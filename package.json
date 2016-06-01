@@ -1,0 +1,29 @@
+{
+  "name": "ipa-client-angular",
+  "version": "0.1.0",
+  "description": "Instructional Planning and Administration AngularJS Client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ucdavis/ipa-client-angular.git"
+  },
+  "author": "DSS IT",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ucdavis/ipa-client-angular/issues"
+  },
+  "homepage": "https://github.com/ucdavis/ipa-client-angular#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-angular-templates": "^1.0.4",
+    "grunt-bower-concat": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0"
+  }
+}

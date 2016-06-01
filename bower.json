@@ -1,0 +1,34 @@
+{
+  "name": "ipa-client-angular",
+  "description": "Instructional Planning and Administration AngularJS Client",
+  "main": "index.js",
+  "authors": [
+    "DSS IT"
+  ],
+  "license": "UNLICENSED",
+  "homepage": "https://ipa.ucdavis.edu",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.6",
+    "jquery": "^2.2.4",
+    "angular-route": "^1.5.6",
+    "jquery-ui": "^1.11.4",
+    "bootstrap": "^3.3.6",
+    "angular-bootstrap": "^1.3.3",
+    "Chart.js": "^2.1.4",
+    "ng-notify": "^0.8.0",
+    "ng-idle": "^1.2.2",
+    "angular-ui-calendar": "^1.0.1",
+    "spin.js": "^2.3.2"
+  },
+  "resolutions": {
+    "angular": "^1.5.6"
+  }
+}
