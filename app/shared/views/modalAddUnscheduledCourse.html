@@ -1,0 +1,18 @@
+<div class="modal-header">
+<h2 style="text-align: center;">Add Course Preference to {{getTermName(term)}}</h2>
+</div>
+<div class="modal-body">
+	<input type="text" ng-model="newCourse" placeholder="Course Title"
+	focus-on-show ng-init="noResults = false" ng-change="clearSearch()"
+	uib-typeahead="course.fullDesc for course in searchCourses($viewValue)"
+	typeahead-min-length="3" typeahead-wait-ms="300" class="form-control"
+	typeahead-no-results="noResults" uib-tooltip="No Results" tooltip-placement="bottom"
+	tooltip-is-open="noResults" tooltip-trigger="none"
+	typeahead-on-select="setCourse($item, $model, $label)"
+	auto-input>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-disabled="isFormIncomplete()" ng-click="ok()">Add Course Preference</button>
+	<button class="btn btn-default" ng-click="cancel()">Cancel</button>
+</div>

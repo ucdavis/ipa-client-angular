@@ -1,0 +1,26 @@
+<table style="margin: auto;">
+	<tbody>
+		<tr class="text-center">
+			<td><a ng-click="incrementHours()" class="btn btn-link btn-sm"><span class="glyphicon glyphicon-chevron-up"></span></a></td>
+			<td>&nbsp;</td>
+			<td><a ng-click="incrementMinutes()" class="btn btn-link btn-sm"><span class="glyphicon glyphicon-chevron-up"></span></a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="form-group">
+				<input type="text" ng-value="getMeridianTime().hours" class="form-control input-sm text-center" ng-readonly="true" maxlength="2">
+			</td>
+			<td>:</td>
+			<td class="form-group">
+				<input type="text" ng-value="('0' + getMeridianTime().minutes).slice(-2)" class="form-control input-sm text-center" ng-readonly="true" maxlength="2">
+			</td>
+			<td><button type="button" class="btn btn-default btn-sm text-center" ng-click="toggleMeridian()">{{ getMeridianTime().meridian }}</button></td>
+		</tr>
+		<tr class="text-center">
+			<td><a ng-click="decrementHours()" class="btn btn-link btn-sm"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
+			<td>&nbsp;</td>
+			<td><a ng-click="decrementMinutes()" class="btn btn-link btn-sm"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>

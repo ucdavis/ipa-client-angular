@@ -1,0 +1,9 @@
+<div idle-countdown="countdown" ng-init="countdown=60" class="modal-body text-center">
+	<h2 class="page-header text-center">
+		Your session is about to time out
+	</h2>
+	<uib-progressbar max="60" value="countdown" animate="false" class="progress-striped active" type="danger">
+		You'll be logged out in {{countdown}} second{{countdown > 1 ? 's' : ''}}.
+	</uib-progressbar>
+	Click anywhere to keep the session alive
+</div>

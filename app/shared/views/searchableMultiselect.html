@@ -1,0 +1,33 @@
+<div class="dropdown searchable-multi-select hidden-print" uib-dropdown is-open="isExpanded"
+	uib-tooltip="{{ commaDelimitedSelected() }}" tooltip-enable="!isExpanded" stop-event="click">
+
+	<a class="dropdown-toggle btn" uib-dropdown-toggle ng-class="{'disabled': readOnly}">
+		<span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+			<small class="text-muted">
+				{{ commaDelimitedSelected() }}
+			</small>
+			<b class="caret text-muted" ng-if="!readOnly && allItems.length"></b>
+		</span>
+	</a>
+	<ul ng-if="!readOnly && allItems.length && isExpanded"
+		class="dropdown-menu dropdown-menu-form form-control list-group">
+		<li class="list-group-item dropdown-list-item" style="background-color: #eee;"
+		ng-if="isSearchable !== 'false'">
+			<input type="text" class="form-control" ng-model="searchQuery" placeholder="Search">
+		</li>
+		<li ng-repeat="item in allItems | orderBy:displayAttr track by $index" class="clickable list-group-item dropdown-list-item"
+			ng-hide="searchQuery.length && item[displayAttr].toLowerCase().indexOf(searchQuery.toLowerCase()) < 0"
+			ng-click="updateSelectedItems(item)" ng-class="{'active': isItemSelected(item) }">
+				{{ item[displayAttr] }}
+				<span class="glyphicon glyphicon-ok pull-right" ng-show="isItemSelected(item)"></span>
+		</li>
+		<li ng-if="canAdd" class="list-group-item dropdown-list-item" style="background-color: #eee;">
+			<input type="text" class="form-control"
+				auto-input on-enter="addItem({itemName: newItemName})" clear-on-init="true" maxlength="100"
+				ng-model="newItemName" placeholder="Add..." help-text-placement="bottom" />
+		</li>
+	</ul>
+</div>
+<div class="visible-print-block">
+	{{ commaDelimitedSelected() }}
+</div>

@@ -78,13 +78,13 @@ module.exports = function (grunt) {
 				],
         dest: '<%= folders.webapp.build %>/js/sharedConfig.js'
       },
-      // coursesApp module files
-      jsCourses: {
+      // courseApp module files
+      jsCourse: {
         src: [
-					'<%= folders.webapp.root %>/courses/*.js',
-					'<%= folders.webapp.root %>/courses/**/*.js'
+					'<%= folders.webapp.root %>/course/*.js',
+					'<%= folders.webapp.root %>/course/**/*.js'
 				],
-        dest: '<%= folders.webapp.build %>/js/coursesApp.js'
+        dest: '<%= folders.webapp.build %>/js/courseApp.js'
       },
       // adminApp module files
       jsAdmin: {
@@ -110,21 +110,13 @@ module.exports = function (grunt) {
 				],
 				dest: '<%= folders.webapp.build %>/js/summaryApp.js'
       },
-      // assignmentsApp module files
-      jsAssignments: {
+      // assignmentApp module files
+      jsAssignment: {
 				src: [
-					'<%= folders.webapp.root %>/assignments/*.js',
-					'<%= folders.webapp.root %>/assignments/**/*.js'
+					'<%= folders.webapp.root %>/assignment/*.js',
+					'<%= folders.webapp.root %>/assignment/**/*.js'
 				],
-				dest: '<%= folders.webapp.build %>/js/assignmentsApp.js'
-      },
-      // teachingCallApp module files
-      jsTeachingcall: {
-				src: [
-					'<%= folders.webapp.root %>/teachingCall/*.js',
-					'<%= folders.webapp.root %>/teachingCall/**/*.js'
-				],
-				dest: '<%= folders.webapp.build %>/js/teachingCallApp.js'
+				dest: '<%= folders.webapp.build %>/js/assignmentApp.js'
       },
       // schedulingApp module files
       jsScheduling: {
@@ -146,6 +138,13 @@ module.exports = function (grunt) {
     },
 
     copy: {
+      html: {
+        expand: true,
+        flatten: true,
+        cwd: '<%= folders.webapp.root %>',
+        src: ['*/*.html'],
+        dest: '<%= folders.webapp.build %>'
+      },
       img: {
         expand: true,
         cwd: '<%= folders.webapp.root %>/images/',
