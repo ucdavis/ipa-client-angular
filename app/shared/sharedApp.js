@@ -1,8 +1,6 @@
 window.sharedApp = angular.module('sharedApp',
 		[
 		 // 3rd party
-		 'ngResource',
-		 'ngAnimate',
 		 'ui.bootstrap',
 		 'ngNotify',
 		 'ngIdle',
