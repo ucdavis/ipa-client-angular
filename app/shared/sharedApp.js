@@ -28,13 +28,13 @@ window.sharedApp = angular.module('sharedApp',
 
 sharedApp
 	// Set the CSRF token
-	.config(['$httpProvider', '$compileProvider', 'IdleProvider', 'KeepaliveProvider',
-	         function($httpProvider, $compileProvider, IdleProvider, KeepaliveProvider) {
+	.config(['$httpProvider', '$compileProvider', 'IdleProvider', 'KeepaliveProvider', '$locationProvider',
+	         function($httpProvider, $compileProvider, IdleProvider, KeepaliveProvider, $locationProvider) {
 		// Add CSRF token to all requests
 		var csrfHeader = $('meta[name=csrf-header]').attr('content');
 		$httpProvider.defaults.headers.common[csrfHeader] = $('meta[name=csrf-token]').attr('content');
 
-		$httpProvider.useApplyAsync( true );
+		$httpProvider.useApplyAsync(true);
 		$compileProvider.debugInfoEnabled(false);
 
 	    // configure Idle settings

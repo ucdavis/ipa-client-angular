@@ -26,7 +26,7 @@ angular.module('sharedApp')
 					} else {
 						// Received a request to redirect to CAS. Obey.
 						localStorage.removeItem('JWT');
-						$window.location.href = response.data.redirect;
+						$window.location.href = response.data.redirect + "?ref=" + document.URL;
 
 						deferred.reject();
 					}
