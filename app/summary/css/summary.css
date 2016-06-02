@@ -1,0 +1,177 @@
+a {
+  color: #337ab7;
+}
+.page-container .main-content {
+  padding: 0;
+  display: flex;
+  height: 100%;
+}
+.left-container {
+  flex: 3 1 75%;
+}
+.right-container {
+  flex: 1 1 25%;
+  background: -moz-linear-gradient(left, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 20px, rgba(0, 0, 0, 0) 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 20px, rgba(0, 0, 0, 0) 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 20px, rgba(0, 0, 0, 0) 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0d000000', endColorstr='#00000000', GradientType=1);
+  /* IE6-9 */
+}
+.page-container .sidebar-menu {
+  width: 200px;
+}
+.pager.year-switcher {
+  border-top: 1px solid rgba(69, 74, 84, 0.7);
+  border-bottom: 1px solid rgba(69, 74, 84, 0.7);
+}
+.pager.year-switcher li a {
+  background-color: transparent;
+  color: #aaa;
+  border: none;
+}
+.pager.year-switcher li a {
+  background-color: transparent;
+  color: #aaa;
+  border: none;
+}
+.welcome {
+  padding: 10px 20px;
+}
+.sidebar-collapsed .pager.year-switcher li.previous,
+.sidebar-collapsed .pager.year-switcher li.next,
+.sidebar-collapsed .welcome {
+  display: none;
+}
+.notifications-menu {
+  background-color: #fff;
+  -webkit-border-radius: 0 0 3px 3px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 0 0 3px 3px;
+  -moz-background-clip: padding;
+  border-radius: 0 0 3px 3px;
+  background-clip: padding-box;
+  -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f8f8f8;
+  list-style: none;
+  padding: 0;
+  margin: 3em 0 0 0;
+}
+.notifications-menu > li {
+  display: block;
+  border-bottom: 1px solid #ededed;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+}
+.notifications-menu li,
+.notifications-menu a,
+.notifications-menu p {
+  color: #888888;
+}
+.notifications-menu > li .scroller {
+  max-height: 290px;
+  overflow: auto;
+}
+.notifications-menu > li > ul {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.notifications-menu > li > ul > li {
+  font-size: 12px;
+  border-bottom: 1px solid #ededed;
+  background: #fff;
+}
+.notifications-menu > li > ul > li > a,
+.notifications-menu > li > ul > li > p {
+  display: block;
+  position: relative;
+  margin: 0;
+  padding: 10px 20px;
+  -webkit-transition: all 300ms ease-in-out;
+  -moz-transition: all 300ms ease-in-out;
+  -o-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+.notifications-menu > li > ul > li > a > i,
+.notifications-menu > li > ul > li > p > i {
+  background: #454a54;
+  display: block;
+  float: left;
+  text-align: center;
+  padding: 5px;
+  line-height: 14px;
+  color: #fff;
+  width: 28px;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 3px;
+  -moz-background-clip: padding;
+  border-radius: 3px;
+  background-clip: padding-box;
+}
+.notifications-menu > li > ul > li .line {
+  display: block;
+}
+.notifications-menu > li > ul > li .line + .line,
+.notifications-menu > li > ul > li .line + .line + .line,
+.notifications-menu > li > ul > li .line + .line + .line + .line {
+  margin-top: 5px;
+}
+.notifications-menu > li.top > p {
+  background-color: #fff;
+}
+.notifications-menu > li > p {
+  background-color: #FFF;
+}
+.notifications-menu > li > a,
+.notifications-menu > li > p {
+  margin: 0;
+  padding: 12px 20px;
+}
+.notifications-menu > li.external {
+  background-color: #FFF;
+  border-bottom: 0;
+  padding: 10px 0;
+}
+.notifications-menu > li.external a {
+  color: #337ab7;
+  -webkit-transition: all 300ms ease-in-out;
+  -moz-transition: all 300ms ease-in-out;
+  -o-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+.notifications-menu > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #7d8086;
+  white-space: nowrap;
+}
+.notifications-menu > li > ul > li.notification-warning > i,
+.notifications-menu > li > ul > li.notification-warning > a > i {
+  background-color: #f7d227;
+  color: #fff;
+}
+.notifications-menu > li > ul > li.notification-danger > i,
+.notifications-menu > li > ul > li.notification-danger > a > i {
+  background-color: #cc2424;
+  color: #fff;
+}
+.right-info {
+  border-left: 1px solid #ebebeb;
+  height: 100%;
+  background-color: #ebebeb;
+}
+.padded-container {
+  padding: 30px;
+}

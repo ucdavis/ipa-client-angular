@@ -142,21 +142,24 @@ module.exports = function (grunt) {
         expand: true,
         flatten: true,
         cwd: '<%= folders.webapp.root %>',
-        src: ['*/*.html'],
+        src: ['*/*.html','index.html'],
         dest: '<%= folders.webapp.build %>'
       },
       img: {
         expand: true,
-        cwd: '<%= folders.webapp.root %>/images/',
+        cwd: '<%= folders.webapp.root %>/assets/images/',
         src: ['**/**/*'],
         dest: '<%= folders.webapp.build %>images/'
       },
       fonts: {
         expand: true,
         flatten: true,
-        cwd: 'bower_components/bootstrap/dist/fonts/',
-        src: ['**/**/*'],
-        dest: '<%= folders.webapp.build %>/fonts/'
+        cwd: '',
+        src: [
+          'bower_components/bootstrap/dist/fonts/*',
+          '<%= folders.webapp.root %>/assets/fonts/*'
+        ],
+        dest: '<%= folders.webapp.build %>/font/'
       },
       css: {
         expand: true,
@@ -165,9 +168,13 @@ module.exports = function (grunt) {
         src: ['**/*.css'],
         dest: '<%= folders.webapp.build %>/css/'
       },
-      map: {
-        src: 'bower_components/bootstrap/dist/css/bootstrap.css.map',
-        dest: '<%= folders.webapp.build %>/css/bootstrap.css.map',
+      // Common Vendor JS files
+      js: {
+        expand: true,
+        flatten: true,
+        cwd: '<%= folders.webapp.root %>/assets/js',
+        src: ['**/*.js'],
+        dest: '<%= folders.webapp.build %>/js/'
       }
     },
 
@@ -226,13 +233,26 @@ module.exports = function (grunt) {
       },
       templates: {
         files: ['<%= folders.webapp.root %>/**/*.html'],
-        tasks: ['ngtemplates', 'concat']
+        tasks: ['ngtemplates', 'concat', 'copy']
       },
       css: {
         files: '<%= folders.webapp.root %>/**/*.css',
         tasks: ['concat:cssShared', 'copy:css']
       }
 
+    },
+
+    connect: {
+      server: {
+        options: {
+          port: 9000,
+          base: 'dist'
+        }
+      }
+    },
+
+    clean: {
+      src: ['dist/*']
     }
   });
 
@@ -241,12 +261,13 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
-
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-bower-concat');
   grunt.loadNpmTasks('grunt-angular-templates');
 
-  grunt.registerTask('build', ['copy', 'ngtemplates', 'bower_concat', 'concat', 'uglify:dist', 'cssmin']);
-  grunt.registerTask('serve', ['copy', 'ngtemplates', 'bower_concat', 'concat']);
+  grunt.registerTask('build', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat', 'uglify:dist', 'cssmin']);
+  grunt.registerTask('serve', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat', 'connect', 'watch', 'connect']);
   grunt.registerTask('default', ['build']);
 
 };
