@@ -245,7 +245,21 @@ module.exports = function (grunt) {
 			server: {
 				options: {
 					port: 9000,
-					base: 'dist'
+					base: 'dist',
+					middleware: function(connect, options, middlewares) {
+						var modRewrite = require('connect-modrewrite');
+						// enable Angular's HTML5 mode
+						middlewares.unshift(modRewrite([
+							'^/admin.* /admin.html [L]',
+							'^/workgroups.* /workgroups.html [L]',
+							'^/summary.* /summary.html [L]',
+							'^/courses.* /courses.html [L]',
+							'^/assignments.* /assignments.html [L]',
+							'^/teachingCalls.* /teachingCalls.html [L]',
+						]));
+
+						return middlewares;
+					}
 				}
 			}
 		},
@@ -260,10 +274,10 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-bower-concat');
 	grunt.loadNpmTasks('grunt-angular-templates');
+	grunt.loadNpmTasks('grunt-contrib-connect');
 
 	grunt.registerTask('build', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat', 'uglify:dist', 'cssmin']);
 	grunt.registerTask('serve', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat', 'connect', 'watch', 'connect']);

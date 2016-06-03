@@ -16,7 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.5.6",
+    "angular": "https://github.com/dssit/bower-angular.git#1.5.7.1",
     "jquery": "^2.2.4",
     "angular-route": "^1.5.6",
     "jquery-ui": "^1.11.4",
@@ -29,6 +29,6 @@
     "spin.js": "^2.3.2"
   },
   "resolutions": {
-    "angular": "^1.5.6"
+    "angular": "1.5.7.1"
   }
 }

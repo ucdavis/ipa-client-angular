@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ucdavis/ipa-client-angular#readme",
   "devDependencies": {
+    "connect-modrewrite": "^0.9.0",
     "grunt": "^1.0.1",
     "grunt-angular-templates": "^1.0.4",
     "grunt-bower-concat": "^1.0.0",
