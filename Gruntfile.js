@@ -256,6 +256,7 @@ module.exports = function (grunt) {
 							'^/courses.* /courses.html [L]',
 							'^/assignments.* /assignments.html [L]',
 							'^/teachingCalls.* /teachingCalls.html [L]',
+							'^/scheduling.* /scheduling.html [L]',
 						]));
 
 						return middlewares;
