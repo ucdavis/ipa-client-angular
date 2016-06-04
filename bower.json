@@ -26,7 +26,8 @@
     "ng-notify": "^0.8.0",
     "ng-idle": "^1.2.2",
     "angular-ui-calendar": "^1.0.1",
-    "spin.js": "^2.3.2"
+    "spin.js": "^2.3.2",
+    "ng-redux": "^3.3.0"
   },
   "resolutions": {
     "angular": "1.5.7.1"
