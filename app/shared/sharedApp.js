@@ -4,6 +4,7 @@ window.sharedApp = angular.module('sharedApp',
 		'ui.bootstrap',
 		'ngNotify',
 		'ngIdle',
+		'ngRedux',
 		// IPA Entities
 		'courseOfferingGroup',
 		'sectionGroup',
@@ -28,8 +29,8 @@ window.sharedApp = angular.module('sharedApp',
 
 sharedApp
 	// Set the CSRF token
-	.config(['$httpProvider', '$compileProvider', 'IdleProvider', 'KeepaliveProvider', '$locationProvider',
-		function ($httpProvider, $compileProvider, IdleProvider, KeepaliveProvider, $locationProvider) {
+	.config(['$httpProvider', '$compileProvider', 'IdleProvider', 'KeepaliveProvider', '$locationProvider','$ngReduxProvider',
+		function ($httpProvider, $compileProvider, IdleProvider, KeepaliveProvider, $locationProvider, $ngReduxProvider) {
 			// Add CSRF token to all requests
 			var csrfHeader = $('meta[name=csrf-header]').attr('content');
 			$httpProvider.defaults.headers.common[csrfHeader] = $('meta[name=csrf-token]').attr('content');
