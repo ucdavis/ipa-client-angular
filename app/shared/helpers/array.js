@@ -1,10 +1,16 @@
+// TODO: Rename to _array_getElementById
 _array_findById = function(arr, id) {
-	for(var el in arr) {
-		// hasOwnProperty ensures prototypes aren't considered
-		if(arr.hasOwnProperty(el)) {
-			if(arr[el].id == id) return arr[el];
-		}
+	var index = _array_getIndexById(arr, id);
+
+	if (index == -1) {
+		return undefined;
 	}
 
-	return undefined;
+	return arr[index];
+}
+
+_array_getIndexById = function (arr, id) {
+	return arr.findIndex( function(n) {
+		return n.id == id;
+	});
 }
