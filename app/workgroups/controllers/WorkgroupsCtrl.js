@@ -7,8 +7,11 @@
  * # WorkgroupsCtrl
  * Controller of the ipaClientAngularApp
  */
-workgroupsApp.controller('WorkgroupsCtrl', ['$scope', '$rootScope', 'workgroupsStateService', 'workgroupsActionCreators',
-		this.WorkgroupsCtrl = function ($scope, $rootScope, workgroupsStateService, workgroupsActionCreators) {
+workgroupsApp.controller('WorkgroupsCtrl', ['$scope', '$rootScope', '$routeParams', 'workgroupsStateService', 'workgroupsActionCreators',
+		this.WorkgroupsCtrl = function ($scope, $rootScope, $routeParams, workgroupsStateService, workgroupsActionCreators) {
+			$scope.workgroupCode = $routeParams.workgroupCode;
+			$scope.year = $routeParams.year;
+
 			$scope.view = {};
 			console.log('Workgroup Controller says hi');
 

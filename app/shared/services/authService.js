@@ -13,7 +13,6 @@ angular.module('sharedApp')
 		return {
 			validate: function (token) {
 				var deferred = $q.defer();
-				console.log('validating', token);
 
 				$http.post(serverRoot + '/auth/validate', { token: token }, { withCredentials: true }).then(function (response) {
 					// Token may be null if we are redirecting
@@ -38,7 +37,6 @@ angular.module('sharedApp')
 
 			hasRole: function (role) {
 				return $http.get(serverRoot + '/api/role/' + role).then(function (response) {
-					console.log(response);
 					return response.data;
 				});
 			},

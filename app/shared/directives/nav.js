@@ -4,7 +4,6 @@ sharedApp.directive("nav", this.nav = function() {
 		templateUrl: 'nav.html',
 		replace: true,
 		link: function (scope, element, attrs) {
-			console.log("nav directive says hi", attrs);
 			scope.year = attrs.year;
 			scope.termCode = attrs.termCode;
 			scope.workgroupCode = attrs.workgroupCode;

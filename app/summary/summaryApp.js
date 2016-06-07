@@ -6,8 +6,7 @@ summaryApp.config(function ($routeProvider) {
 			templateUrl: "SummaryCtrl.html",
 			controller: "SummaryCtrl",
 			resolve: {
-				authenticate: SummaryCtrl.authenticate,
-				setParams: SummaryCtrl.setParams
+				authenticate: SummaryCtrl.authenticate
 			}
 		})
 		.when("/", {

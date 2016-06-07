@@ -7,12 +7,10 @@
  * # SummaryCtrl
  * Controller of the summaryApp
  */
-summaryApp.controller('SummaryCtrl', ['$scope',
-		this.SummaryCtrl = function ($scope) {
-			console.log('Summary Controller');
-			$scope.year = "2020";
-			$scope.termCode = "10";
-			$scope.workgroupCode = "PSC";
+summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams',
+		this.SummaryCtrl = function ($scope, $routeParams) {
+			$scope.workgroupCode = $routeParams.workgroupCode;
+			$scope.year = $routeParams.year;
 }]);
 
 SummaryCtrl.authenticate = function (authService) {
