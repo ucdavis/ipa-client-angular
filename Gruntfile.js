@@ -97,10 +97,10 @@ module.exports = function (grunt) {
 			// workgroupApp module files
 			jsWorkgroup: {
 				src: [
-					'<%= folders.webapp.root %>/workgroup/*.js',
-					'<%= folders.webapp.root %>/workgroup/**/*.js'
+					'<%= folders.webapp.root %>/workgroups/*.js',
+					'<%= folders.webapp.root %>/workgroups/**/*.js'
 				],
-				dest: '<%= folders.webapp.build %>/js/workgroupApp.js'
+				dest: '<%= folders.webapp.build %>/js/workgroupsApp.js'
 			},
 			// summaryApp module files
 			jsSummary: {
@@ -237,7 +237,7 @@ module.exports = function (grunt) {
 			},
 			css: {
 				files: '<%= folders.webapp.root %>/**/*.css',
-				tasks: ['concat:cssShared', 'copy:css']
+				tasks: ['copy:css']
 			}
 
 		},

@@ -1,7 +1,6 @@
-{{tacos}}
-<br />
 <ul>
-	<li ng-repeat="tag in tacos">
-		{{tag}}
+	<li ng-repeat="tag in view.state.tags">
+		{{tag.name}}
 	</li>
 </ul>
+<button class="btn btn-default" ng-click="addTag()">Add Tag</button>

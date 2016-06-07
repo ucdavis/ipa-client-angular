@@ -1,0 +1,28 @@
+a {
+  color: #337ab7;
+}
+.page-container .sidebar-menu {
+  width: 200px;
+}
+.pager.year-switcher {
+  border-top: 1px solid rgba(69, 74, 84, 0.7);
+  border-bottom: 1px solid rgba(69, 74, 84, 0.7);
+}
+.pager.year-switcher li a {
+  background-color: transparent;
+  color: #aaa;
+  border: none;
+}
+.pager.year-switcher li a {
+  background-color: transparent;
+  color: #aaa;
+  border: none;
+}
+.welcome {
+  padding: 10px 20px;
+}
+.sidebar-collapsed .pager.year-switcher li.previous,
+.sidebar-collapsed .pager.year-switcher li.next,
+.sidebar-collapsed .welcome {
+  display: none;
+}

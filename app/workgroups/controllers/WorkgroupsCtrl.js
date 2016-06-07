@@ -7,9 +7,22 @@
  * # WorkgroupsCtrl
  * Controller of the ipaClientAngularApp
  */
-summaryApp.controller('WorkgroupsCtrl', ['$scope',
-		this.WorkgroupsCtrl = function ($scope) {
+workgroupsApp.controller('WorkgroupsCtrl', ['$scope', '$rootScope', 'workgroupsStateService', 'workgroupsActionCreators',
+		this.WorkgroupsCtrl = function ($scope, $rootScope, workgroupsStateService, workgroupsActionCreators) {
+			$scope.view = {};
 			console.log('Workgroup Controller says hi');
+
+			$scope.view.state = workgroupsStateService.getState();
+			$rootScope.$on('workgroupsStateChanged', function (event, data) {
+				$scope.view.state = data;
+			});
+
+			$scope.addTag = function () {
+				workgroupsActionCreators.addTag({
+					id: 4,
+					name: "UCD Course"
+				});
+			}
 }]);
 
 // TODO: This should be removed when authenticate is moved to shared service

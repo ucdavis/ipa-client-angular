@@ -13,3 +13,7 @@ workgroupsApp.config(function ($routeProvider) {
 			redirectTo: "/"
 		});
 });
+
+var ADD_TAG = "ADD_TAG";
+var REMOVE_TAG = "REMOVE_TAG";
+var UPDATE_TAG = "UPDATE_TAG";
