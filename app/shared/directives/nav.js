@@ -1,12 +1,12 @@
-sharedApp.directive("nav", this.nav = function() {
+sharedApp.directive("nav", this.nav = function($timeout, $location) {
 	return {
 		restrict: 'E',
 		templateUrl: 'nav.html',
 		replace: true,
 		link: function (scope, element, attrs) {
+			scope.workgroupCode = attrs.workgroupCode;
 			scope.year = attrs.year;
 			scope.termCode = attrs.termCode;
-			scope.workgroupCode = attrs.workgroupCode;
 
 			scope.terms = [
 				{ id: 1, description: "Fall Quarter", code: "10" },
@@ -27,6 +27,23 @@ sharedApp.directive("nav", this.nav = function() {
 				}
 			});
 
+			scope.changeYearBy = function (offset) {
+				if (!offset) { return; }
+
+				// Cancel any previous timers (In the case when the user clicks mutiple times)
+				$timeout.cancel(scope.timer);
+
+				// Increment/decrement the year
+				scope.year = parseInt(scope.year) + offset;
+
+				// Schedule page redirect after delay
+				var delay = 1000; // milliseconds
+				scope.timer = $timeout(function () {
+					var url = '/' + scope.workgroupCode + '/' + scope.year + '/' + scope.termCode;
+					console.log('redirecting to ' + url);
+					$location.path(url);
+				}, delay);
+			};
 		}
 	}
 })

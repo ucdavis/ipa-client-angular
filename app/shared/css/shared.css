@@ -20,6 +20,7 @@ a {
 }
 .welcome {
   padding: 10px 20px;
+  color: #aaabae;
 }
 .sidebar-collapsed .pager.year-switcher li.previous,
 .sidebar-collapsed .pager.year-switcher li.next,

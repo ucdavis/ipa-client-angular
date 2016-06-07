@@ -51,9 +51,9 @@
 
 		<!-- Year switcher -->
 		<ul class="pager year-switcher">
-			<li class="previous"><a href="#"><i class="entypo-left-open-mini"></i></a></li>
-			<li ><a href="#">{{ year }}</a></li>
-			<li class="next"><a href="#"><i class="entypo-right-open-mini"></i></a></li>
+			<li class="previous"><a ng-click="changeYearBy(-1)"><i class="entypo-left-open-mini"></i></a></li>
+			<li ><a>{{ year }}</a></li>
+			<li class="next"><a ng-click="changeYearBy(1)"><i class="entypo-right-open-mini"></i></a></li>
 		</ul>
 
 		<!-- Sidebar links -->
