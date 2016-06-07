@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name sharedApp.sharedStateService
+ * @name workgroupsApp.workgroupsActionCreators
  * @description
- * # sharedStateService
- * Service in the sharedApp.
+ * # workgroupsActionCreators
+ * Service in the workgroupsApp.
  * Central location for sharedState information.
  */
 workgroupsApp.service('workgroupsActionCreators', function (workgroupsStateService) {

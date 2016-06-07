@@ -1,6 +1,11 @@
-<ul>
-	<li ng-repeat="tag in view.state.tags">
-		{{tag.name}}
-	</li>
-</ul>
-<button class="btn btn-default" ng-click="addTag()">Add Tag</button>
+<nav year="{{ year }}" term-code="{{ termCode }}" workgroup-code="{{ workgroupCode }}"></nav>
+
+<div class="main-content">
+	<ul>
+		<li ng-repeat="tag in view.state.tags">
+			{{tag.name}}
+		</li>
+	</ul>
+	<button class="btn btn-default" ng-click="addTag()">Add Tag</button>
+
+</div>

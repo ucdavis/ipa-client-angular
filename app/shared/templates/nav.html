@@ -1,115 +1,93 @@
-<div class="navbar navbar-inverse hidden-print" role="navigation" ng-controller="IpaNavCtrl">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" ng-href="{{rootUrl}}/summary#/">Instructional
-				Planning and Administration</a>
-		</div>
+<div class="sidebar-menu">
 
-		<!-- navbar-header -->
-		<ul class="nav navbar-nav navbar-right">
-			<li class="dropdown dropdown-greeting" uib-dropdown on-toggle="toggled(open)">
-				<a href="#" class="dropdown-toggle greeting" uib-dropdown-toggle>
-					Good {{ meridiem === 'am' ? 'Morning' : 'Afternoon' }}, {{ currentUser.displayName }}
-					<br />
-					<strong>{{ activeWorkgroup.name == null ? "No Workgroup" : activeWorkgroup.name }}</strong>
-					<b class="caret"></b>
+	<div class="sidebar-menu-inner">
+
+		<header class="logo-env">
+
+			<!-- logo -->
+			<div class="logo">
+				<a href="/summary/">
+					<h1 style="color: #fff; margin:0;">IPA</h1>
 				</a>
-				<ul class="dropdown-menu">
-					<li>
-						<div style="min-width: 500px;" stop-event="click">
-							<!-- Icons -->
-							<ul class="nav nav-pills nav-justified">
-								<!-- Administration -->
-								<li ng-show="isAdmin"><a ng-href="{{rootUrl}}/admin">
-									<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-									Administration
-								</a></li>
-								<!-- Department Configuration -->
-								<li ng-show="activeWorkgroup.id && workgroups.length === 1 && (isAdmin || isCoordinator())">
-									<a ng-href="{{rootUrl}}/workgroups/#/{{activeWorkgroup.id}}"
-										uib-tooltip="Manage your users and settings" tooltip-placement="bottom">
-											<span class="glyphicon glyphicon-th" aria-hidden="true"></span>
-											Workgroup
-									</a>
-								</li>
-								<!-- Registration Section -->
-								<li ng-show="isRegistrar"><a ng-href="{{rootUrl}}/registrar/{{thisYear}}"
-									uib-tooltip="Registrar Section" tooltip-placement="bottom">
-									<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-									Registrar
-								</a></li>
-								<!-- UnImpersonate -->
-								<li ng-show="isImpersonating"><a href="#" ng-click="unImpersonate()"
-									uib-tooltip="Revert to original user" tooltip-placement="bottom">
-									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-									Unimpersonate
-								</a></li>
-								<!-- Logout -->
-								<li><a ng-href="{{rootUrl}}/logout">
-									<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
-									Logout
-								</a></li>
-							</ul>
+			</div>
 
-							<hr ng-if="workgroups.length > 1 || isAdmin" />
-							<div class="row">
-								<!-- Impersonation -->
-								<div ng-class="{ 'col-xs-6': isAdmin && workgroups.length > 1, 'col-xs-12': isAdmin }"
-									ng-if="isAdmin">
-									<div class="form-group has-feedback">
-										<label class="control-label" for="impersonate-user">Impersonate User</label>
-										<input stop-event="click" type="text" focus-on-show id="impersonate-user"
-											ng-model="impersonateUser" placeholder="Username"
-											uib-typeahead="user.description for user in searchUsers($viewValue)"
-											typeahead-loading="loadingUsers" class="form-control"
-											typeahead-wait-ms="500" typeahead-min-length="3" autocomplete="off"
-											typeahead-on-select="impersonate($item, $model, $label)">
-										<div class='form-control-feedback' ng-show="waitingForImpersonating || loadingUsers">
-											<spinner text=''></spinner>
-										</div>
-									</div>
-								</div>
+			<!-- logo collapse icon -->
+			<div class="sidebar-collapse">
+				<a href="#" class="sidebar-collapse-icon"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
+					<i class="entypo-menu"></i>
+				</a>
+			</div>
 
-								<!-- Department switcher -->
-								<div ng-class="{ 'col-xs-6': isAdmin && workgroups.length > 1, 'col-xs-12': workgroups.length > 1 }"
-									ng-if="workgroups.length > 1">
-									<ul class="nav nav-pills nav-stacked">
-										<li ng-repeat="workgroup in workgroups track by $index"
-											ng-class="{ 'active': workgroup.id === activeWorkgroup.id }">
-												<a ng-click="navigateTo('/setActiveWorkgroup/' + workgroup.id)"
-												class="clickable hoverable" uib-tooltip="Switch to {{ workgroup.name }}"
-												ng-class="{ 'col-xs-10': isAdmin || isCoordinator(workgroup.id), 'col-xs-12': !(isAdmin || isCoordinator(workgroup.id)) }"
-												tooltip-placement="top">
-													{{ workgroup.name }}
-												</a>
-												<span class="btn btn-lg glyphicon glyphicon-cog clickable hoverable col-xs-2"
-												ng-if="isAdmin || isCoordinator(workgroup.id)"
-												stop-event="click" ng-click="navigateTo('/workgroups/#/' + workgroup.id)"
-												uib-tooltip="Manage {{ workgroup.name }} users and settings"
-												tooltip-placement="left"></span>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</li>
-				</ul>
+
+			<!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
+			<div class="sidebar-mobile-menu visible-xs">
+				<a href="#" class="with-animation"><!-- add class "with-animation" to support animation -->
+					<i class="entypo-menu"></i>
+				</a>
+			</div>
+
+		</header>
+
+		<!-- User and Organization -->
+		<ul id="main-menu" class="main-menu">
+			<!-- add class "multiple-expanded" to allow multiple submenus to open -->
+			<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
+			<li class="welcome">
+					<span class="title">Welcome John Henderson</span>
+			</li>
+			<li>
+				<a href="logout.html">
+					<i class="entypo-logout"></i>
+					<span class="title">Logout</span>
+				</a>
+			</li>
+			<li>
+				<a href="/workgroups/">
+					<i class="entypo-users"></i>
+					<span class="title">{{ workgroupCode }}</span>
+				</a>
 			</li>
 		</ul>
 
-		<div class="navbar-center">
-			<ul class="nav navbar-nav">
-				<li class="title" ng-bind="navTitle"></li>
-			</ul>
-		</div>
-	</div>
-<!-- container -->
-</div>
-<!--  ipaNavCtrl -->
+		<!-- Year switcher -->
+		<ul class="pager year-switcher">
+			<li class="previous"><a href="#"><i class="entypo-left-open-mini"></i></a></li>
+			<li ><a href="#">{{ year }}</a></li>
+			<li class="next"><a href="#"><i class="entypo-right-open-mini"></i></a></li>
+		</ul>
 
+		<!-- Sidebar links -->
+		<ul id="main-menu" class="main-menu">
+			<!-- add class "multiple-expanded" to allow multiple submenus to open -->
+			<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
+			<li>
+				<a href="/courses/">
+					<i class="entypo-book"></i>
+					<span class="title">Courses</span>
+				</a>
+			</li>
+			<li>
+				<a href="/assignments/">
+					<i class="entypo-user-add"></i>
+					<span class="title">Assignments</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class="entypo-calendar"></i>
+					<span class="title">Scheduling</span>
+				</a>
+				<ul class="visible">
+					<li ng-repeat="term in terms track by term.id" ng-class="{'active': term.code == termCode}">
+						<a ng-href="/scheduling/{{ workgroupCode }}/{{ year }}/{{ term.code }}">
+							{{ term.description }}
+						</a>
+					</li>
+				</ul>
+			</li>
+
+		</ul>
+
+	</div>
+
+</div>
