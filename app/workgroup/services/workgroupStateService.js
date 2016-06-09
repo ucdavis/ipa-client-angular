@@ -10,22 +10,7 @@
  */
 workgroupApp.service('workgroupStateService', function ($rootScope) {
 	return {
-		_state: {
-			tags: [
-				{
-					id: 1,
-					name: "Undergrad"
-				},
-				{
-					id: 2,
-					name: "Graduate"
-				},
-				{
-					id: 3,
-					name: "Core Course"
-				},
-			]
-		},
+		_state: {},
 		_tagReducers: function (action, tags) {
 			var scope = this;
 
@@ -45,19 +30,20 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 					return tags;
 			}
 		},
-		workgroupReducers: function (action) {
+		reduce: function (action) {
 			var scope = this;
 
 			if (!action || !action.type) {
 				return;
 			}
 
+			if (action.type == INIT_WORKGROUP) {
+				scope._state = action.payload;
+			}
+
 			scope._state.tags = scope._tagReducers(action, scope._state.tags);
 
 			$rootScope.$emit('workgroupStateChanged',scope._state);
-		},
-		getState: function () {
-			return this._state;
 		}
 	}
 });

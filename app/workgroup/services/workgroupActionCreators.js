@@ -17,7 +17,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 					tag: tag
 				}
 			};
-			workgroupStateService.workgroupReducers(action);
+			workgroupStateService.reduce(action);
 		},
 		getInitialState: function (workgroupCode) {
 			workgroupService.getWorkgroupByCode(workgroupCode).then(function (payload) {
@@ -25,7 +25,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 					type: INIT_WORKGROUP,
 					payload: payload
 				};
-				workgroupStateService.workgroupReducers(action);
+				workgroupStateService.reduce(action);
 			});
 		}
 	}
