@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name workgroupsApp.workgroupsStateService
+ * @name workgroupApp.workgroupStateService
  * @description
- * # workgroupsStateService
- * Service in the workgroupsApp.
+ * # workgroupStateService
+ * Service in the workgroupApp.
  * Central location for sharedState information.
  */
-workgroupsApp.service('workgroupsStateService', function ($rootScope) {
+workgroupApp.service('workgroupStateService', function ($rootScope) {
 	return {
 		_state: {
 			tags: [
@@ -45,7 +45,7 @@ workgroupsApp.service('workgroupsStateService', function ($rootScope) {
 					return tags;
 			}
 		},
-		workgroupsReducers: function (action) {
+		workgroupReducers: function (action) {
 			var scope = this;
 
 			if (!action || !action.type) {
@@ -54,7 +54,7 @@ workgroupsApp.service('workgroupsStateService', function ($rootScope) {
 
 			scope._state.tags = scope._tagReducers(action, scope._state.tags);
 
-			$rootScope.$emit('workgroupsStateChanged',scope._state);
+			$rootScope.$emit('workgroupStateChanged',scope._state);
 		},
 		getState: function () {
 			return this._state;

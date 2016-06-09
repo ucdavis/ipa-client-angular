@@ -97,10 +97,10 @@ module.exports = function (grunt) {
 			// workgroupApp module files
 			jsWorkgroup: {
 				src: [
-					'<%= folders.webapp.root %>/workgroups/*.js',
-					'<%= folders.webapp.root %>/workgroups/**/*.js'
+					'<%= folders.webapp.root %>/workgroup/*.js',
+					'<%= folders.webapp.root %>/workgroup/**/*.js'
 				],
-				dest: '<%= folders.webapp.build %>/js/workgroupsApp.js'
+				dest: '<%= folders.webapp.build %>/js/workgroupApp.js'
 			},
 			// summaryApp module files
 			jsSummary: {
@@ -252,11 +252,11 @@ module.exports = function (grunt) {
 						// enable Angular's HTML5 mode
 						middlewares.unshift(modRewrite([
 							'^/admin.* /admin.html [L]',
-							'^/workgroups.* /workgroups.html [L]',
+							'^/workgroups.* /workgroup.html [L]',
 							'^/summary.* /summary.html [L]',
-							'^/courses.* /courses.html [L]',
-							'^/assignments.* /assignments.html [L]',
-							'^/teachingCalls.* /teachingCalls.html [L]',
+							'^/courses.* /course.html [L]',
+							'^/assignments.* /assignment.html [L]',
+							'^/teachingCalls.* /teachingCall.html [L]',
 							'^/scheduling.* /scheduling.html [L]',
 						]));
 
