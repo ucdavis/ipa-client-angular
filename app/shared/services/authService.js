@@ -1,4 +1,8 @@
 'use strict';
+
+/**
+ * URL for the IPA API server ("the backend")
+ */
 var serverRoot = 'http://localhost:8080'
 
 /**
@@ -14,7 +18,7 @@ angular.module('sharedApp')
 			validate: function (token) {
 				var deferred = $q.defer();
 
-				$http.post(serverRoot + '/auth/validate', { token: token }, { withCredentials: true }).then(function (response) {
+				$http.post(serverRoot + '/login', { token: token }, { withCredentials: true }).then(function (response) {
 					// Token may be null if we are redirecting
 					if (response.data != null && response.data.token !== null) {
 						var token = response.data.token;
@@ -22,7 +26,7 @@ angular.module('sharedApp')
 						localStorage.setItem('JWT', token);
 
 						deferred.resolve(response);
-					} else {
+					} else if(response.data != null && response.data.redirect != null && response.data.redirect.length > 0) {
 						// Received a request to redirect to CAS. Obey.
 						localStorage.removeItem('JWT');
 						$window.location.href = response.data.redirect + "?ref=" + document.URL;
