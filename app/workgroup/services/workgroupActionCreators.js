@@ -10,14 +10,16 @@
  */
 workgroupApp.service('workgroupActionCreators', function (workgroupStateService, workgroupService) {
 	return {
-		addTag: function (tag) {
-			var action = {
-				type: ADD_TAG,
-				payload: {
-					tag: tag
-				}
-			};
-			workgroupStateService.reduce(action);
+		addTag: function (workgroupCode, tag) {
+			workgroupService.addTag(workgroupCode, tag).then(function (newTag) {
+				var action = {
+					type: ADD_TAG,
+					payload: {
+						tag: newTag
+					}
+				};
+				workgroupStateService.reduce(action);
+			});
 		},
 		getInitialState: function (workgroupCode) {
 			workgroupService.getWorkgroupByCode(workgroupCode).then(function (payload) {

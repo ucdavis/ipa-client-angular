@@ -94,9 +94,6 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 					users.ids.splice(userIndex, 1);
 					delete users.list[action.payload.user.id];
 					return users;
-				case UPDATE_USER:
-					users.list[action.payload.user.id] = action.payload.user;
-					return users;
 				default:
 					return users;
 			}
@@ -123,9 +120,6 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 					var userRoleIndex = userRoles.ids.indexOf(action.payload.userRole.id);
 					userRoles.ids.splice(userRoleIndex, 1);
 					delete userRoles.list[action.payload.userRole.id];
-					return userRoles;
-				case UPDATE_USER_ROLE:
-					userRoles.list[action.payload.userRole.id] = action.payload.userRole;
 					return userRoles;
 				default:
 					return userRoles;

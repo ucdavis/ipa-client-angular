@@ -20,7 +20,7 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 			});
 
 			$scope.addTag = function () {
-				workgroupActionCreators.addTag({
+				workgroupActionCreators.addTag($scope.workgroupCode, {
 					id: 4,
 					name: "UCD Course"
 				});
