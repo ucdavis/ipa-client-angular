@@ -23,12 +23,38 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
-		addTag: function(workgroupCode, tag) {
+		addTag: function (workgroupCode, tag) {
 			var deferred = $q.defer();
 
 			$http.post(serverRoot + "/api/workgroupView/" + workgroupCode + "/tags", tag, { withCredentials: true })
 			.success(function(tag) {
 				deferred.resolve(tag);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		updateTag: function (workgroupCode, tag) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/workgroupView/" + workgroupCode + "/tags/" + tag.id, tag, { withCredentials: true })
+			.success(function(tag) {
+				deferred.resolve(tag);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		removeTag: function(workgroupCode, tag) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/workgroupView/" + workgroupCode + "/tags/" + tag.id, { withCredentials: true })
+			.success(function() {
+				deferred.resolve();
 			})
 			.error(function() {
 				deferred.reject();

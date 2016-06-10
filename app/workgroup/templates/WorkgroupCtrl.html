@@ -3,9 +3,16 @@
 <div class="main-content">
 	<ul>
 		<li ng-repeat="tagId in view.state.tags.ids">
-			{{ view.state.tags.list[tagId].name }}
+			<div ng-hide="view.state.tags.list[tagId].editable">{{ view.state.tags.list[tagId].name }}</div>
+			<div ng-show="view.state.tags.list[tagId].editable">
+				<input type="text" ng-model="view.state.tags.list[tagId].name">
+				<button class="btn btn-default" ng-click="updateTag(view.state.tags.list[tagId])">Save Tag</button>
+			</div>
+			<button ng-hide="view.state.tags.list[tagId].editable" class="btn btn-default" ng-click="removeTag(tagId)">Delete Tag</button>
+			<button ng-hide="view.state.tags.list[tagId].editable" class="btn btn-default" ng-click="view.state.tags.list[tagId].editable = true">Edit Tag</button>
 		</li>
 	</ul>
+	<input type="text" ng-model="view.state.tags.newTag.name">
 	<button class="btn btn-default" ng-click="addTag()">Add Tag</button>
 
 </div>

@@ -28,6 +28,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 				case ADD_TAG:
 					tags.list[action.payload.tag.id] = action.payload.tag;
 					tags.ids.push(action.payload.tag.id);
+					tags.newTag = {};
 					return tags;
 				case REMOVE_TAG:
 					var tagIndex = tags.ids.indexOf(action.payload.tag.id);
@@ -153,7 +154,8 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 			if (action.type == INIT_WORKGROUP) {
 				scope._state.tags = {
 					ids: [],
-					list: action.payload.tags
+					list: action.payload.tags,
+					newTag: {}
 				};
 				scope._state.locations = {
 					ids: [],

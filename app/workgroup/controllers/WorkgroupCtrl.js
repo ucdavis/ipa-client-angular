@@ -11,22 +11,25 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 		this.WorkgroupCtrl = function ($scope, $rootScope, $routeParams, workgroupActionCreators) {
 			$scope.workgroupCode = $routeParams.workgroupCode;
 			$scope.year = $routeParams.year;
-
 			$scope.view = {};
-			console.log('Workgroup Controller says hi');
 
 			$rootScope.$on('workgroupStateChanged', function (event, data) {
 				$scope.view.state = data;
 			});
 
 			$scope.addTag = function () {
-				workgroupActionCreators.addTag($scope.workgroupCode, {
-					id: 4,
-					name: "UCD Course"
-				});
-			}
+				workgroupActionCreators.addTag($scope.workgroupCode, $scope.view.state.tags.newTag);
+			};
 
-}]);
+			$scope.removeTag = function (tagId) {
+				workgroupActionCreators.removeTag($scope.workgroupCode, {id: tagId});
+			};
+
+			$scope.updateTag = function (tag) {
+				workgroupActionCreators.updateTag($scope.workgroupCode, tag);
+			};
+
+	}]);
 
 WorkgroupCtrl.getPayload = function (authService,workgroupActionCreators, $route) {
 	authService.validate(localStorage.getItem('JWT')).then(function () {
