@@ -52,5 +52,38 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				workgroupStateService.reduce(action);
 			});
 		},
+		addLocation: function (workgroupCode, location) {
+			workgroupService.addLocation(workgroupCode, location).then(function (newLocation) {
+				var action = {
+					type: ADD_LOCATION,
+					payload: {
+						location: newLocation
+					}
+				};
+				workgroupStateService.reduce(action);
+			});
+		},
+		updateLocation: function (workgroupCode, location) {
+			workgroupService.updateLocation(workgroupCode, location).then(function (newLocation) {
+				var action = {
+					type: UPDATE_LOCATION,
+					payload: {
+						location: newLocation
+					}
+				};
+				workgroupStateService.reduce(action);
+			});
+		},
+		removeLocation: function (workgroupCode, location) {
+			workgroupService.removeLocation(workgroupCode, location).then(function (newLocation) {
+				var action = {
+					type: REMOVE_LOCATION,
+					payload: {
+						location: location
+					}
+				};
+				workgroupStateService.reduce(action);
+			});
+		},
 	}
 });

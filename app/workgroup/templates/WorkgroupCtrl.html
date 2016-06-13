@@ -3,6 +3,7 @@
 
 <div class="main-content">
 	<uib-tabset active="activeJustified" justified="false">
+
 		<uib-tab index="0" heading="Tags">
 			<div class="tags-view" ng-controller="TagCtrl">
 				<ul>
@@ -20,8 +21,28 @@
 				<button class="btn btn-default" ng-click="addTag()">Add Tag</button>
 			</div>
 		</uib-tab>
-		<uib-tab index="1" heading="Locations">Locations</uib-tab>
-		<uib-tab index="2" heading="People & Roles">People</uib-tab>
+
+		<uib-tab index="1" heading="Locations">
+			<div class="locations-view" ng-controller="LocationCtrl">
+				<ul>
+					<li ng-repeat="locationId in view.state.locations.ids">
+						<div ng-hide="view.state.locations.list[locationId].editable">{{ view.state.locations.list[locationId].description }}</div>
+						<div ng-show="view.state.locations.list[locationId].editable">
+							<input type="text" ng-model="view.state.locations.list[locationId].description">
+							<button class="btn btn-default" ng-click="updateLocation(view.state.locations.list[locationId])">Save Location</button>
+						</div>
+						<button ng-hide="view.state.locations.list[locationId].editable" class="btn btn-default" ng-click="removeLocation(locationId)">Remove Location</button>
+						<button ng-hide="view.state.locations.list[locationId].editable" class="btn btn-default" ng-click="view.state.locations.list[locationId].editable = true">Edit Location</button>
+					</li>
+				</ul>
+				<input type="text" ng-model="view.state.locations.newLocation.description">
+				<button class="btn btn-default" ng-click="addLocation()">Add Location</button>
+			</div>
+		</uib-tab>
+
+		<uib-tab index="2" heading="People & Roles">
+			TODO: People go here
+		</uib-tab>
 	</uib-tabset>
 
 </div>

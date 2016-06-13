@@ -61,6 +61,45 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 			});
 
 			return deferred.promise;
+		},
+		addLocation: function (workgroupCode, location) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/workgroupView/" + workgroupCode + "/locations", location, { withCredentials: true })
+			.success(function(location) {
+				deferred.resolve(location);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		updateLocation: function (workgroupCode, location) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/workgroupView/" + workgroupCode + "/locations/" + location.id, location, { withCredentials: true })
+			.success(function(location) {
+				deferred.resolve(location);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		removeLocation: function(workgroupCode, location) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/workgroupView/" + workgroupCode + "/locations/" + location.id, { withCredentials: true })
+			.success(function() {
+				deferred.resolve();
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });

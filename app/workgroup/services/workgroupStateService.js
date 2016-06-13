@@ -20,8 +20,10 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 					var length = tags.list ? tags.list.length : 0;
 					for (var i = 0; i < length; i++) {
 						var tag = tags.list[i];
-						tagsList[tag.id] = tag;
-						tags.ids.push(tag.id);
+						if (tag.archived == false) {
+							tagsList[tag.id] = tag;
+							tags.ids.push(tag.id);
+						}
 					}
 					tags.list = tagsList;
 					return tags;
@@ -51,8 +53,11 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 					var length = locations.list ? locations.list.length : 0;
 					for (var i = 0; i < length; i++) {
 						var location = locations.list[i];
-						locationsList[location.id] = location;
-						locations.ids.push(location.id);
+
+						if (location.archived == false) {
+							locationsList[location.id] = location;
+							locations.ids.push(location.id);
+						}
 					}
 					locations.list = locationsList;
 					return locations;
@@ -159,7 +164,8 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 				};
 				scope._state.locations = {
 					ids: [],
-					list: action.payload.locations
+					list: action.payload.locations,
+					newLocation: {}
 				};
 				scope._state.users = {
 					ids: [],
