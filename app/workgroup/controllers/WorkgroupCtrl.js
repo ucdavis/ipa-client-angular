@@ -16,19 +16,6 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 			$rootScope.$on('workgroupStateChanged', function (event, data) {
 				$scope.view.state = data;
 			});
-
-			$scope.addTag = function () {
-				workgroupActionCreators.addTag($scope.workgroupCode, $scope.view.state.tags.newTag);
-			};
-
-			$scope.removeTag = function (tagId) {
-				workgroupActionCreators.removeTag($scope.workgroupCode, {id: tagId});
-			};
-
-			$scope.updateTag = function (tag) {
-				workgroupActionCreators.updateTag($scope.workgroupCode, tag);
-			};
-
 	}]);
 
 WorkgroupCtrl.getPayload = function (authService,workgroupActionCreators, $route) {

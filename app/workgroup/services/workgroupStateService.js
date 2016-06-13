@@ -180,7 +180,6 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 			scope._state.users = scope._userReducers(action, scope._state.users);
 			scope._state.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
 			scope._state.roles = scope._roleReducers(action, scope._state.roles);
-			console.log(scope._state);
 
 			$rootScope.$emit('workgroupStateChanged',scope._state);
 		}
