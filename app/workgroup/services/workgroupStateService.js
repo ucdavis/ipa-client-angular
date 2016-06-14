@@ -16,10 +16,14 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 
 			switch (action.type) {
 				case INIT_WORKGROUP:
+					tags = {
+						newTag: {},
+						ids: []
+					};
 					var tagsList = {};
-					var length = tags.list ? tags.list.length : 0;
+					var length = action.payload.tags ? action.payload.tags.length : 0;
 					for (var i = 0; i < length; i++) {
-						var tag = tags.list[i];
+						var tag = action.payload.tags[i];
 						if (tag.archived == false) {
 							tagsList[tag.id] = tag;
 							tags.ids.push(tag.id);
@@ -49,10 +53,15 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 
 			switch (action.type) {
 				case INIT_WORKGROUP:
+					locations = {
+						newLocation: {},
+						ids: []
+					};					
 					var locationsList = {};
-					var length = locations.list ? locations.list.length : 0;
+					var length = action.payload.locations ? action.payload.locations.length : 0;
+
 					for (var i = 0; i < length; i++) {
-						var location = locations.list[i];
+						var location = action.payload.locations[i];
 
 						if (location.archived == false) {
 							locationsList[location.id] = location;
@@ -82,10 +91,14 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 
 			switch (action.type) {
 				case INIT_WORKGROUP:
+					users = {
+						newUser: {},
+						ids: []
+					};
 					var usersList = {};
-					var length = users.list ? users.list.length : 0;
+					var length = action.payload.users ? action.payload.users.length : 0;
 					for (var i = 0; i < length; i++) {
-						var user = users.list[i];
+						var user = action.payload.users[i];
 						usersList[user.id] = user;
 						users.ids.push(user.id);
 					}
@@ -109,10 +122,14 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 
 			switch (action.type) {
 				case INIT_WORKGROUP:
+					userRoles = {
+						ids: []
+					};
 					var userRolesList = {};
-					var length = userRoles.list ? userRoles.list.length : 0;
+
+					var length = action.payload.userRoles ? action.payload.userRoles.length : 0;
 					for (var i = 0; i < length; i++) {
-						var userRole = userRoles.list[i];
+						var userRole = action.payload.userRoles[i];
 						userRolesList[userRole.id] = userRole;
 						userRoles.ids.push(userRole.id);
 					}
@@ -136,10 +153,13 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 
 			switch (action.type) {
 				case INIT_WORKGROUP:
+					roles = {
+						ids: []
+					};
 					var rolesList = {};
-					var length = roles.list ? roles.list.length : 0;
+					var length = action.payload.roles ? action.payload.roles.length : 0;
 					for (var i = 0; i < length; i++) {
-						var role = roles.list[i];
+						var role = action.payload.roles[i];
 						rolesList[role.id] = role;
 						roles.ids.push(role.id);
 					}
@@ -156,38 +176,18 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 				return;
 			}
 
-			if (action.type == INIT_WORKGROUP) {
-				scope._state.tags = {
-					ids: [],
-					list: action.payload.tags,
-					newTag: {}
-				};
-				scope._state.locations = {
-					ids: [],
-					list: action.payload.locations,
-					newLocation: {}
-				};
-				scope._state.users = {
-					ids: [],
-					list: action.payload.users
-				};
-				scope._state.userRoles = {
-					ids: [],
-					list: action.payload.userRoles
-				};
-				scope._state.roles = {
-					ids: [],
-					list: action.payload.roles
-				};
-			}
+			newState = {};
+			newState.tags = scope._tagReducers(action, scope._state.tags);
+			newState.locations = scope._locationReducers(action, scope._state.locations);
+			newState.users = scope._userReducers(action, scope._state.users);
+			newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
+			newState.roles = scope._roleReducers(action, scope._state.roles);
 
-			scope._state.tags = scope._tagReducers(action, scope._state.tags);
-			scope._state.locations = scope._locationReducers(action, scope._state.locations);
-			scope._state.users = scope._userReducers(action, scope._state.users);
-			scope._state.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
-			scope._state.roles = scope._roleReducers(action, scope._state.roles);
-
+			scope._state = newState;
+			console.log(newState);
+			console.log('----');
 			$rootScope.$emit('workgroupStateChanged',scope._state);
+			console.log(scope._state);
 		}
 	}
 });
