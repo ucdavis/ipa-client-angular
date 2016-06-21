@@ -73,6 +73,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 				case ADD_LOCATION:
 					locations.list[action.payload.location.id] = action.payload.location;
 					locations.ids.push(action.payload.location.id);
+					locations.newLocation = {};
 					return locations;
 				case REMOVE_LOCATION:
 					var locationIndex = locations.ids.indexOf(action.payload.location.id);
@@ -195,6 +196,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 
 			scope._state = newState;
 			$rootScope.$emit('workgroupStateChanged',scope._state);
+			console.log(scope._state);
 		}
 	}
 });

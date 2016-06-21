@@ -26,50 +26,52 @@
 				</uib-tab>
 
 				<uib-tab index="1" heading="Locations">
-					<div class="locations-view" ng-controller="LocationCtrl">
-						<ul>
-							<li ng-repeat="locationId in view.state.locations.ids">
-								<div ng-hide="view.state.locations.list[locationId].editable">{{ view.state.locations.list[locationId].description }}</div>
-								<div ng-show="view.state.locations.list[locationId].editable">
-									<input type="text" ng-model="view.state.locations.list[locationId].description">
-									<button class="btn btn-default" ng-click="updateLocation(view.state.locations.list[locationId])">Save Location</button>
-								</div>
-								<button ng-hide="view.state.locations.list[locationId].editable" class="btn btn-default" ng-click="removeLocation(locationId)">Remove Location</button>
-								<button ng-hide="view.state.locations.list[locationId].editable" class="btn btn-default" ng-click="view.state.locations.list[locationId].editable = true">Edit Location</button>
-							</li>
-						</ul>
-						<input type="text" ng-model="view.state.locations.newLocation.description">
-						<button class="btn btn-default" ng-click="addLocation()">Add Location</button>
+					<div class="locations-section" ng-controller="LocationCtrl">
+						<h4>Customize Locations</h4>
+						<div class="row">
+							<div class="col-md-6">
+								<ul class="locations-input">
+									<li ng-repeat="locationId in view.state.locations.ids">
+										<input class="form-control" type="text" name="text"  size="30" ng-model="view.state.locations.list[locationId].description"
+											auto-input on-enter="updateLocation(view.state.locations.list[locationId])" help-text-placement="top">
+										<button type="button" class="btn btn-danger" ng-click="removeLocation(locationId)">Remove</button>
+									</li>
+									<li>      <!-- add button -->	
+										<input class="form-control" type="text" name="text"  size="30" placeholder="Add New Locations"
+											ng-model="view.state.locations.newLocation.description">
+										<button type="button" class="btn btn-success" ng-click="addLocation()">Add</button>
+									</li>
+								</ul>
+							</div>
+						</div>
 					</div>
 				</uib-tab>
 
 				<uib-tab index="2" heading="People &amp; Roles">
 					<div class="users-view" ng-controller="UserCtrl">
-
 						<div class="row">				<!-- this is search bar -->
-							<div class="col-md-3 pull-right">
-								<div class="search-input">
-									<i class="entypo-search search-icon"></i>
+							<div class="col-md-4 pull-right">
+								<div class="input-group search-input">
 									<input type="text" ng-model="view.state.users.searchQuery"
 										ng-change="searchUsers()"
 										placeholder="Search by name or login ID"
 										class="form-control"
-										uib-typeahead="user.name for user in view.state.users.userSearchResults"
+										uib-typeahead="user.name for user in view.state.users.userSearchResults | orderBy: 'lastName'"
 										typeahead-loading="loadingUsers"
 										typeahead-wait-ms="500"
 										typeahead-min-length="3"
 										typeahead-on-select="prepareToAddUserToWorkgroup($item, $model, $label)" />
-										
-										<span class="input-group-btn">
-											<button ng-disabled="!view.state.users.newUser.name"
-												class="pull-left btn btn-primary" 
-												ng-click="addUserToWorkgroup()">
-												Add Person
-										</span>
-								</div>
-							</div>
+									<i class="entypo-search search-icon"></i>
+									<span class="input-group-btn">
+										<button ng-disabled="!view.state.users.newUser.name"
+											class="pull-left btn btn-primary" 
+											ng-click="addUserToWorkgroup()">
+											Add Person
+										</button>
+									</span>
+								</div><!-- /input-group -->
+							</div><!-- /.col-lg-6 -->
 						</div>
-
 						<!--   Table  -->
 						<div class="row">
 							<div class="col-md-12">
@@ -87,7 +89,7 @@
 												<th class="table-name-padding">Name</th>
 												<th class="table-email-padding">Email</th>
 												<th class="role-title" ng-repeat="roleId in view.state.roles.ids track by $index">
-													{{ view.state.roles.list[roleId].name }}
+													{{ getDisplayName(view.state.roles.list[roleId].name) }}
 												</th>
 												<th></th>
 											</tr>
@@ -118,7 +120,7 @@
 								</div>
 							</div>
 						</div>
-
+					</div>
 					</div>
 
 				</uib-tab>

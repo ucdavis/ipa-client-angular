@@ -89,7 +89,6 @@ sharedApp.directive("autoInput", this.autoInput = function($rootScope) {
 					element.tooltip({
 						title: 'Enter to save',
 						placement: scope.helpTextPlacement || 'right',
-						container: 'body',
 						trigger: 'manual'
 					});
 					element.tooltip('show');

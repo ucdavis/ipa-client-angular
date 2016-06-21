@@ -14,6 +14,7 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', 'wo
 			$scope.toggleUserRole = function (userId, roleId) {
 				var user = $scope.view.state.users.list[userId];
 				var role = $scope.view.state.roles.list[roleId];
+
 				if ($scope.userHasRole(userId, role)) {
 					var userRoleNames = user.userRoles.map(function (userRole) { return userRole.role; });
 					var userRoleIndex = userRoleNames.indexOf(role.name);
@@ -59,4 +60,12 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', 'wo
 				var user = $scope.view.state.users.list[userId];
 				workgroupActionCreators.removeUserFromWorkgroup($scope.workgroupCode, user);
 			};
+			
+			$scope.getDisplayName = function(displayName) {
+				if (typeof displayName !== 'string') return "";
+
+				var lowercase = displayName.replace( /([A-Z])/g, " $1" );
+				return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);
+			}
+
 	}]);
