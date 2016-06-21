@@ -56,7 +56,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 					locations = {
 						newLocation: {},
 						ids: []
-					};					
+					};
 					var locationsList = {};
 					var length = action.payload.locations ? action.payload.locations.length : 0;
 
@@ -156,12 +156,15 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 					roles = {
 						ids: []
 					};
+					var _hiddenRoles = ['admin', 'registrar'];
 					var rolesList = {};
 					var length = action.payload.roles ? action.payload.roles.length : 0;
 					for (var i = 0; i < length; i++) {
 						var role = action.payload.roles[i];
-						rolesList[role.id] = role;
-						roles.ids.push(role.id);
+						if (_hiddenRoles.indexOf(role.name) < 0) {
+							rolesList[role.id] = role;
+							roles.ids.push(role.id);
+						}
 					}
 					roles.list = rolesList;
 					return roles;

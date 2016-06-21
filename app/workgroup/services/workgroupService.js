@@ -100,6 +100,32 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 			});
 
 			return deferred.promise;
+		},
+		addRoleToUser: function (workgroupCode, user, role) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupCode + "/roles/" + role.name, null, { withCredentials: true })
+			.success(function(userRole) {
+				deferred.resolve(userRole);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		removeRoleFromUser: function (workgroupCode, user, role) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupCode + "/roles/" + role.name, { withCredentials: true })
+			.success(function() {
+				deferred.resolve();
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });

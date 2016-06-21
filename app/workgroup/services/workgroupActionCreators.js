@@ -85,5 +85,27 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				workgroupStateService.reduce(action);
 			});
 		},
+		addRoleToUser: function (workgroupCode, user, role) {
+			workgroupService.addRoleToUser(workgroupCode, user, role).then(function (userRole) {
+				var action = {
+					type: ADD_USER_ROLE,
+					payload: {
+						userRole: userRole
+					}
+				};
+				workgroupStateService.reduce(action);
+			});
+		},
+		removeRoleFromUser: function (workgroupCode, user, role, userRoleToBeDeleted) {
+			workgroupService.removeRoleFromUser(workgroupCode, user, role).then(function (userRole) {
+				var action = {
+					type: REMOVE_USER_ROLE,
+					payload: {
+						userRole: userRoleToBeDeleted
+					}
+				};
+				workgroupStateService.reduce(action);
+			});
+		}
 	}
 });

@@ -2,47 +2,103 @@
 
 
 <div class="main-content">
-	<uib-tabset active="activeJustified" justified="false">
+	<div class="panel minimal minimal-gray">
+	<!-- 	nav tab  -->
+		<div class="panel-heading">
+			<uib-tabset active="activeJustified" justified="false" class="panel-options pull-left nav-tabs">
 
-		<uib-tab index="0" heading="Tags">
-			<div class="tags-view" ng-controller="TagCtrl">
-				<ul>
-					<li ng-repeat="tagId in view.state.tags.ids">
-						<div ng-hide="view.state.tags.list[tagId].editable">{{ view.state.tags.list[tagId].name }}</div>
-						<div ng-show="view.state.tags.list[tagId].editable">
-							<input type="text" ng-model="view.state.tags.list[tagId].name">
-							<button class="btn btn-default" ng-click="updateTag(view.state.tags.list[tagId])">Save Tag</button>
+				<uib-tab index="0" heading="Tags">
+					<div class="tags-view" ng-controller="TagCtrl">
+						<ul>
+							<li ng-repeat="tagId in view.state.tags.ids">
+								<div ng-hide="view.state.tags.list[tagId].editable">{{ view.state.tags.list[tagId].name }}</div>
+								<div ng-show="view.state.tags.list[tagId].editable">
+									<input type="text" ng-model="view.state.tags.list[tagId].name">
+									<button class="btn btn-default" ng-click="updateTag(view.state.tags.list[tagId])">Save Tag</button>
+								</div>
+								<button ng-hide="view.state.tags.list[tagId].editable" class="btn btn-default" ng-click="removeTag(tagId)">Delete Tag</button>
+								<button ng-hide="view.state.tags.list[tagId].editable" class="btn btn-default" ng-click="view.state.tags.list[tagId].editable = true">Edit Tag</button>
+							</li>
+						</ul>
+						<input type="text" ng-model="view.state.tags.newTag.name">
+						<button class="btn btn-default" ng-click="addTag()">Add Tag</button>
+					</div>
+				</uib-tab>
+
+				<uib-tab index="1" heading="Locations">
+					<div class="locations-view" ng-controller="LocationCtrl">
+						<ul>
+							<li ng-repeat="locationId in view.state.locations.ids">
+								<div ng-hide="view.state.locations.list[locationId].editable">{{ view.state.locations.list[locationId].description }}</div>
+								<div ng-show="view.state.locations.list[locationId].editable">
+									<input type="text" ng-model="view.state.locations.list[locationId].description">
+									<button class="btn btn-default" ng-click="updateLocation(view.state.locations.list[locationId])">Save Location</button>
+								</div>
+								<button ng-hide="view.state.locations.list[locationId].editable" class="btn btn-default" ng-click="removeLocation(locationId)">Remove Location</button>
+								<button ng-hide="view.state.locations.list[locationId].editable" class="btn btn-default" ng-click="view.state.locations.list[locationId].editable = true">Edit Location</button>
+							</li>
+						</ul>
+						<input type="text" ng-model="view.state.locations.newLocation.description">
+						<button class="btn btn-default" ng-click="addLocation()">Add Location</button>
+					</div>
+				</uib-tab>
+
+				<uib-tab index="2" heading="People & Roles">
+					<div class="users-view" ng-controller="UserCtrl">
+
+						<div class="row">				<!-- this is search bar -->
+							<div class="col-md-3 pull-right">
+								<div class="search-input">
+									<i class="fa fa-search search-icon"></i>
+									<input class="form-control" placeholder="Search by name or login ID" type="text">
+								</div>
+							</div>
 						</div>
-						<button ng-hide="view.state.tags.list[tagId].editable" class="btn btn-default" ng-click="removeTag(tagId)">Delete Tag</button>
-						<button ng-hide="view.state.tags.list[tagId].editable" class="btn btn-default" ng-click="view.state.tags.list[tagId].editable = true">Edit Tag</button>
-					</li>
-				</ul>
-				<input type="text" ng-model="view.state.tags.newTag.name">
-				<button class="btn btn-default" ng-click="addTag()">Add Tag</button>
-			</div>
-		</uib-tab>
 
-		<uib-tab index="1" heading="Locations">
-			<div class="locations-view" ng-controller="LocationCtrl">
-				<ul>
-					<li ng-repeat="locationId in view.state.locations.ids">
-						<div ng-hide="view.state.locations.list[locationId].editable">{{ view.state.locations.list[locationId].description }}</div>
-						<div ng-show="view.state.locations.list[locationId].editable">
-							<input type="text" ng-model="view.state.locations.list[locationId].description">
-							<button class="btn btn-default" ng-click="updateLocation(view.state.locations.list[locationId])">Save Location</button>
+						<!--   Table  -->
+						<div class="row">
+							<div class="col-md-12">
+								<div class="role-section">
+									<table class="table table-hover">
+										<colgroup>
+											<col span="1" style="width: 20%;">
+											<col span="1" style="width: 20%;">
+											<col ng-repeat="roleId in view.state.roles.ids track by $index"
+												span="1" ng-style="{ 'width' : 60 / (view.state.roles.ids.length) + '%' }">
+										</colgroup>
+										<thead>							<!-- title for name, email, and checkboxes-->
+											<tr>
+												<th class="table-name-padding">Name</th>
+												<th class="table-email-padding">Email</th>
+												<th class="role-title" ng-repeat="roleId in view.state.roles.ids track by $index">
+													{{ view.state.roles.list[roleId].name }}
+												</th>
+											</tr>
+										</thead>
+										<tbody>  						<!-- people lists-->
+											<tr ng-repeat="userId in view.state.users.ids track by $index">
+												<td>
+													{{ view.state.users.list[userId].name }}
+												</td>
+												<td>
+													{{ view.state.users.list[userId].email }}
+												</td>
+												<td class="role-selector" ng-repeat="roleId in view.state.roles.ids track by $index">
+													<input type="checkbox" ng-checked="userHasRole(userId, view.state.roles.list[roleId])"
+														ng-click="toggleUserRole(userId, roleId)">
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
-						<button ng-hide="view.state.locations.list[locationId].editable" class="btn btn-default" ng-click="removeLocation(locationId)">Remove Location</button>
-						<button ng-hide="view.state.locations.list[locationId].editable" class="btn btn-default" ng-click="view.state.locations.list[locationId].editable = true">Edit Location</button>
-					</li>
-				</ul>
-				<input type="text" ng-model="view.state.locations.newLocation.description">
-				<button class="btn btn-default" ng-click="addLocation()">Add Location</button>
-			</div>
-		</uib-tab>
 
-		<uib-tab index="2" heading="People & Roles">
-			TODO: People go here
-		</uib-tab>
-	</uib-tabset>
+					</div>
 
+				</uib-tab>
+			</uib-tabset>
+
+		</div>
+	</div>
 </div>

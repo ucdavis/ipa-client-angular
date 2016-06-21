@@ -1,0 +1,108 @@
+table th {
+	font-weight: bold;
+}
+
+.search-input i {
+	position: absolute;
+	left: 25px;
+	bottom: 10px;
+}
+
+.search-input input {
+	text-indent: 20px;
+}
+
+.role-section tr .role-title {
+	text-align: center;
+}
+
+.role-section tr th {
+	border-top: none !important;
+}
+
+.role-section tr:hover {
+	background: none !important;
+}
+
+.role-section tbody tr td {
+	color: black;
+	padding-top: 25px;
+	border-bottom: 1px solid #ebebeb;
+}
+
+.role-section tbody tr th {
+	padding-top: 25px;
+	border-bottom: 1px solid #ebebeb;
+}
+
+.table-hover {
+	margin-top: 50px;
+}
+
+.table-name-padding {
+	padding-right: 50px;
+	padding-top: 25px;
+}
+
+.table-email-padding {
+	padding-right: 50px;
+	padding-top: 25px;
+}
+
+.role-selector {
+	text-align: center;
+}
+
+.tags-section {
+	margin-top: 20px;
+}
+
+.tags-input {
+	padding-left: 0px;
+}
+
+.tags-input li {
+	margin-top: 20px;
+	list-style-type: none;
+}
+
+.tags-input li input {
+	border: 1px solid #D5D5D5;
+	width: inherit;
+	display: inline-block !important;
+}
+
+.tags-input li .btn {
+	margin-left: 20px;
+}
+
+.locations-section {
+	margin-top: 20px;
+}
+
+.locations-input {
+	padding-left: 0px;
+}
+
+.locations-input li {
+	margin-top: 20px;
+	list-style-type: none;
+}
+
+.locations-input li input {
+	border: 1px solid #D5D5D5;
+	width: inherit;
+	display: inline-block !important;
+}
+
+.locations-input li .btn {
+	margin-left: 20px;
+}
+
+.nav-tabs {
+	width: 100%;
+}
+
+.tab-content {
+	padding: 1em;
+}
