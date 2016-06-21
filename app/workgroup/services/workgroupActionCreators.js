@@ -86,6 +86,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 			});
 		},
 		addRoleToUser: function (workgroupCode, user, role) {
+			debugger;
 			workgroupService.addRoleToUser(workgroupCode, user, role).then(function (userRole) {
 				var action = {
 					type: ADD_USER_ROLE,
@@ -106,6 +107,33 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				};
 				workgroupStateService.reduce(action);
 			});
-		}
+		},
+		searchUsers: function (workgroupCode, query) {
+			workgroupService.searchUsers(workgroupCode, query).then(function (userSearchResults) {
+				var action = {
+					type: SEARCH_USERS,
+					payload: {
+						userSearchResults: userSearchResults
+					}
+				};
+				workgroupStateService.reduce(action);
+			});
+		},
+		createUser: function (workgroupCode, dwUser) {
+			var scope = this;
+			var role = {name: "senateInstructor"};
+
+			workgroupService.createUser(dwUser).then(function (newUser) {
+				var action = {
+					type: ADD_USER,
+					payload: {
+						user: newUser
+					}
+				};
+				workgroupStateService.reduce(action);
+				scope.addRoleToUser(workgroupCode, newUser, role);
+			});
+		},
+
 	}
 });

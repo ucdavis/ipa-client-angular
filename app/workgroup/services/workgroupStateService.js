@@ -93,7 +93,9 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 				case INIT_WORKGROUP:
 					users = {
 						newUser: {},
-						ids: []
+						ids: [],
+						searchQuery: "",
+						userSearchResults: []
 					};
 					var usersList = {};
 					var length = action.payload.users ? action.payload.users.length : 0;
@@ -112,6 +114,9 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 					var userIndex = users.ids.indexOf(action.payload.user.id);
 					users.ids.splice(userIndex, 1);
 					delete users.list[action.payload.user.id];
+					return users;
+				case SEARCH_USERS:
+					users.userSearchResults = action.payload.userSearchResults;
 					return users;
 				default:
 					return users;
@@ -187,10 +192,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 			newState.roles = scope._roleReducers(action, scope._state.roles);
 
 			scope._state = newState;
-			console.log(newState);
-			console.log('----');
 			$rootScope.$emit('workgroupStateChanged',scope._state);
-			console.log(scope._state);
 		}
 	}
 });

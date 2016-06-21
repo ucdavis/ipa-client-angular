@@ -43,14 +43,29 @@
 					</div>
 				</uib-tab>
 
-				<uib-tab index="2" heading="People & Roles">
+				<uib-tab index="2" heading="People &amp; Roles">
 					<div class="users-view" ng-controller="UserCtrl">
 
 						<div class="row">				<!-- this is search bar -->
 							<div class="col-md-3 pull-right">
 								<div class="search-input">
-									<i class="fa fa-search search-icon"></i>
-									<input class="form-control" placeholder="Search by name or login ID" type="text">
+									<i class="entypo-search search-icon"></i>
+									<input type="text" ng-model="view.state.users.searchQuery"
+										ng-change="searchUsers()"
+										placeholder="Search by name or login ID"
+										class="form-control"
+										uib-typeahead="user.name for user in view.state.users.userSearchResults"
+										typeahead-loading="loadingUsers"
+										typeahead-wait-ms="500"
+										typeahead-min-length="3"
+										typeahead-on-select="prepareToAddUserToWorkgroup($item, $model, $label)" />
+										
+										<span class="input-group-btn">
+											<button ng-disabled="!view.state.users.newUser.name"
+												class="pull-left btn btn-primary" 
+												ng-click="addUserToWorkgroup()">
+												Add Person
+										</span>
 								</div>
 							</div>
 						</div>

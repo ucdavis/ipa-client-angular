@@ -126,6 +126,32 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 			});
 
 			return deferred.promise;
+		},
+		searchUsers: function(workgroupCode, query) {
+			var deferred = $q.defer();
+
+			$http.get(serverRoot + "/api/workgroupView/workgroups/" + workgroupCode + "/userSearch?query=" + query, { withCredentials: true })
+			.success(function(result) {
+				deferred.resolve(result);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		createUser: function (user) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/workgroupView/users", user, { withCredentials: true })
+			.success(function(newUser) {
+				deferred.resolve(newUser);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });

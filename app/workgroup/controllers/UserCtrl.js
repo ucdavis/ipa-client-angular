@@ -9,6 +9,7 @@
  */
 workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', 'workgroupActionCreators',
 		this.TagCtrl = function ($scope, $rootScope, $routeParams, workgroupActionCreators) {
+			$scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana'];
 
 			$scope.toggleUserRole = function (userId, roleId) {
 				var user = $scope.view.state.users.list[userId];
@@ -36,5 +37,20 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', 'wo
 				var userRoleNames = user.userRoles.map(function (userRole) { return userRole.role; });
 				var result = userRoleNames.indexOf(role.name) > -1;
 				return result;
+			};
+
+			$scope.prepareToAddUserToWorkgroup = function (item, model, label) {
+				$scope.view.state.users.newUser = item;
+			};
+
+			$scope.searchUsers = function() {
+				$scope.view.state.users.newUser = {};
+
+				if ($scope.view.state.users.searchQuery.length > 2) {
+					workgroupActionCreators.searchUsers($scope.workgroupCode, $scope.view.state.users.searchQuery);
+				}
+			};
+			$scope.addUserToWorkgroup = function() {
+				workgroupActionCreators.createUser($scope.workgroupCode, $scope.view.state.users.newUser);
 			}
 	}]);
