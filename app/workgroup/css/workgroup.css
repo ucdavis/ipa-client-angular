@@ -26,7 +26,8 @@ table th {
 
 .role-section tbody tr td {
 	color: black;
-	padding-top: 25px;
+	padding-top: 12px;
+	padding-bottom: 12px;
 	border-bottom: 1px solid #ebebeb;
 }
 
@@ -105,4 +106,12 @@ table th {
 
 .tab-content {
 	padding: 1em;
+}
+
+.user-list-item:hover .hover-ui {
+	visibility: visible;
+}
+
+.hover-ui {
+	visibility: hidden;
 }

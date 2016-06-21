@@ -109,6 +109,8 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 				case ADD_USER:
 					users.list[action.payload.user.id] = action.payload.user;
 					users.ids.push(action.payload.user.id);
+					users.newUser = {};
+					users.searchQuery = "";
 					return users;
 				case REMOVE_USER:
 					var userIndex = users.ids.indexOf(action.payload.user.id);

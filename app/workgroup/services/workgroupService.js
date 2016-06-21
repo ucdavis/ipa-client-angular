@@ -152,6 +152,19 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 			});
 
 			return deferred.promise;
+		},
+		removeUserFromWorkgroup: function (workgroupCode, user) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/workgroupView/workgroups/" + workgroupCode + "/users/" + user.loginId, { withCredentials: true })
+			.success(function() {
+				deferred.resolve();
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });

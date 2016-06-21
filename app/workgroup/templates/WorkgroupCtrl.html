@@ -79,7 +79,8 @@
 											<col span="1" style="width: 20%;">
 											<col span="1" style="width: 20%;">
 											<col ng-repeat="roleId in view.state.roles.ids track by $index"
-												span="1" ng-style="{ 'width' : 60 / (view.state.roles.ids.length) + '%' }">
+												span="1" ng-style="{ 'width' : 55 / (view.state.roles.ids.length) + '%' }">
+												<col span="1" style="width: 5%;">
 										</colgroup>
 										<thead>							<!-- title for name, email, and checkboxes-->
 											<tr>
@@ -88,10 +89,11 @@
 												<th class="role-title" ng-repeat="roleId in view.state.roles.ids track by $index">
 													{{ view.state.roles.list[roleId].name }}
 												</th>
+												<th></th>
 											</tr>
 										</thead>
 										<tbody>  						<!-- people lists-->
-											<tr ng-repeat="userId in view.state.users.ids track by $index">
+											<tr class="user-list-item" ng-repeat="userId in view.state.users.ids track by $index">
 												<td>
 													{{ view.state.users.list[userId].name }}
 												</td>
@@ -101,6 +103,14 @@
 												<td class="role-selector" ng-repeat="roleId in view.state.roles.ids track by $index">
 													<input type="checkbox" ng-checked="userHasRole(userId, view.state.roles.list[roleId])"
 														ng-click="toggleUserRole(userId, roleId)">
+												</td>
+												<td class="hover-ui">
+													<span confirm-button="removeUserFromWorkgroup(userId)"
+														message="Are you sure you want to remove this person"
+														yes="Remove" no="Cancel" placement="left"
+														class="entypo-minus-circled text-danger"
+														aria-hidden="true" style="width: 10%;" uib-tooltip="Remove"
+														tooltip-placement="top"></span>
 												</td>
 											</tr>
 										</tbody>

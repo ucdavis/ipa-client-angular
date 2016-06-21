@@ -50,7 +50,13 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', 'wo
 					workgroupActionCreators.searchUsers($scope.workgroupCode, $scope.view.state.users.searchQuery);
 				}
 			};
+
 			$scope.addUserToWorkgroup = function() {
 				workgroupActionCreators.createUser($scope.workgroupCode, $scope.view.state.users.newUser);
-			}
+			};
+
+			$scope.removeUserFromWorkgroup = function(userId) {
+				var user = $scope.view.state.users.list[userId];
+				workgroupActionCreators.removeUserFromWorkgroup($scope.workgroupCode, user);
+			};
 	}]);

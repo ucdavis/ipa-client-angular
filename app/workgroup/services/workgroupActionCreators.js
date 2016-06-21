@@ -86,7 +86,6 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 			});
 		},
 		addRoleToUser: function (workgroupCode, user, role) {
-			debugger;
 			workgroupService.addRoleToUser(workgroupCode, user, role).then(function (userRole) {
 				var action = {
 					type: ADD_USER_ROLE,
@@ -134,6 +133,16 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				scope.addRoleToUser(workgroupCode, newUser, role);
 			});
 		},
-
+		removeUserFromWorkgroup: function (workgroupCode, user) {
+			workgroupService.removeUserFromWorkgroup(workgroupCode, user).then(function () {
+				var action = {
+					type: REMOVE_USER,
+					payload: {
+						user: user
+					}
+				};
+				workgroupStateService.reduce(action);
+			});
+		}
 	}
 });
