@@ -60,12 +60,5 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', 'wo
 				var user = $scope.view.state.users.list[userId];
 				workgroupActionCreators.removeUserFromWorkgroup($scope.workgroupCode, user);
 			};
-			
-			$scope.getDisplayName = function(displayName) {
-				if (typeof displayName !== 'string') return "";
-
-				var lowercase = displayName.replace( /([A-Z])/g, " $1" );
-				return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);
-			}
 
 	}]);

@@ -8,7 +8,7 @@
  * Service in the workgroupApp.
  * Central location for sharedState information.
  */
-workgroupApp.service('workgroupStateService', function ($rootScope) {
+workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, Location, User, UserRole) {
 	return {
 		_state: {},
 		_tagReducers: function (action, tags) {
@@ -23,10 +23,10 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 					var tagsList = {};
 					var length = action.payload.tags ? action.payload.tags.length : 0;
 					for (var i = 0; i < length; i++) {
-						var tag = action.payload.tags[i];
-						if (tag.archived == false) {
-							tagsList[tag.id] = tag;
-							tags.ids.push(tag.id);
+						var tagData = action.payload.tags[i];
+						if (tagData.archived == false) {
+							tagsList[tagData.id] = new Tag(tagData);
+							tags.ids.push(tagData.id);
 						}
 					}
 					tags.list = tagsList;
@@ -61,11 +61,11 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 					var length = action.payload.locations ? action.payload.locations.length : 0;
 
 					for (var i = 0; i < length; i++) {
-						var location = action.payload.locations[i];
+						var locationData = action.payload.locations[i];
 
-						if (location.archived == false) {
-							locationsList[location.id] = location;
-							locations.ids.push(location.id);
+						if (locationData.archived == false) {
+							locationsList[locationData.id] = new Location(locationData);
+							locations.ids.push(locationData.id);
 						}
 					}
 					locations.list = locationsList;
@@ -101,9 +101,9 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 					var usersList = {};
 					var length = action.payload.users ? action.payload.users.length : 0;
 					for (var i = 0; i < length; i++) {
-						var user = action.payload.users[i];
-						usersList[user.id] = user;
-						users.ids.push(user.id);
+						var userData = action.payload.users[i];
+						usersList[userData.id] = new User(userData);
+						users.ids.push(userData.id);
 					}
 					users.list = usersList;
 					return users;
@@ -137,9 +137,9 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 
 					var length = action.payload.userRoles ? action.payload.userRoles.length : 0;
 					for (var i = 0; i < length; i++) {
-						var userRole = action.payload.userRoles[i];
-						userRolesList[userRole.id] = userRole;
-						userRoles.ids.push(userRole.id);
+						var userRoleData = action.payload.userRoles[i];
+						userRolesList[userRoleData.id] = new UserRole(userRoleData);
+						userRoles.ids.push(userRoleData.id);
 					}
 					userRoles.list = userRolesList;
 					return userRoles;
@@ -168,10 +168,10 @@ workgroupApp.service('workgroupStateService', function ($rootScope) {
 					var rolesList = {};
 					var length = action.payload.roles ? action.payload.roles.length : 0;
 					for (var i = 0; i < length; i++) {
-						var role = action.payload.roles[i];
-						if (_hiddenRoles.indexOf(role.name) < 0) {
-							rolesList[role.id] = role;
-							roles.ids.push(role.id);
+						var roleData = action.payload.roles[i];
+						if (_hiddenRoles.indexOf(roleData.name) < 0) {
+							rolesList[roleData.id] = new Role(roleData);
+							roles.ids.push(roleData.id);
 						}
 					}
 					roles.list = rolesList;

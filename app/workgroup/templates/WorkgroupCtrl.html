@@ -24,7 +24,7 @@
 										</button>
 
 									</li>
-									<li>      <!-- add button -->	
+									<li>      <!-- add button -->
 										<input class="form-control" type="text" name="text"  size="30" placeholder="Add New Tag"
 											ng-model="view.state.tags.newTag.name">
 										<button type="button" class="btn btn-success" ng-click="addTag()">Add</button>
@@ -52,7 +52,7 @@
 										</button>
 
 									</li>
-									<li>      <!-- add button -->	
+									<li>      <!-- add button -->
 										<input class="form-control" type="text" name="text"  size="30" placeholder="Add New Location"
 											ng-model="view.state.locations.newLocation.description">
 										<button type="button" class="btn btn-success" ng-click="addLocation()">Add</button>
@@ -80,7 +80,7 @@
 									<i class="entypo-search search-icon"></i>
 									<span class="input-group-btn">
 										<button ng-disabled="!view.state.users.newUser.name"
-											class="pull-left btn btn-primary" 
+											class="pull-left btn btn-primary"
 											ng-click="addUserToWorkgroup()">
 											Add Person
 										</button>
@@ -105,7 +105,7 @@
 												<th class="table-name-padding">Name</th>
 												<th class="table-email-padding">Email</th>
 												<th class="role-title" ng-repeat="roleId in view.state.roles.ids track by $index">
-													{{ getDisplayName(view.state.roles.list[roleId].name) }}
+													{{ view.state.roles.list[roleId].getDisplayName() }}
 												</th>
 												<th></th>
 											</tr>
