@@ -8,36 +8,52 @@
 			<uib-tabset active="activeJustified" justified="false" class="panel-options pull-left nav-tabs">
 
 				<uib-tab index="0" heading="Tags">
-					<div class="tags-view" ng-controller="TagCtrl">
-						<ul>
-							<li ng-repeat="tagId in view.state.tags.ids">
-								<div ng-hide="view.state.tags.list[tagId].editable">{{ view.state.tags.list[tagId].name }}</div>
-								<div ng-show="view.state.tags.list[tagId].editable">
-									<input type="text" ng-model="view.state.tags.list[tagId].name">
-									<button class="btn btn-default" ng-click="updateTag(view.state.tags.list[tagId])">Save Tag</button>
-								</div>
-								<button ng-hide="view.state.tags.list[tagId].editable" class="btn btn-default" ng-click="removeTag(tagId)">Delete Tag</button>
-								<button ng-hide="view.state.tags.list[tagId].editable" class="btn btn-default" ng-click="view.state.tags.list[tagId].editable = true">Edit Tag</button>
-							</li>
-						</ul>
-						<input type="text" ng-model="view.state.tags.newTag.name">
-						<button class="btn btn-default" ng-click="addTag()">Add Tag</button>
+					<div class="tags-section" ng-controller="TagCtrl">
+						<div class="row">
+							<div class="col-md-6">
+								<ul class="tags-input">
+									<li ng-repeat="tagId in view.state.tags.ids">
+										<input class="form-control" type="text" name="text"  size="30" ng-model="view.state.tags.list[tagId].name"
+											auto-input on-enter="updateTag(view.state.tags.list[tagId])" help-text-placement="top">
+										<button type="button" class="btn btn-danger"
+											confirm-button="removeTag(tagId)"
+											message="Are you sure you want to remove this tag"
+											yes="Remove" no="Cancel" placement="right"
+											aria-hidden="true">
+											Remove
+										</button>
+
+									</li>
+									<li>      <!-- add button -->	
+										<input class="form-control" type="text" name="text"  size="30" placeholder="Add New Tag"
+											ng-model="view.state.tags.newTag.name">
+										<button type="button" class="btn btn-success" ng-click="addTag()">Add</button>
+									</li>
+								</ul>
+							</div>
+						</div>
 					</div>
 				</uib-tab>
 
 				<uib-tab index="1" heading="Locations">
 					<div class="locations-section" ng-controller="LocationCtrl">
-						<h4>Customize Locations</h4>
 						<div class="row">
 							<div class="col-md-6">
 								<ul class="locations-input">
 									<li ng-repeat="locationId in view.state.locations.ids">
 										<input class="form-control" type="text" name="text"  size="30" ng-model="view.state.locations.list[locationId].description"
 											auto-input on-enter="updateLocation(view.state.locations.list[locationId])" help-text-placement="top">
-										<button type="button" class="btn btn-danger" ng-click="removeLocation(locationId)">Remove</button>
+										<button type="button" class="btn btn-danger"
+											confirm-button="removeLocation(locationId)"
+											message="Are you sure you want to remove this location"
+											yes="Remove" no="Cancel" placement="right"
+											aria-hidden="true">
+											Remove
+										</button>
+
 									</li>
 									<li>      <!-- add button -->	
-										<input class="form-control" type="text" name="text"  size="30" placeholder="Add New Locations"
+										<input class="form-control" type="text" name="text"  size="30" placeholder="Add New Location"
 											ng-model="view.state.locations.newLocation.description">
 										<button type="button" class="btn btn-success" ng-click="addLocation()">Add</button>
 									</li>
