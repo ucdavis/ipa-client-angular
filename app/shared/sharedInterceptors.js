@@ -36,8 +36,18 @@ var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 	}
 };
 
+var tokenValidatorInterceptor = function ($q, $timeout, $rootScope) {
+	return {
+		responseError: function(rejection) {
+			debugger;
+			return $q.reject(rejection);
+		}
+	}
+};
 sharedApp
 	// Intercept Ajax traffic
 	.config(function($httpProvider) {
+		console.log("config block");
 		$httpProvider.interceptors.push(slowConnectionInterceptor);
+		$httpProvider.interceptors.push(tokenValidatorInterceptor);
 	});

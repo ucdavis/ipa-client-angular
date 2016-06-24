@@ -62,6 +62,7 @@ module.exports = function (grunt) {
 					'<%= folders.webapp.root %>/shared/entities/**/*.js',
 					'<%= folders.webapp.root %>/shared/sharedReducers.js',
 					'<%= folders.webapp.root %>/shared/sharedApp.js',
+					'<%= folders.webapp.root %>/shared/sharedInterceptors.js',
 					'<%= folders.webapp.root %>/shared/controllers/*.js',
 					'<%= folders.webapp.root %>/shared/directives/*.js',
 					'<%= folders.webapp.root %>/shared/filters/*.js',
