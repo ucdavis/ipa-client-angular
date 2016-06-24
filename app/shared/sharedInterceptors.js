@@ -39,10 +39,12 @@ var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 var tokenValidatorInterceptor = function ($q, $injector) {
 	return {
 		responseError: function(rejection) {
-			// Delete expired token and revalidate
-			localStorage.removeItem('JWT');
-			var authService = $injector.get('authService');
-			authService.validate();
+			if (rejection.status === 440) {
+				// Delete expired token and revalidate
+				localStorage.removeItem('JWT');
+				var authService = $injector.get('authService');
+				authService.validate();
+			}
 
 			return $q.reject(rejection);
 		}
