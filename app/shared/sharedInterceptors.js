@@ -36,14 +36,19 @@ var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 	}
 };
 
-var tokenValidatorInterceptor = function ($q, $timeout, $rootScope) {
+var tokenValidatorInterceptor = function ($q, $injector) {
 	return {
 		responseError: function(rejection) {
-			debugger;
+			// Delete expired token and revalidate
+			localStorage.removeItem('JWT');
+			var authService = $injector.get('authService');
+			authService.validate();
+
 			return $q.reject(rejection);
 		}
 	}
 };
+
 sharedApp
 	// Intercept Ajax traffic
 	.config(function($httpProvider) {
