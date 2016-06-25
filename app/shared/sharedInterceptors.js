@@ -36,14 +36,17 @@ var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 	}
 };
 
-var tokenValidatorInterceptor = function ($q, $injector) {
+var tokenValidatorInterceptor = function ($q, $injector, $rootScope) {
 	return {
 		responseError: function(rejection) {
 			if (rejection.status === 440) {
 				// Delete expired token and revalidate
 				localStorage.removeItem('JWT');
 				var authService = $injector.get('authService');
-				authService.validate();
+				authService.validate().then(function(){
+					// $rootScope.toast.message = "This is inconcieveable";
+					$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				});
 			}
 
 			return $q.reject(rejection);

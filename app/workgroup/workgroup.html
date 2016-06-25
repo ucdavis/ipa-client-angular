@@ -35,15 +35,19 @@
 
 </head>
 
-<body class="page-body" data-url="http://neon.dev" ng-app="workgroupApp">
+<body class="page-body" ng-app="workgroupApp" class="ng-cloak" ng-cloak>
 	<base href="/workgroups/">
 
 	<div class="page-container sidebar-collapsed" ng-view>
 		<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
-
-
 	</div>
 
+	<div id="toast-container" class="toast-top-right" ng-if="$root.toast.message.length > 0">
+		<div class="toast toast-error" style="display: block;">
+			<div class="toast-message" ng-bind="$root.toast.message">
+			</div>
+		</div>
+	</div>
 
 	<!-- Bottom scripts (common) -->
 	<script src="/js/lib.js"></script>

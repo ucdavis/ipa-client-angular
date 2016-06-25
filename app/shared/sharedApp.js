@@ -2,9 +2,7 @@ window.sharedApp = angular.module('sharedApp',
 	[
 		// 3rd party
 		'ui.bootstrap',
-		'ngNotify',
 		'ngIdle',
-		'ngRedux',
 		// IPA Entities
 		'courseOfferingGroup',
 		'sectionGroup',
@@ -31,8 +29,8 @@ window.sharedApp = angular.module('sharedApp',
 
 sharedApp
 	// Set the CSRF token
-	.config(['$httpProvider', '$compileProvider', 'IdleProvider', 'KeepaliveProvider', '$locationProvider','$ngReduxProvider',
-		function ($httpProvider, $compileProvider, IdleProvider, KeepaliveProvider, $locationProvider, $ngReduxProvider) {
+	.config(['$httpProvider', '$compileProvider', 'IdleProvider', 'KeepaliveProvider', '$locationProvider',
+		function ($httpProvider, $compileProvider, IdleProvider, KeepaliveProvider, $locationProvider) {
 			// Add CSRF token to all requests
 			var csrfHeader = $('meta[name=csrf-header]').attr('content');
 			$httpProvider.defaults.headers.common[csrfHeader] = $('meta[name=csrf-token]').attr('content');
@@ -49,6 +47,13 @@ sharedApp
 			IdleProvider.idle(25 * 60); // 25 minutes: After this amount of time passes without the user performing an action the user is considered idle
 			IdleProvider.timeout(5 * 60); // 5 minute: The amount of time the user has to respond before they have been considered timed out
 			KeepaliveProvider.interval(5 * 60); // 5 minutes: This specifies how often the KeepAlive event is triggered and the HTTP request is issued
+
+			// // Toastr customization
+			// angular.extend(toastrConfig, {
+			// 	positionClass: 'toast-bottom-right',
+			// 	target: 'body'
+			// });
+
 		}])
 	// Detect route errors
 	.run(['$rootScope', 'Idle',
@@ -67,7 +72,32 @@ sharedApp
 			// Set the initial 'unsavedItems' which is used for the alert
 			// when fields are unsaved and the user tries to close the window
 			$rootScope.unsavedItems = 0;
+			$rootScope.toast = {};
 
 			// Start ngIdle watch
 			Idle.watch();
+
+
+		}])
+
+	// Listen to toast requests
+	.run(['$rootScope',
+		function ($rootScope) {
+			toastr.success("First toast");
+			$rootScope.$on('toast', function (event, data) {
+				switch (data.type) {
+					case "SUCCESS":
+						toastr.success(data.message);
+						break;
+					case "ERROR":
+						toastr.error(data.message);
+						break;
+					case "WARNING":
+						toastr.warning(data.message);
+						break;
+					default:
+						toastr.info(data.message);
+						break;
+				};
+			});
 		}]);
