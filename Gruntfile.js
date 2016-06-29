@@ -143,7 +143,7 @@ module.exports = function (grunt) {
 				expand: true,
 				flatten: true,
 				cwd: '<%= folders.webapp.root %>',
-				src: ['*/*.html', 'index.html'],
+				src: ['**/*.html'],
 				dest: '<%= folders.webapp.build %>'
 			},
 			img: {

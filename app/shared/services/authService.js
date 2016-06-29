@@ -50,6 +50,11 @@ angular.module('sharedApp')
 
 						deferred.reject();
 					}
+				}, function (error) {
+					// User has no access, redirect to Access Denied page
+					if (error.status == 403) {
+						$window.location.href = "/access-denied.html";
+					}
 				});
 
 				return deferred.promise;
