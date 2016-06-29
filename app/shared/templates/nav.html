@@ -42,10 +42,19 @@
 				</a>
 			</li>
 			<li>
-				<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ sharedState.year }}/{{ term.code }}">
+				<a href="/workgroups/{{ sharedState.workgroup.id }}/{{ sharedState.year }}/{{ term.code }}">
 					<i class="entypo-users"></i>
-					<span class="title">{{ sharedState.workgroup.name }}</span>
+					<span class="title" ng-if="sharedState.userWorkgroups.length > 1">Departments</span>
+					<span class="title" ng-if="sharedState.userWorkgroups.length == 1">{{ sharedState.workgroup.name }}</span>
 				</a>
+				<ul class="visible" ng-if="sharedState.userWorkgroups.length > 1">
+					<li ng-repeat="workgroup in sharedState.userWorkgroups track by workgroup.id"
+					ng-class="{ 'active': sharedState.workgroup.id == workgroup.id }">
+						<a ng-href="/workgroups/{{ workgroup.id }}/{{ sharedState.year }}/{{ term.code }}">
+							<span class="title">{{ workgroup.name }}</span>
+						</a>
+					</li>
+				</ul>
 			</li>
 		</ul>
 

@@ -17,6 +17,7 @@ angular.module('sharedApp')
 		return {
 			activeWorkgroup: {},
 			activeYear: 0,
+			userWorkgroups: [],
 			validate: function (token, workgroupId, year) {
 				var deferred = $q.defer();
 				var userRoles = this.getUserRoles();
@@ -78,23 +79,34 @@ angular.module('sharedApp')
 				}
 			},
 			setSharedState: function (workgroupId, year) {
-				var userRoles = this.getUserRoles();
-				this.activeYear = year;
+				var scope = this;
+				var userRoles = scope.getUserRoles();
+				scope.activeYear = year;
+
 				for (var i = 0; i < userRoles.length; i++) {
 					userRole = userRoles[i];
+					var workgroup = {
+						id: userRole.workgroupId,
+						name: userRole.workgroupName
+					}
+
+					// Append to userWorkgroups iff workgroup is valid and avoid duplicates
+					if (workgroup.id > 0 && _array_findById(scope.userWorkgroups, workgroup.id) == undefined) {
+						scope.userWorkgroups.push(workgroup);
+					}
 
 					if (userRole.workgroupId == workgroupId) {
-						this.activeWorkgroup.id = userRole.workgroupId;
-						this.activeWorkgroup.name = userRole.workgroupName;
-						break;
+						scope.activeWorkgroup = workgroup;
 					}
 				}
-				$rootScope.$emit('sharedStateSet', this.getSharedState());
+
+				$rootScope.$emit('sharedStateSet', scope.getSharedState());
 			},
 			getSharedState: function () {
 				return {
 					workgroup: this.activeWorkgroup,
-					year: this.activeYear
+					year: this.activeYear,
+					userWorkgroups: this.userWorkgroups
 				}
 			}
 		};
