@@ -11,7 +11,10 @@ workgroupApp.config(function ($routeProvider) {
 		})
 		.when("/", {
 			templateUrl: "WorkgroupCtrl.html",
-			controller: "WorkgroupCtrl"
+			controller: "WorkgroupCtrl",
+			resolve: {
+				payload: WorkgroupCtrl.getPayload
+			}
 		})
 		.otherwise({
 			redirectTo: "/"

@@ -9,8 +9,6 @@
  */
 workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', 'workgroupActionCreators',
 		this.TagCtrl = function ($scope, $rootScope, $routeParams, workgroupActionCreators) {
-			$scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana'];
-
 			$scope.toggleUserRole = function (userId, roleId) {
 				var user = $scope.view.state.users.list[userId];
 				var role = $scope.view.state.roles.list[roleId];

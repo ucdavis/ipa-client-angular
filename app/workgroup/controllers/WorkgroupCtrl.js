@@ -19,7 +19,7 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 	}]);
 
 WorkgroupCtrl.getPayload = function (authService,workgroupActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT')).then(function () {
+	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupCode, $route.current.params.year).then(function () {
 		return workgroupActionCreators.getInitialState($route.current.params.workgroupCode);
 	});
 }

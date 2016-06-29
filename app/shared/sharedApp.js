@@ -83,7 +83,6 @@ sharedApp
 	// Listen to toast requests
 	.run(['$rootScope',
 		function ($rootScope) {
-			toastr.success("First toast");
 			$rootScope.$on('toast', function (event, data) {
 				switch (data.type) {
 					case "SUCCESS":
