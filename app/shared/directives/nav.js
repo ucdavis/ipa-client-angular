@@ -47,6 +47,10 @@ sharedApp.directive("nav", this.nav = function($timeout, $location, $rootScope, 
 					$location.path(url);
 				}, delay);
 			};
+
+			scope.logout = function () {
+				authService.logout();
+			}
 		}
 	}
 })

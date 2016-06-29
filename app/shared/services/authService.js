@@ -34,7 +34,7 @@ angular.module('sharedApp')
 						// If workgroupId or year NOT set
 						if ( !workgroupId || !year) {
 							scope.fallbackToDefaultUrl();
-							$rootScope.$emit('sharedStateSet', this.getSharedState());
+							$rootScope.$emit('sharedStateSet', scope.getSharedState());
 							deferred.reject();
 						} else {
 							scope.setSharedState(workgroupId, year);
@@ -53,6 +53,11 @@ angular.module('sharedApp')
 				});
 
 				return deferred.promise;
+			},
+			logout: function () {
+				localStorage.removeItem('JWT');
+				localStorage.removeItem('userRoles');
+				$window.location.href = serverRoot + "/logout";
 			},
 			getUserRoles: function () {
 				var userRoles = null;
