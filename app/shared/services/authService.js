@@ -18,18 +18,21 @@ angular.module('sharedApp')
 			activeWorkgroup: {},
 			activeYear: 0,
 			userWorkgroups: [],
+			displayName: "",
 			validate: function (token, workgroupId, year) {
 				var deferred = $q.defer();
 				var userRoles = this.getUserRoles();
+				var displayName = localStorage.getItem('displayName');
 				var scope = this;
 
-				$http.post(serverRoot + '/login', { token: token, userRoles: userRoles }, { withCredentials: true }).then(function (response) {
+				$http.post(serverRoot + '/login', { token: token, userRoles: userRoles, displayName: displayName }, { withCredentials: true }).then(function (response) {
 					// Token may be null if we are redirecting
 					if (response.data != null && response.data.token !== null) {
 						var token = response.data.token;
 						$http.defaults.headers.common.Authorization = 'Bearer ' + token;
 						localStorage.setItem('JWT', token);
 						localStorage.setItem('userRoles', JSON.stringify(response.data.userRoles));
+						localStorage.setItem('displayName', response.data.displayName);
 
 						// If workgroupId or year NOT set
 						if ( !workgroupId || !year) {
@@ -37,7 +40,7 @@ angular.module('sharedApp')
 							$rootScope.$emit('sharedStateSet', scope.getSharedState());
 							deferred.reject();
 						} else {
-							scope.setSharedState(workgroupId, year);
+							scope.setSharedState(workgroupId, year, response.data.displayName);
 						}
 
 
@@ -46,6 +49,7 @@ angular.module('sharedApp')
 						// Received a request to redirect to CAS. Obey.
 						localStorage.removeItem('JWT');
 						localStorage.removeItem('userRoles');
+						localStorage.removeItem('displayName');
 						$window.location.href = response.data.redirect + "?ref=" + document.URL;
 
 						deferred.reject();
@@ -62,6 +66,7 @@ angular.module('sharedApp')
 			logout: function () {
 				localStorage.removeItem('JWT');
 				localStorage.removeItem('userRoles');
+				localStorage.removeItem('displayName');
 				$window.location.href = serverRoot + "/logout";
 			},
 			getUserRoles: function () {
@@ -88,10 +93,11 @@ angular.module('sharedApp')
 					}
 				}
 			},
-			setSharedState: function (workgroupId, year) {
+			setSharedState: function (workgroupId, year, displayName) {
 				var scope = this;
 				var userRoles = scope.getUserRoles();
 				scope.activeYear = year;
+				scope.displayName = displayName;
 
 				for (var i = 0; i < userRoles.length; i++) {
 					userRole = userRoles[i];
@@ -116,7 +122,8 @@ angular.module('sharedApp')
 				return {
 					workgroup: this.activeWorkgroup,
 					year: this.activeYear,
-					userWorkgroups: this.userWorkgroups
+					userWorkgroups: this.userWorkgroups,
+					displayName: this.displayName
 				}
 			}
 		};
