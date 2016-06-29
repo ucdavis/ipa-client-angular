@@ -8,7 +8,7 @@
  * Controller of the ipaClientAngularApp
  */
 workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', 'workgroupActionCreators',
-		this.TagCtrl = function ($scope, $rootScope, $routeParams, workgroupActionCreators) {
+		this.UserCtrl = function ($scope, $rootScope, $routeParams, workgroupActionCreators) {
 			$scope.toggleUserRole = function (userId, roleId) {
 				var user = $scope.view.state.users.list[userId];
 				var role = $scope.view.state.roles.list[roleId];
@@ -21,14 +21,6 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', 'wo
 				} else {
 					workgroupActionCreators.addRoleToUser($scope.workgroupCode, user, role);
 				}
-			};
-
-			$scope.removeTag = function (tagId) {
-				workgroupActionCreators.removeTag($scope.workgroupCode, {id: tagId});
-			};
-
-			$scope.updateTag = function (tag) {
-				workgroupActionCreators.updateTag($scope.workgroupCode, tag);
 			};
 
 			$scope.userHasRole = function (userId, role) {

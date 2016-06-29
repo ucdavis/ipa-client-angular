@@ -15,7 +15,7 @@ workgroupApp.controller('TagCtrl', ['$scope', '$rootScope', '$routeParams', 'wor
 			};
 
 			$scope.removeTag = function (tagId) {
-				workgroupActionCreators.removeTag($scope.workgroupCode, {id: tagId});
+				workgroupActionCreators.removeTag($scope.workgroupCode, $scope.view.state.tags.list[tagId]);
 			};
 
 			$scope.updateTag = function (tag) {

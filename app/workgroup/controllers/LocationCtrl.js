@@ -14,7 +14,7 @@ workgroupApp.controller('LocationCtrl', ['$scope', 'workgroupActionCreators',
 			};
 
 			$scope.removeLocation = function (locationId) {
-				workgroupActionCreators.removeLocation($scope.workgroupCode, {id: locationId});
+				workgroupActionCreators.removeLocation($scope.workgroupCode, $scope.view.state.locations.list[locationId]);
 			};
 
 			$scope.updateLocation = function (location) {
