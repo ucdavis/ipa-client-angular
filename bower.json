@@ -23,7 +23,6 @@
     "bootstrap": "^3.3.6",
     "angular-bootstrap": "^1.3.3",
     "Chart.js": "^2.1.4",
-    "ng-notify": "^0.8.0",
     "ng-idle": "^1.2.2",
     "angular-ui-calendar": "^1.0.1",
     "spin.js": "^2.3.2",

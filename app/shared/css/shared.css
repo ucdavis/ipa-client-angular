@@ -31,3 +31,10 @@ a {
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
+
+/* Overriding neon-core; was messing with the positioning of toastr */
+body {
+  -webkit-perspective: none;
+  -moz-perspective: none;
+  perspective: none;
+}
