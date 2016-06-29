@@ -1,12 +1,15 @@
-sharedApp.directive("nav", this.nav = function($timeout, $location) {
+sharedApp.directive("nav", this.nav = function($timeout, $location, $rootScope, authService) {
 	return {
 		restrict: 'E',
 		templateUrl: 'nav.html',
 		replace: true,
 		link: function (scope, element, attrs) {
-			scope.workgroupCode = attrs.workgroupCode;
-			scope.year = attrs.year;
+			scope.sharedState = authService.getSharedState();
 			scope.termCode = attrs.termCode;
+
+			$rootScope.$on('sharedStateSet', function (event, data) {
+				scope.sharedState = data;
+			});
 
 			scope.terms = [
 				{ id: 1, description: "Fall Quarter", code: "10" },
@@ -28,18 +31,18 @@ sharedApp.directive("nav", this.nav = function($timeout, $location) {
 			});
 
 			scope.changeYearBy = function (offset) {
-				if (!offset) { return; }
+				if (!offset || !scope.sharedState.workgroup) { return; }
 
 				// Cancel any previous timers (In the case when the user clicks mutiple times)
 				$timeout.cancel(scope.timer);
 
 				// Increment/decrement the year
-				scope.year = parseInt(scope.year) + offset;
+				scope.sharedState.year = parseInt(scope.sharedState.year) + offset;
 
 				// Schedule page redirect after delay
 				var delay = 1000; // milliseconds
 				scope.timer = $timeout(function () {
-					var url = '/' + scope.workgroupCode + '/' + scope.year + '/' + scope.termCode;
+					var url = '/' + scope.sharedState.workgroup.code + '/' + scope.sharedState.year + '/' + scope.termCode;
 					console.log('redirecting to ' + url);
 					$location.path(url);
 				}, delay);

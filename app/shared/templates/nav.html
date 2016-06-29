@@ -42,9 +42,9 @@
 				</a>
 			</li>
 			<li>
-				<a ng-href="/workgroups/{{ workgroupCode }}/{{ year }}/{{ term.code }}">
+				<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ sharedState.year }}/{{ term.code }}">
 					<i class="entypo-users"></i>
-					<span class="title">{{ workgroupCode }}</span>
+					<span class="title">{{ sharedState.workgroup.name }}</span>
 				</a>
 			</li>
 		</ul>

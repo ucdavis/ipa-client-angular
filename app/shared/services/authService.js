@@ -13,12 +13,14 @@ var serverRoot = 'http://localhost:8080'
  * Service in the ipaClientAngularApp.
  */
 angular.module('sharedApp')
-	.service('authService', function ($http, $window, $q, $location) {
+	.service('authService', function ($http, $window, $q, $location, $rootScope) {
 		return {
+			activeWorkgroup: {},
+			activeYear: 0,
 			validate: function (token, workgroupId, year) {
 				var deferred = $q.defer();
 				var userRoles = this.getUserRoles();
-				var self = this;
+				var scope = this;
 
 				$http.post(serverRoot + '/login', { token: token, userRoles: userRoles }, { withCredentials: true }).then(function (response) {
 					// Token may be null if we are redirecting
@@ -30,9 +32,13 @@ angular.module('sharedApp')
 
 						// If workgroupId or year NOT set
 						if ( !workgroupId || !year) {
-							self.fallbackToDefaultUrl();
+							scope.fallbackToDefaultUrl();
+							$rootScope.$emit('sharedStateSet', this.getSharedState());
 							deferred.reject();
+						} else {
+							scope.setSharedState(workgroupId, year);
 						}
+
 
 						deferred.resolve(response);
 					} else if(response.data != null && response.data.redirect != null && response.data.redirect.length > 0) {
@@ -62,13 +68,33 @@ angular.module('sharedApp')
 				var userRoles = this.getUserRoles();
 				for (var i = 0; i < userRoles.length; i++) {
 					userRole = userRoles[i];
-					
+
 					if (userRole.workgroupId > 0) {
 						var workgroupId = userRole.workgroupId;
 						var year = new Date().getFullYear();
 						var url = '/' + workgroupId + '/' + year;
 						$location.path(url);
 					}
+				}
+			},
+			setSharedState: function (workgroupId, year) {
+				var userRoles = this.getUserRoles();
+				this.activeYear = year;
+				for (var i = 0; i < userRoles.length; i++) {
+					userRole = userRoles[i];
+
+					if (userRole.workgroupId == workgroupId) {
+						this.activeWorkgroup.id = userRole.workgroupId;
+						this.activeWorkgroup.name = userRole.workgroupName;
+						break;
+					}
+				}
+				$rootScope.$emit('sharedStateSet', this.getSharedState());
+			},
+			getSharedState: function () {
+				return {
+					workgroup: this.activeWorkgroup,
+					year: this.activeYear
 				}
 			}
 		};
