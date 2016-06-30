@@ -74,7 +74,7 @@
 										class="form-control"
 										uib-typeahead="user.name for user in view.state.users.userSearchResults | orderBy: 'lastName'"
 										typeahead-loading="loadingUsers"
-										typeahead-wait-ms="500"
+										typeahead-wait-ms="1000"
 										typeahead-min-length="3"
 										typeahead-on-select="prepareToAddUserToWorkgroup($item, $model, $label)" />
 									<i class="entypo-search search-icon"></i>
