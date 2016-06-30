@@ -74,7 +74,7 @@
 										class="form-control" />
 									<ul class="dropdown-menu" ng-show="view.state.users.userSearchResults.length && !view.state.users.newUser.name" style="display: block;">
 										<li ng-repeat="user in view.state.users.userSearchResults | orderBy: 'lastName'" class="clickable" ng-click="prepareToAddUserToWorkgroup(user)">
-											<a ng-bind-html="user.name  | highlight:view.state.users.searchQuery"></a>
+											<a ng-bind="user.name"></a>
 										</li>
 									</ul>
 									<i class="entypo-search search-icon"></i>

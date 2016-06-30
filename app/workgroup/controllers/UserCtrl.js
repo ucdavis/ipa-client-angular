@@ -36,6 +36,10 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$t
 			};
 
 			$scope.searchUsers = function () {
+				if ($scope.view.state.users.searchQuery.length == 0) {
+					workgroupActionCreators.clearUserSearch();
+				}
+
 				if ($scope.view.state.users.searchQuery.length < 3) {
 					return;
 				}

@@ -146,6 +146,15 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
+		clearUserSearch: function () {
+			var action = {
+				type: SEARCH_USERS,
+				payload: {
+					userSearchResults: []
+				}
+			};
+			workgroupStateService.reduce(action);
+		},
 		createUser: function (workgroupCode, dwUser) {
 			var scope = this;
 			var role = new Role({name: "senateInstructor"});
