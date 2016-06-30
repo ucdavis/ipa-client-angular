@@ -30,8 +30,9 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$t
 				return result;
 			};
 
-			$scope.prepareToAddUserToWorkgroup = function (item, model, label) {
+			$scope.prepareToAddUserToWorkgroup = function (item) {
 				$scope.view.state.users.newUser = item;
+				$scope.view.state.users.searchQuery = item.name;
 			};
 
 			$scope.searchUsers = function () {

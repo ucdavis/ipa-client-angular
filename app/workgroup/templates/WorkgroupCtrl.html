@@ -71,12 +71,12 @@
 									<input type="text" ng-model="view.state.users.searchQuery"
 										ng-change="searchUsers()"
 										placeholder="Search by name or login ID"
-										class="form-control"
-										uib-typeahead="user.name for user in view.state.users.userSearchResults | orderBy: 'lastName'"
-										typeahead-loading="loadingUsers"
-										typeahead-wait-ms="1000"
-										typeahead-min-length="3"
-										typeahead-on-select="prepareToAddUserToWorkgroup($item, $model, $label)" />
+										class="form-control" />
+									<ul class="dropdown-menu" ng-show="view.state.users.userSearchResults.length && !view.state.users.newUser.name" style="display: block;">
+										<li ng-repeat="user in view.state.users.userSearchResults | orderBy: 'lastName'" class="clickable" ng-click="prepareToAddUserToWorkgroup(user)">
+											<a ng-bind-html="user.name  | highlight:view.state.users.searchQuery"></a>
+										</li>
+									</ul>
 									<i class="entypo-search search-icon"></i>
 									<span class="input-group-btn">
 										<button ng-disabled="!view.state.users.newUser.name"

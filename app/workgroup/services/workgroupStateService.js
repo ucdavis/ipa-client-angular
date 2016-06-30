@@ -112,6 +112,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					users.ids.push(action.payload.user.id);
 					users.newUser = {};
 					users.searchQuery = "";
+					users.userSearchResults = [];
 					return users;
 				case REMOVE_USER:
 					var userIndex = users.ids.indexOf(action.payload.user.id);

@@ -38,3 +38,15 @@ body {
   -moz-perspective: none;
   perspective: none;
 }
+
+span.highlighted {
+  font-weight: bold;
+}
+
+.clickable {
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
