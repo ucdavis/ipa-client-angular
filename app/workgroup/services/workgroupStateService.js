@@ -26,9 +26,9 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 						var tagData = action.payload.tags[i];
 						if (tagData.archived == false) {
 							tagsList[tagData.id] = new Tag(tagData);
-							tags.ids.push(tagData.id);
 						}
 					}
+					tags.ids = _array_sortIdsByProperty(tagsList, "name");
 					tags.list = tagsList;
 					return tags;
 				case ADD_TAG:
@@ -65,9 +65,9 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 
 						if (locationData.archived == false) {
 							locationsList[locationData.id] = new Location(locationData);
-							locations.ids.push(locationData.id);
 						}
 					}
+					locations.ids = _array_sortIdsByProperty(locationsList, "description");
 					locations.list = locationsList;
 					return locations;
 				case ADD_LOCATION:
@@ -103,8 +103,8 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					for (var i = 0; i < length; i++) {
 						var userData = action.payload.users[i];
 						usersList[userData.id] = new User(userData);
-						users.ids.push(userData.id);
 					}
+					users.ids = _array_sortIdsByProperty(usersList, "name");
 					users.list = usersList;
 					return users;
 				case ADD_USER:
@@ -171,9 +171,9 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 						var roleData = action.payload.roles[i];
 						if (_hiddenRoles.indexOf(roleData.name) < 0) {
 							rolesList[roleData.id] = new Role(roleData);
-							roles.ids.push(roleData.id);
 						}
 					}
+					roles.ids = _array_sortIdsByProperty(rolesList, "name");
 					roles.list = rolesList;
 					return roles;
 				default:
