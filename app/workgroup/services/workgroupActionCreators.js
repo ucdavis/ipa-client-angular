@@ -8,7 +8,7 @@
  * Service in the workgroupApp.
  * Central location for sharedState information.
  */
-workgroupApp.service('workgroupActionCreators', function (workgroupStateService, workgroupService, $rootScope) {
+workgroupApp.service('workgroupActionCreators', function (workgroupStateService, workgroupService, $rootScope, Role) {
 	return {
 		getInitialState: function (workgroupCode) {
 			workgroupService.getWorkgroupByCode(workgroupCode).then(function (payload) {
@@ -148,9 +148,9 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 		},
 		createUser: function (workgroupCode, dwUser) {
 			var scope = this;
-			var role = {name: "senateInstructor"};
+			var role = new Role({name: "senateInstructor"});
 
-			workgroupService.createUser(dwUser).then(function (newUser) {
+			workgroupService.createUser(workgroupCode, dwUser).then(function (newUser) {
 				$rootScope.$emit('toast', {message: "Added user " + newUser.firstName + " " + newUser.lastName, type: "SUCCESS"});
 				var action = {
 					type: ADD_USER,

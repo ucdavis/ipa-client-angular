@@ -140,10 +140,10 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
-		createUser: function (user) {
+		createUser: function (workgroupCode, user) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/workgroupView/users", user, { withCredentials: true })
+			$http.post(serverRoot + "/api/workgroupView/workgroups/" + workgroupCode + "/users", user, { withCredentials: true })
 			.success(function(newUser) {
 				deferred.resolve(newUser);
 			})
