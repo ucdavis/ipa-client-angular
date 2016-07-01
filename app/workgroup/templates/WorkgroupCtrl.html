@@ -9,29 +9,45 @@
 
 				<uib-tab index="0" heading="Tags">
 					<div class="tags-section" ng-controller="TagCtrl">
-						<div class="row">
 							<div class="col-md-6">
 								<ul class="tags-input">
 									<li ng-repeat="tagId in view.state.tags.ids">
-										<input class="form-control" type="text" name="text"  size="30" ng-model="view.state.tags.list[tagId].name"
-											auto-input on-enter="updateTag(view.state.tags.list[tagId])" help-text-placement="top">
-										<button type="button" class="btn btn-danger"
-											confirm-button="removeTag(tagId)"
-											message="Are you sure you want to remove this tag"
-											yes="Remove" no="Cancel" placement="right"
-											aria-hidden="true">
-											Remove
-										</button>
+										<div class="row">
+											<div class="col-sm-5">
+												<input class="form-control" type="text" name="text"  size="30" ng-model="view.state.tags.list[tagId].name"
+													auto-input on-enter="updateTag(view.state.tags.list[tagId])" help-text-placement="top">
+											</div>
+											<div class="col-sm-4">
+												<colorpicker type="text" color="view.state.tags.list[tagId].color" />
+											</div>
+											<div class="col-sm-3">
+												<a class="text-danger clickable btn btn-block"
+													confirm-button="removeTag(tagId)"
+													message="Are you sure you want to remove this tag"
+													yes="Remove" no="Cancel" placement="right"
+													aria-hidden="true">
+													<i class="entypo-cancel-squared"></i><small>Remove</small>
+												</a>
+											</div>
+										</div>
 
 									</li>
 									<li>      <!-- add button -->
-										<input class="form-control" type="text" name="text"  size="30" placeholder="Add New Tag"
-											ng-model="view.state.tags.newTag.name">
-										<button type="button" class="btn btn-success" ng-click="addTag()">Add</button>
+										<div class="row">
+											<div class="col-sm-5">
+												<input class="form-control" type="text" name="text"  size="30" placeholder="Add New Tag"
+												ng-model="view.state.tags.newTag.name">
+											</div>
+											<div class="col-sm-4">
+												<colorpicker type="text" color="view.state.tags.newTag.color" />
+											</div>
+											<div class="col-sm-3">
+												<button type="button" class="btn btn-blue btn-block" ng-click="addTag()">Add</button>
+											</div>
+										</div>
 									</li>
 								</ul>
 							</div>
-						</div>
 					</div>
 				</uib-tab>
 
@@ -43,19 +59,21 @@
 									<li ng-repeat="locationId in view.state.locations.ids">
 										<input class="form-control" type="text" name="text"  size="30" ng-model="view.state.locations.list[locationId].description"
 											auto-input on-enter="updateLocation(view.state.locations.list[locationId])" help-text-placement="top">
-										<button type="button" class="btn btn-danger"
+										<a class="text-danger clickable"
 											confirm-button="removeLocation(locationId)"
 											message="Are you sure you want to remove this location"
 											yes="Remove" no="Cancel" placement="right"
 											aria-hidden="true">
-											Remove
-										</button>
+											<i class="entypo-cancel-squared"></i><small>Remove</small>
+										</a>
 
 									</li>
 									<li>      <!-- add button -->
-										<input class="form-control" type="text" name="text"  size="30" placeholder="Add New Location"
-											ng-model="view.state.locations.newLocation.description">
-										<button type="button" class="btn btn-success" ng-click="addLocation()">Add</button>
+										<div class="form-horizontal">
+											<input class="form-control" type="text" name="text"  size="30" placeholder="Add New Location"
+												ng-model="view.state.locations.newLocation.description">
+											<button type="button" class="btn btn-blue" ng-click="addLocation()">Add</button>
+										</div>
 									</li>
 								</ul>
 							</div>

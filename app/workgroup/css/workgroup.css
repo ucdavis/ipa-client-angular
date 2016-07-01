@@ -70,16 +70,11 @@ table th {
 
 .tags-input li input {
 	border: 1px solid #D5D5D5;
-	width: inherit;
 	display: inline-block !important;
 }
 
 .tags-input li .btn {
 	margin-left: 20px;
-}
-
-.tags-input li:hover .btn {
-	visibility: visible;
 }
 
 .locations-section {
@@ -102,7 +97,7 @@ table th {
 }
 
 .locations-input li .btn {
-	margin-left: 20px;
+	margin-left: 5px;
 }
 
 .nav-tabs {
