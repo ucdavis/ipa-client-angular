@@ -119,42 +119,18 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					users.ids.splice(userIndex, 1);
 					delete users.list[action.payload.user.id];
 					return users;
+				case ADD_USER_ROLE:
+					users.list[action.payload.user.id].userRoles.push(action.payload.userRole);
+					return users;
+				case REMOVE_USER_ROLE:
+					var userRoleIndex = users.list[action.payload.user.id].userRoles.indexOf(action.payload.userRole);
+					users.list[action.payload.user.id].userRoles.splice(userRoleIndex, 1);
+					return users;
 				case SEARCH_USERS:
 					users.userSearchResults = action.payload.userSearchResults;
 					return users;
 				default:
 					return users;
-			}
-		},
-		_userRoleReducers: function (action, userRoles) {
-			var scope = this;
-
-			switch (action.type) {
-				case INIT_WORKGROUP:
-					userRoles = {
-						ids: []
-					};
-					var userRolesList = {};
-
-					var length = action.payload.userRoles ? action.payload.userRoles.length : 0;
-					for (var i = 0; i < length; i++) {
-						var userRoleData = action.payload.userRoles[i];
-						userRolesList[userRoleData.id] = new UserRole(userRoleData);
-						userRoles.ids.push(userRoleData.id);
-					}
-					userRoles.list = userRolesList;
-					return userRoles;
-				case ADD_USER_ROLE:
-					userRoles.list[action.payload.userRole.id] = action.payload.userRole;
-					userRoles.ids.push(action.payload.userRole.id);
-					return userRoles;
-				case REMOVE_USER_ROLE:
-					var userRoleIndex = userRoles.ids.indexOf(action.payload.userRole.id);
-					userRoles.ids.splice(userRoleIndex, 1);
-					delete userRoles.list[action.payload.userRole.id];
-					return userRoles;
-				default:
-					return userRoles;
 			}
 		},
 		_roleReducers: function (action, roles) {
@@ -192,7 +168,6 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 			newState.tags = scope._tagReducers(action, scope._state.tags);
 			newState.locations = scope._locationReducers(action, scope._state.locations);
 			newState.users = scope._userReducers(action, scope._state.users);
-			newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
 			newState.roles = scope._roleReducers(action, scope._state.roles);
 
 			scope._state = newState;

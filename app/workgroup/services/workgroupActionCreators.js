@@ -111,7 +111,8 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				var action = {
 					type: ADD_USER_ROLE,
 					payload: {
-						userRole: userRole
+						user: user,
+						userRole: userRole,
 					}
 				};
 				workgroupStateService.reduce(action);
@@ -125,6 +126,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				var action = {
 					type: REMOVE_USER_ROLE,
 					payload: {
+						user: user,
 						userRole: userRoleToBeDeleted
 					}
 				};
