@@ -21,18 +21,29 @@ _array_getIndexById = function (arr, id) {
  *
  * Example:
  * listHash = { 1: {name: "Chris"}, 2: {name: "Adam"}, 3: {name: "Bob"} };
- * property = "name"
+ * properties = "name"
  * Returns ==> [2, 3, 1]
  *
  * @param {object of objects} listHash - An object of which the keys are the ids of its objects.
- * @param {string} property - The property that the sorter will be comparing.
+ * @param {string or array of strings} properties - The property/properties that the sorter will be comparing.
  * @returns {array} The sorted array
  */
-_array_sortIdsByProperty = function (listHash, property) {
+_array_sortIdsByProperty = function (listHash, properties) {
 	var keys = Object.keys(listHash);
 	return keys.sort(function (a, b) {
-		var valA = listHash[a][property];
-		var valB = listHash[b][property];
+		// Construct the comparator value by concatinating property values if the properties were passed as an array
+		if (properties.constructor === Array) {
+			var valA = "";
+			var valB = "";
+			for (i in properties) {
+				valA += listHash[a][properties[i]];
+				valB += listHash[b][properties[i]];
+			}
+		} else {
+			// This will accept a single property in the form of a string
+			var valA = listHash[a][properties];
+			var valB = listHash[b][properties];
+		}
 
 		// If the properties are strings, ignore the case
 		if (typeof valA == "string") { valA = valA.toUpperCase(); }

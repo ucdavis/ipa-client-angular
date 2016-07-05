@@ -11,12 +11,10 @@
 courseApp.service('courseActionCreators', function (courseStateService, courseService, $rootScope, Role) {
 	return {
 		getInitialState: function (workgroupId, year) {
-			courseService.getCoursesByWorkgroupIdAndYear(workgroupId, year).then(function (courses) {
+			courseService.getScheduleByWorkgroupIdAndYear(workgroupId, year).then(function (payload) {
 				var action = {
 					type: INIT_STATE,
-					payload: {
-						courses: courses
-					}
+					payload: payload
 				};
 				courseStateService.reduce(action);
 			}, function (err) {

@@ -10,12 +10,12 @@
  */
 courseApp.factory("courseService", this.courseService = function($http, $q) {
 	return {
-		getCoursesByWorkgroupIdAndYear: function(workgroupId, year) {
+		getScheduleByWorkgroupIdAndYear: function(workgroupId, year) {
 			var deferred = $q.defer();
 
 			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year, { withCredentials: true })
-			.success(function(courses) {
-				deferred.resolve(courses);
+			.success(function(payload) {
+				deferred.resolve(payload);
 			})
 			.error(function() {
 				deferred.reject();
