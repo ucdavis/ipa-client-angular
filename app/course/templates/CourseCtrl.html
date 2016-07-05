@@ -26,26 +26,21 @@
 		</div>
 	</div>
 
-	<table class="table table-bordered datatable courses-table">
+	<table class="table table-bordered courses-table">
 		<thead>
 			<tr>
 				<th class="sorting-asc">Course</th>
-				<th class="sorting">
-					Fall Quarter
-					<br />
-					<div class="col-xs-6">Enrollment</div>
-					<div class="col-xs-6">Total</div>
+				<th class="sorting" ng-repeat="termCode in view.state.scheduleTermStates.ids">
+					{{ termCode }}
 				</th>
-				<th class="sorting">Winter Quarter</th>
-				<th class="sorting">Spring Quarter</th>
 				<th class="ui-overlay"></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr class="odd gradeX" ng-repeat="courseId in view.state.courses.ids">
 				<td sg-cell cell-sgr-id="{{view.state.courses.list[courseId].id}}"
-						ng-class="{'selected-td' : selectedCell.sgrId == course.id && !selectedCell.sgId, 'new-row': course.id === 0}">
-					<div ng-if="course.id != 0">
+						ng-class="{'selected-td' : selectedCell.sgrId == courseId && !selectedCell.sgId, 'new-row': courseId === 0}">
+					<div ng-if="courseId != 0">
 						<strong>{{ view.state.courses.list[courseId].subjectCode }} {{ view.state.courses.list[courseId].courseNumber }} -
 							{{ view.state.courses.list[courseId].sequencePattern }}</strong> <br />
 						{{ view.state.courses.list[courseId].title }} <br />
@@ -55,36 +50,26 @@
 							{{ tag.name }}
 						</div>
 					</div>
-					<div ng-if="course.id == 0">
+					<div ng-if="courseId == 0">
 						<course-input></course-input>
 					</div>
 				</td>
-				<td sg-cell cell-sgr-id="{{course.id}}" cell-sg-id="{{sg.id}}" ng-repeat="sg in course.sectionGroups"
-						ng-class="{'selected-td' : (selectedCell.sgrId == course.id && selectedCell.sgId == sg.id)
-						|| (selectedCell.sgrId == course.id && !selectedCell.sgId), 'new-row': course.id === 0}">
-						<div ng-if="course.id != 0">
-							<span ng-if="sg.isActive">
-								<div class="right-inner-addon form-group" ng-class="{ 'has-warning': requiresAttention(sg) }">
-									<i class="entypo-attention text-warning" ng-if="requiresAttention(sg)"></i>
-									<input id="seats1" class="form-control" ng-model="sg.maxSeats"></input>
-								</div>
-							</span>
-							<span ng-if="sg.isActive == false">
-								<div class="col-xs-6">
-									{{sg.census[4]}}
-								</div>
-								<div class="col-xs-6">
-									{{ getSectionSeatsTotal(sg) }}
-								</div>
-							</span>
+				<td sg-cell cell-sgr-id="{{courseId}}" cell-sg-id="{{sg.id}}" ng-repeat="termCode in view.state.scheduleTermStates.ids"
+						ng-class="{'selected-td' : (selectedCell.sgrId == courseId && selectedCell.sgId == sg.id)
+						|| (selectedCell.sgrId == courseId && !selectedCell.sgId), 'new-row': courseId === 0}">
+						<div ng-if="courseId != 0">
+							<div class="right-inner-addon form-group" ng-class="{ 'has-warning': requiresAttention(sg) }">
+								<i class="entypo-attention text-warning" ng-if="requiresAttention(sg)"></i>
+								<input class="form-control" ng-model="view.state.sectionGroups.list[view.state.courses.list[courseId].sectionGroupIds[termCode]].plannedSeats"></input>
+							</div>
 						</div>
 				</td>
-				<td class="ui-overlay" ng-class="{ 'new-row': course.id === 0 }">
-						<i class="btn add-before entypo-plus-circled" ng-click="addRowForm($index)" ng-if="course.id"
+				<td class="ui-overlay" ng-class="{ 'new-row': courseId === 0 }">
+						<i class="btn add-before entypo-plus-circled" ng-click="addRowForm($index)" ng-if="courseId"
 							data-toggle="tooltip" data-placement="right" title="" data-original-title="Add a course"></i>
 						<i class="btn delete-sg entypo-minus-circled" ng-click="deleteSectionGroup($index)"
 							data-toggle="tooltip" data-placement="right" title="" data-original-title="Delete..."></i>
-						<i class="btn add-after entypo-plus-circled" ng-click="addRowForm($index+1)" ng-if="course.id"
+						<i class="btn add-after entypo-plus-circled" ng-click="addRowForm($index+1)" ng-if="courseId"
 							data-toggle="tooltip" data-placement="right" title="" data-original-title="Add a course"></i>
 				</td>
 			</tr>
