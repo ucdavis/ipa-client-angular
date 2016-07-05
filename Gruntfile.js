@@ -151,15 +151,23 @@ module.exports = function (grunt) {
 				src: ['**/**/*'],
 				dest: '<%= folders.webapp.build %>images/'
 			},
+			font: {
+				expand: true,
+				flatten: true,
+				cwd: '',
+				src: [
+					'<%= folders.webapp.root %>/assets/fonts/*'
+				],
+				dest: '<%= folders.webapp.build %>/font/'
+			},
 			fonts: {
 				expand: true,
 				flatten: true,
 				cwd: '',
 				src: [
-					'bower_components/bootstrap/dist/fonts/*',
-					'<%= folders.webapp.root %>/assets/fonts/*'
+					'bower_components/bootstrap/dist/fonts/*'
 				],
-				dest: '<%= folders.webapp.build %>/font/'
+				dest: '<%= folders.webapp.build %>/fonts/'
 			},
 			css: {
 				expand: true,
