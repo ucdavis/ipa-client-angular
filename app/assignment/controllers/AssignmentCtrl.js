@@ -13,7 +13,15 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 			$scope.year = $routeParams.year;
 			$scope.view = {};
 
-			$rootScope.$on('workgroupStateChanged', function (event, data) {
+			console.log("AssignmentCtrl hello");
+			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				$scope.view.state = data;
+				console.log("assignmentStateChanged");
+				console.log($scope.view.state);
 			});
 	}]);
+AssignmentCtrl.validate = function () {
+	console.log("triggering validate");
+
+	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year);
+}

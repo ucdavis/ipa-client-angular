@@ -2,13 +2,19 @@ window.assignmentApp = angular.module("assignmentApp", ["sharedApp", "ngRoute"])
 
 assignmentApp.config(function ($routeProvider) {
 	return $routeProvider
-		.when("/:workgroupCode/:year", {
+		.when("/:workgroupId/:year", {
 			templateUrl: "AssignmentCtrl.html",
-			controller: "AssignmentCtrl"
+			controller: "AssignmentCtrl",
+			resolve: {
+				courses: AssignmentCtrl.validate
+			}
 		})
 		.when("/", {
 			templateUrl: "AssignmentCtrl.html",
-			controller: "AssignmentCtrl"
+			controller: "AssignmentCtrl",
+			resolve: {
+				taco: AssignmentCtrl.validate
+			}
 		})
 		.otherwise({
 			redirectTo: "/"

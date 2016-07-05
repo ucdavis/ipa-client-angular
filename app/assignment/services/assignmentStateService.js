@@ -8,7 +8,7 @@
  * Service in the workgroupApp.
  * Central location for sharedState information.
  */
-workgroupApp.service('assignmentStateService', function ($rootScope, SectionGroup, Course) {
+assignmentApp.service('assignmentStateService', function ($rootScope, SectionGroup, Course) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
