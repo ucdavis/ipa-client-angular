@@ -20,3 +20,8 @@ courseApp.config(function ($routeProvider) {
 			redirectTo: "/"
 		});
 });
+
+var INIT_STATE = "INIT_STATE";
+var ADD_COURSE = "ADD_COURSE";
+var REMOVE_COURSE = "REMOVE_COURSE";
+var UPDATE_COURSE = "UPDATE_COURSE";

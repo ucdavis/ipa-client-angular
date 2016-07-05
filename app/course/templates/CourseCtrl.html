@@ -42,12 +42,13 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="odd gradeX" ng-repeat="course in courses">
-				<td sg-cell cell-sgr-id="{{course.id}}"
+			<tr class="odd gradeX" ng-repeat="courseId in view.state.courses.ids">
+				<td sg-cell cell-sgr-id="{{view.state.courses.list[courseId].id}}"
 						ng-class="{'selected-td' : selectedCell.sgrId == course.id && !selectedCell.sgId, 'new-row': course.id === 0}">
 					<div ng-if="course.id != 0">
-						<strong>{{ course.subjectCode }} {{ course.courseNumber }} - {{ course.sequenceDescription }}</strong> <br />
-						{{course.title}} <br />
+						<strong>{{ view.state.courses.list[courseId].subjectCode }} {{ view.state.courses.list[courseId].courseNumber }} -
+							{{ view.state.courses.list[courseId].sequencePattern }}</strong> <br />
+						{{ view.state.courses.list[courseId].title }} <br />
 						Tags:
 						<div class="label" ng-repeat="tag in course.tags" style="padding: 3px; margin-left: 3px;"
 						ng-style="{'background-color':tag.color}">
