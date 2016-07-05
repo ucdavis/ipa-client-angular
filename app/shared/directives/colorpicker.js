@@ -6,14 +6,15 @@ sharedApp.directive("colorpicker", this.colorpicker = function () {
 	return {
 		restrict: "E",
 		template: "<div class=\"input-group\"> " +
-		"		<input type=\"text\" class=\"form-control\" data-format=\"hex\"> " +
+		"		<input type=\"text\" class=\"form-control\" ng-model=\"color\" > " +
 		"		<div class=\"input-group-addon\"> " +
 		"			<i class=\"color-preview\" ng-style=\"{ 'background-color': color }\"></i> " +
 		"		</div> " +
 		"	</div> ",
 		replace: true,
 		scope: {
-			color: '='
+			color: '=',
+			onChange: '&'
 		},
 		link: function (scope, element, attrs) {
 			element
@@ -23,7 +24,11 @@ sharedApp.directive("colorpicker", this.colorpicker = function () {
 				.on('changeColor', function (e) {
 					scope.color = e.color.toHex();
 					scope.$apply();
-				});;
+				})
+				.on('hidePicker', function (e) {
+					scope.onChange();
+					scope.$apply();
+				});
 		}
 	}
 })

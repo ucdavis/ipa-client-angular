@@ -18,7 +18,8 @@
 													auto-input on-enter="updateTag(view.state.tags.list[tagId])" help-text-placement="top">
 											</div>
 											<div class="col-sm-4">
-												<colorpicker type="text" color="view.state.tags.list[tagId].color" />
+												<colorpicker type="text" color="view.state.tags.list[tagId].color"
+													on-change="updateTag(view.state.tags.list[tagId])" />
 											</div>
 											<div class="col-sm-3">
 												<a class="text-danger clickable btn btn-block"
