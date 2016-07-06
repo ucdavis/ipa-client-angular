@@ -1,1 +1,246 @@
-assignment ctrl template
+<script type="text/javascript">
+	jQuery( document ).ready( function( $ ) {
+		$('#courses-pivot').on('click', function(e) {
+			console.log('showing courses');
+			$('#courses-table').show();
+			$('#instructors-table').hide();
+		});
+		$('#instructors-pivot').click(function(e) {
+			console.log('showing instructors');
+			$('#courses-table').hide();
+			$('#instructors-table').show();
+		});
+	} );
+</script>
+
+<nav year="{{ year }}" term-code="{{ termCode }}" workgroup-code="{{ workgroupCode }}"></nav>
+
+<div class="main-content">
+	<h3 style="text-align: center;">Assignments</h3>
+
+	<div class="row" style="margin-bottom: 2em;">
+		<div class="col-sm-offset-3 col-sm-6">
+			<input type="search" class="form-control" placeholder="Search" />
+		</div>
+	</div>
+
+	<div class="row" style="margin-bottom: 1em;">
+		<div class="col-sm-12">
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-white btn-sm active" id="courses-pivot">
+					<input type="radio" name="options">
+					<span class="tool-icon glyphicon glyphicon-education"></span> By Course
+				</label>
+				<label class="btn btn-white btn-sm" id="instructors-pivot">
+					<input type="radio" name="options">
+					<span class="tool-icon glyphicon glyphicon-user"></span> By Instructor
+				</label>
+			</div>
+		</div>
+	</div>
+
+	<div id="courses-table">
+		<div class="course-list-row">
+			<div class="course-header description-cell">
+				Course
+			</div>
+			<div class="term-header term-cell">
+				Fall Quarter
+			</div>
+			<div class="term-header term-cell">
+				Winter Quarter
+			</div>
+			<div class="term-header term-cell">
+				Spring Quarter
+			</div>
+		</div>
+		<div class="course-list-row">
+			<div class="description-cell">
+				<div>
+					<div class="course-title">
+						PSC 001 Introduction to Psychology - 001
+					</div>
+					<div class="course-units">
+						Units: 4
+					</div>
+				</div>
+			</div>
+			<div class="term-cell">
+				<p>
+					<span class="assignment-seats" data-toggle="tooltip" data-placement="top"
+						title="" data-original-title="Seats" data-container="body">
+						200
+					</span>
+				</p>
+				<div class="alert alert-info tile-assignment">
+					<div>Lu, Sammy</div>
+					<i class="btn glyphicon glyphicon-remove assignment-remove text-primary"
+						data-toggle="tooltip" data-placement="top"
+						title="" data-original-title="Unassign" data-container="body"></i>
+				</div>
+				<select name="test" class="select2" data-allow-clear="true" data-placeholder="Assign...">
+					<option></option>
+					<optgroup label="Interested">
+						<option value="1">Sagit, Bob</option>
+						<option value="2">Johnson, Smith</option>
+					</optgroup>
+					<optgroup label="Other">
+						<option value="3">McCormick, Janet</option>
+						<option value="4">McGlophlin, Sarah</option>
+						<option value="5">Brown, Suzi</option>
+					</optgroup>
+				</select>
+			</div>
+			<div class="term-cell">
+				<p>
+					<span class="assignment-seats" data-toggle="tooltip" data-placement="top"
+						title="" data-original-title="Seats" data-container="body">200</span>
+				</p>
+				<div class="alert alert-info tile-assignment">
+					<p>Lu, Sammy</p>
+					<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary" data-toggle="tooltip" data-placement="top"
+						title="" data-original-title="Unassign" data-container="body"></i>
+				</div>
+				<select name="test" class="select2" data-allow-clear="true" data-placeholder="Assign...">
+					<option></option>
+					<optgroup label="Interested">
+						<option value="1">Sagit, Bob</option>
+						<option value="2">Johnson, Smith</option>
+					</optgroup>
+					<optgroup label="Other">
+						<option value="3">McCormick, Janet</option>
+						<option value="4">McGlophlin, Sarah</option>
+						<option value="5">Brown, Suzi</option>
+					</optgroup>
+				</select>
+			</div>
+			<div class="term-cell">
+				<p>
+					<span class="assignment-seats" data-toggle="tooltip" data-placement="top"
+						title="" data-original-title="Seats" data-container="body">200</span>
+				</p>
+				<div class="alert alert-info tile-assignment">
+					<p>Lu, Sammy</p>
+					<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary" data-toggle="tooltip" data-placement="top"
+						title="" data-original-title="Unassign" data-container="body"></i>
+				</div>
+				<select name="test" class="select2" data-allow-clear="true" data-placeholder="Assign...">
+					<option></option>
+					<optgroup label="Interested">
+						<option value="1">Sagit, Bob</option>
+						<option value="2">Johnson, Smith</option>
+					</optgroup>
+					<optgroup label="Other">
+						<option value="3">McCormick, Janet</option>
+						<option value="4">McGlophlin, Sarah</option>
+						<option value="5">Brown, Suzi</option>
+					</optgroup>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<div class="instructors-table">
+		<div class="course-list-row">
+			<div class="course-header description-cell">
+				Instructor
+			</div>
+			<div class="term-header term-cell">
+				Fall Quarter
+			</div>
+			<div class="term-header term-cell">
+				Winter Quarter
+			</div>
+			<div class="term-header term-cell">
+				Spring Quarter
+			</div>
+		</div>
+
+		<div class="course-list-row">
+			<div class="description-cell">
+				<strong>Brown, Suzi</strong>
+			</div>
+			<div class="term-cell">
+
+				<div class="alert alert-info tile-assignment">
+					<p>PSC 113 - A Series</p>
+					<div class="tile-assignment-details">
+						<small>Seats: 75</small>
+						<br />
+						<small>Units: 3</small>
+					</div>
+					<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary" data-toggle="tooltip" data-placement="top"
+						title="" data-original-title="Unassign" data-container="body"></i>
+				</div>
+				<select name="test" class="select2" data-allow-clear="true" data-placeholder="Assign...">
+					<option></option>
+					<optgroup label="Interested">
+						<option value="1">PSC 113 - B Series</option>
+						<option value="3">BUYOUT</option>
+					</optgroup>
+					<optgroup label="Other">
+						<option value="4">COURSE RELEASE</option>
+						<option value="4">SABBATICAL</option>
+						<option value="3">PSC 001 - 001 </option>
+						<option value="4">PSC 001 - 002 </option>
+					</optgroup>
+				</select>
+
+			</div>
+			<div class="term-cell">
+
+				<div class="alert alert-info tile-assignment">
+					<p>PSC 113 - A Series</p>
+					<div class="tile-assignment-details">
+						<small>Seats: 75</small>
+						<br />
+						<small>Units: 3</small>
+					</div>
+					<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary" data-toggle="tooltip" data-placement="top"
+						title="" data-original-title="Unassign" data-container="body"></i>
+				</div>
+				<select name="test" class="select2" data-allow-clear="true" data-placeholder="Assign...">
+					<option></option>
+					<optgroup label="Interested">
+						<option value="1">PSC 113 - B Series</option>
+						<option value="3">BUYOUT</option>
+					</optgroup>
+					<optgroup label="Other">
+						<option value="4">COURSE RELEASE</option>
+						<option value="4">SABBATICAL</option>
+						<option value="3">PSC 001 - 001 </option>
+						<option value="4">PSC 001 - 002 </option>
+					</optgroup>
+				</select>
+
+			</div>
+			<div class="term-cell">
+
+				<div class="alert alert-info tile-assignment">
+					<p>PSC 113 - A Series</p>
+					<div class="tile-assignment-details">
+						<small>Seats: 75</small>
+						<br />
+						<small>Units: 3</small>
+					</div>
+					<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary" data-toggle="tooltip" data-placement="top"
+						title="" data-original-title="Unassign" data-container="body"></i>
+				</div>
+				<select name="test" class="select2" data-allow-clear="true" data-placeholder="Assign...">
+					<option></option>
+					<optgroup label="Interested">
+						<option value="1">PSC 113 - B Series</option>
+						<option value="3">BUYOUT</option>
+					</optgroup>
+					<optgroup label="Other">
+						<option value="4">COURSE RELEASE</option>
+						<option value="4">SABBATICAL</option>
+						<option value="3">PSC 001 - 001 </option>
+						<option value="4">PSC 001 - 002 </option>
+					</optgroup>
+				</select>
+			</div> <!-- term-cell -->
+		</div> <!-- course list row -->
+
+	</div> <!-- instructors-list -->
+</div>

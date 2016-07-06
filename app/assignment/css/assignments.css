@@ -439,12 +439,18 @@
 .x-ng-cloak {
   display: none !important;
 }
+
+.tile-assignment, .select2-choice {
+	font-size: 12px;
+}
+
 #instructors-table .tile-assignment {
   position: relative;
   height: 45px;
   line-height: .9em;
   padding: 4px 6px;
 }
+
 #courses-table .tile-assignment {
   position: relative;
   height: 30px;
@@ -460,6 +466,7 @@
   right: 0;
   top: 0;
   color: #000;
+	padding: 4px 12px;
 }
 #instructors-table .assignment-remove {
   position: absolute;
@@ -475,10 +482,9 @@
   line-height: 45px;
   height: 45px;
 }
-#courses-table td {
-  position: relative;
-  padding-top: 2em;
-}
+
+	padding: 8px;
+	
 .assignment-seats {
   position: absolute;
   top: 0;
@@ -493,6 +499,33 @@
 }
 .select2-dropdown-open.select2-drop-above .select2-choice {
   background: none !important;
+}
+
+.course-list-row {
+	display: flex;
+}
+
+.course-header {
+	color: #a6a7aa;
+	background-color: #f5f5f6;
+}
+
+.term-header {
+	color: #a6a7aa;
+	background-color: #f5f5f6;
+}
+
+.term-cell, .description-cell {
+	padding: 8px;
+	font-size: 12px;
+	border: 1px solid #ebebeb;
+}
+.term-cell {
+	flex: 1 1 200px;
+}
+
+.description-cell {
+	flex: 2 1 200px;
 }
 
 .course-title {
