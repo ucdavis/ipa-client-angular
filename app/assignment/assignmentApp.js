@@ -6,14 +6,14 @@ assignmentApp.config(function ($routeProvider) {
 			templateUrl: "AssignmentCtrl.html",
 			controller: "AssignmentCtrl",
 			resolve: {
-				courses: AssignmentCtrl.validate
+				validate: AssignmentCtrl.validate
 			}
 		})
 		.when("/", {
 			templateUrl: "AssignmentCtrl.html",
 			controller: "AssignmentCtrl",
 			resolve: {
-				taco: AssignmentCtrl.validate
+				validate: AssignmentCtrl.validate
 			}
 		})
 		.otherwise({
