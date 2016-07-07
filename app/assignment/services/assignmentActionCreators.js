@@ -11,7 +11,6 @@
 assignmentApp.service('assignmentActionCreators', function (assignmentStateService, assignmentService, $rootScope, Role) {
 	return {
 		getInitCourses: function (workgroupId, year) {
-			console.log("get initCourses");
 			assignmentService.getCoursesByWorkgroupIdAndYear(workgroupId, year).then(function (payload) {
 				var action = {
 					type: INIT_COURSES,

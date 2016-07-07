@@ -13,7 +13,7 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 		getCoursesByWorkgroupIdAndYear: function(workgroupId, year) {
 			var deferred = $q.defer();
 
-			$http.get(serverRoot + "/api/assignmentView/" + workgroupId, + "/" + year + "/courses", { withCredentials: true })
+			$http.get(serverRoot + "/api/assignmentView/" + workgroupId + "/" + year + "/courses", { withCredentials: true })
 			.success(function(courses) {
 				deferred.resolve(courses);
 			})

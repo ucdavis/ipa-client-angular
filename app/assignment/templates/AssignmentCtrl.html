@@ -54,14 +54,17 @@
 				Spring Quarter
 			</div>
 		</div>
-		<div class="course-list-row">
+		<div class="course-list-row" ng-repeat="courseId in view.state.courses.ids">
 			<div class="description-cell">
 				<div>
 					<div class="course-title">
-						PSC 001 Introduction to Psychology - 001
+						{{ view.state.courses.list[courseId].subjectCode }}
+						{{ view.state.courses.list[courseId].courseNumber }}
+						{{ view.state.courses.list[courseId].title }}
+						{{ view.state.courses.list[courseId].sequencePattern }}
 					</div>
 					<div class="course-units">
-						Units: 4
+						Units: {{ view.state.courses.list[courseId].unitsHigh }}
 					</div>
 				</div>
 			</div>
@@ -140,7 +143,7 @@
 		</div>
 	</div>
 
-	<div class="instructors-table">
+	<div id="instructors-table">
 		<div class="course-list-row">
 			<div class="course-header description-cell">
 				Instructor

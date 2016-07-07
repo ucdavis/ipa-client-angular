@@ -7,9 +7,9 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParams',
-		this.AssignmentCtrl = function ($scope, $rootScope, $routeParams) {
-			$scope.workgroupCode = $routeParams.workgroupCode;
+assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParams', 'assignmentActionCreators',
+		this.AssignmentCtrl = function ($scope, $rootScope, $routeParams, assignmentActionCreators) {
+			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.view = {};
 
@@ -19,5 +19,7 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 			});
 	}]);
 AssignmentCtrl.validate = function (authService, assignmentActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year);
+	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then( function() {
+		assignmentActionCreators.getInitCourses($route.current.params.workgroupId, $route.current.params.year);
+	})
 }

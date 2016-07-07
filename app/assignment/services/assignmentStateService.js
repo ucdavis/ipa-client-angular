@@ -20,18 +20,18 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 						ids: []
 					};
 					var coursesList = {};
-					var length = action.payload.courses ? action.payload.courses.length : 0;
+					var length = action.payload ? action.payload.length : 0;
 					for (var i = 0; i < length; i++) {
-						var courseData = action.payload.tags[i];
+						var courseData = action.payload[i];
 						
-						coursesList[courseData.id] = new Tag(courseData);
+						coursesList[courseData.id] = new Course(courseData);
 					}
 
 					courses.ids = _array_sortIdsByProperty(coursesList, "title");
 					courses.list = coursesList;
-					return tags;
+					return courses;
 				default:
-					return tags;
+					return courses;
 			}
 		},
 		reduce: function (action) {
@@ -46,7 +46,6 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 
 			scope._state = newState;
 			$rootScope.$emit('assignmentStateChanged',scope._state);
-			console.log(scope._state);
 		}
 	}
 });
