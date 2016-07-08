@@ -15,7 +15,13 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams',
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
 				$scope.view.state = data;
+
+				window.data = data;
+
+				CourseTable.render(data);
 			});
+
+			CourseTable.registerEvents();
 	}]);
 
 CourseCtrl.getPayload = function (authService, $route, courseActionCreators) {
