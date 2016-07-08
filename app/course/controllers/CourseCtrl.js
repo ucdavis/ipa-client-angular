@@ -13,10 +13,6 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams',
 			$scope.year = $routeParams.year;
 			$scope.view = {};
 
-			$rootScope.$on('courseStateChanged', function (event, data) {
-				$scope.view.state = data;
-			});
-
 	}]);
 
 CourseCtrl.getPayload = function (authService, $route, courseActionCreators) {

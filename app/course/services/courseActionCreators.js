@@ -20,6 +20,19 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			}, function (err) {
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
+		},
+		setActiveCell: function (courseId, termCode) {
+			var action = {
+				type: SET_ACTIVE_CELL,
+				payload: {
+					courseId: courseId,
+					termCode: termCode
+				}
+			};
+			courseStateService.reduce(action);
+		},
+		saveOrCreateSectionGroup: function (courseId, termCode) {
+			// TODO: Save or create here
 		}
 	}
 });

@@ -476,7 +476,7 @@ table.courses-table > tbody > tr > td:not(:first-child) {
 .x-ng-cloak {
   display: none !important;
 }
-.selected-td {
+.selected-tr td:not(.ui-overlay), .selected-td {
   background-color: rgba(179, 181, 198, 0.5);
   color: #000;
 }

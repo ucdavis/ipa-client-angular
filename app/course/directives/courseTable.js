@@ -1,20 +1,15 @@
-courseApp.directive("courseTable", this.courseTable = function () {
+courseApp.directive("courseTable", this.courseTable = function ($rootScope, courseActionCreators) {
 	return {
 		restrict: 'A',
-		scope: {
-			data: '='
-		},
 		link: function (scope, element, attrs) {
-			scope.$watch("data", function () {
-				if (scope.data == undefined) { return; }
-
+			$rootScope.$on('courseStateChanged', function (event, data) {
 				// Clear the table
 				element.empty();
 
 				// Render the header
 				var header = "<thead><tr><th class=\"sorting-asc\">Course</th>";
 
-				$.each(scope.data.scheduleTermStates.ids, function(i, termCode) {
+				$.each(data.scheduleTermStates.ids, function(i, termCode) {
 					header += "<th class=\"sorting\">" + termCode + "</th>"
 				});
 
@@ -25,10 +20,11 @@ courseApp.directive("courseTable", this.courseTable = function () {
 				// Render the body
 				var body = "<tbody></tbody>";
 
-				$.each(scope.data.courses.ids, function(rowIdx, courseId) {
-					var course = scope.data.courses.list[courseId];
+				$.each(data.courses.ids, function(rowIdx, courseId) {
+					var course = data.courses.list[courseId];
+					var trClass = (data.view.selectedCourseId == courseId && !data.view.selectedTermCode) ? "selected-tr" : "";
 
-					var row = "<tr class=\"odd gradeX\" data-course-id=\"" + courseId + "\">";
+					var row = "<tr class=\"odd gradeX " + trClass + "\" data-course-id=\"" + courseId + "\">";
 
 					// First column
 					row += "<td><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
@@ -39,14 +35,15 @@ courseApp.directive("courseTable", this.courseTable = function () {
 					row += "</td>";
 
 					// Term column(s)
-					$.each(scope.data.scheduleTermStates.ids, function(i, termCode) {
-						var sectionGroup = scope.data.sectionGroups.list[course.sectionGroupTermCodeIds[termCode]];
+					$.each(data.scheduleTermStates.ids, function(i, termCode) {
+						var sectionGroup = data.sectionGroups.list[course.sectionGroupTermCodeIds[termCode]];
 						var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
+						var tdClass = (data.view.selectedCourseId == courseId && data.view.selectedTermCode == termCode) ? "selected-td" : "";
 
 						// Calculate this boolean by comparing the sum of all section seats to the plannedSeats
 						var requiresAttention = false;
 
-						row += "<td data-term-code=\"" + termCode + "\"><div>";
+						row += "<td data-term-code=\"" + termCode + "\" class=\"" + tdClass + "\"><div>";
 
 						if(requiresAttention) {
 							row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
@@ -77,11 +74,10 @@ courseApp.directive("courseTable", this.courseTable = function () {
 					$el = $(e.target);
 
 					if($el.hasClass('planned-seats')) {
-						var termCode = $el.data('term-code');
 						var courseId = $el.closest("tr").data('course-id');
+						var termCode = $el.data('term-code');
 
-						// TODO: Save here.
-						console.log(termCode, courseId);
+						courseActionCreators.saveOrCreateSectionGroup(courseId, termCode);
 					}
 				}
 			});
@@ -92,11 +88,10 @@ courseApp.directive("courseTable", this.courseTable = function () {
 
 				if($el.is('td, td *')) {
 					// TODO: termCode and courseId may not be found if clicking on the first column ...
-					var termCode = $el.data('term-code');
 					var courseId = $el.closest("tr").data('course-id');
+					var termCode = $el.data('term-code');
 
-					$(document).trigger( "sg-clicked", [ termCode, courseId ] );
-					console.log(termCode, courseId);
+					courseActionCreators.setActiveCell(courseId, termCode);
 				}
 			});
 
