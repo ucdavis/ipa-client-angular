@@ -31,14 +31,14 @@
 </div>
 
 <div class="fixed right-details">
-	<div class="panel panel-primary panel-highlight" ng-show="selectedEntity">
+	<div class="panel panel-primary panel-highlight" ng-if="view.selectedEntity">
 		<div class="panel-heading">
 			<div class="panel-title">
 				<h4>
-					{{selectedEntity.subjectCode}} {{selectedEntity.courseNumber}}
+					{{view.selectedEntity.subjectCode}} {{view.selectedEntity.courseNumber}}
 					<br>
-					<small ng-show="selectedEntity.term">{{ selectedEntity.term }}</small>
-					<small ng-hide="selectedEntity.term">2016-17</small>
+					<small ng-show="view.selectedEntity.termCode">{{ view.selectedEntity.termCode }}</small>
+					<small ng-hide="view.selectedEntity.termCode">{{ year }}</small>
 				</h4>
 			</div>
 
@@ -54,7 +54,7 @@
 						<div class="row">
 							<label class="col-sm-3 col-sm-offset-1 control-label">Title</label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control course-title-edit" ng-model="selectedEntity.title">
+								<input type="text" class="form-control course-title-edit" ng-model="view.selectedEntity.title">
 							</div>
 						</div>
 					</div>
@@ -75,14 +75,14 @@
 						<div class="row">
 							<label class="col-sm-3 col-sm-offset-1 control-label">Sequence</label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control course-title-edit" ng-model="selectedEntity.sequenceDescription">
+								<input type="text" class="form-control course-title-edit" ng-model="view.selectedEntity.sequenceDescription">
 							</div>
 						</div>
 					</div>
 				</form>
 			</div>
 			<div class="section-group-details" ng-class="{ 'visible': selectedCell.sgId }" style="padding: 1em;">
-				<sg-chart sg="selectedEntity"></sg-chart>
+				<sg-chart sg="view.selectedEntity"></sg-chart>
 				<hr />
 				<table class="table sections-table">
 					<colgroup>
@@ -98,13 +98,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="section in selectedEntity.sections track by section.id">
+						<tr ng-repeat="section in view.selectedEntity.sections track by section.id">
 							<td>{{ section.sequence }}</td>
 							<td>{{ section.enrollment }}</td>
 							<td><input type="text" class="form-control" ng-model="section.seats"></td>
 						</tr>
-						<tr ng-if="selectedEntity.isSeries && selectedEntity.isActive">
-							<td><a>{{ nextSequence(selectedEntity) }}</a></td>
+						<tr ng-if="view.selectedEntity.isSeries && view.selectedEntity.isActive">
+							<td><a>{{ nextSequence(view.selectedEntity) }}</a></td>
 							<td></td>
 							<td></td>
 						</tr>

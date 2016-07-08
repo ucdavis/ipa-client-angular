@@ -57,7 +57,6 @@ var tokenValidatorInterceptor = function ($q, $injector, $rootScope) {
 sharedApp
 	// Intercept Ajax traffic
 	.config(function($httpProvider) {
-		console.log("config block");
 		$httpProvider.interceptors.push(slowConnectionInterceptor);
 		$httpProvider.interceptors.push(tokenValidatorInterceptor);
 	});

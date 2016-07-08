@@ -142,7 +142,6 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			newState.view = scope._viewReducers(action, scope._state.view);
 
 			scope._state = newState;
-			console.log(scope._state);
 			$rootScope.$emit('courseStateChanged',scope._state);
 		}
 	}

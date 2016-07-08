@@ -78,6 +78,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 						var termCode = $el.data('term-code');
 
 						courseActionCreators.saveOrCreateSectionGroup(courseId, termCode);
+						// Important: notify angular since this happends outside of the scope
+						scope.$apply();
 					}
 				}
 			});
@@ -92,6 +94,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					var termCode = $el.data('term-code');
 
 					courseActionCreators.setActiveCell(courseId, termCode);
+					// Important: notify angular since this happends outside of the scope
+					scope.$apply();
 				}
 			});
 
