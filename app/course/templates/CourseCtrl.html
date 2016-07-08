@@ -26,58 +26,8 @@
 		</div>
 	</div>
 
-	<table class="table table-bordered courses-table"></table>
+	<table course-table data="view.state" class="table table-bordered courses-table"></table>
 
-	<!--<table class="table table-bordered courses-table">
-		<thead>
-			<tr>
-				<th class="sorting-asc">Course</th>
-				<th class="sorting" ng-repeat="termCode in ::view.state.scheduleTermStates.ids track by $index">
-					{{ termCode }}
-				</th>
-				<th class="ui-overlay"></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="odd gradeX" ng-repeat="courseId in view.state.courses.ids track by $index" ng-init="course = view.state.courses.list[courseId];">
-				<td sg-cell cell-sgr-id="{{ courseId }}"
-						ng-class="{'selected-td' : selectedCell.sgrId == courseId && !selectedCell.sgId, 'new-row': courseId === 0}">
-					<div ng-show="courseId">
-						<strong>{{ course.subjectCode }} {{ course.courseNumber }} -
-							{{ course.sequencePattern }}</strong> <br />
-						{{ course.title }} <br />
-						Tags:
-						<div class="label" ng-repeat="tag in course.tags track by $index" style="padding: 3px; margin-left: 3px;"
-						ng-style="{'background-color':tag.color}">
-							{{ tag.name }}
-						</div>
-					</div>
-					<div ng-hide="courseId">
-						<course-input></course-input>
-					</div>
-				</td>
-				<td sg-cell cell-sgr-id="{{courseId}}" cell-sg-id="{{sg.id}}" ng-repeat="termCode in ::view.state.scheduleTermStates.ids track by $index"
-						ng-class="{'selected-td' : (selectedCell.sgrId == courseId && selectedCell.sgId == sg.id)
-						|| (selectedCell.sgrId == courseId && !selectedCell.sgId), 'new-row': courseId === 0}">
-						<div ng-show="courseId" ng-init="sectionGroup = view.state.sectionGroups.list[course.sectionGroupTermCodeIds[termCode]];">
-							<div class="right-inner-addon form-group" ng-class="{ 'has-warning': requiresAttention(sectionGroup) }">
-								<i class="entypo-attention text-warning" ng-show="requiresAttention(sectionGroup)"></i>
-								<input ng-value="sectionGroup.plannedSeats"
-									class="form-control"></input>
-							</div>
-						</div>
-				</td>
-				<td class="ui-overlay" ng-class="{ 'new-row': courseId === 0 }">
-						<i class="btn add-before entypo-plus-circled" ng-click="addRowForm($index)" ng-show="courseId"
-							data-toggle="tooltip" data-placement="right" title="" data-original-title="Add a course"></i>
-						<i class="btn delete-sg entypo-minus-circled" ng-click="deleteSectionGroup($index)"
-							data-toggle="tooltip" data-placement="right" title="" data-original-title="Delete..."></i>
-						<i class="btn add-after entypo-plus-circled" ng-click="addRowForm($index+1)" ng-show="courseId"
-							data-toggle="tooltip" data-placement="right" title="" data-original-title="Add a course"></i>
-				</td>
-			</tr>
-		</tbody>
-	</table>-->
 </div>
 
 <div class="fixed right-details">
