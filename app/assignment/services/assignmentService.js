@@ -10,6 +10,20 @@
  */
 assignmentApp.factory("assignmentService", this.assignmentService = function($http, $q) {
 	return {
+		getInitialState: function(workgroupId, year) {
+			var deferred = $q.defer();
+
+			$http.get(serverRoot + "/api/assignmentView/" + workgroupId + "/" + year, { withCredentials: true })
+			.success(function(assignmentView) {
+				deferred.resolve(assignmentView);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+/*
 		getCoursesByWorkgroupIdAndYear: function(workgroupId, year) {
 			var deferred = $q.defer();
 
@@ -22,6 +36,20 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 			});
 
 			return deferred.promise;
+		},
+		getSectionGroupsByWorkgroupIdAndYear: function(workgroupId, year) {
+			var deferred = $q.defer();
+
+			$http.get(serverRoot + "/api/assignmentView/" + workgroupId + "/" + year + "/sectionGroups", { withCredentials: true })
+			.success(function(sectionGroups) {
+				deferred.resolve(sectionGroups);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
+*/
 	};
 });
