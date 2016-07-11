@@ -20,6 +20,6 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 	}]);
 AssignmentCtrl.validate = function (authService, assignmentActionCreators, $route) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then( function() {
-		assignmentActionCreators.getInitCourses($route.current.params.workgroupId, $route.current.params.year);
+		assignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
 	})
 }

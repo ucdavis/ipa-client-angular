@@ -10,7 +10,6 @@ sharedApp.controller('NavCtrl', this.NavCtrl = function(
 	$scope.isImpersonating = userService.isImpersonating();
 	$scope.waitingForImpersonating = false;
 	$scope.loadingUsers = false;
-	console.log("I luv tacos");
 	// Retrieve the data passed by the JSP from the JAVA controller
 	// $scope.activeWorkgroup = userService.getActiveWorkgroup();
 	// $scope.currentUser = userService.getCurrentUser();

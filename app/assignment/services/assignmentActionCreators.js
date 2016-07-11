@@ -10,16 +10,16 @@
  */
 assignmentApp.service('assignmentActionCreators', function (assignmentStateService, assignmentService, $rootScope, Role) {
 	return {
-		getInitCourses: function (workgroupId, year) {
-			assignmentService.getCoursesByWorkgroupIdAndYear(workgroupId, year).then(function (payload) {
+		getInitialState: function (workgroupId, year) {
+			assignmentService.getInitialState(workgroupId, year).then(function (payload) {
 				var action = {
-					type: INIT_COURSES,
+					type: INIT_ASSIGNMENT_VIEW,
 					payload: payload
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
-		}
+		},
 	}
 });
