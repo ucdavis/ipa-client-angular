@@ -1,12 +1,10 @@
 <script type="text/javascript">
 	jQuery( document ).ready( function( $ ) {
 		$('#courses-pivot').on('click', function(e) {
-			console.log('showing courses');
 			$('#courses-table').show();
 			$('#instructors-table').hide();
 		});
 		$('#instructors-pivot').click(function(e) {
-			console.log('showing instructors');
 			$('#courses-table').hide();
 			$('#instructors-table').show();
 		});
@@ -54,7 +52,9 @@
 				Spring Quarter
 			</div>
 		</div>
-		<div class="course-list-row" ng-repeat="courseId in view.state.courses.ids">
+		<div class="course-list-row" ng-repeat="courseId in view.state.courses.ids"
+		ng-init="course=view.state.courses.list[courseId]"
+		ng-if="view.state.courses.list[courseId].isHidden == false">
 			<div class="description-cell">
 				<div>
 					<div class="course-title">
@@ -68,11 +68,13 @@
 					</div>
 				</div>
 			</div>
-			<div class="term-cell">
+			<div class="term-cell" ng-repeat="scheduleTermStateTermCode in view.state.scheduleTermStates.ids"
+				ng-init="sectionGroupId=course.sectionGroupTermCodeIds[scheduleTermStateTermCode]">
+					{{ scheduleTermStateTermCode }}
+				{{ view.state.sectionGroups.list[sectionGroupId].plannedSeats }}
 				<p>
 					<span class="assignment-seats" data-toggle="tooltip" data-placement="top"
-						title="" data-original-title="Seats" data-container="body">
-						200
+						data-original-title="Seats" data-container="body">
 					</span>
 				</p>
 				<div class="alert alert-info tile-assignment">
