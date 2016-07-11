@@ -43,7 +43,7 @@
 					ng-init="parentCourse = view.state.courses.list[view.selectedEntity.courseId]">
 					{{ parentCourse.subjectCode }} {{ parentCourse.courseNumber }}
 					<br>
-					<small>{{ view.selectedEntity.termCode }}</small>
+					<small>{{ view.selectedEntity.termCode.getTermCodeDisplayName() }}</small>
 				</h4>
 			</div>
 

@@ -10,7 +10,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				var header = "<thead><tr><th class=\"sorting-asc\">Course</th>";
 
 				$.each(data.scheduleTermStates.ids, function(i, termCode) {
-					header += "<th class=\"sorting\">" + termCode + "</th>"
+					header += "<th class=\"sorting\">" + termCode.toString().getTermCodeDisplayName(true) + "</th>"
 				});
 
 				header += "<th class=\"ui-overlay\"></th></tr></thead>";
