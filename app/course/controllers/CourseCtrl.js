@@ -25,7 +25,10 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					// A sectionGroup is selected
 					var course = $scope.view.state.courses.list[data.courseId];
 					$scope.view.selectedEntity = $scope.view.state.sectionGroups.list[course.sectionGroupTermCodeIds[data.termCode]];
+				} else {
+					delete $scope.view.selectedEntity;
 				}
+				console.log($scope.view.selectedEntity);
 			});
 
 			$scope.closeDetails = function () {

@@ -65,6 +65,19 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 			});
 
+			$rootScope.$on('cellChanged', function (event, data) {
+				// Remove existing highlighting
+				element.find('tbody > tr').removeClass("selected-tr");
+				element.find('tbody > tr > td').removeClass("selected-td");
+
+				if (data.courseId && !data.termCode) {
+					// Highlight row if a course is selected
+					$('tr[data-course-id="' + data.courseId + '"]').addClass("selected-tr");
+				} else if (data.courseId && data.termCode) {
+					// Highlight single cell if a sectionGroup is selected
+					$('tr[data-course-id="' + data.courseId + '"] td[data-term-code="' + data.termCode + '"]').addClass("selected-td");
+				}
+			});
 
 			// Call this once to set up table events.
 			element.keypress(function (e) {
@@ -90,22 +103,6 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					// TODO: termCode and courseId may not be found if clicking on the first column ...
 					var courseId = $el.closest("tr").data('course-id');
 					var termCode = $el.data('term-code');
-
-					// Remove existing highlighting
-					element.find('tbody > tr').removeClass("selected-tr");
-					element.find('tbody > tr > td').removeClass("selected-td");
-
-					// Highlight single cell if a sectionGroup is selected
-					var selectedIsSectionGroup = $el.closest("td").hasClass("sg-cell");
-					if (selectedIsSectionGroup) {
-						$el.closest("td").addClass("selected-td")
-					}
-
-					// Highlight row if a course is selected
-					var selectedIsCourse = $el.closest("td").hasClass("course-cell");
-					if (selectedIsCourse) {
-						$el.closest("tr").addClass("selected-tr")
-					}
 
 					courseActionCreators.setActiveCell(courseId, termCode);
 					// Important: notify angular since this happends outside of the scope
