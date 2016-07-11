@@ -27,8 +27,33 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 					termCode: termCode
 			});
 		},
-		saveOrCreateSectionGroup: function (courseId, termCode) {
-			// TODO: Save or create here
+		addSectionGroup: function (sectionGroup) {
+			courseService.addSectionGroup(sectionGroup).then(function (sectionGroup) {
+				$rootScope.$emit('toast', {message: "Created course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS"});
+				var action = {
+					type: ADD_SECTION_GROUP,
+					payload: {
+						sectionGroup: sectionGroup
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
+		updateSectionGroup: function (sectionGroup) {
+			courseService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
+				$rootScope.$emit('toast', {message: "Updated course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS"});
+				var action = {
+					type: UPDATE_SECTION_GROUP,
+					payload: {
+						sectionGroup: sectionGroup
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
 		}
 	}
 });

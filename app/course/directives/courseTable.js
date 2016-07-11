@@ -2,7 +2,10 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 	return {
 		restrict: 'A',
 		link: function (scope, element, attrs) {
+			scope.view = {};
 			$rootScope.$on('courseStateChanged', function (event, data) {
+				scope.view.state = data;
+
 				// Clear the table
 				element.empty();
 
@@ -38,18 +41,19 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					// Term column(s)
 					$.each(data.scheduleTermStates.ids, function(i, termCode) {
 						var sectionGroup = data.sectionGroups.list[course.sectionGroupTermCodeIds[termCode]];
+						var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
 						var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
 
 						// Calculate this boolean by comparing the sum of all section seats to the plannedSeats
 						var requiresAttention = false;
 
-						row += "<td data-term-code=\"" + termCode + "\" class=\"sg-cell\"><div>";
+						row += "<td data-term-code=\"" + termCode + "\" data-section-group-id=\"" + sectionGroupId + "\" class=\"sg-cell\"><div>";
 
 						if(requiresAttention) {
 							row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
 						}
 
-						row += "<input value=\"" + plannedSeats + "\" class=\"form-control planned-seats\" data-term-code=\"" + termCode + "\"></input>";
+						row += "<input value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
 						row += "</div></td>";
 					});
 
@@ -88,9 +92,25 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 					if($el.hasClass('planned-seats')) {
 						var courseId = $el.closest("tr").data('course-id');
-						var termCode = $el.data('term-code');
+						var termCode = $el.closest("td").data('term-code').toString();
+						var sectionGroupId = $el.closest("td").data('section-group-id');
+						var plannedSeats = parseInt($el.val());
 
-						courseActionCreators.saveOrCreateSectionGroup(courseId, termCode);
+						if (sectionGroupId) {
+							// Save existing sectionGroup
+							var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+							sectionGroup.plannedSeats = plannedSeats;
+							courseActionCreators.updateSectionGroup(sectionGroup);
+						} else {
+							// Create a new sectionGroup
+							var sectionGroup = {
+								courseId: courseId,
+								termCode: termCode,
+								plannedSeats: plannedSeats
+							};
+							courseActionCreators.addSectionGroup(sectionGroup);
+						}
+
 						// Important: notify angular since this happends outside of the scope
 						scope.$apply();
 					}
@@ -104,7 +124,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				if($el.is('td, td *')) {
 					// TODO: termCode and courseId may not be found if clicking on the first column ...
 					var courseId = $el.closest("tr").data('course-id');
-					var termCode = $el.data('term-code');
+					var termCode = $el.closest("td").data('term-code');
 
 					courseActionCreators.setActiveCell(courseId, termCode);
 					// Important: notify angular since this happends outside of the scope
