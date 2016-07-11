@@ -8,7 +8,7 @@
  * Service in the courseApp.
  * Central location for sharedState information.
  */
-courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup) {
+courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Tag) {
 	return {
 		_state: {},
 		_scheduleTermStateReducers: function (action, scheduleTermStates) {
@@ -113,6 +113,29 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					return sectionGroups;
 			}
 		},
+		_tagReducers: function (action, tags) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					tags = {
+						ids: []
+					};
+					var tagsList = {};
+					var length = action.payload.tags ? action.payload.tags.length : 0;
+					for (var i = 0; i < length; i++) {
+						var tagData = action.payload.tags[i];
+						if (tagData.archived == false) {
+							tagsList[tagData.id] = new Tag(tagData);
+						}
+					}
+					tags.ids = _array_sortIdsByProperty(tagsList, "name");
+					tags.list = tagsList;
+					return tags;
+				default:
+					return tags;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -124,9 +147,11 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			newState.scheduleTermStates = scope._scheduleTermStateReducers(action, scope._state.scheduleTermStates);
 			newState.courses = scope._courseReducers(action, scope._state.courses);
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
+			newState.tags = scope._tagReducers(action, scope._state.tags);
 
 			scope._state = newState;
-			$rootScope.$emit('courseStateChanged',scope._state);
+			$rootScope.$emit('courseStateChanged', scope._state);
+			console.log(scope._state);
 		}
 	}
 });

@@ -28,7 +28,6 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				} else {
 					delete $scope.view.selectedEntity;
 				}
-				console.log($scope.view.selectedEntity);
 			});
 
 			$scope.closeDetails = function () {
