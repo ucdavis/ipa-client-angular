@@ -34,11 +34,16 @@
 	<div class="panel panel-primary panel-highlight" ng-if="view.selectedEntity">
 		<div class="panel-heading">
 			<div class="panel-title">
-				<h4>
-					{{view.selectedEntity.subjectCode}} {{view.selectedEntity.courseNumber}}
+				<h4 ng-if="view.selectedEntityType == 'course'">
+					{{ view.selectedEntity.subjectCode }} {{ view.selectedEntity.courseNumber 	}}
 					<br>
-					<small ng-show="view.selectedEntity.termCode">{{ view.selectedEntity.termCode }}</small>
-					<small ng-hide="view.selectedEntity.termCode">{{ year }}</small>
+					<small>{{ view.selectedEntity.title }}</small>
+				</h4>
+				<h4 ng-if="view.selectedEntityType == 'sectionGroup'"
+					ng-init="parentCourse = view.state.courses.list[view.selectedEntity.courseId]">
+					{{ parentCourse.subjectCode }} {{ parentCourse.courseNumber }}
+					<br>
+					<small>{{ view.selectedEntity.termCode }}</small>
 				</h4>
 			</div>
 
@@ -48,7 +53,7 @@
 		</div>
 
 		<div class="panel-body no-padding">
-			<div class="course-details" ng-if="selectedCell.sgrId > 0 && !selectedCell.sgId">
+			<div class="course-details" ng-if="view.selectedEntityType == 'course'">
 				<form role="form" class="form-horizontal form-groups-bordered">
 					<div class="right-details-group">
 						<div class="row">
@@ -62,11 +67,9 @@
 						<div class="row">
 							<label class="col-sm-3 col-sm-offset-1 control-label">Tags</label>
 							<div class="col-sm-7">
-								<select name="test" class="select2" multiple>
-									<option value="1" selected>Undergraduate</option>
-									<option value="2" selected>Graduate</option>
-									<option value="3" selected>Code Course</option>
-									<option value="4" >Elective</option>
+								<select name="test" class="select2" multiple
+									option-ids="view.state.tags.ids" selected-ids="view.selectedEntity.tagIds"
+									option-objects="view.state.tags.list">
 								</select>
 							</div>
 						</div>
@@ -75,13 +78,14 @@
 						<div class="row">
 							<label class="col-sm-3 col-sm-offset-1 control-label">Sequence</label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control course-title-edit" ng-model="view.selectedEntity.sequenceDescription">
+								<input type="text" class="form-control course-title-edit" ng-model="view.selectedEntity.sequencePattern">
 							</div>
 						</div>
 					</div>
 				</form>
 			</div>
-			<div class="section-group-details" ng-class="{ 'visible': selectedCell.sgId }" style="padding: 1em;">
+			<div class="section-group-details" style="padding: 1em;"
+				ng-class="{ 'visible': view.selectedEntityType == 'sectionGroup' }">
 				<sg-chart sg="view.selectedEntity"></sg-chart>
 				<hr />
 				<table class="table sections-table">
