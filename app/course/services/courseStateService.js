@@ -113,21 +113,6 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					return sectionGroups;
 			}
 		},
-		_viewReducers: function (action, view) {
-			var scope = this;
-
-			switch (action.type) {
-				case INIT_STATE:
-					view = {};
-					return view;
-				case SET_ACTIVE_CELL:
-					view.selectedCourseId = action.payload.courseId;
-					view.selectedTermCode = action.payload.termCode;
-					return view;
-				default:
-					return view;
-			}
-		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -139,7 +124,6 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			newState.scheduleTermStates = scope._scheduleTermStateReducers(action, scope._state.scheduleTermStates);
 			newState.courses = scope._courseReducers(action, scope._state.courses);
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
-			newState.view = scope._viewReducers(action, scope._state.view);
 
 			scope._state = newState;
 			$rootScope.$emit('courseStateChanged',scope._state);

@@ -22,12 +22,11 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 				$.each(data.courses.ids, function(rowIdx, courseId) {
 					var course = data.courses.list[courseId];
-					var trClass = (data.view.selectedCourseId == courseId && !data.view.selectedTermCode) ? "selected-tr" : "";
 
-					var row = "<tr class=\"odd gradeX " + trClass + "\" data-course-id=\"" + courseId + "\">";
+					var row = "<tr class=\"odd gradeX\" data-course-id=\"" + courseId + "\">";
 
 					// First column
-					row += "<td><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
+					row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
 					row += "Tags:";
 					$.each(course.tags, function(i, tag) {
 						row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + tag.color + "\">" + tag.name + "</div>"
@@ -38,12 +37,11 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					$.each(data.scheduleTermStates.ids, function(i, termCode) {
 						var sectionGroup = data.sectionGroups.list[course.sectionGroupTermCodeIds[termCode]];
 						var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
-						var tdClass = (data.view.selectedCourseId == courseId && data.view.selectedTermCode == termCode) ? "selected-td" : "";
 
 						// Calculate this boolean by comparing the sum of all section seats to the plannedSeats
 						var requiresAttention = false;
 
-						row += "<td data-term-code=\"" + termCode + "\" class=\"" + tdClass + "\"><div>";
+						row += "<td data-term-code=\"" + termCode + "\" class=\"sg-cell\"><div>";
 
 						if(requiresAttention) {
 							row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
@@ -69,7 +67,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 
 			// Call this once to set up table events.
-			element.keypress(function (e, $el) {
+			element.keypress(function (e) {
 				if(e.which == 13) {
 					$el = $(e.target);
 
@@ -85,13 +83,29 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 			});
 
 			// Emit sg-clicked event whenever a table <td> is clicked.
-			element.click(function(e, $el) {
+			element.click(function(e) {
 				$el = $(e.target);
 
 				if($el.is('td, td *')) {
 					// TODO: termCode and courseId may not be found if clicking on the first column ...
 					var courseId = $el.closest("tr").data('course-id');
 					var termCode = $el.data('term-code');
+
+					// Remove existing highlighting
+					element.find('tbody > tr').removeClass("selected-tr");
+					element.find('tbody > tr > td').removeClass("selected-td");
+
+					// Highlight single cell if a sectionGroup is selected
+					var selectedIsSectionGroup = $el.closest("td").hasClass("sg-cell");
+					if (selectedIsSectionGroup) {
+						$el.closest("td").addClass("selected-td")
+					}
+
+					// Highlight row if a course is selected
+					var selectedIsCourse = $el.closest("td").hasClass("course-cell");
+					if (selectedIsCourse) {
+						$el.closest("tr").addClass("selected-tr")
+					}
 
 					courseActionCreators.setActiveCell(courseId, termCode);
 					// Important: notify angular since this happends outside of the scope

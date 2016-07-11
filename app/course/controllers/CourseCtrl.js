@@ -14,13 +14,17 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			$scope.view = {};
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
-				if (data.view.selectedCourseId && !data.view.selectedTermCode) {
+				$scope.view.state = data;
+			});
+
+			$rootScope.$on('cellChanged', function (event, data) {
+				if (data.courseId && !data.termCode) {
 					// A course is selected
-					$scope.view.selectedEntity = data.courses.list[data.view.selectedCourseId];
-				} else if (data.view.selectedCourseId && data.view.selectedTermCode) {
+					$scope.view.selectedEntity = $scope.view.state.courses.list[data.courseId];
+				} else if (data.courseId && data.termCode) {
 					// A sectionGroup is selected
-					var course = data.courses.list[data.view.selectedCourseId];
-					$scope.view.selectedEntity = data.sectionGroups.list[course.sectionGroupTermCodeIds[data.view.selectedTermCode]];
+					var course = $scope.view.state.courses.list[data.courseId];
+					$scope.view.selectedEntity = $scope.view.state.sectionGroups.list[course.sectionGroupTermCodeIds[data.termCode]];
 				}
 			});
 

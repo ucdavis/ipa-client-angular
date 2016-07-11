@@ -500,6 +500,7 @@ th.ui-overlay {
   visibility: hidden;
   border: 0px !important;
   position: relative;
+  width: 30px;
 }
 .add-before {
   position: absolute;

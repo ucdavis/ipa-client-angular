@@ -22,14 +22,10 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			});
 		},
 		setActiveCell: function (courseId, termCode) {
-			var action = {
-				type: SET_ACTIVE_CELL,
-				payload: {
+			$rootScope.$emit('cellChanged', {
 					courseId: courseId,
 					termCode: termCode
-				}
-			};
-			courseStateService.reduce(action);
+			});
 		},
 		saveOrCreateSectionGroup: function (courseId, termCode) {
 			// TODO: Save or create here
