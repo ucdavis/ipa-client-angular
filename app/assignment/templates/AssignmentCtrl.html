@@ -42,14 +42,11 @@
 			<div class="course-header description-cell">
 				Course
 			</div>
-			<div class="term-header term-cell">
-				Fall Quarter
-			</div>
-			<div class="term-header term-cell">
-				Winter Quarter
-			</div>
-			<div class="term-header term-cell">
-				Spring Quarter
+			<div class="term-header term-cell"
+					ng-repeat="scheduleTermStateTermCode in view.state.scheduleTermStates.ids"
+					ng-init="termCode = view.state.scheduleTermStates.list[scheduleTermStateTermCode].termCode"
+					ng-if="view.state.scheduleTermStates.list[view.state.scheduleTermStates.list[scheduleTermStateTermCode].termCode].isHidden == false">
+					{{ termCode.getTermCodeDisplayName(true) }}
 			</div>
 		</div>
 		<!-- Course row repeating -->
@@ -71,9 +68,8 @@
 			</div>
 			<!-- SectionGroups in Course repeating -->
 			<div class="term-cell" ng-repeat="scheduleTermStateTermCode in view.state.scheduleTermStates.ids"
-				ng-if="view.state.scheduleTermStates.list[scheduleTermStateTermCode].isShown"
+				ng-if="view.state.scheduleTermStates.list[scheduleTermStateTermCode].isHidden == false"
 				ng-init="sectionGroupId=course.sectionGroupTermCodeIds[scheduleTermStateTermCode]">
-					{{ scheduleTermStateTermCode }}
 				{{ view.state.sectionGroups.list[sectionGroupId].plannedSeats }}
 
 				list of each instructor tied to approved teachingAssignment tied to sectionGroup
@@ -103,6 +99,11 @@
 			</div> <!-- SectionGroup Term cell -->
 		</div> <!-- Course Row -->
 	</div> <!-- Table courses-table -->
+
+
+
+
+
 
 	<div id="instructors-table">
 		<div class="course-list-row">

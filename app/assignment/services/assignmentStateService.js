@@ -61,11 +61,11 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 						scheduleTermStateList[scheduleTermStateData.termCode] = new ScheduleTermState(scheduleTermStateData);
 
 						// Set default display of termCodes
-						scheduleTermStateList[scheduleTermStateData.termCode].isShown = false;
+						scheduleTermStateList[scheduleTermStateData.termCode].isHidden = true;
 						var term = scheduleTermStateData.termCode.slice(-2);
 
 						if( activeTerms.indexOf(term) > -1 ) {
-							scheduleTermStateList[scheduleTermStateData.termCode].isShown = true;
+							scheduleTermStateList[scheduleTermStateData.termCode].isHidden = false;
 						}
 					}
 					scheduleTermStates.ids = _array_sortIdsByProperty(scheduleTermStateList, "termCode");
