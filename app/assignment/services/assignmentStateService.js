@@ -44,6 +44,28 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					return courses;
 			}
 		},
+		_instructorReducers: function (action, instructors) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					instructors = {
+						ids: [],
+						list: []
+					};
+					var instructorsList = {};
+					var length = action.payload.instructors ? action.payload.instructors.length : 0;
+					for (var i = 0; i < length; i++) {
+						var instructor = new Course(action.payload.instructors[i]);
+						instructorsList[instructor.id] = instructor;
+					}
+					instructors.ids = _array_sortIdsByProperty(instructorsList, ["lastName"]);
+					instructors.list = instructorsList;
+					return instructors;
+				default:
+					return instructors;
+			}
+		},
 		_scheduleTermStateReducers: function (action, scheduleTermStates) {
 			var scope = this;
 			var activeTerms = ['07','10','03'];
@@ -109,6 +131,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 			newState.scheduleTermStates = scope._scheduleTermStateReducers(action, scope._state.scheduleTermStates);
 			newState.courses = scope._courseReducers(action, scope._state.courses);
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
+			newState.instructors = scope._instructorReducers(action, scope._state.instructors);
 
 			scope._state = newState;
 
