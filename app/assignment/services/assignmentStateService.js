@@ -119,6 +119,28 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					return scheduleTermStates;
 			}
 		},
+		_scheduleInstructorNoteReducers: function (action, scheduleInstructorNotes) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					scheduleInstructorNotes = {
+						ids: [],
+						list: []
+					};
+					var scheduleInstructorNotesList = {};
+					var length = action.payload.scheduleInstructorNotes ? action.payload.scheduleInstructorNotes.length : 0;
+					for (var i = 0; i < length; i++) {
+						var scheduleInstructorNote = new ScheduleInstructorNote(action.payload.scheduleInstructorNotes[i]);
+						scheduleInstructorNotesList[scheduleInstructorNote.id] = scheduleInstructorNote;
+					}
+					scheduleInstructorNotes.ids = _array_sortIdsByProperty(scheduleInstructorNotesList, ["id"]);
+					scheduleInstructorNotes.list = scheduleInstructorNotesList;
+					return scheduleInstructorNotes;
+				default:
+					return scheduleInstructorNotes;
+			}
+		},
 		_sectionGroupReducers: function (action, sectionGroups) {
 			var scope = this;
 
