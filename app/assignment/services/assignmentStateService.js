@@ -8,7 +8,7 @@
  * Service in the workgroupApp.
  * Central location for sharedState information.
  */
-assignmentApp.service('assignmentStateService', function ($rootScope, SectionGroup, Course, ScheduleTermState, Instructor, TeachingAssignment) {
+assignmentApp.service('assignmentStateService', function ($rootScope, SectionGroup, Course, ScheduleTermState, ScheduleInstructorNote, Instructor, TeachingAssignment) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -177,6 +177,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.instructors = scope._instructorReducers(action, scope._state.instructors);
 			newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
+			newState.scheduleInstructorNotes = scope._scheduleInstructorNoteReducers(action, scope._state.scheduleInstructorNotes);
 
 			scope._state = newState;
 
