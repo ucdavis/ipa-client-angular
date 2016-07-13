@@ -46,6 +46,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 		},
 		_scheduleTermStateReducers: function (action, scheduleTermStates) {
 			var scope = this;
+			var activeTerms = ['07','10','03'];
 
 			switch (action.type) {
 				case INIT_ASSIGNMENT_VIEW:
@@ -58,6 +59,14 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 						var scheduleTermStateData = action.payload.scheduleTermStates[i];
 						// Using termCode as key since the scheduleTermState does not have an id
 						scheduleTermStateList[scheduleTermStateData.termCode] = new ScheduleTermState(scheduleTermStateData);
+
+						// Set default display of termCodes
+						scheduleTermStateList[scheduleTermStateData.termCode].isShown = false;
+						var term = scheduleTermStateData.termCode.slice(-2);
+
+						if( activeTerms.indexOf(term) > -1 ) {
+							scheduleTermStateList[scheduleTermStateData.termCode].isShown = true;
+						}
 					}
 					scheduleTermStates.ids = _array_sortIdsByProperty(scheduleTermStateList, "termCode");
 					scheduleTermStates.list = scheduleTermStateList;
