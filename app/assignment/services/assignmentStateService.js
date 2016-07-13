@@ -8,7 +8,7 @@
  * Service in the workgroupApp.
  * Central location for sharedState information.
  */
-assignmentApp.service('assignmentStateService', function ($rootScope, SectionGroup, Course, ScheduleTermState) {
+assignmentApp.service('assignmentStateService', function ($rootScope, SectionGroup, Course, ScheduleTermState, Instructor, TeachingAssignment) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -44,6 +44,28 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					return courses;
 			}
 		},
+		_teachingAssignmentReducers: function (action, teachingAssignments) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					teachingAssignments = {
+						ids: [],
+						list: []
+					};
+					var teachingAssignmentsList = {};
+					var length = action.payload.courses ? action.payload.courses.length : 0;
+					for (var i = 0; i < length; i++) {
+						var teachingAssignment = new TeachingAssignment(action.payload.teachingAssignments[i]);
+						teachingAssignmentsList[teachingAssignment.id] = teachingAssignment;
+					}
+					teachingAssignments.ids = _array_sortIdsByProperty(teachingAssignmentsList, ["approved"]);
+					teachingAssignments.list = teachingAssignmentsList;
+					return teachingAssignments;
+				default:
+					return teachingAssignments;
+			}
+		},
 		_instructorReducers: function (action, instructors) {
 			var scope = this;
 
@@ -56,7 +78,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					var instructorsList = {};
 					var length = action.payload.instructors ? action.payload.instructors.length : 0;
 					for (var i = 0; i < length; i++) {
-						var instructor = new Course(action.payload.instructors[i]);
+						var instructor = new Instructor(action.payload.instructors[i]);
 						instructorsList[instructor.id] = instructor;
 					}
 					instructors.ids = _array_sortIdsByProperty(instructorsList, ["lastName"]);
@@ -132,6 +154,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 			newState.courses = scope._courseReducers(action, scope._state.courses);
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.instructors = scope._instructorReducers(action, scope._state.instructors);
+			newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
 
 			scope._state = newState;
 
