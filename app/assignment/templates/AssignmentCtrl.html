@@ -70,20 +70,21 @@
 			<div class="term-cell" ng-repeat="scheduleTermStateTermCode in view.state.scheduleTermStates.ids"
 				ng-if="view.state.scheduleTermStates.list[scheduleTermStateTermCode].isHidden == false"
 				ng-init="sectionGroupId=course.sectionGroupTermCodeIds[scheduleTermStateTermCode]">
-				{{ view.state.sectionGroups.list[sectionGroupId].plannedSeats }}
-
-				list of each instructor tied to approved teachingAssignment tied to sectionGroup
-				<p>
-					<span class="assignment-seats" data-toggle="tooltip" data-placement="top"
-						data-original-title="Seats" data-container="body">
-					</span>
-				</p>
-				<div class="alert alert-info tile-assignment">
+				<div class="assignment-seats" data-toggle="tooltip" data-placement="top"
+					data-original-title="Seats" data-container="body">
+					{{ view.state.sectionGroups.list[sectionGroupId].plannedSeats }}
+				</div>
+				Show each approved teaching assignment tied to this sectionGroup (and its instructor data)
+				sectionGroup: {{ sectionGroupId }}
+				teachingAssignments: {{view.state.sectionGroups.list[sectionGroupId].teachingAssignmentIds.length}}
+				<div ng-repeat="taco in loopy"
+				class="alert alert-info tile-assignment">
 					<div>Lu, Sammy</div>
 					<i class="btn glyphicon glyphicon-remove assignment-remove text-primary"
 						data-toggle="tooltip" data-placement="top"
 						title="" data-original-title="Unassign" data-container="body"></i>
 				</div>
+
 				<select name="test" class="select2" data-allow-clear="true" data-placeholder="Assign...">
 					<option></option>
 					<optgroup label="Interested">

@@ -90,7 +90,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 		},
 		_scheduleTermStateReducers: function (action, scheduleTermStates) {
 			var scope = this;
-			var activeTerms = ['07','10','03'];
+			var activeTerms = ['10','01','03'];
 
 			switch (action.type) {
 				case INIT_ASSIGNMENT_VIEW:
@@ -150,14 +150,29 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 						newSectionGroup: {},
 						ids: []
 					};
-
+					
 					var sectionGroupsList = {};
+
 					var length = action.payload.sectionGroups ? action.payload.sectionGroups.length : 0;
 					for (var i = 0; i < length; i++) {
-						var sectionGroupData = action.payload.sectionGroups[i];
-						sectionGroupsList[sectionGroupData.id] = new SectionGroup(sectionGroupData);
-						sectionGroups.ids.push(sectionGroupData.id);
+						var sectionGroup = new SectionGroup(action.payload.sectionGroups[i]);
+						sectionGroupsList[sectionGroup.id] = sectionGroup;
+						sectionGroups.ids.push(sectionGroup.id);
+						// TODO: fix this block
+						// Add teachingAssignmentIds associated to this sectionGroup
+						sectionGroupsList[sectionGroup.id].teachingAssignmentIds = [];
+						action.payload.teachingAssignments
+							.filter(function (teachingAssignment) {
+								return teachingAssignment.sectionGroupId === sectionGroup.id
+							})
+							.forEach(function (teachingAssignment) {
+								if ( sectionGroup.id == 76318) {
+									debugger;
+								}
+								sectionGroupsList[sectionGroup.id].teachingAssignmentIds.push(teachingAssignment.id);
+							});
 					}
+
 					sectionGroups.list = sectionGroupsList;
 					return sectionGroups;
 				default:
