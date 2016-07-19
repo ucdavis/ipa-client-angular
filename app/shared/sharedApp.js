@@ -1,9 +1,10 @@
 window.sharedApp = angular.module('sharedApp',
 	[
-		// 3rd party
+		// 3rd party modules
 		'ui.bootstrap',
 		'ngIdle',
-		// IPA Entities
+
+		// Local modules
 		'courseOfferingGroup',
 		'sectionGroup',
 		'courseOffering',
@@ -26,7 +27,8 @@ window.sharedApp = angular.module('sharedApp',
 		'teachingPreference',
 		'teachingCallReceipt',
 		'teachingCallResponse'
-	]);
+	]
+);
 
 sharedApp
 	// Set the CSRF token
@@ -34,7 +36,11 @@ sharedApp
 		function ($httpProvider, $compileProvider, IdleProvider, KeepaliveProvider, $locationProvider) {
 			// Add CSRF token to all requests
 			var csrfHeader = $('meta[name=csrf-header]').attr('content');
-			$httpProvider.defaults.headers.common[csrfHeader] = $('meta[name=csrf-token]').attr('content');
+			if(csrfHeader === undefined) {
+				console.warn("CSRF meta tag not found.");
+			} else {
+				$httpProvider.defaults.headers.common[csrfHeader] = $('meta[name=csrf-token]').attr('content');
+			}
 
 			$httpProvider.useApplyAsync(true);
 			$compileProvider.debugInfoEnabled(false);
@@ -44,17 +50,10 @@ sharedApp
 				enabled: true
 			});
 
-			// configure Idle settings
+			// Configure Idle settings
 			IdleProvider.idle(25 * 60); // 25 minutes: After this amount of time passes without the user performing an action the user is considered idle
 			IdleProvider.timeout(5 * 60); // 5 minute: The amount of time the user has to respond before they have been considered timed out
 			KeepaliveProvider.interval(5 * 60); // 5 minutes: This specifies how often the KeepAlive event is triggered and the HTTP request is issued
-
-			// // Toastr customization
-			// angular.extend(toastrConfig, {
-			// 	positionClass: 'toast-bottom-right',
-			// 	target: 'body'
-			// });
-
 		}])
 
 	// Detect route errors
@@ -66,6 +65,7 @@ sharedApp
 					$rootScope.loadingView = true;
 				}
 			});
+
 			$rootScope.$on('$routeChangeSuccess', function (e, curr, prev) {
 				// Hide loading message
 				$rootScope.loadingView = false;
@@ -78,8 +78,6 @@ sharedApp
 
 			// Start ngIdle watch
 			Idle.watch();
-
-
 		}
 	])
 
@@ -102,4 +100,4 @@ sharedApp
 						break;
 				};
 			});
-		}]);
+	}]);
