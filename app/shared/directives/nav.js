@@ -7,6 +7,7 @@ sharedApp.directive("nav", this.nav = function($timeout, $location, $rootScope, 
 			scope.sharedState = authService.getSharedState();
 			scope.termCode = attrs.termCode;
 
+			// TODO: Shouldn't this be set somewhere to be shared outside of <nav> ? -CT
 			$rootScope.$on('sharedStateSet', function (event, data) {
 				scope.sharedState = data;
 			});
