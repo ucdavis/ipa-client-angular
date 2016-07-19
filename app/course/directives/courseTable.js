@@ -1,8 +1,12 @@
+/**
+ * Provides the main course table in the Courses View
+ */
 courseApp.directive("courseTable", this.courseTable = function ($rootScope, courseActionCreators) {
 	return {
 		restrict: 'A',
 		link: function (scope, element, attrs) {
 			scope.view = {};
+
 			$rootScope.$on('courseStateChanged', function (event, data) {
 				scope.view.state = data;
 

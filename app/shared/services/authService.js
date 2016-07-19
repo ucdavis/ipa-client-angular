@@ -19,6 +19,10 @@ angular.module('sharedApp')
 			activeYear: 0,
 			userWorkgroups: [],
 			displayName: "",
+
+			/**
+			 * Validates the given JWT token with the backend.
+			 */
 			validate: function (token, workgroupId, year) {
 				var deferred = $q.defer();
 				var userRoles = this.getUserRoles();
@@ -29,7 +33,9 @@ angular.module('sharedApp')
 					// Token may be null if we are redirecting
 					if (response.data != null && response.data.token !== null) {
 						var token = response.data.token;
+
 						$http.defaults.headers.common.Authorization = 'Bearer ' + token;
+						
 						localStorage.setItem('JWT', token);
 						localStorage.setItem('userRoles', JSON.stringify(response.data.userRoles));
 						localStorage.setItem('displayName', response.data.displayName);
@@ -42,7 +48,6 @@ angular.module('sharedApp')
 						} else {
 							scope.setSharedState(workgroupId, year, response.data.displayName);
 						}
-
 
 						deferred.resolve(response);
 					} else if(response.data != null && response.data.redirect != null && response.data.redirect.length > 0) {
@@ -63,12 +68,14 @@ angular.module('sharedApp')
 
 				return deferred.promise;
 			},
+
 			logout: function () {
 				localStorage.removeItem('JWT');
 				localStorage.removeItem('userRoles');
 				localStorage.removeItem('displayName');
 				$window.location.href = serverRoot + "/logout";
 			},
+			
 			getUserRoles: function () {
 				var userRoles = null;
 
@@ -80,6 +87,7 @@ angular.module('sharedApp')
 
 				return userRoles;
 			},
+			
 			fallbackToDefaultUrl: function() {
 				var userRoles = this.getUserRoles();
 				for (var i = 0; i < userRoles.length; i++) {
@@ -93,6 +101,7 @@ angular.module('sharedApp')
 					}
 				}
 			},
+			
 			setSharedState: function (workgroupId, year, displayName) {
 				var scope = this;
 				var userRoles = scope.getUserRoles();
@@ -118,6 +127,7 @@ angular.module('sharedApp')
 
 				$rootScope.$emit('sharedStateSet', scope.getSharedState());
 			},
+			
 			getSharedState: function () {
 				return {
 					workgroup: this.activeWorkgroup,

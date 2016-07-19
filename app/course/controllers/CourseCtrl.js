@@ -36,7 +36,8 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				courseActionCreators.setActiveCell();
 				delete $scope.view.selectedEntity;
 			}
-	}]);
+	}
+]);
 
 CourseCtrl.getPayload = function (authService, $route, courseActionCreators) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.courseCode, $route.current.params.year).then(function () {

@@ -56,6 +56,7 @@ sharedApp
 			// });
 
 		}])
+
 	// Detect route errors
 	.run(['$rootScope', 'Idle',
 		function ($rootScope, Idle) {
@@ -79,7 +80,8 @@ sharedApp
 			Idle.watch();
 
 
-		}])
+		}
+	])
 
 	// Listen to toast requests
 	.run(['$rootScope',
