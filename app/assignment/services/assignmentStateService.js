@@ -158,17 +158,14 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 						var sectionGroup = new SectionGroup(action.payload.sectionGroups[i]);
 						sectionGroupsList[sectionGroup.id] = sectionGroup;
 						sectionGroups.ids.push(sectionGroup.id);
-						// TODO: fix this block
-						// Add teachingAssignmentIds associated to this sectionGroup
+
+						// Create a list of teachingAssignmentIds that are associated to this sectionGroup
 						sectionGroupsList[sectionGroup.id].teachingAssignmentIds = [];
 						action.payload.teachingAssignments
 							.filter(function (teachingAssignment) {
 								return teachingAssignment.sectionGroupId === sectionGroup.id
 							})
 							.forEach(function (teachingAssignment) {
-								if ( sectionGroup.id == 76318) {
-									debugger;
-								}
 								sectionGroupsList[sectionGroup.id].teachingAssignmentIds.push(teachingAssignment.id);
 							});
 					}

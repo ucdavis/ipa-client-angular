@@ -37,8 +37,10 @@
 		</div>
 	</div>
 
+	<div course-assignment-table id="courses-table"></table>
+
 	<div id="courses-table">
-		<div class="course-list-row">
+		<!-- <div class="course-list-row">
 			<div class="course-header description-cell">
 				Course
 			</div>
@@ -48,7 +50,7 @@
 					ng-if="view.state.scheduleTermStates.list[view.state.scheduleTermStates.list[scheduleTermStateTermCode].termCode].isHidden == false">
 					{{ termCode.getTermCodeDisplayName(true) }}
 			</div>
-		</div>
+		</div> -->
 		<!-- Course row repeating -->
 		<div class="course-list-row" ng-repeat="courseId in view.state.courses.ids"
 		ng-init="course=view.state.courses.list[courseId]"
@@ -66,6 +68,7 @@
 					</div>
 				</div>
 			</div>
+
 			<!-- SectionGroups in Course repeating -->
 			<div class="term-cell" ng-repeat="scheduleTermStateTermCode in view.state.scheduleTermStates.ids"
 				ng-if="view.state.scheduleTermStates.list[scheduleTermStateTermCode].isHidden == false"
@@ -74,12 +77,11 @@
 					data-original-title="Seats" data-container="body">
 					{{ view.state.sectionGroups.list[sectionGroupId].plannedSeats }}
 				</div>
-				Show each approved teaching assignment tied to this sectionGroup (and its instructor data)
-				sectionGroup: {{ sectionGroupId }}
-				teachingAssignments: {{view.state.sectionGroups.list[sectionGroupId].teachingAssignmentIds.length}}
-				<div ng-repeat="taco in loopy"
-				class="alert alert-info tile-assignment">
-					<div>Lu, Sammy</div>
+				<div ng-repeat="teachingAssignmentId in view.state.sectionGroups.list[sectionGroupId].teachingAssignmentIds"
+					class="alert alert-info tile-assignment"
+					ng-init="teachingAssignment=view.state.teachingAssignments.list[teachingAssignmentId]"
+					ng-if="view.state.teachingAssignments.list[teachingAssignmentId].approved">
+					{{ view.state.instructors.list[teachingAssignment.instructorId].fullName }}
 					<i class="btn glyphicon glyphicon-remove assignment-remove text-primary"
 						data-toggle="tooltip" data-placement="top"
 						title="" data-original-title="Unassign" data-container="body"></i>
@@ -192,6 +194,7 @@
 					<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary" data-toggle="tooltip" data-placement="top"
 						title="" data-original-title="Unassign" data-container="body"></i>
 				</div>
+
 				<select name="test" class="select2" data-allow-clear="true" data-placeholder="Assign...">
 					<option></option>
 					<optgroup label="Interested">
@@ -207,6 +210,5 @@
 				</select>
 			</div> <!-- term-cell -->
 		</div> <!-- course list row -->
-
 	</div> <!-- instructors-list -->
 </div>
