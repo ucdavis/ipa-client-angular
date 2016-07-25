@@ -205,8 +205,18 @@ isCourseSuppressed = function(course) {
 
 	var lastChar = course.courseNumber.charAt(course.courseNumber.length-1);
 	var secondLastChar = course.courseNumber.charAt(course.courseNumber.length-2);
-	if (secondLastChar == 9 && (lastChar == 8 || lastChar == 9)) {
-		return true;
+	var thirdLastChar = course.courseNumber.charAt(course.courseNumber.length-3);
+	
+	// Filter out courses like 299H
+	if (isLetter(lastChar)) {
+		if (thirdLastChar == 9 && (secondLastChar == 8 || secondLastChar == 9)) {
+			return true;
+		}
+	} else {
+		if (secondLastChar == 9 && (lastChar == 8 || lastChar == 9)) {
+			return true;
+		}
 	}
+
 	return false;
 }
