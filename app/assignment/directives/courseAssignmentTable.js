@@ -17,8 +17,8 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 				var header = "<div class=\"course-list-row\">";
 				header += "<div class=\"course-header description-cell\">Course</div>";
 
-				$.each(data.scheduleTermStates.ids, function(i, termCode) {
-					if (data.scheduleTermStates.list[termCode].isHidden == false) {
+				$.each(scope.view.state.scheduleTermStates.ids, function(i, termCode) {
+					if (scope.view.state.scheduleTermStates.list[termCode].isHidden == false) {
 						header += "<div class=\"term-header term-cell\">" + termCode.toString().getTermCodeDisplayName(true) + "</div>";
 					}
 				});
@@ -27,7 +27,68 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 
 				element.append(header);
 
-				debugger;
+				// Render the list of courses
+				var coursesHtml = "";
+				// TODO: Loop over courses (sectionGroup rows)
+				$.each(scope.view.state.courses.ids, function(i, courseId) {
+					var course = scope.view.state.courses.list[courseId];
+					if (course.isHidden == false) {
+						var courseHtml = "";
+						courseHtml += "<div class=\"course-list-row\">";
+						courseHtml += "<div class=\"description-cell\"><div><div class=\"course-title\">";
+						courseHtml += course.subjectCode + " " + course.courseNumber + " " + course.title + " " + course.sequencePattern;
+						courseHtml += "</div>";
+						courseHtml += "<div class=\"course-units\">";
+						courseHtml += "Units: " + course.unitsHigh;
+						courseHtml += "</div></div></div>";
+						
+						// TODO: Loop over active terms
+						$.each(scope.view.state.scheduleTermStates.ids, function(i, termCode) {
+							if (scope.view.state.scheduleTermStates.list[termCode].isHidden == false) {
+								courseHtml += "<div class=\"term-cell\">";
+								var sectionGroupId = course.sectionGroupTermCodeIds[termCode];
+								if (sectionGroupId) {
+									var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+
+									courseHtml += "<div class=\"assignment-seats\" data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Seats\" data-container=\"body\">";
+									courseHtml += scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats;
+									courseHtml += "</div>";
+
+									// TODO: Loop over teachingAssignments that are approved
+									$.each(sectionGroup.teachingAssignmentIds, function(i, teachingAssignmentId) {
+										var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+
+										if (teachingAssignment.approved == true) {
+											var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
+											courseHtml += "<div class=\"alert alert-info tile-assignment\">";
+
+											if (instructor == undefined) {
+												courseHtml += "instructorId not found: " + teachingAssignment.instructorId;
+											} else {
+												courseHtml += instructor.fullName;
+											}
+											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\"";
+											courseHtml += "data-placement=\"top\" data-original-title=\"Unassign\" data-container=\"body\"></i>";
+											courseHtml += "</div>"; // Ending Teaching assignment div
+
+											// TODO: Add an assign button to add more instructors
+										}
+									});
+								}
+								courseHtml += "</div>"; // Ending term-cell div
+							}
+						});
+						courseHtml += "</div>"; // Ending course-row div
+						
+						coursesHtml += courseHtml;
+					}
+				});
+
+
+				element.append(coursesHtml);
+
+// ----------------- OLD STUFF -----------------
+	/*
 				// Render the body
 				var body = "<tbody></tbody>";
 
@@ -76,70 +137,10 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 				});
 
 				element.append(body);
+				// ----------------- OLD STUFF -----------------
+			*/
+			}); // end on event 'assignmentStateChanged'
 
-			});
-
-			$rootScope.$on('cellChanged', function (event, data) {
-				// Remove existing highlighting
-				element.find('tbody > tr').removeClass("selected-tr");
-				element.find('tbody > tr > td').removeClass("selected-td");
-
-				if (data.courseId && !data.termCode) {
-					// Highlight row if a course is selected
-					$('tr[data-course-id="' + data.courseId + '"]').addClass("selected-tr");
-				} else if (data.courseId && data.termCode) {
-					// Highlight single cell if a sectionGroup is selected
-					$('tr[data-course-id="' + data.courseId + '"] td[data-term-code="' + data.termCode + '"]').addClass("selected-td");
-				}
-			});
-
-			// Call this once to set up table events.
-			element.keypress(function (e) {
-				if(e.which == 13) {
-					$el = $(e.target);
-
-					if($el.hasClass('planned-seats')) {
-						var courseId = $el.closest("tr").data('course-id');
-						var termCode = $el.closest("td").data('term-code').toString();
-						var sectionGroupId = $el.closest("td").data('section-group-id');
-						var plannedSeats = parseInt($el.val());
-
-						if (sectionGroupId) {
-							// Save existing sectionGroup
-							var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
-							sectionGroup.plannedSeats = plannedSeats;
-							courseActionCreators.updateSectionGroup(sectionGroup);
-						} else {
-							// Create a new sectionGroup
-							var sectionGroup = {
-								courseId: courseId,
-								termCode: termCode,
-								plannedSeats: plannedSeats
-							};
-							courseActionCreators.addSectionGroup(sectionGroup);
-						}
-
-						// Important: notify angular since this happends outside of the scope
-						scope.$apply();
-					}
-				}
-			});
-
-			// Emit sg-clicked event whenever a table <td> is clicked.
-			element.click(function(e) {
-				$el = $(e.target);
-
-				if($el.is('td, td *')) {
-					// TODO: termCode and courseId may not be found if clicking on the first column ...
-					var courseId = $el.closest("tr").data('course-id');
-					var termCode = $el.closest("td").data('term-code');
-
-					courseActionCreators.setActiveCell(courseId, termCode);
-					// Important: notify angular since this happends outside of the scope
-					scope.$apply();
-				}
-			});
-
-		}
+		} // end link
 	}
 });
