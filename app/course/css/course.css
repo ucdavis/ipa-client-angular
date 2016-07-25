@@ -606,3 +606,9 @@ table.sections-table > tbody tr > td {
 .section-group-details.visible {
   visibility: visible;
 }
+
+/* .btn-group vertical-align pushes the icons with dropdown menus out of veritcal
+   alignment with the icons without a dropdown menu */
+.table-toolbar>.btn-group {
+  vertical-align: initial;
+}

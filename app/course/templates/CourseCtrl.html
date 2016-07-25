@@ -14,14 +14,63 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="table-toolbar">
-				<span class="tool-icon glyphicon glyphicon-list-alt"
-				data-toggle="tooltip" data-placement="top" title="" data-original-title="Columns"></span>
-				<span class="tool-icon glyphicon glyphicon-filter"
-				data-toggle="tooltip" data-placement="top" title="" data-original-title="Filters"></span>
-				<span class="tool-icon glyphicon glyphicon-download-alt"
-				data-toggle="tooltip" data-placement="top" title="" data-original-title="Download"></span>
-				<span class="tool-icon glyphicon glyphicon-print"
-				data-toggle="tooltip" data-placement="top" title="" data-original-title="Print"></span>
+				<script type="text/javascript">
+					// TODO: Move me somewhere else.
+
+					// Taken from http://codepen.io/bseth99/pen/fboKH
+					// Allows checkboxes to be used in Bootstrap dropdowns
+					var options = [];
+					$( '.dropdown-menu a' ).on( 'click', function( event ) {
+
+						var $target = $( event.currentTarget ),
+								val = $target.attr( 'data-value' ),
+								$inp = $target.find( 'input' ),
+								idx;
+
+						if ( ( idx = options.indexOf( val ) ) > -1 ) {
+								options.splice( idx, 1 );
+								setTimeout( function() { $inp.prop( 'checked', false ) }, 0);
+						} else {
+								options.push( val );
+								setTimeout( function() { $inp.prop( 'checked', true ) }, 0);
+						}
+
+						$( event.target ).blur();
+								
+						console.log( options );
+						return false;
+					});
+				</script>
+
+				<div class="btn-group">
+					<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+					<ul class="dropdown-menu">
+						<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Fall Quarter</a></li>
+						<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Winter Quarter</a></li>
+						<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Spring Quarter</a></li>
+					</ul>
+				</div> <!-- .btn-group -->
+
+				<div class="btn-group">
+					<span class="tool-icon glyphicon glyphicon-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+					<ul class="dropdown-menu">
+						<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Undergraduate</a></li>
+						<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Graduate</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Published Courses</a></li>
+						<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Unpublished Courses</a></li>
+					</ul>
+				</div> <!-- .btn-group -->
+
+				<div class="btn-group">
+					<span class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+					<ul class="dropdown-menu">
+						<li><a href="#" class="small">as Excel</a></li>
+						<li><a href="#" class="small">as CSV</a></li>
+					</ul>
+				</div> <!-- .btn-group -->
+
+				<span class="tool-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print"></span>
 			</div>
 		</div>
 	</div>
