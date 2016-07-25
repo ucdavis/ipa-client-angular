@@ -24,12 +24,11 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 				});
 
 				header += "</div>";
-
 				element.append(header);
 
-				// Render the list of courses
 				var coursesHtml = "";
-				// TODO: Loop over courses (sectionGroup rows)
+
+				// Loop over courses (sectionGroup rows)
 				$.each(scope.view.state.courses.ids, function(i, courseId) {
 					var course = scope.view.state.courses.list[courseId];
 					if (course.isHidden == false) {
@@ -42,7 +41,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 						courseHtml += "Units: " + course.unitsHigh;
 						courseHtml += "</div></div></div>";
 						
-						// TODO: Loop over active terms
+						// Loop over active terms
 						$.each(scope.view.state.scheduleTermStates.ids, function(i, termCode) {
 							if (scope.view.state.scheduleTermStates.list[termCode].isHidden == false) {
 								courseHtml += "<div class=\"term-cell\">";
@@ -50,16 +49,20 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 								if (sectionGroupId) {
 									var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 
-									courseHtml += "<div class=\"assignment-seats\" data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Seats\" data-container=\"body\">";
-									courseHtml += scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats;
+									// Adding sectionGroup Seats
+									courseHtml += "<div>";
+									courseHtml += "<span class=\"assignment-seats\" data-toggle=\"tooltip\" data-placement=\"top\"";
+									courseHtml += "data-original-title=\"Seats\" data-container=\"body\">";
+									courseHtml += scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats + "</span>";
 									courseHtml += "</div>";
 
-									// TODO: Loop over teachingAssignments that are approved
+									// Loop over teachingAssignments that are approved
 									$.each(sectionGroup.teachingAssignmentIds, function(i, teachingAssignmentId) {
 										var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 
 										if (teachingAssignment.approved == true) {
 											var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
+											// Add approved teachingAssignment to term
 											courseHtml += "<div class=\"alert alert-info tile-assignment\">";
 
 											if (instructor == undefined) {
@@ -67,13 +70,26 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 											} else {
 												courseHtml += instructor.fullName;
 											}
+
 											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\"";
 											courseHtml += "data-placement=\"top\" data-original-title=\"Unassign\" data-container=\"body\"></i>";
 											courseHtml += "</div>"; // Ending Teaching assignment div
-
-											// TODO: Add an assign button to add more instructors
 										}
 									});
+
+									// Add an assign button to add more instructors
+									courseHtml += "<select name=\"test\" class=\"select2\" data-allow-clear=\"true\" data-placeholder=\"Assign...\">";
+									courseHtml += "<option></option>";
+									courseHtml += "<optgroup label=\"Interested\">";
+									courseHtml += "<option value=\"1\">Sagit, Bob</option>";
+									courseHtml += "<option value=\"2\">Johnson, Smith</option>";
+									courseHtml += "</optgroup>";
+									courseHtml += "<optgroup label=\"Other\">";
+									courseHtml += "<option value=\"3\">McCormick, Janet</option>";
+									courseHtml += "<option value=\"4\">McGlophlin, Sarah</option>";
+									courseHtml += "<option value=\"5\">Brown, Suzi</option>";
+									courseHtml += "</optgroup>";
+									courseHtml += "</select>";
 								}
 								courseHtml += "</div>"; // Ending term-cell div
 							}
@@ -82,10 +98,16 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 						
 						coursesHtml += courseHtml;
 					}
-				});
-
+				}); // Ending loop over courses
 
 				element.append(coursesHtml);
+
+				// Manually activate bootstrap tooltip triggers
+				$('body').tooltip({
+    			selector: '[data-toggle="tooltip"]'
+				});
+				//$('.select2').select2();
+				$('.select2').addClass('visible');
 
 // ----------------- OLD STUFF -----------------
 	/*
