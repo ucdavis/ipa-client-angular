@@ -7,3 +7,7 @@
 // isNumber(false); // false
 // isNumber('   '); // false
 function isNumber(obj) { return ! isNaN (obj-0) && obj !== null && obj !== "" && obj !== false; }
+
+function isLetter(c) {
+  return c.toLowerCase() != c.toUpperCase();
+}

@@ -158,17 +158,14 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 						var sectionGroup = new SectionGroup(action.payload.sectionGroups[i]);
 						sectionGroupsList[sectionGroup.id] = sectionGroup;
 						sectionGroups.ids.push(sectionGroup.id);
-						// TODO: fix this block
-						// Add teachingAssignmentIds associated to this sectionGroup
+
+						// Create a list of teachingAssignmentIds that are associated to this sectionGroup
 						sectionGroupsList[sectionGroup.id].teachingAssignmentIds = [];
 						action.payload.teachingAssignments
 							.filter(function (teachingAssignment) {
 								return teachingAssignment.sectionGroupId === sectionGroup.id
 							})
 							.forEach(function (teachingAssignment) {
-								if ( sectionGroup.id == 76318) {
-									debugger;
-								}
 								sectionGroupsList[sectionGroup.id].teachingAssignmentIds.push(teachingAssignment.id);
 							});
 					}
@@ -206,10 +203,26 @@ isCourseSuppressed = function(course) {
 	// TODO: implement this check once toggle is added
 	// if (suppressingDoNotPrint == false) { return false;}
 
+	// HardCoded courses that are suppressed
+	var suppressedCourseNumbers = ["194HA", "194HB", "197T", "201"];
+	if (suppressedCourseNumbers.indexOf(course.courseNumber) > -1) {
+		return true;
+	}	
+
 	var lastChar = course.courseNumber.charAt(course.courseNumber.length-1);
 	var secondLastChar = course.courseNumber.charAt(course.courseNumber.length-2);
-	if (secondLastChar == 9 && (lastChar == 8 || lastChar == 9)) {
-		return true;
+	var thirdLastChar = course.courseNumber.charAt(course.courseNumber.length-3);
+	
+	// Filter out courses like 299H
+	if (isLetter(lastChar)) {
+		if (thirdLastChar == 9 && (secondLastChar == 8 || secondLastChar == 9)) {
+			return true;
+		}
+	} else {
+		if (secondLastChar == 9 && (lastChar == 8 || lastChar == 9)) {
+			return true;
+		}
 	}
+
 	return false;
 }

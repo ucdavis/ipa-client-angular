@@ -483,10 +483,7 @@
   height: 45px;
 }
 
-	padding: 8px;
-	
 .assignment-seats {
-  position: absolute;
   top: 0;
   left: 0;
   text-align: right;
@@ -535,4 +532,20 @@
 
 .course-units {
 	color: #949494;
+}
+
+.assign-dropdown .dropdown-toggle {
+	background: white;
+	width: 100%;
+	text-align: left;
+}
+
+.dropdown-menu {
+	width: 100%;
+}
+
+.dropdown-assign-header {
+	font-weight: bold;
+	color: rgb(0,0,0);
+	padding-left: 10px;
 }
