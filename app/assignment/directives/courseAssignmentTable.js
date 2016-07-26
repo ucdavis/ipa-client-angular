@@ -53,7 +53,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 									courseHtml += "<div>";
 									courseHtml += "<span class=\"assignment-seats\" data-toggle=\"tooltip\" data-placement=\"top\"";
 									courseHtml += "data-original-title=\"Seats\" data-container=\"body\">";
-									courseHtml += scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats + "</span>";
+									courseHtml += scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats + "-" + sectionGroupId + "</span>";
 									courseHtml += "</div>";
 
 									// Loop over teachingAssignments that are approved
@@ -78,18 +78,32 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 									});
 
 									// Add an assign button to add more instructors
-									courseHtml += "<select name=\"test\" class=\"select2\" data-allow-clear=\"true\" data-placeholder=\"Assign...\">";
-									courseHtml += "<option></option>";
-									courseHtml += "<optgroup label=\"Interested\">";
-									courseHtml += "<option value=\"1\">Sagit, Bob</option>";
-									courseHtml += "<option value=\"2\">Johnson, Smith</option>";
-									courseHtml += "</optgroup>";
-									courseHtml += "<optgroup label=\"Other\">";
-									courseHtml += "<option value=\"3\">McCormick, Janet</option>";
-									courseHtml += "<option value=\"4\">McGlophlin, Sarah</option>";
-									courseHtml += "<option value=\"5\">Brown, Suzi</option>";
-									courseHtml += "</optgroup>";
-									courseHtml += "</select>";
+									courseHtml += "<div class=\"dropdown assign-dropdown\">";
+									courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
+									courseHtml += "Assign..<span class=\"caret\"></span></button>";
+									courseHtml += "<ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">";
+									courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
+
+									// Loop over instructors who are interested in this course
+									$.each(sectionGroup.teachingAssignmentIds, function(i, teachingAssignmentId) {
+										var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+
+										if (teachingAssignment.approved == false) {
+											var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
+											courseHtml += "<li><a href=\"#\">" + instructor.fullName + "</a></li>";
+										}
+									});
+									courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
+
+									// Loop over instructors who are not interested in this course
+									$.each(scope.view.state.instructors.ids, function(i, instructorId) {
+										var instructor = scope.view.state.instructors.list[instructorId];
+										courseHtml += "<li><a href=\"#\">" + instructor.fullName + "</a></li>";
+									});
+
+									courseHtml += "</ul></div>";
+								} else {
+									courseHtml += "Not Offered";
 								}
 								courseHtml += "</div>"; // Ending term-cell div
 							}
@@ -106,61 +120,6 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 				$('body').tooltip({
     			selector: '[data-toggle="tooltip"]'
 				});
-				//$('.select2').select2();
-				$('.select2').addClass('visible');
-
-// ----------------- OLD STUFF -----------------
-	/*
-				// Render the body
-				var body = "<tbody></tbody>";
-
-				$.each(data.courses.ids, function(rowIdx, courseId) {
-					var course = data.courses.list[courseId];
-
-					var row = "<tr class=\"odd gradeX\" data-course-id=\"" + courseId + "\">";
-
-					// First column
-					row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
-					row += "Tags:";
-					$.each(course.tagIds, function (i, tagId) {
-						var tag = data.tags.list[tagId];
-						var bgColor = tag.color ? tag.color : "#333";
-						row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + bgColor + "\">" + tag.name + "</div>"
-					});
-					row += "</td>";
-
-					// Term column(s)
-					$.each(data.scheduleTermStates.ids, function(i, termCode) {
-						var sectionGroup = data.sectionGroups.list[course.sectionGroupTermCodeIds[termCode]];
-						var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
-						var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
-
-						// Calculate this boolean by comparing the sum of all section seats to the plannedSeats
-						var requiresAttention = false;
-
-						row += "<td data-term-code=\"" + termCode + "\" data-section-group-id=\"" + sectionGroupId + "\" class=\"sg-cell\"><div>";
-
-						if(requiresAttention) {
-							row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
-						}
-
-						row += "<input value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
-						row += "</div></td>";
-					});
-
-					// Actions column
-					row += "<td class=\"ui-overlay\"><i class=\"btn add-before entypo-plus-circled\" onClick=\"addRowForm(" + rowIdx + ")\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Add a course\"></i>";
-					row += "<i class=\"btn delete-sg entypo-minus-circled\" onClick=\"deleteSectionGroup(" + rowIdx + ")\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Delete...\"></i>";
-					row += "<i class=\"btn add-after entypo-plus-circled\" onClick=\"addRowForm(" + (rowIdx + 1) + ")\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Add a course\"></i></td>";
-
-					row += "</tr>";
-
-					body += row;
-				});
-
-				element.append(body);
-				// ----------------- OLD STUFF -----------------
-			*/
 			}); // end on event 'assignmentStateChanged'
 
 		} // end link

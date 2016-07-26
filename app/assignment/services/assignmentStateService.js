@@ -203,6 +203,12 @@ isCourseSuppressed = function(course) {
 	// TODO: implement this check once toggle is added
 	// if (suppressingDoNotPrint == false) { return false;}
 
+	// HardCoded courses that are suppressed
+	var suppressedCourseNumbers = ["194HA", "194HB", "197T", "201"];
+	if (suppressedCourseNumbers.indexOf(course.courseNumber) > -1) {
+		return true;
+	}	
+
 	var lastChar = course.courseNumber.charAt(course.courseNumber.length-1);
 	var secondLastChar = course.courseNumber.charAt(course.courseNumber.length-2);
 	var thirdLastChar = course.courseNumber.charAt(course.courseNumber.length-3);
