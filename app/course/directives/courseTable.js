@@ -16,8 +16,17 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				// Render the header
 				var header = "<thead><tr><th class=\"sorting-asc\">Course</th>";
 
-				$.each(data.scheduleTermStates.ids, function(i, termCode) {
-					header += "<th class=\"sorting\">" + termCode.toString().getTermCodeDisplayName(true) + "</th>"
+				// Filter scope.termDefinitions to only those terms which are enabled by the filter.
+				// Store this in termsToRender.
+				var termsToRender = [];
+				$.each(scope.termDefinitions, function(i, term) {
+					if(data.filters.enabledTerms.indexOf(Number(term.shortCode)) != -1) {
+						termsToRender.push(term);
+					}
+				});
+				
+				$.each(termsToRender, function(i, term) {
+					header += "<th class=\"sorting\">" + term.description + "</th>"
 				});
 
 				header += "<th class=\"ui-overlay\"></th></tr></thead>";
@@ -43,7 +52,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					row += "</td>";
 
 					// Term column(s)
-					$.each(data.scheduleTermStates.ids, function(i, termCode) {
+					$.each(termsToRender, function(i, term) {
+						var termCode = term.code;
 						var sectionGroup = data.sectionGroups.list[course.sectionGroupTermCodeIds[termCode]];
 						var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
 						var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";

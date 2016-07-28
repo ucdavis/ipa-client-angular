@@ -27,6 +27,15 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 					termCode: termCode
 			});
 		},
+		toggleTermFilter: function (termId) {
+			var action = {
+				type: TOGGLE_TERM_FILTER,
+				payload: {
+					termId: termId
+				}
+			};
+			courseStateService.reduce(action);
+		},
 		addSectionGroup: function (sectionGroup) {
 			courseService.addSectionGroup(sectionGroup).then(function (sectionGroup) {
 				$rootScope.$emit('toast', {message: "Created course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS"});

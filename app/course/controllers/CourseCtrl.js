@@ -36,6 +36,10 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				courseActionCreators.setActiveCell();
 				delete $scope.view.selectedEntity;
 			}
+
+			$scope.termToggled = function(id) {
+				courseActionCreators.toggleTermFilter(id);
+			}
 	}
 ]);
 

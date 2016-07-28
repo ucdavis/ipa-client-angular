@@ -136,6 +136,38 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					return tags;
 			}
 		},
+		_filterReducers: function (action, filters) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					// A filter is 'enabled' if it is checked, i.e. the category it represents
+					// is selected to be shown/on/active.
+					filters = {
+						enabledTerms: [10, 1, 3], // these match the 'id' field in termDefinitions
+						enabledTags: [],
+						enablePublishedCourses: true,
+						enableUnpublishedCourses: false
+					};
+					// Here is where we might load stored data about what filters
+					// were left on last time.
+					return filters;
+				case TOGGLE_TERM_FILTER:
+					var termId = action.payload.termId;
+					var idx = filters.enabledTerms.indexOf(termId);
+					// A term in the term filter dropdown has been toggled on or off.
+					if(idx === -1) {
+						// Toggle on
+						filters.enabledTerms.push(termId);
+					} else {
+						// Toggle off
+						filters.enabledTerms.splice(idx, 1);
+					}
+					return filters;
+				default:
+					return filters;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -148,10 +180,12 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			newState.courses = scope._courseReducers(action, scope._state.courses);
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.tags = scope._tagReducers(action, scope._state.tags);
+			newState.filters = scope._filterReducers(action, scope._state.filters);
 
 			scope._state = newState;
 			$rootScope.$emit('courseStateChanged', scope._state);
-			console.log(scope._state);
+			console.debug("Course state updated:");
+			console.debug(scope._state);
 		}
 	}
 });
