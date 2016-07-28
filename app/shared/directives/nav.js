@@ -1,4 +1,4 @@
-sharedApp.directive("nav", this.nav = function($timeout, $location, $rootScope, authService) {
+sharedApp.directive("nav", this.nav = function($timeout, $location, $rootScope, authService, Term) {
 	return {
 		restrict: 'E',
 		templateUrl: 'nav.html',
@@ -11,12 +11,12 @@ sharedApp.directive("nav", this.nav = function($timeout, $location, $rootScope, 
 			$rootScope.$on('sharedStateSet', function (event, data) {
 				scope.sharedState = data;
 			});
-
-			scope.terms = [
-				{ id: 1, description: "Fall Quarter", code: "10" },
-				{ id: 2, description: "Winter Quarter", code: "01" },
-				{ id: 3, description: "Spring Quarter", code: "03" }
-			];
+			// TODO: Move shared data being put into the nav directive. Yay clean architecture. -CT
+			// A list of all possible terms, not necessarily the ones
+			// with data for this schedule.
+			// We leave code '04' off because it is unused.
+			// This table is purposefully ordered in the order of terms in an academic year (starts with 5).
+			scope.termDefinitions = Term.prototype.generateTable(scope.year);
 
 			// Sidebar Collapse icon
 			element.find(".sidebar-collapse-icon").on('click', function (ev) {
