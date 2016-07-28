@@ -1,0 +1,1 @@
+<li ng-repeat="item in items"><a href="#" class="small" data-value="{{ item.id }}" tabIndex="-1" ng-click="selectItem($event, item.id)"><input type="checkbox" ng-checked="activeIds.indexOf(item.id) != -1" />&nbsp;&nbsp;{{ item.description }}</a></li>
