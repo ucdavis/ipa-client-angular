@@ -54,13 +54,20 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 						list: []
 					};
 					var teachingAssignmentsList = {};
-					var length = action.payload.courses ? action.payload.courses.length : 0;
+					var length = action.payload.teachingAssignments ? action.payload.teachingAssignments.length : 0;
 					for (var i = 0; i < length; i++) {
 						var teachingAssignment = new TeachingAssignment(action.payload.teachingAssignments[i]);
 						teachingAssignmentsList[teachingAssignment.id] = teachingAssignment;
 					}
 					teachingAssignments.ids = _array_sortIdsByProperty(teachingAssignmentsList, ["approved"]);
 					teachingAssignments.list = teachingAssignmentsList;
+					return teachingAssignments;
+				case UPDATE_TEACHING_ASSIGNMENT:
+					teachingAssignments.list[action.payload.teachingAssignment.id] = action.payload.teachingAssignment;
+					return teachingAssignments;
+				case ADD_TEACHING_ASSIGNMENT:
+					teachingAssignments.list[action.payload.teachingAssignment.id] = action.payload.teachingAssignment;
+					teachingAssignments.ids.push(action.payload.teachingAssignment.id);
 					return teachingAssignments;
 				default:
 					return teachingAssignments;
@@ -77,9 +84,26 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					};
 					var instructorsList = {};
 					var length = action.payload.instructors ? action.payload.instructors.length : 0;
+					
+					// Loop over instructors
 					for (var i = 0; i < length; i++) {
 						var instructor = new Instructor(action.payload.instructors[i]);
 						instructorsList[instructor.id] = instructor;
+						instructorsList[instructor.id].teachingAssignmentTermCodeIds = {};
+						// Create arrays of teachingAssignmentIds for each termCode
+						for (var j = 0; j < action.payload.scheduleTermStates.length; j++) {
+							var termCode = action.payload.scheduleTermStates[j].termCode;
+							instructorsList[instructor.id].teachingAssignmentTermCodeIds[termCode] = [];
+
+							// Create array of teachingAssignmentIds that are associated to this termCode and instructor
+							action.payload.teachingAssignments
+								.filter(function (teachingAssignment) {
+									return (teachingAssignment.instructorId === instructor.id && teachingAssignment.termCode === termCode)
+								})
+								.forEach(function (teachingAssignment) {
+									instructorsList[instructor.id].teachingAssignmentTermCodeIds[termCode].push(teachingAssignment.id);
+								});
+						}
 					}
 					instructors.ids = _array_sortIdsByProperty(instructorsList, ["lastName"]);
 					instructors.list = instructorsList;
@@ -176,6 +200,23 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					return sectionGroups;
 			}
 		},
+		_userInterfaceReducers: function (action, userInterface) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					var userInterface = {};
+					userInterface.showInstructors = false;
+					userInterface.showCourses = true;
+					return userInterface;
+				case SWITCH_MAIN_VIEW:
+					userInterface.showCourses = action.payload.showCourses;
+					userInterface.showInstructors = action.payload.showInstructors;
+					return userInterface;
+				default:
+					return userInterface;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -190,6 +231,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 			newState.instructors = scope._instructorReducers(action, scope._state.instructors);
 			newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
 			newState.scheduleInstructorNotes = scope._scheduleInstructorNoteReducers(action, scope._state.scheduleInstructorNotes);
+			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
 
 			scope._state = newState;
 
