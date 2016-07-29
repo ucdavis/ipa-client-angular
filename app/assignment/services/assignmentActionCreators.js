@@ -35,7 +35,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
-		removeInstructorAssignment: function (sectionGroupId, instructorId) {
+		removeInstructorAssignment: function (teachingAssignment) {
 			assignmentService.removeInstructorAssignment(sectionGroupId, instructorId).then(function (sectionGroupId) {
 				$rootScope.$emit('toast', {message: "Removed instructor from course", type: "SUCCESS"});
 				var action = {
@@ -81,13 +81,12 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 		},
 		unapproveInstructorAssignment: function (teachingAssignment) {
 			teachingAssignment.approved = false;
-
-			assignmentService.unapproveInstructorAssignment(teachingAssignment).then(function (sectionGroupId) {
+			assignmentService.updateInstructorAssignment(teachingAssignment).then(function (teachingAssignment) {
 				$rootScope.$emit('toast', {message: "Removed instructor from course", type: "SUCCESS"});
 				var action = {
 					type: UPDATE_TEACHING_ASSIGNMENT,
 					payload: {
-						sectionGroup: sectionGroup
+						teachingAssignment: teachingAssignment
 					}
 				};
 				assignmentStateService.reduce(action);

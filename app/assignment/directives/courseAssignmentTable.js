@@ -72,7 +72,8 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 											}
 
 											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\"";
-											courseHtml += "data-placement=\"top\" data-original-title=\"Unassign\" data-container=\"body\"></i>";
+											courseHtml += " data-placement=\"top\" data-original-title=\"Unassign\" data-container=\"body\""
+											courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"></i>";
 											courseHtml += "</div>"; // Ending Teaching assignment div
 										}
 									});
@@ -133,6 +134,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 				element.click(function(e) {
 					$el = $(e.target);
 
+					// Approving a teachingAssignment or creating a new one
 					if ($el.is('a')) {
 						var sectionGroupId = $el.data('section-group-id');
 						var instructorId = $el.data('instructor-id');
@@ -145,6 +147,14 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 							assignmentActionCreators.addAndApproveInstructorAssignment(sectionGroupId, instructorId);
 						}
 					}
+					// Unapproving a teachingAssignment
+					else if ($el.hasClass('assignment-remove')) {
+							var teachingAssignmentId = $el.data('teaching-assignment-id');
+							var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+							assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
+
+					}
+
 				});
 
 			}); // end on event 'assignmentStateChanged'
