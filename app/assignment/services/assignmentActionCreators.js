@@ -93,6 +93,27 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			}, function (err) {
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
+		},
+		showCourses: function () {
+			var action = {
+				type: SWITCH_MAIN_VIEW,
+				payload: {
+					showInstructors: false,
+					showCourses: true
+				}
+			};
+			assignmentStateService.reduce(action);
+		},
+		showInstructors: function () {
+			var action = {
+				type: SWITCH_MAIN_VIEW,
+				payload: {
+					showInstructors: true,
+					showCourses: false
+				}
+			};
+			assignmentStateService.reduce(action);
 		}
+
 	}
 });

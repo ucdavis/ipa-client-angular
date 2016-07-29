@@ -17,6 +17,15 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 				$scope.view.state = data;
 				console.log($scope.view.state);
 			});
+
+			$scope.showInstructors = function () {
+				assignmentActionCreators.showInstructors();
+			}
+
+			$scope.showCourses = function () {
+				assignmentActionCreators.showCourses();
+			}
+
 	}]);
 AssignmentCtrl.validate = function (authService, assignmentActionCreators, $route) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then( function() {

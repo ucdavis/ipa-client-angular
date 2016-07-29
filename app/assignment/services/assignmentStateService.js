@@ -200,6 +200,23 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					return sectionGroups;
 			}
 		},
+		_userInterfaceReducers: function (action, userInterface) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					var userInterface = {};
+					userInterface.showInstructors = false;
+					userInterface.showCourses = true;
+					return userInterface;
+				case SWITCH_MAIN_VIEW:
+					userInterface.showCourses = action.payload.showCourses;
+					userInterface.showInstructors = action.payload.showInstructors;
+					return userInterface;
+				default:
+					return userInterface;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -214,6 +231,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 			newState.instructors = scope._instructorReducers(action, scope._state.instructors);
 			newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
 			newState.scheduleInstructorNotes = scope._scheduleInstructorNoteReducers(action, scope._state.scheduleInstructorNotes);
+			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
 
 			scope._state = newState;
 

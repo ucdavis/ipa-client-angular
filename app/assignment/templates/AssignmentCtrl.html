@@ -12,11 +12,11 @@
 	<div class="row" style="margin-bottom: 1em;">
 		<div class="col-sm-12">
 			<div class="btn-group" data-toggle="buttons">
-				<label class="btn btn-white btn-sm active" id="courses-pivot">
+				<label class="btn btn-white btn-sm active" id="courses-pivot" ng-click="showCourses()">
 					<input type="radio" name="options">
 					<span class="tool-icon glyphicon glyphicon-education"></span> By Course
 				</label>
-				<label class="btn btn-white btn-sm" id="instructors-pivot">
+				<label class="btn btn-white btn-sm" id="instructors-pivot" ng-click="showInstructors()">
 					<input type="radio" name="options">
 					<span class="tool-icon glyphicon glyphicon-user"></span> By Instructor
 				</label>
@@ -24,10 +24,10 @@
 		</div>
 	</div>
 
-	<div course-assignment-table id="courses-table"></div>
+	<div course-assignment-table id="courses-table" ng-show="view.state.userInterface.showCourses"></div>
 
 
-	<div id="instructors-table">
+	<div id="instructors-table" ng-show="view.state.userInterface.showInstructors">
 		<div class="course-list-row">
 			<div class="course-header description-cell">
 				Instructor
