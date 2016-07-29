@@ -27,111 +27,47 @@
 	<div course-assignment-table id="courses-table"></div>
 
 
-
-
-
-
 	<div id="instructors-table">
 		<div class="course-list-row">
 			<div class="course-header description-cell">
 				Instructor
 			</div>
-			<div class="term-header term-cell">
-				Fall Quarter
-			</div>
-			<div class="term-header term-cell">
-				Winter Quarter
-			</div>
-			<div class="term-header term-cell">
-				Spring Quarter
+			<div class="term-header term-cell"
+				ng-repeat="scheduleTermStateTermCode in view.state.scheduleTermStates.ids"
+				ng-init="termCode = view.state.scheduleTermStates.list[scheduleTermStateTermCode].termCode"
+				ng-if="view.state.scheduleTermStates.list[view.state.scheduleTermStates.list[scheduleTermStateTermCode].termCode].isHidden == false">
+				{{ termCode.getTermCodeDisplayName(true) }}
 			</div>
 		</div>
 
-		<div class="course-list-row">
+		<!-- instructor-row repeating -->
+		<div class="course-list-row" ng-repeat="instructorId in view.state.instructors.ids"
+		ng-init="instructor=view.state.instructors.list[instructorId]">
 			<div class="description-cell">
-				<strong>Brown, Suzi</strong>
+				<strong>{{ instructor.fullName }}</strong>
 			</div>
-			<div class="term-cell">
+			<!-- instructor teachingAssignments over time -->
+			<div class="term-cell"
+				ng-repeat="scheduleTermStateTermCode in view.state.scheduleTermStates.ids"
+				ng-init="termCode = view.state.scheduleTermStates.list[scheduleTermStateTermCode].termCode"
+				ng-if="view.state.scheduleTermStates.list[view.state.scheduleTermStates.list[scheduleTermStateTermCode].termCode].isHidden == false">
 
-				<div class="alert alert-info tile-assignment">
-					<p>PSC 113 - A Series</p>
-					<div class="tile-assignment-details">
-						<small>Seats: 75</small>
+				<!-- teachingAssignments within a term -->
+				<div ng-repeat="teachingAssignmentId in view.state.instructors.list[instructor.id].teachingAssignmentTermCodeIds[termCode]"
+					class="alert alert-info tile-assignment"
+					ng-init="course=view.state.courses.list[view.state.sectionGroups.list[view.state.teachingAssignments.list[teachingAssignmentId].sectionGroupId].courseId]">
+					<p>{{ course.subjectCode }} {{ course.courseNumber }} - {{ course.sequencePattern }}</p>
+					<div class="tile-assignment-details"
+					ng-init="sectionGroup=view.state.sectionGroups.list[view.state.teachingAssignments.list[teachingAssignmentId].sectionGroupId]">
+						<small>Seats: {{ sectionGroup.plannedSeats }}</small>
 						<br />
-						<small>Units: 3</small>
+						<small>Units: {{ course.unitsLow }}</small>
 					</div>
 					<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary" data-toggle="tooltip" data-placement="top"
 						title="" data-original-title="Unassign" data-container="body"></i>
 				</div>
-				<select name="test" class="select2" data-allow-clear="true" data-placeholder="Assign...">
-					<option></option>
-					<optgroup label="Interested">
-						<option value="1">PSC 113 - B Series</option>
-						<option value="3">BUYOUT</option>
-					</optgroup>
-					<optgroup label="Other">
-						<option value="4">COURSE RELEASE</option>
-						<option value="4">SABBATICAL</option>
-						<option value="3">PSC 001 - 001 </option>
-						<option value="4">PSC 001 - 002 </option>
-					</optgroup>
-				</select>
-
-			</div>
-			<div class="term-cell">
-
-				<div class="alert alert-info tile-assignment">
-					<p>PSC 113 - A Series</p>
-					<div class="tile-assignment-details">
-						<small>Seats: 75</small>
-						<br />
-						<small>Units: 3</small>
-					</div>
-					<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary" data-toggle="tooltip" data-placement="top"
-						title="" data-original-title="Unassign" data-container="body"></i>
-				</div>
-				<select name="test" class="select2" data-allow-clear="true" data-placeholder="Assign...">
-					<option></option>
-					<optgroup label="Interested">
-						<option value="1">PSC 113 - B Series</option>
-						<option value="3">BUYOUT</option>
-					</optgroup>
-					<optgroup label="Other">
-						<option value="4">COURSE RELEASE</option>
-						<option value="4">SABBATICAL</option>
-						<option value="3">PSC 001 - 001 </option>
-						<option value="4">PSC 001 - 002 </option>
-					</optgroup>
-				</select>
-
-			</div>
-			<div class="term-cell">
-
-				<div class="alert alert-info tile-assignment">
-					<p>PSC 113 - A Series</p>
-					<div class="tile-assignment-details">
-						<small>Seats: 75</small>
-						<br />
-						<small>Units: 3</small>
-					</div>
-					<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary" data-toggle="tooltip" data-placement="top"
-						title="" data-original-title="Unassign" data-container="body"></i>
-				</div>
-
-				<select name="test" class="select2" data-allow-clear="true" data-placeholder="Assign...">
-					<option></option>
-					<optgroup label="Interested">
-						<option value="1">PSC 113 - B Series</option>
-						<option value="3">BUYOUT</option>
-					</optgroup>
-					<optgroup label="Other">
-						<option value="4">COURSE RELEASE</option>
-						<option value="4">SABBATICAL</option>
-						<option value="3">PSC 001 - 001 </option>
-						<option value="4">PSC 001 - 002 </option>
-					</optgroup>
-				</select>
-			</div> <!-- term-cell -->
+				Assign widget goes here.
+			</div><!-- term cell -->
 		</div> <!-- course list row -->
 	</div> <!-- instructors-list -->
 </div>

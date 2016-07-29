@@ -53,7 +53,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 									courseHtml += "<div>";
 									courseHtml += "<span class=\"assignment-seats\" data-toggle=\"tooltip\" data-placement=\"top\"";
 									courseHtml += "data-original-title=\"Seats\" data-container=\"body\">";
-									courseHtml += scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats + "-" + sectionGroupId + "</span>";
+									courseHtml += scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats + "</span>";
 									courseHtml += "</div>";
 
 									// Loop over teachingAssignments that are approved
