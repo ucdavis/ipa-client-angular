@@ -54,7 +54,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 						list: []
 					};
 					var teachingAssignmentsList = {};
-					var length = action.payload.courses ? action.payload.courses.length : 0;
+					var length = action.payload.teachingAssignments ? action.payload.teachingAssignments.length : 0;
 					for (var i = 0; i < length; i++) {
 						var teachingAssignment = new TeachingAssignment(action.payload.teachingAssignments[i]);
 						teachingAssignmentsList[teachingAssignment.id] = teachingAssignment;
@@ -64,6 +64,11 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					return teachingAssignments;
 				case UPDATE_TEACHING_ASSIGNMENT:
 					teachingAssignments.list[action.payload.teachingAssignment.id] = action.payload.teachingAssignment;
+					return teachingAssignments;
+				case ADD_TEACHING_ASSIGNMENT:
+					debugger;
+					teachingAssignments.list[action.payload.teachingAssignment.id] = action.payload.teachingAssignment;
+					teachingAssignments.ids.push(action.payload.teachingAssignment.id);
 					return teachingAssignments;
 				default:
 					return teachingAssignments;

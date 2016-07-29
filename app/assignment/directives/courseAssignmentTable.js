@@ -144,7 +144,16 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 							var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 							assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
 						} else { // Creating a new teachingAssignment, and then approving it
-							assignmentActionCreators.addAndApproveInstructorAssignment(sectionGroupId, instructorId);
+							var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+							var teachingAssignment = {
+								sectionGroupId: sectionGroupId,
+								instructorId: instructorId,
+								termCode: sectionGroup.termCode,
+								priority: 1,
+								approved: true
+							}
+
+							assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
 						}
 					}
 					// Unapproving a teachingAssignment
