@@ -62,7 +62,15 @@ angular.module('sharedApp')
 				}, function (error) {
 					// User has no access, redirect to Access Denied page
 					if (error.status == 403) {
+						console.error("Authentication request received a 403. Redirecting to access denied page ...");
 						$window.location.href = "/access-denied.html";
+					} else if(error.status == -1) {
+						console.error("Request was aborted or server was not found. Check that the backend is running.");
+						$window.location.href = "/unknown-error.html";
+					} else {
+						console.error("Unknown error occurred while authenticating. Details:");
+						console.error(error);
+						$window.location.href = "/unknown-error.html";
 					}
 				});
 
