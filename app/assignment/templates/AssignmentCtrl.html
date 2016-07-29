@@ -52,9 +52,10 @@
 				ng-init="termCode = view.state.scheduleTermStates.list[scheduleTermStateTermCode].termCode"
 				ng-if="view.state.scheduleTermStates.list[view.state.scheduleTermStates.list[scheduleTermStateTermCode].termCode].isHidden == false">
 
-				<!-- teachingAssignments within a term -->
+				<!-- Approved teachingAssignments within a term -->
 				<div ng-repeat="teachingAssignmentId in view.state.instructors.list[instructor.id].teachingAssignmentTermCodeIds[termCode]"
 					class="alert alert-info tile-assignment"
+					ng-if="view.state.teachingAssignments.list[teachingAssignmentId].approved"
 					ng-init="course=view.state.courses.list[view.state.sectionGroups.list[view.state.teachingAssignments.list[teachingAssignmentId].sectionGroupId].courseId]">
 					<p>{{ course.subjectCode }} {{ course.courseNumber }} - {{ course.sequencePattern }}</p>
 					<div class="tile-assignment-details"
@@ -66,7 +67,25 @@
 					<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary" data-toggle="tooltip" data-placement="top"
 						title="" data-original-title="Unassign" data-container="body"></i>
 				</div>
-				Assign widget goes here.
+				<div class="dropdown assign-dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						Assign..
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li>
+							<div class="dropdown-assign-header">Interested</div>
+						</li>
+						<li ng-repeat="teachingAssignmentId in instructor.teachingAssignmentTermCodeIds">
+							<a href="#">instructor name</a>
+						</li>
+						<li>
+							<div class="dropdown-assign-header">Other</div>
+						</li>
+						<li>
+							<a href="#">instructor name</a>
+						</li>
+
 			</div><!-- term cell -->
 		</div> <!-- course list row -->
 	</div> <!-- instructors-list -->
