@@ -23,6 +23,33 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
+		addInstructorAssignment: function (sectionGroup) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/assignmentView/teachingAssignments/", teachingAssignment, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		updateInstructorAssignment: function (teachingAssignment) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/assignmentView/teachingAssignments/" + teachingAssignment.id, teachingAssignment, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+
+		}
 /*
 		getCoursesByWorkgroupIdAndYear: function(workgroupId, year) {
 			var deferred = $q.defer();

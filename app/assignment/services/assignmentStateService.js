@@ -62,6 +62,9 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					teachingAssignments.ids = _array_sortIdsByProperty(teachingAssignmentsList, ["approved"]);
 					teachingAssignments.list = teachingAssignmentsList;
 					return teachingAssignments;
+				case UPDATE_TEACHING_ASSIGNMENT:
+					teachingAssignments.list[action.payload.teachingAssignment.id] = action.payload.teachingAssignment;
+					return teachingAssignments;
 				default:
 					return teachingAssignments;
 			}
