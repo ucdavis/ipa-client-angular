@@ -36,6 +36,9 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				// Render the body
 				var body = "<tbody></tbody>";
 
+				console.log("sectionGroups.list:");
+				console.log(data.sectionGroups.list);
+
 				$.each(data.courses.ids, function(rowIdx, courseId) {
 					var course = data.courses.list[courseId];
 
@@ -54,7 +57,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					// Term column(s)
 					$.each(termsToRender, function(i, term) {
 						var termCode = term.code;
-						var sectionGroup = data.sectionGroups.list[course.sectionGroupTermCodeIds[termCode]];
+						var sectionGroup = _.find(data.sectionGroups.list, function(sg) { return (sg.termCode == termCode) && (sg.courseId == courseId) });
 						var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
 						var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
 

@@ -47,16 +47,6 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					for (var i = 0; i < length; i++) {
 						var courseData = action.payload.courses[i];
 						coursesList[courseData.id] = new Course(courseData);
-
-						// Add the termCode:sectionGroupId pairs
-						coursesList[courseData.id].sectionGroupTermCodeIds = {};
-						action.payload.sectionGroups
-							.filter(function (sg) {
-								return sg.courseId === courseData.id
-							})
-							.forEach(function (sg) {
-								coursesList[courseData.id].sectionGroupTermCodeIds[sg.termCode] = sg.id;
-							});
 					}
 					courses.ids = _array_sortIdsByProperty(coursesList, ["subjectCode", "courseNumber", "sequencePattern"]);
 					courses.list = coursesList;

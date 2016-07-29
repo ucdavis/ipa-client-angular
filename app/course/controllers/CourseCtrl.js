@@ -25,7 +25,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				} else if (data.courseId && data.termCode) {
 					// A sectionGroup is selected
 					var course = $scope.view.state.courses.list[data.courseId];
-					$scope.view.selectedEntity = $scope.view.state.sectionGroups.list[course.sectionGroupTermCodeIds[data.termCode]];
+					$scope.view.selectedEntity = _.find($scope.view.state.sectionGroups.list, function(sg) { return (sg.termCode == data.termCode) && (sg.courseId == data.courseId) });
 					$scope.view.selectedEntityType = "sectionGroup";
 				} else {
 					delete $scope.view.selectedEntity;

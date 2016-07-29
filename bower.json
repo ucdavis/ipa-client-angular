@@ -27,7 +27,8 @@
     "angular-ui-calendar": "^1.0.1",
     "spin.js": "^2.3.2",
     "toastr": "^2.1.2",
-    "mjolnic-bootstrap-colorpicker": "bootstrap-colorpicker#^2.3.3"
+    "mjolnic-bootstrap-colorpicker": "bootstrap-colorpicker#^2.3.3",
+    "underscore": "^1.8.3"
   },
   "resolutions": {
     "angular": "1.5.7.1"
