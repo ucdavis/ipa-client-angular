@@ -24,9 +24,20 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 
 			$scope.showCourses = function () {
 				assignmentActionCreators.showCourses();
-			}
+			};
 
+			$scope.approveInstructorAssignment = function(teachingAssignmentId) {
+				console.log("clicked");
+				var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
+				assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
+			};
+
+			$scope.unapproveInstructorAssignment = function(teachingAssignmentId) {
+				var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
+				assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
+			};
 	}]);
+
 AssignmentCtrl.validate = function (authService, assignmentActionCreators, $route) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then( function() {
 		assignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);

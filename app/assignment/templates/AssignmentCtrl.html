@@ -64,8 +64,9 @@
 						<br />
 						<small>Units: {{ course.unitsLow }}</small>
 					</div>
-					<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary" data-toggle="tooltip" data-placement="top"
-						title="" data-original-title="Unassign" data-container="body"></i>
+					<i class="btn glyphicon glyphicon-remove assignment-remove text-primary" data-toggle="tooltip" data-placement="top"
+						title="" data-original-title="Unassign" data-container="body"
+						ng-click="unapproveInstructorAssignment(teachingAssignmentId)"></i>
 				</div>
 				<div class="dropdown assign-dropdown">
 					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -73,19 +74,25 @@
 						<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li>
+						<li ng-if="instructor.teachingAssignmentTermCodeIds[scheduleTermStateTermCode].length > 0">
 							<div class="dropdown-assign-header">Interested</div>
 						</li>
-						<li ng-repeat="teachingAssignmentId in instructor.teachingAssignmentTermCodeIds">
-							<a href="#">instructor name</a>
+						<!-- Show option if the TeachingAssignments parent Course is not being suppressed and Assignment is not already approved -->
+						<li ng-repeat="teachingAssignmentId in instructor.teachingAssignmentTermCodeIds[scheduleTermStateTermCode]"
+						ng-if="( view.state.teachingAssignments.list[teachingAssignmentId].approved == false ) && (view.state.courses.list[view.state.sectionGroups.list[view.state.teachingAssignments.list[teachingAssignmentId].sectionGroupId].courseId].isHidden == false) "
+						ng-init="course=view.state.courses.list[view.state.sectionGroups.list[view.state.teachingAssignments.list[teachingAssignmentId].sectionGroupId].courseId]">
+							<a href="#" ng-click="approveInstructorAssignment(teachingAssignmentId)">{{ course.subjectCode }} {{ course.courseNumber }} - {{ course.sequencePattern }}</a>
 						</li>
 						<li>
-							<div class="dropdown-assign-header">Other</div>
+							<div class="dropdown-assign-header">All</div>
 						</li>
-						<li>
-							<a href="#">instructor name</a>
+						<!-- Show option if course has a sectionGroup in this term -->
+						<li ng-repeat="courseId in view.state.courses.ids"
+							ng-init="course=view.state.courses.list[courseId]"
+							ng-if="view.state.courses.list[courseId].isHidden == false">
+							<a href="#">{{ course.subjectCode }} {{ course.courseNumber }} - {{ course.sequencePattern }}</a>
 						</li>
-
+					</ul>
 			</div><!-- term cell -->
 		</div> <!-- course list row -->
 	</div> <!-- instructors-list -->
