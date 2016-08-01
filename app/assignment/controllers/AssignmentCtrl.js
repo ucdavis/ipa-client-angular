@@ -27,7 +27,6 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 			};
 
 			$scope.approveInstructorAssignment = function(teachingAssignmentId) {
-				console.log("clicked");
 				var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
 				assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
 			};
@@ -36,6 +35,18 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 				var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
 				assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
 			};
+
+			$scope.addAndApproveInstructorAssignment = function(sectionGroupId, instructorId, termCode) {
+				var teachingAssignment = {
+					sectionGroupId: sectionGroupId,
+					instructorId: instructorId,
+					termCode: termCode,
+					priority: 1,
+					approved: true
+				}
+
+				assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
+			}
 	}]);
 
 AssignmentCtrl.validate = function (authService, assignmentActionCreators, $route) {

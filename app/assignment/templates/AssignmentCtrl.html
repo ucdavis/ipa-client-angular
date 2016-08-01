@@ -88,9 +88,9 @@
 						</li>
 						<!-- Show option if course has a sectionGroup in this term -->
 						<li ng-repeat="courseId in view.state.courses.ids"
-							ng-init="course=view.state.courses.list[courseId]"
-							ng-if="view.state.courses.list[courseId].isHidden == false">
-							<a href="#">{{ course.subjectCode }} {{ course.courseNumber }} - {{ course.sequencePattern }}</a>
+							ng-init="course=view.state.courses.list[courseId];"
+							ng-if="view.state.courses.list[courseId].sectionGroupTermCodeIds[termCode]">
+							<a href="#" ng-click="addAndApproveInstructorAssignment(view.state.courses.list[courseId].sectionGroupTermCodeIds[termCode], instructorId, termCode)">{{ course.subjectCode }} {{ course.courseNumber }} - {{ course.sequencePattern }}</a>
 						</li>
 					</ul>
 			</div><!-- term cell -->
