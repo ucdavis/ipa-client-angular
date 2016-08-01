@@ -7,8 +7,8 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParams', 'assignmentActionCreators',
-		this.AssignmentCtrl = function ($scope, $rootScope, $routeParams, assignmentActionCreators) {
+assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParams', '$uibModal', 'assignmentActionCreators',
+		this.AssignmentCtrl = function ($scope, $rootScope, $routeParams, $uibModal, assignmentActionCreators) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.view = {};
@@ -46,7 +46,55 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 				}
 
 				assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
-			}
+			};
+
+			// Launches TeachingCall Config modal and controller
+			$scope.openTeachingCallConfig = function() {
+				modalInstance = $uibModal.open({
+					templateUrl: 'ModalTeachingCallConfig.html',
+					controller: ModalTeachingCallConfigCtrl,
+					size: 'lg',
+					resolve: {
+						scheduleYear: function () {
+							return $scope.year;
+						},
+						workgroupId: function () {
+							return $scope.workgroupId;
+						},
+						schedule: function () {
+							return $scope.view.state;
+						}
+					}
+				});
+
+				modalInstance.result.then(function (teachingCallConfig) {
+					$scope.startTeachingCall(schedule, teachingCallConfig);
+				});
+			};
+
+			// Triggered on TeachingCall Config submission
+			$scope.startTeachingCall = function(schedule, teachingCallConfig) {
+				teachingCallConfig.termsBlob = "";
+				var terms = termService.getAllTerms();
+
+				for (var i = 0; i < terms.length; i++) {
+					if (teachingCallConfig.activeTerms[terms[i]] == true) {
+						teachingCallConfig.termsBlob += "1";
+					} else {
+						teachingCallConfig.termsBlob += "0";
+					}
+				}
+
+				delete teachingCallConfig.activeTerms;
+
+				// TODO: refactor into actionCreator
+				teachingCallService.createTeachingCall(schedule.id, teachingCallConfig).then(function(tachingCall) {
+					$scope.updateSchedules();
+					schedule.teachingCalls.push(tachingCall);
+					$scope.calculateTeachingCallEligibility();
+				}, function() {
+				});
+			};
 	}]);
 
 AssignmentCtrl.validate = function (authService, assignmentActionCreators, $route) {
