@@ -9,10 +9,11 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				scope.view.state = data;
-
+				console.log("on state changed");
 				// Clear the table
 				element.empty();
-
+				// Remove any currently open tooltips
+				$('.tooltip').remove();
 				// Render the header
 				var header = "<div class=\"course-list-row\">";
 				header += "<div class=\"course-header description-cell\">Course</div>";
