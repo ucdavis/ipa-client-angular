@@ -90,12 +90,14 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 
 										if (teachingAssignment.approved == false) {
 											var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
-											courseHtml += "<li><a";
-											courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
-											courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
-											courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
+											if (instructor) {
+												courseHtml += "<li><a";
+												courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
+												courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
+												courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 
-											courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
+												courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
+											}
 										}
 									});
 									courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
