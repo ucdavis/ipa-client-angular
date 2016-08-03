@@ -81,7 +81,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 									courseHtml += "<div class=\"dropdown assign-dropdown\">";
 									courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
 									courseHtml += "Assign..<span class=\"caret\"></span></button>";
-									courseHtml += "<ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">";
+									courseHtml += "<ul class=\"dropdown-menu scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
 									if (sectionGroup.teachingAssignmentIds.length > 0) {
 										courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
 										// Loop over instructors who are interested in this course
