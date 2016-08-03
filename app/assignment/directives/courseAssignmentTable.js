@@ -37,7 +37,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 						courseHtml += course.subjectCode + " " + course.courseNumber + " " + course.title + " " + course.sequencePattern;
 						courseHtml += "</div>";
 						courseHtml += "<div class=\"course-units\">";
-						courseHtml += "Units: " + course.unitsHigh;
+						courseHtml += "Units: " + course.unitsLow;
 						courseHtml += "</div></div></div>";
 						
 						// Loop over active terms
