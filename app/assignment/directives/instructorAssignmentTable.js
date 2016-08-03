@@ -88,9 +88,9 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 										courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
 									}
 								});
+								courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
 							}
 
-							courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
 
 							// Loop over all other courses
 							$.each(scope.view.state.courses.ids, function(i, courseId) {
