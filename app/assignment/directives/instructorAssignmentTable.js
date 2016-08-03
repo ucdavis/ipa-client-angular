@@ -95,8 +95,8 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 							// Loop over all other courses
 							$.each(scope.view.state.courses.ids, function(i, courseId) {
 								var course = scope.view.state.courses.list[courseId]
-								// Show option if course has a sectionGroup in this term
-								if (course.sectionGroupTermCodeIds[termCode]) {
+								// Show option if course has a sectionGroup in this term, and course is not suppressed
+								if (course.sectionGroupTermCodeIds[termCode] && course.isHidden == false) {
 									var sectionGroupId = course.sectionGroupTermCodeIds[termCode];
 									var instructor = scope.view.state.instructors.list[instructorId];
 									courseHtml += "<li><a";
