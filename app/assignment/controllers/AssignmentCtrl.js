@@ -15,7 +15,6 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				$scope.view.state = data;
-				console.log($scope.view.state);
 			});
 
 			$scope.showInstructors = function () {

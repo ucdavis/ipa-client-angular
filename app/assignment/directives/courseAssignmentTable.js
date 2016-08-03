@@ -9,11 +9,9 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				scope.view.state = data;
-				console.log("on state changed");
 				// Clear the table
-				element.empty();
-				// Remove any currently open tooltips
 				$('.tooltip').remove();
+				element.empty();
 				// Render the header
 				var header = "<div class=\"course-list-row\">";
 				header += "<div class=\"course-header description-cell\">Course</div>";
@@ -130,46 +128,41 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 				$('body').tooltip({
     			selector: '[data-toggle="tooltip"]'
 				});
-
-				// Handle Instructor UI events
-				element.click(function(e) {
-					$el = $(e.target);
-
-					// Approving a teachingAssignment or creating a new one
-					if ($el.is('a')) {
-						var sectionGroupId = $el.data('section-group-id');
-						var instructorId = $el.data('instructor-id');
-						var teachingAssignmentId = $el.data('teaching-assignment-id');
-						// Approving an existing teachingAssignment
-						if (teachingAssignmentId) {
-							var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
-							assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
-						} else { // Creating a new teachingAssignment, and then approving it
-							var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
-							var teachingAssignment = {
-								sectionGroupId: sectionGroupId,
-								instructorId: instructorId,
-								termCode: sectionGroup.termCode,
-								priority: 1,
-								approved: true
-							}
-
-							assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
-						}
-					}
-					// Unapproving a teachingAssignment
-					else if ($el.hasClass('assignment-remove')) {
-							var teachingAssignmentId = $el.data('teaching-assignment-id');
-							var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
-							assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
-
-					}
-
-				});
-
 			}); // end on event 'assignmentStateChanged'
 
+			// Handle Instructor UI events
+			element.click(function(e) {
+				$el = $(e.target);
 
+				// Approving a teachingAssignment or creating a new one
+				if ($el.is('a')) {
+					var sectionGroupId = $el.data('section-group-id');
+					var instructorId = $el.data('instructor-id');
+					var teachingAssignmentId = $el.data('teaching-assignment-id');
+					// Approving an existing teachingAssignment
+					if (teachingAssignmentId) {
+						var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+						assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
+					} else { // Creating a new teachingAssignment, and then approving it
+						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+						var teachingAssignment = {
+							sectionGroupId: sectionGroupId,
+							instructorId: instructorId,
+							termCode: sectionGroup.termCode,
+							priority: 1,
+							approved: true
+						}
+
+						assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
+					}
+				}
+				// Unapproving a teachingAssignment
+				else if ($el.hasClass('assignment-remove')) {
+						var teachingAssignmentId = $el.data('teaching-assignment-id');
+						var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+						assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
+				}
+			}); // end UI event handler
 		} // end link
 	}
 });
