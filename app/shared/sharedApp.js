@@ -25,6 +25,7 @@ window.sharedApp = angular.module('sharedApp',
 		'building',
 		'teachingAssignment',
 		'teachingPreference',
+		'teachingCall',
 		'teachingCallReceipt',
 		'teachingCallResponse'
 	]

@@ -1,4 +1,4 @@
-assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallConfigCtrl = function($scope, $rootScope, $uibModalInstance, scheduleYear, schedule, workgroupId) {
+assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallConfigCtrl = function($scope, $rootScope, $uibModalInstance, scheduleYear, viewState, workgroupId, allTerms) {
 	$scope.startTeachingCallConfig = {};
 	$scope.startTeachingCallConfig.sentToFederation = false;
 	$scope.startTeachingCallConfig.sentToSenate = false;
@@ -8,12 +8,16 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 	$scope.startTeachingCallConfig.message += " As always, we will attempt to accommodate your requests, but we may need to ask some of you to make changes in order to balance our course offerings effectively.";
 	$scope.startTeachingCallConfig.emailInstructors = true;
 
+	$scope.view = {};
+	$scope.viewState = viewState;
+	console.log("viewstate");
+	console.log(viewState);
 	$scope.scheduleYear = scheduleYear;
-	$scope.eligibleGroupsForTeachingCall = eligibleGroupsForTeachingCall;
+	$scope.eligibleGroupsForTeachingCall = viewState.teachingCalls.eligibleGroupsForTeachingCall;
 	$scope.workgroupId = workgroupId;
 
-	$scope.senate = $scope.eligibleGroupsForTeachingCall.senateInstructors;
-	$scope.federation = $scope.eligibleGroupsForTeachingCall.federationInstructors;
+	$scope.senate = $scope.viewState.teachingCalls.eligibleGroups.senateInstructors;
+	$scope.federation = $scope.viewState.teachingCalls.eligibleGroups.federationInstructors;
 
 	$scope.minDate = new Date();
 	$scope.parent = {dueDate:''};
@@ -22,23 +26,22 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 	$scope.federationInstructors = {};
 
 	$scope.startTeachingCallConfig.activeTerms = {};
-	$scope.allTerms = termService.getAllTerms();
+	$scope.allTerms = allTerms;
 	$scope.displayedFormPage = 1;
-	$scope.schedule = schedule;
 
 	for (var i = 0; i < $scope.allTerms.length; i++) {
 		$scope.startTeachingCallConfig.activeTerms[$scope.allTerms[i]] = false;
 	}
 
 	// Use schedule data to pre-select terms in TeachingCall creation form
-	for (var i = 0; i < $scope.schedule.termStates.length; i++) {
-		var termCode = $scope.schedule.termStates[i].termCode;
-		var term = termCode.slice(-2);
+	for (var i = 0; i < $scope.viewState.scheduleTermStates.ids.length; i++) {
+		var termCode = $scope.viewState.scheduleTermStates.ids[i];
+		var term = String(termCode).slice(-2);
 		$scope.startTeachingCallConfig.activeTerms[term] = true;
 	}
 
 	// If schedule had no terms, default to pre-select SS1,SS2,F,W,S in TeachingCall creation form
-	if ($scope.schedule.termStates.length == 0) {
+	if ($scope.viewState.scheduleTermStates.ids.length == 0) {
 		$scope.startTeachingCallConfig.activeTerms['05'] = true;
 		$scope.startTeachingCallConfig.activeTerms['07'] = true;
 		$scope.startTeachingCallConfig.activeTerms['01'] = true;
