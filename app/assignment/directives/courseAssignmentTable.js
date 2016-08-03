@@ -49,7 +49,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 									var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 
 									// Adding sectionGroup Seats
-									courseHtml += "<div>";
+									courseHtml += "<div class=\"assignment-seats-container\">";
 									courseHtml += "<span class=\"assignment-seats\" data-toggle=\"tooltip\" data-placement=\"top\"";
 									courseHtml += "data-original-title=\"Seats\" data-container=\"body\">";
 									courseHtml += scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats + "</span>";
