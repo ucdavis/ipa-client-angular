@@ -63,6 +63,21 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			}, function (err) {
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
+		},
+		deleteCourse: function(course) {
+			var courseTitle = course.title;
+			courseService.deleteCourse(course).then(function (course) {
+				$rootScope.$emit('toast', { message: "Deleted course " + courseTitle, type: "SUCCESS"} );
+				var action = {
+					type: REMOVE_COURSE,
+					payload: {
+						course: course
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
 		}
 	}
 });

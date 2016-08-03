@@ -36,9 +36,6 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				// Render the body
 				var body = "<tbody></tbody>";
 
-				console.log("sectionGroups.list:");
-				console.log(data.sectionGroups.list);
-
 				$.each(data.courses.ids, function(rowIdx, courseId) {
 					var course = data.courses.list[courseId];
 
@@ -76,7 +73,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 					// Actions column
 					row += "<td class=\"ui-overlay\"><i class=\"btn add-before entypo-plus-circled\" onClick=\"addRowForm(" + rowIdx + ")\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Add a course\"></i>";
-					row += "<i class=\"btn delete-sg entypo-minus-circled\" onClick=\"deleteSectionGroup(" + rowIdx + ")\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Delete...\"></i>";
+					row += "<i class=\"btn delete-sg entypo-minus-circled\" data-event-type=\"deleteCourse\" data-course-id=\"" + courseId + "\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Delete...\"></i>";
 					row += "<i class=\"btn add-after entypo-plus-circled\" onClick=\"addRowForm(" + (rowIdx + 1) + ")\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Add a course\"></i></td>";
 
 					row += "</tr>";
@@ -85,7 +82,6 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				});
 
 				element.append(body);
-
 			});
 
 			$rootScope.$on('cellChanged', function (event, data) {
@@ -104,10 +100,10 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 			// Call this once to set up table events.
 			element.keypress(function (e) {
-				if(e.which == 13) {
+				if (e.which == 13) {
 					$el = $(e.target);
 
-					if($el.hasClass('planned-seats')) {
+					if ($el.hasClass('planned-seats')) {
 						var courseId = $el.closest("tr").data('course-id');
 						var termCode = $el.closest("td").data('term-code').toString();
 						var sectionGroupId = $el.closest("td").data('section-group-id');
@@ -135,10 +131,18 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 			});
 
 			// Emit sg-clicked event whenever a table <td> is clicked.
+			// I'm sorry. Really.
 			element.click(function(e) {
 				$el = $(e.target);
 
-				if($el.is('td, td *')) {
+				if ($el.data('event-type') == 'deleteCourse') {
+					var courseId = $el.data('course-id');
+					var course = scope.view.state.courses.list[courseId];
+
+					courseActionCreators.deleteCourse(course);
+					// Important: notify angular since this happends outside of the scope
+					scope.$apply();
+				} else if ($el.is('td, td *')) {
 					// TODO: termCode and courseId may not be found if clicking on the first column ...
 					var courseId = $el.closest("tr").data('course-id');
 					var termCode = $el.closest("td").data('term-code');

@@ -48,7 +48,19 @@ courseApp.factory("courseService", this.courseService = function($http, $q) {
 			});
 
 			return deferred.promise;
+		},
+		deleteCourse: function(course) {
+			var deferred = $q.defer();
 
+			$http.delete(serverRoot + "/api/courseView/courses/" + course.id, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });
