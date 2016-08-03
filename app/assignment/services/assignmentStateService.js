@@ -8,7 +8,7 @@
  * Service in the workgroupApp.
  * Central location for sharedState information.
  */
-assignmentApp.service('assignmentStateService', function ($rootScope, SectionGroup, Course, ScheduleTermState, ScheduleInstructorNote, Instructor, TeachingAssignment) {
+assignmentApp.service('assignmentStateService', function ($rootScope, SectionGroup, Course, ScheduleTermState, ScheduleInstructorNote, Instructor, TeachingAssignment, TeachingCall) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -71,6 +71,41 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					return teachingAssignments;
 				default:
 					return teachingAssignments;
+			}
+		},
+		_teachingCallReducers: function (action, teachingCalls) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					teachingCalls = {
+						ids: [],
+						list: [],
+						eligibleGroups: {}
+					};
+					teachingCalls.eligibleGroups.senateInstructors = true;
+					teachingCalls.eligibleGroups.federationInstructors = true;
+					
+					var teachingCallsList = {};
+					var length = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
+					for (var i = 0; i < length; i++) {
+						var teachingCall = new TeachingCall(action.payload.teachingCalls[i]);
+						teachingCallsList[teachingCall.id] = teachingCall;
+
+						// Gather eligible group data
+						if (teachingCall.sentToSenate) {
+							teachingCalls.eligibleGroups.senateInstructors = false;
+						}
+						if (teachingCall.sentToFederation) {
+							teachingCalls.eligibleGroups.federationInstructors = false;
+						}
+
+					}
+					teachingCalls.ids = _array_sortIdsByProperty(teachingCallsList, ["id"]);
+					teachingCalls.list = teachingCallsList;
+					return teachingCalls;
+				default:
+					return teachingCalls;
 			}
 		},
 		_instructorReducers: function (action, instructors) {
@@ -232,6 +267,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 			newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
 			newState.scheduleInstructorNotes = scope._scheduleInstructorNoteReducers(action, scope._state.scheduleInstructorNotes);
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
+			newState.teachingCalls = scope._teachingCallReducers(action, scope._state.teachingCalls);
 
 			scope._state = newState;
 
