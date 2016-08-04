@@ -593,3 +593,25 @@ div.dropdown button.dropdown-toggle {
 	max-height: 200px;
 	overflow-x: hidden;
 }
+
+.table-toolbar {
+  width: 100%;
+  text-align: right;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
+.table-toolbar .dropdown-menu {
+	min-width: 200px;
+}
+
+.table-toolbar .tool-icon {
+  margin: 0 0.5em;
+  padding: 0.5em;
+}
+
+.table-toolbar .tool-icon:hover {
+  cursor: pointer;
+  background: #ebebeb;
+  border-radius: 3px;
+}

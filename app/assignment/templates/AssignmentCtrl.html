@@ -31,6 +31,35 @@
 		</div>
 	</div>
 
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="table-toolbar">
+				<div class="btn-group">
+					<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+					<ul class="dropdown-menu dropdown-menu-right" multiselect-dropdown items="termDefinitions" active-ids="view.state.filters.enabledTerms" toggle-item="termToggled(id)" ></ul>
+				</div> <!-- .btn-group -->
+
+				<div class="btn-group">
+					<span class="tool-icon glyphicon glyphicon-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+					<ul class="dropdown-menu dropdown-menu-right">
+						<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Published Courses</a></li>
+						<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Unpublished Courses</a></li>
+					</ul>
+				</div> <!-- .btn-group -->
+
+				<div class="btn-group">
+					<span class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+					<ul class="dropdown-menu dropdown-menu-right">
+						<li><a href="#" class="small">as Excel</a></li>
+						<li><a href="#" class="small">as CSV</a></li>
+					</ul>
+				</div> <!-- .btn-group -->
+
+				<span class="tool-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print"></span>
+			</div>
+		</div>
+	</div>
+
 	<div course-assignment-table id="courses-table" ng-show="view.state.userInterface.showCourses"></div>
 	<div instructor-assignment-table id="instructors-table" ng-show="view.state.userInterface.showInstructors"></div>
 
