@@ -14,22 +14,20 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			$scope.view = {};
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
-				$scope.view.state = data;
-			});
+				$scope.view.state = data.state;
 
-			$rootScope.$on('cellChanged', function (event, data) {
-				if (data.courseId == 0) {
+				if (data.state.courses.newCourse) {
 					// A new course is being created
 					$scope.view.selectedEntity = $scope.view.state.courses.newCourse;
 					$scope.view.selectedEntityType = "course";
-				} else if (data.courseId && !data.termCode) {
+				} else if (data.state.uiState.selectedCourseId && !data.state.uiState.selectedTermCode) {
 					// A course is selected
-					$scope.view.selectedEntity = $scope.view.state.courses.list[data.courseId];
+					$scope.view.selectedEntity = $scope.view.state.courses.list[data.state.uiState.selectedCourseId];
 					$scope.view.selectedEntityType = "course";
-				} else if (data.courseId && data.termCode) {
+				} else if (data.state.uiState.selectedCourseId && data.state.uiState.selectedTermCode) {
 					// A sectionGroup is selected
-					var course = $scope.view.state.courses.list[data.courseId];
-					$scope.view.selectedEntity = _.find($scope.view.state.sectionGroups.list, function(sg) { return (sg.termCode == data.termCode) && (sg.courseId == data.courseId) });
+					var course = $scope.view.state.courses.list[data.state.uiState.selectedCourseId];
+					$scope.view.selectedEntity = _.find($scope.view.state.sectionGroups.list, function(sg) { return (sg.termCode == data.state.uiState.selectedTermCode) && (sg.courseId == data.state.uiState.selectedCourseId) });
 					$scope.view.selectedEntityType = "sectionGroup";
 				} else {
 					delete $scope.view.selectedEntity;
@@ -37,7 +35,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			});
 
 			$scope.closeDetails = function () {
-				courseActionCreators.setActiveCell();
+				courseActionCreators.closeDetails();
 				delete $scope.view.selectedEntity;
 			}
 

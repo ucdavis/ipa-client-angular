@@ -506,7 +506,9 @@ th.ui-overlay {
   width: 30px;
 }
 table.disabled-courses-table td:not(.new-course-td), table.disabled-courses-table th {
-  opacity: 0.7;
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
 }
 .add-before {
   position: absolute;

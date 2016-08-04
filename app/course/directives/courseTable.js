@@ -8,7 +8,29 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 			scope.view = {};
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
-				scope.view.state = data;
+				if (data.actionType == CELL_SELECTED) {
+					// Remove existing highlighting
+					element.find('tbody > tr').removeClass("selected-tr");
+					element.find('tbody > tr > td').removeClass("selected-td");
+
+					if (data.state.uiState.selectedCourseId && !data.state.uiState.selectedTermCode) {
+						// Highlight row if a course is selected
+						$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"]').addClass("selected-tr");
+					} else if (data.state.uiState.selectedCourseId && data.state.uiState.selectedTermCode) {
+						// Highlight single cell if a sectionGroup is selected
+						$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]').addClass("selected-td");
+					}
+
+					return;
+				}
+
+				scope.view.state = data.state;
+
+				if (data.state.uiState.tableLocked) {
+					element.addClass("disabled-courses-table");
+				} else {
+					element.removeClass("disabled-courses-table");
+				}
 
 				// Clear the table
 				element.empty();
@@ -20,7 +42,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				// Store this in termsToRender.
 				var termsToRender = [];
 				$.each(scope.termDefinitions, function(i, term) {
-					if(data.filters.enabledTerms.indexOf(Number(term.shortCode)) != -1) {
+					if(data.state.filters.enabledTerms.indexOf(Number(term.shortCode)) != -1) {
 						termsToRender.push(term);
 					}
 				});
@@ -36,21 +58,20 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				// Render the body
 				var body = "<tbody></tbody>";
 
-				$.each(data.courses.ids, function (rowIdx, courseId) {
+				$.each(data.state.courses.ids, function (rowIdx, courseId) {
 					var row = "<tr class=\"odd gradeX\" data-course-id=\"" + courseId + "\">";
 
 					if (courseId == 0) {
-						element.addClass("disabled-courses-table");
 						var numOfColumns = termsToRender.length + 1;
 						row += "<td class=\"new-course-td\" colspan=\"" + numOfColumns + "\">Adding a new course</td><td class=\"ui-overlay\"></td>";
 					} else {
-						var course = data.courses.list[courseId];
+						var course = data.state.courses.list[courseId];
 
 						// First column
 						row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
 						row += "Tags:";
 						$.each(course.tagIds, function (i, tagId) {
-							var tag = data.tags.list[tagId];
+							var tag = data.state.tags.list[tagId];
 							var bgColor = tag.color ? tag.color : "#333";
 							row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + bgColor + "\">" + tag.name + "</div>"
 						});
@@ -59,7 +80,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 						// Term column(s)
 						$.each(termsToRender, function (i, term) {
 							var termCode = term.code;
-							var sectionGroup = _.find(data.sectionGroups.list, function (sg) { return (sg.termCode == termCode) && (sg.courseId == courseId) });
+							var sectionGroup = _.find(data.state.sectionGroups.list, function (sg) { return (sg.termCode == termCode) && (sg.courseId == courseId) });
 							var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
 							var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
 
@@ -88,20 +109,6 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				});
 
 				element.append(body);
-			});
-
-			$rootScope.$on('cellChanged', function (event, data) {
-				// Remove existing highlighting
-				element.find('tbody > tr').removeClass("selected-tr");
-				element.find('tbody > tr > td').removeClass("selected-td");
-
-				if (data.courseId && !data.termCode) {
-					// Highlight row if a course is selected
-					$('tr[data-course-id="' + data.courseId + '"]').addClass("selected-tr");
-				} else if (data.courseId && data.termCode) {
-					// Highlight single cell if a sectionGroup is selected
-					$('tr[data-course-id="' + data.courseId + '"] td[data-term-code="' + data.termCode + '"]').addClass("selected-td");
-				}
 			});
 
 			// Call this once to set up table events.

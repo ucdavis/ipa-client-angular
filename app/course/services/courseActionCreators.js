@@ -22,10 +22,21 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			});
 		},
 		setActiveCell: function (courseId, termCode) {
-			$rootScope.$emit('cellChanged', {
+			var action = {
+				type: CELL_SELECTED,
+				payload: {
 					courseId: courseId,
 					termCode: termCode
-			});
+				}
+			};
+			courseStateService.reduce(action);
+		},
+		closeDetails: function () {
+			var action = {
+				type: CLOSE_DETAILS,
+				payload: {}
+			};
+			courseStateService.reduce(action);
 		},
 		toggleTermFilter: function (termId) {
 			var action = {
@@ -80,7 +91,6 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			});
 		},
 		newCourse: function (index) {
-			this.setActiveCell(0);
 			var action = {
 				type: NEW_COURSE,
 				payload: {
@@ -88,6 +98,8 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				}
 			};
 			courseStateService.reduce(action);
+			// This need to run after the reducer
+			this.setActiveCell(0);
 		}
 	}
 });

@@ -39,7 +39,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			switch (action.type) {
 				case INIT_STATE:
 					courses = {
-						newCourse: {tagIds: []},
+						newCourse: null,
 						ids: []
 					};
 					var coursesList = {};
@@ -54,8 +54,14 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				case NEW_COURSE:
 					// Insert a new id of '0' at the specified index
 					courses.ids.splice(action.payload.index, 0, 0);
+					courses.newCourse = new Course();
 					return courses;
-				case ADD_COURSE:
+				case CLOSE_DETAILS:
+					var newCourseIndex = courses.ids.indexOf(0);
+					courses.ids.splice(newCourseIndex, 1);
+					courses.newCourse = null;
+					return courses;
+				case CREATE_COURSE:
 					courses.list[action.payload.course.id] = action.payload.course;
 					courses.ids.push(action.payload.course.id);
 					courses.newCourse = {tagIds: []};
@@ -162,6 +168,36 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					return filters;
 			}
 		},
+		_uiStateReducers: function (action, uiState) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					uiState = {
+						tableLocked: false,
+						selectedCourseId: null,
+						selectedTermCode: null
+					};
+					return uiState;
+				case NEW_COURSE:
+					uiState.tableLocked = true;
+					return uiState;
+				case CREATE_COURSE:
+					uiState.tableLocked = false;
+					return uiState;
+				case CELL_SELECTED:
+					uiState.selectedCourseId = action.payload.courseId;
+					uiState.selectedTermCode = action.payload.termCode;
+					return uiState;
+				case CLOSE_DETAILS:
+					uiState.selectedCourseId = null;
+					uiState.selectedTermCode = null;
+					uiState.tableLocked = false;
+					return uiState;
+				default:
+					return uiState;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -175,9 +211,13 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.tags = scope._tagReducers(action, scope._state.tags);
 			newState.filters = scope._filterReducers(action, scope._state.filters);
+			newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
 
 			scope._state = newState;
-			$rootScope.$emit('courseStateChanged', scope._state);
+			$rootScope.$emit('courseStateChanged', {
+				state: scope._state,
+				actionType: action.type
+			});
 			console.debug("Course state updated:");
 			console.debug(scope._state);
 		}
