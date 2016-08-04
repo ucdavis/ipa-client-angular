@@ -87,16 +87,17 @@
 						<div class="row">				<!-- this is search bar -->
 							<div class="col-md-4 pull-right">
 								<div class="input-group search-input">
-									<input type="text" ng-model="view.state.users.searchQuery"
-										ng-change="searchUsers()"
-										placeholder="Search by name or login ID"
-										class="form-control" />
-									<ul class="dropdown-menu" ng-show="view.state.users.userSearchResults.length && !view.state.users.newUser.name" style="display: block;">
-										<li ng-repeat="user in view.state.users.userSearchResults | orderBy: 'lastName'" class="clickable" ng-click="prepareToAddUserToWorkgroup(user)">
-											<a ng-bind="user.name"></a>
-										</li>
-									</ul>
-									<i class="entypo-search search-icon"></i>
+									<input type="text" ng-model="asyncSelected" placeholder="Search by name or login ID"
+													uib-typeahead="person.name for person in searchUsers($viewValue)"
+													typeahead-loading="loadingPeople"
+													typeahead-no-results="noResults"
+													typeahead-wait-ms="400"
+													typeahead-min-length="2"
+													typeahead-on-select="searchUsersResultSelected($item, $model, $label, $event)"
+													class="form-control">
+									<i ng-hide="noResults || loadingPeople" class="entypo-search"></i>
+									<i ng-show="loadingPeople" class="entypo-cw"></i>
+									<i ng-show="noResults" class="entypo-cancel"></i>
 									<span class="input-group-btn">
 										<button ng-disabled="!view.state.users.newUser.name"
 											class="pull-left btn btn-primary"

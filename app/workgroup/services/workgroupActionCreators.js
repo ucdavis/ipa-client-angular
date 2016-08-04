@@ -135,19 +135,6 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
-		searchUsers: function (workgroupCode, query) {
-			workgroupService.searchUsers(workgroupCode, query).then(function (userSearchResults) {
-				var action = {
-					type: SEARCH_USERS,
-					payload: {
-						userSearchResults: userSearchResults
-					}
-				};
-				workgroupStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
-			});
-		},
 		clearUserSearch: function () {
 			var action = {
 				type: SEARCH_USERS,

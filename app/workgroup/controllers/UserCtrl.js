@@ -7,8 +7,8 @@
  * # UserCtrl
  * Controller of the ipaClientAngularApp
  */
-workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$timeout', 'workgroupActionCreators',
-		this.UserCtrl = function ($scope, $rootScope, $routeParams, $timeout, workgroupActionCreators) {
+workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$timeout', 'workgroupActionCreators', 'workgroupService',
+		this.UserCtrl = function ($scope, $rootScope, $routeParams, $timeout, workgroupActionCreators, workgroupService) {
 			$scope.toggleUserRole = function (userId, roleId) {
 				var user = $scope.view.state.users.list[userId];
 				var role = $scope.view.state.roles.list[roleId];
@@ -30,26 +30,18 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$t
 				return result;
 			};
 
-			$scope.prepareToAddUserToWorkgroup = function (item) {
-				$scope.view.state.users.newUser = item;
-				$scope.view.state.users.searchQuery = item.name;
+			$scope.searchUsersResultSelected = function ($item, $model, $label, $event) {
+				debugger;
+				$scope.view.state.users.newUser = $item;
+				$scope.view.state.users.searchQuery = $item.name;
 			};
 
-			$scope.searchUsers = function () {
-				if ($scope.view.state.users.searchQuery.length == 0) {
-					workgroupActionCreators.clearUserSearch();
-				}
-
-				if ($scope.view.state.users.searchQuery.length < 3) {
-					return;
-				}
-
-				// Add some delay to the search and cancel any pending searches
-				$timeout.cancel($scope.timeout);
-				$scope.timeout = $timeout(function() {
-					$scope.view.state.users.newUser = {};
-					workgroupActionCreators.searchUsers($scope.workgroupCode, $scope.view.state.users.searchQuery);
-				}, 300);
+			$scope.searchUsers = function (query) {
+				return workgroupService.searchUsers($scope.workgroupCode, query).then(function (userSearchResults) {
+					return userSearchResults;
+				}, function (err) {
+					$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				});
 			};
 
 			$scope.addUserToWorkgroup = function() {
