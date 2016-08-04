@@ -69,6 +69,9 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 							courseHtml += "Assign..<span class=\"caret\"></span></button>";
 							courseHtml += "<ul class=\"dropdown-menu scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
 
+							// Track courses that were already present in 'interested', and should be filtered from 'other'
+							var interestedCourseIds = [];
+
 							// If the instructor has teachingAssignments in this term, show them first
 							if (instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
 								courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
@@ -78,6 +81,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 									var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 									var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 									var course = scope.view.state.courses.list[sectionGroup.courseId];
+									interestedCourseIds.push(course.id);
 
 									// Show option if the TeachingAssignments parent Course is not being suppressed and Assignment is not already approved
 									if (teachingAssignment.approved == false && course.isHidden == false) {
@@ -95,8 +99,8 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 							// Loop over all other courses
 							$.each(scope.view.state.courses.ids, function(i, courseId) {
 								var course = scope.view.state.courses.list[courseId]
-								// Show option if course has a sectionGroup in this term, and course is not suppressed
-								if (course.sectionGroupTermCodeIds[termCode] && course.isHidden == false) {
+								// Show option if course has a sectionGroup in this term, course is not suppressed, and course did not already show up in the interested section
+								if (course.sectionGroupTermCodeIds[termCode] && course.isHidden == false && interestedCourseIds.indexOf(course.id) < 0) {
 									var sectionGroupId = course.sectionGroupTermCodeIds[termCode];
 									var instructor = scope.view.state.instructors.list[instructorId];
 									courseHtml += "<li><a";
