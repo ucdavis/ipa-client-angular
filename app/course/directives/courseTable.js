@@ -24,7 +24,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 						termsToRender.push(term);
 					}
 				});
-				
+
 				$.each(termsToRender, function(i, term) {
 					header += "<th class=\"sorting\">" + term.description + "</th>"
 				});
@@ -36,45 +36,51 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				// Render the body
 				var body = "<tbody></tbody>";
 
-				$.each(data.courses.ids, function(rowIdx, courseId) {
-					var course = data.courses.list[courseId];
-
+				$.each(data.courses.ids, function (rowIdx, courseId) {
 					var row = "<tr class=\"odd gradeX\" data-course-id=\"" + courseId + "\">";
 
-					// First column
-					row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
-					row += "Tags:";
-					$.each(course.tagIds, function (i, tagId) {
-						var tag = data.tags.list[tagId];
-						var bgColor = tag.color ? tag.color : "#333";
-						row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + bgColor + "\">" + tag.name + "</div>"
-					});
-					row += "</td>";
+					if (courseId == 0) {
+						element.addClass("disabled-courses-table");
+						var numOfColumns = termsToRender.length + 1;
+						row += "<td class=\"new-course-td\" colspan=\"" + numOfColumns + "\">Adding a new course</td><td class=\"ui-overlay\"></td>";
+					} else {
+						var course = data.courses.list[courseId];
 
-					// Term column(s)
-					$.each(termsToRender, function(i, term) {
-						var termCode = term.code;
-						var sectionGroup = _.find(data.sectionGroups.list, function(sg) { return (sg.termCode == termCode) && (sg.courseId == courseId) });
-						var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
-						var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
+						// First column
+						row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
+						row += "Tags:";
+						$.each(course.tagIds, function (i, tagId) {
+							var tag = data.tags.list[tagId];
+							var bgColor = tag.color ? tag.color : "#333";
+							row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + bgColor + "\">" + tag.name + "</div>"
+						});
+						row += "</td>";
 
-						// Calculate this boolean by comparing the sum of all section seats to the plannedSeats
-						var requiresAttention = false;
+						// Term column(s)
+						$.each(termsToRender, function (i, term) {
+							var termCode = term.code;
+							var sectionGroup = _.find(data.sectionGroups.list, function (sg) { return (sg.termCode == termCode) && (sg.courseId == courseId) });
+							var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
+							var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
 
-						row += "<td data-term-code=\"" + termCode + "\" data-section-group-id=\"" + sectionGroupId + "\" class=\"sg-cell\"><div>";
+							// Calculate this boolean by comparing the sum of all section seats to the plannedSeats
+							var requiresAttention = false;
 
-						if(requiresAttention) {
-							row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
-						}
+							row += "<td data-term-code=\"" + termCode + "\" data-section-group-id=\"" + sectionGroupId + "\" class=\"sg-cell\"><div>";
 
-						row += "<input value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
-						row += "</div></td>";
-					});
+							if (requiresAttention) {
+								row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
+							}
 
-					// Actions column
-					row += "<td class=\"ui-overlay\"><i class=\"btn add-before entypo-plus-circled\" onClick=\"addRowForm(" + rowIdx + ")\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Add a course\"></i>";
-					row += "<i class=\"btn delete-sg entypo-minus-circled\" data-event-type=\"deleteCourse\" data-course-id=\"" + courseId + "\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Delete...\"></i>";
-					row += "<i class=\"btn add-after entypo-plus-circled\" onClick=\"addRowForm(" + (rowIdx + 1) + ")\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Add a course\"></i></td>";
+							row += "<input value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
+							row += "</div></td>";
+						});
+
+						// Actions column
+						row += "<td class=\"ui-overlay\"><i class=\"btn add-before entypo-plus-circled\" data-event-type=\"addCourse\" data-index=\"" + rowIdx + "\" ></i>";
+						row += "<i class=\"btn delete-sg entypo-minus-circled\" data-event-type=\"deleteCourse\" data-course-id=\"" + courseId + "\" ></i>";
+						row += "<i class=\"btn add-after entypo-plus-circled\" data-event-type=\"addCourse\" data-index=\"" + (rowIdx + 1) + "\" ></i></td>";
+					}
 
 					row += "</tr>";
 
@@ -135,11 +141,18 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 			element.click(function(e) {
 				$el = $(e.target);
 
+				// Delete course
 				if ($el.data('event-type') == 'deleteCourse') {
 					var courseId = $el.data('course-id');
 					var course = scope.view.state.courses.list[courseId];
 
 					courseActionCreators.deleteCourse(course);
+					// Important: notify angular since this happends outside of the scope
+					scope.$apply();
+				} else if ($el.data('event-type') == 'addCourse') {
+					var index = $el.data('index');
+
+					courseActionCreators.newCourse(index);
 					// Important: notify angular since this happends outside of the scope
 					scope.$apply();
 				} else if ($el.is('td, td *')) {

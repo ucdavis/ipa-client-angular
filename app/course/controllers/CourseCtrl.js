@@ -18,7 +18,11 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			});
 
 			$rootScope.$on('cellChanged', function (event, data) {
-				if (data.courseId && !data.termCode) {
+				if (data.courseId == 0) {
+					// A new course is being created
+					$scope.view.selectedEntity = $scope.view.state.courses.newCourse;
+					$scope.view.selectedEntityType = "course";
+				} else if (data.courseId && !data.termCode) {
 					// A course is selected
 					$scope.view.selectedEntity = $scope.view.state.courses.list[data.courseId];
 					$scope.view.selectedEntityType = "course";

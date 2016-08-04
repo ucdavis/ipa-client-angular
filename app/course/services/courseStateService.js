@@ -39,7 +39,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			switch (action.type) {
 				case INIT_STATE:
 					courses = {
-						newCourse: {},
+						newCourse: {tagIds: []},
 						ids: []
 					};
 					var coursesList = {};
@@ -51,10 +51,14 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					courses.ids = _array_sortIdsByProperty(coursesList, ["subjectCode", "courseNumber", "sequencePattern"]);
 					courses.list = coursesList;
 					return courses;
+				case NEW_COURSE:
+					// Insert a new id of '0' at the specified index
+					courses.ids.splice(action.payload.index, 0, 0);
+					return courses;
 				case ADD_COURSE:
 					courses.list[action.payload.course.id] = action.payload.course;
 					courses.ids.push(action.payload.course.id);
-					courses.newCourse = {};
+					courses.newCourse = {tagIds: []};
 					return courses;
 				case REMOVE_COURSE:
 					var courseIndex = courses.ids.indexOf(action.payload.course.id);

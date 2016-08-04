@@ -476,9 +476,12 @@ table.courses-table > tbody > tr > td:not(:first-child) {
 .x-ng-cloak {
   display: none !important;
 }
-.selected-tr td:not(.ui-overlay), .selected-td {
+.selected-tr td:not(.ui-overlay), .selected-td, .new-course-td {
   background-color: rgba(179, 181, 198, 0.5);
   color: #000;
+}
+.new-course-td {
+  text-align: center;
 }
 table.courses-table.table > thead:first-child > tr:first-child > th {
   border-top: 1px solid #ebebeb;
@@ -487,10 +490,10 @@ table.courses-table {
   border: 0px;
   border-collapse: separate;
 }
-table.courses-table tr:hover td.ui-overlay:not(.new-row) {
+table.courses-table:not(.disabled-courses-table) tr:hover td.ui-overlay:not(.new-course-td) {
   visibility: visible;
 }
-table.courses-table tr:hover td:not(.new-row):not(.ui-overlay) {
+table.courses-table:not(.disabled-courses-table) tr:hover td:not(.ui-overlay):not(.new-course-td) {
   border-top: solid 1px rgba(0, 166, 81, 0.3) !important;
   border-bottom-color: rgba(0, 166, 81, 0.3) !important;
   z-index: 9999;
@@ -501,6 +504,9 @@ th.ui-overlay {
   border: 0px !important;
   position: relative;
   width: 30px;
+}
+table.disabled-courses-table td:not(.new-course-td), table.disabled-courses-table th {
+  opacity: 0.7;
 }
 .add-before {
   position: absolute;

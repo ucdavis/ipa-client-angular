@@ -22,6 +22,7 @@ courseApp.config(function ($routeProvider) {
 });
 
 var INIT_STATE = "INIT_STATE";
+var NEW_COURSE = "NEW_COURSE";
 var ADD_COURSE = "ADD_COURSE";
 var REMOVE_COURSE = "REMOVE_COURSE";
 var UPDATE_COURSE = "UPDATE_COURSE";

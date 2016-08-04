@@ -78,6 +78,16 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
 			});
+		},
+		newCourse: function (index) {
+			this.setActiveCell(0);
+			var action = {
+				type: NEW_COURSE,
+				payload: {
+					index: index
+				}
+			};
+			courseStateService.reduce(action);
 		}
 	}
 });
