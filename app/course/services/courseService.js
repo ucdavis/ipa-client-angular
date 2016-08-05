@@ -61,6 +61,20 @@ courseApp.factory("courseService", this.courseService = function($http, $q) {
 			});
 
 			return deferred.promise;
+		},
+		searchCourses: function(query) {
+			var deferred = $q.defer();
+			var dwToken = "dssit";
+
+			$http.get("http://beta.dw.dss.ucdavis.edu:8080/courses/search?q=" + query + "&token=" + dwToken)
+			.success(function(result) {
+				deferred.resolve(result);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });

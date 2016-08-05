@@ -73,11 +73,24 @@
 			<div class="course-details" ng-if="view.selectedEntityType == 'course'">
 				<form role="form" class="form-horizontal form-groups-bordered">
 					<div class="right-details-group">
-						<div class="row">
+						<div class="row" ng-if="!view.state.courses.newCourse">
 							<div class="col-sm-10 col-sm-offset-1">
 								<strong>Title</strong>
 								<br />
 								<input type="text" class="form-control course-title-edit" ng-model="view.selectedEntity.title">
+							</div>
+						</div>
+						<div class="row" ng-if="view.state.courses.newCourse">
+							<div class="col-sm-10 col-sm-offset-1">
+								<strong>Course</strong>
+								<br />
+								<input type="text" ng-model="asyncSelected" placeholder="Search courses"
+												uib-typeahead="course for course in searchCourses($viewValue)"
+												typeahead-loading="loadingCourses"
+												typeahead-no-results="noResults"
+												typeahead-wait-ms="400"
+												typeahead-min-length="2"
+												class="form-control">
 							</div>
 						</div>
 					</div>
@@ -105,7 +118,7 @@
 						<div class="row">
 							<div class="col-sm-10 col-sm-offset-1 ">
 								<button type="button" class="btn btn-white" ng-click="closeDetails()">Cancel</button>
-								<button type="button" class="btn btn-blue pull-right">Create</button>
+								<button type="button" class="btn btn-blue pull-right" ng-click="createCourse()">Create</button>
 							</div>
 						</div>
 					</div>

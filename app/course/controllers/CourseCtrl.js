@@ -7,8 +7,8 @@
  * # CourseCtrl
  * Controller of the ipaClientAngularApp
  */
-courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'courseActionCreators',
-		this.CourseCtrl = function ($scope, $rootScope, $routeParams, courseActionCreators) {
+courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'courseActionCreators', 'courseService',
+		this.CourseCtrl = function ($scope, $rootScope, $routeParams, courseActionCreators, courseService) {
 			$scope.courseCode = $routeParams.courseCode;
 			$scope.year = $routeParams.year;
 			$scope.view = {};
@@ -37,11 +37,23 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			$scope.closeDetails = function () {
 				courseActionCreators.closeDetails();
 				delete $scope.view.selectedEntity;
-			}
+			};
 
-			$scope.termToggled = function(id) {
+			$scope.termToggled = function (id) {
 				courseActionCreators.toggleTermFilter(id);
-			}
+			};
+
+			$scope.createCourse = function () {
+				courseActionCreators.createCourse($scope.view.state.courses.newCourse);
+			};
+
+			$scope.searchCourses = function (query) {
+				return courseService.searchCourses(query).then(function (courseSearchResults) {
+					return courseSearchResults;
+				}, function (err) {
+					$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				});
+			};
 	}
 ]);
 

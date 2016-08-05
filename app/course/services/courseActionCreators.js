@@ -100,6 +100,9 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			courseStateService.reduce(action);
 			// This need to run after the reducer
 			this.setActiveCell(0);
+		},
+		createCourse: function (newCourse) {
+			console.log("newCourse", newCourse);
 		}
 	}
 });
