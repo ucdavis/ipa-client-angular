@@ -245,6 +245,9 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 						enabledTerms.ids.push(id);
 					}
 
+					enabledTerms.ids = orderTermsChronologically(enabledTerms.ids);
+
+					// Generate termCode list entries
 					for (var i = 1; i < 11; i++) {
 						// 4 is not used as a termCode
 						if (i != 4) {
@@ -252,6 +255,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 							enabledTerms.list[i] = termCode;
 						}
 					}
+
 					userInterface.enabledTerms = enabledTerms;
 
 					return userInterface;
@@ -266,6 +270,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					if(idx === -1) {
 						// Toggle on
 						userInterface.enabledTerms.ids.push(termId);
+						userInterface.enabledTerms.ids = orderTermsChronologically(userInterface.enabledTerms.ids);
 					} else {
 						// Toggle off
 						userInterface.enabledTerms.ids.splice(idx, 1);
@@ -329,7 +334,6 @@ isCourseSuppressed = function(course) {
 }
 
 generateTermCode = function(year, term) {
-
 	if (term.toString().length == 1) {
 		term = "0" + Number(term);
 	}
@@ -346,4 +350,17 @@ generateTermCode = function(year, term) {
 	var termCode = year + term;
 
 	return termCode;
+}
+
+// Sorts a list of termIds into chronological order
+orderTermsChronologically = function(terms) {
+	var orderedTermsReference = [5,6,7,8,9,10,1,2,3];
+	terms.sort(function(a,b) {
+		if (orderedTermsReference.indexOf(a) > orderedTermsReference.indexOf(b)) {
+			return 1;
+		}
+		return -1;
+	});
+
+	return terms;
 }

@@ -19,7 +19,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 				$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
 
 					var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
-					header += "<div class=\"term-header term-cell\">" + termCode + " " + termCode.getTermCodeDisplayName(true) + "</div>";
+					header += "<div class=\"term-header term-cell\">" + termCode.getTermCodeDisplayName(true) + "</div>";
 				});
 
 				header += "</div>";
