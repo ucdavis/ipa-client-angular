@@ -243,10 +243,31 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					var userInterface = {};
 					userInterface.showInstructors = false;
 					userInterface.showCourses = true;
+
+					var enabledTerms = [];
+					for (var i = 0; i < action.payload.scheduleTermStates.length; i++) {
+						var term = Number(action.payload.scheduleTermStates[i].termCode.slice(-2));
+						enabledTerms.push(term);
+					}
+
+					userInterface.enabledTerms = enabledTerms;
+
 					return userInterface;
 				case SWITCH_MAIN_VIEW:
 					userInterface.showCourses = action.payload.showCourses;
 					userInterface.showInstructors = action.payload.showInstructors;
+					return userInterface;
+				case TOGGLE_TERM_FILTER:
+					var termId = action.payload.termId;
+					var idx = userInterface.enabledTerms.indexOf(termId);
+					// A term in the term filter dropdown has been toggled on or off.
+					if(idx === -1) {
+						// Toggle on
+						userInterface.enabledTerms.push(termId);
+					} else {
+						// Toggle off
+						userInterface.enabledTerms.splice(idx, 1);
+					}
 					return userInterface;
 				default:
 					return userInterface;
