@@ -237,7 +237,7 @@ module.exports = function (grunt) {
 
 		watch: {
 			js: {
-				files: ['Gruntfile.js', '<%= folders.webapp.root %>/**/*.js'],
+				files: ['Gruntfile.js', 'bower.json', 'clientConfig.js', '<%= folders.webapp.root %>/**/*.js'],
 				tasks: ['concat']
 			},
 			templates: {

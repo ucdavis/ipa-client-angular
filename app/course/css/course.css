@@ -620,3 +620,11 @@ table.sections-table > tbody tr > td {
 .table-toolbar>.btn-group {
   vertical-align: initial;
 }
+
+.page-body .select2-container {
+  width: 100%;
+}
+
+.course-sequence-pattern {
+  text-transform: uppercase;
+}

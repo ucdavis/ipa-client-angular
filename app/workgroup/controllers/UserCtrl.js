@@ -31,7 +31,6 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$t
 			};
 
 			$scope.searchUsersResultSelected = function ($item, $model, $label, $event) {
-				debugger;
 				$scope.view.state.users.newUser = $item;
 				$scope.view.state.users.searchQuery = $item.name;
 			};

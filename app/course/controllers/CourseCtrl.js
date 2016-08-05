@@ -49,12 +49,19 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 
 			$scope.searchCourses = function (query) {
 				return courseService.searchCourses(query).then(function (courseSearchResults) {
-					return courseSearchResults;
+					return courseSearchResults.slice(0, 20);
 				}, function (err) {
 					$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 				});
 			};
-	}
+
+			$scope.searchCoursesResultSelected = function ($item, $model, $label, $event) {
+				$scope.view.state.courses.newCourse.title = $item.title;
+				$scope.view.state.courses.newCourse.subjectCode = $item.subjectCode;
+				$scope.view.state.courses.newCourse.courseNumber = $item.courseNumber;
+				$scope.view.state.courses.newCourse.effectiveTermCode = $item.effectiveTermCode;
+			};
+		}
 ]);
 
 CourseCtrl.getPayload = function (authService, $route, courseActionCreators) {

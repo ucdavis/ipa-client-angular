@@ -12,7 +12,7 @@ courseApp.directive("select2", this.select2 = function () {
 
 				element.empty();
 				scope.optionIds.forEach(function (id) {
-					var isSelected = scope.selectedIds.indexOf(id) >= 0;
+					var isSelected = scope.selectedIds.indexOf(id.toString()) >= 0;
 					var optionBlock = $('<option></option>')
 						.val(id)
 						.attr('selected', isSelected)
