@@ -8,7 +8,7 @@
  * Service in the workgroupApp.
  * Central location for sharedState information.
  */
-assignmentApp.service('assignmentStateService', function ($rootScope, SectionGroup, Course, ScheduleTermState, ScheduleInstructorNote, Instructor, TeachingAssignment, TeachingCall) {
+assignmentApp.service('assignmentStateService', function ($rootScope, SectionGroup, Course, ScheduleTermState, ScheduleInstructorNote, Term, Instructor, TeachingAssignment, TeachingCall) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -149,7 +149,6 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 		},
 		_scheduleTermStateReducers: function (action, scheduleTermStates) {
 			var scope = this;
-			var activeTerms = ['10','01','03'];
 
 			switch (action.type) {
 				case INIT_ASSIGNMENT_VIEW:
@@ -162,14 +161,6 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 						var scheduleTermStateData = action.payload.scheduleTermStates[i];
 						// Using termCode as key since the scheduleTermState does not have an id
 						scheduleTermStateList[scheduleTermStateData.termCode] = new ScheduleTermState(scheduleTermStateData);
-
-						// Set default display of termCodes
-						scheduleTermStateList[scheduleTermStateData.termCode].isHidden = true;
-						var term = scheduleTermStateData.termCode.slice(-2);
-
-						if( activeTerms.indexOf(term) > -1 ) {
-							scheduleTermStateList[scheduleTermStateData.termCode].isHidden = false;
-						}
 					}
 					scheduleTermStates.ids = _array_sortIdsByProperty(scheduleTermStateList, "termCode");
 					scheduleTermStates.list = scheduleTermStateList;
@@ -243,13 +234,24 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					var userInterface = {};
 					userInterface.showInstructors = false;
 					userInterface.showCourses = true;
-
-					var enabledTerms = [];
+					// Set default enabledTerms based on scheduleTermState data
+					var enabledTerms = {};
+					enabledTerms.list = {};
+					enabledTerms.ids = [];
 					for (var i = 0; i < action.payload.scheduleTermStates.length; i++) {
-						var term = Number(action.payload.scheduleTermStates[i].termCode.slice(-2));
-						enabledTerms.push(term);
+						var term = action.payload.scheduleTermStates[i].termCode;
+						// Generate an id based off termCode
+						var id = Number(term.slice(-2));
+						enabledTerms.ids.push(id);
 					}
 
+					for (var i = 1; i < 11; i++) {
+						// 4 is not used as a termCode
+						if (i != 4) {
+							var termCode = generateTermCode(action.year, i)
+							enabledTerms.list[i] = termCode;
+						}
+					}
 					userInterface.enabledTerms = enabledTerms;
 
 					return userInterface;
@@ -259,14 +261,14 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					return userInterface;
 				case TOGGLE_TERM_FILTER:
 					var termId = action.payload.termId;
-					var idx = userInterface.enabledTerms.indexOf(termId);
+					var idx = userInterface.enabledTerms.ids.indexOf(termId);
 					// A term in the term filter dropdown has been toggled on or off.
 					if(idx === -1) {
 						// Toggle on
-						userInterface.enabledTerms.push(termId);
+						userInterface.enabledTerms.ids.push(termId);
 					} else {
 						// Toggle off
-						userInterface.enabledTerms.splice(idx, 1);
+						userInterface.enabledTerms.ids.splice(idx, 1);
 					}
 					return userInterface;
 				default:
@@ -324,4 +326,24 @@ isCourseSuppressed = function(course) {
 	}
 
 	return false;
+}
+
+generateTermCode = function(year, term) {
+
+	if (term.toString().length == 1) {
+		term = "0" + Number(term);
+	}
+
+	switch(term) {
+		case "01":
+		case "02":
+		case "03":
+			year++;
+			break;
+		default:
+			year;
+	}
+	var termCode = year + term;
+
+	return termCode;
 }

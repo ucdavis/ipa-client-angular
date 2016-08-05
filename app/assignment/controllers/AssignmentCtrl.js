@@ -25,6 +25,10 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 				assignmentActionCreators.showCourses();
 			};
 
+			$scope.termToggled = function(id) {
+				assignmentActionCreators.toggleTermFilter(id);
+			}
+
 			$scope.approveInstructorAssignment = function(teachingAssignmentId) {
 				var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
 				assignmentActionCreators.approveInstructorAssignment(teachingAssignment);

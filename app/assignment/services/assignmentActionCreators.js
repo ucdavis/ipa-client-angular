@@ -14,7 +14,8 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			assignmentService.getInitialState(workgroupId, year).then(function (payload) {
 				var action = {
 					type: INIT_ASSIGNMENT_VIEW,
-					payload: payload
+					payload: payload,
+					year: year
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
@@ -113,7 +114,15 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				}
 			};
 			assignmentStateService.reduce(action);
+		},
+		toggleTermFilter: function (termId) {
+			var action = {
+				type: TOGGLE_TERM_FILTER,
+				payload: {
+					termId: termId
+				}
+			};
+			assignmentStateService.reduce(action);
 		}
-
 	}
 });

@@ -16,10 +16,10 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 				var header = "<div class=\"course-list-row\">";
 				header += "<div class=\"course-header description-cell\">Course</div>";
 
-				$.each(scope.view.state.scheduleTermStates.ids, function(i, termCode) {
-					if (scope.view.state.scheduleTermStates.list[termCode].isHidden == false) {
-						header += "<div class=\"term-header term-cell\">" + termCode.toString().getTermCodeDisplayName(true) + "</div>";
-					}
+				$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
+
+					var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
+					header += "<div class=\"term-header term-cell\">" + termCode + " " + termCode.getTermCodeDisplayName(true) + "</div>";
 				});
 
 				header += "</div>";
@@ -41,83 +41,84 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 						courseHtml += "</div></div></div>";
 						
 						// Loop over active terms
-						$.each(scope.view.state.scheduleTermStates.ids, function(i, termCode) {
-							if (scope.view.state.scheduleTermStates.list[termCode].isHidden == false) {
-								courseHtml += "<div class=\"term-cell\">";
-								var sectionGroupId = course.sectionGroupTermCodeIds[termCode];
-								if (sectionGroupId) {
-									var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+						$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
+							var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
 
-									// Adding sectionGroup Seats
-									courseHtml += "<div class=\"assignment-seats-container\">";
-									courseHtml += "<span class=\"assignment-seats\" data-toggle=\"tooltip\" data-placement=\"top\"";
-									courseHtml += "data-original-title=\"Seats\" data-container=\"body\">";
-									courseHtml += scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats + "</span>";
-									courseHtml += "</div>";
+							courseHtml += "<div class=\"term-cell\">";
+							
+							var sectionGroupId = course.sectionGroupTermCodeIds[termCode];
+							if (sectionGroupId) {
+								var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 
-									// Loop over teachingAssignments that are approved
+								// Adding sectionGroup Seats
+								courseHtml += "<div class=\"assignment-seats-container\">";
+								courseHtml += "<span class=\"assignment-seats\" data-toggle=\"tooltip\" data-placement=\"top\"";
+								courseHtml += "data-original-title=\"Seats\" data-container=\"body\">";
+								courseHtml += scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats + "</span>";
+								courseHtml += "</div>";
+
+								// Loop over teachingAssignments that are approved
+								$.each(sectionGroup.teachingAssignmentIds, function(i, teachingAssignmentId) {
+									var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+
+									if (teachingAssignment.approved == true) {
+										var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
+										// Add approved teachingAssignment to term
+										courseHtml += "<div class=\"alert alert-info tile-assignment\">";
+
+										if (instructor == undefined) {
+											courseHtml += "instructorId not found: " + teachingAssignment.instructorId;
+										} else {
+											courseHtml += instructor.fullName;
+										}
+
+										courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\"";
+										courseHtml += " data-placement=\"top\" data-original-title=\"Unassign\" data-container=\"body\""
+										courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"></i>";
+										courseHtml += "</div>"; // Ending Teaching assignment div
+									}
+								});
+
+								// Add an assign button to add more instructors
+								courseHtml += "<div class=\"dropdown assign-dropdown\">";
+								courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
+								courseHtml += "Assign..<span class=\"caret\"></span></button>";
+								courseHtml += "<ul class=\"dropdown-menu scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
+								if (sectionGroup.teachingAssignmentIds.length > 0) {
+									courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
+									// Loop over instructors who are interested in this course
 									$.each(sectionGroup.teachingAssignmentIds, function(i, teachingAssignmentId) {
 										var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 
-										if (teachingAssignment.approved == true) {
+										if (teachingAssignment.approved == false) {
 											var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
-											// Add approved teachingAssignment to term
-											courseHtml += "<div class=\"alert alert-info tile-assignment\">";
+											if (instructor) {
+												courseHtml += "<li><a";
+												courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
+												courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
+												courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 
-											if (instructor == undefined) {
-												courseHtml += "instructorId not found: " + teachingAssignment.instructorId;
-											} else {
-												courseHtml += instructor.fullName;
+												courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
 											}
-
-											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\"";
-											courseHtml += " data-placement=\"top\" data-original-title=\"Unassign\" data-container=\"body\""
-											courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"></i>";
-											courseHtml += "</div>"; // Ending Teaching assignment div
 										}
 									});
-
-									// Add an assign button to add more instructors
-									courseHtml += "<div class=\"dropdown assign-dropdown\">";
-									courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
-									courseHtml += "Assign..<span class=\"caret\"></span></button>";
-									courseHtml += "<ul class=\"dropdown-menu scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
-									if (sectionGroup.teachingAssignmentIds.length > 0) {
-										courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
-										// Loop over instructors who are interested in this course
-										$.each(sectionGroup.teachingAssignmentIds, function(i, teachingAssignmentId) {
-											var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
-
-											if (teachingAssignment.approved == false) {
-												var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
-												if (instructor) {
-													courseHtml += "<li><a";
-													courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
-													courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
-													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
-
-													courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
-												}
-											}
-										});
-										courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
-									}
-
-									// Loop over instructors who are not interested in this course
-									$.each(scope.view.state.instructors.ids, function(i, instructorId) {
-										var instructor = scope.view.state.instructors.list[instructorId];
-										courseHtml += "<li><a";
-										courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
-										courseHtml += " data-instructor-id=\"" + instructorId + "\"";
-										courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
-									});
-
-									courseHtml += "</ul></div>";
-								} else {
-									courseHtml += "Not Offered";
+									courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
 								}
-								courseHtml += "</div>"; // Ending term-cell div
+
+								// Loop over instructors who are not interested in this course
+								$.each(scope.view.state.instructors.ids, function(i, instructorId) {
+									var instructor = scope.view.state.instructors.list[instructorId];
+									courseHtml += "<li><a";
+									courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
+									courseHtml += " data-instructor-id=\"" + instructorId + "\"";
+									courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
+								});
+
+								courseHtml += "</ul></div>";
+							} else {
+								courseHtml += "Not Offered";
 							}
+							courseHtml += "</div>"; // Ending term-cell div
 						});
 						courseHtml += "</div>"; // Ending course-row div
 						
