@@ -84,8 +84,12 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 								courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
 								courseHtml += "Assign..<span class=\"caret\"></span></button>";
 								courseHtml += "<ul class=\"dropdown-menu scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
+
+								var interestedInstructorIds = [];
+
 								if (sectionGroup.teachingAssignmentIds.length > 0) {
 									courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
+
 									// Loop over instructors who are interested in this course
 									$.each(sectionGroup.teachingAssignmentIds, function(i, teachingAssignmentId) {
 										var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
@@ -93,6 +97,8 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 										if (teachingAssignment.approved == false) {
 											var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 											if (instructor) {
+												interestedInstructorIds.push(instructor.id);
+
 												courseHtml += "<li><a";
 												courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
 												courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
@@ -108,10 +114,12 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 								// Loop over instructors who are not interested in this course
 								$.each(scope.view.state.instructors.ids, function(i, instructorId) {
 									var instructor = scope.view.state.instructors.list[instructorId];
-									courseHtml += "<li><a";
-									courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
-									courseHtml += " data-instructor-id=\"" + instructorId + "\"";
-									courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
+									if (interestedInstructorIds.indexOf(instructor.id) < 0) {
+										courseHtml += "<li><a";
+										courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
+										courseHtml += " data-instructor-id=\"" + instructorId + "\"";
+										courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
+									}
 								});
 
 								courseHtml += "</ul></div>";
