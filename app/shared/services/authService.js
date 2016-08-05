@@ -1,11 +1,6 @@
 'use strict';
 
 /**
- * URL for the IPA API server ("the backend")
- */
-var serverRoot = 'http://localhost:8080'
-
-/**
  * @ngdoc service
  * @name ipaClientAngularApp.authService
  * @description
@@ -35,7 +30,7 @@ angular.module('sharedApp')
 						var token = response.data.token;
 
 						$http.defaults.headers.common.Authorization = 'Bearer ' + token;
-						
+
 						localStorage.setItem('JWT', token);
 						localStorage.setItem('userRoles', JSON.stringify(response.data.userRoles));
 						localStorage.setItem('displayName', response.data.displayName);
@@ -83,7 +78,7 @@ angular.module('sharedApp')
 				localStorage.removeItem('displayName');
 				$window.location.href = serverRoot + "/logout";
 			},
-			
+
 			getUserRoles: function () {
 				var userRoles = null;
 
@@ -95,7 +90,7 @@ angular.module('sharedApp')
 
 				return userRoles;
 			},
-			
+
 			fallbackToDefaultUrl: function() {
 				var userRoles = this.getUserRoles();
 				for (var i = 0; i < userRoles.length; i++) {
@@ -109,7 +104,7 @@ angular.module('sharedApp')
 					}
 				}
 			},
-			
+
 			setSharedState: function (workgroupId, year, displayName) {
 				var scope = this;
 				var userRoles = scope.getUserRoles();
@@ -135,7 +130,7 @@ angular.module('sharedApp')
 
 				$rootScope.$emit('sharedStateSet', scope.getSharedState());
 			},
-			
+
 			getSharedState: function () {
 				return {
 					workgroup: this.activeWorkgroup,

@@ -73,6 +73,7 @@ module.exports = function (grunt) {
 			// AJS configuration files, separated so that they can be excluded in JS testing
 			jsConfig: {
 				src: [
+					'clientConfig.js',
 					'<%= folders.webapp.root %>/shared/exceptionHandler.js',
 					'<%= folders.webapp.root %>/shared/sharedInterceptors.js'
 				],

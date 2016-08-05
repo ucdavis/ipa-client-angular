@@ -64,9 +64,8 @@ courseApp.factory("courseService", this.courseService = function($http, $q) {
 		},
 		searchCourses: function(query) {
 			var deferred = $q.defer();
-			var dwToken = "dssit";
 
-			$http.get("http://beta.dw.dss.ucdavis.edu:8080/courses/search?q=" + query + "&token=" + dwToken)
+			$http.get(dwUrl + "/courses/search?q=" + query + "&token=" + dwToken)
 			.success(function(result) {
 				deferred.resolve(result);
 			})
