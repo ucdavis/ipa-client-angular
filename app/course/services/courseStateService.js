@@ -62,9 +62,13 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					courses.newCourse = null;
 					return courses;
 				case CREATE_COURSE:
+					// Close details
+					var newCourseIndex = courses.ids.indexOf(0);
+					courses.ids.splice(newCourseIndex, 1);
+					courses.newCourse = null;
+					// Insert new course
 					courses.list[action.payload.course.id] = action.payload.course;
-					courses.ids.push(action.payload.course.id);
-					courses.newCourse = {tagIds: []};
+					courses.ids.splice(newCourseIndex, 0, action.payload.course.id);
 					return courses;
 				case REMOVE_COURSE:
 					var courseIndex = courses.ids.indexOf(action.payload.course.id);
