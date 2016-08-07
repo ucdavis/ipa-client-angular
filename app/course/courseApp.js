@@ -2,7 +2,7 @@ window.courseApp = angular.module("courseApp", ["sharedApp", "ngRoute"]);
 
 courseApp.config(function ($routeProvider) {
 	return $routeProvider
-		.when("/:courseCode/:year", {
+		.when("/:workgroupId/:year", {
 			templateUrl: "CourseCtrl.html",
 			controller: "CourseCtrl",
 			resolve: {

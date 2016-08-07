@@ -98,11 +98,32 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				}
 			};
 			courseStateService.reduce(action);
-			// This need to run after the reducer
+			// This needs to run after the reducer
 			this.setActiveCell(0);
 		},
-		createCourse: function (newCourse) {
+		/**
+		 * POSTs to create a course
+		 *
+		 * @param  newCourse		new course object
+		 * @param  workgroupId
+		 * @param  year
+		 * @returns							created course
+		 */
+		createCourse: function (newCourse, workgroupId, year) {
 			console.log("newCourse", newCourse);
+			courseService.createCourse(newCourse, workgroupId, year).then(function (createdCourse) {
+				$rootScope.$emit('toast', { message: "Created course " + createdCourse.title, type: "SUCCESS"} );
+				var action = {
+					type: CREATE_COURSE,
+					payload: {
+						course: createdCourse
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
+
 		}
 	}
 });

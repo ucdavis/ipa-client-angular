@@ -9,7 +9,7 @@
  */
 courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'courseActionCreators', 'courseService',
 		this.CourseCtrl = function ($scope, $rootScope, $routeParams, courseActionCreators, courseService) {
-			$scope.courseCode = $routeParams.courseCode;
+			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.view = {};
 
@@ -44,7 +44,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			};
 
 			$scope.createCourse = function () {
-				courseActionCreators.createCourse($scope.view.state.courses.newCourse);
+				courseActionCreators.createCourse($scope.view.state.courses.newCourse, $scope.workgroupId, $scope.year);
 			};
 
 			$scope.searchCourses = function (query) {
@@ -65,7 +65,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 ]);
 
 CourseCtrl.getPayload = function (authService, $route, courseActionCreators) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.courseCode, $route.current.params.year).then(function () {
-		return courseActionCreators.getInitialState($route.current.params.courseCode, $route.current.params.year);
+	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+		return courseActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
 	});
 }

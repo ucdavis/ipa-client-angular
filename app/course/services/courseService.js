@@ -49,6 +49,23 @@ courseApp.factory("courseService", this.courseService = function($http, $q) {
 
 			return deferred.promise;
 		},
+		createCourse: function (course, workgroupId, year) {
+			var deferred = $q.defer();
+			course.tags = [];
+			course.tagIds.forEach(function (tagId) {
+				course.tags.push({id: parseInt(tagId)});
+			});
+
+			$http.post(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/courses", course, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		deleteCourse: function(course) {
 			var deferred = $q.defer();
 
