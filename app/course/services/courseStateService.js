@@ -187,6 +187,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					uiState.tableLocked = true;
 					return uiState;
 				case CREATE_COURSE:
+					uiState.selectedCourseId = action.payload.course.id;
 					uiState.tableLocked = false;
 					return uiState;
 				case CELL_SELECTED:

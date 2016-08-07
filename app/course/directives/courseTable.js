@@ -59,7 +59,11 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				var body = "<tbody></tbody>";
 
 				$.each(data.state.courses.ids, function (rowIdx, courseId) {
-					var row = "<tr class=\"odd gradeX\" data-course-id=\"" + courseId + "\">";
+					var rowClass = "odd gradeX";
+					if (data.state.uiState.selectedCourseId == courseId) {
+						rowClass += " selected-tr";
+					}
+					var row = "<tr class=\"" + rowClass + "\" data-course-id=\"" + courseId + "\" >";
 
 					if (courseId == 0) {
 						var numOfColumns = termsToRender.length + 1;
