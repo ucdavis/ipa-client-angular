@@ -75,9 +75,9 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
-		deleteCourse: function(course) {
+		deleteCourse: function (course) {
 			var courseTitle = course.title;
-			courseService.deleteCourse(course).then(function (course) {
+			courseService.deleteCourse(course).then(function () {
 				$rootScope.$emit('toast', { message: "Deleted course " + courseTitle, type: "SUCCESS"} );
 				var action = {
 					type: REMOVE_COURSE,
