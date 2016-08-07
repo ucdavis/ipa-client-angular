@@ -85,7 +85,7 @@
 								<strong>Course</strong>
 								<br />
 								<input type="text" ng-model="selectedCourse" placeholder="Search courses"
-												uib-typeahead="course as course.title for course in searchCourses($viewValue)"
+												uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchCourses($viewValue)"
 												typeahead-loading="loadingCourses"
 												typeahead-no-results="noResults"
 												typeahead-wait-ms="400"
