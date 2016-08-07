@@ -44,7 +44,13 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			};
 
 			$scope.createCourse = function () {
-				courseActionCreators.createCourse($scope.view.state.courses.newCourse, $scope.workgroupId, $scope.year);
+				if ($scope.newCourseIsValid()) {
+					courseActionCreators.createCourse($scope.view.state.courses.newCourse, $scope.workgroupId, $scope.year);
+				}
+			};
+
+			$scope.newCourseIsValid = function () {
+				return $scope.view.state.courses.newCourse.title && $scope.view.state.courses.newCourse.sequencePattern;
 			};
 
 			$scope.searchCourses = function (query) {
