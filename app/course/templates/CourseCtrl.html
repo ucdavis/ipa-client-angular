@@ -103,10 +103,15 @@
 							<div class="col-sm-10 col-sm-offset-1">
 								<strong>Tags</strong>
 								<br />
-								<select name="test" class="select2" multiple ng-model="view.selectedEntity.tagIds"
-									option-ids="view.state.tags.ids" selected-ids="view.selectedEntity.tagIds"
-									option-objects="view.state.tags.list">
-								</select>
+
+								<ui-select multiple ng-model="view.selectedEntity.tagIds" theme="bootstrap" close-on-select="false">
+									<ui-select-match placeholder="Select tags...">{{view.state.tags.list[$item].name}}</ui-select-match>
+									<!-- TODO: needs custom filter -->
+									<ui-select-choices repeat="tagId in view.state.tags.ids | filter:$select.search">
+										<div ng-bind-html="view.state.tags.list[tagId].name | highlight: $select.search"></div>
+									</ui-select-choices>
+								</ui-select>
+
 							</div>
 						</div>
 					</div>
