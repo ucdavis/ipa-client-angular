@@ -51,12 +51,12 @@
 	<div class="panel panel-primary panel-highlight" ng-if="view.selectedEntity">
 		<div class="panel-heading">
 			<div class="panel-title">
-				<h4 ng-if="view.selectedEntityType == 'course' && !view.state.courses.newCourse">
+				<h4 ng-if="view.selectedEntityType == 'course'">
 					{{ view.selectedEntity.subjectCode }} {{ view.selectedEntity.courseNumber 	}}
 					<br>
 					<small>{{ view.selectedEntity.title }}</small>
 				</h4>
-				<h4 ng-if="view.state.courses.newCourse">
+				<h4 ng-if="view.selectedEntityType == 'newCourse'">
 					New Course
 				</h4>
 				<h4 ng-if="view.selectedEntityType == 'sectionGroup'"
@@ -74,31 +74,23 @@
 
 		<div class="panel-body no-padding">
 			<div class="course-details" ng-if="view.selectedEntityType == 'course'">
+				<!-- Edit course form -->
 				<form role="form" class="form-horizontal form-groups-bordered">
 					<div class="right-details-group">
-						<div class="row" ng-if="!view.state.courses.newCourse">
+						<div class="row">
 							<div class="col-sm-10 col-sm-offset-1">
 								<strong>Title</strong>
 								<br />
-								<input type="text" class="form-control course-title-edit" ng-model="view.selectedEntity.title">
-							</div>
-						</div>
-						<div class="row" ng-if="view.state.courses.newCourse">
-							<div class="col-sm-10 col-sm-offset-1">
-								<strong>Course</strong>
-								<br />
-								<input type="text" ng-model="selectedCourse" placeholder="Search courses"
-												uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchCourses($viewValue)"
-												typeahead-loading="loadingCourses"
-												typeahead-no-results="noResults"
-												typeahead-wait-ms="400"
-												typeahead-min-length="2"
-												typeahead-on-select="searchCoursesResultSelected($item, $model, $label, $event)"
-												class="form-control">
+								<input auto-input
+									type="text" class="form-control course-title-edit"
+									on-enter="saveCourse()"
+									on-blur="saveCourse()"
+									help-text-placement="bottom"
+									ng-model="view.selectedEntity.title" />
 							</div>
 						</div>
 					</div>
-					<div class="right-details-group" ng-if="!view.state.courses.newCourse">
+					<div class="right-details-group">
 						<div class="row">
 							<div class="col-sm-10 col-sm-offset-1">
 								<strong>Tags</strong>
@@ -124,14 +116,48 @@
 												uib-typeahead="sequencePattern for sequencePattern in sequencePatterns | filter:$viewValue | limitTo:8"
 												typeahead-loading="loadingSequences"
 												typeahead-no-results="noResults"
+												typeahead-editable="false"
+												typeahead-on-select="saveCourse()"
+												class="form-control course-sequence-pattern">
+							</div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="course-details" ng-if="view.selectedEntityType == 'newCourse'">
+				<!-- New course form -->
+				<form role="form" class="form-horizontal form-groups-bordered" ng-if="view.state.courses.newCourse">
+					<div class="right-details-group">
+						<div class="row">
+							<div class="col-sm-10 col-sm-offset-1">
+								<strong>Course</strong>
+								<br />
+								<input type="text" ng-model="selectedCourse" placeholder="Search courses"
+												uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchCourses($viewValue)"
+												typeahead-loading="loadingCourses"
+												typeahead-no-results="noResults"
 												typeahead-wait-ms="400"
 												typeahead-min-length="2"
+												typeahead-on-select="searchCoursesResultSelected($item, $model, $label, $event)"
+												class="form-control">
+							</div>
+						</div>
+					</div>
+					<div class="right-details-group">
+						<div class="row">
+							<label class="col-sm-3 col-sm-offset-1 control-label">Sequence</label>
+							<div class="col-sm-7">
+								<input type="text" ng-model="view.selectedEntity.sequencePattern"
+												uib-typeahead="sequencePattern for sequencePattern in sequencePatterns | filter:$viewValue | limitTo:10"
+												typeahead-loading="loadingSequences"
+												typeahead-no-results="noResults"
 												typeahead-editable="false"
 												class="form-control course-sequence-pattern">
 							</div>
 						</div>
 					</div>
-					<div class="right-details-group" ng-if="view.state.courses.newCourse">
+					<div class="right-details-group">
 						<div class="row">
 							<div class="col-sm-10 col-sm-offset-1 ">
 								<button type="button" class="btn btn-white" ng-click="closeDetails()">Cancel</button>

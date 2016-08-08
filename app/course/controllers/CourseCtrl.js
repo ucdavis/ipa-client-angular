@@ -20,7 +20,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				if (data.state.courses.newCourse) {
 					// A new course is being created
 					$scope.view.selectedEntity = $scope.view.state.courses.newCourse;
-					$scope.view.selectedEntityType = "course";
+					$scope.view.selectedEntityType = "newCourse";
 				} else if (data.state.uiState.selectedCourseId && !data.state.uiState.selectedTermCode) {
 					// A course is selected
 					$scope.view.selectedEntity = $scope.view.state.courses.list[data.state.uiState.selectedCourseId];
@@ -80,6 +80,10 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			$scope.removeTag = function (item, tagId) {
 				courseActionCreators.removeTagFromCourse($scope.view.selectedEntity, $scope.view.state.tags.list[tagId]);
 			};
+
+			$scope.saveCourse = function () {
+				courseActionCreators.updateCourse($scope.view.selectedEntity);
+			}
 		}
 ]);
 

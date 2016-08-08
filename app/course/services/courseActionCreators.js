@@ -131,6 +131,20 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			});
 
 		},
+		updateCourse: function (course) {
+			courseService.updateCourse(course).then(function (updatedCourse) {
+				$rootScope.$emit('toast', { message: "Updated course " + updatedCourse.title, type: "SUCCESS"} );
+				var action = {
+					type: UPDATE_COURSE,
+					payload: {
+						course: updatedCourse
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
+		},
 		addTagToCourse: function (course, tag) {
 			courseService.addTagToCourse(course, tag).then(function (updatedCourse) {
 				$rootScope.$emit('toast', { message: "Added tag " + tag.name, type: "SUCCESS"} );

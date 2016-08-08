@@ -66,6 +66,19 @@ courseApp.factory("courseService", this.courseService = function($http, $q) {
 
 			return deferred.promise;
 		},
+		updateCourse: function (course) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/courseView/courses/" + course.id, course, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		deleteCourse: function(course) {
 			var deferred = $q.defer();
 
