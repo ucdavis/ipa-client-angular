@@ -56,7 +56,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					courses.ids.splice(action.payload.index, 0, 0);
 					courses.newCourse = new Course();
 					return courses;
-				case CLOSE_DETAILS:
+				case CLOSE_NEW_COURSE_DETAILS:
 					var newCourseIndex = courses.ids.indexOf(0);
 					courses.ids.splice(newCourseIndex, 1);
 					courses.newCourse = null;
@@ -197,6 +197,8 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				case CLOSE_DETAILS:
 					uiState.selectedCourseId = null;
 					uiState.selectedTermCode = null;
+					return uiState;
+				case CLOSE_NEW_COURSE_DETAILS:
 					uiState.tableLocked = false;
 					return uiState;
 				default:

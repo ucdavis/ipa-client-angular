@@ -38,6 +38,13 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			};
 			courseStateService.reduce(action);
 		},
+		closeNewCourseDetails: function () {
+			var action = {
+				type: CLOSE_NEW_COURSE_DETAILS,
+				payload: {}
+			};
+			courseStateService.reduce(action);
+		},
 		toggleTermFilter: function (termId) {
 			var action = {
 				type: TOGGLE_TERM_FILTER,

@@ -8,6 +8,14 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 			scope.view = {};
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
+				if (data.actionType == CLOSE_DETAILS) {
+					// Remove existing highlighting
+					element.find('tbody > tr').removeClass("selected-tr");
+					element.find('tbody > tr > td').removeClass("selected-td");
+
+					return;
+				}
+
 				if (data.actionType == CELL_SELECTED) {
 					// Remove existing highlighting
 					element.find('tbody > tr').removeClass("selected-tr");

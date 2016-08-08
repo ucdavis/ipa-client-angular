@@ -36,8 +36,12 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			});
 
 			$scope.closeDetails = function () {
-				courseActionCreators.closeDetails();
 				delete $scope.view.selectedEntity;
+				if ($scope.view.state.courses.newCourse) {
+					courseActionCreators.closeNewCourseDetails();
+				} else {
+					courseActionCreators.closeDetails();
+				}
 			};
 
 			$scope.termToggled = function (id) {
