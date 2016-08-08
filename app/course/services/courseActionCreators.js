@@ -110,7 +110,6 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 		 * @returns							created course
 		 */
 		createCourse: function (newCourse, workgroupId, year) {
-			console.log("newCourse", newCourse);
 			courseService.createCourse(newCourse, workgroupId, year).then(function (createdCourse) {
 				$rootScope.$emit('toast', { message: "Created course " + createdCourse.title, type: "SUCCESS"} );
 				var action = {
@@ -124,6 +123,34 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
 			});
 
+		},
+		addTagToCourse: function (course, tag) {
+			courseService.addTagToCourse(course, tag).then(function (updatedCourse) {
+				$rootScope.$emit('toast', { message: "Added tag " + tag.name, type: "SUCCESS"} );
+				var action = {
+					type: UPDATE_COURSE,
+					payload: {
+						course: updatedCourse
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
+		},
+		removeTagFromCourse: function (course, tag) {
+			courseService.removeTagFromCourse(course, tag).then(function (updatedCourse) {
+				$rootScope.$emit('toast', { message: "Removed tag " + tag.name, type: "SUCCESS"} );
+				var action = {
+					type: UPDATE_COURSE,
+					payload: {
+						course: updatedCourse
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
 		}
 	}
 });

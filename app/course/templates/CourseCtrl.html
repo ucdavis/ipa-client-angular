@@ -104,7 +104,8 @@
 								<strong>Tags</strong>
 								<br />
 
-								<ui-select multiple ng-model="view.selectedEntity.tagIds" theme="bootstrap" close-on-select="false">
+								<ui-select multiple ng-model="view.selectedEntity.tagIds" theme="bootstrap"
+								close-on-select="false" on-select="addTag($item, $model)" on-remove="removeTag($item, $model)">
 									<ui-select-match placeholder="Select tags...">{{view.state.tags.list[$item].name}}</ui-select-match>
 									<!-- TODO: needs custom filter -->
 									<ui-select-choices repeat="tagId in view.state.tags.ids | filter:$select.search">

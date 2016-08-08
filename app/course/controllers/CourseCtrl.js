@@ -68,6 +68,14 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				$scope.view.state.courses.newCourse.courseNumber = $item.courseNumber;
 				$scope.view.state.courses.newCourse.effectiveTermCode = $item.effectiveTermCode;
 			};
+
+			$scope.addTag = function (item, tagId) {
+				courseActionCreators.addTagToCourse($scope.view.selectedEntity, $scope.view.state.tags.list[tagId]);
+			};
+
+			$scope.removeTag = function (item, tagId) {
+				courseActionCreators.removeTagFromCourse($scope.view.selectedEntity, $scope.view.state.tags.list[tagId]);
+			};
 		}
 ]);
 
