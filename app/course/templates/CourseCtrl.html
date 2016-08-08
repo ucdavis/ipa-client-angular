@@ -114,8 +114,14 @@
 						<div class="row">
 							<label class="col-sm-3 col-sm-offset-1 control-label">Sequence</label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control course-sequence-pattern"
-									ng-model="view.selectedEntity.sequencePattern" maxlength="3">
+								<input type="text" ng-model="view.selectedEntity.sequencePattern"
+												uib-typeahead="sequencePattern for sequencePattern in sequencePatterns | filter:$viewValue | limitTo:8"
+												typeahead-loading="loadingSequences"
+												typeahead-no-results="noResults"
+												typeahead-wait-ms="400"
+												typeahead-min-length="2"
+												typeahead-editable="false"
+												class="form-control course-sequence-pattern">
 							</div>
 						</div>
 					</div>

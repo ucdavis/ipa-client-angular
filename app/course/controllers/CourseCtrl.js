@@ -12,6 +12,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.view = {};
+			$scope.sequencePatterns = sequencePatterns;
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
 				$scope.view.state = data.state;
