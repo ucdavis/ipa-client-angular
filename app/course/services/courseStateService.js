@@ -113,6 +113,9 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				case UPDATE_SECTION_GROUP:
 					sectionGroups.list[action.payload.sectionGroup.id] = action.payload.sectionGroup;
 					return sectionGroups;
+				case INIT_SECTION_GROUP_SECTIONS:
+					sectionGroups.list[action.payload.sectionGroup.id].sections = action.payload.sections;
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}

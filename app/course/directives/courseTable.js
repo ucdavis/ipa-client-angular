@@ -6,8 +6,21 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 		restrict: 'A',
 		link: function (scope, element, attrs) {
 			scope.view = {};
+			var rerenderStateActions = [
+				INIT_STATE,
+				NEW_COURSE,
+				CREATE_COURSE,
+				REMOVE_COURSE,
+				UPDATE_COURSE,
+				CELL_SELECTED,
+				CLOSE_DETAILS,
+				CLOSE_NEW_COURSE_DETAILS
+			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
+				// Rerender only if on of the specified state actions
+				if (rerenderStateActions.indexOf(data.actionType) < 0) { return; }
+
 				if (data.actionType == CLOSE_DETAILS) {
 					// Remove existing highlighting
 					element.find('tbody > tr').removeClass("selected-tr");

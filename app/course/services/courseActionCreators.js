@@ -172,6 +172,20 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
 			});
+		},
+		getSectionsBySectionGroup: function (sectionGroup) {
+			courseService.getSectionsBySectionGroupId(sectionGroup.id).then(function (sections) {
+				var action = {
+					type: INIT_SECTION_GROUP_SECTIONS,
+					payload: {
+						sectionGroup: sectionGroup,
+						sections: sections
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
 		}
 	}
 });

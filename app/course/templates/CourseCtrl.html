@@ -180,20 +180,21 @@
 				<table class="table sections-table">
 					<colgroup>
 						<col span="1" style="width: 34%;">
-						<col span="1" style="width: 33%;">
+						<!--<col span="1" style="width: 33%;">-->
 						<col span="1" style="width: 33%;">
 					</colgroup>
 					<thead>
 						<tr>
 							<th>Section</th>
-							<th>Enrollment</th>
+							<!--<th>Enrollment</th>-->
 							<th>Seats</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="section in view.selectedEntity.sections track by section.id">
-							<td>{{ section.sequence }}</td>
-							<td>{{ section.enrollment }}</td>
+							<td>{{ section.sequenceNumber }}</td>
+							<!-- TODO: Get enrollment live from DW? -->
+							<!--<td>{{ section.enrollment }}</td>-->
 							<td><input type="text" class="form-control" ng-model="section.seats"></td>
 						</tr>
 						<tr ng-if="view.selectedEntity.isSeries && view.selectedEntity.isActive">

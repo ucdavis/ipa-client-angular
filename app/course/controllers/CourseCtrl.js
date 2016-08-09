@@ -28,7 +28,13 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				} else if (data.state.uiState.selectedCourseId && data.state.uiState.selectedTermCode) {
 					// A sectionGroup is selected
 					var course = $scope.view.state.courses.list[data.state.uiState.selectedCourseId];
-					$scope.view.selectedEntity = _.find($scope.view.state.sectionGroups.list, function(sg) { return (sg.termCode == data.state.uiState.selectedTermCode) && (sg.courseId == data.state.uiState.selectedCourseId) });
+					$scope.view.selectedEntity = _.find($scope.view.state.sectionGroups.list, function (sg) { return (sg.termCode == data.state.uiState.selectedTermCode) && (sg.courseId == data.state.uiState.selectedCourseId) });
+
+					// Initialize sectionGroup details if not done already
+					if ($scope.view.selectedEntity.sections == undefined) {
+						courseActionCreators.getSectionsBySectionGroup($scope.view.selectedEntity);
+					}
+
 					$scope.view.selectedEntityType = "sectionGroup";
 				} else {
 					delete $scope.view.selectedEntity;

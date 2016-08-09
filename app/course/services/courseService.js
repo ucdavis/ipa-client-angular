@@ -130,6 +130,19 @@ courseApp.factory("courseService", this.courseService = function($http, $q) {
 			});
 
 			return deferred.promise;
+		},
+		getSectionsBySectionGroupId: function (sectionGroupId) {
+			var deferred = $q.defer();
+
+			$http.get(serverRoot + "/api/courseView/sectionGroups/" + sectionGroupId + "/sections/", { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });
