@@ -40,6 +40,16 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					courses.ids = _array_sortIdsByProperty(coursesList, ["subjectCode", "courseNumber", "sequencePattern"]);
 					courses.list = coursesList;
 					return courses;
+				case UPDATE_COURSE_FILTER:
+					var query = action.payload.query;
+					for (var i = 0; i < courses.length; i++) {
+						if (searchCourse(course, query)) {
+							courses[i].isFiltered = false;
+						} else {
+							courses[i].isFiltered = true;
+						}
+					}
+					return courses;
 				default:
 					return courses;
 			}
@@ -363,4 +373,14 @@ orderTermsChronologically = function(terms) {
 	});
 
 	return terms;
+}
+
+searchCourse = function(course, query) {
+	if (course.subjectCode.search(query) >= 0
+		|| course.courseNumber.search(query) >= 0
+		|| course.title.search(query) >= 0) {
+		return true;
+	}
+
+	return false;
 }

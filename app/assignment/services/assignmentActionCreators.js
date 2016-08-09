@@ -123,6 +123,16 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				}
 			};
 			assignmentStateService.reduce(action);
+		},
+		updateCourseFilter: function (query) {
+			var action = {
+				type: UPDATE_COURSE_FILTER,
+				payload: {
+					query: query
+				}
+			};
+			assignmentStateService.reduce(action);
 		}
+
 	}
 });
