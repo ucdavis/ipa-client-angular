@@ -149,7 +149,7 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 					if (privateComment != scheduleInstructorNote.comment) {
 						// Update the scheduleInstructorNote
 						if (scheduleInstructorNote && scheduleInstructorNote.id) {
-							scheduleInstructorNote.comment = privateComment;
+							scheduleInstructorNote.instructorComment = privateComment;
 							assignmentActionCreators.updateScheduleInstructorNote(scheduleInstructorNote);
 						}
 						// Create new scheduleInstructorNote

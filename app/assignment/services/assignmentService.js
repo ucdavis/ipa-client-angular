@@ -78,7 +78,6 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 			});
 
 			return deferred.promise;
-
 		},
 		allTerms: function () {
 			var allTerms = {
