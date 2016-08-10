@@ -8,7 +8,10 @@
  * Service in the workgroupApp.
  * Central location for sharedState information.
  */
-assignmentApp.service('assignmentStateService', function ($rootScope, SectionGroup, Course, ScheduleTermState, ScheduleInstructorNote, Term, Instructor, TeachingAssignment, TeachingCall) {
+assignmentApp.service('assignmentStateService', function (
+	$rootScope, SectionGroup, Course, ScheduleTermState,
+	ScheduleInstructorNote, Term, Instructor, TeachingAssignment,
+	TeachingCall, TeachingCallReceipt, TeachingCallResponse) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -120,6 +123,52 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					return teachingCalls;
 			}
 		},
+		_teachingCallReceiptReducers: function (action, teachingCallReceipts) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					teachingCallReceipts = {
+						ids: [],
+						list: []
+					};
+					
+					var teachingCallReceiptsList = {};
+					var length = action.payload.teachingCallReceipts ? action.payload.teachingCallReceipts.length : 0;
+					for (var i = 0; i < length; i++) {
+						var teachingCallReceipt = new TeachingCallReceipt(action.payload.teachingCallReceipts[i]);
+						teachingCallReceiptsList[teachingCallReceipt.id] = teachingCallReceipt;
+					}
+					teachingCallReceipts.ids = _array_sortIdsByProperty(teachingCallReceiptsList, ["id"]);
+					teachingCallReceipts.list = teachingCallReceiptsList;
+					return teachingCallReceipts;
+				default:
+					return teachingCallReceipts;
+			}
+		},
+		_teachingCallResponseReducers: function (action, teachingCallResponses) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					teachingCallResponses = {
+						ids: [],
+						list: []
+					};
+					
+					var teachingCallResponsesList = {};
+					var length = action.payload.teachingCallResponses ? action.payload.teachingCallResponses.length : 0;
+					for (var i = 0; i < length; i++) {
+						var teachingCallResponse = new TeachingCallResponse(action.payload.teachingCallResponses[i]);
+						teachingCallResponsesList[teachingCallResponse.id] = teachingCallResponse;
+					}
+					teachingCallResponses.ids = _array_sortIdsByProperty(teachingCallResponsesList, ["id"]);
+					teachingCallResponses.list = teachingCallResponsesList;
+					return teachingCallResponses;
+				default:
+					return teachingCallResponses;
+			}
+		},
 		_instructorReducers: function (action, instructors) {
 			var scope = this;
 
@@ -135,13 +184,13 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					// Loop over instructors
 					for (var i = 0; i < length; i++) {
 						var instructor = new Instructor(action.payload.instructors[i]);
-						instructorsList[instructor.id] = instructor;
-						instructorsList[instructor.id].teachingAssignmentTermCodeIds = {};
-						instructorsList[instructor.id].isFiltered = false;
+						instructor.teachingAssignmentTermCodeIds = {};
+						instructor.isFiltered = false;
+
 						// Create arrays of teachingAssignmentIds for each termCode
 						for (var j = 0; j < action.payload.scheduleTermStates.length; j++) {
 							var termCode = action.payload.scheduleTermStates[j].termCode;
-							instructorsList[instructor.id].teachingAssignmentTermCodeIds[termCode] = [];
+							instructor.teachingAssignmentTermCodeIds[termCode] = [];
 
 							// Create array of teachingAssignmentIds that are associated to this termCode and instructor
 							action.payload.teachingAssignments
@@ -149,9 +198,20 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 									return (teachingAssignment.instructorId === instructor.id && teachingAssignment.termCode === termCode)
 								})
 								.forEach(function (teachingAssignment) {
-									instructorsList[instructor.id].teachingAssignmentTermCodeIds[termCode].push(teachingAssignment.id);
+									instructor.teachingAssignmentTermCodeIds[termCode].push(teachingAssignment.id);
 								});
 						}
+
+						// Find scheduleInstructorNote associated to this instructor, if it exists
+						instructor.scheduleInstructorNoteId = null;
+						for (var j = 0; j < action.payload.scheduleInstructorNotes.length; j++) {
+							var scheduleInstructorNote = action.payload.scheduleInstructorNotes[j];
+							if (scheduleInstructorNote.instructorId == instructor.id) {
+								instructor.scheduleInstructorNoteId = scheduleInstructorNote.id;
+							}
+						}
+
+						instructorsList[instructor.id] = instructor;
 					}
 					instructors.ids = _array_sortIdsByProperty(instructorsList, ["lastName"]);
 					instructors.list = instructorsList;
@@ -317,6 +377,9 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.instructors = scope._instructorReducers(action, scope._state.instructors);
 			newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
+			newState.teachingCallReceipts = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipts);
+			newState.teachingCallResponses = scope._teachingCallResponseReducers(action, scope._state.teachingCallResponses);
+			newState.teachingCalls = scope._teachingCallReducers(action, scope._state.teachingCalls);
 			newState.scheduleInstructorNotes = scope._scheduleInstructorNoteReducers(action, scope._state.scheduleInstructorNotes);
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
 			newState.teachingCalls = scope._teachingCallReducers(action, scope._state.teachingCalls);
