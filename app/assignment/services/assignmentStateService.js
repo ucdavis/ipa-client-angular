@@ -390,9 +390,11 @@ orderTermsChronologically = function(terms) {
 }
 
 searchCourse = function(course, query) {
-	if (course.subjectCode.search(query) >= 0
-		|| course.courseNumber.search(query) >= 0
-		|| course.title.search(query) >= 0) {
+	query = query.toLowerCase();
+
+	if (course.subjectCode.toLowerCase().search(query) >= 0
+		|| course.courseNumber.toLowerCase().search(query) >= 0
+		|| course.title.toLowerCase().search(query) >= 0) {
 		return true;
 	}
 
@@ -400,7 +402,9 @@ searchCourse = function(course, query) {
 }
 
 searchInstructor = function(user, query) {
-	if (user.fullName.search(query) >= 0) {
+	query = query.toLowerCase();
+
+	if (user.fullName.toLowerCase().search(query) >= 0) {
 		return true;
 	}
 
