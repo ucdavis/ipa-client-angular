@@ -48,6 +48,36 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 			});
 
 			return deferred.promise;
+		},
+		addScheduleInstructorNote: function (instructorId, year, workgroupId, comment) {
+			var deferred = $q.defer();
+			var scheduleInstructorNote = {};
+			scheduleInstructorNote.instructorId = instructorId;
+			scheduleInstructorNote.comment = comment;
+			scheduleInstructoNote.assignmentsCompleted = false;
+
+			$http.post(serverRoot + "/api/assignmentView/scheduleInstructorNotes/workgroupId/year", scheduleInstructorNote, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		updateScheduleInstructorNote: function (scheduleInstructorNote) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/assignmentView/scheduleInstructorNotes/" + scheduleInstructorNote.id, scheduleInstructorNote, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 
 		},
 		allTerms: function () {

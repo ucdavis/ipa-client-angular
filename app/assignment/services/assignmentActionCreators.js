@@ -22,13 +22,45 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
-		addInstructorAssignment: function (sectionGroupId, instructorId) {
+		addScheduleInstructorNote: function (sectionGroupId, instructorId) {
 			assignmentService.addInstructorAssignment(sectionGroup).then(function (sectionGroup) {
 				$rootScope.$emit('toast', {message: "Assigned instructor to course", type: "SUCCESS"});
 				var action = {
 					type: ADD_INSTRUCTOR_ASSIGNMENT,
 					payload: {
 						instructorId: instructorId
+					}
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
+		updateScheduleInstructorNote: function (scheduleInstructorNote) {
+			assignmentService.updateScheduleInstructorNote(scheduleInstructorNote).then(function (scheduleInstructorNote) {
+				$rootScope.$emit('toast', {message: "Updated instructor comment", type: "SUCCESS"});
+				var action = {
+					type: UPDATE_SCHEDULE_INSTRUCTOR_NOTE,
+					payload: {
+						scheduleInstructorNote: scheduleInstructorNote
+					}
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
+		addInstructorAssignment: function (instructorId, year, workgroupId, comment) {
+			var scheduleInstructorNote = {};
+			scheduleInstructorNote.instructorId = instructorId;
+			scheduleInstructorNote.comment = comment;
+
+			assignmentService.addScheduleInstructorNote(scheduleInstructorNote).then(function (scheduleInstructorNote) {
+				$rootScope.$emit('toast', {message: "Added instructor comment", type: "SUCCESS"});
+				var action = {
+					type: ADD_SCHEDULE_INSTRUCTOR_NOTE,
+					payload: {
+						scheduleInstructorNote: scheduleInstructorNote
 					}
 				};
 				assignmentStateService.reduce(action);

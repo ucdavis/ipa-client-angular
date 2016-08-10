@@ -1,13 +1,20 @@
 <div class="modal-body">
-	<h2 style="margin-top: 10px; margin-bottom: 20px;" class="page-header text-center">
+	<h3 style="margin-top: 10px; margin-bottom: 20px;" class="page-header text-center">
 		Instructor Comments
-	</h2>
-	<div>
-		Instructor comment from Teaching Call: {{ teachingCallReceipt.comment }}
-	</div>
-	<div>
-		Private Comment:
-		<input ng-model="scheduleInstructorNote.instructorComment"></input>
+	</h3>
+	<div style="display:flex;">
+		<div style="flex: 1 1 40%;">
+			Instructor comment from Teaching Call:
+			<br />
+			<div class="gray-text" style="margin-top: 10px;">
+				{{ instructorComment }}
+			</div>
+		</div>
+		<div style="flex: 1 1 40%;">
+			Private Comment:
+			<br />
+			<input ng-model="privateComment" style="margin-top: 10px;"></input>
+		</div>
 	</div>
 </div>
 <div class="modal-footer row" style="text-align: center; margin: 0px;">

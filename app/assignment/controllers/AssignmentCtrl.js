@@ -116,7 +116,7 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 			// Launched from the instructorTable directive UI handler
 			$scope.openCommentModal = function(instructorId) {
 				var instructor = $scope.view.state.instructors.list[instructorId];
-
+				var scheduleInstructorNote = $scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
 				// Find a teachingCallReceipt for this instructor and schedule, if one exists.
 				var teachingCallReceipt = null;
 
@@ -136,17 +136,28 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 						instructor: function () {
 							return instructor;
 						},
-						scheduleInstructorNote: function () {
-							return $scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
+						privateComment: function () {
+							return scheduleInstructorNote.instructorComment;
 						},
-						teachingCallReceipt: function () {
-							return teachingCallReceipt;
+						instructorComment: function () {
+							return teachingCallReceipt.comment;
 						}
 					}
 				});
 
-				modalInstance.result.then(function (teachingCallConfig) {
-					// $scope.submitComment(schedule, teachingCallConfig);
+				modalInstance.result.then(function (privateComment) {
+					if (privateComment != scheduleInstructorNote.comment) {
+						// Update the scheduleInstructorNote
+						if (scheduleInstructorNote && scheduleInstructorNote.id) {
+							scheduleInstructorNote.comment = privateComment;
+							assignmentActionCreators.updateScheduleInstructorNote(scheduleInstructorNote);
+						}
+						// Create new scheduleInstructorNote
+						else {
+							scheduleInstructorNote = {};
+							assignmentActionCreators.addScheduleInstructorNote(instructor.id, $scope.year, $scope.workgroupId, comment);
+						}
+					}
 				});
 			};
 	}]);
