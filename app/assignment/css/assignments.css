@@ -529,6 +529,7 @@
 
 .description-cell {
 	flex: 2 1 200px;
+	display: flex;
 }
 
 .course-title {
@@ -614,4 +615,34 @@ div.dropdown button.dropdown-toggle {
   cursor: pointer;
   background: #ebebeb;
   border-radius: 3px;
+}
+
+.description-cell__comment-btn-container {
+	margin-left: 5px;
+}
+
+.description-cell__avail-btn-container {
+	margin-left: 5px;
+}
+
+.description-cell__comment-btn-container i,
+.description-cell__avail-btn-container i {
+	cursor: pointer;
+}
+
+.description-cell__comment-btn-container:hover i,
+.description-cell__avail-btn-container:hover i {
+	color: black;
+}
+
+.modal-confirm-btn {
+	color: #fff;
+	background-color: #337ab7;
+	border-color: #2e6da4;
+}
+
+.modal-cancel-btn {
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
 }

@@ -112,6 +112,43 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 				}, function() {
 				});
 			};
+
+			// Launched from the instructorTable directive UI handler
+			$scope.openCommentModal = function(instructorId) {
+				var instructor = $scope.view.state.instructors.list[instructorId];
+
+				// Find a teachingCallReceipt for this instructor and schedule, if one exists.
+				var teachingCallReceipt = null;
+
+				for (var i = 0; i < $scope.view.state.teachingCallReceipts.ids.length; i++) {
+					teachingCallReceipt = $scope.view.state.teachingCallReceipts.list[$scope.view.state.teachingCallReceipts.ids[i]];
+
+					if (teachingCallReceipt.instructorId == instructor.id) {
+						break;
+					}
+				}
+
+				modalInstance = $uibModal.open({
+					templateUrl: 'ModalComment.html',
+					controller: ModalCommentCtrl,
+					size: 'lg',
+					resolve: {
+						instructor: function () {
+							return instructor;
+						},
+						scheduleInstructorNote: function () {
+							return $scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
+						},
+						teachingCallReceipt: function () {
+							return teachingCallReceipt;
+						}
+					}
+				});
+
+				modalInstance.result.then(function (teachingCallConfig) {
+					// $scope.submitComment(schedule, teachingCallConfig);
+				});
+			};
 	}]);
 
 AssignmentCtrl.validate = function (authService, assignmentActionCreators, $route) {

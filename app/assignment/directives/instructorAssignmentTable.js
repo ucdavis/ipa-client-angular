@@ -34,9 +34,17 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 						var courseHtml = "";
 						courseHtml += "<div class=\"course-list-row\">";
-						courseHtml += "<div class=\"description-cell\"><div><strong>";
+						courseHtml += "<div class=\"description-cell\">";
+						courseHtml += "<div><strong>";
 						courseHtml += instructor.fullName;
-						courseHtml += "</strong></div></div>";
+						courseHtml += "</strong></div>";
+						courseHtml += "<div class=\"description-cell__comment-btn-container\">";
+						courseHtml += "<i class=\"glyphicon comment-btn glyphicon-pencil\" data-instructor-id=" + instructor.id + "></i>";
+						courseHtml += "</div>";
+						courseHtml += "<div class=\"description-cell__avail-btn-container\">";
+						courseHtml += "<i class=\"glyphicon avail-btn glyphicon-calendar\" data-instructor-id=" + instructor.id + "></i>";
+						courseHtml += "</div>";
+						courseHtml += "</div>";
 						
 						// Loop over active terms
 						$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
@@ -157,9 +165,16 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				}
 				// Unapproving a teachingAssignment
 				else if ($el.hasClass('assignment-remove')) {
-						var teachingAssignmentId = $el.data('teaching-assignment-id');
-						var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
-						assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
+					var teachingAssignmentId = $el.data('teaching-assignment-id');
+					var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+					assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
+				}
+				else if ($el.hasClass('comment-btn')) {
+					var instructorId = $el.data('instructor-id');
+					scope.openCommentModal(instructorId);
+				}
+				else if ($el.hasClass('avail-btn')) {
+					var instructorId = $el.data('instructor-id');
 				}
 			}); // end UI event handler
 		} // end link

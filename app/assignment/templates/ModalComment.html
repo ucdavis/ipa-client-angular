@@ -1,0 +1,23 @@
+<div class="modal-body">
+	<h2 style="margin-top: 10px; margin-bottom: 20px;" class="page-header text-center">
+		Instructor Comments
+	</h2>
+	<div>
+		Instructor comment from Teaching Call: {{ teachingCallReceipt.comment }}
+	</div>
+	<div>
+		Private Comment:
+		<input ng-model="scheduleInstructorNote.instructorComment"></input>
+	</div>
+</div>
+<div class="modal-footer row" style="text-align: center; margin: 0px;">
+	<div style="display:flex">
+		<div style="flex: 1 1 80%"></div>
+		<div style="flex: 1 1 20%">
+			<button class="btn btn-default modal-cancel-btn" ng-click="cancel()">Cancel</button>
+			<button class="btn btn-primary modal-confirm-btn" ng-click="confirm()">Ok</button>
+		</div>
+	</div>
+
+	</div>
+</div>
