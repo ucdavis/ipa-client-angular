@@ -25,6 +25,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					for (var i = 0; i < length; i++) {
 						var course = new Course(action.payload.courses[i]);
 						coursesList[course.id] = course;
+						coursesList[course.id].isFiltered = false;
 						coursesList[course.id].isHidden = isCourseSuppressed(course);
 						// Add the termCode:sectionGroupId pairs
 						coursesList[course.id].sectionGroupTermCodeIds = {};
@@ -40,13 +41,14 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					courses.ids = _array_sortIdsByProperty(coursesList, ["subjectCode", "courseNumber", "sequencePattern"]);
 					courses.list = coursesList;
 					return courses;
-				case UPDATE_COURSE_FILTER:
+				case UPDATE_TABLE_FILTER:
 					var query = action.payload.query;
-					for (var i = 0; i < courses.length; i++) {
+					for (var i = 0; i < courses.ids.length; i++) {
+						var course = courses.list[courses.ids[i]];
 						if (searchCourse(course, query)) {
-							courses[i].isFiltered = false;
+							course.isFiltered = false;
 						} else {
-							courses[i].isFiltered = true;
+							course.isFiltered = true;
 						}
 					}
 					return courses;
@@ -135,6 +137,7 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 						var instructor = new Instructor(action.payload.instructors[i]);
 						instructorsList[instructor.id] = instructor;
 						instructorsList[instructor.id].teachingAssignmentTermCodeIds = {};
+						instructorsList[instructor.id].isFiltered = false;
 						// Create arrays of teachingAssignmentIds for each termCode
 						for (var j = 0; j < action.payload.scheduleTermStates.length; j++) {
 							var termCode = action.payload.scheduleTermStates[j].termCode;
@@ -152,6 +155,17 @@ assignmentApp.service('assignmentStateService', function ($rootScope, SectionGro
 					}
 					instructors.ids = _array_sortIdsByProperty(instructorsList, ["lastName"]);
 					instructors.list = instructorsList;
+					return instructors;
+				case UPDATE_TABLE_FILTER:
+					var query = action.payload.query;
+					for (var i = 0; i < instructors.ids.length; i++) {
+						var instructor = instructors.list[instructors.ids[i]];
+						if (searchInstructor(instructor, query)) {
+							instructor.isFiltered = false;
+						} else {
+							instructor.isFiltered = true;
+						}
+					}
 					return instructors;
 				default:
 					return instructors;
@@ -379,6 +393,14 @@ searchCourse = function(course, query) {
 	if (course.subjectCode.search(query) >= 0
 		|| course.courseNumber.search(query) >= 0
 		|| course.title.search(query) >= 0) {
+		return true;
+	}
+
+	return false;
+}
+
+searchInstructor = function(user, query) {
+	if (user.fullName.search(query) >= 0) {
 		return true;
 	}
 

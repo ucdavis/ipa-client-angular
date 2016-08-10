@@ -30,93 +30,96 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				// Loop over instructors
 				$.each(scope.view.state.instructors.ids, function(i, instructorId) {
 					var instructor = scope.view.state.instructors.list[instructorId];
-					var courseHtml = "";
-					courseHtml += "<div class=\"course-list-row\">";
-					courseHtml += "<div class=\"description-cell\"><div><strong>";
-					courseHtml += instructor.fullName;
-					courseHtml += "</strong></div></div>";
-					
-					// Loop over active terms
-					$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
-						var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
+					if (instructor.isFiltered == false) {
 
-						courseHtml += "<div class=\"term-cell\">";
+						var courseHtml = "";
+						courseHtml += "<div class=\"course-list-row\">";
+						courseHtml += "<div class=\"description-cell\"><div><strong>";
+						courseHtml += instructor.fullName;
+						courseHtml += "</strong></div></div>";
+						
+						// Loop over active terms
+						$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
+							var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
 
-						// Loop over teachingAssignments within a term
-						$.each(scope.view.state.instructors.list[instructor.id].teachingAssignmentTermCodeIds[termCode], function(j, teachingAssignmentId) {
-							// Ensure it is approved already
-							if (scope.view.state.teachingAssignments.list[teachingAssignmentId].approved) {
-								var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId]
-								var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
-								var course = scope.view.state.courses.list[sectionGroup.courseId];
+							courseHtml += "<div class=\"term-cell\">";
 
-								courseHtml += "<div class=\"alert alert-info tile-assignment\">";
-								courseHtml += "<p>" + course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern + "</p>";
-								courseHtml += "<div class=\"tile-assignment-details\">";
-								courseHtml += "<small>Seats: " + sectionGroup.plannedSeats + "</small>";
-								courseHtml += "<br />";
-								courseHtml += "<small>Units: " + course.unitsLow + "</small>";
-								courseHtml += "</div>";
-								courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\" data-placement=\"top\"";
-								courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
-								courseHtml += "data-original-title=\"Unassign\" data-container=\"body\"></i>";
-								courseHtml += "</div>";
-							}
-						});
+							// Loop over teachingAssignments within a term
+							$.each(scope.view.state.instructors.list[instructor.id].teachingAssignmentTermCodeIds[termCode], function(j, teachingAssignmentId) {
+								// Ensure it is approved already
+								if (scope.view.state.teachingAssignments.list[teachingAssignmentId].approved) {
+									var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId]
+									var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
+									var course = scope.view.state.courses.list[sectionGroup.courseId];
 
-						// Add an assign button to add more instructors
-						courseHtml += "<div class=\"dropdown assign-dropdown\">";
-						courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
-						courseHtml += "Assign..<span class=\"caret\"></span></button>";
-						courseHtml += "<ul class=\"dropdown-menu scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
-
-						// Track courses that were already present in 'interested', and should be filtered from 'other'
-						var interestedCourseIds = [];
-
-						// If the instructor has teachingAssignments in this term, show them first
-						if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
-							courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
-
-							// Loop over teachingAssignments
-							$.each(instructor.teachingAssignmentTermCodeIds[termCode], function(i, teachingAssignmentId) {
-								var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
-								var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
-								var course = scope.view.state.courses.list[sectionGroup.courseId];
-								interestedCourseIds.push(course.id);
-
-								// Show option if the TeachingAssignments parent Course is not being suppressed and Assignment is not already approved
-								if (teachingAssignment.approved == false && course.isHidden == false) {
-									var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
-									courseHtml += "<li><a";
+									courseHtml += "<div class=\"alert alert-info tile-assignment\">";
+									courseHtml += "<p>" + course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern + "</p>";
+									courseHtml += "<div class=\"tile-assignment-details\">";
+									courseHtml += "<small>Seats: " + sectionGroup.plannedSeats + "</small>";
+									courseHtml += "<br />";
+									courseHtml += "<small>Units: " + course.unitsLow + "</small>";
+									courseHtml += "</div>";
+									courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\" data-placement=\"top\"";
 									courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
+									courseHtml += "data-original-title=\"Unassign\" data-container=\"body\"></i>";
+									courseHtml += "</div>";
+								}
+							});
 
+							// Add an assign button to add more instructors
+							courseHtml += "<div class=\"dropdown assign-dropdown\">";
+							courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
+							courseHtml += "Assign..<span class=\"caret\"></span></button>";
+							courseHtml += "<ul class=\"dropdown-menu scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
+
+							// Track courses that were already present in 'interested', and should be filtered from 'other'
+							var interestedCourseIds = [];
+
+							// If the instructor has teachingAssignments in this term, show them first
+							if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
+								courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
+
+								// Loop over teachingAssignments
+								$.each(instructor.teachingAssignmentTermCodeIds[termCode], function(i, teachingAssignmentId) {
+									var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+									var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
+									var course = scope.view.state.courses.list[sectionGroup.courseId];
+									interestedCourseIds.push(course.id);
+
+									// Show option if the TeachingAssignments parent Course is not being suppressed and Assignment is not already approved
+									if (teachingAssignment.approved == false && course.isHidden == false) {
+										var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
+										courseHtml += "<li><a";
+										courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
+
+										courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
+									}
+								});
+								courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
+							}
+
+
+							// Loop over all other courses
+							$.each(scope.view.state.courses.ids, function(i, courseId) {
+								var course = scope.view.state.courses.list[courseId]
+								// Show option if course has a sectionGroup in this term, course is not suppressed, and course did not already show up in the interested section
+								if (course.sectionGroupTermCodeIds[termCode] && course.isHidden == false && interestedCourseIds.indexOf(course.id) < 0) {
+									var sectionGroupId = course.sectionGroupTermCodeIds[termCode];
+									var instructor = scope.view.state.instructors.list[instructorId];
+									courseHtml += "<li><a";
+									courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
+									courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
 									courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
 								}
 							});
-							courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
-						}
 
-
-						// Loop over all other courses
-						$.each(scope.view.state.courses.ids, function(i, courseId) {
-							var course = scope.view.state.courses.list[courseId]
-							// Show option if course has a sectionGroup in this term, course is not suppressed, and course did not already show up in the interested section
-							if (course.sectionGroupTermCodeIds[termCode] && course.isHidden == false && interestedCourseIds.indexOf(course.id) < 0) {
-								var sectionGroupId = course.sectionGroupTermCodeIds[termCode];
-								var instructor = scope.view.state.instructors.list[instructorId];
-								courseHtml += "<li><a";
-								courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
-								courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-								courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
-							}
+							courseHtml += "</ul></div>"; // End dropdown assign list
+							courseHtml += "</div>"; // Ending term-cell div
 						});
+						courseHtml += "</div>"; // Ending course-row div
 
-						courseHtml += "</ul></div>"; // End dropdown assign list
-						courseHtml += "</div>"; // Ending term-cell div
-					});
-					courseHtml += "</div>"; // Ending course-row div
-
-					coursesHtml += courseHtml;
+						coursesHtml += courseHtml;
+					}
 				}); // Ending loop over courses
 
 				element.append(coursesHtml);

@@ -124,9 +124,9 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			};
 			assignmentStateService.reduce(action);
 		},
-		updateCourseFilter: function (query) {
+		updateTableFilter: function (query) {
 			var action = {
-				type: UPDATE_COURSE_FILTER,
+				type: UPDATE_TABLE_FILTER,
 				payload: {
 					query: query
 				}

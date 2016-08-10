@@ -5,7 +5,7 @@
 
 	<div class="row" style="margin-bottom: 2em;">
 		<div class="col-sm-offset-3 col-sm-6">
-			<input type="search" class="form-control" placeholder="Search" />
+			<input type="search" class="form-control" placeholder="Search" ng-model="searchQuery" ng-change="filterTable(searchQuery)"/>
 		</div>
 	</div>
 

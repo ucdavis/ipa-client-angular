@@ -52,6 +52,16 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 				assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
 			};
 
+			// Triggered by global search field, redraws table based on query
+			$scope.filterTable = function(query) {
+				clearTimeout($scope.t);
+				$scope.t = setTimeout($scope.startFilter, 700, query);
+			}
+
+			$scope.startFilter = function(query) {
+				assignmentActionCreators.updateTableFilter(query);
+			}
+
 			// Launches TeachingCall Config modal and controller
 			$scope.openTeachingCallConfig = function() {
 				modalInstance = $uibModal.open({
