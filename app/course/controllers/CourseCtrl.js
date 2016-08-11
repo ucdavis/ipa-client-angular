@@ -13,6 +13,15 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			$scope.year = $routeParams.year;
 			$scope.view = {};
 			$scope.sequencePatterns = sequencePatterns;
+			$scope.subjectCodes = subjectCodes;
+
+			// Generate a few recent academic years for the mass course import mode
+			var currentYear = new Date().getFullYear();
+			var recentYears = [];
+			for(i = currentYear; i > currentYear - 10; i--) {
+				recentYears.push(i + "-" + String(i + 1).slice(2));
+			}
+			$scope.recentAcademicYears = recentYears;
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
 				$scope.view.state = data.state;
@@ -39,6 +48,8 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				} else {
 					delete $scope.view.selectedEntity;
 				}
+
+				$scope.view.massImportMode = data.state.uiState.massImportMode;
 			});
 
 			$scope.closeDetails = function () {
@@ -142,6 +153,22 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				clearTimeout($scope.timeout);
 				$scope.timeout = setTimeout(courseActionCreators.updateTableFilter, 700, query);
 			};
+
+			/**
+			 * Begins import mode, which allows for the mass adding of courses.
+			 * @return {[type]} [description]
+			 */
+			$scope.beginImportMode = function() {
+				courseActionCreators.beginImportMode();
+			}
+
+			/**
+			 * Ends import mode, which allows for the mass adding of courses.
+			 * @return {[type]} [description]
+			 */
+			$scope.endImportMode = function() {
+				courseActionCreators.endImportMode();
+			}
 
 		}
 ]);

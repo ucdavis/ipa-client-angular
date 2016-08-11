@@ -243,7 +243,8 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					uiState = {
 						tableLocked: false,
 						selectedCourseId: null,
-						selectedTermCode: null
+						selectedTermCode: null,
+						massImportMode: false
 					};
 					return uiState;
 				case NEW_COURSE:
@@ -263,6 +264,12 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					return uiState;
 				case CLOSE_NEW_COURSE_DETAILS:
 					uiState.tableLocked = false;
+					return uiState;
+				case BEGIN_IMPORT_MODE:
+					uiState.massImportMode = true;
+					return uiState;
+				case END_IMPORT_MODE:
+					uiState.massImportMode = false;
 					return uiState;
 				default:
 					return uiState;
@@ -289,6 +296,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				state: scope._state,
 				actionType: action.type
 			});
+			
 			console.debug("Course state updated:");
 			console.debug(scope._state);
 		}

@@ -14,6 +14,11 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="table-toolbar">
+				<span class="tool-icon glyphicon glyphicon-plus"
+				      data-toggle="tooltip" data-placement="top"
+							title="" data-original-title="Import"
+							ng-click="beginImportMode()"></span>
+
 				<div class="btn-group">
 					<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
 					<ul class="dropdown-menu" multiselect-dropdown items="termDefinitions" active-ids="view.state.filters.enabledTerms" toggle-item="termToggled(id)" ></ul>
@@ -39,9 +44,67 @@
 				</div> <!-- .btn-group -->
 
 				<span class="tool-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print"></span>
+			</div> <!-- .table-toolbar -->
+		</div> <!-- .col-sm-12 -->
+	</div> <!-- .row -->
+
+	<div class="row" ng-if="view.massImportMode">
+		<div class="col-md-12">
+
+			<div class="panel panel-primary" data-collapsed="0">
+
+				<div class="panel-heading">
+					<div class="panel-title">
+						Add Multiple Courses
+					</div>
+
+					<div class="panel-options">
+						<a href="#" ng-click="endImportMode()"><i class="entypo-cancel"></i></a>
+					</div>
+				</div>
+
+				<div class="panel-body">
+
+					<form role="form" class="form-horizontal form-groups-bordered">
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Subject Code</label>
+
+							<div class="col-sm-5">
+								<select class="form-control">
+									<option ng-repeat="subjectCode in subjectCodes track by $index" value="{{ subjectCode }}">{{ subjectCode }}</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Academic Year</label>
+
+							<div class="col-sm-5">
+								<select class="form-control">
+									<option ng-repeat="recentYear in recentAcademicYears track by $index" value={{ recentYear }}>{{ recentYear }}</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-offset-2 col-sm-3">
+									<button type="submit" class="btn btn-default btn-block">Search IPA</button>
+								</div>
+								<div class="col-sm-offset-2 col-sm-3">
+									<button type="submit" class="btn btn-default btn-block">Search Banner</button>
+								</div>
+							</div>
+						</div>
+					</form>
+
+				</div>
+
 			</div>
+
 		</div>
-	</div>
+	</div> <!-- .row -->
 
 	<table course-table class="table table-bordered courses-table"></table>
 
