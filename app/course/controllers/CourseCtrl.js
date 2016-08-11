@@ -137,6 +137,12 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				}
 			};
 
+			// Triggered by global search field, redraws table based on query
+			$scope.filterTable = function (query) {
+				clearTimeout($scope.timeout);
+				$scope.timeout = setTimeout(courseActionCreators.updateTableFilter, 700, query);
+			};
+
 		}
 ]);
 

@@ -78,6 +78,21 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				case UPDATE_COURSE:
 					courses.list[action.payload.course.id] = action.payload.course;
 					return courses;
+				case UPDATE_TABLE_FILTER:
+					var query = action.payload.query.toLowerCase();
+
+					courses.ids.forEach(function (courseId) {
+						if (courses.list[courseId].subjectCode.toLowerCase().search(query) >= 0
+							|| courses.list[courseId].courseNumber.toLowerCase().search(query) >= 0
+							|| courses.list[courseId].title.toLowerCase().search(query) >= 0) {
+							courses.list[courseId].isFiltered = false;
+						} else {
+							courses.list[courseId].isFiltered = true;
+						}
+						return courses.list[courseId];
+					});
+					console.log(courses.list);
+					return courses;
 				default:
 					return courses;
 			}

@@ -14,7 +14,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				UPDATE_COURSE,
 				CELL_SELECTED,
 				CLOSE_DETAILS,
-				CLOSE_NEW_COURSE_DETAILS
+				CLOSE_NEW_COURSE_DETAILS,
+				UPDATE_TABLE_FILTER
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
@@ -91,6 +92,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 						row += "<td class=\"new-course-td\" colspan=\"" + numOfColumns + "\">Adding a new course</td><td class=\"ui-overlay\"></td>";
 					} else {
 						var course = data.state.courses.list[courseId];
+						if (course.isFiltered) { return; }
 
 						// First column
 						row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
