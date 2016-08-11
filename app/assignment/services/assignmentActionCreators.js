@@ -22,6 +22,18 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
+		getInitialTeachingCallState: function (workgroupId, year) {
+			assignmentService.getInitialTeachingCallState(workgroupId, year).then(function (payload) {
+				var action = {
+					type: INIT_TEACHING_CALL_VIEW,
+					payload: payload,
+					year: year
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
 		addScheduleInstructorNote: function (instructorId, year, workgroupId, comment) {
 			assignmentService.addScheduleInstructorNote(instructorId, year, workgroupId, comment).then(function (scheduleInstructorNote) {
 				$rootScope.$emit('toast', {message: "Added instructor comment", type: "SUCCESS"});

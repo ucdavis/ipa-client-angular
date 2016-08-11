@@ -178,8 +178,10 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 					var sectionGroupId = $el.data('section-group-id');
 					var instructorId = $el.data('instructor-id');
 					var teachingAssignmentId = $el.data('teaching-assignment-id');
+
 					// Approving an existing teachingAssignment
 					if (teachingAssignmentId) {
+
 						var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 						assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
 					} else { // Creating a new teachingAssignment, and then approving it

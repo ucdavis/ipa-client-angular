@@ -78,9 +78,11 @@ assignmentApp.service('assignmentStateService', function (
 					teachingAssignments.list = teachingAssignmentsList;
 					return teachingAssignments;
 				case UPDATE_TEACHING_ASSIGNMENT:
+					console.log("updating teaching assignment");
 					teachingAssignments.list[action.payload.teachingAssignment.id] = action.payload.teachingAssignment;
 					return teachingAssignments;
 				case ADD_TEACHING_ASSIGNMENT:
+					console.log("making new teaching assignment");
 					teachingAssignments.list[action.payload.teachingAssignment.id] = action.payload.teachingAssignment;
 					teachingAssignments.ids.push(action.payload.teachingAssignment.id);
 					return teachingAssignments;
@@ -257,6 +259,11 @@ assignmentApp.service('assignmentStateService', function (
 							instructor.scheduleInstructorNoteId = scheduleInstructorNote.id;
 						}
 					}
+				case ADD_TEACHING_ASSIGNMENT:
+					var teachingAssignment = action.payload.teachingAssignment;
+					var instructor = instructors.list[teachingAssignment.instructorId];
+					instructor.teachingAssignmentTermCodeIds[teachingAssignment.termCode].push(teachingAssignment.id);
+					return instructors;
 				default:
 					return instructors;
 			}
