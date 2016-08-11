@@ -529,6 +529,9 @@
 
 .description-cell {
 	flex: 2 1 200px;
+}
+
+.description-cell div {
 	display: flex;
 }
 

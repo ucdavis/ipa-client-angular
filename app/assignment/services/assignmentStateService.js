@@ -211,6 +211,15 @@ assignmentApp.service('assignmentStateService', function (
 							}
 						}
 
+						// Find teachingCallReceipt associated to this instructor, if it exists
+						instructor.teachingCallReceiptId = null;
+						for (var j = 0; j < action.payload.teachingCallReceipts.length; j++) {
+							var teachingCallReceipt = action.payload.teachingCallReceipts[j];
+							if (teachingCallReceipt.instructorId == instructor.id) {
+								instructor.teachingCallReceiptId = teachingCallReceipt.id;
+							}
+						}
+
 						instructorsList[instructor.id] = instructor;
 					}
 					instructors.ids = _array_sortIdsByProperty(instructorsList, ["lastName"]);

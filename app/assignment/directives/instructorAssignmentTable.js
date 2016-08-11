@@ -32,33 +32,50 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 					var instructor = scope.view.state.instructors.list[instructorId];
 					if (instructor.isFiltered == false) {
 						var scheduleInstructorNote = scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
+						var teachingCallReceipt = scope.view.state.teachingCallReceipts.list[instructor.teachingCallReceiptId];
 
 						var courseHtml = "";
 						courseHtml += "<div class=\"course-list-row\">";
 						courseHtml += "<div class=\"description-cell\">";
+						courseHtml += "<div>";
+
 						courseHtml += "<span style=\"margin-right:5px;\">";
 
+						// Instructor assignmentCompleted UI
 						courseHtml += "<i class=\"glyphicon";
 						if (scheduleInstructorNote && scheduleInstructorNote.assignmentsCompleted) {
 							courseHtml += " glyphicon-check";
 						} else {
 							courseHtml += " glyphicon-unchecked";
 						}
-
 						courseHtml += " clickable\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Toggle completed assigning instructor\" data-container=\"body\"></i>";
 						courseHtml += "</span>";
 						courseHtml += "<div><strong>";
 						courseHtml += instructor.fullName;
-						courseHtml += "</strong></div>";
+						courseHtml += "</strong>";
+						courseHtml += "</div>";
+
+						// Instructor Comment UI
 						courseHtml += "<div class=\"description-cell__comment-btn-container\">";
 						courseHtml += "<i class=\"glyphicon comment-btn glyphicon-pencil\" data-instructor-id=" + instructor.id;
 						courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor comments\" data-container=\"body\"></i>";
 						courseHtml += "</div>";
+
+						// Instructor Availabilities UI
 						courseHtml += "<div class=\"description-cell__avail-btn-container\">";
 						courseHtml += "<i class=\"glyphicon avail-btn glyphicon-calendar\" data-instructor-id=" + instructor.id;
 						courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor unavailabilities\" data-container=\"body\"></i>";
 						courseHtml += "</div>";
 						courseHtml += "</div>";
+
+						// Instructor TeachingCall submitted preferences checkmark
+						if (teachingCallReceipt && teachingCallReceipt.isDone) {
+							courseHtml += "<div style=\"color:#B3B3B3; display: flex;\">";
+							courseHtml += "Preferences Submitted";
+							courseHtml += "</div>";
+						}
+
+						courseHtml += "</div>"; // end description-cell
 						
 						// Loop over active terms
 						$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
