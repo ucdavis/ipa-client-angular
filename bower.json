@@ -33,6 +33,7 @@
     "angular-sanitize": "^1.5.8"
   },
   "resolutions": {
-    "angular": "^1.5.8"
+    "angular": "^1.5.8",
+    "jquery": "^2.2.4"
   }
 }
