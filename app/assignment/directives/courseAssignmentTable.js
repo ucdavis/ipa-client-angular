@@ -14,7 +14,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 				element.empty();
 				// Render the header
 				var header = "<div class=\"course-list-row\">";
-				header += "<div class=\"course-header description-cell\">Course</div>";
+				header += "<div class=\"course-header course-description-cell\">Course</div>";
 
 				$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
 
@@ -33,7 +33,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 					if (course.isHidden == false && course.isFiltered == false) {
 						var courseHtml = "";
 						courseHtml += "<div class=\"course-list-row\">";
-						courseHtml += "<div class=\"description-cell\"><div><div class=\"course-title\">";
+						courseHtml += "<div class=\"course-description-cell\"><div><div class=\"course-title\">";
 						courseHtml += course.subjectCode + " " + course.courseNumber + " " + course.title + " " + course.sequencePattern;
 						courseHtml += "</div>";
 						courseHtml += "<div class=\"course-units\">";

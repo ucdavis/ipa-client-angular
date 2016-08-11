@@ -48,7 +48,8 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 						} else {
 							courseHtml += " glyphicon-unchecked";
 						}
-						courseHtml += " clickable\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Toggle completed assigning instructor\" data-container=\"body\"></i>";
+						courseHtml += " assignments-complete clickable\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Toggle completed assigning instructor\" data-container=\"body\"";
+						courseHtml += " data-instructor-id=" + instructor.id + " data-schedule-instructor-note-id=" + instructor.scheduleInstructorNoteId + "></i>";
 						courseHtml += "</span>";
 						courseHtml += "<div><strong>";
 						courseHtml += instructor.fullName;
@@ -207,6 +208,25 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				else if ($el.hasClass('avail-btn')) {
 					var instructorId = $el.data('instructor-id');
 					scope.openAvailabilityModal(instructorId);
+				}
+				else if ($el.hasClass('assignments-complete')) {
+					var scheduleInstructorNoteId = $el.data('schedule-instructor-note-id');
+					var instructorId = $el.data('instructor-id');
+					var scheduleInstructorNote = scope.view.state.scheduleInstructorNotes.list[scheduleInstructorNoteId];
+
+					// Properly toggle assignmentsCompleted of existing scheduleInstructorNote
+					if (scheduleInstructorNote) {
+						if ($el.hasClass('glyphicon-unchecked')) {
+							scheduleInstructorNote.assignmentsCompleted = true;
+						} else {
+							scheduleInstructorNote.assignmentsCompleted = false;
+						}
+						assignmentActionCreators.updateScheduleInstructorNote(scheduleInstructorNote);
+					}
+					// Make a new scheduleInstructorNote
+					else {
+						assignmentActionCreators.addScheduleInstructorNote(instructor.id, scope.year, scope.workgroupId, "");
+					}
 				}
 			}); // end UI event handler
 		} // end link
