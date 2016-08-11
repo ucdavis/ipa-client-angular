@@ -31,18 +31,32 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				$.each(scope.view.state.instructors.ids, function(i, instructorId) {
 					var instructor = scope.view.state.instructors.list[instructorId];
 					if (instructor.isFiltered == false) {
+						var scheduleInstructorNote = scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
 
 						var courseHtml = "";
 						courseHtml += "<div class=\"course-list-row\">";
 						courseHtml += "<div class=\"description-cell\">";
+						courseHtml += "<span style=\"margin-right:5px;\">";
+
+						courseHtml += "<i class=\"glyphicon";
+						if (scheduleInstructorNote && scheduleInstructorNote.assignmentsCompleted) {
+							courseHtml += " glyphicon-check";
+						} else {
+							courseHtml += " glyphicon-unchecked";
+						}
+
+						courseHtml += " clickable\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Toggle completed assigning instructor\" data-container=\"body\"></i>";
+						courseHtml += "</span>";
 						courseHtml += "<div><strong>";
 						courseHtml += instructor.fullName;
 						courseHtml += "</strong></div>";
 						courseHtml += "<div class=\"description-cell__comment-btn-container\">";
-						courseHtml += "<i class=\"glyphicon comment-btn glyphicon-pencil\" data-instructor-id=" + instructor.id + "></i>";
+						courseHtml += "<i class=\"glyphicon comment-btn glyphicon-pencil\" data-instructor-id=" + instructor.id;
+						courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor comments\" data-container=\"body\"></i>";
 						courseHtml += "</div>";
 						courseHtml += "<div class=\"description-cell__avail-btn-container\">";
-						courseHtml += "<i class=\"glyphicon avail-btn glyphicon-calendar\" data-instructor-id=" + instructor.id + "></i>";
+						courseHtml += "<i class=\"glyphicon avail-btn glyphicon-calendar\" data-instructor-id=" + instructor.id;
+						courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor unavailabilities\" data-container=\"body\"></i>";
 						courseHtml += "</div>";
 						courseHtml += "</div>";
 						
