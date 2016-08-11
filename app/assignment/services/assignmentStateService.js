@@ -78,11 +78,9 @@ assignmentApp.service('assignmentStateService', function (
 					teachingAssignments.list = teachingAssignmentsList;
 					return teachingAssignments;
 				case UPDATE_TEACHING_ASSIGNMENT:
-					console.log("updating teaching assignment");
 					teachingAssignments.list[action.payload.teachingAssignment.id] = action.payload.teachingAssignment;
 					return teachingAssignments;
 				case ADD_TEACHING_ASSIGNMENT:
-					console.log("making new teaching assignment");
 					teachingAssignments.list[action.payload.teachingAssignment.id] = action.payload.teachingAssignment;
 					teachingAssignments.ids.push(action.payload.teachingAssignment.id);
 					return teachingAssignments;
@@ -349,6 +347,16 @@ assignmentApp.service('assignmentStateService', function (
 					}
 
 					sectionGroups.list = sectionGroupsList;
+					return sectionGroups;
+				case ADD_TEACHING_ASSIGNMENT:
+					var teachingAssignment = action.payload.teachingAssignment;
+					var sectionGroup = {};
+
+					if (teachingAssignment.sectionGroupId) {
+						sectionGroup = sectionGroups.list[teachingAssignment.sectionGroupId];
+						sectionGroup.teachingAssignmentIds.push(teachingAssignment.id);
+					}
+
 					return sectionGroups;
 				default:
 					return sectionGroups;
