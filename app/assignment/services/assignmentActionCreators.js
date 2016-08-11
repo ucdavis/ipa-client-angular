@@ -22,13 +22,13 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
-		addScheduleInstructorNote: function (sectionGroupId, instructorId) {
-			assignmentService.addInstructorAssignment(sectionGroup).then(function (sectionGroup) {
-				$rootScope.$emit('toast', {message: "Assigned instructor to course", type: "SUCCESS"});
+		addScheduleInstructorNote: function (instructorId, year, workgroupId, comment) {
+			assignmentService.addScheduleInstructorNote(instructorId, year, workgroupId, comment).then(function (scheduleInstructorNote) {
+				$rootScope.$emit('toast', {message: "Added instructor comment", type: "SUCCESS"});
 				var action = {
-					type: ADD_INSTRUCTOR_ASSIGNMENT,
+					type: ADD_SCHEDULE_INSTRUCTOR_NOTE,
 					payload: {
-						instructorId: instructorId
+						scheduleInstructorNote: scheduleInstructorNote
 					}
 				};
 				assignmentStateService.reduce(action);

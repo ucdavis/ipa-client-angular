@@ -227,6 +227,14 @@ assignmentApp.service('assignmentStateService', function (
 						}
 					}
 					return instructors;
+				case ADD_SCHEDULE_INSTRUCTOR_NOTE:
+					var scheduleInstructorNote = action.payload.scheduleInstructorNote;
+					for (var i = 0; i < instructors.ids.length; i++) {
+						var instructor = instructors.list[instructors.ids[i]];
+						if (instructor.id == scheduleInstructorNote.instructorId) {
+							instructor.scheduleInstructorNoteId = scheduleInstructorNote.id;
+						}
+					}
 				default:
 					return instructors;
 			}
@@ -270,6 +278,13 @@ assignmentApp.service('assignmentStateService', function (
 					}
 					scheduleInstructorNotes.ids = _array_sortIdsByProperty(scheduleInstructorNotesList, ["id"]);
 					scheduleInstructorNotes.list = scheduleInstructorNotesList;
+					return scheduleInstructorNotes;
+				case UPDATE_SCHEDULE_INSTRUCTOR_NOTE:
+					scheduleInstructorNotes.list[action.payload.scheduleInstructorNote.id] = action.payload.scheduleInstructorNote;
+					return scheduleInstructorNotes;
+				case ADD_SCHEDULE_INSTRUCTOR_NOTE:
+					scheduleInstructorNotes.list[action.payload.scheduleInstructorNote.id] = action.payload.scheduleInstructorNote;
+					scheduleInstructorNotes.ids.push(action.payload.scheduleInstructorNote.id);
 					return scheduleInstructorNotes;
 				default:
 					return scheduleInstructorNotes;

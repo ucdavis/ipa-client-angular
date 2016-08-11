@@ -52,11 +52,10 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 		addScheduleInstructorNote: function (instructorId, year, workgroupId, comment) {
 			var deferred = $q.defer();
 			var scheduleInstructorNote = {};
-			scheduleInstructorNote.instructorId = instructorId;
-			scheduleInstructorNote.comment = comment;
-			scheduleInstructoNote.assignmentsCompleted = false;
+			scheduleInstructorNote.instructorComment = comment;
+			scheduleInstructorNote.assignmentsCompleted = false;
 
-			$http.post(serverRoot + "/api/assignmentView/scheduleInstructorNotes/workgroupId/year", scheduleInstructorNote, { withCredentials: true })
+			$http.post(serverRoot + "/api/assignmentView/scheduleInstructorNotes/" + instructorId + "/" + workgroupId + "/" + year, scheduleInstructorNote, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})

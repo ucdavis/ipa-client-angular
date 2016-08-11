@@ -175,6 +175,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				}
 				else if ($el.hasClass('avail-btn')) {
 					var instructorId = $el.data('instructor-id');
+					scope.openAvailabilityModal(instructorId);
 				}
 			}); // end UI event handler
 		} // end link

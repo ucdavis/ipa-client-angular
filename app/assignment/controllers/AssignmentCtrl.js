@@ -116,7 +116,16 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 			// Launched from the instructorTable directive UI handler
 			$scope.openCommentModal = function(instructorId) {
 				var instructor = $scope.view.state.instructors.list[instructorId];
-				var scheduleInstructorNote = $scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
+				var scheduleInstructorNote = {};
+
+				// Create new scheduleInstructorNote object if one does not already exist
+				if (instructor.scheduleInstructorNoteId) {
+					scheduleInstructorNote = $scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
+				} else {
+					scheduleInstructorNote = {};
+					scheduleInstructorNote.instructorComment = "";
+				}
+
 				// Find a teachingCallReceipt for this instructor and schedule, if one exists.
 				var teachingCallReceipt = null;
 
@@ -154,8 +163,7 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 						}
 						// Create new scheduleInstructorNote
 						else {
-							scheduleInstructorNote = {};
-							assignmentActionCreators.addScheduleInstructorNote(instructor.id, $scope.year, $scope.workgroupId, comment);
+							assignmentActionCreators.addScheduleInstructorNote(instructor.id, $scope.year, $scope.workgroupId, privateComment);
 						}
 					}
 				});
