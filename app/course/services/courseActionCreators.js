@@ -235,6 +235,9 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				payload: {
 					query: query
 				}
+			};
+			courseStateService.reduce(action);
+		},
 		beginImportMode: function() {
 			var action = {
 				type: BEGIN_IMPORT_MODE,
