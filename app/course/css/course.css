@@ -458,7 +458,6 @@ table.courses-table > tbody > tr > td:not(:first-child) {
   height: 100%;
 }
 .right-details a {
-  color: #337ab7;
   cursor: pointer;
 }
 .right-details a:hover {

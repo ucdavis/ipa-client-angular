@@ -278,16 +278,12 @@
 								</a>
 							</td>
 						</tr>
-						<tr ng-if="nextSequence()">
-							<td>
-								<a uib-tooltip="Add a section" tooltip-placement="right"
-									ng-click="addSection()">{{ nextSequence() }}</a></td>
-							<!--<td></td>-->
-							<td></td>
-							<td></td>
-						</tr>
 					</tbody>
 				</table>
+				<div class="col-sm-12 text-center" ng-if="view.selectedEntity.sectionIds && nextSequence()">
+						<a class="btn btn-white" uib-tooltip="Add a section" tooltip-placement="right"
+							ng-click="addSection()">Create {{ nextSequence() }}</a></td>
+				</div>
 			</div>
 		</div>
 	</div>
