@@ -114,7 +114,21 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					sectionGroups.list[action.payload.sectionGroup.id] = action.payload.sectionGroup;
 					return sectionGroups;
 				case FETCH_SECTIONS:
-					sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections.map(function (section) { return section.id; });
+					sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections
+						.sort(function (sectionA, sectionB) {
+							if (sectionA.sequenceNumber < sectionB.sequenceNumber) { return -1; }
+							if (sectionA.sequenceNumber > sectionB.sequenceNumber) { return 1; }
+							return 0;
+ 						})
+						.map(function (section) { return section.id; });
+					return sectionGroups;
+				case CREATE_SECTION:
+					sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.push(action.payload.section.id);
+					return sectionGroups;
+				case REMOVE_SECTION:
+					var sectionIdIndex = sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.indexOf(action.payload.section.id);
+					sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.splice(sectionIdIndex, 1);
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}
@@ -134,6 +148,15 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 						sections.list[section.id] = section;
 						sections.ids.push(section.id);
 					});
+					return sections;
+				case CREATE_SECTION:
+					sections.list[action.payload.section.id] = action.payload.section;
+					sections.ids.push(action.payload.section.id);
+					return sections;
+				case REMOVE_SECTION:
+					var sectionIndex = sections.ids.indexOf(action.payload.section.id);
+					sections.ids.splice(sectionIndex, 1);
+					delete sections.list[action.payload.section.id];
 					return sections;
 				case UPDATE_SECTION:
 					sections.list[action.payload.section.id] = action.payload.section;

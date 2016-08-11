@@ -177,17 +177,19 @@
 				ng-class="{ 'visible': view.selectedEntityType == 'sectionGroup' }">
 				<sg-chart sg="view.selectedEntity"></sg-chart>
 				<hr />
-				<table class="table sections-table">
+				<table class="table sections-table" ng-if="view.selectedEntity.sectionIds">
 					<colgroup>
-						<col span="1" style="width: 34%;">
-						<!--<col span="1" style="width: 33%;">-->
-						<col span="1" style="width: 33%;">
+						<col span="1" style="width: 30%;">
+						<!--<col span="1" style="width: 30%;">-->
+						<col span="1" style="width: 30%;">
+						<col span="1" style="width: 10%;">
 					</colgroup>
 					<thead>
 						<tr>
 							<th>Section</th>
 							<!--<th>Enrollment</th>-->
 							<th>Seats</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -202,9 +204,22 @@
 									on-blur="updateSection(view.state.sections.list[sectionId])"
 									help-text-placement="left"
 									ng-model="view.state.sections.list[sectionId].seats" />
+							</td>
+							<td>
+								<a class="text-danger clickable"
+									uib-tooltip="Delete"
+									confirm-button="deleteSection(view.state.sections.list[sectionId])"
+									message="Are you sure you want to remove this section"
+									yes="Delete" no="Cancel" placement="left">
+										<i class="entypo-cancel-squared"></i>
+								</a>
+							</td>
 						</tr>
-						<tr ng-if="view.selectedEntity.isSeries && view.selectedEntity.isActive">
-							<td><a>{{ nextSequence(view.selectedEntity) }}</a></td>
+						<tr ng-if="nextSequence()">
+							<td>
+								<a uib-tooltip="Add a section" tooltip-placement="right"
+									ng-click="addSection()">{{ nextSequence() }}</a></td>
+							<!--<td></td>-->
 							<td></td>
 							<td></td>
 						</tr>

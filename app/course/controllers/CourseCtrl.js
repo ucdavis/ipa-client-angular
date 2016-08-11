@@ -91,9 +91,52 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				courseActionCreators.updateCourse($scope.view.selectedEntity);
 			};
 
+			$scope.addSection = function () {
+				var sequenceNumber = $scope.nextSequence();
+				var sectionGroupId = $scope.view.selectedEntity.id;
+				var section = {
+					sectionGroupId: sectionGroupId,
+					sequenceNumber: sequenceNumber
+				};
+				courseActionCreators.createSection(section);
+			};
+
 			$scope.updateSection = function (section) {
 				courseActionCreators.updateSection(section);
 			};
+
+			$scope.deleteSection = function (section) {
+				courseActionCreators.deleteSection(section);
+			};
+
+			/**
+			 * For a given sectionGroup this returns the next sequence number if applicable.
+			 * Possible cases:
+			 * Numeric:
+			 * - no section -> the parent course sequencePattern
+			 * - section exists -> null
+			 * Alpha:
+			 * - no sections -> the parent course sequencePattern + 01
+			 * - sections exists -> increments the last section
+			 */
+			$scope.nextSequence = function () {
+				var sg = $scope.view.selectedEntity;
+				var course = $scope.view.state.courses.list[sg.courseId];
+				if (course.isSeries() == false) {
+					// Numeric sections
+					if (sg.sectionIds && sg.sectionIds.length > 0) { return null; }
+					else { return course.sequencePattern; }
+				} if (sg.sectionIds) {
+					var lstSectionId = sg.sectionIds[sg.sectionIds.length - 1];
+					var lastSection = $scope.view.state.sections.list[lstSectionId]
+					var number = parseInt(lastSection.sequenceNumber.slice(-1)) + 1;
+					var character = lastSection.sequenceNumber.slice(0, 1);
+					return character + "0" + number;
+				} else {
+					return course.sequencePattern + "01";
+				}
+			};
+
 		}
 ]);
 
