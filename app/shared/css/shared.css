@@ -50,3 +50,50 @@ span.highlighted {
 	-ms-user-select: none;
 	user-select: none;
 }
+
+/* Availability grid shared directive css */
+table.availability-grid {
+	font-size: 0.7em;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	margin-botton: 5px;
+}
+
+table.availability-grid tr th {
+	border: none;
+	font-weight: normal;
+	padding: 0 !important;
+}
+
+table.availability-grid tr th.left {
+	text-align: left;
+	width: 2em;
+}
+
+table.availability-grid tr th.hover {
+	color: #BA0C2F;
+	font-weight: bold;
+}
+
+table.availability-grid tr td.unavailable {
+	background-color: rgba(200,200,200,0.8);
+}
+
+table.availability-grid tr td.available {
+}
+
+table.availability-grid tr td {
+	border-top: 1px solid #ddd !important;
+}
+
+.legend-square {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	margin: 0px 5px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgba(0, 0, 0, .2);
+}

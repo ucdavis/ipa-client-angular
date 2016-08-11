@@ -168,6 +168,30 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 					}
 				});
 			};
+
+			$scope.openUnavailabilityModal = function(instructorId) {
+				var instructor = $scope.view.state.instructors.list[instructorId];
+	
+				var termDisplayNames = {};
+				
+
+				modalInstance = $uibModal.open({
+					templateUrl: 'ModalUnavailability.html',
+					controller: ModalUnavailabilityCtrl,
+					size: 'lg',
+					resolve: {
+						teachingCallResponses: function () {
+							return instructor.teachingCallResponses;
+						},
+						termDisplayNames: function() {
+							return assignmentService.allTerms();
+						}
+					}
+				});
+
+				modalInstance.result.then(function () {
+				});
+			};
 	}]);
 
 AssignmentCtrl.validate = function (authService, assignmentActionCreators, $route) {

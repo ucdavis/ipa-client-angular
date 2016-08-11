@@ -202,6 +202,16 @@ assignmentApp.service('assignmentStateService', function (
 								});
 						}
 
+						// Create arrays of teachingCallResponseIds
+						instructor.teachingCallResponses = [];
+
+						for (var j = 0; j < action.payload.teachingCallResponses.length; j++) {
+							var teachingCallResponse = action.payload.teachingCallResponses[j];
+							if (teachingCallResponse.instructorId == instructor.id) {
+								instructor.teachingCallResponses.push(teachingCallResponse);
+							}
+						}
+
 						// Find scheduleInstructorNote associated to this instructor, if it exists
 						instructor.scheduleInstructorNoteId = null;
 						for (var j = 0; j < action.payload.scheduleInstructorNotes.length; j++) {

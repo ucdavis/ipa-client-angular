@@ -1,0 +1,28 @@
+<div class="modal-body">
+	<h3 style="margin-top: 10px; margin-bottom: 20px;" class="page-header text-center">
+		Instructor Availabilities
+	</h3>
+	<div style="display:flex;">
+		<div style="flex: 1 1 auto;" ng-repeat="teachingCallResponse in teachingCallResponses">
+			{{ termDisplayNames[teachingCallResponse.termCode.slice(-2)]}}
+			<availability-grid blob="teachingCallResponse.availabilityBlob"
+				on-change="saveUnavailabilities(instructor, term, blob)"
+				read-only="isScheduleTermLocked(term)"></availability-grid>
+
+				<small class="legend">
+					<div class="legend-square" style="background-color:#fff"></div>Available
+					<div class="legend-square" style="background-color:#ccc"></div>Unavailable
+				</small>
+		</div>
+	</div>
+</div>
+<div class="modal-footer row" style="text-align: center; margin: 0px;">
+	<div style="display:flex">
+		<div style="flex: 1 1 80%"></div>
+		<div style="flex: 1 1 20%">
+			<button class="btn btn-default modal-cancel-btn" ng-click="cancel()">Close</button>
+		</div>
+	</div>
+
+	</div>
+</div>

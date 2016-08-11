@@ -207,7 +207,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				}
 				else if ($el.hasClass('avail-btn')) {
 					var instructorId = $el.data('instructor-id');
-					scope.openAvailabilityModal(instructorId);
+					scope.openUnavailabilityModal(instructorId);
 				}
 				else if ($el.hasClass('assignments-complete')) {
 					var scheduleInstructorNoteId = $el.data('schedule-instructor-note-id');
