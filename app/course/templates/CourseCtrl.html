@@ -83,8 +83,8 @@
 								<br />
 								<input auto-input
 									type="text" class="form-control course-title-edit"
-									on-enter="saveCourse()"
-									on-blur="saveCourse()"
+									on-enter="updateCourse()"
+									on-blur="updateCourse()"
 									help-text-placement="bottom"
 									ng-model="view.selectedEntity.title" />
 							</div>
@@ -117,7 +117,7 @@
 												typeahead-loading="loadingSequences"
 												typeahead-no-results="noResults"
 												typeahead-editable="false"
-												typeahead-on-select="saveCourse()"
+												typeahead-on-select="updateCourse()"
 												class="form-control course-sequence-pattern">
 							</div>
 						</div>
@@ -191,11 +191,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="section in view.selectedEntity.sections track by section.id">
-							<td>{{ section.sequenceNumber }}</td>
+						<tr ng-repeat="sectionId in view.selectedEntity.sectionIds track by $index">
+							<td>{{ view.state.sections.list[sectionId].sequenceNumber }}</td>
 							<!-- TODO: Get enrollment live from DW? -->
 							<!--<td>{{ section.enrollment }}</td>-->
-							<td><input type="text" class="form-control" ng-model="section.seats"></td>
+							<td>
+								<input auto-input
+									type="text" class="form-control section-seats-edit"
+									on-enter="updateSection(view.state.sections.list[sectionId])"
+									on-blur="updateSection(view.state.sections.list[sectionId])"
+									help-text-placement="left"
+									ng-model="view.state.sections.list[sectionId].seats" />
 						</tr>
 						<tr ng-if="view.selectedEntity.isSeries && view.selectedEntity.isActive">
 							<td><a>{{ nextSequence(view.selectedEntity) }}</a></td>

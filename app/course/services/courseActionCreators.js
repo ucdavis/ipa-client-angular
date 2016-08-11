@@ -176,10 +176,24 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 		getSectionsBySectionGroup: function (sectionGroup) {
 			courseService.getSectionsBySectionGroupId(sectionGroup.id).then(function (sections) {
 				var action = {
-					type: INIT_SECTION_GROUP_SECTIONS,
+					type: FETCH_SECTIONS,
 					payload: {
 						sectionGroup: sectionGroup,
 						sections: sections
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
+		},
+		updateSection: function (section) {
+			courseService.updateSection(section).then(function (section) {
+				$rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber, type: "SUCCESS"} );
+				var action = {
+					type: UPDATE_SECTION,
+					payload: {
+						section: section
 					}
 				};
 				courseStateService.reduce(action);

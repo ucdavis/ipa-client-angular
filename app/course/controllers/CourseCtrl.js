@@ -31,7 +31,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					$scope.view.selectedEntity = _.find($scope.view.state.sectionGroups.list, function (sg) { return (sg.termCode == data.state.uiState.selectedTermCode) && (sg.courseId == data.state.uiState.selectedCourseId) });
 
 					// Initialize sectionGroup details if not done already
-					if ($scope.view.selectedEntity.sections == undefined) {
+					if ($scope.view.selectedEntity.sectionIds == undefined) {
 						courseActionCreators.getSectionsBySectionGroup($scope.view.selectedEntity);
 					}
 
@@ -87,9 +87,13 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				courseActionCreators.removeTagFromCourse($scope.view.selectedEntity, $scope.view.state.tags.list[tagId]);
 			};
 
-			$scope.saveCourse = function () {
+			$scope.updateCourse = function () {
 				courseActionCreators.updateCourse($scope.view.selectedEntity);
-			}
+			};
+
+			$scope.updateSection = function (section) {
+				courseActionCreators.updateSection(section);
+			};
 		}
 ]);
 

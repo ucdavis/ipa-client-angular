@@ -113,11 +113,33 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				case UPDATE_SECTION_GROUP:
 					sectionGroups.list[action.payload.sectionGroup.id] = action.payload.sectionGroup;
 					return sectionGroups;
-				case INIT_SECTION_GROUP_SECTIONS:
-					sectionGroups.list[action.payload.sectionGroup.id].sections = action.payload.sections;
-					return sectionGroups;
+				case FETCH_SECTIONS:
+					sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections.map(function (section) { return section.id; });
 				default:
 					return sectionGroups;
+			}
+		},
+		_sectionReducers: function (action, sections) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					sections = {
+						list: {},
+						ids: []
+					};
+					return sections;
+				case FETCH_SECTIONS:
+					action.payload.sections.forEach(function (section) {
+						sections.list[section.id] = section;
+						sections.ids.push(section.id);
+					});
+					return sections;
+				case UPDATE_SECTION:
+					sections.list[action.payload.section.id] = action.payload.section;
+					return sections;
+				default:
+					return sections;
 			}
 		},
 		_tagReducers: function (action, tags) {
@@ -219,6 +241,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			newState.scheduleTermStates = scope._scheduleTermStateReducers(action, scope._state.scheduleTermStates);
 			newState.courses = scope._courseReducers(action, scope._state.courses);
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
+			newState.sections = scope._sectionReducers(action, scope._state.sections);
 			newState.tags = scope._tagReducers(action, scope._state.tags);
 			newState.filters = scope._filterReducers(action, scope._state.filters);
 			newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
