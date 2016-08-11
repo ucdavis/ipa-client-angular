@@ -3,18 +3,20 @@
 		Instructor Availabilities
 	</h3>
 	<div style="display:flex;">
-		<div style="flex: 1 1 auto;" ng-repeat="teachingCallResponse in teachingCallResponses">
-			{{ termDisplayNames[teachingCallResponse.termCode.slice(-2)]}}
+		<div style="flex: 1 1 auto; margin-left: 20px;" ng-repeat="teachingCallResponse in teachingCallResponses">
+			<div style="text-align: center;">
+				{{ termDisplayNames[teachingCallResponse.termCode.slice(-2)]}}
+			</div>
 			<availability-grid blob="teachingCallResponse.availabilityBlob"
-				on-change="saveUnavailabilities(instructor, term, blob)"
+				on-change="saveUnavailabilities(teachingCallResponse, blob)"
 				read-only="isScheduleTermLocked(term)"></availability-grid>
-
-				<small class="legend">
-					<div class="legend-square" style="background-color:#fff"></div>Available
-					<div class="legend-square" style="background-color:#ccc"></div>Unavailable
-				</small>
 		</div>
 	</div>
+	<small class="legend">
+		<div class="legend-square" style="background-color:#fff"></div>Available
+		<div class="legend-square" style="background-color:#ccc"></div>Unavailable
+	</small>
+
 </div>
 <div class="modal-footer row" style="text-align: center; margin: 0px;">
 	<div style="display:flex">

@@ -165,6 +165,9 @@ assignmentApp.service('assignmentStateService', function (
 					teachingCallResponses.ids = _array_sortIdsByProperty(teachingCallResponsesList, ["id"]);
 					teachingCallResponses.list = teachingCallResponsesList;
 					return teachingCallResponses;
+				case UPDATE_TEACHING_CALL_RESPONSE:
+					teachingCallResponses.list[action.payload.teachingCallResponse.id] = action.payload.teachingCallResponse;
+					return teachingCallResponses;
 				default:
 					return teachingCallResponses;
 			}

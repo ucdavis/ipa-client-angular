@@ -183,8 +183,11 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 						teachingCallResponses: function () {
 							return instructor.teachingCallResponses;
 						},
-						termDisplayNames: function() {
+						termDisplayNames: function () {
 							return assignmentService.allTerms();
+						},
+						instructor: function () {
+							return instructor;
 						}
 					}
 				});

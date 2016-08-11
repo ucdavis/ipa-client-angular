@@ -78,6 +78,19 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
+		updateTeachingCallResponse: function (teachingCallResponse) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/assignmentView/teachingCallResponses/" + teachingCallResponse.id, teachingCallResponse, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		allTerms: function () {
 			var allTerms = {
 				'05': 'Summer Session 1',
