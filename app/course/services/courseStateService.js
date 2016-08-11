@@ -82,16 +82,16 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					var query = action.payload.query.toLowerCase();
 
 					courses.ids.forEach(function (courseId) {
-						if (courses.list[courseId].subjectCode.toLowerCase().search(query) >= 0
-							|| courses.list[courseId].courseNumber.toLowerCase().search(query) >= 0
-							|| courses.list[courseId].title.toLowerCase().search(query) >= 0) {
-							courses.list[courseId].isFiltered = false;
-						} else {
-							courses.list[courseId].isFiltered = true;
+						courses.list[courseId].isFiltered = true;
+						for(key in courses.list[courseId]) {
+							if (typeof courses.list[courseId][key] == "string"
+								&& courses.list[courseId][key].toLowerCase().search(query) >= 0) {
+								courses.list[courseId].isFiltered = false;
+							}
 						}
+
 						return courses.list[courseId];
 					});
-					console.log(courses.list);
 					return courses;
 				default:
 					return courses;
