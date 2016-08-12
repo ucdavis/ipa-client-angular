@@ -84,6 +84,12 @@ assignmentApp.service('assignmentStateService', function (
 					teachingAssignments.list[action.payload.teachingAssignment.id] = action.payload.teachingAssignment;
 					teachingAssignments.ids.push(action.payload.teachingAssignment.id);
 					return teachingAssignments;
+				case REMOVE_TEACHING_ASSIGNMENT:
+					var index = teachingAssignments.ids.indexOf(action.payload.teachingAssignment.id);
+					if (index > -1) {
+						teachingAssignments.ids.splice(index, 1);
+					}
+					return teachingAssignments;
 				default:
 					return teachingAssignments;
 			}
@@ -262,6 +268,16 @@ assignmentApp.service('assignmentStateService', function (
 					var instructor = instructors.list[teachingAssignment.instructorId];
 					instructor.teachingAssignmentTermCodeIds[teachingAssignment.termCode].push(teachingAssignment.id);
 					return instructors;
+				case REMOVE_TEACHING_ASSIGNMENT:
+					var teachingAssignment = action.payload.teachingAssignment;
+					var instructor = instructors.list[teachingAssignment.instructorId];
+					for (var i = 0; i < instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode].length; i++) {
+							var slotTeachingAssignmentId = instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode][i];
+						if (slotTeachingAssignmentId == teachingAssignment.id) {
+							instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode].splice(i);
+							return instructors;
+						}
+					}
 				default:
 					return instructors;
 			}
@@ -358,6 +374,14 @@ assignmentApp.service('assignmentStateService', function (
 					}
 
 					return sectionGroups;
+				case REMOVE_TEACHING_ASSIGNMENT:
+					var teachingAssignment = action.payload.teachingAssignment;
+					var sectionGroup = sectionGroups.list[teachingAssignment.sectionGroupId];
+					var index = sectionGroup.teachingAssignmentIds.indexOf(teachingAssignment.id);
+					if (index > -1) {
+						sectionGroup.teachingAssignmentIds.splice(index, 1);
+					}
+
 				default:
 					return sectionGroups;
 			}

@@ -138,17 +138,29 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
-		unapproveInstructorAssignment: function (teachingAssignment) {
-			teachingAssignment.approved = false;
-			assignmentService.updateInstructorAssignment(teachingAssignment).then(function (teachingAssignment) {
+		unapproveInstructorAssignment: function (originalTeachingAssignment) {
+			originalTeachingAssignment.approved = false;
+			assignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {
 				$rootScope.$emit('toast', {message: "Removed instructor from course", type: "SUCCESS"});
-				var action = {
-					type: UPDATE_TEACHING_ASSIGNMENT,
-					payload: {
-						teachingAssignment: teachingAssignment
-					}
-				};
-				assignmentStateService.reduce(action);
+				// If unapproving a teachingPreference that was not created by the instructor, delete it instead
+				if (originalTeachingAssignment.fromInstructor == false && originalTeachingAssignment.approved == false) {
+					var action = {
+						type: REMOVE_TEACHING_ASSIGNMENT,
+						payload: {
+							teachingAssignment: originalTeachingAssignment
+						}
+					};
+					assignmentStateService.reduce(action);
+
+				} else {
+					var action = {
+						type: UPDATE_TEACHING_ASSIGNMENT,
+						payload: {
+							teachingAssignment: teachingAssignment
+						}
+					};
+					assignmentStateService.reduce(action);
+				}
 			}, function (err) {
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
