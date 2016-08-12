@@ -46,9 +46,6 @@ module.exports = function (grunt) {
 				dest: '<%= folders.webapp.build %>/js/lib.js',
 				dependencies: {
 					'jquery-ui': 'jquery',
-				},
-				mainFiles: {
-					'jquery-ui': ['ui/core.js', 'ui/widget.js', 'ui/mouse.js', 'ui/sortable.js']
 				}
 			}
 		},
