@@ -93,19 +93,19 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 									// Loop over instructors who are interested in this course
 									$.each(sectionGroup.teachingAssignmentIds, function(i, teachingAssignmentId) {
 										var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+										var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 
-										if (teachingAssignment.approved == false) {
-											var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
-											if (instructor) {
-												interestedInstructorIds.push(instructor.id);
+										if (instructor) {
+											interestedInstructorIds.push(instructor.id);
+										}
 
-												courseHtml += "<li><a";
-												courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
-												courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
-												courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
+										if (teachingAssignment.approved == false && instructor) {
+											courseHtml += "<li><a";
+											courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
+											courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
+											courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 
-												courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
-											}
+											courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
 										}
 									});
 									courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
