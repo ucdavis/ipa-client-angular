@@ -9,11 +9,10 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 		},
 		link: function (scope, element, attrs) {
 			var ctx = element[0].getContext("2d");
-			scope.$watch('census', function () {
+			scope.$watchGroup(['census', 'termCode'], function () {
 				if (scope.census == undefined) { return; }
 
 				var getCurrentCensusForProperty = function (property) {
-					console.log("Calling getCurrentCensusForProperty(" + property + ")");
 					return scope.census.filter(function (c) {
 						var matchesTerm = (c.termCode + '').slice(-2) == (scope.termCode + '').slice(-2);
 						var matchesCurrentCode = c.snapshotCode == "CURRENT";
@@ -29,7 +28,7 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 				// TODO: Determine chart mode
 				if (true) {	// SG is in historical mode
 					type = 'line';
-					labels = getCurrentCensusForProperty("termCode");
+					labels = getCurrentCensusForProperty("termCode").map(function (tc) { return Math.floor(tc/100); });
 					datasets = [
 						{
 							label: "Seats",
@@ -75,7 +74,6 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 				Chart.defaults.global.defaultFontColor = "#888";
 				// Chart.defaults.global.responsive = false;
 				$timeout(function () {
-					console.log("creating chart", labels, datasets);
 					var myChart = new Chart(ctx, {
 						type: type,
 						data: {
@@ -92,10 +90,9 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 							}
 						}
 					});
-					// TODO: Destroy obsolete charts from dom
-					// $rootScope.$on("courseStateChanged", function () {
-					// 	if (myChart) { myChart.destroy(); }
-					// });
+					$rootScope.$on("courseStateChanged", function (event, data) {
+						if (myChart && data.actionType == "CELL_SELECTED") { myChart.destroy(); }
+					});
 				});
 
 			}, true);
