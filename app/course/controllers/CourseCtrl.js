@@ -39,9 +39,14 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					var course = $scope.view.state.courses.list[data.state.uiState.selectedCourseId];
 					$scope.view.selectedEntity = _.find($scope.view.state.sectionGroups.list, function (sg) { return (sg.termCode == data.state.uiState.selectedTermCode) && (sg.courseId == data.state.uiState.selectedCourseId) });
 
-					// Initialize sectionGroup details if not done already
-					if ($scope.view.selectedEntity.sectionIds == undefined) {
+					// Initialize sectionGroup sections if not done already
+					if ($scope.view.selectedEntity && $scope.view.selectedEntity.sectionIds == undefined) {
 						courseActionCreators.getSectionsBySectionGroup($scope.view.selectedEntity);
+					}
+
+					// Initialize course census if not done already
+					if (course.census == undefined) {
+						courseActionCreators.getCourseCensus(course);
 					}
 
 					$scope.view.selectedEntityType = "sectionGroup";

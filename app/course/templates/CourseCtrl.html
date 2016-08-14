@@ -238,7 +238,8 @@
 			</div>
 			<div class="section-group-details" style="padding: 1em;"
 				ng-class="{ 'visible': view.selectedEntityType == 'sectionGroup' }">
-				<sg-chart sg="view.selectedEntity"></sg-chart>
+				<census-chart census="view.state.courses.list[view.selectedEntity.courseId].census"
+				term-code="view.selectedEntity.termCode"></census-chart>
 				<hr />
 				<table class="table sections-table" ng-if="view.selectedEntity.sectionIds">
 					<colgroup>

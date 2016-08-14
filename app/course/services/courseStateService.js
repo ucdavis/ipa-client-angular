@@ -93,6 +93,9 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 						return courses.list[courseId];
 					});
 					return courses;
+				case GET_COURSE_CENSUS:
+					courses.list[action.payload.course.id].census = action.payload.census;
+					return courses;
 				default:
 					return courses;
 			}
@@ -296,7 +299,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				state: scope._state,
 				actionType: action.type
 			});
-			
+
 			console.debug("Course state updated:");
 			console.debug(scope._state);
 		}

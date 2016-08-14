@@ -251,6 +251,20 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				payload: {}
 			};
 			courseStateService.reduce(action);
+		},
+		getCourseCensus: function (course) {
+			courseService.getCourseCensus(course).then(function (census) {
+				var action = {
+					type: GET_COURSE_CENSUS,
+					payload: {
+						course: course,
+						census: census
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
 		}
 	}
 });

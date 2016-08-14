@@ -182,6 +182,19 @@ courseApp.factory("courseService", this.courseService = function($http, $q) {
 			});
 
 			return deferred.promise;
+		},
+		getCourseCensus: function(course) {
+			var deferred = $q.defer();
+
+			$http.get(dwUrl + "/census?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + dwToken)
+			.success(function(result) {
+				deferred.resolve(result);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });
