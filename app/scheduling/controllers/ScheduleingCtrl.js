@@ -11,7 +11,7 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		this.SchedulingCtrl = function ($scope, $rootScope, $routeParams) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
-			$scope.termShortCode = $routeParams.termShortCode;
+			$scope.termCode = $routeParams.termCode;
 			$scope.view = {};
 
 			$rootScope.$on('schedulingStateChanged', function (event, data) {
@@ -22,6 +22,6 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 
 SchedulingCtrl.getPayload = function (authService, $route, schedulingActionCreators) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		return schedulingActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode);
+		return schedulingActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termCode);
 	});
 }

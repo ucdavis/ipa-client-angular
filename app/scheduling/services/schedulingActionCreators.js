@@ -10,8 +10,8 @@
  */
 schedulingApp.service('schedulingActionCreators', function (schedulingStateService, schedulingService, $rootScope, Role) {
 	return {
-		getInitialState: function (workgroupId, year, termShortCode) {
-			schedulingService.getScheduleByWorkgroupIdAndYearAndTermCode(workgroupId, year, termShortCode).then(function (payload) {
+		getInitialState: function (workgroupId, year, termCode) {
+			schedulingService.getScheduleByWorkgroupIdAndYearAndTermCode(workgroupId, year, termCode).then(function (payload) {
 				var action = {
 					type: INIT_STATE,
 					payload: payload
