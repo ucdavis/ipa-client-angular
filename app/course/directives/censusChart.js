@@ -97,7 +97,8 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 				}
 
 				Chart.defaults.global.defaultFontColor = "#888";
-				// Chart.defaults.global.responsive = false;
+				Chart.defaults.global.tooltips.mode = 'x-axis';
+
 				$timeout(function () {
 					var myChart = new Chart(ctx, {
 						type: type,
