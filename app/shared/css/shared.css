@@ -1,6 +1,9 @@
 a {
   color: #337ab7;
 }
+h3, .h3 {
+  font-size: 21px;
+}
 .page-container .sidebar-menu {
   width: 200px;
 }
@@ -37,6 +40,7 @@ body {
   -webkit-perspective: none;
   -moz-perspective: none;
   perspective: none;
+  font-size: 12px;
 }
 
 span.highlighted {
@@ -58,7 +62,7 @@ table.availability-grid {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	margin-botton: 5px;
+	margin-bottom: 5px;
 }
 
 table.availability-grid tr th {
@@ -79,9 +83,6 @@ table.availability-grid tr th.hover {
 
 table.availability-grid tr td.unavailable {
 	background-color: rgba(200,200,200,0.8);
-}
-
-table.availability-grid tr td.available {
 }
 
 table.availability-grid tr td {
