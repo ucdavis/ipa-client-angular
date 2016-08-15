@@ -9,10 +9,10 @@
  */
 summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams',
 		this.SummaryCtrl = function ($scope, $routeParams) {
-			$scope.workgroupCode = $routeParams.workgroupCode;
+			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 }]);
 
 SummaryCtrl.authenticate = function (authService, $route) {
-	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupCode, $route.current.params.year);
+	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year);
 }
