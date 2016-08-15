@@ -2,7 +2,7 @@ window.schedulingApp = angular.module("schedulingApp", ["sharedApp", "ngRoute"])
 
 schedulingApp.config(function ($routeProvider) {
 	return $routeProvider
-		.when("/:workgroupId/:year/:termCode", {
+		.when("/:workgroupId/:year/:termShortCode", {
 			templateUrl: "SchedulingCtrl.html",
 			controller: "SchedulingCtrl",
 			resolve: {

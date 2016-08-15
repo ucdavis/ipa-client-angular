@@ -11,13 +11,17 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		this.SchedulingCtrl = function ($scope, $rootScope, $routeParams) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
-			$scope.termCode = $routeParams.termCode;
+			$scope.termShortCode = $routeParams.termShortCode;
 			$scope.view = {};
+
+			$rootScope.$on('schedulingStateChanged', function (event, data) {
+				$scope.view.state = data.state;
+			});
 		}
 ]);
 
 SchedulingCtrl.getPayload = function (authService, $route, schedulingActionCreators) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		return schedulingActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termCode);
+		return schedulingActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode);
 	});
 }
