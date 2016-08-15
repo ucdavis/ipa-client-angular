@@ -24,6 +24,30 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 					}).slice(-5);
 				};
 
+				var getCensusEnrollmentByCensusCodes = function (snapshotCodes) {
+					var censusEnrollment = [];
+
+					// Create an array of currentEnrolledCounts in the order of passed snapshotCodes
+					for (var sc = 0; sc < snapshotCodes.length; sc++) {
+						var snapshotCodesFound = false;
+						for (var c = 0; c < scope.census.length; c++) {
+							// If snapshotCode and termCode match push to array and go on to the next snapshotCode
+							if (scope.census[c].snapshotCode == snapshotCodes[sc]
+								&& scope.census[c].termCode == scope.termCode) {
+								censusEnrollment.push(scope.census[c].currentEnrolledCount);
+								snapshotCodesFound = true;
+								break;
+							}
+						}
+						// Fill in 0 for missing snapshotCodes
+						if (!snapshotCodesFound) {
+							censusEnrollment.push(0);
+						}
+					}
+
+					return censusEnrollment;
+				};
+
 				var type, labels, datasets;
 				// TODO: Determine chart mode
 				if (true) {	// SG is in historical mode
@@ -54,8 +78,9 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 						}
 					];
 				} else {
+					var snapshotCodes = ["INSTR_BEG", "DAY5", "DAY10", "DAY15", "CURRENT"];
 					type = 'bar';
-					labels = ['Day 1', 'Day 5', 'Day 15', 'Day 20', 'Current'];
+					labels = snapshotCodes;
 					datasets = [
 						{
 							label: "Census",
@@ -66,7 +91,7 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 							pointBorderColor: "#fff",
 							pointHoverBackgroundColor: "#fff",
 							pointHoverBorderColor: "rgba(179,181,198,1)",
-							data: scope.census.census
+							data: getCensusEnrollmentByCensusCodes(snapshotCodes)
 						}
 					];
 				}
