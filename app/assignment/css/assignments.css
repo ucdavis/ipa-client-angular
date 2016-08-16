@@ -668,3 +668,10 @@ div:hover .disabled-calendar {
 	color: rgb(153, 153, 153);
 	cursor: not-allowed;
 }
+
+.modal-comment-subheader {
+	color: #5f625f;
+	font-size: 14px;
+	font-weight: bold;
+	margin-top: 20px;
+}
