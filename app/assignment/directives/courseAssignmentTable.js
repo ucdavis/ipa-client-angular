@@ -86,9 +86,9 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 								courseHtml += "<ul class=\"dropdown-menu scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
 
 								var interestedInstructorIds = [];
+								var firstInstructorAdded = false;
 
 								if (sectionGroup.teachingAssignmentIds.length > 0) {
-									courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
 
 									// Loop over instructors who are interested in this course
 									$.each(sectionGroup.teachingAssignmentIds, function(i, teachingAssignmentId) {
@@ -100,6 +100,12 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 										}
 
 										if (teachingAssignment.approved == false && instructor) {
+											// Ensure header is aded only if there is appropriate to display
+											if (firstInstructorAdded == false) {
+												courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
+												firstInstructorAdded = true;
+											}
+
 											courseHtml += "<li><a";
 											courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
 											courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
@@ -108,7 +114,9 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 											courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
 										}
 									});
-									courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
+									if (firstInstructorAdded) {
+										courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
+									}
 								}
 
 								// Loop over instructors who are not interested in this course
