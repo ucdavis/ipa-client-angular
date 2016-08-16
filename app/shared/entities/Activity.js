@@ -53,12 +53,8 @@ angular.module('activity', [])
 			};
 			return codeDescriptions[this.activityTypeCode.activityTypeCode];
 		},
-		/**
-		 * Sets the 'isStandardTimes' property on the activity if the times match
-		 * one of the registrar's standard time patterns'
-		 */
-		setStandardTimes: function () {
-			standardTimePatterns = {
+		getStandardTimes: function () {
+			return {
 				50: {
 					dayIndicators: ['0101000', '0010100', '0101010', '0111100', '0111010'],
 					times: [
@@ -106,6 +102,29 @@ angular.module('activity', [])
 					]
 				}
 			};
+		},
+		getMeridianTime: function(time) {
+			if (!time) {
+				return {hours: '--', minutes: '--', meridian: '--'};
+			}
+
+			var timeArr = time.split(':');
+
+			var hours = parseInt(timeArr[0]);
+			if (hours === 0) hours = 12;
+			else if (hours > 12) hours = hours % 12;
+
+			var minutes = parseInt(timeArr[1]);
+			var meridian = timeArr[0] < 12 ? 'AM' : 'PM';
+
+			return {hours: hours, minutes: minutes, meridian: meridian};
+		},
+		/**
+		 * Sets the 'isStandardTimes' property on the activity if the times match
+		 * one of the registrar's standard time patterns'
+		 */
+		setStandardTimes: function () {
+			standardTimePatterns = this.getStandardTimes();
 
 			if (parseInt(this.frequency) !== 1 || !this.startTime || !this.endTime) { return false; }
 

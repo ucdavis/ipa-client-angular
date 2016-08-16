@@ -7,12 +7,15 @@
  * # SchedulingCtrl
  * Controller of the ipaClientAngularApp
  */
-schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParams', 'schedulingActionCreators',
-		this.SchedulingCtrl = function ($scope, $rootScope, $routeParams, schedulingActionCreators) {
+schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParams', 'Activity', 'schedulingActionCreators',
+		this.SchedulingCtrl = function ($scope, $rootScope, $routeParams, Activity, schedulingActionCreators) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.termCode = $routeParams.termCode;
 			$scope.view = {};
+
+			$scope.days = ['M','T','W','R','F','S','U'];
+			$scope.standardPatterns = Activity.prototype.getStandardTimes();
 
 			$rootScope.$on('schedulingStateChanged', function (event, data) {
 				$scope.view.state = data.state;
@@ -42,6 +45,23 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 					schedulingActionCreators.getSectionGroupDetails(sectionGroup);
 				}
 			};
+
+			$scope.getWeekDays = function(dayIndicator, dayIndicators) {
+				var dayArr = dayIndicator.split('');
+
+				var dayStr = '';
+				angular.forEach(dayArr, function(day, i) {
+					if (day === '1') dayStr = dayStr + $scope.days[i];
+				});
+
+				return dayStr;
+			};
+
+			$scope.getMeridianTime = function (time) {
+				var time = Activity.prototype.getMeridianTime(time);
+				return ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ' ' + time.meridian;
+			};
+
 		}
 ]);
 
