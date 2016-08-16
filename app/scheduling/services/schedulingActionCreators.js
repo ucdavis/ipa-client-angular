@@ -20,6 +20,30 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 			}, function (err) {
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
+		},
+		setSelectedSectionGroup: function (sectionGroupId) {
+			var action = {
+				type: SECTION_GROUP_SELECTED,
+				payload: {
+					sectionGroupId: sectionGroupId
+				}
+			};
+			schedulingStateService.reduce(action);
+		},
+		getSectionGroupDetails: function (sectionGroup) {
+			schedulingService.getSectionSectionGroupDetails(sectionGroup.id).then(function (payload) {
+				var action = {
+					type: FETCH_SECTION_GROUP_DETAILS,
+					payload: {
+						sectionGroup: sectionGroup,
+						sections: payload.sections,
+						activities: payload.activities
+					}
+				};
+				schedulingStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
 		}
 	}
 });

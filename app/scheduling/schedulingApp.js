@@ -22,3 +22,5 @@ schedulingApp.config(function ($routeProvider) {
 });
 
 var INIT_STATE = "INIT_STATE";
+var SECTION_GROUP_SELECTED = "SECTION_GROUP_SELECTED";
+var FETCH_SECTION_GROUP_DETAILS = "FETCH_SECTION_GROUP_DETAILS";

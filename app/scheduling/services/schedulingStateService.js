@@ -29,51 +29,6 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					courses.ids = _array_sortIdsByProperty(coursesList, ["subjectCode", "courseNumber", "sequencePattern"]);
 					courses.list = coursesList;
 					return courses;
-				case NEW_COURSE:
-					// Insert a new id of '0' at the specified index
-					courses.ids.splice(action.payload.index, 0, 0);
-					courses.newCourse = new Course();
-					return courses;
-				case CLOSE_NEW_COURSE_DETAILS:
-					var newCourseIndex = courses.ids.indexOf(0);
-					courses.ids.splice(newCourseIndex, 1);
-					courses.newCourse = null;
-					return courses;
-				case CREATE_COURSE:
-					// Close details
-					var newCourseIndex = courses.ids.indexOf(0);
-					courses.ids.splice(newCourseIndex, 1);
-					courses.newCourse = null;
-					// Insert new course
-					courses.list[action.payload.course.id] = action.payload.course;
-					courses.ids.splice(newCourseIndex, 0, action.payload.course.id);
-					return courses;
-				case REMOVE_COURSE:
-					var courseIndex = courses.ids.indexOf(action.payload.course.id);
-					courses.ids.splice(courseIndex, 1);
-					delete courses.list[action.payload.course.id];
-					return courses;
-				case UPDATE_COURSE:
-					courses.list[action.payload.course.id] = action.payload.course;
-					return courses;
-				case UPDATE_TABLE_FILTER:
-					var query = action.payload.query.toLowerCase();
-
-					courses.ids.forEach(function (courseId) {
-						courses.list[courseId].isFiltered = true;
-						for(key in courses.list[courseId]) {
-							if (typeof courses.list[courseId][key] == "string"
-								&& courses.list[courseId][key].toLowerCase().search(query) >= 0) {
-								courses.list[courseId].isFiltered = false;
-							}
-						}
-
-						return courses.list[courseId];
-					});
-					return courses;
-				case GET_COURSE_CENSUS:
-					courses.list[action.payload.course.id].census = action.payload.census;
-					return courses;
 				default:
 					return courses;
 			}
@@ -96,6 +51,15 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					}
 					sectionGroups.list = sectionGroupsList;
 					return sectionGroups;
+				case FETCH_SECTION_GROUP_DETAILS:
+					sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections
+						.sort(function (sectionA, sectionB) {
+							if (sectionA.sequenceNumber < sectionB.sequenceNumber) { return -1; }
+							if (sectionA.sequenceNumber > sectionB.sequenceNumber) { return 1; }
+							return 0;
+ 						})
+						.map(function (section) { return section.id; });
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}
@@ -110,8 +74,48 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 						ids: []
 					};
 					return sections;
+				case FETCH_SECTION_GROUP_DETAILS:
+					action.payload.sections.forEach(function (section) {
+						sections.list[section.id] = section;
+						sections.ids.push(section.id);
+					});
+					return sections;
 				default:
 					return sections;
+			}
+		},
+		_activityReducers: function (action, activities) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					activities = {
+						list: {},
+						ids: []
+					};
+					return activities;
+				case FETCH_SECTION_GROUP_DETAILS:
+					action.payload.activities.forEach(function (activity) {
+						activities.list[activity.id] = activity;
+						activities.ids.push(activity.id);
+					});
+					return activities;
+				default:
+					return activities;
+			}
+		},
+		_calendarActivityReducers: function (action, calendarActivities) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					calendarActivities = {
+						list: {},
+						ids: []
+					};
+					return calendarActivities;
+				default:
+					return calendarActivities;
 			}
 		},
 		_tagReducers: function (action, tags) {
@@ -145,7 +149,6 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					// A filter is 'enabled' if it is checked, i.e. the category it represents
 					// is selected to be shown/on/active.
 					filters = {
-						enabledTerms: [10, 1, 3], // these match the 'id' field in termDefinitions
 						enabledTags: [],
 						enablePublishedCourses: true,
 						enableUnpublishedCourses: false
@@ -163,11 +166,13 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 			switch (action.type) {
 				case INIT_STATE:
 					uiState = {
-						tableLocked: false,
-						selectedCourseId: null,
-						selectedTermCode: null,
-						massImportMode: false
+						selectedSectionGroupId: null,
+						checkedSectionGroupIds: [],
+						selectedActivityId: null
 					};
+					return uiState;
+				case SECTION_GROUP_SELECTED:
+					uiState.selectedSectionGroupId = action.payload.sectionGroupId;
 					return uiState;
 				default:
 					return uiState;
@@ -184,6 +189,8 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 			newState.courses = scope._courseReducers(action, scope._state.courses);
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
+			newState.activities = scope._activityReducers(action, scope._state.activities);
+			newState.calendarActivities = scope._calendarActivityReducers(action, scope._state.calendarActivities);
 			newState.tags = scope._tagReducers(action, scope._state.tags);
 			newState.filters = scope._filterReducers(action, scope._state.filters);
 			newState.uiState = scope._uiStateReducers(action, scope._state.uiState);

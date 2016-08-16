@@ -89,12 +89,15 @@
 			</div>
 		</div>
 		<div class="section-group-container">
-			<div class="section-group-list" ng-class="{ 'collapsed': selectedSG.id }">
+			<div class="section-group-list" ng-class="{ 'collapsed': view.state.uiState.selectedSectionGroupId }">
 				<ul>
-					<li class="section-group-item" ng-repeat="sectionGroupId in view.state.sectionGroups.ids track by $index" ng-class="{ 'active': selectedSG.id == sectionGroupId }" ng-click="selectSG(sectionGroupId)">
+					<li class="section-group-item" ng-repeat="sectionGroupId in view.state.sectionGroups.ids track by $index"
+						ng-class="{ 'active': view.state.uiState.selectedSectionGroupId == sectionGroupId }"
+						ng-click="setSelectedSectionGroup(sectionGroupId)">
+
 						<div class="section-group-check" ng-click="toggleCheckedSectionGroup(sectionGroupId)" stop-event="click">
-							<i ng-show="checkedSectionGroupIds.indexOf(sectionGroupId) > -1 && selectedSG.id != sectionGroupId" class="sg-checkbox fa fa-check-square-o"></i>
-							<i ng-hide="checkedSectionGroupIds.indexOf(sectionGroupId) > -1 || selectedSG.id == sectionGroupId" class="sg-checkbox fa fa-square-o"></i>
+							<i ng-show="checkedSectionGroupIds.indexOf(sectionGroupId) > -1 && view.state.uiState.selectedSectionGroupId != sectionGroupId" class="sg-checkbox fa fa-check-square-o"></i>
+							<i ng-hide="checkedSectionGroupIds.indexOf(sectionGroupId) > -1 || view.state.uiState.selectedSectionGroupId == sectionGroupId" class="sg-checkbox fa fa-square-o"></i>
 						</div>
 						<div class="section-group-description" ng-init="sg = view.state.sectionGroups.list[sectionGroupId];">
 							<span>
@@ -118,10 +121,13 @@
 					</li>
 				</ul>
 			</div>
-			<div class="activity-container" ng-class="{ 'collapsed': !selectedSG.id }">
+			<div class="activity-container" ng-class="{ 'collapsed': !view.state.uiState.selectedSectionGroupId }">
 				<div class="activity-list">
-					<div ng-if="selectedSG.id">
-						<p class="activity-list-header">{{ selectedSG.subjectCode }} {{ selectedSG.courseNumber }} - {{ selectedSG.sequenceDescription }}</p>
+					<div ng-if="view.state.uiState.selectedSectionGroupId"
+						ng-init="selectedSectionGroup = view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId];
+							selectedCourse = view.state.courses.list[selectedSectionGroup.courseId]">
+
+						<p class="activity-list-header">{{ selectedCourse.subjectCode }} {{ selectedCourse.courseNumber }} - {{ selectedCourse.sequencePattern }}</p>
 						<ul class="activity-group" style="margin-top: 10px;" ng-repeat="activity in selectedSG.sharedActivities">
 							<li class="activity-item"
 								ng-class="{ 'active': selectedActivity.id == activity.id && selectedActivity.sgId == activity.sgId }"

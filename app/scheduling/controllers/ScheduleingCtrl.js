@@ -7,8 +7,8 @@
  * # SchedulingCtrl
  * Controller of the ipaClientAngularApp
  */
-schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParams',
-		this.SchedulingCtrl = function ($scope, $rootScope, $routeParams) {
+schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParams', 'schedulingActionCreators',
+		this.SchedulingCtrl = function ($scope, $rootScope, $routeParams, schedulingActionCreators) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.termCode = $routeParams.termCode;
@@ -17,6 +17,20 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			$rootScope.$on('schedulingStateChanged', function (event, data) {
 				$scope.view.state = data.state;
 			});
+
+			$scope.setSelectedSectionGroup = function (sectionGroupId) {
+				schedulingActionCreators.setSelectedSectionGroup(sectionGroupId);
+				$scope.getSectionGroupDetails(sectionGroupId);
+			};
+
+			$scope.getSectionGroupDetails = function (sectionGroupId) {
+				var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroupId];
+
+				// Initialize sectionGroup sections if not done already
+				if (sectionGroup && sectionGroup.sectionIds == undefined) {
+					schedulingActionCreators.getSectionGroupDetails(sectionGroup);
+				}
+			};
 		}
 ]);
 

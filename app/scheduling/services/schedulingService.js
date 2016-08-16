@@ -22,6 +22,19 @@ schedulingApp.factory("schedulingService", this.schedulingService = function($ht
 			});
 
 			return deferred.promise;
+		},
+		getSectionSectionGroupDetails: function (sectionGroupId) {
+			var deferred = $q.defer();
+
+			$http.get(serverRoot + "/api/schedulingView/sectionGroups/" + sectionGroupId, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });
