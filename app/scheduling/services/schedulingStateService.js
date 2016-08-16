@@ -76,6 +76,9 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					return sections;
 				case FETCH_SECTION_GROUP_DETAILS:
 					action.payload.sections.forEach(function (section) {
+						section.activityIds = action.payload.activities
+							.filter(function (a) { return a.sectionId == section.id; })
+							.map(function (a) { return a.id; });
 						sections.list[section.id] = section;
 						sections.ids.push(section.id);
 					});
@@ -167,12 +170,14 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 				case INIT_STATE:
 					uiState = {
 						selectedSectionGroupId: null,
-						checkedSectionGroupIds: [],
-						selectedActivityId: null
+						selectedCourseId: null,
+						selectedActivityId: null,
+						checkedSectionGroupIds: []
 					};
 					return uiState;
 				case SECTION_GROUP_SELECTED:
-					uiState.selectedSectionGroupId = action.payload.sectionGroupId;
+					uiState.selectedSectionGroupId = action.payload.sectionGroup.id;
+					uiState.selectedCourseId = action.payload.sectionGroup.courseId;
 					return uiState;
 				default:
 					return uiState;

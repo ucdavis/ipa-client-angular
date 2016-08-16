@@ -123,11 +123,13 @@
 			</div>
 			<div class="activity-container" ng-class="{ 'collapsed': !view.state.uiState.selectedSectionGroupId }">
 				<div class="activity-list">
-					<div ng-if="view.state.uiState.selectedSectionGroupId"
-						ng-init="selectedSectionGroup = view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId];
-							selectedCourse = view.state.courses.list[selectedSectionGroup.courseId]">
+					<div ng-if="view.state.uiState.selectedSectionGroupId">
 
-						<p class="activity-list-header">{{ selectedCourse.subjectCode }} {{ selectedCourse.courseNumber }} - {{ selectedCourse.sequencePattern }}</p>
+						<p class="activity-list-header">
+							{{ view.state.courses.list[view.state.uiState.selectedCourseId].subjectCode }}
+							{{ view.state.courses.list[view.state.uiState.selectedCourseId].courseNumber }}
+							- {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
+						</p>
 						<ul class="activity-group" style="margin-top: 10px;" ng-repeat="activity in selectedSG.sharedActivities">
 							<li class="activity-item"
 								ng-class="{ 'active': selectedActivity.id == activity.id && selectedActivity.sgId == activity.sgId }"
@@ -139,13 +141,14 @@
 								<i class="entypo-plus-circled text-success" style="font-size: 120%;"></i>
 						</ul>
 						<ul>
-							<li class="section-item" ng-repeat="section in selectedSG.sections">
-								<div class="section-pattern">Section {{ section.sequence }}</div>
-								<ul class="activity-group" ng-repeat="activity in section.activities">
+							<li class="section-item" ng-repeat="sectionId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds"
+								ng-init="section = view.state.sections.list[sectionId];">
+								<div class="section-pattern">Section {{ section.sequenceNumber }}</div>
+								<ul class="activity-group" ng-repeat="activityId in section.activityIds" ng-init="activity = view.state.activities.list[activityId];">
 									<li class="activity-item"
 										ng-class="{ 'active': selectedActivity.id == activity.id && selectedActivity.sgId == activity.sgId }"
 										ng-click="selectActivity(activity)">
-											<span>{{ activity.type }}</span>
+											<span>{{ activity.activityTypeCode.activityTypeCode }}</span>
 											<i class="entypo-minus-circled text-danger pull-right delete-activity"></i>
 											<i class="glyphicon glyphicon-warning-sign pull-right text-warning"
 												data-toggle="tooltip" data-placement="top" tool-pa

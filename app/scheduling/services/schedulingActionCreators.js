@@ -21,11 +21,11 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
-		setSelectedSectionGroup: function (sectionGroupId) {
+		setSelectedSectionGroup: function (sectionGroup) {
 			var action = {
 				type: SECTION_GROUP_SELECTED,
 				payload: {
-					sectionGroupId: sectionGroupId
+					sectionGroup: sectionGroup
 				}
 			};
 			schedulingStateService.reduce(action);
