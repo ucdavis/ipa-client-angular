@@ -649,3 +649,22 @@ div.dropdown button.dropdown-toggle {
 	background-color: #fff;
 	border-color: #ccc;
 }
+
+table.teaching-call tr td.quarter_column, table.teaching-call tr th {
+	text-align: center;
+}
+
+small.legend {
+	display:block;
+	margin: 10px;
+	font-size: 12px;
+}
+
+.disabled-calendar {
+	color: rgb(153, 153, 153);
+	cursor: not-allowed;
+}
+div:hover .disabled-calendar {
+	color: rgb(153, 153, 153);
+	cursor: not-allowed;
+}

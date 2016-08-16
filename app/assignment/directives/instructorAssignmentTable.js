@@ -62,12 +62,22 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 						courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor comments\" data-container=\"body\"></i>";
 						courseHtml += "</div>";
 
-						// Instructor Availabilities UI
+						// If they don't have any teachingCallResponses, there won't be any unavailabilities to show
 						courseHtml += "<div class=\"description-cell__avail-btn-container\">";
-						courseHtml += "<i class=\"glyphicon avail-btn glyphicon-calendar\" data-instructor-id=" + instructor.id;
-						courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor unavailabilities\" data-container=\"body\"></i>";
+
+						if (instructor.teachingCallResponses.length > 0) {
+							// Instructor Availabilities UI
+							courseHtml += "<i class=\"glyphicon avail-btn glyphicon-calendar\" data-instructor-id=" + instructor.id;
+							courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor unavailabilities\" data-container=\"body\"></i>";
+						} else {
+							courseHtml += "<div data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"No unavailabilities\" data-container=\"body\">";
+							courseHtml += "<i class=\" disabled disabled-calendar glyphicon glyphicon-calendar\"></i>";
+							courseHtml += "</div>";
+						}
+
 						courseHtml += "</div>";
 						courseHtml += "</div>";
+
 
 						// Instructor TeachingCall submitted preferences checkmark
 						if (teachingCallReceipt && teachingCallReceipt.isDone) {
