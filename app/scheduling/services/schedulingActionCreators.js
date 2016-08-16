@@ -30,6 +30,15 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 			};
 			schedulingStateService.reduce(action);
 		},
+		toggleCheckedSectionGroup: function (sectionGroupId) {
+			var action = {
+				type: SECTION_GROUP_TOGGLED,
+				payload: {
+					sectionGroupId: sectionGroupId
+				}
+			};
+			schedulingStateService.reduce(action);
+		},
 		getSectionGroupDetails: function (sectionGroup) {
 			schedulingService.getSectionSectionGroupDetails(sectionGroup.id).then(function (payload) {
 				var action = {

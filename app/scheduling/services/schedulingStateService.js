@@ -8,7 +8,7 @@
  schedulingApp.
  * Central location for sharedState information.
  */
-schedulingApp.service('schedulingStateService', function ($rootScope, Course, SectionGroup, Tag) {
+schedulingApp.service('schedulingStateService', function ($rootScope, Course, SectionGroup, Section, Activity, Tag) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -79,7 +79,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 						section.activityIds = action.payload.activities
 							.filter(function (a) { return a.sectionId == section.id; })
 							.map(function (a) { return a.id; });
-						sections.list[section.id] = section;
+						sections.list[section.id] = new Section(section);
 						sections.ids.push(section.id);
 					});
 					return sections;
@@ -99,7 +99,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					return activities;
 				case FETCH_SECTION_GROUP_DETAILS:
 					action.payload.activities.forEach(function (activity) {
-						activities.list[activity.id] = activity;
+						activities.list[activity.id] = new Activity(activity);
 						activities.ids.push(activity.id);
 					});
 					return activities;
@@ -176,8 +176,21 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					};
 					return uiState;
 				case SECTION_GROUP_SELECTED:
-					uiState.selectedSectionGroupId = action.payload.sectionGroup.id;
-					uiState.selectedCourseId = action.payload.sectionGroup.courseId;
+					if (uiState.selectedSectionGroupId != action.payload.sectionGroup.id) {
+						uiState.selectedSectionGroupId = action.payload.sectionGroup.id;
+						uiState.selectedCourseId = action.payload.sectionGroup.courseId;
+					} else {
+						uiState.selectedSectionGroupId = null;
+						uiState.selectedCourseId = null;
+					}
+					return uiState;
+				case SECTION_GROUP_TOGGLED:
+					var sectionGroupCheckedIndex = uiState.checkedSectionGroupIds.indexOf(action.payload.sectionGroupId);
+					if (sectionGroupCheckedIndex < 0) {
+						uiState.checkedSectionGroupIds.push(action.payload.sectionGroupId);
+					} else {
+						uiState.checkedSectionGroupIds.splice(sectionGroupCheckedIndex, 1);
+					}
 					return uiState;
 				default:
 					return uiState;

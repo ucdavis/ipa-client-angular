@@ -24,6 +24,11 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				$scope.getSectionGroupDetails(sectionGroupId);
 			};
 
+			$scope.toggleCheckedSectionGroup = function (sectionGroupId) {
+				schedulingActionCreators.toggleCheckedSectionGroup(sectionGroupId);
+				$scope.getSectionGroupDetails(sectionGroupId);
+			};
+
 			$scope.getSectionGroupDetails = function (sectionGroupId) {
 				var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroupId];
 

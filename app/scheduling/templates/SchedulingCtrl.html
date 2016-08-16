@@ -96,8 +96,8 @@
 						ng-click="setSelectedSectionGroup(sectionGroupId)">
 
 						<div class="section-group-check" ng-click="toggleCheckedSectionGroup(sectionGroupId)" stop-event="click">
-							<i ng-show="checkedSectionGroupIds.indexOf(sectionGroupId) > -1 && view.state.uiState.selectedSectionGroupId != sectionGroupId" class="sg-checkbox fa fa-check-square-o"></i>
-							<i ng-hide="checkedSectionGroupIds.indexOf(sectionGroupId) > -1 || view.state.uiState.selectedSectionGroupId == sectionGroupId" class="sg-checkbox fa fa-square-o"></i>
+							<i ng-show="view.state.uiState.checkedSectionGroupIds.indexOf(sectionGroupId) > -1 && view.state.uiState.selectedSectionGroupId != sectionGroupId" class="sg-checkbox fa fa-check-square-o"></i>
+							<i ng-hide="view.state.uiState.checkedSectionGroupIds.indexOf(sectionGroupId) > -1 || view.state.uiState.selectedSectionGroupId == sectionGroupId" class="sg-checkbox fa fa-square-o"></i>
 						</div>
 						<div class="section-group-description" ng-init="sg = view.state.sectionGroups.list[sectionGroupId];">
 							<span>
@@ -134,7 +134,7 @@
 							<li class="activity-item"
 								ng-class="{ 'active': selectedActivity.id == activity.id && selectedActivity.sgId == activity.sgId }"
 								ng-click="selectActivity(activity)">
-									<span>{{ activity.type }}</span>
+									<span>{{ activity.getCodeDescription() }}</span>
 									<i class="entypo-minus-circled text-danger pull-right delete-activity"></i>
 							</li>
 							<li class="add-activity">
@@ -148,7 +148,7 @@
 									<li class="activity-item"
 										ng-class="{ 'active': selectedActivity.id == activity.id && selectedActivity.sgId == activity.sgId }"
 										ng-click="selectActivity(activity)">
-											<span>{{ activity.activityTypeCode.activityTypeCode }}</span>
+											<span>{{ activity.getCodeDescription() }}</span>
 											<i class="entypo-minus-circled text-danger pull-right delete-activity"></i>
 											<i class="glyphicon glyphicon-warning-sign pull-right text-warning"
 												data-toggle="tooltip" data-placement="top" tool-pa
