@@ -1,0 +1,277 @@
+<nav year="{{ year }}" term-code="{{ termCode }}" workgroup-id="{{ workgroupId }}"></nav>
+
+<div class="wrap">
+	<div class="main-content">
+
+		<div class="activity-page-header">
+			<div class="activity-page-title">
+				<h3>Winter Quarter 2016</h3>
+			</div>
+			<div class="activity-filters">
+				<div class="activity-filter-menu">
+					<div class="btn-group pull-right">
+						<button class="btn btn-white btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Filters <span class="caret"></span>
+						</button>
+						<div class="dropdown-menu" style="width: 400px; padding: 0;">
+							<div class="filters-container" stop-event="click">
+								<div class="tags-filter">
+									<h3>Tags</h3>
+									<ul>
+										<li ng-repeat="tagId in view.state.tags.ids track by $index">
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement checked">
+												<label class="cb-wrapper" ng-style="{ 'border-color': view.state.tags.list[tagId].color }">
+													<input type="checkbox" checked="">
+													<div class="checked" ng-style="{ 'background': view.state.tags.list[tagId].color }"></div>
+												</label>
+												<label ng-bind="view.state.tags.list[tagId].name"></label>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div class="days-filter">
+									<h3>Days</h3>
+									<ul>
+										<li>
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement">
+												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
+												<label>Sunday</label>
+											</div>
+										</li>
+										<li>
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement checked">
+												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
+												<label>Monday</label>
+											</div>
+										</li>
+										<li>
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement checked">
+												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
+												<label>Tuesday</label>
+											</div>
+										</li>
+										<li>
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement checked">
+												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
+												<label>Wednesday</label>
+											</div>
+										</li>
+										<li>
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement checked">
+												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
+												<label>Thursday</label>
+											</div>
+										</li>
+										<li>
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement checked">
+												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
+												<label>Friday</label>
+											</div>
+										</li>
+										<li>
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement">
+												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
+												<label>Saturday</label>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="activity-filter-tokens">
+					<div class="label label-info" ng-repeat="filter in filters">
+						{{ filter.displayName }}
+						<i class="glyphicon glyphicon-remove" ng-click="toggleCheckedSectionGroup(filter.id)"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section-group-container">
+			<div class="section-group-list" ng-class="{ 'collapsed': selectedSG.id }">
+				<ul>
+					<li class="section-group-item" ng-repeat="sectionGroupId in view.state.sectionGroups.ids track by $index" ng-class="{ 'active': selectedSG.id == sectionGroupId }" ng-click="selectSG(sectionGroupId)">
+						<div class="section-group-check" ng-click="toggleCheckedSectionGroup(sectionGroupId)" stop-event="click">
+							<i ng-show="checkedSectionGroupIds.indexOf(sectionGroupId) > -1 && selectedSG.id != sectionGroupId" class="sg-checkbox fa fa-check-square-o"></i>
+							<i ng-hide="checkedSectionGroupIds.indexOf(sectionGroupId) > -1 || selectedSG.id == sectionGroupId" class="sg-checkbox fa fa-square-o"></i>
+						</div>
+						<div class="section-group-description" ng-init="sg = view.state.sectionGroups.list[sectionGroupId];">
+							<span>
+								{{ view.state.courses.list[sg.courseId].subjectCode }}
+								{{ view.state.courses.list[sg.courseId].courseNumber }}
+								- {{ view.state.courses.list[sg.courseId].sequencePattern }}
+							</span>
+							<br />
+							<small class="text-muted">{{ view.state.courses.list[sg.courseId].title }}</small>
+							<br />
+							<small class="text-muted">
+								<!-- TODO: Instructor -->
+								<!--{{ sg.instructor }} --->
+
+								Units: {{ view.state.courses.list[sg.courseId].unitsLow }}
+
+								<!-- TODO: Display enrollment and total seats (Involves modifying payload to include all sections) -->
+								<!-- - {{ sg.enrollment[4] }} / {{ getSectionSeatsTotal(sg) }}-->
+							</small>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="activity-container" ng-class="{ 'collapsed': !selectedSG.id }">
+				<div class="activity-list">
+					<div ng-if="selectedSG.id">
+						<p class="activity-list-header">{{ selectedSG.subjectCode }} {{ selectedSG.courseNumber }} - {{ selectedSG.sequenceDescription }}</p>
+						<ul class="activity-group" style="margin-top: 10px;" ng-repeat="activity in selectedSG.sharedActivities">
+							<li class="activity-item"
+								ng-class="{ 'active': selectedActivity.id == activity.id && selectedActivity.sgId == activity.sgId }"
+								ng-click="selectActivity(activity)">
+									<span>{{ activity.type }}</span>
+									<i class="entypo-minus-circled text-danger pull-right delete-activity"></i>
+							</li>
+							<li class="add-activity">
+								<i class="entypo-plus-circled text-success" style="font-size: 120%;"></i>
+						</ul>
+						<ul>
+							<li class="section-item" ng-repeat="section in selectedSG.sections">
+								<div class="section-pattern">Section {{ section.sequence }}</div>
+								<ul class="activity-group" ng-repeat="activity in section.activities">
+									<li class="activity-item"
+										ng-class="{ 'active': selectedActivity.id == activity.id && selectedActivity.sgId == activity.sgId }"
+										ng-click="selectActivity(activity)">
+											<span>{{ activity.type }}</span>
+											<i class="entypo-minus-circled text-danger pull-right delete-activity"></i>
+											<i class="glyphicon glyphicon-warning-sign pull-right text-warning"
+												data-toggle="tooltip" data-placement="top" tool-pa
+												title="Activity no longer matches standard pattern"
+												ng-show="activity.id == selectedActivity.id && selectedActivity.hasWarning"></i>
+									</li>
+									<li class="add-activity">
+										<i class="entypo-plus-circled text-success" style="font-size: 120%;"></i>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="activity-details">
+					<div ng-show="selectedActivity.id">
+						<p class="activity-details-header">{{ selectedActivity.type }}</p>
+						<form class="form-horizontal">
+							<strong>Location</strong>
+							<hr style="margin-top: 0;" />
+							<div class="form-group">
+								<div class="col-sm-12">
+									<div class="radio">
+										<label>
+											<input type="radio" name="buildingRadios" ng-value="true" ng-model="selectedActivity.isBannerRoom">Banner Selected
+										</label>
+									</div>
+									<div class="radio">
+										<label>
+											<input type="radio" name="buildingRadios" ng-value="false" ng-model="selectedActivity.isBannerRoom">Custom
+										</label>
+									</div>
+									<div ng-show="!selectedActivity.isBannerRoom">
+										<select name="test" class="select2" data-allow-clear="true" data-placeholder="Select...">
+											<option></option>
+											<option value="1">Young 100</option>
+											<option value="2">Young 186</option>
+											<option value="3">Young 190</option>
+											<option value="4">Young 263</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<strong>Time</strong>
+							<hr style="margin-top: 0;" />
+							<div class="form-group">
+								<div class="col-sm-12">
+									<div class="radio">
+										<label>
+											<input type="radio" name="buildingRadios" ng-value="0" ng-model="selectedActivity.isStandardTimes">Standard times
+										</label>
+									</div>
+
+									<!-- Standard times -->
+									<div ng-show="selectedActivity.isStandardTimes === 0">
+										<fieldset>
+											<div class="col-sm-4" style="padding: 0px;">
+												<select size="4" class="form-control standard-time"
+												ng-options="duration as (duration + ' min') for (duration,pattern) in standardPatterns"
+												ng-model="selectedActivity.selectedDuration">
+												</select>
+											</div>
+											<div class="control-group col-sm-3" style="padding: 0px 0px 0px 5px;">
+												<select size="4" class="form-control standard-time"
+												ng-options="dayIndicator as getWeekDays(dayIndicator, standardPatterns[selectedActivity.selectedDuration].dayIndicators) for dayIndicator in standardPatterns[selectedActivity.selectedDuration].dayIndicators"
+												ng-model="selectedActivity.dayIndicator">
+												</select>
+											</div>
+											<div class="control-group col-sm-5" style="padding: 0px 0px 0px 5px;">
+												<select size="4" class="form-control standard-time">
+													<option ng-repeat="time in standardPatterns[selectedActivity.selectedDuration].times"
+													ng-selected="time.start === selectedActivity.startTime && time.end === selectedActivity.endTime">
+														{{ getMeridianTime(time.start) }} - {{ getMeridianTime(time.end) }}
+													</option>
+												</select>
+											</div>
+										</fieldset>
+									</div>
+
+									<div class="radio">
+										<label>
+											<input type="radio" name="buildingRadios" ng-value="1" ng-model="selectedActivity.isStandardTimes">Non-standard times
+										</label>
+									</div>
+
+									<!-- Non-standard times -->
+									<div ng-show="selectedActivity.isStandardTimes === 1">
+										<div class="form-group">
+											<div class="input-group">
+												<label class="col-sm-6 control-label">
+													Repeats every
+												</label>
+												<div class="col-sm-5">
+													<div class="input-group">
+														<input type="number" class="form-control" value="1">
+														<span class="input-group-addon">weeks</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-offset-1 col-sm-10">
+												<div class="btn-group btn-group-justified btn-group-sm">
+													<div class="btn-group ng-scope" ng-repeat="day in days track by $index">
+														<button ng-click="toggleDay($index)" ng-class="{'active': selectedActivity.dayIndicator[$index] === '1'}" type="button" class="btn btn-default ng-binding">{{day}}</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-offset-1 col-sm-10">
+												<div class="input-group">
+													<input type="text" class="form-control timepicker" data-template="dropdown" data-show-seconds="true" data-default-time="null" data-show-meridian="true" data-minute-step="5" data-second-step="5" />
+													<div class="input-group-addon">
+														<a href="#"><i class="entypo-clock"></i></a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</form>
+
+					</div>
+				</div>
+			</div>
+			<div class="activity-calendar">
+				<term-calendar></term-calendar>
+			</div>
+		</div>
+
+	</div>
+</div>

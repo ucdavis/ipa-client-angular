@@ -1,4 +1,4 @@
-<nav year="{{ year }}" term-code="{{ termCode }}" workgroup-code="{{ workgroupCode }}"></nav>
+<nav year="{{ year }}" term-code="{{ termCode }}" workgroup-id="{{ workgroupId }}"></nav>
 
 <div class="main-content" unselect-cell>
 
@@ -241,7 +241,7 @@
 				<census-chart census="view.state.courses.list[view.selectedEntity.courseId].census"
 				term-code="view.selectedEntity.termCode"></census-chart>
 				<hr />
-				<table class="table sections-table" ng-if="view.selectedEntity.sectionIds">
+				<table class="table sections-table" style="margin-bottom: 5px;" ng-if="view.selectedEntity.sectionIds">
 					<colgroup>
 						<col span="1" style="width: 30%;">
 						<!--<col span="1" style="width: 30%;">-->
@@ -279,11 +279,18 @@
 								</a>
 							</td>
 						</tr>
+						<tr ng-if="view.selectedEntity.sectionIds.length > 1">
+							<td><strong>Total</strong></td>
+							<!-- TODO: Get enrollment live from DW? -->
+							<!--<td>{{ section.enrollment }}</td>-->
+							<td>{{ sectionSeatTotal(view.selectedEntity) }}</td>
+							<td></td>
+						</tr>
 					</tbody>
 				</table>
 				<div class="col-sm-12 text-center" ng-if="view.selectedEntity.sectionIds && nextSequence()">
-						<a class="btn btn-white" uib-tooltip="Add a section" tooltip-placement="right"
-							ng-click="addSection()">Create {{ nextSequence() }}</a></td>
+						<button class="btn btn-white" uib-tooltip="Add a section" tooltip-placement="right"
+							ng-click="addSection()">Create {{ nextSequence() }}</button>
 				</div>
 			</div>
 		</div>

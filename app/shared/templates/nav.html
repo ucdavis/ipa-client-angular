@@ -6,7 +6,7 @@
 
 			<!-- logo -->
 			<div class="logo">
-				<a ng-href="/summary/{{ workgroupCode }}/{{ year }}/{{ term.code }}">
+				<a ng-href="/summary/{{ workgroupId }}/{{ year }}/{{ term.code }}">
 					<h1 style="color: #fff; margin:0;">IPA</h1>
 				</a>
 			</div>
@@ -70,13 +70,13 @@
 			<!-- add class "multiple-expanded" to allow multiple submenus to open -->
 			<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
 			<li>
-				<a ng-href="/courses/{{ workgroupCode }}/{{ year }}/{{ term.code }}">
+				<a ng-href="/courses/{{ workgroupId }}/{{ year }}/{{ term.code }}">
 					<i class="entypo-book"></i>
 					<span class="title">Courses</span>
 				</a>
 			</li>
 			<li>
-				<a ng-href="/assignments/{{ workgroupCode }}/{{ year }}/{{ term.code }}">
+				<a ng-href="/assignments/{{ workgroupId }}/{{ year }}/{{ term.code }}">
 					<i class="entypo-user-add"></i>
 					<span class="title">Assignments</span>
 				</a>
@@ -87,8 +87,8 @@
 					<span class="title">Scheduling</span>
 				</a>
 				<ul class="visible">
-					<li ng-repeat="term in terms track by term.id" ng-class="{'active': term.code == termCode}">
-						<a ng-href="/scheduling/{{ workgroupCode }}/{{ year }}/{{ term.code }}">
+					<li ng-repeat="term in termDefinitions track by term.id" ng-class="{'active': term.code == termCode}">
+						<a ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ term.code }}">
 							{{ term.description }}
 						</a>
 					</li>

@@ -9,7 +9,7 @@
  */
 workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams', 'workgroupActionCreators',
 		this.WorkgroupCtrl = function ($scope, $rootScope, $routeParams, workgroupActionCreators) {
-			$scope.workgroupCode = $routeParams.workgroupCode;
+			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.view = {};
 
@@ -19,7 +19,7 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 	}]);
 
 WorkgroupCtrl.getPayload = function (authService,workgroupActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupCode, $route.current.params.year).then(function () {
-		return workgroupActionCreators.getInitialState($route.current.params.workgroupCode);
+	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+		return workgroupActionCreators.getInitialState($route.current.params.workgroupId);
 	});
 }

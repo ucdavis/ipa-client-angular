@@ -163,18 +163,23 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			 * Begins import mode, which allows for the mass adding of courses.
 			 * @return {[type]} [description]
 			 */
-			$scope.beginImportMode = function() {
+			$scope.beginImportMode = function () {
 				courseActionCreators.beginImportMode();
-			}
+			};
 
 			/**
 			 * Ends import mode, which allows for the mass adding of courses.
 			 * @return {[type]} [description]
 			 */
-			$scope.endImportMode = function() {
+			$scope.endImportMode = function () {
 				courseActionCreators.endImportMode();
-			}
+			};
 
+			$scope.sectionSeatTotal = function (sectionGroup) {
+				return sectionGroup.sectionIds.reduce(function (previousValue, sectionId) {
+					return previousValue + $scope.view.state.sections.list[sectionId].seats;
+				}, 0);
+			};
 		}
 ]);
 
