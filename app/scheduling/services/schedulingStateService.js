@@ -176,6 +176,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					};
 					return uiState;
 				case SECTION_GROUP_SELECTED:
+					uiState.selectedActivityId = null;
 					if (uiState.selectedSectionGroupId != action.payload.sectionGroup.id) {
 						uiState.selectedSectionGroupId = action.payload.sectionGroup.id;
 						uiState.selectedCourseId = action.payload.sectionGroup.courseId;
@@ -190,6 +191,13 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 						uiState.checkedSectionGroupIds.push(action.payload.sectionGroupId);
 					} else {
 						uiState.checkedSectionGroupIds.splice(sectionGroupCheckedIndex, 1);
+					}
+					return uiState;
+				case ACTIVITY_SELECTED:
+					if (uiState.selectedActivityId != action.payload.activity.id) {
+						uiState.selectedActivityId = action.payload.activity.id;
+					} else {
+						uiState.selectedActivityId = null;
 					}
 					return uiState;
 				default:

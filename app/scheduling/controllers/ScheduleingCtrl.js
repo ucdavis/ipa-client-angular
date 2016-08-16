@@ -29,6 +29,11 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				$scope.getSectionGroupDetails(sectionGroupId);
 			};
 
+			$scope.setSelectedActivity = function (activityId) {
+				var activity = $scope.view.state.activities.list[activityId];
+				schedulingActionCreators.setSelectedActivity(activity);
+			};
+
 			$scope.getSectionGroupDetails = function (sectionGroupId) {
 				var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroupId];
 

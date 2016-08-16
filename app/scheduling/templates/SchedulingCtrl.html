@@ -132,8 +132,8 @@
 						</p>
 						<ul class="activity-group" style="margin-top: 10px;" ng-repeat="activity in selectedSG.sharedActivities">
 							<li class="activity-item"
-								ng-class="{ 'active': selectedActivity.id == activity.id && selectedActivity.sgId == activity.sgId }"
-								ng-click="selectActivity(activity)">
+								ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }"
+								ng-click="setSelectedActivity(activity)">
 									<span>{{ activity.getCodeDescription() }}</span>
 									<i class="entypo-minus-circled text-danger pull-right delete-activity"></i>
 							</li>
@@ -146,14 +146,13 @@
 								<div class="section-pattern">Section {{ section.sequenceNumber }}</div>
 								<ul class="activity-group" ng-repeat="activityId in section.activityIds" ng-init="activity = view.state.activities.list[activityId];">
 									<li class="activity-item"
-										ng-class="{ 'active': selectedActivity.id == activity.id && selectedActivity.sgId == activity.sgId }"
-										ng-click="selectActivity(activity)">
+										ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }"
+										ng-click="setSelectedActivity(activityId)">
 											<span>{{ activity.getCodeDescription() }}</span>
 											<i class="entypo-minus-circled text-danger pull-right delete-activity"></i>
 											<i class="glyphicon glyphicon-warning-sign pull-right text-warning"
-												data-toggle="tooltip" data-placement="top" tool-pa
-												title="Activity no longer matches standard pattern"
-												ng-show="activity.id == selectedActivity.id && selectedActivity.hasWarning"></i>
+												uib-tooltip="Activity no longer matches standard pattern"
+												ng-show="activityId == view.state.uiState.selectedActivityId && view.state.uiState.selectedActivity.hasWarning"></i>
 									</li>
 									<li class="add-activity">
 										<i class="entypo-plus-circled text-success" style="font-size: 120%;"></i>
@@ -164,24 +163,26 @@
 					</div>
 				</div>
 				<div class="activity-details">
-					<div ng-show="selectedActivity.id">
-						<p class="activity-details-header">{{ selectedActivity.type }}</p>
+					<div ng-show="view.state.uiState.selectedActivityId">
+						<p class="activity-details-header">
+							{{ view.state.activities.list[view.state.uiState.selectedActivityId].getCodeDescription() }}
+						</p>
 						<form class="form-horizontal">
 							<strong>Location</strong>
 							<hr style="margin-top: 0;" />
 							<div class="form-group">
-								<div class="col-sm-12">
+								<div class="col-sm-12">{{view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom}}
 									<div class="radio">
 										<label>
-											<input type="radio" name="buildingRadios" ng-value="true" ng-model="selectedActivity.isBannerRoom">Banner Selected
+											<input type="radio" ng-value="true" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom">Banner Selected
 										</label>
 									</div>
 									<div class="radio">
 										<label>
-											<input type="radio" name="buildingRadios" ng-value="false" ng-model="selectedActivity.isBannerRoom">Custom
+											<input type="radio" ng-value="false" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom">Custom
 										</label>
 									</div>
-									<div ng-show="!selectedActivity.isBannerRoom">
+									<div ng-show="!view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom">
 										<select name="test" class="select2" data-allow-clear="true" data-placeholder="Select...">
 											<option></option>
 											<option value="1">Young 100</option>
@@ -198,29 +199,29 @@
 								<div class="col-sm-12">
 									<div class="radio">
 										<label>
-											<input type="radio" name="buildingRadios" ng-value="0" ng-model="selectedActivity.isStandardTimes">Standard times
+											<input type="radio" name="buildingRadios" ng-value="true" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">Standard times
 										</label>
 									</div>
 
 									<!-- Standard times -->
-									<div ng-show="selectedActivity.isStandardTimes === 0">
+									<div ng-show="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">
 										<fieldset>
 											<div class="col-sm-4" style="padding: 0px;">
 												<select size="4" class="form-control standard-time"
 												ng-options="duration as (duration + ' min') for (duration,pattern) in standardPatterns"
-												ng-model="selectedActivity.selectedDuration">
+												ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration">
 												</select>
 											</div>
 											<div class="control-group col-sm-3" style="padding: 0px 0px 0px 5px;">
 												<select size="4" class="form-control standard-time"
-												ng-options="dayIndicator as getWeekDays(dayIndicator, standardPatterns[selectedActivity.selectedDuration].dayIndicators) for dayIndicator in standardPatterns[selectedActivity.selectedDuration].dayIndicators"
-												ng-model="selectedActivity.dayIndicator">
+												ng-options="dayIndicator as getWeekDays(dayIndicator, standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].dayIndicators) for dayIndicator in standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].dayIndicators"
+												ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].dayIndicator">
 												</select>
 											</div>
 											<div class="control-group col-sm-5" style="padding: 0px 0px 0px 5px;">
 												<select size="4" class="form-control standard-time">
-													<option ng-repeat="time in standardPatterns[selectedActivity.selectedDuration].times"
-													ng-selected="time.start === selectedActivity.startTime && time.end === selectedActivity.endTime">
+													<option ng-repeat="time in standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].times"
+													ng-selected="time.start === view.state.activities.list[view.state.uiState.selectedActivityId].startTime && time.end === view.state.activities.list[view.state.uiState.selectedActivityId].endTime">
 														{{ getMeridianTime(time.start) }} - {{ getMeridianTime(time.end) }}
 													</option>
 												</select>
@@ -230,12 +231,12 @@
 
 									<div class="radio">
 										<label>
-											<input type="radio" name="buildingRadios" ng-value="1" ng-model="selectedActivity.isStandardTimes">Non-standard times
+											<input type="radio" name="buildingRadios" ng-value="false" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">Non-standard times
 										</label>
 									</div>
 
 									<!-- Non-standard times -->
-									<div ng-show="selectedActivity.isStandardTimes === 1">
+									<div ng-hide="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">
 										<div class="form-group">
 											<div class="input-group">
 												<label class="col-sm-6 control-label">
@@ -253,7 +254,7 @@
 											<div class="col-sm-offset-1 col-sm-10">
 												<div class="btn-group btn-group-justified btn-group-sm">
 													<div class="btn-group ng-scope" ng-repeat="day in days track by $index">
-														<button ng-click="toggleDay($index)" ng-class="{'active': selectedActivity.dayIndicator[$index] === '1'}" type="button" class="btn btn-default ng-binding">{{day}}</button>
+														<button ng-click="toggleDay($index)" ng-class="{'active': view.state.activities.list[view.state.uiState.selectedActivityId].dayIndicator[$index] === '1'}" type="button" class="btn btn-default ng-binding">{{day}}</button>
 													</div>
 												</div>
 											</div>

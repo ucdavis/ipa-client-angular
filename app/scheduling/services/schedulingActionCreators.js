@@ -39,6 +39,15 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 			};
 			schedulingStateService.reduce(action);
 		},
+		setSelectedActivity: function (activity) {
+			var action = {
+				type: ACTIVITY_SELECTED,
+				payload: {
+					activity: activity
+				}
+			};
+			schedulingStateService.reduce(action);
+		},
 		getSectionGroupDetails: function (sectionGroup) {
 			schedulingService.getSectionSectionGroupDetails(sectionGroup.id).then(function (payload) {
 				var action = {
