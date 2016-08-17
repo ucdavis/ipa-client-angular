@@ -9,6 +9,9 @@ schedulingApp.config(function ($routeProvider) {
 				payload: SchedulingCtrl.getPayload
 			}
 		})
+		.when("/:workgroupId/:year", {
+			templateUrl: "not-found.html"
+		})
 		.when("/", {
 			templateUrl: "SchedulingCtrl.html",
 			controller: "SchedulingCtrl",
