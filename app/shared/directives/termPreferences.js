@@ -4,7 +4,6 @@ sharedApp.directive("termPreferences", this.termPreferences = function($uibModal
 		templateUrl: 'termPreferences.html',
 		scope: {
 			preference: '=',
-			courses: '=',
 			scheduleId: '=',
 			term: '=',
 			instructorId: '=',
@@ -18,6 +17,12 @@ sharedApp.directive("termPreferences", this.termPreferences = function($uibModal
 			onUpdate: '&'
 		},
 		link: function(scope, element, attrs) {
+			scope.year = scope.$parent.year;
+			scope.term = termToTermCode(scope.term, scope.year);
+
+			scope.courses = scope.$parent.scheduledCourses[scope.term];
+			//console.log(scope.$parent.scheduledCourses);
+			console.log(scope.term);
 			scope.status = {};
 			scope.deletable = (typeof attrs.onDelete != 'undefined');
 			scope.getDescription = function(preference) {
@@ -34,6 +39,22 @@ sharedApp.directive("termPreferences", this.termPreferences = function($uibModal
 				if (newVal) element.addClass('disable-sorting');
 				else element.removeClass('disable-sorting');
 			});
-		}
+
+		} // End link block
 	};
 });
+
+termToTermCode = function(term, year) {
+	switch(term) {
+		case "01":
+		case "02":
+		case "03":
+			year++;
+			break;
+		default:
+			year;
+	}
+	var termCode = year + term;
+
+	return termCode;
+}

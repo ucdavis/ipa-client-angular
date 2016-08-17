@@ -1,8 +1,7 @@
 <div class="container">
-
 	<div class="col-sm-10 col-sm-offset-1">
 		<h2 class="page-header text-center">
-			Teaching Call {{ year }}-{{ year+1 }}: {{ activeWorkgroup.name }}
+			Teaching Call {{ year }}-{{ nextYear }}: {{ activeWorkgroup.name }}
 			<small class="glyphicon glyphicon-question-sign" aria-hidden="true" tooltip-placement="right"
 				uib-tooltip="Select the courses you plan to teach for the given term in the order of preference">
 			</small>
@@ -30,7 +29,6 @@
 								<div term-preferences
 								instructor-id="view.state.userInterface.instructorId"
 								preference="preference"
-								courses="courseOfferings[term]"
 								on-select="updatePreference(preference, courseOffering, isBuyout, isSabbatical, isCourseRelease)"
 								on-delete="deletePreference(preference)"
 								on-update="refreshPreferences()"

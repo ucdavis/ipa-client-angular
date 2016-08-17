@@ -11,6 +11,7 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 		this.TeachingCallCtrl = function ($scope, $rootScope, $routeParams, assignmentActionCreators) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
+			$scope.nextYear = parseInt($scope.year) + 1;
 			$scope.view = {};
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
@@ -192,6 +193,7 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 
 				$scope.termAssignments = {};
 
+				// Building an object of teachingAssignments for this instructor, separated by term
 				for (var i = 0; i < $scope.view.state.teachingAssignments.ids.length; i++) {
 					var teachingAssignment = $scope.view.state.teachingAssignments.list[$scope.view.state.teachingAssignments.ids[i]];
 
@@ -209,10 +211,42 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 						$scope.termAssignments[teachingAssignment.termCode].push(teachingAssignment);
 					}
 				}
-				console.log($scope.termAssignments);
+
+				// Building an object separated by terms, of unique courses based on schedule sectionGroups
+				$scope.scheduledCourses = {};
+
+				for (var i = 0; i < $scope.view.state.sectionGroups.ids.length; i++) {
+					var sectionGroup = $scope.view.state.sectionGroups.list[$scope.view.state.sectionGroups.ids[i]];
+					var course = $scope.view.state.courses.list[sectionGroup.courseId];
+
+					// Adding metadata from sectionGroup
+					course.seatsTotal = sectionGroup.plannedSeats;
+
+					// Ignore courses being suppressed
+					if (course.isHidden == false) {
+
+						// Ensure termCode has been added
+						if ($scope.scheduledCourses[sectionGroup.termCode] == null) {
+							$scope.scheduledCourses[sectionGroup.termCode] = [];
+						}
+
+						// Ensure course hasn't already been added
+						if ($scope.scheduledCourses[sectionGroup.termCode].indexOf(course) < 0) {
+							$scope.scheduledCourses[sectionGroup.termCode].push(course);
+						}
+					}
+				}
+
+
+				console.log($scope.scheduledCourses);
 			}
 
 			$scope.termToTermCode = function(term) {
+				// Already a termCode
+				if (term.length == 6) {
+					return term;
+				}
+
 				var year = $scope.year;
 
 				switch(term) {
@@ -225,6 +259,7 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 						year;
 				}
 				var termCode = year + term;
+
 				return termCode;
 			}
 			

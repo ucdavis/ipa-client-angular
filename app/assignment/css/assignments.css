@@ -551,7 +551,7 @@
 }
 
 .dropdown-menu {
-	width: 100%;
+	width: 300px;
 }
 
 .dropdown-assign-header {
@@ -791,4 +791,22 @@ ol.sortable-list>li .term-preference-dropdown {
 
 .btn, .btn-group, .btn-group-vertical, .caret, .checkbox-inline, .radio-inline, img {
 	vertical-align: middle;
+}
+
+.badge {
+	display: inline-block;
+	min-width: 10px;
+	padding: 3px 7px;
+	font-size: 12px;
+	color: #fff;
+	vertical-align: middle;
+	background-color: #777;
+	border-radius: 10px;
+}
+
+.badge, .label {
+	font-weight: 700;
+	line-height: 1;
+	white-space: nowrap;
+	text-align: center;
 }
