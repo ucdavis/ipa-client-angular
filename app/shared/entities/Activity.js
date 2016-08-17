@@ -6,6 +6,7 @@ angular.module('activity', [])
 			this.setData(activityData);
 			this.setStandardTimes();
 			this.setBannerRoom();
+			this.setSelectedDuration();
 		}
 	};
 	Activity.prototype = {
@@ -155,6 +156,12 @@ angular.module('activity', [])
 		 */
 		setBannerRoom: function () {
 			this.isBannerRoom = !this.locationId && !this.virtual;
+		},
+		setSelectedDuration: function () {
+			var start = moment(this.startTime, "HH:mm:ss");
+			var end = moment(this.endTime, "HH:mm:ss");
+			var duration = moment.duration(end.diff(start));
+			this.selectedDuration = duration.asMinutes().toString();
 		}
 	};
 	return Activity;
