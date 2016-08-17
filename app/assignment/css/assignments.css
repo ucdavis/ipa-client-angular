@@ -588,10 +588,6 @@ div.dropdown button.dropdown-toggle {
 	border-color: rgb(235, 235, 235);
 }
 
-.dropdown-toggle:hover {
-	border-color: rgb(235, 235, 235);
-}
-
 .scrollable-menu {
 	height: auto;
 	max-height: 200px;
