@@ -70,13 +70,21 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 
 			var sectionGroupToEvents = function (sectionGroup) {
 				var calendarActivities = [];
+				var title = getCourseTitleByCourseId(sectionGroup.courseId);
 
+				if (sectionGroup.sharedActivityIds) {
+					sectionGroup.sharedActivityIds.forEach(function (sharedActivityId) {
+						calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[sharedActivityId], title));
+					});
+				}
 				if (sectionGroup.sectionIds) {
 					sectionGroup.sectionIds.forEach(function (sectionId) {
-						scope.view.state.sections.list[sectionId].activityIds.forEach(function (activityId) {
-							var title = getCourseTitleByCourseId(sectionGroup.courseId);
-							calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[activityId], title));
-						});
+						var section = scope.view.state.sections.list[sectionId];
+						if (section.activityIds) {
+							section.activityIds.forEach(function (activityId) {
+								calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[activityId], title));
+							});
+						}
 					});
 				}
 
@@ -99,19 +107,6 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 
 			$rootScope.$on("schedulingStateChanged", function (event, data) {
 				scope.view.state = data.state;
-				refreshCalendar();
-			});
-
-			$rootScope.$on("sectionGroupSelected", function (event, newSG) {
-				refreshCalendar();
-			});
-
-			$rootScope.$on("activitySelected", function (event, newActivity) {
-				if (newActivity.hasWarning) { return; }
-				refreshCalendar();
-			});
-
-			$rootScope.$on("checkedSectionGroupsChanged", function (event, checkedSectionGroupIds) {
 				refreshCalendar();
 			});
 

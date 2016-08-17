@@ -55,7 +55,8 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 					payload: {
 						sectionGroup: sectionGroup,
 						sections: payload.sections,
-						activities: payload.activities
+						sharedActivities: payload.sharedActivities,
+						unsharedActivities: payload.unsharedActivities
 					}
 				};
 				schedulingStateService.reduce(action);

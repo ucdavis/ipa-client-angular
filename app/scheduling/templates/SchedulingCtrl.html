@@ -136,11 +136,12 @@
 							{{ view.state.courses.list[view.state.uiState.selectedCourseId].courseNumber }}
 							- {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
 						</p>
-						<ul class="activity-group" style="margin-top: 10px;" ng-repeat="activity in selectedSG.sharedActivities">
+						<ul ng-repeat="sharedActivityId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sharedActivityIds track by $index"
+							class="activity-group" style="margin-top: 10px;" ng-init="sharedActivity = view.state.activities.list[sharedActivityId];">
 							<li class="activity-item"
-								ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }"
-								ng-click="setSelectedActivity(activity)">
-									<span>{{ activity.getCodeDescription() }}</span>
+								ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
+								ng-click="setSelectedActivity(sharedActivityId)">
+									<span>{{ sharedActivity.getCodeDescription() }}</span>
 									<i class="entypo-minus-circled text-danger pull-right delete-activity"></i>
 							</li>
 							<li class="add-activity">
@@ -150,7 +151,7 @@
 							<li class="section-item" ng-repeat="sectionId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds"
 								ng-init="section = view.state.sections.list[sectionId];">
 								<div class="section-pattern">Section {{ section.sequenceNumber }}</div>
-								<ul class="activity-group" ng-repeat="activityId in section.activityIds" ng-init="activity = view.state.activities.list[activityId];">
+								<ul class="activity-group" ng-repeat="activityId in section.activityIds track by $index" ng-init="activity = view.state.activities.list[activityId];">
 									<li class="activity-item"
 										ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }"
 										ng-click="setSelectedActivity(activityId)">

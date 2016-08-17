@@ -59,6 +59,8 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 							return 0;
  						})
 						.map(function (section) { return section.id; });
+					sectionGroups.list[action.payload.sectionGroup.id].sharedActivityIds = action.payload.sharedActivities
+						.map(function (a) { return a.id; });
 					return sectionGroups;
 				default:
 					return sectionGroups;
@@ -76,7 +78,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					return sections;
 				case FETCH_SECTION_GROUP_DETAILS:
 					action.payload.sections.forEach(function (section) {
-						section.activityIds = action.payload.activities
+						section.activityIds = action.payload.unsharedActivities
 							.filter(function (a) { return a.sectionId == section.id; })
 							.map(function (a) { return a.id; });
 						sections.list[section.id] = new Section(section);
@@ -98,7 +100,11 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					};
 					return activities;
 				case FETCH_SECTION_GROUP_DETAILS:
-					action.payload.activities.forEach(function (activity) {
+					action.payload.sharedActivities.forEach(function (activity) {
+						activities.list[activity.id] = new Activity(activity);
+						activities.ids.push(activity.id);
+					});
+					action.payload.unsharedActivities.forEach(function (activity) {
 						activities.list[activity.id] = new Activity(activity);
 						activities.ids.push(activity.id);
 					});
