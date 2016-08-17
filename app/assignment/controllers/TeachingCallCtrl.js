@@ -16,7 +16,9 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				$scope.view.state = data;
-				$scope.prepareTeachingCall();
+				if ($scope.view.state.activeTeachingCall.scheduledCourses == null) {
+					$scope.prepareTeachingCall();
+				}
 				console.log($scope.view.state);
 			});
 
@@ -189,9 +191,11 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 			};
 */
 			$scope.prepareTeachingCall = function() {
-				$scope.terms = $scope.getActiveTerms();
+				var activeTeachingCall = $scope.view.state.activeTeachingCall;
 
-				$scope.termAssignments = {};
+				activeTeachingCall.terms = $scope.getActiveTerms();
+
+				activeTeachingCall.termAssignments = {};
 
 				// Building an object of teachingAssignments for this instructor, separated by term
 				for (var i = 0; i < $scope.view.state.teachingAssignments.ids.length; i++) {
@@ -204,16 +208,16 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 						teachingAssignment.subjectCode = course.subjectCode;
 						teachingAssignment.courseNumber = course.courseNumber;
 
-						if ($scope.termAssignments[teachingAssignment.termCode] == null) {
-							$scope.termAssignments[teachingAssignment.termCode] = [];
+						if (activeTeachingCall.termAssignments[teachingAssignment.termCode] == null) {
+							activeTeachingCall.termAssignments[teachingAssignment.termCode] = [];
 						};
 
-						$scope.termAssignments[teachingAssignment.termCode].push(teachingAssignment);
+						activeTeachingCall.termAssignments[teachingAssignment.termCode].push(teachingAssignment);
 					}
 				}
 
 				// Building an object separated by terms, of unique courses based on schedule sectionGroups
-				$scope.scheduledCourses = {};
+				activeTeachingCall.scheduledCourses = {};
 
 				for (var i = 0; i < $scope.view.state.sectionGroups.ids.length; i++) {
 					var sectionGroup = $scope.view.state.sectionGroups.list[$scope.view.state.sectionGroups.ids[i]];
@@ -226,15 +230,15 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 					if (course.isHidden == false) {
 
 						// Ensure termCode has been added
-						if ($scope.scheduledCourses[termCode] == null) {
-							$scope.scheduledCourses[termCode] = [];
+						if (activeTeachingCall.scheduledCourses[termCode] == null) {
+							activeTeachingCall.scheduledCourses[termCode] = [];
 						}
 
 						// Ensure course hasn't already been added
 						var courseAlreadyExists = false;
 
-						for (var j = 0; j < $scope.scheduledCourses[termCode].length; j++) {
-							var slotCourse = $scope.scheduledCourses[termCode][j];
+						for (var j = 0; j < activeTeachingCall.scheduledCourses[termCode].length; j++) {
+							var slotCourse = activeTeachingCall.scheduledCourses[termCode][j];
 
 							if (slotCourse.subjectCode == course.subjectCode
 								&& slotCourse.courseNumber == course.courseNumber) {
@@ -244,11 +248,12 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 						}
 
 						if (courseAlreadyExists == false) {
-							$scope.scheduledCourses[termCode].push(course);
+							activeTeachingCall.scheduledCourses[termCode].push(course);
 						}
 					}
 				}
 				console.log($scope.scheduledCourses);
+				assignmentActionCreators.initializeActiveTeachingCall(activeTeachingCall);
 			}
 
 			$scope.termToTermCode = function(term) {

@@ -13,19 +13,19 @@
 			</colgroup>
 			<tbody>
 				<tr>
-					<th ng-repeat="term in ::terms track by $index"
+					<th ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index"
 					disable-element="isScheduleTermLocked(term)">
 						{{ getTermName(term) }}
 					</th>
 				</tr>
 				<tr>
-					<td ng-repeat="term in ::terms track by $index"
+					<td ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index"
 					disable-element="isScheduleTermLocked(term)">
 						<ol sortable drag-end="updatePreferencesOrder(sortedIds, term)"
 						read-only="isScheduleTermLocked(term)" class="sortable-list">
 							<!-- id values needed to calculate the reordering of preferences in this specific format -->
-							<li id="pref-{{ preference.id }}" ng-class="{ 'unsortable': termAssignments[termToTermCode(term)].length < 2 }"
-							ng-repeat="preference in termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
+							<li id="pref-{{ preference.id }}" ng-class="{ 'unsortable': view.state.activeTeachingCall.termAssignments[termToTermCode(term)].length < 2 }"
+							ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
 								<div term-preferences
 								instructor-id="view.state.userInterface.instructorId"
 								preference="preference"
@@ -62,7 +62,7 @@
 						</ol>
 					</td>
 				</tr>
-				<tr ng-if="teachingCall.showUnavailabilities">
+				<tr ng-if="view.state.activeTeachingCall.showUnavailabilities">
 					<td colspan="{{ terms.length }}">
 						<h2 class="page-header text-center">
 							Unavailabilities
@@ -77,7 +77,7 @@
 					</td>
 				</tr>
 				<tr style="text-align:center;" ng-if="teachingCall.showUnavailabilities">
-					<td ng-repeat="term in ::terms track by $index" disable-element="isScheduleTermLocked(term)" style="font-weight: bold;">
+					<td ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index" disable-element="isScheduleTermLocked(term)" style="font-weight: bold;">
 						{{ getTermName(term) }}
 						<span class="glyphicon glyphicon-transfer text-primary clickable hovrable" uib-tooltip="Copy to all terms"
 							confirm-button="copyUnabailabilitiesToAllTerms(teachingCallResponse[term].availabilityBlob)"
@@ -86,7 +86,7 @@
 							yes="Confirm" no="Cancel" placement="top"></span>
 					</td>
 				</tr>
-				<tr ng-if="teachingCall.showUnavailabilities">
+				<tr ng-if="view.state.activeTeachingCall.showUnavailabilities">
 					<td ng-repeat="term in ::terms track by $index" disable-element="isScheduleTermLocked(term)">
 						<availability-grid blob="teachingCallResponse[term].availabilityBlob"
 							on-change="saveTeachingCallResponse(term, blob, 3000)"

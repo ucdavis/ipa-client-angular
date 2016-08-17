@@ -135,6 +135,9 @@ assignmentApp.service('assignmentStateService', function (
 			switch (action.type) {
 				case INIT_ASSIGNMENT_VIEW:
 					return activeTeachingCall;
+				case INIT_ACTIVE_TEACHING_CALL:
+					activeTeachingCall = action.payload;
+					return activeTeachingCall;
 				default:
 					return activeTeachingCall;
 			}

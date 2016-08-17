@@ -34,6 +34,13 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
+		initializeActiveTeachingCall: function (activeTeachingCall) {
+			var action = {
+				type: INIT_ACTIVE_TEACHING_CALL,
+				payload: activeTeachingCall
+			};
+			assignmentStateService.reduce(action);
+		},
 		addScheduleInstructorNote: function (instructorId, year, workgroupId, comment) {
 			assignmentService.addScheduleInstructorNote(instructorId, year, workgroupId, comment).then(function (scheduleInstructorNote) {
 				$rootScope.$emit('toast', {message: "Added instructor comment", type: "SUCCESS"});
