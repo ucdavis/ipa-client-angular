@@ -81,9 +81,12 @@
 					</div>
 				</div>
 				<div class="activity-filter-tokens">
-					<div class="label label-info" ng-repeat="filter in filters">
-						{{ filter.displayName }}
-						<i class="glyphicon glyphicon-remove" ng-click="toggleCheckedSectionGroup(filter.id)"></i>
+					<div class="label label-info" ng-repeat="sectionGroupId in view.state.uiState.checkedSectionGroupIds track by $index"
+						ng-init="sg = view.state.sectionGroups.list[sectionGroupId];">
+						{{ view.state.courses.list[sg.courseId].subjectCode }}
+						{{ view.state.courses.list[sg.courseId].courseNumber }}
+						- {{ view.state.courses.list[sg.courseId].sequencePattern }}
+						<i class="glyphicon glyphicon-remove clickable hoverable" ng-click="toggleCheckedSectionGroup(sectionGroupId)"></i>
 					</div>
 				</div>
 			</div>
