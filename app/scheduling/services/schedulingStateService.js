@@ -107,20 +107,6 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					return activities;
 			}
 		},
-		_calendarActivityReducers: function (action, calendarActivities) {
-			var scope = this;
-
-			switch (action.type) {
-				case INIT_STATE:
-					calendarActivities = {
-						list: {},
-						ids: []
-					};
-					return calendarActivities;
-				default:
-					return calendarActivities;
-			}
-		},
 		_tagReducers: function (action, tags) {
 			var scope = this;
 
@@ -216,7 +202,6 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
 			newState.activities = scope._activityReducers(action, scope._state.activities);
-			newState.calendarActivities = scope._calendarActivityReducers(action, scope._state.calendarActivities);
 			newState.tags = scope._tagReducers(action, scope._state.tags);
 			newState.filters = scope._filterReducers(action, scope._state.filters);
 			newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
