@@ -675,3 +675,120 @@ div:hover .disabled-calendar {
 	font-weight: bold;
 	margin-top: 20px;
 }
+
+/* Sortable-list */
+ol.sortable-list {
+	padding-left: 5px;
+	position: relative;
+}
+
+ol.sortable-list > li {
+	position: relative;
+	list-style: none;
+	padding-left: 1em;
+}
+
+ol.sortable-list > li:not(.unsortable) {
+	cursor: move;
+	list-style: decimal;
+}
+
+ol.sortable-list > li:not(.unsortable):after {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0.75em;
+	width: 0.75em;
+	height: 0.15em;
+	background: #ccc;
+	box-shadow:
+		0 0.25em 0 0 #ccc,
+		0 0.5em 0 0 #ccc;
+}
+
+ol.sortable-list > li .term-preference-dropdown {
+	cursor: auto;
+}
+
+ol.sortable-list > li span.sortable-item-button {
+	position: absolute;
+	right: 0;
+	padding-top: 0.5em;
+	font-size: 16px;
+	font-weight: normal;
+}
+
+ol.sortable-list>li span.dropdown-text {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 80%;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+ul.dropdown-menu li.hidden-column a {
+	color: #AAA;
+}
+
+ul.dropdown-menu li.hidden-column a:before  {
+	content: "\e157";
+	font-family: 'Glyphicons Halflings';
+	position: absolute;
+	left: 15px;
+}
+
+ul.dropdown-menu li.visible-column a:before  {
+	content: "\e067";
+	font-family: 'Glyphicons Halflings';
+	position: absolute;
+	left: 15px;
+}
+
+ul.dropdown-menu li.selected a:before  {
+	content: "\e013";
+	font-family: 'Glyphicons Halflings';
+	position: absolute;
+	left: 15px;
+}
+
+.dropdown-menu > li.left-icon > a {
+	padding: 3px 20px 3px 35px;
+}
+
+element.style {
+    width: 88%;
+}
+ol.sortable-list>li .term-preference-dropdown {
+    cursor: auto;
+}
+.dropdown-toggle {
+	border-color: #ccc;
+}
+.btn-default {
+	color: #333;
+		background-color: #fff;
+		border-color: #ccc;
+}
+
+.btn {
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	border-radius: 4px;
+}
+
+.btn, .btn-group, .btn-group-vertical, .caret, .checkbox-inline, .radio-inline, img {
+	vertical-align: middle;
+}

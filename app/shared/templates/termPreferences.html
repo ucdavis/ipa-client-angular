@@ -31,18 +31,12 @@
 				{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
 			</a>
 		</li>
-		<li role="presentation" class="clickable">
-			<a role="menuitem" ng-click="addUnscheduledCourseModal()">
-				<strong style="width: 100%;" class="btn btn-default">Add Other Course</strong>
-			</a>
-		</li>
 	</ul>
 </div>
 <span confirm-button="onDelete()"
 	message="Are you sure you want to delete this preference"
 	yes="Delete" no="Cancel" placement="bottom"
 	confirm-is-shown="status.confirmIsOpen"
-	ng-if="deletable && !readOnly"
 	class="glyphicon glyphicon-remove sortable-item-button close"
 	aria-hidden="true" style="width: 10%;" uib-tooltip="Remove"
 	tooltip-placement="right"></span>

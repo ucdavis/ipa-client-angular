@@ -129,6 +129,16 @@ assignmentApp.service('assignmentStateService', function (
 					return teachingCalls;
 			}
 		},
+		_activeTeachingCallReducers: function (action, activeTeachingCall) {
+			activeTeachingCall = action.payload.activeTeachingCall;
+
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					return activeTeachingCall;
+				default:
+					return activeTeachingCall;
+			}
+		},
 		_teachingCallReceiptReducers: function (action, teachingCallReceipts) {
 			var scope = this;
 
@@ -392,6 +402,10 @@ assignmentApp.service('assignmentStateService', function (
 			switch (action.type) {
 				case INIT_ASSIGNMENT_VIEW:
 					var userInterface = {};
+
+					userInterface.instructorId = action.payload.instructorId;
+					userInterface.userId = action.payload.userId;
+
 					userInterface.showInstructors = false;
 					userInterface.showCourses = true;
 					// Set default enabledTerms based on scheduleTermState data
@@ -459,6 +473,7 @@ assignmentApp.service('assignmentStateService', function (
 			newState.scheduleInstructorNotes = scope._scheduleInstructorNoteReducers(action, scope._state.scheduleInstructorNotes);
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
 			newState.teachingCalls = scope._teachingCallReducers(action, scope._state.teachingCalls);
+			newState.activeTeachingCall = scope._activeTeachingCallReducers(action, scope._state.activeTeachingCall);
 
 			scope._state = newState;
 
