@@ -7,11 +7,12 @@
  * # SchedulingCtrl
  * Controller of the ipaClientAngularApp
  */
-schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParams', 'Activity', 'schedulingActionCreators',
-		this.SchedulingCtrl = function ($scope, $rootScope, $routeParams, Activity, schedulingActionCreators) {
+schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParams', 'Activity', 'Term', 'schedulingActionCreators',
+		this.SchedulingCtrl = function ($scope, $rootScope, $routeParams, Activity, Term, schedulingActionCreators) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.termCode = $routeParams.termCode;
+			$scope.term = Term.prototype.getTermByTermCode($scope.termCode);
 			$scope.view = {};
 
 			$scope.days = ['M','T','W','R','F','S','U'];

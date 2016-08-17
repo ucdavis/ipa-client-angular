@@ -10,7 +10,7 @@ angular.module('term', [])
 			setData: function(termData) {
 				angular.extend(this, termData);
 			},
-			
+
 			// Generates a useful table of terms for the given academic year, e.g. for academicYear = 2016
 			// { id: 10, description: "Fall Quarter", shortCode: "10", termCode: "201610" }
 			// { id: 1, description: "Winter Quarter", shortCode: "01", termCode: "201701" }
@@ -27,17 +27,35 @@ angular.module('term', [])
 					{ id: 2,  description: "Spring Semester",        shortCode: "02"},
 					{ id: 3,  description: "Spring Quarter",         shortCode: "03"}
 				];
+				var year;
 				angular.forEach(table, function(term, i) {
 					if(Number(term.shortCode) < 5) {
-						term.code = (Number(academicYear) + 1).toString() + term.shortCode;
+						year = (Number(academicYear) + 1);
 					} else {
-						term.code = academicYear.toString() + term.shortCode;
+						year = academicYear;
 					}
+					term.code = year.toString() + term.shortCode;
+					term.fullDescription = term.description + ' ' + year.toString();
 				});
 
 				return table;
+			},
+
+			// Returns a proper term object for a given termCode
+			getTermByTermCode: function (termCode) {
+				if (typeof termCode != "string" || termCode.length != 6) { return; }
+
+				var year;
+				var termId = Number(termCode.slice(-2));
+				if (termId < 5) {
+					year = Number(termCode.substr(0, 4)) - 1;
+				} else {
+					year = Number(termCode.substr(0, 4));
+				}
+				var allTerms = this.generateTable(year);
+				return _array_findById(allTerms, termId);
 			}
-			
+
 	};
 
 	return Term;
