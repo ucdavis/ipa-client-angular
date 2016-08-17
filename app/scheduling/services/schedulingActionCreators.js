@@ -63,6 +63,15 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
 			});
+		},
+		toggleDay: function (dayIndex) {
+			var action = {
+				type: TOGGLE_DAY,
+				payload: {
+					dayIndex: dayIndex
+				}
+			};
+			schedulingStateService.reduce(action);
 		}
 	}
 });

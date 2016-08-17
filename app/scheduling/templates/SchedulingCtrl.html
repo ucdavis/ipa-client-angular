@@ -32,46 +32,11 @@
 								<div class="days-filter">
 									<h3>Days</h3>
 									<ul>
-										<li>
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement">
+										<li ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] track by $index" ng-click="toggleDay($index)">
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+												ng-class="{ 'checked': view.state.filters.hiddenDays.indexOf($index) < 0 }">
 												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
-												<label>Sunday</label>
-											</div>
-										</li>
-										<li>
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement checked">
-												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
-												<label>Monday</label>
-											</div>
-										</li>
-										<li>
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement checked">
-												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
-												<label>Tuesday</label>
-											</div>
-										</li>
-										<li>
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement checked">
-												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
-												<label>Wednesday</label>
-											</div>
-										</li>
-										<li>
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement checked">
-												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
-												<label>Thursday</label>
-											</div>
-										</li>
-										<li>
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement checked">
-												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
-												<label>Friday</label>
-											</div>
-										</li>
-										<li>
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement">
-												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
-												<label>Saturday</label>
+												<label>{{ day }}</label>
 											</div>
 										</li>
 									</ul>

@@ -4,15 +4,28 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 		template: '<div id="calendar"></div>',
 		replace: true,
 		link: function (scope, element, attrs) {
-			scope.calendarEvents = [];
+			var parentAspectRatio = element.parent().width() / element.parent().height();
 			scope.view = {};
 
 			var refreshCalendar = function () {
-				getActivities();
-				scope.calendar.fullCalendar('removeEvents');
-				scope.calendar.fullCalendar('addEventSource', scope.calendarEvents[0]);
-				scope.calendar.fullCalendar('rerenderEvents');
-			}
+				element.fullCalendar('destroy');
+				element.fullCalendar({
+					defaultView: 'agendaWeek',
+					allDaySlot: false,
+					allDayDefault: false,
+					aspectRatio: parentAspectRatio,
+					height: "auto",
+					minTime: '06:00',
+					maxTime: '18:00',
+					header: false,
+					slotEventOverlap: false,
+					hiddenDays: scope.view.state.filters.hiddenDays,
+					eventSources: [
+						// TODO: Add instructor unavailabilities,
+						getActivities()
+					]
+				});
+			};
 
 			var getActivities = function () {
 				// Each of these If blocks will add to a 'events array'
@@ -37,8 +50,6 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 					});
 				}
 
-				scope.calendarEvents.length = 0;
-				scope.calendarEvents.push(calendarActivities);
 				return calendarActivities;
 			};
 
@@ -118,24 +129,6 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				isPresent: neonCalendar.$container.length > 0
 			});
 
-			if($.isFunction($.fn.fullCalendar))
-			{
-				scope.calendar = element;
-				var parentAspectRatio = element.parent().width() / element.parent().height();
-
-				scope.calendar.fullCalendar({
-					defaultView: 'agendaWeek',
-					allDaySlot: false,
-					allDayDefault: false,
-					aspectRatio: parentAspectRatio,
-					height: "auto",
-					minTime: '06:00',
-					maxTime: '18:00',
-					header: false,
-					slotEventOverlap: false,
-					eventSources: scope.calendarEvents
-				});
-			}
 		}
 	}
 });

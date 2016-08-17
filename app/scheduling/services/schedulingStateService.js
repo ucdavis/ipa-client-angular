@@ -145,11 +145,20 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					// is selected to be shown/on/active.
 					filters = {
 						enabledTags: [],
-						enablePublishedCourses: true,
+						hiddenDays: [0, 6], // Default hidden days: Sat and Sun
 						enableUnpublishedCourses: false
 					};
 					// Here is where we might load stored data about what filters
 					// were left on last time.
+					return filters;
+				case TOGGLE_DAY:
+					var dayIndex = filters.hiddenDays.indexOf(action.payload.dayIndex);
+					// Make sure not to hide
+					if (dayIndex >= 0) {
+						filters.hiddenDays.splice(dayIndex, 1);
+					} else if (filters.hiddenDays.length < 6) { // Make sure not to hide all days
+						filters.hiddenDays.push(action.payload.dayIndex);
+					}
 					return filters;
 				default:
 					return filters;

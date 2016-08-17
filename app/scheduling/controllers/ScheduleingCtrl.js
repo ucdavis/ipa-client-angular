@@ -63,6 +63,9 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				return ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ' ' + time.meridian;
 			};
 
+			$scope.toggleDay = function (index) {
+				schedulingActionCreators.toggleDay(index);
+			};
 		}
 ]);
 
