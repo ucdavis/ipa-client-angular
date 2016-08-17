@@ -21,8 +21,7 @@ sharedApp.directive("termPreferences", this.termPreferences = function($uibModal
 			scope.term = termToTermCode(scope.term, scope.year);
 
 			scope.courses = scope.$parent.scheduledCourses[scope.term];
-			//console.log(scope.$parent.scheduledCourses);
-			console.log(scope.term);
+
 			scope.status = {};
 			scope.deletable = (typeof attrs.onDelete != 'undefined');
 			scope.getDescription = function(preference) {

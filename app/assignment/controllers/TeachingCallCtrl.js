@@ -218,7 +218,7 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 				for (var i = 0; i < $scope.view.state.sectionGroups.ids.length; i++) {
 					var sectionGroup = $scope.view.state.sectionGroups.list[$scope.view.state.sectionGroups.ids[i]];
 					var course = $scope.view.state.courses.list[sectionGroup.courseId];
-
+					var termCode = parseInt(sectionGroup.termCode);
 					// Adding metadata from sectionGroup
 					course.seatsTotal = sectionGroup.plannedSeats;
 
@@ -226,18 +226,28 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 					if (course.isHidden == false) {
 
 						// Ensure termCode has been added
-						if ($scope.scheduledCourses[sectionGroup.termCode] == null) {
-							$scope.scheduledCourses[sectionGroup.termCode] = [];
+						if ($scope.scheduledCourses[termCode] == null) {
+							$scope.scheduledCourses[termCode] = [];
 						}
 
 						// Ensure course hasn't already been added
-						if ($scope.scheduledCourses[sectionGroup.termCode].indexOf(course) < 0) {
-							$scope.scheduledCourses[sectionGroup.termCode].push(course);
+						var courseAlreadyExists = false;
+
+						for (var j = 0; j < $scope.scheduledCourses[termCode].length; j++) {
+							var slotCourse = $scope.scheduledCourses[termCode][j];
+
+							if (slotCourse.subjectCode == course.subjectCode
+								&& slotCourse.courseNumber == course.courseNumber) {
+								courseAlreadyExists = true;
+								break;
+							}
+						}
+
+						if (courseAlreadyExists == false) {
+							$scope.scheduledCourses[termCode].push(course);
 						}
 					}
 				}
-
-
 				console.log($scope.scheduledCourses);
 			}
 
