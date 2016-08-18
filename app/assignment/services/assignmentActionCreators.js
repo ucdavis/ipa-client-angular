@@ -37,7 +37,9 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 		initializeActiveTeachingCall: function (activeTeachingCall) {
 			var action = {
 				type: INIT_ACTIVE_TEACHING_CALL,
-				payload: activeTeachingCall
+				payload: { 
+					activeTeachingCall: activeTeachingCall
+				}
 			};
 			assignmentStateService.reduce(action);
 		},
