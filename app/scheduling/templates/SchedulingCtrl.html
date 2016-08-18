@@ -93,7 +93,7 @@
 				</ul>
 			</div>
 			<div class="activity-container" ng-class="{ 'collapsed': !view.state.uiState.selectedSectionGroupId }">
-				<div class="activity-list">
+				<div class="activity-list" ng-class="{ 'collapsed': view.state.uiState.selectedActivityId }">
 					<div ng-if="view.state.uiState.selectedSectionGroupId">
 
 						<p class="activity-list-header">
@@ -134,7 +134,7 @@
 						</ul>
 					</div>
 				</div>
-				<div class="activity-details">
+				<div class="activity-details" ng-class="{ 'collapsed': !view.state.uiState.selectedActivityId }">
 					<div ng-show="view.state.uiState.selectedActivityId">
 						<p class="activity-details-header">
 							{{ view.state.activities.list[view.state.uiState.selectedActivityId].getCodeDescription() }}

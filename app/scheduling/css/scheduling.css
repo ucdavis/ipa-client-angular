@@ -466,6 +466,7 @@ body {
   justify-content: center;
   display: flex;
   align-items: center;
+  overflow-x: auto;
 }
 .section-group-container {
   flex: 10 1 auto;
@@ -540,8 +541,11 @@ body {
   flex: 1 0 0;
   width: 0;
 }
+.activity-list.collapsed {
+  flex: 0 0 40%;
+}
 .activity-list {
-  flex: 0 0 40vh;
+  flex: 0 0 100%;
   border-bottom: 1px solid #ebebeb;
   overflow-y: auto;
 }
@@ -572,8 +576,11 @@ p.activity-list-header {
   color: white;
   border: none;
 }
+.activity-details.collapsed {
+  flex: 0 0 0;
+}
 .activity-details {
-  flex: 1 0 50vh;
+  flex: 1 0 60%;
   padding: 10px;
   overflow-y: auto;
   overflow-x: hidden;

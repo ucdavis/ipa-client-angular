@@ -4,10 +4,10 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 		template: '<div id="calendar"></div>',
 		replace: true,
 		link: function (scope, element, attrs) {
-			var parentAspectRatio = element.parent().width() / element.parent().height();
 			scope.view = {};
 
 			var refreshCalendar = function () {
+				var parentAspectRatio = element.parent().width() / element.parent().height();
 				element.fullCalendar('destroy');
 				element.fullCalendar({
 					defaultView: 'agendaWeek',
