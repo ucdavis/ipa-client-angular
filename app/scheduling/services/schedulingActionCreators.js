@@ -72,6 +72,15 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				}
 			};
 			schedulingStateService.reduce(action);
+		},
+		updateTagFilters: function (tagIds) {
+			var action = {
+				type: UPDATE_TAG_FILTERS,
+				payload: {
+					tagIds: tagIds
+				}
+			};
+			schedulingStateService.reduce(action);
 		}
 	}
 });

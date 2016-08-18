@@ -18,8 +18,9 @@
 								<div class="tags-filter">
 									<h3>Tags</h3>
 									<ul>
-										<li ng-repeat="tagId in view.state.tags.ids track by $index">
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement checked">
+										<li ng-repeat="tagId in view.state.tags.ids track by $index" ng-click="toggleTagFilter(tagId)">
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+												ng-class="{ 'checked': view.state.filters.enabledTagIds.indexOf(tagId) >= 0 }">
 												<label class="cb-wrapper" ng-style="{ 'border-color': view.state.tags.list[tagId].color }">
 													<input type="checkbox" checked="">
 													<div class="checked" ng-style="{ 'background': view.state.tags.list[tagId].color }"></div>

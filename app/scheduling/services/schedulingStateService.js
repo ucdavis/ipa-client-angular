@@ -29,6 +29,15 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					courses.ids = _array_sortIdsByProperty(coursesList, ["subjectCode", "courseNumber", "sequencePattern"]);
 					courses.list = coursesList;
 					return courses;
+				case UPDATE_TAG_FILTERS:
+					// Set the course.matchesTagFilters flag to true if any tag matches the filters
+					courses.ids.forEach(function (courseId) {
+						courses.list[courseId].matchesTagFilters = courses.list[courseId].tagIds
+							.some(function (tagId) {
+								return action.payload.tagIds.indexOf(tagId) >= 0;
+							});
+					});
+					return courses;
 				default:
 					return courses;
 			}
@@ -144,7 +153,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					// A filter is 'enabled' if it is checked, i.e. the category it represents
 					// is selected to be shown/on/active.
 					filters = {
-						enabledTags: [],
+						enabledTagIds: [],
 						hiddenDays: [0, 6], // Default hidden days: Sat and Sun
 						enableUnpublishedCourses: false
 					};
@@ -152,13 +161,15 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					// were left on last time.
 					return filters;
 				case TOGGLE_DAY:
-					var dayIndex = filters.hiddenDays.indexOf(action.payload.dayIndex);
-					// Make sure not to hide
-					if (dayIndex >= 0) {
-						filters.hiddenDays.splice(dayIndex, 1);
+					var tagIndex = filters.hiddenDays.indexOf(action.payload.dayIndex);
+					if (tagIndex >= 0) {
+						filters.hiddenDays.splice(tagIndex, 1);
 					} else if (filters.hiddenDays.length < 6) { // Make sure not to hide all days
 						filters.hiddenDays.push(action.payload.dayIndex);
 					}
+					return filters;
+				case UPDATE_TAG_FILTERS:
+					filters.enabledTagIds = action.payload.tagIds;
 					return filters;
 				default:
 					return filters;

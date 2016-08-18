@@ -66,6 +66,19 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			$scope.toggleDay = function (index) {
 				schedulingActionCreators.toggleDay(index);
 			};
+
+			$scope.toggleTagFilter = function (tagId) {
+				var tagFilters = $scope.view.state.filters.enabledTagIds;
+				var tagIndex = tagFilters.indexOf(tagId);
+
+				if (tagIndex < 0) {
+					tagFilters.push(tagId);
+				} else {
+					tagFilters.splice(tagIndex, 1);
+				}
+
+				schedulingActionCreators.updateTagFilters(tagFilters);
+			};
 		}
 ]);
 
