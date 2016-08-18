@@ -84,6 +84,15 @@ assignmentApp.service('assignmentStateService', function (
 					teachingAssignments.list[action.payload.teachingAssignment.id] = action.payload.teachingAssignment;
 					teachingAssignments.ids.push(action.payload.teachingAssignment.id);
 					return teachingAssignments;
+				case ADD_PREFERENCE:
+					// Add a group of teachingAssignments created from a preference
+					var teachingAssignments = action.payload.teachingAssignments;
+					for (var i = 0; i < teachingAssignments.length; i++) {
+						var slotTeachingAssignment = teachingAssignments[i];
+						teachingAssignments.list[slotTeachingAssignment.id] = slotTeachingAssignment;
+						teachingAssignments.ids.push(slotTeachingAssignment.id);
+					}
+					return teachingAssignments;
 				case REMOVE_TEACHING_ASSIGNMENT:
 					var index = teachingAssignments.ids.indexOf(action.payload.teachingAssignment.id);
 					if (index > -1) {
@@ -281,6 +290,14 @@ assignmentApp.service('assignmentStateService', function (
 					var instructor = instructors.list[teachingAssignment.instructorId];
 					instructor.teachingAssignmentTermCodeIds[teachingAssignment.termCode].push(teachingAssignment.id);
 					return instructors;
+				case ADD_PREFERENCE:
+					var teachingAssignments = action.payload.teachingAssignments;
+					for (var i = 0; i < teachingAssignments.length; i++) {
+						var slotTeachingAssignment = teachingAssignments[i];
+						var instructor = instructors.list[slotTeachingAssignment.instructorId];
+						instructor.teachingAssignmentTermCodeIds[slotTeachingAssignment.termCode].push(slotTeachingAssignment.id);
+					}
+					return instructors;
 				case REMOVE_TEACHING_ASSIGNMENT:
 					var teachingAssignment = action.payload.teachingAssignment;
 					var instructor = instructors.list[teachingAssignment.instructorId];
@@ -380,12 +397,21 @@ assignmentApp.service('assignmentStateService', function (
 				case ADD_TEACHING_ASSIGNMENT:
 					var teachingAssignment = action.payload.teachingAssignment;
 					var sectionGroup = {};
-
 					if (teachingAssignment.sectionGroupId) {
 						sectionGroup = sectionGroups.list[teachingAssignment.sectionGroupId];
 						sectionGroup.teachingAssignmentIds.push(teachingAssignment.id);
 					}
-
+					return sectionGroups;
+				case ADD_PREFERENCE:
+					var teachingAssignments = action.payload.teachingAssignments;
+					for (var i = 0; i < teachingAssignments.length; i++) {
+						var slotTeachingAssignment = teachingAssignments[i];
+						var sectionGroup = {};
+						if (slotTeachingAssignment.sectionGroupId) {
+							sectionGroup = sectionGroups.list[slotTeachingAssignment.sectionGroupId];
+							sectionGroup.teachingAssignmentIds.push(slotTeachingAssignment.id);
+						}
+					}
 					return sectionGroups;
 				case REMOVE_TEACHING_ASSIGNMENT:
 					var teachingAssignment = action.payload.teachingAssignment;

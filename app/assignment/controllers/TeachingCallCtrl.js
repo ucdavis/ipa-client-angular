@@ -73,30 +73,42 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 				});
 			};
 
-			$scope.addPreference = function(courseOffering, term, isBuyout, isSabbatical, isCourseRelease) {
-				var instructor = {id: userService.getCurrentUser().instructorId};
-				var isApproved = false;
-				
-				teachingPreferenceService.addInstructorTeachingPreference(courseOffering, term, $scope.teachingCall.scheduleId, isBuyout, isSabbatical, isCourseRelease, instructor, isApproved)
-				.then(function(res){
-					$scope.termPreferences = teachingPreferenceService.retrieveInstancesSortedByTerm();
-					ngNotify.set("Added preference successfully",'success');
-					$scope.autoSave();
-				}, function() {
-					ngNotify.set("Error adding preference",'error');
-				});
-			};
+			$scope.addPreference = function(preference, courseOffering, isBuyout, isSabbatical, isCourseRelease) {
+				var courseNumber, subjectCode, sectionGroup;
+				var term = courseOffering;
+				var scheduleId = $scope.view.state.activeTeachingCall.scheduleId;
 
-			$scope.updatePreference = function(preference, courseOffering, isBuyout, isSabbatical, isCourseRelease) {
-				var term = preference.termCode.slice(-2);
+				if (preference) {
+					courseNumber = preference.courseNumber;
+					subjectCode = preference.subjectCode;
 
-				teachingPreferenceService.updateTeachingPreference(preference, courseOffering, isBuyout, isSabbatical, isCourseRelease)
-				.then(function(res){
-					ngNotify.set("Updated preference successfully",'success');
-					$scope.autoSave();
-				}, function() {
-					ngNotify.set("Error updating preference",'error');
-				});
+					// Find an appropriate sectionGroup
+					for (var i = 0; i < $scope.view.state.sectionGroups.ids.length; i++) {
+						var slotSectionGroup = $scope.view.state.sectionGroups.list[$scope.view.state.sectionGroups.ids[i]];
+						var slotCourse = $scope.view.state.courses.list[slotSectionGroup.courseId];
+						var instructor = $scope.view.state.instructors.list[$scope.view.state.userInterface.instructorId];
+						if (slotCourse.subjectCode == subjectCode && slotCourse.courseNumber == courseNumber) {
+							sectionGroup = slotSectionGroup;
+							break;
+						}
+					}
+				}
+
+				var teachingAssignment = {};
+				teachingAssignment.termCode = term;
+				// Used as a model for courseNumber/sectionGroup/scheduleId association
+				teachingAssignment.sectionGroup = sectionGroup;
+				teachingAssignment.sectionGroupId = sectionGroup.id;
+				teachingAssignment.instructor = instructor;
+				teachingAssignment.instructorId = instructor.id;
+
+				teachingAssignment.isBuyout = isBuyout;
+				teachingAssignment.isSabbatical = isSabbatical;
+				teachingAssignment.isCourseRelease = isCourseRelease;
+				teachingAssignment.schedule = {id: scheduleId};
+				teachingAssignment.scheduleId = scheduleId;
+
+				assignmentActionCreators.addPreference(teachingAssignment);
 			};
 
 			$scope.deletePreference = function(preference) {
@@ -277,7 +289,7 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 
 				return termCode;
 			}
-			
+
 			$scope.termCodeToTerm = function(termCode) {
 				return termCode.slice(-2);
 			}

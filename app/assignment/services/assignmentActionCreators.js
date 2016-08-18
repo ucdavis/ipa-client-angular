@@ -209,7 +209,20 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				}
 			};
 			assignmentStateService.reduce(action);
+		},
+		addPreference: function (teachingAssignment) {
+			assignmentService.addPreference(teachingAssignment).then(function (teachingAssignments) {
+				$rootScope.$emit('toast', {message: "Added Preference", type: "SUCCESS"});
+				var action = {
+					type: ADD_PREFERENCE,
+					payload: {
+						teachingAssignments: teachingAssignments
+					}
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});	
 		}
-
 	}
 });
