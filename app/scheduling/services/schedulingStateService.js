@@ -212,6 +212,15 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 						uiState.selectedActivityId = null;
 					}
 					return uiState;
+				case UPDATE_TAG_FILTERS:
+					// TODO: needs re-visiting, ultimately this should clear
+					// checkedSectionGroupIds, selectedSectionGroupId, selectedCourseId,
+					// and selectedActivityId ONLY if they don't match the filters
+					uiState.selectedSectionGroupId = null;
+					uiState.selectedCourseId = null;
+					uiState.selectedActivityId = null;
+					uiState.checkedSectionGroupIds = [];
+					return uiState;
 				default:
 					return uiState;
 			}
