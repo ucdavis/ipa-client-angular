@@ -264,7 +264,6 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 						}
 					}
 				}
-				console.log($scope.scheduledCourses);
 				assignmentActionCreators.initializeActiveTeachingCall(activeTeachingCall);
 			}
 
