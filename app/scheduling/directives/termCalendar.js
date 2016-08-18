@@ -1,4 +1,4 @@
-schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope, $timeout) {
+schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope, $timeout, schedulingActionCreators) {
 	return {
 		restrict: 'E',
 		template: '<div id="calendar"></div>',
@@ -23,7 +23,13 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 					eventSources: [
 						// TODO: Add instructor unavailabilities,
 						getActivities()
-					]
+					],
+					eventClick: function (calEvent, jsEvent, view) {
+						var activity = scope.view.state.activities.list[calEvent.activityId];
+						schedulingActionCreators.setSelectedActivity(activity);
+						// Important: notify angular since this happends outside of the scope
+						scope.$apply();
+					}
 				});
 			};
 
@@ -70,8 +76,7 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 								title: title,
 								start: activityStart,
 								end: activityEnd,
-								activityId: activity.id,
-								editable: scope.view.state.uiState.selectedActivityId === activity.id
+								activityId: activity.id
 							});
 						}
 					});

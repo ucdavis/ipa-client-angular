@@ -111,10 +111,12 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 				case FETCH_SECTION_GROUP_DETAILS:
 					action.payload.sharedActivities.forEach(function (activity) {
 						activities.list[activity.id] = new Activity(activity);
+						activities.list[activity.id].courseId = action.payload.sectionGroup.courseId;
 						activities.ids.push(activity.id);
 					});
 					action.payload.unsharedActivities.forEach(function (activity) {
 						activities.list[activity.id] = new Activity(activity);
+						activities.list[activity.id].courseId = action.payload.sectionGroup.courseId;
 						activities.ids.push(activity.id);
 					});
 					return activities;
@@ -232,6 +234,8 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 				case ACTIVITY_SELECTED:
 					if (uiState.selectedActivityId != action.payload.activity.id) {
 						uiState.selectedActivityId = action.payload.activity.id;
+						uiState.selectedSectionGroupId = action.payload.activity.sectionGroupId;
+						uiState.selectedCourseId = action.payload.activity.courseId;
 					} else {
 						uiState.selectedActivityId = null;
 					}
