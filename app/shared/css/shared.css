@@ -4,7 +4,7 @@ a {
 h3, .h3 {
   font-size: 21px;
 }
-.form-control {
+.form-control, .btn {
 	font-size: 12px;
 }
 .page-container .sidebar-menu {

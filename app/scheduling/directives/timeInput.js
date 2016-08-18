@@ -4,7 +4,7 @@
  * 				minute-step="5"
  * 				link-minute-hour="true"></time-input>
  */
-sharedApp.directive("timeInput", this.timeInput = function(timePatternService) {
+schedulingApp.directive("timeInput", this.timeInput = function() {
 	return {
 		restrict: "E",
 		templateUrl: 'timeInput.html',
@@ -16,7 +16,20 @@ sharedApp.directive("timeInput", this.timeInput = function(timePatternService) {
 			var linkMinuteHour = (attrs.linkMinuteHour === 'true');
 
 			scope.getMeridianTime = function() {
-				return timePatternService.getMeridianTime(scope.time);
+				if (!scope.time) {
+					return {hours: '--', minutes: '--', meridian: '--'};
+				}
+
+				var timeArr = scope.time.split(':');
+
+				var hours = parseInt(timeArr[0]);
+				if (hours === 0) hours = 12;
+				else if (hours > 12) hours = hours % 12;
+
+				var minutes = parseInt(timeArr[1]);
+				var meridian = timeArr[0] < 12 ? 'AM' : 'PM';
+
+				return {hours: hours, minutes: minutes, meridian: meridian};
 			};
 
 			scope.incrementHours = function() {

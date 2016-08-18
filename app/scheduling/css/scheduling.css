@@ -687,3 +687,7 @@ select.standard-time {
   padding: 3px;
   font-size: 11px;
 }
+.input-sm-padding, .btn-sm-padding {
+  padding: 2px 3px;
+  height: 30px;
+}

@@ -4,14 +4,17 @@ angular.module('activity', [])
 	function Activity(activityData) {
 		if (activityData) {
 			this.setData(activityData);
-			this.setStandardTimes();
-			this.setBannerRoom();
-			this.setSelectedDuration();
+			this.updateCalculatedProperties();
 		}
 	};
 	Activity.prototype = {
 		setData: function(activityData) {
 			angular.extend(this, activityData);
+		},
+		updateCalculatedProperties: function () {
+			this.setStandardTimes();
+			this.setBannerRoom();
+			this.setSelectedDuration();
 		},
 		/**
 		 * Returns the human readable code description

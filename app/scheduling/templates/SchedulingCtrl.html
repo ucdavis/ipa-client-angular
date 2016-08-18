@@ -119,10 +119,17 @@
 								ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
 								ng-click="setSelectedActivity(sharedActivityId)">
 									<span>{{ sharedActivity.getCodeDescription() }}</span>
-									<i class="entypo-minus-circled text-danger pull-right delete-activity"></i>
+									<i class="entypo-minus-circled text-danger pull-right delete-activity"
+										uib-tooltip="Remove shared {{ sharedActivity.getCodeDescription() }}"
+										tooltip-append-to-body="true"
+										confirm-button="deleteSection(view.state.sections.list[sectionId])"
+										message="Are you sure you want to remove this section"
+										yes="Delete" no="Cancel" placement="left"></i>
 							</li>
 							<li class="add-activity">
-								<i class="entypo-plus-circled text-success" style="font-size: 120%;"></i>
+								<i class="entypo-plus-circled text-success" style="font-size: 120%;"
+									uib-tooltip="Add new shared {{ sharedActivity.getCodeDescription() }}"
+									tooltip-placement="right" tooltip-append-to-body="true"></i>
 						</ul>
 						<ul>
 							<li class="section-item" ng-repeat="sectionId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds"
@@ -228,11 +235,11 @@
 									<div ng-hide="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">
 										<div class="form-group">
 											<div class="input-group">
-												<label class="col-sm-6 control-label">
-													Repeats every
+												<label class="col-sm-6 control-label" style="padding-right: 0;">
+													Repeats every: &nbsp;
 												</label>
-												<div class="col-sm-5">
-													<div class="input-group">
+												<div class="col-sm-5" style="padding-left: 0;">
+													<div class="input-group input-group-sm">
 														<input type="number" class="form-control" value="1">
 														<span class="input-group-addon">weeks</span>
 													</div>
@@ -241,7 +248,7 @@
 										</div>
 										<div class="form-group">
 											<div class="col-sm-offset-1 col-sm-10">
-												<div class="btn-group btn-group-justified btn-group-sm">
+												<div class="btn-group btn-group-justified btn-group-xs">
 													<div class="btn-group ng-scope" ng-repeat="day in days track by $index">
 														<button ng-click="toggleDay($index)" ng-class="{'active': view.state.activities.list[view.state.uiState.selectedActivityId].dayIndicator[$index] === '1'}" type="button" class="btn btn-default ng-binding">{{day}}</button>
 													</div>
@@ -249,13 +256,11 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<div class="col-sm-offset-1 col-sm-10">
-												<div class="input-group">
-													<input type="text" class="form-control timepicker" data-template="dropdown" data-show-seconds="true" data-default-time="null" data-show-meridian="true" data-minute-step="5" data-second-step="5" />
-													<div class="input-group-addon">
-														<a href="#"><i class="entypo-clock"></i></a>
-													</div>
-												</div>
+											<div class="col-sm-offset-1 col-sm-5 text-center">
+												<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].startTime" minute-step="5"></time-input>
+											</div>
+											<div class="col-sm-5 text-center">
+												<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].endTime" minute-step="5"></time-input>
 											</div>
 										</div>
 									</div>
