@@ -61,6 +61,8 @@
 			<div class="section-group-list" ng-class="{ 'collapsed': view.state.uiState.selectedSectionGroupId }">
 				<ul>
 					<li class="section-group-item" ng-repeat="sectionGroupId in view.state.sectionGroups.ids track by $index"
+						ng-init="sg = view.state.sectionGroups.list[sectionGroupId];"
+						ng-show="view.state.courses.list[sg.courseId].matchesTagFilters || view.state.filters.enabledTagIds.length == 0"
 						ng-class="{ 'active': view.state.uiState.selectedSectionGroupId == sectionGroupId }"
 						ng-click="setSelectedSectionGroup(sectionGroupId)">
 
@@ -71,7 +73,7 @@
 						</div>
 						<div class="section-group-check" ng-if="view.state.uiState.selectedSectionGroupId == sectionGroupId">
 						</div>
-						<div class="section-group-description" ng-init="sg = view.state.sectionGroups.list[sectionGroupId];">
+						<div class="section-group-description">
 							<span>
 								{{ view.state.courses.list[sg.courseId].subjectCode }}
 								{{ view.state.courses.list[sg.courseId].courseNumber }}
@@ -88,6 +90,15 @@
 
 								<!-- TODO: Display enrollment and total seats (Involves modifying payload to include all sections) -->
 								<!-- - {{ sg.enrollment[4] }} / {{ getSectionSeatsTotal(sg) }}-->
+
+								<div ng-if="view.state.courses.list[sg.courseId].tagIds.length">
+									Tags:
+									<div class="label" style="padding: 3px; margin-left: 3px;"
+										ng-repeat="tagId in view.state.courses.list[sg.courseId].tagIds track by $index"
+										ng-style="{ 'background-color': view.state.tags.list[tagId].color }">
+										{{ view.state.tags.list[tagId].name }}
+									</div>
+								</div>
 							</small>
 						</div>
 					</li>

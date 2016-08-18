@@ -683,3 +683,7 @@ ul.activity-group:hover li.activity-item {
 ul.activity-group li.activity-item:hover .delete-activity {
   display: block;
 }
+select.standard-time {
+  padding: 3px;
+  font-size: 11px;
+}
