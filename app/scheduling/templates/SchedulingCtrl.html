@@ -155,7 +155,7 @@
 							<strong>Location</strong>
 							<hr style="margin-top: 0;" />
 							<div class="form-group">
-								<div class="col-sm-12">{{view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom}}
+								<div class="col-sm-12">
 									<div class="radio">
 										<label>
 											<input type="radio" ng-value="true" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom">Banner Selected
@@ -167,13 +167,18 @@
 										</label>
 									</div>
 									<div ng-show="!view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom">
-										<select name="test" class="select2" data-allow-clear="true" data-placeholder="Select...">
-											<option></option>
-											<option value="1">Young 100</option>
-											<option value="2">Young 186</option>
-											<option value="3">Young 190</option>
-											<option value="4">Young 263</option>
-										</select>
+
+										<ui-select ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].locationId"
+											theme="bootstrap" search-enabled="false"
+											close-on-select="true" on-select="saveActivity()">
+											<ui-select-match placeholder="Select location...">
+												{{ view.state.locations.list[view.state.activities.list[view.state.uiState.selectedActivityId].locationId].description }}
+											</ui-select-match>
+											<ui-select-choices repeat="locationId in view.state.locations.ids track by $index">
+												<div ng-bind-html="view.state.locations.list[locationId].description | highlight: $select.search"></div>
+											</ui-select-choices>
+										</ui-select>
+
 									</div>
 								</div>
 							</div>

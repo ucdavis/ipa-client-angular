@@ -8,7 +8,7 @@
  schedulingApp.
  * Central location for sharedState information.
  */
-schedulingApp.service('schedulingStateService', function ($rootScope, Course, SectionGroup, Section, Activity, Tag) {
+schedulingApp.service('schedulingStateService', function ($rootScope, Course, SectionGroup, Section, Activity, Tag, Location) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -145,6 +145,30 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					return tags;
 			}
 		},
+		_locationReducers: function (action, locations) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					locations = {
+						list: {},
+						ids: []
+					};
+					var locationsList = {};
+					var length = action.payload.locations ? action.payload.locations.length : 0;
+					for (var i = 0; i < length; i++) {
+						var locationData = action.payload.locations[i];
+						if (locationData.archived == false) {
+							locationsList[locationData.id] = new Location(locationData);
+						}
+					}
+					locations.ids = _array_sortIdsByProperty(locationsList, "description");
+					locations.list = locationsList;
+					return locations;
+				default:
+					return locations;
+			}
+		},
 		_filterReducers: function (action, filters) {
 			var scope = this;
 
@@ -238,6 +262,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
 			newState.activities = scope._activityReducers(action, scope._state.activities);
 			newState.tags = scope._tagReducers(action, scope._state.tags);
+			newState.locations = scope._locationReducers(action, scope._state.locations);
 			newState.filters = scope._filterReducers(action, scope._state.filters);
 			newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
 
