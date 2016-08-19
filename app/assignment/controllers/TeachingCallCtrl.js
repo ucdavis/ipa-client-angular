@@ -169,15 +169,13 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 			};
 
 			$scope.updateTeachingCallReceipt = function(markAsDone) {
-				$scope.teachingCallReceipt.isDone = markAsDone || $scope.teachingCallReceipt.isDone; 
-				teachingCallReceiptService.updateTeachingCallReceipt($scope.teachingCallReceipt)
-				.then(function(receipt){
-					$scope.teachingCallReceipt = receipt;
-					ngNotify.set("Saved successfully", "success");
-					$scope.autoSave();
-				}, function() {
-					ngNotify.set("Error saving", "error");
-				});
+				var teachingCallReceipt = $scope.view.state.activeTeachingCall.teachingCallReceipt;
+
+				if (markAsDone) {
+					teachingCallReceipt.isDone = true;
+				}
+
+				assignmentActionCreators.updateTeachingCallReceipt(teachingCallReceipt);
 			};
 
 			$scope.isScheduleTermLocked = function(term) {
@@ -269,6 +267,17 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 					}
 				}
 
+				// Set teachingCallReceipt
+				for (var i = 0; i < $scope.view.state.teachingCallReceipts.ids.length; i++) {
+					var slotTeachingCallReceipt = $scope.view.state.teachingCallReceipts.list[$scope.view.state.teachingCallReceipts.ids[i]];
+					if (slotTeachingCallReceipt.instructorId == $scope.view.state.userInterface.instructorId
+						&& slotTeachingCallReceipt.teachingCallId == activeTeachingCall.id) {
+							activeTeachingCall.teachingCallReceiptId = slotTeachingCallReceipt.id;
+							activeTeachingCall.teachingCallReceipt = slotTeachingCallReceipt;
+							break;
+						}
+				}
+				activeTeachingCall.teachingCallReceipt = $scope.view.state.teachingCallReceipts.list[$scope.view.state.activeTeachingCall.teachingCallReceiptId];
 				assignmentActionCreators.initializeActiveTeachingCall(activeTeachingCall);
 			}
 

@@ -85,6 +85,20 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
+		updateTeachingCallReceipt: function (teachingCallReceipt) {
+			assignmentService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
+				$rootScope.$emit('toast', {message: "Updated reponse", type: "SUCCESS"});
+				var action = {
+					type: UPDATE_TEACHING_CALL_RECEIPT,
+					payload: {
+						teachingCallReceipt: teachingCallReceipt
+					}
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
 		addInstructorAssignment: function (instructorId, year, workgroupId, comment) {
 			var scheduleInstructorNote = {};
 			scheduleInstructorNote.instructorId = instructorId;

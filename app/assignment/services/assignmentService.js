@@ -117,6 +117,19 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
+		updateTeachingCallReceipt: function (teachingCallReceipt) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/assignmentView/teachingCallReceipts/" + teachingCallReceipt.id, teachingCallReceipt, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		allTerms: function () {
 			var allTerms = {
 				'05': 'Summer Session 1',

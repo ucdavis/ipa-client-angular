@@ -241,6 +241,9 @@ assignmentApp.service('assignmentStateService', function (
 					teachingCallReceipts.ids = _array_sortIdsByProperty(teachingCallReceiptsList, ["id"]);
 					teachingCallReceipts.list = teachingCallReceiptsList;
 					return teachingCallReceipts;
+				case UPDATE_TEACHING_CALL_RECEIPT:
+					teachingCallReceipts.list[action.payload.teachingCallReceipt.id] = action.payload.teachingCallReceipt;
+					return teachingCallReceipts;
 				default:
 					return teachingCallReceipts;
 			}
