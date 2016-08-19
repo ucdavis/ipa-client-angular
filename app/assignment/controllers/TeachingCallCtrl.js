@@ -19,6 +19,7 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 				if ($scope.view.state.activeTeachingCall.scheduledCourses == null) {
 					$scope.prepareTeachingCall();
 				}
+
 				console.log($scope.view.state);
 			});
 
@@ -200,6 +201,9 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 
 				activeTeachingCall.termAssignments = {};
 
+				// Holds sectionGroupIds that should not be offered as preferences to add
+				var alreadyHasPreferenceSectionGroupIds = [];
+
 				// Building an object of teachingAssignments for this instructor, separated by term
 				for (var i = 0; i < $scope.view.state.teachingAssignments.ids.length; i++) {
 					var teachingAssignment = $scope.view.state.teachingAssignments.list[$scope.view.state.teachingAssignments.ids[i]];
@@ -216,6 +220,7 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 						};
 
 						activeTeachingCall.termAssignments[teachingAssignment.termCode].push(teachingAssignment);
+						alreadyHasPreferenceSectionGroupIds.push(teachingAssignment.sectionGroupId);
 					}
 				}
 
@@ -224,7 +229,9 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 
 				for (var i = 0; i < $scope.view.state.sectionGroups.ids.length; i++) {
 					var sectionGroup = $scope.view.state.sectionGroups.list[$scope.view.state.sectionGroups.ids[i]];
-					var course = $scope.view.state.courses.list[sectionGroup.courseId];
+					var originalCourse = $scope.view.state.courses.list[sectionGroup.courseId];
+					var course = jQuery.extend(true, {}, originalCourse);
+
 					var termCode = parseInt(sectionGroup.termCode);
 					// Adding metadata from sectionGroup
 					course.seatsTotal = sectionGroup.plannedSeats;
@@ -251,10 +258,17 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 						}
 
 						if (courseAlreadyExists == false) {
+							if (alreadyHasPreferenceSectionGroupIds.indexOf(course.sectionGroupTermCodeIds[termCode]) > -1) {
+								course.hasPreference = true;
+							} else {
+								course.hasPreference = false;
+							}
+
 							activeTeachingCall.scheduledCourses[termCode].push(course);
 						}
 					}
 				}
+
 				assignmentActionCreators.initializeActiveTeachingCall(activeTeachingCall);
 			}
 

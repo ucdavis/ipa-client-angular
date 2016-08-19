@@ -29,7 +29,7 @@
 			</a>
 		</li>
 		<li ng-repeat="course in courses | orderBy: ['subjectCode','courseNumber','title'] track by $index"
-		role="presentation" class="clickable">
+		ng-if="course.hasPreference == false" role="presentation" class="clickable">
 			<a role="menuitem" ng-click="onSelect({courseOffering: course})">
 				<span class="badge" style="background-color: #aaa; width: 40px;">{{ course.seatsTotal }}</span>
 				{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}

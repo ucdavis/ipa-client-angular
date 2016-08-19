@@ -180,6 +180,13 @@ assignmentApp.service('assignmentStateService', function (
 						};
 
 						activeTeachingCall.termAssignments[teachingAssignment.termCode].push(teachingAssignment);
+
+						for (var j = 0; j < activeTeachingCall.scheduledCourses[teachingAssignment.termCode].length; j++) {
+							slotCourse = activeTeachingCall.scheduledCourses[teachingAssignment.termCode][j];
+							if (slotCourse.id == course.id) {
+								slotCourse.hasPreference = true;
+							}
+						}
 					}
 					return activeTeachingCall;
 				case REMOVE_PREFERENCE:
@@ -201,7 +208,15 @@ assignmentApp.service('assignmentStateService', function (
 						if (index > -1) {
 							activeTeachingCall.termAssignments[termCode].splice(index, 1);
 						}
+
+						for (var k = 0; k < activeTeachingCall.scheduledCourses[termCode].length; k++) {
+							slotCourse = activeTeachingCall.scheduledCourses[termCode][k];
+							if (slotTeachingAssignment.sectionGroupId == slotCourse.sectionGroupTermCodeIds[termCode]) {
+								slotCourse.hasPreference = false;
+							}
+						}
 					}
+
 					return activeTeachingCall;
 				default:
 					return activeTeachingCall;
