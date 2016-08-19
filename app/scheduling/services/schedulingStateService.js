@@ -120,6 +120,9 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 						activities.ids.push(activity.id);
 					});
 					return activities;
+				case UPDATE_ACTIVITY:
+					activities.list[action.payload.activity.id] = new Activity(action.payload.activity);
+					return activities;
 				default:
 					return activities;
 			}

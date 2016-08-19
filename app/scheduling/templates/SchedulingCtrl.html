@@ -202,7 +202,6 @@
 											<input type="radio" name="buildingRadios" ng-value="true" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">Standard times
 										</label>
 									</div>
-
 									<!-- Standard times -->
 									<div ng-show="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">
 										<fieldset>
@@ -214,7 +213,8 @@
 											</div>
 											<div class="control-group col-sm-3" style="padding: 0px 0px 0px 5px;">
 												<select size="4" class="form-control standard-time"
-												ng-options="dayIndicator as getWeekDays(dayIndicator, standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].dayIndicators) for dayIndicator in standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].dayIndicators"
+												ng-options="dayIndicator as getWeekDays(dayIndicator, standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].dayIndicators)
+												for dayIndicator in standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].dayIndicators"
 												ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].dayIndicator">
 												</select>
 											</div>
@@ -222,7 +222,7 @@
 												<select size="4" class="form-control standard-time">
 													<option ng-repeat="time in standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].times"
 													ng-selected="time.start === view.state.activities.list[view.state.uiState.selectedActivityId].startTime && time.end === view.state.activities.list[view.state.uiState.selectedActivityId].endTime"
-													ng-click="saveActivity()">
+													ng-click="setActivityStandardTime(time)">
 														{{ getMeridianTime(time.start) }} - {{ getMeridianTime(time.end) }}
 													</option>
 												</select>

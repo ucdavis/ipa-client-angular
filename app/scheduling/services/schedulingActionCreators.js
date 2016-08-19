@@ -21,6 +21,20 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
+		updateActivity: function (activity) {
+			schedulingService.updateActivity(activity).then(function (updatedActivity) {
+				$rootScope.$emit('toast', {message: "Updated " + activity.getCodeDescription(), type: "SUCCESS"});
+				var action = {
+					type: UPDATE_ACTIVITY,
+					payload: {
+						activity: updatedActivity
+					}
+				};
+				schedulingStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
 		setSelectedSectionGroup: function (sectionGroup) {
 			var action = {
 				type: SECTION_GROUP_SELECTED,

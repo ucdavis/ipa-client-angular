@@ -35,6 +35,19 @@ schedulingApp.factory("schedulingService", this.schedulingService = function($ht
 			});
 
 			return deferred.promise;
+		},
+		updateActivity: function (activity) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/schedulingView/activities/" + activity.id, activity, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });

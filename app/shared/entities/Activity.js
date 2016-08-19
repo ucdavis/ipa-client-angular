@@ -130,7 +130,10 @@ angular.module('activity', [])
 		setStandardTimes: function () {
 			standardTimePatterns = this.getStandardTimes();
 
-			if (parseInt(this.frequency) !== 1 || !this.startTime || !this.endTime) { return false; }
+			if (parseInt(this.frequency) !== 1 || !this.startTime || !this.endTime) {
+				this.isStandardTimes = false;
+				return;
+			}
 
 			// Get time difference in minutes
 			var start = this.startTime.split(':').map(Number);

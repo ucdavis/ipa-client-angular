@@ -94,9 +94,17 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				$scope.saveActivity();
 			};
 
+			$scope.setActivityStandardTime = function (time) {
+				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+				activity.frequency = 1;
+				activity.startTime = time.start;
+				activity.endTime = time.end;
+				$scope.saveActivity();
+			};
+
 			$scope.saveActivity = function () {
 				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
-				console.log(activity);
+				schedulingActionCreators.updateActivity(activity);
 			};
 		}
 ]);
