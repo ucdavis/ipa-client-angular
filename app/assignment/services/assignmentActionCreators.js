@@ -225,6 +225,23 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			}, function (err) {
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});	
+		},
+		removePreference: function(teachingAssignment) {
+			assignmentService.removePreference(teachingAssignment).then(function (teachingAssignments) {
+				$rootScope.$emit('toast', {message: "Removed Preference", type: "SUCCESS"});
+				var action = {
+					type: REMOVE_PREFERENCE,
+					payload: {
+						teachingAssignments: teachingAssignments,
+						instructorId: teachingAssignment.instructorId,
+						termCode: teachingAssignment.termCode
+					}
+				};
+
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
 		}
 	}
 });

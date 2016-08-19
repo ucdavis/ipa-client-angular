@@ -37,7 +37,7 @@
 		</li>
 	</ul>
 </div>
-<span ng-if="!preference.approved" confirm-button="onDelete()"
+<span ng-if="preference && !preference.approved" confirm-button="onDelete()"
 	message="Are you sure you want to delete this preference"
 	yes="Delete" no="Cancel" placement="bottom"
 	confirm-is-shown="status.confirmIsOpen"

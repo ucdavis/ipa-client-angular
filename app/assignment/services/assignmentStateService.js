@@ -93,6 +93,21 @@ assignmentApp.service('assignmentStateService', function (
 						teachingAssignments.ids.push(slotTeachingAssignment.id);
 					}
 					return teachingAssignments;
+				case REMOVE_PREFERENCE:
+					var payloadTeachingAssignments = action.payload.teachingAssignments;
+					var termCode = action.payload.termCode;
+					// For each teachingAssignment associated to that preference
+					for (var i = 0; i < payloadTeachingAssignments.length; i++) {
+						var slotTeachingAssignment = payloadTeachingAssignments[i];
+						// Remove reference from ids
+						var index = teachingAssignments.ids.indexOf(slotTeachingAssignment.id);
+						if (index > -1) {
+							teachingAssignments.ids.splice(index, 1);
+						}
+						// Remove reference from list
+						delete teachingAssignments.list[slotTeachingAssignment.id];
+					}
+					return teachingAssignments;
 				case REMOVE_TEACHING_ASSIGNMENT:
 					var index = teachingAssignments.ids.indexOf(action.payload.teachingAssignment.id);
 					if (index > -1) {
@@ -165,6 +180,27 @@ assignmentApp.service('assignmentStateService', function (
 						};
 
 						activeTeachingCall.termAssignments[teachingAssignment.termCode].push(teachingAssignment);
+					}
+					return activeTeachingCall;
+				case REMOVE_PREFERENCE:
+					if (activeTeachingCall == null) {
+						return activeTeachingCall;
+					}
+					var teachingAssignments = action.payload.teachingAssignments;
+					var termCode = action.payload.termCode;
+					var DTOinstructorId = action.payload.instructorId;
+					for (var i = 0; i < teachingAssignments.length; i++) {
+						var slotTeachingAssignment = teachingAssignments[i];
+						var index = -1;
+						for (var j = 0; j < activeTeachingCall.termAssignments[termCode].length; j++) {
+								if (activeTeachingCall.termAssignments[termCode][j].id == slotTeachingAssignment.id) {
+									var index = j;
+									break;
+								}
+						}
+						if (index > -1) {
+							activeTeachingCall.termAssignments[termCode].splice(index, 1);
+						}
 					}
 					return activeTeachingCall;
 				default:
@@ -318,6 +354,20 @@ assignmentApp.service('assignmentStateService', function (
 						instructor.teachingAssignmentTermCodeIds[slotTeachingAssignment.termCode].push(slotTeachingAssignment.id);
 					}
 					return instructors;
+				case REMOVE_PREFERENCE:
+					var teachingAssignments = action.payload.teachingAssignments;
+					var termCode = action.payload.termCode;
+					var DTOinstructorId = action.payload.instructorId;
+					var instructor = instructors.list[DTOinstructorId];
+					var instructorTeachingAssignments = instructor.teachingAssignmentTermCodeIds[termCode];
+					for (var i = 0; i < teachingAssignments.length; i++) {
+						var slotTeachingAssignment = teachingAssignments[i];
+						var index = instructorTeachingAssignments.indexOf(slotTeachingAssignment.id);
+						if (index > -1) {
+							instructorTeachingAssignments.splice(index, 1);
+						}
+					}
+					return instructors;
 				case REMOVE_TEACHING_ASSIGNMENT:
 					var teachingAssignment = action.payload.teachingAssignment;
 					var instructor = instructors.list[teachingAssignment.instructorId];
@@ -328,6 +378,7 @@ assignmentApp.service('assignmentStateService', function (
 							return instructors;
 						}
 					}
+					return instructors;
 				default:
 					return instructors;
 			}
@@ -430,6 +481,19 @@ assignmentApp.service('assignmentStateService', function (
 						if (slotTeachingAssignment.sectionGroupId) {
 							sectionGroup = sectionGroups.list[slotTeachingAssignment.sectionGroupId];
 							sectionGroup.teachingAssignmentIds.push(slotTeachingAssignment.id);
+						}
+					}
+					return sectionGroups;
+				case REMOVE_PREFERENCE:
+					var teachingAssignments = action.payload.teachingAssignments;
+					var DTOtermCode = action.payload.termCode;
+					var DTOinstructorId = action.payload.instructorId;
+					for (var i = 0; i < teachingAssignments.length; i++) {
+						var slotTeachingAssignment = teachingAssignments[i];
+						var sectionGroup = sectionGroups.list[slotTeachingAssignment.sectionGroupId];
+						var index = sectionGroup.teachingAssignmentIds.indexOf(slotTeachingAssignment.id);
+						if (index > -1) {
+							sectionGroup.teachingAssignmentIds.splice(index, 1);
 						}
 					}
 					return sectionGroups;

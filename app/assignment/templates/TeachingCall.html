@@ -24,13 +24,13 @@
 						<ol drag-end="updatePreferencesOrder(sortedIds, term)"
 						read-only="isScheduleTermLocked(term)" class="sortable-list">
 							<!-- id values needed to calculate the reordering of preferences in this specific format -->
-							<li id="pref-{{ preference.id }}" ng-class="{ 'unsortable': view.state.activeTeachingCall.termAssignments[termToTermCode(term)].length < 2 }"
+							<li id="pref-{{ preference.id }}" class="unsortable"
 							ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
 								<div term-preferences
 								instructor-id="view.state.userInterface.instructorId"
 								preference="preference"
 								on-select="addPreference(preference, courseOffering, isBuyout, isSabbatical, isCourseRelease)"
-								on-delete="deletePreference(preference)"
+								on-delete="removePreference(preference)"
 								on-update="refreshPreferences()"
 								schedule-id="activeTeachingCall.scheduleId"
 								term="term"

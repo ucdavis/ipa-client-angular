@@ -111,17 +111,8 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 				assignmentActionCreators.addPreference(teachingAssignment);
 			};
 
-			$scope.deletePreference = function(preference) {
-				var term = preference.termCode.slice(-2);
-
-				teachingPreferenceService.deleteTeachingPreference(preference)
-				.then(function(res){
-					$scope.termPreferences = teachingPreferenceService.retrieveInstancesSortedByTerm();
-					ngNotify.set("Removed preference successfully",'success');
-					$scope.autoSave();
-				}, function() {
-					ngNotify.set("Error removing preference",'error');
-				});
+			$scope.removePreference = function(teachingAssignment) {
+				assignmentActionCreators.removePreference(teachingAssignment);
 			};
 
 			$scope.updatePreferencesOrder = function(sortedTeachingPreferenceIds, term) {

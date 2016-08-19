@@ -36,6 +36,19 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
+		removePreference: function (teachingAssignment) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/assignmentView/preferences/" + teachingAssignment.id, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		addInstructorAssignment: function (teachingAssignment) {
 			var deferred = $q.defer();
 
