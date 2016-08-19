@@ -113,6 +113,9 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 						section.activityIds.splice(activityIndex, 1);
 					}
 					return sections;
+				case CREATE_ACTIVITY:
+					sections.list[action.payload.activity.sectionId].activityIds.push(action.payload.activity.id);
+					return sections;
 				default:
 					return sections;
 			}
@@ -148,6 +151,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					delete activities.list[action.payload.activity.id];
 					return activities;
 				case CREATE_SHARED_ACTIVITY:
+				case CREATE_ACTIVITY:
 					activities.list[action.payload.activity.id] = new Activity(action.payload.activity);
 					activities.list[action.payload.activity.id].courseId = action.payload.sectionGroup.courseId;
 					activities.ids.push(action.payload.activity.id);

@@ -114,6 +114,10 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			$scope.createSharedActivity = function (sharedActivity, sectionGroup) {
 				schedulingActionCreators.createSharedActivity(sharedActivity, sectionGroup);
 			};
+
+			$scope.createActivity = function (activity, sectionGroup) {
+				schedulingActionCreators.createActivity(activity, sectionGroup);
+			};
 		}
 ]);
 

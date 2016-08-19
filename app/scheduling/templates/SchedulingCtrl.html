@@ -152,7 +152,10 @@
 												ng-show="activityId == view.state.uiState.selectedActivityId && view.state.uiState.selectedActivity.hasWarning"></i>
 									</li>
 									<li class="add-activity">
-										<i class="entypo-plus-circled text-success" style="font-size: 120%;"></i>
+										<i class="entypo-plus-circled text-success" style="font-size: 120%;"
+											uib-tooltip="Add new {{ sharedActivity.getCodeDescription() }}"
+											tooltip-placement="right" tooltip-append-to-body="true"
+											ng-click="createActivity(activity, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"></i>
 									</li>
 								</ul>
 							</li>
