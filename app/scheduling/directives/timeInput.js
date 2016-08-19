@@ -2,15 +2,19 @@
  * example:
  * <time-input	time="time"
  * 				minute-step="5"
+ *				on-change-delay="500"
+ *				on-change="saveChanges()"
  * 				link-minute-hour="true"></time-input>
  */
-schedulingApp.directive("timeInput", this.timeInput = function() {
+schedulingApp.directive("timeInput", this.timeInput = function($timeout) {
 	return {
 		restrict: "E",
 		templateUrl: 'timeInput.html',
 		scope: {
 			time: '=',
-			minuteStep: '@'
+			minuteStep: '@',
+			onChangeDelay: '@',
+			onChange: '&'
 		},
 		link: function(scope, element, attrs) {
 			var linkMinuteHour = (attrs.linkMinuteHour === 'true');
@@ -145,6 +149,10 @@ schedulingApp.directive("timeInput", this.timeInput = function() {
 				else if (time.meridian === 'AM' && time.hours === 12) time.hours = 0;
 
 				scope.time = ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ":00";
+
+				$timeout(function () {
+					scope.onChange();
+				}, parseInt(scope.onChangeDelay));
 			}
 		}
 	}
