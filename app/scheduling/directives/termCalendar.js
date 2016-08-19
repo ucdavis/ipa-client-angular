@@ -1,18 +1,37 @@
-schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope, $timeout) {
+schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope, $timeout, schedulingActionCreators) {
 	return {
 		restrict: 'E',
 		template: '<div id="calendar"></div>',
 		replace: true,
 		link: function (scope, element, attrs) {
-			scope.calendarEvents = [];
 			scope.view = {};
 
 			var refreshCalendar = function () {
-				getActivities();
-				scope.calendar.fullCalendar('removeEvents');
-				scope.calendar.fullCalendar('addEventSource', scope.calendarEvents[0]);
-				scope.calendar.fullCalendar('rerenderEvents');
-			}
+				var parentAspectRatio = element.parent().width() / element.parent().height();
+				element.fullCalendar('destroy');
+				element.fullCalendar({
+					defaultView: 'agendaWeek',
+					allDaySlot: false,
+					allDayDefault: false,
+					aspectRatio: parentAspectRatio,
+					height: "auto",
+					minTime: '06:00',
+					maxTime: '18:00',
+					header: false,
+					slotEventOverlap: false,
+					hiddenDays: scope.view.state.filters.hiddenDays,
+					eventSources: [
+						// TODO: Add instructor unavailabilities,
+						getActivities()
+					],
+					eventClick: function (calEvent, jsEvent, view) {
+						var activity = scope.view.state.activities.list[calEvent.activityId];
+						schedulingActionCreators.setSelectedActivity(activity);
+						// Important: notify angular since this happends outside of the scope
+						scope.$apply();
+					}
+				});
+			};
 
 			var getActivities = function () {
 				// Each of these If blocks will add to a 'events array'
@@ -37,8 +56,6 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 					});
 				}
 
-				scope.calendarEvents.length = 0;
-				scope.calendarEvents.push(calendarActivities);
 				return calendarActivities;
 			};
 
@@ -59,8 +76,7 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 								title: title,
 								start: activityStart,
 								end: activityEnd,
-								activityId: activity.id,
-								editable: scope.view.state.uiState.selectedActivityId === activity.id
+								activityId: activity.id
 							});
 						}
 					});
@@ -70,13 +86,21 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 
 			var sectionGroupToEvents = function (sectionGroup) {
 				var calendarActivities = [];
+				var title = getCourseTitleByCourseId(sectionGroup.courseId);
 
+				if (sectionGroup.sharedActivityIds) {
+					sectionGroup.sharedActivityIds.forEach(function (sharedActivityId) {
+						calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[sharedActivityId], title));
+					});
+				}
 				if (sectionGroup.sectionIds) {
 					sectionGroup.sectionIds.forEach(function (sectionId) {
-						scope.view.state.sections.list[sectionId].activityIds.forEach(function (activityId) {
-							var title = getCourseTitleByCourseId(sectionGroup.courseId);
-							calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[activityId], title));
-						});
+						var section = scope.view.state.sections.list[sectionId];
+						if (section.activityIds) {
+							section.activityIds.forEach(function (activityId) {
+								calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[activityId], title));
+							});
+						}
 					});
 				}
 
@@ -102,19 +126,6 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				refreshCalendar();
 			});
 
-			$rootScope.$on("sectionGroupSelected", function (event, newSG) {
-				refreshCalendar();
-			});
-
-			$rootScope.$on("activitySelected", function (event, newActivity) {
-				if (newActivity.hasWarning) { return; }
-				refreshCalendar();
-			});
-
-			$rootScope.$on("checkedSectionGroupsChanged", function (event, checkedSectionGroupIds) {
-				refreshCalendar();
-			});
-
 			var neonCalendar = neonCalendar || {};
 
 			neonCalendar.$container = $(".calendar-env");
@@ -123,24 +134,6 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				isPresent: neonCalendar.$container.length > 0
 			});
 
-			if($.isFunction($.fn.fullCalendar))
-			{
-				scope.calendar = element;
-				var parentAspectRatio = element.parent().width() / element.parent().height();
-
-				scope.calendar.fullCalendar({
-					defaultView: 'agendaWeek',
-					allDaySlot: false,
-					allDayDefault: false,
-					aspectRatio: parentAspectRatio,
-					height: "auto",
-					minTime: '06:00',
-					maxTime: '18:00',
-					header: false,
-					slotEventOverlap: false,
-					eventSources: scope.calendarEvents
-				});
-			}
 		}
 	}
 });

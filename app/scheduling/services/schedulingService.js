@@ -35,6 +35,58 @@ schedulingApp.factory("schedulingService", this.schedulingService = function($ht
 			});
 
 			return deferred.promise;
+		},
+		updateActivity: function (activity) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/schedulingView/activities/" + activity.id, activity, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		removeActivity: function (activityId) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/schedulingView/activities/" + activityId, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		createSharedActivity: function (activity) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/schedulingView/sectionGroups/" + activity.sectionGroupId, activity, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		createActivity: function (activity) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/schedulingView/sections/" + activity.sectionId, activity, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });

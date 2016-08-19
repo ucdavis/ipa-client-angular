@@ -21,16 +21,16 @@
 				<tr>
 					<td ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index"
 					disable-element="isScheduleTermLocked(term)">
-						<ol sortable drag-end="updatePreferencesOrder(sortedIds, term)"
+						<ol drag-end="updatePreferencesOrder(sortedIds, term)"
 						read-only="isScheduleTermLocked(term)" class="sortable-list">
 							<!-- id values needed to calculate the reordering of preferences in this specific format -->
-							<li id="pref-{{ preference.id }}" ng-class="{ 'unsortable': view.state.activeTeachingCall.termAssignments[termToTermCode(term)].length < 2 }"
+							<li id="pref-{{ preference.id }}" class="unsortable"
 							ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
 								<div term-preferences
 								instructor-id="view.state.userInterface.instructorId"
 								preference="preference"
-								on-select="updatePreference(preference, courseOffering, isBuyout, isSabbatical, isCourseRelease)"
-								on-delete="deletePreference(preference)"
+								on-select="addPreference(preference, courseOffering, isBuyout, isSabbatical, isCourseRelease)"
+								on-delete="removePreference(preference)"
 								on-update="refreshPreferences()"
 								schedule-id="activeTeachingCall.scheduleId"
 								term="term"
@@ -93,35 +93,28 @@
 							read-only="teachingCallResponse[term].isComplete" ></availability-grid>
 					</td>
 				</tr>
-				<tr>
-					<td colspan="{{ terms.length }}">
-						<textarea class="form-control" rows="5" ng-model="teachingCallReceipt.comment"
-							placeholder="Comments" auto-input on-blur="updateTeachingCallReceipt()">
-						</textarea>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="{{ terms.length }}">
-						<div class="col-xs-offset-3 col-xs-6">
-							<button type="button" class="btn btn-default btn-block"
-							 confirm-button="updateTeachingCallReceipt(true)"
-							 confirm-is-enabled="!teachingCallReceipt.isDone"
-							 btn-class="btn-primary"
-							 message="Are you sure you want to submit the preferences for this term?"
-							 yes="Confirm" no="Cancel" placement="top">
-								{{ teachingCallReceipt.isDone ? 'Update Preferences' : 'Submit Preferences' }}
-							</button>
-						</div>
-						<div class="col-xs-3 text-muted" style="font-size: 80%;" ng-if="viewState.lastSaved">
-							<span class="text-success">Auto saved at {{ viewState.lastSaved }}</span><br />
-							It is safe to leave this page and continue later.
-						</div>
-					</td>
-				</tr>
 			</tbody>
 		</table>
-	</div>
-	<!-- .col-xs-12 -->
 
+		<div>
+			<div style="margin-bottom: 10px;">
+				<textarea class="form-control" rows="5" ng-model="view.state.activeTeachingCall.teachingCallReceipt.comment"
+					placeholder="Comments" auto-input on-blur="updateTeachingCallReceipt()">
+				</textarea>
+			</div>
+			<div>
+				<div class="col-xs-offset-3 col-xs-6" style="margin-bottom: 10px;">
+					<button type="button" class="btn btn-default btn-block"
+					 confirm-button="updateTeachingCallReceipt(true)"
+					 confirm-is-enabled="!view.state.activeTeachingCall.teachingCallReceipt.isDone"
+					 btn-class="btn-primary"
+					 message="Are you sure you want to submit the preferences for this term?"
+					 yes="Confirm" no="Cancel" placement="top">
+						{{ view.state.activeTeachingCall.teachingCallReceipt.isDone ? 'Update Preferences' : 'Submit Preferences' }}
+					</button>
+				</div>
+			</div>
+		</div> <!-- teachingCallReceipt ng-init -->
+	</div>
 </div>
 <!-- /row -->

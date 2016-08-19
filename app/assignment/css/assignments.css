@@ -753,11 +753,20 @@ ul.dropdown-menu li.selected a:before  {
 }
 
 element.style {
-    width: 88%;
+	width: 88%;
 }
 ol.sortable-list>li .term-preference-dropdown {
-    cursor: auto;
+	cursor: auto;
 }
+
+.preference-display:hover {
+	background-color: #d9edf7 !important;
+}
+
+.preference-display {
+	background-color: #d9edf7 !important;
+}
+
 .dropdown-toggle {
 	border-color: #ccc;
 }
@@ -805,4 +814,19 @@ ol.sortable-list>li .term-preference-dropdown {
 	line-height: 1;
 	white-space: nowrap;
 	text-align: center;
+}
+
+.preference-display {
+	margin-bottom: 5px;
+	height: 31px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 88%;
+}
+
+.preference-display-detail {
+	text-align: center;
+	flex: 1 1 auto;
 }

@@ -21,6 +21,64 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
+		updateActivity: function (activity) {
+			schedulingService.updateActivity(activity).then(function (updatedActivity) {
+				$rootScope.$emit('toast', {message: "Updated " + activity.getCodeDescription(), type: "SUCCESS"});
+				var action = {
+					type: UPDATE_ACTIVITY,
+					payload: {
+						activity: updatedActivity
+					}
+				};
+				schedulingStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
+		removeActivity: function (activity) {
+			schedulingService.removeActivity(activity.id).then(function () {
+				$rootScope.$emit('toast', {message: "Removed " + activity.getCodeDescription(), type: "SUCCESS"});
+				var action = {
+					type: REMOVE_ACTIVITY,
+					payload: {
+						activity: activity
+					}
+				};
+				schedulingStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
+		createSharedActivity: function (activity, sectionGroup) {
+			schedulingService.createSharedActivity(activity).then(function (newActivity) {
+				$rootScope.$emit('toast', {message: "Created new shared " + activity.getCodeDescription(), type: "SUCCESS"});
+				var action = {
+					type: CREATE_SHARED_ACTIVITY,
+					payload: {
+						activity: newActivity,
+						sectionGroup: sectionGroup
+					}
+				};
+				schedulingStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
+		createActivity: function (activity, sectionGroup) {
+			schedulingService.createActivity(activity).then(function (newActivity) {
+				$rootScope.$emit('toast', {message: "Created new " + activity.getCodeDescription(), type: "SUCCESS"});
+				var action = {
+					type: CREATE_ACTIVITY,
+					payload: {
+						activity: newActivity,
+						sectionGroup: sectionGroup
+					}
+				};
+				schedulingStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
 		setSelectedSectionGroup: function (sectionGroup) {
 			var action = {
 				type: SECTION_GROUP_SELECTED,
@@ -55,13 +113,32 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 					payload: {
 						sectionGroup: sectionGroup,
 						sections: payload.sections,
-						activities: payload.activities
+						sharedActivities: payload.sharedActivities,
+						unsharedActivities: payload.unsharedActivities
 					}
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
 			});
+		},
+		toggleDay: function (dayIndex) {
+			var action = {
+				type: TOGGLE_DAY,
+				payload: {
+					dayIndex: dayIndex
+				}
+			};
+			schedulingStateService.reduce(action);
+		},
+		updateTagFilters: function (tagIds) {
+			var action = {
+				type: UPDATE_TAG_FILTERS,
+				payload: {
+					tagIds: tagIds
+				}
+			};
+			schedulingStateService.reduce(action);
 		}
 	}
 });

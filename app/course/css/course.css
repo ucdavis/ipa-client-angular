@@ -456,6 +456,7 @@ table.courses-table > tbody > tr > td:not(:first-child) {
 }
 .right-details .panel {
   height: 100%;
+  position: relative;
 }
 .right-details a {
   cursor: pointer;
@@ -588,6 +589,13 @@ table.sections-table > tbody tr > td {
 }
 .panel-highlight > .panel-heading {
   background: rgba(179, 181, 198, 0.5);
+  height: 50px;
+}
+.panel-highlight > .panel-body {
+  height: calc(100% - 50px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 20px;
 }
 .right-inner-addon.form-group {
   margin: 0;

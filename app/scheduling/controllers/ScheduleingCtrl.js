@@ -63,6 +63,61 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				return ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ' ' + time.meridian;
 			};
 
+			$scope.toggleCalendarDay = function (index) {
+				schedulingActionCreators.toggleDay(index);
+			};
+
+			$scope.toggleTagFilter = function (tagId) {
+				var tagFilters = $scope.view.state.filters.enabledTagIds;
+				var tagIndex = tagFilters.indexOf(tagId);
+
+				if (tagIndex < 0) {
+					tagFilters.push(tagId);
+				} else {
+					tagFilters.splice(tagIndex, 1);
+				}
+
+				schedulingActionCreators.updateTagFilters(tagFilters);
+			};
+
+			$scope.clearLocation = function () {
+				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+				activity.locationId = 0;
+				$scope.saveActivity();
+			};
+
+			$scope.toggleActivityDay = function(index) {
+				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+				var dayArr = activity.dayIndicator.split('');
+				dayArr[index] = Math.abs(1 - parseInt(dayArr[index])).toString();
+				activity.dayIndicator = dayArr.join('');
+				$scope.saveActivity();
+			};
+
+			$scope.setActivityStandardTime = function (time) {
+				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+				activity.frequency = 1;
+				activity.startTime = time.start;
+				activity.endTime = time.end;
+				$scope.saveActivity();
+			};
+
+			$scope.saveActivity = function () {
+				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+				schedulingActionCreators.updateActivity(activity);
+			};
+
+			$scope.removeActivity = function (activity) {
+				schedulingActionCreators.removeActivity(activity);
+			};
+
+			$scope.createSharedActivity = function (sharedActivity, sectionGroup) {
+				schedulingActionCreators.createSharedActivity(sharedActivity, sectionGroup);
+			};
+
+			$scope.createActivity = function (activity, sectionGroup) {
+				schedulingActionCreators.createActivity(activity, sectionGroup);
+			};
 		}
 ]);
 

@@ -37,7 +37,9 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 		initializeActiveTeachingCall: function (activeTeachingCall) {
 			var action = {
 				type: INIT_ACTIVE_TEACHING_CALL,
-				payload: activeTeachingCall
+				payload: { 
+					activeTeachingCall: activeTeachingCall
+				}
 			};
 			assignmentStateService.reduce(action);
 		},
@@ -76,6 +78,20 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 					type: UPDATE_TEACHING_CALL_RESPONSE,
 					payload: {
 						teachingCallResponse: teachingCallResponse
+					}
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
+		updateTeachingCallReceipt: function (teachingCallReceipt) {
+			assignmentService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
+				$rootScope.$emit('toast', {message: "Updated reponse", type: "SUCCESS"});
+				var action = {
+					type: UPDATE_TEACHING_CALL_RECEIPT,
+					payload: {
+						teachingCallReceipt: teachingCallReceipt
 					}
 				};
 				assignmentStateService.reduce(action);
@@ -209,7 +225,37 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				}
 			};
 			assignmentStateService.reduce(action);
-		}
+		},
+		addPreference: function (teachingAssignment) {
+			assignmentService.addPreference(teachingAssignment).then(function (teachingAssignments) {
+				$rootScope.$emit('toast', {message: "Added Preference", type: "SUCCESS"});
+				var action = {
+					type: ADD_PREFERENCE,
+					payload: {
+						teachingAssignments: teachingAssignments
+					}
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});	
+		},
+		removePreference: function(teachingAssignment) {
+			assignmentService.removePreference(teachingAssignment).then(function (teachingAssignments) {
+				$rootScope.$emit('toast', {message: "Removed Preference", type: "SUCCESS"});
+				var action = {
+					type: REMOVE_PREFERENCE,
+					payload: {
+						teachingAssignments: teachingAssignments,
+						instructorId: teachingAssignment.instructorId,
+						termCode: teachingAssignment.termCode
+					}
+				};
 
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		}
 	}
 });

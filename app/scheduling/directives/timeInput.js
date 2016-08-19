@@ -2,21 +2,38 @@
  * example:
  * <time-input	time="time"
  * 				minute-step="5"
+ *				on-change-delay="500"
+ *				on-change="saveChanges()"
  * 				link-minute-hour="true"></time-input>
  */
-sharedApp.directive("timeInput", this.timeInput = function(timePatternService) {
+schedulingApp.directive("timeInput", this.timeInput = function($timeout) {
 	return {
 		restrict: "E",
 		templateUrl: 'timeInput.html',
 		scope: {
 			time: '=',
-			minuteStep: '@'
+			minuteStep: '@',
+			onChangeDelay: '@',
+			onChange: '&'
 		},
 		link: function(scope, element, attrs) {
 			var linkMinuteHour = (attrs.linkMinuteHour === 'true');
 
 			scope.getMeridianTime = function() {
-				return timePatternService.getMeridianTime(scope.time);
+				if (!scope.time) {
+					return {hours: '--', minutes: '--', meridian: '--'};
+				}
+
+				var timeArr = scope.time.split(':');
+
+				var hours = parseInt(timeArr[0]);
+				if (hours === 0) hours = 12;
+				else if (hours > 12) hours = hours % 12;
+
+				var minutes = parseInt(timeArr[1]);
+				var meridian = timeArr[0] < 12 ? 'AM' : 'PM';
+
+				return {hours: hours, minutes: minutes, meridian: meridian};
 			};
 
 			scope.incrementHours = function() {
@@ -132,6 +149,10 @@ sharedApp.directive("timeInput", this.timeInput = function(timePatternService) {
 				else if (time.meridian === 'AM' && time.hours === 12) time.hours = 0;
 
 				scope.time = ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ":00";
+
+				$timeout(function () {
+					scope.onChange();
+				}, parseInt(scope.onChangeDelay));
 			}
 		}
 	}
