@@ -563,6 +563,7 @@ p.activity-list-header {
   color: #000;
   text-indent: 1em;
   font-weight: bold;
+  margin-top: 1.5em;
 }
 .activity-item {
   border-bottom: 1px solid #6AA4C1;
@@ -658,7 +659,7 @@ a.fc-event:hover,
   padding-left: 0.5em;
 }
 ul.activity-group {
-  padding: 1em;
+  padding: 0 1em;
   position: relative;
 }
 li.add-activity {
