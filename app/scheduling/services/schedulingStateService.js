@@ -71,6 +71,15 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					sectionGroups.list[action.payload.sectionGroup.id].sharedActivityIds = action.payload.sharedActivities
 						.map(function (a) { return a.id; });
 					return sectionGroups;
+				case REMOVE_ACTIVITY:
+					var sectionGroup = sectionGroups.list[action.payload.activity.sectionGroupId];
+					if (!sectionGroup.sharedActivityIds) { return sectionGroups; }
+
+					var activityIndex = sectionGroup.sharedActivityIds.indexOf(action.payload.activity.id);
+					if (activityIndex >= 0) {
+						sectionGroup.sharedActivityIds.splice(activityIndex, 1);
+					}
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}
@@ -93,6 +102,13 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 						sections.list[section.id] = new Section(section);
 						sections.ids.push(section.id);
 					});
+					return sections;
+				case REMOVE_ACTIVITY:
+					var section = sections.list[action.payload.activity.sectionId];
+					var activityIndex = section.activityIds.indexOf(action.payload.activity.id);
+					if (activityIndex >= 0) {
+						section.activityIds.splice(activityIndex, 1);
+					}
 					return sections;
 				default:
 					return sections;
@@ -122,6 +138,11 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					return activities;
 				case UPDATE_ACTIVITY:
 					activities.list[action.payload.activity.id] = new Activity(action.payload.activity);
+					return activities;
+				case REMOVE_ACTIVITY:
+					var activityIndex = activities.ids.indexOf(action.payload.activity.id);
+					activities.ids.splice(activityIndex, 1);
+					delete activities.list[action.payload.activity.id];
 					return activities;
 				default:
 					return activities;
@@ -251,6 +272,11 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					uiState.selectedCourseId = null;
 					uiState.selectedActivityId = null;
 					uiState.checkedSectionGroupIds = [];
+					return uiState;
+				case REMOVE_ACTIVITY:
+					if (uiState.selectedActivityId == action.payload.activity.id) {
+						uiState.selectedActivityId = null;
+					}
 					return uiState;
 				default:
 					return uiState;

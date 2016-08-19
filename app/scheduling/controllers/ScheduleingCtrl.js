@@ -106,6 +106,10 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
 				schedulingActionCreators.updateActivity(activity);
 			};
+
+			$scope.removeActivity = function (activity) {
+				schedulingActionCreators.removeActivity(activity);
+			};
 		}
 ]);
 
