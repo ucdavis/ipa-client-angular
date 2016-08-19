@@ -129,7 +129,8 @@
 							<li class="add-activity">
 								<i class="entypo-plus-circled text-success" style="font-size: 120%;"
 									uib-tooltip="Add new shared {{ sharedActivity.getCodeDescription() }}"
-									tooltip-placement="right" tooltip-append-to-body="true"></i>
+									tooltip-placement="right" tooltip-append-to-body="true"
+									ng-click="createSharedActivity(sharedActivity, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"></i>
 						</ul>
 						<ul>
 							<li class="section-item" ng-repeat="sectionId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds"

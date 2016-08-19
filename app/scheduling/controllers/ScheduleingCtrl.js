@@ -110,6 +110,10 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			$scope.removeActivity = function (activity) {
 				schedulingActionCreators.removeActivity(activity);
 			};
+
+			$scope.createSharedActivity = function (sharedActivity, sectionGroup) {
+				schedulingActionCreators.createSharedActivity(sharedActivity, sectionGroup);
+			};
 		}
 ]);
 

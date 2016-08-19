@@ -80,6 +80,9 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 						sectionGroup.sharedActivityIds.splice(activityIndex, 1);
 					}
 					return sectionGroups;
+				case CREATE_SHARED_ACTIVITY:
+					sectionGroups.list[action.payload.sectionGroup.id].sharedActivityIds.push(action.payload.activity.id);
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}
@@ -143,6 +146,11 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					var activityIndex = activities.ids.indexOf(action.payload.activity.id);
 					activities.ids.splice(activityIndex, 1);
 					delete activities.list[action.payload.activity.id];
+					return activities;
+				case CREATE_SHARED_ACTIVITY:
+					activities.list[action.payload.activity.id] = new Activity(action.payload.activity);
+					activities.list[action.payload.activity.id].courseId = action.payload.sectionGroup.courseId;
+					activities.ids.push(action.payload.activity.id);
 					return activities;
 				default:
 					return activities;

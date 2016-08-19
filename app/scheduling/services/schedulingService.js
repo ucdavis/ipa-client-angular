@@ -61,6 +61,19 @@ schedulingApp.factory("schedulingService", this.schedulingService = function($ht
 			});
 
 			return deferred.promise;
+		},
+		createSharedActivity: function (activity) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/schedulingView/sectionGroups/" + activity.sectionGroupId, activity, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });
