@@ -142,7 +142,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					// Numeric sections
 					if (sg.sectionIds && sg.sectionIds.length > 0) { return null; }
 					else { return course.sequencePattern; }
-				} if (sg.sectionIds) {
+				} if (sg.sectionIds && sg.sectionIds.length > 0) {
 					var lstSectionId = sg.sectionIds[sg.sectionIds.length - 1];
 					var lastSection = $scope.view.state.sections.list[lstSectionId]
 					var number = parseInt(lastSection.sequenceNumber.slice(-1)) + 1;

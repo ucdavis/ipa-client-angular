@@ -260,7 +260,7 @@
 							<!--<td>{{ section.enrollment }}</td>-->
 							<td>
 								<input auto-input
-									type="number" class="form-control section-seats-edit"
+									type="number" class="form-control section-seats-edit text-center"
 									on-enter="updateSection(view.state.sections.list[sectionId])"
 									on-blur="updateSection(view.state.sections.list[sectionId])"
 									help-text-placement="left"
@@ -280,12 +280,12 @@
 							<td><strong>Total</strong></td>
 							<!-- TODO: Get enrollment live from DW? -->
 							<!--<td>{{ section.enrollment }}</td>-->
-							<td>{{ sectionSeatTotal(view.selectedEntity) }}</td>
+							<td class="text-center">{{ sectionSeatTotal(view.selectedEntity) }}</td>
 							<td></td>
 						</tr>
 					</tbody>
 				</table>
-				<div class="col-sm-12 text-center" ng-if="view.selectedEntity.sectionIds && nextSequence()">
+				<div class="col-sm-12 text-center" ng-if="nextSequence()">
 						<button class="btn btn-white" uib-tooltip="Add a section" tooltip-placement="right"
 							ng-click="addSection()">Create {{ nextSequence() }}</button>
 				</div>
