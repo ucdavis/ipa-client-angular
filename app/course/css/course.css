@@ -615,12 +615,6 @@ table.sections-table > tbody tr > td {
   background: #ebebeb;
   border-radius: 3px;
 }
-.section-group-details {
-  visibility: hidden;
-}
-.section-group-details.visible {
-  visibility: visible;
-}
 
 /* .btn-group vertical-align pushes the icons with dropdown menus out of veritcal
    alignment with the icons without a dropdown menu */

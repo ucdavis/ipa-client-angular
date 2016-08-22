@@ -36,11 +36,12 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					$scope.view.selectedEntityType = "course";
 				} else if (data.state.uiState.selectedCourseId && data.state.uiState.selectedTermCode) {
 					// A sectionGroup is selected
+					$scope.view.selectedEntityType = "sectionGroup";
 					var course = $scope.view.state.courses.list[data.state.uiState.selectedCourseId];
-					$scope.view.selectedEntity = _.find($scope.view.state.sectionGroups.list, function (sg) { return (sg.termCode == data.state.uiState.selectedTermCode) && (sg.courseId == data.state.uiState.selectedCourseId) });
+					$scope.view.selectedEntity = $scope.view.state.sectionGroups.selectedSectionGroup || $scope.view.state.sectionGroups.newSectionGroup;
 
 					// Initialize sectionGroup sections if not done already
-					if ($scope.view.selectedEntity && $scope.view.selectedEntity.sectionIds == undefined) {
+					if ($scope.view.selectedEntity.id && $scope.view.selectedEntity.sectionIds == undefined) {
 						courseActionCreators.getSectionsBySectionGroup($scope.view.selectedEntity);
 					}
 
@@ -49,7 +50,6 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 						courseActionCreators.getCourseCensus(course);
 					}
 
-					$scope.view.selectedEntityType = "sectionGroup";
 				} else {
 					delete $scope.view.selectedEntity;
 				}
@@ -137,18 +137,23 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			 */
 			$scope.nextSequence = function () {
 				var sg = $scope.view.selectedEntity;
+				// SectionGroup does not exist...
+				if (!sg.id) { return null; }
+
 				var course = $scope.view.state.courses.list[sg.courseId];
 				if (course.isSeries() == false) {
-					// Numeric sections
+					// Numeric sections: return sequencePattern iff no sections exist
 					if (sg.sectionIds && sg.sectionIds.length > 0) { return null; }
 					else { return course.sequencePattern; }
 				} if (sg.sectionIds && sg.sectionIds.length > 0) {
+					// Calculate next section sequence if sections already exist
 					var lstSectionId = sg.sectionIds[sg.sectionIds.length - 1];
 					var lastSection = $scope.view.state.sections.list[lstSectionId]
 					var number = parseInt(lastSection.sequenceNumber.slice(-1)) + 1;
 					var character = lastSection.sequenceNumber.slice(0, 1);
 					return character + "0" + number;
 				} else {
+					// Default to 'X01' for the first section
 					return course.sequencePattern + "01";
 				}
 			};

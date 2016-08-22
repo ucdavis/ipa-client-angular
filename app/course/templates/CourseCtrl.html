@@ -234,7 +234,7 @@
 				</form>
 			</div>
 			<div class="section-group-details" style="padding: 1em;"
-				ng-class="{ 'visible': view.selectedEntityType == 'sectionGroup' }">
+				ng-if="view.selectedEntityType == 'sectionGroup'">
 				<census-chart census="view.state.courses.list[view.selectedEntity.courseId].census"
 				term-code="view.selectedEntity.termCode"></census-chart>
 				<hr />
@@ -288,6 +288,11 @@
 				<div class="col-sm-12 text-center" ng-if="nextSequence()">
 						<button class="btn btn-white" uib-tooltip="Add a section" tooltip-placement="right"
 							ng-click="addSection()">Create {{ nextSequence() }}</button>
+				</div>
+				<div class="col-sm-12 text-center" ng-if="!view.selectedEntity.id">
+						<p>No Course Offering for {{view.selectedEntity.termCode.getTermCodeDisplayName()}}</p>
+						<button class="btn btn-primary" uib-tooltip="Add a section" tooltip-placement="right"
+							ng-click="addSection()">Create Offering</button>
 				</div>
 			</div>
 		</div>

@@ -106,7 +106,8 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			switch (action.type) {
 				case INIT_STATE:
 					sectionGroups = {
-						newSectionGroup: {},
+						newSectionGroup: null,
+						selectedSectionGroup: null,
 						ids: []
 					};
 					var sectionGroupsList = {};
@@ -146,6 +147,23 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				case REMOVE_SECTION:
 					var sectionIdIndex = sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.indexOf(action.payload.section.id);
 					sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.splice(sectionIdIndex, 1);
+					return sectionGroups;
+				case CELL_SELECTED:
+					sectionGroups.selectedSectionGroup = _.find(sectionGroups.list, function (sg) {
+						return (sg.termCode == action.payload.termCode) && (sg.courseId == action.payload.courseId);
+					});
+					if (sectionGroups.selectedSectionGroup == undefined) {
+						var sectionGroupData = {
+							courseId: action.payload.courseId,
+							plannedSeats: 0,
+							termCode: action.payload.termCode.toString()
+						};
+						sectionGroups.newSectionGroup = new SectionGroup(sectionGroupData);
+					}
+					return sectionGroups;
+				case CLOSE_DETAILS:
+					sectionGroups.selectedSectionGroup = null;
+					sectionGroups.newSectionGroup = null;
 					return sectionGroups;
 				default:
 					return sectionGroups;
