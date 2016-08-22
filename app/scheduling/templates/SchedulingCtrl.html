@@ -113,6 +113,7 @@
 							{{ view.state.courses.list[view.state.uiState.selectedCourseId].courseNumber }}
 							- {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
 						</p>
+						<div class="section-pattern">All Sections</div>
 						<ul ng-repeat="sharedActivityId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sharedActivityIds track by $index"
 							class="activity-group" ng-init="sharedActivity = view.state.activities.list[sharedActivityId];">
 							<li class="activity-item"
