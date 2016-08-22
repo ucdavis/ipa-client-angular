@@ -119,7 +119,8 @@
 								ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
 								ng-click="setSelectedActivity(sharedActivityId)">
 									<span>{{ sharedActivity.getCodeDescription() }}</span>
-									<i class="entypo-minus-circled text-danger pull-right delete-activity"
+									<i class="entypo-minus-circled pull-right delete-activity clickable hoverable"
+										ng-class="{ 'text-danger': view.state.uiState.selectedActivityId != sharedActivityId }"
 										uib-tooltip="Remove shared {{ sharedActivity.getCodeDescription() }}"
 										tooltip-append-to-body="true"
 										confirm-button="removeActivity(sharedActivity)"
@@ -127,7 +128,7 @@
 										yes="Delete" no="Cancel" placement="right"></i>
 							</li>
 							<li class="add-activity">
-								<i class="entypo-plus-circled text-success" style="font-size: 120%;"
+								<i class="entypo-plus-circled text-success clickable hoverable"
 									uib-tooltip="Add new shared {{ sharedActivity.getCodeDescription() }}"
 									tooltip-placement="right" tooltip-append-to-body="true"
 									ng-click="createSharedActivity(sharedActivity, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"></i>
@@ -141,7 +142,8 @@
 										ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }"
 										ng-click="setSelectedActivity(activityId)">
 											<span>{{ activity.getCodeDescription() }}</span>
-											<i class="entypo-minus-circled text-danger pull-right delete-activity"
+											<i class="entypo-minus-circled pull-right delete-activity clickable hoverable"
+												ng-class="{ 'text-danger': view.state.uiState.selectedActivityId != sharedActivityId }"
 												uib-tooltip="Remove {{ activity.getCodeDescription() }}"
 												tooltip-append-to-body="true"
 												confirm-button="removeActivity(activity)"
@@ -152,7 +154,7 @@
 												ng-show="activityId == view.state.uiState.selectedActivityId && view.state.uiState.selectedActivity.hasWarning"></i>
 									</li>
 									<li class="add-activity">
-										<i class="entypo-plus-circled text-success" style="font-size: 120%;"
+										<i class="entypo-plus-circled text-success clickable hoverable"
 											uib-tooltip="Add new {{ sharedActivity.getCodeDescription() }}"
 											tooltip-placement="right" tooltip-append-to-body="true"
 											ng-click="createActivity(activity, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"></i>

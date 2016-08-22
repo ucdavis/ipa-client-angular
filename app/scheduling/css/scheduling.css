@@ -568,7 +568,6 @@ p.activity-list-header {
   margin-top: 1.5em;
 }
 .activity-item {
-  border-bottom: 1px solid #6AA4C1;
   padding: 5px;
   background: #FAFAFA;
   color: #333;
@@ -662,28 +661,31 @@ a.fc-event:hover,
   padding-left: 0.5em;
 }
 ul.activity-group {
-  padding: 0 1em;
   position: relative;
-  margin: 10px 0;
+  margin: 10px 15px;
 }
 li.add-activity {
-  visibility: hidden;
   position: absolute;
-  right: -3px;
-  bottom: -10px;
+  width: 100%;
+  border-top: 1px solid #6AA4C1;
 }
 ul.activity-group:hover li.add-activity {
+  width: calc(100% - 1em);
+  border-top: 1px solid green;
+}
+li.add-activity i {
+  font-size: 120%;
+  visibility: hidden;
+  right: -1em;
+  position: absolute;
+  bottom: -0.6em;
+}
+ul.activity-group:hover li.add-activity i {
   visibility: visible;
 }
-ul.activity-group:hover li.activity-item {
-  border-bottom: 1px solid green;
-}
 .delete-activity {
-  opacity: 0.3;
   display: none;
-}
-.delete-activity:hover {
-  opacity: 0.8;
+  margin-right: 1em;
 }
 ul.activity-group li.activity-item:hover .delete-activity {
   display: block;
