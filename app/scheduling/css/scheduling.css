@@ -439,12 +439,11 @@ body {
   display: flex;
 }
 .page-container .main-content {
-  display: flex !important;
   flex-direction: column;
   padding: 0;
 }
 .activity-page-header {
-  flex: 0 0 100px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid #ebebeb;
@@ -469,7 +468,7 @@ body {
   overflow-x: auto;
 }
 .section-group-container {
-  flex: 10 1 auto;
+  height: calc(100vh - 100px);
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -528,6 +527,7 @@ body {
   flex: 1 0 25%;
   display: flex;
   flex-direction: column;
+  height: 100%;
   background: -moz-linear-gradient(left, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 10px, rgba(0, 0, 0, 0) 100%);
   /* FF3.6-15 */
   background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 10px, rgba(0, 0, 0, 0) 100%);
@@ -540,6 +540,7 @@ body {
 .activity-container.collapsed {
   flex: 1 0 0;
   width: 0;
+  display: none;
 }
 .activity-list.collapsed {
   flex: 0 0 40%;
@@ -548,6 +549,7 @@ body {
   flex: 0 0 100%;
   border-bottom: 1px solid #ebebeb;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 .activity-list ul {
   list-style: none;
@@ -570,7 +572,6 @@ p.activity-list-header {
   padding: 5px;
   background: #FAFAFA;
   color: #333;
-  margin-bottom: 1em;
 }
 .activity-item.active {
   background: #636770;
@@ -579,9 +580,11 @@ p.activity-list-header {
 }
 .activity-details.collapsed {
   flex: 0 0 0;
+  display: none;
 }
 .activity-details {
   flex: 1 0 60%;
+  display: block;
   padding: 10px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -661,12 +664,13 @@ a.fc-event:hover,
 ul.activity-group {
   padding: 0 1em;
   position: relative;
+  margin: 10px 0;
 }
 li.add-activity {
   visibility: hidden;
   position: absolute;
-  right: 0px;
-  bottom: 15px;
+  right: -3px;
+  bottom: -10px;
 }
 ul.activity-group:hover li.add-activity {
   visibility: visible;

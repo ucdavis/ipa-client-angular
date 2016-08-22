@@ -114,7 +114,7 @@
 							- {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
 						</p>
 						<ul ng-repeat="sharedActivityId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sharedActivityIds track by $index"
-							class="activity-group" style="margin-top: 10px;" ng-init="sharedActivity = view.state.activities.list[sharedActivityId];">
+							class="activity-group" ng-init="sharedActivity = view.state.activities.list[sharedActivityId];">
 							<li class="activity-item"
 								ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
 								ng-click="setSelectedActivity(sharedActivityId)">
