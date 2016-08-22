@@ -12,16 +12,23 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 			scope.$watchGroup(['census', 'termCode'], function () {
 				if (scope.census == undefined) { return; }
 
+				var getLastFiveYears = function () {
+					var lastFiveYears = [];
+					for (var y = 4; y >= 0; y--) { lastFiveYears.push(moment().year() - y); }
+					return lastFiveYears;
+				};
+
 				var getCurrentCensusForProperty = function (property) {
-					return scope.census.filter(function (c) {
-						var matchesTerm = (c.termCode + '').slice(-2) == (scope.termCode + '').slice(-2);
-						var matchesCurrentCode = c.snapshotCode == "CURRENT";
-						return matchesTerm && matchesCurrentCode;
-					}).sort(function (ca, cb) {
-						return ca.termCode - cb.termCode;
+					var something = getLastFiveYears().map(function (year) {
+						return _.find(scope.census, function (c) {
+							var matchesTermCode = c.termCode.toString() == year + (scope.termCode + '').slice(-2);
+							var matchesCurrentCode = c.snapshotCode == "CURRENT";
+							return matchesTermCode && matchesCurrentCode;
+						});
 					}).map(function (c) {
-						return c[property];
-					}).slice(-5);
+						return c ? c[property] : 0;
+					});
+					return something;
 				};
 
 				var getCensusEnrollmentByCensusCodes = function (snapshotCodes) {
@@ -52,7 +59,7 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 				// TODO: Determine chart mode
 				if (true) {	// SG is in historical mode
 					type = 'line';
-					labels = getCurrentCensusForProperty("termCode").map(function (tc) { return Math.floor(tc/100); });
+					labels = getLastFiveYears();
 					datasets = [
 						{
 							label: "Seats",
