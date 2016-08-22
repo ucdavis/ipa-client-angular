@@ -125,6 +125,10 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				courseActionCreators.deleteSection(section);
 			};
 
+			$scope.addSectionGroup = function () {
+				courseActionCreators.addSectionGroup($scope.view.state.sectionGroups.newSectionGroup);
+			};
+
 			/**
 			 * For a given sectionGroup this returns the next sequence number if applicable.
 			 * Possible cases:
