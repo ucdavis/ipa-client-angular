@@ -8,7 +8,7 @@
  * Service in the courseApp.
  * Central location for sharedState information.
  */
-courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Tag) {
+courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Section, Tag) {
 	return {
 		_state: {},
 		_scheduleTermStateReducers: function (action, scheduleTermStates) {
@@ -67,7 +67,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					courses.ids.splice(newCourseIndex, 1);
 					courses.newCourse = null;
 					// Insert new course
-					courses.list[action.payload.course.id] = action.payload.course;
+					courses.list[action.payload.course.id] = new Course(action.payload.course);
 					courses.ids.splice(newCourseIndex, 0, action.payload.course.id);
 					return courses;
 				case REMOVE_COURSE:
@@ -120,9 +120,10 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					sectionGroups.list = sectionGroupsList;
 					return sectionGroups;
 				case ADD_SECTION_GROUP:
-					sectionGroups.list[action.payload.sectionGroup.id] = action.payload.sectionGroup;
+					sectionGroups.list[action.payload.sectionGroup.id] = new SectionGroup(action.payload.sectionGroup);
 					sectionGroups.ids.push(action.payload.sectionGroup.id);
-					sectionGroups.newSectionGroup = {};
+					sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
+					sectionGroups.newSectionGroup = null;
 					return sectionGroups;
 				case REMOVE_SECTION_GROUP:
 					var sectionGroupIndex = sectionGroups.ids.indexOf(action.payload.sectionGroup.id);
@@ -152,7 +153,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					sectionGroups.selectedSectionGroup = _.find(sectionGroups.list, function (sg) {
 						return (sg.termCode == action.payload.termCode) && (sg.courseId == action.payload.courseId);
 					});
-					if (sectionGroups.selectedSectionGroup == undefined) {
+					if (action.payload.termCode && sectionGroups.selectedSectionGroup == undefined) {
 						var sectionGroupData = {
 							courseId: action.payload.courseId,
 							plannedSeats: 0,
@@ -180,13 +181,13 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					};
 					return sections;
 				case FETCH_SECTIONS:
-					action.payload.sections.forEach(function (section) {
-						sections.list[section.id] = section;
-						sections.ids.push(section.id);
+					action.payload.sections.forEach(function (sectionData) {
+						sections.list[sectionData.id] = new Section(sectionData);
+						sections.ids.push(sectionData.id);
 					});
 					return sections;
 				case CREATE_SECTION:
-					sections.list[action.payload.section.id] = action.payload.section;
+					sections.list[action.payload.section.id] = new Section(action.payload.section);
 					sections.ids.push(action.payload.section.id);
 					return sections;
 				case REMOVE_SECTION:

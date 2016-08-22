@@ -30,6 +30,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					// A new course is being created
 					$scope.view.selectedEntity = $scope.view.state.courses.newCourse;
 					$scope.view.selectedEntityType = "newCourse";
+					$scope.$apply();
 				} else if (data.state.uiState.selectedCourseId && !data.state.uiState.selectedTermCode) {
 					// A course is selected
 					$scope.view.selectedEntity = $scope.view.state.courses.list[data.state.uiState.selectedCourseId];
@@ -41,7 +42,9 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					$scope.view.selectedEntity = $scope.view.state.sectionGroups.selectedSectionGroup || $scope.view.state.sectionGroups.newSectionGroup;
 
 					// Initialize sectionGroup sections if not done already
-					if ($scope.view.selectedEntity.id && $scope.view.selectedEntity.sectionIds == undefined) {
+					if ( $scope.view.selectedEntity
+						&& $scope.view.selectedEntity.id
+						&& $scope.view.selectedEntity.sectionIds == undefined) {
 						courseActionCreators.getSectionsBySectionGroup($scope.view.selectedEntity);
 					}
 
@@ -58,7 +61,6 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			});
 
 			$scope.closeDetails = function () {
-				delete $scope.view.selectedEntity;
 				if ($scope.view.state.courses.newCourse) {
 					courseActionCreators.closeNewCourseDetails();
 				} else {
