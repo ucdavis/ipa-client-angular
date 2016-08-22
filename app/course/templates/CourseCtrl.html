@@ -238,7 +238,7 @@
 				<census-chart census="view.state.courses.list[view.selectedEntity.courseId].census"
 				term-code="view.selectedEntity.termCode"></census-chart>
 				<hr />
-				<table class="table sections-table" style="margin-bottom: 5px;" ng-if="view.selectedEntity.sectionIds">
+				<table class="table sections-table" style="margin-bottom: 5px;" ng-if="view.selectedEntity.sectionIds.length">
 					<colgroup>
 						<col span="1" style="width: 30%;">
 						<!--<col span="1" style="width: 30%;">-->
@@ -285,14 +285,15 @@
 						</tr>
 					</tbody>
 				</table>
+				<div ng-if="view.selectedEntity.sectionIds.length == 0"
+					class="text-center text-muted" style="padding: 1em;">No sections available</div>
 				<div class="col-sm-12 text-center" ng-if="nextSequence()">
 						<button class="btn btn-white" uib-tooltip="Add a section" tooltip-placement="right"
 							ng-click="addSection()">Create {{ nextSequence() }}</button>
 				</div>
 				<div class="col-sm-12 text-center" ng-if="!view.selectedEntity.id">
 						<p>No Course Offering for {{view.selectedEntity.termCode.getTermCodeDisplayName()}}</p>
-						<button class="btn btn-primary" uib-tooltip="Add a section" tooltip-placement="right"
-							ng-click="addSectionGroup()">Create Offering</button>
+						<button class="btn btn-primary" ng-click="addSectionGroup()">Create Offering</button>
 				</div>
 			</div>
 		</div>
