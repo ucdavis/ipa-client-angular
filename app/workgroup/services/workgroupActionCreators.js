@@ -37,7 +37,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 		},
 		updateTag: function (workgroupId, tag) {
 			workgroupService.updateTag(workgroupId, tag).then(function (newTag) {
-				$rootScope.$emit('toast', {message: "Renamed tag to " + newTag.name, type: "SUCCESS"});
+				$rootScope.$emit('toast', {message: "Updated tag " + newTag.name, type: "SUCCESS"});
 				var action = {
 					type: UPDATE_TAG,
 					payload: {
