@@ -10,14 +10,27 @@
 			<div class="modal-body">
 				<!-- button -->
 				<div class="row btn-group btn-group--position container-fluid" data-toggle="buttons">
-					<label class="btn btn-white btn-sm active" id="courses-pivot">
-						<input type="radio" name="options">
+					<label class="btn btn-white btn-sm" id="courses-pivot" ng-if="viewState.teachingCalls.eligibleGroups.senateInstructors == true"
+					ng-click="toggleSenateInstructors()">
+						<input type="checkbox" name="options">
 						<span></span> Senate
 					</label>
-						<label class="btn btn-white btn-sm" id="instructors-pivot">
-							<input type="radio" name="options">
-							<span></span> Federation
-						</label>
+					<label class="btn btn-white btn-sm disabled" id="courses-pivot" ng-if="viewState.teachingCalls.eligibleGroups.senateInstructors == false"
+					data-toggle="tooltip" data-placement="top" data-original-title="Already participating in a Teaching Call" data-container="body">
+						<input type="checkbox" name="options">
+						<span></span> Senate
+					</label>
+
+					<label class="btn btn-white btn-sm active" id="courses-pivot" ng-if="viewState.teachingCalls.eligibleGroups.federationInstructors == true"
+					ng-click="toggleFederationInstructors()">
+						<input type="checkbox" name="options">
+						<span></span> Federation
+					</label>
+					<label class="btn btn-white btn-sm disabled" id="courses-pivot" ng-if="viewState.teachingCalls.eligibleGroups.federationInstructors == false"
+					data-toggle="tooltip" data-placement="top" data-original-title="Already participating in a Teaching Call" data-container="body">
+						<input type="checkbox" name="options">
+						<span></span> Federation
+					</label>
 				</div>
 				<!-- button ends-->
 					<div class="row flex-box container-fluid">
@@ -44,15 +57,14 @@
 							</div>
 							<div>
 								<h5>Set Term</h5>
-
-								<div class="btn-group" uib-dropdown is-open="status.isopen">
-									<button id="single-button" type="button" class="btn btn-default dropdown-toggle set-terms-teaching-call-btn" uib-dropdown-toggle>
+								<div class="btn-group" uib-dropdown auto-close="outsideClick" is-open="status.isopen">
+									<button id="single-button" type="button" class="btn btn-default dropdown-toggle set-terms-teaching-call-btn" uib-dropdown-toggle ng-disabled="disabled">
 										Set Terms <span class="caret"></span>
 									</button>
-									<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-										<li role="menuitem"><a href="#">Fall 2016</a></li>
-										<li role="menuitem"><a href="#">Winter 2017</a></li>
-										<li role="menuitem"><a href="#">Spring 2017</a></li>
+									<ul class="dropdown-menu" uib-dropdown-menu auto-close="outsideClick" role="menu" aria-labelledby="single-button">
+										<li ng-repeat="term in viewState.userInterface.enabledTerms.list" role="menuitem" 
+												ng-click="toggleTermActive(term)"
+												ng-class="{'active': startTeachingCallConfig.activeTerms[term.slice(-2)]}"><a href="#">{{getTermName(term)}}</a></li>
 									</ul>
 								</div>
 
