@@ -1,4 +1,4 @@
-sharedApp.directive("nav", this.nav = function($timeout, $location, $rootScope, authService, Term) {
+sharedApp.directive("nav", this.nav = function($location, $rootScope, authService, Term) {
 	return {
 		restrict: 'E',
 		templateUrl: 'nav.html',
@@ -34,19 +34,13 @@ sharedApp.directive("nav", this.nav = function($timeout, $location, $rootScope, 
 			scope.changeYearBy = function (offset) {
 				if (!offset || !scope.sharedState.workgroup) { return; }
 
-				// Cancel any previous timers (In the case when the user clicks mutiple times)
-				$timeout.cancel(scope.timer);
-
 				// Increment/decrement the year
 				scope.sharedState.year = parseInt(scope.sharedState.year) + offset;
 
-				// Schedule page redirect after delay
-				var delay = 1000; // milliseconds
-				scope.timer = $timeout(function () {
-					var url = '/' + scope.sharedState.workgroup.code + '/' + scope.sharedState.year + '/' + scope.termCode;
-					console.log('redirecting to ' + url);
-					$location.path(url);
-				}, delay);
+				// Redirect the page
+				var termCode = Number(scope.termCode) + (offset * 100);
+				var url = '/' + scope.sharedState.workgroup.id + '/' + scope.sharedState.year + '/' + termCode;
+				$location.path(url);
 			};
 
 			scope.logout = function () {
