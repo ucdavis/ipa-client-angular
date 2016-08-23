@@ -246,7 +246,7 @@
 			<div class="section-group-details" style="padding: 1em;"
 				ng-if="view.selectedEntityType == 'sectionGroup'">
 				<census-chart census="view.state.courses.list[view.selectedEntity.courseId].census"
-				term-code="view.selectedEntity.termCode"></census-chart>
+					term-code="view.selectedEntity.termCode" course-id="view.selectedEntity.courseId"></census-chart>
 				<hr />
 				<table class="table sections-table" style="margin-bottom: 5px;" ng-if="view.selectedEntity.sectionIds.length">
 					<colgroup>

@@ -5,11 +5,12 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 		replace: true,
 		scope: {
 			census: '=',
-			termCode: '='
+			termCode: '=',
+			courseId: '='
 		},
 		link: function (scope, element, attrs) {
 			var ctx = element[0].getContext("2d");
-			scope.$watchGroup(['census', 'termCode'], function () {
+			scope.$watchGroup(['census', 'termCode', 'courseId'], function () {
 				if (scope.census == undefined) {
 					ctx.textAlign="center";
 					ctx.fillText("Loading...", element.width()/2, element.height()/2);
@@ -128,7 +129,11 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 						}
 					});
 					$rootScope.$on("courseStateChanged", function (event, data) {
-						if (myChart && data.actionType == "CELL_SELECTED") { myChart.destroy(); }
+						// Destroy chart only if it exists and another cell was selected
+						if (myChart && data.actionType == "CELL_SELECTED"
+							&& ( data.state.uiState.selectedTermCode != scope.termCode || data.state.uiState.selectedCourseId != scope.courseId)) {
+							myChart.destroy();
+						}
 					});
 				});
 
