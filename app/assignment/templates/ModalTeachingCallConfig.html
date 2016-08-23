@@ -79,7 +79,7 @@
 			<div class="modal-footer modal-footer--teaching-call">
 				<div class="email-style container-fluid">
 					<h5 class="pull-left">Email Message</h5>
-					<textarea class="form-control" placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment"></textarea>
+					<textarea ng-model="startTeachingCallConfig.message" class="form-control" placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment"></textarea>
 				</div>
 				<button type="button" class="btn btn-default">Begin Without Email</button>
 				<button type="button" class="btn btn-info" ng-click="viewState.showPage1=false">Next</button>
@@ -123,7 +123,7 @@
 				<div class="modal-footer modal-footer--teaching-call">
 					<div class="email-style container-fluid">
 						<h5 class="pull-left">Email Message</h5>
-						<textarea class="form-control" placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment"></textarea>
+						<textarea ng-model="startTeachingCallConfig.message" class="form-control" placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment"></textarea>
 					</div>
 					<button type="button" class="btn btn-default" ng-click="viewState.showPage1 = true">Back</button>
 					<button type="button" class="btn btn-info">Submit</button>
