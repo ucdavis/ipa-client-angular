@@ -22,7 +22,6 @@
 											<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
 												ng-class="{ 'checked': view.state.filters.enabledTagIds.indexOf(tagId) >= 0 }">
 												<label class="cb-wrapper" ng-style="{ 'border-color': view.state.tags.list[tagId].color }">
-													<input type="checkbox" checked="">
 													<div class="checked" ng-style="{ 'background': view.state.tags.list[tagId].color }"></div>
 												</label>
 												<label ng-bind="view.state.tags.list[tagId].name"></label>
@@ -36,7 +35,9 @@
 										<li ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] track by $index" ng-click="toggleCalendarDay($index)">
 											<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
 												ng-class="{ 'checked': view.state.filters.hiddenDays.indexOf($index) < 0 }">
-												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
+												<label class="cb-wrapper">
+													<div class="checked"></div>
+												</label>
 												<label>{{ day }}</label>
 											</div>
 										</li>
