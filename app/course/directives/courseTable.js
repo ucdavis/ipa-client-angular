@@ -125,8 +125,12 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 						});
 
 						// Actions column
+						var popoverTemplate = "Are you sure you want to delete " + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern +"? <br />\
+							<div class='text-center'><button class='btn btn-red' data-event-type='deleteCourse' data-course-id='" + courseId + "'>Delete</button>\
+							<button class='btn btn-white' data-event-type='dismissCoursePop'>Cancel</button></div>"
 						row += "<td class=\"ui-overlay\"><i class=\"btn add-before entypo-plus-circled\" data-event-type=\"addCourse\" data-index=\"" + rowIdx + "\" ></i>";
-						row += "<i class=\"btn delete-sg entypo-minus-circled\" data-event-type=\"deleteCourse\" data-course-id=\"" + courseId + "\" ></i>";
+						row += "<i class=\"btn delete-sg entypo-minus-circled delete-course\" data-event-type=\"deleteCoursePop\" \
+							data-toggle=\"popover\" data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
 						row += "<i class=\"btn add-after entypo-plus-circled\" data-event-type=\"addCourse\" data-index=\"" + (rowIdx + 1) + "\" ></i></td>";
 					}
 
@@ -136,6 +140,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				});
 
 				element.append(body);
+				$('delete-course').popover();
 			});
 
 			// Call this once to set up table events.
@@ -176,13 +181,19 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				$el = $(e.target);
 
 				// Delete course
-				if ($el.data('event-type') == 'deleteCourse') {
+				if ($el.data('event-type') == 'deleteCoursePop') {
+					$el.closest('td.ui-overlay').css('visibility', 'visible')
+					$el.popover('show');
+				} else if ($el.data('event-type') == 'deleteCourse') {
 					var courseId = $el.data('course-id');
 					var course = scope.view.state.courses.list[courseId];
 
 					courseActionCreators.deleteCourse(course);
 					// Important: notify angular since this happends outside of the scope
 					scope.$apply();
+				} else if ($el.data('event-type') == 'dismissCoursePop') {
+					$el.closest('td.ui-overlay').css('visibility', '')
+					$el.closest("div.popover").siblings("i.delete-course").popover('hide');
 				} else if ($el.data('event-type') == 'addCourse') {
 					var index = $el.data('index');
 
