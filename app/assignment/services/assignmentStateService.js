@@ -537,6 +537,9 @@ assignmentApp.service('assignmentStateService', function (
 					userInterface.instructorId = action.payload.instructorId;
 					userInterface.userId = action.payload.userId;
 
+					userInterface.federationInstructorIds = action.payload.federationInstructorIds;
+					userInterface.senateInstructorIds = action.payload.senateInstructorIds;
+
 					userInterface.showInstructors = false;
 					userInterface.showCourses = true;
 					// Set default enabledTerms based on scheduleTermState data
