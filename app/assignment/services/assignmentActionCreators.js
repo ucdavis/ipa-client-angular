@@ -188,6 +188,34 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
+		updateTeachingCallResponse: function (teachingCallResponse) {
+			assignmentService.updateTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
+				$rootScope.$emit('toast', {message: "Updated reponse", type: "SUCCESS"});
+				var action = {
+					type: UPDATE_TEACHING_CALL_RESPONSE,
+					payload: {
+						teachingCallResponse: teachingCallResponse
+					}
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
+		addTeachingCallResponse: function (teachingCallResponse) {
+			assignmentService.addTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
+				$rootScope.$emit('toast', {message: "Updated response", type: "SUCCESS"});
+				var action = {
+					type: ADD_TEACHING_CALL_RESPONSE,
+					payload: {
+						teachingCallResponse: teachingCallResponse
+					}
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
 		showCourses: function () {
 			var action = {
 				type: SWITCH_MAIN_VIEW,

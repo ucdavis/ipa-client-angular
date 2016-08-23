@@ -7,8 +7,8 @@
  * # TeachingCallCtrl
  * Controller of the ipaClientAngularApp
  */
-assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routeParams', 'assignmentActionCreators',
-		this.TeachingCallCtrl = function ($scope, $rootScope, $routeParams, assignmentActionCreators) {
+assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routeParams', '$timeout', 'assignmentActionCreators',
+		this.TeachingCallCtrl = function ($scope, $rootScope, $routeParams, $timeout, assignmentActionCreators) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.nextYear = parseInt($scope.year) + 1;
@@ -146,25 +146,23 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 			};
 
 			$scope.saveTeachingCallResponse = function(term, blob, delay) {
-				var termCode = sharedService.termYear(term) + term;
-				var teachingCallResponse = $scope.teachingCallResponse[term] || {};
+				// Identify is updating or creating
+
+				var termCode = $scope.termToTermCode(term);
+				var teachingCallResponse = $scope.view.state.activeTeachingCall.teachingCallResponsesByTermCode[term] || {};
 				teachingCallResponse.availabilityBlob = blob || teachingCallResponse.availabilityBlob;
+				teachingCallResponse.termCode = termCode;
+				teachingCallResponse.instructorId = $scope.view.state.userInterface.instructorId;
+				teachingCallResponse.teachingCallId = $scope.view.state.activeTeachingCall.id;
 
 				// Report changes back to server after some delay
 				$timeout.cancel($scope.timeout[term]);
 				$scope.timeout[term] = $timeout(function() {
-					teachingCallResponseService.updateOrCreateTeachingCallResponse(
-						teachingCallResponse,
-						termCode,
-						$scope.instructorId,
-						$routeParams.teachingCallId)
-					.then(function(response){
-						$scope.teachingCallResponse[term] = response;
-						ngNotify.set("Saved changes successfully",'success');
-						$scope.autoSave();
-					}, function() {
-						ngNotify.set("Error saving changes",'error');
-					});
+					if (teachingCallResponse.id) {
+						assignmentActionCreators.updateTeachingCallResponse(teachingCallResponse);
+					} else {
+						assignmentActionCreators.addTeachingCallResponse(teachingCallResponse);
+					}
 				}, delay);
 			};
 
@@ -278,6 +276,22 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 						}
 				}
 				activeTeachingCall.teachingCallReceipt = $scope.view.state.teachingCallReceipts.list[$scope.view.state.activeTeachingCall.teachingCallReceiptId];
+				activeTeachingCall.teachingCallResponsesByTermCode = {};
+
+				for (var i = 0; i < $scope.view.state.activeTeachingCall.terms.length; i++) {
+					var termCode = $scope.termToTermCode($scope.view.state.activeTeachingCall.terms[i]);
+					activeTeachingCall.teachingCallResponsesByTermCode[termCode] = {};
+
+					for (var j = 0; j < $scope.view.state.teachingCallResponses.ids.length; j++) {
+						var slotTeachingCallResponse = $scope.view.state.teachingCallResponses.list[$scope.view.state.teachingCallResponses.ids[j]];
+
+						if (slotTeachingCallResponse.instructorId == $scope.view.state.userInterface.instructorId
+						&& slotTeachingCallResponse.termCode == termCode) {
+							activeTeachingCall.teachingCallResponsesByTermCode[termCode] = slotTeachingCallResponse;
+						}
+					}
+				}
+
 				assignmentActionCreators.initializeActiveTeachingCall(activeTeachingCall);
 			}
 
