@@ -7,7 +7,7 @@
 
 	<div class="row" style="margin-bottom: 2em;">
 		<div class="col-sm-offset-3 col-sm-6">
-			<input type="search" class="form-control" placeholder="Search" ng-model="view.searchQuery" ng-change="filterTable(view.searchQuery)" />
+			<input type="search" class="form-control" placeholder="Search Schedule" ng-model="view.searchQuery" ng-change="filterTable(view.searchQuery)" />
 		</div>
 	</div>
 
@@ -55,7 +55,7 @@
 
 				<div class="panel-heading">
 					<div class="panel-title">
-						Add Multiple Courses {{view.massImport}}
+						Add Multiple Courses
 					</div>
 
 					<div class="panel-options">
@@ -88,7 +88,7 @@
 							<div class="col-sm-4">
 								<ui-select ng-model="view.massImport.year" theme="bootstrap" search-enabled="false" close-on-select="true">
 									<ui-select-match placeholder="Select Academic Year...">
-										{{ view.massImport.year }}
+										{{ view.massImport.year }}-{{ (view.massImport.year + 1).toString().slice(2) }}
 									</ui-select-match>
 									<ui-select-choices repeat="recentYear in recentAcademicYears track by $index">
 										<div>{{ recentYear }}-{{ (recentYear + 1).toString().slice(2) }}</div>

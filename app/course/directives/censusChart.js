@@ -10,7 +10,11 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 		link: function (scope, element, attrs) {
 			var ctx = element[0].getContext("2d");
 			scope.$watchGroup(['census', 'termCode'], function () {
-				if (scope.census == undefined) { return; }
+				if (scope.census == undefined) {
+					ctx.textAlign="center";
+					ctx.fillText("Loading...", element.width()/2, element.height()/2);
+					return;
+				}
 
 				var getLastFiveYears = function () {
 					var lastFiveYears = [];
