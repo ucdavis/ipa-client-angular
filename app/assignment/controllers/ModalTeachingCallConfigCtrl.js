@@ -10,6 +10,8 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 
 	$scope.view = {};
 	$scope.viewState = viewState;
+	$scope.viewState.showPage1 = true;
+
 	console.log("viewstate");
 	console.log(viewState);
 	$scope.scheduleYear = scheduleYear;
@@ -127,5 +129,5 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 		return description;
 	}
 
-	$scope.getWorkgroupUserRoles();
+	//$scope.getWorkgroupUserRoles();
 });

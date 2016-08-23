@@ -1,0 +1,78 @@
+/*modal css*/
+.flex-box {
+    display: flex;
+}
+
+.btn-group--position{
+    flex:0 1 100%;
+    margin-bottom: 10px;
+}
+
+.teaching-call--header_style {
+    background: #303641;
+}
+
+.teaching-call--header_style h4 {
+    color: white;
+}
+
+.teaching-call--header_style button { /*assign style to "x" button */
+    color: white;
+    opacity: 1;
+}
+
+.teaching-call--width {
+    width: 750px;
+}
+
+.teaching-call--info_style {
+    flex:0 1 45%;
+}
+
+.modal-footer--teaching-call {
+    background-color: rgb(248, 248, 248);
+}
+
+.checkbox-inline input{
+    top: -2px !important;
+}
+
+.email-style {
+    margin-bottom:30px;
+    text-align: left;
+}
+
+.ta-slot--width {
+    width: 450px;
+}
+
+.ta-application--info_style {
+    flex: 0 1 35%;
+}
+
+/* modal overwrite */
+.modal .modal-header .close {
+    background: none;
+    display: inline-block;
+    padding: 0px 5px;
+    line-height: 1;
+    color: white;
+    zoom: 1;
+    opacity: 1 !important;
+}
+
+/*bootstrap overwrite*/
+.row {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+#modal-1 {
+	height: 600px;
+}
+
+.set-terms-teaching-call-btn {
+	background-color: white;
+	text-align: left;
+	width: 120px;
+}

@@ -830,3 +830,14 @@ ol.sortable-list>li .term-preference-dropdown {
 	text-align: center;
 	flex: 1 1 auto;
 }
+
+.btn:hover,
+.btn:focus,
+.btn-default:active,
+.btn-default.active,
+.btn-default:hover,
+.btn-default.hover,
+.open > .dropdown-toggle.btn-default
+ {
+	background-color: rgba(245, 245, 246, 0.8) !important;
+}
