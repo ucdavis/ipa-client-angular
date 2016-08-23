@@ -12,14 +12,14 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.view = {};
-			$scope.sequencePatterns = sequencePatterns;
-			$scope.subjectCodes = subjectCodes;
+			$scope.sequencePatterns = sequencePatterns; // constants.js file
+			$scope.subjectCodes = subjectCodes; // constants.js file
 
 			// Generate a few recent academic years for the mass course import mode
 			var currentYear = new Date().getFullYear();
 			var recentYears = [];
 			for(i = currentYear; i > currentYear - 10; i--) {
-				recentYears.push(i + "-" + String(i + 1).slice(2));
+				recentYears.push(i);
 			}
 			$scope.recentAcademicYears = recentYears;
 
@@ -56,8 +56,6 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				} else {
 					delete $scope.view.selectedEntity;
 				}
-
-				$scope.view.massImportMode = data.state.uiState.massImportMode;
 			});
 
 			$scope.closeDetails = function () {

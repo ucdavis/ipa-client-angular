@@ -320,7 +320,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			});
 
 			console.debug("Course state updated:");
-			console.debug(scope._state);
+			console.debug(scope._state, action.type);
 		}
 	}
 });

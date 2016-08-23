@@ -632,3 +632,7 @@ table.sections-table > tbody tr > td {
 .course-sequence-pattern {
   text-transform: uppercase;
 }
+
+.mass-import-panel {
+  width: calc(100% - 30px);
+}
