@@ -15,7 +15,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				CELL_SELECTED,
 				CLOSE_DETAILS,
 				CLOSE_NEW_COURSE_DETAILS,
-				UPDATE_TABLE_FILTER
+				UPDATE_TABLE_FILTER,
+				TOGGLE_TERM_FILTER
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
