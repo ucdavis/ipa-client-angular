@@ -7,11 +7,11 @@
 
 	<div class="row" style="margin-bottom: 2em;">
 		<div class="col-sm-offset-3 col-sm-6">
-			<input type="search" class="form-control" placeholder="Search Schedule" ng-model="view.searchQuery" ng-change="filterTable(view.searchQuery)" />
+			<input type="search" class="form-control hidden-print" placeholder="Search Schedule" ng-model="view.searchQuery" ng-change="filterTable(view.searchQuery)" />
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row hidden-print">
 		<div class="col-sm-12">
 			<div class="table-toolbar">
 				<span class="tool-icon glyphicon glyphicon-plus"
@@ -43,12 +43,12 @@
 					</ul>
 				</div> <!-- .btn-group -->
 
-				<span class="tool-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print"></span>
+				<span class="tool-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print" ng-click="print()"></span>
 			</div> <!-- .table-toolbar -->
 		</div> <!-- .col-sm-12 -->
 	</div> <!-- .row -->
 
-	<div class="row" ng-if="view.state.uiState.massImportMode">
+	<div class="row hidden-print" ng-if="view.state.uiState.massImportMode">
 		<div class="col-md-12">
 
 			<div class="panel panel-primary mass-import-panel" data-collapsed="0">
@@ -117,7 +117,7 @@
 
 </div>
 
-<div class="fixed right-details">
+<div class="fixed right-details hidden-print">
 	<div class="panel panel-primary panel-highlight" ng-if="view.selectedEntity">
 		<div class="panel-heading">
 			<div class="panel-title">

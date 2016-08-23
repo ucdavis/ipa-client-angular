@@ -58,6 +58,10 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				}
 			});
 
+			$scope.print = function(){
+				window.print();
+			};
+
 			$scope.closeDetails = function () {
 				if ($scope.view.state.courses.newCourse) {
 					courseActionCreators.closeNewCourseDetails();

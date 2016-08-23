@@ -96,12 +96,15 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 						// First column
 						row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
-						row += "Tags:";
-						$.each(course.tagIds, function (i, tagId) {
-							var tag = data.state.tags.list[tagId];
-							var bgColor = tag.color ? tag.color : "#333";
-							row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + bgColor + "\">" + tag.name + "</div>"
-						});
+						if (course.tagIds.length) {
+							row += "<div class=\"hidden-print\">Tags:";
+							$.each(course.tagIds, function (i, tagId) {
+								var tag = data.state.tags.list[tagId];
+								var bgColor = tag.color ? tag.color : "#333";
+								row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + bgColor + "\">" + tag.name + "</div>"
+							});
+							row += "</div>"
+						}
 						row += "</td>";
 
 						// Term column(s)
