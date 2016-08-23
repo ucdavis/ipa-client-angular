@@ -129,11 +129,11 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 	}
 
 	$scope.toggleSenateInstructors = function() {
-
+		$scope.startTeachingCallConfig.sentToSenate = !$scope.startTeachingCallConfig.sentToSenate;
 	}
 
 	$scope.toggleFederationInstructors = function() {
-
+		$scope.startTeachingCallConfig.sentToFederation = !$scope.startTeachingCallConfig.sentToFederation;
 	}
 
 	$scope.getTermName = function(term) {

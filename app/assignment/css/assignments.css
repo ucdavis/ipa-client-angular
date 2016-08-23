@@ -831,13 +831,16 @@ ol.sortable-list>li .term-preference-dropdown {
 	flex: 1 1 auto;
 }
 
-.btn:hover,
-.btn:focus,
-.btn-default:active,
-.btn-default.active,
-.btn-default:hover,
-.btn-default.hover,
-.open > .dropdown-toggle.btn-default
- {
+.open > .dropdown-toggle.btn:hover,
+.open > .dropdown-toggle.btn:focus,
+.open > .dropdown-toggle.btn-default:active,
+.open > .dropdown-toggle.btn-default.active,
+.open > .dropdown-toggle.btn-default:hover,
+.open > .dropdown-toggle.btn-default.hover,
+.open > .dropdown-toggle.btn-default {
 	background-color: rgba(245, 245, 246, 0.8) !important;
+}
+
+.muted-term-name {
+	color: #949494;
 }
