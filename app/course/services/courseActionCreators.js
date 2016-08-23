@@ -200,6 +200,71 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
 			});
+		},
+		createSection: function (section) {
+			courseService.createSection(section).then(function (section) {
+				$rootScope.$emit('toast', { message: "Created section " + section.sequenceNumber, type: "SUCCESS"} );
+				var action = {
+					type: CREATE_SECTION,
+					payload: {
+						section: section
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
+		},
+		deleteSection: function (section) {
+			courseService.deleteSection(section).then(function () {
+				$rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS"} );
+				var action = {
+					type: REMOVE_SECTION,
+					payload: {
+						section: section
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
+		},
+		updateTableFilter: function (query) {
+			var action = {
+				type: UPDATE_TABLE_FILTER,
+				payload: {
+					query: query
+				}
+			};
+			courseStateService.reduce(action);
+		},
+		beginImportMode: function() {
+			var action = {
+				type: BEGIN_IMPORT_MODE,
+				payload: {}
+			};
+			courseStateService.reduce(action);
+		},
+		endImportMode: function() {
+			var action = {
+				type: END_IMPORT_MODE,
+				payload: {}
+			};
+			courseStateService.reduce(action);
+		},
+		getCourseCensus: function (course) {
+			courseService.getCourseCensus(course).then(function (census) {
+				var action = {
+					type: GET_COURSE_CENSUS,
+					payload: {
+						course: course,
+						census: census
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
 		}
 	}
 });

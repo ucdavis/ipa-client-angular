@@ -46,9 +46,6 @@ module.exports = function (grunt) {
 				dest: '<%= folders.webapp.build %>/js/lib.js',
 				dependencies: {
 					'jquery-ui': 'jquery',
-				},
-				mainFiles: {
-					'jquery-ui': ['ui/core.js', 'ui/widget.js', 'ui/mouse.js', 'ui/sortable.js']
 				}
 			}
 		},
@@ -158,7 +155,7 @@ module.exports = function (grunt) {
 				flatten: true,
 				cwd: '',
 				src: [
-					'<%= folders.webapp.root %>/assets/fonts/*'
+					'<%= folders.webapp.root %>/assets/font/*'
 				],
 				dest: '<%= folders.webapp.build %>/font/'
 			},
@@ -167,7 +164,8 @@ module.exports = function (grunt) {
 				flatten: true,
 				cwd: '',
 				src: [
-					'bower_components/bootstrap/dist/fonts/*'
+					'bower_components/bootstrap/dist/fonts/*',
+					'<%= folders.webapp.root %>/assets/fonts/*'
 				],
 				dest: '<%= folders.webapp.build %>/fonts/'
 			},

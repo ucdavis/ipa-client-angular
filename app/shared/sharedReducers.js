@@ -13,11 +13,11 @@ var routeParamsThingy = function (state, action) {
 		case "CHANGE_YEAR":
 			state.year = action.payload.year;
 			return state;
-		case "CHANGE_WORKGROUP_CODE":
-			state.workgroupCode = action.payload.workgroupCode;
+		case "CHANGE_WORKGROUP_ID":
+			state.workgroupId = action.payload.workgroupId;
 			return state;
 		case "CHANGE_BOTH":
-			state.workgroupCode = action.payload.workgroupCode;
+			state.workgroupId = action.payload.workgroupId;
 			state.year = action.payload.year;
 			return state;
 		default:

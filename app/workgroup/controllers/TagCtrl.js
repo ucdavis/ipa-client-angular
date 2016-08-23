@@ -11,15 +11,15 @@ workgroupApp.controller('TagCtrl', ['$scope', '$rootScope', '$routeParams', 'wor
 		this.TagCtrl = function ($scope, $rootScope, $routeParams, workgroupActionCreators) {
 
 			$scope.addTag = function () {
-				workgroupActionCreators.addTag($scope.workgroupCode, $scope.view.state.tags.newTag);
+				workgroupActionCreators.addTag($scope.workgroupId, $scope.view.state.tags.newTag);
 			};
 
 			$scope.removeTag = function (tagId) {
-				workgroupActionCreators.removeTag($scope.workgroupCode, $scope.view.state.tags.list[tagId]);
+				workgroupActionCreators.removeTag($scope.workgroupId, $scope.view.state.tags.list[tagId]);
 			};
 
 			$scope.updateTag = function (tag) {
-				workgroupActionCreators.updateTag($scope.workgroupCode, tag);
+				workgroupActionCreators.updateTag($scope.workgroupId, tag);
 			};
 
 	}]);

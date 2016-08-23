@@ -2,7 +2,7 @@ window.workgroupApp = angular.module("workgroupApp", ["sharedApp", "ngRoute"]);
 
 workgroupApp.config(function ($routeProvider) {
 	return $routeProvider
-		.when("/:workgroupCode/:year", {
+		.when("/:workgroupId/:year", {
 			templateUrl: "WorkgroupCtrl.html",
 			controller: "WorkgroupCtrl",
 			resolve: {

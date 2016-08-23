@@ -10,10 +10,10 @@
  */
 workgroupApp.factory("workgroupService", this.workgroupService = function($http, $q) {
 	return {
-		getWorkgroupByCode: function(workgroupCode) {
+		getWorkgroupByCode: function(workgroupId) {
 			var deferred = $q.defer();
 
-			$http.get(serverRoot + "/api/workgroupView/" + workgroupCode, { withCredentials: true })
+			$http.get(serverRoot + "/api/workgroupView/" + workgroupId, { withCredentials: true })
 			.success(function(workgroup) {
 				deferred.resolve(workgroup);
 			})
@@ -23,10 +23,10 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
-		addTag: function (workgroupCode, tag) {
+		addTag: function (workgroupId, tag) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/workgroupView/" + workgroupCode + "/tags", tag, { withCredentials: true })
+			$http.post(serverRoot + "/api/workgroupView/" + workgroupId + "/tags", tag, { withCredentials: true })
 			.success(function(tag) {
 				deferred.resolve(tag);
 			})
@@ -36,10 +36,10 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
-		updateTag: function (workgroupCode, tag) {
+		updateTag: function (workgroupId, tag) {
 			var deferred = $q.defer();
 
-			$http.put(serverRoot + "/api/workgroupView/" + workgroupCode + "/tags/" + tag.id, tag, { withCredentials: true })
+			$http.put(serverRoot + "/api/workgroupView/" + workgroupId + "/tags/" + tag.id, tag, { withCredentials: true })
 			.success(function(tag) {
 				deferred.resolve(tag);
 			})
@@ -49,10 +49,10 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
-		removeTag: function(workgroupCode, tag) {
+		removeTag: function(workgroupId, tag) {
 			var deferred = $q.defer();
 
-			$http.delete(serverRoot + "/api/workgroupView/" + workgroupCode + "/tags/" + tag.id, { withCredentials: true })
+			$http.delete(serverRoot + "/api/workgroupView/" + workgroupId + "/tags/" + tag.id, { withCredentials: true })
 			.success(function() {
 				deferred.resolve();
 			})
@@ -62,10 +62,10 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
-		addLocation: function (workgroupCode, location) {
+		addLocation: function (workgroupId, location) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/workgroupView/" + workgroupCode + "/locations", location, { withCredentials: true })
+			$http.post(serverRoot + "/api/workgroupView/" + workgroupId + "/locations", location, { withCredentials: true })
 			.success(function(location) {
 				deferred.resolve(location);
 			})
@@ -75,10 +75,10 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
-		updateLocation: function (workgroupCode, location) {
+		updateLocation: function (workgroupId, location) {
 			var deferred = $q.defer();
 
-			$http.put(serverRoot + "/api/workgroupView/" + workgroupCode + "/locations/" + location.id, location, { withCredentials: true })
+			$http.put(serverRoot + "/api/workgroupView/" + workgroupId + "/locations/" + location.id, location, { withCredentials: true })
 			.success(function(location) {
 				deferred.resolve(location);
 			})
@@ -88,10 +88,10 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
-		removeLocation: function(workgroupCode, location) {
+		removeLocation: function(workgroupId, location) {
 			var deferred = $q.defer();
 
-			$http.delete(serverRoot + "/api/workgroupView/" + workgroupCode + "/locations/" + location.id, { withCredentials: true })
+			$http.delete(serverRoot + "/api/workgroupView/" + workgroupId + "/locations/" + location.id, { withCredentials: true })
 			.success(function() {
 				deferred.resolve();
 			})
@@ -101,10 +101,10 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
-		addRoleToUser: function (workgroupCode, user, role) {
+		addRoleToUser: function (workgroupId, user, role) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupCode + "/roles/" + role.name, null, { withCredentials: true })
+			$http.post(serverRoot + "/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupId + "/roles/" + role.name, null, { withCredentials: true })
 			.success(function(userRole) {
 				deferred.resolve(userRole);
 			})
@@ -114,10 +114,10 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
-		removeRoleFromUser: function (workgroupCode, user, role) {
+		removeRoleFromUser: function (workgroupId, user, role) {
 			var deferred = $q.defer();
 
-			$http.delete(serverRoot + "/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupCode + "/roles/" + role.name, { withCredentials: true })
+			$http.delete(serverRoot + "/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupId + "/roles/" + role.name, { withCredentials: true })
 			.success(function() {
 				deferred.resolve();
 			})
@@ -127,10 +127,10 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
-		searchUsers: function(workgroupCode, query) {
+		searchUsers: function(workgroupId, query) {
 			var deferred = $q.defer();
 
-			$http.get(serverRoot + "/api/workgroupView/workgroups/" + workgroupCode + "/userSearch?query=" + query, { withCredentials: true })
+			$http.get(serverRoot + "/api/workgroupView/workgroups/" + workgroupId + "/userSearch?query=" + query, { withCredentials: true })
 			.success(function(result) {
 				deferred.resolve(result);
 			})
@@ -140,10 +140,10 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
-		createUser: function (workgroupCode, user) {
+		createUser: function (workgroupId, user) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/workgroupView/workgroups/" + workgroupCode + "/users", user, { withCredentials: true })
+			$http.post(serverRoot + "/api/workgroupView/workgroups/" + workgroupId + "/users", user, { withCredentials: true })
 			.success(function(newUser) {
 				deferred.resolve(newUser);
 			})
@@ -153,10 +153,10 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
-		removeUserFromWorkgroup: function (workgroupCode, user) {
+		removeUserFromWorkgroup: function (workgroupId, user) {
 			var deferred = $q.defer();
 
-			$http.delete(serverRoot + "/api/workgroupView/workgroups/" + workgroupCode + "/users/" + user.loginId, { withCredentials: true })
+			$http.delete(serverRoot + "/api/workgroupView/workgroups/" + workgroupId + "/users/" + user.loginId, { withCredentials: true })
 			.success(function() {
 				deferred.resolve();
 			})

@@ -1,0 +1,305 @@
+<nav year="{{ year }}" term-code="{{ termCode }}" workgroup-id="{{ workgroupId }}"></nav>
+
+<div class="wrap">
+	<div class="main-content">
+
+		<div class="activity-page-header">
+			<div class="activity-page-title">
+				<h3>{{ term.fullDescription }}</h3>
+			</div>
+			<div class="activity-filters">
+				<div class="activity-filter-menu">
+					<div class="btn-group pull-right">
+						<button class="btn btn-white btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Filters <span class="caret"></span>
+						</button>
+						<div class="dropdown-menu" style="width: 400px; padding: 0;">
+							<div class="filters-container" stop-event="click">
+								<div class="tags-filter">
+									<h3>Tags</h3>
+									<ul>
+										<li ng-repeat="tagId in view.state.tags.ids track by $index" ng-click="toggleTagFilter(tagId)">
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+												ng-class="{ 'checked': view.state.filters.enabledTagIds.indexOf(tagId) >= 0 }">
+												<label class="cb-wrapper" ng-style="{ 'border-color': view.state.tags.list[tagId].color }">
+													<input type="checkbox" checked="">
+													<div class="checked" ng-style="{ 'background': view.state.tags.list[tagId].color }"></div>
+												</label>
+												<label ng-bind="view.state.tags.list[tagId].name"></label>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div class="days-filter">
+									<h3>Days</h3>
+									<ul>
+										<li ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] track by $index" ng-click="toggleCalendarDay($index)">
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+												ng-class="{ 'checked': view.state.filters.hiddenDays.indexOf($index) < 0 }">
+												<label class="cb-wrapper"><input type="checkbox" id="chk-20" checked=""><div class="checked"></div></label>
+												<label>{{ day }}</label>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="activity-filter-tokens">
+					<div class="label label-info" ng-repeat="sectionGroupId in view.state.uiState.checkedSectionGroupIds track by $index"
+						ng-init="sg = view.state.sectionGroups.list[sectionGroupId];">
+						{{ view.state.courses.list[sg.courseId].subjectCode }}
+						{{ view.state.courses.list[sg.courseId].courseNumber }}
+						- {{ view.state.courses.list[sg.courseId].sequencePattern }}
+						<i class="glyphicon glyphicon-remove clickable hoverable" ng-click="toggleCheckedSectionGroup(sectionGroupId)"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section-group-container">
+			<div class="section-group-list" ng-class="{ 'collapsed': view.state.uiState.selectedSectionGroupId }">
+				<ul>
+					<li class="section-group-item" ng-repeat="sectionGroupId in view.state.sectionGroups.ids track by $index"
+						ng-init="sg = view.state.sectionGroups.list[sectionGroupId];"
+						ng-show="view.state.courses.list[sg.courseId].matchesTagFilters || view.state.filters.enabledTagIds.length == 0"
+						ng-class="{ 'active': view.state.uiState.selectedSectionGroupId == sectionGroupId }"
+						ng-click="setSelectedSectionGroup(sectionGroupId)">
+
+						<div class="section-group-check" ng-if="view.state.uiState.selectedSectionGroupId != sectionGroupId"
+							ng-click="toggleCheckedSectionGroup(sectionGroupId)" stop-event="click">
+							<i ng-show="view.state.uiState.checkedSectionGroupIds.indexOf(sectionGroupId) >= 0" class="sg-checkbox fa fa-check-square-o"></i>
+							<i ng-hide="view.state.uiState.checkedSectionGroupIds.indexOf(sectionGroupId) >= 0" class="sg-checkbox fa fa-square-o"></i>
+						</div>
+						<div class="section-group-check" ng-if="view.state.uiState.selectedSectionGroupId == sectionGroupId">
+						</div>
+						<div class="section-group-description">
+							<span>
+								{{ view.state.courses.list[sg.courseId].subjectCode }}
+								{{ view.state.courses.list[sg.courseId].courseNumber }}
+								- {{ view.state.courses.list[sg.courseId].sequencePattern }}
+							</span>
+							<br />
+							<small class="text-muted">{{ view.state.courses.list[sg.courseId].title }}</small>
+							<br />
+							<small class="text-muted">
+								<!-- TODO: Instructor -->
+								<!--{{ sg.instructor }} --->
+
+								Units: {{ view.state.courses.list[sg.courseId].unitsLow }}
+
+								<!-- TODO: Display enrollment and total seats (Involves modifying payload to include all sections) -->
+								<!-- - {{ sg.enrollment[4] }} / {{ getSectionSeatsTotal(sg) }}-->
+
+								<div ng-if="view.state.courses.list[sg.courseId].tagIds.length">
+									Tags:
+									<div class="label" style="padding: 3px; margin-left: 3px;"
+										ng-repeat="tagId in view.state.courses.list[sg.courseId].tagIds track by $index"
+										ng-style="{ 'background-color': view.state.tags.list[tagId].color || '#333' }">
+										{{ view.state.tags.list[tagId].name }}
+									</div>
+								</div>
+							</small>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="activity-container" ng-class="{ 'collapsed': !view.state.uiState.selectedSectionGroupId }">
+				<div class="activity-list" ng-class="{ 'collapsed': view.state.uiState.selectedActivityId }">
+					<div ng-if="view.state.uiState.selectedSectionGroupId">
+
+						<p class="activity-list-header">
+							{{ view.state.courses.list[view.state.uiState.selectedCourseId].subjectCode }}
+							{{ view.state.courses.list[view.state.uiState.selectedCourseId].courseNumber }}
+							- {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
+						</p>
+						<div class="section-pattern">All Sections</div>
+						<ul ng-repeat="sharedActivityId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sharedActivityIds track by $index"
+							class="activity-group" ng-init="sharedActivity = view.state.activities.list[sharedActivityId];">
+							<li class="activity-item"
+								ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
+								ng-click="setSelectedActivity(sharedActivityId)">
+									<span>{{ sharedActivity.getCodeDescription() }}</span>
+									<i class="entypo-minus-circled pull-right delete-activity clickable hoverable"
+										ng-class="{ 'text-danger': view.state.uiState.selectedActivityId != sharedActivityId }"
+										uib-tooltip="Remove shared {{ sharedActivity.getCodeDescription() }}"
+										tooltip-append-to-body="true"
+										confirm-button="removeActivity(sharedActivity)"
+										message="Are you sure you want to remove this {{ sharedActivity.getCodeDescription() }}"
+										yes="Delete" no="Cancel" placement="right"></i>
+							</li>
+							<li class="add-activity">
+								<i class="entypo-plus-circled text-success clickable hoverable"
+									uib-tooltip="Add new shared {{ sharedActivity.getCodeDescription() }}"
+									tooltip-placement="right" tooltip-append-to-body="true"
+									ng-click="createSharedActivity(sharedActivity, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"></i>
+						</ul>
+						<ul>
+							<li class="section-item" ng-repeat="sectionId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds"
+								ng-init="section = view.state.sections.list[sectionId];">
+								<div class="section-pattern">Section {{ section.sequenceNumber }}</div>
+								<ul class="activity-group" ng-repeat="activityId in section.activityIds track by $index" ng-init="activity = view.state.activities.list[activityId];">
+									<li class="activity-item"
+										ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }"
+										ng-click="setSelectedActivity(activityId)">
+											<span>{{ activity.getCodeDescription() }}</span>
+											<i class="entypo-minus-circled pull-right delete-activity clickable hoverable"
+												ng-class="{ 'text-danger': view.state.uiState.selectedActivityId != sharedActivityId }"
+												uib-tooltip="Remove {{ activity.getCodeDescription() }}"
+												tooltip-append-to-body="true"
+												confirm-button="removeActivity(activity)"
+												message="Are you sure you want to remove this {{ activity.getCodeDescription() }}"
+												yes="Delete" no="Cancel" placement="right"></i>
+											<i class="glyphicon glyphicon-warning-sign pull-right text-warning"
+												uib-tooltip="Activity no longer matches standard pattern"
+												ng-show="activityId == view.state.uiState.selectedActivityId && view.state.uiState.selectedActivity.hasWarning"></i>
+									</li>
+									<li class="add-activity">
+										<i class="entypo-plus-circled text-success clickable hoverable"
+											uib-tooltip="Add new {{ sharedActivity.getCodeDescription() }}"
+											tooltip-placement="right" tooltip-append-to-body="true"
+											ng-click="createActivity(activity, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"></i>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="activity-details" ng-class="{ 'collapsed': !view.state.uiState.selectedActivityId }">
+					<div ng-show="view.state.uiState.selectedActivityId">
+						<p class="activity-details-header">
+							{{ view.state.activities.list[view.state.uiState.selectedActivityId].getCodeDescription() }}
+						</p>
+						<form class="form-horizontal">
+							<strong>Location</strong>
+							<hr style="margin: 0 0 5px 0;" />
+							<div class="form-group">
+								<div class="col-sm-12">
+									<div class="radio">
+										<label>
+											<input type="radio" ng-value="true" ng-click="clearLocation()"
+												ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom">
+												Banner Selected
+										</label>
+									</div>
+									<div class="radio">
+										<label>
+											<input type="radio" ng-value="false"
+												ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom">
+												Custom
+										</label>
+									</div>
+									<div ng-show="!view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom">
+
+										<ui-select ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].locationId"
+											theme="bootstrap" search-enabled="false"
+											close-on-select="true" on-select="saveActivity()">
+											<ui-select-match placeholder="Select location...">
+												{{ view.state.locations.list[view.state.activities.list[view.state.uiState.selectedActivityId].locationId].description }}
+											</ui-select-match>
+											<ui-select-choices repeat="locationId in view.state.locations.ids track by $index">
+												<div ng-bind-html="view.state.locations.list[locationId].description | highlight: $select.search"></div>
+											</ui-select-choices>
+										</ui-select>
+
+									</div>
+								</div>
+							</div>
+							<strong>Time</strong>
+							<hr style="margin: 0 0 5px 0;" />
+							<div class="form-group">
+								<div class="col-sm-12">
+									<div class="radio">
+										<label>
+											<input type="radio" name="buildingRadios" ng-value="true" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">Standard times
+										</label>
+									</div>
+									<!-- Standard times -->
+									<div ng-show="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">
+										<fieldset>
+											<div class="col-sm-4" style="padding: 0px;">
+												<select size="4" class="form-control standard-time"
+												ng-options="duration as (duration + ' min') for (duration,pattern) in standardPatterns"
+												ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration">
+												</select>
+											</div>
+											<div class="control-group col-sm-3" style="padding: 0px 0px 0px 5px;">
+												<select size="4" class="form-control standard-time"
+												ng-options="dayIndicator as getWeekDays(dayIndicator, standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].dayIndicators)
+												for dayIndicator in standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].dayIndicators"
+												ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].dayIndicator">
+												</select>
+											</div>
+											<div class="control-group col-sm-5" style="padding: 0px 0px 0px 5px;">
+												<select size="4" class="form-control standard-time">
+													<option ng-repeat="time in standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].times"
+													ng-selected="time.start === view.state.activities.list[view.state.uiState.selectedActivityId].startTime && time.end === view.state.activities.list[view.state.uiState.selectedActivityId].endTime"
+													ng-click="setActivityStandardTime(time)">
+														{{ getMeridianTime(time.start) }} - {{ getMeridianTime(time.end) }}
+													</option>
+												</select>
+											</div>
+										</fieldset>
+									</div>
+
+									<div class="radio">
+										<label>
+											<input type="radio" name="buildingRadios" ng-value="false" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">Non-standard times
+										</label>
+									</div>
+
+									<!-- Non-standard times -->
+									<div ng-hide="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">
+										<div class="form-group">
+											<div class="input-group">
+												<label class="col-sm-6 control-label" style="padding-right: 0;">
+													Repeats every: &nbsp;
+												</label>
+												<div class="col-sm-5" style="padding-left: 0;">
+													<div class="input-group input-group-sm">
+														<input auto-input
+															type="number" class="form-control"
+															on-enter="saveActivity()"
+															on-blur="saveActivity()"
+															help-text-placement="top"
+															ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].frequency" />
+														<span class="input-group-addon">weeks</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-offset-1 col-sm-10">
+												<div class="btn-group btn-group-justified btn-group-xs">
+													<div class="btn-group ng-scope" ng-repeat="day in days track by $index">
+														<button ng-click="toggleActivityDay($index)" ng-class="{'active': view.state.activities.list[view.state.uiState.selectedActivityId].dayIndicator[$index] === '1'}" type="button" class="btn btn-default ng-binding">{{day}}</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-offset-1 col-sm-5 text-center">
+												<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].startTime"
+													minute-step="5" on-change-delay="500" on-change="saveActivity()"></time-input>
+											</div>
+											<div class="col-sm-5 text-center">
+												<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].endTime"
+													minute-step="5" on-change-delay="500" on-change="saveActivity()"></time-input>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</form>
+
+					</div>
+				</div>
+			</div>
+			<div class="activity-calendar">
+				<term-calendar></term-calendar>
+			</div>
+		</div>
+
+	</div>
+</div>

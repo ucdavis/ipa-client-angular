@@ -1,28 +1,25 @@
 <div class="modal-body">
-	<h3 style="margin-top: 10px; margin-bottom: 20px;" class="page-header text-center">
-		Instructor Comments
+	<h3 style="margin-top: 10px;" class="page-header text-center">
+		Comments
 	</h3>
-	<div style="display:flex;">
-		<div style="flex: 1 1 40%;">
-			Instructor comment from Teaching Call:
-			<br />
-			<div class="gray-text" style="margin-top: 10px;">
-				{{ instructorComment }}
-			</div>
-		</div>
-		<div style="flex: 1 1 40%;">
-			Private Comment:
-			<br />
-			<input ng-model="privateComment" style="margin-top: 10px;"></input>
+	<div ng-if="instructorComment.length > 0">
+		<div class="modal-comment-subheader">From Instructor</div>
+
+		<div class="gray-text" style="margin-top: 10px; border: 1px solid #F2F2F2; padding: 5px;">
+			{{ instructorComment }}
 		</div>
 	</div>
+	<div class="modal-comment-subheader">From Staff</div>
+	
+	<textarea rows="6" class="form-control wysihtml5" ng-model="privateComment" style="margin-top: 10px;"></textarea>
+
 </div>
 <div class="modal-footer row" style="text-align: center; margin: 0px;">
 	<div style="display:flex">
 		<div style="flex: 1 1 80%"></div>
 		<div style="flex: 1 1 20%">
 			<button class="btn btn-default modal-cancel-btn" ng-click="cancel()">Cancel</button>
-			<button class="btn btn-primary modal-confirm-btn" ng-click="confirm()">Ok</button>
+			<button class="btn btn-primary modal-confirm-btn" ng-click="confirm()">Save</button>
 		</div>
 	</div>
 

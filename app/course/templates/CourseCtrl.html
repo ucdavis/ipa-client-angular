@@ -1,4 +1,4 @@
-<nav year="{{ year }}" term-code="{{ termCode }}" workgroup-code="{{ workgroupCode }}"></nav>
+<nav year="{{ year }}" term-code="{{ termCode }}" workgroup-id="{{ workgroupId }}"></nav>
 
 <div class="main-content" unselect-cell>
 
@@ -7,13 +7,18 @@
 
 	<div class="row" style="margin-bottom: 2em;">
 		<div class="col-sm-offset-3 col-sm-6">
-			<input type="search" class="form-control" placeholder="Search" />
+			<input type="search" class="form-control" placeholder="Search" ng-model="view.searchQuery" ng-change="filterTable(view.searchQuery)" />
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="table-toolbar">
+				<span class="tool-icon glyphicon glyphicon-plus"
+				      data-toggle="tooltip" data-placement="top"
+							title="" data-original-title="Import"
+							ng-click="beginImportMode()"></span>
+
 				<div class="btn-group">
 					<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
 					<ul class="dropdown-menu" multiselect-dropdown items="termDefinitions" active-ids="view.state.filters.enabledTerms" toggle-item="termToggled(id)" ></ul>
@@ -39,9 +44,64 @@
 				</div> <!-- .btn-group -->
 
 				<span class="tool-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print"></span>
+			</div> <!-- .table-toolbar -->
+		</div> <!-- .col-sm-12 -->
+	</div> <!-- .row -->
+
+	<div class="row" ng-if="view.massImportMode">
+		<div class="col-md-12">
+
+			<div class="panel panel-primary" data-collapsed="0">
+
+				<div class="panel-heading">
+					<div class="panel-title">
+						Add Multiple Courses
+					</div>
+
+					<div class="panel-options">
+						<a href="#" ng-click="endImportMode()"><i class="entypo-cancel"></i></a>
+					</div>
+				</div>
+
+				<div class="panel-body">
+
+					<form role="form" class="form-horizontal form-groups-bordered">
+
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Subject Code</label>
+
+							<div class="col-sm-4">
+								<select class="form-control">
+									<option ng-repeat="subjectCode in subjectCodes track by $index" value="{{ subjectCode }}">{{ subjectCode }}</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Academic Year</label>
+
+							<div class="col-sm-4">
+								<select class="form-control">
+									<option ng-repeat="recentYear in recentAcademicYears track by $index" value={{ recentYear }}>{{ recentYear }}</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-offset-4 col-sm-4">
+									<button type="submit" class="btn btn-default btn-block">Search</button>
+								</div>
+							</div>
+						</div>
+					</form>
+
+				</div>
+
 			</div>
+
 		</div>
-	</div>
+	</div> <!-- .row -->
 
 	<table course-table class="table table-bordered courses-table"></table>
 
@@ -174,20 +234,23 @@
 				</form>
 			</div>
 			<div class="section-group-details" style="padding: 1em;"
-				ng-class="{ 'visible': view.selectedEntityType == 'sectionGroup' }">
-				<sg-chart sg="view.selectedEntity"></sg-chart>
+				ng-if="view.selectedEntityType == 'sectionGroup'">
+				<census-chart census="view.state.courses.list[view.selectedEntity.courseId].census"
+				term-code="view.selectedEntity.termCode"></census-chart>
 				<hr />
-				<table class="table sections-table">
+				<table class="table sections-table" style="margin-bottom: 5px;" ng-if="view.selectedEntity.sectionIds.length">
 					<colgroup>
-						<col span="1" style="width: 34%;">
-						<!--<col span="1" style="width: 33%;">-->
-						<col span="1" style="width: 33%;">
+						<col span="1" style="width: 30%;">
+						<!--<col span="1" style="width: 30%;">-->
+						<col span="1" style="width: 30%;">
+						<col span="1" style="width: 10%;">
 					</colgroup>
 					<thead>
 						<tr>
 							<th>Section</th>
 							<!--<th>Enrollment</th>-->
 							<th>Seats</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -197,19 +260,41 @@
 							<!--<td>{{ section.enrollment }}</td>-->
 							<td>
 								<input auto-input
-									type="text" class="form-control section-seats-edit"
+									type="number" class="form-control section-seats-edit text-center"
 									on-enter="updateSection(view.state.sections.list[sectionId])"
 									on-blur="updateSection(view.state.sections.list[sectionId])"
 									help-text-placement="left"
 									ng-model="view.state.sections.list[sectionId].seats" />
+							</td>
+							<td>
+								<a class="text-danger clickable"
+									uib-tooltip="Delete"
+									confirm-button="deleteSection(view.state.sections.list[sectionId])"
+									message="Are you sure you want to remove this section"
+									yes="Delete" no="Cancel" placement="left">
+										<i class="entypo-cancel-squared"></i>
+								</a>
+							</td>
 						</tr>
-						<tr ng-if="view.selectedEntity.isSeries && view.selectedEntity.isActive">
-							<td><a>{{ nextSequence(view.selectedEntity) }}</a></td>
-							<td></td>
+						<tr ng-if="view.selectedEntity.sectionIds.length > 1">
+							<td><strong>Total</strong></td>
+							<!-- TODO: Get enrollment live from DW? -->
+							<!--<td>{{ section.enrollment }}</td>-->
+							<td class="text-center">{{ sectionSeatTotal(view.selectedEntity) }}</td>
 							<td></td>
 						</tr>
 					</tbody>
 				</table>
+				<div ng-if="view.selectedEntity.sectionIds.length == 0"
+					class="text-center text-muted" style="padding: 1em;">No sections available</div>
+				<div class="col-sm-12 text-center" ng-if="nextSequence()">
+						<button class="btn btn-white" uib-tooltip="Add a section" tooltip-placement="right"
+							ng-click="addSection()">Create {{ nextSequence() }}</button>
+				</div>
+				<div class="col-sm-12 text-center" ng-if="!view.selectedEntity.id">
+						<p>No Course Offering for {{view.selectedEntity.termCode.getTermCodeDisplayName()}}</p>
+						<button class="btn btn-primary" ng-click="addSectionGroup()">Create Offering</button>
+				</div>
 			</div>
 		</div>
 	</div>

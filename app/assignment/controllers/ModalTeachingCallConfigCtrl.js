@@ -8,16 +8,15 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 	$scope.startTeachingCallConfig.message += " As always, we will attempt to accommodate your requests, but we may need to ask some of you to make changes in order to balance our course offerings effectively.";
 	$scope.startTeachingCallConfig.emailInstructors = true;
 
+	// TODO: test data, remove
+
+	$scope.activeTermIds = [];
+
 	$scope.view = {};
 	$scope.viewState = viewState;
-	console.log("viewstate");
-	console.log(viewState);
+	$scope.viewState.showPage1 = true;
 	$scope.scheduleYear = scheduleYear;
-	$scope.eligibleGroupsForTeachingCall = viewState.teachingCalls.eligibleGroupsForTeachingCall;
 	$scope.workgroupId = workgroupId;
-
-	$scope.senate = $scope.viewState.teachingCalls.eligibleGroups.senateInstructors;
-	$scope.federation = $scope.viewState.teachingCalls.eligibleGroups.federationInstructors;
 
 	$scope.minDate = new Date();
 	$scope.parent = {dueDate:''};
@@ -29,8 +28,9 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 	$scope.allTerms = allTerms;
 	$scope.displayedFormPage = 1;
 
-	for (var i = 0; i < $scope.allTerms.length; i++) {
-		$scope.startTeachingCallConfig.activeTerms[$scope.allTerms[i]] = false;
+	var allTerms = ['5','6','7','8','9','10','1','2','3'];
+	for (var i = 0; i < allTerms.length; i++) {
+		$scope.startTeachingCallConfig.activeTerms[allTerms[i]] = false;
 	}
 
 	// Use schedule data to pre-select terms in TeachingCall creation form
@@ -105,6 +105,7 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 	}
 
 	$scope.toggleTermActive = function(term) {
+		var term = term.slice(-2);
 		$scope.startTeachingCallConfig.activeTerms[term] = !$scope.startTeachingCallConfig.activeTerms[term];
 	}
 
@@ -127,5 +128,35 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 		return description;
 	}
 
-	$scope.getWorkgroupUserRoles();
+	$scope.toggleSenateInstructors = function() {
+		$scope.startTeachingCallConfig.sentToSenate = !$scope.startTeachingCallConfig.sentToSenate;
+	}
+
+	$scope.toggleFederationInstructors = function() {
+		$scope.startTeachingCallConfig.sentToFederation = !$scope.startTeachingCallConfig.sentToFederation;
+	}
+
+	$scope.getTermName = function(term) {
+		var endingYear = "";
+		if (term.length == 6) {
+			endingYear = term.substring(0,4);
+			term = term.slice(-2);
+		}
+
+		termNames = {
+			'05': 'Summer Session 1',
+			'06': 'Summer Special Session',
+			'07': 'Summer Session 2',
+			'08': 'Summer Quarter',
+			'09': 'Fall Semester',
+			'10': 'Fall Quarter',
+			'01': 'Winter Quarter',
+			'02': 'Spring Semester',
+			'03': 'Spring Quarter'
+		};
+
+		return termNames[term] + " " + endingYear;
+	};
+
+	//$scope.getWorkgroupUserRoles();
 });

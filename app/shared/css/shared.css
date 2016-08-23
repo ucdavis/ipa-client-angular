@@ -1,6 +1,12 @@
 a {
   color: #337ab7;
 }
+h3, .h3 {
+  font-size: 21px;
+}
+.form-control, .btn {
+	font-size: 12px;
+}
 .page-container .sidebar-menu {
   width: 200px;
 }
@@ -37,6 +43,7 @@ body {
   -webkit-perspective: none;
   -moz-perspective: none;
   perspective: none;
+  font-size: 12px;
 }
 
 span.highlighted {
@@ -51,6 +58,13 @@ span.highlighted {
 	user-select: none;
 }
 
+.hoverable:hover {
+	text-decoration: none;
+	cursor: pointer;
+	filter: alpha(opacity = 60);
+	opacity: .6;
+}
+
 /* Availability grid shared directive css */
 table.availability-grid {
 	font-size: 0.7em;
@@ -58,7 +72,7 @@ table.availability-grid {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	margin-botton: 5px;
+	margin-bottom: 5px;
 }
 
 table.availability-grid tr th {
@@ -79,9 +93,6 @@ table.availability-grid tr th.hover {
 
 table.availability-grid tr td.unavailable {
 	background-color: rgba(200,200,200,0.8);
-}
-
-table.availability-grid tr td.available {
 }
 
 table.availability-grid tr td {

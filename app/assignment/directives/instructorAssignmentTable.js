@@ -62,12 +62,22 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 						courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor comments\" data-container=\"body\"></i>";
 						courseHtml += "</div>";
 
-						// Instructor Availabilities UI
+						// If they don't have any teachingCallResponses, there won't be any unavailabilities to show
 						courseHtml += "<div class=\"description-cell__avail-btn-container\">";
-						courseHtml += "<i class=\"glyphicon avail-btn glyphicon-calendar\" data-instructor-id=" + instructor.id;
-						courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor unavailabilities\" data-container=\"body\"></i>";
+
+						if (instructor.teachingCallResponses.length > 0) {
+							// Instructor Availabilities UI
+							courseHtml += "<i class=\"glyphicon avail-btn glyphicon-calendar\" data-instructor-id=" + instructor.id;
+							courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor unavailabilities\" data-container=\"body\"></i>";
+						} else {
+							courseHtml += "<div data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"No unavailabilities\" data-container=\"body\">";
+							courseHtml += "<i class=\" disabled disabled-calendar glyphicon glyphicon-calendar\"></i>";
+							courseHtml += "</div>";
+						}
+
 						courseHtml += "</div>";
 						courseHtml += "</div>";
+
 
 						// Instructor TeachingCall submitted preferences checkmark
 						if (teachingCallReceipt && teachingCallReceipt.isDone) {
@@ -114,10 +124,10 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 							// Track courses that were already present in 'interested', and should be filtered from 'other'
 							var interestedCourseIds = [];
+							var firstInterestedCourseAdded = false;
 
 							// If the instructor has teachingAssignments in this term, show them first
 							if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
-								courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
 
 								// Loop over teachingAssignments
 								$.each(instructor.teachingAssignmentTermCodeIds[termCode], function(i, teachingAssignmentId) {
@@ -128,6 +138,11 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 									// Show option if the TeachingAssignments parent Course is not being suppressed and Assignment is not already approved
 									if (teachingAssignment.approved == false && course.isHidden == false) {
+										if (firstInterestedCourseAdded == false) {
+											courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
+											firstInterestedCourseAdded = true;
+										}
+
 										var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 										courseHtml += "<li><a";
 										courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
@@ -135,7 +150,9 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 										courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
 									}
 								});
-								courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
+								if (firstInterestedCourseAdded) {
+									courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
+								}
 							}
 
 
@@ -178,8 +195,10 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 					var sectionGroupId = $el.data('section-group-id');
 					var instructorId = $el.data('instructor-id');
 					var teachingAssignmentId = $el.data('teaching-assignment-id');
+
 					// Approving an existing teachingAssignment
 					if (teachingAssignmentId) {
+
 						var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 						assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
 					} else { // Creating a new teachingAssignment, and then approving it

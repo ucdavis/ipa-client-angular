@@ -2,7 +2,7 @@ window.summaryApp = angular.module("summaryApp", ["sharedApp", "ngRoute"]);
 
 summaryApp.config(function ($routeProvider) {
 	return $routeProvider
-		.when("/:workgroupCode/:year", {
+		.when("/:workgroupId/:year", {
 			templateUrl: "SummaryCtrl.html",
 			controller: "SummaryCtrl",
 			resolve: {

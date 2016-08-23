@@ -23,6 +23,32 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
+		addPreference: function (teachingAssignment) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/assignmentView/preferences/" + teachingAssignment.schedule.id, teachingAssignment, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		removePreference: function (teachingAssignment) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/assignmentView/preferences/" + teachingAssignment.id, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		addInstructorAssignment: function (teachingAssignment) {
 			var deferred = $q.defer();
 
@@ -82,6 +108,32 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 			var deferred = $q.defer();
 
 			$http.put(serverRoot + "/api/assignmentView/teachingCallResponses/" + teachingCallResponse.id, teachingCallResponse, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		addTeachingCallResponse: function (teachingCallResponse) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/assignmentView/teachingCallResponses/" + teachingCallResponse.teachingCallId  + "/" + teachingCallResponse.instructorId, teachingCallResponse, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		updateTeachingCallReceipt: function (teachingCallReceipt) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/assignmentView/teachingCallReceipts/" + teachingCallReceipt.id, teachingCallReceipt, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})

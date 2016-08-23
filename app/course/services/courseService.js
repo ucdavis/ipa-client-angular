@@ -156,6 +156,45 @@ courseApp.factory("courseService", this.courseService = function($http, $q) {
 			});
 
 			return deferred.promise;
+		},
+		createSection: function (section) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/courseView/sectionGroups/" + section.sectionGroupId + "/sections", section, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		deleteSection: function (section) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/courseView/sections/" + section.id, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		getCourseCensus: function(course) {
+			var deferred = $q.defer();
+
+			$http.get(dwUrl + "/census?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + dwToken)
+			.success(function(result) {
+				deferred.resolve(result);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });

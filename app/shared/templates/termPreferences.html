@@ -1,18 +1,23 @@
 <div uib-dropdown is-open="status.dropDownIsOpen">
-	<button class="btn btn-default dropdown-toggle term-preference-dropdown" type="button"
+	<button ng-if="!preference" class="btn btn-default dropdown-toggle term-preference-dropdown" type="button"
 		id="dropdownMenu1" uib-dropdown-toggle ng-disabled="readOnly" style="width: 88%;">
 		<span class="dropdown-text">
 			{{ getDescription(preference) }}
 		</span>
 		<span class="caret"></span>
 	</button>
+	<div ng-if="preference" class="alert alert-info tile-assignment preference-display">
+		<div class="preference-display-detail">
+			{{ getDescription(preference) }}
+		</div>
+	</div>
 	<ul class="dropdown-menu dropdown-short" role="menu" aria-labelledby="dropdownMenu1" ng-if="status.dropDownIsOpen">
-		<li role="presentation" class="clickable" ng-class="{ 'active': preference.isBuyout }">
+		<li role="presentation" class="clickable">
 			<a role="menuitem" ng-click="onSelect({isBuyout: true})">
 				<strong style="padding-left: 43px;">BUYOUT</strong>
 			</a>
 		</li>
-		<li role="presentation" class="clickable" ng-class="{ 'active': preference.isCourseRelease }">
+		<li role="presentation" class="clickable">
 			<a role="menuitem" ng-click="onSelect({isCourseRelease: true})">
 				<strong style="padding-left: 43px;">COURSE RELEASE</strong>
 			</a>
@@ -24,25 +29,18 @@
 			</a>
 		</li>
 		<li ng-repeat="course in courses | orderBy: ['subjectCode','courseNumber','title'] track by $index"
-		ng-class="{ 'active': preference.courseOffering && preference.courseOffering.id === course.id }"
-		ng-if="(!hiddenCourseOfferingIds) || hiddenCourseOfferingIds.indexOf(course.id) < 0" role="presentation" class="clickable">
+		ng-if="course.hasPreference == false" role="presentation" class="clickable">
 			<a role="menuitem" ng-click="onSelect({courseOffering: course})">
 				<span class="badge" style="background-color: #aaa; width: 40px;">{{ course.seatsTotal }}</span>
 				{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
 			</a>
 		</li>
-		<li role="presentation" class="clickable">
-			<a role="menuitem" ng-click="addUnscheduledCourseModal()">
-				<strong style="width: 100%;" class="btn btn-default">Add Other Course</strong>
-			</a>
-		</li>
 	</ul>
 </div>
-<span confirm-button="onDelete()"
+<span ng-if="preference && !preference.approved" confirm-button="onDelete()"
 	message="Are you sure you want to delete this preference"
 	yes="Delete" no="Cancel" placement="bottom"
 	confirm-is-shown="status.confirmIsOpen"
-	ng-if="deletable && !readOnly"
 	class="glyphicon glyphicon-remove sortable-item-button close"
 	aria-hidden="true" style="width: 10%;" uib-tooltip="Remove"
 	tooltip-placement="right"></span>

@@ -17,9 +17,9 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$t
 					var userRoleNames = user.userRoles.map(function (userRole) { return userRole.role; });
 					var userRoleIndex = userRoleNames.indexOf(role.name);
 					var userRoleToBeDeleted = user.userRoles[userRoleIndex];
-					workgroupActionCreators.removeRoleFromUser($scope.workgroupCode, user, role, userRoleToBeDeleted);
+					workgroupActionCreators.removeRoleFromUser($scope.workgroupId, user, role, userRoleToBeDeleted);
 				} else {
-					workgroupActionCreators.addRoleToUser($scope.workgroupCode, user, role);
+					workgroupActionCreators.addRoleToUser($scope.workgroupId, user, role);
 				}
 			};
 
@@ -36,7 +36,7 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$t
 			};
 
 			$scope.searchUsers = function (query) {
-				return workgroupService.searchUsers($scope.workgroupCode, query).then(function (userSearchResults) {
+				return workgroupService.searchUsers($scope.workgroupId, query).then(function (userSearchResults) {
 					return userSearchResults;
 				}, function (err) {
 					$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
@@ -44,12 +44,12 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$t
 			};
 
 			$scope.addUserToWorkgroup = function() {
-				workgroupActionCreators.createUser($scope.workgroupCode, $scope.view.state.users.newUser);
+				workgroupActionCreators.createUser($scope.workgroupId, $scope.view.state.users.newUser);
 			};
 
 			$scope.removeUserFromWorkgroup = function(userId) {
 				var user = $scope.view.state.users.list[userId];
-				workgroupActionCreators.removeUserFromWorkgroup($scope.workgroupCode, user);
+				workgroupActionCreators.removeUserFromWorkgroup($scope.workgroupId, user);
 			};
 
 	}]);

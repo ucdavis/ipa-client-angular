@@ -456,9 +456,9 @@ table.courses-table > tbody > tr > td:not(:first-child) {
 }
 .right-details .panel {
   height: 100%;
+  position: relative;
 }
 .right-details a {
-  color: #337ab7;
   cursor: pointer;
 }
 .right-details a:hover {
@@ -589,6 +589,13 @@ table.sections-table > tbody tr > td {
 }
 .panel-highlight > .panel-heading {
   background: rgba(179, 181, 198, 0.5);
+  height: 50px;
+}
+.panel-highlight > .panel-body {
+  height: calc(100% - 50px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 20px;
 }
 .right-inner-addon.form-group {
   margin: 0;
@@ -607,12 +614,6 @@ table.sections-table > tbody tr > td {
   cursor: pointer;
   background: #ebebeb;
   border-radius: 3px;
-}
-.section-group-details {
-  visibility: hidden;
-}
-.section-group-details.visible {
-  visibility: visible;
 }
 
 /* .btn-group vertical-align pushes the icons with dropdown menus out of veritcal

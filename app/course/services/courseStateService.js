@@ -8,7 +8,7 @@
  * Service in the courseApp.
  * Central location for sharedState information.
  */
-courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Tag) {
+courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Section, Tag) {
 	return {
 		_state: {},
 		_scheduleTermStateReducers: function (action, scheduleTermStates) {
@@ -67,7 +67,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					courses.ids.splice(newCourseIndex, 1);
 					courses.newCourse = null;
 					// Insert new course
-					courses.list[action.payload.course.id] = action.payload.course;
+					courses.list[action.payload.course.id] = new Course(action.payload.course);
 					courses.ids.splice(newCourseIndex, 0, action.payload.course.id);
 					return courses;
 				case REMOVE_COURSE:
@@ -77,6 +77,24 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					return courses;
 				case UPDATE_COURSE:
 					courses.list[action.payload.course.id] = action.payload.course;
+					return courses;
+				case UPDATE_TABLE_FILTER:
+					var query = action.payload.query.toLowerCase();
+
+					courses.ids.forEach(function (courseId) {
+						courses.list[courseId].isFiltered = true;
+						for(key in courses.list[courseId]) {
+							if (typeof courses.list[courseId][key] == "string"
+								&& courses.list[courseId][key].toLowerCase().search(query) >= 0) {
+								courses.list[courseId].isFiltered = false;
+							}
+						}
+
+						return courses.list[courseId];
+					});
+					return courses;
+				case GET_COURSE_CENSUS:
+					courses.list[action.payload.course.id].census = action.payload.census;
 					return courses;
 				default:
 					return courses;
@@ -88,7 +106,8 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			switch (action.type) {
 				case INIT_STATE:
 					sectionGroups = {
-						newSectionGroup: {},
+						newSectionGroup: null,
+						selectedSectionGroup: null,
 						ids: []
 					};
 					var sectionGroupsList = {};
@@ -101,9 +120,10 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					sectionGroups.list = sectionGroupsList;
 					return sectionGroups;
 				case ADD_SECTION_GROUP:
-					sectionGroups.list[action.payload.sectionGroup.id] = action.payload.sectionGroup;
+					sectionGroups.list[action.payload.sectionGroup.id] = new SectionGroup(action.payload.sectionGroup);
 					sectionGroups.ids.push(action.payload.sectionGroup.id);
-					sectionGroups.newSectionGroup = {};
+					sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
+					sectionGroups.newSectionGroup = null;
 					return sectionGroups;
 				case REMOVE_SECTION_GROUP:
 					var sectionGroupIndex = sectionGroups.ids.indexOf(action.payload.sectionGroup.id);
@@ -114,7 +134,38 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					sectionGroups.list[action.payload.sectionGroup.id] = action.payload.sectionGroup;
 					return sectionGroups;
 				case FETCH_SECTIONS:
-					sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections.map(function (section) { return section.id; });
+					sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections
+						.sort(function (sectionA, sectionB) {
+							if (sectionA.sequenceNumber < sectionB.sequenceNumber) { return -1; }
+							if (sectionA.sequenceNumber > sectionB.sequenceNumber) { return 1; }
+							return 0;
+ 						})
+						.map(function (section) { return section.id; });
+					return sectionGroups;
+				case CREATE_SECTION:
+					sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.push(action.payload.section.id);
+					return sectionGroups;
+				case REMOVE_SECTION:
+					var sectionIdIndex = sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.indexOf(action.payload.section.id);
+					sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.splice(sectionIdIndex, 1);
+					return sectionGroups;
+				case CELL_SELECTED:
+					sectionGroups.selectedSectionGroup = _.find(sectionGroups.list, function (sg) {
+						return (sg.termCode == action.payload.termCode) && (sg.courseId == action.payload.courseId);
+					});
+					if (action.payload.termCode && sectionGroups.selectedSectionGroup == undefined) {
+						var sectionGroupData = {
+							courseId: action.payload.courseId,
+							plannedSeats: 0,
+							termCode: action.payload.termCode.toString()
+						};
+						sectionGroups.newSectionGroup = new SectionGroup(sectionGroupData);
+					}
+					return sectionGroups;
+				case CLOSE_DETAILS:
+					sectionGroups.selectedSectionGroup = null;
+					sectionGroups.newSectionGroup = null;
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}
@@ -130,10 +181,19 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					};
 					return sections;
 				case FETCH_SECTIONS:
-					action.payload.sections.forEach(function (section) {
-						sections.list[section.id] = section;
-						sections.ids.push(section.id);
+					action.payload.sections.forEach(function (sectionData) {
+						sections.list[sectionData.id] = new Section(sectionData);
+						sections.ids.push(sectionData.id);
 					});
+					return sections;
+				case CREATE_SECTION:
+					sections.list[action.payload.section.id] = new Section(action.payload.section);
+					sections.ids.push(action.payload.section.id);
+					return sections;
+				case REMOVE_SECTION:
+					var sectionIndex = sections.ids.indexOf(action.payload.section.id);
+					sections.ids.splice(sectionIndex, 1);
+					delete sections.list[action.payload.section.id];
 					return sections;
 				case UPDATE_SECTION:
 					sections.list[action.payload.section.id] = action.payload.section;
@@ -205,7 +265,8 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					uiState = {
 						tableLocked: false,
 						selectedCourseId: null,
-						selectedTermCode: null
+						selectedTermCode: null,
+						massImportMode: false
 					};
 					return uiState;
 				case NEW_COURSE:
@@ -225,6 +286,12 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					return uiState;
 				case CLOSE_NEW_COURSE_DETAILS:
 					uiState.tableLocked = false;
+					return uiState;
+				case BEGIN_IMPORT_MODE:
+					uiState.massImportMode = true;
+					return uiState;
+				case END_IMPORT_MODE:
+					uiState.massImportMode = false;
 					return uiState;
 				default:
 					return uiState;
@@ -251,6 +318,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				state: scope._state,
 				actionType: action.type
 			});
+
 			console.debug("Course state updated:");
 			console.debug(scope._state);
 		}
