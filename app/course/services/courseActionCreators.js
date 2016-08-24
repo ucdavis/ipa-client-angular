@@ -97,6 +97,19 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
 			});
 		},
+		searchImportCourses: function (subjectCode, year) {
+			courseService.searchImportCourses(subjectCode, year).then(function (sectionGroups) {
+				var action = {
+					type: SEARCH_IMPORT_COURSES,
+					payload: {
+						sectionGroups: sectionGroups
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
+		},
 		newCourse: function (index) {
 			var action = {
 				type: NEW_COURSE,

@@ -188,6 +188,14 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				courseActionCreators.endImportMode();
 			};
 
+			/**
+			 * Triggers the action to pull mass import courses from DW that
+			 * match the selected subjectCode and academicYear
+			 */
+			$scope.searchImportCourses = function () {
+				courseActionCreators.searchImportCourses($scope.view.massImport.subjectCode, $scope.view.massImport.year);
+			};
+
 			$scope.sectionSeatTotal = function (sectionGroup) {
 				return sectionGroup.sectionIds.reduce(function (previousValue, sectionId) {
 					return previousValue + $scope.view.state.sections.list[sectionId].seats;
