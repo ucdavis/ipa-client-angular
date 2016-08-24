@@ -59,7 +59,6 @@ angular.module('sharedApp')
 						// Token is invalid. Grab a new token
 						localStorage.removeItem('JWT');
 						location.reload();
-
 					} else if (error.status == 403) {
 						// User has no access, redirect to Access Denied page
 						console.error("Authentication request received a 403. Redirecting to access denied page ...");
