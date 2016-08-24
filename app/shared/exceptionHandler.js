@@ -17,10 +17,9 @@ sharedApp.config(function($provide) {
 						url: $location.absUrl()
 				};
 
-				// TODO: Create this controller method on the backend
-				// $http.post(serverRoot + "/reportJsException/", exceptionObject, { withCredentials: true }).then(function(res) {
-				// 	return res.data;
-				// });
+				$http.post(serverRoot + "/reportJsException/", exceptionObject, { withCredentials: true }).then(function(res) {
+					return res.data;
+				});
 			}
 		};
 	});
