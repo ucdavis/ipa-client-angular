@@ -23,6 +23,19 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
+		createTeachingCall: function (workgroupId, year, teachingCallConfig) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/assignmentView/" + workgroupId + "/" + year + "/teachingCalls", teachingCallConfig, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		addPreference: function (teachingAssignment) {
 			var deferred = $q.defer();
 

@@ -85,17 +85,17 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 				});
 
 				modalInstance.result.then(function (teachingCallConfig) {
-					$scope.startTeachingCall(schedule, teachingCallConfig);
+					$scope.startTeachingCall($scope.workgroupId, $scope.year, teachingCallConfig);
 				});
 			};
 
 			// Triggered on TeachingCall Config submission
-			$scope.startTeachingCall = function(schedule, teachingCallConfig) {
+			$scope.startTeachingCall = function(workgroupId, year, teachingCallConfig) {
 				teachingCallConfig.termsBlob = "";
-				var terms = termService.getAllTerms();
+				var allTerms = ['05','06','07','08','09','10','01','02','03'];
 
-				for (var i = 0; i < terms.length; i++) {
-					if (teachingCallConfig.activeTerms[terms[i]] == true) {
+				for (var i = 0; i < allTerms.length; i++) {
+					if (teachingCallConfig.activeTerms[allTerms[i]] == true) {
 						teachingCallConfig.termsBlob += "1";
 					} else {
 						teachingCallConfig.termsBlob += "0";
@@ -104,13 +104,7 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 
 				delete teachingCallConfig.activeTerms;
 
-				// TODO: refactor into actionCreator
-				teachingCallService.createTeachingCall(schedule.id, teachingCallConfig).then(function(tachingCall) {
-					$scope.updateSchedules();
-					schedule.teachingCalls.push(tachingCall);
-					$scope.calculateTeachingCallEligibility();
-				}, function() {
-				});
+				assignmentActionCreators.createTeachingCall(workgroupId, year, teachingCallConfig);
 			};
 
 			// Launched from the instructorTable directive UI handler

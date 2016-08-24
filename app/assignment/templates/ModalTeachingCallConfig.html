@@ -95,7 +95,7 @@
 					<h5 class="pull-left">Email Message</h5>
 					<textarea ng-model="startTeachingCallConfig.message" class="form-control" placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment"></textarea>
 				</div>
-				<button type="button" class="btn btn-default">Begin Without Email</button>
+				<button type="button" class="btn btn-default" ng-click="createWithoutEmail()">Begin Without Email</button>
 				<button type="button" class="btn btn-info" ng-click="viewState.showPage1=false">Next</button>
 			</div>
 			<!-- modal-footer ends -->
@@ -140,7 +140,7 @@
 						</div>
 					</div>
 					<button type="button" class="btn btn-default" ng-click="viewState.showPage1=true">Back</button>
-					<button type="button" class="btn btn-info">Create</button>
+					<button type="button" class="btn btn-info" ng-click="createAndEmail()">Create</button>
 				</div>
 			</div>
 		</div>

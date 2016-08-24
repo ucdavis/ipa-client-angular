@@ -216,6 +216,21 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
+		createTeachingCall: function (workgroupId, year, teachingCallConfig) {
+			assignmentService.createTeachingCall(workgroupId, year, teachingCallConfig).then(function (teachingCall) {
+				$rootScope.$emit('toast', {message: "Updated reponse", type: "SUCCESS"});
+				var action = {
+					type: CREATE_TEACHING_CALL,
+					payload: {
+						teachingCall: teachingCall
+					}
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
+
 		showCourses: function () {
 			var action = {
 				type: SWITCH_MAIN_VIEW,

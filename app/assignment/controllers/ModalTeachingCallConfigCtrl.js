@@ -28,7 +28,7 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 	$scope.allTerms = allTerms;
 	$scope.displayedFormPage = 1;
 
-	var allTerms = ['5','6','7','8','9','10','1','2','3'];
+	var allTerms = ['01','02','03','04','05','06','07','08','09','10'];
 	for (var i = 0; i < allTerms.length; i++) {
 		$scope.startTeachingCallConfig.activeTerms[allTerms[i]] = false;
 	}
@@ -179,6 +179,16 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
 	$scope.format = $scope.formats[1];
 	$scope.altInputFormats = ['M!/d!/yyyy'];
+
+	$scope.createWithoutEmail = function() {
+		$scope.startTeachingCallConfig.emailInstructors = false;
+		$uibModalInstance.close($scope.startTeachingCallConfig);
+	};
+
+	$scope.createAndEmail = function() {
+		$scope.startTeachingCallConfig.emailInstructors = true;
+		$uibModalInstance.close($scope.startTeachingCallConfig);
+	};
 
 	console.log($scope.startTeachingCallConfig);
 	//$scope.getWorkgroupUserRoles();
