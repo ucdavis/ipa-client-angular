@@ -79,16 +79,6 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 		return true;
 	}
 
-	$scope.getWorkgroupUserRoles = function () {
-		userService.getWorkgroupUserRoles($scope.workgroupId).then(function(data) {
-			$scope.senateInstructors = data.senateUsers;
-			$scope.federationInstructors = data.federationUsers;
-		}, function(data) {
-			console.error("Error obtaining Workgroup Users");
-		});
-
-	};
-
 	// Transforms to ISO format
 	$scope.saveDueDate = function () {
 		if ($scope.parent.dueDate != "") {
@@ -190,6 +180,4 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 		$uibModalInstance.close($scope.startTeachingCallConfig);
 	};
 
-	console.log($scope.startTeachingCallConfig);
-	//$scope.getWorkgroupUserRoles();
 });
