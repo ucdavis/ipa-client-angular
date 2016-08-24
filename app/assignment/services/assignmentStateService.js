@@ -149,6 +149,19 @@ assignmentApp.service('assignmentStateService', function (
 					teachingCalls.ids = _array_sortIdsByProperty(teachingCallsList, ["id"]);
 					teachingCalls.list = teachingCallsList;
 					return teachingCalls;
+				case CREATE_TEACHING_CALL:
+					var teachingCall = action.payload.teachingCall;
+
+					if (teachingCall.sentToFederation) {
+						teachingCalls.eligibleGroups.federationInstructors = false;
+					}
+					if (teachingCall.sentToSenate) {
+						teachingCalls.eligibleGroups.senateInstructors = false;
+					}
+
+					teachingCalls.list[teachingCall.id] = teachingCall;
+					teachingCalls.ids.push(teachingCall.id);
+					return teachingCalls;
 				default:
 					return teachingCalls;
 			}
@@ -359,6 +372,7 @@ assignmentApp.service('assignmentStateService', function (
 							instructor.scheduleInstructorNoteId = scheduleInstructorNote.id;
 						}
 					}
+					return instructors;
 				case ADD_TEACHING_ASSIGNMENT:
 					var teachingAssignment = action.payload.teachingAssignment;
 					var instructor = instructors.list[teachingAssignment.instructorId];
@@ -536,6 +550,9 @@ assignmentApp.service('assignmentStateService', function (
 
 					userInterface.instructorId = action.payload.instructorId;
 					userInterface.userId = action.payload.userId;
+
+					userInterface.federationInstructorIds = action.payload.federationInstructorIds;
+					userInterface.senateInstructorIds = action.payload.senateInstructorIds;
 
 					userInterface.showInstructors = false;
 					userInterface.showCourses = true;

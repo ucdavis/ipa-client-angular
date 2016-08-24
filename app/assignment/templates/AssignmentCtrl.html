@@ -24,9 +24,16 @@
 		</div>
 		<div class="col-sm-2">
 			<span>
-				<a class="btn btn-block btn-default begin-teaching-call-button" ng-click="openTeachingCallConfig()">
+				<a ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors || view.state.teachingCalls.eligibleGroups.senateInstructors"
+				class="btn btn-block btn-default begin-teaching-call-button" ng-click="openTeachingCallConfig()">
 					Create Teaching Call
 				</a>
+				<div data-toggle="tooltip" data-placement="top" data-original-title="All instructors already assigned to a teaching call" data-container="body">
+					<a ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors == false && view.state.teachingCalls.eligibleGroups.senateInstructors == false"
+					class="btn btn-block btn-default begin-teaching-call-button disabled">
+						Create Teaching Call
+					</a>
+				</div>
 			</span>
 		</div>
 	</div>

@@ -505,6 +505,9 @@ th.ui-overlay {
   position: relative;
   width: 30px;
 }
+.ui-overlay .popover {
+  width: 300px;
+}
 table.disabled-courses-table td:not(.new-course-td), table.disabled-courses-table th {
   opacity: 0.5;
   pointer-events: none;
@@ -628,4 +631,8 @@ table.sections-table > tbody tr > td {
 
 .course-sequence-pattern {
   text-transform: uppercase;
+}
+
+.mass-import-panel {
+  width: calc(100% - 30px);
 }

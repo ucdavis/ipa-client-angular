@@ -5,12 +5,17 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 		replace: true,
 		scope: {
 			census: '=',
-			termCode: '='
+			scheduleTermState: '=',
+			courseId: '='
 		},
 		link: function (scope, element, attrs) {
 			var ctx = element[0].getContext("2d");
-			scope.$watchGroup(['census', 'termCode'], function () {
-				if (scope.census == undefined) { return; }
+			scope.$watchGroup(['census', 'scheduleTermState', 'courseId'], function () {
+				if (scope.census == undefined) {
+					ctx.textAlign="center";
+					ctx.fillText("Loading...", element.width()/2, element.height()/2);
+					return;
+				}
 
 				var getLastFiveYears = function () {
 					var lastFiveYears = [];
@@ -21,7 +26,7 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 				var getCurrentCensusForProperty = function (property) {
 					var something = getLastFiveYears().map(function (year) {
 						return _.find(scope.census, function (c) {
-							var matchesTermCode = c.termCode.toString() == year + (scope.termCode + '').slice(-2);
+							var matchesTermCode = c.termCode.toString() == year + (scope.scheduleTermState.termCode + '').slice(-2);
 							var matchesCurrentCode = c.snapshotCode == "CURRENT";
 							return matchesTermCode && matchesCurrentCode;
 						});
@@ -40,7 +45,7 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 						for (var c = 0; c < scope.census.length; c++) {
 							// If snapshotCode and termCode match push to array and go on to the next snapshotCode
 							if (scope.census[c].snapshotCode == snapshotCodes[sc]
-								&& scope.census[c].termCode == scope.termCode) {
+								&& scope.census[c].termCode == scope.scheduleTermState.termCode) {
 								censusEnrollment.push(scope.census[c].currentEnrolledCount);
 								snapshotCodesFound = true;
 								break;
@@ -56,8 +61,25 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 				};
 
 				var type, labels, datasets;
-				// TODO: Determine chart mode
-				if (true) {	// SG is in historical mode
+
+				if (scope.scheduleTermState.isLocked) {	// Locked mode
+					var snapshotCodes = ["INSTR_BEG", "DAY5", "DAY10", "DAY15", "CURRENT"];
+					type = 'bar';
+					labels = snapshotCodes;
+					datasets = [
+						{
+							label: "Census",
+							lineTension: 0,
+							backgroundColor: "rgba(179,181,198,0.5)",
+							borderColor: "rgba(179,181,198,1)",
+							pointBackgroundColor: "rgba(179,181,198,1)",
+							pointBorderColor: "#fff",
+							pointHoverBackgroundColor: "#fff",
+							pointHoverBorderColor: "rgba(179,181,198,1)",
+							data: getCensusEnrollmentByCensusCodes(snapshotCodes)
+						}
+					];
+				} else { // SG is in historical mode
 					type = 'line';
 					labels = getLastFiveYears();
 					datasets = [
@@ -84,23 +106,6 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 							data: getCurrentCensusForProperty("currentEnrolledCount")
 						}
 					];
-				} else {
-					var snapshotCodes = ["INSTR_BEG", "DAY5", "DAY10", "DAY15", "CURRENT"];
-					type = 'bar';
-					labels = snapshotCodes;
-					datasets = [
-						{
-							label: "Census",
-							lineTension: 0,
-							backgroundColor: "rgba(179,181,198,0.5)",
-							borderColor: "rgba(179,181,198,1)",
-							pointBackgroundColor: "rgba(179,181,198,1)",
-							pointBorderColor: "#fff",
-							pointHoverBackgroundColor: "#fff",
-							pointHoverBorderColor: "rgba(179,181,198,1)",
-							data: getCensusEnrollmentByCensusCodes(snapshotCodes)
-						}
-					];
 				}
 
 				Chart.defaults.global.defaultFontColor = "#888";
@@ -124,7 +129,11 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 						}
 					});
 					$rootScope.$on("courseStateChanged", function (event, data) {
-						if (myChart && data.actionType == "CELL_SELECTED") { myChart.destroy(); }
+						// Destroy chart only if it exists and another cell was selected
+						if (myChart && data.actionType == "CELL_SELECTED"
+							&& ( data.state.uiState.selectedTermCode != scope.scheduleTermState.termCode || data.state.uiState.selectedCourseId != scope.courseId)) {
+							myChart.destroy();
+						}
 					});
 				});
 

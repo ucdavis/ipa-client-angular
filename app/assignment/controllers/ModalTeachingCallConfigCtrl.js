@@ -28,7 +28,7 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 	$scope.allTerms = allTerms;
 	$scope.displayedFormPage = 1;
 
-	var allTerms = ['5','6','7','8','9','10','1','2','3'];
+	var allTerms = ['01','02','03','04','05','06','07','08','09','10'];
 	for (var i = 0; i < allTerms.length; i++) {
 		$scope.startTeachingCallConfig.activeTerms[allTerms[i]] = false;
 	}
@@ -78,16 +78,6 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 		}
 		return true;
 	}
-
-	$scope.getWorkgroupUserRoles = function () {
-		userService.getWorkgroupUserRoles($scope.workgroupId).then(function(data) {
-			$scope.senateInstructors = data.senateUsers;
-			$scope.federationInstructors = data.federationUsers;
-		}, function(data) {
-			console.error("Error obtaining Workgroup Users");
-		});
-
-	};
 
 	// Transforms to ISO format
 	$scope.saveDueDate = function () {
@@ -158,5 +148,36 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 		return termNames[term] + " " + endingYear;
 	};
 
-	//$scope.getWorkgroupUserRoles();
+	// Datepicker config
+	$scope.inlineOptions = {
+		minDate: new Date(),
+		showWeeks: true
+	};
+
+	$scope.dateOptions = {
+		formatYear: 'yy',
+		maxDate: new Date(2020, 5, 22),
+		minDate: new Date(),
+		startingDay: 1
+	};
+	
+	$scope.popup1 = {};
+	$scope.open1 = function() {
+		$scope.popup1.opened = true;
+	};
+
+	$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+	$scope.format = $scope.formats[1];
+	$scope.altInputFormats = ['M!/d!/yyyy'];
+
+	$scope.createWithoutEmail = function() {
+		$scope.startTeachingCallConfig.emailInstructors = false;
+		$uibModalInstance.close($scope.startTeachingCallConfig);
+	};
+
+	$scope.createAndEmail = function() {
+		$scope.startTeachingCallConfig.emailInstructors = true;
+		$uibModalInstance.close($scope.startTeachingCallConfig);
+	};
+
 });

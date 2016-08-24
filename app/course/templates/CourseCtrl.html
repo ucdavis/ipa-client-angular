@@ -7,11 +7,11 @@
 
 	<div class="row" style="margin-bottom: 2em;">
 		<div class="col-sm-offset-3 col-sm-6">
-			<input type="search" class="form-control" placeholder="Search" ng-model="view.searchQuery" ng-change="filterTable(view.searchQuery)" />
+			<input type="search" class="form-control hidden-print" placeholder="Search Schedule" ng-model="view.searchQuery" ng-change="filterTable(view.searchQuery)" />
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row hidden-print">
 		<div class="col-sm-12">
 			<div class="table-toolbar">
 				<span class="tool-icon glyphicon glyphicon-plus"
@@ -43,15 +43,15 @@
 					</ul>
 				</div> <!-- .btn-group -->
 
-				<span class="tool-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print"></span>
+				<span class="tool-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print" ng-click="print()"></span>
 			</div> <!-- .table-toolbar -->
 		</div> <!-- .col-sm-12 -->
 	</div> <!-- .row -->
 
-	<div class="row" ng-if="view.massImportMode">
+	<div class="row hidden-print" ng-if="view.state.uiState.massImportMode">
 		<div class="col-md-12">
 
-			<div class="panel panel-primary" data-collapsed="0">
+			<div class="panel panel-primary mass-import-panel" data-collapsed="0">
 
 				<div class="panel-heading">
 					<div class="panel-title">
@@ -71,9 +71,14 @@
 							<label class="col-sm-4 control-label">Subject Code</label>
 
 							<div class="col-sm-4">
-								<select class="form-control">
-									<option ng-repeat="subjectCode in subjectCodes track by $index" value="{{ subjectCode }}">{{ subjectCode }}</option>
-								</select>
+								<ui-select ng-model="view.massImport.subjectCode" theme="bootstrap" search-enabled="true" close-on-select="true">
+									<ui-select-match placeholder="Select Seubject Code...">
+										{{ view.massImport.subjectCode }}
+									</ui-select-match>
+									<ui-select-choices repeat="subjectCode in subjectCodes | filter: $select.search track by $index">
+										<div ng-bind-html="subjectCode | highlight: $select.search"></div>
+									</ui-select-choices>
+								</ui-select>
 							</div>
 						</div>
 
@@ -81,16 +86,21 @@
 							<label class="col-sm-4 control-label">Academic Year</label>
 
 							<div class="col-sm-4">
-								<select class="form-control">
-									<option ng-repeat="recentYear in recentAcademicYears track by $index" value={{ recentYear }}>{{ recentYear }}</option>
-								</select>
+								<ui-select ng-model="view.massImport.year" theme="bootstrap" search-enabled="false" close-on-select="true">
+									<ui-select-match placeholder="Select Academic Year...">
+										{{ view.massImport.year }}-{{ (view.massImport.year + 1).toString().slice(2) }}
+									</ui-select-match>
+									<ui-select-choices repeat="recentYear in recentAcademicYears track by $index">
+										<div>{{ recentYear }}-{{ (recentYear + 1).toString().slice(2) }}</div>
+									</ui-select-choices>
+								</ui-select>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-offset-4 col-sm-4">
-									<button type="submit" class="btn btn-default btn-block">Search</button>
+									<button class="btn btn-default btn-block" ng-disabled="!(view.massImport.subjectCode && view.massImport.year)" ng-click="searchImportCourses()">Search</button>
 								</div>
 							</div>
 						</div>
@@ -107,7 +117,7 @@
 
 </div>
 
-<div class="fixed right-details">
+<div class="fixed right-details hidden-print">
 	<div class="panel panel-primary panel-highlight" ng-if="view.selectedEntity">
 		<div class="panel-heading">
 			<div class="panel-title">
@@ -236,7 +246,8 @@
 			<div class="section-group-details" style="padding: 1em;"
 				ng-if="view.selectedEntityType == 'sectionGroup'">
 				<census-chart census="view.state.courses.list[view.selectedEntity.courseId].census"
-				term-code="view.selectedEntity.termCode"></census-chart>
+					schedule-term-state="view.state.scheduleTermStates.list[view.selectedEntity.termCode]"
+					course-id="view.selectedEntity.courseId"></census-chart>
 				<hr />
 				<table class="table sections-table" style="margin-bottom: 5px;" ng-if="view.selectedEntity.sectionIds.length">
 					<colgroup>

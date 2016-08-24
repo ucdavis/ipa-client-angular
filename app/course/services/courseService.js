@@ -105,6 +105,19 @@ courseApp.factory("courseService", this.courseService = function($http, $q) {
 
 			return deferred.promise;
 		},
+		searchImportCourses: function(subjectCode, year) {
+			var deferred = $q.defer();
+
+			$http.get(dwUrl + "/sections/search?subjectCode=" + subjectCode + "&academicYear=" + year + "&token=" + dwToken)
+			.success(function(result) {
+				deferred.resolve(result);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		addTagToCourse: function (course, tag) {
 			var deferred = $q.defer();
 

@@ -43,8 +43,8 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			};
 			assignmentStateService.reduce(action);
 		},
-		addScheduleInstructorNote: function (instructorId, year, workgroupId, comment) {
-			assignmentService.addScheduleInstructorNote(instructorId, year, workgroupId, comment).then(function (scheduleInstructorNote) {
+		addScheduleInstructorNote: function (instructorId, year, workgroupId, comment, assignmentsCompleted) {
+			assignmentService.addScheduleInstructorNote(instructorId, year, workgroupId, comment, assignmentsCompleted).then(function (scheduleInstructorNote) {
 				$rootScope.$emit('toast', {message: "Added instructor comment", type: "SUCCESS"});
 				var action = {
 					type: ADD_SCHEDULE_INSTRUCTOR_NOTE,
@@ -209,6 +209,20 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 					type: ADD_TEACHING_CALL_RESPONSE,
 					payload: {
 						teachingCallResponse: teachingCallResponse
+					}
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
+		createTeachingCall: function (workgroupId, year, teachingCallConfig) {
+			assignmentService.createTeachingCall(workgroupId, year, teachingCallConfig).then(function (teachingCall) {
+				$rootScope.$emit('toast', {message: "Updated reponse", type: "SUCCESS"});
+				var action = {
+					type: CREATE_TEACHING_CALL,
+					payload: {
+						teachingCall: teachingCall
 					}
 				};
 				assignmentStateService.reduce(action);

@@ -12,14 +12,14 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.view = {};
-			$scope.sequencePatterns = sequencePatterns;
-			$scope.subjectCodes = subjectCodes;
+			$scope.sequencePatterns = sequencePatterns; // constants.js file
+			$scope.subjectCodes = subjectCodes; // constants.js file
 
 			// Generate a few recent academic years for the mass course import mode
 			var currentYear = new Date().getFullYear();
 			var recentYears = [];
 			for(i = currentYear; i > currentYear - 10; i--) {
-				recentYears.push(i + "-" + String(i + 1).slice(2));
+				recentYears.push(i);
 			}
 			$scope.recentAcademicYears = recentYears;
 
@@ -56,9 +56,11 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				} else {
 					delete $scope.view.selectedEntity;
 				}
-
-				$scope.view.massImportMode = data.state.uiState.massImportMode;
 			});
+
+			$scope.print = function(){
+				window.print();
+			};
 
 			$scope.closeDetails = function () {
 				if ($scope.view.state.courses.newCourse) {
@@ -184,6 +186,14 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			 */
 			$scope.endImportMode = function () {
 				courseActionCreators.endImportMode();
+			};
+
+			/**
+			 * Triggers the action to pull mass import courses from DW that
+			 * match the selected subjectCode and academicYear
+			 */
+			$scope.searchImportCourses = function () {
+				courseActionCreators.searchImportCourses($scope.view.massImport.subjectCode, $scope.view.massImport.year);
 			};
 
 			$scope.sectionSeatTotal = function (sectionGroup) {
