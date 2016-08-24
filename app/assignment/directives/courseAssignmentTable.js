@@ -173,7 +173,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 							approved: true
 						}
 
-						assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
+						assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment, scope.view.state.userInterface.scheduleId);
 					}
 				}
 				// Unapproving a teachingAssignment
