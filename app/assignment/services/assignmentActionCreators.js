@@ -43,8 +43,8 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			};
 			assignmentStateService.reduce(action);
 		},
-		addScheduleInstructorNote: function (instructorId, year, workgroupId, comment) {
-			assignmentService.addScheduleInstructorNote(instructorId, year, workgroupId, comment).then(function (scheduleInstructorNote) {
+		addScheduleInstructorNote: function (instructorId, year, workgroupId, comment, assignmentsCompleted) {
+			assignmentService.addScheduleInstructorNote(instructorId, year, workgroupId, comment, assignmentsCompleted).then(function (scheduleInstructorNote) {
 				$rootScope.$emit('toast', {message: "Added instructor comment", type: "SUCCESS"});
 				var action = {
 					type: ADD_SCHEDULE_INSTRUCTOR_NOTE,
@@ -230,7 +230,6 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
-
 		showCourses: function () {
 			var action = {
 				type: SWITCH_MAIN_VIEW,

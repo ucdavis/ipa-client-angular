@@ -372,6 +372,7 @@ assignmentApp.service('assignmentStateService', function (
 							instructor.scheduleInstructorNoteId = scheduleInstructorNote.id;
 						}
 					}
+					return instructors;
 				case ADD_TEACHING_ASSIGNMENT:
 					var teachingAssignment = action.payload.teachingAssignment;
 					var instructor = instructors.list[teachingAssignment.instructorId];

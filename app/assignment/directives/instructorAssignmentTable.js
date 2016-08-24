@@ -244,7 +244,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 					}
 					// Make a new scheduleInstructorNote
 					else {
-						assignmentActionCreators.addScheduleInstructorNote(instructor.id, scope.year, scope.workgroupId, "");
+						assignmentActionCreators.addScheduleInstructorNote(instructorId, scope.year, scope.workgroupId, "", true);
 					}
 				}
 			}); // end UI event handler
