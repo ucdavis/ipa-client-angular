@@ -53,24 +53,29 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					courses.list = coursesList;
 					return courses;
 				case SEARCH_IMPORT_COURSES:
+					var importList = [];
 					action.payload.sectionGroups.forEach(function (sg) {
 						// Find any duplicate in existing courses
 						var matchingCourse = _.find(courses.list, function (course) {
 							return (course.courseNumber == sg.courseNumber) && (course.sequencePattern == sg.sequencePattern);
 						});
 						// Find any duplicate in importList
-						var matchingImportCourse = _.find(courses.importList, function (course) {
+						var matchingImportCourse = _.find(importList, function (course) {
 							return (course.courseNumber == sg.courseNumber) && (course.sequencePattern == sg.sequencePattern);
 						});
 						// Add only non-duplicates
 						if (matchingCourse == undefined && matchingImportCourse == undefined) {
-							courses.importList.push(new Course({
+							importList.push(new Course({
 								subjectCode: action.payload.subjectCode,
 								courseNumber: sg.courseNumber,
 								title: sg.title,
-								sequencePattern: sg.sequencePattern
+								sequencePattern: sg.sequencePattern,
+								import: true
 							}));
 						}
+					});
+					courses.importList = _.sortBy(importList, function (course) {
+						return course.subjectCode + course.courseNumber + course.sequenceNumber;
 					});
 					return courses;
 				case NEW_COURSE:
@@ -118,6 +123,9 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				case GET_COURSE_CENSUS:
 					courses.list[action.payload.course.id].census = action.payload.census;
 					return courses;
+				case END_IMPORT_MODE:
+					courses.importList = [];
+					return courses;
 				default:
 					return courses;
 			}
@@ -143,6 +151,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					sectionGroups.list = sectionGroupsList;
 					return sectionGroups;
 				case SEARCH_IMPORT_COURSES:
+					sectionGroups.importList = [];
 					action.payload.sectionGroups.forEach(function (sg) {
 						// Find any duplicate in importList
 						var matchingImportSectionGroup = _.find(sectionGroups.importList, function (sectionGroup) {
@@ -208,6 +217,9 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				case CLOSE_DETAILS:
 					sectionGroups.selectedSectionGroup = null;
 					sectionGroups.newSectionGroup = null;
+					return sectionGroups;
+				case END_IMPORT_MODE:
+					sectionGroups.importList = [];
 					return sectionGroups;
 				default:
 					return sectionGroups;
@@ -331,9 +343,11 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					uiState.tableLocked = false;
 					return uiState;
 				case BEGIN_IMPORT_MODE:
+					uiState.tableLocked = true;
 					uiState.massImportMode = true;
 					return uiState;
 				case END_IMPORT_MODE:
+					uiState.tableLocked = false;
 					uiState.massImportMode = false;
 					return uiState;
 				default:

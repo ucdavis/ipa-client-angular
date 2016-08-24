@@ -16,7 +16,10 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				CLOSE_DETAILS,
 				CLOSE_NEW_COURSE_DETAILS,
 				UPDATE_TABLE_FILTER,
-				TOGGLE_TERM_FILTER
+				TOGGLE_TERM_FILTER,
+				BEGIN_IMPORT_MODE,
+				END_IMPORT_MODE,
+				SEARCH_IMPORT_COURSES
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
@@ -80,6 +83,30 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 				// Render the body
 				var body = "<tbody></tbody>";
+
+				$.each(data.state.courses.importList, function (rowIdx, course) {
+					var checkboxClass = course.import ? "fa-check-square-o" : "fa-square-o";
+					var row = "<tr class=\"odd gradeX\"><td class=\"import-course course-cell\">"
+						+ "<div class=\"import-course-check\"><i class=\"fa " + checkboxClass + "\"></i></div>"
+						+ "<div class=\"import-course-description\"><strong>"
+						+ course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern
+						+ "</strong><br />" + course.title + "</div></td>";
+					$.each(termsToRender, function (i, term) {
+						var termCode = term.code;
+						var once = true;
+						var sectionGroup = _.find(data.state.sectionGroups.importList, function (sg) {
+							return (sg.termCode.slice(-2) == termCode.slice(-2))
+								&& (sg.subjectCode == course.subjectCode)
+								&& (sg.courseNumber == course.courseNumber)
+								&& (sg.sequencePattern == course.sequencePattern)
+						});
+						var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
+
+						row += "<td data-term-code=\"" + termCode + "\" class=\"sg-cell import-course\"><div>" + plannedSeats + "</div></td>";
+					});
+					row += "</tr>";
+					body += row;
+				});
 
 				$.each(data.state.courses.ids, function (rowIdx, courseId) {
 					var rowClass = "odd gradeX";
@@ -204,7 +231,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					courseActionCreators.newCourse(index);
 					// Important: notify angular since this happends outside of the scope
 					scope.$apply();
-				} else if ($el.is('td, td *')) {
+				} else if ($el.is('td:not(.new-course-td):not(.import-course), td:not(.new-course-td):not(.import-course) *')) {
 					// TODO: termCode and courseId may not be found if clicking on the first column ...
 					var courseId = $el.closest("tr").data('course-id');
 					var termCode = $el.closest("td").data('term-code');
