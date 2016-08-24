@@ -55,9 +55,14 @@ angular.module('sharedApp')
 						deferred.reject();
 					}
 				}, function (error) {
-					// User has no access, redirect to Access Denied page
-					if (error.status == 403) {
+					if (error.status == 400) {
+						// Token is invalid. Grab a new token
+						localStorage.removeItem('JWT');
+						location.reload();
+					} else if (error.status == 403) {
+						// User has no access, redirect to Access Denied page
 						console.error("Authentication request received a 403. Redirecting to access denied page ...");
+						localStorage.clear();
 						$window.location.href = "/access-denied.html";
 					} else if(error.status == -1) {
 						console.error("Request was aborted or server was not found. Check that the backend is running.");
