@@ -158,5 +158,28 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 		return termNames[term] + " " + endingYear;
 	};
 
+	// Datepicker config
+	$scope.inlineOptions = {
+		minDate: new Date(),
+		showWeeks: true
+	};
+
+	$scope.dateOptions = {
+		formatYear: 'yy',
+		maxDate: new Date(2020, 5, 22),
+		minDate: new Date(),
+		startingDay: 1
+	};
+	
+	$scope.popup1 = {};
+	$scope.open1 = function() {
+		$scope.popup1.opened = true;
+	};
+
+	$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+	$scope.format = $scope.formats[1];
+	$scope.altInputFormats = ['M!/d!/yyyy'];
+
+	console.log($scope.startTeachingCallConfig);
 	//$scope.getWorkgroupUserRoles();
 });

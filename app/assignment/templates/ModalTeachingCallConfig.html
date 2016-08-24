@@ -50,7 +50,7 @@
 							</div>
 
 							<div class="checkbox"> 
-								<label class="checkbox-inline"><input type="checkbox" value="">Ask for unavailabilities</label>
+								<label class="checkbox-inline"><input type="checkbox" ng-model="startTeachingCallConfig.showUnavailabilities">Ask for unavailabilities</label>
 							</div>
 						</div>
 						<!-- faculty member info ends-->
@@ -61,12 +61,14 @@
 						<!-- select dates&terms section-->
 						<div class="teaching-call--info_style container-fluid">
 							<h5 style="margin-top: 0px;">Due Date</h5>
-							<div class="input-group date" data-provide="datepicker" >
-								<input type="text" class="form-control" placeholder="mm/dd/yyyy" data-date-format="mm/dd/yyyy">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-th"></span>
-								</div>
-							</div>
+							<p class="input-group">
+								<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="startTeachingCallConfig.dueDate" is-open="popup1.opened"
+								datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" 
+								popup-placement="bottom-left" show-button-bar="false"/>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
+							</p>
 							<div>
 								<h5>Set Term</h5>
 								<div class="btn-group" uib-dropdown auto-close="outsideClick" is-open="status.isopen">
