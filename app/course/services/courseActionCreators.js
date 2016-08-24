@@ -102,6 +102,7 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				var action = {
 					type: SEARCH_IMPORT_COURSES,
 					payload: {
+						subjectCode: subjectCode,
 						sectionGroups: sectionGroups
 					}
 				};
