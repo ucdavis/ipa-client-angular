@@ -155,6 +155,24 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 								}
 							}
 
+							// Add Buyout, Sabbatical, Course Release options
+							courseHtml += "<li><a";
+							courseHtml += " data-is-buyout=\"true\"";
+							courseHtml += " data-term-code=\"" + termCode + "\"";
+							courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+							courseHtml += " href=\"#\">BUYOUT</a></li>";
+
+							courseHtml += "<li><a";
+							courseHtml += " data-is-sabbatical=\"true\"";
+							courseHtml += " data-term-code=\"" + termCode + "\"";
+							courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+							courseHtml += " href=\"#\">SABBATICAL</a></li>";
+
+							courseHtml += "<li><a";
+							courseHtml += " data-is-course-release=\"true\"";
+							courseHtml += " data-term-code=\"" + termCode + "\"";
+							courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+							courseHtml += " href=\"#\">COURSE RELEASE</a></li>";
 
 							// Loop over all other courses
 							$.each(scope.view.state.courses.ids, function(i, courseId) {
@@ -165,6 +183,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 									var instructor = scope.view.state.instructors.list[instructorId];
 									courseHtml += "<li><a";
 									courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
+									courseHtml += " data-term-code=\"" + termCode + "\"";
 									courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
 									courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
 								}
@@ -193,6 +212,11 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				// Approving a teachingAssignment or creating a new one
 				if ($el.is('a')) {
 					var sectionGroupId = $el.data('section-group-id');
+					var isCourseRelease = $el.data('is-course-release');
+					var isSabbatical = $el.data('is-sabbatical');
+					var isBuyout = $el.data('is-buyout');
+					var termCode = $el.data('term-code');
+
 					var instructorId = $el.data('instructor-id');
 					var teachingAssignmentId = $el.data('teaching-assignment-id');
 
@@ -206,9 +230,12 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 						var teachingAssignment = {
 							sectionGroupId: sectionGroupId,
 							instructorId: instructorId,
-							termCode: sectionGroup.termCode,
+							termCode: termCode,
 							priority: 1,
-							approved: true
+							approved: true,
+							isBuyout: isBuyout,
+							isCourseRelease: isCourseRelease,
+							isSabbatical: isSabbatical
 						}
 
 						assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
