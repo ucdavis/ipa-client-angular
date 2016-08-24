@@ -149,6 +149,19 @@ assignmentApp.service('assignmentStateService', function (
 					teachingCalls.ids = _array_sortIdsByProperty(teachingCallsList, ["id"]);
 					teachingCalls.list = teachingCallsList;
 					return teachingCalls;
+				case CREATE_TEACHING_CALL:
+					var teachingCall = action.payload.teachingCall;
+
+					if (teachingCall.sentToFederation) {
+						teachingCalls.eligibleGroups.federationInstructors = false;
+					}
+					if (teachingCall.sentToSenate) {
+						teachingCalls.eligibleGroups.senateInstructors = false;
+					}
+
+					teachingCalls.list[teachingCall.id] = teachingCall;
+					teachingCalls.ids.push(teachingCall.id);
+					return teachingCalls;
 				default:
 					return teachingCalls;
 			}
