@@ -116,8 +116,8 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 				assignmentActionCreators.removePreference(teachingAssignment);
 			};
 
-			$scope.updatePreferencesOrder = function(sortedTeachingPreferenceIds, term) {
-				// TODO: update preference order
+			$scope.updateAssignmentsOrder = function(sortedTeachingPreferenceIds, term) {
+				assignmentActionCreators.updateAssignmentsOrder(sortedTeachingPreferenceIds, $scope.view.state.userInterface.scheduleId);
 			};
 
 			$scope.termHasSabbatical = function(term) {

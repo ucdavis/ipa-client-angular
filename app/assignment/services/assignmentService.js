@@ -117,6 +117,19 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
+		updateAssignmentsOrder: function (sortedTeachingAssignmentIds, scheduleId) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/assignmentView/schedules/" + scheduleId + "/teachingAssignments" , sortedTeachingAssignmentIds, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		updateTeachingCallResponse: function (teachingCallResponse) {
 			var deferred = $q.defer();
 

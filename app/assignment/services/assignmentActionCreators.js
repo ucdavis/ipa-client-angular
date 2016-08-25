@@ -43,6 +43,20 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			};
 			assignmentStateService.reduce(action);
 		},
+		updateAssignmentsOrder: function (sortedTeachingAssignmentIds, scheduleId) {
+			assignmentService.updateAssignmentsOrder(sortedTeachingAssignmentIds, scheduleId).then(function (sortedTeachingAssignmentIds) {
+				$rootScope.$emit('toast', {message: "Updated Assignment Priority", type: "SUCCESS"});
+				var action = {
+					type: UPDATE_TEACHING_ASSIGNMENT_ORDER,
+					payload: {
+						sortedTeachingAssignmentIds: sortedTeachingAssignmentIds
+					}
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
 		addScheduleInstructorNote: function (instructorId, year, workgroupId, comment, assignmentsCompleted) {
 			assignmentService.addScheduleInstructorNote(instructorId, year, workgroupId, comment, assignmentsCompleted).then(function (scheduleInstructorNote) {
 				$rootScope.$emit('toast', {message: "Added instructor comment", type: "SUCCESS"});

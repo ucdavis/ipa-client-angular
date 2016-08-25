@@ -21,7 +21,7 @@
 				<tr>
 					<td ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index"
 					disable-element="isScheduleTermLocked(term)">
-						<ol sortable drag-end="updatePreferencesOrder(sortedIds, term)"
+						<ol sortable drag-end="updateAssignmentsOrder(sortedIds, term)"
 						class="sortable-list">
 							<!-- id values needed to calculate the reordering of preferences in this specific format -->
 							<li id="pref-{{ preference.id }}" ng-class="{ 'unsortable': preference.approved, 'sortable': !preference.approved}"
