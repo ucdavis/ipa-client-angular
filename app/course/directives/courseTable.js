@@ -84,91 +84,26 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				// Render the body
 				var body = "<tbody></tbody>";
 
-				$.each(data.state.courses.importList, function (rowIdx, course) {
-					var checkboxClass = course.import ? "fa-check-square-o" : "fa-square-o";
-					var row = "<tr class=\"odd gradeX\"><td class=\"import-course course-cell\">"
-						+ "<div class=\"import-course-check\"><i class=\"fa " + checkboxClass + "\"></i></div>"
-						+ "<div class=\"import-course-description\"><strong>"
-						+ course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern
-						+ "</strong><br />" + course.title + "</div></td>";
-					$.each(termsToRender, function (i, term) {
-						var termCode = term.code;
-						var once = true;
-						var sectionGroup = _.find(data.state.sectionGroups.importList, function (sg) {
-							return (sg.termCode.slice(-2) == termCode.slice(-2))
-								&& (sg.subjectCode == course.subjectCode)
-								&& (sg.courseNumber == course.courseNumber)
-								&& (sg.sequencePattern == course.sequencePattern)
-						});
-						var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
-
-						row += "<td data-term-code=\"" + termCode + "\" class=\"sg-cell import-course\"><div>" + plannedSeats + "</div></td>";
+				if (data.state.courses.importList.length) {
+					var coursesArray = data.state.courses.ids.map(function (id) { return data.state.courses.list[id]; });
+					var blendedCoursesArray = coursesArray.concat(data.state.courses.importList);
+					// TODO: handle different sorting options here
+					var sortedBlendedCoursesArray = _.sortBy(blendedCoursesArray, function (course) {
+						return course.subjectCode + course.courseNumber + course.sequenceNumber;
 					});
-					row += "</tr>";
-					body += row;
-				});
 
-				$.each(data.state.courses.ids, function (rowIdx, courseId) {
-					var rowClass = "odd gradeX";
-					if (data.state.uiState.selectedCourseId == courseId) {
-						rowClass += " selected-tr";
-					}
-					var row = "<tr class=\"" + rowClass + "\" data-course-id=\"" + courseId + "\" >";
-
-					if (courseId == 0) {
-						var numOfColumns = termsToRender.length + 1;
-						row += "<td class=\"new-course-td\" colspan=\"" + numOfColumns + "\">Adding a new course</td><td class=\"ui-overlay\"></td>";
-					} else {
-						var course = data.state.courses.list[courseId];
-						if (course.isFiltered) { return; }
-
-						// First column
-						row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
-						if (course.tagIds.length) {
-							row += "<div class=\"hidden-print\">Tags:";
-							$.each(course.tagIds, function (i, tagId) {
-								var tag = data.state.tags.list[tagId];
-								var bgColor = tag.color ? tag.color : "#333";
-								row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + bgColor + "\">" + tag.name + "</div>"
-							});
-							row += "</div>"
+					$.each(sortedBlendedCoursesArray, function (rowIdx, course) {
+						if (course.id == undefined) {
+							body += getImportCourseRow(course, termsToRender, data.state);
+						} else {
+							body += getCourseRow(rowIdx, course.id, termsToRender, data.state);
 						}
-						row += "</td>";
-
-						// Term column(s)
-						$.each(termsToRender, function (i, term) {
-							var termCode = term.code;
-							var sectionGroup = _.find(data.state.sectionGroups.list, function (sg) { return (sg.termCode == termCode) && (sg.courseId == courseId) });
-							var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
-							var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
-
-							// Calculate this boolean by comparing the sum of all section seats to the plannedSeats
-							var requiresAttention = false;
-
-							row += "<td data-term-code=\"" + termCode + "\" data-section-group-id=\"" + sectionGroupId + "\" class=\"sg-cell\"><div>";
-
-							if (requiresAttention) {
-								row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
-							}
-
-							row += "<input value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
-							row += "</div></td>";
-						});
-
-						// Actions column
-						var popoverTemplate = "Are you sure you want to delete " + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern +"? <br />\
-							<div class='text-center'><button class='btn btn-red' data-event-type='deleteCourse' data-course-id='" + courseId + "'>Delete</button>\
-							<button class='btn btn-white' data-event-type='dismissCoursePop'>Cancel</button></div>"
-						row += "<td class=\"ui-overlay\"><i class=\"btn add-before entypo-plus-circled\" data-event-type=\"addCourse\" data-index=\"" + rowIdx + "\" ></i>";
-						row += "<i class=\"btn delete-sg entypo-minus-circled delete-course\" data-event-type=\"deleteCoursePop\" \
-							data-toggle=\"popover\" data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
-						row += "<i class=\"btn add-after entypo-plus-circled\" data-event-type=\"addCourse\" data-index=\"" + (rowIdx + 1) + "\" ></i></td>";
-					}
-
-					row += "</tr>";
-
-					body += row;
-				});
+					});
+				} else {
+					$.each(data.state.courses.ids, function (rowIdx, courseId) {
+							body += getCourseRow(rowIdx, courseId, termsToRender, data.state);
+					});
+				}
 
 				element.append(body);
 				$('delete-course').popover();
@@ -245,3 +180,88 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 		}
 	}
 });
+
+var getImportCourseRow = function (course, termsToRender, state) {
+	var checkboxClass = course.import ? "fa-check-square-o" : "fa-square-o";
+	var row = "<tr class=\"odd gradeX\"><td class=\"import-course course-cell\">"
+		+ "<div class=\"import-course-check\"><i class=\"fa " + checkboxClass + "\"></i></div>"
+		+ "<div class=\"import-course-description\"><strong>"
+		+ course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern
+		+ "</strong><br />" + course.title + "</div></td>";
+	$.each(termsToRender, function (i, term) {
+		var termCode = term.code;
+		var once = true;
+		var sectionGroup = _.find(state.sectionGroups.importList, function (sg) {
+			return (sg.termCode.slice(-2) == termCode.slice(-2))
+				&& (sg.subjectCode == course.subjectCode)
+				&& (sg.courseNumber == course.courseNumber)
+				&& (sg.sequencePattern == course.sequencePattern)
+		});
+		var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
+
+		row += "<td data-term-code=\"" + termCode + "\" class=\"sg-cell import-course\"><div>" + plannedSeats + "</div></td>";
+	});
+	row += "</tr>";
+	return row;
+};
+
+var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
+	var rowClass = "odd gradeX";
+	if (state.uiState.selectedCourseId == courseId) {
+		rowClass += " selected-tr";
+	}
+	var row = "<tr class=\"" + rowClass + "\" data-course-id=\"" + courseId + "\" >";
+
+	if (courseId == 0) {
+		var numOfColumns = termsToRender.length + 1;
+		row += "<td class=\"new-course-td\" colspan=\"" + numOfColumns + "\">Adding a new course</td><td class=\"ui-overlay\"></td>";
+	} else {
+		var course = state.courses.list[courseId];
+		if (course.isFiltered) { return; }
+
+		// First column
+		row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
+		if (course.tagIds.length) {
+			row += "<div class=\"hidden-print\">Tags:";
+			$.each(course.tagIds, function (i, tagId) {
+				var tag = state.tags.list[tagId];
+				var bgColor = tag.color ? tag.color : "#333";
+				row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + bgColor + "\">" + tag.name + "</div>"
+			});
+			row += "</div>"
+		}
+		row += "</td>";
+
+		// Term column(s)
+		$.each(termsToRender, function (i, term) {
+			var termCode = term.code;
+			var sectionGroup = _.find(state.sectionGroups.list, function (sg) { return (sg.termCode == termCode) && (sg.courseId == courseId) });
+			var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
+			var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
+
+			// Calculate this boolean by comparing the sum of all section seats to the plannedSeats
+			var requiresAttention = false;
+
+			row += "<td data-term-code=\"" + termCode + "\" data-section-group-id=\"" + sectionGroupId + "\" class=\"sg-cell\"><div>";
+
+			if (requiresAttention) {
+				row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
+			}
+
+			row += "<input value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
+			row += "</div></td>";
+		});
+
+		// Actions column
+		var popoverTemplate = "Are you sure you want to delete " + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "? <br />\
+			<div class='text-center'><button class='btn btn-red' data-event-type='deleteCourse' data-course-id='" + courseId + "'>Delete</button>\
+			<button class='btn btn-white' data-event-type='dismissCoursePop'>Cancel</button></div>"
+		row += "<td class=\"ui-overlay\"><i class=\"btn add-before entypo-plus-circled\" data-event-type=\"addCourse\" data-index=\"" + rowIdx + "\" ></i>";
+		row += "<i class=\"btn delete-sg entypo-minus-circled delete-course\" data-event-type=\"deleteCoursePop\" \
+			data-toggle=\"popover\" data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
+		row += "<i class=\"btn add-after entypo-plus-circled\" data-event-type=\"addCourse\" data-index=\"" + (rowIdx + 1) + "\" ></i></td>";
+	}
+
+	row += "</tr>";
+	return row;
+};
