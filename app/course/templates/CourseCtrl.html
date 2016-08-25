@@ -98,6 +98,21 @@
 						</div>
 
 						<div class="form-group">
+							<label class="col-sm-4 control-label"></label>
+
+							<div class="col-sm-4">
+								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+									ng-click="view.massImport.private = !view.massImport.private"
+									ng-class="{ 'checked': view.massImport.private }">
+									<label class="cb-wrapper">
+										<div class="checked"></div>
+									</label>
+									<label>Include unpublished courses</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-offset-4 col-sm-4">
 									<button class="btn btn-default btn-block" ng-disabled="!(view.massImport.subjectCode && view.massImport.year)" ng-click="searchImportCourses()">Search</button>

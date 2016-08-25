@@ -108,8 +108,8 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
 			});
 		},
-		searchImportCourses: function (subjectCode, year) {
-			courseService.searchImportCourses(subjectCode, year).then(function (sectionGroups) {
+		searchImportCourses: function (subjectCode, year, includePrivate) {
+			courseService.searchImportCourses(subjectCode, year, includePrivate).then(function (sectionGroups) {
 				var action = {
 					type: SEARCH_IMPORT_COURSES,
 					payload: {

@@ -113,3 +113,6 @@ table.availability-grid tr td {
   height: 100vh;
   text-align: center;
 }
+.checkbox label.cb-wrapper {
+    min-height: 18px;
+}

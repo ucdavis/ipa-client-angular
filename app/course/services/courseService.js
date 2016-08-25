@@ -105,10 +105,11 @@ courseApp.factory("courseService", this.courseService = function($http, $q) {
 
 			return deferred.promise;
 		},
-		searchImportCourses: function(subjectCode, year) {
+		searchImportCourses: function(subjectCode, year, includePrivate) {
 			var deferred = $q.defer();
+			var privateParam = includePrivate ? "&private=true" : "";
 
-			$http.get(dwUrl + "/sections/search?subjectCode=" + subjectCode + "&academicYear=" + year + "&token=" + dwToken)
+			$http.get(dwUrl + "/sections/search?subjectCode=" + subjectCode + "&academicYear=" + year + "&token=" + dwToken + privateParam)
 			.success(function(result) {
 				deferred.resolve(result);
 			})
