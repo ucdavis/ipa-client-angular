@@ -6,7 +6,12 @@
 		</span>
 		<span class="caret"></span>
 	</button>
-	<div ng-if="preference" class="alert alert-info tile-assignment preference-display">
+	<div ng-if="preference && preference.approved" class="approved-preference alert alert-info tile-assignment preference-display">
+		<div class="preference-display-detail">
+			{{ getDescription(preference) }}
+		</div>
+	</div>
+	<div ng-if="preference && !preference.approved" class="unapproved-preference alert alert-info tile-assignment preference-display">
 		<div class="preference-display-detail">
 			{{ getDescription(preference) }}
 		</div>
