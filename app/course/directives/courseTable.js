@@ -86,7 +86,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				// Render the body
 				var body = "<tbody></tbody>";
 
-				if (data.state.courses.importList.length) {
+				if (data.state.courses.importList) {
 					var coursesArray = data.state.courses.ids.map(function (id) { return data.state.courses.list[id]; });
 					var blendedCoursesArray = coursesArray.concat(data.state.courses.importList);
 					// TODO: handle different sorting options here

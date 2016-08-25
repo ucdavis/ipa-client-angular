@@ -41,7 +41,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					courses = {
 						newCourse: null,
 						ids: [],
-						importList: [],
+						importList: null,
 					};
 					var coursesList = {};
 					var length = action.payload.courses ? action.payload.courses.length : 0;
@@ -134,7 +134,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					courses.list[action.payload.course.id].census = action.payload.census;
 					return courses;
 				case END_IMPORT_MODE:
-					courses.importList = [];
+					courses.importList = null;
 					return courses;
 				default:
 					return courses;
@@ -149,7 +149,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 						newSectionGroup: null,
 						selectedSectionGroup: null,
 						ids: [],
-						importList: []
+						importList: null
 					};
 					var sectionGroupsList = {};
 					var length = action.payload.sectionGroups ? action.payload.sectionGroups.length : 0;
@@ -229,7 +229,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					sectionGroups.newSectionGroup = null;
 					return sectionGroups;
 				case END_IMPORT_MODE:
-					sectionGroups.importList = [];
+					sectionGroups.importList = null;
 					return sectionGroups;
 				default:
 					return sectionGroups;

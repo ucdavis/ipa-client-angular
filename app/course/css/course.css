@@ -660,3 +660,7 @@ td.import-course.course-cell {
 .import-course-description {
   flex: 1 0 50%;
 }
+
+.import-summary {
+  padding-top: 2em;
+}

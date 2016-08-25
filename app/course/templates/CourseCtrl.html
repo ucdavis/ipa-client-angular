@@ -325,4 +325,22 @@
 		</div>
 	</div>
 
+	<div class="panel panel-primary panel-highlight" ng-if="view.state.uiState.massImportMode">
+		<div class="panel-heading">
+			<div class="panel-title">
+				<h4>Add Multiple Courses</h4>
+			</div>
+		</div>
+		<div class="panel-body no-padding">
+			<div class="col-sm-12 import-summary">
+				<div ng-hide="view.state.courses.importList">
+					Please search for courses to import
+				</div>
+				<div ng-show="view.state.courses.importList">
+					Courses are being imported
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
