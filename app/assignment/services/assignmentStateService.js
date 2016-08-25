@@ -532,11 +532,13 @@ assignmentApp.service('assignmentStateService', function (
 				case REMOVE_TEACHING_ASSIGNMENT:
 					var teachingAssignment = action.payload.teachingAssignment;
 					var sectionGroup = sectionGroups.list[teachingAssignment.sectionGroupId];
-					var index = sectionGroup.teachingAssignmentIds.indexOf(teachingAssignment.id);
-					if (index > -1) {
-						sectionGroup.teachingAssignmentIds.splice(index, 1);
+					if (sectionGroup) {
+						var index = sectionGroup.teachingAssignmentIds.indexOf(teachingAssignment.id);
+						if (index > -1) {
+							sectionGroup.teachingAssignmentIds.splice(index, 1);
+						}
 					}
-
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}
@@ -553,6 +555,7 @@ assignmentApp.service('assignmentStateService', function (
 
 					userInterface.federationInstructorIds = action.payload.federationInstructorIds;
 					userInterface.senateInstructorIds = action.payload.senateInstructorIds;
+					userInterface.scheduleId = action.payload.scheduleId;
 
 					userInterface.showInstructors = false;
 					userInterface.showCourses = true;

@@ -131,8 +131,8 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
-		addAndApproveInstructorAssignment: function (teachingAssignment) {
-			assignmentService.addInstructorAssignment(teachingAssignment).then(function (teachingAssignment) {
+		addAndApproveInstructorAssignment: function (teachingAssignment, scheduleId) {
+			assignmentService.addInstructorAssignment(teachingAssignment, scheduleId).then(function (teachingAssignment) {
 				$rootScope.$emit('toast', {message: "Assigned instructor to course", type: "SUCCESS"});
 				var action = {
 					type: ADD_TEACHING_ASSIGNMENT,

@@ -100,14 +100,32 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 								if (scope.view.state.teachingAssignments.list[teachingAssignmentId].approved) {
 									var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId]
 									var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
-									var course = scope.view.state.courses.list[sectionGroup.courseId];
+
+									var displayTitle = "";
+									var plannedSeats = "";
+									var unitsLow = "";
+
+									if (sectionGroup) {
+										var course = scope.view.state.courses.list[sectionGroup.courseId];
+										displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
+										plannedSeats = "<small>Seats: " + sectionGroup.plannedSeats + "</small>";
+										unitsLow = "<small>Units: " + course.unitsLow + "</small>";
+									} else {
+										if (teachingAssignment.buyout) {
+											displayTitle += "BUYOUT";
+										} else if (teachingAssignment.courseRelease) {
+											displayTitle += "COURSE RELEASE";
+										} else if (teachingAssignment.sabbatical) {
+											displayTitle += "SABBATICAL";
+										}
+									}
 
 									courseHtml += "<div class=\"alert alert-info tile-assignment\">";
-									courseHtml += "<p>" + course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern + "</p>";
+									courseHtml += "<p>" + displayTitle + "</p>";
 									courseHtml += "<div class=\"tile-assignment-details\">";
-									courseHtml += "<small>Seats: " + sectionGroup.plannedSeats + "</small>";
+									courseHtml += plannedSeats;
 									courseHtml += "<br />";
-									courseHtml += "<small>Units: " + course.unitsLow + "</small>";
+									courseHtml += unitsLow;
 									courseHtml += "</div>";
 									courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\" data-placement=\"top\"";
 									courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
@@ -133,6 +151,11 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 								$.each(instructor.teachingAssignmentTermCodeIds[termCode], function(i, teachingAssignmentId) {
 									var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 									var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
+
+									if (teachingAssignment.sectionGroupId == 0) {
+										return true;
+									}
+
 									var course = scope.view.state.courses.list[sectionGroup.courseId];
 									interestedCourseIds.push(course.id);
 
@@ -233,12 +256,12 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 							termCode: termCode,
 							priority: 1,
 							approved: true,
-							isBuyout: isBuyout,
-							isCourseRelease: isCourseRelease,
-							isSabbatical: isSabbatical
+							buyout: isBuyout,
+							courseRelease: isCourseRelease,
+							sabbatical: isSabbatical
 						}
 
-						assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
+						assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment, scope.view.state.userInterface.scheduleId);
 					}
 				}
 				// Unapproving a teachingAssignment

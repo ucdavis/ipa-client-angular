@@ -62,10 +62,10 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
-		addInstructorAssignment: function (teachingAssignment) {
+		addInstructorAssignment: function (teachingAssignment, scheduleId) {
 			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/assignmentView/teachingAssignments/", teachingAssignment, { withCredentials: true })
+			teachingAssignment.termCode = String(teachingAssignment.termCode);
+			$http.post(serverRoot + "/api/assignmentView/schedules/" + scheduleId + "/teachingAssignments/", teachingAssignment, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})

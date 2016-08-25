@@ -72,7 +72,7 @@
 
 							<div class="col-sm-4">
 								<ui-select ng-model="view.massImport.subjectCode" theme="bootstrap" search-enabled="true" close-on-select="true">
-									<ui-select-match placeholder="Select Seubject Code...">
+									<ui-select-match placeholder="Select...">
 										{{ view.massImport.subjectCode }}
 									</ui-select-match>
 									<ui-select-choices repeat="subjectCode in subjectCodes | filter: $select.search track by $index">
@@ -87,7 +87,7 @@
 
 							<div class="col-sm-4">
 								<ui-select ng-model="view.massImport.year" theme="bootstrap" search-enabled="false" close-on-select="true">
-									<ui-select-match placeholder="Select Academic Year...">
+									<ui-select-match placeholder="Select...">
 										{{ view.massImport.year }}-{{ (view.massImport.year + 1).toString().slice(2) }}
 									</ui-select-match>
 									<ui-select-choices repeat="recentYear in recentAcademicYears track by $index">

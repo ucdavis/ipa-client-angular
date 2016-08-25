@@ -508,7 +508,8 @@ th.ui-overlay {
 .ui-overlay .popover {
   width: 300px;
 }
-table.disabled-courses-table td:not(.new-course-td), table.disabled-courses-table th {
+table.disabled-courses-table td:not(.new-course-td):not(.import-course),
+table.disabled-courses-table th {
   opacity: 0.5;
   pointer-events: none;
   cursor: default;
@@ -635,4 +636,23 @@ table.sections-table > tbody tr > td {
 
 .mass-import-panel {
   width: calc(100% - 30px);
+}
+
+td.sg-cell input[type=number] {
+  text-align: center;
+}
+
+td.import-course.course-cell {
+  display: flex;
+}
+
+.import-course-check {
+  flex: 0 0 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.import-course-description {
+  flex: 1 0 50%;
 }

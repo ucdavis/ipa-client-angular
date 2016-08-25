@@ -759,14 +759,6 @@ ol.sortable-list>li .term-preference-dropdown {
 	cursor: auto;
 }
 
-.preference-display:hover {
-	background-color: #d9edf7 !important;
-}
-
-.preference-display {
-	background-color: #d9edf7 !important;
-}
-
 .dropdown-toggle {
 	border-color: #ccc;
 }
@@ -843,4 +835,19 @@ ol.sortable-list>li .term-preference-dropdown {
 
 .muted-term-name {
 	color: #949494;
+}
+
+.approved-preference,
+.approved-preference:hover {
+	background-color: #d9edf7;
+}
+
+.unapproved-preference,
+.unapproved-preference:hover {
+	background-color: white;
+	border-color: rgb(204,204,204);
+}
+
+.unapproved-preference .preference-display-detail {
+	color: rgb(153, 153, 153);
 }
