@@ -62,23 +62,21 @@
 						</ol>
 					</td>
 				</tr>
-				<tr ng-if="view.state.activeTeachingCall.showUnavailabilities">
-					<td colspan="{{ terms.length }}">
-						<h2 class="page-header text-center">
-							Unavailabilities
-							<small class="glyphicon glyphicon-question-sign" aria-hidden="true" tooltip-placement="right"
-								uib-tooltip="Highlight the blocks of time you are not available">
-							</small>
-							<small class="legend">
-								<div class="legend-square" style="background-color:#fff"></div>Available
-								<div class="legend-square" style="background-color:#ccc"></div>Unavailable
-							</small>
-						</h2>
-					</td>
-				</tr>
 			</tbody>
 		</table>
 		<div>
+			<div ng-if="view.state.activeTeachingCall.showUnavailabilities">
+				<h2 class="page-header text-center">
+					Unavailabilities
+					<small class="glyphicon glyphicon-question-sign" aria-hidden="true" tooltip-placement="right"
+						uib-tooltip="Highlight the blocks of time you are not available">
+					</small>
+					<small class="legend">
+						<div class="legend-square" style="background-color:#fff"></div>Available
+						<div class="legend-square" style="background-color:#ccc"></div>Unavailable
+					</small>
+				</h2>
+			</div>
 			<div style="display:flex;">
 				<div style="flex: 1 1 auto; margin-left: 20px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
 					<div ng-init="teachingCallResponse=view.state.activeTeachingCall.teachingCallResponsesByTermCode[termToTermCode(term)]">
