@@ -78,6 +78,16 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 						return course.subjectCode + course.courseNumber + course.sequenceNumber;
 					});
 					return courses;
+				case TOGGLE_IMPORT_COURSE:
+					var matchingImportCourse = _.find(courses.importList, function (course) {
+						return (course.subjectCode == action.payload.subjectCode)
+							&& (course.courseNumber == action.payload.courseNumber)
+							&& (course.sequencePattern == action.payload.sequencePattern);
+					});
+					if (matchingImportCourse) {
+						matchingImportCourse.import = !matchingImportCourse.import;
+					}
+					return courses;
 				case NEW_COURSE:
 					// Insert a new id of '0' at the specified index
 					courses.ids.splice(action.payload.index, 0, 0);

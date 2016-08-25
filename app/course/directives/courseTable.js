@@ -174,6 +174,21 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					courseActionCreators.setActiveCell(courseId, termCode);
 					// Important: notify angular since this happends outside of the scope
 					scope.$apply();
+				} else if ($el.is('td.import-course, td.import-course *')) {
+					var courseSubjectCode = $el.closest("tr").data('course-subject-code');
+					var courseNumber = $el.closest("tr").data('course-number');
+					var courseSequencePattern = $el.closest("tr").data('course-sequence-pattern');
+					var checkBox = $el.closest("tr").find('div.import-course-check i');
+
+					if (checkBox.hasClass('fa-square-o')) {
+						checkBox.removeClass('fa-square-o').addClass('fa-check-square-o');
+					} else {
+						checkBox.removeClass('fa-check-square-o').addClass('fa-square-o');
+					}
+
+					courseActionCreators.toggleImportCourse(courseSubjectCode, courseNumber, courseSequencePattern);
+					// Important: notify angular since this happends outside of the scope
+					scope.$apply();
 				}
 			});
 
@@ -183,7 +198,9 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 var getImportCourseRow = function (course, termsToRender, state) {
 	var checkboxClass = course.import ? "fa-check-square-o" : "fa-square-o";
-	var row = "<tr class=\"odd gradeX\"><td class=\"import-course course-cell\">"
+	var row = "<tr class=\"odd gradeX\" data-course-subject-code=\"" + course.subjectCode + "\""
+		+ "data-course-number=\"" + course.courseNumber + "\" data-course-sequence-pattern=\"" + course.sequencePattern + "\" >"
+		+ "<td class=\"import-course course-cell\">"
 		+ "<div class=\"import-course-check\"><i class=\"fa " + checkboxClass + "\"></i></div>"
 		+ "<div class=\"import-course-description\"><strong>"
 		+ course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern
@@ -248,7 +265,7 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 				row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
 			}
 
-			row += "<input value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
+			row += "<input type=\"number\" value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
 			row += "</div></td>";
 		});
 

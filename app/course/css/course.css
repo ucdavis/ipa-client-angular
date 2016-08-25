@@ -638,6 +638,10 @@ table.sections-table > tbody tr > td {
   width: calc(100% - 30px);
 }
 
+td.sg-cell input[type=number] {
+  text-align: center;
+}
+
 td.import-course.course-cell {
   display: flex;
 }

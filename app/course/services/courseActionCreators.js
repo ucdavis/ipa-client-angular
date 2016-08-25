@@ -31,6 +31,17 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			};
 			courseStateService.reduce(action);
 		},
+		toggleImportCourse: function (subjectCode, courseNumber, sequencePattern) {
+			var action = {
+				type: TOGGLE_IMPORT_COURSE,
+				payload: {
+					subjectCode: subjectCode,
+					courseNumber: courseNumber,
+					sequencePattern: sequencePattern
+				}
+			};
+			courseStateService.reduce(action);
+		},
 		closeDetails: function () {
 			var action = {
 				type: CLOSE_DETAILS,
