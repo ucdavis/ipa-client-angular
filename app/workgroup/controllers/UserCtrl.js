@@ -32,7 +32,12 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$t
 
 			$scope.searchUsersResultSelected = function ($item, $model, $label, $event) {
 				$scope.view.state.users.newUser = $item;
-				$scope.view.state.users.searchQuery = $item.name;
+			};
+
+			$scope.clearUserSearch = function () {
+				$scope.view.state.users.newUser = {};
+				$scope.view.searchQuery = "";
+				$scope.view.noResults = null;
 			};
 
 			$scope.searchUsers = function (query) {
