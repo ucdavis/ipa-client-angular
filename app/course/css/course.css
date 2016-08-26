@@ -600,6 +600,7 @@ table.sections-table > tbody tr > td {
   height: 50px;
 }
 .panel-highlight > .panel-body {
+  width: 100%;
   height: calc(100% - 50px);
   overflow-y: auto;
   overflow-x: hidden;
