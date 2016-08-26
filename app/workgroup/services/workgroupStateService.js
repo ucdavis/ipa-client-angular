@@ -95,7 +95,6 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					users = {
 						newUser: {},
 						ids: [],
-						searchQuery: "",
 						userSearchResults: []
 					};
 					var usersList = {};
@@ -111,7 +110,6 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					users.list[action.payload.user.id] = action.payload.user;
 					users.ids.push(action.payload.user.id);
 					users.newUser = {};
-					users.searchQuery = "";
 					users.userSearchResults = [];
 					return users;
 				case REMOVE_USER:

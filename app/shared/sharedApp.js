@@ -5,6 +5,7 @@ window.sharedApp = angular.module('sharedApp',
 		'ngIdle',
 		'ngSanitize',
 		'ui.select',
+		'selectize',
 
 		// Local modules
 		'courseOfferingGroup',

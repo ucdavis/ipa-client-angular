@@ -686,7 +686,7 @@ ol.sortable-list > li {
 
 ol.sortable-list > li:not(.unsortable) {
 	cursor: move;
-	list-style: decimal;
+	list-style: none;
 }
 
 ol.sortable-list > li:not(.unsortable):after {

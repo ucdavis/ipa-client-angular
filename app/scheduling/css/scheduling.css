@@ -652,9 +652,6 @@ a.fc-event:hover,
 .filters-container ul li:hover {
   background-color: #ebebeb;
 }
-.checkbox label.cb-wrapper {
-    min-height: 18px;
-}
 .tags-filter {
   flex: 0 0 50%;
   padding-right: 0.5em;

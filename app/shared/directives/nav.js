@@ -38,7 +38,7 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 				scope.sharedState.year = parseInt(scope.sharedState.year) + offset;
 
 				// Redirect the page
-				var termCode = Number(scope.termCode) + (offset * 100);
+				var termCode = scope.termCode ? Number(scope.termCode) + (offset * 100) : '';
 				var url = '/' + scope.sharedState.workgroup.id + '/' + scope.sharedState.year + '/' + termCode;
 				$location.path(url);
 			};

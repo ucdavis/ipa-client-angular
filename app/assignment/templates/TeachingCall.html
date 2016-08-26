@@ -21,10 +21,10 @@
 				<tr>
 					<td ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index"
 					disable-element="isScheduleTermLocked(term)">
-						<ol drag-end="updatePreferencesOrder(sortedIds, term)"
-						read-only="isScheduleTermLocked(term)" class="sortable-list">
+						<ol sortable drag-end="updateAssignmentsOrder(sortedIds, term)"
+						class="sortable-list">
 							<!-- id values needed to calculate the reordering of preferences in this specific format -->
-							<li id="pref-{{ preference.id }}" class="unsortable"
+							<li id="pref-{{ preference.id }}" ng-class="{ 'unsortable': preference.approved, 'sortable': !preference.approved}"
 							ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
 								<div term-preferences
 								instructor-id="view.state.userInterface.instructorId"
@@ -46,7 +46,7 @@
 								on-select="updatePreference(preference, courseOffering, isBuyout, isSabbatical, isCourseRelease)"
 								on-delete="deletePreference(preference)"
 								on-update="refreshPreferences()"
-								ng-if="isScheduleTermLocked(term) || preference.approved"
+								ng-if="preference.approved"
 								read-only="isScheduleTermLocked(term) || preference.approved"></div>
 								
 							</li>

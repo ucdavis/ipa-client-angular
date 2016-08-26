@@ -89,17 +89,18 @@
 						<div class="row">				<!-- this is search bar -->
 							<div class="col-md-4 pull-right">
 								<div class="input-group search-input">
-									<input type="text" ng-model="asyncSelected" placeholder="Search by name or login ID"
+									<input type="text" ng-model="view.searchQuery" placeholder="Search by name or login ID"
 													uib-typeahead="person.name for person in searchUsers($viewValue)"
-													typeahead-loading="loadingPeople"
-													typeahead-no-results="noResults"
+													ng-change="view.state.users.newUser = {}"
+													typeahead-loading="view.loadingPeople"
+													typeahead-no-results="view.noResults"
 													typeahead-wait-ms="400"
 													typeahead-min-length="2"
 													typeahead-on-select="searchUsersResultSelected($item, $model, $label, $event)"
 													class="form-control">
-									<i ng-hide="noResults || loadingPeople" class="entypo-search"></i>
-									<i ng-show="loadingPeople" class="entypo-cw"></i>
-									<i ng-show="noResults" class="entypo-cancel"></i>
+									<i ng-hide="view.noResults || view.loadingPeople" class="entypo-search"></i>
+									<i ng-show="view.loadingPeople" class="entypo-cw"></i>
+									<i ng-show="view.noResults" class="entypo-cancel" ng-click="clearUserSearch()"></i>
 									<span class="input-group-btn">
 										<button ng-disabled="!view.state.users.newUser.name"
 											class="pull-left btn btn-primary"

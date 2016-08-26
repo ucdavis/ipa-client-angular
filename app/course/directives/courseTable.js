@@ -62,7 +62,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				element.empty();
 
 				// Render the header
-				var header = "<thead><tr><th class=\"sorting-asc\">Course</th>";
+				// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
+				var header = "<thead><tr><th class=\"\">Course</th>";
 
 				// Filter scope.termDefinitions to only those terms which are enabled by the filter.
 				// Store this in termsToRender.
@@ -74,7 +75,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				});
 
 				$.each(termsToRender, function(i, term) {
-					header += "<th class=\"sorting\">" + term.description + "</th>"
+					// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
+					header += "<th class=\"\">" + term.description + "</th>"
 				});
 
 				header += "<th class=\"ui-overlay\"></th></tr></thead>";
@@ -84,7 +86,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				// Render the body
 				var body = "<tbody></tbody>";
 
-				if (data.state.courses.importList.length) {
+				if (data.state.courses.importList) {
 					var coursesArray = data.state.courses.ids.map(function (id) { return data.state.courses.list[id]; });
 					var blendedCoursesArray = coursesArray.concat(data.state.courses.importList);
 					// TODO: handle different sorting options here

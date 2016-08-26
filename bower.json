@@ -27,7 +27,8 @@
     "mjolnic-bootstrap-colorpicker": "bootstrap-colorpicker#^2.3.3",
     "underscore": "^1.8.3",
     "angular-ui-select": "^0.19.1",
-    "angular-sanitize": "^1.5.8"
+    "angular-sanitize": "^1.5.8",
+    "angular-selectize2": "^3.0.1"
   },
   "resolutions": {
     "angular": "^1.5.8",

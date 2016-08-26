@@ -71,14 +71,8 @@
 							<label class="col-sm-4 control-label">Subject Code</label>
 
 							<div class="col-sm-4">
-								<ui-select ng-model="view.massImport.subjectCode" theme="bootstrap" search-enabled="true" close-on-select="true">
-									<ui-select-match placeholder="Select...">
-										{{ view.massImport.subjectCode }}
-									</ui-select-match>
-									<ui-select-choices repeat="subjectCode in subjectCodes | filter: $select.search track by $index">
-										<div ng-bind-html="subjectCode | highlight: $select.search"></div>
-									</ui-select-choices>
-								</ui-select>
+								<selectize config="{maxItems: 1, valueField: 'code', labelField: 'code', searchField: ['code']}"
+									options="subjectCodes" ng-model="view.state.uiState.massImportCode"></selectize>
 							</div>
 						</div>
 
@@ -86,21 +80,31 @@
 							<label class="col-sm-4 control-label">Academic Year</label>
 
 							<div class="col-sm-4">
-								<ui-select ng-model="view.massImport.year" theme="bootstrap" search-enabled="false" close-on-select="true">
-									<ui-select-match placeholder="Select...">
-										{{ view.massImport.year }}-{{ (view.massImport.year + 1).toString().slice(2) }}
-									</ui-select-match>
-									<ui-select-choices repeat="recentYear in recentAcademicYears track by $index">
-										<div>{{ recentYear }}-{{ (recentYear + 1).toString().slice(2) }}</div>
-									</ui-select-choices>
-								</ui-select>
+								<selectize config="{maxItems: 1, valueField: 'year', labelField: 'academicYear', searchField: ['academicYear']}"
+									options="recentAcademicYears" ng-model="view.state.uiState.massImportYear"></selectize>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-4 control-label"></label>
+
+							<div class="col-sm-4">
+								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+									ng-click="view.state.uiState.massImportPrivate = !view.state.uiState.massImportPrivate"
+									ng-class="{ 'checked': view.state.uiState.massImportPrivate }">
+									<label class="cb-wrapper">
+										<div class="checked"></div>
+									</label>
+									<label>Include unpublished courses</label>
+								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-offset-4 col-sm-4">
-									<button class="btn btn-default btn-block" ng-disabled="!(view.massImport.subjectCode && view.massImport.year)" ng-click="searchImportCourses()">Search</button>
+									<button class="btn btn-default btn-block" ng-click="searchImportCourses()"
+										ng-disabled="!(view.state.uiState.massImportCode && view.state.uiState.massImportYear)">Search</button>
 								</div>
 							</div>
 						</div>
@@ -305,6 +309,24 @@
 				<div class="col-sm-12 text-center" ng-if="!view.selectedEntity.id">
 						<p>No Course Offering for {{view.selectedEntity.termCode.getTermCodeDisplayName()}}</p>
 						<button class="btn btn-primary" ng-click="addSectionGroup()">Create Offering</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-primary panel-highlight" ng-if="view.state.uiState.massImportMode">
+		<div class="panel-heading">
+			<div class="panel-title">
+				<h4>Add Multiple Courses</h4>
+			</div>
+		</div>
+		<div class="panel-body no-padding">
+			<div class="col-sm-12 import-summary">
+				<div ng-hide="view.state.courses.importList">
+					Please search for courses to import
+				</div>
+				<div ng-show="view.state.courses.importList">
+					Courses are being imported
 				</div>
 			</div>
 		</div>

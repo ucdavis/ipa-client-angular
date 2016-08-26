@@ -116,14 +116,8 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 				assignmentActionCreators.removePreference(teachingAssignment);
 			};
 
-			$scope.updatePreferencesOrder = function(sortedTeachingPreferenceIds, term) {
-				teachingPreferenceService.updatePreferencesOrder(sortedTeachingPreferenceIds,term)
-				.then(function(res) {
-					ngNotify.set("Reordered preferences successfully",'success');
-					$scope.autoSave();
-				}, function() {
-					ngNotify.set("Error reordering preferences",'error');
-				});
+			$scope.updateAssignmentsOrder = function(sortedTeachingPreferenceIds, term) {
+				assignmentActionCreators.updateAssignmentsOrder(sortedTeachingPreferenceIds, $scope.view.state.userInterface.scheduleId);
 			};
 
 			$scope.termHasSabbatical = function(term) {
@@ -332,6 +326,10 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 			//$scope.courseOfferings = courseOfferings;
 			//$scope.instructorId = userService.getCurrentUser().instructorId;
 			$scope.timeout = {};
+			setTimeout(function() {
+				$( ".sortable-list" ).sortable();
+			}, 1000);
+
 	}]);
 
 TeachingCallCtrl.validate = function (authService, assignmentActionCreators, $route) {
