@@ -480,9 +480,13 @@ table.courses-table > tbody > tr > td:not(:first-child) {
 .x-ng-cloak {
   display: none !important;
 }
-.selected-tr td:not(.ui-overlay), .selected-td, .new-course-td {
+.selected-tr td:not(.ui-overlay), .selected-td, .new-course-td, tr.selected-import-course td.import-course {
   background-color: rgba(179, 181, 198, 0.5);
   color: #000;
+}
+td.import-course  {
+  background-color: rgba(179, 181, 198, 0.25);
+  color: #555;
 }
 .new-course-td {
   text-align: center;
