@@ -331,7 +331,10 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 						tableLocked: false,
 						selectedCourseId: null,
 						selectedTermCode: null,
-						massImportMode: false
+						massImportMode: false,
+						massImportCode: null,
+						massImportYear: null,
+						massImportPrivate: false
 					};
 					return uiState;
 				case NEW_COURSE:
@@ -355,10 +358,15 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				case BEGIN_IMPORT_MODE:
 					uiState.tableLocked = true;
 					uiState.massImportMode = true;
+					uiState.selectedCourseId = null;
+					uiState.selectedTermCode = null;
 					return uiState;
 				case END_IMPORT_MODE:
 					uiState.tableLocked = false;
 					uiState.massImportMode = false;
+					uiState.massImportCode = null;
+					uiState.massImportYear = null;
+					uiState.massImportPrivate = false;
 					return uiState;
 				default:
 					return uiState;

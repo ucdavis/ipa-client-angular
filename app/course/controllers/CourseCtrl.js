@@ -196,7 +196,10 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			 * match the selected subjectCode and academicYear
 			 */
 			$scope.searchImportCourses = function () {
-				courseActionCreators.searchImportCourses($scope.view.massImport.subjectCode, $scope.view.massImport.year, $scope.view.massImport.private);
+				courseActionCreators.searchImportCourses(
+					$scope.view.state.uiState.massImportCode,
+					$scope.view.state.uiState.massImportYear,
+					$scope.view.state.uiState.massImportPrivate);
 			};
 
 			$scope.sectionSeatTotal = function (sectionGroup) {

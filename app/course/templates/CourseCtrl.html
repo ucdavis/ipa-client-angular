@@ -72,7 +72,7 @@
 
 							<div class="col-sm-4">
 								<selectize config="{maxItems: 1, valueField: 'code', labelField: 'code', searchField: ['code']}"
-									options="subjectCodes" ng-model="view.massImport.subjectCode"></selectize>
+									options="subjectCodes" ng-model="view.state.uiState.massImportCode"></selectize>
 							</div>
 						</div>
 
@@ -81,7 +81,7 @@
 
 							<div class="col-sm-4">
 								<selectize config="{maxItems: 1, valueField: 'year', labelField: 'academicYear', searchField: ['academicYear']}"
-									options="recentAcademicYears" ng-model="view.massImport.year"></selectize>
+									options="recentAcademicYears" ng-model="view.state.uiState.massImportYear"></selectize>
 							</div>
 						</div>
 
@@ -90,8 +90,8 @@
 
 							<div class="col-sm-4">
 								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-									ng-click="view.massImport.private = !view.massImport.private"
-									ng-class="{ 'checked': view.massImport.private }">
+									ng-click="view.state.uiState.massImportPrivate = !view.state.uiState.massImportPrivate"
+									ng-class="{ 'checked': view.state.uiState.massImportPrivate }">
 									<label class="cb-wrapper">
 										<div class="checked"></div>
 									</label>
@@ -103,7 +103,8 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-offset-4 col-sm-4">
-									<button class="btn btn-default btn-block" ng-disabled="!(view.massImport.subjectCode && view.massImport.year)" ng-click="searchImportCourses()">Search</button>
+									<button class="btn btn-default btn-block" ng-click="searchImportCourses()"
+										ng-disabled="!(view.state.uiState.massImportCode && view.state.uiState.massImportYear)">Search</button>
 								</div>
 							</div>
 						</div>
