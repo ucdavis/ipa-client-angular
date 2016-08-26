@@ -16,11 +16,11 @@ sharedApp.config(function($provide) {
 						stack: exception.stack,
 						url: $location.absUrl()
 				};
-
-				// TODO: Create this controller method on the backend
-				// $http.post(serverRoot + "/reportJsException/", exceptionObject, { withCredentials: true }).then(function(res) {
-				// 	return res.data;
-				// });
+				
+				$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("JWT"); // Set proper headers
+				$http.post(serverRoot + "/api/reportJsException", exceptionObject, { withCredentials: true }).then(function(res) {
+					return res.data;
+				});
 			}
 		};
 	});
