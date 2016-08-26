@@ -245,7 +245,7 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 			$.each(course.tagIds, function (i, tagId) {
 				var tag = state.tags.list[tagId];
 				var bgColor = tag.color ? tag.color : "#333";
-				row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + bgColor + "\">" + tag.name + "</div>"
+				row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + bgColor + "; color: " + tag.getTextColor() + "; \">" + tag.name + "</div>"
 			});
 			row += "</div>"
 		}
