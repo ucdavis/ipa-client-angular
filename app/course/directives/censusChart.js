@@ -12,7 +12,8 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 			var ctx = element[0].getContext("2d");
 			scope.$watchGroup(['census', 'scheduleTermState', 'courseId'], function () {
 				if (scope.census == undefined) {
-					ctx.textAlign="center";
+					ctx.font = "14px Helvetica";
+					ctx.textAlign = "center";
 					ctx.fillText("Loading...", element.width()/2, element.height()/2);
 					return;
 				}
