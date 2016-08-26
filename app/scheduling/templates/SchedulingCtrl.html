@@ -96,7 +96,7 @@
 									Tags:
 									<div class="label" style="padding: 3px; margin-left: 3px;"
 										ng-repeat="tagId in view.state.courses.list[sg.courseId].tagIds track by $index"
-										ng-style="{ 'background-color': view.state.tags.list[tagId].color || '#333' }">
+										ng-style="{ 'background-color': view.state.tags.list[tagId].color || '#333', 'color': view.state.tags.list[tagId].getTextColor() }">
 										{{ view.state.tags.list[tagId].name }}
 									</div>
 								</div>
