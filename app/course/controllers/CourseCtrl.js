@@ -26,8 +26,29 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			}
 			$scope.recentAcademicYears = recentYears;
 
+			$scope.tagsSelectConfig = {
+				maxItems: 10,
+				valueField: 'id',
+				labelField: 'name',
+				searchField: ['name'],
+				onItemAdd: function (value) {
+					// This method is called for some reason on initialization:
+					// This 'if' is to avoid poking the server multiple times on initialization
+					var tagIdExists = $scope.view.selectedEntity.tagIds.some(function (id) { return id == value; });
+					if (tagIdExists == false) {
+						courseActionCreators.addTagToCourse($scope.view.selectedEntity, $scope.view.state.tags.list[value]);
+					}
+				},
+				onItemRemove: function (value) {
+					courseActionCreators.removeTagFromCourse($scope.view.selectedEntity, $scope.view.state.tags.list[value]);
+				}
+			};
+
 			$rootScope.$on('courseStateChanged', function (event, data) {
 				$scope.view.state = data.state;
+				$scope.tagsSelectConfig.options = $scope.view.state.tags.ids.map(function (tagId) {
+					return $scope.view.state.tags.list[tagId];
+				});
 
 				if (data.state.courses.newCourse) {
 					// A new course is being created
