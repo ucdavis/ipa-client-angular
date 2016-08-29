@@ -10,7 +10,7 @@
  */
 assignmentApp.service('assignmentStateService', function (
 	$rootScope, SectionGroup, Course, ScheduleTermState,
-	ScheduleInstructorNote, Term, Instructor, TeachingAssignment,
+	ScheduleInstructorNote, Term, Tag, Instructor, TeachingAssignment,
 	TeachingCall, TeachingCallReceipt, TeachingCallResponse) {
 	return {
 		_state: {},
@@ -442,6 +442,28 @@ assignmentApp.service('assignmentStateService', function (
 					return scheduleTermStates;
 			}
 		},
+		_tagReducers: function (action, tags) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					tags = {
+						ids: [],
+						list: []
+					};
+					var tagsList = {};
+					var length = action.payload.tags ? action.payload.tags.length : 0;
+					for (var i = 0; i < length; i++) {
+						var tagData = action.payload.tags[i];
+						tagsList[tagData.id] = new Tag(tagData);
+					}
+					tags.ids = _array_sortIdsByProperty(tagsList, "id");
+					tags.list = tagsList;
+					return tags;
+				default:
+					return tags;
+			}
+		},
 		_scheduleInstructorNoteReducers: function (action, scheduleInstructorNotes) {
 			var scope = this;
 
@@ -630,6 +652,7 @@ assignmentApp.service('assignmentStateService', function (
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
 			newState.teachingCalls = scope._teachingCallReducers(action, scope._state.teachingCalls);
 			newState.activeTeachingCall = scope._activeTeachingCallReducers(action, scope._state);
+			newState.tags = scope._tagReducers(action, scope._state);
 
 			scope._state = newState;
 
