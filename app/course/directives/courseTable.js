@@ -19,7 +19,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				TOGGLE_TERM_FILTER,
 				BEGIN_IMPORT_MODE,
 				END_IMPORT_MODE,
-				SEARCH_IMPORT_COURSES
+				SEARCH_IMPORT_COURSES,
+				ADD_SECTION_GROUP
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
@@ -46,6 +47,19 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 						// Highlight single cell if a sectionGroup is selected
 						$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]').addClass("selected-td");
 					}
+
+					return;
+				}
+
+				// Set the correct section-group-id on the newly created sectionGkroup cell
+				if (data.actionType == ADD_SECTION_GROUP) {
+					var sectionGroup = _.find(scope.view.state.sectionGroups.list, function (sg) {
+						return (sg.termCode == data.state.uiState.selectedTermCode)
+							&& (sg.courseId == data.state.uiState.selectedCourseId)
+					});
+
+					$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]')
+						.data('section-group-id', sectionGroup.id);
 
 					return;
 				}
@@ -291,12 +305,12 @@ var savePlannedSeats = function ($el, scope, courseActionCreators) {
 	var sectionGroupId = $el.closest("td").data('section-group-id');
 	var plannedSeats = parseInt($el.val());
 
-	// Ignore if unchanged
-	if (scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats == plannedSeats) {
-		return;
-	}
-
 	if (sectionGroupId) {
+		// Ignore if unchanged
+		if (scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats == plannedSeats) {
+			return;
+		}
+
 		// Save existing sectionGroup
 		var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 		sectionGroup.plannedSeats = plannedSeats;
