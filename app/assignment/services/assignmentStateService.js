@@ -48,11 +48,16 @@ assignmentApp.service('assignmentStateService', function (
 					var query = action.payload.query;
 					for (var i = 0; i < courses.ids.length; i++) {
 						var course = courses.list[courses.ids[i]];
+
+						// Apply search filter
 						if (searchCourse(course, query)) {
 							course.isFiltered = false;
 						} else {
 							course.isFiltered = true;
 						}
+
+						// Apply toggle filters
+						
 					}
 					return courses;
 				default:

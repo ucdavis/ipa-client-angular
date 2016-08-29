@@ -851,3 +851,7 @@ ol.sortable-list>li .term-preference-dropdown {
 .unapproved-preference .preference-display-detail {
 	color: rgb(153, 153, 153);
 }
+
+.dropdown-menu .divider.courses-separator {
+	margin: 4px;
+}

@@ -19,19 +19,21 @@
 	<ul class="dropdown-menu dropdown-short" role="menu" aria-labelledby="dropdownMenu1" ng-if="status.dropDownIsOpen">
 		<li role="presentation" class="clickable">
 			<a role="menuitem" ng-click="onSelect({isBuyout: true})">
-				<strong style="padding-left: 43px;">BUYOUT</strong>
+				<strong style="padding-left: 43px;">Buyout</strong>
 			</a>
 		</li>
 		<li role="presentation" class="clickable">
 			<a role="menuitem" ng-click="onSelect({isCourseRelease: true})">
-				<strong style="padding-left: 43px;">COURSE RELEASE</strong>
+				<strong style="padding-left: 43px;">Course Release</strong>
 			</a>
 		</li>
 		<li disable-element="disableSabbatical && !preference.isSabbatical" role="presentation" class="clickable" ng-class="{ 'active': preference.isSabbatical }"
 			uib-tooltip="{{ sabbaticalDisableMessage }}" tooltip-enable="disableSabbatical && !preference.isSabbatical">
 			<a role="menuitem" ng-click="onSelect({isSabbatical: true})">
-				<strong style="padding-left: 43px;">SABBATICAL</strong>
+				<strong style="padding-left: 43px;">Sabbatical</strong>
 			</a>
+		</li>
+		<li role="presentation" class="divider courses-separator">
 		</li>
 		<li ng-repeat="course in courses | orderBy: ['subjectCode','courseNumber','title'] track by $index"
 		ng-if="course.hasPreference == false" role="presentation" class="clickable">
