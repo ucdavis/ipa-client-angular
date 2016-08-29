@@ -268,7 +268,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					}
 					return uiState;
 				case ACTIVITY_SELECTED:
-					if (uiState.selectedActivityId != action.payload.activity.id) {
+					if (action.payload.activity && uiState.selectedActivityId != action.payload.activity.id) {
 						uiState.selectedActivityId = action.payload.activity.id;
 						uiState.selectedSectionGroupId = action.payload.activity.sectionGroupId;
 						uiState.selectedCourseId = action.payload.activity.courseId;
