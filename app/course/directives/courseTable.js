@@ -109,6 +109,10 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 				element.append(body);
 				$('delete-course').popover();
+				element.find('input.planned-seats').blur(function (e) {
+					$el = $(e.target);
+					savePlannedSeats($el, scope, courseActionCreators);
+				});
 			});
 
 			// Call this once to set up table events.
@@ -117,28 +121,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					$el = $(e.target);
 
 					if ($el.hasClass('planned-seats')) {
-						var courseId = $el.closest("tr").data('course-id');
-						var termCode = $el.closest("td").data('term-code').toString();
-						var sectionGroupId = $el.closest("td").data('section-group-id');
-						var plannedSeats = parseInt($el.val());
-
-						if (sectionGroupId) {
-							// Save existing sectionGroup
-							var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
-							sectionGroup.plannedSeats = plannedSeats;
-							courseActionCreators.updateSectionGroup(sectionGroup);
-						} else {
-							// Create a new sectionGroup
-							var sectionGroup = {
-								courseId: courseId,
-								termCode: termCode,
-								plannedSeats: plannedSeats
-							};
-							courseActionCreators.addSectionGroup(sectionGroup);
-						}
-
-						// Important: notify angular since this happends outside of the scope
-						scope.$apply();
+						savePlannedSeats($el, scope, courseActionCreators);
 					}
 				}
 			});
@@ -301,3 +284,33 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 	row += "</tr>";
 	return row;
 };
+
+var savePlannedSeats = function ($el, scope, courseActionCreators) {
+	var courseId = $el.closest("tr").data('course-id');
+	var termCode = $el.closest("td").data('term-code').toString();
+	var sectionGroupId = $el.closest("td").data('section-group-id');
+	var plannedSeats = parseInt($el.val());
+
+	// Ignore if unchanged
+	if (scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats == plannedSeats) {
+		return;
+	}
+
+	if (sectionGroupId) {
+		// Save existing sectionGroup
+		var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+		sectionGroup.plannedSeats = plannedSeats;
+		courseActionCreators.updateSectionGroup(sectionGroup);
+	} else {
+		// Create a new sectionGroup
+		var sectionGroup = {
+			courseId: courseId,
+			termCode: termCode,
+			plannedSeats: plannedSeats
+		};
+		courseActionCreators.addSectionGroup(sectionGroup);
+	}
+
+	// Important: notify angular since this happends outside of the scope
+	scope.$apply();
+}
