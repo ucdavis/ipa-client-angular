@@ -28,8 +28,8 @@
   display: none;
 }
 #chat,
-div:not(.sidebar-collapsed) .right-details {
-  right: -135px;
+.page-container:not(.sidebar-collapsed) .right-details {
+  width: 20%;
 }
 #chat.fixed {
   min-height: 0 !important;
@@ -408,6 +408,9 @@ div:not(.sidebar-collapsed) .right-details {
 }
 .page-container .main-content {
   width: 70%;
+}
+.page-container:not(.sidebar-collapsed) .main-content {
+  width: 65%;
 }
 .pager.year-switcher {
   border-top: 1px solid rgba(69, 74, 84, 0.7);

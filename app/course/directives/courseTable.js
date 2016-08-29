@@ -305,6 +305,8 @@ var savePlannedSeats = function ($el, scope, courseActionCreators) {
 	var sectionGroupId = $el.closest("td").data('section-group-id');
 	var plannedSeats = parseInt($el.val());
 
+	if (isNaN(plannedSeats)) { return; }
+
 	if (sectionGroupId) {
 		// Ignore if unchanged
 		if (scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats == plannedSeats) {
