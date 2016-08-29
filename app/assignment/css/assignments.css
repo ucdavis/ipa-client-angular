@@ -855,3 +855,10 @@ ol.sortable-list>li .term-preference-dropdown {
 .dropdown-menu .divider.courses-separator {
 	margin: 4px;
 }
+
+.course-tag {
+	padding: 3px;
+	margin-left: 3px;
+	background-color: #333;
+	color: #FFFFFF; 
+}
