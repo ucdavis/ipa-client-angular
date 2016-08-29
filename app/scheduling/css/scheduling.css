@@ -546,6 +546,7 @@ body {
   flex: 0 0 40%;
 }
 .activity-list {
+  position: relative;
   flex: 0 0 100%;
   border-bottom: 1px solid #ebebeb;
   overflow-y: auto;
@@ -697,4 +698,11 @@ select.standard-time {
 .input-sm-padding, .btn-sm-padding {
   padding: 2px 3px;
   height: 30px;
+}
+
+.loading-section-group {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
 }

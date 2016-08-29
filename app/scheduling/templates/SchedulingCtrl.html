@@ -107,7 +107,10 @@
 			</div>
 			<div class="activity-container" ng-class="{ 'collapsed': !view.state.uiState.selectedSectionGroupId }">
 				<div class="activity-list" ng-class="{ 'collapsed': view.state.uiState.selectedActivityId }">
-					<div ng-if="view.state.uiState.selectedSectionGroupId">
+					<div ng-hide="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds" class="loading-section-group">
+						loading...
+					</div>
+					<div ng-show="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds">
 
 						<p class="activity-list-header">
 							{{ view.state.courses.list[view.state.uiState.selectedCourseId].subjectCode }}
