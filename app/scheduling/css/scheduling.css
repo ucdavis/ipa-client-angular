@@ -597,9 +597,6 @@ p.activity-details-header {
   width: 100%;
   float: none;
 }
-.fc-time-grid .fc-slats td {
-  height: 2em !important;
-}
 a.fc-event,
 a.fc-event:hover,
 .ui-widget a.fc-event {
