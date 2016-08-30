@@ -6,7 +6,7 @@
 
 			<!-- logo -->
 			<div class="logo">
-				<a ng-href="/summary/{{ workgroupId }}/{{ year }}/{{ term.code }}">
+				<a ng-href="/summary/{{ workgroupId }}/{{ year }}">
 					<h1 style="color: #fff; margin:0;">IPA</h1>
 				</a>
 			</div>
@@ -42,7 +42,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="/workgroups/{{ sharedState.workgroup.id }}/{{ sharedState.year }}/{{ term.code }}">
+				<a href="/workgroups/{{ sharedState.workgroup.id }}/{{ sharedState.year }}">
 					<i class="entypo-users"></i>
 					<span class="title" ng-if="sharedState.userWorkgroups.length > 1">Workgroups</span>
 					<span class="title" ng-if="sharedState.userWorkgroups.length == 1">{{ sharedState.workgroup.name }}</span>
@@ -50,7 +50,7 @@
 				<ul class="visible" ng-if="sharedState.userWorkgroups.length > 1">
 					<li ng-repeat="workgroup in sharedState.userWorkgroups track by workgroup.id"
 					ng-class="{ 'active': sharedState.workgroup.id == workgroup.id }">
-						<a ng-href="/workgroups/{{ workgroup.id }}/{{ sharedState.year }}/{{ term.code }}">
+						<a ng-href="/workgroups/{{ workgroup.id }}/{{ sharedState.year }}">
 							<span class="title">{{ workgroup.name }}</span>
 						</a>
 					</li>
@@ -70,13 +70,13 @@
 			<!-- add class "multiple-expanded" to allow multiple submenus to open -->
 			<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
 			<li>
-				<a ng-href="/courses/{{ workgroupId }}/{{ year }}/{{ term.code }}">
+				<a ng-href="/courses/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-book"></i>
 					<span class="title">Courses</span>
 				</a>
 			</li>
 			<li>
-				<a ng-href="/assignments/{{ workgroupId }}/{{ year }}/{{ term.code }}">
+				<a ng-href="/assignments/{{ workgroupId }}/{{ year }}
 					<i class="entypo-user-add"></i>
 					<span class="title">Assignments</span>
 				</a>
@@ -87,8 +87,8 @@
 					<span class="title">Scheduling</span>
 				</a>
 				<ul class="visible">
-					<li ng-repeat="term in termDefinitions track by term.id" ng-class="{'active': term.code == termCode}">
-						<a ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ term.code }}">
+					<li ng-repeat="term in termDefinitions track by term.id" ng-class="{'active': term.shortCode == termShortCode}">
+						<a ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ term.shortCode }}">
 							{{ term.description }}
 						</a>
 					</li>

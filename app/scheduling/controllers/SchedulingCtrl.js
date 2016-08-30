@@ -11,11 +11,11 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		this.SchedulingCtrl = function ($scope, $rootScope, $routeParams, Activity, Term, schedulingActionCreators) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
-			$scope.termCode = $routeParams.termCode;
-			$scope.term = Term.prototype.getTermByTermCode($scope.termCode);
+			$scope.termShortCode = $routeParams.termShortCode;
+			$scope.term = Term.prototype.getTermByTermShortCodeAndYear($scope.termShortCode, $scope.year);
 			$scope.view = {};
 
-			$scope.days = ['M','T','W','R','F','S','U'];
+			$scope.days = ['M', 'T', 'W', 'R', 'F', 'S', 'U'];
 			$scope.standardPatterns = Activity.prototype.getStandardTimes();
 
 			$rootScope.$on('schedulingStateChanged', function (event, data) {
@@ -121,8 +121,12 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		}
 ]);
 
-SchedulingCtrl.getPayload = function (authService, $route, schedulingActionCreators) {
+SchedulingCtrl.getPayload = function (authService, $route, Term, schedulingActionCreators) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		return schedulingActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termCode);
+		var term = Term.prototype.getTermByTermShortCodeAndYear($route.current.params.termShortCode, $route.current.params.year);
+		return schedulingActionCreators.getInitialState(
+			$route.current.params.workgroupId,
+			$route.current.params.year,
+			term.code);
 	});
 }

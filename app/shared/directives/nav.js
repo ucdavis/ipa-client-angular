@@ -5,7 +5,7 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.sharedState = authService.getSharedState();
-			scope.termCode = attrs.termCode;
+			scope.termShortCode = attrs.termShortCode;
 
 			// TODO: Shouldn't this be set somewhere to be shared outside of <nav> ? -CT
 			$rootScope.$on('sharedStateSet', function (event, data) {
@@ -38,8 +38,7 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 				scope.sharedState.year = parseInt(scope.sharedState.year) + offset;
 
 				// Redirect the page
-				var termCode = scope.termCode ? Number(scope.termCode) + (offset * 100) : '';
-				var url = '/' + scope.sharedState.workgroup.id + '/' + scope.sharedState.year + '/' + termCode;
+				var url = '/' + scope.sharedState.workgroup.id + '/' + scope.sharedState.year + '/' + scope.termShortCode;
 				$location.path(url);
 			};
 

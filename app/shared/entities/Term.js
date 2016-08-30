@@ -42,16 +42,11 @@ angular.module('term', [])
 			},
 
 			// Returns a proper term object for a given termCode
-			getTermByTermCode: function (termCode) {
-				if (typeof termCode != "string" || termCode.length != 6) { return; }
+			getTermByTermShortCodeAndYear: function (termShortCode, year) {
+				if (typeof termShortCode != "string" || termShortCode.length != 2) { return; }
 
 				var year;
-				var termId = Number(termCode.slice(-2));
-				if (termId < 5) {
-					year = Number(termCode.substr(0, 4)) - 1;
-				} else {
-					year = Number(termCode.substr(0, 4));
-				}
+				var termId = Number(termShortCode);
 				var allTerms = this.generateTable(year);
 				return _array_findById(allTerms, termId);
 			}
