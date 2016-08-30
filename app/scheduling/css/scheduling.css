@@ -546,6 +546,7 @@ body {
   flex: 0 0 40%;
 }
 .activity-list {
+  position: relative;
   flex: 0 0 100%;
   border-bottom: 1px solid #ebebeb;
   overflow-y: auto;
@@ -596,15 +597,19 @@ p.activity-details-header {
   width: 100%;
   float: none;
 }
-.fc-time-grid .fc-slats td {
-  height: 2em !important;
-}
 a.fc-event,
 a.fc-event:hover,
 .ui-widget a.fc-event {
   font-size: 10px ;
   line-height: 1em;
   border-radius: 0;
+  cursor: pointer;
+}
+a.fc-event:hover,
+.ui-widget a.fc-event:hover {
+  -webkit-box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow:    0px 0px 30px 0px rgba(0, 0, 0, 0.3);
+  box-shadow:         0px 0px 30px 0px rgba(0, 0, 0, 0.3);
 }
 .fc-unthemed .fc-today {
   background: transparent !important;
@@ -697,4 +702,11 @@ select.standard-time {
 .input-sm-padding, .btn-sm-padding {
   padding: 2px 3px;
   height: 30px;
+}
+
+.loading-section-group {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
 }

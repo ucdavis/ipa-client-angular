@@ -183,19 +183,20 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 							courseHtml += " data-is-buyout=\"true\"";
 							courseHtml += " data-term-code=\"" + termCode + "\"";
 							courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-							courseHtml += " href=\"#\">BUYOUT</a></li>";
+							courseHtml += " href=\"#\">Buyout</a></li>";
 
 							courseHtml += "<li><a";
 							courseHtml += " data-is-sabbatical=\"true\"";
 							courseHtml += " data-term-code=\"" + termCode + "\"";
 							courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-							courseHtml += " href=\"#\">SABBATICAL</a></li>";
+							courseHtml += " href=\"#\">Sabbatical</a></li>";
 
 							courseHtml += "<li><a";
 							courseHtml += " data-is-course-release=\"true\"";
 							courseHtml += " data-term-code=\"" + termCode + "\"";
 							courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-							courseHtml += " href=\"#\">COURSE RELEASE</a></li>";
+							courseHtml += " href=\"#\">Course Release</a></li>";
+							courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
 
 							// Loop over all other courses
 							$.each(scope.view.state.courses.ids, function(i, courseId) {

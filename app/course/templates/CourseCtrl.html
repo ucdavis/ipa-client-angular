@@ -169,16 +169,7 @@
 							<div class="col-sm-10 col-sm-offset-1">
 								<strong>Tags</strong>
 								<br />
-
-								<ui-select multiple ng-model="view.selectedEntity.tagIds" theme="bootstrap"
-								close-on-select="false" on-select="addTag($item, $model)" on-remove="removeTag($item, $model)">
-									<ui-select-match placeholder="Select tags...">{{view.state.tags.list[$item].name}}</ui-select-match>
-									<!-- TODO: needs custom filter -->
-									<ui-select-choices repeat="tagId in view.state.tags.ids | filter:$select.search">
-										<div ng-bind-html="view.state.tags.list[tagId].name | highlight: $select.search"></div>
-									</ui-select-choices>
-								</ui-select>
-
+								<selectize config="tagsSelectConfig" ng-model="view.selectedEntity.tagIds"></selectize>
 							</div>
 						</div>
 					</div>
@@ -295,7 +286,7 @@
 							<td><strong>Total</strong></td>
 							<!-- TODO: Get enrollment live from DW? -->
 							<!--<td>{{ section.enrollment }}</td>-->
-							<td class="text-center">{{ sectionSeatTotal(view.selectedEntity) }}</td>
+							<td class="text-center">{{ sectionSeatTotal(view.selectedEntity) }} / {{ view.selectedEntity.plannedSeats }}</td>
 							<td></td>
 						</tr>
 					</tbody>

@@ -107,14 +107,20 @@
 			</div>
 			<div class="activity-container" ng-class="{ 'collapsed': !view.state.uiState.selectedSectionGroupId }">
 				<div class="activity-list" ng-class="{ 'collapsed': view.state.uiState.selectedActivityId }">
-					<div ng-if="view.state.uiState.selectedSectionGroupId">
+					<div ng-hide="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds" class="loading-section-group">
+						loading...
+					</div>
+					<div ng-show="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds">
 
 						<p class="activity-list-header">
 							{{ view.state.courses.list[view.state.uiState.selectedCourseId].subjectCode }}
 							{{ view.state.courses.list[view.state.uiState.selectedCourseId].courseNumber }}
 							- {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
 						</p>
-						<div class="section-pattern">All Sections</div>
+						<div class="section-pattern" ng-show="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">All Sections</div>
+						<div class="section-pattern" ng-hide="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">
+							Section {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
+						</div>
 						<ul ng-repeat="sharedActivityId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sharedActivityIds track by $index"
 							class="activity-group" ng-init="sharedActivity = view.state.activities.list[sharedActivityId];">
 							<li class="activity-item"
@@ -135,7 +141,7 @@
 									tooltip-placement="right" tooltip-append-to-body="true"
 									ng-click="createSharedActivity(sharedActivity, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"></i>
 						</ul>
-						<ul>
+						<ul ng-if="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">
 							<li class="section-item" ng-repeat="sectionId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds"
 								ng-init="section = view.state.sections.list[sectionId];">
 								<div class="section-pattern">Section {{ section.sequenceNumber }}</div>

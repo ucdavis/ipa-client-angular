@@ -28,8 +28,8 @@
   display: none;
 }
 #chat,
-div:not(.sidebar-collapsed) .right-details {
-  right: -135px;
+.page-container:not(.sidebar-collapsed) .right-details {
+  width: 20%;
 }
 #chat.fixed {
   min-height: 0 !important;
@@ -409,6 +409,9 @@ div:not(.sidebar-collapsed) .right-details {
 .page-container .main-content {
   width: 70%;
 }
+.page-container:not(.sidebar-collapsed) .main-content {
+  width: 65%;
+}
 .pager.year-switcher {
   border-top: 1px solid rgba(69, 74, 84, 0.7);
   border-bottom: 1px solid rgba(69, 74, 84, 0.7);
@@ -480,9 +483,13 @@ table.courses-table > tbody > tr > td:not(:first-child) {
 .x-ng-cloak {
   display: none !important;
 }
-.selected-tr td:not(.ui-overlay), .selected-td, .new-course-td {
+.selected-tr td:not(.ui-overlay), .selected-td, .new-course-td, tr.selected-import-course td.import-course {
   background-color: rgba(179, 181, 198, 0.5);
   color: #000;
+}
+td.import-course  {
+  background-color: rgba(179, 181, 198, 0.25);
+  color: #555;
 }
 .new-course-td {
   text-align: center;
@@ -631,8 +638,16 @@ table.sections-table > tbody tr > td {
   vertical-align: initial;
 }
 
-.page-body .select2-container {
-  width: 100%;
+.selectize-control.multi .selectize-input [data-value] {
+  color: #303641;
+  background-color: #f0f0f1;
+  background-image: none;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+.selectize-control.multi .selectize-input > div {
+  border-color: #f0f0f1;
 }
 
 .course-sequence-pattern {

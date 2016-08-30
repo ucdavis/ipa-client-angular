@@ -33,12 +33,28 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 					if (course.isHidden == false && course.isFiltered == false) {
 						var courseHtml = "";
 						courseHtml += "<div class=\"course-list-row\">";
-						courseHtml += "<div class=\"course-description-cell\"><div><div class=\"course-title\">";
+						courseHtml += "<div class=\"course-description-cell\"><div>";
+
+						courseHtml += "<div class=\"course-title\">";
 						courseHtml += course.subjectCode + " " + course.courseNumber + " " + course.title + " " + course.sequencePattern;
 						courseHtml += "</div>";
+
 						courseHtml += "<div class=\"course-units\">";
 						courseHtml += "Units: " + course.unitsLow;
-						courseHtml += "</div></div></div>";
+						courseHtml += "</div>";
+
+						courseHtml += "<div class=\"course-tags\">";
+						courseHtml += "Tags: ";
+
+						// Display tags
+						$.each(course.tagIds, function(i, tagId) {
+							var tag = scope.view.state.tags.list[tagId];
+							courseHtml += "<div class=\"label course-tag\">" + tag.name + "</div>";
+						});
+
+						courseHtml += "</div>"; // End tags
+
+						courseHtml += "</div></div>"; // End course-description-cell
 						
 						// Loop over active terms
 						$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {

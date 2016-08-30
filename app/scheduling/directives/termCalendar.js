@@ -15,8 +15,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 					allDayDefault: false,
 					aspectRatio: parentAspectRatio,
 					height: "auto",
-					minTime: '06:00',
-					maxTime: '18:00',
+					minTime: '07:00',
+					maxTime: '22:00',
 					header: false,
 					slotEventOverlap: false,
 					hiddenDays: scope.view.state.filters.hiddenDays,
@@ -28,6 +28,10 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 						var activity = scope.view.state.activities.list[calEvent.activityId];
 						schedulingActionCreators.setSelectedActivity(activity);
 						// Important: notify angular since this happends outside of the scope
+						scope.$apply();
+					},
+					dayClick: function (date, jsEvent, view) {
+						schedulingActionCreators.setSelectedActivity();
 						scope.$apply();
 					}
 				});
@@ -69,8 +73,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 
 					dayArray.forEach(function(d,i) {
 						if (d === '1') {
-							var activityStart = moment().day(i).hour(start[0]).minute(start[1]).second(0).format('llll');
-							var activityEnd = moment().day(i).hour(end[0]).minute(end[1]).second(0).format('llll');
+							var activityStart = moment().day(i+1).hour(start[0]).minute(start[1]).second(0).format('llll');
+							var activityEnd = moment().day(i+1).hour(end[0]).minute(end[1]).second(0).format('llll');
 
 							calendarActivities.push({
 								title: title,

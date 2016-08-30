@@ -19,7 +19,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				TOGGLE_TERM_FILTER,
 				BEGIN_IMPORT_MODE,
 				END_IMPORT_MODE,
-				SEARCH_IMPORT_COURSES
+				SEARCH_IMPORT_COURSES,
+				ADD_SECTION_GROUP
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
@@ -46,6 +47,19 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 						// Highlight single cell if a sectionGroup is selected
 						$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]').addClass("selected-td");
 					}
+
+					return;
+				}
+
+				// Set the correct section-group-id on the newly created sectionGkroup cell
+				if (data.actionType == ADD_SECTION_GROUP) {
+					var sectionGroup = _.find(scope.view.state.sectionGroups.list, function (sg) {
+						return (sg.termCode == data.state.uiState.selectedTermCode)
+							&& (sg.courseId == data.state.uiState.selectedCourseId)
+					});
+
+					$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]')
+						.data('section-group-id', sectionGroup.id);
 
 					return;
 				}
@@ -109,6 +123,10 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 				element.append(body);
 				$('delete-course').popover();
+				element.find('input.planned-seats').blur(function (e) {
+					$el = $(e.target);
+					savePlannedSeats($el, scope, courseActionCreators);
+				});
 			});
 
 			// Call this once to set up table events.
@@ -117,28 +135,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					$el = $(e.target);
 
 					if ($el.hasClass('planned-seats')) {
-						var courseId = $el.closest("tr").data('course-id');
-						var termCode = $el.closest("td").data('term-code').toString();
-						var sectionGroupId = $el.closest("td").data('section-group-id');
-						var plannedSeats = parseInt($el.val());
-
-						if (sectionGroupId) {
-							// Save existing sectionGroup
-							var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
-							sectionGroup.plannedSeats = plannedSeats;
-							courseActionCreators.updateSectionGroup(sectionGroup);
-						} else {
-							// Create a new sectionGroup
-							var sectionGroup = {
-								courseId: courseId,
-								termCode: termCode,
-								plannedSeats: plannedSeats
-							};
-							courseActionCreators.addSectionGroup(sectionGroup);
-						}
-
-						// Important: notify angular since this happends outside of the scope
-						scope.$apply();
+						savePlannedSeats($el, scope, courseActionCreators);
 					}
 				}
 			});
@@ -148,11 +145,15 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 			element.click(function(e) {
 				$el = $(e.target);
 
-				// Delete course
 				if ($el.data('event-type') == 'deleteCoursePop') {
+					// Delete course confirmation
+
+					// Make the overlay td always visible to keep the popover visible
 					$el.closest('td.ui-overlay').css('visibility', 'visible')
 					$el.popover('show');
 				} else if ($el.data('event-type') == 'deleteCourse') {
+					// Delete the course after the action is confirmed
+
 					var courseId = $el.data('course-id');
 					var course = scope.view.state.courses.list[courseId];
 
@@ -160,15 +161,22 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					// Important: notify angular since this happends outside of the scope
 					scope.$apply();
 				} else if ($el.data('event-type') == 'dismissCoursePop') {
+					// Dismiss the delete course dialog
+
+					// Make the ui-overlay invisible again
 					$el.closest('td.ui-overlay').css('visibility', '')
 					$el.closest("div.popover").siblings("i.delete-course").popover('hide');
 				} else if ($el.data('event-type') == 'addCourse') {
+					// Add a course
+
 					var index = $el.data('index');
 
 					courseActionCreators.newCourse(index);
 					// Important: notify angular since this happends outside of the scope
 					scope.$apply();
 				} else if ($el.is('td:not(.new-course-td):not(.import-course), td:not(.new-course-td):not(.import-course) *')) {
+					// Select a cell/row
+
 					// TODO: termCode and courseId may not be found if clicking on the first column ...
 					var courseId = $el.closest("tr").data('course-id');
 					var termCode = $el.closest("td").data('term-code');
@@ -177,15 +185,20 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					// Important: notify angular since this happends outside of the scope
 					scope.$apply();
 				} else if ($el.is('td.import-course, td.import-course *')) {
-					var courseSubjectCode = $el.closest("tr").data('course-subject-code');
-					var courseNumber = $el.closest("tr").data('course-number');
-					var courseSequencePattern = $el.closest("tr").data('course-sequence-pattern');
-					var checkBox = $el.closest("tr").find('div.import-course-check i');
+					// Toggle import flag on the mass import courses list
+
+					var row = $el.closest("tr");
+					var courseSubjectCode = row.data('course-subject-code');
+					var courseNumber = row.data('course-number');
+					var courseSequencePattern = row.data('course-sequence-pattern');
+					var checkBox = row.find('div.import-course-check i');
 
 					if (checkBox.hasClass('fa-square-o')) {
 						checkBox.removeClass('fa-square-o').addClass('fa-check-square-o');
+						row.addClass('selected-import-course');
 					} else {
 						checkBox.removeClass('fa-check-square-o').addClass('fa-square-o');
+						row.removeClass('selected-import-course');
 					}
 
 					courseActionCreators.toggleImportCourse(courseSubjectCode, courseNumber, courseSequencePattern);
@@ -199,8 +212,9 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 });
 
 var getImportCourseRow = function (course, termsToRender, state) {
+	var rowClass = course.import ? "selected-import-course" : "";
 	var checkboxClass = course.import ? "fa-check-square-o" : "fa-square-o";
-	var row = "<tr class=\"odd gradeX\" data-course-subject-code=\"" + course.subjectCode + "\""
+	var row = "<tr class=\"odd gradeX clickable " + rowClass + "\" data-course-subject-code=\"" + course.subjectCode + "\""
 		+ "data-course-number=\"" + course.courseNumber + "\" data-course-sequence-pattern=\"" + course.sequencePattern + "\" >"
 		+ "<td class=\"import-course course-cell\">"
 		+ "<div class=\"import-course-check\"><i class=\"fa " + checkboxClass + "\"></i></div>"
@@ -284,3 +298,35 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 	row += "</tr>";
 	return row;
 };
+
+var savePlannedSeats = function ($el, scope, courseActionCreators) {
+	var courseId = $el.closest("tr").data('course-id');
+	var termCode = $el.closest("td").data('term-code').toString();
+	var sectionGroupId = $el.closest("td").data('section-group-id');
+	var plannedSeats = parseInt($el.val());
+
+	if (isNaN(plannedSeats)) { return; }
+
+	if (sectionGroupId) {
+		// Ignore if unchanged
+		if (scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats == plannedSeats) {
+			return;
+		}
+
+		// Save existing sectionGroup
+		var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+		sectionGroup.plannedSeats = plannedSeats;
+		courseActionCreators.updateSectionGroup(sectionGroup);
+	} else {
+		// Create a new sectionGroup
+		var sectionGroup = {
+			courseId: courseId,
+			termCode: termCode,
+			plannedSeats: plannedSeats
+		};
+		courseActionCreators.addSectionGroup(sectionGroup);
+	}
+
+	// Important: notify angular since this happends outside of the scope
+	scope.$apply();
+}
