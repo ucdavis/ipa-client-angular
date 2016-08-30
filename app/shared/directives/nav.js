@@ -44,7 +44,16 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 
 			scope.logout = function () {
 				authService.logout();
-			}
+			};
+
+			scope.getYearTerms = function () {
+				var activeTerms = scope.sharedState.termStates.map(function (termState) {
+					return termState.termCode;
+				});
+				return scope.termDefinitions.filter(function (term) {
+					return activeTerms.indexOf(term.code) >= 0;
+				});
+			};
 		}
 	}
 })

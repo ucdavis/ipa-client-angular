@@ -14,6 +14,7 @@ angular.module('sharedApp')
 			activeYear: 0,
 			userWorkgroups: [],
 			displayName: "",
+			termStates: [],
 
 			/**
 			 * Validates the given JWT token with the backend.
@@ -22,9 +23,16 @@ angular.module('sharedApp')
 				var deferred = $q.defer();
 				var userRoles = this.getUserRoles();
 				var displayName = localStorage.getItem('displayName');
+				var termStates = this.getTermStates();
 				var scope = this;
+				var requestPayload = {
+					token: token,
+					userRoles: userRoles,
+					displayName: displayName,
+					termStates: termStates
+				};
 
-				$http.post(serverRoot + '/login', { token: token, userRoles: userRoles, displayName: displayName }, { withCredentials: true }).then(function (response) {
+				$http.post(serverRoot + '/login', requestPayload, { withCredentials: true }).then(function (response) {
 					// Token may be null if we are redirecting
 					if (response.data != null && response.data.token !== null) {
 						var token = response.data.token;
@@ -34,6 +42,7 @@ angular.module('sharedApp')
 						localStorage.setItem('JWT', token);
 						localStorage.setItem('userRoles', JSON.stringify(response.data.userRoles));
 						localStorage.setItem('displayName', response.data.displayName);
+						localStorage.setItem('termStates', JSON.stringify(response.data.termStates));
 
 						// If workgroupId or year NOT set
 						if ( !workgroupId || !year) {
@@ -41,7 +50,7 @@ angular.module('sharedApp')
 							$rootScope.$emit('sharedStateSet', scope.getSharedState());
 							deferred.reject();
 						} else {
-							scope.setSharedState(workgroupId, year, response.data.displayName);
+							scope.setSharedState(workgroupId, year, response.data.displayName, response.data.termStates);
 						}
 
 						deferred.resolve(response);
@@ -50,6 +59,7 @@ angular.module('sharedApp')
 						localStorage.removeItem('JWT');
 						localStorage.removeItem('userRoles');
 						localStorage.removeItem('displayName');
+						localStorage.removeItem('termStates');
 						$window.location.href = response.data.redirect + "?ref=" + document.URL;
 
 						deferred.reject();
@@ -81,6 +91,7 @@ angular.module('sharedApp')
 				localStorage.removeItem('JWT');
 				localStorage.removeItem('userRoles');
 				localStorage.removeItem('displayName');
+				localStorage.removeItem('termStates');
 				$window.location.href = serverRoot + "/logout";
 			},
 
@@ -94,6 +105,18 @@ angular.module('sharedApp')
 				}
 
 				return userRoles;
+			},
+
+			getTermStates: function () {
+				var termStates = null;
+
+				try {
+					termStates = JSON.parse(localStorage.getItem('termStates'));
+				} catch(err) {
+					console.log(err);
+				}
+
+				return termStates;
 			},
 
 			fallbackToDefaultUrl: function() {
@@ -110,11 +133,12 @@ angular.module('sharedApp')
 				}
 			},
 
-			setSharedState: function (workgroupId, year, displayName) {
+			setSharedState: function (workgroupId, year, displayName, termStates) {
 				var scope = this;
 				var userRoles = scope.getUserRoles();
 				scope.activeYear = year;
 				scope.displayName = displayName;
+				scope.termStates = scope.getTermStates();
 
 				for (var i = 0; i < userRoles.length; i++) {
 					userRole = userRoles[i];
@@ -141,7 +165,8 @@ angular.module('sharedApp')
 					workgroup: this.activeWorkgroup,
 					year: this.activeYear,
 					userWorkgroups: this.userWorkgroups,
-					displayName: this.displayName
+					displayName: this.displayName,
+					termStates: this.termStates
 				}
 			}
 		};

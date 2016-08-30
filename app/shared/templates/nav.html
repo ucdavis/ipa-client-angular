@@ -76,7 +76,7 @@
 				</a>
 			</li>
 			<li>
-				<a ng-href="/assignments/{{ workgroupId }}/{{ year }}
+				<a ng-href="/assignments/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-user-add"></i>
 					<span class="title">Assignments</span>
 				</a>
@@ -87,7 +87,7 @@
 					<span class="title">Scheduling</span>
 				</a>
 				<ul class="visible">
-					<li ng-repeat="term in termDefinitions track by term.id" ng-class="{'active': term.shortCode == termShortCode}">
+					<li ng-repeat="term in getYearTerms() track by term.id" ng-class="{'active': term.shortCode == termShortCode}">
 						<a ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ term.shortCode }}">
 							{{ term.description }}
 						</a>
