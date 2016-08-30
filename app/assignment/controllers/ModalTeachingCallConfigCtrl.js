@@ -180,4 +180,5 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 		$uibModalInstance.close($scope.startTeachingCallConfig);
 	};
 
+	$scope.urlRoot = location.href;
 });
