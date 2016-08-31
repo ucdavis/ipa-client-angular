@@ -954,6 +954,7 @@ ol.sortable-list>li .term-preference-dropdown {
 .unavailability-term-container {
 	border-right: 1px solid;
 	border-color: rgb(235, 235, 235);
+	padding-bottom: 10px;
 }
 
 .unapproved-preference-container {
@@ -998,4 +999,8 @@ ol.sortable-list>li .term-preference-dropdown {
 
 .teaching-call-form-submit-container {
 	margin-bottom: 50px;
+}
+
+.ui-state-highlight {
+	height: 50px; /* preserve space for preference while dragging */
 }

@@ -22,7 +22,8 @@ sharedApp.directive("sortable", this.sortable = function() {
 					var sortedIds = element.sortable( "serialize" ).split('pref[]=').join('').split('&');
 					scope.dragEnd({sortedIds: sortedIds});
 				},
-				axis: "y"
+				axis: "y",
+				placeholder: "ui-state-highlight"
 			});
 		}
 	}
