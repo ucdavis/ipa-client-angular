@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name ipaClientAngularApp.controller:TeachingCallCtrl
+ * @name ipaClientAngularApp.controller:TeachingCallFormCtrl
  * @description
- * # TeachingCallCtrl
+ * # TeachingCallFormCtrl
  * Controller of the ipaClientAngularApp
  */
-assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routeParams', '$timeout', 'assignmentActionCreators',
-		this.TeachingCallCtrl = function ($scope, $rootScope, $routeParams, $timeout, assignmentActionCreators) {
+assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$routeParams', '$timeout', 'assignmentActionCreators',
+		this.TeachingCallFormCtrl = function ($scope, $rootScope, $routeParams, $timeout, assignmentActionCreators) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
@@ -20,7 +20,6 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 					$scope.prepareTeachingCall();
 				}
 
-				console.log($scope.view.state);
 			});
 
 			$scope.viewState = {};
@@ -325,17 +324,6 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 				}
 			};
 
-			//$scope.terms = termService.getActiveTerms();
-
-			//$scope.year = sharedService.selectedYear();
-			//$scope.activeWorkgroup = userService.getActiveWorkgroup();
-			//$scope.termPreferences = teachingPreferenceService.retrieveInstancesSortedByTerm();
-			//$scope.teachingCall = teachingCall;
-			//$scope.teachingCallReceipt = teachingCallReceipt;
-			//$scope.teachingCallResponse = teachingCallResponseService.retrieveInstancesSortedByTerm();
-			//$scope.terms = termService.setActiveTermsByTermsBlob(teachingCall.termsBlob);
-			//$scope.courseOfferings = courseOfferings;
-			//$scope.instructorId = userService.getCurrentUser().instructorId;
 			$scope.timeout = {};
 			setTimeout(function() {
 				$( ".sortable-list" ).sortable();
@@ -343,7 +331,7 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 
 	}]);
 
-TeachingCallCtrl.validate = function (authService, assignmentActionCreators, $route) {
+TeachingCallFormCtrl.validate = function (authService, assignmentActionCreators, $route) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then( function() {
 		assignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
 	})

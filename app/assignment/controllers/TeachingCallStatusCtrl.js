@@ -7,8 +7,8 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParams', '$uibModal', 'assignmentActionCreators', 'assignmentService',
-		this.AssignmentCtrl = function ($scope, $rootScope, $routeParams, $uibModal, assignmentActionCreators, assignmentService) {
+assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$routeParams', '$uibModal', 'assignmentActionCreators', 'assignmentService',
+		this.TeachingCallStatusCtrl = function ($scope, $rootScope, $routeParams, $uibModal, assignmentActionCreators, assignmentService) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.view = {};
@@ -190,7 +190,7 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParam
 			};
 	}]);
 
-AssignmentCtrl.validate = function (authService, assignmentActionCreators, $route) {
+TeachingCallStatusCtrl.validate = function (authService, assignmentActionCreators, $route) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then( function() {
 		assignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
 	})
