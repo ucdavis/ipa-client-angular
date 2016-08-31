@@ -954,7 +954,6 @@ ol.sortable-list>li .term-preference-dropdown {
 .unavailability-term-container {
 	border-right: 1px solid;
 	border-color: rgb(235, 235, 235);
-	padding-bottom: 10px;
 }
 
 .unapproved-preference-container {
@@ -1003,4 +1002,45 @@ ol.sortable-list>li .term-preference-dropdown {
 
 .ui-state-highlight {
 	height: 50px; /* preserve space for preference while dragging */
+}
+
+/* Teaching Call Status ------------------------------------ */
+.teaching-call-status-header {
+	text-align: center;
+}
+
+.teaching-call-status-sub-header {
+	padding-left: 1%;
+}
+
+.teaching-call-table-row {
+	display:flex;
+	margin-left:15px;
+	margin-right:15px;
+	border: 1px solid;
+	border-color: rgb(235, 235, 235);
+}
+
+.teaching-call-table__header {
+	border-right: 1px solid;
+	border-color: rgb(235, 235, 235);
+	flex: 1 0 100px;
+	background-color: rgb(245, 245, 246);
+	height: 30px;
+	text-align: center;
+	padding-top: 5px;
+}
+
+.teaching-call-table__header-detail {
+	text-align: center;
+	color: rgb(166, 167, 170);
+}
+
+.teaching-call-table__row-detail {
+	flex: 1 0 100px;
+	border-right: 1px solid;
+	border-color: rgb(235, 235, 235);
+	height: 30px;
+	text-align: center;
+	padding-top: 5px;
 }

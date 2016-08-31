@@ -11,6 +11,8 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$ro
 		this.TeachingCallStatusCtrl = function ($scope, $rootScope, $routeParams, $uibModal, assignmentActionCreators, assignmentService) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
+			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
+
 			$scope.view = {};
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
