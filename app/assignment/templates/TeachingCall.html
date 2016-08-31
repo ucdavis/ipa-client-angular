@@ -7,7 +7,7 @@
 	</h3>
 	<p class="text-align--center department-title">- {{ sharedState.workgroup.name }} -</p>
 </div>
-<div class="row">
+<div class="row" ng-show="view.state">
 	<div class="col-md-6">
 		<h5>Provide Courses:</h5>
 	</div>
@@ -17,7 +17,7 @@
 </div>
 
 
-<div class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
+<div ng-show="view.state" class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
 	<div class="unavailability-term-container" style="flex: 1 0 200px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
 		<div>
 			<div class="unavailability-term-header" style="text-align: center;">
@@ -28,7 +28,7 @@
 		</div>
 	</div>
 </div>
-<div class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
+<div ng-show="view.state" class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
 	<div class="unavailability-term-container" style="flex: 1 1 200px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
 		<!-- confirmed preferences -->
 		<div class="approved-preference-container">
@@ -71,7 +71,7 @@
 </div>
 
 <!-- Select Unavailabilities -->
-<div class="row provide-unavailabilities-header">
+<div ng-show="view.state" class="row provide-unavailabilities-header">
 	<div class="col-md-6">
 		<h5>Provide Unavailabilities:</h5>
 	</div>
@@ -83,7 +83,7 @@
 		</small>
 	</div>
 </div>
-<div class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
+<div ng-show="view.state" class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
 	<div class="unavailability-term-container" style="flex: 1 1 auto;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
 		<div ng-init="teachingCallResponse=view.state.activeTeachingCall.teachingCallResponsesByTermCode[termToTermCode(term)]">
 			<div class="unavailability-term-header" style="text-align: center;">
@@ -105,12 +105,12 @@
 <!-- Select Unavailabilities ends -->
 
 <!-- Comments -->
-<div class="row provide-comments-header">
+<div ng-show="view.state" class="row provide-comments-header">
 	<div class="col-md-12">
 		<h5>Provide Comments:</h5>
 	</div>
 </div>
-<div class="container-fluid margin-bottom-30">
+<div ng-show="view.state" class="container-fluid margin-bottom-30">
 	<textarea class="form-control" style="height:150px;" 
 	ng-model="view.state.activeTeachingCall.teachingCallReceipt.comment" auto-input on-blur="updateTeachingCallReceipt()"
 	placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment"></textarea>
@@ -118,7 +118,7 @@
 	<!-- Comments ends -->
 
 <!-- Submit button -->
-<div class="row teaching-call-form-submit-container">
+<div ng-show="view.state" class="row teaching-call-form-submit-container">
 	<div class="container-fluid pull-right">
 		<button type="button" class="btn btn-default"
 		 confirm-button="updateTeachingCallReceipt(true)"
