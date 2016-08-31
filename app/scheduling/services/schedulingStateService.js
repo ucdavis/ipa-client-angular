@@ -108,6 +108,8 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					return sections;
 				case REMOVE_ACTIVITY:
 					var section = sections.list[action.payload.activity.sectionId];
+					if (section == undefined) { return sections; }
+
 					var activityIndex = section.activityIds.indexOf(action.payload.activity.id);
 					if (activityIndex >= 0) {
 						section.activityIds.splice(activityIndex, 1);

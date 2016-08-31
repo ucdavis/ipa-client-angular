@@ -15,7 +15,7 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			$scope.term = Term.prototype.getTermByTermShortCodeAndYear($scope.termShortCode, $scope.year);
 			$scope.view = {};
 
-			$scope.days = ['M', 'T', 'W', 'R', 'F', 'S', 'U'];
+			$scope.days = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
 			$scope.standardPatterns = Activity.prototype.getStandardTimes();
 
 			$rootScope.$on('schedulingStateChanged', function (event, data) {

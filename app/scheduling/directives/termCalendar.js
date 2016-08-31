@@ -73,8 +73,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 
 					dayArray.forEach(function(d,i) {
 						if (d === '1') {
-							var activityStart = moment().day(i+1).hour(start[0]).minute(start[1]).second(0).format('llll');
-							var activityEnd = moment().day(i+1).hour(end[0]).minute(end[1]).second(0).format('llll');
+							var activityStart = moment().day(i).hour(start[0]).minute(start[1]).second(0).format('llll');
+							var activityEnd = moment().day(i).hour(end[0]).minute(end[1]).second(0).format('llll');
 
 							calendarActivities.push({
 								title: title,
