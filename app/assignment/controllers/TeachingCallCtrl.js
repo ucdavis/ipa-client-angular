@@ -11,7 +11,7 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 		this.TeachingCallCtrl = function ($scope, $rootScope, $routeParams, $timeout, assignmentActionCreators) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
-			$scope.nextYear = parseInt($scope.year) + 1;
+			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
@@ -309,11 +309,22 @@ assignmentApp.controller('TeachingCallCtrl', ['$scope', '$rootScope', '$routePar
 				var termCode = year + term;
 
 				return termCode;
-			}
+			};
 
 			$scope.termCodeToTerm = function(termCode) {
 				return termCode.slice(-2);
-			}
+			};
+
+			$scope.getDescription = function(preference) {
+				if (typeof preference === 'undefined') return 'Add';
+				else if (preference.isBuyout) return 'Buyout';
+				else if (preference.isSabbatical) return 'Sabbatical';
+				else if (preference.isCourseRelease) return 'Course Release';
+				else {
+					return preference.subjectCode + ' ' + preference.courseNumber;
+				}
+			};
+
 			//$scope.terms = termService.getActiveTerms();
 
 			//$scope.year = sharedService.selectedYear();

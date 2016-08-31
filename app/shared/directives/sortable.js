@@ -12,6 +12,7 @@ sharedApp.directive("sortable", this.sortable = function() {
 			});
 
 			element.sortable({
+				handle: '.preference-sortable-handle',
 				items: ">li:not(.unsortable)",
 				cancel:".disable-sorting",
 				start: function( event, ui ) {

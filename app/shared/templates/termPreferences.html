@@ -1,6 +1,6 @@
-<div uib-dropdown is-open="status.dropDownIsOpen">
+<div style="flex: 1 1 auto;" uib-dropdown is-open="status.dropDownIsOpen">
 	<button ng-if="!preference" class="btn btn-default dropdown-toggle term-preference-dropdown" type="button"
-		id="dropdownMenu1" uib-dropdown-toggle ng-disabled="readOnly" style="width: 88%;">
+		id="dropdownMenu1" uib-dropdown-toggle ng-disabled="readOnly">
 		<span class="dropdown-text">
 			{{ getDescription(preference) }}
 		</span>
@@ -16,6 +16,8 @@
 			{{ getDescription(preference) }}
 		</div>
 	</div>
+
+
 	<ul class="dropdown-menu dropdown-short" role="menu" aria-labelledby="dropdownMenu1" ng-if="status.dropDownIsOpen">
 		<li role="presentation" class="clickable">
 			<a role="menuitem" ng-click="onSelect({isBuyout: true})">
@@ -48,6 +50,6 @@
 	message="Are you sure you want to delete this preference"
 	yes="Delete" no="Cancel" placement="bottom"
 	confirm-is-shown="status.confirmIsOpen"
-	class="glyphicon glyphicon-remove sortable-item-button close"
+	class="delete-preference-button glyphicon glyphicon-remove sortable-item-button close"
 	aria-hidden="true" style="width: 10%;" uib-tooltip="Remove"
 	tooltip-placement="right"></span>

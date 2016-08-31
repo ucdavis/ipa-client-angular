@@ -685,21 +685,8 @@ ol.sortable-list > li {
 }
 
 ol.sortable-list > li:not(.unsortable) {
-	cursor: move;
+	cursor: auto;
 	list-style: none;
-}
-
-ol.sortable-list > li:not(.unsortable):after {
-	content: "";
-	position: absolute;
-	left: 0;
-	top: 0.75em;
-	width: 0.75em;
-	height: 0.15em;
-	background: #ccc;
-	box-shadow:
-		0 0.25em 0 0 #ccc,
-		0 0.5em 0 0 #ccc;
 }
 
 ol.sortable-list > li .term-preference-dropdown {
@@ -840,20 +827,111 @@ ol.sortable-list>li .term-preference-dropdown {
 .approved-preference,
 .approved-preference:hover {
 	background-color: #d9edf7;
+	height: 30px;
+	padding: 6px;
+	width: 180px;
+	margin-bottom: 20px;
+}
+
+.preference-assignment-dropdown {
+	width: 180px;
+	height: 30px;
+	padding: 6px;
 }
 
 .unapproved-preference,
 .unapproved-preference:hover {
 	background-color: white;
-	border-color: rgb(204,204,204);
+	border: 1px solid #adadad;
+	width: 180px;
 }
 
-.unapproved-preference .preference-display-detail {
-	color: rgb(153, 153, 153);
+.preference-display-detail {
+	color: rgb(0, 0, 0);
 }
 
 .dropdown-menu .divider.courses-separator {
 	margin: 4px;
+}
+
+.text-align--center {
+    text-align: center;
+}
+
+.tile-assignment--180_width {
+    width: 180px;
+    margin-right: 20px;
+}
+
+.question--position {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: rgb(166, 167, 170);
+    font-size: 12pt;
+}
+
+.question--position:hover {
+    color: black;
+}
+
+.margin-bottom-30 {
+    margin-bottom: 30px;
+}
+
+.icon-option-vertical_ta-assignment {
+    float: left;
+    left: -15px;
+    color: rgb(166, 167, 170);
+}
+
+.icon-remove_ta-assignment {/* remove course icon */
+    display: none;
+    color: #ee4749;
+    float: right;
+    position: absolute;
+    right: -20px;
+    font-size: 12pt;
+    padding-left: 20px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    cursor: pointer;
+}
+
+.department-title {
+    color: rgb(166, 167, 170);
+}
+
+.tile-assignment:hover .icon-remove_ta-assignment {
+    display: block !important;
+}
+
+.glyphicon {
+    cursor: pointer;
+}
+
+.confirmed-course {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.confirmed-course-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.unconfirmed-course {
+    padding: 6px 12px 6px 0px !important; /*this padding make the course title center*/
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.unconfirmed-course-info {
+    color: black;
+    background-color: white;
+    border:1px solid #adadad;
 }
 
 .course-tag {
@@ -861,4 +939,63 @@ ol.sortable-list>li .term-preference-dropdown {
 	margin-left: 3px;
 	background-color: #333;
 	color: #FFFFFF; 
+}
+
+.unavailability-container {
+	border: 1px solid;
+	border-color: rgb(235, 235, 235);
+}
+.unavailability-term-header {
+	background-color: rgb(245, 245, 246);
+	color: rgb(166, 167, 170);
+	height: 34px;
+}
+
+.unavailability-term-container {
+	border-right: 1px solid;
+	border-color: rgb(235, 235, 235);
+}
+
+.unapproved-preference-container {
+	padding-right: 28px; /* accounting for drag handle on unapproved preferences */
+	padding-top: 0px;
+}
+
+.approved-preference-container {
+	padding-top: 10px;
+	margin-bottom: 0px;
+}
+
+.approved-preference-container,
+.unapproved-preference-container {
+	display: flex;
+	flex-direction: column;
+	align-items:center;
+}
+
+.delete-preference-button {
+	opacity: 1 !important;
+	margin-right: 10px;
+}
+
+.term-preference-dropdown {
+	width: 180px;
+	border-color: rgb(173, 173, 173);
+}
+
+.dropdown-text {
+	color: black;
+}
+
+.preference-sortable-handle {
+	cursor: move;
+}
+
+.provide-unavailabilities-header,
+.provide-comments-header {
+	margin-top: 50px;
+}
+
+.teaching-call-form-submit-container {
+	margin-bottom: 50px;
 }
