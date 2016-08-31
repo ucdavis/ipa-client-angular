@@ -1,135 +1,143 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
-
-
-<div class="margin-bottom-30">
-	<h3 class="text-align--center">
-		Teaching Call {{ year }}-{{ nextYear }}
-	</h3>
-	<p class="text-align--center department-title">- {{ sharedState.workgroup.name }} -</p>
+<div>
 </div>
-<div class="row" ng-show="view.state">
-	<div class="col-md-6">
-		<h5>Provide Courses:</h5>
+<div ng-if="view.state && view.state.activeTeachingCall.id">
+	<div class="margin-bottom-30">
+		<h3 class="text-align--center">
+			Teaching Call {{ year }}-{{ nextYear }}
+		</h3>
+		<p class="text-align--center department-title">- {{ sharedState.workgroup.name }} -</p>
 	</div>
-	<div class="col-md-6">
-		<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+	<div class="row">
+		<div class="col-md-6">
+			<h5>Provide Courses:</h5>
+		</div>
+		<div class="col-md-6">
+			<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+		</div>
 	</div>
-</div>
 
 
-<div ng-show="view.state" class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
-	<div class="unavailability-term-container" style="flex: 1 0 200px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
-		<div>
-			<div class="unavailability-term-header" style="text-align: center;">
-				<div>
-					{{ getTermName(term) }}
+	<div class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
+		<div class="unavailability-term-container" style="flex: 1 0 200px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
+			<div>
+				<div class="unavailability-term-header" style="text-align: center;">
+					<div>
+						{{ getTermName(term) }}
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<div ng-show="view.state" class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
-	<div class="unavailability-term-container" style="flex: 1 1 200px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
-		<!-- confirmed preferences -->
-		<div class="approved-preference-container">
-			<div ng-if="preference.approved" class="approved-preference preference-display alert-info alert" data-toggle="tooltip" data-placement="top" data-original-title="Preference has been approved" data-container="body"
-			ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
-				{{getDescription(preference)}}
+	<div class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
+		<div class="unavailability-term-container" style="flex: 1 1 200px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
+			<!-- confirmed preferences -->
+			<div class="approved-preference-container">
+				<div ng-if="preference.approved" class="approved-preference preference-display alert-info alert" data-toggle="tooltip" data-placement="top" data-original-title="Preference has been approved" data-container="body"
+				ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
+					{{getDescription(preference)}}
+				</div>
 			</div>
+			<ol sortable drag-end="updateAssignmentsOrder(sortedIds, term)" class="sortable-list unapproved-preference-container">
+				<!-- unconfirmed preferences -->
+				<!-- id values needed to calculate the reordering of preferences in this specific format -->
+				<li style="display:flex; margin-bottom: 13px;" ng-if="!preference.approved" id="pref-{{ preference.id }}" class="sortable"
+				ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
+					<div style="flex: 0 0 auto; display: flex; align-items: center; padding-bottom: 5px;">
+						<i style="flex: 0 0 auto;" class="glyphicon glyphicon-option-vertical preference-sortable-handle"></i>
+					</div>
+					<div term-preferences
+					instructor-id="view.state.userInterface.instructorId"
+					preference="preference"
+					on-select="addPreference(preference, courseOffering, isBuyout, isSabbatical, isCourseRelease)"
+					on-delete="removePreference(preference)"
+					on-update="refreshPreferences()"
+					schedule-id="activeTeachingCall.scheduleId"
+					term="term"
+					ng-if="!isScheduleTermLocked(term) && !preference.approved"></div>
+				</li>
+
+				<li ng-if="!teachingCallResponse[term].isComplete && !isScheduleTermLocked(term)"
+					term-preferences courses="courseOfferings[term]" term="term" schedule-id="teachingCall.scheduleId"
+					class="unsortable preference-assignment-dropdown"
+					instructor-id="instructorId"
+					hidden-course-offering-ids="{{ getCourseOfferingIdsFromPreferences(termPreferences[term]) }}"
+					hidden-courses="{{ getCoursesFromPreferences(termPreferences[term]) }}"
+					on-update="refreshPreferences()"
+					on-select="addPreference(courseOffering, term, isBuyout, isSabbatical, isCourseRelease)">
+				</li>
+			</ol>
+
+		</div> <!-- term container -->
+	</div>
+
+	<!-- Select Unavailabilities -->
+	<div class="row provide-unavailabilities-header">
+		<div class="col-md-6">
+			<h5>Provide Unavailabilities:</h5>
 		</div>
-		<ol sortable drag-end="updateAssignmentsOrder(sortedIds, term)" class="sortable-list unapproved-preference-container">
-			<!-- unconfirmed preferences -->
-			<!-- id values needed to calculate the reordering of preferences in this specific format -->
-			<li style="display:flex; margin-bottom: 13px;" ng-if="!preference.approved" id="pref-{{ preference.id }}" class="sortable"
-			ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
-				<div style="flex: 0 0 auto; display: flex; align-items: center; padding-bottom: 5px;">
-					<i style="flex: 0 0 auto;" class="glyphicon glyphicon-option-vertical preference-sortable-handle"></i>
-				</div>
-				<div term-preferences
-				instructor-id="view.state.userInterface.instructorId"
-				preference="preference"
-				on-select="addPreference(preference, courseOffering, isBuyout, isSabbatical, isCourseRelease)"
-				on-delete="removePreference(preference)"
-				on-update="refreshPreferences()"
-				schedule-id="activeTeachingCall.scheduleId"
-				term="term"
-				ng-if="!isScheduleTermLocked(term) && !preference.approved"></div>
-			</li>
-
-			<li ng-if="!teachingCallResponse[term].isComplete && !isScheduleTermLocked(term)"
-				term-preferences courses="courseOfferings[term]" term="term" schedule-id="teachingCall.scheduleId"
-				class="unsortable preference-assignment-dropdown"
-				instructor-id="instructorId"
-				hidden-course-offering-ids="{{ getCourseOfferingIdsFromPreferences(termPreferences[term]) }}"
-				hidden-courses="{{ getCoursesFromPreferences(termPreferences[term]) }}"
-				on-update="refreshPreferences()"
-				on-select="addPreference(courseOffering, term, isBuyout, isSabbatical, isCourseRelease)">
-			</li>
-		</ol>
-
-	</div> <!-- term container -->
-</div>
-
-<!-- Select Unavailabilities -->
-<div ng-show="view.state" class="row provide-unavailabilities-header">
-	<div class="col-md-6">
-		<h5>Provide Unavailabilities:</h5>
-	</div>
-	<div class="col-md-6">
-		<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
-		<small class="legend pull-right" style="text-align: center;">
-			<div class="legend-square" style="background-color:#fff"></div>Available
-			<div class="legend-square" style="background-color:#ccc"></div>Unavailable
-		</small>
-	</div>
-</div>
-<div ng-show="view.state" class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
-	<div class="unavailability-term-container" style="flex: 1 1 auto;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
-		<div ng-init="teachingCallResponse=view.state.activeTeachingCall.teachingCallResponsesByTermCode[termToTermCode(term)]">
-			<div class="unavailability-term-header" style="text-align: center;">
-				<div>
-					{{ getTermName(term) }}
-				</div>
-				<span class="glyphicon glyphicon-transfer text-primary clickable hovrable" uib-tooltip="Copy to all terms"
-					confirm-button="copyUnabailabilitiesToAllTerms(teachingCallResponse.availabilityBlob)"
-					message="Are you sure you want to copy this term availabilities to all other terms?
-						This will overwrite exisiting availabilities."
-					yes="Confirm" no="Cancel" placement="top"></span>
-			</div>
-			<availability-grid blob="teachingCallResponse.availabilityBlob"
-				on-change="saveTeachingCallResponse(term, blob, 3000)"
-				read-only="teachingCallResponse.isComplete"></availability-grid>
+		<div class="col-md-6">
+			<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+			<small class="legend pull-right" style="text-align: center;">
+				<div class="legend-square" style="background-color:#fff"></div>Available
+				<div class="legend-square" style="background-color:#ccc"></div>Unavailable
+			</small>
 		</div>
 	</div>
-</div>
-<!-- Select Unavailabilities ends -->
+	<div class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
+		<div class="unavailability-term-container" style="flex: 1 1 auto;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
+			<div ng-init="teachingCallResponse=view.state.activeTeachingCall.teachingCallResponsesByTermCode[termToTermCode(term)]">
+				<div class="unavailability-term-header" style="text-align: center;">
+					<div>
+						{{ getTermName(term) }}
+					</div>
+					<span class="glyphicon glyphicon-transfer text-primary clickable hovrable" uib-tooltip="Copy to all terms"
+						confirm-button="copyUnabailabilitiesToAllTerms(teachingCallResponse.availabilityBlob)"
+						message="Are you sure you want to copy this term availabilities to all other terms?
+							This will overwrite exisiting availabilities."
+						yes="Confirm" no="Cancel" placement="top"></span>
+				</div>
+				<availability-grid blob="teachingCallResponse.availabilityBlob"
+					on-change="saveTeachingCallResponse(term, blob, 3000)"
+					read-only="teachingCallResponse.isComplete"></availability-grid>
+			</div>
+		</div>
+	</div>
+	<!-- Select Unavailabilities ends -->
 
-<!-- Comments -->
-<div ng-show="view.state" class="row provide-comments-header">
-	<div class="col-md-12">
-		<h5>Provide Comments:</h5>
+	<!-- Comments -->
+	<div class="row provide-comments-header">
+		<div class="col-md-12">
+			<h5>Provide Comments:</h5>
+		</div>
+	</div>
+	<div class="container-fluid margin-bottom-30">
+		<textarea class="form-control" style="height:150px;" 
+		ng-model="view.state.activeTeachingCall.teachingCallReceipt.comment" auto-input on-blur="updateTeachingCallReceipt()"
+		placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment"></textarea>
+	</div>
+		<!-- Comments ends -->
+
+	<!-- Submit button -->
+	<div class="row teaching-call-form-submit-container">
+		<div class="container-fluid pull-right">
+			<button type="button" class="btn btn-default"
+			 confirm-button="updateTeachingCallReceipt(true)"
+			 confirm-is-enabled="!view.state.activeTeachingCall.teachingCallReceipt.isDone"
+			 btn-class="btn-primary"
+			 message="Are you sure you want to submit the preferences for this term?"
+			 yes="Confirm" no="Cancel" placement="top">
+				{{ view.state.activeTeachingCall.teachingCallReceipt.isDone ? 'Update Preferences' : 'Submit Preferences' }}
+			</button>
+		</div>
 	</div>
 </div>
-<div ng-show="view.state" class="container-fluid margin-bottom-30">
-	<textarea class="form-control" style="height:150px;" 
-	ng-model="view.state.activeTeachingCall.teachingCallReceipt.comment" auto-input on-blur="updateTeachingCallReceipt()"
-	placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment"></textarea>
+
+<!-- handle lack of active teaching call -->
+<div ng-if="view.state && !view.state.activeTeachingCall.id">
+		<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+			<p class="lead">You have not been added to a  {{sharedState.workgroup.name}} Teaching Call for the year {{ year }}-{{ nextYear }}</p>
+<br />
+			<p class="lead">If you feel this is in error please contact the academic planner for Psychology to get access.</p>
+		</div>
 </div>
-	<!-- Comments ends -->
-
-<!-- Submit button -->
-<div ng-show="view.state" class="row teaching-call-form-submit-container">
-	<div class="container-fluid pull-right">
-		<button type="button" class="btn btn-default"
-		 confirm-button="updateTeachingCallReceipt(true)"
-		 confirm-is-enabled="!view.state.activeTeachingCall.teachingCallReceipt.isDone"
-		 btn-class="btn-primary"
-		 message="Are you sure you want to submit the preferences for this term?"
-		 yes="Confirm" no="Cancel" placement="top">
-			{{ view.state.activeTeachingCall.teachingCallReceipt.isDone ? 'Update Preferences' : 'Submit Preferences' }}
-		</button>
-	</div>
-</div>
-
-
-
