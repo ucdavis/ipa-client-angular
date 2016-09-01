@@ -574,7 +574,7 @@ p.activity-list-header {
   color: #333;
 }
 .activity-item.active {
-  background: #636770;
+  background: #6AA4C1;
   color: white;
   border: none;
 }
@@ -709,4 +709,8 @@ select.standard-time {
   top: 50%;
   width: 100%;
   text-align: center;
+}
+
+.label-selected-section-group {
+    background-color: #9da1aa;
 }

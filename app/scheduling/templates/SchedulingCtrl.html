@@ -48,7 +48,7 @@
 					</div>
 				</div>
 				<div class="activity-filter-tokens">
-					<div class="label label-info" ng-repeat="sectionGroupId in view.state.uiState.checkedSectionGroupIds track by $index"
+					<div class="label label-selected-section-group" ng-repeat="sectionGroupId in view.state.uiState.checkedSectionGroupIds track by $index"
 						ng-init="sg = view.state.sectionGroups.list[sectionGroupId];">
 						{{ view.state.courses.list[sg.courseId].subjectCode }}
 						{{ view.state.courses.list[sg.courseId].courseNumber }}

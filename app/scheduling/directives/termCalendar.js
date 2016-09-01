@@ -20,6 +20,7 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 					header: false,
 					slotEventOverlap: false,
 					hiddenDays: scope.view.state.filters.hiddenDays,
+					eventColor: '#6AA4C1',
 					eventSources: [
 						// TODO: Add instructor unavailabilities,
 						getActivities()
@@ -51,10 +52,11 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 
 				// Add checked sectionGroups activities
 				if (scope.view.state.uiState.checkedSectionGroupIds.length > 0) {
+					var otherEventsColor = "#7D838E";
 					scope.view.state.uiState.checkedSectionGroupIds.forEach(function (sgId) {
 						if (sgId !== scope.view.state.uiState.selectedSectionGroupId) {
 							calendarActivities = calendarActivities.concat(
-								createCalendarEvents(scope.view.state.sectionGroups.list[sgId], "#006600")
+								createCalendarEvents(scope.view.state.sectionGroups.list[sgId], otherEventsColor)
 							);
 						}
 					});
@@ -112,7 +114,7 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			};
 
 			var createCalendarEvents = function (sectionGroup, color) {
-				var hiliteColor = "#303641"
+				var hiliteColor = "#3A87AD"
 				var calendarActivities = sectionGroupToEvents(sectionGroup);
 				calendarActivities.forEach(function (event) {
 					event.color = (scope.view.state.uiState.selectedActivityId === event.activityId) ? hiliteColor : color;
