@@ -74,7 +74,7 @@
 .set-terms-teaching-call-btn {
 	background-color: white;
 	text-align: left;
-	width: 120px;
+	width: 100%;
 }
 
 .set-term-menu .active a,
@@ -118,4 +118,8 @@
 
 .overflow-auto {
 	overflow-y: auto;
+}
+
+.set-terms-container {
+	width: 100%;
 }
