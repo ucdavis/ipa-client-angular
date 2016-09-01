@@ -8,6 +8,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 			scope.view = {};
 			var rerenderStateActions = [
 				INIT_STATE,
+				IMPORT_COURSES,
 				NEW_COURSE,
 				CREATE_COURSE,
 				REMOVE_COURSE,

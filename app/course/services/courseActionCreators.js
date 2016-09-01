@@ -156,9 +156,9 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			});
 
 		},
-		importCoursesAndSectionGroups: function (sectionGroupImports, workgroupId, year) {
+		importCoursesAndSectionGroups: function (sectionGroupImports, workgroupId, year, importedCoursesCount) {
 			courseService.importCoursesAndSectionGroups(sectionGroupImports, workgroupId, year).then(function (payload) {
-				$rootScope.$emit('toast', { message: "Created course " + payload.title, type: "SUCCESS"} );
+				$rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS"} );
 				var action = {
 					type: IMPORT_COURSES,
 					payload: payload

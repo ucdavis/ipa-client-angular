@@ -236,7 +236,8 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					return selectedCourseIds.indexOf(sgCourseId) >= 0;
 				});
 
-				courseActionCreators.importCoursesAndSectionGroups(sectionGroupImports, $scope.workgroupId, $scope.year);
+				courseActionCreators.importCoursesAndSectionGroups(
+					sectionGroupImports, $scope.workgroupId, $scope.year, selectedCourseIds.length);
 			};
 
 			$scope.sectionSeatTotal = function (sectionGroup) {

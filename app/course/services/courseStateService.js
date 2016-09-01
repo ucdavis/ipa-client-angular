@@ -38,6 +38,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 
 			switch (action.type) {
 				case INIT_STATE:
+				case IMPORT_COURSES:
 					courses = {
 						newCourse: null,
 						ids: [],
@@ -146,6 +147,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 
 			switch (action.type) {
 				case INIT_STATE:
+				case IMPORT_COURSES:
 					sectionGroups = {
 						newSectionGroup: null,
 						selectedSectionGroup: null,
@@ -330,6 +332,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 
 			switch (action.type) {
 				case INIT_STATE:
+				case IMPORT_COURSES:
 					uiState = {
 						tableLocked: false,
 						selectedCourseId: null,
