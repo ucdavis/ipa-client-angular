@@ -97,8 +97,8 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 
 								// Add an assign button to add more instructors
 								courseHtml += "<div class=\"dropdown assign-dropdown\">";
-								courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
-								courseHtml += "Assign..<span class=\"caret\"></span></button>";
+								courseHtml += "<button class=\"btn btn-default dropdown-toggle assign-dropdown-btn\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
+								courseHtml += "<div>Assign..</div><div class=\"caret\"></div></button>";
 								courseHtml += "<ul class=\"dropdown-menu scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
 
 								var interestedInstructorIds = [];
