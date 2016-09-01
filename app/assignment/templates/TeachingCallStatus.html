@@ -11,20 +11,6 @@
 		<p class="text-align--center department-title">- {{ sharedState.workgroup.name }} -</p>
 	</div>
 
-	<div>
-		<a ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors || view.state.teachingCalls.eligibleGroups.senateInstructors"
-		class="btn btn-block btn-default begin-teaching-call-button" ng-click="openTeachingCallConfig()">
-			Create Teaching Call
-		</a>
-		<div data-toggle="tooltip" data-placement="top" data-original-title="All instructors already assigned to a teaching call" data-container="body">
-			<a ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors == false && view.state.teachingCalls.eligibleGroups.senateInstructors == false"
-			class="btn btn-block btn-default begin-teaching-call-button disabled">
-				Create Teaching Call
-			</a>
-		</div>
-	</div>
-
-
 	<div class="teaching-call-status-sub-header">
 		<h5>Teaching Calls:</h5>
 	</div>
@@ -68,20 +54,6 @@
 		<div class="teaching-call-table__header">
 			<div class="teaching-call-table__header-detail">
 				<div>
-					Total Instructors
-				</div>
-			</div>
-		</div>
-		<div class="teaching-call-table__header">
-			<div class="teaching-call-table__header-detail">
-				<div>
-					# Responded
-				</div>
-			</div>
-		</div>
-		<div class="teaching-call-table__header">
-			<div class="teaching-call-table__header-detail">
-				<div>
 					Terms
 				</div>
 			</div>
@@ -92,28 +64,43 @@
 	<div class="teaching-call-table-row" ng-repeat="teachingCallId in view.state.teachingCalls.ids">
 		<div class="teaching-call-table__row-detail"
 		ng-init="teachingCall=view.state.teachingCalls.list[teachingCallId]">
-			{{ teachingCall.startDate }}
+			<div>
+				{{ teachingCall.startDate }}
+			</div>
 		</div>
 		<div class="teaching-call-table__row-detail">
 			{{ teachingCall.dueDate }}
 		</div>
 		<div class="teaching-call-table__row-detail">
-			{{ teachingCall.sentToSenate }}
+			<i class="glyphicon glyphicon-ok" ng-if="teachingCall.sentToSenate"></i>
 		</div>
 		<div class="teaching-call-table__row-detail">
-			{{ teachingCall.sentToFederation }}
+			<i class="glyphicon glyphicon-ok" ng-if="teachingCall.sentToFederation"></i>
 		</div>
 		<div class="teaching-call-table__row-detail">
-			{{ teachingCall.emailInstructors }}
+			<i class="glyphicon glyphicon-ok" ng-if="teachingCall.emailInstructors"></i>
 		</div>
 		<div class="teaching-call-table__row-detail">
-			Total instructors
-		</div>
-		<div class="teaching-call-table__row-detail">
-			# responded
-		</div>
-		<div class="teaching-call-table__row-detail">
-			Terms
+			<div ng-repeat="term in teachingCall.terms">
+				<div>
+					{{ term }}
+				</div>
+			</div>
 		</div>
 	</div>
+
+	<!-- Create new teaching call -->
+	<div class="begin-teaching-call-container">
+		<a ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors || view.state.teachingCalls.eligibleGroups.senateInstructors"
+		class="btn btn-block btn-default begin-teaching-call-button" ng-click="openTeachingCallConfig()">
+			Create Teaching Call
+		</a>
+		<div data-toggle="tooltip" data-placement="top" data-original-title="All instructors already assigned to a teaching call" data-container="body">
+			<a ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors == false && view.state.teachingCalls.eligibleGroups.senateInstructors == false"
+			class="btn btn-block btn-default begin-teaching-call-button disabled">
+				Create Teaching Call
+			</a>
+		</div>
+	</div>
+
 </div> <!-- end cloak -->

@@ -12,56 +12,12 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$ro
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
-
 			$scope.view = {};
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				$scope.view.state = data;
+				$scope.prepareTeachingCallStatusPage();
 			});
-
-			$scope.showInstructors = function () {
-				assignmentActionCreators.showInstructors();
-			}
-
-			$scope.showCourses = function () {
-				assignmentActionCreators.showCourses();
-			};
-
-			$scope.termToggled = function(id) {
-				assignmentActionCreators.toggleTermFilter(id);
-			}
-
-			$scope.approveInstructorAssignment = function(teachingAssignmentId) {
-				var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
-				assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
-			};
-
-			$scope.unapproveInstructorAssignment = function(teachingAssignmentId) {
-				var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
-				assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
-			};
-
-			$scope.addAndApproveInstructorAssignment = function(sectionGroupId, instructorId, termCode) {
-				var teachingAssignment = {
-					sectionGroupId: sectionGroupId,
-					instructorId: instructorId,
-					termCode: termCode,
-					priority: 1,
-					approved: true
-				}
-
-				assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
-			};
-
-			// Triggered by global search field, redraws table based on query
-			$scope.filterTable = function(query) {
-				clearTimeout($scope.t);
-				$scope.t = setTimeout($scope.startFilter, 700, query);
-			}
-
-			$scope.startFilter = function(query) {
-				assignmentActionCreators.updateTableFilter(query);
-			}
 
 			// Launches TeachingCall Config modal and controller
 			$scope.openTeachingCallConfig = function() {
@@ -93,7 +49,7 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$ro
 			// Triggered on TeachingCall Config submission
 			$scope.startTeachingCall = function(workgroupId, year, teachingCallConfig) {
 				teachingCallConfig.termsBlob = "";
-				var allTerms = ['05','06','07','08','09','10','01','02','03'];
+				var allTerms = ['01','02','03','04','05','06','07','08','09', '10'];
 
 				for (var i = 0; i < allTerms.length; i++) {
 					if (teachingCallConfig.activeTerms[allTerms[i]] == true) {
@@ -108,88 +64,38 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$ro
 				assignmentActionCreators.createTeachingCall(workgroupId, year, teachingCallConfig);
 			};
 
-			// Launched from the instructorTable directive UI handler
-			$scope.openCommentModal = function(instructorId) {
-				var instructor = $scope.view.state.instructors.list[instructorId];
-				var scheduleInstructorNote = {};
+			$scope.prepareTeachingCallStatusPage = function() {
+				for (var i = 0; i < $scope.view.state.teachingCalls.ids.length; i++) {
+					var teachingCall = $scope.view.state.teachingCalls.list[$scope.view.state.teachingCalls.ids[i]];
 
-				// Create new scheduleInstructorNote object if one does not already exist
-				if (instructor.scheduleInstructorNoteId) {
-					scheduleInstructorNote = $scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
-				} else {
-					scheduleInstructorNote = {};
-					scheduleInstructorNote.instructorComment = "";
+					teachingCall.terms = [];
+					termNames = {
+						'05': 'Summer Session 1',
+						'06': 'Summer Special Session',
+						'07': 'Summer Session 2',
+						'08': 'Summer Quarter',
+						'09': 'Fall Semester',
+						'10': 'Fall Quarter',
+						'01': 'Winter Quarter',
+						'02': 'Spring Semester',
+						'03': 'Spring Quarter'
+					};
+
+					for (var j = 0; j < teachingCall.termsBlob.length; j++) {
+						var isTermInTeachingCall = parseInt(teachingCall.termsBlob.charAt(j));
+
+						if (isTermInTeachingCall) {
+							term = j + 1;
+
+							if (term.toString().length == 1) {
+								term = "0" + term;
+							}
+
+							teachingCall.terms.push(termNames[term]);
+						}
+					}
 				}
-
-				// Find a teachingCallReceipt for this instructor and schedule, if one exists.
-				var teachingCallReceipt = null;
-
-				for (var i = 0; i < $scope.view.state.teachingCallReceipts.ids.length; i++) {
-					teachingCallReceipt = $scope.view.state.teachingCallReceipts.list[$scope.view.state.teachingCallReceipts.ids[i]];
-
-					if (teachingCallReceipt.instructorId == instructor.id) {
-						break;
-					}
-				}
-
-				modalInstance = $uibModal.open({
-					templateUrl: 'ModalComment.html',
-					controller: ModalCommentCtrl,
-					size: 'lg',
-					resolve: {
-						instructor: function () {
-							return instructor;
-						},
-						privateComment: function () {
-							return scheduleInstructorNote.instructorComment;
-						},
-						instructorComment: function () {
-							return teachingCallReceipt.comment;
-						}
-					}
-				});
-
-				modalInstance.result.then(function (privateComment) {
-					if (privateComment != scheduleInstructorNote.comment) {
-						// Update the scheduleInstructorNote
-						if (scheduleInstructorNote && scheduleInstructorNote.id) {
-							scheduleInstructorNote.instructorComment = privateComment;
-							assignmentActionCreators.updateScheduleInstructorNote(scheduleInstructorNote);
-						}
-						// Create new scheduleInstructorNote
-						else {
-							assignmentActionCreators.addScheduleInstructorNote(instructor.id, $scope.year, $scope.workgroupId, privateComment);
-						}
-					}
-				});
-			};
-
-			$scope.openUnavailabilityModal = function(instructorId) {
-				var instructor = $scope.view.state.instructors.list[instructorId];
-	
-				var termDisplayNames = {};
-				
-
-				modalInstance = $uibModal.open({
-					templateUrl: 'ModalUnavailability.html',
-					controller: ModalUnavailabilityCtrl,
-					size: 'lg',
-					resolve: {
-						teachingCallResponses: function () {
-							return instructor.teachingCallResponses;
-						},
-						termDisplayNames: function () {
-							return assignmentService.allTerms();
-						},
-						instructor: function () {
-							return instructor;
-						}
-					}
-				});
-
-				modalInstance.result.then(function () {
-				});
-			};
+			}
 	}]);
 
 TeachingCallStatusCtrl.validate = function (authService, assignmentActionCreators, $route) {

@@ -560,10 +560,6 @@
 	padding-left: 10px;
 }
 
-.begin-teaching-call-button {
-	background-color: white;
-}
-
 ul.dropdown-menu li div {
 	color: rgb(0, 0, 0);
 	font-size: 12px;
@@ -1011,6 +1007,7 @@ ol.sortable-list>li .term-preference-dropdown {
 
 .teaching-call-status-sub-header {
 	padding-left: 1%;
+	margin-top: 50px;
 }
 
 .teaching-call-table-row {
@@ -1037,10 +1034,28 @@ ol.sortable-list>li .term-preference-dropdown {
 }
 
 .teaching-call-table__row-detail {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	flex: 1 0 100px;
 	border-right: 1px solid;
 	border-color: rgb(235, 235, 235);
-	height: 30px;
-	text-align: center;
 	padding-top: 5px;
+	flex-direction: column;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.begin-teaching-call-container {
+	margin-top: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.begin-teaching-call-button {
+	background-color: white;
+	margin-left: 15px;
+	flex: 0 0 200px;
+	width: 20%;
 }
