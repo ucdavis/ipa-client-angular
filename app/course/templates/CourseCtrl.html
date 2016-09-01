@@ -322,8 +322,12 @@
 					</div>
 					<div ng-show="(view.state.courses.importList | filter:{import:true}).length">
 						<p>
-							{{ (view.state.courses.importList | filter:{import:true}).length }} Courses will be imported
-							<br />
+							{{ (view.state.courses.importList | filter:{import:true}).length }}
+							out of {{ view.state.courses.importList.length }} courses
+							with subject code <strong>{{ view.state.uiState.massImportCode }}</strong><br />
+							offered in <strong>{{ view.state.uiState.massImportYear.yearToAcademicYear() }}</strong>
+							will be imported
+						</p><p>
 							Please review the list displayed on the schedule table
 						</p>
 						<button class="btn btn-primary" ng-click="importCoursesAndSectionGroups()">Import courses</button>

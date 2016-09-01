@@ -24,6 +24,11 @@ String.prototype.toNumber = function() {
 	return Number(this).toString();
 };
 
+// Converts a 4-digit year to academic year format. Example: 2015 -> 2015-16
+String.prototype.yearToAcademicYear = function() {
+	return this + "-" + (Number(this) + 1).toString().slice(-2);
+};
+
 // Converts 24 'military time' to 12 hour am/pm time
 String.prototype.toStandardTime = function () {
 	//If time is already in standard time then don't format.

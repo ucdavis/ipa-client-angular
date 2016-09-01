@@ -21,7 +21,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			for(i = currentYear; i > currentYear - 10; i--) {
 				recentYears.push({
 					year: i,
-					academicYear: i + "-" + String(i + 1).slice(2)
+					academicYear: String(i).yearToAcademicYear()
 				});
 			}
 			$scope.recentAcademicYears = recentYears;
