@@ -36,7 +36,7 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$t
 
 			$scope.clearUserSearch = function () {
 				$scope.view.state.users.newUser = {};
-				$scope.view.searchQuery = "";
+				$scope.view.state.users.searchQuery = "";
 				$scope.view.noResults = null;
 			};
 

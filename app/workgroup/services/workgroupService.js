@@ -130,7 +130,7 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 		searchUsers: function(workgroupId, query) {
 			var deferred = $q.defer();
 
-			$http.get(serverRoot + "/api/workgroupView/workgroups/" + workgroupId + "/userSearch?query=" + query, { withCredentials: true })
+			$http.get(serverRoot + "/api/people/search?query=" + query, { withCredentials: true })
 			.success(function(result) {
 				deferred.resolve(result);
 			})

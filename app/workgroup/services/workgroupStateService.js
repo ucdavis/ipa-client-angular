@@ -95,7 +95,8 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					users = {
 						newUser: {},
 						ids: [],
-						userSearchResults: []
+						userSearchResults: [],
+						searchQuery: ""
 					};
 					var usersList = {};
 					var length = action.payload.users ? action.payload.users.length : 0;
@@ -107,10 +108,14 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					users.list = usersList;
 					return users;
 				case ADD_USER:
+					var userIndex = users.ids.indexOf(action.payload.user.id);
+					if (userIndex >= 0) { return users; }
+
 					users.list[action.payload.user.id] = action.payload.user;
 					users.ids.push(action.payload.user.id);
 					users.newUser = {};
 					users.userSearchResults = [];
+					users.searchQuery = "";
 					return users;
 				case REMOVE_USER:
 					var userIndex = users.ids.indexOf(action.payload.user.id);
