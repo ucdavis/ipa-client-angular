@@ -25,9 +25,10 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$t
 
 			$scope.userHasRole = function (userId, role) {
 				var user = $scope.view.state.users.list[userId];
-				var userRoleNames = user.userRoles.map(function (userRole) { return userRole.role; });
-				var result = userRoleNames.indexOf(role.name) > -1;
-				return result;
+				var matchingRole = user.userRoles.filter(function (ur) {
+					return (ur.role == role.name) && (ur.workgroupId == $scope.workgroupId);
+				});
+				return matchingRole.length > 0;
 			};
 
 			$scope.searchUsersResultSelected = function ($item, $model, $label, $event) {
