@@ -54,10 +54,10 @@
 					on-update="refreshPreferences()"
 					schedule-id="activeTeachingCall.scheduleId"
 					term="term"
-					ng-if="!isScheduleTermLocked(term) && !preference.approved"></div>
+					ng-if="!preference.approved"></div>
 				</li>
 
-				<li ng-if="!teachingCallResponse[term].isComplete && !isScheduleTermLocked(term)"
+				<li ng-if="!teachingCallResponse[term].isComplete"
 					term-preferences courses="courseOfferings[term]" term="term" schedule-id="teachingCall.scheduleId"
 					class="unsortable preference-assignment-dropdown"
 					instructor-id="instructorId"
