@@ -236,6 +236,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					return selectedCourseIds.indexOf(sgCourseId) >= 0;
 				});
 
+				$scope.view.state.uiState.massImportInProgress = true;
 				courseActionCreators.importCoursesAndSectionGroups(
 					sectionGroupImports, $scope.workgroupId, $scope.year, selectedCourseIds.length);
 			};

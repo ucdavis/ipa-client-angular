@@ -312,7 +312,10 @@
 			</div>
 		</div>
 		<div class="panel-body no-padding">
-			<div class="col-sm-12 import-summary text-center">
+			<div class="col-sm-12 import-summary text-center" ng-show="view.state.uiState.massImportInProgress">
+				Importing, please wait...
+			</div>
+			<div class="col-sm-12 import-summary text-center" ng-hide="view.state.uiState.massImportInProgress">
 				<div ng-hide="view.state.courses.importList">
 					Please search for courses to import
 				</div>

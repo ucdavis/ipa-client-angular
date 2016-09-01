@@ -340,7 +340,8 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 						massImportMode: false,
 						massImportCode: null,
 						massImportYear: null,
-						massImportPrivate: false
+						massImportPrivate: false,
+						massImportInProgress: false
 					};
 					return uiState;
 				case NEW_COURSE:
