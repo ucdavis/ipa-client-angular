@@ -66,6 +66,19 @@ courseApp.factory("courseService", this.courseService = function($http, $q) {
 
 			return deferred.promise;
 		},
+		importCoursesAndSectionGroups: function (sectionGroupImports, workgroupId, year) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/sectionGroups", sectionGroupImports, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		updateCourse: function (course) {
 			var deferred = $q.defer();
 

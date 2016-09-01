@@ -312,12 +312,22 @@
 			</div>
 		</div>
 		<div class="panel-body no-padding">
-			<div class="col-sm-12 import-summary">
+			<div class="col-sm-12 import-summary text-center">
 				<div ng-hide="view.state.courses.importList">
 					Please search for courses to import
 				</div>
 				<div ng-show="view.state.courses.importList">
-					Courses are being imported
+					<div ng-hide="(view.state.courses.importList | filter:{import:true}).length">
+						Please select courses to import
+					</div>
+					<div ng-show="(view.state.courses.importList | filter:{import:true}).length">
+						<p>
+							{{ (view.state.courses.importList | filter:{import:true}).length }} Courses will be imported
+							<br />
+							Please review the list displayed on the schedule table
+						</p>
+						<button class="btn btn-primary" ng-click="importCoursesAndSectionGroups()">Import courses</button>
+					</div>
 				</div>
 			</div>
 		</div>

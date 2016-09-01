@@ -70,6 +70,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 								courseNumber: sg.courseNumber,
 								title: sg.title,
 								sequencePattern: sg.sequencePattern,
+								effectiveTermCode: sg.effectiveTermCode,
 								import: true
 							}));
 						}
@@ -176,7 +177,9 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 								courseNumber: sg.courseNumber,
 								sequencePattern: sg.sequencePattern,
 								plannedSeats: sg.seats,
-								termCode: sg.termCode
+								title: sg.title,
+								termCode: sg.termCode,
+								effectiveTermCode: sg.effectiveTermCode
 							}));
 						}
 					});
