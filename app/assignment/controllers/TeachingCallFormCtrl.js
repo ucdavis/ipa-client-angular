@@ -208,7 +208,21 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$rout
 							activeTeachingCall.termAssignments[teachingAssignment.termCode] = [];
 						};
 
-						activeTeachingCall.termAssignments[teachingAssignment.termCode].push(teachingAssignment);
+						var preferenceAlreadyAdded = false;
+						// Ensure sectionGroup hasn't already been added as a preference
+						for (var j = 0; j < activeTeachingCall.termAssignments[teachingAssignment.termCode].length; j++) {
+							var slotAssignment = activeTeachingCall.termAssignments[teachingAssignment.termCode][j];
+
+							if (teachingAssignment.subjectCode == slotAssignment.subjectCode
+								&& teachingAssignment.courseNumber == slotAssignment.courseNumber) {
+									preferenceAlreadyAdded = true;
+							}
+						}
+
+						if (preferenceAlreadyAdded == false) {
+							activeTeachingCall.termAssignments[teachingAssignment.termCode].push(teachingAssignment);
+						}
+
 						alreadyHasPreferenceSectionGroupIds.push(teachingAssignment.sectionGroupId);
 					}
 				}

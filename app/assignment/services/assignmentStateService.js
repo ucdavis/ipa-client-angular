@@ -197,8 +197,22 @@ assignmentApp.service('assignmentStateService', function (
 							activeTeachingCall.termAssignments[teachingAssignment.termCode] = [];
 						};
 
-						activeTeachingCall.termAssignments[teachingAssignment.termCode].push(teachingAssignment);
+						// Ensure sectionGroup hasn't already been added as a preference
+						var preferenceAlreadyAdded = false;
+						for (var j = 0; j < activeTeachingCall.termAssignments[teachingAssignment.termCode].length; j++) {
+							var slotAssignment = activeTeachingCall.termAssignments[teachingAssignment.termCode][j];
 
+							if (teachingAssignment.subjectCode == slotAssignment.subjectCode
+								&& teachingAssignment.courseNumber == slotAssignment.courseNumber) {
+									preferenceAlreadyAdded = true;
+							}
+						}
+
+						if (preferenceAlreadyAdded == false) {
+							activeTeachingCall.termAssignments[teachingAssignment.termCode].push(teachingAssignment);
+						}
+
+						// Ensure scheduledCourses are flagged as having a preference
 						for (var j = 0; j < activeTeachingCall.scheduledCourses[teachingAssignment.termCode].length; j++) {
 							slotCourse = activeTeachingCall.scheduledCourses[teachingAssignment.termCode][j];
 							if (slotCourse.id == course.id) {
