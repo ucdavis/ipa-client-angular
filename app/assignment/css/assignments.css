@@ -653,12 +653,12 @@ small.legend {
 }
 
 .disabled-calendar {
-	color: rgb(153, 153, 153);
-	cursor: not-allowed;
+	color: #E6E6E6;
+	cursor: default;
 }
 div:hover .disabled-calendar {
-	color: rgb(153, 153, 153);
-	cursor: not-allowed;
+	color: #E6E6E6;
+	cursor: default;
 }
 
 .modal-comment-subheader {

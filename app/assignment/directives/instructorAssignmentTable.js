@@ -71,7 +71,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 							courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor unavailabilities\" data-container=\"body\"></i>";
 						} else {
 							courseHtml += "<div data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"No unavailabilities\" data-container=\"body\">";
-							courseHtml += "<i class=\" disabled disabled-calendar glyphicon glyphicon-calendar\"></i>";
+							courseHtml += "<i class=\" disabled-calendar glyphicon glyphicon-calendar\"></i>";
 							courseHtml += "</div>";
 						}
 
