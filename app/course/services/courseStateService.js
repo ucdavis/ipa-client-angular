@@ -118,19 +118,23 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					courses.list[action.payload.course.id] = action.payload.course;
 					return courses;
 				case UPDATE_TABLE_FILTER:
-					var query = action.payload.query.toLowerCase();
+					var query = action.payload.query;
+					var queryList = query.toLowerCase().split(/\s+/);
 
 					courses.ids.forEach(function (courseId) {
 						courses.list[courseId].isFiltered = true;
-						for(key in courses.list[courseId]) {
-							if (typeof courses.list[courseId][key] == "string"
-								&& courses.list[courseId][key].toLowerCase().search(query) >= 0) {
-								courses.list[courseId].isFiltered = false;
-							}
-						}
 
-						return courses.list[courseId];
+						var coursePropList = Object.keys(courses.list[courseId])
+							.filter(function (key) { return typeof courses.list[courseId][key] == "string"; })
+							.map(function (key) { return courses.list[courseId][key].toLowerCase(); });
+
+						var courseMatchesQuery = queryList.every(function (queryItem) {
+							return _.filter(coursePropList, function (prop) { return prop.search(queryItem) >= 0; }).length > 0;
+						});
+
+						if (courseMatchesQuery) { courses.list[courseId].isFiltered = false; }
 					});
+
 					return courses;
 				case GET_COURSE_CENSUS:
 					courses.list[action.payload.course.id].census = action.payload.census;
