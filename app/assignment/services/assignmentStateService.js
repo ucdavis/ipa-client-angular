@@ -568,9 +568,11 @@ assignmentApp.service('assignmentStateService', function (
 					for (var i = 0; i < teachingAssignments.length; i++) {
 						var slotTeachingAssignment = teachingAssignments[i];
 						var sectionGroup = sectionGroups.list[slotTeachingAssignment.sectionGroupId];
-						var index = sectionGroup.teachingAssignmentIds.indexOf(slotTeachingAssignment.id);
-						if (index > -1) {
-							sectionGroup.teachingAssignmentIds.splice(index, 1);
+						if (sectionGroup) {
+							var index = sectionGroup.teachingAssignmentIds.indexOf(slotTeachingAssignment.id);
+							if (index > -1) {
+								sectionGroup.teachingAssignmentIds.splice(index, 1);
+							}
 						}
 					}
 					return sectionGroups;
