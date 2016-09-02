@@ -18,46 +18,31 @@
 				</div>
 			</li>
 
-			<li>
-				<time class="cbp_tmtime"><span>12:00 AM</span> <span>5/26/2016</span></time>
+			<li ng-repeat="event in events">
+				<time class="cbp_tmtime"><span>{{event.time}}</span> <span>{{event.date}}</span></time>
 
-				<div class="cbp_tmicon bg-success">
+				<div class="cbp_tmicon bg-success" ng-show="event.type == 'school'">
 					<i class="entypo-graduation-cap"></i>
 				</div>
 
-				<div class="cbp_tmlabel">
-					<h2>Spring Quarter Started</h2>
-				</div>
-			</li>
-
-			<li>
-				<time class="cbp_tmtime"><span>01:22 PM</span> <span>4/12/2016</span></time>
-
-				<div class="cbp_tmicon bg-secondary">
+				<div class="cbp_tmicon bg-secondary" ng-show="event.type == 'notice'">
 					<i class="entypo-bell"></i>
 				</div>
 
-				<div class="cbp_tmlabel">
-					<h2>Summer Session I Upload Available</h2>
-				</div>
-			</li>
-
-			<li>
-				<time class="cbp_tmtime"><span>12:13 PM</span> <span>3/27/2016</span></time>
-
-				<div class="cbp_tmicon bg-info">
+				<div class="cbp_tmicon bg-info" ng-show="event.type == 'teaching_call'">
 					<i class="entypo-users"></i>
 				</div>
 
 				<div class="cbp_tmlabel">
-					<h2>Teaching Call 2017 Started</h2>
-					<p>Send to Federation and Senate Instructors</p>
-					<p><a href="http://ipa.ucdavis.edu/teachingCall/11/">View the teaching call</a></p>
+					<h2>{{event.title}}</h2>
+					<p ng-show="event.caption">{{event.caption}}</p>
+					<p ng-show="event.link"><a href="http://ipa.ucdavis.edu/teachingCall/{{event.link}}">View the teaching call</a></p>
 				</div>
-			</li>
 
+			</li>
 		</ul>
 	</div>
+	<!-- Planning At A Glance -->
 
 	<div class="right-container right-info padded-container">
 		<h3>Notices</h3>
