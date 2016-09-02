@@ -13,7 +13,7 @@ summaryApp.service('summaryActionCreators', function (summaryStateService, summa
 		getInitialState: function (workgroupId, year) {
 			summaryService.getInitialState(workgroupId, year).then(function (payload) {
 				var action = {
-					type: INIT_SUMMARY_VIEW,
+					type: INIT_STATE,
 					payload: payload,
 					year: year
 				};
