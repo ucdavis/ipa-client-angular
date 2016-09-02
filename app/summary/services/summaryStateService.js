@@ -64,23 +64,43 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						list: {},
 						ids: []
 					};
+
+					var sectionsList = {};
+					var length = action.payload.sections ? action.payload.sections.length : 0;
+					for (var i = 0; i < length; i++) {
+						var sectionData = action.payload.sectionGroups[i];
+						sectionsList[sectionData.id] = new SectionGroup(sectionData);
+						sections.ids.push(sectionData.id);
+					}
+					sections.list = sectionsList;
+
 					return sections;
 				default:
 					return sections;
 			}
 		},
-		_activityReducers: function (action, sections) {
+		_activityReducers: function (action, activities) {
 			var scope = this;
 
 			switch (action.type) {
 				case INIT_STATE:
-					sections = {
+					activities = {
 						list: {},
 						ids: []
 					};
-					return sections;
+
+					var activitiesList = {};
+					var length = action.payload.activities ? action.payload.activities.length : 0;
+					for (var i = 0; i < length; i++) {
+						var activityData = action.payload.activities[i];
+						activitiesList[activityData.id] = new SectionGroup(activityData);
+						activities.ids.push(activityData.id);
+					}
+					activities.list = activitiesList;
+
+					return activities;
 				default:
-					return sections;
+					return activities;
 			}
 		},
 		reduce: function (action) {
