@@ -141,6 +141,16 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					});
 
 					return courses;
+				case UPDATE_TAG_FILTERS:
+					// Set the course.isFiltered flag to false if any tag matches the filters
+					courses.ids.forEach(function (courseId) {
+						courses.list[courseId].matchesTagFilters = courses.list[courseId].tagIds
+							.some(function (tagId) {
+								// Set to true if to tags are checked or if matches one of the selected tags
+								return action.payload.tagIds.length == 0 || action.payload.tagIds.indexOf(tagId) >= 0;
+							});
+					});
+					return courses;
 				case GET_COURSE_CENSUS:
 					courses.list[action.payload.course.id].census = action.payload.census;
 					return courses;
@@ -313,24 +323,26 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					// is selected to be shown/on/active.
 					filters = {
 						enabledTerms: [10, 1, 3], // these match the 'id' field in termDefinitions
-						enabledTags: [],
-						enablePublishedCourses: true,
+						enabledTagIds: [],
 						enableUnpublishedCourses: false
 					};
 					// Here is where we might load stored data about what filters
 					// were left on last time.
 					return filters;
 				case TOGGLE_TERM_FILTER:
-					var termId = action.payload.termId;
-					var idx = filters.enabledTerms.indexOf(termId);
+					var tagId = action.payload.termId;
+					var idx = filters.enabledTerms.indexOf(tagId);
 					// A term in the term filter dropdown has been toggled on or off.
 					if(idx === -1) {
 						// Toggle on
-						filters.enabledTerms.push(termId);
+						filters.enabledTerms.push(tagId);
 					} else {
 						// Toggle off
 						filters.enabledTerms.splice(idx, 1);
 					}
+					return filters;
+				case UPDATE_TAG_FILTERS:
+					filters.enabledTagIds = action.payload.tagIds;
 					return filters;
 				default:
 					return filters;

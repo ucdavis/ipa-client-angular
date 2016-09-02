@@ -26,12 +26,15 @@
 
 				<div class="btn-group">
 					<span class="tool-icon glyphicon glyphicon-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-					<ul class="dropdown-menu">
-						<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Undergraduate</a></li>
-						<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Graduate</a></li>
+					<ul class="dropdown-menu" stop-event="click">
+						<li ng-repeat="tagId in view.state.tags.ids track by $index" class="clickable" ng-click="tagToggled(tagId)">
+							<a class="small">
+								<input type="checkbox" ng-checked="view.state.filters.enabledTagIds.indexOf(tagId) >= 0" />
+								<span class="course-filter-item">{{ view.state.tags.list[tagId].name }}</span>
+							</a>
+						</li>
 						<li role="separator" class="divider"></li>
-						<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Published Courses</a></li>
-						<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Unpublished Courses</a></li>
+						<li class="clickable"><a class="small"><input type="checkbox"/><span class="course-filter-item">Unpublished Courses</span></a></li>
 					</ul>
 				</div> <!-- .btn-group -->
 
