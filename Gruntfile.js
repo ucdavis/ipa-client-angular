@@ -63,6 +63,7 @@ module.exports = function (grunt) {
 					'<%= folders.webapp.root %>/shared/directives/*.js',
 					'<%= folders.webapp.root %>/shared/filters/*.js',
 					'<%= folders.webapp.root %>/shared/services/**/*.js',
+					'<%= folders.webapp.root %>/shared/konami.js',
 					'<%= ngtemplates.sharedApp.dest %>'
 				],
 				dest: '<%= folders.webapp.build %>/js/sharedApp.js'
