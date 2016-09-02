@@ -28,7 +28,8 @@
     "underscore": "^1.8.3",
     "angular-ui-select": "^0.19.1",
     "angular-sanitize": "^1.5.8",
-    "angular-selectize2": "^3.0.1"
+    "angular-selectize2": "^3.0.1",
+    "konami-js": "^1.4.6"
   },
   "resolutions": {
     "angular": "^1.5.8",
