@@ -17,10 +17,10 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$http',
 			// 	console.log($scope.data);
 			// });
 			$scope.events = [{
-					'date': "5/12/2016",
-					'time': "12:00 PM",
+					'date': "8/21/2016",
+					'time': "12:00 AM",
 					'type': "school",
-					'title': "Spring Quarter Started"
+					'title': "Fall Quarter Started"
 				}, {
 					'date': "8/12/2016",
 					'time': "1:42 PM",
@@ -37,6 +37,8 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$http',
 			];
 }]);
 
-SummaryCtrl.authenticate = function (authService, $route) {
-	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year);
+SummaryCtrl.authenticate = function (authService, $route, summaryActionCreators) {
+	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then( function() {
+		summaryActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+	})
 }

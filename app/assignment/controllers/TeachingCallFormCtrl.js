@@ -97,14 +97,19 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$rout
 				var teachingAssignment = {};
 				teachingAssignment.termCode = term;
 				// Used as a model for courseNumber/sectionGroup/scheduleId association
-				teachingAssignment.sectionGroup = sectionGroup;
-				teachingAssignment.sectionGroupId = sectionGroup.id;
-				teachingAssignment.instructor = instructor;
-				teachingAssignment.instructorId = instructor.id;
 
-				teachingAssignment.isBuyout = isBuyout;
-				teachingAssignment.isSabbatical = isSabbatical;
-				teachingAssignment.isCourseRelease = isCourseRelease;
+				if (sectionGroup && sectionGroup.id) {
+					teachingAssignment.sectionGroup = sectionGroup;
+					teachingAssignment.sectionGroupId = sectionGroup.id;
+				}
+
+				var instructorId = $scope.view.state.userInterface.instructorId;
+				teachingAssignment.instructor = $scope.view.state.instructors.list[instructorId];
+				teachingAssignment.instructorId = instructorId;
+
+				teachingAssignment.buyout = isBuyout;
+				teachingAssignment.sabbatical = isSabbatical;
+				teachingAssignment.courseRelease = isCourseRelease;
 				teachingAssignment.schedule = {id: scheduleId};
 				teachingAssignment.scheduleId = scheduleId;
 
@@ -198,11 +203,14 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$rout
 					var teachingAssignment = $scope.view.state.teachingAssignments.list[$scope.view.state.teachingAssignments.ids[i]];
 
 					if (teachingAssignment.instructorId == $scope.view.state.userInterface.instructorId) {
-						var sectionGroup = $scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
-						var course = $scope.view.state.courses.list[sectionGroup.courseId];
 
-						teachingAssignment.subjectCode = course.subjectCode;
-						teachingAssignment.courseNumber = course.courseNumber;
+						if (teachingAssignment.sectionGroupId) {
+							var sectionGroup = $scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
+							var course = $scope.view.state.courses.list[sectionGroup.courseId];
+
+							teachingAssignment.subjectCode = course.subjectCode;
+							teachingAssignment.courseNumber = course.courseNumber;
+						}
 
 						if (activeTeachingCall.termAssignments[teachingAssignment.termCode] == null) {
 							activeTeachingCall.termAssignments[teachingAssignment.termCode] = [];

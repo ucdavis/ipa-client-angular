@@ -35,10 +35,10 @@
 			<li class="welcome">
 					<span class="title">Howdy, {{ sharedState.displayName }}</span>
 			</li>
-			<li>
-				<a ng-click="logout()">
-					<i class="entypo-logout"></i>
-					<span class="title">Logout</span>
+			<li class="home">
+				<a ng-href="/summary/{{ workgroupId }}/{{ year }}">
+					<i class="entypo-home"></i>
+					<span class="title">Home</span>
 				</a>
 			</li>
 			<li>
@@ -83,7 +83,7 @@
 				<ul class="visible">
 					<li>
 						<a ng-href="/assignments/{{ workgroupId }}/{{ year }}/teachingCallStatus">
-							Teaching Calls
+							Teaching Call(s)
 						</a>
 					</li>
 				</ul>
@@ -102,6 +102,16 @@
 				</ul>
 			</li>
 
+		</ul>
+
+		<!-- Logout -->
+		<ul id="main-menu" class="main-menu">
+			<li>
+				<a class="clickable" ng-click="logout()">
+					<i class="entypo-logout"></i>
+					<span class="title">Logout</span>
+				</a>
+			</li>
 		</ul>
 
 	</div>

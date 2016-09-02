@@ -98,6 +98,19 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				courseActionCreators.toggleTermFilter(id);
 			};
 
+			$scope.tagToggled = function (tagId) {
+				var tagFilters = $scope.view.state.filters.enabledTagIds;
+				var tagIndex = tagFilters.indexOf(tagId);
+
+				if (tagIndex < 0) {
+					tagFilters.push(tagId);
+				} else {
+					tagFilters.splice(tagIndex, 1);
+				}
+
+				courseActionCreators.updateTagFilters(tagFilters);
+			};
+
 			$scope.createCourse = function () {
 				if ($scope.newCourseIsValid()) {
 					courseActionCreators.createCourse($scope.view.state.courses.newCourse, $scope.workgroupId, $scope.year);
@@ -246,6 +259,14 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					return previousValue + $scope.view.state.sections.list[sectionId].seats;
 				}, 0);
 			};
+
+			$scope.unpublishedCoursesToggled = function () {
+				courseActionCreators.setUnpublishedCoursesFilter(
+					$scope.workgroupId,
+					$scope.year,
+					!$scope.view.state.filters.enableUnpublishedCourses
+				);
+			}
 		}
 ]);
 

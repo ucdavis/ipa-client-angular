@@ -10,10 +10,11 @@
  */
 courseApp.factory("courseService", this.courseService = function($http, $q) {
 	return {
-		getScheduleByWorkgroupIdAndYear: function(workgroupId, year) {
+		getScheduleByWorkgroupIdAndYear: function(workgroupId, year, enableUnpublishedCourses) {
 			var deferred = $q.defer();
+			var showDoNotPrintParam = enableUnpublishedCourses ? "?showDoNotPrint=true" : "";
 
-			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year, { withCredentials: true })
+			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + showDoNotPrintParam, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})

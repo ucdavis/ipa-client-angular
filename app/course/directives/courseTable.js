@@ -21,7 +21,9 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				BEGIN_IMPORT_MODE,
 				END_IMPORT_MODE,
 				SEARCH_IMPORT_COURSES,
-				ADD_SECTION_GROUP
+				ADD_SECTION_GROUP,
+				UPDATE_TAG_FILTERS,
+				TOGGLE_UNPUBLISHED_COURSES
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
@@ -251,7 +253,7 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 		row += "<td class=\"new-course-td\" colspan=\"" + numOfColumns + "\">Adding a new course</td><td class=\"ui-overlay\"></td>";
 	} else {
 		var course = state.courses.list[courseId];
-		if (course.isFiltered) { return; }
+		if (course.isFiltered || course.matchesTagFilters == false) { return; }
 
 		// First column
 		row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";

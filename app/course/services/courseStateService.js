@@ -39,6 +39,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			switch (action.type) {
 				case INIT_STATE:
 				case IMPORT_COURSES:
+				case TOGGLE_UNPUBLISHED_COURSES:
 					courses = {
 						newCourse: null,
 						ids: [],
@@ -118,18 +119,41 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					courses.list[action.payload.course.id] = action.payload.course;
 					return courses;
 				case UPDATE_TABLE_FILTER:
-					var query = action.payload.query.toLowerCase();
+					var query = action.payload.query;
+					// Convert the query into an array split at the white space
+					var queryList = query.toLowerCase().split(/\s+/);
+					// Specify the properties that we are interested in searching
+					var courseKeyList = ['courseNumber', 'sequencePattern', 'subjectCode', 'title'];
 
 					courses.ids.forEach(function (courseId) {
 						courses.list[courseId].isFiltered = true;
-						for(key in courses.list[courseId]) {
-							if (typeof courses.list[courseId][key] == "string"
-								&& courses.list[courseId][key].toLowerCase().search(query) >= 0) {
-								courses.list[courseId].isFiltered = false;
-							}
-						}
 
-						return courses.list[courseId];
+						// Create an array of the properties values
+						var courseValueList = Object.keys(courses.list[courseId])
+							.filter(function (key) { return courseKeyList.indexOf(key) >= 0; })
+							.map(function (key) { return courses.list[courseId][key].toLowerCase(); });
+
+						// Find out if all the query words have a match in the properties values array
+						var courseMatchesQuery = queryList.every(function (queryItem) {
+							return courseValueList.some(function (prop) { return prop.search(queryItem) >= 0; });
+						});
+
+						if (courseMatchesQuery) { courses.list[courseId].isFiltered = false; }
+					});
+
+					return courses;
+				case UPDATE_TAG_FILTERS:
+					// Set the course.isFiltered flag to false if any tag matches the filters
+					courses.ids.forEach(function (courseId) {
+						// Display all courses if none of the tags is checked
+						if (action.payload.tagIds.length == 0) {
+							delete courses.list[courseId].matchesTagFilters;
+						} else {
+							courses.list[courseId].matchesTagFilters = courses.list[courseId].tagIds
+								.some(function (tagId) {
+									return action.payload.tagIds.indexOf(tagId) >= 0;
+								});
+						}
 					});
 					return courses;
 				case GET_COURSE_CENSUS:
@@ -148,6 +172,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			switch (action.type) {
 				case INIT_STATE:
 				case IMPORT_COURSES:
+				case TOGGLE_UNPUBLISHED_COURSES:
 					sectionGroups = {
 						newSectionGroup: null,
 						selectedSectionGroup: null,
@@ -304,24 +329,30 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					// is selected to be shown/on/active.
 					filters = {
 						enabledTerms: [10, 1, 3], // these match the 'id' field in termDefinitions
-						enabledTags: [],
-						enablePublishedCourses: true,
+						enabledTagIds: [],
 						enableUnpublishedCourses: false
 					};
 					// Here is where we might load stored data about what filters
 					// were left on last time.
 					return filters;
 				case TOGGLE_TERM_FILTER:
-					var termId = action.payload.termId;
-					var idx = filters.enabledTerms.indexOf(termId);
+					var tagId = action.payload.termId;
+					var idx = filters.enabledTerms.indexOf(tagId);
 					// A term in the term filter dropdown has been toggled on or off.
 					if(idx === -1) {
 						// Toggle on
-						filters.enabledTerms.push(termId);
+						filters.enabledTerms.push(tagId);
 					} else {
 						// Toggle off
 						filters.enabledTerms.splice(idx, 1);
 					}
+					return filters;
+				case UPDATE_TAG_FILTERS:
+					filters.enabledTagIds = action.payload.tagIds;
+					return filters;
+				case TOGGLE_UNPUBLISHED_COURSES:
+					filters.enableUnpublishedCourses = !filters.enableUnpublishedCourses;
+					filters.enabledTagIds = [];
 					return filters;
 				default:
 					return filters;
@@ -333,6 +364,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			switch (action.type) {
 				case INIT_STATE:
 				case IMPORT_COURSES:
+				case TOGGLE_UNPUBLISHED_COURSES:
 					uiState = {
 						tableLocked: false,
 						selectedCourseId: null,

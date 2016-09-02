@@ -680,3 +680,7 @@ td.import-course.course-cell {
 .import-summary {
   padding-top: 2em;
 }
+
+.course-filter-item {
+  padding-left: 1em;
+}
