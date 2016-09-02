@@ -39,6 +39,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			switch (action.type) {
 				case INIT_STATE:
 				case IMPORT_COURSES:
+				case TOGGLE_UNPUBLISHED_COURSES:
 					courses = {
 						newCourse: null,
 						ids: [],
@@ -144,11 +145,15 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				case UPDATE_TAG_FILTERS:
 					// Set the course.isFiltered flag to false if any tag matches the filters
 					courses.ids.forEach(function (courseId) {
-						courses.list[courseId].matchesTagFilters = courses.list[courseId].tagIds
-							.some(function (tagId) {
-								// Set to true if to tags are checked or if matches one of the selected tags
-								return action.payload.tagIds.length == 0 || action.payload.tagIds.indexOf(tagId) >= 0;
-							});
+						// Display all courses if none of the tags is checked
+						if (action.payload.tagIds.length == 0) {
+							delete courses.list[courseId].matchesTagFilters;
+						} else {
+							courses.list[courseId].matchesTagFilters = courses.list[courseId].tagIds
+								.some(function (tagId) {
+									return action.payload.tagIds.indexOf(tagId) >= 0;
+								});
+						}
 					});
 					return courses;
 				case GET_COURSE_CENSUS:
@@ -167,6 +172,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			switch (action.type) {
 				case INIT_STATE:
 				case IMPORT_COURSES:
+				case TOGGLE_UNPUBLISHED_COURSES:
 					sectionGroups = {
 						newSectionGroup: null,
 						selectedSectionGroup: null,
@@ -344,6 +350,10 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				case UPDATE_TAG_FILTERS:
 					filters.enabledTagIds = action.payload.tagIds;
 					return filters;
+				case TOGGLE_UNPUBLISHED_COURSES:
+					filters.enableUnpublishedCourses = !filters.enableUnpublishedCourses;
+					filters.enabledTagIds = [];
+					return filters;
 				default:
 					return filters;
 			}
@@ -354,6 +364,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			switch (action.type) {
 				case INIT_STATE:
 				case IMPORT_COURSES:
+				case TOGGLE_UNPUBLISHED_COURSES:
 					uiState = {
 						tableLocked: false,
 						selectedCourseId: null,

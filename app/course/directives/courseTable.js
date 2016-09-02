@@ -22,7 +22,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				END_IMPORT_MODE,
 				SEARCH_IMPORT_COURSES,
 				ADD_SECTION_GROUP,
-				UPDATE_TAG_FILTERS
+				UPDATE_TAG_FILTERS,
+				TOGGLE_UNPUBLISHED_COURSES
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {

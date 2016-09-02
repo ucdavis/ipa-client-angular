@@ -65,6 +65,17 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			};
 			courseStateService.reduce(action);
 		},
+		setUnpublishedCoursesFilter: function (workgroupId, year, enableUnpublishedCourses) {
+			courseService.getScheduleByWorkgroupIdAndYear(workgroupId, year, enableUnpublishedCourses).then(function (payload) {
+				var action = {
+					type: TOGGLE_UNPUBLISHED_COURSES,
+					payload: payload
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+			});
+		},
 		updateTagFilters: function (tagIds) {
 			var action = {
 				type: UPDATE_TAG_FILTERS,

@@ -259,6 +259,14 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					return previousValue + $scope.view.state.sections.list[sectionId].seats;
 				}, 0);
 			};
+
+			$scope.unpublishedCoursesToggled = function () {
+				courseActionCreators.setUnpublishedCoursesFilter(
+					$scope.workgroupId,
+					$scope.year,
+					!$scope.view.state.filters.enableUnpublishedCourses
+				);
+			}
 		}
 ]);
 
