@@ -36,12 +36,6 @@
 					<span class="title">Howdy, {{ sharedState.displayName }}</span>
 			</li>
 			<li>
-				<a ng-click="logout()">
-					<i class="entypo-logout"></i>
-					<span class="title">Logout</span>
-				</a>
-			</li>
-			<li>
 				<a href="/workgroups/{{ sharedState.workgroup.id }}/{{ sharedState.year }}">
 					<i class="entypo-users"></i>
 					<span class="title" ng-if="sharedState.userWorkgroups.length > 1">Workgroups</span>
@@ -102,6 +96,16 @@
 				</ul>
 			</li>
 
+		</ul>
+
+		<!-- Logout -->
+		<ul id="main-menu" class="main-menu">
+			<li>
+				<a ng-click="logout()">
+					<i class="entypo-logout"></i>
+					<span class="title">Logout</span>
+				</a>
+			</li>
 		</ul>
 
 	</div>
