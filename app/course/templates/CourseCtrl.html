@@ -14,17 +14,14 @@
 	<div class="row hidden-print">
 		<div class="col-sm-12">
 			<div class="table-toolbar">
-				<span class="tool-icon glyphicon glyphicon-plus"
-				      data-toggle="tooltip" data-placement="top"
-							title="" data-original-title="Import"
-							ng-click="beginImportMode()"></span>
+				<span class="tool-icon glyphicon glyphicon-plus" uib-tooltip="Add multiple courses" ng-click="beginImportMode()"></span>
 
-				<div class="btn-group">
+				<div class="btn-group" uib-tooltip="Toggle terms">
 					<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
 					<ul class="dropdown-menu" multiselect-dropdown items="termDefinitions" active-ids="view.state.filters.enabledTerms" toggle-item="termToggled(id)" ></ul>
 				</div> <!-- .btn-group -->
 
-				<div class="btn-group">
+				<div class="btn-group" uib-tooltip="Filters">
 					<span class="tool-icon glyphicon glyphicon-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
 					<ul class="dropdown-menu">
 						<li ng-repeat="tagId in view.state.tags.ids track by $index" class="clickable" ng-click="tagToggled(tagId)" stop-event="click">
@@ -43,15 +40,9 @@
 					</ul>
 				</div> <!-- .btn-group -->
 
-				<div class="btn-group">
-					<span class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-					<ul class="dropdown-menu">
-						<li><a href="#" class="small">as Excel</a></li>
-						<li><a href="#" class="small">as CSV</a></li>
-					</ul>
-				</div> <!-- .btn-group -->
+				<span class="tool-icon glyphicon glyphicon-download-alt text-muted" uib-tooltip="Download as Excel (Coming Soon)"></span>
 
-				<span class="tool-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print" ng-click="print()"></span>
+				<span class="tool-icon glyphicon glyphicon-print" uib-tooltip="Print" ng-click="print()"></span>
 			</div> <!-- .table-toolbar -->
 		</div> <!-- .col-sm-12 -->
 	</div> <!-- .row -->
