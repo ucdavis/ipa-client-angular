@@ -118,6 +118,10 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			$scope.createActivity = function (activity, sectionGroup) {
 				schedulingActionCreators.createActivity(activity, sectionGroup);
 			};
+
+			$scope.closeActivityDetails = function () {
+				schedulingActionCreators.setSelectedActivity();
+			};
 		}
 ]);
 

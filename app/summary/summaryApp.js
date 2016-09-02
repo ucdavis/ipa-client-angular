@@ -20,3 +20,5 @@ summaryApp.config(function ($routeProvider) {
 			redirectTo: "/"
 		});
 });
+
+var INIT_STATE = "INIT_STATE";
