@@ -35,6 +35,12 @@
 			<li class="welcome">
 					<span class="title">Howdy, {{ sharedState.displayName }}</span>
 			</li>
+			<li class="home">
+				<a ng-href="/summary/{{ workgroupId }}/{{ year }}">
+					<i class="entypo-home"></i>
+					<span class="title">Home</span>
+				</a>
+			</li>
 			<li>
 				<a href="/workgroups/{{ sharedState.workgroup.id }}/{{ sharedState.year }}">
 					<i class="entypo-users"></i>
