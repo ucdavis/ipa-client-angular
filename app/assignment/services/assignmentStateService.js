@@ -186,12 +186,16 @@ assignmentApp.service('assignmentStateService', function (
 
 					for (var i = 0; i < payloadTeachingAssignments.length; i++) {
 						var teachingAssignment = payloadTeachingAssignments[i];
-						var sectionGroup = state.sectionGroups.list[teachingAssignment.sectionGroupId];
-						var course = state.courses.list[sectionGroup.courseId];
+
+						if (teachingAssignment.sectionGroupId) {
+							var sectionGroup = state.sectionGroups.list[teachingAssignment.sectionGroupId];
+							var course = state.courses.list[sectionGroup.courseId];
+							teachingAssignment.subjectCode = course.subjectCode;
+							teachingAssignment.courseNumber = course.courseNumber;
+						}
+
 						var termCode = parseInt(teachingAssignment.termCode);
 
-						teachingAssignment.subjectCode = course.subjectCode;
-						teachingAssignment.courseNumber = course.courseNumber;
 
 						if (activeTeachingCall.termAssignments[teachingAssignment.termCode] == null) {
 							activeTeachingCall.termAssignments[teachingAssignment.termCode] = [];
@@ -215,7 +219,7 @@ assignmentApp.service('assignmentStateService', function (
 						// Ensure scheduledCourses are flagged as having a preference
 						for (var j = 0; j < activeTeachingCall.scheduledCourses[teachingAssignment.termCode].length; j++) {
 							slotCourse = activeTeachingCall.scheduledCourses[teachingAssignment.termCode][j];
-							if (slotCourse.id == course.id) {
+							if (course && (slotCourse.id == course.id)) {
 								slotCourse.hasPreference = true;
 							}
 						}
