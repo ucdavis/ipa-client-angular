@@ -176,6 +176,7 @@
 					<div ng-show="view.state.uiState.selectedActivityId">
 						<p class="activity-details-header">
 							{{ view.state.activities.list[view.state.uiState.selectedActivityId].getCodeDescription() }}
+							<a ng-click="closeActivityDetails()" class="close"><i class="entypo-cancel"></i></a>
 						</p>
 						<form class="form-horizontal">
 							<strong>Location</strong>
