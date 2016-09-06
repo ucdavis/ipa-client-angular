@@ -15,7 +15,9 @@ angular.module('term', [])
 			// { id: 10, description: "Fall Quarter", shortCode: "10", termCode: "201610" }
 			// { id: 1, description: "Winter Quarter", shortCode: "01", termCode: "201701" }
 			// etc.
-			generateTable: function(academicYear) {
+			generateTable: function (academicYear) {
+				if (!academicYear) { return []; }
+
 				var table = [
 					{ id: 5,  description: "Summer Session 1",       shortCode: "05"},
 					{ id: 6,  description: "Summer Special Session", shortCode: "06"},
