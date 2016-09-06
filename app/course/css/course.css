@@ -684,3 +684,11 @@ td.import-course.course-cell {
 .course-filter-item {
   padding-left: 1em;
 }
+
+.clear-search {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  z-index: 10;
+  transform: translateY(-50%);
+}

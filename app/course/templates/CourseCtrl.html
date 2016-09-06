@@ -6,8 +6,9 @@
 	<br />
 
 	<div class="row" style="margin-bottom: 2em;">
-		<div class="col-sm-offset-3 col-sm-6">
+		<div class="col-sm-offset-3 col-sm-6 input-group">
 			<input type="search" class="form-control hidden-print" placeholder="Search Schedule" ng-model="view.searchQuery" ng-change="filterTable(view.searchQuery)" />
+			<i class="entypo-cancel clear-search close" ng-show="view.searchQuery" ng-click="clearSearch()"></i>
 		</div>
 	</div>
 

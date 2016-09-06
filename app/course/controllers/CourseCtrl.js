@@ -209,6 +209,12 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				$scope.timeout = setTimeout(courseActionCreators.updateTableFilter, 700, query);
 			};
 
+			// Triggered by global search cancel button
+			$scope.clearSearch = function () {
+				$scope.view.searchQuery = "";
+				$scope.filterTable("");
+			};
+
 			/**
 			 * Begins import mode, which allows for the mass adding of courses.
 			 * @return {[type]} [description]
