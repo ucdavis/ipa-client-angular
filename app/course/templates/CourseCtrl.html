@@ -266,7 +266,8 @@
 							<!--<td>{{ section.enrollment }}</td>-->
 							<td>
 								<input auto-input
-									type="number" class="form-control section-seats-edit text-center"
+									type="number" min="0"
+									class="form-control section-seats-edit text-center"
 									on-enter="updateSection(view.state.sections.list[sectionId])"
 									on-blur="updateSection(view.state.sections.list[sectionId])"
 									help-text-placement="left"
