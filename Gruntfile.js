@@ -307,7 +307,7 @@ module.exports = function (grunt) {
 		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:cssLib', 'uglify:dist', 'cssmin']);
 
 	grunt.registerTask('serve', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsDevSnippets',
-		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:cssLib', 'watch', 'connect']);
+		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:cssLib', 'connect', 'watch']);
 
 	grunt.registerTask('default', ['serve']);
 
