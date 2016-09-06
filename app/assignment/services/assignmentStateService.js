@@ -46,19 +46,12 @@ assignmentApp.service('assignmentStateService', function (
 					return courses;
 				case UPDATE_TABLE_FILTER:
 					var query = action.payload.query;
-					for (var i = 0; i < courses.ids.length; i++) {
-						var course = courses.list[courses.ids[i]];
 
-						// Apply search filter
-						if (searchCourse(course, query)) {
-							course.isFiltered = false;
-						} else {
-							course.isFiltered = true;
-						}
+					// Specify the properties that we are interested in searching
+					var courseKeyList = ['courseNumber', 'sequencePattern', 'subjectCode', 'title'];
 
-						// Apply toggle filters
-						
-					}
+					_object_search_properties(query, courses, courseKeyList);
+
 					return courses;
 				default:
 					return courses;
@@ -135,7 +128,7 @@ assignmentApp.service('assignmentStateService', function (
 					};
 					teachingCalls.eligibleGroups.senateInstructors = true;
 					teachingCalls.eligibleGroups.federationInstructors = true;
-					
+
 					var teachingCallsList = {};
 					var length = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
 					for (var i = 0; i < length; i++) {
@@ -267,7 +260,7 @@ assignmentApp.service('assignmentStateService', function (
 						ids: [],
 						list: []
 					};
-					
+
 					var teachingCallReceiptsList = {};
 					var length = action.payload.teachingCallReceipts ? action.payload.teachingCallReceipts.length : 0;
 					for (var i = 0; i < length; i++) {
@@ -293,7 +286,7 @@ assignmentApp.service('assignmentStateService', function (
 						ids: [],
 						list: []
 					};
-					
+
 					var teachingCallResponsesList = {};
 					var length = action.payload.teachingCallResponses ? action.payload.teachingCallResponses.length : 0;
 					for (var i = 0; i < length; i++) {
@@ -321,7 +314,7 @@ assignmentApp.service('assignmentStateService', function (
 					};
 					var instructorsList = {};
 					var length = action.payload.instructors ? action.payload.instructors.length : 0;
-					
+
 					// Loop over instructors
 					for (var i = 0; i < length; i++) {
 						var instructor = new Instructor(action.payload.instructors[i]);
@@ -378,14 +371,11 @@ assignmentApp.service('assignmentStateService', function (
 					return instructors;
 				case UPDATE_TABLE_FILTER:
 					var query = action.payload.query;
-					for (var i = 0; i < instructors.ids.length; i++) {
-						var instructor = instructors.list[instructors.ids[i]];
-						if (searchInstructor(instructor, query)) {
-							instructor.isFiltered = false;
-						} else {
-							instructor.isFiltered = true;
-						}
-					}
+					// Specify the properties that we are interested in searching
+					var instructorKeyList = ['emailAddress', 'firstName', 'lastName', 'fullName', 'loginId', 'ucdStudentSID'];
+
+					_object_search_properties(query, instructors, instructorKeyList);
+
 					return instructors;
 				case ADD_SCHEDULE_INSTRUCTOR_NOTE:
 					var scheduleInstructorNote = action.payload.scheduleInstructorNote;
@@ -520,7 +510,7 @@ assignmentApp.service('assignmentStateService', function (
 						newSectionGroup: {},
 						ids: []
 					};
-					
+
 					var sectionGroupsList = {};
 
 					var length = action.payload.sectionGroups ? action.payload.sectionGroups.length : 0;
@@ -690,12 +680,12 @@ isCourseSuppressed = function(course) {
 	var suppressedCourseNumbers = ["194HA", "194HB", "197T", "201"];
 	if (suppressedCourseNumbers.indexOf(course.courseNumber) > -1) {
 		return true;
-	}	
+	}
 
 	var lastChar = course.courseNumber.charAt(course.courseNumber.length-1);
 	var secondLastChar = course.courseNumber.charAt(course.courseNumber.length-2);
 	var thirdLastChar = course.courseNumber.charAt(course.courseNumber.length-3);
-	
+
 	// Filter out courses like 299H
 	if (isLetter(lastChar)) {
 		if (thirdLastChar == 9 && (secondLastChar == 8 || secondLastChar == 9)) {
@@ -740,26 +730,4 @@ orderTermsChronologically = function(terms) {
 	});
 
 	return terms;
-}
-
-searchCourse = function(course, query) {
-	query = query.toLowerCase();
-
-	if (course.subjectCode.toLowerCase().search(query) >= 0
-		|| course.courseNumber.toLowerCase().search(query) >= 0
-		|| course.title.toLowerCase().search(query) >= 0) {
-		return true;
-	}
-
-	return false;
-}
-
-searchInstructor = function(user, query) {
-	query = query.toLowerCase();
-
-	if (user.fullName.toLowerCase().search(query) >= 0) {
-		return true;
-	}
-
-	return false;
 }

@@ -120,26 +120,11 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					return courses;
 				case UPDATE_TABLE_FILTER:
 					var query = action.payload.query;
-					// Convert the query into an array split at the white space
-					var queryList = query.toLowerCase().split(/\s+/);
+
 					// Specify the properties that we are interested in searching
 					var courseKeyList = ['courseNumber', 'sequencePattern', 'subjectCode', 'title'];
 
-					courses.ids.forEach(function (courseId) {
-						courses.list[courseId].isFiltered = true;
-
-						// Create an array of the properties values
-						var courseValueList = Object.keys(courses.list[courseId])
-							.filter(function (key) { return courseKeyList.indexOf(key) >= 0; })
-							.map(function (key) { return courses.list[courseId][key].toLowerCase(); });
-
-						// Find out if all the query words have a match in the properties values array
-						var courseMatchesQuery = queryList.every(function (queryItem) {
-							return courseValueList.some(function (prop) { return prop.search(queryItem) >= 0; });
-						});
-
-						if (courseMatchesQuery) { courses.list[courseId].isFiltered = false; }
-					});
+					_object_search_properties(query, courses, courseKeyList);
 
 					return courses;
 				case UPDATE_TAG_FILTERS:
