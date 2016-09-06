@@ -15,6 +15,7 @@ angular.module('sharedApp')
 			userWorkgroups: [],
 			displayName: "",
 			termStates: [],
+			isAdmin: 0,
 
 			/**
 			 * Validates the given JWT token with the backend.
@@ -142,18 +143,29 @@ angular.module('sharedApp')
 
 				for (var i = 0; i < userRoles.length; i++) {
 					userRole = userRoles[i];
+					var roles = [];
+					roles.push(userRole.roleName);
+
 					var workgroup = {
 						id: userRole.workgroupId,
-						name: userRole.workgroupName
+						name: userRole.workgroupName,
+						roles: roles
 					}
 
-					// Append to userWorkgroups iff workgroup is valid and avoid duplicates
-					if (workgroup.id > 0 && _array_findById(scope.userWorkgroups, workgroup.id) == undefined) {
+					// Set isAdmin
+					if (workgroup.id == 0 && userRole.roleName == "admin") {
+						scope.isAdmin = true;
+					} else if (_array_findById(scope.userWorkgroups, workgroup.id) == undefined) {
+						// Append to userWorkgroups iff workgroup is valid and avoid duplicates
 						scope.userWorkgroups.push(workgroup);
-					}
 
-					if (userRole.workgroupId == workgroupId) {
-						scope.activeWorkgroup = workgroup;
+						if (userRole.workgroupId == workgroupId) {
+							scope.activeWorkgroup = workgroup;
+						}
+					} else {
+						// Add role if necessary
+						var userWorkgroup = _array_findById(scope.userWorkgroups, workgroup.id);
+						userWorkgroup.roles.push(userRole.roleName);
 					}
 				}
 
@@ -166,7 +178,9 @@ angular.module('sharedApp')
 					year: this.activeYear,
 					userWorkgroups: this.userWorkgroups,
 					displayName: this.displayName,
-					termStates: this.termStates
+					termStates: this.termStates,
+					isAdmin: this.isAdmin,
+					activeWorkgroup: this.activeWorkgroup
 				}
 			}
 		};
