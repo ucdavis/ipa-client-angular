@@ -650,6 +650,10 @@ table.sections-table > tbody tr > td {
   border-color: #f0f0f1;
 }
 
+.selectize-control.plugin-remove_button [data-value] .remove {
+  border: none;
+}
+
 .course-sequence-pattern {
   text-transform: uppercase;
 }

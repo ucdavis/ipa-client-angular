@@ -27,6 +27,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			$scope.recentAcademicYears = recentYears;
 
 			$scope.tagsSelectConfig = {
+				plugins: ['remove_button'],
 				maxItems: 10,
 				valueField: 'id',
 				labelField: 'name',
