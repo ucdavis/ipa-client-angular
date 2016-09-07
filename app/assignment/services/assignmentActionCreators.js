@@ -204,7 +204,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 		},
 		updateTeachingCallResponse: function (teachingCallResponse) {
 			assignmentService.updateTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
-				$rootScope.$emit('toast', {message: "Updated reponse", type: "SUCCESS"});
+				$rootScope.$emit('toast', {message: "Updated availablities", type: "SUCCESS"});
 				var action = {
 					type: UPDATE_TEACHING_CALL_RESPONSE,
 					payload: {
@@ -218,7 +218,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 		},
 		addTeachingCallResponse: function (teachingCallResponse) {
 			assignmentService.addTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
-				$rootScope.$emit('toast', {message: "Updated response", type: "SUCCESS"});
+				$rootScope.$emit('toast', {message: "Updated availablities", type: "SUCCESS"});
 				var action = {
 					type: ADD_TEACHING_CALL_RESPONSE,
 					payload: {
