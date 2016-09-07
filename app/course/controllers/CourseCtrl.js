@@ -58,7 +58,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					$scope.$apply();
 				} else if (data.state.uiState.selectedCourseId && !data.state.uiState.selectedTermCode) {
 					// A course is selected
-					$scope.view.selectedEntity = $scope.view.state.courses.list[data.state.uiState.selectedCourseId];
+					$scope.view.selectedEntity = angular.copy($scope.view.state.courses.list[data.state.uiState.selectedCourseId]);
 					$scope.view.selectedEntityType = "course";
 				} else if (data.state.uiState.selectedCourseId && data.state.uiState.selectedTermCode) {
 					// A sectionGroup is selected
@@ -273,7 +273,20 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					$scope.year,
 					!$scope.view.state.filters.enableUnpublishedCourses
 				);
-			}
+			};
+
+			$scope.sequencePatternsScopedByCurrentType = function () {
+				var course = $scope.view.state.courses.list[$scope.view.selectedEntity.id];
+				if (course.sequencePattern) {
+					if (course.isSeries()) {
+						return alphaSequencePatterns;
+					} else {
+						return numericSequencePatterns;
+					}
+				} else {
+					return sequencePatterns;
+				}
+			};
 		}
 ]);
 

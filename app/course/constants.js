@@ -1027,6 +1027,9 @@ var sequencePatterns = [
 	"999"
 ];
 
+var alphaSequencePatterns = sequencePatterns.slice(0, 26);
+var numericSequencePatterns = sequencePatterns.slice(26, sequencePatterns.length);
+
 var subjectCodes = [
 	'AAS',
 	'AASN',
