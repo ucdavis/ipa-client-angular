@@ -120,7 +120,7 @@ angular.module('sharedApp')
 				return termStates;
 			},
 
-			fallbackToDefaultUrl: function() {
+			fallbackToDefaultUrl: function () {
 				var scope = this;
 				var userRoles = scope.getUserRoles();
 				for (var i = 0; i < userRoles.length; i++) {
@@ -131,6 +131,7 @@ angular.module('sharedApp')
 						var year = new Date().getFullYear();
 						var url = '/' + workgroupId + '/' + year;
 						$location.path(url);
+						return;
 					} else if (userRole.workgroupId == 0 && userRole.roleName == "admin") {
 						scope.isAdmin = true;
 					}
@@ -141,11 +142,13 @@ angular.module('sharedApp')
 				if (scope.isAdmin) {
 					// Admin users can go to the administration view
 					$window.location.href = "/admin";
+					return;
 				} else {
 					// Other users don't have access to any workgroup, redirect to Access Denied page
 					console.error("Authentication request received a 403. Redirecting to access denied page ...");
 					localStorage.clear();
 					$window.location.href = "/access-denied.html";
+					return;
 				}
 
 			},

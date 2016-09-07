@@ -10,7 +10,7 @@
 adminApp.controller('AdminCtrl', ['$scope', '$rootScope', '$routeParams', 'adminActionCreators',
 		this.AdminCtrl = function ($scope, $rootScope, $routeParams, adminActionCreators) {
 			$scope.workgroupId = $routeParams.workgroupId;
-			$scope.year = $routeParams.year;
+			$scope.year = $routeParams.year || moment().year();
 			$scope.view = {};
 
 			$rootScope.$on('adminStateChanged', function (event, data) {
