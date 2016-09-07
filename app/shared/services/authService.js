@@ -137,9 +137,15 @@ angular.module('sharedApp')
 
 				}
 
-				// If not workgroups and user is admin...
+				// If no workgroups...
 				if (scope.isAdmin) {
+					// Admin users can go to the administration view
 					$window.location.href = "/admin";
+				} else {
+					// Other users don't have access to any workgroup, redirect to Access Denied page
+					console.error("Authentication request received a 403. Redirecting to access denied page ...");
+					localStorage.clear();
+					$window.location.href = "/access-denied.html";
 				}
 
 			},
