@@ -961,14 +961,26 @@ ol.sortable-list>li .term-preference-dropdown {
 	color: #FFFFFF; 
 }
 
+.preference-container,
 .unavailability-container {
 	border: 1px solid;
 	border-color: rgb(235, 235, 235);
 }
+
+.unavailability-container {
+	display:flex;
+	margin-left:15px;
+	margin-right:15px;
+}
+
 .unavailability-term-header {
 	background-color: rgb(245, 245, 246);
 	color: rgb(166, 167, 170);
 	height: 34px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 14px;
 }
 
 .unavailability-term-container {
