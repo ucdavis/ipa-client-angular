@@ -6,6 +6,7 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 		link: function (scope, element, attrs) {
 			scope.sharedState = authService.getSharedState();
 			scope.termShortCode = attrs.termShortCode;
+			scope.currentBaseHref = $location.absUrl().split('/')[3];
 
 			// TODO: Shouldn't this be set somewhere to be shared outside of <nav> ? -CT
 			$rootScope.$on('sharedStateSet', function (event, data) {

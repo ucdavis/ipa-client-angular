@@ -50,8 +50,12 @@
 				<ul class="visible" ng-if="sharedState.userWorkgroups.length > 1">
 					<li ng-repeat="workgroup in sharedState.userWorkgroups track by workgroup.id"
 					ng-class="{ 'active': sharedState.workgroup.id == workgroup.id }">
-						<a ng-href="/workgroups/{{ workgroup.id }}/{{ sharedState.year }}">
+						<a ng-href="/{{ currentBaseHref }}/{{ workgroup.id }}/{{ sharedState.year }}/{{ term.shortCode }}">
 							<span class="title">{{ workgroup.name }}</span>
+						</a>
+						<a ng-href="/workgroups/{{ workgroup.id }}/{{ sharedState.year }}" class="icon-workgroup-manage"
+							uib-tooltip="Manage {{ workgroup.name }}" tooltip-append-to-body="true" tooltip-placement="right">
+							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						</a>
 					</li>
 				</ul>
