@@ -16,5 +16,5 @@ adminApp.controller('AdminCtrl', ['$scope', '$rootScope', '$routeParams',
 ]);
 
 AdminCtrl.getPayload = function (authService, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year);
+	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year);
 }

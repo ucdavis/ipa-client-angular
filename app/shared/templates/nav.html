@@ -41,6 +41,12 @@
 					<span class="title">Home</span>
 				</a>
 			</li>
+			<li ng-if="sharedState.isAdmin">
+				<a ng-href="/admin/{{ workgroupId }}/{{ year }}">
+					<i class="entypo-cog"></i>
+					<span class="title">Administration</span>
+				</a>
+			</li>
 			<li>
 				<a href="/workgroups/{{ sharedState.workgroup.id }}/{{ sharedState.year }}">
 					<i class="entypo-users"></i>
