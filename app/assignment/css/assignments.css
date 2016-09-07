@@ -1083,3 +1083,12 @@ ol.sortable-list>li .term-preference-dropdown {
 	flex: 0 0 200px;
 	width: 20%;
 }
+
+.confirmbutton-yes {
+	background-color: rgb(48, 54, 65);
+	border-color: rgb(48, 54, 65);
+}
+
+.confirmbutton-yes:hover {
+	background-color: rgb(18, 24, 35); /* Darker Version for hover */
+}
