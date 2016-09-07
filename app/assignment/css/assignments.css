@@ -1092,3 +1092,9 @@ ol.sortable-list>li .term-preference-dropdown {
 .confirmbutton-yes:hover {
 	background-color: rgb(18, 24, 35); /* Darker Version for hover */
 }
+
+.provide-unavailabilities-header,
+.provide-comments-header,
+.provide-preferences-header {
+	color: rgb(186, 187, 190);
+}
