@@ -918,7 +918,7 @@ ol.sortable-list>li .term-preference-dropdown {
 }
 
 .department-title {
-    color: rgb(166, 167, 170);
+	font-size: 14px;
 }
 
 .tile-assignment:hover .icon-remove_ta-assignment {
