@@ -1022,15 +1022,6 @@ ol.sortable-list>li .term-preference-dropdown {
 	height: 50px; /* preserve space for preference while dragging */
 }
 
-.view-pivot-btn {
-	padding-top: 4px;
-	padding-right: 8px;
-	font-size: 12px;
-}
-
-.view-pivot-btn .glyphicon {
-	margin: 0px;
-}
 /* Teaching Call Status ------------------------------------ */
 .teaching-call-status-header {
 	text-align: center;
