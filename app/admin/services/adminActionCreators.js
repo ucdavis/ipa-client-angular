@@ -26,7 +26,9 @@ adminApp.service('adminActionCreators', function (adminStateService, adminServic
 				$rootScope.$emit('toast', {message: "Updated workgroup " + updatedWorkgroup.name, type: "SUCCESS"});
 				var action = {
 					type: UPDATE_WORKGROUP,
-					workgroup: updatedWorkgroup
+					payload: {
+						workgroup: updatedWorkgroup
+					}
 				};
 				adminStateService.reduce(action);
 			}, function (err) {
@@ -38,7 +40,9 @@ adminApp.service('adminActionCreators', function (adminStateService, adminServic
 				$rootScope.$emit('toast', {message: "Removed workgroup " + workgroup.name, type: "SUCCESS"});
 				var action = {
 					type: REMOVE_WORKGROUP,
-					workgroup: workgroup
+					payload: {
+						workgroup: workgroup
+					}
 				};
 				adminStateService.reduce(action);
 			}, function (err) {
@@ -50,7 +54,9 @@ adminApp.service('adminActionCreators', function (adminStateService, adminServic
 				$rootScope.$emit('toast', {message: "Created workgroup " + workgroup.name, type: "SUCCESS"});
 				var action = {
 					type: ADD_WORKGROUP,
-					workgroup: createdWorkgroup
+					payload: {
+						workgroup: createdWorkgroup
+					}
 				};
 				adminStateService.reduce(action);
 			}, function (err) {

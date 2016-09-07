@@ -17,6 +17,7 @@ adminApp.service('adminStateService', function ($rootScope, Workgroup) {
 			switch (action.type) {
 				case INIT_STATE:
 					workgroups = {
+						newWorkgroup: {},
 						ids: []
 					};
 					var workgroupList = {};
@@ -27,6 +28,19 @@ adminApp.service('adminStateService', function ($rootScope, Workgroup) {
 					}
 					workgroups.ids = _array_sortIdsByProperty(workgroupList, "name");
 					workgroups.list = workgroupList;
+					return workgroups;
+				case UPDATE_WORKGROUP:
+					workgroups.list[action.payload.workgroup.id] = action.payload.workgroup;
+					return workgroups;
+				case REMOVE_WORKGROUP:
+					var workgroupIndex = workgroups.ids.indexOf(action.payload.workgroup.id);
+					workgroups.ids.splice(workgroupIndex, 1);
+					delete workgroups.list[action.payload.workgroup.id];
+					return workgroups;
+				case ADD_WORKGROUP:
+					workgroups.list[action.payload.workgroup.id] = action.payload.workgroup;
+					workgroups.ids.push(action.payload.workgroup.id);
+					workgroups.newWorkgroup = {};
 					return workgroups;
 				default:
 					return workgroups;
