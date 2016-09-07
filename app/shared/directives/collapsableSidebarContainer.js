@@ -1,0 +1,25 @@
+/**
+ * Function: Detects Keys: Enter and ESC, and detects blur.. Calls defined functions if model is changed
+ * Usage: <input auto-input on-enter="save()" on-blur="save()" on-escape="cancel()"></input>
+ */
+
+sharedApp.directive("collapsableSidebarContainer", this.autoInput = function($rootScope, authService) {
+	return {
+		link: function (scope, element, attrs, ngModelCtrl) {
+
+			$rootScope.$on('sidebarStateToggled', function (event, sidebarCollapsed) {
+				updateClass(sidebarCollapsed);
+			});
+
+			var updateClass = function (sidebarCollapsed) {
+				if (sidebarCollapsed) {
+					element.addClass('sidebar-collapsed');
+				} else {
+					element.removeClass('sidebar-collapsed');
+				}
+			};
+
+			updateClass(authService.isSidebarCollapsed());
+		}
+	}
+})

@@ -7,6 +7,7 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 			scope.sharedState = authService.getSharedState();
 			scope.termShortCode = attrs.termShortCode;
 			scope.currentBaseHref = $location.absUrl().split('/')[3];
+			scope.view.sidebarCollapsed = localStorage.getItem('sidebarCollapsed') == 'true';
 
 			// TODO: Shouldn't this be set somewhere to be shared outside of <nav> ? -CT
 			$rootScope.$on('sharedStateSet', function (event, data) {
@@ -18,19 +19,6 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 			// We leave code '04' off because it is unused.
 			// This table is purposefully ordered in the order of terms in an academic year (starts with 5).
 			scope.termDefinitions = Term.prototype.generateTable(scope.year);
-
-			// Sidebar Collapse icon
-			element.find(".sidebar-collapse-icon").on('click', function (ev) {
-				ev.preventDefault();
-				var open = $('.page-container').hasClass("sidebar-collapsed");
-
-				if (open) {
-					$('.page-container').removeClass("sidebar-collapsed");
-				}
-				else {
-					$('.page-container').addClass("sidebar-collapsed");
-				}
-			});
 
 			scope.changeYearBy = function (offset) {
 				if (!offset || !scope.sharedState.workgroup) { return; }
@@ -45,6 +33,10 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 
 			scope.logout = function () {
 				authService.logout();
+			};
+
+			scope.toggleSidebarState = function () {
+				authService.toggleSidebarState();
 			};
 
 			scope.getYearTerms = function () {

@@ -182,6 +182,16 @@ angular.module('sharedApp')
 					isAdmin: this.isAdmin,
 					activeWorkgroup: this.activeWorkgroup
 				}
+			},
+
+			toggleSidebarState: function () {
+				var sidebarCollapsed = localStorage.getItem('sidebarCollapsed') == 'true';
+				localStorage.setItem('sidebarCollapsed', !sidebarCollapsed);
+				$rootScope.$emit('sidebarStateToggled', !sidebarCollapsed);
+			},
+
+			isSidebarCollapsed: function () {
+				return localStorage.getItem('sidebarCollapsed') == 'true';
 			}
 		};
 	});
