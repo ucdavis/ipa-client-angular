@@ -1110,3 +1110,8 @@ ol.sortable-list>li .term-preference-dropdown {
 .provide-preferences-header {
 	color: rgb(186, 187, 190);
 }
+
+.teaching-call-form-container {
+	padding-left: 30px;
+	padding-right:30px;
+}
