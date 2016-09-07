@@ -173,6 +173,8 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				}
 
 				assignmentActionCreators.updateTeachingCallReceipt(teachingCallReceipt);
+
+				window.location.pathname = "/summary";
 			};
 
 			$scope.isScheduleTermLocked = function(term) {

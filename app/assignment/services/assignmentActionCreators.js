@@ -101,7 +101,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 		},
 		updateTeachingCallReceipt: function (teachingCallReceipt) {
 			assignmentService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
-				$rootScope.$emit('toast', {message: "Updated reponse", type: "SUCCESS"});
+				$rootScope.$emit('toast', {message: "Updated Reponse", type: "SUCCESS"});
 				var action = {
 					type: UPDATE_TEACHING_CALL_RECEIPT,
 					payload: {
