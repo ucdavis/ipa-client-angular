@@ -22,3 +22,6 @@ adminApp.config(function ($routeProvider) {
 });
 
 var INIT_STATE = "INIT_STATE";
+var UPDATE_WORKGROUP = "UPDATE_WORKGROUP";
+var REMOVE_WORKGROUP = "REMOVE_WORKGROUP";
+var ADD_WORKGROUP = "ADD_WORKGROUP";
