@@ -20,7 +20,7 @@ angular.module('sharedApp')
 			/**
 			 * Validates the given JWT token with the backend.
 			 */
-			validate: function (token, workgroupId, year) {
+			validate: function (token, workgroupId, year, ignoreFallBackUrl) {
 				var deferred = $q.defer();
 				var userRoles = this.getUserRoles();
 				var displayName = localStorage.getItem('displayName');
@@ -45,8 +45,8 @@ angular.module('sharedApp')
 						localStorage.setItem('displayName', response.data.displayName);
 						localStorage.setItem('termStates', JSON.stringify(response.data.termStates));
 
-						// If workgroupId or year NOT set
-						if ( !workgroupId || !year) {
+						// If workgroupId or year NOT set, and the ignoreFallBackUrl is not set to true
+						if ( !(workgroupId && year) && !ignoreFallBackUrl) {
 							scope.fallbackToDefaultUrl();
 							$rootScope.$emit('sharedStateSet', scope.getSharedState());
 							deferred.reject();
@@ -121,7 +121,8 @@ angular.module('sharedApp')
 			},
 
 			fallbackToDefaultUrl: function() {
-				var userRoles = this.getUserRoles();
+				var scope = this;
+				var userRoles = scope.getUserRoles();
 				for (var i = 0; i < userRoles.length; i++) {
 					userRole = userRoles[i];
 
@@ -130,8 +131,17 @@ angular.module('sharedApp')
 						var year = new Date().getFullYear();
 						var url = '/' + workgroupId + '/' + year;
 						$location.path(url);
+					} else if (userRole.workgroupId == 0 && userRole.roleName == "admin") {
+						scope.isAdmin = true;
 					}
+
 				}
+
+				// If not workgroups and user is admin...
+				if (scope.isAdmin) {
+					$window.location.href = "/admin";
+				}
+
 			},
 
 			setSharedState: function (workgroupId, year, displayName, termStates) {
