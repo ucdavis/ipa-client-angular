@@ -14,7 +14,7 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams',
 }]);
 
 SummaryCtrl.authenticate = function (authService, $route, summaryActionCreators) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then( function() {
-		summaryActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then( function() {
+		return summaryActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
 	})
 }
