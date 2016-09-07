@@ -137,3 +137,50 @@
 .padded-container {
   padding: 30px;
 }
+
+
+/* Instructor View */
+.course-status-header {
+	text-align: center;
+}
+
+.course-status-sub-header {
+	padding-left: 1%;
+	margin-top: 50px;
+}
+
+.course-table-row {
+	display:flex;
+	margin-left:15px;
+	margin-right:15px;
+	border: 1px solid;
+	border-color: rgb(235, 235, 235);
+}
+
+.course-table__header {
+	border-right: 1px solid;
+	border-color: rgb(235, 235, 235);
+	flex: 1 0 100px;
+	background-color: rgb(245, 245, 246);
+	height: 30px;
+	text-align: center;
+	padding-top: 5px;
+}
+
+.course-table__header-detail {
+	text-align: center;
+	color: rgb(166, 167, 170);
+}
+
+.course-table__row-detail {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1 0 100px;
+	border-right: 1px solid;
+	border-color: rgb(235, 235, 235);
+	padding-top: 5px;
+	flex-direction: column;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}

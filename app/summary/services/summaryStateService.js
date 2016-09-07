@@ -103,6 +103,89 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 					return activities;
 			}
 		},
+		_instructorCourses: function (action, instructorCourses) {
+			var scope = this;
+			var data = action.payload;
+
+			switch (action.type) {
+				case INIT_STATE:
+					var instructorCoursesByTermCode = {};
+
+//					termCodes = [];
+//					termCode['2016'].meetings = {};
+//					meeting
+//					meeting.location;
+//					meeting.time;
+
+					terms = [];
+
+					data.sectionGroups.forEach( function(sectionGroup) {
+						var termCode = sectionGroup.termCode;
+
+						// If this is the first sectionGroup of a termCode
+						if (terms.indexOf(termCode) == -1 ) {
+							terms.push(termCode);
+							instructorCoursesByTermCode[termCode] = [];
+						}
+
+						var slotSectionGroup = {};
+
+						slotSectionGroup.title = "";
+
+						data.courses.forEach( function (course) {
+							if (sectionGroup.courseId == course.id) {
+								slotSectionGroup.title = course.title;
+							}
+						});
+
+						slotSectionGroup.meetings = [];
+
+						// Look for meeting data from shared activities
+						data.activities.forEach( function(activity) {
+							if (activity.sectionGroupId == sectionGroup.id) {
+								var slotMeeting = {};
+
+								slotMeeting.startTime = activity.startTime;
+								slotMeeting.endTime = activity.endTime;
+								if (activity.locationDescription.length == 0) {
+									slotMeeting.location = "To Be Announced";
+								} else {
+									slotMeeting.location = activity.locationDescription;
+								}
+								slotSectionGroup.meetings.push(slotMeeting);
+							}
+						});
+
+						// Look for meeting data tied to sections
+						data.sections.forEach( function(section) {
+							if (section.sectionGroupId == sectionGroup.id) {
+
+								// Collect Location/Time Data
+								data.activities.forEach( function(activity) {
+									if (activity.sectionId == section.id) {
+										var slotMeeting = {};
+										slotMeeting.startTime = activity.startTime;
+										slotMeeting.endTime = activity.endTime;
+										slotMeeting.location = activity.locationDescription;
+
+										slotSectionGroup.meetings.push(slotMeeting);
+									}
+								});
+							}
+						});
+
+						instructorCoursesByTermCode[termCode].push(slotSectionGroup);
+					});
+
+					var instructorCourses = {};
+					instructorCourses.terms = terms;
+					instructorCourses.list = instructorCoursesByTermCode;
+
+					return instructorCourses;
+				default:
+					return instructorCourses;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -115,15 +198,11 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
 			newState.activities = scope._activityReducers(action, scope._state.activities);
+			newState.instructorCourses = scope._instructorCourses(action, scope._state.instructorCourses);
 
 			scope._state = newState;
-			$rootScope.$emit('summaryStateChanged', {
-				state: scope._state,
-				actionType: action.type
-			});
 
-			console.debug("Summary state updated:");
-			console.debug(scope._state, action.type);
+			$rootScope.$emit('summaryStateChanged',scope._state);
 		}
 	}
 });

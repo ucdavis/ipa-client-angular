@@ -1,77 +1,172 @@
 <nav></nav>
 
-<div class="main-content">
+<div ng-if="sharedState.isAcademicPlanner">
+	<div class="main-content">
+		<div class="left-container padded-container">
+			<h2>Planning At A Glance</h2>
+			<br />
 
-	<div class="left-container padded-container">
-		<h2>Planning At A Glance</h2>
+			<ul class="cbp_tmtimeline">
+				<li>
+					<time class="cbp_tmtime" datetime="2015-11-04T18:30"><span class="hidden">04/11/2015</span> <span class="large">Now</span></time>
+
+					<div class="cbp_tmicon">
+						<i class="entypo-info"></i>
+					</div>
+
+					<div class="cbp_tmlabel empty">
+					</div>
+				</li>
+
+				<li>
+					<time class="cbp_tmtime"><span>12:00 AM</span> <span>8/21/2016</span></time>
+
+					<div class="cbp_tmicon bg-success">
+						<i class="entypo-graduation-cap"></i>
+					</div>
+
+					<div class="cbp_tmlabel">
+						<h2>Fall Quarter Starts</h2>
+					</div>
+				</li>
+
+				<li>
+					<time class="cbp_tmtime"><span>8:00 AM</span> <span>10/12/2016</span></time>
+
+					<div class="cbp_tmicon bg-secondary">
+						<i class="entypo-bell"></i>
+					</div>
+
+					<div class="cbp_tmlabel">
+						<h2>Fall Upload Available</h2>
+					</div>
+				</li>
+
+				<li>
+					<time class="cbp_tmtime"><span>12:00 AM</span> <span>1/9/2017</span></time>
+
+					<div class="cbp_tmicon bg-success">
+						<i class="entypo-graduation-cap"></i>
+					</div>
+
+					<div class="cbp_tmlabel">
+						<h2>Winter Quarter Starts</h2>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+
+		<div class="right-container right-info padded-container">
+			<h3>Notices</h3>
+			<ul class="notifications-menu">
+				<li class="top">
+					<p class="small">
+						You have no notices.
+					</p>
+				</li>
+
+				<li style="height: 300px;">
+					<ul class="dropdown-menu-list scroller" tabindex="5001" style="overflow: hidden; outline: none;">
+
+					</ul>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+</div>
+
+<!-- Instructor View -->
+<div ng-if="sharedState.isInstructor">
+	
+	<div class="course-status-header">
+		<h3>
+			Scheduled Courses {{ year }}-{{ nextYear }}
+		</h3>
+		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
+	</div>
+
+	<div class="course-table-row">
+		<div class="course-table__header">
+			<div class="course-table__header-detail">
+				<div>
+					Teaching Call
+				</div>
+			</div>
+		</div>
+		<div class="course-table__header">
+			<div class="course-table__header-detail">
+				<div>
+					Due Date
+				</div>
+			</div>
+		</div>
+	</div><!-- table header -->
+
+	<!-- course table -->
+	<div class="course-table-row" ng-repeat="courseId in view.state.courses.ids"
+	ng-init="course=view.state.courses.list[courseId]">
+		<div class="course-table__row-detail">
+			<div>
+				Link to teaching Call
+			</div>
+		</div>
+		<div class="course-table__row-detail">
+			Due Date
+		</div>
+	</div>
+
+	<div ng-repeat="term in view.state.instructorCourses.terms">
+		<div class="course-status-sub-header">
+			<h5>{{ term }}</h5>
+		</div>
+		<!-- table headers -->
+		<div class="course-table-row">
+			<div class="course-table__header">
+				<div class="course-table__header-detail">
+					<div>
+						Course
+					</div>
+				</div>
+			</div>
+			<div class="course-table__header">
+				<div class="course-table__header-detail">
+					<div>
+						Location / Time
+					</div>
+				</div>
+			</div>
+			<div class="course-table__header">
+				<div class="course-table__header-detail">
+					<div>
+						Teaching Assistant(s)
+					</div>
+				</div>
+			</div>
+		</div><!-- table header -->
+
+		<!-- course table -->
+		<div class="course-table-row" ng-repeat="course in view.state.instructorCourses.list[term]">
+			<div class="course-table__row-detail">
+				<div>
+					{{ course.title }}
+				</div>
+			</div>
+			<div class="course-table__row-detail">
+				<div ng-repeat="meeting in course.meetings">
+					{{ meeting.location }} / {{ meeting.startTime }}-{{ meeting.endTime }}
+				</div>
+			</div>
+			<div class="course-table__row-detail">
+				None Assigned.
+			</div>
+		</div>
+	</div>
+
+		<br />
+		<br />
+		<br />
 		<br />
 
-		<ul class="cbp_tmtimeline">
-			<li>
-				<time class="cbp_tmtime" datetime="2015-11-04T18:30"><span class="hidden">04/11/2015</span> <span class="large">Now</span></time>
-
-				<div class="cbp_tmicon">
-					<i class="entypo-info"></i>
-				</div>
-
-				<div class="cbp_tmlabel empty">
-				</div>
-			</li>
-
-			<li>
-				<time class="cbp_tmtime"><span>12:00 AM</span> <span>8/21/2016</span></time>
-
-				<div class="cbp_tmicon bg-success">
-					<i class="entypo-graduation-cap"></i>
-				</div>
-
-				<div class="cbp_tmlabel">
-					<h2>Fall Quarter Starts</h2>
-				</div>
-			</li>
-
-			<li>
-				<time class="cbp_tmtime"><span>8:00 AM</span> <span>10/12/2016</span></time>
-
-				<div class="cbp_tmicon bg-secondary">
-					<i class="entypo-bell"></i>
-				</div>
-
-				<div class="cbp_tmlabel">
-					<h2>Fall Upload Available</h2>
-				</div>
-			</li>
-
-			<li>
-				<time class="cbp_tmtime"><span>12:00 AM</span> <span>1/9/2017</span></time>
-
-				<div class="cbp_tmicon bg-success">
-					<i class="entypo-graduation-cap"></i>
-				</div>
-
-				<div class="cbp_tmlabel">
-					<h2>Winter Quarter Starts</h2>
-				</div>
-			</li>
-
-		</ul>
-	</div>
-
-	<div class="right-container right-info padded-container">
-		<h3>Notices</h3>
-		<ul class="notifications-menu">
-			<li class="top">
-				<p class="small">
-					You have no notices.
-				</p>
-			</li>
-
-			<li style="height: 300px;">
-				<ul class="dropdown-menu-list scroller" tabindex="5001" style="overflow: hidden; outline: none;">
-
-				</ul>
-			</li>
-
-		</ul>
-	</div>
 </div>
