@@ -20,15 +20,13 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 			// This table is purposefully ordered in the order of terms in an academic year (starts with 5).
 			scope.termDefinitions = Term.prototype.generateTable(scope.year);
 
-			scope.changeYearBy = function (offset) {
-				if (!offset || !scope.sharedState.workgroup) { return; }
-
-				// Increment/decrement the year
-				scope.sharedState.year = parseInt(scope.sharedState.year) + offset;
-
-				// Redirect the page
-				var url = '/' + scope.sharedState.workgroup.id + '/' + scope.sharedState.year + '/' + scope.termShortCode;
-				$location.path(url);
+			scope.yearOffset = function (offset) {
+				var year = parseInt(scope.sharedState.year);
+				if (offset) {
+					// Increment/decrement the year
+					year = year + offset;
+				}
+				return year;
 			};
 
 			scope.logout = function () {

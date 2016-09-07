@@ -48,7 +48,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="/workgroups/{{ sharedState.workgroup.id }}/{{ sharedState.year }}">
+				<a href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}">
 					<i class="entypo-users"></i>
 					<span class="title" ng-if="sharedState.userWorkgroups.length > 1">Workgroups</span>
 					<span class="title" ng-if="sharedState.userWorkgroups.length == 1">{{ sharedState.workgroup.name }}</span>
@@ -56,10 +56,10 @@
 				<ul class="visible" ng-if="sharedState.userWorkgroups.length > 1">
 					<li ng-repeat="workgroup in sharedState.userWorkgroups track by workgroup.id"
 					ng-class="{ 'active': sharedState.workgroup.id == workgroup.id }">
-						<a ng-href="/{{ currentBaseHref }}/{{ workgroup.id }}/{{ sharedState.year }}/{{ term.shortCode }}">
+						<a ng-href="/{{ currentBaseHref }}/{{ workgroup.id }}/{{ year }}/{{ termShortCode }}">
 							<span class="title">{{ workgroup.name }}</span>
 						</a>
-						<a ng-href="/workgroups/{{ workgroup.id }}/{{ sharedState.year }}" class="icon-workgroup-manage"
+						<a ng-href="/workgroups/{{ workgroup.id }}/{{ year }}" class="icon-workgroup-manage"
 							uib-tooltip="Manage {{ workgroup.name }}" tooltip-append-to-body="true" tooltip-placement="right">
 							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						</a>
@@ -70,9 +70,9 @@
 
 		<!-- Year switcher -->
 		<ul class="pager year-switcher">
-			<li class="previous"><a ng-click="changeYearBy(-1)"><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
+			<li class="previous"><a ng-href="/{{ currentBaseHref }}/{{ workgroupId }}/{{ yearOffset(-1) }}/{{ termShortCode }}"><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
 			<li ><a>{{ year }}</a></li>
-			<li class="next"><a ng-click="changeYearBy(1)"><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
+			<li class="next"><a ng-href="/{{ currentBaseHref }}/{{ workgroupId }}/{{ yearOffset(1) }}/{{ termShortCode }}"><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
 		</ul>
 
 		<!-- Sidebar links -->
