@@ -96,11 +96,9 @@
 			<span style="padding-right: 5px;" class="glyphicon glyphicon-plus"></span>
 			Create Teaching Call
 		</a>
-		<div data-toggle="tooltip" data-placement="top" data-original-title="All instructors already assigned to a teaching call" data-container="body">
-			<a ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors == false && view.state.teachingCalls.eligibleGroups.senateInstructors == false"
-			class="btn btn-block btn-default begin-teaching-call-button disabled">
-				Create Teaching Call
-			</a>
+		<div class="teaching-call-complete-container" ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors == false && view.state.teachingCalls.eligibleGroups.senateInstructors == false">
+			<i class="glyphicon glyphicon-ok teaching-call-complete-check"></i>
+			<div class="teaching-call-complete-msg">All instructors have been assigned to a teaching call.</div>
 		</div>
 	</div>
 

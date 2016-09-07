@@ -1120,6 +1120,20 @@ ol.sortable-list>li .term-preference-dropdown {
 	color: white;
 }
 
+.teaching-call-complete-container {
+	display: flex;
+}
+
+.teaching-call-complete-check {
+	padding-right: 5px;
+	color: rgba(0, 166, 81, 0.8);
+	cursor: default;
+}
+
+.teaching-call-complete-msg {
+	cursor: default;
+}
+
 .provide-unavailabilities-header,
 .provide-comments-header,
 .provide-preferences-header {
