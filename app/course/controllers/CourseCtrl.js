@@ -47,7 +47,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
 				$scope.view.state = data.state;
-				$scope.tagsSelectConfig.options = $scope.view.state.tags.ids.map(function (tagId) {
+				$scope.tagsSelectConfig.options = $scope.view.state.tags.availableIds.map(function (tagId) {
 					return $scope.view.state.tags.list[tagId];
 				});
 
