@@ -130,11 +130,11 @@
 							<h5>Email sent to Instructor</h5>
 							<div class="list-group-item">
 								<h5 class="text-muted">Subject:</h5>
-								<p class="text-muted">Reminder for IPA Due Day</p>	
-								<h5 class="text-muted" ng-model="startTeachingCallConfig.message">Body:</h5>
+								<p class="text-muted">IPA: Teaching Call has Started</p>	
+								<h5 class="text-muted">Body:</h5>
 								<p class="text-muted">
-								Faculties, Just a quick reminder your IPA is due in couple weeks. Pleas complete your IPA assignments by 8/21/16. Any late submission
-								will result in placing into lower priority category. Thanks you!<br>
+									{{ startTeachingCallConfig.message }}
+								<br>
 								{{ urlRoot }}/assignments/{{ workgroupId }}/{{ scheduleYear }}/teachingCall
 								</p>
 							</div>
