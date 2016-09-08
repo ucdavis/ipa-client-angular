@@ -190,16 +190,17 @@ angular.module('sharedApp')
 						roles: roles
 					}
 
+					// Set as active workgroup if matches
+					if (userRole.workgroupId == workgroupId) {
+						scope.activeWorkgroup = workgroup;
+					}
+
 					// Set isAdmin
 					if (workgroup.id == 0 && userRole.roleName == "admin") {
 						scope.isAdmin = true;
 					} else if (_array_findById(scope.userWorkgroups, workgroup.id) == undefined) {
 						// Append to userWorkgroups iff workgroup is valid and avoid duplicates
 						scope.userWorkgroups.push(workgroup);
-
-						if (userRole.workgroupId == workgroupId) {
-							scope.activeWorkgroup = workgroup;
-						}
 					} else {
 						// Add role if necessary
 						var userWorkgroup = _array_findById(scope.userWorkgroups, workgroup.id);
