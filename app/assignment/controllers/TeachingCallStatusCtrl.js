@@ -7,8 +7,9 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$routeParams', '$uibModal', 'assignmentActionCreators', 'assignmentService',
-		this.TeachingCallStatusCtrl = function ($scope, $rootScope, $routeParams, $uibModal, assignmentActionCreators, assignmentService) {
+assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$window', '$routeParams', '$uibModal', 'assignmentActionCreators', 'assignmentService',
+		this.TeachingCallStatusCtrl = function ($scope, $rootScope, $window, $routeParams, $uibModal, assignmentActionCreators, assignmentService) {
+			$window.document.title = "Teaching Call Status";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);

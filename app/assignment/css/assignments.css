@@ -854,7 +854,9 @@ ol.sortable-list>li .term-preference-dropdown {
 .preference-assignment-dropdown {
 	width: 180px;
 	height: 30px;
-	padding: 6px;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-bottom: 6px;
 }
 
 .unapproved-preference,
@@ -916,7 +918,7 @@ ol.sortable-list>li .term-preference-dropdown {
 }
 
 .department-title {
-    color: rgb(166, 167, 170);
+	font-size: 14px;
 }
 
 .tile-assignment:hover .icon-remove_ta-assignment {
@@ -959,14 +961,25 @@ ol.sortable-list>li .term-preference-dropdown {
 	color: #FFFFFF; 
 }
 
+.preference-container,
 .unavailability-container {
 	border: 1px solid;
 	border-color: rgb(235, 235, 235);
 }
+
+.unavailability-container {
+	display:flex;
+	margin-left:15px;
+	margin-right:15px;
+}
+
 .unavailability-term-header {
 	background-color: rgb(245, 245, 246);
-	color: rgb(166, 167, 170);
 	height: 34px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 14px;
 }
 
 .unavailability-term-container {
@@ -1023,8 +1036,13 @@ ol.sortable-list>li .term-preference-dropdown {
 }
 
 /* Teaching Call Status ------------------------------------ */
+.teaching-call-status-container {
+	padding-left: 30px;
+	padding-right: 30px;
+}
 .teaching-call-status-header {
 	text-align: center;
+	padding-bottom: 50px;
 }
 
 .teaching-call-status-sub-header {
@@ -1080,4 +1098,53 @@ ol.sortable-list>li .term-preference-dropdown {
 	margin-left: 15px;
 	flex: 0 0 200px;
 	width: 20%;
+}
+
+.neon-dark-confirm-btn,
+.neon-dark-confirm-btn:focus,
+.neon-dark-confirm-btn:active,
+.neon-dark-confirm-btn,
+.confirmbutton-yes {
+	background-color: rgb(48, 54, 65);
+	border-color: rgb(48, 54, 65);
+	color: white;
+}
+
+.neon-dark-confirm-btn:hover,
+.confirmbutton-yes:hover {
+	background-color: rgb(18, 24, 35); /* Darker Version for hover */
+	color: white;
+}
+
+.neon-dark-confirm-btn.disabled,
+.neon-dark-confirm-btn.disabled:hover,
+.neon-dark-confirm-btn.disabled:focus,
+.neon-dark-confirm-btn.disabled:active {
+	background-color: rgb(48, 54, 65);
+	color: white;
+}
+
+.teaching-call-complete-container {
+	display: flex;
+}
+
+.teaching-call-complete-check {
+	padding-right: 5px;
+	color: rgba(0, 166, 81, 0.8);
+	cursor: default;
+}
+
+.teaching-call-complete-msg {
+	cursor: default;
+}
+
+.provide-unavailabilities-header,
+.provide-comments-header,
+.provide-preferences-header {
+	color: rgb(186, 187, 190);
+}
+
+.teaching-call-form-container {
+	padding-left: 30px;
+	padding-right:30px;
 }

@@ -73,8 +73,10 @@ table th {
 	display: inline-block !important;
 }
 
-.tags-input li .btn {
+.tags-input li .btn-remove-tag {
 	margin-left: 20px;
+	display: inline-block;
+	padding: 8px 12px;
 }
 
 .locations-section {

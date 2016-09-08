@@ -7,8 +7,9 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$routeParams', '$uibModal', 'assignmentActionCreators', 'assignmentService',
-		this.AssignmentCtrl = function ($scope, $rootScope, $routeParams, $uibModal, assignmentActionCreators, assignmentService) {
+assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '$routeParams', '$uibModal', 'assignmentActionCreators', 'assignmentService',
+		this.AssignmentCtrl = function ($scope, $rootScope, $window, $routeParams, $uibModal, assignmentActionCreators, assignmentService) {
+			$window.document.title = "Assignments";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.view = {};

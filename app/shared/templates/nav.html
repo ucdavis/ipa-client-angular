@@ -13,7 +13,7 @@
 
 			<!-- logo collapse icon -->
 			<div class="sidebar-collapse">
-				<a href="#" class="sidebar-collapse-icon"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
+				<a class="sidebar-collapse-icon" ng-click="toggleSidebarState()" uib-tooltip="Toggle Sidebar" tooltip-placement="right"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
 					<i class="entypo-menu"></i>
 				</a>
 			</div>
@@ -41,17 +41,30 @@
 					<span class="title">Home</span>
 				</a>
 			</li>
+			<li ng-if="sharedState.isAdmin">
+				<a ng-href="/admin/{{ workgroupId }}/{{ year }}">
+					<i class="entypo-cog"></i>
+					<span class="title">Administration</span>
+				</a>
+			</li>
 			<li>
-				<a href="/workgroups/{{ sharedState.workgroup.id }}/{{ sharedState.year }}">
+				<a ng-if="sharedState.userWorkgroups.length > 1">
 					<i class="entypo-users"></i>
-					<span class="title" ng-if="sharedState.userWorkgroups.length > 1">Workgroups</span>
-					<span class="title" ng-if="sharedState.userWorkgroups.length == 1">{{ sharedState.workgroup.name }}</span>
+					<span class="title">Workgroups</span>
+				</a>
+				<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}" ng-if="sharedState.userWorkgroups.length == 1">
+					<i class="entypo-users"></i>
+					<span class="title">{{ sharedState.workgroup.name }}</span>
 				</a>
 				<ul class="visible" ng-if="sharedState.userWorkgroups.length > 1">
 					<li ng-repeat="workgroup in sharedState.userWorkgroups track by workgroup.id"
 					ng-class="{ 'active': sharedState.workgroup.id == workgroup.id }">
-						<a ng-href="/workgroups/{{ workgroup.id }}/{{ sharedState.year }}">
+						<a ng-href="/{{ currentBaseHref }}/{{ workgroup.id }}/{{ year }}/{{ termShortCode }}">
 							<span class="title">{{ workgroup.name }}</span>
+						</a>
+						<a ng-href="/workgroups/{{ workgroup.id }}/{{ year }}" class="icon-workgroup-manage"
+							uib-tooltip="Manage {{ workgroup.name }}" tooltip-append-to-body="true" tooltip-placement="right">
+							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						</a>
 					</li>
 				</ul>
@@ -60,9 +73,9 @@
 
 		<!-- Year switcher -->
 		<ul class="pager year-switcher">
-			<li class="previous"><a ng-click="changeYearBy(-1)"><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
+			<li class="previous"><a ng-href="/{{ currentBaseHref }}/{{ workgroupId }}/{{ yearOffset(-1) }}/{{ termShortCode }}"><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
 			<li ><a>{{ year }}</a></li>
-			<li class="next"><a ng-click="changeYearBy(1)"><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
+			<li class="next"><a ng-href="/{{ currentBaseHref }}/{{ workgroupId }}/{{ yearOffset(1) }}/{{ termShortCode }}"><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
 		</ul>
 
 		<!-- Sidebar links -->
@@ -89,7 +102,7 @@
 				</ul>
 			</li>
 			<li>
-				<a href="#">
+				<a>
 					<i class="entypo-calendar"></i>
 					<span class="title">Scheduling</span>
 				</a>

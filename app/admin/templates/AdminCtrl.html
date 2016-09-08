@@ -1,0 +1,50 @@
+<nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
+
+<div class="main-content" unselect-cell>
+
+	<h3 style="text-align: center;">IPA Administration</h3>
+
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<ul class="workgroups-input">
+				<li ng-repeat="workgroupId in view.state.workgroups.ids">
+					<div class="row">
+						<div class="col-md-8">
+							<input class="form-control" type="text" name="text"  ng-model="view.state.workgroups.list[workgroupId].name"
+								auto-input on-enter="updateWorkgroup(view.state.workgroups.list[workgroupId])" help-text-placement="top">
+						</div>
+						<div class="col-md-2 text-center">
+							<a class="clickable btn-workgroup" ng-href="/workgroups/{{ workgroupId }}/{{ year }}">
+								<i class="entypo-cog"></i><small>Manage</small>
+							</a>
+						</div>
+						<div class="col-md-2 text-center">
+							<a class="text-danger clickable btn-workgroup"
+								confirm-button="removeWorkgroup(view.state.workgroups.list[workgroupId])"
+								message="Are you sure you want to remove this workgroup"
+								yes="Remove" no="Cancel" placement="right"
+								aria-hidden="true">
+								<i class="entypo-cancel-squared"></i><small>Remove</small>
+							</a>
+						</div>
+					</div>
+				</li>
+				<li>      <!-- add button -->
+					<div class="form-horizontal">
+						<div class="row">
+							<div class="col-md-8">
+								<input class="form-control" type="text" name="text"  size="50" placeholder="Add New Workgroup"
+									ng-model="view.state.workgroups.newWorkgroup.name">
+							</div>
+							<div class="col-md-4">
+								<button type="button" class="btn btn-block btn-primary" ng-click="addWorkgroup()">Add</button>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+
+</div>

@@ -15,11 +15,12 @@ angular.module('sharedApp')
 			userWorkgroups: [],
 			displayName: "",
 			termStates: [],
+			isAdmin: 0,
 
 			/**
 			 * Validates the given JWT token with the backend.
 			 */
-			validate: function (token, workgroupId, year) {
+			validate: function (token, workgroupId, year, ignoreFallBackUrl) {
 				var deferred = $q.defer();
 				var userRoles = this.getUserRoles();
 				var displayName = localStorage.getItem('displayName');
@@ -44,8 +45,8 @@ angular.module('sharedApp')
 						localStorage.setItem('displayName', response.data.displayName);
 						localStorage.setItem('termStates', JSON.stringify(response.data.termStates));
 
-						// If workgroupId or year NOT set
-						if ( !workgroupId || !year) {
+						// If workgroupId or year NOT set, and the ignoreFallBackUrl is not set to true
+						if ( !(workgroupId && year) && !ignoreFallBackUrl) {
 							scope.fallbackToDefaultUrl();
 							$rootScope.$emit('sharedStateSet', scope.getSharedState());
 							deferred.reject();
@@ -119,8 +120,9 @@ angular.module('sharedApp')
 				return termStates;
 			},
 
-			fallbackToDefaultUrl: function() {
-				var userRoles = this.getUserRoles();
+			fallbackToDefaultUrl: function () {
+				var scope = this;
+				var userRoles = scope.getUserRoles();
 				for (var i = 0; i < userRoles.length; i++) {
 					userRole = userRoles[i];
 
@@ -129,8 +131,26 @@ angular.module('sharedApp')
 						var year = new Date().getFullYear();
 						var url = '/' + workgroupId + '/' + year;
 						$location.path(url);
+						return;
+					} else if (userRole.workgroupId == 0 && userRole.roleName == "admin") {
+						scope.isAdmin = true;
 					}
+
 				}
+
+				// If no workgroups...
+				if (scope.isAdmin) {
+					// Admin users can go to the administration view
+					$window.location.href = "/admin";
+					return;
+				} else {
+					// Other users don't have access to any workgroup, redirect to Access Denied page
+					console.error("Authentication request received a 403. Redirecting to access denied page ...");
+					localStorage.clear();
+					$window.location.href = "/access-denied.html";
+					return;
+				}
+
 			},
 
 			setSharedState: function (workgroupId, year, displayName, termStates) {
@@ -142,18 +162,29 @@ angular.module('sharedApp')
 
 				for (var i = 0; i < userRoles.length; i++) {
 					userRole = userRoles[i];
+					var roles = [];
+					roles.push(userRole.roleName);
+
 					var workgroup = {
 						id: userRole.workgroupId,
-						name: userRole.workgroupName
+						name: userRole.workgroupName,
+						roles: roles
 					}
 
-					// Append to userWorkgroups iff workgroup is valid and avoid duplicates
-					if (workgroup.id > 0 && _array_findById(scope.userWorkgroups, workgroup.id) == undefined) {
+					// Set isAdmin
+					if (workgroup.id == 0 && userRole.roleName == "admin") {
+						scope.isAdmin = true;
+					} else if (_array_findById(scope.userWorkgroups, workgroup.id) == undefined) {
+						// Append to userWorkgroups iff workgroup is valid and avoid duplicates
 						scope.userWorkgroups.push(workgroup);
-					}
 
-					if (userRole.workgroupId == workgroupId) {
-						scope.activeWorkgroup = workgroup;
+						if (userRole.workgroupId == workgroupId) {
+							scope.activeWorkgroup = workgroup;
+						}
+					} else {
+						// Add role if necessary
+						var userWorkgroup = _array_findById(scope.userWorkgroups, workgroup.id);
+						userWorkgroup.roles.push(userRole.roleName);
 					}
 				}
 
@@ -166,8 +197,20 @@ angular.module('sharedApp')
 					year: this.activeYear,
 					userWorkgroups: this.userWorkgroups,
 					displayName: this.displayName,
-					termStates: this.termStates
+					termStates: this.termStates,
+					isAdmin: this.isAdmin,
+					activeWorkgroup: this.activeWorkgroup
 				}
+			},
+
+			toggleSidebarState: function () {
+				var sidebarCollapsed = localStorage.getItem('sidebarCollapsed') == 'true';
+				localStorage.setItem('sidebarCollapsed', !sidebarCollapsed);
+				$rootScope.$emit('sidebarStateToggled', !sidebarCollapsed);
+			},
+
+			isSidebarCollapsed: function () {
+				return localStorage.getItem('sidebarCollapsed') == 'true';
 			}
 		};
 	});

@@ -138,7 +138,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 							courseHtml += "<div class=\"dropdown assign-dropdown\">";
 							courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
 							courseHtml += "Assign..<span class=\"caret\"></span></button>";
-							courseHtml += "<ul class=\"dropdown-menu scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
+							courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
 
 							// Track courses that were already present in 'interested', and should be filtered from 'other'
 							var interestedCourseIds = [];

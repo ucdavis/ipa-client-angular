@@ -23,9 +23,6 @@
 	<link rel="stylesheet" href="/css/shared.css">
 	<link rel="stylesheet" href="/css/course.css">
 
-	<link rel="stylesheet" href="/css/select2-bootstrap.css">
-	<link rel="stylesheet" href="/css/select2.css">
-
 	<!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -38,7 +35,7 @@
 <body class="page-body" ng-app="courseApp" class="ng-cloak" ng-cloak>
 	<base href="/courses/">
 
-	<div class="page-container sidebar-collapsed" ng-view>
+	<div class="page-container" collapsable-sidebar-container ng-view>
 		<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 	</div>
 
@@ -53,6 +50,7 @@
 	<script src="/js/lib.js"></script>
 	<script src="/js/sharedApp.js"></script>
 	<script src="/js/sharedConfig.js"></script>
+	<script src="/js/snippets.js"></script>
 	<script src="/js/courseApp.js"></script>
 	<script src="/js/Chart.min.js"></script>
 

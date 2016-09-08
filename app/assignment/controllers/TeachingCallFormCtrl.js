@@ -7,8 +7,9 @@
  * # TeachingCallFormCtrl
  * Controller of the ipaClientAngularApp
  */
-assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$routeParams', '$timeout', 'assignmentActionCreators',
-		this.TeachingCallFormCtrl = function ($scope, $rootScope, $routeParams, $timeout, assignmentActionCreators) {
+assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$window', '$routeParams', '$timeout', 'assignmentActionCreators',
+		this.TeachingCallFormCtrl = function ($scope, $rootScope, $window, $routeParams, $timeout, assignmentActionCreators) {
+			$window.document.title = "Teaching Call";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
@@ -172,6 +173,8 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$rout
 				}
 
 				assignmentActionCreators.updateTeachingCallReceipt(teachingCallReceipt);
+
+				window.location.pathname = "/summary";
 			};
 
 			$scope.isScheduleTermLocked = function(term) {

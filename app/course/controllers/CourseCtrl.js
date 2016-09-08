@@ -27,6 +27,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			$scope.recentAcademicYears = recentYears;
 
 			$scope.tagsSelectConfig = {
+				plugins: ['remove_button'],
 				maxItems: 10,
 				valueField: 'id',
 				labelField: 'name',
@@ -46,7 +47,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
 				$scope.view.state = data.state;
-				$scope.tagsSelectConfig.options = $scope.view.state.tags.ids.map(function (tagId) {
+				$scope.tagsSelectConfig.options = $scope.view.state.tags.availableIds.map(function (tagId) {
 					return $scope.view.state.tags.list[tagId];
 				});
 
@@ -57,7 +58,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					$scope.$apply();
 				} else if (data.state.uiState.selectedCourseId && !data.state.uiState.selectedTermCode) {
 					// A course is selected
-					$scope.view.selectedEntity = $scope.view.state.courses.list[data.state.uiState.selectedCourseId];
+					$scope.view.selectedEntity = angular.copy($scope.view.state.courses.list[data.state.uiState.selectedCourseId]);
 					$scope.view.selectedEntityType = "course";
 				} else if (data.state.uiState.selectedCourseId && data.state.uiState.selectedTermCode) {
 					// A sectionGroup is selected
@@ -209,6 +210,12 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				$scope.timeout = setTimeout(courseActionCreators.updateTableFilter, 700, query);
 			};
 
+			// Triggered by global search cancel button
+			$scope.clearSearch = function () {
+				$scope.view.searchQuery = "";
+				$scope.filterTable("");
+			};
+
 			/**
 			 * Begins import mode, which allows for the mass adding of courses.
 			 * @return {[type]} [description]
@@ -266,7 +273,20 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					$scope.year,
 					!$scope.view.state.filters.enableUnpublishedCourses
 				);
-			}
+			};
+
+			$scope.sequencePatternsScopedByCurrentType = function () {
+				var course = $scope.view.state.courses.list[$scope.view.selectedEntity.id];
+				if (course.sequencePattern) {
+					if (course.isSeries()) {
+						return alphaSequencePatterns;
+					} else {
+						return numericSequencePatterns;
+					}
+				} else {
+					return sequencePatterns;
+				}
+			};
 		}
 ]);
 

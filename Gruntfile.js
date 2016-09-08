@@ -14,7 +14,7 @@ module.exports = function (grunt) {
 		banner: '/*!\n * <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
 		'<%= grunt.template.today("yyyy-mm-dd") %>\n' +
 		'<%= pkg.homepage ? " * " + pkg.homepage + "\\n" : "" %>' +
-		' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;',
+		' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;\n*/\n',
 
 		ngtemplates: {
 			sharedApp: {
@@ -58,24 +58,36 @@ module.exports = function (grunt) {
 					'<%= folders.webapp.root %>/shared/entities/**/*.js',
 					'<%= folders.webapp.root %>/shared/sharedReducers.js',
 					'<%= folders.webapp.root %>/shared/sharedApp.js',
-					'<%= folders.webapp.root %>/shared/userEcho.js',
 					'<%= folders.webapp.root %>/shared/controllers/*.js',
 					'<%= folders.webapp.root %>/shared/directives/*.js',
 					'<%= folders.webapp.root %>/shared/filters/*.js',
 					'<%= folders.webapp.root %>/shared/services/**/*.js',
-					'<%= folders.webapp.root %>/shared/konami.js',
 					'<%= ngtemplates.sharedApp.dest %>'
 				],
 				dest: '<%= folders.webapp.build %>/js/sharedApp.js'
 			},
-			// AJS configuration files, separated so that they can be excluded in JS testing
+			// Configuration files, separated so that they can be excluded in JS testing
 			jsConfig: {
 				src: [
 					'clientConfig.js',
 					'<%= folders.webapp.root %>/shared/exceptionHandler.js',
-					'<%= folders.webapp.root %>/shared/sharedInterceptors.js'
+					'<%= folders.webapp.root %>/shared/sharedInterceptors.js',
+					'<%= folders.webapp.root %>/shared/konami.js'
 				],
 				dest: '<%= folders.webapp.build %>/js/sharedConfig.js'
+			},
+			// Production Snippets from various 3rd party services
+			jsProdSnippets: {
+				src: [
+					'<%= folders.webapp.root %>/shared/userEcho.js',
+					'<%= folders.webapp.root %>/shared/googleAnalytics.js'
+				],
+				dest: '<%= folders.webapp.build %>/js/snippets.js'
+			},
+			// Development Snippets from various 3rd party services
+			jsDevSnippets: {
+				src: [],
+				dest: '<%= folders.webapp.build %>/js/snippets.js'
 			},
 			// courseApp module files
 			jsCourse: {
@@ -291,8 +303,12 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-angular-templates');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 
-	grunt.registerTask('build', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat', 'uglify:dist', 'cssmin']);
-	grunt.registerTask('serve', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat', 'connect', 'watch', 'connect']);
-	grunt.registerTask('default', ['build']);
+	grunt.registerTask('build', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsProdSnippets',
+		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:cssLib', 'uglify:dist', 'cssmin']);
+
+	grunt.registerTask('serve', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsDevSnippets',
+		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:cssLib', 'connect', 'watch']);
+
+	grunt.registerTask('default', ['serve']);
 
 };

@@ -120,26 +120,11 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					return courses;
 				case UPDATE_TABLE_FILTER:
 					var query = action.payload.query;
-					// Convert the query into an array split at the white space
-					var queryList = query.toLowerCase().split(/\s+/);
+
 					// Specify the properties that we are interested in searching
 					var courseKeyList = ['courseNumber', 'sequencePattern', 'subjectCode', 'title'];
 
-					courses.ids.forEach(function (courseId) {
-						courses.list[courseId].isFiltered = true;
-
-						// Create an array of the properties values
-						var courseValueList = Object.keys(courses.list[courseId])
-							.filter(function (key) { return courseKeyList.indexOf(key) >= 0; })
-							.map(function (key) { return courses.list[courseId][key].toLowerCase(); });
-
-						// Find out if all the query words have a match in the properties values array
-						var courseMatchesQuery = queryList.every(function (queryItem) {
-							return courseValueList.some(function (prop) { return prop.search(queryItem) >= 0; });
-						});
-
-						if (courseMatchesQuery) { courses.list[courseId].isFiltered = false; }
-					});
+					_object_search_properties(query, courses, courseKeyList);
 
 					return courses;
 				case UPDATE_TAG_FILTERS:
@@ -303,17 +288,18 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			switch (action.type) {
 				case INIT_STATE:
 					tags = {
-						ids: []
+						ids: [],
+						list: {},
+						availableIds: []	// Tags that are available to be used (not archived).
 					};
 					var tagsList = {};
 					var length = action.payload.tags ? action.payload.tags.length : 0;
 					for (var i = 0; i < length; i++) {
 						var tagData = action.payload.tags[i];
-						if (tagData.archived == false) {
-							tagsList[tagData.id] = new Tag(tagData);
-						}
+						tagsList[tagData.id] = new Tag(tagData);
 					}
 					tags.ids = _array_sortIdsByProperty(tagsList, "name");
+					tags.availableIds = tags.ids.filter(function (tagId) { return tagsList[tagId].archived == false; });
 					tags.list = tagsList;
 					return tags;
 				default:

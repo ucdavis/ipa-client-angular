@@ -2,18 +2,15 @@
 <div>
 </div>
 
-<div ng-if="view.state">
+<div ng-if="view.state" class="teaching-call-status-container">
 
 	<div class="teaching-call-status-header">
 		<h3>
 			Teaching Call Status {{ year }}-{{ nextYear }}
 		</h3>
-		<p class="text-align--center department-title">- {{ sharedState.workgroup.name }} -</p>
+		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
 	</div>
 
-	<div class="teaching-call-status-sub-header">
-		<h5>Teaching Calls:</h5>
-	</div>
 	<!-- table headers -->
 	<div class="teaching-call-table-row">
 		<div class="teaching-call-table__header">
@@ -47,7 +44,7 @@
 		<div class="teaching-call-table__header">
 			<div class="teaching-call-table__header-detail">
 				<div>
-					Sent Email
+					Via Email
 				</div>
 			</div>
 		</div>
@@ -93,13 +90,12 @@
 	<div class="begin-teaching-call-container">
 		<a ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors || view.state.teachingCalls.eligibleGroups.senateInstructors"
 		class="btn btn-block btn-default begin-teaching-call-button" ng-click="openTeachingCallConfig()">
+			<span style="padding-right: 5px;" class="glyphicon glyphicon-plus"></span>
 			Create Teaching Call
 		</a>
-		<div data-toggle="tooltip" data-placement="top" data-original-title="All instructors already assigned to a teaching call" data-container="body">
-			<a ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors == false && view.state.teachingCalls.eligibleGroups.senateInstructors == false"
-			class="btn btn-block btn-default begin-teaching-call-button disabled">
-				Create Teaching Call
-			</a>
+		<div class="teaching-call-complete-container" ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors == false && view.state.teachingCalls.eligibleGroups.senateInstructors == false">
+			<i class="glyphicon glyphicon-ok teaching-call-complete-check"></i>
+			<div class="teaching-call-complete-msg">All instructors have been assigned to a teaching call.</div>
 		</div>
 	</div>
 

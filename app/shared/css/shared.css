@@ -114,9 +114,17 @@ table.availability-grid tr td {
 }
 
 #access-denied {
-  height: 100vh;
-  text-align: center;
+	height: 100vh;
+	text-align: center;
 }
 .checkbox label.cb-wrapper {
-    min-height: 18px;
+	min-height: 18px;
+}
+
+.page-container .sidebar-menu #main-menu li a.icon-workgroup-manage {
+	position: absolute;
+	right: 0;
+	z-index: 3;
+	top: 50%;
+	transform: translateY(-50%);
 }

@@ -135,11 +135,15 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 			// Call this once to set up table events.
 			element.keypress(function (e) {
 				if (e.which == 13) {
+					// ENTER button pressed
 					$el = $(e.target);
 
 					if ($el.hasClass('planned-seats')) {
 						savePlannedSeats($el, scope, courseActionCreators);
 					}
+				} else if (e.which == 45) {
+					// Disallow '-' value
+					e.preventDefault();
 				}
 			});
 
@@ -284,7 +288,7 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 				row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
 			}
 
-			row += "<input type=\"number\" value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
+			row += "<input type=\"number\" min=\"0\" value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
 			row += "</div></td>";
 		});
 

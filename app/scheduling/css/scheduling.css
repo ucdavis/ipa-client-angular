@@ -544,6 +544,10 @@ body {
 }
 .activity-list.collapsed {
   flex: 0 0 40%;
+  background-color: #F9F9F9;
+  -webkit-box-shadow: inset 0px 0px 5px 1px rgba(235,235,235,1);
+  -moz-box-shadow: inset 0px 0px 5px 1px rgba(235,235,235,1);
+  box-shadow: inset 0px 0px 5px 1px rgba(235,235,235,1);
 }
 .activity-list {
   position: relative;
@@ -607,9 +611,7 @@ a.fc-event:hover,
 }
 a.fc-event:hover,
 .ui-widget a.fc-event:hover {
-  -webkit-box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow:    0px 0px 30px 0px rgba(0, 0, 0, 0.3);
-  box-shadow:         0px 0px 30px 0px rgba(0, 0, 0, 0.3);
+  border-color: #000 !important;
 }
 .fc-unthemed .fc-today {
   background: transparent !important;
@@ -684,6 +686,14 @@ li.add-activity i {
   right: -1em;
   position: absolute;
   bottom: -0.6em;
+  color: green;
+}
+ul.activity-group:hover li.add-selected-activity {
+  border-color: #777;
+}
+li.add-selected-activity i {
+  color: white;
+  text-shadow: 0 1px 1px #333;
 }
 ul.activity-group:hover li.add-activity i {
   visibility: visible;
@@ -712,5 +722,19 @@ select.standard-time {
 }
 
 .label-selected-section-group {
-    background-color: #9da1aa;
+  background-color: #e6e6e6;
+  color: #333;
+}
+
+i.selected-section-group-remove {
+  margin-left: 0.7em;
+}
+
+.activity-page-title > h3 {
+  margin: 10px 0 0;
+}
+
+.activity-page-title > p {
+  font-size: 12px;
+  margin: 0;
 }

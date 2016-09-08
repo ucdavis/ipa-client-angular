@@ -99,7 +99,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 								courseHtml += "<div class=\"dropdown assign-dropdown\">";
 								courseHtml += "<button class=\"btn btn-default dropdown-toggle assign-dropdown-btn\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
 								courseHtml += "<div>Assign..</div><div class=\"caret\"></div></button>";
-								courseHtml += "<ul class=\"dropdown-menu scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
+								courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
 
 								var interestedInstructorIds = [];
 								var firstInstructorAdded = false;

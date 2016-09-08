@@ -1,24 +1,29 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 <div>
 </div>
-<div ng-if="view.state && view.state.activeTeachingCall.id">
+<div ng-if="view.state && view.state.activeTeachingCall.id" class="teaching-call-form-container">
 	<div class="margin-bottom-30">
 		<h3 class="text-align--center">
 			Teaching Call {{ year }}-{{ nextYear }}
 		</h3>
-		<p class="text-align--center department-title">- {{ sharedState.workgroup.name }} -</p>
+		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
 	</div>
-	<div class="row">
+	<div class="row provide-preferences-header">
 		<div class="col-md-6">
-			<h5>Provide Courses:</h5>
+			<h5>Please indicate your preferences</h5>
 		</div>
 		<div class="col-md-6">
-			<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+			<div class="pull-right" tooltip-placement="left" 
+			uib-tooltip="Clicking the Add button will show you a list of all courses currently in the schedule (Use the comment box below
+			to request courses not on the list). Once you've added your preferences you can rank them by dragging and dropping them into the
+			preferred order">
+				<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+			</div>
 		</div>
 	</div>
 
 
-	<div class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
+	<div class="preference-container" style="display:flex; margin-left:15px; margin-right:15px;">
 		<div class="unavailability-term-container" style="flex: 1 0 200px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
 			<div>
 				<div class="unavailability-term-header" style="text-align: center;">
@@ -29,7 +34,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
+	<div class="preference-container" style="display:flex; margin-left:15px; margin-right:15px;">
 		<div class="unavailability-term-container" style="flex: 1 1 200px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
 			<!-- confirmed preferences -->
 			<div class="approved-preference-container">
@@ -74,17 +79,22 @@
 	<!-- Select Unavailabilities -->
 	<div class="row provide-unavailabilities-header">
 		<div class="col-md-6">
-			<h5>Provide Unavailabilities:</h5>
+			<h5>Please indicate your unavailabilities</h5>
 		</div>
 		<div class="col-md-6">
-			<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+			<div class="pull-right" tooltip-placement="left" 
+			uib-tooltip="You can left click and drag to paint unavailability on the grids below.
+			Additionally you can use the copy to all terms button next to the term headers to
+			indicate the same unavailability on all terms.">
+				<i class="glyphicon glyphicon-question-sign  question--position"></i>
+			</div>
 			<small class="legend pull-right" style="text-align: center;">
 				<div class="legend-square" style="background-color:#fff"></div>Available
 				<div class="legend-square" style="background-color:#ccc"></div>Unavailable
 			</small>
 		</div>
 	</div>
-	<div class="unavailability-container" style="display:flex; margin-left:15px; margin-right:15px;">
+	<div class="unavailability-container">
 		<div class="unavailability-term-container" style="flex: 1 1 auto;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
 			<div ng-init="teachingCallResponse=view.state.activeTeachingCall.teachingCallResponsesByTermCode[termToTermCode(term)]">
 				<div class="unavailability-term-header" style="text-align: center;">
@@ -109,7 +119,7 @@
 	<!-- Comments -->
 	<div class="row provide-comments-header">
 		<div class="col-md-12">
-			<h5>Provide Comments:</h5>
+			<h5>Please provide comments</h5>
 		</div>
 	</div>
 	<div class="container-fluid margin-bottom-30">

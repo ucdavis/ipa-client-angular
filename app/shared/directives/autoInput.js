@@ -70,7 +70,10 @@ sharedApp.directive("autoInput", this.autoInput = function($rootScope) {
 				if (typeof attrs.onChange !== 'undefined' && element.hasClass('ng-dirty')) scope.onChange({ previousValue: oldVal, currentValue: newVal });
 
 				if (newVal !== oldVal && element.hasClass('ng-dirty') && !element.is(':focus')) {
-					scope.blurTextbox(null, true);
+					// Blur after some delay. The reason for the delay is that on Firefox this was triggered each time the number
+					// input arrows are clicked since Firefox does not focus on the input box when those buttons are clicked
+					clearTimeout(scope.timeout);
+					scope.timeout = setTimeout(scope.blurTextbox, 500, null, true);
 				}
 
 				// Prevent window from closing and show tooltip if an onEnter method
@@ -116,7 +119,7 @@ sharedApp.directive("autoInput", this.autoInput = function($rootScope) {
 				element.bind("blur", scope.blurTextbox);
 			});
 
-			scope.blurTextbox = function(event, noApply) {
+			scope.blurTextbox = function (event, noApply) {
 				if (typeof attrs.onBlur === 'undefined') return;
 
 				scope.removeTooltip();

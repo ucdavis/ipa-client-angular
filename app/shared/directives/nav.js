@@ -6,6 +6,7 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 		link: function (scope, element, attrs) {
 			scope.sharedState = authService.getSharedState();
 			scope.termShortCode = attrs.termShortCode;
+			scope.currentBaseHref = $location.absUrl().split('/')[3];
 
 			// TODO: Shouldn't this be set somewhere to be shared outside of <nav> ? -CT
 			$rootScope.$on('sharedStateSet', function (event, data) {
@@ -18,32 +19,21 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 			// This table is purposefully ordered in the order of terms in an academic year (starts with 5).
 			scope.termDefinitions = Term.prototype.generateTable(scope.year);
 
-			// Sidebar Collapse icon
-			element.find(".sidebar-collapse-icon").on('click', function (ev) {
-				ev.preventDefault();
-				var open = $('.page-container').hasClass("sidebar-collapsed");
-
-				if (open) {
-					$('.page-container').removeClass("sidebar-collapsed");
+			scope.yearOffset = function (offset) {
+				var year = parseInt(scope.sharedState.year);
+				if (offset) {
+					// Increment/decrement the year
+					year = year + offset;
 				}
-				else {
-					$('.page-container').addClass("sidebar-collapsed");
-				}
-			});
-
-			scope.changeYearBy = function (offset) {
-				if (!offset || !scope.sharedState.workgroup) { return; }
-
-				// Increment/decrement the year
-				scope.sharedState.year = parseInt(scope.sharedState.year) + offset;
-
-				// Redirect the page
-				var url = '/' + scope.sharedState.workgroup.id + '/' + scope.sharedState.year + '/' + scope.termShortCode;
-				$location.path(url);
+				return year;
 			};
 
 			scope.logout = function () {
 				authService.logout();
+			};
+
+			scope.toggleSidebarState = function () {
+				authService.toggleSidebarState();
 			};
 
 			scope.getYearTerms = function () {
