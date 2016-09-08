@@ -52,11 +52,12 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 
 				// Add checked sectionGroups activities
 				if (scope.view.state.uiState.checkedSectionGroupIds.length > 0) {
-					var otherEventsColor = "#7D838E";
+					var otherEventsColor = "#DEDEDE";
+					var otherEventsTextColor = "#333333";
 					scope.view.state.uiState.checkedSectionGroupIds.forEach(function (sgId) {
 						if (sgId !== scope.view.state.uiState.selectedSectionGroupId) {
 							calendarActivities = calendarActivities.concat(
-								createCalendarEvents(scope.view.state.sectionGroups.list[sgId], otherEventsColor)
+								createCalendarEvents(scope.view.state.sectionGroups.list[sgId], otherEventsColor, otherEventsTextColor)
 							);
 						}
 					});
@@ -113,11 +114,13 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				return calendarActivities;
 			};
 
-			var createCalendarEvents = function (sectionGroup, color) {
+			var createCalendarEvents = function (sectionGroup, color, textColor) {
 				var hiliteColor = "#3A87AD"
+				var defaultTextColor = "#FFFFFF"
 				var calendarActivities = sectionGroupToEvents(sectionGroup);
 				calendarActivities.forEach(function (event) {
 					event.color = (scope.view.state.uiState.selectedActivityId === event.activityId) ? hiliteColor : color;
+					event.textColor = textColor ? textColor : defaultTextColor;
 				});
 				return calendarActivities;
 			};

@@ -718,5 +718,6 @@ select.standard-time {
 }
 
 .label-selected-section-group {
-    background-color: #9da1aa;
+    background-color: #e6e6e6;
+    color: #333;
 }
