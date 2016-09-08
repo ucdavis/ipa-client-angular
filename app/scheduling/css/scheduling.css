@@ -718,6 +718,10 @@ select.standard-time {
 }
 
 .label-selected-section-group {
-    background-color: #e6e6e6;
-    color: #333;
+  background-color: #e6e6e6;
+  color: #333;
+}
+
+i.selected-section-group-remove {
+  margin-left: 0.7em;
 }
