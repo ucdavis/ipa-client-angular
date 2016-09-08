@@ -48,10 +48,13 @@
 				</a>
 			</li>
 			<li>
-				<a href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}">
+				<a ng-if="sharedState.userWorkgroups.length > 1">
 					<i class="entypo-users"></i>
-					<span class="title" ng-if="sharedState.userWorkgroups.length > 1">Workgroups</span>
-					<span class="title" ng-if="sharedState.userWorkgroups.length == 1">{{ sharedState.workgroup.name }}</span>
+					<span class="title">Workgroups</span>
+				</a>
+				<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}" ng-if="sharedState.userWorkgroups.length == 1">
+					<i class="entypo-users"></i>
+					<span class="title">{{ sharedState.workgroup.name }}</span>
 				</a>
 				<ul class="visible" ng-if="sharedState.userWorkgroups.length > 1">
 					<li ng-repeat="workgroup in sharedState.userWorkgroups track by workgroup.id"
@@ -99,7 +102,7 @@
 				</ul>
 			</li>
 			<li>
-				<a href="#">
+				<a>
 					<i class="entypo-calendar"></i>
 					<span class="title">Scheduling</span>
 				</a>
