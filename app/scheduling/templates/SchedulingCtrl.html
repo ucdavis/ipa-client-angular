@@ -123,7 +123,7 @@
 						</div>
 						<ul ng-repeat="sharedActivityId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sharedActivityIds track by $index"
 							class="activity-group" ng-init="sharedActivity = view.state.activities.list[sharedActivityId];">
-							<li class="activity-item"
+							<li class="activity-item clickable"
 								ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
 								ng-click="setSelectedActivity(sharedActivityId)">
 									<span>{{ sharedActivity.getCodeDescription() }}</span>
@@ -145,7 +145,7 @@
 								ng-init="section = view.state.sections.list[sectionId];">
 								<div class="section-pattern">Section {{ section.sequenceNumber }}</div>
 								<ul class="activity-group" ng-repeat="activityId in section.activityIds track by $index" ng-init="activity = view.state.activities.list[activityId];">
-									<li class="activity-item"
+									<li class="activity-item clickable"
 										ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }"
 										ng-click="setSelectedActivity(activityId)">
 											<span>{{ activity.getCodeDescription() }}</span>
