@@ -1036,8 +1036,13 @@ ol.sortable-list>li .term-preference-dropdown {
 }
 
 /* Teaching Call Status ------------------------------------ */
+.teaching-call-status-container {
+	padding-left: 30px;
+	padding-right: 30px;
+}
 .teaching-call-status-header {
 	text-align: center;
+	padding-bottom: 50px;
 }
 
 .teaching-call-status-sub-header {
