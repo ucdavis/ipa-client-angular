@@ -729,3 +729,12 @@ select.standard-time {
 i.selected-section-group-remove {
   margin-left: 0.7em;
 }
+
+.activity-page-title > h3 {
+  margin: 10px 0 0;
+}
+
+.activity-page-title > p {
+  font-size: 12px;
+  margin: 0;
+}
