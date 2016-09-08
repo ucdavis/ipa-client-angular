@@ -127,16 +127,15 @@
 								ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
 								ng-click="setSelectedActivity(sharedActivityId)">
 									<span>{{ sharedActivity.getCodeDescription() }}</span>
-									<i class="entypo-minus-circled pull-right delete-activity clickable hoverable"
-										ng-class="{ 'text-danger': view.state.uiState.selectedActivityId != sharedActivityId }"
+									<i class="entypo-minus-circled pull-right delete-activity clickable"
 										uib-tooltip="Remove shared {{ sharedActivity.getCodeDescription() }}"
 										tooltip-append-to-body="true"
 										confirm-button="removeActivity(sharedActivity)"
 										message="Are you sure you want to remove this {{ sharedActivity.getCodeDescription() }}"
 										yes="Delete" no="Cancel" placement="right"></i>
 							</li>
-							<li class="add-activity">
-								<i class="entypo-plus-circled text-success clickable hoverable"
+							<li class="add-activity" ng-class="{ 'add-selected-activity': view.state.uiState.selectedActivityId == sharedActivityId }">
+								<i class="entypo-plus-circled text-success clickable"
 									uib-tooltip="Add new shared {{ sharedActivity.getCodeDescription() }}"
 									tooltip-placement="right" tooltip-append-to-body="true"
 									ng-click="createSharedActivity(sharedActivity, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"></i>
@@ -150,8 +149,7 @@
 										ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }"
 										ng-click="setSelectedActivity(activityId)">
 											<span>{{ activity.getCodeDescription() }}</span>
-											<i class="entypo-minus-circled pull-right delete-activity clickable hoverable"
-												ng-class="{ 'text-danger': view.state.uiState.selectedActivityId != sharedActivityId }"
+											<i class="entypo-minus-circled pull-right delete-activity clickable"
 												uib-tooltip="Remove {{ activity.getCodeDescription() }}"
 												tooltip-append-to-body="true"
 												confirm-button="removeActivity(activity)"
@@ -161,8 +159,9 @@
 												uib-tooltip="Activity no longer matches standard pattern"
 												ng-show="activityId == view.state.uiState.selectedActivityId && view.state.uiState.selectedActivity.hasWarning"></i>
 									</li>
-									<li class="add-activity">
-										<i class="entypo-plus-circled text-success clickable hoverable"
+									<li class="add-activity" ng-class="{ 'add-selected-activity': view.state.uiState.selectedActivityId == sharedActivityId }">
+										<i class="entypo-plus-circled clickable"
+											ng-class="{ 'text-success': view.state.uiState.selectedActivityId != sharedActivityId }"
 											uib-tooltip="Add new {{ sharedActivity.getCodeDescription() }}"
 											tooltip-placement="right" tooltip-append-to-body="true"
 											ng-click="createActivity(activity, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"></i>
