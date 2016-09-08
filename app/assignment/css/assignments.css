@@ -1148,3 +1148,9 @@ ol.sortable-list>li .term-preference-dropdown {
 	padding-left: 30px;
 	padding-right:30px;
 }
+
+li.active-term .dropdown-term-row {
+	background-color: #ffffff;
+	color: #333;
+	font-weight: bold;
+}

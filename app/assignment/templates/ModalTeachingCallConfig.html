@@ -78,7 +78,9 @@
 									<ul class="dropdown-menu set-term-menu" uib-dropdown-menu auto-close="outsideClick" role="menu" aria-labelledby="single-button">
 										<li ng-repeat="term in viewState.userInterface.enabledTerms.list" role="menuitem" 
 												ng-click="toggleTermActive(term)"
-												ng-class="{'active': startTeachingCallConfig.activeTerms[term.slice(-2)]}"><a href="#">{{getTermName(term)}}</a></li>
+												ng-class="{'active-term': startTeachingCallConfig.activeTerms[term.slice(-2)]}">
+											<a href="#" class="dropdown-term-row">{{getTermName(term)}}</a>
+										</li>
 									</ul>
 								</div>
 
