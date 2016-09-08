@@ -544,6 +544,10 @@ body {
 }
 .activity-list.collapsed {
   flex: 0 0 40%;
+  background-color: #F9F9F9;
+  -webkit-box-shadow: inset 0px 0px 5px 1px rgba(0,0,0,0.1);
+  -moz-box-shadow: inset 0px 0px 5px 1px rgba(0,0,0,0.1);
+  box-shadow: inset 0px 0px 5px 1px rgba(0,0,0,0.1);
 }
 .activity-list {
   position: relative;
