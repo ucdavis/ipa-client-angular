@@ -22,7 +22,7 @@
 						<span></span> Senate
 					</label>
 
-					<label class="instructor-toggle-btn btn btn-sm active" id="courses-pivot" ng-if="viewState.teachingCalls.eligibleGroups.federationInstructors == true"
+					<label class="instructor-toggle-btn btn btn-sm" id="courses-pivot" ng-if="viewState.teachingCalls.eligibleGroups.federationInstructors == true"
 					ng-click="toggleFederationInstructors()"
 					ng-class="{'instructor-group-active': startTeachingCallConfig.sentToFederation}">
 						<input type="checkbox" name="options">
@@ -78,7 +78,7 @@
 									<ul class="dropdown-menu set-term-menu" uib-dropdown-menu auto-close="outsideClick" role="menu" aria-labelledby="single-button">
 										<li ng-repeat="term in viewState.userInterface.enabledTerms.list" role="menuitem" 
 												ng-click="toggleTermActive(term)"
-												ng-class="{'active-term': startTeachingCallConfig.activeTerms[term.slice(-2)]}">
+												ng-class="{'active': startTeachingCallConfig.activeTerms[term.slice(-2)]}">
 											<a href="#" class="dropdown-term-row">{{getTermName(term)}}</a>
 										</li>
 									</ul>
