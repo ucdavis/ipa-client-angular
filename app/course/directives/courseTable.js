@@ -4,6 +4,7 @@
 courseApp.directive("courseTable", this.courseTable = function ($rootScope, courseActionCreators) {
 	return {
 		restrict: 'A',
+		template: '<thead><tr><th>&nbsp;</th></tr></thead><tbody><tr><td class="text-center">Loading Courses...</td></tr></tbody>',
 		link: function (scope, element, attrs) {
 			scope.view = {};
 			var rerenderStateActions = [
@@ -118,10 +119,13 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 							body += getCourseRow(rowIdx, course.id, termsToRender, data.state);
 						}
 					});
-				} else {
+				} else if (data.state.courses.ids.length) {
 					$.each(data.state.courses.ids, function (rowIdx, courseId) {
 							body += getCourseRow(rowIdx, courseId, termsToRender, data.state);
 					});
+				} else {
+					var numberOfColumns = data.state.filters.enabledTerms.length + 1;
+					body += "<tr><td class=\"text-center\" colspan=\"" + numberOfColumns + "\">No Courses</td></tr>";
 				}
 
 				element.append(body);
