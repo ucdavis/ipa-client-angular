@@ -104,8 +104,9 @@
 	background-color: rgba(245, 245, 246, 0.8);
 }
 
+.instructor-toggle-btn.active,
 .instructor-toggle-btn.active:hover {
-	background-color: #303641;
+	background-color: rgb(48, 54, 65);
 	color: white;
 }
 

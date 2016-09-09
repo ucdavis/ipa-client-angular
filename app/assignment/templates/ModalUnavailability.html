@@ -1,7 +1,8 @@
+<div class="modal-header teaching-call--header_style">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
+	<h4 class="modal-title">Instructor Unavailabilities</h4>
+</div>
 <div class="modal-body">
-	<h3 style="margin-top: 10px; margin-bottom: 20px;" class="page-header text-center">
-		Instructor Unavailabilities
-	</h3>
 	<div style="display:flex;">
 		<div style="flex: 1 1 auto; margin-left: 20px;" ng-repeat="teachingCallResponse in teachingCallResponses">
 			<div style="text-align: center;">
@@ -19,8 +20,7 @@
 
 </div>
 <div class="modal-footer row" style="text-align: center; margin: 0px;">
-	<div style="display:flex">
-		<div style="flex: 1 1 80%"></div>
+	<div style="display:flex; align-items: center;">
 		<div style="flex: 1 1 20%">
 			<button class="btn btn-default modal-cancel-btn" ng-click="cancel()">Close</button>
 		</div>

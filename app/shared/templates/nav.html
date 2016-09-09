@@ -13,7 +13,9 @@
 
 			<!-- logo collapse icon -->
 			<div class="sidebar-collapse">
-				<a class="sidebar-collapse-icon" ng-click="toggleSidebarState()" uib-tooltip="Toggle Sidebar" tooltip-placement="right"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
+				<a class="sidebar-collapse-icon clickable" ng-click="toggleSidebarState()"
+					uib-tooltip="Toggle Sidebar" tooltip-placement="right" tooltip-append-to-body="true">
+					<!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
 					<i class="entypo-menu"></i>
 				</a>
 			</div>
@@ -35,19 +37,19 @@
 			<li class="welcome">
 					<span class="title">Howdy, {{ sharedState.displayName }}</span>
 			</li>
-			<li class="home">
+			<li class="home" ng-class="{ 'active': currentBaseHref == 'summary' }">
 				<a ng-href="/summary/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-home"></i>
 					<span class="title">Home</span>
 				</a>
 			</li>
-			<li ng-if="sharedState.isAdmin">
+			<li ng-if="sharedState.isAdmin" ng-class="{ 'active': currentBaseHref == 'admin' }">
 				<a ng-href="/admin/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-cog"></i>
 					<span class="title">Administration</span>
 				</a>
 			</li>
-			<li>
+			<li ng-class="{ 'active': currentBaseHref == 'workgroups' }">
 				<a ng-if="sharedState.userWorkgroups.length > 1">
 					<i class="entypo-users"></i>
 					<span class="title">Workgroups</span>
@@ -82,13 +84,13 @@
 		<ul id="main-menu" class="main-menu">
 			<!-- add class "multiple-expanded" to allow multiple submenus to open -->
 			<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-			<li>
+			<li ng-class="{ 'active': currentBaseHref == 'courses' }">
 				<a ng-href="/courses/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-book"></i>
 					<span class="title">Courses</span>
 				</a>
 			</li>
-			<li>
+			<li ng-class="{ 'active': currentBaseHref == 'assignments' }">
 				<a ng-href="/assignments/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-user-add"></i>
 					<span class="title">Assignments</span>
@@ -96,18 +98,19 @@
 				<ul class="visible">
 					<li>
 						<a ng-href="/assignments/{{ workgroupId }}/{{ year }}/teachingCallStatus">
-							Teaching Call(s)
+							Teaching Call
 						</a>
 					</li>
 				</ul>
 			</li>
-			<li>
+			<li ng-class="{ 'active': currentBaseHref == 'scheduling' }">
 				<a>
 					<i class="entypo-calendar"></i>
 					<span class="title">Scheduling</span>
 				</a>
 				<ul class="visible">
-					<li ng-repeat="term in getYearTerms() track by term.id" ng-class="{'active': term.shortCode == termShortCode}">
+					<li ng-repeat="term in getYearTerms() track by term.id" ng-class="{'active': term.shortCode == termShortCode}"
+						ng-class="{ 'active': currentBaseHref == 'scheduling' && termShortCode == term.shortCode }">
 						<a ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ term.shortCode }}">
 							{{ term.description }}
 						</a>

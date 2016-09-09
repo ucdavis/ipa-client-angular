@@ -17,23 +17,10 @@ angular.module('sharedApp')
 			termStates: [],
 			isAdmin: 0,
 
-			/**
-			 * Validates the given JWT token with the backend.
-			 */
-			validate: function (token, workgroupId, year, ignoreFallBackUrl) {
+			validateToken: function (token) {
 				var deferred = $q.defer();
-				var userRoles = this.getUserRoles();
-				var displayName = localStorage.getItem('displayName');
-				var termStates = this.getTermStates();
-				var scope = this;
-				var requestPayload = {
-					token: token,
-					userRoles: userRoles,
-					displayName: displayName,
-					termStates: termStates
-				};
 
-				$http.post(serverRoot + '/login', requestPayload, { withCredentials: true }).then(function (response) {
+				$http.post(serverRoot + '/login', { token: token }, { withCredentials: true }).then(function (response) {
 					// Token may be null if we are redirecting
 					if (response.data != null && response.data.token !== null) {
 						var token = response.data.token;
@@ -41,22 +28,10 @@ angular.module('sharedApp')
 						$http.defaults.headers.common.Authorization = 'Bearer ' + token;
 
 						localStorage.setItem('JWT', token);
-						localStorage.setItem('userRoles', JSON.stringify(response.data.userRoles));
-						localStorage.setItem('displayName', response.data.displayName);
-						localStorage.setItem('termStates', JSON.stringify(response.data.termStates));
-
-						// If workgroupId or year NOT set, and the ignoreFallBackUrl is not set to true
-						if ( !(workgroupId && year) && !ignoreFallBackUrl) {
-							scope.fallbackToDefaultUrl();
-							$rootScope.$emit('sharedStateSet', scope.getSharedState());
-							deferred.reject();
-						} else {
-							scope.setSharedState(workgroupId, year, response.data.displayName, response.data.termStates);
-						}
 
 						deferred.resolve(response);
 					} else if(response.data != null && response.data.redirect != null && response.data.redirect.length > 0) {
-						// Received a request to redirect to CAS. Obey.
+						// Received a request to redirect to CAS. Obey!
 						localStorage.removeItem('JWT');
 						localStorage.removeItem('userRoles');
 						localStorage.removeItem('displayName');
@@ -83,7 +58,51 @@ angular.module('sharedApp')
 						console.error(error);
 						$window.location.href = "/unknown-error.html";
 					}
+
+					deferred.reject();
 				});
+
+				return deferred.promise;
+			},
+
+			validateState: function (data, workgroupId, year, ignoreFallBackUrl) {
+				localStorage.setItem('userRoles', JSON.stringify(data.userRoles));
+				localStorage.setItem('displayName', data.displayName);
+				localStorage.setItem('termStates', JSON.stringify(data.termStates));
+
+				// If workgroupId or year NOT set, and the ignoreFallBackUrl is not set to true
+				if ( !(workgroupId && year) && !ignoreFallBackUrl) {
+					this.fallbackToDefaultUrl();
+					$rootScope.$emit('sharedStateSet', this.getSharedState());
+					return false;
+				} else {
+					this.setSharedState(workgroupId, year, data.displayName, data.termStates);
+				}
+
+				return true;
+			},
+
+			/**
+			 * Validates the given JWT token with the backend.
+			 */
+			validate: function (token, workgroupId, year, ignoreFallBackUrl) {
+				var deferred = $q.defer();
+				var scope = this;
+
+				scope.validateToken(token).then(
+					// Success
+					function (response) {
+						if(scope.validateState(response.data, workgroupId, year, ignoreFallBackUrl)) {
+							deferred.resolve();
+						} else {
+							deferred.reject();
+						}
+					},
+					// Failure
+					function (response) {
+						deferred.reject();
+					}
+				);
 
 				return deferred.promise;
 			},
@@ -153,6 +172,11 @@ angular.module('sharedApp')
 
 			},
 
+			setSharedStateWorkgroup: function (workgroup) {
+				this.activeWorkgroup = workgroup;
+				$rootScope.$emit('sharedStateSet', this.getSharedState());
+			},
+
 			setSharedState: function (workgroupId, year, displayName, termStates) {
 				var scope = this;
 				var userRoles = scope.getUserRoles();
@@ -171,16 +195,17 @@ angular.module('sharedApp')
 						roles: roles
 					}
 
+					// Set as active workgroup if matches
+					if (userRole.workgroupId == workgroupId) {
+						scope.activeWorkgroup = workgroup;
+					}
+
 					// Set isAdmin
 					if (workgroup.id == 0 && userRole.roleName == "admin") {
 						scope.isAdmin = true;
 					} else if (_array_findById(scope.userWorkgroups, workgroup.id) == undefined) {
 						// Append to userWorkgroups iff workgroup is valid and avoid duplicates
 						scope.userWorkgroups.push(workgroup);
-
-						if (userRole.workgroupId == workgroupId) {
-							scope.activeWorkgroup = workgroup;
-						}
 					} else {
 						// Add role if necessary
 						var userWorkgroup = _array_findById(scope.userWorkgroups, workgroup.id);
