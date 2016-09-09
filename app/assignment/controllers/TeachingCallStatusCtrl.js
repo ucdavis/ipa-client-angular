@@ -50,7 +50,7 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$wi
 			// Triggered on TeachingCall Config submission
 			$scope.startTeachingCall = function(workgroupId, year, teachingCallConfig) {
 				teachingCallConfig.termsBlob = "";
-				var allTerms = ['01','02','03','04','05','06','07','08','09', '10'];
+				var allTerms = ['01','02','03','04','05','06','07','08','09','10'];
 
 				for (var i = 0; i < allTerms.length; i++) {
 					if (teachingCallConfig.activeTerms[allTerms[i]] == true) {
@@ -66,36 +66,59 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$wi
 			};
 
 			$scope.prepareTeachingCallStatusPage = function() {
+				var allTerms = ['01','02','03','04','05','06','07','08','09','10'];
+				var chronologicallyOrderedTerms = ['05','06','07','08','09','10','01','02','03'];
+				var termNames = {
+					'05': 'Summer Session 1',
+					'06': 'Summer Special Session',
+					'07': 'Summer Session 2',
+					'08': 'Summer Quarter',
+					'09': 'Fall Semester',
+					'10': 'Fall Quarter',
+					'01': 'Winter Quarter',
+					'02': 'Spring Semester',
+					'03': 'Spring Quarter'
+				};
+
+				// Build each teachingCall
 				for (var i = 0; i < $scope.view.state.teachingCalls.ids.length; i++) {
 					var teachingCall = $scope.view.state.teachingCalls.list[$scope.view.state.teachingCalls.ids[i]];
 
 					teachingCall.terms = [];
-					termNames = {
-						'05': 'Summer Session 1',
-						'06': 'Summer Special Session',
-						'07': 'Summer Session 2',
-						'08': 'Summer Quarter',
-						'09': 'Fall Semester',
-						'10': 'Fall Quarter',
-						'01': 'Winter Quarter',
-						'02': 'Spring Semester',
-						'03': 'Spring Quarter'
-					};
 
-					for (var j = 0; j < teachingCall.termsBlob.length; j++) {
-						var isTermInTeachingCall = parseInt(teachingCall.termsBlob.charAt(j));
+					// Decode termsBlob into two digit terms (example: '02', '04')
+					var decodedTermsBlob = $scope.termsBlobToTerms(teachingCall.termsBlob);
 
-						if (isTermInTeachingCall) {
-							term = j + 1;
+					// Ensure terms are properly ordered
+					var orderedTermNames = [];
 
-							if (term.toString().length == 1) {
-								term = "0" + term;
-							}
-
-							teachingCall.terms.push(termNames[term]);
+					for (var i = 0; i < chronologicallyOrderedTerms.length; i++) {
+						if (decodedTermsBlob.indexOf(chronologicallyOrderedTerms[i]) > -1) {
+							orderedTermNames.push(termNames[chronologicallyOrderedTerms[i]]);
 						}
 					}
+
+					teachingCall.terms = orderedTermNames;
 				}
+			}
+
+			// Decode termsBlob into two digit terms (example: '02', '04')
+			$scope.termsBlobToTerms = function(termsBlob) {
+				var decodedTermsBlob = [];
+				for (var j = 0; j < termsBlob.length; j++) {
+					var isTermInTeachingCall = parseInt(termsBlob.charAt(j));
+
+					if (isTermInTeachingCall) {
+						term = j + 1;
+						term = term.toString();
+						if (term.toString().length == 1) {
+							term = "0" + term;
+						}
+
+						decodedTermsBlob.push(term);
+					}
+				}
+				return decodedTermsBlob;
 			}
 	}]);
 
