@@ -14,7 +14,8 @@
 								auto-input on-enter="updateWorkgroup(view.state.workgroups.list[workgroupId])" help-text-placement="top">
 						</div>
 						<div class="col-md-2 text-center">
-							<a class="clickable btn-workgroup" ng-href="/workgroups/{{ workgroupId }}/{{ year }}">
+							<a class="clickable btn-workgroup" ng-href="/workgroups/{{ workgroupId }}/{{ year }}"
+								ng-click="setActiveWorkgroup(workgroupId, year)">
 								<i class="entypo-cog"></i><small>Manage</small>
 							</a>
 						</div>

@@ -44,6 +44,13 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 					return activeTerms.indexOf(term.code) >= 0;
 				});
 			};
+
+			scope.hasExtraWorkgroup = function () {
+				if (scope.sharedState.userWorkgroups == undefined) { return false; }
+
+				return scope.sharedState.userWorkgroups
+					.some(function (w) { return w.id == scope.sharedState.workgroup.id }) == false;
+			}
 		}
 	}
 })

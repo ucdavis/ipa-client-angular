@@ -15,12 +15,6 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 
 			$rootScope.$on('workgroupStateChanged', function (event, data) {
 				$scope.view.state = data;
-
-				var workgroup = {
-					id: $scope.workgroupId,
-					name: $scope.view.state.uiState.workgroupName
-				}
-				authService.setSharedStateWorkgroup(workgroup);
 			});
 	}]);
 

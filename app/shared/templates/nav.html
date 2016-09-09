@@ -69,6 +69,16 @@
 							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						</a>
 					</li>
+					<!-- Show the current workgroup separately if it is not in the user workgroups -->
+					<li ng-if="hasExtraWorkgroup()" class="active">
+						<a ng-href="/{{ currentBaseHref }}/{{ sharedState.workgroup.id }}/{{ year }}/{{ termShortCode }}">
+							<span class="title">({{ sharedState.workgroup.name }})</span>
+						</a>
+						<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}" class="icon-workgroup-manage"
+							uib-tooltip="Manage {{ sharedState.workgroup.name }}" tooltip-append-to-body="true" tooltip-placement="right">
+							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+						</a>
+					</li>
 				</ul>
 			</li>
 		</ul>
