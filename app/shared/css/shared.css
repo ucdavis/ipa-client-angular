@@ -127,4 +127,5 @@ table.availability-grid tr td {
 	z-index: 3;
 	top: 50%;
 	transform: translateY(-50%);
+	padding-left: 10px;
 }
