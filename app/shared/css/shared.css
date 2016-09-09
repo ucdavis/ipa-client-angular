@@ -129,3 +129,7 @@ table.availability-grid tr td {
 	transform: translateY(-50%);
 	padding-left: 10px;
 }
+
+.page-container .sidebar-menu #main-menu > li.active > a {
+	background-color: transparent;
+}
