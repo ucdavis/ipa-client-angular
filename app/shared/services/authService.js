@@ -172,6 +172,11 @@ angular.module('sharedApp')
 
 			},
 
+			setSharedStateWorkgroup: function (workgroup) {
+				this.activeWorkgroup = workgroup;
+				$rootScope.$emit('sharedStateSet', this.getSharedState());
+			},
+
 			setSharedState: function (workgroupId, year, displayName, termStates) {
 				var scope = this;
 				var userRoles = scope.getUserRoles();

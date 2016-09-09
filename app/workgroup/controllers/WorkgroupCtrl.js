@@ -7,14 +7,20 @@
  * # WorkgroupCtrl
  * Controller of the ipaClientAngularApp
  */
-workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams', 'workgroupActionCreators',
-		this.WorkgroupCtrl = function ($scope, $rootScope, $routeParams, workgroupActionCreators) {
+workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams', 'workgroupActionCreators', 'authService',
+		this.WorkgroupCtrl = function ($scope, $rootScope, $routeParams, workgroupActionCreators, authService) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.view = {};
 
 			$rootScope.$on('workgroupStateChanged', function (event, data) {
 				$scope.view.state = data;
+
+				var workgroup = {
+					id: $scope.workgroupId,
+					name: $scope.view.state.uiState.workgroupName
+				}
+				authService.setSharedStateWorkgroup(workgroup);
 			});
 	}]);
 
