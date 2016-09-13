@@ -110,7 +110,7 @@
 			<div class="activity-container" ng-class="{ 'collapsed': !view.state.uiState.selectedSectionGroupId }">
 				<div class="activity-list" ng-class="{ 'collapsed': view.state.uiState.selectedActivityId }">
 					<div ng-hide="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds" class="loading-section-group">
-						loading...
+						<spinner></spinner>
 					</div>
 					<div ng-show="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds">
 
