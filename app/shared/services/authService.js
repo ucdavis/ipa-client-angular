@@ -129,9 +129,12 @@ angular.module('sharedApp')
 
 				try {
 					userRoles = JSON.parse(localStorage.getItem('userRoles'));
-					userWorkgroups = userRoles
-						.filter(function (ur) { return ur.workgroupId > 0 })
-						.map(function (ur) { return { id: ur.workgroupId, name: ur.workgroupName } });
+					userWorkgroups = _.uniq(
+						userRoles
+							.filter(function (ur) { return ur.workgroupId > 0 })
+							.map(function (ur) { return { id: ur.workgroupId, name: ur.workgroupName } })
+						, 'id'
+					);
 				} catch(err) {
 					console.log(err);
 				}
