@@ -86,7 +86,7 @@
 		<!-- Year switcher -->
 		<ul class="pager year-switcher">
 			<li class="previous"><a ng-href="/{{ currentBaseHref }}/{{ workgroupId }}/{{ yearOffset(-1) }}/{{ termShortCode }}"><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
-			<li ><a>{{ year }}</a></li>
+			<li ><a>{{ year.yearToAcademicYear() }}</a></li>
 			<li class="next"><a ng-href="/{{ currentBaseHref }}/{{ workgroupId }}/{{ yearOffset(1) }}/{{ termShortCode }}"><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
 		</ul>
 
