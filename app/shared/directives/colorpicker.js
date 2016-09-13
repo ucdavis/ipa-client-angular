@@ -8,7 +8,7 @@ sharedApp.directive("colorpicker", this.colorpicker = function () {
 		template: "<div class=\"input-group\"> " +
 		"		<input type=\"text\" class=\"form-control\" ng-model=\"color\" > " +
 		"		<div class=\"input-group-addon\"> " +
-		"			<i class=\"color-preview\" ng-style=\"{ 'background-color': color }\"></i> " +
+		"			<i class=\"color-preview\"></i> " +
 		"		</div> " +
 		"	</div> ",
 		replace: true,
@@ -17,18 +17,32 @@ sharedApp.directive("colorpicker", this.colorpicker = function () {
 			onChange: '&'
 		},
 		link: function (scope, element, attrs) {
+			element.find('input').on('focus', function () {
+				element.colorpicker('show');
+			});
+
 			element
 				.colorpicker({
-					format: 'hex'
+					format: 'hex',
+					color: scope.color
 				})
-				.on('changeColor', function (e) {
-					scope.color = e.color.toHex();
-					scope.$apply();
-				})
-				.on('hidePicker', function (e) {
-					scope.onChange();
-					scope.$apply();
+				.on('hidePicker.colorpicker', function (e) {
+					var newColor = e.color.toHex();
+					if (scope.color != newColor) {
+						applyNewColor(newColor);
+						applyChange();
+					}
 				});
+
+			var applyNewColor = function (newColor) {
+				scope.color = newColor;
+				scope.$apply();
+			};
+
+			var applyChange = function () {
+				scope.onChange();
+				scope.$apply();
+			};
 		}
 	}
 })
