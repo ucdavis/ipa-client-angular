@@ -129,3 +129,11 @@ table.availability-grid tr td {
 .page-container .sidebar-menu #main-menu > li.active > a {
 	background-color: transparent;
 }
+
+.page-container .sidebar-menu #main-menu li a i.active-workgroup-icon {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-55%);
+	left: 2em;
+	font-size: 12px;
+}

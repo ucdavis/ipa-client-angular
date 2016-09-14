@@ -63,6 +63,7 @@
 					<li ng-repeat="workgroup in sharedState.userWorkgroups track by workgroup.id"
 					ng-class="{ 'active': sharedState.workgroup.id == workgroup.id }">
 						<a ng-href="/{{ currentBaseHref }}/{{ workgroup.id }}/{{ year }}/{{ termShortCode }}">
+							<i class="entypo-check active-workgroup-icon" ng-if="sharedState.workgroup.id == workgroup.id"></i>
 							<span class="title">{{ workgroup.name }}</span>
 						</a>
 						<a ng-href="/workgroups/{{ workgroup.id }}/{{ year }}"
