@@ -7,8 +7,8 @@
  * # CourseCtrl
  * Controller of the ipaClientAngularApp
  */
-courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'courseActionCreators', 'courseService',
-		this.CourseCtrl = function ($scope, $rootScope, $routeParams, courseActionCreators, courseService) {
+courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 'courseActionCreators', 'courseService',
+		this.CourseCtrl = function ($scope, $rootScope, $routeParams, $window, courseActionCreators, courseService) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.view = {};
@@ -85,6 +85,11 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 
 			$scope.print = function(){
 				window.print();
+			};
+
+			$scope.download = function(){
+				var showDoNotPrintParam = $scope.view.state.filters.enableUnpublishedCourses ? "?showDoNotPrint=true" : "";
+				$window.location.href = serverRoot + "/courseView/workgroups/" + $scope.workgroupId + "/years/" + $scope.year + "/excel" + showDoNotPrintParam;
 			};
 
 			$scope.closeDetails = function () {
