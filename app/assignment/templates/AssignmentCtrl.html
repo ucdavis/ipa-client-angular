@@ -30,15 +30,29 @@
 				<ul class="dropdown-menu dropdown-menu-right" multiselect-dropdown items="termDefinitions" active-ids="view.state.userInterface.enabledTerms.ids" toggle-item="termToggled(id)" ></ul>
 			</div> <!-- .btn-group -->
 
-			<div class="btn-group">
-				<span data-toggle="tooltip" data-placement="left" data-original-title="Filters Coming Soon" data-container="body"
-				class="tool-icon glyphicon glyphicon-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-				<ul class="dropdown-menu">
-					<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Undergraduate</a></li>
-					<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Graduate</a></li>
+			<div class="btn-group" uib-tooltip="Filters">
+				<span class="tool-icon glyphicon glyphicon-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+				<ul class="dropdown-menu dropdown-menu-right">
+					<li ng-repeat="tagId in view.state.tags.ids track by $index" class="clickable" ng-click="toggleTag(tagId)" stop-event="click">
+						<a class="small">
+							<input type="checkbox" ng-checked="view.state.filters.enabledTagIds.indexOf(tagId) >= 0" />
+							<span class="course-filter-item">{{ view.state.tags.list[tagId].name }}</span>
+						</a>
+					</li>
 					<li role="separator" class="divider"></li>
-					<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Published Courses</a></li>
-					<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;&nbsp;Unpublished Courses</a></li>
+					<li class="clickable" ng-click="unpublishedCoursesToggled()">
+						<a class="small">
+							<input type="checkbox" ng-checked="view.state.filters.enableUnpublishedCourses" />
+							<span class="course-filter-item">Unpublished Courses</span>
+						</a>
+					</li>
+					<li class="clickable" ng-click="unpublishedCoursesToggled()">
+						<a class="small">
+							<input type="checkbox" ng-checked="view.state.filters.enableUnpublishedCourses" />
+							<span class="course-filter-item">Hide Completed</span>
+						</a>
+					</li>
+
 				</ul>
 			</div> <!-- .btn-group -->
 

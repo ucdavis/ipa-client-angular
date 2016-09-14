@@ -62,6 +62,19 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 				assignmentActionCreators.updateTableFilter(query);
 			}
 
+			$scope.toggleTag = function (tagId) {
+				var tagFilters = $scope.view.state.filters.enabledTagIds;
+				var tagIndex = tagFilters.indexOf(tagId);
+
+				if (tagIndex < 0) {
+					tagFilters.push(tagId);
+				} else {
+					tagFilters.splice(tagIndex, 1);
+				}
+
+				assignmentActionCreators.updateTagFilters(tagFilters);
+			};
+
 			// Launches TeachingCall Config modal and controller
 			$scope.openTeachingCallConfig = function() {
 				modalInstance = $uibModal.open({

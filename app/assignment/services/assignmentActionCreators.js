@@ -43,6 +43,15 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			};
 			assignmentStateService.reduce(action);
 		},
+		updateTagFilters: function (tagIds) {
+			var action = {
+				type: UPDATE_TAG_FILTERS,
+				payload: {
+					tagIds: tagIds
+				}
+			};
+			assignmentStateService.reduce(action);
+		},
 		updateAssignmentsOrder: function (sortedTeachingAssignmentIds, scheduleId) {
 			assignmentService.updateAssignmentsOrder(sortedTeachingAssignmentIds, scheduleId).then(function (sortedTeachingAssignmentIds) {
 				$rootScope.$emit('toast', {message: "Updated Assignment Priority", type: "SUCCESS"});

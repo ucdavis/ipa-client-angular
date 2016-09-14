@@ -30,7 +30,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 				// Loop over courses (sectionGroup rows)
 				$.each(scope.view.state.courses.ids, function(i, courseId) {
 					var course = scope.view.state.courses.list[courseId];
-					if (course.isHidden == false && course.isFiltered == false) {
+					if (course.isHidden == false && course.isFiltered == false && course.matchesTagFilters == true) {
 						var courseHtml = "";
 						courseHtml += "<div class=\"course-list-row\">";
 						courseHtml += "<div class=\"course-description-cell\"><div>";
