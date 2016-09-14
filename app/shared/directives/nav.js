@@ -64,6 +64,8 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 			 * Checks if user has any of the given roles for the current active workgroup
 			 */
 			scope.userHasRoles = function (roles) {
+				if (scope.sharedState.isAdmin) { return true; }
+
 				if (roles instanceof Array == false) { return false; }
 				return roles.some(function (r) {
 					return scope.sharedState.currentUserRoles.indexOf(r) >= 0;
@@ -71,6 +73,8 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 			};
 
 			scope.userHasRolesForWorkgroup = function (roles, workgroup) {
+				if (scope.sharedState.isAdmin) { return true; }
+
 				if (roles instanceof Array == false) { return false; }
 				return scope.sharedState.allUserRoles.some(function (ur) {
 					return ur.workgroupId == workgroup.id && roles.indexOf(ur.roleName) >= 0;

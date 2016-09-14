@@ -76,6 +76,7 @@
 								(happens if the current user is admin and managing a workgroup they're not in) -->
 					<li ng-if="hasExtraWorkgroup()" class="active">
 						<a ng-href="/{{ currentBaseHref }}/{{ sharedState.workgroup.id }}/{{ year }}/{{ termShortCode }}">
+							<i class="entypo-check active-workgroup-icon"></i>
 							<span class="title">({{ sharedState.workgroup.name }})</span>
 						</a>
 						<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}" class="icon-workgroup-manage"
