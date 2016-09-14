@@ -5,12 +5,14 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.sharedState = authService.getSharedState();
+			console.log(scope.sharedState);
 			scope.termShortCode = attrs.termShortCode;
 			scope.currentBaseHref = $location.absUrl().split('/')[3];
 
 			// TODO: Shouldn't this be set somewhere to be shared outside of <nav> ? -CT
 			$rootScope.$on('sharedStateSet', function (event, data) {
 				scope.sharedState = data;
+				console.log(scope.sharedState);
 			});
 			// TODO: Move shared data being put into the nav directive. Yay clean architecture. -CT
 			// A list of all possible terms, not necessarily the ones
@@ -37,6 +39,8 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 			};
 
 			scope.getYearTerms = function () {
+				if (!scope.sharedState.termStates) { return; }
+
 				var activeTerms = scope.sharedState.termStates.map(function (termState) {
 					return termState.termCode;
 				});
