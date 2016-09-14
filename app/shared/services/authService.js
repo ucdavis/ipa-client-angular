@@ -113,10 +113,10 @@ angular.module('sharedApp')
 			},
 
 			getUserRoles: function () {
-				var userRoles = null;
+				var userRoles = [];
 
 				try {
-					userRoles = JSON.parse(localStorage.getItem('userRoles'));
+					userRoles = JSON.parse(localStorage.getItem('userRoles')) || [];
 				} catch(err) {
 					console.log(err);
 				}
@@ -125,28 +125,20 @@ angular.module('sharedApp')
 			},
 
 			getWorkgroups: function () {
-				var userWorkgroups = null;
-
-				try {
-					userRoles = JSON.parse(localStorage.getItem('userRoles'));
-					userWorkgroups = _.uniq(
-						userRoles
-							.filter(function (ur) { return ur.workgroupId > 0 })
-							.map(function (ur) { return { id: ur.workgroupId, name: ur.workgroupName } })
-						, 'id'
-					);
-				} catch(err) {
-					console.log(err);
-				}
-
-				return userWorkgroups;
+				var userRoles = this.getUserRoles();
+				return _.uniq(
+					userRoles
+						.filter(function (ur) { return ur.workgroupId > 0 })
+						.map(function (ur) { return { id: ur.workgroupId, name: ur.workgroupName } })
+					, 'id'
+				);
 			},
 
 			getTermStates: function () {
-				var termStates = null;
+				var termStates = [];
 
 				try {
-					termStates = JSON.parse(localStorage.getItem('termStates'));
+					termStates = JSON.parse(localStorage.getItem('termStates')) || [];
 				} catch(err) {
 					console.log(err);
 				}
@@ -155,16 +147,20 @@ angular.module('sharedApp')
 			},
 
 			isAdmin: function () {
-				var isAdmin = false;
+				userRoles = this.getUserRoles();
+				return userRoles.some(function(ur) { return ur.roleName == "admin" && ur.workgroupId == 0; });
+			},
 
-				try {
-					userRoles = JSON.parse(localStorage.getItem('userRoles'));
-					isAdmin = userRoles.some(function(ur) { return ur.roleName == "admin" && ur.workgroupId == 0; });
-				} catch(err) {
-					console.log(err);
-				}
+			getCurrentWorkgroup: function () {
+				return JSON.parse(localStorage.getItem('workgroup')) || {};
+			},
 
-				return isAdmin;
+			getCurrentUserRoles: function () {
+				var userRoles = this.getUserRoles();
+				var workgroup = this.getCurrentWorkgroup();
+				return userRoles
+					.filter(function (ur) { return ur.workgroupId == workgroup.id; })
+					.map(function (ur) { return ur.roleName; });
 			},
 
 			fallbackToDefaultUrl: function () {
@@ -208,10 +204,12 @@ angular.module('sharedApp')
 
 			getSharedState: function () {
 				return {
-					workgroup: JSON.parse(localStorage.getItem('workgroup')),
-					year: Number(localStorage.getItem('year')),
+					workgroup: this.getCurrentWorkgroup(),
+					year: Number(localStorage.getItem('year')) || moment().year(),
+					allUserRoles: this.getUserRoles(),
+					currentUserRoles: this.getCurrentUserRoles(),
 					userWorkgroups: this.getWorkgroups(),
-					displayName: localStorage.getItem('displayName'),
+					displayName: localStorage.getItem('displayName') || '',
 					termStates: this.getTermStates(),
 					isAdmin: this.isAdmin()
 				};
