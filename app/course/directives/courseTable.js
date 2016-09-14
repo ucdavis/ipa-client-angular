@@ -4,7 +4,9 @@
 courseApp.directive("courseTable", this.courseTable = function ($rootScope, courseActionCreators) {
 	return {
 		restrict: 'A',
-		template: '<thead><tr><th>&nbsp;</th></tr></thead><tbody><tr><td class="text-center">Loading Courses...</td></tr></tbody>',
+		template: '<thead><tr><th>&nbsp;</th></tr></thead><tbody><tr><td>'
+		+ '<div style="width: 100%;" align="center"><img src="/images/ajax-loader.gif" /> &nbsp; Loading schedule</div>'
+		+ '</td></tr></tbody>',
 		link: function (scope, element, attrs) {
 			scope.view = {};
 			var rerenderStateActions = [

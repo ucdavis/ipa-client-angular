@@ -475,6 +475,7 @@ body {
   position: relative;
 }
 .section-group-list {
+  position: relative;
   flex: 1 0 40%;
   padding: 0px;
   overflow-y: auto;
@@ -511,6 +512,7 @@ body {
   color: white;
 }
 .activity-calendar {
+  position: relative;
   flex: 7 0 60%;
   justify-content: center;
   width: 60%;
@@ -714,7 +716,7 @@ select.standard-time {
   height: 30px;
 }
 
-.loading-section-group {
+.loading-center {
   position: absolute;
   top: 50%;
   width: 100%;
