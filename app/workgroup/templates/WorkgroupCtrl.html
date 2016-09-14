@@ -7,9 +7,9 @@
 	<div class="panel minimal minimal-gray">
 	<!-- 	nav tab  -->
 		<div class="panel-heading">
-			<uib-tabset active="activeJustified" justified="false" class="panel-options pull-left nav-tabs">
+			<uib-tabset active="activeWorkgroupTab" justified="false" class="panel-options pull-left nav-tabs">
 
-				<uib-tab index="0" heading="Tags">
+				<uib-tab index="'tags'" heading="Tags" select="setActiveTab('tags')">
 					<div class="tags-section" ng-controller="TagCtrl">
 							<div class="col-md-6">
 								<ul class="tags-input">
@@ -54,7 +54,7 @@
 					</div>
 				</uib-tab>
 
-				<uib-tab index="1" heading="Locations">
+				<uib-tab index="'locations'" heading="Locations" select="setActiveTab('locations')">
 					<div class="locations-section" ng-controller="LocationCtrl">
 						<div class="row">
 							<div class="col-md-6">
@@ -84,7 +84,7 @@
 					</div>
 				</uib-tab>
 
-				<uib-tab index="2" heading="People &amp; Roles">
+				<uib-tab index="'people'" heading="People &amp; Roles" select="setActiveTab('people')">
 					<div class="users-view" ng-controller="UserCtrl">
 						<div class="row">				<!-- this is search bar -->
 							<div class="col-md-4 pull-right">

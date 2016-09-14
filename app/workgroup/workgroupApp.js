@@ -5,6 +5,7 @@ workgroupApp.config(function ($routeProvider) {
 		.when("/:workgroupId/:year", {
 			templateUrl: "WorkgroupCtrl.html",
 			controller: "WorkgroupCtrl",
+			reloadOnSearch: false,
 			resolve: {
 				payload: WorkgroupCtrl.getPayload
 			}
