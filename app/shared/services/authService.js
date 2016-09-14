@@ -151,6 +151,18 @@ angular.module('sharedApp')
 				return userRoles.some(function(ur) { return ur.roleName == "admin" && ur.workgroupId == 0; });
 			},
 
+			getCurrentWorkgroup: function () {
+				return JSON.parse(localStorage.getItem('workgroup')) || {};
+			},
+
+			getCurrentUserRoles: function () {
+				var userRoles = this.getUserRoles();
+				var workgroup = this.getCurrentWorkgroup();
+				return userRoles
+					.filter(function (ur) { return ur.workgroupId == workgroup.id; })
+					.map(function (ur) { return ur.roleName; });
+			},
+
 			fallbackToDefaultUrl: function () {
 				var scope = this;
 				var userRoles = scope.getUserRoles();
@@ -192,8 +204,10 @@ angular.module('sharedApp')
 
 			getSharedState: function () {
 				return {
-					workgroup: JSON.parse(localStorage.getItem('workgroup')) || {},
+					workgroup: this.getCurrentWorkgroup(),
 					year: Number(localStorage.getItem('year')) || moment().year(),
+					allUserRoles: this.getUserRoles(),
+					currentUserRoles: this.getCurrentUserRoles(),
 					userWorkgroups: this.getWorkgroups(),
 					displayName: localStorage.getItem('displayName') || '',
 					termStates: this.getTermStates(),

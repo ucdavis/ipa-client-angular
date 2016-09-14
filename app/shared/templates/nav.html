@@ -54,7 +54,8 @@
 					<i class="entypo-users"></i>
 					<span class="title">Workgroups</span>
 				</a>
-				<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}" ng-if="sharedState.userWorkgroups.length == 1">
+				<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}"
+					ng-if="sharedState.userWorkgroups.length == 1 && userHasRoles(['academicPlanner'])">
 					<i class="entypo-users"></i>
 					<span class="title">{{ sharedState.workgroup.name }}</span>
 				</a>
@@ -64,12 +65,14 @@
 						<a ng-href="/{{ currentBaseHref }}/{{ workgroup.id }}/{{ year }}/{{ termShortCode }}">
 							<span class="title">{{ workgroup.name }}</span>
 						</a>
-						<a ng-href="/workgroups/{{ workgroup.id }}/{{ year }}" class="icon-workgroup-manage"
+						<a ng-href="/workgroups/{{ workgroup.id }}/{{ year }}"
+							ng-if="userHasRolesForWorkgroup(['academicPlanner'], workgroup)" class="icon-workgroup-manage"
 							uib-tooltip="Manage {{ workgroup.name }}" tooltip-append-to-body="true" tooltip-placement="right">
 							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						</a>
 					</li>
-					<!-- Show the current workgroup separately if it is not in the user workgroups -->
+					<!--	Show the current workgroup separately if it is not in the user workgroups
+								(happens if the current user is admin and managing a workgroup they're not in) -->
 					<li ng-if="hasExtraWorkgroup()" class="active">
 						<a ng-href="/{{ currentBaseHref }}/{{ sharedState.workgroup.id }}/{{ year }}/{{ termShortCode }}">
 							<span class="title">({{ sharedState.workgroup.name }})</span>
@@ -94,13 +97,13 @@
 		<ul id="main-menu" class="main-menu">
 			<!-- add class "multiple-expanded" to allow multiple submenus to open -->
 			<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-			<li ng-class="{ 'active': currentBaseHref == 'courses' }">
+			<li ng-class="{ 'active': currentBaseHref == 'courses' }" ng-if="userHasRoles(['academicPlanner'])">
 				<a ng-href="/courses/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-book"></i>
 					<span class="title">Courses</span>
 				</a>
 			</li>
-			<li ng-class="{ 'active': currentBaseHref == 'assignments' }">
+			<li ng-class="{ 'active': currentBaseHref == 'assignments' }" ng-if="userHasRoles(['academicPlanner'])">
 				<a ng-href="/assignments/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-user-add"></i>
 					<span class="title">Assignments</span>
@@ -113,7 +116,7 @@
 					</li>
 				</ul>
 			</li>
-			<li ng-class="{ 'active': currentBaseHref == 'scheduling' }">
+			<li ng-class="{ 'active': currentBaseHref == 'scheduling' }" ng-if="userHasRoles(['academicPlanner'])">
 				<a>
 					<i class="entypo-calendar"></i>
 					<span class="title">Scheduling</span>
