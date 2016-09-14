@@ -7,6 +7,20 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 		link: function (scope, element, attrs) {
 			scope.view = {};
 
+			// Filter instructors with assignmentsCompleted if filter is active
+			scope.showCompletedInstructor = function(instructor) {
+				var scheduleInstructorNote = scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
+				var assignmentsCompleted = false;
+				if (scheduleInstructorNote) {
+					assignmentsCompleted = scheduleInstructorNote.assignmentsCompleted;
+				}
+				if (scope.view.state.filters.showCompletedInstructors && assignmentsCompleted) {
+					return false;
+				}
+
+				return true;
+			}
+
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				scope.view.state = data;
 				// Clear the table
@@ -30,7 +44,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				// Loop over instructors
 				$.each(scope.view.state.instructors.ids, function(i, instructorId) {
 					var instructor = scope.view.state.instructors.list[instructorId];
-					if (instructor.isFiltered == false) {
+					if (instructor.isFiltered == false && scope.showCompletedInstructor(instructor) ) {
 						var scheduleInstructorNote = scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
 						var teachingCallReceipt = scope.view.state.teachingCallReceipts.list[instructor.teachingCallReceiptId];
 

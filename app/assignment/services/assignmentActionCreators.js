@@ -263,6 +263,15 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			};
 			assignmentStateService.reduce(action);
 		},
+		toggleDisplayCompletedInstructors: function (showCompletedInstructors) {
+			var action = {
+				type: TOGGLE_COMPLETED_INSTRUCTORS,
+				payload: {
+					showCompletedInstructors: showCompletedInstructors
+				}
+			};
+			assignmentStateService.reduce(action);
+		},
 		showInstructors: function () {
 			var action = {
 				type: SWITCH_MAIN_VIEW,

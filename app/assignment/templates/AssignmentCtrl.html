@@ -40,15 +40,9 @@
 						</a>
 					</li>
 					<li role="separator" class="divider"></li>
-					<li class="clickable" ng-click="unpublishedCoursesToggled()">
+					<li class="clickable" ng-click="toggleDisplayCompletedInstructors()" stop-event="click">
 						<a class="small">
-							<input type="checkbox" ng-checked="view.state.filters.enableUnpublishedCourses" />
-							<span class="course-filter-item">Unpublished Courses</span>
-						</a>
-					</li>
-					<li class="clickable" ng-click="unpublishedCoursesToggled()">
-						<a class="small">
-							<input type="checkbox" ng-checked="view.state.filters.enableUnpublishedCourses" />
+							<input type="checkbox" ng-checked="view.state.filters.showCompletedInstructors" />
 							<span class="course-filter-item">Hide Completed</span>
 						</a>
 					</li>

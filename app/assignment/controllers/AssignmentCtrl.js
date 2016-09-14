@@ -30,6 +30,9 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 				assignmentActionCreators.toggleTermFilter(id);
 			}
 
+			$scope.toggleDisplayCompletedInstructors = function() {
+				assignmentActionCreators.toggleDisplayCompletedInstructors(!$scope.view.state.filters.showCompletedInstructors);
+			}
 			$scope.approveInstructorAssignment = function(teachingAssignmentId) {
 				var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
 				assignmentActionCreators.approveInstructorAssignment(teachingAssignment);

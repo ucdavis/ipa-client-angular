@@ -57,10 +57,6 @@ assignmentApp.service('assignmentStateService', function (
 
 						_object_search_properties(query, courses, courseKeyList);
 					}
-
-					// Apply toggle filters
-					
-					debugger;
 					return courses;
 				case UPDATE_TAG_FILTERS:
 					// Set the course.isFiltered flag to false if any tag matches the filters
@@ -623,6 +619,9 @@ assignmentApp.service('assignmentStateService', function (
 				case TOGGLE_UNPUBLISHED_COURSES:
 					filters.enableUnpublishedCourses = !filters.enableUnpublishedCourses;
 					filters.enabledTagIds = [];
+					return filters;
+				case TOGGLE_COMPLETED_INSTRUCTORS:
+					filters.showCompletedInstructors = action.payload.showCompletedInstructors;
 					return filters;
 				default:
 					return filters;
