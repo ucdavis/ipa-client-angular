@@ -18,11 +18,7 @@ h3, .h3 {
   background-color: transparent;
   color: #aaa;
   border: none;
-}
-.pager.year-switcher li a {
-  background-color: transparent;
-  color: #aaa;
-  border: none;
+  padding: 5px;
 }
 .welcome {
   padding: 10px 20px;
