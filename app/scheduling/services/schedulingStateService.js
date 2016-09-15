@@ -8,7 +8,7 @@
  schedulingApp.
  * Central location for sharedState information.
  */
-schedulingApp.service('schedulingStateService', function ($rootScope, Course, SectionGroup, Section, Activity, Tag, Location, Instructor) {
+schedulingApp.service('schedulingStateService', function ($rootScope, Course, SectionGroup, Section, Activity, Tag, Location, Instructor, TeachingCallResponse) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -92,6 +92,8 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 						.map(function (section) { return section.id; });
 					sectionGroups.list[action.payload.sectionGroup.id].sharedActivityIds = action.payload.sharedActivities
 						.map(function (a) { return a.id; });
+					sectionGroups.list[action.payload.sectionGroup.id].teachingCallResponseIds = action.payload.teachingCallResponses
+						.map(function (tr) { return tr.id; });
 					return sectionGroups;
 				case REMOVE_ACTIVITY:
 					var sectionGroup = sectionGroups.list[action.payload.activity.sectionGroupId];
@@ -142,6 +144,26 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					return sections;
 				default:
 					return sections;
+			}
+		},
+		_teachingCallResponseReducers: function (action, teachingCallResponses) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					teachingCallResponses = {
+						list: {},
+						ids: []
+					};
+					return teachingCallResponses;
+				case FETCH_SECTION_GROUP_DETAILS:
+					action.payload.teachingCallResponses.forEach(function (teachingCallResponse) {
+						teachingCallResponses.list[teachingCallResponse.id] = new TeachingCallResponse(teachingCallResponse);
+						teachingCallResponses.ids.push(teachingCallResponse.id);
+					});
+					return teachingCallResponses;
+				default:
+					return teachingCallResponses;
 			}
 		},
 		_activityReducers: function (action, activities) {
@@ -330,6 +352,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 			newState.instructors = scope._instructorReducers(action, scope._state.instructors);
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
+			newState.teachingCallResponses = scope._teachingCallResponseReducers(action, scope._state.teachingCallResponses);
 			newState.activities = scope._activityReducers(action, scope._state.activities);
 			newState.tags = scope._tagReducers(action, scope._state.tags);
 			newState.locations = scope._locationReducers(action, scope._state.locations);

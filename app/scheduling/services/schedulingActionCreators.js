@@ -114,7 +114,8 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 						sectionGroup: sectionGroup,
 						sections: payload.sections,
 						sharedActivities: payload.sharedActivities,
-						unsharedActivities: payload.unsharedActivities
+						unsharedActivities: payload.unsharedActivities,
+						teachingCallResponses: payload.teachingCallResponses
 					}
 				};
 				schedulingStateService.reduce(action);
