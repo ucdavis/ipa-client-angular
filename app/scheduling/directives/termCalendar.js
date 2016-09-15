@@ -6,6 +6,22 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 		link: function (scope, element, attrs) {
 			scope.view = {};
 
+			// Default color: Other (checked) courses
+			var defaultEventBackgroundColor = "#DEDEDE";
+			var defaultEventTextColor = "#333333";
+
+			// Active (selected) course activities
+			var activeEventBackgroundColor = "#54A1C7";
+			var activeEventTextColor = "#FFFFFF";
+
+			// The highlighted activity
+			var highlightedEventBackgroundColor = "#3A87AD";
+			var highlightedEventTextColor = "#FFFFFF";
+
+			// instructor unavailabilities
+			var unavailabilityEventBackgroundColor = "#aaaaaa";
+			var unavailabilityEventTextColor = "#333333";
+
 			var refreshCalendar = function () {
 				var parentAspectRatio = element.parent().width() / element.parent().height();
 				element.fullCalendar('destroy');
@@ -20,7 +36,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 					header: false,
 					slotEventOverlap: false,
 					hiddenDays: scope.view.state.filters.hiddenDays,
-					eventColor: '#6AA4C1',
+					eventColor: defaultEventBackgroundColor,
+					eventTextColor: defaultEventTextColor,
 					eventSources: [
 						getActivities(),
 						getUnavailabilities()
@@ -47,19 +64,17 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				if (scope.view.state.uiState.selectedSectionGroupId) {
 					var unstyledEvents = sectionGroupToActivityEvents(scope.view.state.sectionGroups.list[scope.view.state.uiState.selectedSectionGroupId]);
 					calendarActivities = calendarActivities.concat(
-						styleCalendarEvents(unstyledEvents)
+						styleCalendarEvents(unstyledEvents, activeEventBackgroundColor, activeEventTextColor)
 					);
 				}
 
 				// Add checked sectionGroups activities
 				if (scope.view.state.uiState.checkedSectionGroupIds.length > 0) {
-					var otherEventsColor = "#DEDEDE";
-					var otherEventsTextColor = "#333333";
 					scope.view.state.uiState.checkedSectionGroupIds.forEach(function (sgId) {
 						if (sgId !== scope.view.state.uiState.selectedSectionGroupId) {
 							var unstyledEvents = sectionGroupToActivityEvents(scope.view.state.sectionGroups.list[sgId]);
 							calendarActivities = calendarActivities.concat(
-								styleCalendarEvents(unstyledEvents, otherEventsColor, otherEventsTextColor)
+								styleCalendarEvents(unstyledEvents)
 							);
 						}
 					});
@@ -161,12 +176,9 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			};
 
 			var styleCalendarEvents = function (calendarActivities, backgroundColor, textColor) {
-				var defaultBackgroundColor = "#3A87AD"; // The default color is for the highlighted activities
-				var defaultTextColor = "#FFFFFF";
-
 				calendarActivities.forEach(function (event) {
-					event.color = (scope.view.state.uiState.selectedActivityId === event.activityId) ? defaultBackgroundColor : backgroundColor;
-					event.textColor = textColor ? textColor : defaultTextColor;
+					event.color = (scope.view.state.uiState.selectedActivityId === event.activityId) ? highlightedEventBackgroundColor : backgroundColor;
+					event.textColor = textColor ? textColor : defaultEventTextColor;
 				});
 				return calendarActivities;
 			};
@@ -177,15 +189,12 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			};
 
 			var getUnavailabilities = function () {
-				var unavailabilityEventsColor = "#aaaaaa";
-				var unavailabilityEventsTextColor = "#333333";
-
 				var calendarActivities = [];
 
 				// Add Selected sectionGroup unavailabilities
 				if (scope.view.state.uiState.selectedSectionGroupId) {
 					var unstyledEvents = sectionGroupToUnavailabilityEvents(scope.view.state.sectionGroups.list[scope.view.state.uiState.selectedSectionGroupId]);
-					calendarActivities = styleCalendarEvents(unstyledEvents, unavailabilityEventsColor, unavailabilityEventsTextColor);
+					calendarActivities = styleCalendarEvents(unstyledEvents, unavailabilityEventBackgroundColor, unavailabilityEventTextColor);
 				}
 
 				return calendarActivities;
