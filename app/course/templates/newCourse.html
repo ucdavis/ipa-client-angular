@@ -18,7 +18,7 @@
 						<div class="col-sm-10 col-sm-offset-1">
 							<strong>Course</strong>
 							<br />
-							<input type="text" ng-model="selectedCourse" placeholder="Search courses"
+							<input type="text" ng-model="view.selectedCourse" placeholder="Search courses"
 											uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchCourses($viewValue)"
 											typeahead-loading="loadingCourses"
 											typeahead-no-results="noResults"
@@ -34,7 +34,7 @@
 						<label class="col-sm-3 col-sm-offset-1 control-label">Sequence</label>
 						<div class="col-sm-7">
 							<input type="text" ng-model="view.selectedEntity.sequencePattern"
-											uib-typeahead="sequencePattern for sequencePattern in sequencePatterns | filter:$viewValue | limitTo:10"
+											uib-typeahead="sequencePattern for sequencePattern in unoccupiedSequencePatterns() | filter:$viewValue | limitTo:10"
 											typeahead-loading="loadingSequences"
 											typeahead-no-results="noResults"
 											typeahead-editable="false"

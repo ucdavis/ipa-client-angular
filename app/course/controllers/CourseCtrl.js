@@ -117,12 +117,6 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$wi
 				courseActionCreators.updateTagFilters(tagFilters);
 			};
 
-			$scope.createCourse = function () {
-				if ($scope.newCourseIsValid()) {
-					courseActionCreators.createCourse($scope.view.state.courses.newCourse, $scope.workgroupId, $scope.year);
-				}
-			};
-
 			$scope.newCourseIsValid = function () {
 				return $scope.view.state.courses.newCourse.title && $scope.view.state.courses.newCourse.sequencePattern;
 			};
@@ -133,13 +127,6 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$wi
 				}, function (err) {
 					$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 				});
-			};
-
-			$scope.searchCoursesResultSelected = function ($item, $model, $label, $event) {
-				$scope.view.state.courses.newCourse.title = $item.title;
-				$scope.view.state.courses.newCourse.subjectCode = $item.subjectCode;
-				$scope.view.state.courses.newCourse.courseNumber = $item.courseNumber;
-				$scope.view.state.courses.newCourse.effectiveTermCode = $item.effectiveTermCode;
 			};
 
 			$scope.addTag = function (item, tagId) {
@@ -280,18 +267,6 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$wi
 				);
 			};
 
-			$scope.sequencePatternsScopedByCurrentType = function () {
-				var course = $scope.view.state.courses.list[$scope.view.selectedEntity.id];
-				if (course.sequencePattern) {
-					if (course.isSeries()) {
-						return alphaSequencePatterns;
-					} else {
-						return numericSequencePatterns;
-					}
-				} else {
-					return sequencePatterns;
-				}
-			};
 		}
 ]);
 
