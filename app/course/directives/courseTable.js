@@ -5,7 +5,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 	return {
 		restrict: 'A',
 		template: '<thead><tr><th>&nbsp;</th></tr></thead><tbody><tr><td>'
-		+ '<div style="width: 100%;" align="center"><img src="/images/ajax-loader.gif" /> &nbsp; Loading schedule</div>'
+		+ '<div style="width: 100%;" align="center" class=\"text-muted\">'
+		+ '< img src="/images/ajax-loader.gif" /> &nbsp; Loading schedule</div>'
 		+ '</td></tr></tbody>',
 		link: function (scope, element, attrs) {
 			scope.view = {};
@@ -127,7 +128,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					});
 				} else {
 					var numberOfColumns = data.state.filters.enabledTerms.length + 1;
-					body += "<tr><td class=\"text-center\" colspan=\"" + numberOfColumns + "\">No Courses</td></tr>";
+					body += "<tr><td class=\"text-center text-muted\" colspan=\"" + numberOfColumns + "\">No Courses</td></tr>";
 				}
 
 				element.append(body);
