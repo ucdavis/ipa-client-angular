@@ -94,9 +94,34 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			};
 
 			var teachingCallResponseToEvents = function (teachingCallResponse, title) {
-				var calendarActivities = [];
-				// TODO: logic to convert blob to contiguous calendar events
-				return calendarActivities;
+				debugger;
+				var calendarUnavailabilities = [];
+				var unavailabilitiesArr = teachingCallResponse.availabilityBlob.split(',');
+
+				for (var d = 1; d < 6; d++) { // Blob starts on Monday and ends on Friday by definition
+					var unavailabilityStart = null;
+					for (var h = 7; h < 22; h++) {  // Blob starts at 7am and ends at 10pm by definition
+						var slotUnavailable = unavailabilitiesArr[15 * (d - 1) + (h - 7)] === '0';
+						if (unavailabilityStart === null && slotUnavailable) {
+							unavailabilityStart = moment().day(d).hour(h).minute(0).second(0);
+						}
+
+						// If unavailability slot is ending or day is ending...
+						if (unavailabilityStart !== null && (slotUnavailable === false || h === 21)) {
+							if (h === 21) { h++; } // Unavailabilities must end at 22:00
+							var unavailabilityEnd = moment().day(d).hour(h).minute(0).second(0);
+							calendarUnavailabilities.push({
+								title: title,
+								start: unavailabilityStart,
+								end: unavailabilityEnd,
+								teachingCallResponseId: teachingCallResponse.id
+							});
+							unavailabilityStart = null;
+						}
+					}
+				}
+
+				return calendarUnavailabilities;
 			};
 
 			var sectionGroupToActivityEvents = function (sectionGroup) {
@@ -153,12 +178,15 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			};
 
 			var getUnavailabilities = function () {
+				var unavailabilityEventsColor = "#aaaaaa";
+				var unavailabilityEventsTextColor = "#333333";
+
 				var calendarActivities = [];
 
 				// Add Selected sectionGroup unavailabilities
 				if (scope.view.state.uiState.selectedSectionGroupId) {
 					var unstyledEvents = sectionGroupToUnavailabilityEvents(scope.view.state.sectionGroups.list[scope.view.state.uiState.selectedSectionGroupId]);
-					calendarActivities = styleCalendarEvents(unstyledEvents)
+					calendarActivities = styleCalendarEvents(unstyledEvents, unavailabilityEventsColor, unavailabilityEventsTextColor);
 				}
 
 				return calendarActivities;
