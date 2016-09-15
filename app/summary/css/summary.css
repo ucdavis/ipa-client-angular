@@ -184,3 +184,23 @@
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
+
+.course-table__row-detail-header {
+
+}
+
+.course-table__row-detail-location {
+	font-weight: bold;
+}
+
+.meeting-location-time {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.content-container {
+	padding-left: 10%;
+	padding-right: 10%;
+}
