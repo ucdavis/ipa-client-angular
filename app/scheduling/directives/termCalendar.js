@@ -94,7 +94,6 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			};
 
 			var teachingCallResponseToEvents = function (teachingCallResponse, title) {
-				debugger;
 				var calendarUnavailabilities = [];
 				var unavailabilitiesArr = teachingCallResponse.availabilityBlob.split(',');
 
