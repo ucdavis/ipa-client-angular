@@ -22,8 +22,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 					hiddenDays: scope.view.state.filters.hiddenDays,
 					eventColor: '#6AA4C1',
 					eventSources: [
-						// TODO: Add instructor unavailabilities,
-						getActivities()
+						getActivities(),
+						getUnavailabilities()
 					],
 					eventClick: function (calEvent, jsEvent, view) {
 						var activity = scope.view.state.activities.list[calEvent.activityId];
@@ -45,8 +45,9 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 
 				// Add Selected sectionGroup activities
 				if (scope.view.state.uiState.selectedSectionGroupId) {
+					var unstyledEvents = sectionGroupToActivityEvents(scope.view.state.sectionGroups.list[scope.view.state.uiState.selectedSectionGroupId]);
 					calendarActivities = calendarActivities.concat(
-						createCalendarEvents(scope.view.state.sectionGroups.list[scope.view.state.uiState.selectedSectionGroupId], null)
+						styleCalendarEvents(unstyledEvents)
 					);
 				}
 
@@ -56,8 +57,9 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 					var otherEventsTextColor = "#333333";
 					scope.view.state.uiState.checkedSectionGroupIds.forEach(function (sgId) {
 						if (sgId !== scope.view.state.uiState.selectedSectionGroupId) {
+							var unstyledEvents = sectionGroupToActivityEvents(scope.view.state.sectionGroups.list[sgId]);
 							calendarActivities = calendarActivities.concat(
-								createCalendarEvents(scope.view.state.sectionGroups.list[sgId], otherEventsColor, otherEventsTextColor)
+								styleCalendarEvents(unstyledEvents, otherEventsColor, otherEventsTextColor)
 							);
 						}
 					});
@@ -91,7 +93,13 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				return calendarActivities;
 			};
 
-			var sectionGroupToEvents = function (sectionGroup) {
+			var teachingCallResponseToEvents = function (teachingCallResponse, title) {
+				var calendarActivities = [];
+				// TODO: logic to convert blob to contiguous calendar events
+				return calendarActivities;
+			};
+
+			var sectionGroupToActivityEvents = function (sectionGroup) {
 				var calendarActivities = [];
 				var title = getCourseTitleByCourseId(sectionGroup.courseId);
 
@@ -114,12 +122,26 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				return calendarActivities;
 			};
 
-			var createCalendarEvents = function (sectionGroup, color, textColor) {
-				var hiliteColor = "#3A87AD"
-				var defaultTextColor = "#FFFFFF"
-				var calendarActivities = sectionGroupToEvents(sectionGroup);
+			var sectionGroupToUnavailabilityEvents = function (sectionGroup) {
+				var calendarActivities = [];
+
+				if (sectionGroup.teachingCallResponseIds) {
+					sectionGroup.teachingCallResponseIds.forEach(function (trId) {
+						var teachingCallResponse = scope.view.state.teachingCallResponses.list[trId];
+						var instructorName = scope.view.state.instructors.list[teachingCallResponse.instructorId].fullName;
+						calendarActivities = calendarActivities.concat(teachingCallResponseToEvents(teachingCallResponse, instructorName));
+					});
+				}
+
+				return calendarActivities;
+			};
+
+			var styleCalendarEvents = function (calendarActivities, backgroundColor, textColor) {
+				var defaultBackgroundColor = "#3A87AD"; // The default color is for the highlighted activities
+				var defaultTextColor = "#FFFFFF";
+
 				calendarActivities.forEach(function (event) {
-					event.color = (scope.view.state.uiState.selectedActivityId === event.activityId) ? hiliteColor : color;
+					event.color = (scope.view.state.uiState.selectedActivityId === event.activityId) ? defaultBackgroundColor : backgroundColor;
 					event.textColor = textColor ? textColor : defaultTextColor;
 				});
 				return calendarActivities;
@@ -129,6 +151,19 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				var course = scope.view.state.courses.list[courseId];
 				return course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern;
 			};
+
+			var getUnavailabilities = function () {
+				var calendarActivities = [];
+
+				// Add Selected sectionGroup unavailabilities
+				if (scope.view.state.uiState.selectedSectionGroupId) {
+					var unstyledEvents = sectionGroupToUnavailabilityEvents(scope.view.state.sectionGroups.list[scope.view.state.uiState.selectedSectionGroupId]);
+					calendarActivities = styleCalendarEvents(unstyledEvents)
+				}
+
+				return calendarActivities;
+			};
+
 
 			$rootScope.$on("schedulingStateChanged", function (event, data) {
 				scope.view.state = data.state;
