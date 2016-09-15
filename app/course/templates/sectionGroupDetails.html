@@ -1,0 +1,82 @@
+<div class="panel panel-primary panel-highlight">
+	<div class="panel-heading">
+		<div class="panel-title">
+			<h4 ng-init="parentCourse = view.state.courses.list[view.selectedEntity.courseId]">
+				{{ parentCourse.subjectCode }} {{ parentCourse.courseNumber }}
+				<br>
+				<small>{{ view.selectedEntity.termCode.getTermCodeDisplayName() }}</small>
+			</h4>
+		</div>
+
+		<div class="panel-options">
+			<a ng-click="closeDetails()"><i class="entypo-cancel"></i></a>
+		</div>
+	</div>
+
+	<div class="panel-body no-padding">
+		<div class="section-group-details" style="padding: 1em;">
+			<census-chart census="view.state.courses.list[view.selectedEntity.courseId].census"
+				schedule-term-state="view.state.scheduleTermStates.list[view.selectedEntity.termCode]"
+				course-id="view.selectedEntity.courseId"></census-chart>
+			<hr />
+			<table class="table sections-table" style="margin-bottom: 5px;" ng-if="view.selectedEntity.sectionIds.length">
+				<colgroup>
+					<col span="1" style="width: 30%;">
+					<!--<col span="1" style="width: 30%;">-->
+					<col span="1" style="width: 30%;">
+					<col span="1" style="width: 10%;">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>Section</th>
+						<!--<th>Enrollment</th>-->
+						<th>Seats</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="sectionId in view.selectedEntity.sectionIds track by $index">
+						<td>{{ view.state.sections.list[sectionId].sequenceNumber }}</td>
+						<!-- TODO: Get enrollment live from DW? -->
+						<!--<td>{{ section.enrollment }}</td>-->
+						<td>
+							<input auto-input
+								type="number" min="0"
+								class="form-control section-seats-edit text-center"
+								on-enter="updateSection(view.state.sections.list[sectionId])"
+								on-blur="updateSection(view.state.sections.list[sectionId])"
+								help-text-placement="left"
+								ng-model="view.state.sections.list[sectionId].seats" />
+						</td>
+						<td>
+							<a class="text-danger clickable"
+								uib-tooltip="Delete"
+								confirm-button="deleteSection(view.state.sections.list[sectionId])"
+								message="Are you sure you want to remove this section"
+								yes="Delete" no="Cancel" placement="left">
+									<i class="entypo-cancel-squared"></i>
+							</a>
+						</td>
+					</tr>
+					<tr ng-if="view.selectedEntity.sectionIds.length > 1">
+						<td><strong>Total</strong></td>
+						<!-- TODO: Get enrollment live from DW? -->
+						<!--<td>{{ section.enrollment }}</td>-->
+						<td class="text-center">{{ sectionSeatTotal(view.selectedEntity) }} / {{ view.selectedEntity.plannedSeats }}</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+			<div ng-if="view.selectedEntity.sectionIds.length == 0"
+				class="text-center text-muted" style="padding: 1em;">No sections available</div>
+			<div class="col-sm-12 text-center" ng-if="nextSequence()">
+					<button class="btn btn-white" uib-tooltip="Add a section" tooltip-placement="right"
+						ng-click="addSection()">Create {{ nextSequence() }}</button>
+			</div>
+			<div class="col-sm-12 text-center" ng-if="!view.selectedEntity.id">
+					<p>No Course Offering for {{view.selectedEntity.termCode.getTermCodeDisplayName()}}</p>
+					<button class="btn btn-primary" ng-click="addSectionGroup()">Create Offering</button>
+			</div>
+		</div>
+	</div>
+</div>
