@@ -131,6 +131,15 @@ assignmentApp.service('assignmentStateService', function (
 						teachingAssignments.ids.splice(index, 1);
 					}
 					return teachingAssignments;
+				case UPDATE_TEACHING_ASSIGNMENT_ORDER:
+					var sortedTeachingAssignmentIds = action.payload.sortedTeachingAssignmentIds;
+
+					for (var i = 0; i < sortedTeachingAssignmentIds.length; i++) {
+						var id = sortedTeachingAssignmentIds[i];
+						teachingAssignments.list[id].priority = i + 1;
+					}
+
+					return teachingAssignments;
 				default:
 					return teachingAssignments;
 			}

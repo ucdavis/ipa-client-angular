@@ -182,15 +182,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 
 				return $scope.view.state.scheduleTermStates.list[termCode].isLocked;
 			};
-/*
-			$scope.refreshPreferences = function() {
-				$scope.termPreferences = teachingPreferenceService.retrieveInstancesSortedByTerm();
-			};
 
-			$scope.autoSave = function() {
-				$scope.viewState.lastSaved = moment().format('LTS');
-			};
-*/
 			$scope.prepareTeachingCall = function() {
 				var activeTeachingCall = $scope.view.state.activeTeachingCall;
 
