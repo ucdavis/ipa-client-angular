@@ -17,7 +17,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				$scope.view.state = data;
-				if ($scope.view.state.activeTeachingCall.scheduledCourses == null) {
+				if ($scope.view.state.activeTeachingCall && $scope.view.state.activeTeachingCall.scheduledCourses == null) {
 					$scope.prepareTeachingCall();
 				}
 
