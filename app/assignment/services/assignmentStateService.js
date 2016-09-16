@@ -669,6 +669,10 @@ assignmentApp.service('assignmentStateService', function (
 
 					return userInterface;
 				case SWITCH_MAIN_VIEW:
+					if (userInterface == undefined) {
+						userInterface = {};
+					}
+
 					userInterface.showCourses = action.payload.showCourses;
 					userInterface.showInstructors = action.payload.showInstructors;
 					return userInterface;
