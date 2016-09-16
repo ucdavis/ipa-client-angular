@@ -52,6 +52,24 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope',
 
 				return termNames[term] + " " + endingYear;
 			};
+
+			// Will translate a dayIndicator like '0010100' into 'TR'
+			$scope.dayIndicatorToDayCodes = function(dayIndicator) {
+				dayCodes = "";
+				// Handle incorrect data
+				if (dayIndicator.length == 0) {
+					return dayCodes;
+				}
+				dayStrings = ['U','M','T','W','R','F','S'];
+				for (var i = 0; i < dayIndicator.length; i++) {
+					char = dayIndicator.charAt(i);
+					if (Number(char) == 1) {
+						dayCodes += dayStrings[i];
+					}
+				}
+
+				return dayCodes;
+			}
 }]);
 
 SummaryCtrl.authenticate = function (authService, $route, summaryActionCreators) {

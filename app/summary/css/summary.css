@@ -160,7 +160,7 @@
 .course-table__header {
 	border-right: 1px solid;
 	border-color: rgb(235, 235, 235);
-	flex: 1 0 100px;
+	flex: 1 0 0px;
 	background-color: rgb(245, 245, 246);
 	height: 30px;
 	text-align: center;
@@ -172,11 +172,34 @@
 	color: rgb(166, 167, 170);
 }
 
+.course-table__header-middle {
+	border-right: 1px solid;
+	border-color: rgb(235, 235, 235);
+	flex: 3 0 0px;
+	background-color: rgb(245, 245, 246);
+	height: 30px;
+	text-align: center;
+	padding-top: 5px;
+}
+
 .course-table__row-detail {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	flex: 1 0 100px;
+	flex: 1 0 0px;
+	border-right: 1px solid;
+	border-color: rgb(235, 235, 235);
+	padding-top: 5px;
+	flex-direction: column;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.course-table__row-detail-middle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 3 0 0px;
 	border-right: 1px solid;
 	border-color: rgb(235, 235, 235);
 	padding-top: 5px;
@@ -193,7 +216,7 @@
 	font-weight: bold;
 }
 
-.meeting-location-time {
+.meeting-inner {
 	display: flex;
 	width: 100%;
 	align-items: center;
@@ -203,4 +226,8 @@
 .content-container {
 	padding-left: 10%;
 	padding-right: 10%;
+}
+
+.meeting-days {
+	color: rgb(166, 167, 170);
 }

@@ -80,7 +80,7 @@
 </div>
 
 <!-- Instructor View -->
-<div ng-if="sharedState.isInstructor">
+<div ng-if="sharedState.isInstructor && !sharedState.isAcademicPlanner">
 	<div class="content-container">
 
 		<div class="course-status-header">
@@ -135,12 +135,23 @@
 					</div>
 				</div>
 				<div class="course-table__header">
-					<div class="course-table__header-detail meeting-location-time">
+					<div class="course-table__header-detail">
 						<div>
 							Location
 						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
 						<div>
 							Time
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Activity
 						</div>
 					</div>
 				</div>
@@ -157,16 +168,26 @@
 			<div class="course-table-row" ng-repeat="course in view.state.instructorCourses.list[term]">
 				<div class="course-table__row-detail">
 					<div class="course-table__row-detail-header">
-						{{ course.title }}
+						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
 					</div>
 				</div>
-				<div class="course-table__row-detail">
-					<div class="meeting-location-time" ng-repeat="meeting in course.meetings">
-						<div class="course-table__row-detail-location">
-							{{ meeting.location }}
+				<div class="course-table__row-detail-middle">
+					<div class="meeting-inner" ng-repeat="meeting in course.meetings">
+						<div class="course-table__row-detail-location" style="flex: 1 1 0px; display: flex; justify-content: center;">
+							<div>
+								{{ meeting.location }}
+							</div>
 						</div>
-						<div>
-							TR {{ meeting.startTime.toStandardTime() }}-{{ meeting.endTime.toStandardTime() }}
+						<div style="flex: 1 1 0px; display: flex; justify-content: left; padding-left: 50px;">
+							<span class="meeting-days">
+								{{ dayIndicatorToDayCodes(meeting.dayIndicator) }}&nbsp;
+							</span>
+							<span class="meeting-time">
+								{{ meeting.startTime.toStandardTime() }}-{{ meeting.endTime.toStandardTime() }}
+							</span>
+						</div>
+						<div style="flex: 1 1 0px; display: flex; justify-content: center;">
+							{{ meeting.activityType }}
 						</div>
 					</div>
 				</div>

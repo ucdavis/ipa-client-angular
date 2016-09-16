@@ -8,7 +8,7 @@
  * Service in the courseApp.
  * Central location for sharedState information.
  */
-summaryApp.service('summaryStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Section, Tag) {
+summaryApp.service('summaryStateService', function ($rootScope, Course, ScheduleTermState, Activity, SectionGroup, Section, Tag) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -67,8 +67,9 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 
 					var sectionsList = {};
 					var length = action.payload.sections ? action.payload.sections.length : 0;
-					for (var i = 0; i < length; i++) {
-						var sectionData = action.payload.sectionGroups[i];
+					for (var i = 0; i < action.payload.sections.length; i++) {
+						var sectionData = action.payload.sections[i];
+
 						sectionsList[sectionData.id] = new SectionGroup(sectionData);
 						sections.ids.push(sectionData.id);
 					}
@@ -111,12 +112,6 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 				case INIT_STATE:
 					var instructorCoursesByTermCode = {};
 
-//					termCodes = [];
-//					termCode['2016'].meetings = {};
-//					meeting
-//					meeting.location;
-//					meeting.time;
-
 					terms = [];
 
 					data.sectionGroups.forEach( function(sectionGroup) {
@@ -135,6 +130,8 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						data.courses.forEach( function (course) {
 							if (sectionGroup.courseId == course.id) {
 								slotSectionGroup.title = course.title;
+								slotSectionGroup.subjectCode = course.subjectCode;
+								slotSectionGroup.courseNumber = course.courseNumber;
 							}
 						});
 
@@ -142,6 +139,8 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 
 						// Look for meeting data from shared activities
 						data.activities.forEach( function(activity) {
+							activity = new Activity(activity);
+
 							if (activity.sectionGroupId == sectionGroup.id) {
 								var slotMeeting = {};
 
@@ -152,25 +151,11 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 								} else {
 									slotMeeting.location = activity.locationDescription;
 								}
+								slotMeeting.activityType = activity.getCodeDescription();
+								slotMeeting.dayIndicator = activity.dayIndicator;
+								slotMeeting.id = activity.id;
+
 								slotSectionGroup.meetings.push(slotMeeting);
-							}
-						});
-
-						// Look for meeting data tied to sections
-						data.sections.forEach( function(section) {
-							if (section.sectionGroupId == sectionGroup.id) {
-
-								// Collect Location/Time Data
-								data.activities.forEach( function(activity) {
-									if (activity.sectionId == section.id) {
-										var slotMeeting = {};
-										slotMeeting.startTime = activity.startTime;
-										slotMeeting.endTime = activity.endTime;
-										slotMeeting.location = activity.locationDescription;
-
-										slotSectionGroup.meetings.push(slotMeeting);
-									}
-								});
 							}
 						});
 
