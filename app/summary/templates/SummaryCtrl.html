@@ -1,6 +1,6 @@
 <nav></nav>
 <div></div>
-<div ng-if="sharedState.isAcademicPlanner">
+<div ng-if="isAcademicPlanner()">
 	<div class="content-container">
 		<div class="main-content">
 			<div class="left-container padded-container">
@@ -80,7 +80,7 @@
 </div>
 
 <!-- Instructor View -->
-<div ng-if="sharedState.isInstructor && !sharedState.isAcademicPlanner">
+<div ng-if="isInstructor() && !isAcademicPlanner()">
 	<div class="content-container">
 
 		<div class="course-status-header">

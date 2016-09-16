@@ -21,14 +21,6 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope',
 
 			$rootScope.$on('sharedStateSet', function (event, data) {
 				$scope.sharedState = data;
-
-				if ($scope.sharedState.activeWorkgroup.roles.indexOf("senateInstructor") || $scope.sharedState.activeWorkgroup.roles.indexOf("federationInstructor")) {
-					$scope.sharedState.isInstructor = true;
-				}
-
-				if ($scope.sharedState.activeWorkgroup.roles.indexOf("academicPlanner") ) {
-					$scope.sharedState.isAcademicPlanner = true;
-				}
 			});
 
 			$scope.getTermName = function(term) {
@@ -69,6 +61,22 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope',
 				}
 
 				return dayCodes;
+			}
+
+			$scope.isInstructor = function() {
+				if ($scope.userHasRolesForWorkgroup(['senateInstructor'], $scope.sharedState.workgroup) || $scope.userHasRolesForWorkgroup(['federationInstructor'], $scope.sharedState.workgroup)) {
+					return true;
+				}
+
+				return false;
+			}
+
+			$scope.isAcademicPlanner = function() {
+				if ($scope.userHasRolesForWorkgroup(['academicPlanner'], $scope.sharedState.workgroup)) {
+					return true;
+				}
+
+				return false;
 			}
 }]);
 
