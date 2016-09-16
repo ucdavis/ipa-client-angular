@@ -733,3 +733,31 @@ li.active-term .dropdown-term-row {
 	color: #333;
 	font-weight: bold;
 }
+
+/* unavailability modal */
+.flex-term_title {
+	display: flex;
+	justify-content: space-around;
+	text-align: center;
+	margin: 20px 10px 15px 10px;
+}
+
+.flex-term_title-children {
+	flex: 1 1 20%;
+}
+
+.flex-unavability_chart {
+	display: flex;
+	justify-content: space-around;
+	text-align: center;
+	margin: 10px;
+}
+
+.flex-unavability_chart-children {
+	flex: 1 1 20%;
+}
+
+.unavability_chart {
+	border: 1px solid #95989A;
+	margin-bottom: 10px;
+}
