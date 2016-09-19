@@ -150,7 +150,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							'title': "Teaching Call " + action.year + " Ended",
 							'time': endDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
 							'date': endDate.toLocaleDateString(),
-							'caption': teachingCall.message,
+							'caption': "",
 							'link': "/" + action.workgroupId + "/" + action.year + "/teachingCallStatus"
 						}
 						if (endDate.getTime() > Date.now()) {
@@ -183,7 +183,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						// Append future starting quarters / semesters
 						var eventData = {
 							'type': "school",
-							'title': term.code.getTermCodeDisplayName() + " Started",
+							'title': term.code.getTermCodeDisplayName() + " Starts",
 							'time': startDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
 							'date': startDate.toLocaleDateString(),
 							'caption': "",
@@ -198,7 +198,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						// Append future ending quarters / semesters
 						eventData = {
 							'type': "school",
-							'title': term.code.getTermCodeDisplayName() + " Started",
+							'title': term.code.getTermCodeDisplayName() + " Ends",
 							'time': endDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
 							'date': endDate.toLocaleDateString(),
 							'caption': "",
