@@ -97,6 +97,15 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 			};
 			schedulingStateService.reduce(action);
 		},
+		toggleCheckAll: function (sectionGroupIds) {
+			var action = {
+				type: CHECK_ALL_TOGGLED,
+				payload: {
+					sectionGroupIds: sectionGroupIds
+				}
+			};
+			schedulingStateService.reduce(action);
+		},
 		setSelectedActivity: function (activity) {
 			var action = {
 				type: ACTIVITY_SELECTED,
@@ -107,16 +116,21 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 			schedulingStateService.reduce(action);
 		},
 		getSectionGroupDetails: function (sectionGroup) {
-			schedulingService.getSectionSectionGroupDetails(sectionGroup.id).then(function (payload) {
+			schedulingService.getSectionGroupDetails(sectionGroup.id).then(function (payload) {
 				var action = {
 					type: FETCH_SECTION_GROUP_DETAILS,
-					payload: {
-						sectionGroup: sectionGroup,
-						sections: payload.sections,
-						sharedActivities: payload.sharedActivities,
-						unsharedActivities: payload.unsharedActivities,
-						teachingCallResponses: payload.teachingCallResponses
-					}
+					payload: payload
+				};
+				schedulingStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+			});
+		},
+		getAllSectionGroupDetails: function (workgroupId, year, termCode) {
+			schedulingService.getAllSectionGroupDetails(workgroupId, year, termCode).then(function (payload) {
+				var action = {
+					type: FETCH_ALL_SECTION_GROUP_DETAILS,
+					payload: payload
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {

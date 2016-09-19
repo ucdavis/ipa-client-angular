@@ -83,17 +83,12 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					sectionGroups.list = sectionGroupsList;
 					return sectionGroups;
 				case FETCH_SECTION_GROUP_DETAILS:
-					sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections
-						.sort(function (sectionA, sectionB) {
-							if (sectionA.sequenceNumber < sectionB.sequenceNumber) { return -1; }
-							if (sectionA.sequenceNumber > sectionB.sequenceNumber) { return 1; }
-							return 0;
- 						})
-						.map(function (section) { return section.id; });
-					sectionGroups.list[action.payload.sectionGroup.id].sharedActivityIds = action.payload.sharedActivities
-						.map(function (a) { return a.id; });
-					sectionGroups.list[action.payload.sectionGroup.id].teachingCallResponseIds = action.payload.teachingCallResponses
-						.map(function (tr) { return tr.id; });
+					scope.fillSectionGroupDetails(action.payload, sectionGroups);
+					return sectionGroups;
+				case FETCH_ALL_SECTION_GROUP_DETAILS:
+					action.payload.forEach(function (details) {
+						scope.fillSectionGroupDetails(details, sectionGroups);
+					});
 					return sectionGroups;
 				case REMOVE_ACTIVITY:
 					var sectionGroup = sectionGroups.list[action.payload.activity.sectionGroupId];
@@ -122,12 +117,11 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					};
 					return sections;
 				case FETCH_SECTION_GROUP_DETAILS:
-					action.payload.sections.forEach(function (section) {
-						section.activityIds = action.payload.unsharedActivities
-							.filter(function (a) { return a.sectionId == section.id; })
-							.map(function (a) { return a.id; });
-						sections.list[section.id] = new Section(section);
-						sections.ids.push(section.id);
+					scope.fillSectionDetails(action.payload, sections);
+					return sections;
+				case FETCH_ALL_SECTION_GROUP_DETAILS:
+					action.payload.forEach(function (details) {
+						scope.fillSectionDetails(details, sections);
 					});
 					return sections;
 				case REMOVE_ACTIVITY:
@@ -157,9 +151,11 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					};
 					return teachingCallResponses;
 				case FETCH_SECTION_GROUP_DETAILS:
-					action.payload.teachingCallResponses.forEach(function (teachingCallResponse) {
-						teachingCallResponses.list[teachingCallResponse.id] = new TeachingCallResponse(teachingCallResponse);
-						teachingCallResponses.ids.push(teachingCallResponse.id);
+					scope.fillTeachingCallResponseDetails(action.payload, teachingCallResponses);
+					return teachingCallResponses;
+				case FETCH_ALL_SECTION_GROUP_DETAILS:
+					action.payload.forEach(function (details) {
+						scope.fillTeachingCallResponseDetails(details, teachingCallResponses);
 					});
 					return teachingCallResponses;
 				default:
@@ -177,15 +173,11 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					};
 					return activities;
 				case FETCH_SECTION_GROUP_DETAILS:
-					action.payload.sharedActivities.forEach(function (activity) {
-						activities.list[activity.id] = new Activity(activity);
-						activities.list[activity.id].courseId = action.payload.sectionGroup.courseId;
-						activities.ids.push(activity.id);
-					});
-					action.payload.unsharedActivities.forEach(function (activity) {
-						activities.list[activity.id] = new Activity(activity);
-						activities.list[activity.id].courseId = action.payload.sectionGroup.courseId;
-						activities.ids.push(activity.id);
+					scope.fillActivityDetails(action.payload, activities);
+					return activities;
+				case FETCH_ALL_SECTION_GROUP_DETAILS:
+					action.payload.forEach(function (details) {
+						scope.fillActivityDetails(details, activities);
 					});
 					return activities;
 				case UPDATE_ACTIVITY:
@@ -292,7 +284,8 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 						selectedSectionGroupId: null,
 						selectedCourseId: null,
 						selectedActivityId: null,
-						checkedSectionGroupIds: []
+						checkedSectionGroupIds: [],
+						allSectionGroupsDetailsCached: false
 					};
 					return uiState;
 				case SECTION_GROUP_SELECTED:
@@ -312,6 +305,16 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					} else {
 						uiState.checkedSectionGroupIds.splice(sectionGroupCheckedIndex, 1);
 					}
+					return uiState;
+				case CHECK_ALL_TOGGLED:
+					if (uiState.checkedSectionGroupIds.length == 0) {
+						uiState.checkedSectionGroupIds = action.payload.sectionGroupIds;
+					} else {
+						uiState.checkedSectionGroupIds = [];
+					}
+					return uiState;
+				case FETCH_ALL_SECTION_GROUP_DETAILS:
+					uiState.allSectionGroupsDetailsCached = true;
 					return uiState;
 				case ACTIVITY_SELECTED:
 					if (action.payload.activity && uiState.selectedActivityId != action.payload.activity.id) {
@@ -367,6 +370,47 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 
 			console.debug("Scheduling state updated:");
 			console.debug(scope._state);
+		},
+		// Helper methods
+		fillSectionGroupDetails: function (sectionGroupDetails, sectionGroups) {
+			sectionGroups.list[sectionGroupDetails.id].sectionIds = sectionGroupDetails.sections
+				.sort(function (sectionA, sectionB) {
+					if (sectionA.sequenceNumber < sectionB.sequenceNumber) { return -1; }
+					if (sectionA.sequenceNumber > sectionB.sequenceNumber) { return 1; }
+					return 0;
+				})
+				.map(function (section) { return section.id; });
+			sectionGroups.list[sectionGroupDetails.id].sharedActivityIds = sectionGroupDetails.sharedActivities
+				.map(function (a) { return a.id; });
+			sectionGroups.list[sectionGroupDetails.id].teachingCallResponseIds = sectionGroupDetails.teachingCallResponses
+				.map(function (tr) { return tr.id; });
+		},
+		fillSectionDetails: function (sectionGroupDetails, sections) {
+			sectionGroupDetails.sections.forEach(function (section) {
+				section.activityIds = sectionGroupDetails.unsharedActivities
+					.filter(function (a) { return a.sectionId == section.id; })
+					.map(function (a) { return a.id; });
+				sections.list[section.id] = new Section(section);
+				sections.ids.push(section.id);
+			});
+		},
+		fillActivityDetails: function (sectionGroupDetails, activities) {
+			sectionGroupDetails.sharedActivities.forEach(function (activity) {
+				activities.list[activity.id] = new Activity(activity);
+				activities.list[activity.id].courseId = sectionGroupDetails.courseId;
+				activities.ids.push(activity.id);
+			});
+			sectionGroupDetails.unsharedActivities.forEach(function (activity) {
+				activities.list[activity.id] = new Activity(activity);
+				activities.list[activity.id].courseId = sectionGroupDetails.courseId;
+				activities.ids.push(activity.id);
+			})
+		},
+		fillTeachingCallResponseDetails: function (sectionGroupDetails, teachingCallResponses) {
+			sectionGroupDetails.teachingCallResponses.forEach(function (teachingCallResponse) {
+				teachingCallResponses.list[teachingCallResponse.id] = new TeachingCallResponse(teachingCallResponse);
+				teachingCallResponses.ids.push(teachingCallResponse.id);
+			});
 		}
 	}
 });

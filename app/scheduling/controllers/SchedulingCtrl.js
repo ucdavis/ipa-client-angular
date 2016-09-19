@@ -122,6 +122,16 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			$scope.closeActivityDetails = function () {
 				schedulingActionCreators.setSelectedActivity();
 			};
+
+			$scope.toggleCheckAll = function () {
+				schedulingActionCreators.toggleCheckAll($scope.view.state.sectionGroups.ids);
+
+				// Initialize all sectionGroup sections if not done already
+				if ($scope.view.state.uiState.allSectionGroupsDetailsCached == false) {
+					schedulingActionCreators.getAllSectionGroupDetails(
+						$scope.workgroupId, $scope.year, $scope.term.code);
+				}
+			}
 		}
 ]);
 

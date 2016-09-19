@@ -10,6 +10,11 @@
 			</div>
 			<div class="activity-filters">
 				<div class="activity-filter-menu">
+					<div class="btn-group pull-left">
+						<div class="btn" ng-click="toggleCheckAll()">
+							{{ view.state.uiState.checkedSectionGroupIds.length ? "Unselect" : "Select" }} all
+						</div>
+					</div>
 					<div class="btn-group pull-right">
 						<button class="btn btn-white btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Filters <span class="caret"></span>
