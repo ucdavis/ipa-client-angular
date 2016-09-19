@@ -81,6 +81,7 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$wi
 				};
 
 				// Build each teachingCall
+
 				for (var i = 0; i < $scope.view.state.teachingCalls.ids.length; i++) {
 					var teachingCall = $scope.view.state.teachingCalls.list[$scope.view.state.teachingCalls.ids[i]];
 
@@ -92,11 +93,11 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$wi
 					// Ensure terms are properly ordered
 					var orderedTermNames = [];
 
-					for (var i = 0; i < chronologicallyOrderedTerms.length; i++) {
-						if (decodedTermsBlob.indexOf(chronologicallyOrderedTerms[i]) > -1) {
-							orderedTermNames.push(termNames[chronologicallyOrderedTerms[i]]);
+					chronologicallyOrderedTerms.forEach( function(chronologicallyOrderedTerm) {
+						if (decodedTermsBlob.indexOf(chronologicallyOrderedTerm) > -1) {
+							orderedTermNames.push(termNames[chronologicallyOrderedTerm]);
 						}
-					}
+					});
 
 					teachingCall.terms = orderedTermNames;
 				}
