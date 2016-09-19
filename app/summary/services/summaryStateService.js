@@ -106,6 +106,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 			}
 		},
 		_eventReducers: function(action, events) {
+			console.log("Reducing events...");
 			var scope = this;
 
 			switch (action.type) {
@@ -152,8 +153,8 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 					var termLength = action.payload.dwTerm ? action.payload.dwTerm.length : 0;
 					for (var i = 0; i < termLength; i++) {
 						var term = action.payload.dwTerm[i];
-						var startDate = new Date(term.beginDate);
-						var endDate = new Date(term.endDate);
+						var startDate = new Date(parseInt(term.beginDate));
+						var endDate = new Date(parseInt(term.endDate));
 
 						// Start Term notice
 						var eventData = {
@@ -178,8 +179,8 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						eventsList[eventListLength++] = new Event(eventData);
 
 						if (term.maintenanceDate1Start != null) {
-							var upload1Start = new Date(term.maintenanceDate1Start);
-							var upload1End = new Date(term.maintenanceDate1End);
+							var upload1Start = new Date(parseInt(term.maintenanceDate1Start));
+							var upload1End = new Date(parseInt(term.maintenanceDate1End));
 
 							// Start Update I notice
 							eventData = {
@@ -206,8 +207,8 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						}
 
 						if (term.maintenanceDate2Start != null) {
-							var upload2Start = new Date(term.maintenanceDate2Start);
-							var upload2End = new Date(term.maintenanceDate2End);
+							var upload2Start = new Date(parseInt(term.maintenanceDate2Start));
+							var upload2End = new Date(parseInt(term.maintenanceDate2End));
 
 							// Start Update II notice
 							eventData = {
