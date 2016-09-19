@@ -292,8 +292,8 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 					events.list = eventsList;
 
 					// Add ids for iterating purposes
-					for (int i = 0; i < events.list.length; i++) {
-						events.id[i] = i;
+					for (var i = 0; i < eventsList.length; i++) {
+						events.ids.push(i);
 					}
 
 					return events;
