@@ -129,9 +129,19 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						var endDate = new Date(teachingCall.dueDate);
 
 						// Build eventData object based on the teachingCall's start date
+						var teachingCallType = "";
+
+						// This logic is important because a teaching call may be both, one, or the other.
+						if (teachingCall.sentToFederation && teachingCall.sentToSenate) {
+							teachingCallType = " Federation and Senate ";
+						} else if (teachingCall.sentToFederation) {
+							teachingCallType = " Federation ";
+						} else {
+							teachingCallType = " Senate ";
+						}
 						var eventData = {
 							'type': "teaching_call",
-							'title': "Teaching Call " + action.year + " Started",
+							'title': action.year + teachingCallType + "Teaching Call Starts",
 							'time': startDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
 							'date': startDate.toLocaleDateString(),
 							'caption': teachingCall.message,
@@ -147,7 +157,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						// The type property indicates the icon to be shown in the timeline
 						eventData = {
 							'type': "teaching_call",
-							'title': "Teaching Call " + action.year + " Ended",
+							'title': action.year + teachingCallType + "Teaching Call Ends",
 							'time': endDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
 							'date': endDate.toLocaleDateString(),
 							'caption': "",
@@ -216,7 +226,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							// Append notice for upload I start time
 							eventData = {
 								'type': "notice",
-								'title': term.code.getTermCodeDisplayName() + " Upload I Started",
+								'title': term.code.getTermCodeDisplayName() + " Upload I Starts",
 								'time': upload1Start.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
 								'date': upload1Start.toLocaleDateString(),
 								'caption': "",
@@ -230,7 +240,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							// Append notice for upload I end time
 							eventData = {
 								'type': "notice",
-								'title': term.code.getTermCodeDisplayName() + " Upload I Ended",
+								'title': term.code.getTermCodeDisplayName() + " Upload I Ends",
 								'time': upload1End.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
 								'date': upload1End.toLocaleDateString(),
 								'caption': "",
@@ -248,7 +258,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							// // Append notice for upload II start time
 							eventData = {
 								'type': "notice",
-								'title': term.code.getTermCodeDisplayName() + " Upload II Started",
+								'title': term.code.getTermCodeDisplayName() + " Upload II Starts",
 								'time': upload2Start.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
 								'date': upload2Start.toLocaleDateString(),
 								'caption': "",
@@ -262,7 +272,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							// // Append notice for upload I end time
 							eventData = {
 								'type': "notice",
-								'title': term.code.getTermCodeDisplayName() + " Upload II Ended",
+								'title': term.code.getTermCodeDisplayName() + " Upload II Ends",
 								'time': upload2End.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
 								'date': upload2End.toLocaleDateString(),
 								'caption': "",
