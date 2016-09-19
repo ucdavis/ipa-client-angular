@@ -21,29 +21,40 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				return true;
 			}
 
+			// Build a string of html to display a column header (course, terms, etc.)
+			scope.renderHeader = function() {
+				// Render the header
+				var header = "<div class=\"course-list-row\">";
+				header += "<div class=\"course-header course-description-cell\">Course</div>";
+
+				$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
+
+					var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
+					header += "<div class=\"term-header term-cell\">" + termCode.getTermCodeDisplayName(true) + "</div>";
+				});
+
+				header += "</div>";
+
+				return header;
+			}
+
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				scope.view.state = data;
 				// Clear the table
 				$('.tooltip').remove();
 				element.empty();
+
 				// Render the header
-				var header = "<div class=\"course-list-row\">";
-				header += "<div class=\"course-header description-cell\">Instructor</div>";
-
-				$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
-					var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
-
-					header += "<div class=\"term-header term-cell\">" + termCode.toString().getTermCodeDisplayName(true) + "</div>";
-				});
-
-				header += "</div>";
+				var header = scope.renderHeader();
 				element.append(header);
 
 				var coursesHtml = "";
+				var rowsSinceHeaderWasAdded = 0;
 
 				// Loop over instructors
 				$.each(scope.view.state.instructors.ids, function(i, instructorId) {
 					var instructor = scope.view.state.instructors.list[instructorId];
+
 					if (instructor.isFiltered == false && scope.showCompletedInstructor(instructor) ) {
 						var scheduleInstructorNote = scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
 						var teachingCallReceipt = scope.view.state.teachingCallReceipts.list[instructor.teachingCallReceiptId];
@@ -233,6 +244,13 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 						courseHtml += "</div>"; // Ending course-row div
 
 						coursesHtml += courseHtml;
+
+						// Add a header after each 10 displayed instructor rows
+						if (rowsSinceHeaderWasAdded == 10) {
+							coursesHtml += scope.renderHeader();
+							rowsSinceHeaderWasAdded = 0;
+						}
+						rowsSinceHeaderWasAdded++;
 					}
 				}); // Ending loop over courses
 

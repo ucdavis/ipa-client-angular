@@ -12,11 +12,8 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 		link: function (scope, element, attrs) {
 			scope.view = {};
 
-			$rootScope.$on('assignmentStateChanged', function (event, data) {
-				scope.view.state = data;
-				// Clear the table
-				$('.tooltip').remove();
-				element.empty();
+			// Build a string of html to display a column header (course, terms, etc.)
+			scope.renderHeader = function() {
 				// Render the header
 				var header = "<div class=\"course-list-row\">";
 				header += "<div class=\"course-header course-description-cell\">Course</div>";
@@ -28,9 +25,21 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 				});
 
 				header += "</div>";
+
+				return header;
+			}
+
+			$rootScope.$on('assignmentStateChanged', function (event, data) {
+				scope.view.state = data;
+				// Clear the table
+				$('.tooltip').remove();
+				element.empty();
+
+				var header = scope.renderHeader();
 				element.append(header);
 
 				var coursesHtml = "";
+				var rowsSinceHeaderWasAdded = 0;
 
 				// Loop over courses (sectionGroup rows)
 				$.each(scope.view.state.courses.ids, function(i, courseId) {
@@ -160,7 +169,16 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 						courseHtml += "</div>"; // Ending course-row div
 						
 						coursesHtml += courseHtml;
+
+						// Add a header after each 10 displayed course rows
+						if (rowsSinceHeaderWasAdded == 10) {
+							coursesHtml += scope.renderHeader();
+							rowsSinceHeaderWasAdded = 0;
+						}
+						rowsSinceHeaderWasAdded++;
+
 					}
+
 				}); // Ending loop over courses
 
 				element.append(coursesHtml);
