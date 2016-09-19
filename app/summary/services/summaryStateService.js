@@ -115,47 +115,57 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						ids: []
 					};
 
+					// eventsListLength is necessary because
+					// each teaching call produces up to 2 events and
+					// each term produces up to 4 events
 					var eventsList = [];
-
-					// Grab Teaching Calls
-					var teachingCallLength = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
 					var eventListLength = 0;
+
+					// Append future starting and ending teaching calls to eventsList
+					var teachingCallLength = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
 					for (var i = 0; i < teachingCallLength; i++) {
 						var teachingCall = action.payload.teachingCalls[i];
-						var date = new Date(teachingCall.startDate);
+						var startDate = new Date(teachingCall.startDate);
+						var endDate = new Date(teachingCall.dueDate);
 
-						// TODO: Swap 20 with workgroupId
+						// Build eventData object based on the teachingCall's start date
 						var eventData = {
 							'type': "teaching_call",
-							'title': "Teaching Call " + date.getFullYear() + " Started",
-							'time': date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
-							'date': date.toLocaleDateString(),
+							'title': "Teaching Call " + action.year + " Started",
+							'time': startDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'date': startDate.toLocaleDateString(),
 							'caption': teachingCall.message,
 							'link': "/" + action.workgroupId + "/" + action.year + "/teachingCall"
 						}
-						if (Date.now() > date.getTime()) {
+
+						// Only add the event if it happens in the future
+						if (startDate.getTime() > Date.now()) {
 							eventsList[eventListLength++] = new Event(eventData);
 						}
 
-						date = new Date(teachingCall.dueDate);
+						// Build eventData object based on the teachingCall's end date
+						// The type property indicates the icon to be shown in the timeline
 						eventData = {
 							'type': "teaching_call",
-							'title': "Teaching Call " + date.getFullYear() + " Ended",
-							'time': date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
-							'date': date.toLocaleDateString(),
+							'title': "Teaching Call " + action.year + " Ended",
+							'time': endDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'date': endDate.toLocaleDateString(),
 							'caption': teachingCall.message,
 							'link': "/" + action.workgroupId + "/" + action.year + "/teachingCallStatus"
 						}
-						if (Date.now() > date.getTime()) {
+						if (endDate.getTime() > Date.now()) {
 							eventsList[eventListLength++] = new Event(eventData);
 						}
 
-					} // end for
+					} // end loop appending teaching calls
 
-					// Grab Terms
+					// Filter dwTerm to only use terms for the current school year
 					var relevantTerms = action.payload.dwTerm.filter(function(term) {
+						// action.year is the academic school year
+						// * 100 adds the possible term code
 						var academicYearStart = action.year * 100;
 						var academicYearEnd = (parseInt(action.year) + 1) * 100;
+
 						return (
 							term.code == academicYearStart + 10 ||
 							term.code == academicYearStart + 09 ||
@@ -163,13 +173,14 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						);
 					});
 
+					// Append future events retrieved from the terms
 					var termLength = relevantTerms ? relevantTerms.length : 0;
 					for (var i = 0; i < termLength; i++) {
 						var term = relevantTerms[i];
 						var startDate = new Date(parseInt(term.beginDate));
 						var endDate = new Date(parseInt(term.endDate));
 
-						// Start Term notice
+						// Append future starting quarters / semesters
 						var eventData = {
 							'type': "school",
 							'title': term.code.getTermCodeDisplayName() + " Started",
@@ -178,11 +189,13 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							'caption': "",
 							'link': ""
 						}
-						if (Date.now() > startDate.getTime()) {
+
+						// Only append the event if it is in the future
+						if (startDate.getTime() > Date.now() ) {
 							eventsList[eventListLength++] = new Event(eventData);
 						}
 
-						// End term notice
+						// Append future ending quarters / semesters
 						eventData = {
 							'type': "school",
 							'title': term.code.getTermCodeDisplayName() + " Started",
@@ -191,15 +204,16 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							'caption': "",
 							'link': ""
 						}
-						if (Date.now() > endDate.getTime()) {
+						if (endDate.getTime() > Date.now()) {
 							eventsList[eventListLength++] = new Event(eventData);
 						}
 
+						// This is wrapped in a if statement because not all terms have this value
 						if (term.maintenanceDate1Start != null) {
 							var upload1Start = new Date(parseInt(term.maintenanceDate1Start));
 							var upload1End = new Date(parseInt(term.maintenanceDate1End));
 
-							// Start Update I notice
+							// Append notice for upload I start time
 							eventData = {
 								'type': "notice",
 								'title': term.code.getTermCodeDisplayName() + " Upload I Started",
@@ -208,12 +222,12 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 								'caption': "",
 								'link': ""
 							}
-							if (Date.now() > upload1Start.getTime()) {
+							if (upload1Start.getTime() > Date.now()) {
 								eventsList[eventListLength++] = new Event(eventData);
 							}
 
 
-							// End Update I notice
+							// Append notice for upload I end time
 							eventData = {
 								'type': "notice",
 								'title': term.code.getTermCodeDisplayName() + " Upload I Ended",
@@ -222,7 +236,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 								'caption': "",
 								'link': ""
 							}
-							if (Date.now() > upload1End.getTime()) {
+							if (upload1End.getTime() > Date.now()) {
 								eventsList[eventListLength++] = new Event(eventData);
 							}
 						}
@@ -231,7 +245,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							var upload2Start = new Date(parseInt(term.maintenanceDate2Start));
 							var upload2End = new Date(parseInt(term.maintenanceDate2End));
 
-							// Start Update II notice
+							// // Append notice for upload II start time
 							eventData = {
 								'type': "notice",
 								'title': term.code.getTermCodeDisplayName() + " Upload II Started",
@@ -240,12 +254,12 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 								'caption': "",
 								'link': ""
 							}
-							if (Date.now() > upload2Start.getTime()) {
+							if (upload2Start.getTime() > Date.now()) {
 								eventsList[eventListLength++] = new Event(eventData);
 							}
 
 
-							// End Update II notice
+							// // Append notice for upload I end time
 							eventData = {
 								'type': "notice",
 								'title': term.code.getTermCodeDisplayName() + " Upload II Ended",
@@ -254,15 +268,16 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 								'caption': "",
 								'link': ""
 							}
-							if (Date.now() > upload2End.getTime()) {
+							if (upload2End.getTime() > Date.now()) {
 								eventsList[eventListLength++] = new Event(eventData);
 							}
 						}
 
 					} // end for
 
+					// Sort the eventList from least to greatest time
 					eventsList.sort(function(a, b) {
-						return new Date(b.date).getTime() - new Date(a.date).getTime();
+						return new Date(a.date).getTime() - new Date(b.date).getTime();
 					});
 					events.list = eventsList;
 
