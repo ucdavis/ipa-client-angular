@@ -291,6 +291,11 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 					});
 					events.list = eventsList;
 
+					// Add ids for iterating purposes
+					for (int i = 0; i < events.list.length; i++) {
+						events.id[i] = i;
+					}
+
 					return events;
 				default:
 					return events;
