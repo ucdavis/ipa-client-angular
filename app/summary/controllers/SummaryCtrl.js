@@ -17,8 +17,6 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope',
 
 			$rootScope.$on('summaryStateChanged', function (event, data) {
 				$scope.view.state = data;
-				console.log("The state has...");
-				console.log($scope.view.state);
 			});
 
 			$rootScope.$on('sharedStateSet', function (event, data) {

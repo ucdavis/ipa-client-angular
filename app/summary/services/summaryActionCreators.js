@@ -15,7 +15,8 @@ summaryApp.service('summaryActionCreators', function (summaryStateService, summa
 				var action = {
 					type: INIT_STATE,
 					payload: payload,
-					year: year
+					year: year,
+					workgroupId: workgroupId
 				};
 				summaryStateService.reduce(action);
 			}, function (err) {

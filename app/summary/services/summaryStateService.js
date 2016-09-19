@@ -106,7 +106,6 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 			}
 		},
 		_eventReducers: function(action, events) {
-			console.log("Reducing events...");
 			var scope = this;
 
 			switch (action.type) {
@@ -116,7 +115,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						ids: []
 					};
 
-					var eventsList = {};
+					var eventsList = [];
 
 					// Grab Teaching Calls
 					var teachingCallLength = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
@@ -132,9 +131,11 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							'time': date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
 							'date': date.toLocaleDateString(),
 							'caption': teachingCall.message,
-							'link': "/assign/" + 20 + "/" + date.getFullYear() + "/teachingCall"
+							'link': "/" + action.workgroupId + "/" + action.year + "/teachingCall"
 						}
-						eventsList[eventListLength++] = new Event(eventData);
+						if (Date.now() > date.getTime()) {
+							eventsList[eventListLength++] = new Event(eventData);
+						}
 
 						date = new Date(teachingCall.dueDate);
 						eventData = {
@@ -143,16 +144,28 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							'time': date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
 							'date': date.toLocaleDateString(),
 							'caption': teachingCall.message,
-							'link': "/assign/" + 20 + "/" + date.getFullYear() + "/teachingCall"
+							'link': "/" + action.workgroupId + "/" + action.year + "/teachingCallStatus"
 						}
-						eventsList[eventListLength++] = new Event(eventData);
+						if (Date.now() > date.getTime()) {
+							eventsList[eventListLength++] = new Event(eventData);
+						}
 
 					} // end for
 
 					// Grab Terms
-					var termLength = action.payload.dwTerm ? action.payload.dwTerm.length : 0;
+					var relevantTerms = action.payload.dwTerm.filter(function(term) {
+						var academicYearStart = action.year * 100;
+						var academicYearEnd = (parseInt(action.year) + 1) * 100;
+						return (
+							term.code == academicYearStart + 10 ||
+							term.code == academicYearStart + 09 ||
+							(term.code != academicYearEnd + 04 && term.code >= academicYearEnd + 01 && term.code <= academicYearEnd + 08)
+						);
+					});
+
+					var termLength = relevantTerms ? relevantTerms.length : 0;
 					for (var i = 0; i < termLength; i++) {
-						var term = action.payload.dwTerm[i];
+						var term = relevantTerms[i];
 						var startDate = new Date(parseInt(term.beginDate));
 						var endDate = new Date(parseInt(term.endDate));
 
@@ -165,7 +178,9 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							'caption': "",
 							'link': ""
 						}
-						eventsList[eventListLength++] = new Event(eventData);
+						if (Date.now() > startDate.getTime()) {
+							eventsList[eventListLength++] = new Event(eventData);
+						}
 
 						// End term notice
 						eventData = {
@@ -176,7 +191,9 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							'caption': "",
 							'link': ""
 						}
-						eventsList[eventListLength++] = new Event(eventData);
+						if (Date.now() > endDate.getTime()) {
+							eventsList[eventListLength++] = new Event(eventData);
+						}
 
 						if (term.maintenanceDate1Start != null) {
 							var upload1Start = new Date(parseInt(term.maintenanceDate1Start));
@@ -191,7 +208,9 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 								'caption': "",
 								'link': ""
 							}
-							eventsList[eventListLength++] = new Event(eventData);
+							if (Date.now() > upload1Start.getTime()) {
+								eventsList[eventListLength++] = new Event(eventData);
+							}
 
 
 							// End Update I notice
@@ -203,7 +222,9 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 								'caption': "",
 								'link': ""
 							}
-							eventsList[eventListLength++] = new Event(eventData);
+							if (Date.now() > upload1End.getTime()) {
+								eventsList[eventListLength++] = new Event(eventData);
+							}
 						}
 
 						if (term.maintenanceDate2Start != null) {
@@ -219,7 +240,9 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 								'caption': "",
 								'link': ""
 							}
-							eventsList[eventListLength++] = new Event(eventData);
+							if (Date.now() > upload2Start.getTime()) {
+								eventsList[eventListLength++] = new Event(eventData);
+							}
 
 
 							// End Update II notice
@@ -231,14 +254,18 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 								'caption': "",
 								'link': ""
 							}
-							eventsList[eventListLength++] = new Event(eventData);
+							if (Date.now() > upload2End.getTime()) {
+								eventsList[eventListLength++] = new Event(eventData);
+							}
 						}
 
 					} // end for
 
+					eventsList.sort(function(a, b) {
+						return new Date(b.date).getTime() - new Date(a.date).getTime();
+					});
 					events.list = eventsList;
-					console.log("These are the events");
-					console.log(events);
+
 					return events;
 				default:
 					return events;
