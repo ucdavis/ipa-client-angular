@@ -38,34 +38,43 @@
 		<div class="unavailability-term-container" style="flex: 1 1 200px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
 			<!-- confirmed preferences -->
 			<div class="approved-preference-container">
-				<div ng-if="preference.approved" class="approved-preference preference-display alert-info alert" data-toggle="tooltip" data-placement="top" data-original-title="Preference has been approved" data-container="body"
+				<div ng-if="preference.approved" class="teaching-call-approved-preference alert-info alert"
 				ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
-					{{getDescription(preference)}}
-				</div>
-			</div>
-			<ol sortable drag-end="updateAssignmentsOrder(sortedIds, term)" class="sortable-list unapproved-preference-container">
-				<!-- unconfirmed preferences -->
-				<!-- id values needed to calculate the reordering of preferences in this specific format -->
-				<li style="display:flex; margin-bottom: 13px;" ng-if="!preference.approved" id="pref-{{ preference.id }}" class="sortable"
-				ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
-					<div style="flex: 0 0 auto; display: flex; align-items: center; padding-bottom: 5px;">
-						<i style="flex: 0 0 auto;" class="glyphicon glyphicon-option-vertical preference-sortable-handle"></i>
-					</div>
-					<div term-preferences
-					instructor-id="view.state.userInterface.instructorId"
-					preference="preference"
-					on-select="addPreference(preference, courseOffering, isBuyout, isSabbatical, isCourseRelease)"
-					on-delete="removePreference(preference)"
-					on-update="refreshPreferences()"
-					schedule-id="activeTeachingCall.scheduleId"
-					term="term"
-					ng-if="!preference.approved"></div>
-					<div style="display: flex; justify-content: center; align-items: center;">
-						<div style="margin-right: -20px;">
-							{{preference.priority}}
+					<div style="display: flex; height: 100%: justify-content: center; align-items: center;">
+						<div>
+							{{getDescription(preference)}}
 						</div>
 					</div>
-				</li>
+				</div>
+			</div>
+			<ol sortable drag-end="updateAssignmentsOrder(sortedIds, term)" class="sortable-list teaching-call-form-unapproved-preference-container">
+					<li id="pref-{{ preference.id }}" ng-if="!preference.approved" class="teaching-call-form-unapproved-preference"
+					ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
+
+						<div style="flex: 0 0 auto; display: flex; align-items: center; padding-bottom: 5px;">
+							<i style="flex: 0 0 auto;" class="glyphicon glyphicon-option-vertical preference-sortable-handle"></i>
+						</div>
+
+						<div class="teaching-call-form-unapproved-preference-panel" style="display: flex; justify-content: space-around;">
+							<div style="flex 1 0 0px;">
+							</div>
+							<div style="flex 1 0 0px;">
+								{{getDescription(preference)}}
+							</div>
+							<div ng-if="preference && !preference.approved" confirm-button="removePreference(preference)"
+								message="Are you sure you want to delete this preference"
+								yes="Delete" no="Cancel" placement="bottom"
+								confirm-is-shown="status.confirmIsOpen"
+								class="delete-preference-button glyphicon glyphicon-remove sortable-item-button close" style="font-size: 14px; flex 1 0 0px;"
+								aria-hidden="true" style="width: 10%;" uib-tooltip="Remove"
+								tooltip-placement="right"></div>
+						</div>
+						<div style="flex: 0 0 20px; display: flex; justify-content: center; align-items: center;">
+							<div>
+								{{preference.priority}}
+							</div>
+						</div>
+					</li>
 
 				<li ng-if="!teachingCallResponse[term].isComplete"
 					term-preferences courses="courseOfferings[term]" term="term" schedule-id="teachingCall.scheduleId"

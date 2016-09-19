@@ -278,7 +278,6 @@ ol.sortable-list {
 ol.sortable-list > li {
 	position: relative;
 	list-style: none;
-	padding-left: 1em;
 }
 
 ol.sortable-list > li:not(.unsortable) {
@@ -392,6 +391,7 @@ ol.sortable-list>li .term-preference-dropdown {
 	text-align: center;
 }
 
+
 .preference-display {
 	margin-bottom: 5px;
 	height: 31px;
@@ -404,6 +404,7 @@ ol.sortable-list>li .term-preference-dropdown {
 
 .preference-display-detail {
 	text-align: center;
+	justify-content: center;
 	flex: 1 1 auto;
 }
 
@@ -425,15 +426,28 @@ ol.sortable-list>li .term-preference-dropdown {
 .approved-preference:hover {
 	background-color: #d9edf7;
 	height: 30px;
-	padding: 6px;
+	padding-left: 6px;
+	padding-right: 6px;
 	width: 180px;
-	margin-bottom: 20px;
+	margin-top: 10px;
+}
+
+.teaching-call-approved-preference {
+	background-color: #d9edf7;
+	height: 30px;
+	padding-left: 6px;
+	padding-right: 6px;
+	width: 180px;
+	margin-top: 10px;
+	margin-bottom: 0px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
 .preference-assignment-dropdown {
-	width: 180px;
-	height: 30px;
-	padding-left: 6px;
+	padding-top: 10px;
 	padding-right: 6px;
 	padding-bottom: 6px;
 }
@@ -572,8 +586,9 @@ ol.sortable-list>li .term-preference-dropdown {
 }
 
 .approved-preference-container {
-	padding-top: 10px;
 	margin-bottom: 0px;
+	text-align: center;
+	justify-content: center;
 }
 
 .approved-preference-container,
@@ -585,7 +600,6 @@ ol.sortable-list>li .term-preference-dropdown {
 
 .delete-preference-button {
 	opacity: 1 !important;
-	margin-right: 10px;
 }
 
 .term-preference-dropdown {
@@ -611,7 +625,7 @@ ol.sortable-list>li .term-preference-dropdown {
 }
 
 .ui-state-highlight {
-	height: 50px; /* preserve space for preference while dragging */
+	height: 40px; /* preserve space for preference while dragging */
 }
 
 /* Teaching Call Status ------------------------------------ */
@@ -764,4 +778,33 @@ li.active-term .dropdown-term-row {
 
 .invisible {
 	visibility:hidden;
+}
+
+.teaching-call-form-unapproved-preference {
+	padding-left: 6px;
+	padding-right: 6px;
+	margin-top: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.teaching-call-form-unapproved-preference-panel {
+	flex: 0 0 auto;
+	border-radius: 4px;
+	border: 1px solid #adadad;
+	background-color: white;
+	width: 182px;
+	height: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 5px;
+}
+
+.teaching-call-form-unapproved-preference-container {
+	margin-bottom: 0px;
+	display: flex;
+	flex-direction: column;
+	align-items:center;
 }
