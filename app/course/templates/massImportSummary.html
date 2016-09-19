@@ -1,0 +1,34 @@
+<div class="panel panel-primary panel-highlight">
+	<div class="panel-heading">
+		<div class="panel-title">
+			<h4>Add Multiple Courses</h4>
+		</div>
+	</div>
+	<div class="panel-body no-padding">
+		<div class="col-sm-12 import-summary text-center" ng-show="view.state.uiState.massImportInProgress">
+			Importing, please wait...
+		</div>
+		<div class="col-sm-12 import-summary text-center" ng-hide="view.state.uiState.massImportInProgress">
+			<div ng-hide="view.state.courses.importList">
+				Please search for courses to import
+			</div>
+			<div ng-show="view.state.courses.importList">
+				<div ng-hide="(view.state.courses.importList | filter:{import:true}).length">
+					Please select courses to import
+				</div>
+				<div ng-show="(view.state.courses.importList | filter:{import:true}).length">
+					<p>
+						{{ (view.state.courses.importList | filter:{import:true}).length }}
+						out of {{ view.state.courses.importList.length }} courses
+						with subject code <strong>{{ view.state.uiState.massImportCode }}</strong><br />
+						offered in <strong>{{ view.state.uiState.massImportYear.yearToAcademicYear() }}</strong>
+						will be imported.
+					</p><p>
+						Please review the list displayed on the schedule table.
+					</p>
+					<button class="btn btn-primary" ng-click="importCoursesAndSectionGroups()">Import courses</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

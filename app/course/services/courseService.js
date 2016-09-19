@@ -8,7 +8,7 @@
  * Service in the courseApp.
  * courseApp specific api calls.
  */
-courseApp.factory("courseService", this.courseService = function($http, $q) {
+courseApp.factory("courseService", this.courseService = function($http, $q, $window) {
 	return {
 		getScheduleByWorkgroupIdAndYear: function(workgroupId, year, enableUnpublishedCourses) {
 			var deferred = $q.defer();
@@ -16,6 +16,21 @@ courseApp.factory("courseService", this.courseService = function($http, $q) {
 
 			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + showDoNotPrintParam, { withCredentials: true })
 			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		downloadSchedule: function (workgroupId, year, enableUnpublishedCourses) {
+			var deferred = $q.defer();
+			var showDoNotPrintParam = enableUnpublishedCourses ? "?showDoNotPrint=true" : "";
+
+			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel" + showDoNotPrintParam, { withCredentials: true })
+			.success(function(payload) {
+				$window.location.href = payload.redirect;
 				deferred.resolve(payload);
 			})
 			.error(function() {

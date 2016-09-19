@@ -62,7 +62,10 @@
 		</div>
 		<div class="section-group-container">
 			<div class="section-group-list" ng-class="{ 'collapsed': view.state.uiState.selectedSectionGroupId }">
-				<ul>
+				<div ng-hide="view.state.sectionGroups.ids" class="loading-center">
+					<spinner></spinner>
+				</div>
+				<ul ng-show="view.state.sectionGroups.ids">
 					<li class="section-group-item" ng-repeat="sectionGroupId in view.state.sectionGroups.ids track by $index"
 						ng-init="sg = view.state.sectionGroups.list[sectionGroupId];"
 						ng-show="view.state.courses.list[sg.courseId].matchesTagFilters || view.state.filters.enabledTagIds.length == 0"
@@ -109,8 +112,8 @@
 			</div>
 			<div class="activity-container" ng-class="{ 'collapsed': !view.state.uiState.selectedSectionGroupId }">
 				<div class="activity-list" ng-class="{ 'collapsed': view.state.uiState.selectedActivityId }">
-					<div ng-hide="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds" class="loading-section-group">
-						loading...
+					<div ng-hide="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds" class="loading-center">
+						<spinner></spinner>
 					</div>
 					<div ng-show="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds">
 
@@ -306,6 +309,9 @@
 				</div>
 			</div>
 			<div class="activity-calendar">
+				<div ng-hide="view.state.sectionGroups.ids" class="loading-center">
+					<spinner></spinner>
+				</div>
 				<term-calendar></term-calendar>
 			</div>
 		</div>

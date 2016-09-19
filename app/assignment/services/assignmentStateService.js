@@ -30,6 +30,9 @@ assignmentApp.service('assignmentStateService', function (
 						coursesList[course.id] = course;
 						coursesList[course.id].isFiltered = false;
 						coursesList[course.id].isHidden = isCourseSuppressed(course);
+						// Set all courses to true initially as no tag filters are set
+						coursesList[course.id].matchesTagFilters = true;
+
 						// Add the termCode:sectionGroupId pairs
 						coursesList[course.id].sectionGroupTermCodeIds = {};
 
@@ -47,11 +50,27 @@ assignmentApp.service('assignmentStateService', function (
 				case UPDATE_TABLE_FILTER:
 					var query = action.payload.query;
 
-					// Specify the properties that we are interested in searching
-					var courseKeyList = ['courseNumber', 'sequencePattern', 'subjectCode', 'title'];
+					// Apply search filters
+					if (query.length > 0) {
+						// Specify the properties that we are interested in searching
+						var courseKeyList = ['courseNumber', 'sequencePattern', 'subjectCode', 'title'];
 
-					_object_search_properties(query, courses, courseKeyList);
-
+						_object_search_properties(query, courses, courseKeyList);
+					}
+					return courses;
+				case UPDATE_TAG_FILTERS:
+					// Set the course.isFiltered flag to false if any tag matches the filters
+					courses.ids.forEach(function (courseId) {
+						// Display all courses if none of the tags is checked
+						if (action.payload.tagIds.length == 0) {
+							courses.list[courseId].matchesTagFilters = true;
+						} else {
+							courses.list[courseId].matchesTagFilters = courses.list[courseId].tagIds
+								.some(function (tagId) {
+									return action.payload.tagIds.indexOf(tagId) >= 0;
+								});
+						}
+					});
 					return courses;
 				default:
 					return courses;
@@ -112,6 +131,15 @@ assignmentApp.service('assignmentStateService', function (
 						teachingAssignments.ids.splice(index, 1);
 					}
 					return teachingAssignments;
+				case UPDATE_TEACHING_ASSIGNMENT_ORDER:
+					var sortedTeachingAssignmentIds = action.payload.sortedTeachingAssignmentIds;
+
+					for (var i = 0; i < sortedTeachingAssignmentIds.length; i++) {
+						var id = sortedTeachingAssignmentIds[i];
+						teachingAssignments.list[id].priority = i + 1;
+					}
+
+					return teachingAssignments;
 				default:
 					return teachingAssignments;
 			}
@@ -159,6 +187,7 @@ assignmentApp.service('assignmentStateService', function (
 
 					teachingCalls.list[teachingCall.id] = teachingCall;
 					teachingCalls.ids.push(teachingCall.id);
+
 					return teachingCalls;
 				default:
 					return teachingCalls;
@@ -580,6 +609,34 @@ assignmentApp.service('assignmentStateService', function (
 					return sectionGroups;
 			}
 		},
+		_filterReducers: function (action, filters) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					// A filter is 'enabled' if it is checked, i.e. the category it represents
+					// is selected to be shown/on/active.
+					filters = {
+						enabledTagIds: [],
+						enableUnpublishedCourses: false
+					};
+					// Here is where we might load stored data about what filters
+					// were left on last time.
+					return filters;
+				case UPDATE_TAG_FILTERS:
+					filters.enabledTagIds = action.payload.tagIds;
+					return filters;
+				case TOGGLE_UNPUBLISHED_COURSES:
+					filters.enableUnpublishedCourses = !filters.enableUnpublishedCourses;
+					filters.enabledTagIds = [];
+					return filters;
+				case TOGGLE_COMPLETED_INSTRUCTORS:
+					filters.showCompletedInstructors = action.payload.showCompletedInstructors;
+					return filters;
+				default:
+					return filters;
+			}
+		},
 		_userInterfaceReducers: function (action, userInterface) {
 			var scope = this;
 
@@ -622,6 +679,10 @@ assignmentApp.service('assignmentStateService', function (
 
 					return userInterface;
 				case SWITCH_MAIN_VIEW:
+					if (userInterface == undefined) {
+						userInterface = {};
+					}
+
 					userInterface.showCourses = action.payload.showCourses;
 					userInterface.showInstructors = action.payload.showInstructors;
 					return userInterface;
@@ -660,9 +721,9 @@ assignmentApp.service('assignmentStateService', function (
 			newState.teachingCalls = scope._teachingCallReducers(action, scope._state.teachingCalls);
 			newState.scheduleInstructorNotes = scope._scheduleInstructorNoteReducers(action, scope._state.scheduleInstructorNotes);
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
-			newState.teachingCalls = scope._teachingCallReducers(action, scope._state.teachingCalls);
 			newState.activeTeachingCall = scope._activeTeachingCallReducers(action, scope._state);
 			newState.tags = scope._tagReducers(action, scope._state.tags);
+			newState.filters = scope._filterReducers(action, scope._state.filters);
 
 			scope._state = newState;
 

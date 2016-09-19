@@ -5,6 +5,7 @@ workgroupApp.config(function ($routeProvider) {
 		.when("/:workgroupId/:year", {
 			templateUrl: "WorkgroupCtrl.html",
 			controller: "WorkgroupCtrl",
+			reloadOnSearch: false,
 			resolve: {
 				payload: WorkgroupCtrl.getPayload
 			}
@@ -32,3 +33,4 @@ var REMOVE_USER = "REMOVE_USER";
 var ADD_USER_ROLE = "ADD_USER_ROLE";
 var REMOVE_USER_ROLE = "REMOVE_USER_ROLE";
 var INIT_WORKGROUP = "INIT_WORKGROUP";
+var SEARCH_USERS = "SEARCH_USERS";

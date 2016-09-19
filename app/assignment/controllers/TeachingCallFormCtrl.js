@@ -17,7 +17,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				$scope.view.state = data;
-				if ($scope.view.state.activeTeachingCall.scheduledCourses == null) {
+				if ($scope.view.state.activeTeachingCall && $scope.view.state.activeTeachingCall.scheduledCourses == null) {
 					$scope.prepareTeachingCall();
 				}
 
@@ -28,16 +28,35 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 			// Convert teachingCall active terms 'termsBlob' to array
 			$scope.getActiveTerms = function() {
 				var sortedTerms = ['05','06','07','08','09','10','01','02','03'];
-				var termsBlob = $scope.view.state.activeTeachingCall.termsBlob;
+				var terms = $scope.termsBlobToTerms($scope.view.state.activeTeachingCall.termsBlob);
 				var teachingCallTerms = [];
 
 				for (var i = 0; i < sortedTerms.length; i++) {
-					if (termsBlob.charAt(i) == 1) {
+					if (terms.indexOf(sortedTerms[i]) > -1) {
 						teachingCallTerms.push(sortedTerms[i]);
 					}
 				}
 
 				return teachingCallTerms;
+			}
+
+			// Decode termsBlob into two digit terms (example: '02', '04')
+			$scope.termsBlobToTerms = function(termsBlob) {
+				var decodedTermsBlob = [];
+				for (var j = 0; j < termsBlob.length; j++) {
+					var isTermInTeachingCall = parseInt(termsBlob.charAt(j));
+
+					if (isTermInTeachingCall) {
+						term = j + 1;
+						term = term.toString();
+						if (term.toString().length == 1) {
+							term = "0" + term;
+						}
+
+						decodedTermsBlob.push(term);
+					}
+				}
+				return decodedTermsBlob;
 			}
 
 			$scope.getTermName = function(term) {
@@ -182,15 +201,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 
 				return $scope.view.state.scheduleTermStates.list[termCode].isLocked;
 			};
-/*
-			$scope.refreshPreferences = function() {
-				$scope.termPreferences = teachingPreferenceService.retrieveInstancesSortedByTerm();
-			};
 
-			$scope.autoSave = function() {
-				$scope.viewState.lastSaved = moment().format('LTS');
-			};
-*/
 			$scope.prepareTeachingCall = function() {
 				var activeTeachingCall = $scope.view.state.activeTeachingCall;
 

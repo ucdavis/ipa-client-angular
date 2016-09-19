@@ -41,7 +41,7 @@ sharedApp
 		function ($httpProvider, $compileProvider, IdleProvider, KeepaliveProvider, $locationProvider) {
 			// Add CSRF token to all requests
 			var csrfHeader = $('meta[name=csrf-header]').attr('content');
-			if(csrfHeader === undefined) {
+			if (csrfHeader === undefined) {
 				console.warn("CSRF meta tag not found.");
 			} else {
 				$httpProvider.defaults.headers.common[csrfHeader] = $('meta[name=csrf-token]').attr('content');
@@ -89,20 +89,32 @@ sharedApp
 	// Listen to toast requests
 	.run(['$rootScope',
 		function ($rootScope) {
+
+			// Default options
+			toastr.options = {
+				"preventDuplicates": true
+			};
+
 			$rootScope.$on('toast', function (event, data) {
+				var title = data.title ? data.title : '';
+				var message = data.message ? data.message : '';
+				var options = data.options ? data.options : {};
+
 				switch (data.type) {
 					case "SUCCESS":
-						toastr.success(data.message);
+						toastr.success(title, message, options);
 						break;
 					case "ERROR":
-						toastr.error(data.message);
+						toastr.error(title, message, options);
 						break;
 					case "WARNING":
-						toastr.warning(data.message);
+						toastr.warning(title, message, options);
 						break;
 					default:
-						toastr.info(data.message);
+						toastr.info(title, message, options);
 						break;
 				};
 			});
-	}]);
+
+		}]
+	);

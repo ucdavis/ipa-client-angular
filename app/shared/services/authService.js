@@ -10,13 +10,6 @@
 angular.module('sharedApp')
 	.service('authService', function ($http, $window, $q, $location, $rootScope) {
 		return {
-			activeWorkgroup: {},
-			activeYear: 0,
-			userWorkgroups: [],
-			displayName: "",
-			termStates: [],
-			isAdmin: 0,
-
 			validateToken: function (token) {
 				var deferred = $q.defer();
 
@@ -76,7 +69,11 @@ angular.module('sharedApp')
 					$rootScope.$emit('sharedStateSet', this.getSharedState());
 					return false;
 				} else {
-					this.setSharedState(workgroupId, year, data.displayName, data.termStates);
+					var matchingRole = _.findWhere(data.userRoles, { workgroupId: Number(workgroupId) });
+					if (matchingRole) {
+						var workgroup = { id: matchingRole.workgroupId, name: matchingRole.workgroupName };
+						this.setSharedState(workgroup, year);
+					}
 				}
 
 				return true;
@@ -116,10 +113,10 @@ angular.module('sharedApp')
 			},
 
 			getUserRoles: function () {
-				var userRoles = null;
+				var userRoles = [];
 
 				try {
-					userRoles = JSON.parse(localStorage.getItem('userRoles'));
+					userRoles = JSON.parse(localStorage.getItem('userRoles')) || [];
 				} catch(err) {
 					console.log(err);
 				}
@@ -127,16 +124,43 @@ angular.module('sharedApp')
 				return userRoles;
 			},
 
+			getWorkgroups: function () {
+				var userRoles = this.getUserRoles();
+				return _.uniq(
+					userRoles
+						.filter(function (ur) { return ur.workgroupId > 0 })
+						.map(function (ur) { return { id: ur.workgroupId, name: ur.workgroupName } })
+					, 'id'
+				);
+			},
+
 			getTermStates: function () {
-				var termStates = null;
+				var termStates = [];
 
 				try {
-					termStates = JSON.parse(localStorage.getItem('termStates'));
+					termStates = JSON.parse(localStorage.getItem('termStates')) || [];
 				} catch(err) {
 					console.log(err);
 				}
 
 				return termStates;
+			},
+
+			isAdmin: function () {
+				userRoles = this.getUserRoles();
+				return userRoles.some(function(ur) { return ur.roleName == "admin" && ur.workgroupId == 0; });
+			},
+
+			getCurrentWorkgroup: function () {
+				return JSON.parse(localStorage.getItem('workgroup')) || {};
+			},
+
+			getCurrentUserRoles: function () {
+				var userRoles = this.getUserRoles();
+				var workgroup = this.getCurrentWorkgroup();
+				return userRoles
+					.filter(function (ur) { return ur.workgroupId == workgroup.id; })
+					.map(function (ur) { return ur.roleName; });
 			},
 
 			fallbackToDefaultUrl: function () {
@@ -152,7 +176,7 @@ angular.module('sharedApp')
 						$location.path(url);
 						return;
 					} else if (userRole.workgroupId == 0 && userRole.roleName == "admin") {
-						scope.isAdmin = true;
+						// scope.isAdmin = true;
 					}
 
 				}
@@ -172,60 +196,23 @@ angular.module('sharedApp')
 
 			},
 
-			setSharedStateWorkgroup: function (workgroup) {
-				this.activeWorkgroup = workgroup;
+			setSharedState: function (workgroup, year) {
+				localStorage.setItem('workgroup', JSON.stringify(workgroup));
+				localStorage.setItem('year', year || moment().year());
 				$rootScope.$emit('sharedStateSet', this.getSharedState());
-			},
-
-			setSharedState: function (workgroupId, year, displayName, termStates) {
-				var scope = this;
-				var userRoles = scope.getUserRoles();
-				scope.activeYear = year;
-				scope.displayName = displayName;
-				scope.termStates = scope.getTermStates();
-
-				for (var i = 0; i < userRoles.length; i++) {
-					userRole = userRoles[i];
-					var roles = [];
-					roles.push(userRole.roleName);
-
-					var workgroup = {
-						id: userRole.workgroupId,
-						name: userRole.workgroupName,
-						roles: roles
-					}
-
-					// Set as active workgroup if matches
-					if (userRole.workgroupId == workgroupId) {
-						scope.activeWorkgroup = workgroup;
-					}
-
-					// Set isAdmin
-					if (workgroup.id == 0 && userRole.roleName == "admin") {
-						scope.isAdmin = true;
-					} else if (_array_findById(scope.userWorkgroups, workgroup.id) == undefined) {
-						// Append to userWorkgroups iff workgroup is valid and avoid duplicates
-						scope.userWorkgroups.push(workgroup);
-					} else {
-						// Add role if necessary
-						var userWorkgroup = _array_findById(scope.userWorkgroups, workgroup.id);
-						userWorkgroup.roles.push(userRole.roleName);
-					}
-				}
-
-				$rootScope.$emit('sharedStateSet', scope.getSharedState());
 			},
 
 			getSharedState: function () {
 				return {
-					workgroup: this.activeWorkgroup,
-					year: this.activeYear,
-					userWorkgroups: this.userWorkgroups,
-					displayName: this.displayName,
-					termStates: this.termStates,
-					isAdmin: this.isAdmin,
-					activeWorkgroup: this.activeWorkgroup
-				}
+					workgroup: this.getCurrentWorkgroup(),
+					year: Number(localStorage.getItem('year')) || moment().year(),
+					allUserRoles: this.getUserRoles(),
+					currentUserRoles: this.getCurrentUserRoles(),
+					userWorkgroups: this.getWorkgroups(),
+					displayName: localStorage.getItem('displayName') || '',
+					termStates: this.getTermStates(),
+					isAdmin: this.isAdmin()
+				};
 			},
 
 			toggleSidebarState: function () {

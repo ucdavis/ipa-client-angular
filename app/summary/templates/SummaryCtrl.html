@@ -1,65 +1,204 @@
 <nav></nav>
+<div></div>
+<div ng-if="isAcademicPlanner()">
+	<div class="content-container">
+		<div class="main-content">
+			<div class="left-container padded-container">
+				<h2>Planning At A Glance</h2>
+				<br />
 
-<div class="main-content">
+				<ul class="cbp_tmtimeline">
+					<li>
+						<time class="cbp_tmtime" datetime="2015-11-04T18:30"><span class="hidden">04/11/2015</span> <span class="large">Now</span></time>
 
-	<div class="left-container padded-container">
-		<h2>Planning At A Glance</h2>
-		<br />
+						<div class="cbp_tmicon">
+							<i class="entypo-info"></i>
+						</div>
 
-		<ul class="cbp_tmtimeline">
-			<li>
-				<time class="cbp_tmtime" datetime="2015-11-04T18:30"><span class="hidden">04/11/2015</span> <span class="large">Now</span></time>
+						<div class="cbp_tmlabel empty">
+						</div>
+					</li>
 
-				<div class="cbp_tmicon">
-					<i class="entypo-info"></i>
-				</div>
+					<li>
+						<time class="cbp_tmtime"><span>12:00 AM</span> <span>8/21/2016</span></time>
 
-				<div class="cbp_tmlabel empty">
-				</div>
-			</li>
+						<div class="cbp_tmicon bg-success">
+							<i class="entypo-graduation-cap"></i>
+						</div>
 
-			<li ng-repeat="event in state.events.list">
-				<h1>{{event.title}}</h1>
-				<time class="cbp_tmtime"><span>{{event.time}}</span> <span>{{event.date}}</span></time>
+						<div class="cbp_tmlabel">
+							<h2>Fall Quarter Starts</h2>
+						</div>
+					</li>
 
-				<div class="cbp_tmicon bg-success" ng-show="event.type == 'school'">
-					<i class="entypo-graduation-cap"></i>
-				</div>
+					<li>
+						<time class="cbp_tmtime"><span>8:00 AM</span> <span>10/12/2016</span></time>
 
-				<div class="cbp_tmicon bg-secondary" ng-show="event.type == 'notice'">
-					<i class="entypo-bell"></i>
-				</div>
+						<div class="cbp_tmicon bg-secondary">
+							<i class="entypo-bell"></i>
+						</div>
 
-				<div class="cbp_tmicon bg-info" ng-show="event.type == 'teaching_call'">
-					<i class="entypo-users"></i>
-				</div>
+						<div class="cbp_tmlabel">
+							<h2>Fall Upload Available</h2>
+						</div>
+					</li>
 
-				<div class="cbp_tmlabel">
-					<h2>{{event.title}}</h2>
-					<p ng-show="event.caption">{{event.caption}}</p>
-					<p ng-show="event.link"><a href="http://ipa.ucdavis.edu/teachingCall/{{event.link}}">View the teaching call</a></p>
-				</div>
+					<li>
+						<time class="cbp_tmtime"><span>12:00 AM</span> <span>1/9/2017</span></time>
 
-			</li>
-		</ul>
-	</div>
-	<!-- Planning At A Glance -->
+						<div class="cbp_tmicon bg-success">
+							<i class="entypo-graduation-cap"></i>
+						</div>
 
-	<div class="right-container right-info padded-container">
-		<h3>Notices</h3>
-		<ul class="notifications-menu">
-			<li class="top">
-				<p class="small">
-					You have no notices.
-				</p>
-			</li>
-
-			<li style="height: 300px;">
-				<ul class="dropdown-menu-list scroller" tabindex="5001" style="overflow: hidden; outline: none;">
+						<div class="cbp_tmlabel">
+							<h2>Winter Quarter Starts</h2>
+						</div>
+					</li>
 
 				</ul>
-			</li>
+			</div>
 
-		</ul>
+			<div class="right-container right-info padded-container">
+				<h3>Notices</h3>
+				<ul class="notifications-menu">
+					<li class="top">
+						<p class="small">
+							You have no notices.
+						</p>
+					</li>
+
+					<li style="height: 300px;">
+						<ul class="dropdown-menu-list scroller" tabindex="5001" style="overflow: hidden; outline: none;">
+
+						</ul>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Instructor View -->
+<div ng-if="isInstructor() && !isAcademicPlanner()">
+	<div class="content-container">
+
+		<div class="course-status-header">
+			<h3>
+				Scheduled Courses {{ year }}-{{ nextYear }}
+			</h3>
+			<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
+		</div>
+
+		<div class="course-table-row">
+			<div class="course-table__header">
+				<div class="course-table__header-detail">
+					<div>
+						Teaching Call
+					</div>
+				</div>
+			</div>
+			<div class="course-table__header">
+				<div class="course-table__header-detail">
+					<div>
+						Due Date
+					</div>
+				</div>
+			</div>
+		</div><!-- table header -->
+
+		<!-- course table -->
+		<div class="course-table-row">
+			<div class="course-table__row-detail">
+				<div>
+					<a ng-href="{{ urlRoot }}/assignments/{{ workgroupId }}/{{ year }}/teachingCall">
+						Link to Teaching Call
+					</a>
+				</div>
+			</div>
+			<div class="course-table__row-detail">
+				October 24th, 2016
+			</div>
+		</div>
+
+		<div ng-repeat="term in view.state.instructorCourses.terms">
+			<div class="course-status-sub-header">
+				<h5>{{ getTermName(term) }}</h5>
+			</div>
+			<!-- table headers -->
+			<div class="course-table-row">
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Course
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Location
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Time
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Activity
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Teaching Assistant(s)
+						</div>
+					</div>
+				</div>
+			</div><!-- table header -->
+
+			<!-- course table -->
+			<div class="course-table-row" ng-repeat="course in view.state.instructorCourses.list[term]">
+				<div class="course-table__row-detail">
+					<div class="course-table__row-detail-header">
+						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
+					</div>
+				</div>
+				<div class="course-table__row-detail-middle">
+					<div class="meeting-inner" ng-repeat="meeting in course.meetings">
+						<div class="course-table__row-detail-location" style="flex: 1 1 0px; display: flex; justify-content: center;">
+							<div>
+								{{ meeting.location }}
+							</div>
+						</div>
+						<div style="flex: 1 1 0px; display: flex; justify-content: left; padding-left: 50px;">
+							<span class="meeting-days">
+								{{ dayIndicatorToDayCodes(meeting.dayIndicator) }}&nbsp;
+							</span>
+							<span class="meeting-time">
+								{{ meeting.startTime.toStandardTime() }}-{{ meeting.endTime.toStandardTime() }}
+							</span>
+						</div>
+						<div style="flex: 1 1 0px; display: flex; justify-content: center;">
+							{{ meeting.activityType }}
+						</div>
+					</div>
+				</div>
+				<div class="course-table__row-detail">
+					None Assigned
+				</div>
+			</div>
+		</div>
+		<br />
+		<br />
+		<br />
+		<br />
 	</div>
 </div>

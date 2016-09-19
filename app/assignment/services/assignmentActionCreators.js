@@ -43,6 +43,15 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			};
 			assignmentStateService.reduce(action);
 		},
+		updateTagFilters: function (tagIds) {
+			var action = {
+				type: UPDATE_TAG_FILTERS,
+				payload: {
+					tagIds: tagIds
+				}
+			};
+			assignmentStateService.reduce(action);
+		},
 		updateAssignmentsOrder: function (sortedTeachingAssignmentIds, scheduleId) {
 			assignmentService.updateAssignmentsOrder(sortedTeachingAssignmentIds, scheduleId).then(function (sortedTeachingAssignmentIds) {
 				$rootScope.$emit('toast', {message: "Updated Assignment Priority", type: "SUCCESS"});
@@ -232,7 +241,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 		},
 		createTeachingCall: function (workgroupId, year, teachingCallConfig) {
 			assignmentService.createTeachingCall(workgroupId, year, teachingCallConfig).then(function (teachingCall) {
-				$rootScope.$emit('toast', {message: "Updated reponse", type: "SUCCESS"});
+				$rootScope.$emit('toast', {message: "Started Teaching Call", type: "SUCCESS"});
 				var action = {
 					type: CREATE_TEACHING_CALL,
 					payload: {
@@ -250,6 +259,15 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				payload: {
 					showInstructors: false,
 					showCourses: true
+				}
+			};
+			assignmentStateService.reduce(action);
+		},
+		toggleDisplayCompletedInstructors: function (showCompletedInstructors) {
+			var action = {
+				type: TOGGLE_COMPLETED_INSTRUCTORS,
+				payload: {
+					showCompletedInstructors: showCompletedInstructors
 				}
 			};
 			assignmentStateService.reduce(action);

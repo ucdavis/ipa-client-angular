@@ -7,8 +7,8 @@
  * # AdminCtrl
  * Controller of the ipaClientAngularApp
  */
-adminApp.controller('AdminCtrl', ['$scope', '$rootScope', '$routeParams', 'adminActionCreators',
-		this.AdminCtrl = function ($scope, $rootScope, $routeParams, adminActionCreators) {
+adminApp.controller('AdminCtrl', ['$scope', '$rootScope', '$routeParams', 'adminActionCreators', 'authService',
+		this.AdminCtrl = function ($scope, $rootScope, $routeParams, adminActionCreators, authService) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year || moment().year();
 			$scope.view = {};
@@ -27,6 +27,10 @@ adminApp.controller('AdminCtrl', ['$scope', '$rootScope', '$routeParams', 'admin
 
 			$scope.addWorkgroup = function () {
 				adminActionCreators.addWorkgroup($scope.view.state.workgroups.newWorkgroup);
+			};
+
+			$scope.setActiveWorkgroup = function (workgroupId, year) {
+				authService.setSharedState($scope.view.state.workgroups.list[workgroupId], year);
 			};
 		}
 ]);

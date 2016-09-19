@@ -30,6 +30,9 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 				assignmentActionCreators.toggleTermFilter(id);
 			}
 
+			$scope.toggleDisplayCompletedInstructors = function() {
+				assignmentActionCreators.toggleDisplayCompletedInstructors(!$scope.view.state.filters.showCompletedInstructors);
+			}
 			$scope.approveInstructorAssignment = function(teachingAssignmentId) {
 				var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
 				assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
@@ -61,6 +64,19 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 			$scope.startFilter = function(query) {
 				assignmentActionCreators.updateTableFilter(query);
 			}
+
+			$scope.toggleTag = function (tagId) {
+				var tagFilters = $scope.view.state.filters.enabledTagIds;
+				var tagIndex = tagFilters.indexOf(tagId);
+
+				if (tagIndex < 0) {
+					tagFilters.push(tagId);
+				} else {
+					tagFilters.splice(tagIndex, 1);
+				}
+
+				assignmentActionCreators.updateTagFilters(tagFilters);
+			};
 
 			// Launches TeachingCall Config modal and controller
 			$scope.openTeachingCallConfig = function() {

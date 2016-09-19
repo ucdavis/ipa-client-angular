@@ -8,7 +8,8 @@
  * Service in the courseApp.
  * Central location for sharedState information.
  */
-summaryApp.service('summaryStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Section, Tag, Event) {
+
+summaryApp.service('summaryStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Section, Tag, Event, Activity) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -67,8 +68,9 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 
 					var sectionsList = {};
 					var length = action.payload.sections ? action.payload.sections.length : 0;
-					for (var i = 0; i < length; i++) {
-						var sectionData = action.payload.sectionGroups[i];
+					for (var i = 0; i < action.payload.sections.length; i++) {
+						var sectionData = action.payload.sections[i];
+
 						sectionsList[sectionData.id] = new SectionGroup(sectionData);
 						sections.ids.push(sectionData.id);
 					}
@@ -241,6 +243,73 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 					return events;
 			}
 		},
+		_instructorCourses: function (action, instructorCourses) {
+			var scope = this;
+			var data = action.payload;
+
+			switch (action.type) {
+				case INIT_STATE:
+					var instructorCoursesByTermCode = {};
+
+					terms = [];
+
+					data.sectionGroups.forEach( function(sectionGroup) {
+						var termCode = sectionGroup.termCode;
+
+						// If this is the first sectionGroup of a termCode
+						if (terms.indexOf(termCode) == -1 ) {
+							terms.push(termCode);
+							instructorCoursesByTermCode[termCode] = [];
+						}
+
+						var slotSectionGroup = {};
+
+						slotSectionGroup.title = "";
+
+						data.courses.forEach( function (course) {
+							if (sectionGroup.courseId == course.id) {
+								slotSectionGroup.title = course.title;
+								slotSectionGroup.subjectCode = course.subjectCode;
+								slotSectionGroup.courseNumber = course.courseNumber;
+							}
+						});
+
+						slotSectionGroup.meetings = [];
+
+						// Look for meeting data from shared activities
+						data.activities.forEach( function(activity) {
+							activity = new Activity(activity);
+
+							if (activity.sectionGroupId == sectionGroup.id) {
+								var slotMeeting = {};
+
+								slotMeeting.startTime = activity.startTime;
+								slotMeeting.endTime = activity.endTime;
+								if (activity.locationDescription.length == 0) {
+									slotMeeting.location = "To Be Announced";
+								} else {
+									slotMeeting.location = activity.locationDescription;
+								}
+								slotMeeting.activityType = activity.getCodeDescription();
+								slotMeeting.dayIndicator = activity.dayIndicator;
+								slotMeeting.id = activity.id;
+
+								slotSectionGroup.meetings.push(slotMeeting);
+							}
+						});
+
+						instructorCoursesByTermCode[termCode].push(slotSectionGroup);
+					});
+
+					var instructorCourses = {};
+					instructorCourses.terms = terms;
+					instructorCourses.list = instructorCoursesByTermCode;
+
+					return instructorCourses;
+				default:
+					return instructorCourses;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -254,15 +323,11 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
 			newState.activities = scope._activityReducers(action, scope._state.activities);
 			newState.events = scope._eventReducers(action, scope._state.events);
+			newState.instructorCourses = scope._instructorCourses(action, scope._state.instructorCourses);
 
 			scope._state = newState;
-			$rootScope.$emit('summaryStateChanged', {
-				state: scope._state,
-				actionType: action.type
-			});
 
-			console.debug("Summary state updated:");
-			console.debug(scope._state, action.type);
+			$rootScope.$emit('summaryStateChanged',scope._state);
 		}
 	}
 });

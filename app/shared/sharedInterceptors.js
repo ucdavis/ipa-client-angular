@@ -3,27 +3,37 @@ var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 	return {
 		request: function(config) {
 			reqCount++;
-			if ($rootScope.responseTimer) {
-				$timeout.cancel($rootScope.responseTimer);
-			}
-			$rootScope.responseTimer = $timeout( function() {
-				$rootScope.slowResponse = true;
-			}, 6000);
+			if ($rootScope.slowResTime) { $timeout.cancel($rootScope.slowResTime); }
+			if ($rootScope.timeOutTimer) { $timeout.cancel($rootScope.timeOutTimer); }
+
+			var slowResDelay = 5000; // 5 seconds
+			var timeOutDelay = 30000; // 30 seconds
+
+			$rootScope.slowResTime = $timeout(function () {
+				$rootScope.$emit('toast', {message: "Server appears to be slow. Please standby...", type: "WARNING", options: {timeOut: timeOutDelay - slowResDelay} });
+			}, slowResDelay);
+
+			$rootScope.timeOutTimer = $timeout(function () {
+				toastr.clear();
+				$rootScope.$emit('toast', {message: "Server apears to have failed. Please try again.", type: "ERROR", options: {timeOut: 0, closeButton: true} });
+			}, timeOutDelay);
 
 			return config;
 		},
-		response: function(response) {
+		response: function (response) {
 			if (--reqCount === 0) {
-				$timeout.cancel($rootScope.responseTimer);
-				$rootScope.slowResponse = false;
+				$timeout.cancel($rootScope.slowResTime);
+				$timeout.cancel($rootScope.timeOutTimer);
+				toastr.clear();
 			}
 
 			return response;
 		},
 		responseError: function(rejection) {
 			if (--reqCount === 0) {
-				$timeout.cancel($rootScope.responseTimer);
-				$rootScope.slowResponse = false;
+				$timeout.cancel($rootScope.slowResTime);
+				$timeout.cancel($rootScope.timeOutTimer);
+				toastr.clear();
 			}
 
 			// Redirect 'Access Denied' responses to /accessDenied
@@ -45,7 +55,7 @@ var tokenValidatorInterceptor = function ($q, $injector, $rootScope) {
 				var authService = $injector.get('authService');
 				authService.validate().then(function(){
 					// $rootScope.toast.message = "This is inconcieveable";
-					$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+					$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"});
 				});
 			}
 

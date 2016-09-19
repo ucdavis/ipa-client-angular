@@ -37,11 +37,45 @@ sharedApp.directive("nav", this.nav = function($location, $rootScope, authServic
 			};
 
 			scope.getYearTerms = function () {
+				if (!scope.sharedState.termStates) { return; }
+
 				var activeTerms = scope.sharedState.termStates.map(function (termState) {
 					return termState.termCode;
 				});
 				return scope.termDefinitions.filter(function (term) {
 					return activeTerms.indexOf(term.code) >= 0;
+				});
+			};
+
+			/**
+			 * Return true only if the user is viewing a workgroup they are not part of
+			 * (happens if the current user is admin and managing a workgroup they're not in)
+			 */
+			scope.hasExtraWorkgroup = function () {
+				if (scope.sharedState.userWorkgroups == undefined) { return false; }
+
+				return scope.sharedState.userWorkgroups
+					.some(function (w) { return w.id == scope.sharedState.workgroup.id }) == false;
+			};
+
+			/**
+			 * Checks if user has any of the given roles for the current active workgroup
+			 */
+			scope.userHasRoles = function (roles) {
+				if (scope.sharedState.isAdmin) { return true; }
+
+				if (roles instanceof Array == false) { return false; }
+				return roles.some(function (r) {
+					return scope.sharedState.currentUserRoles.indexOf(r) >= 0;
+				});
+			};
+
+			scope.userHasRolesForWorkgroup = function (roles, workgroup) {
+				if (scope.sharedState.isAdmin) { return true; }
+
+				if (roles instanceof Array == false) { return false; }
+				return scope.sharedState.allUserRoles.some(function (ur) {
+					return ur.workgroupId == workgroup.id && roles.indexOf(ur.roleName) >= 0;
 				});
 			};
 		}
