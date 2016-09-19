@@ -145,7 +145,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							'time': startDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
 							'date': startDate.toLocaleDateString(),
 							'caption': teachingCall.message,
-							'link': "/" + action.workgroupId + "/" + action.year + "/teachingCall"
+							'link': "/assignments/" + action.workgroupId + "/" + action.year + "/teachingCall"
 						}
 
 						// Only add the event if it happens in the future
@@ -161,7 +161,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							'time': endDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
 							'date': endDate.toLocaleDateString(),
 							'caption': "",
-							'link': "/" + action.workgroupId + "/" + action.year + "/teachingCallStatus"
+							'link': "/assignments/" + action.workgroupId + "/" + action.year + "/teachingCall"
 						}
 						if (endDate.getTime() > Date.now()) {
 							eventsList[eventListLength++] = new Event(eventData);
