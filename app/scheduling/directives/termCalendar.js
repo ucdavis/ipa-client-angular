@@ -167,7 +167,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				if (sectionGroup.teachingCallResponseIds) {
 					sectionGroup.teachingCallResponseIds.forEach(function (trId) {
 						var teachingCallResponse = scope.view.state.teachingCallResponses.list[trId];
-						var instructorName = scope.view.state.instructors.list[teachingCallResponse.instructorId].fullName;
+						var instructor = scope.view.state.instructors.list[teachingCallResponse.instructorId];
+						var instructorName = instructor ? instructor.fullName : "Unknown Instructor";
 						calendarActivities = calendarActivities.concat(teachingCallResponseToEvents(teachingCallResponse, instructorName));
 					});
 				}
