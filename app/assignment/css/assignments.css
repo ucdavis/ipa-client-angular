@@ -761,3 +761,7 @@ li.active-term .dropdown-term-row {
 	border: 1px solid #95989A;
 	margin-bottom: 10px;
 }
+
+.invisible {
+	visibility:hidden;
+}

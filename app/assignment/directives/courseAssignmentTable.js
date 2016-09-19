@@ -4,6 +4,11 @@
 assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = function ($rootScope, assignmentActionCreators) {
 	return {
 		restrict: 'A',
+		template: '<div class=\"course-list-row\">'
+		+ '<div class=\"course-header course-description-cell\">&nbsp;</div></div>'
+		+ '<div style="display: flex; justify-content: center; padding-top: 20px;">'
+		+ '<div><img src="/images/ajax-loader.gif" /> <span class="text-muted">&nbsp; Loading assignments</span></div>'
+		+ '</div>',
 		link: function (scope, element, attrs) {
 			scope.view = {};
 

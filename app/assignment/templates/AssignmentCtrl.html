@@ -1,6 +1,7 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 <div></div>
-<div ng-show="view.state" class="main-content">
+
+<div class="main-content">
 	<h3 style="text-align: center;">Assignments</h3>
 
 	<div class="row" style="margin-bottom: 2em;">
@@ -9,7 +10,7 @@
 		</div>
 	</div>
 
-	<div style="margin-bottom: 1em;">
+	<div ng-class="{'invisible': !view.state}" style="margin-bottom: 1em;">
 			<div class="btn-group" data-toggle="buttons">
 				<label class="btn btn-white btn-sm view-pivot-btn active" id="courses-pivot" ng-click="showCourses()">
 					<input type="radio" name="options">
@@ -64,7 +65,7 @@
 		</div> <!-- .table-toolbar -->
 	</div> <!-- .row -->
 
-	<div course-assignment-table id="courses-table" ng-show="view.state.userInterface.showCourses"></div>
+	<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"></div>
 	<div instructor-assignment-table id="instructors-table" ng-show="view.state.userInterface.showInstructors"></div>
 
 </div>
