@@ -15,6 +15,8 @@ summaryApp.factory("summaryService", this.summaryService = function($http, $q) {
 
 			$http.get(serverRoot + "/api/summaryView/" + workgroupId + "/" + year, { withCredentials: true })
 			.success(function(summaryView) {
+				console.log("This was a success");
+				console.log(summaryView);
 				deferred.resolve(summaryView);
 			})
 			.error(function() {

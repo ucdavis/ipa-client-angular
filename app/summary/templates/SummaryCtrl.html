@@ -17,8 +17,9 @@
 				<div class="cbp_tmlabel empty">
 				</div>
 			</li>
-			
-			<li ng-repeat="event in events">
+
+			<li ng-repeat="event in state.events.list">
+				<h1>{{event.title}}</h1>
 				<time class="cbp_tmtime"><span>{{event.time}}</span> <span>{{event.date}}</span></time>
 
 				<div class="cbp_tmicon bg-success" ng-show="event.type == 'school'">

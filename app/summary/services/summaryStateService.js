@@ -8,7 +8,7 @@
  * Service in the courseApp.
  * Central location for sharedState information.
  */
-summaryApp.service('summaryStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Section, Tag) {
+summaryApp.service('summaryStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Section, Tag, Event) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -103,6 +103,144 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 					return activities;
 			}
 		},
+		_eventReducers: function(action, events) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					events = {
+						list: {},
+						ids: []
+					};
+
+					var eventsList = {};
+
+					// Grab Teaching Calls
+					var teachingCallLength = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
+					var eventListLength = 0;
+					for (var i = 0; i < teachingCallLength; i++) {
+						var teachingCall = action.payload.teachingCalls[i];
+						var date = new Date(teachingCall.startDate);
+
+						// TODO: Swap 20 with workgroupId
+						var eventData = {
+							'type': "teaching_call",
+							'title': "Teaching Call " + date.getFullYear() + " Started",
+							'time': date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'date': date.toLocaleDateString(),
+							'caption': teachingCall.message,
+							'link': "/assign/" + 20 + "/" + date.getFullYear() + "/teachingCall"
+						}
+						eventsList[eventListLength++] = new Event(eventData);
+
+						date = new Date(teachingCall.dueDate);
+						eventData = {
+							'type': "teaching_call",
+							'title': "Teaching Call " + date.getFullYear() + " Ended",
+							'time': date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'date': date.toLocaleDateString(),
+							'caption': teachingCall.message,
+							'link': "/assign/" + 20 + "/" + date.getFullYear() + "/teachingCall"
+						}
+						eventsList[eventListLength++] = new Event(eventData);
+
+					} // end for
+
+					// Grab Terms
+					var termLength = action.payload.dwTerm ? action.payload.dwTerm.length : 0;
+					for (var i = 0; i < termLength; i++) {
+						var term = action.payload.dwTerm[i];
+						var startDate = new Date(term.beginDate);
+						var endDate = new Date(term.endDate);
+
+						// Start Term notice
+						var eventData = {
+							'type': "school",
+							'title': term.code.getTermCodeDisplayName() + " Started",
+							'time': startDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'date': startDate.toLocaleDateString(),
+							'caption': "",
+							'link': ""
+						}
+						eventsList[eventListLength++] = new Event(eventData);
+
+						// End term notice
+						eventData = {
+							'type': "school",
+							'title': term.code.getTermCodeDisplayName() + " Started",
+							'time': endDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'date': endDate.toLocaleDateString(),
+							'caption': "",
+							'link': ""
+						}
+						eventsList[eventListLength++] = new Event(eventData);
+
+						if (term.maintenanceDate1Start != null) {
+							var upload1Start = new Date(term.maintenanceDate1Start);
+							var upload1End = new Date(term.maintenanceDate1End);
+
+							// Start Update I notice
+							eventData = {
+								'type': "notice",
+								'title': term.code.getTermCodeDisplayName() + " Upload I Started",
+								'time': upload1Start.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+								'date': upload1Start.toLocaleDateString(),
+								'caption': "",
+								'link': ""
+							}
+							eventsList[eventListLength++] = new Event(eventData);
+
+
+							// End Update I notice
+							eventData = {
+								'type': "notice",
+								'title': term.code.getTermCodeDisplayName() + " Upload I Ended",
+								'time': upload1End.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+								'date': upload1End.toLocaleDateString(),
+								'caption': "",
+								'link': ""
+							}
+							eventsList[eventListLength++] = new Event(eventData);
+						}
+
+						if (term.maintenanceDate2Start != null) {
+							var upload2Start = new Date(term.maintenanceDate2Start);
+							var upload2End = new Date(term.maintenanceDate2End);
+
+							// Start Update II notice
+							eventData = {
+								'type': "notice",
+								'title': term.code.getTermCodeDisplayName() + " Upload II Started",
+								'time': upload2Start.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+								'date': upload2Start.toLocaleDateString(),
+								'caption': "",
+								'link': ""
+							}
+							eventsList[eventListLength++] = new Event(eventData);
+
+
+							// End Update II notice
+							eventData = {
+								'type': "notice",
+								'title': term.code.getTermCodeDisplayName() + " Upload II Ended",
+								'time': upload2End.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+								'date': upload2End.toLocaleDateString(),
+								'caption': "",
+								'link': ""
+							}
+							eventsList[eventListLength++] = new Event(eventData);
+						}
+
+					} // end for
+
+					events.list = eventsList;
+					console.log("These are the events");
+					console.log(events);
+					return events;
+				default:
+					return events;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -115,6 +253,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
 			newState.activities = scope._activityReducers(action, scope._state.activities);
+			newState.events = scope._eventReducers(action, scope._state.events);
 
 			scope._state = newState;
 			$rootScope.$emit('summaryStateChanged', {
