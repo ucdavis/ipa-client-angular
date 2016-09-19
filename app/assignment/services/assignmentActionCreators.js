@@ -241,7 +241,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 		},
 		createTeachingCall: function (workgroupId, year, teachingCallConfig) {
 			assignmentService.createTeachingCall(workgroupId, year, teachingCallConfig).then(function (teachingCall) {
-				$rootScope.$emit('toast', {message: "Updated reponse", type: "SUCCESS"});
+				$rootScope.$emit('toast', {message: "Started Teaching Call", type: "SUCCESS"});
 				var action = {
 					type: CREATE_TEACHING_CALL,
 					payload: {

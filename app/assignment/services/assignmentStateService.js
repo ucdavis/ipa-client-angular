@@ -187,6 +187,7 @@ assignmentApp.service('assignmentStateService', function (
 
 					teachingCalls.list[teachingCall.id] = teachingCall;
 					teachingCalls.ids.push(teachingCall.id);
+
 					return teachingCalls;
 				default:
 					return teachingCalls;
@@ -720,7 +721,6 @@ assignmentApp.service('assignmentStateService', function (
 			newState.teachingCalls = scope._teachingCallReducers(action, scope._state.teachingCalls);
 			newState.scheduleInstructorNotes = scope._scheduleInstructorNoteReducers(action, scope._state.scheduleInstructorNotes);
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
-			newState.teachingCalls = scope._teachingCallReducers(action, scope._state.teachingCalls);
 			newState.activeTeachingCall = scope._activeTeachingCallReducers(action, scope._state);
 			newState.tags = scope._tagReducers(action, scope._state.tags);
 			newState.filters = scope._filterReducers(action, scope._state.filters);
