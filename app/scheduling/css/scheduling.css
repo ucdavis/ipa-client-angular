@@ -159,7 +159,8 @@ p.activity-list-header {
   color: #333;
 }
 .activity-item.active {
-  background: #6AA4C1;
+  /*background: #6AA4C1;*/
+  background: #578090;
   color: white;
   border: none;
 }
