@@ -86,3 +86,44 @@ String.prototype.getTermCodeDisplayName = function (excludeYear) {
 	description += _allTerms[code];
 	return description;
 };
+
+// Turns '2016-10-01' into 'October 1st 2016'
+String.prototype.toFullDate = function () {
+	if (this.length == 0) {
+		return "";
+	}
+
+	var explodedShortDate = this.split('-');
+
+	var monthNames = [
+		"January", "February", "March",
+		"April", "May", "June", "July",
+		"August", "September", "October",
+		"November", "December"
+	];
+
+	var day = Number(explodedShortDate[2]);
+	var monthIndex = explodedShortDate[1];
+	var year = explodedShortDate[0];
+
+	var daySuffix = "";
+
+	var lastNumberInDay = day.toString().charAt(day.length);
+	switch (lastNumberInDay) {
+		case '1':
+			daySuffix = "st";
+			break;
+		case '2':
+			daySuffix = "nd";
+			break;
+		case '3':
+			daySuffix = "rd";
+			break;
+		default:
+			daySuffix = "th";
+			break;
+	}
+
+	var fullDate = monthNames[Number(monthIndex)] +  ' ' + day + daySuffix + ' ' + year;
+	return fullDate;
+}
