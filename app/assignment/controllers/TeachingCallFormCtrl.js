@@ -158,7 +158,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 					$timeout.cancel($scope.timeout[term]);
 				}
 
-				angular.forEach($scope.terms, function(term) {
+				angular.forEach($scope.view.state.activeTeachingCall.terms, function(term) {
 					$scope.saveTeachingCallResponse(term, blob, 0);
 				});
 			};
@@ -167,7 +167,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				// Identify is updating or creating
 
 				var termCode = $scope.termToTermCode(term);
-				var teachingCallResponse = $scope.view.state.activeTeachingCall.teachingCallResponsesByTermCode[term] || {};
+				var teachingCallResponse = $scope.view.state.activeTeachingCall.teachingCallResponsesByTermCode[termCode] || {};
 				teachingCallResponse.availabilityBlob = blob || teachingCallResponse.availabilityBlob;
 				teachingCallResponse.termCode = termCode;
 				teachingCallResponse.instructorId = $scope.view.state.userInterface.instructorId;

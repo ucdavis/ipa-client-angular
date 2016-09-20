@@ -115,12 +115,11 @@
 					<div>
 						{{ getTermName(term) }}
 					</div>
-					<!--					<span class="glyphicon glyphicon-transfer text-primary clickable hovrable" uib-tooltip="Copy to all terms"
-											confirm-button="copyUnabailabilitiesToAllTerms(teachingCallResponse.availabilityBlob)"
-											message="Are you sure you want to copy this term availabilities to all other terms?
-												This will overwrite exisiting availabilities."
-											yes="Confirm" no="Cancel" placement="top"></span>
-					-->
+					<span style="padding-left: 10px;" class="glyphicon glyphicon-transfer text-primary clickable hovrable" tooltip-placement="bottom" uib-tooltip="Copy to all terms"
+						confirm-button="copyUnabailabilitiesToAllTerms(teachingCallResponse.availabilityBlob)"
+						message="Are you sure you want to copy this term availabilities to all other terms?
+							This will overwrite exisiting availabilities."
+						yes="Confirm" no="Cancel" placement="top"></span>
 				</div>
 				<availability-grid blob="teachingCallResponse.availabilityBlob"
 					on-change="saveTeachingCallResponse(term, blob, 3000)"

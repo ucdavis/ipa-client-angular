@@ -211,20 +211,6 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 			});
 		},
-		updateTeachingCallResponse: function (teachingCallResponse) {
-			assignmentService.updateTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
-				$rootScope.$emit('toast', {message: "Updated availablities", type: "SUCCESS"});
-				var action = {
-					type: UPDATE_TEACHING_CALL_RESPONSE,
-					payload: {
-						teachingCallResponse: teachingCallResponse
-					}
-				};
-				assignmentStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
-			});
-		},
 		addTeachingCallResponse: function (teachingCallResponse) {
 			assignmentService.addTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
 				$rootScope.$emit('toast', {message: "Updated availablities", type: "SUCCESS"});

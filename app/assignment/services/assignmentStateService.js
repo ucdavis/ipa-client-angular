@@ -276,6 +276,8 @@ assignmentApp.service('assignmentStateService', function (
 					}
 
 					return activeTeachingCall;
+				case UPDATE_TEACHING_CALL_RESPONSE:
+					return activeTeachingCall;
 				default:
 					return activeTeachingCall;
 			}

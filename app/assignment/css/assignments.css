@@ -573,6 +573,7 @@ ol.sortable-list>li .term-preference-dropdown {
 	justify-content: center;
 	align-items: center;
 	font-size: 14px;
+	position: relative;
 }
 
 .unavailability-term-container {
