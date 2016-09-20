@@ -19,8 +19,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function($rootScope,
             var highlightedEventTextColor = "#FFFFFF";
 
             // instructor unavailabilities
-            var unavailabilityEventBackgroundColor = "#EFF7FA";
-            var unavailabilityEventTextColor = "#ACB0B0";
+            var unavailabilityEventBackgroundColor = "#DFEBEF";
+            var unavailabilityEventTextColor = "#777777";
 
             var refreshCalendar = function() {
                 var parentAspectRatio = element.parent().width() / element.parent().height();
