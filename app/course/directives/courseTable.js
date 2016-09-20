@@ -286,16 +286,23 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 			var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
 			var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
 
-			// Calculate this boolean by comparing the sum of all section seats to the plannedSeats
+			// TODO: Calculate this boolean by comparing the sum of all section seats to the plannedSeats
 			var requiresAttention = false;
 
-			row += "<td data-term-code=\"" + termCode + "\" data-section-group-id=\"" + sectionGroupId + "\" class=\"sg-cell\"><div>";
+			// Determine if the term is readonly
+			var termState = state.scheduleTermStates.list[termCode];
+			var isLocked = termState ? termState.isLocked : true;
 
-			if (requiresAttention) {
-				row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
+			row += "<td data-term-code=\"" + termCode + "\" data-section-group-id=\"" + sectionGroupId + "\" class=\"sg-cell\"><div>";
+			if (isLocked) {
+				row += plannedSeats;
+			} else {
+				if (requiresAttention) {
+					row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
+				}
+				row += "<input type=\"number\" min=\"0\" value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
 			}
 
-			row += "<input type=\"number\" min=\"0\" value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
 			row += "</div></td>";
 		});
 

@@ -40,17 +40,20 @@
 						<!-- TODO: Get enrollment live from DW? -->
 						<!--<td>{{ section.enrollment }}</td>-->
 						<td>
-							<input auto-input
+							<input auto-input ng-if="!isLocked()"
 								type="number" min="0"
 								class="form-control section-seats-edit text-center"
 								on-enter="updateSection(view.state.sections.list[sectionId])"
 								on-blur="updateSection(view.state.sections.list[sectionId])"
 								help-text-placement="left"
 								ng-model="view.state.sections.list[sectionId].seats" />
+
+							<span ng-if="isLocked()"
+								ng-bind="view.state.sections.list[sectionId].seats"></span>
 						</td>
 						<td>
 							<a class="text-danger clickable"
-								uib-tooltip="Delete"
+								uib-tooltip="Delete" ng-if="!isLocked()"
 								confirm-button="deleteSection(view.state.sections.list[sectionId])"
 								message="Are you sure you want to remove this section"
 								yes="Delete" no="Cancel" placement="left">
@@ -69,13 +72,13 @@
 			</table>
 			<div ng-if="view.selectedEntity.sectionIds.length == 0"
 				class="text-center text-muted" style="padding: 1em;">No sections available</div>
-			<div class="col-sm-12 text-center" ng-if="nextSequence()">
+			<div class="col-sm-12 text-center" ng-if="nextSequence() && !isLocked()">
 					<button class="btn btn-white" uib-tooltip="Add a section" tooltip-placement="right"
 						ng-click="addSection()">Create {{ nextSequence() }}</button>
 			</div>
 			<div class="col-sm-12 text-center" ng-if="!view.selectedEntity.id">
 					<p>No Course Offering for {{view.selectedEntity.termCode.getTermCodeDisplayName()}}</p>
-					<button class="btn btn-primary" ng-click="addSectionGroup()">Create Offering</button>
+					<button class="btn btn-primary" ng-click="addSectionGroup()" ng-if="!isLocked()">Create Offering</button>
 			</div>
 		</div>
 	</div>
