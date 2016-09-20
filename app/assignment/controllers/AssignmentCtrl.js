@@ -7,8 +7,8 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '$routeParams', '$uibModal', 'assignmentActionCreators', 'assignmentService',
-		this.AssignmentCtrl = function ($scope, $rootScope, $window, $routeParams, $uibModal, assignmentActionCreators, assignmentService) {
+assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'assignmentActionCreators', 'assignmentService',
+		this.AssignmentCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, assignmentActionCreators, assignmentService) {
 			$window.document.title = "Assignments";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
@@ -181,9 +181,9 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 
 			$scope.openUnavailabilityModal = function(instructorId) {
 				var instructor = $scope.view.state.instructors.list[instructorId];
-	
+
 				var termDisplayNames = {};
-				
+
 
 				modalInstance = $uibModal.open({
 					templateUrl: 'ModalUnavailability.html',
@@ -205,10 +205,27 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 				modalInstance.result.then(function () {
 				});
 			};
+
+			$scope.setActiveTab = function (tabName) {
+				$location.search({ tab: tabName });
+				switch (tabName) {
+					case "instructors":
+						$scope.showInstructors();
+						break;
+					default:
+						$scope.showCourses();
+						break;
+				}
+			};
+
+			// Set the active tab according to the URL
+			// Otherwise redirect to the default view
+			$scope.setActiveTab($routeParams.tab || "courses");
+
 	}]);
 
 AssignmentCtrl.validate = function (authService, assignmentActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then( function() {
-		assignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+		assignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.tab);
 	})
 }

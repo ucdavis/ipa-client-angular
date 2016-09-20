@@ -10,12 +10,13 @@
  */
 assignmentApp.service('assignmentActionCreators', function (assignmentStateService, assignmentService, $rootScope, Role) {
 	return {
-		getInitialState: function (workgroupId, year) {
+		getInitialState: function (workgroupId, year, tab) {
 			assignmentService.getInitialState(workgroupId, year).then(function (payload) {
 				var action = {
 					type: INIT_ASSIGNMENT_VIEW,
 					payload: payload,
-					year: year
+					year: year,
+					tab: tab
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
@@ -37,7 +38,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 		initializeActiveTeachingCall: function (activeTeachingCall) {
 			var action = {
 				type: INIT_ACTIVE_TEACHING_CALL,
-				payload: { 
+				payload: {
 					activeTeachingCall: activeTeachingCall
 				}
 			};
@@ -298,7 +299,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				assignmentStateService.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
-			});	
+			});
 		},
 		removePreference: function(teachingAssignment) {
 			assignmentService.removePreference(teachingAssignment).then(function (teachingAssignments) {

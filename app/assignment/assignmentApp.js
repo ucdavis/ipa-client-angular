@@ -5,6 +5,7 @@ assignmentApp.config(function ($routeProvider) {
 		.when("/:workgroupId/:year", {
 			templateUrl: "AssignmentCtrl.html",
 			controller: "AssignmentCtrl",
+			reloadOnSearch: false,
 			resolve: {
 				validate: AssignmentCtrl.validate
 			}

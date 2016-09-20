@@ -12,11 +12,13 @@
 
 	<div ng-class="{'invisible': !view.state}" style="margin-bottom: 1em;">
 			<div class="btn-group" data-toggle="buttons">
-				<label class="btn btn-white btn-sm view-pivot-btn active" id="courses-pivot" ng-click="showCourses()">
+				<label class="btn btn-white btn-sm view-pivot-btn" id="courses-pivot" ng-click="setActiveTab('courses')"
+					ng-class="{ 'active': view.state.userInterface.showCourses }">
 					<input type="radio" name="options">
 					<span class="glyphicon glyphicon-education"></span> By Course
 				</label>
-				<label class="btn btn-white btn-sm view-pivot-btn" id="instructors-pivot" ng-click="showInstructors()">
+				<label class="btn btn-white btn-sm view-pivot-btn" id="instructors-pivot" ng-click="setActiveTab('instructors')"
+					ng-class="{ 'active': view.state.userInterface.showInstructors }">
 					<input type="radio" name="options">
 					<span class="glyphicon glyphicon-user"></span> By Instructor
 				</label>
