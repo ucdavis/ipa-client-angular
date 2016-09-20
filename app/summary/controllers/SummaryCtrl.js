@@ -7,6 +7,7 @@
  * # SummaryCtrl
  * Controller of the summaryApp
  */
+
 summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope',
 		this.SummaryCtrl = function ($scope, $routeParams, $rootScope) {
 			$scope.workgroupId = $routeParams.workgroupId;
@@ -16,7 +17,6 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope',
 
 			$rootScope.$on('summaryStateChanged', function (event, data) {
 				$scope.view.state = data;
-				console.log($scope.view.state);
 			});
 
 			$rootScope.$on('sharedStateSet', function (event, data) {

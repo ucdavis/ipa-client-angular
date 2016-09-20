@@ -8,7 +8,8 @@
  * Service in the courseApp.
  * Central location for sharedState information.
  */
-summaryApp.service('summaryStateService', function ($rootScope, Course, ScheduleTermState, Activity, SectionGroup, Section, Tag) {
+
+summaryApp.service('summaryStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Section, Tag, Event, Activity) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -104,6 +105,198 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 					return activities;
 			}
 		},
+		_eventReducers: function(action, events) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					events = {
+						list: {},
+						ids: []
+					};
+
+					var eventsList = [];
+
+					// Append future starting and ending teaching calls to eventsList
+					var teachingCallLength = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
+					for (var i = 0; i < teachingCallLength; i++) {
+						var teachingCall = action.payload.teachingCalls[i];
+						var startDate = new Date(teachingCall.startDate);
+						var endDate = new Date(teachingCall.dueDate);
+
+						// Build eventData object based on the teachingCall's start date
+						var teachingCallType = "";
+
+						// This logic is important because a teaching call may be both, one, or the other.
+						if (teachingCall.sentToFederation && teachingCall.sentToSenate) {
+							teachingCallType = " Federation and Senate ";
+						} else if (teachingCall.sentToFederation) {
+							teachingCallType = " Federation ";
+						} else {
+							teachingCallType = " Senate ";
+						}
+						var eventData = {
+							'type': "teaching_call",
+							'title': action.year + teachingCallType + "Teaching Call Starts",
+							'time': startDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'date': startDate.toLocaleDateString(),
+							'caption': teachingCall.message,
+							'link': "/assignments/" + action.workgroupId + "/" + action.year + "/teachingCallStatus"
+						}
+
+						// Only add the event if it happens in the future
+						if (startDate.getTime() > Date.now()) {
+							eventsList.push(new Event(eventData));
+						}
+
+						// Build eventData object based on the teachingCall's end date
+						// The type property indicates the icon to be shown in the timeline
+						eventData = {
+							'type': "teaching_call",
+							'title': action.year + teachingCallType + "Teaching Call Ends",
+							'time': endDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'date': endDate.toLocaleDateString(),
+							'caption': "",
+							'link': "/assignments/" + action.workgroupId + "/" + action.year + "/teachingCallStatus"
+						}
+						if (endDate.getTime() > Date.now()) {
+							eventsList.push(new Event(eventData));
+						}
+
+					} // end loop appending teaching calls
+
+					// Filter dwTerm to only use terms for the current school year
+					var relevantTerms = action.payload.dwTerm.filter(function(term) {
+						// action.year is the academic school year
+						// * 100 adds the possible term code
+						var academicYearStart = action.year * 100;
+						var academicYearEnd = (parseInt(action.year) + 1) * 100;
+
+						return (
+							term.code == academicYearStart + 10 ||
+							term.code == academicYearStart + 09 ||
+							(term.code != academicYearEnd + 04 && term.code >= academicYearEnd + 01 && term.code <= academicYearEnd + 08)
+						);
+					});
+
+					// Append future events retrieved from the terms
+					var termLength = relevantTerms ? relevantTerms.length : 0;
+					for (var i = 0; i < termLength; i++) {
+						var term = relevantTerms[i];
+						var startDate = new Date(parseInt(term.beginDate));
+						var endDate = new Date(parseInt(term.endDate));
+
+						// Append future starting quarters / semesters
+						var eventData = {
+							'type': "school",
+							'title': term.code.getTermCodeDisplayName() + " Starts",
+							'time': startDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'date': startDate.toLocaleDateString(),
+							'caption': "",
+							'link': ""
+						}
+
+						// Only append the event if it is in the future
+						if (startDate.getTime() > Date.now() ) {
+							eventsList.push(new Event(eventData));
+						}
+
+						// Append future ending quarters / semesters
+						eventData = {
+							'type': "school",
+							'title': term.code.getTermCodeDisplayName() + " Ends",
+							'time': endDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'date': endDate.toLocaleDateString(),
+							'caption': "",
+							'link': ""
+						}
+						if (endDate.getTime() > Date.now()) {
+							eventsList.push(new Event(eventData));
+						}
+
+						// This is wrapped in a if statement because not all terms have this value
+						if (term.maintenanceDate1Start != null) {
+							var upload1Start = new Date(parseInt(term.maintenanceDate1Start));
+							var upload1End = new Date(parseInt(term.maintenanceDate1End));
+
+							// Append notice for upload I start time
+							eventData = {
+								'type': "notice",
+								'title': term.code.getTermCodeDisplayName() + " Upload I Starts",
+								'time': upload1Start.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+								'date': upload1Start.toLocaleDateString(),
+								'caption': "",
+								'link': ""
+							}
+							if (upload1Start.getTime() > Date.now()) {
+								eventsList.push(new Event(eventData));
+							}
+
+
+							// Append notice for upload I end time
+							eventData = {
+								'type': "notice",
+								'title': term.code.getTermCodeDisplayName() + " Upload I Ends",
+								'time': upload1End.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+								'date': upload1End.toLocaleDateString(),
+								'caption': "",
+								'link': ""
+							}
+							if (upload1End.getTime() > Date.now()) {
+								eventsList.push(new Event(eventData));
+							}
+						}
+
+						if (term.maintenanceDate2Start != null) {
+							var upload2Start = new Date(parseInt(term.maintenanceDate2Start));
+							var upload2End = new Date(parseInt(term.maintenanceDate2End));
+
+							// // Append notice for upload II start time
+							eventData = {
+								'type': "notice",
+								'title': term.code.getTermCodeDisplayName() + " Upload II Starts",
+								'time': upload2Start.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+								'date': upload2Start.toLocaleDateString(),
+								'caption': "",
+								'link': ""
+							}
+							if (upload2Start.getTime() > Date.now()) {
+								eventsList.push(new Event(eventData));
+							}
+
+
+							// // Append notice for upload I end time
+							eventData = {
+								'type': "notice",
+								'title': term.code.getTermCodeDisplayName() + " Upload II Ends",
+								'time': upload2End.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+								'date': upload2End.toLocaleDateString(),
+								'caption': "",
+								'link': ""
+							}
+							if (upload2End.getTime() > Date.now()) {
+								eventsList.push(new Event(eventData));
+							}
+						}
+
+					} // end for
+
+					// Sort the eventList from least to greatest time
+					eventsList.sort(function(a, b) {
+						return new Date(a.date).getTime() - new Date(b.date).getTime();
+					});
+					events.list = eventsList;
+
+					// Add ids for iterating purposes
+					for (var i = 0; i < eventsList.length; i++) {
+						events.ids.push(i);
+					}
+
+					return events;
+				default:
+					return events;
+			}
+		},
 		_instructorCourses: function (action, instructorCourses) {
 			var scope = this;
 			var data = action.payload;
@@ -183,6 +376,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
 			newState.activities = scope._activityReducers(action, scope._state.activities);
+			newState.events = scope._eventReducers(action, scope._state.events);
 			newState.instructorCourses = scope._instructorCourses(action, scope._state.instructorCourses);
 
 			scope._state = newState;

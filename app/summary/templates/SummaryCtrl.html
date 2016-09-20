@@ -19,42 +19,32 @@
 						</div>
 					</li>
 
-					<li>
-						<time class="cbp_tmtime"><span>12:00 AM</span> <span>8/21/2016</span></time>
+					<li ng-repeat="event in view.state.events.list">
 
-						<div class="cbp_tmicon bg-success">
+						<time class="cbp_tmtime"><span>{{event.date}}</span><span>{{event.time}}</span></time>
+
+						<!-- Show proper icon -->
+						<div class="cbp_tmicon bg-success" ng-show="event.type == 'school'">
 							<i class="entypo-graduation-cap"></i>
 						</div>
 
-						<div class="cbp_tmlabel">
-							<h2>Fall Quarter Starts</h2>
-						</div>
-					</li>
-
-					<li>
-						<time class="cbp_tmtime"><span>8:00 AM</span> <span>10/12/2016</span></time>
-
-						<div class="cbp_tmicon bg-secondary">
+						<div class="cbp_tmicon bg-secondary" ng-show="event.type == 'notice'">
 							<i class="entypo-bell"></i>
 						</div>
 
-						<div class="cbp_tmlabel">
-							<h2>Fall Upload Available</h2>
-						</div>
-					</li>
-
-					<li>
-						<time class="cbp_tmtime"><span>12:00 AM</span> <span>1/9/2017</span></time>
-
-						<div class="cbp_tmicon bg-success">
-							<i class="entypo-graduation-cap"></i>
+						<div class="cbp_tmicon bg-secondary" ng-show="event.type == 'teaching_call'">
+							<i class="entypo-users"></i>
 						</div>
 
 						<div class="cbp_tmlabel">
-							<h2>Winter Quarter Starts</h2>
+							<h2>{{event.title}}</h2>
+							<p ng-show="events.caption != ''">{{event.caption}}<p>
+							<p ng-show="event.link != ''">
+								<a ng-show="event.type == 'teaching_call'" href="{{event.link}}">Click here to view the teaching call status</a>
+							<p>
 						</div>
-					</li>
 
+					</li>
 				</ul>
 			</div>
 
@@ -196,7 +186,6 @@
 				</div>
 			</div>
 		</div>
-
 		<br />
 		<br />
 		<br />
