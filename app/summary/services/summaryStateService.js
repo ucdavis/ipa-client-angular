@@ -115,11 +115,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						ids: []
 					};
 
-					// eventsListLength is necessary because
-					// each teaching call produces up to 2 events and
-					// each term produces up to 4 events
 					var eventsList = [];
-					var eventListLength = 0;
 
 					// Append future starting and ending teaching calls to eventsList
 					var teachingCallLength = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
@@ -150,7 +146,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 
 						// Only add the event if it happens in the future
 						if (startDate.getTime() > Date.now()) {
-							eventsList[eventListLength++] = new Event(eventData);
+							eventsList.push(new Event(eventData));
 						}
 
 						// Build eventData object based on the teachingCall's end date
@@ -164,7 +160,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							'link': "/assignments/" + action.workgroupId + "/" + action.year + "/teachingCall"
 						}
 						if (endDate.getTime() > Date.now()) {
-							eventsList[eventListLength++] = new Event(eventData);
+							eventsList.push(new Event(eventData));
 						}
 
 					} // end loop appending teaching calls
@@ -202,7 +198,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 
 						// Only append the event if it is in the future
 						if (startDate.getTime() > Date.now() ) {
-							eventsList[eventListLength++] = new Event(eventData);
+							eventsList.push(new Event(eventData));
 						}
 
 						// Append future ending quarters / semesters
@@ -215,7 +211,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							'link': ""
 						}
 						if (endDate.getTime() > Date.now()) {
-							eventsList[eventListLength++] = new Event(eventData);
+							eventsList.push(new Event(eventData));
 						}
 
 						// This is wrapped in a if statement because not all terms have this value
@@ -233,7 +229,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 								'link': ""
 							}
 							if (upload1Start.getTime() > Date.now()) {
-								eventsList[eventListLength++] = new Event(eventData);
+								eventsList.push(new Event(eventData));
 							}
 
 
@@ -247,7 +243,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 								'link': ""
 							}
 							if (upload1End.getTime() > Date.now()) {
-								eventsList[eventListLength++] = new Event(eventData);
+								eventsList.push(new Event(eventData));
 							}
 						}
 
@@ -265,7 +261,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 								'link': ""
 							}
 							if (upload2Start.getTime() > Date.now()) {
-								eventsList[eventListLength++] = new Event(eventData);
+								eventsList.push(new Event(eventData));
 							}
 
 
@@ -279,7 +275,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 								'link': ""
 							}
 							if (upload2End.getTime() > Date.now()) {
-								eventsList[eventListLength++] = new Event(eventData);
+								eventsList.push(new Event(eventData));
 							}
 						}
 
