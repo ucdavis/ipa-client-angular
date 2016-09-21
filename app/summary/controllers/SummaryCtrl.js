@@ -80,8 +80,28 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope',
 			}
 }]);
 
-SummaryCtrl.authenticate = function (authService, $route, summaryActionCreators) {
+SummaryCtrl.authenticate = function (authService, $route, $window, summaryActionCreators) {
 	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then( function() {
-		return summaryActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+
+		var path = $window.location.pathname.split('/');
+		var lastPathString = path[path.length-1];
+
+		// Ensure user is not at a generic '/summary/20/2016' route, and should have access to this summary page
+		if ( (lastPathString == "instructor" && authService.isInstructor() ) || (lastPathString == "workgroup" && authService.isAcademicPlanner()) ) {
+			return summaryActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+		}
+
+		// Otherwise redirect to an appropriate default Summary screen (ex: '/summary/20/2016/instructor')
+		var userRoles = authService.getUserRoles();
+		var isAcademicPlanner = authService.isAcademicPlanner();
+		var isInstructor = authService.isInstructor();
+
+		if (isAcademicPlanner) {
+			location.href = location.href + "/workgroup";
+		}
+		else if (isInstructor) {
+			location.href = location.href + "/instructor";
+		}
+		
 	})
 }

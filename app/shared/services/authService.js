@@ -147,8 +147,20 @@ angular.module('sharedApp')
 			},
 
 			isAdmin: function () {
-				userRoles = this.getUserRoles();
+				var userRoles = this.getUserRoles();
 				return userRoles.some(function(ur) { return ur.roleName == "admin" && ur.workgroupId == 0; });
+			},
+
+			isAcademicPlanner: function () {
+				var userRoles = this.getUserRoles();
+				var workgroup = this.getCurrentWorkgroup();
+				return userRoles.some(function(userRole) { return userRole.roleName == "academicPlanner" && userRole.workgroupId == workgroup.id; });
+			},
+
+			isInstructor: function () {
+				var userRoles = this.getUserRoles();
+				var workgroup = this.getCurrentWorkgroup();
+				return userRoles.some(function(userRole) { return (userRole.roleName == "senateInstructor" || userRole.roleName == "federationInstructor") && userRole.workgroupId == workgroup.id; });
 			},
 
 			getCurrentWorkgroup: function () {
@@ -211,7 +223,9 @@ angular.module('sharedApp')
 					userWorkgroups: this.getWorkgroups(),
 					displayName: localStorage.getItem('displayName') || '',
 					termStates: this.getTermStates(),
-					isAdmin: this.isAdmin()
+					isAdmin: this.isAdmin(),
+					isAcademicPlanner: this.isAcademicPlanner(),
+					isInstructor: this.isInstructor()
 				};
 			},
 
