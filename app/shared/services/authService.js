@@ -113,10 +113,6 @@ angular.module('sharedApp')
 				$window.location.href = redirectUrl;
 			},
 
-			keepAlive: function () {
-				$http.get(serverRoot + "/status.json", { withCredentials: true });
-			},
-
 			getUserRoles: function () {
 				var userRoles = [];
 

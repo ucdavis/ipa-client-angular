@@ -49,8 +49,4 @@ sharedApp.controller('SharedCtrl', ['$scope', '$rootScope', '$http', '$uibModal'
 				authService.logout("/");
 			});
 
-			$scope.$on('Keepalive', function () {
-				authService.keepAlive();
-			});
-
 	}]);
