@@ -124,7 +124,11 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			};
 
 			$scope.toggleCheckAll = function () {
-				schedulingActionCreators.toggleCheckAll($scope.view.state.sectionGroups.ids);
+				var sectionGroupIdsToCheck = $scope.view.state.sectionGroups.ids.filter(function (sgId) {
+					var courseId = $scope.view.state.sectionGroups.list[sgId].courseId;
+					return $scope.view.state.courses.list[courseId].matchesTagFilters || $scope.view.state.filters.enabledTagIds.length == 0;
+				});
+				schedulingActionCreators.toggleCheckAll(sectionGroupIdsToCheck);
 
 				// Initialize all sectionGroup sections if not done already
 				if ($scope.view.state.uiState.allSectionGroupsDetailsCached == false) {
