@@ -83,10 +83,6 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				}
 			});
 
-			$scope.print = function(){
-				window.print();
-			};
-
 			$scope.download = function(){
 				courseService.downloadSchedule($scope.workgroupId, $scope.year, $scope.view.state.filters.enableUnpublishedCourses);
 			};

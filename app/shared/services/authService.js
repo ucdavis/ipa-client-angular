@@ -104,12 +104,17 @@ angular.module('sharedApp')
 				return deferred.promise;
 			},
 
-			logout: function () {
+			logout: function (redirectUrl) {
 				localStorage.removeItem('JWT');
 				localStorage.removeItem('userRoles');
 				localStorage.removeItem('displayName');
 				localStorage.removeItem('termStates');
-				$window.location.href = serverRoot + "/logout";
+				redirectUrl = redirectUrl || serverRoot + "/logout"
+				$window.location.href = redirectUrl;
+			},
+
+			keepAlive: function () {
+				$http.get(serverRoot + "/status.json", { withCredentials: true });
 			},
 
 			getUserRoles: function () {

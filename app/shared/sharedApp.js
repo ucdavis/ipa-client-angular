@@ -56,8 +56,8 @@ sharedApp
 			});
 
 			// Configure Idle settings
-			IdleProvider.idle(25 * 60); // 25 minutes: After this amount of time passes without the user performing an action the user is considered idle
-			IdleProvider.timeout(5 * 60); // 5 minute: The amount of time the user has to respond before they have been considered timed out
+			IdleProvider.idle(28 * 60); // 28 minutes: After this amount of time passes without the user performing an action the user is considered idle
+			IdleProvider.timeout(2 * 60); // 2 minute: The amount of time the user has to respond before they have been considered timed out
 			KeepaliveProvider.interval(5 * 60); // 5 minutes: This specifies how often the KeepAlive event is triggered and the HTTP request is issued
 		}])
 

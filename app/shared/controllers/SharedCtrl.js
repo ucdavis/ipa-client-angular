@@ -1,62 +1,56 @@
-sharedApp.controller('SharedCtrl', this.SharedCtrl = function(
-		$rootScope,
-		$scope,
-		$http,
-		$uibModal,
-		Idle,
-		Keepalive,
-		siteConfig) {
+'use strict';
 
-	$rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
-		if (!$rootScope.loadingError) { $rootScope.loadingError = 'unknown'; }
-		console.error('Failed to change routes. Error code: ' + $rootScope.loadingError);
-	});
+/**
+ * @ngdoc function
+ * @name ipaClientAngularApp.controller:SharedCtrl
+ * @description
+ * # SharedCtrl
+ * Controller of the ipaClientAngularApp
+ */
+sharedApp.controller('SharedCtrl', ['$scope', '$rootScope', '$http', '$uibModal', 'authService',
+		this.SharedCtrl = function ($scope, $rootScope, $http, $uibModal, authService) {
 
-	$scope.print = function(){
-		window.print();
-	};
+			$rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
+				if (!$rootScope.loadingError) { $rootScope.loadingError = 'unknown'; }
+				console.error('Failed to change routes. Error code: ' + $rootScope.loadingError);
+			});
 
-	// ngIdle stuff
-	$scope.rootUrl = siteConfig.rootUrl;
+			$scope.print = function () {
+				window.print();
+			};
 
-	function closeModals() {
-		if ($scope.warning) {
-			$scope.warning.close();
-			$scope.warning = null;
-		}
+			// ngIdle stuff
+			function closeModals() {
+				if ($scope.warning) {
+					$scope.warning.close();
+					$scope.warning = null;
+				}
 
-		if ($scope.timedout) {
-			$scope.timedout.close();
-			$scope.timedout = null;
-		}
-	}
+				if ($scope.timedout) {
+					$scope.timedout.close();
+					$scope.timedout = null;
+				}
+			}
 
-	$scope.$on('IdleStart', function() {
-		closeModals();
+			$scope.$on('IdleStart', function () {
+				closeModals();
 
-		$scope.warning = $uibModal.open({
-			templateUrl: 'sessionWarning.html',
-			backdrop : 'static'
-		});
-	});
+				$scope.warning = $uibModal.open({
+					templateUrl: 'sessionWarning.html',
+					backdrop: 'static'
+				});
+			});
 
-	$scope.$on('IdleEnd', function() {
-		closeModals();
-		$scope.$digest();
-	});
+			$scope.$on('IdleEnd', function () {
+				closeModals();
+			});
 
-	$scope.$on('IdleTimeout', function() {
-		closeModals();
+			$scope.$on('IdleTimeout', function () {
+				authService.logout("/");
+			});
 
-		$scope.timedout = $uibModal.open({
-			templateUrl: 'sessionTimedout.html',
-			backdrop : 'static',
-			scope: $scope
-		});
-	});
+			$scope.$on('Keepalive', function () {
+				authService.keepAlive();
+			});
 
-	$scope.$on('Keepalive', function() {
-		$http.get("/status.json");
-    });
-
-});
+	}]);
