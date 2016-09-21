@@ -352,9 +352,9 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 
 			$scope.getDescription = function(preference) {
 				if (typeof preference === 'undefined') return 'Add';
-				else if (preference.isBuyout) return 'Buyout';
-				else if (preference.isSabbatical) return 'Sabbatical';
-				else if (preference.isCourseRelease) return 'Course Release';
+				else if (preference.buyout) return 'Buyout';
+				else if (preference.sabbatical) return 'Sabbatical';
+				else if (preference.courseRelease) return 'Course Release';
 				else {
 					return preference.subjectCode + ' ' + preference.courseNumber;
 				}
