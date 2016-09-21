@@ -7,8 +7,8 @@
  * # SchedulingCtrl
  * Controller of the ipaClientAngularApp
  */
-schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParams', 'Activity', 'Term', 'schedulingActionCreators',
-		this.SchedulingCtrl = function ($scope, $rootScope, $routeParams, Activity, Term, schedulingActionCreators) {
+schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParams', 'Activity', 'Term', 'schedulingActionCreators', 'authService',
+		this.SchedulingCtrl = function ($scope, $rootScope, $routeParams, Activity, Term, schedulingActionCreators, authService) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.termShortCode = $routeParams.termShortCode;
@@ -131,6 +131,11 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 					schedulingActionCreators.getAllSectionGroupDetails(
 						$scope.workgroupId, $scope.year, $scope.term.code);
 				}
+			};
+
+			$scope.isLocked = function () {
+				var termState = authService.getTermStateByTermCode($scope.term.code);
+				return termState ? termState.isLocked : true;
 			}
 		}
 ]);

@@ -159,10 +159,12 @@ p.activity-list-header {
   color: #333;
 }
 .activity-item.active {
-  /*background: #6AA4C1;*/
   background: #578090;
   color: white;
   border: none;
+}
+.activity-item:hover:not(.active) {
+  background: #EFEFEF;
 }
 .activity-details.collapsed {
   flex: 0 0 0;

@@ -147,6 +147,12 @@ angular.module('sharedApp')
 				return termStates;
 			},
 
+			getTermStateByTermCode: function (termCode) {
+				return this.getTermStates().filter(function (ts) {
+					return ts.termCode == termCode;
+				})[0];
+			},
+
 			isAdmin: function () {
 				var userRoles = this.getUserRoles();
 				return userRoles.some(function(ur) { return ur.roleName == "admin" && ur.workgroupId == 0; });
