@@ -37,18 +37,45 @@
 			<li class="welcome">
 					<span class="title">Howdy, {{ sharedState.displayName }}</span>
 			</li>
-			<li class="home" ng-class="{ 'active': currentBaseHref == 'summary' }">
-				<a ng-href="/summary/{{ workgroupId }}/{{ year }}">
-					<i class="entypo-home"></i>
-					<span class="title">Home</span>
-				</a>
-			</li>
 			<li ng-if="sharedState.isAdmin" ng-class="{ 'active': currentBaseHref == 'admin' }">
 				<a ng-href="/admin/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-cog"></i>
 					<span class="title">Administration</span>
 				</a>
 			</li>
+
+			<li ng-class="{ 'active': currentBaseHref == 'summary' }" ng-if="sharedState.isAcademicPlanner && sharedState.isInstructor">
+				<a>
+					<i class="entypo-home"></i>
+					<span class="title">Home</span>
+				</a>
+				<ul class="visible">
+					<li ng-class="{ 'active': currentBaseHref == 'summary' && currentEndHref == 'workgroup' }">
+						<a ng-href="/summary/{{ workgroupId }}/{{ year }}/workgroup">
+							Workgroup Summary
+						</a>
+					</li>
+					<li ng-class="{ 'active': currentBaseHref == 'summary' && currentEndHref == 'instructor' }">
+						<a ng-href="/summary/{{ workgroupId }}/{{ year }}/instructor">
+							Instructor Summary
+						</a>
+					</li>
+				</ul>
+			</li>
+			<!-- handle UI for users with either academicPlanner or instructor, but not both -->
+			<li ng-if="(sharedState.isAcademicPlanner && (sharedState.isInstructor == false))" ng-class="{ 'active': currentBaseHref == 'summary' && currentEndHref == 'workgroup' }">
+				<a class="clickable" ng-href="/summary/{{ workgroupId }}/{{ year }}/workgroup">
+					<i class="entypo-home"></i>
+					<span class="title">Summary</span>
+				</a>
+			</li>
+			<li ng-if="((sharedState.isAcademicPlanner == false) && sharedState.isInstructor)" ng-class="{ 'active': currentBaseHref == 'summary' && currentEndHref == 'instructor' }">
+				<a class="clickable" ng-href="/summary/{{ workgroupId }}/{{ year }}/instructor">
+					<i class="entypo-home"></i>
+					<span class="title">Summary</span>
+				</a>
+			</li>
+
 			<li ng-class="{ 'active': currentBaseHref == 'workgroups' }">
 				<a ng-if="sharedState.userWorkgroups.length > 1">
 					<i class="entypo-users"></i>
@@ -97,6 +124,7 @@
 
 		<!-- Sidebar links -->
 		<ul id="main-menu" class="main-menu">
+
 			<!-- add class "multiple-expanded" to allow multiple submenus to open -->
 			<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
 			<li ng-class="{ 'active': currentBaseHref == 'courses' }" ng-if="userHasRoles(['academicPlanner'])">
