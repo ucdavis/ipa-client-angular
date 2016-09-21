@@ -8,7 +8,7 @@
 		<div class="col-md-6 col-md-offset-3">
 			<ul class="workgroups-input">
 				<li ng-repeat="workgroupId in view.state.workgroups.ids">
-					<div class="row">
+					<div class="row" ng-hide="view.state.workgroups.list[workgroupId].isRemoving">
 						<div class="col-md-8">
 							<input class="form-control" type="text" name="text"  ng-model="view.state.workgroups.list[workgroupId].name"
 								auto-input on-enter="updateWorkgroup(view.state.workgroups.list[workgroupId])" help-text-placement="top">
@@ -29,6 +29,7 @@
 							</a>
 						</div>
 					</div>
+					<spinner ng-show="view.state.workgroups.list[workgroupId].isRemoving" text="Removing {{ view.state.workgroups.list[workgroupId].name }} workgroup"></spinner>
 				</li>
 				<li>      <!-- add button -->
 					<div class="form-horizontal">

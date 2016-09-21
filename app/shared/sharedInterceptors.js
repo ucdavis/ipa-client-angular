@@ -10,11 +10,10 @@ var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 			var timeOutDelay = 30000; // 30 seconds
 
 			$rootScope.slowResTime = $timeout(function () {
-				$rootScope.$emit('toast', {message: "Server appears to be slow. Please standby...", type: "WARNING", options: {timeOut: timeOutDelay - slowResDelay} });
+				$rootScope.$emit('toast', {message: "Server appears to be slow. Please standby...", type: "WARNING"});
 			}, slowResDelay);
 
 			$rootScope.timeOutTimer = $timeout(function () {
-				toastr.clear();
 				$rootScope.$emit('toast', {message: "Server apears to have failed. Please try again.", type: "ERROR", options: {timeOut: 0, closeButton: true} });
 			}, timeOutDelay);
 

@@ -22,6 +22,7 @@ adminApp.controller('AdminCtrl', ['$scope', '$rootScope', '$routeParams', 'admin
 			};
 
 			$scope.removeWorkgroup = function (workgroup) {
+				workgroup.isRemoving = true;
 				adminActionCreators.removeWorkgroup(workgroup);
 			};
 
