@@ -116,7 +116,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					delete courses.list[action.payload.course.id];
 					return courses;
 				case UPDATE_COURSE:
-					courses.list[action.payload.course.id] = action.payload.course;
+					courses.list[action.payload.course.id] = new Course(action.payload.course);
 					return courses;
 				case UPDATE_TABLE_FILTER:
 					var query = action.payload.query;
@@ -208,7 +208,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					delete sectionGroups.list[action.payload.sectionGroup.id];
 					return sectionGroups;
 				case UPDATE_SECTION_GROUP:
-					sectionGroups.list[action.payload.sectionGroup.id] = action.payload.sectionGroup;
+					sectionGroups.list[action.payload.sectionGroup.id] = new SectionGroup(action.payload.sectionGroup);
 					return sectionGroups;
 				case FETCH_SECTIONS:
 					sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections
@@ -276,7 +276,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					delete sections.list[action.payload.section.id];
 					return sections;
 				case UPDATE_SECTION:
-					sections.list[action.payload.section.id] = action.payload.section;
+					sections.list[action.payload.section.id] = new Section(action.payload.section);
 					return sections;
 				default:
 					return sections;
