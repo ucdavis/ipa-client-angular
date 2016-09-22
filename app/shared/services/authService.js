@@ -11,8 +11,8 @@ angular.module('sharedApp')
 	.service('authService', function ($http, $window, $q, $location, $rootScope) {
 		return {
 			validateToken: function (token) {
+				var self = this;
 				var deferred = $q.defer();
-
 				$http.post(serverRoot + '/login', { token: token }, { withCredentials: true }).then(function (response) {
 					// Token may be null if we are redirecting
 					if (response.data != null && response.data.token !== null) {
@@ -44,11 +44,15 @@ angular.module('sharedApp')
 						localStorage.clear();
 						$window.location.href = "/access-denied.html";
 					} else if(error.status == -1) {
-						console.error("Request was aborted or server was not found. Check that the backend is running.");
+						var message = "Request was aborted or server was not found. Check that the backend is running.";
+						console.error(message);
+						self.reportJsException(error, message);
 						$window.location.href = "/unknown-error.html";
 					} else {
-						console.error("Unknown error occurred while authenticating. Details:");
+						var message = "Unknown error occurred while authenticating. Details:";
+						console.error(message);
 						console.error(error);
+						self.reportJsException(error, message);
 						$window.location.href = "/unknown-error.html";
 					}
 
@@ -244,6 +248,19 @@ angular.module('sharedApp')
 
 			isSidebarCollapsed: function () {
 				return localStorage.getItem('sidebarCollapsed') == 'true';
+			},
+
+			reportJsException(error, message) {
+				var stack = "method: " + error.config.method + ", url: " + error.config.url + ", status code: " + error.status;
+				var exceptionObject = {
+						message: message,
+						stack: stack,
+						url: error.config.url
+				};
+
+				$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("JWT"); // Set proper headers
+				$http.post(serverRoot + "/api/reportJsException", exceptionObject).then(function(res) {
+				});
 			}
 		};
 	});
