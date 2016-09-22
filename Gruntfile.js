@@ -137,6 +137,14 @@ module.exports = function (grunt) {
 				],
 				dest: '<%= folders.webapp.build %>/js/schedulingApp.js'
 			},
+			// public module files
+			jsPublic: {
+				src: [
+					'<%= folders.webapp.root %>/public/*.js',
+					'<%= folders.webapp.root %>/public/**/*.js'
+				],
+				dest: '<%= folders.webapp.build %>/js/publicApp.js'
+			},
 			// Vendor CSS files
 			cssLib: {
 				src: [
@@ -189,6 +197,13 @@ module.exports = function (grunt) {
 				cwd: '<%= folders.webapp.root %>',
 				src: ['**/*.css'],
 				dest: '<%= folders.webapp.build %>/css/'
+			},
+			public_assets: {
+				expand: true,
+				flatten: false,
+				cwd: '<%= folders.webapp.root %>',
+				src: ['public/assets/*/**'],
+				dest: '<%= folders.webapp.build %>/'
 			},
 			// Common Vendor JS files
 			js: {
@@ -304,10 +319,10 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 
 	grunt.registerTask('build', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsProdSnippets',
-		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:cssLib', 'uglify:dist', 'cssmin']);
+		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsPublic', 'concat:cssLib', 'uglify:dist', 'cssmin']);
 
 	grunt.registerTask('serve', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsDevSnippets',
-		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:cssLib', 'connect', 'watch']);
+		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsPublic', 'concat:cssLib', 'connect', 'watch']);
 
 	grunt.registerTask('default', ['serve']);
 

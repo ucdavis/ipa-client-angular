@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/ucdavis/ipa-client-angular.git"
   },
-  "author": "DSS IT",
+  "author": "UC Davis Division of Social Science IT Service Center",
   "license": "Unspecified",
   "bugs": {
     "url": "https://github.com/ucdavis/ipa-client-angular/issues"
