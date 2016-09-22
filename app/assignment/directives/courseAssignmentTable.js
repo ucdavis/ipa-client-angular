@@ -12,6 +12,11 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 		link: function (scope, element, attrs) {
 			scope.view = {};
 
+			scope.isTermLocked = function(termCode) {
+				var termState = scope.view.state.scheduleTermStates.list[termCode];
+				return termState.isLocked;
+			}
+
 			// Build a string of html to display a column header (course, terms, etc.)
 			scope.renderHeader = function() {
 				// Render the header
@@ -101,66 +106,71 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 										} else {
 											courseHtml += instructor.fullName;
 										}
-
-										courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\"";
-										courseHtml += " data-placement=\"top\" data-original-title=\"Unassign\" data-container=\"body\""
-										courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"></i>";
+										if (scope.isTermLocked(sectionGroup.termCode) == false) {
+											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\"";
+											courseHtml += " data-placement=\"top\" data-original-title=\"Unassign\" data-container=\"body\""
+											courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"></i>";
+										}
 										courseHtml += "</div>"; // Ending Teaching assignment div
 									}
 								});
+								
+								if (scope.isTermLocked(sectionGroup.termCode) == false) {
 
-								// Add an assign button to add more instructors
-								courseHtml += "<div class=\"dropdown assign-dropdown\">";
-								courseHtml += "<button class=\"btn btn-default dropdown-toggle assign-dropdown-btn\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
-								courseHtml += "<div>Assign..</div><div class=\"caret\"></div></button>";
-								courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
+									// Add an assign button to add more instructors
+									courseHtml += "<div class=\"dropdown assign-dropdown\">";
+									courseHtml += "<button class=\"btn btn-default dropdown-toggle assign-dropdown-btn\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
+									courseHtml += "<div>Assign..</div><div class=\"caret\"></div></button>";
+									courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
 
-								var interestedInstructorIds = [];
-								var firstInstructorAdded = false;
+									var interestedInstructorIds = [];
+									var firstInstructorAdded = false;
 
-								if (sectionGroup.teachingAssignmentIds.length > 0) {
+									if (sectionGroup.teachingAssignmentIds.length > 0) {
 
-									// Loop over instructors who are interested in this course
-									$.each(sectionGroup.teachingAssignmentIds, function(i, teachingAssignmentId) {
-										var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
-										var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
+										// Loop over instructors who are interested in this course
+										$.each(sectionGroup.teachingAssignmentIds, function(i, teachingAssignmentId) {
+											var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+											var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 
-										if (instructor) {
-											interestedInstructorIds.push(instructor.id);
-										}
-
-										if (teachingAssignment.approved == false && instructor) {
-											// Ensure header is aded only if there is appropriate to display
-											if (firstInstructorAdded == false) {
-												courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
-												firstInstructorAdded = true;
+											if (instructor) {
+												interestedInstructorIds.push(instructor.id);
 											}
 
+											if (teachingAssignment.approved == false && instructor) {
+												// Ensure header is aded only if there is appropriate to display
+												if (firstInstructorAdded == false) {
+													courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
+													firstInstructorAdded = true;
+												}
+
+												courseHtml += "<li><a";
+												courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
+												courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
+												courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
+
+												courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
+											}
+										});
+										if (firstInstructorAdded) {
+											courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
+										}
+									}
+
+									// Loop over instructors who are not interested in this course
+									$.each(scope.view.state.instructors.ids, function(i, instructorId) {
+										var instructor = scope.view.state.instructors.list[instructorId];
+										if (interestedInstructorIds.indexOf(instructor.id) < 0) {
 											courseHtml += "<li><a";
 											courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
-											courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
-											courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
-
+											courseHtml += " data-instructor-id=\"" + instructorId + "\"";
 											courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
 										}
 									});
-									if (firstInstructorAdded) {
-										courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
-									}
-								}
 
-								// Loop over instructors who are not interested in this course
-								$.each(scope.view.state.instructors.ids, function(i, instructorId) {
-									var instructor = scope.view.state.instructors.list[instructorId];
-									if (interestedInstructorIds.indexOf(instructor.id) < 0) {
-										courseHtml += "<li><a";
-										courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
-										courseHtml += " data-instructor-id=\"" + instructorId + "\"";
-										courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
-									}
-								});
+									courseHtml += "</ul></div>";
+								} // End scope.isTermLocked check
 
-								courseHtml += "</ul></div>";
 							} else {
 								courseHtml += "Not Offered";
 							}

@@ -21,6 +21,11 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				return true;
 			}
 
+			scope.isTermLocked = function(termCode) {
+				var termState = scope.view.state.scheduleTermStates.list[termCode];
+				return termState.isLocked;
+			}
+
 			// Build a string of html to display a column header (course, terms, etc.)
 			scope.renderHeader = function() {
 				// Render the header
@@ -152,13 +157,17 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 									courseHtml += "<br />";
 									courseHtml += unitsLow;
 									courseHtml += "</div>";
-									courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\" data-placement=\"top\"";
-									courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
-									courseHtml += "data-original-title=\"Unassign\" data-container=\"body\"></i>";
+
+									if (scope.isTermLocked(sectionGroup.termCode) == false) {
+										courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\" data-placement=\"top\"";
+										courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
+										courseHtml += "data-original-title=\"Unassign\" data-container=\"body\"></i>";
+									}
 									courseHtml += "</div>";
 								}
 							});
 
+							if (scope.isTermLocked(termCode) == false) {
 							// Add an assign button to add more instructors
 							courseHtml += "<div class=\"dropdown assign-dropdown\">";
 							courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
@@ -239,7 +248,8 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 							});
 
 							courseHtml += "</ul></div>"; // End dropdown assign list
-							courseHtml += "</div>"; // Ending term-cell div
+						} // end isTermLocked
+						courseHtml += "</div>"; // Ending term-cell div
 						});
 						courseHtml += "</div>"; // Ending course-row div
 
