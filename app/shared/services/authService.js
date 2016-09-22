@@ -250,7 +250,7 @@ angular.module('sharedApp')
 				return localStorage.getItem('sidebarCollapsed') == 'true';
 			},
 
-			reportJsException(error, message) {
+			reportJsException: function(error, message) {
 				var stack = "method: " + error.config.method + ", url: " + error.config.url + ", status code: " + error.status;
 				var exceptionObject = {
 						message: message,
