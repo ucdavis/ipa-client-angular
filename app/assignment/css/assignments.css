@@ -129,7 +129,7 @@
 	text-align: left;
 }
 
-.dropdown-menu {
+.set-term-menu {
 	width: 300px;
 }
 
@@ -808,4 +808,8 @@ li.active-term .dropdown-term-row {
 	display: flex;
 	flex-direction: column;
 	align-items:center;
+}
+
+.uib-daypicker {
+	outline-width: 0;
 }

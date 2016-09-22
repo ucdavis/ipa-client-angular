@@ -166,8 +166,8 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 		$scope.popup1.opened = true;
 	};
 
-	$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-	$scope.format = $scope.formats[1];
+	$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate', 'yyyy-MM-dd'];
+	$scope.format = $scope.formats[4];
 	$scope.altInputFormats = ['M!/d!/yyyy'];
 
 	$scope.createWithoutEmail = function() {
