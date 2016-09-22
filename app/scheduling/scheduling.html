@@ -35,6 +35,10 @@
 <body class="page-body ng-cloak" ng-app="schedulingApp" ng-cloak ng-controller="SharedCtrl">
 	<base href="/scheduling/">
 
+	<div ng-if="loadingView" class="overlay">
+		<spinner class="vertical-center"></spinner>
+	</div>
+
 	<div class="page-container" collapsable-sidebar-container ng-view>
 		<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 	</div>
