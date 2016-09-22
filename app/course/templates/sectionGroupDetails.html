@@ -76,7 +76,7 @@
 					<button class="btn btn-white" uib-tooltip="Add a section" tooltip-placement="right"
 						ng-click="addSection()">Create {{ nextSequence() }}</button>
 			</div>
-			<div class="text-center text-muted" ng-if="!nextSequence() && !isLocked()">
+			<div class="text-center text-muted" ng-if="nextSequence() == ''">
 				You need to set the course sequence pattern before you can create sections
 			</div>
 			<div class="col-sm-12 text-center" ng-if="!view.selectedEntity.id">
