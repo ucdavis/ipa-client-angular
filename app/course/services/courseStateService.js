@@ -394,6 +394,12 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					uiState.massImportYear = null;
 					uiState.massImportPrivate = false;
 					return uiState;
+				case REMOVE_COURSE:
+					// Remove the details pane if it was showing the deleted course
+					if (uiState.selectedCourseId == action.payload.course.id) {
+						uiState.selectedCourseId = null;
+					}
+					return uiState;
 				default:
 					return uiState;
 			}
