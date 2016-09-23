@@ -62,7 +62,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 						courseHtml += "Units: " + course.unitsLow;
 						courseHtml += "</div>";
 
-						courseHtml += "<div class=\"course-tags\">";
+						courseHtml += "<div class=\"course-tags hidden-print\">";
 						courseHtml += "Tags: ";
 
 						// Display tags
@@ -74,13 +74,13 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 						courseHtml += "</div>"; // End tags
 
 						courseHtml += "</div></div>"; // End course-description-cell
-						
+
 						// Loop over active terms
 						$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
 							var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
 
 							courseHtml += "<div class=\"term-cell\">";
-							
+
 							var sectionGroupId = course.sectionGroupTermCodeIds[termCode];
 							if (sectionGroupId) {
 								var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
@@ -107,18 +107,18 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 											courseHtml += instructor.fullName;
 										}
 										if (scope.isTermLocked(sectionGroup.termCode) == false) {
-											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\"";
+											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\" data-toggle=\"tooltip\"";
 											courseHtml += " data-placement=\"top\" data-original-title=\"Unassign\" data-container=\"body\""
 											courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"></i>";
 										}
 										courseHtml += "</div>"; // Ending Teaching assignment div
 									}
 								});
-								
+
 								if (scope.isTermLocked(sectionGroup.termCode) == false) {
 
 									// Add an assign button to add more instructors
-									courseHtml += "<div class=\"dropdown assign-dropdown\">";
+									courseHtml += "<div class=\"dropdown assign-dropdown hidden-print\">";
 									courseHtml += "<button class=\"btn btn-default dropdown-toggle assign-dropdown-btn\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
 									courseHtml += "<div>Assign..</div><div class=\"caret\"></div></button>";
 									courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
@@ -177,7 +177,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 							courseHtml += "</div>"; // Ending term-cell div
 						});
 						courseHtml += "</div>"; // Ending course-row div
-						
+
 						coursesHtml += courseHtml;
 
 						// Add a header after each 10 displayed course rows

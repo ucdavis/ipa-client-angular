@@ -87,7 +87,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 						courseHtml += "</div>";
 
 						// Instructor Comment UI
-						courseHtml += "<div class=\"description-cell__comment-btn-container\">";
+						courseHtml += "<div class=\"description-cell__comment-btn-container hidden-print\">";
 						courseHtml += "<i class=\"glyphicon comment-btn glyphicon-pencil\" data-instructor-id=" + instructor.id;
 						courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor comments\" data-container=\"body\"></i>";
 						courseHtml += "</div>";
@@ -97,11 +97,11 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 						if (instructor.teachingCallResponses.length > 0) {
 							// Instructor Availabilities UI
-							courseHtml += "<i class=\"glyphicon avail-btn glyphicon-calendar\" data-instructor-id=" + instructor.id;
+							courseHtml += "<i class=\"glyphicon avail-btn glyphicon-calendar hidden-print\" data-instructor-id=" + instructor.id;
 							courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor unavailabilities\" data-container=\"body\"></i>";
 						} else {
 							courseHtml += "<div data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"No unavailabilities\" data-container=\"body\">";
-							courseHtml += "<i class=\" disabled-calendar glyphicon glyphicon-calendar\"></i>";
+							courseHtml += "<i class=\" disabled-calendar glyphicon glyphicon-calendar hidden-print\"></i>";
 							courseHtml += "</div>";
 						}
 
@@ -117,7 +117,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 						}
 
 						courseHtml += "</div>"; // end description-cell
-						
+
 						// Loop over active terms
 						$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
 							var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
@@ -159,7 +159,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 									courseHtml += "</div>";
 
 									if (scope.isTermLocked(sectionGroup.termCode) == false) {
-										courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary\" data-toggle=\"tooltip\" data-placement=\"top\"";
+										courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\" data-toggle=\"tooltip\" data-placement=\"top\"";
 										courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 										courseHtml += "data-original-title=\"Unassign\" data-container=\"body\"></i>";
 									}
@@ -169,7 +169,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 							if (scope.isTermLocked(termCode) == false) {
 							// Add an assign button to add more instructors
-							courseHtml += "<div class=\"dropdown assign-dropdown\">";
+							courseHtml += "<div class=\"dropdown assign-dropdown hidden-print\">";
 							courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
 							courseHtml += "Assign..<span class=\"caret\"></span></button>";
 							courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
