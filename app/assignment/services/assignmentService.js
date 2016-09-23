@@ -8,7 +8,7 @@
  * Service in the workgroupApp.
  * workgroupApp specific api calls.
  */
-assignmentApp.factory("assignmentService", this.assignmentService = function($http, $q) {
+assignmentApp.factory("assignmentService", this.assignmentService = function($http, $q, $window) {
 	return {
 		getInitialState: function(workgroupId, year) {
 			var deferred = $q.defer();
@@ -16,6 +16,20 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 			$http.get(serverRoot + "/api/assignmentView/" + workgroupId + "/" + year, { withCredentials: true })
 			.success(function(assignmentView) {
 				deferred.resolve(assignmentView);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		download: function (workgroupId, year) {
+			var deferred = $q.defer();
+
+			$http.get(serverRoot + "/api/assignmentView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
+			.success(function(payload) {
+				$window.location.href = payload.redirect;
+				deferred.resolve(payload);
 			})
 			.error(function() {
 				deferred.reject();

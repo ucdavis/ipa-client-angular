@@ -206,6 +206,10 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 				});
 			};
 
+			$scope.download = function () {
+				assignmentService.download($scope.workgroupId, $scope.year);
+			};
+
 			$scope.setActiveTab = function (tabName) {
 				$location.search({ tab: tabName });
 				switch (tabName) {
