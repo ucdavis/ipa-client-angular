@@ -1,0 +1,10 @@
+RewriteEngine on
+
+RewriteRule ^admin(.+)(?<!\.html)$ admin.html [L]
+RewriteRule ^workgroups(.+)(?<!\.html)$ workgroup.html [L]
+RewriteRule ^summary(.+)(?<!\.html)$ summary.html [L]
+RewriteRule ^courses(.+)(?<!\.html)$ course.html [L]
+RewriteRule ^assignments(.+)(?<!\.html)$ assignment.html [L]
+RewriteRule ^teachingCalls(.+)(?<!\.html)$ teachingCall.html [L]
+RewriteRule ^scheduling(.+)(?<!\.html)$ scheduling.html [L]
+RewriteRule ^unknown-error.html$ unknown-error.php [L]
