@@ -19,6 +19,22 @@
 		<h1>Uh oh.</h1>
 		<p class="lead">We encountered an error we were not prepared for.</p>
 
+		<?php
+			$body = "Date: " . date(DATE_RFC2822) . "\r\n\r\nRequest headers:\r\n\r\n";
+
+			foreach (getallheaders() as $name => $value) {
+				$body .= "\t$name: $value\n";
+			}
+
+			$headers = 'From: no-reply@ipa.ucdavis.edu' . "\r\n" .
+    				'Reply-To: no-reply@ipa.ucdavis.edu' . "\r\n" .
+    				'X-Mailer: PHP/' . phpversion();
+
+			if(mail ( "dssit-devs-exceptions@ucdavis.edu", "IPA Uh Oh Page Request", $body, $headers ) == false) {
+				/* Nothing we can do. */
+			}
+		?>
+
 		<p class="lead"><br />Please <a href="https://it.dss.ucdavis.edu/">report this to IT</a>.</p>
 	</div>
 </body>
