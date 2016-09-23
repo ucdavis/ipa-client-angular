@@ -150,3 +150,7 @@ table.availability-grid tr td {
 	top: 50%;
 	transform: translateY(-50%);
 }
+
+.page-container.sidebar-collapsed .sidebar-menu #main-menu > li > ul li a {
+    padding-left: 40px;
+}
