@@ -111,15 +111,6 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 				case CREATE_SHARED_ACTIVITY:
 					sectionGroups.list[action.payload.sectionGroup.id].sharedActivityIds.push(action.payload.activity.id);
 					return sectionGroups;
-				case UPDATE_LOCATION_FILTERS:
-					// Set the sectionGroups.matchesLocationFilters flag to true if any activity location matches the filters
-					sectionGroups.ids.forEach(function (sectionGroupId) {
-						sectionGroups.list[sectionGroupId].matchesLocationFilters = sectionGroups.list[sectionGroupId].locationIds
-							.some(function (locationId) {
-								return action.payload.locationIds.indexOf(locationId) >= 0;
-							});
-					});
-					return sectionGroups;
 				default:
 					return sectionGroups;
 			}
@@ -189,6 +180,14 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 						list: {},
 						ids: []
 					};
+					var activitiesList = {};
+					var length = action.payload.activities ? action.payload.activities.length : 0;
+					for (var i = 0; i < length; i++) {
+						var activityData = action.payload.activities[i];
+						activitiesList[activityData.id] = new Activity(activityData);
+						activities.ids.push(activityData.id);
+					}
+					activities.list = activitiesList;
 					return activities;
 				case FETCH_SECTION_GROUP_DETAILS:
 					scope.fillActivityDetails(action.payload, activities);

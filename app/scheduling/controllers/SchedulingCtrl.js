@@ -155,13 +155,30 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			};
 
 			$scope.matchesFilters = function (sectionGroup) {
-				var matchesTagFilters = (
+				var satisfiesTagFilters = (
+					$scope.view.state.filters.enabledTagIds.length == 0 ||
 					$scope.view.state.courses.list[sectionGroup.courseId].matchesTagFilters
-					|| $scope.view.state.filters.enabledTagIds.length == 0 );
-				var matchesLocationFilters = (
-					sectionGroup.matchesLocationFilters
-					|| $scope.view.state.filters.enabledLocationIds.length == 0);
-				return matchesTagFilters && matchesLocationFilters;
+				);
+
+				var satisfiesLocationFilters = (
+					$scope.view.state.filters.enabledLocationIds.length == 0 ||
+					matchesLocationFilters(sectionGroup)
+				);
+
+				return satisfiesTagFilters && satisfiesLocationFilters;
+			};
+
+			var matchesLocationFilters = function (sectionGroup) {
+				var sectionGroupLocationIds = $scope.view.state.activities.ids
+					.filter(function (activityId) {
+						return $scope.view.state.activities.list[activityId].sectionGroupId == sectionGroup.id;
+					}).map(function (activityId) {
+						return $scope.view.state.activities.list[activityId].locationId;
+					});
+
+				return $scope.view.state.filters.enabledLocationIds.some(function (locationId) {
+					return sectionGroupLocationIds.indexOf(locationId) >= 0;
+				});
 			};
 		}
 ]);
