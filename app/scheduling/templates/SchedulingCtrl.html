@@ -49,6 +49,20 @@
 										</li>
 									</ul>
 								</div>
+								<div class="locations-filter">
+									<h3>Locations</h3>
+									<ul>
+										<li ng-repeat="locationId in view.state.locations.ids track by $index" ng-click="toggleLocationFilter(locationId)">
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+												ng-class="{ 'checked': view.state.filters.enabledLocationIds.indexOf(locationId) >= 0 }">
+												<label class="cb-wrapper">
+													<div class="checked"></div>
+												</label>
+												<label ng-bind="view.state.locations.list[locationId].description"></label>
+											</div>
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>
