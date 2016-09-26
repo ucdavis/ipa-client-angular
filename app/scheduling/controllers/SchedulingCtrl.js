@@ -138,8 +138,7 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 
 			$scope.toggleCheckAll = function () {
 				var sectionGroupIdsToCheck = $scope.view.state.sectionGroups.ids.filter(function (sgId) {
-					var courseId = $scope.view.state.sectionGroups.list[sgId].courseId;
-					return $scope.view.state.courses.list[courseId].matchesTagFilters || $scope.view.state.filters.enabledTagIds.length == 0;
+					return $scope.matchesFilters($scope.view.state.sectionGroups.list[sgId]);
 				});
 				schedulingActionCreators.toggleCheckAll(sectionGroupIdsToCheck);
 
@@ -153,7 +152,17 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			$scope.isLocked = function () {
 				var termState = authService.getTermStateByTermCode($scope.term.code);
 				return termState ? termState.isLocked : true;
-			}
+			};
+
+			$scope.matchesFilters = function (sectionGroup) {
+				var matchesTagFilters = (
+					$scope.view.state.courses.list[sectionGroup.courseId].matchesTagFilters
+					|| $scope.view.state.filters.enabledTagIds.length == 0 );
+				var matchesLocationFilters = (
+					sectionGroup.matchesLocationFilters
+					|| $scope.view.state.filters.enabledLocationIds.length == 0);
+				return matchesTagFilters && matchesLocationFilters;
+			};
 		}
 ]);
 

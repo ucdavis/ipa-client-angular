@@ -87,7 +87,7 @@
 				<ul ng-show="view.state.sectionGroups.ids">
 					<li class="section-group-item" ng-repeat="sectionGroupId in view.state.sectionGroups.ids track by $index"
 						ng-init="sg = view.state.sectionGroups.list[sectionGroupId];"
-						ng-show="view.state.courses.list[sg.courseId].matchesTagFilters || view.state.filters.enabledTagIds.length == 0"
+						ng-show="matchesFilters(sg)"
 						ng-class="{ 'active': view.state.uiState.selectedSectionGroupId == sectionGroupId }"
 						ng-click="setSelectedSectionGroup(sectionGroupId)">
 
