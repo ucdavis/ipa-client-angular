@@ -80,6 +80,19 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				schedulingActionCreators.updateTagFilters(tagFilters);
 			};
 
+			$scope.toggleLocationFilter = function (locationId) {
+				var locationFilters = $scope.view.state.filters.enabledLocationIds;
+				var locationIndex = locationFilters.indexOf(locationId);
+
+				if (locationIndex < 0) {
+					locationFilters.push(locationId);
+				} else {
+					locationFilters.splice(locationIndex, 1);
+				}
+
+				schedulingActionCreators.updateLocationFilters(locationFilters);
+			};
+
 			$scope.clearLocation = function () {
 				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
 				activity.locationId = 0;

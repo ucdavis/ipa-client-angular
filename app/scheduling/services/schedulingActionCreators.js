@@ -154,6 +154,15 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				}
 			};
 			schedulingStateService.reduce(action);
+		},
+		updateLocationFilters: function (locationIds) {
+			var action = {
+				type: UPDATE_LOCATION_FILTERS,
+				payload: {
+					locationIds: locationIds
+				}
+			};
+			schedulingStateService.reduce(action);
 		}
 	}
 });

@@ -79,6 +79,15 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 						var sectionGroupData = action.payload.sectionGroups[i];
 						sectionGroupsList[sectionGroupData.id] = new SectionGroup(sectionGroupData);
 						sectionGroups.ids.push(sectionGroupData.id);
+
+						// Set aectionGroup locationIds
+						sectionGroupsList[sectionGroupData.id].locationIds = action.payload.activities
+							.filter(function (activity) {
+								// Return activities that have locationId set and belong to sectionGroup in hand
+								return activity.locationId && activity.sectionGroupId == sectionGroupData.id;
+							}).map(function (activity) {
+								return activity.locationId;
+							});
 					}
 					sectionGroups.list = sectionGroupsList;
 					return sectionGroups;
@@ -101,6 +110,15 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					return sectionGroups;
 				case CREATE_SHARED_ACTIVITY:
 					sectionGroups.list[action.payload.sectionGroup.id].sharedActivityIds.push(action.payload.activity.id);
+					return sectionGroups;
+				case UPDATE_LOCATION_FILTERS:
+					// Set the sectionGroups.matchesLocationFilters flag to true if any activity location matches the filters
+					sectionGroups.ids.forEach(function (sectionGroupId) {
+						sectionGroups.list[sectionGroupId].matchesLocationFilters = sectionGroups.list[sectionGroupId].locationIds
+							.some(function (locationId) {
+								return action.payload.locationIds.indexOf(locationId) >= 0;
+							});
+					});
 					return sectionGroups;
 				default:
 					return sectionGroups;
@@ -254,6 +272,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					// is selected to be shown/on/active.
 					filters = {
 						enabledTagIds: [],
+						enabledLocationIds: [],
 						hiddenDays: [0, 6], // Default hidden days: Sat and Sun
 						enableUnpublishedCourses: false
 					};
@@ -270,6 +289,9 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					return filters;
 				case UPDATE_TAG_FILTERS:
 					filters.enabledTagIds = action.payload.tagIds;
+					return filters;
+				case UPDATE_LOCATION_FILTERS:
+					filters.enabledLocationIds = action.payload.locationIds;
 					return filters;
 				default:
 					return filters;
@@ -326,6 +348,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					}
 					return uiState;
 				case UPDATE_TAG_FILTERS:
+				case UPDATE_LOCATION_FILTERS:
 					// TODO: needs re-visiting, ultimately this should clear
 					// checkedSectionGroupIds, selectedSectionGroupId, selectedCourseId,
 					// and selectedActivityId ONLY if they don't match the filters
