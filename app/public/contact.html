@@ -111,7 +111,7 @@
 					If you'd like to contact the team for any reason, please feel free to get in touch.
 				</p>
 
-				<form class="contact-form" role="form" method="post" action="" enctype="application/x-www-form-urlencoded">
+				<form id="contact-form" class="contact-form" role="form" method="POST" action="#" enctype="application/x-www-form-urlencoded">
 
 					<div class="form-group">
 						<input type="text" name="name" class="form-control" placeholder="Name:" />
@@ -213,6 +213,29 @@
 
 <!-- JavaScripts initializations and stuff -->
 <script src="/public/assets/js/neon-custom.js"></script>
+
+<script type="text/javascript">
+	function submitForm(e) {
+		e.preventDefault();
+
+		var name = $("form input[name=name]").val();
+		var email = $("form input[name=email]").val();
+		var message = $("form textarea[name=message]").val();
+
+		$.post("https://api.ipa.ucdavis.edu/contactFormSubmission", {
+			name: name,
+			email: email,
+			message: message
+		}, function() {
+			$("form#contact-form").html("<p><b style=\"color: #111;\">Thanks for your feedback. Our team has received it and will be in touch.</b></p>");
+		}).fail(function() {
+			$("form#contact-form").html("<p><b style=\"color: #f11;\">Uh oh, something went wrong while submitting your message. Please alert IT of this issue.</b></p>");
+			console.error("Server returned non-OK status code.");
+		})
+	}
+
+	$("form#contact-form button").on("click", submitForm);
+</script>
 
 </body>
 </html>
