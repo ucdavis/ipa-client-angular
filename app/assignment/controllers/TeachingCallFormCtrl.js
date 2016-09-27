@@ -73,6 +73,23 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				return termNames[term];
 			};
 
+			$scope.searchCourses = function (term, query) {
+				var term = $scope.termToTermCode(term);
+
+				if (!query || query.length == 0) {
+					return $scope.view.state.activeTeachingCall.scheduledCourses[term];
+				}
+/*
+				if (query.length > 3) {
+					return courseService.searchCourses(query).then(function (courseSearchResults) {
+						return courseSearchResults.slice(0, 20);
+					}, function (err) {
+						$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+					});
+				}
+*/
+			};
+
 			$scope.getCourseOfferingIdsFromPreferences = function(preferences) {
 				if (!preferences) { return; }
 				return preferences.filter(function(preference) {
@@ -328,7 +345,6 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				if (term.length == 6) {
 					return term;
 				}
-
 				var year = $scope.year;
 
 				if (["01", "02", "03"].indexOf(term) >= 0) { year++; }

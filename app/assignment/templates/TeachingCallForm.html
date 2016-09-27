@@ -77,6 +77,17 @@
 						</div>
 					</li>
 
+					<li class="scrollable-dropdown-menu">
+						<input type="text" ng-model="view.courseSearchQuery" placeholder="Search courses"
+							uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchCourses(term, $viewValue)"
+							typeahead-loading="loadingCourses"
+							typeahead-no-results="noResults"
+							typeahead-wait-ms="400"
+							typeahead-min-length="0"
+							typeahead-on-select="addPreferenceFromCourseSearch($item, $model, $label, $event)"
+							class="form-control">
+					</li>
+
 				<li ng-if="!teachingCallResponse[term].isComplete"
 					term-preferences courses="courseOfferings[term]" term="term" schedule-id="teachingCall.scheduleId"
 					class="unsortable preference-assignment-dropdown"

@@ -812,3 +812,8 @@ li.active-term .dropdown-term-row {
 .uib-daypicker {
 	outline-width: 0;
 }
+
+.scrollable-dropdown-menu .dropdown-menu {
+	max-height: 400px;
+	overflow-y: auto;
+}
