@@ -68,6 +68,16 @@
 					</div>
 				</div>
 				<div class="activity-filter-tokens text-center">
+					<div class="label label-selected-section-group" ng-repeat="tagId in view.state.filters.enabledTagIds track by $index">
+						{{ view.state.tags.list[tagId].name }}
+						<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable"
+							ng-click="toggleTagFilter(tagId)"></i>
+					</div>
+					<div class="label label-selected-section-group" ng-repeat="locationId in view.state.filters.enabledLocationIds track by $index">
+						{{ view.state.locations.list[locationId].description }}
+						<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable"
+							ng-click="toggleLocationFilter(locationId)"></i>
+					</div>
 					<div class="label label-selected-section-group" ng-repeat="sectionGroupId in view.state.uiState.checkedSectionGroupIds track by $index"
 						ng-init="sg = view.state.sectionGroups.list[sectionGroupId];">
 						{{ view.state.courses.list[sg.courseId].subjectCode }}
