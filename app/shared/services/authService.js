@@ -46,14 +46,24 @@ angular.module('sharedApp')
 					} else if(error.status == -1) {
 						var message = "Request was aborted or server was not found. Check that the backend is running.";
 						console.error(message);
-						self.reportJsException(error, message);
-						$window.location.href = "/unknown-error.html";
+						// Do not redirect until reportJsException comes back
+						self.reportJsException(error, message).then(function(res) {
+							$window.location.href = "/unknown-error.html";
+						},
+						function(res) {
+							$window.location.href = "/unknown-error.html";
+						});
 					} else {
 						var message = "Unknown error occurred while authenticating. Details:";
 						console.error(message);
 						console.error(error);
-						self.reportJsException(error, message);
-						$window.location.href = "/unknown-error.html";
+						// Do not redirect until reportJsException comes back
+						self.reportJsException(error, message).then(function(res) {
+							$window.location.href = "/unknown-error.html";
+						},
+						function(res) {
+							$window.location.href = "/unknown-error.html";
+						});
 					}
 
 					deferred.reject();
@@ -259,8 +269,7 @@ angular.module('sharedApp')
 				};
 
 				$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("JWT"); // Set proper headers
-				$http.post(serverRoot + "/api/reportJsException", exceptionObject).then(function(res) {
-				});
+				return $http.post(serverRoot + "/api/reportJsException", exceptionObject);
 			}
 		};
 	});
