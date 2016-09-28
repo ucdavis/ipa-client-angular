@@ -108,9 +108,8 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				});
 			};
 
-			$scope.addPreference = function(preference, courseOffering, isBuyout, isSabbatical, isCourseRelease) {
+			$scope.addPreference = function(preference, term, isBuyout, isSabbatical, isCourseRelease) {
 				var courseNumber, subjectCode, sectionGroup;
-				var term = courseOffering;
 				var scheduleId = $scope.view.state.activeTeachingCall.scheduleId;
 
 				if (preference) {
