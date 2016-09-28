@@ -76,8 +76,18 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 			$scope.searchCourses = function (term, query) {
 				var term = $scope.termToTermCode(term);
 
+				// Display courses already on the schedule
 				if (!query || query.length == 0) {
-					return $scope.view.state.activeTeachingCall.scheduledCourses[term];
+					var results = [];
+						results.push({isBuyout: true})
+						results.push({isCourseRelease: true})
+						results.push({isSabbatical: true})
+						results.push.apply(results, $scope.view.state.activeTeachingCall.scheduledCourses[term]);
+						results.forEach( function(entry) {
+							entry.displayText = $scope.getDisplayTextFromCourse(entry);
+						})
+
+					return results;
 				}
 /*
 				if (query.length > 3) {
@@ -88,6 +98,26 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 					});
 				}
 */
+			};
+
+			$scope.getDisplayTextFromCourse = function(course) {
+				// If entry is a buyout/sabbatical/course release
+				if (course.isBuyout) {
+					return "Buyout";
+				} else if (course.isSabbatical) {
+					return "Sabbatical";
+				} else if (course.isCourseRelease) {
+					return "Course Release";
+				}
+				// If entry is a standard course that was already added to the schedule
+				else if ( course.subjectCode.length > 0
+					&& course.courseNumber.length > 0
+					&& course.title.length > 0 ) {
+						var displayText = course.subjectCode + ' ' + course.courseNumber + ' ' + course.title;
+						return displayText;
+				} else {
+					return "";
+				}
 			};
 
 			$scope.getCourseOfferingIdsFromPreferences = function(preferences) {
@@ -141,13 +171,15 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				teachingAssignment.instructor = $scope.view.state.instructors.list[instructorId];
 				teachingAssignment.instructorId = instructorId;
 
-				teachingAssignment.buyout = isBuyout;
-				teachingAssignment.sabbatical = isSabbatical;
-				teachingAssignment.courseRelease = isCourseRelease;
+				teachingAssignment.buyout = preference.isBuyout;
+				teachingAssignment.sabbatical = preference.isSabbatical;
+				teachingAssignment.courseRelease = preference.isCourseRelease;
 				teachingAssignment.schedule = {id: scheduleId};
 				teachingAssignment.scheduleId = scheduleId;
 
 				assignmentActionCreators.addPreference(teachingAssignment);
+				$scope.view.courseSearchQuery = "";
+				$scope.view.courseSearchIsOpen = false;
 			};
 
 			$scope.removePreference = function(teachingAssignment) {

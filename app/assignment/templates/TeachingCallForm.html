@@ -48,45 +48,43 @@
 				</div>
 			</div>
 			<ol sortable drag-end="updateAssignmentsOrder(sortedIds, term)" class="sortable-list teaching-call-form-unapproved-preference-container">
-					<li id="pref-{{ preference.id }}" ng-if="!preference.approved" class="teaching-call-form-unapproved-preference"
-					ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
-
-						<div style="flex: 0 0 10px; display: flex; justify-content: center; align-items: center;">
-							<div>
-								{{$index + 1}}
-							</div>
+				<li id="pref-{{ preference.id }}" ng-if="!preference.approved" class="teaching-call-form-unapproved-preference"
+				ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
+					<div style="flex: 0 0 10px; display: flex; justify-content: center; align-items: center;">
+						<div>
+							{{$index + 1}}
 						</div>
+					</div>
 
-						<div style="flex: 0 0 auto; display: flex; align-items: center; padding-bottom: 5px;">
-							<i style="flex: 0 0 auto;" class="glyphicon glyphicon-option-vertical preference-sortable-handle"></i>
+					<div style="flex: 0 0 auto; display: flex; align-items: center; padding-bottom: 5px;">
+						<i style="flex: 0 0 auto;" class="glyphicon glyphicon-option-vertical preference-sortable-handle"></i>
+					</div>
+					<div class="teaching-call-form-unapproved-preference-panel" style="display: flex; justify-content: space-around;">
+						<div style="flex 1 0 0px;">
 						</div>
-
-						<div class="teaching-call-form-unapproved-preference-panel" style="display: flex; justify-content: space-around;">
-							<div style="flex 1 0 0px;">
-							</div>
-							<div style="flex 1 0 0px;">
-								{{getDescription(preference)}}
-							</div>
-							<div ng-if="preference && !preference.approved" confirm-button="removePreference(preference)"
-								message="Are you sure you want to delete this preference"
-								yes="Delete" no="Cancel" placement="bottom"
-								confirm-is-shown="status.confirmIsOpen"
-								class="delete-preference-button glyphicon glyphicon-remove sortable-item-button close" style="font-size: 14px; flex 1 0 0px;"
-								aria-hidden="true" style="width: 10%;" uib-tooltip="Remove"
-								tooltip-placement="right"></div>
+						<div style="flex 1 0 0px;">
+							{{getDescription(preference)}}
 						</div>
-					</li>
-
-					<li class="scrollable-dropdown-menu">
-						<input type="text" ng-model="view.courseSearchQuery" placeholder="Search courses"
-							uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchCourses(term, $viewValue)"
-							typeahead-loading="loadingCourses"
-							typeahead-no-results="noResults"
-							typeahead-wait-ms="400"
-							typeahead-min-length="0"
-							typeahead-on-select="addPreference($item, termToTermCode(term), isBuyout, isSabbatical, isCourseRelease)"
-							class="form-control">
-					</li>
+						<div ng-if="preference && !preference.approved" confirm-button="removePreference(preference)"
+							message="Are you sure you want to delete this preference"
+							yes="Delete" no="Cancel" placement="bottom"
+							confirm-is-shown="status.confirmIsOpen"
+							class="delete-preference-button glyphicon glyphicon-remove sortable-item-button close" style="font-size: 14px; flex 1 0 0px;"
+							aria-hidden="true" style="width: 10%;" uib-tooltip="Remove"
+							tooltip-placement="right"></div>
+					</div>
+				</li>
+				<li class="scrollable-dropdown-menu">
+					<input type="text" ng-model="view.courseSearchQuery" placeholder="Search courses"
+						uib-typeahead="course as (course.displayText) for course in searchCourses(term, $viewValue)"
+						typeahead-loading="loadingCourses"
+						typeahead-no-results="noResults"
+						typeahead-wait-ms="400"
+						typeahead-min-length="0"
+						popover-is-open="view.courseSearchIsOpen"
+						typeahead-on-select="addPreference($item, termToTermCode(term), isBuyout, isSabbatical, isCourseRelease)"
+						class="form-control">
+				</li>
 
 				<li ng-if="!teachingCallResponse[term].isComplete"
 					term-preferences courses="courseOfferings[term]" term="term" schedule-id="teachingCall.scheduleId"
