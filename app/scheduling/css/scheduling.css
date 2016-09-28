@@ -41,10 +41,17 @@ body {
 }
 .activity-filter-tokens {
   flex: 7 0 60%;
-  justify-content: center;
-  display: flex;
-  align-items: center;
   overflow-x: auto;
+  white-space: nowrap;
+  line-height: 50px;
+}
+.label-selected-section-group {
+  background-color: #e6e6e6;
+  color: #333;
+  margin-right: 5px;
+  display: inline-block;
+  font-size: 85%;
+  line-height: normal;
 }
 .section-group-container {
   height: calc(100vh - 100px);
@@ -307,11 +314,6 @@ select.standard-time {
   top: 50%;
   width: 100%;
   text-align: center;
-}
-
-.label-selected-section-group {
-  background-color: #e6e6e6;
-  color: #333;
 }
 
 i.selected-section-group-remove {
