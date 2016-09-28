@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc function
  * @name ipaClientAngularApp.controller:AdminCtrl
@@ -41,4 +39,4 @@ AdminCtrl.getPayload = function (authService, $route, adminActionCreators) {
 	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year, ignoreFallBackUrl).then(function () {
 		return adminActionCreators.getInitialState();
 	});
-}
+};

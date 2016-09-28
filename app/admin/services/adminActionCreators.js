@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc service
  * @name adminApp.adminActionCreators
@@ -18,12 +16,12 @@ adminApp.service('adminActionCreators', function (adminStateService, adminServic
 				};
 				adminStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		updateWorkgroup: function (workgroup) {
 			adminService.updateWorkgroup(workgroup).then(function (updatedWorkgroup) {
-				$rootScope.$emit('toast', {message: "Updated workgroup " + updatedWorkgroup.name, type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Updated workgroup " + updatedWorkgroup.name, type: "SUCCESS" });
 				var action = {
 					type: UPDATE_WORKGROUP,
 					payload: {
@@ -32,12 +30,12 @@ adminApp.service('adminActionCreators', function (adminStateService, adminServic
 				};
 				adminStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		removeWorkgroup: function (workgroup) {
 			adminService.removeWorkgroup(workgroup.id).then(function () {
-				$rootScope.$emit('toast', {message: "Removed workgroup " + workgroup.name, type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Removed workgroup " + workgroup.name, type: "SUCCESS" });
 				var action = {
 					type: REMOVE_WORKGROUP,
 					payload: {
@@ -46,12 +44,12 @@ adminApp.service('adminActionCreators', function (adminStateService, adminServic
 				};
 				adminStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		addWorkgroup: function (workgroup) {
 			adminService.addWorkgroup(workgroup).then(function (createdWorkgroup) {
-				$rootScope.$emit('toast', {message: "Created workgroup " + workgroup.name, type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Created workgroup " + workgroup.name, type: "SUCCESS" });
 				var action = {
 					type: ADD_WORKGROUP,
 					payload: {
@@ -60,8 +58,8 @@ adminApp.service('adminActionCreators', function (adminStateService, adminServic
 				};
 				adminStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		}
-	}
+	};
 });

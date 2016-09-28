@@ -284,7 +284,7 @@ module.exports = function (grunt) {
 				options: {
 					port: 9000,
 					base: 'dist',
-					middleware: function(connect, options, middlewares) {
+					middleware: function (connect, options, middlewares) {
 						var modRewrite = require('connect-modrewrite');
 						// enable Angular's HTML5 mode
 						middlewares.unshift(modRewrite([
@@ -305,7 +305,19 @@ module.exports = function (grunt) {
 
 		clean: {
 			src: ['dist/*']
+		},
+
+		jshint: {
+			options: {
+				curly: true,
+				eqnull: true,
+				browser: true,
+			},
+			src: [
+				'<%= folders.webapp.root %>/admin/**/*.js',
+			]
 		}
+
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-concat');
@@ -317,11 +329,12 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-bower-concat');
 	grunt.loadNpmTasks('grunt-angular-templates');
 	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 
 	grunt.registerTask('build', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsProdSnippets',
 		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsPublic', 'concat:cssLib', 'uglify:dist', 'cssmin']);
 
-	grunt.registerTask('serve', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsDevSnippets',
+	grunt.registerTask('serve', ['clean', 'jshint', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsDevSnippets',
 		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsPublic', 'concat:cssLib', 'connect', 'watch']);
 
 	grunt.registerTask('default', ['serve']);

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc service
  * @name adminApp.adminStateService
@@ -78,5 +76,5 @@ adminApp.service('adminStateService', function ($rootScope, Workgroup) {
 			console.debug("Admin state updated:");
 			console.debug(scope._state, action.type);
 		}
-	}
+	};
 });
