@@ -82,7 +82,9 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 						results.push({isBuyout: true})
 						results.push({isCourseRelease: true})
 						results.push({isSabbatical: true})
-						results.push.apply(results, $scope.view.state.activeTeachingCall.scheduledCourses[term]);
+
+						var scheduledCourses = $scope.view.state.activeTeachingCall.scheduledCourses[term]
+						results.push.apply(results, scheduledCourses);
 						results.forEach( function(entry) {
 							entry.displayText = $scope.getDisplayTextFromCourse(entry);
 						})
@@ -179,7 +181,6 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 
 				assignmentActionCreators.addPreference(teachingAssignment);
 				$scope.view.courseSearchQuery = "";
-				$scope.view.courseSearchIsOpen = false;
 			};
 
 			$scope.removePreference = function(teachingAssignment) {

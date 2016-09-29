@@ -74,18 +74,6 @@
 							tooltip-placement="right"></div>
 					</div>
 				</li>
-				<li class="scrollable-dropdown-menu">
-					<input type="text" ng-model="view.courseSearchQuery" placeholder="Search courses"
-						uib-typeahead="course as (course.displayText) for course in searchCourses(term, $viewValue)"
-						typeahead-loading="loadingCourses"
-						typeahead-no-results="noResults"
-						typeahead-wait-ms="400"
-						typeahead-min-length="0"
-						popover-is-open="view.courseSearchIsOpen"
-						typeahead-on-select="addPreference($item, termToTermCode(term), isBuyout, isSabbatical, isCourseRelease)"
-						class="form-control">
-				</li>
-
 				<li ng-if="!teachingCallResponse[term].isComplete"
 					term-preferences courses="courseOfferings[term]" term="term" schedule-id="teachingCall.scheduleId"
 					class="unsortable preference-assignment-dropdown"
@@ -94,6 +82,20 @@
 					hidden-courses="{{ getCoursesFromPreferences(termPreferences[term]) }}"
 					on-update="refreshPreferences()"
 					on-select="addPreference(courseOffering, term, isBuyout, isSabbatical, isCourseRelease)">
+				</li>
+			</ol>
+			<ol class="sortable-list teaching-call-form-unapproved-preference-container">
+
+				<li class="scrollable-dropdown-menu">
+					<input type="text" ng-model="view.courseSearchQuery" placeholder="Search courses"
+						uib-typeahead="course as (course.displayText) for course in searchCourses(term, $viewValue)"
+						typeahead-loading="loadingCourses"
+						typeahead-no-results="noResults"
+						typeahead-wait-ms="400"
+						typeahead-min-length="0"
+						auto-close="always"
+						typeahead-on-select="addPreference($item, termToTermCode(term), isBuyout, isSabbatical, isCourseRelease)"
+						class="form-control search-course-input">
 				</li>
 			</ol>
 
