@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc function
  * @name summaryApp.controller:SummaryCtrl
@@ -46,13 +44,13 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope',
 			};
 
 			// Will translate a dayIndicator like '0010100' into 'TR'
-			$scope.dayIndicatorToDayCodes = function(dayIndicator) {
+			$scope.dayIndicatorToDayCodes = function (dayIndicator) {
 				dayCodes = "";
 				// Handle incorrect data
-				if (dayIndicator.length == 0) {
+				if (dayIndicator.length === 0) {
 					return dayCodes;
 				}
-				dayStrings = ['U','M','T','W','R','F','S'];
+				dayStrings = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
 				for (var i = 0; i < dayIndicator.length; i++) {
 					char = dayIndicator.charAt(i);
 					if (Number(char) == 1) {
@@ -61,33 +59,33 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope',
 				}
 
 				return dayCodes;
-			}
+			};
 
-			$scope.isInstructor = function() {
+			$scope.isInstructor = function () {
 				if ($scope.userHasRolesForWorkgroup(['senateInstructor'], $scope.sharedState.workgroup) || $scope.userHasRolesForWorkgroup(['federationInstructor'], $scope.sharedState.workgroup)) {
 					return true;
 				}
 
 				return false;
-			}
+			};
 
-			$scope.isAcademicPlanner = function() {
+			$scope.isAcademicPlanner = function () {
 				if ($scope.userHasRolesForWorkgroup(['academicPlanner'], $scope.sharedState.workgroup)) {
 					return true;
 				}
 
 				return false;
-			}
+			};
 }]);
 
 SummaryCtrl.authenticate = function (authService, $route, $window, summaryActionCreators) {
-	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then( function() {
+	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
 
 		var path = $window.location.pathname.split('/');
-		var lastPathString = path[path.length-1];
+		var lastPathString = path[path.length - 1];
 
 		// Ensure user is not at a generic '/summary/20/2016' route, and should have access to this summary page
-		if ( (lastPathString == "instructor" && authService.isInstructor() ) || (lastPathString == "workgroup" && authService.isAcademicPlanner()) ) {
+		if ((lastPathString == "instructor" && authService.isInstructor()) || (lastPathString == "workgroup" && authService.isAcademicPlanner())) {
 			return summaryActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
 		}
 
@@ -102,6 +100,6 @@ SummaryCtrl.authenticate = function (authService, $route, $window, summaryAction
 		else if (isInstructor) {
 			location.href = location.href + "/instructor";
 		}
-		
-	})
-}
+
+	});
+};

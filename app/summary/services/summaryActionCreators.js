@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc service
  * @name workgroupApp.workgroupActionCreators
@@ -20,8 +18,8 @@ summaryApp.service('summaryActionCreators', function (summaryStateService, summa
 				};
 				summaryStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		}
-	}
+	};
 });

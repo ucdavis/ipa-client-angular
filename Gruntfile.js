@@ -309,7 +309,7 @@ module.exports = function (grunt) {
 				loopfunc: true
 			},
 			src: [
-				'<%= folders.webapp.root %>/scheduling/**/*.js',
+				'<%= folders.webapp.root %>/summary/**/*.js',
 			]
 		}
 

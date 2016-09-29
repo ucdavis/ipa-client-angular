@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc service
  * @name courseApp.courseStateService
@@ -105,8 +103,9 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 					return activities;
 			}
 		},
-		_eventReducers: function(action, events) {
+		_eventReducers: function (action, events) {
 			var scope = this;
+			var i, startDate, endDate, eventData;
 
 			switch (action.type) {
 				case INIT_STATE:
@@ -119,10 +118,10 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 
 					// Append future starting and ending teaching calls to eventsList
 					var teachingCallLength = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
-					for (var i = 0; i < teachingCallLength; i++) {
+					for (i = 0; i < teachingCallLength; i++) {
 						var teachingCall = action.payload.teachingCalls[i];
-						var startDate = new Date(teachingCall.startDate);
-						var endDate = new Date(teachingCall.dueDate);
+						startDate = new Date(teachingCall.startDate);
+						endDate = new Date(teachingCall.dueDate);
 
 						// Build eventData object based on the teachingCall's start date
 						var teachingCallType = "";
@@ -135,14 +134,14 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						} else {
 							teachingCallType = " Senate ";
 						}
-						var eventData = {
+						eventData = {
 							'type': "teaching_call",
 							'title': action.year + teachingCallType + "Teaching Call Starts",
-							'time': startDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'time': startDate.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 							'date': startDate.toLocaleDateString(),
 							'caption': teachingCall.message,
 							'link': "/assignments/" + action.workgroupId + "/" + action.year + "/teachingCallStatus"
-						}
+						};
 
 						// Only add the event if it happens in the future
 						if (startDate.getTime() > Date.now()) {
@@ -154,11 +153,11 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						eventData = {
 							'type': "teaching_call",
 							'title': action.year + teachingCallType + "Teaching Call Ends",
-							'time': endDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'time': endDate.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 							'date': endDate.toLocaleDateString(),
 							'caption': "",
 							'link': "/assignments/" + action.workgroupId + "/" + action.year + "/teachingCallStatus"
-						}
+						};
 						if (endDate.getTime() > Date.now()) {
 							eventsList.push(new Event(eventData));
 						}
@@ -166,7 +165,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 					} // end loop appending teaching calls
 
 					// Filter dwTerm to only use terms for the current school year
-					var relevantTerms = action.payload.dwTerm.filter(function(term) {
+					var relevantTerms = action.payload.dwTerm.filter(function (term) {
 						// action.year is the academic school year
 						// * 100 adds the possible term code
 						var academicYearStart = action.year * 100;
@@ -181,23 +180,23 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 
 					// Append future events retrieved from the terms
 					var termLength = relevantTerms ? relevantTerms.length : 0;
-					for (var i = 0; i < termLength; i++) {
+					for (i = 0; i < termLength; i++) {
 						var term = relevantTerms[i];
-						var startDate = new Date(parseInt(term.beginDate));
-						var endDate = new Date(parseInt(term.endDate));
+						startDate = new Date(parseInt(term.beginDate));
+						endDate = new Date(parseInt(term.endDate));
 
 						// Append future starting quarters / semesters
-						var eventData = {
+						eventData = {
 							'type': "school",
 							'title': term.code.getTermCodeDisplayName() + " Starts",
-							'time': startDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'time': startDate.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 							'date': startDate.toLocaleDateString(),
 							'caption': "",
 							'link': ""
-						}
+						};
 
 						// Only append the event if it is in the future
-						if (startDate.getTime() > Date.now() ) {
+						if (startDate.getTime() > Date.now()) {
 							eventsList.push(new Event(eventData));
 						}
 
@@ -205,11 +204,11 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						eventData = {
 							'type': "school",
 							'title': term.code.getTermCodeDisplayName() + " Ends",
-							'time': endDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+							'time': endDate.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 							'date': endDate.toLocaleDateString(),
 							'caption': "",
 							'link': ""
-						}
+						};
 						if (endDate.getTime() > Date.now()) {
 							eventsList.push(new Event(eventData));
 						}
@@ -223,11 +222,11 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							eventData = {
 								'type': "notice",
 								'title': term.code.getTermCodeDisplayName() + " Upload I Starts",
-								'time': upload1Start.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+								'time': upload1Start.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 								'date': upload1Start.toLocaleDateString(),
 								'caption': "",
 								'link': ""
-							}
+							};
 							if (upload1Start.getTime() > Date.now()) {
 								eventsList.push(new Event(eventData));
 							}
@@ -237,11 +236,11 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							eventData = {
 								'type': "notice",
 								'title': term.code.getTermCodeDisplayName() + " Upload I Ends",
-								'time': upload1End.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+								'time': upload1End.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 								'date': upload1End.toLocaleDateString(),
 								'caption': "",
 								'link': ""
-							}
+							};
 							if (upload1End.getTime() > Date.now()) {
 								eventsList.push(new Event(eventData));
 							}
@@ -255,11 +254,11 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							eventData = {
 								'type': "notice",
 								'title': term.code.getTermCodeDisplayName() + " Upload II Starts",
-								'time': upload2Start.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+								'time': upload2Start.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 								'date': upload2Start.toLocaleDateString(),
 								'caption': "",
 								'link': ""
-							}
+							};
 							if (upload2Start.getTime() > Date.now()) {
 								eventsList.push(new Event(eventData));
 							}
@@ -269,11 +268,11 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 							eventData = {
 								'type': "notice",
 								'title': term.code.getTermCodeDisplayName() + " Upload II Ends",
-								'time': upload2End.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+								'time': upload2End.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 								'date': upload2End.toLocaleDateString(),
 								'caption': "",
 								'link': ""
-							}
+							};
 							if (upload2End.getTime() > Date.now()) {
 								eventsList.push(new Event(eventData));
 							}
@@ -282,13 +281,13 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 					} // end for
 
 					// Sort the eventList from least to greatest time
-					eventsList.sort(function(a, b) {
+					eventsList.sort(function (a, b) {
 						return new Date(a.date).getTime() - new Date(b.date).getTime();
 					});
 					events.list = eventsList;
 
 					// Add ids for iterating purposes
-					for (var i = 0; i < eventsList.length; i++) {
+					for (i = 0; i < eventsList.length; i++) {
 						events.ids.push(i);
 					}
 
@@ -307,11 +306,11 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 
 					terms = [];
 
-					data.sectionGroups.forEach( function(sectionGroup) {
+					data.sectionGroups.forEach(function (sectionGroup) {
 						var termCode = sectionGroup.termCode;
 
 						// If this is the first sectionGroup of a termCode
-						if (terms.indexOf(termCode) == -1 ) {
+						if (terms.indexOf(termCode) == -1) {
 							terms.push(termCode);
 							instructorCoursesByTermCode[termCode] = [];
 						}
@@ -320,7 +319,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 
 						slotSectionGroup.title = "";
 
-						data.courses.forEach( function (course) {
+						data.courses.forEach(function (course) {
 							if (sectionGroup.courseId == course.id) {
 								slotSectionGroup.title = course.title;
 								slotSectionGroup.subjectCode = course.subjectCode;
@@ -331,7 +330,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						slotSectionGroup.meetings = [];
 
 						// Look for meeting data from shared activities
-						data.activities.forEach( function(activity) {
+						data.activities.forEach(function (activity) {
 							activity = new Activity(activity);
 
 							if (activity.sectionGroupId == sectionGroup.id) {
@@ -339,7 +338,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 
 								slotMeeting.startTime = activity.startTime;
 								slotMeeting.endTime = activity.endTime;
-								if (activity.locationDescription.length == 0) {
+								if (activity.locationDescription.length === 0) {
 									slotMeeting.location = "To Be Announced";
 								} else {
 									slotMeeting.location = activity.locationDescription;
@@ -355,7 +354,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						instructorCoursesByTermCode[termCode].push(slotSectionGroup);
 					});
 
-					var instructorCourses = {};
+					instructorCourses = {};
 					instructorCourses.terms = terms;
 					instructorCourses.list = instructorCoursesByTermCode;
 
@@ -381,7 +380,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 
 			scope._state = newState;
 
-			$rootScope.$emit('summaryStateChanged',scope._state);
+			$rootScope.$emit('summaryStateChanged', scope._state);
 		}
-	}
+	};
 });
