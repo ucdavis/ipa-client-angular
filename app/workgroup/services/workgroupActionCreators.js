@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc service
  * @name workgroupApp.workgroupActionCreators
@@ -18,12 +16,12 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				};
 				workgroupStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		addTag: function (workgroupId, tag) {
 			workgroupService.addTag(workgroupId, tag).then(function (newTag) {
-				$rootScope.$emit('toast', {message: "Created tag " + newTag.name, type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Created tag " + newTag.name, type: "SUCCESS" });
 				var action = {
 					type: ADD_TAG,
 					payload: {
@@ -32,12 +30,12 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				};
 				workgroupStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		updateTag: function (workgroupId, tag) {
 			workgroupService.updateTag(workgroupId, tag).then(function (newTag) {
-				$rootScope.$emit('toast', {message: "Updated tag " + newTag.name, type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Updated tag " + newTag.name, type: "SUCCESS" });
 				var action = {
 					type: UPDATE_TAG,
 					payload: {
@@ -46,12 +44,12 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				};
 				workgroupStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		removeTag: function (workgroupId, tag) {
 			workgroupService.removeTag(workgroupId, tag).then(function () {
-				$rootScope.$emit('toast', {message: "Removed tag " + tag.name, type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Removed tag " + tag.name, type: "SUCCESS" });
 				var action = {
 					type: REMOVE_TAG,
 					payload: {
@@ -60,12 +58,12 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				};
 				workgroupStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		addLocation: function (workgroupId, location) {
 			workgroupService.addLocation(workgroupId, location).then(function (newLocation) {
-				$rootScope.$emit('toast', {message: "Created location " + newLocation.description, type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Created location " + newLocation.description, type: "SUCCESS" });
 				var action = {
 					type: ADD_LOCATION,
 					payload: {
@@ -74,12 +72,12 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				};
 				workgroupStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		updateLocation: function (workgroupId, location) {
 			workgroupService.updateLocation(workgroupId, location).then(function (newLocation) {
-				$rootScope.$emit('toast', {message: "Renamed location to " + newLocation.description, type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Renamed location to " + newLocation.description, type: "SUCCESS" });
 				var action = {
 					type: UPDATE_LOCATION,
 					payload: {
@@ -88,12 +86,12 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				};
 				workgroupStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		removeLocation: function (workgroupId, location) {
 			workgroupService.removeLocation(workgroupId, location).then(function (newLocation) {
-				$rootScope.$emit('toast', {message: "Removed location " + location.description, type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Removed location " + location.description, type: "SUCCESS" });
 				var action = {
 					type: REMOVE_LOCATION,
 					payload: {
@@ -102,12 +100,12 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				};
 				workgroupStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		addRoleToUser: function (workgroupId, user, role) {
 			workgroupService.addRoleToUser(workgroupId, user, role).then(function (userRole) {
-				$rootScope.$emit('toast', {message: user.firstName + " " + user.lastName + " is now " + role.getDisplayName(), type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: user.firstName + " " + user.lastName + " is now " + role.getDisplayName(), type: "SUCCESS" });
 				var action = {
 					type: ADD_USER_ROLE,
 					payload: {
@@ -117,12 +115,12 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				};
 				workgroupStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		removeRoleFromUser: function (workgroupId, user, role, userRoleToBeDeleted) {
 			workgroupService.removeRoleFromUser(workgroupId, user, role).then(function (userRole) {
-				$rootScope.$emit('toast', {message: user.firstName + " " + user.lastName + " is no longer " + role.getDisplayName(), type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: user.firstName + " " + user.lastName + " is no longer " + role.getDisplayName(), type: "SUCCESS" });
 				var action = {
 					type: REMOVE_USER_ROLE,
 					payload: {
@@ -132,7 +130,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				};
 				workgroupStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		clearUserSearch: function () {
@@ -146,10 +144,10 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 		},
 		createUser: function (workgroupId, dwUser) {
 			var scope = this;
-			var role = new Role({name: "senateInstructor"});
+			var role = new Role({ name: "senateInstructor" });
 
 			workgroupService.createUser(workgroupId, dwUser).then(function (newUser) {
-				$rootScope.$emit('toast', {message: "Added user " + newUser.firstName + " " + newUser.lastName, type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Added user " + newUser.firstName + " " + newUser.lastName, type: "SUCCESS" });
 				var action = {
 					type: ADD_USER,
 					payload: {
@@ -159,12 +157,12 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				workgroupStateService.reduce(action);
 				scope.addRoleToUser(workgroupId, newUser, role);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		removeUserFromWorkgroup: function (workgroupId, user) {
 			workgroupService.removeUserFromWorkgroup(workgroupId, user).then(function () {
-				$rootScope.$emit('toast', {message: "Removed user " + user.firstName + " " + user.lastName, type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Removed user " + user.firstName + " " + user.lastName, type: "SUCCESS" });
 				var action = {
 					type: REMOVE_USER,
 					payload: {
@@ -173,8 +171,8 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				};
 				workgroupStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		}
-	}
+	};
 });

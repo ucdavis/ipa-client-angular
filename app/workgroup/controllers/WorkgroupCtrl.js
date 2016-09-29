@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc function
  * @name ipaClientAngularApp.controller:WorkgroupCtrl
@@ -31,8 +29,8 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 			}
 	}]);
 
-WorkgroupCtrl.getPayload = function (authService,workgroupActionCreators, $route) {
+WorkgroupCtrl.getPayload = function (authService, workgroupActionCreators, $route) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
 		return workgroupActionCreators.getInitialState($route.current.params.workgroupId);
 	});
-}
+};

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc service
  * @name workgroupApp.workgroupStateService
@@ -24,7 +22,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					var length = action.payload.tags ? action.payload.tags.length : 0;
 					for (var i = 0; i < length; i++) {
 						var tagData = action.payload.tags[i];
-						if (tagData.archived == false) {
+						if (tagData.archived === false) {
 							tagsList[tagData.id] = new Tag(tagData);
 						}
 					}
@@ -63,7 +61,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					for (var i = 0; i < length; i++) {
 						var locationData = action.payload.locations[i];
 
-						if (locationData.archived == false) {
+						if (locationData.archived === false) {
 							locationsList[locationData.id] = new Location(locationData);
 						}
 					}
@@ -89,6 +87,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 		},
 		_userReducers: function (action, users) {
 			var scope = this;
+			var userIndex;
 
 			switch (action.type) {
 				case INIT_WORKGROUP:
@@ -108,7 +107,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					users.list = usersList;
 					return users;
 				case ADD_USER:
-					var userIndex = users.ids.indexOf(action.payload.user.id);
+					userIndex = users.ids.indexOf(action.payload.user.id);
 					if (userIndex >= 0) { return users; }
 
 					users.list[action.payload.user.id] = action.payload.user;
@@ -118,7 +117,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					users.searchQuery = "";
 					return users;
 				case REMOVE_USER:
-					var userIndex = users.ids.indexOf(action.payload.user.id);
+					userIndex = users.ids.indexOf(action.payload.user.id);
 					users.ids.splice(userIndex, 1);
 					delete users.list[action.payload.user.id];
 					return users;
@@ -174,8 +173,8 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 			newState.roles = scope._roleReducers(action, scope._state.roles);
 
 			scope._state = newState;
-			$rootScope.$emit('workgroupStateChanged',scope._state);
+			$rootScope.$emit('workgroupStateChanged', scope._state);
 			console.log(scope._state);
 		}
-	}
+	};
 });
