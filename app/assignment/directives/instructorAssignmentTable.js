@@ -158,7 +158,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 									courseHtml += unitsLow;
 									courseHtml += "</div>";
 
-									if (scope.isTermLocked(sectionGroup.termCode) == false) {
+									if (scope.isTermLocked(teachingAssignment.termCode) == false) {
 										courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\" data-toggle=\"tooltip\" data-placement=\"top\"";
 										courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 										courseHtml += "data-original-title=\"Unassign\" data-container=\"body\"></i>";
