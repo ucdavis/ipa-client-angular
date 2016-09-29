@@ -16,27 +16,27 @@ schedulingApp.directive("timeInput", this.timeInput = function($timeout) {
 			onChangeDelay: '@',
 			onChange: '&'
 		},
-		link: function(scope, element, attrs) {
+		link: function (scope, element, attrs) {
 			var linkMinuteHour = (attrs.linkMinuteHour === 'true');
 
-			scope.getMeridianTime = function() {
+			scope.getMeridianTime = function () {
 				if (!scope.time) {
-					return {hours: '--', minutes: '--', meridian: '--'};
+					return { hours: '--', minutes: '--', meridian: '--' };
 				}
 
 				var timeArr = scope.time.split(':');
 
 				var hours = parseInt(timeArr[0]);
-				if (hours === 0) hours = 12;
-				else if (hours > 12) hours = hours % 12;
+				if (hours === 0) { hours = 12; }
+				else if (hours > 12) { hours = hours % 12; }
 
 				var minutes = parseInt(timeArr[1]);
 				var meridian = timeArr[0] < 12 ? 'AM' : 'PM';
 
-				return {hours: hours, minutes: minutes, meridian: meridian};
+				return { hours: hours, minutes: minutes, meridian: meridian };
 			};
 
-			scope.incrementHours = function() {
+			scope.incrementHours = function () {
 				var time = scope.getMeridianTime();
 
 				var hours;
@@ -60,7 +60,7 @@ schedulingApp.directive("timeInput", this.timeInput = function($timeout) {
 				scope.updateTime(time);
 			};
 
-			scope.decrementHours = function() {
+			scope.decrementHours = function () {
 				var time = scope.getMeridianTime();
 
 				var hours;
@@ -84,7 +84,7 @@ schedulingApp.directive("timeInput", this.timeInput = function($timeout) {
 				scope.updateTime(time);
 			};
 
-			scope.incrementMinutes = function() {
+			scope.incrementMinutes = function () {
 				var time = scope.getMeridianTime();
 
 				var minutes;
@@ -107,7 +107,7 @@ schedulingApp.directive("timeInput", this.timeInput = function($timeout) {
 				}
 			};
 
-			scope.decrementMinutes = function() {
+			scope.decrementMinutes = function () {
 				var time = scope.getMeridianTime();
 
 				var minutes;
@@ -130,7 +130,7 @@ schedulingApp.directive("timeInput", this.timeInput = function($timeout) {
 				}
 			};
 
-			scope.toggleMeridian = function() {
+			scope.toggleMeridian = function () {
 				var time = scope.getMeridianTime();
 				if (time.meridian === 'AM') {
 					time.meridian = 'PM';
@@ -144,16 +144,16 @@ schedulingApp.directive("timeInput", this.timeInput = function($timeout) {
 				scope.updateTime(time);
 			};
 
-			scope.updateTime = function(time) {
-				if (time.meridian === 'PM' && time.hours !== 12) time.hours = time.hours + 12;
-				else if (time.meridian === 'AM' && time.hours === 12) time.hours = 0;
+			scope.updateTime = function (time) {
+				if (time.meridian === 'PM' && time.hours !== 12) { time.hours = time.hours + 12; }
+				else if (time.meridian === 'AM' && time.hours === 12) { time.hours = 0; }
 
 				scope.time = ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ":00";
 
 				$timeout(function () {
 					scope.onChange();
 				}, parseInt(scope.onChangeDelay));
-			}
+			};
 		}
-	}
+	};
 });

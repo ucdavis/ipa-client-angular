@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc service
  schedulingApp.schedulingStateService
@@ -135,7 +133,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					return sections;
 				case REMOVE_ACTIVITY:
 					var section = sections.list[action.payload.activity.sectionId];
-					if (section == undefined) { return sections; }
+					if (section === undefined) { return sections; }
 
 					var activityIndex = section.activityIds.indexOf(action.payload.activity.id);
 					if (activityIndex >= 0) {
@@ -227,7 +225,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					var length = action.payload.tags ? action.payload.tags.length : 0;
 					for (var i = 0; i < length; i++) {
 						var tagData = action.payload.tags[i];
-						if (tagData.archived == false) {
+						if (tagData.archived === false) {
 							tagsList[tagData.id] = new Tag(tagData);
 						}
 					}
@@ -251,7 +249,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					var length = action.payload.locations ? action.payload.locations.length : 0;
 					for (var i = 0; i < length; i++) {
 						var locationData = action.payload.locations[i];
-						if (locationData.archived == false) {
+						if (locationData.archived === false) {
 							locationsList[locationData.id] = new Location(locationData);
 						}
 					}
@@ -328,7 +326,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 					}
 					return uiState;
 				case CHECK_ALL_TOGGLED:
-					if (uiState.checkedSectionGroupIds.length == 0) {
+					if (uiState.checkedSectionGroupIds.length === 0) {
 						uiState.checkedSectionGroupIds = action.payload.sectionGroupIds;
 					} else {
 						uiState.checkedSectionGroupIds = [];
@@ -426,7 +424,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 				activities.list[activity.id] = new Activity(activity);
 				activities.list[activity.id].courseId = sectionGroupDetails.courseId;
 				activities.ids.push(activity.id);
-			})
+			});
 		},
 		fillTeachingCallResponseDetails: function (sectionGroupDetails, teachingCallResponses) {
 			sectionGroupDetails.teachingCallResponses.forEach(function (teachingCallResponse) {
@@ -434,5 +432,5 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 				teachingCallResponses.ids.push(teachingCallResponse.id);
 			});
 		}
-	}
+	};
 });

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc service
  schedulingApp.schedulingActionCreators
@@ -18,12 +16,12 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		updateActivity: function (activity) {
 			schedulingService.updateActivity(activity).then(function (updatedActivity) {
-				$rootScope.$emit('toast', {message: "Updated " + activity.getCodeDescription(), type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Updated " + activity.getCodeDescription(), type: "SUCCESS" });
 				var action = {
 					type: UPDATE_ACTIVITY,
 					payload: {
@@ -32,12 +30,12 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		removeActivity: function (activity) {
 			schedulingService.removeActivity(activity.id).then(function () {
-				$rootScope.$emit('toast', {message: "Removed " + activity.getCodeDescription(), type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Removed " + activity.getCodeDescription(), type: "SUCCESS" });
 				var action = {
 					type: REMOVE_ACTIVITY,
 					payload: {
@@ -46,12 +44,12 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		createSharedActivity: function (activity, sectionGroup) {
 			schedulingService.createSharedActivity(activity).then(function (newActivity) {
-				$rootScope.$emit('toast', {message: "Created new shared " + activity.getCodeDescription(), type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Created new shared " + activity.getCodeDescription(), type: "SUCCESS" });
 				var action = {
 					type: CREATE_SHARED_ACTIVITY,
 					payload: {
@@ -61,12 +59,12 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		createActivity: function (activity, sectionGroup) {
 			schedulingService.createActivity(activity).then(function (newActivity) {
-				$rootScope.$emit('toast', {message: "Created new " + activity.getCodeDescription(), type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Created new " + activity.getCodeDescription(), type: "SUCCESS" });
 				var action = {
 					type: CREATE_ACTIVITY,
 					payload: {
@@ -76,7 +74,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		setSelectedSectionGroup: function (sectionGroup) {
@@ -123,7 +121,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		getAllSectionGroupDetails: function (workgroupId, year, termCode) {
@@ -134,7 +132,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		toggleDay: function (dayIndex) {
@@ -164,5 +162,5 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 			};
 			schedulingStateService.reduce(action);
 		}
-	}
+	};
 });

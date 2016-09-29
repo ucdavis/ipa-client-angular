@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc function
  * @name ipaClientAngularApp.controller:SchedulingCtrl
@@ -42,7 +40,7 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroupId];
 
 				// Initialize sectionGroup sections if not done already
-				if (sectionGroup && sectionGroup.sectionIds == undefined) {
+				if (sectionGroup && sectionGroup.sectionIds === undefined) {
 					schedulingActionCreators.getSectionGroupDetails(sectionGroup);
 				}
 			};
@@ -52,14 +50,14 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 
 				var dayStr = '';
 				angular.forEach(dayArr, function(day, i) {
-					if (day === '1') dayStr = dayStr + $scope.days[i];
+					if (day === '1') { dayStr = dayStr + $scope.days[i]; }
 				});
 
 				return dayStr;
 			};
 
 			$scope.getMeridianTime = function (time) {
-				var time = Activity.prototype.getMeridianTime(time);
+				time = Activity.prototype.getMeridianTime(time);
 				return ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ' ' + time.meridian;
 			};
 
@@ -143,7 +141,7 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				schedulingActionCreators.toggleCheckAll(sectionGroupIdsToCheck);
 
 				// Initialize all sectionGroup sections if not done already
-				if ($scope.view.state.uiState.allSectionGroupsDetailsCached == false) {
+				if ($scope.view.state.uiState.allSectionGroupsDetailsCached === false) {
 					schedulingActionCreators.getAllSectionGroupDetails(
 						$scope.workgroupId, $scope.year, $scope.term.code);
 				}
@@ -156,12 +154,12 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 
 			$scope.matchesFilters = function (sectionGroup) {
 				var satisfiesTagFilters = (
-					$scope.view.state.filters.enabledTagIds.length == 0 ||
+					$scope.view.state.filters.enabledTagIds.length === 0 ||
 					$scope.view.state.courses.list[sectionGroup.courseId].matchesTagFilters
 				);
 
 				var satisfiesLocationFilters = (
-					$scope.view.state.filters.enabledLocationIds.length == 0 ||
+					$scope.view.state.filters.enabledLocationIds.length === 0 ||
 					matchesLocationFilters(sectionGroup)
 				);
 
@@ -191,4 +189,4 @@ SchedulingCtrl.getPayload = function (authService, $route, Term, schedulingActio
 			$route.current.params.year,
 			term.code);
 	});
-}
+};
