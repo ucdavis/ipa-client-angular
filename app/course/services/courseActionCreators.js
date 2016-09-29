@@ -16,7 +16,7 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		setActiveCell: function (courseId, termCode) {
@@ -71,7 +71,7 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		updateTagFilters: function (tagIds) {
@@ -85,7 +85,7 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 		},
 		addSectionGroup: function (sectionGroup) {
 			courseService.addSectionGroup(sectionGroup).then(function (sectionGroup) {
-				$rootScope.$emit('toast', {message: "Created course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Created course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
 				var action = {
 					type: ADD_SECTION_GROUP,
 					payload: {
@@ -94,12 +94,12 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		updateSectionGroup: function (sectionGroup) {
 			courseService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
-				$rootScope.$emit('toast', {message: "Updated course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS"});
+				$rootScope.$emit('toast', { message: "Updated course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
 				var action = {
 					type: UPDATE_SECTION_GROUP,
 					payload: {
@@ -108,13 +108,13 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		deleteCourse: function (course) {
 			var courseTitle = course.title;
 			courseService.deleteCourse(course).then(function () {
-				$rootScope.$emit('toast', { message: "Deleted course " + courseTitle, type: "SUCCESS"} );
+				$rootScope.$emit('toast', { message: "Deleted course " + courseTitle, type: "SUCCESS" });
 				var action = {
 					type: REMOVE_COURSE,
 					payload: {
@@ -123,7 +123,7 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		searchImportCourses: function (subjectCode, year, includePrivate) {
@@ -137,7 +137,7 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		newCourse: function (index) {
@@ -161,7 +161,7 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 		 */
 		createCourse: function (newCourse, workgroupId, year) {
 			courseService.createCourse(newCourse, workgroupId, year).then(function (createdCourse) {
-				$rootScope.$emit('toast', { message: "Created course " + createdCourse.title, type: "SUCCESS"} );
+				$rootScope.$emit('toast', { message: "Created course " + createdCourse.title, type: "SUCCESS" });
 				var action = {
 					type: CREATE_COURSE,
 					payload: {
@@ -170,25 +170,25 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 
 		},
 		importCoursesAndSectionGroups: function (sectionGroupImports, workgroupId, year, importedCoursesCount) {
 			courseService.importCoursesAndSectionGroups(sectionGroupImports, workgroupId, year).then(function (payload) {
-				$rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS"} );
+				$rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS" });
 				var action = {
 					type: IMPORT_COURSES,
 					payload: payload
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		updateCourse: function (course) {
 			courseService.updateCourse(course).then(function (updatedCourse) {
-				$rootScope.$emit('toast', { message: "Updated course " + updatedCourse.title, type: "SUCCESS"} );
+				$rootScope.$emit('toast', { message: "Updated course " + updatedCourse.title, type: "SUCCESS" });
 				var action = {
 					type: UPDATE_COURSE,
 					payload: {
@@ -197,12 +197,12 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		addTagToCourse: function (course, tag) {
 			courseService.addTagToCourse(course, tag).then(function (updatedCourse) {
-				$rootScope.$emit('toast', { message: "Added tag " + tag.name, type: "SUCCESS"} );
+				$rootScope.$emit('toast', { message: "Added tag " + tag.name, type: "SUCCESS" });
 				var action = {
 					type: UPDATE_COURSE,
 					payload: {
@@ -211,12 +211,12 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		removeTagFromCourse: function (course, tag) {
 			courseService.removeTagFromCourse(course, tag).then(function (updatedCourse) {
-				$rootScope.$emit('toast', { message: "Removed tag " + tag.name, type: "SUCCESS"} );
+				$rootScope.$emit('toast', { message: "Removed tag " + tag.name, type: "SUCCESS" });
 				var action = {
 					type: UPDATE_COURSE,
 					payload: {
@@ -225,7 +225,7 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		getSectionsBySectionGroup: function (sectionGroup) {
@@ -239,12 +239,12 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		updateSection: function (section) {
 			courseService.updateSection(section).then(function (section) {
-				$rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber, type: "SUCCESS"} );
+				$rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber, type: "SUCCESS" });
 				var action = {
 					type: UPDATE_SECTION,
 					payload: {
@@ -253,12 +253,12 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		createSection: function (section) {
 			courseService.createSection(section).then(function (section) {
-				$rootScope.$emit('toast', { message: "Created section " + section.sequenceNumber, type: "SUCCESS"} );
+				$rootScope.$emit('toast', { message: "Created section " + section.sequenceNumber, type: "SUCCESS" });
 				var action = {
 					type: CREATE_SECTION,
 					payload: {
@@ -267,12 +267,12 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		deleteSection: function (section) {
 			courseService.deleteSection(section).then(function () {
-				$rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS"} );
+				$rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
 				var action = {
 					type: REMOVE_SECTION,
 					payload: {
@@ -281,7 +281,7 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		updateTableFilter: function (query) {
@@ -293,14 +293,14 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			};
 			courseStateService.reduce(action);
 		},
-		beginImportMode: function() {
+		beginImportMode: function () {
 			var action = {
 				type: BEGIN_IMPORT_MODE,
 				payload: {}
 			};
 			courseStateService.reduce(action);
 		},
-		endImportMode: function() {
+		endImportMode: function () {
 			var action = {
 				type: END_IMPORT_MODE,
 				payload: {}
@@ -318,8 +318,8 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				};
 				courseStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"} );
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		}
-	}
+	};
 });

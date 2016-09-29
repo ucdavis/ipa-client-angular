@@ -33,6 +33,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 		},
 		_courseReducers: function (action, courses) {
 			var scope = this;
+			var newCourseIndex;
 
 			switch (action.type) {
 				case INIT_STATE:
@@ -64,7 +65,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 							return (course.courseNumber == sg.courseNumber) && (course.sequencePattern == sg.sequencePattern);
 						});
 						// Add only non-duplicates
-						if (matchingCourse == undefined && matchingImportCourse == undefined) {
+						if (matchingCourse === undefined && matchingImportCourse === undefined) {
 							importList.push(new Course({
 								subjectCode: action.payload.subjectCode,
 								courseNumber: sg.courseNumber,
@@ -81,9 +82,9 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					return courses;
 				case TOGGLE_IMPORT_COURSE:
 					var matchingImportCourse = _.find(courses.importList, function (course) {
-						return (course.subjectCode == action.payload.subjectCode)
-							&& (course.courseNumber == action.payload.courseNumber)
-							&& (course.sequencePattern == action.payload.sequencePattern);
+						return (course.subjectCode == action.payload.subjectCode) &&
+							(course.courseNumber == action.payload.courseNumber) &&
+							(course.sequencePattern == action.payload.sequencePattern);
 					});
 					if (matchingImportCourse) {
 						matchingImportCourse.import = !matchingImportCourse.import;
@@ -95,13 +96,13 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					courses.newCourse = new Course();
 					return courses;
 				case CLOSE_NEW_COURSE_DETAILS:
-					var newCourseIndex = courses.ids.indexOf(0);
+					newCourseIndex = courses.ids.indexOf(0);
 					courses.ids.splice(newCourseIndex, 1);
 					courses.newCourse = null;
 					return courses;
 				case CREATE_COURSE:
 					// Close details
-					var newCourseIndex = courses.ids.indexOf(0);
+					newCourseIndex = courses.ids.indexOf(0);
 					courses.ids.splice(newCourseIndex, 1);
 					courses.newCourse = null;
 					// Insert new course
@@ -129,7 +130,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					// Set the course.isFiltered flag to false if any tag matches the filters
 					courses.ids.forEach(function (courseId) {
 						// Display all courses if none of the tags is checked
-						if (action.payload.tagIds.length == 0) {
+						if (action.payload.tagIds.length === 0) {
 							delete courses.list[courseId].matchesTagFilters;
 						} else {
 							courses.list[courseId].matchesTagFilters = courses.list[courseId].tagIds
@@ -151,6 +152,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 		},
 		_sectionGroupReducers: function (action, sectionGroups) {
 			var scope = this;
+			var sectionGroupData;
 
 			switch (action.type) {
 				case INIT_STATE:
@@ -165,7 +167,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					var sectionGroupsList = {};
 					var length = action.payload.sectionGroups ? action.payload.sectionGroups.length : 0;
 					for (var i = 0; i < length; i++) {
-						var sectionGroupData = action.payload.sectionGroups[i];
+						sectionGroupData = action.payload.sectionGroups[i];
 						sectionGroupsList[sectionGroupData.id] = new SectionGroup(sectionGroupData);
 						sectionGroups.ids.push(sectionGroupData.id);
 					}
@@ -176,12 +178,12 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					action.payload.sectionGroups.forEach(function (sg) {
 						// Find any duplicate in importList
 						var matchingImportSectionGroup = _.find(sectionGroups.importList, function (sectionGroup) {
-							return (sectionGroup.courseNumber == sg.courseNumber)
-								&& (sectionGroup.sequencePattern == sg.sequencePattern)
-								&& (sectionGroup.termCode == sg.termCode);
+							return (sectionGroup.courseNumber == sg.courseNumber) &&
+								(sectionGroup.sequencePattern == sg.sequencePattern) &&
+								(sectionGroup.termCode == sg.termCode);
 						});
 						// Add only non-duplicates
-						if (matchingImportSectionGroup == undefined) {
+						if (matchingImportSectionGroup === undefined) {
 							sectionGroups.importList.push(new SectionGroup({
 								subjectCode: action.payload.subjectCode,
 								courseNumber: sg.courseNumber,
@@ -214,7 +216,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 							if (sectionA.sequenceNumber < sectionB.sequenceNumber) { return -1; }
 							if (sectionA.sequenceNumber > sectionB.sequenceNumber) { return 1; }
 							return 0;
- 						})
+						})
 						.map(function (section) { return section.id; });
 					return sectionGroups;
 				case CREATE_SECTION:
@@ -228,8 +230,8 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					sectionGroups.selectedSectionGroup = _.find(sectionGroups.list, function (sg) {
 						return (sg.termCode == action.payload.termCode) && (sg.courseId == action.payload.courseId);
 					});
-					if (action.payload.termCode && sectionGroups.selectedSectionGroup == undefined) {
-						var sectionGroupData = {
+					if (action.payload.termCode && sectionGroups.selectedSectionGroup === undefined) {
+						sectionGroupData = {
 							courseId: action.payload.courseId,
 							plannedSeats: 0,
 							termCode: action.payload.termCode.toString()
@@ -298,7 +300,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 						tagsList[tagData.id] = new Tag(tagData);
 					}
 					tags.ids = _array_sortIdsByProperty(tagsList, "name");
-					tags.availableIds = tags.ids.filter(function (tagId) { return tagsList[tagId].archived == false; });
+					tags.availableIds = tags.ids.filter(function (tagId) { return tagsList[tagId].archived === false; });
 					tags.list = tagsList;
 					return tags;
 				default:
@@ -324,7 +326,7 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 					var tagId = action.payload.termId;
 					var idx = filters.enabledTerms.indexOf(tagId);
 					// A term in the term filter dropdown has been toggled on or off.
-					if(idx === -1) {
+					if (idx === -1) {
 						// Toggle on
 						filters.enabledTerms.push(tagId);
 					} else {
@@ -427,5 +429,5 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 			console.debug("Course state updated:");
 			console.debug(scope._state, action.type);
 		}
-	}
+	};
 });

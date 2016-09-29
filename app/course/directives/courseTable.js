@@ -4,10 +4,10 @@
 courseApp.directive("courseTable", this.courseTable = function ($rootScope, courseActionCreators) {
 	return {
 		restrict: 'A',
-		template: '<thead><tr><th>&nbsp;</th></tr></thead><tbody><tr><td>'
-		+ '<div style="width: 100%;" align="center" class=\"text-muted\">'
-		+ '<img src="/images/ajax-loader.gif" /> &nbsp; Loading schedule</div>'
-		+ '</td></tr></tbody>',
+		template: '<thead><tr><th>&nbsp;</th></tr></thead><tbody><tr><td>' +
+		'<div style="width: 100%;" align="center" class=\"text-muted\">' +
+		'<img src="/images/ajax-loader.gif" /> &nbsp; Loading schedule</div>' +
+		'</td></tr></tbody>',
 		link: function (scope, element, attrs) {
 			scope.view = {};
 			var rerenderStateActions = [
@@ -58,11 +58,10 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					return;
 				}
 
-				// Set the correct section-group-id on the newly created sectionGkroup cell
+				// Set the correct section-group-id on the newly created sectionGroup cell
 				if (data.actionType == ADD_SECTION_GROUP) {
 					var sectionGroup = _.find(scope.view.state.sectionGroups.list, function (sg) {
-						return (sg.termCode == data.state.uiState.selectedTermCode)
-							&& (sg.courseId == data.state.uiState.selectedCourseId)
+						return (sg.termCode == data.state.uiState.selectedTermCode) && (sg.courseId == data.state.uiState.selectedCourseId);
 					});
 
 					$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]')
@@ -89,15 +88,15 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				// Filter scope.termDefinitions to only those terms which are enabled by the filter.
 				// Store this in termsToRender.
 				var termsToRender = [];
-				$.each(scope.termDefinitions, function(i, term) {
-					if(data.state.filters.enabledTerms.indexOf(Number(term.shortCode)) != -1) {
+				$.each(scope.termDefinitions, function (i, term) {
+					if (data.state.filters.enabledTerms.indexOf(Number(term.shortCode)) != -1) {
 						termsToRender.push(term);
 					}
 				});
 
-				$.each(termsToRender, function(i, term) {
+				$.each(termsToRender, function (i, term) {
 					// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
-					header += "<th class=\"\">" + term.description + "</th>"
+					header += "<th class=\"\">" + term.description + "</th>";
 				});
 
 				header += "<th class=\"ui-overlay\"></th></tr></thead>";
@@ -116,7 +115,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					});
 
 					$.each(sortedBlendedCoursesArray, function (rowIdx, course) {
-						if (course.id == undefined) {
+						if (course.id === undefined) {
 							body += getImportCourseRow(course, termsToRender, data.state);
 						} else {
 							body += getCourseRow(rowIdx, course.id, termsToRender, data.state);
@@ -124,7 +123,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					});
 				} else if (data.state.courses.ids.length) {
 					$.each(data.state.courses.ids, function (rowIdx, courseId) {
-							body += getCourseRow(rowIdx, courseId, termsToRender, data.state);
+						body += getCourseRow(rowIdx, courseId, termsToRender, data.state);
 					});
 				} else {
 					var numberOfColumns = data.state.filters.enabledTerms.length + 1;
@@ -156,19 +155,20 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 			// Emit sg-clicked event whenever a table <td> is clicked.
 			// I'm sorry. Really.
-			element.click(function(e) {
+			element.click(function (e) {
 				$el = $(e.target);
+				var courseId;
 
 				if ($el.data('event-type') == 'deleteCoursePop') {
 					// Delete course confirmation
 
 					// Make the overlay td always visible to keep the popover visible
-					$el.closest('td.ui-overlay').css('visibility', 'visible')
+					$el.closest('td.ui-overlay').css('visibility', 'visible');
 					$el.popover('show');
 				} else if ($el.data('event-type') == 'deleteCourse') {
 					// Delete the course after the action is confirmed
 
-					var courseId = $el.data('course-id');
+					courseId = $el.data('course-id');
 					var course = scope.view.state.courses.list[courseId];
 
 					courseActionCreators.deleteCourse(course);
@@ -178,7 +178,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					// Dismiss the delete course dialog
 
 					// Make the ui-overlay invisible again
-					$el.closest('td.ui-overlay').css('visibility', '')
+					$el.closest('td.ui-overlay').css('visibility', '');
 					$el.closest("div.popover").siblings("i.delete-course").popover('hide');
 				} else if ($el.data('event-type') == 'addCourse') {
 					// Add a course
@@ -192,7 +192,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					// Select a cell/row
 
 					// TODO: termCode and courseId may not be found if clicking on the first column ...
-					var courseId = $el.closest("tr").data('course-id');
+					courseId = $el.closest("tr").data('course-id');
 					var termCode = $el.closest("td").data('term-code');
 
 					courseActionCreators.setActiveCell(courseId, termCode);
@@ -222,27 +222,27 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 			});
 
 		}
-	}
+	};
 });
 
 var getImportCourseRow = function (course, termsToRender, state) {
 	var rowClass = course.import ? "selected-import-course" : "";
 	var checkboxClass = course.import ? "fa-check-square-o" : "fa-square-o";
-	var row = "<tr class=\"odd gradeX clickable " + rowClass + "\" data-course-subject-code=\"" + course.subjectCode + "\""
-		+ "data-course-number=\"" + course.courseNumber + "\" data-course-sequence-pattern=\"" + course.sequencePattern + "\" >"
-		+ "<td class=\"import-course course-cell\">"
-		+ "<div class=\"import-course-check\"><i class=\"fa " + checkboxClass + "\"></i></div>"
-		+ "<div class=\"import-course-description\"><strong>"
-		+ course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern
-		+ "</strong><br />" + course.title + "</div></td>";
+	var row = "<tr class=\"odd gradeX clickable " + rowClass + "\" data-course-subject-code=\"" + course.subjectCode + "\"" +
+		"data-course-number=\"" + course.courseNumber + "\" data-course-sequence-pattern=\"" + course.sequencePattern + "\" >" +
+		"<td class=\"import-course course-cell\">" +
+		"<div class=\"import-course-check\"><i class=\"fa " + checkboxClass + "\"></i></div>" +
+		"<div class=\"import-course-description\"><strong>" +
+		course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern +
+		"</strong><br />" + course.title + "</div></td>";
 	$.each(termsToRender, function (i, term) {
 		var termCode = term.code;
 		var once = true;
 		var sectionGroup = _.find(state.sectionGroups.importList, function (sg) {
-			return (sg.termCode.slice(-2) == termCode.slice(-2))
-				&& (sg.subjectCode == course.subjectCode)
-				&& (sg.courseNumber == course.courseNumber)
-				&& (sg.sequencePattern == course.sequencePattern)
+			return (sg.termCode.slice(-2) == termCode.slice(-2)) &&
+				(sg.subjectCode == course.subjectCode) &&
+				(sg.courseNumber == course.courseNumber) &&
+				(sg.sequencePattern == course.sequencePattern);
 		});
 		var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
 
@@ -259,12 +259,12 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 	}
 	var row = "<tr class=\"" + rowClass + "\" data-course-id=\"" + courseId + "\" >";
 
-	if (courseId == 0) {
+	if (courseId === 0) {
 		var numOfColumns = termsToRender.length + 1;
 		row += "<td class=\"new-course-td\" colspan=\"" + numOfColumns + "\">Adding a new course</td><td class=\"ui-overlay\"></td>";
 	} else {
 		var course = state.courses.list[courseId];
-		if (course.isFiltered || course.matchesTagFilters == false) { return; }
+		if (course.isFiltered || course.matchesTagFilters === false) { return; }
 
 		// First column
 		row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
@@ -273,16 +273,16 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 			$.each(course.tagIds, function (i, tagId) {
 				var tag = state.tags.list[tagId];
 				var bgColor = tag.color ? tag.color : "#333";
-				row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + bgColor + "; color: " + tag.getTextColor() + "; \">" + tag.name + "</div>"
+				row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + bgColor + "; color: " + tag.getTextColor() + "; \">" + tag.name + "</div>";
 			});
-			row += "</div>"
+			row += "</div>";
 		}
 		row += "</td>";
 
 		// Term column(s)
 		$.each(termsToRender, function (i, term) {
 			var termCode = term.code;
-			var sectionGroup = _.find(state.sectionGroups.list, function (sg) { return (sg.termCode == termCode) && (sg.courseId == courseId) });
+			var sectionGroup = _.find(state.sectionGroups.list, function (sg) { return (sg.termCode == termCode) && (sg.courseId == courseId); });
 			var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
 			var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
 
@@ -307,12 +307,12 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 		});
 
 		// Actions column
-		var popoverTemplate = "Are you sure you want to delete " + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "? <br />\
-			<div class='text-center'><button class='btn btn-red' data-event-type='deleteCourse' data-course-id='" + courseId + "'>Delete</button>\
-			<button class='btn btn-white' data-event-type='dismissCoursePop'>Cancel</button></div>"
+		var popoverTemplate = "Are you sure you want to delete " + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "? <br />" +
+			"<div class='text-center'><button class='btn btn-red' data-event-type='deleteCourse' data-course-id='" + courseId + "'>Delete</button>" +
+			"<button class='btn btn-white' data-event-type='dismissCoursePop'>Cancel</button></div>";
 		row += "<td class=\"ui-overlay\"><i class=\"btn add-before entypo-plus-circled\" data-event-type=\"addCourse\" data-index=\"" + rowIdx + "\" ></i>";
-		row += "<i class=\"btn delete-sg entypo-minus-circled delete-course\" data-event-type=\"deleteCoursePop\" \
-			data-toggle=\"popover\" data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
+		row += "<i class=\"btn delete-sg entypo-minus-circled delete-course\" data-event-type=\"deleteCoursePop\" " +
+			"data-toggle=\"popover\" data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
 		row += "<i class=\"btn add-after entypo-plus-circled\" data-event-type=\"addCourse\" data-index=\"" + (rowIdx + 1) + "\" ></i></td>";
 	}
 
@@ -325,6 +325,7 @@ var savePlannedSeats = function ($el, scope, courseActionCreators) {
 	var termCode = $el.closest("td").data('term-code').toString();
 	var sectionGroupId = $el.closest("td").data('section-group-id');
 	var plannedSeats = parseInt($el.val());
+	var sectionGroup;
 
 	if (isNaN(plannedSeats)) { return; }
 
@@ -335,12 +336,12 @@ var savePlannedSeats = function ($el, scope, courseActionCreators) {
 		}
 
 		// Save existing sectionGroup
-		var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+		sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 		sectionGroup.plannedSeats = plannedSeats;
 		courseActionCreators.updateSectionGroup(sectionGroup);
 	} else {
 		// Create a new sectionGroup
-		var sectionGroup = {
+		sectionGroup = {
 			courseId: courseId,
 			termCode: termCode,
 			plannedSeats: plannedSeats
@@ -350,4 +351,4 @@ var savePlannedSeats = function ($el, scope, courseActionCreators) {
 
 	// Important: notify angular since this happends outside of the scope
 	scope.$apply();
-}
+};

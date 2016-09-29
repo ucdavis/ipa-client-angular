@@ -1,4 +1,4 @@
-sharedApp.directive("massImportSummary", this.massImportSummary = function() {
+sharedApp.directive("massImportSummary", this.massImportSummary = function () {
 	return {
 		restrict: 'E',
 		templateUrl: 'massImportSummary.html',
@@ -6,5 +6,5 @@ sharedApp.directive("massImportSummary", this.massImportSummary = function() {
 		link: function (scope, element, attrs) {
 
 		}
-	}
-})
+	};
+});

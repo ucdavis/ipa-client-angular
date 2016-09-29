@@ -11,7 +11,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			$scope.year = $routeParams.year;
 			$scope.view = {};
 			$scope.sequencePatterns = sequencePatterns; // constants.js file
-			$scope.subjectCodes = subjectCodes.map(function (subjectCode) { return {code: subjectCode} }); // constants.js file
+			$scope.subjectCodes = subjectCodes.map(function (subjectCode) { return { code: subjectCode }; }); // constants.js file
 
 			// Generate a few recent academic years for the mass course import mode
 			var currentYear = new Date().getFullYear();
@@ -34,7 +34,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					// This method is called for some reason on initialization:
 					// This 'if' is to avoid poking the server multiple times on initialization
 					var tagIdExists = $scope.view.selectedEntity.tagIds.some(function (id) { return id == value; });
-					if (tagIdExists == false) {
+					if (tagIdExists === false) {
 						courseActionCreators.addTagToCourse($scope.view.selectedEntity, $scope.view.state.tags.list[value]);
 					}
 				},
@@ -65,14 +65,12 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					$scope.view.selectedEntity = $scope.view.state.sectionGroups.selectedSectionGroup || $scope.view.state.sectionGroups.newSectionGroup;
 
 					// Initialize sectionGroup sections if not done already
-					if ( $scope.view.selectedEntity
-						&& $scope.view.selectedEntity.id
-						&& $scope.view.selectedEntity.sectionIds == undefined) {
+					if ( $scope.view.selectedEntity && $scope.view.selectedEntity.id && $scope.view.selectedEntity.sectionIds === undefined) {
 						courseActionCreators.getSectionsBySectionGroup($scope.view.selectedEntity);
 					}
 
 					// Initialize course census if not done already
-					if (course.census == undefined) {
+					if (course.census === undefined) {
 						courseActionCreators.getCourseCensus(course);
 					}
 
@@ -172,14 +170,14 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				if (!sg.id) { return null; }
 
 				var course = $scope.view.state.courses.list[sg.courseId];
-				if (course.isSeries() == false) {
+				if (course.isSeries() === false) {
 					// Numeric sections: return sequencePattern iff no sections exist
 					if (sg.sectionIds && sg.sectionIds.length > 0) { return null; }
 					else { return course.sequencePattern; }
 				} if (sg.sectionIds && sg.sectionIds.length > 0) {
 					// Calculate next section sequence if sections already exist
 					var lstSectionId = sg.sectionIds[sg.sectionIds.length - 1];
-					var lastSection = $scope.view.state.sections.list[lstSectionId]
+					var lastSection = $scope.view.state.sections.list[lstSectionId];
 					var number = parseInt(lastSection.sequenceNumber.slice(-1)) + 1;
 					var character = lastSection.sequenceNumber.slice(0, 1);
 					return character + "0" + number;
@@ -267,4 +265,4 @@ CourseCtrl.getPayload = function (authService, $route, courseActionCreators) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
 		return courseActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
 	});
-}
+};

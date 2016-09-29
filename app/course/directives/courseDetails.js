@@ -1,4 +1,4 @@
-sharedApp.directive("courseDetails", this.courseDetails = function() {
+sharedApp.directive("courseDetails", this.courseDetails = function () {
 	return {
 		restrict: 'E',
 		templateUrl: 'courseDetails.html',
@@ -8,9 +8,9 @@ sharedApp.directive("courseDetails", this.courseDetails = function() {
 				var course = scope.view.state.courses.list[scope.view.selectedEntity.id];
 				var occupiedSequencePatterns = scope.view.state.courses.ids
 					.filter(function (courseId) {
-						return scope.view.state.courses.list[courseId].id != course.id
-							&& scope.view.state.courses.list[courseId].subjectCode == course.subjectCode
-							&& scope.view.state.courses.list[courseId].courseNumber == course.courseNumber;
+						return scope.view.state.courses.list[courseId].id != course.id &&
+							scope.view.state.courses.list[courseId].subjectCode == course.subjectCode &&
+							scope.view.state.courses.list[courseId].courseNumber == course.courseNumber;
 					}).map(function (courseId) {
 						return scope.view.state.courses.list[courseId].sequencePattern;
 					});
@@ -33,5 +33,5 @@ sharedApp.directive("courseDetails", this.courseDetails = function() {
 			};
 
 		}
-	}
-})
+	};
+});

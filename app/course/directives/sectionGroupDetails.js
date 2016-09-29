@@ -1,4 +1,4 @@
-sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function() {
+sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function () {
 	return {
 		restrict: 'E',
 		templateUrl: 'sectionGroupDetails.html',
@@ -10,5 +10,5 @@ sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function()
 				return termState ? termState.isLocked : true;
 			};
 		}
-	}
-})
+	};
+});
