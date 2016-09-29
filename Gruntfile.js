@@ -158,30 +158,47 @@ module.exports = function (grunt) {
 				src: ['**/*.html'],
 				dest: '<%= folders.webapp.build %>'
 			},
-			img: {
+			assets: {
 				expand: true,
-				cwd: '<%= folders.webapp.root %>/assets/images/',
+				cwd: '<%= folders.webapp.root %>/assets/',
 				src: ['**/**/*'],
-				dest: '<%= folders.webapp.build %>images/'
+				dest: '<%= folders.webapp.build %>'
 			},
-			font: {
+			vendor_font: {
 				expand: true,
 				flatten: true,
 				cwd: '',
 				src: [
-					'<%= folders.webapp.root %>/assets/font/*'
+					'vendor/font/*'
 				],
 				dest: '<%= folders.webapp.build %>/font/'
 			},
-			fonts: {
+			vendor_fonts: {
 				expand: true,
 				flatten: true,
-				cwd: '',
 				src: [
 					'bower_components/bootstrap/dist/fonts/*',
-					'<%= folders.webapp.root %>/assets/fonts/*'
+					'vendor/fonts/*'
 				],
 				dest: '<%= folders.webapp.build %>/fonts/'
+			},
+			vendor_css: {
+				expand: true,
+				flatten: true,
+				src: [
+					'bower_components/bootstrap/dist/css/*',
+					'vendor/css/*'
+				],
+				dest: '<%= folders.webapp.build %>/css/'
+			},
+			vendor_js: {
+				expand: true,
+				flatten: true,
+				src: [
+					'bower_components/bootstrap/dist/js/*',
+					'vendor/js/*'
+				],
+				dest: '<%= folders.webapp.build %>/js/'
 			},
 			css: {
 				expand: true,
@@ -189,14 +206,6 @@ module.exports = function (grunt) {
 				cwd: '<%= folders.webapp.root %>',
 				src: ['**/*.css'],
 				dest: '<%= folders.webapp.build %>/css/'
-			},
-			// Common Vendor JS files
-			js: {
-				expand: true,
-				flatten: true,
-				cwd: '<%= folders.webapp.root %>/assets/js',
-				src: ['**/*.js'],
-				dest: '<%= folders.webapp.build %>/js/'
 			}
 		},
 
