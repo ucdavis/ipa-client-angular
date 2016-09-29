@@ -1,0 +1,49 @@
+{
+	"env": {
+		//enable nodejs environment
+		"node": true,
+		//enable browser environment
+		"browser": true
+	},
+	"rules": {
+		// Possible Errors
+		"no-debugger": 1, // warn about the use of debugger
+		"no-dupe-args": 2, // disallow duplicate arguments in function definitions
+		"no-dupe-keys": 2, // disallow duplicate keys in object literals
+		"no-duplicate-case": 2, // disallow duplicate case labels in switch statements
+		"no-empty": 1, // warn about empty block statements
+		"no-extra-semi": 1, // warn about unnecessary semicolons
+		"no-func-assign": 2, // disallow reassigning function declarations
+		"no-irregular-whitespace": 1, // warn about irregular whitespace outside of strings and comments
+		"no-obj-calls": 2, // disallow calling global object properties as functions
+		"no-sparse-arrays": 2, // disallow sparse arrays
+		"no-unexpected-multiline": 1, // warn about confusing multiline expressions
+		"no-unreachable": 2, // disallow unreachable code after return, throw, continue, and break statements
+		"use-isnan": 2, // require calls to isNaN() when checking for NaN
+
+		"valid-jsdoc": 0, // enforce valid JSDoc comments
+		"valid-typeof": 2, // enforce comparing typeof expressions against valid strings
+
+		// Best Practices
+		"no-empty-function": 1, // warn about empty functions
+		"curly": 2, // enforce consistent brace style for all control statements
+		"no-empty-pattern": 1, // warn about empty destructuring patterns
+		"no-eq-null": 0, // warn about null comparisons without type-checking operators
+		"no-eval": 2, // disallow the use of eval()
+		"no-redeclare": 1, // warn about variable redeclaration
+
+		// Variables
+		"no-delete-var": 2, // The delete operator is used to remove a property from an object. deleting a variable might lead to unexpected behavior
+
+		// Stylistic Issues
+		"semi": 1, // require or disallow semicolons instead of ASI
+		"no-mixed-spaces-and-tabs": 1, // disallow mixed spaces and tabs for indentation
+
+		// Angular
+		// TODO: Add more angular rules https://github.com/Gillespie59/eslint-plugin-angular
+		"angular/angularelement": 1, // use angular.element instead of $ or jQuery
+	},
+	"plugins": [
+		"angular"
+	]
+}

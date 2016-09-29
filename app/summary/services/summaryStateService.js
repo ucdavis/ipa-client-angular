@@ -173,8 +173,8 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 
 						return (
 							term.code == academicYearStart + 10 ||
-							term.code == academicYearStart + 09 ||
-							(term.code != academicYearEnd + 04 && term.code >= academicYearEnd + 01 && term.code <= academicYearEnd + 08)
+							term.code == academicYearStart + 9 ||
+							(term.code != academicYearEnd + 4 && term.code >= academicYearEnd + 1 && term.code <= academicYearEnd + 8)
 						);
 					});
 

@@ -259,8 +259,8 @@ module.exports = function (grunt) {
 
 		watch: {
 			js: {
-				files: ['Gruntfile.js', 'bower.json', 'clientConfig.js', '<%= folders.webapp.root %>/**/*.js'],
-				tasks: ['jshint', 'concat']
+				files: ['Gruntfile.js', 'bower.json', 'clientConfig.js', '<%= folders.webapp.root %>/**/*.js', '.eslintrc'],
+				tasks: ['eslint', 'concat']
 			},
 			templates: {
 				files: ['<%= folders.webapp.root %>/**/*.html'],
@@ -301,13 +301,7 @@ module.exports = function (grunt) {
 			src: ['dist/*']
 		},
 
-		jshint: {
-			options: {
-				curly: true,
-				eqnull: true,
-				browser: true,
-				loopfunc: true
-			},
+		eslint: {
 			src: [
 				'<%= folders.webapp.root %>/**/*.js',
 			]
@@ -324,12 +318,12 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-bower-concat');
 	grunt.loadNpmTasks('grunt-angular-templates');
 	grunt.loadNpmTasks('grunt-contrib-connect');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks("gruntify-eslint");
 
 	grunt.registerTask('build', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsProdSnippets',
 		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:cssLib', 'uglify:dist', 'cssmin']);
 
-	grunt.registerTask('serve', ['clean', 'jshint', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsDevSnippets',
+	grunt.registerTask('serve', ['clean', 'eslint', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsDevSnippets',
 		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:cssLib', 'connect', 'watch']);
 
 	grunt.registerTask('default', ['serve']);
