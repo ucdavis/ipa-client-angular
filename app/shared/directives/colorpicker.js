@@ -44,5 +44,5 @@ sharedApp.directive("colorpicker", this.colorpicker = function () {
 				scope.$apply();
 			};
 		}
-	}
-})
+	};
+});

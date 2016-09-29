@@ -10,13 +10,13 @@ angular.module('role', [])
 		if (roleData) {
 			this.setData(roleData);
 		}
-	};
+	}
 	Role.prototype = {
 			setData: function(roleData) {
 				angular.extend(this, roleData);
 			},
 			getDisplayName : function() {
-				if (typeof this.name !== 'string') return "";
+				if (typeof this.name !== 'string') { return ""; }
 
 				var lowercase = this.name.replace( /([A-Z])/g, " $1" );
 				return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);

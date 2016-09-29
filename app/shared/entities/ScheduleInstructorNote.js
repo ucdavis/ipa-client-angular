@@ -5,7 +5,7 @@ angular.module('scheduleInstructorNote', [])
 		if (scheduleInstructorNoteData) {
 			this.setData(scheduleInstructorNoteData);
 		}
-	};
+	}
 	ScheduleInstructorNote.prototype = {
 			setData: function(scheduleInstructorNoteData) {
 				angular.extend(this, scheduleInstructorNoteData);

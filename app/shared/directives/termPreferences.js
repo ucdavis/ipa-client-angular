@@ -24,36 +24,28 @@ sharedApp.directive("termPreferences", this.termPreferences = function($uibModal
 
 			scope.status = {};
 			scope.deletable = (typeof attrs.onDelete != 'undefined');
-			scope.getDescription = function(preference) {
-				if (typeof preference === 'undefined') return 'Add';
-				else if (preference.buyout) return 'Buyout';
-				else if (preference.sabbatical) return 'Sabbatical';
-				else if (preference.courseRelease) return 'Course Release';
+			scope.getDescription = function (preference) {
+				if (typeof preference === 'undefined') { return 'Add'; }
+				else if (preference.buyout) { return 'Buyout'; }
+				else if (preference.sabbatical) { return 'Sabbatical'; }
+				else if (preference.courseRelease) { return 'Course Release'; }
 				else {
 					return preference.subjectCode + ' ' + preference.courseNumber;
 				}
-			}
+			};
 
 			scope.$watchGroup(['status.dropDownIsOpen','status.confirmIsOpen'], function(newVal) {
-				if (newVal) element.addClass('disable-sorting');
-				else element.removeClass('disable-sorting');
+				if (newVal) { element.addClass('disable-sorting'); }
+				else { element.removeClass('disable-sorting'); }
 			});
 
 		} // End link block
 	};
 });
 
-termToTermCode = function(term, year) {
-	switch(term) {
-		case "01":
-		case "02":
-		case "03":
-			year++;
-			break;
-		default:
-			year;
-	}
+termToTermCode = function (term, year) {
+	if (["01", "02", "03"].indexOf(term) >= 0) { year++; }
 	var termCode = year + term;
 
 	return termCode;
-}
+};

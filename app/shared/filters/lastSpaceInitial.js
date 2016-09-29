@@ -6,7 +6,7 @@
 
 sharedApp.filter("lastSpaceInitial", this.lastSpaceInitial = function() {
 	return function (instructor) {
-		if (!(instructor && instructor.firstName && instructor.lastName)) return;
+		if (!(instructor && instructor.firstName && instructor.lastName)) { return; }
 		var firstInitial = instructor.firstName.charAt(0);
 		return [instructor.lastName, firstInitial].filter(function(name) {
 			return name.trim() !== ".";

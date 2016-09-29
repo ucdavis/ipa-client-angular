@@ -5,7 +5,7 @@ angular.module('event', [])
 		if (eventData) {
 			this.setData(eventData);
 		}
-	};
+	}
 	Event.prototype = {
 			setData: function(eventData) {
 				angular.extend(this, eventData);

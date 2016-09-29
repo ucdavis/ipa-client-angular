@@ -5,7 +5,7 @@ angular.module('term', [])
 		if (termData) {
 			this.setData(termData);
 		}
-	};
+	}
 	Term.prototype = {
 			setData: function(termData) {
 				angular.extend(this, termData);
@@ -47,7 +47,6 @@ angular.module('term', [])
 			getTermByTermShortCodeAndYear: function (termShortCode, year) {
 				if (typeof termShortCode != "string" || termShortCode.length != 2) { return; }
 
-				var year;
 				var termId = Number(termShortCode);
 				var allTerms = this.generateTable(year);
 				return _array_findById(allTerms, termId);

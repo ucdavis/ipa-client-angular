@@ -112,7 +112,7 @@ sharedApp
 					default:
 						toastr.info(title, message, options);
 						break;
-				};
+				}
 			});
 
 		}]

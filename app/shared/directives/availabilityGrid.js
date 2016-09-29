@@ -36,16 +36,16 @@ sharedApp.directive("availabilityGrid", this.availabilityGrid = function($timeou
 
 			// Translate blob into availability array
 			scope.$watch('blob', function(blob) {
-				if (typeof blob === 'undefined') return;
+				if (typeof blob === 'undefined') { return; }
 				var blobArray = blob.split(',');
 				scope.buildAvailabilityObject(blobArray);
 			});
 
 			scope.saveAvailability = function () {
-				if (scope.readOnly) return;
+				if (scope.readOnly) { return; }
 
 				// Translate back into blob
-				var blob = []
+				var blob = [];
 				for ( d = 0; d < scope.days.length; d++) {
 					for ( h = 0; h < scope.hours.length; h++) {
 						blob.push(scope.availability[d][h]);
@@ -84,7 +84,7 @@ sharedApp.directive("availabilityGrid", this.availabilityGrid = function($timeou
 					dragValue = scope.availability[d][h] = 1- scope.availability[d][h];
 					scope.saveAvailability();
 
-					dragClass = dragValue === 0 ? 'unavailable' : 'available'
+					dragClass = dragValue === 0 ? 'unavailable' : 'available';
 					$(this).removeClass('available unavailable');
 					$(this).addClass(dragClass);
 					return false; // prevent text selection

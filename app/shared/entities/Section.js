@@ -5,7 +5,7 @@ angular.module('section', [])
 		if (sectionData) {
 			this.setData(sectionData);
 		}
-	};
+	}
 	Section.prototype = {
 			setData: function(sectionData) {
 				angular.extend(this, sectionData);

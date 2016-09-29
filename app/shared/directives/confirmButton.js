@@ -1,4 +1,4 @@
-sharedApp.directive("confirmButton", this.confirmButton = function($document) {
+sharedApp.directive("confirmButton", this.confirmButton = function ($document) {
 	return {
 		restrict: 'A',
 		scope: {
@@ -8,20 +8,20 @@ sharedApp.directive("confirmButton", this.confirmButton = function($document) {
 		},
 		link: function (scope, element, attrs) {
 			var buttonId = Math.floor(Math.random() * 10000000000),
-			message = attrs.message || "Are you sure?",
-			yep = attrs.yes || "Yes",
-			nope = attrs.no || "No",
-			title = attrs.title || "Confirm",
-			btnClass = attrs.btnClass || "btn-danger",
-			placement = attrs.placement || "bottom";
+				message = attrs.message || "Are you sure?",
+				yep = attrs.yes || "Yes",
+				nope = attrs.no || "No",
+				title = attrs.title || "Confirm",
+				btnClass = attrs.btnClass || "btn-danger",
+				placement = attrs.placement || "bottom";
 
 			var html = "<div id=\"button-" + buttonId + "\" style=\"position: relative; width: 250px;\">" +
 				"<p class=\"confirmbutton-msg\">" + message + "</p>" +
 				"<div align=\"center\">" +
-					"<button class=\"confirmbutton-yes btn " + btnClass + "\">" + yep + "</button> " +
-					"<button class=\"confirmbutton-no btn btn-default\">" + nope + "</button>" +
+				"<button class=\"confirmbutton-yes btn " + btnClass + "\">" + yep + "</button> " +
+				"<button class=\"confirmbutton-no btn btn-default\">" + nope + "</button>" +
 				"</div>" +
-			"</div>";
+				"</div>";
 
 			element.popover({
 				content: html,
@@ -38,7 +38,7 @@ sharedApp.directive("confirmButton", this.confirmButton = function($document) {
 				scope.$apply();
 			});
 
-			element.bind('click', function(e) {
+			element.bind('click', function (e) {
 				// Disable confirmation if confirmIsEnabled is provided but not true
 				if (typeof scope.confirmIsEnabled !== 'undefined' && !scope.confirmIsEnabled) {
 					scope.confirmAction();
@@ -53,13 +53,13 @@ sharedApp.directive("confirmButton", this.confirmButton = function($document) {
 
 				var pop = $("#button-" + buttonId);
 
-				pop.closest(".popover").click(function(e) {
+				pop.closest(".popover").click(function (e) {
 					if (dontBubble) {
 						e.stopPropagation();
 					}
 				});
 
-				pop.find('.confirmbutton-yes').click(function(e) {
+				pop.find('.confirmbutton-yes').click(function (e) {
 					e.stopPropagation();
 					dontBubble = false;
 					scope.$apply(scope.confirmAction);
@@ -67,7 +67,7 @@ sharedApp.directive("confirmButton", this.confirmButton = function($document) {
 					element.removeClass('active');
 				});
 
-				pop.find('.confirmbutton-no').click(function(e) {
+				pop.find('.confirmbutton-no').click(function (e) {
 					e.stopPropagation();
 					dontBubble = false;
 					$document.off('click.confirmbutton.' + buttonId);
@@ -75,7 +75,7 @@ sharedApp.directive("confirmButton", this.confirmButton = function($document) {
 					element.removeClass('active');
 				});
 
-				$document.on('click.confirmbutton.' + buttonId, ":not(.popover, .popover *)", function() {
+				$document.on('click.confirmbutton.' + buttonId, ":not(.popover, .popover *)", function () {
 					$document.off('click.confirmbutton.' + buttonId);
 					element.popover('hide');
 					element.removeClass('active');
@@ -83,4 +83,4 @@ sharedApp.directive("confirmButton", this.confirmButton = function($document) {
 			});
 		}
 	};
-})
+});

@@ -5,7 +5,7 @@ angular.module('sectionGroup', [])
 		if (coData) {
 			this.setData(coData);
 		}
-	};
+	}
 	SectionGroup.prototype = {
 			setData: function(coData) {
 				angular.extend(this, coData);

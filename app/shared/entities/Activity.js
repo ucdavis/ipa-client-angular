@@ -6,7 +6,7 @@ angular.module('activity', [])
 			this.setData(activityData);
 			this.updateCalculatedProperties();
 		}
-	};
+	}
 	Activity.prototype = {
 		setData: function(activityData) {
 			angular.extend(this, activityData);
@@ -115,8 +115,8 @@ angular.module('activity', [])
 			var timeArr = time.split(':');
 
 			var hours = parseInt(timeArr[0]);
-			if (hours === 0) hours = 12;
-			else if (hours > 12) hours = hours % 12;
+			if (hours === 0) { hours = 12; }
+			else if (hours > 12) { hours = hours % 12; }
 
 			var minutes = parseInt(timeArr[1]);
 			var meridian = timeArr[0] < 12 ? 'AM' : 'PM';

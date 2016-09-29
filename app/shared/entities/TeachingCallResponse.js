@@ -9,7 +9,7 @@ angular.module('teachingCallResponse', [])
 		if (teachingCallResponseData) {
 			this.setData(teachingCallResponseData);
 		}
-	};
+	}
 	TeachingCallResponse.prototype = {
 			setData: function(teachingCallResponseData) {
 				angular.extend(this, teachingCallResponseData);

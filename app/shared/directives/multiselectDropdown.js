@@ -7,18 +7,18 @@ sharedApp.directive("multiselectDropdown", this.multiselectDropdown = function()
 			activeIds: '=',
 			toggleItem: '&'
 		},
-		link: function(scope, element, attrs) {
-			scope.selectItem = function($event, id) {
+		link: function (scope, element, attrs) {
+			scope.selectItem = function ($event, id) {
 				// Ensure checkboxes do not close the dropdown
 				$event.preventDefault();
 				$event.stopPropagation();
 
-				if(typeof attrs.toggleItem !== 'undefined') {
+				if (typeof attrs.toggleItem !== 'undefined') {
 					// This is how we call the callback.
 					// See: http://tech.europace.de/passing-functions-to-angularjs-directives/
-					scope.toggleItem( { id: id } );
+					scope.toggleItem({ id: id });
 				}
-			}
+			};
 		}
-	}
+	};
 });

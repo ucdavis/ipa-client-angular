@@ -3,7 +3,7 @@
  * Usage: <input auto-input on-enter="save()" on-blur="save()" on-escape="cancel()"></input>
  */
 
-sharedApp.directive("collapsableSidebarContainer", this.autoInput = function($rootScope, authService) {
+sharedApp.directive("collapsableSidebarContainer", this.autoInput = function ($rootScope, authService) {
 	return {
 		link: function (scope, element, attrs, ngModelCtrl) {
 
@@ -21,5 +21,5 @@ sharedApp.directive("collapsableSidebarContainer", this.autoInput = function($ro
 
 			updateClass(authService.isSidebarCollapsed());
 		}
-	}
-})
+	};
+});

@@ -5,7 +5,7 @@ angular.module('location', [])
 		if (locationData) {
 			this.setData(locationData);
 		}
-	};
+	}
 	Location.prototype = {
 			setData: function(locationData) {
 				angular.extend(this, locationData);

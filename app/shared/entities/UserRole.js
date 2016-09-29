@@ -5,7 +5,7 @@ angular.module('userRole', [])
 		if (userRoleData) {
 			this.setData(userRoleData);
 		}
-	};
+	}
 	UserRole.prototype = {
 			setData: function(userRoleData) {
 				angular.extend(this, userRoleData);

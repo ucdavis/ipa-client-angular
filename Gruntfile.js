@@ -308,7 +308,7 @@ module.exports = function (grunt) {
 				browser: true,
 			},
 			src: [
-				'<%= folders.webapp.root %>/admin/**/*.js',
+				'<%= folders.webapp.root %>/shared/**/*.js',
 			]
 		}
 

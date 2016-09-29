@@ -41,10 +41,10 @@ String.prototype.toStandardTime = function () {
 			var minutes = this.substring ( 3,5 ); //Extract minutes
 			var identifier = 'AM'; //Initialize AM PM identifier
 
-			if(hour == 12){ //If hour is 12 then should set AM PM identifier to PM
+			if(hour === 12){ //If hour is 12 then should set AM PM identifier to PM
 				identifier = 'PM';
 			}
-			if(hour == 0){ //If hour is 0 then set to 12 for standard time 12 AM
+			if(hour === 0){ //If hour is 0 then set to 12 for standard time 12 AM
 				hour=12;
 			}
 			if(hour > 12){ //If hour is greater than 12 then convert to standard 12 hour format and set the AM PM identifier to PM
@@ -65,7 +65,7 @@ String.prototype.toStandardTime = function () {
  * @params [optional] excludeYear
  */
 String.prototype.getTermCodeDisplayName = function (excludeYear) {
-	if (this.length != 6) return "";
+	if (this.length !== 6) { return ""; }
 
 	var year = this.substr(0, 4);
 	var code = this.slice(-2);
@@ -89,7 +89,7 @@ String.prototype.getTermCodeDisplayName = function (excludeYear) {
 
 // Turns '2016-10-01' into 'October 1st 2016'
 String.prototype.toFullDate = function () {
-	if (this.length == 0) {
+	if (this.length === 0) {
 		return "";
 	}
 
@@ -124,6 +124,6 @@ String.prototype.toFullDate = function () {
 			break;
 	}
 
-	var fullDate = monthNames[Number(monthIndex)] +  ' ' + day + daySuffix + ' ' + year;
+	var fullDate = monthNames[Number(monthIndex)] + ' ' + day + daySuffix + ' ' + year;
 	return fullDate;
-}
+};

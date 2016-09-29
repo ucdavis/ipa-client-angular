@@ -1,7 +1,7 @@
 var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 	var reqCount = 0;
 	return {
-		request: function(config) {
+		request: function (config) {
 			reqCount++;
 			if ($rootScope.slowResTime) { $timeout.cancel($rootScope.slowResTime); }
 			if ($rootScope.timeOutTimer) { $timeout.cancel($rootScope.timeOutTimer); }
@@ -10,11 +10,11 @@ var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 			var timeOutDelay = 30000; // 30 seconds
 
 			$rootScope.slowResTime = $timeout(function () {
-				$rootScope.$emit('toast', {message: "Server appears to be slow. Please standby...", type: "WARNING"});
+				$rootScope.$emit('toast', { message: "Server appears to be slow. Please standby...", type: "WARNING" });
 			}, slowResDelay);
 
 			$rootScope.timeOutTimer = $timeout(function () {
-				$rootScope.$emit('toast', {message: "Server apears to have failed. Please try again.", type: "ERROR", options: {timeOut: 0, closeButton: true} });
+				$rootScope.$emit('toast', { message: "Server apears to have failed. Please try again.", type: "ERROR", options: { timeOut: 0, closeButton: true } });
 			}, timeOutDelay);
 
 			return config;
@@ -28,7 +28,7 @@ var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 
 			return response;
 		},
-		responseError: function(rejection) {
+		responseError: function (rejection) {
 			if (--reqCount === 0) {
 				$timeout.cancel($rootScope.slowResTime);
 				$timeout.cancel($rootScope.timeOutTimer);
@@ -42,25 +42,25 @@ var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 
 			return $q.reject(rejection);
 		}
-	}
+	};
 };
 
 var tokenValidatorInterceptor = function ($q, $injector, $rootScope) {
 	return {
-		responseError: function(rejection) {
+		responseError: function (rejection) {
 			if (rejection.status === 440) {
 				// Delete expired token and revalidate
 				localStorage.removeItem('JWT');
 				var authService = $injector.get('authService');
-				authService.validate().then(function(){
+				authService.validate().then(function () {
 					// $rootScope.toast.message = "This is inconcieveable";
-					$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR"});
+					$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 				});
 			}
 
 			return $q.reject(rejection);
 		}
-	}
+	};
 };
 
 sharedApp

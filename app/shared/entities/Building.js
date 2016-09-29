@@ -5,7 +5,7 @@ angular.module('building', [])
 		if (buildingData) {
 			this.setData(buildingData);
 		}
-	};
+	}
 	Building.prototype = {
 			setData: function(buildingData) {
 				angular.extend(this, buildingData);

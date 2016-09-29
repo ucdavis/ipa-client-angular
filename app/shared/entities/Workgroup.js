@@ -5,7 +5,7 @@ angular.module('workgroup', [])
 		if (workgroupData) {
 			this.setData(workgroupData);
 		}
-	};
+	}
 	Workgroup.prototype = {
 			setData: function(workgroupData) {
 				angular.extend(this, workgroupData);

@@ -5,7 +5,7 @@ angular.module('courseOfferingGroup', [])
 		if (cogData) {
 			this.setData(cogData);
 		}
-	};
+	}
 	CourseOfferingGroup.prototype = {
 			setData: function(cogData) {
 				angular.extend(this, cogData);

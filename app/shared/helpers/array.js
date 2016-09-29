@@ -1,5 +1,5 @@
 // TODO: Rename to _array_getElementById
-_array_findById = function(arr, id) {
+_array_findById = function (arr, id) {
 	var index = _array_getIndexById(arr, id);
 
 	if (index == -1) {
@@ -7,13 +7,13 @@ _array_findById = function(arr, id) {
 	}
 
 	return arr[index];
-}
+};
 
 _array_getIndexById = function (arr, id) {
-	return arr.findIndex( function(n) {
+	return arr.findIndex(function (n) {
 		return n.id == id;
 	});
-}
+};
 
 /**
  * Returns a sorted array of Ids based on the value of a
@@ -31,18 +31,19 @@ _array_getIndexById = function (arr, id) {
 _array_sortIdsByProperty = function (listHash, properties) {
 	var keys = Object.keys(listHash);
 	return keys.sort(function (a, b) {
+		var valA, valB;
 		// Construct the comparator value by concatinating property values if the properties were passed as an array
 		if (properties.constructor === Array) {
-			var valA = "";
-			var valB = "";
-			for (i in properties) {
+			valA = "";
+			valB = "";
+			for (var i in properties) {
 				valA += listHash[a][properties[i]];
 				valB += listHash[b][properties[i]];
 			}
 		} else {
 			// This will accept a single property in the form of a string
-			var valA = listHash[a][properties];
-			var valB = listHash[b][properties];
+			valA = listHash[a][properties];
+			valB = listHash[b][properties];
 		}
 
 		// If the properties are strings, ignore the case
@@ -52,5 +53,5 @@ _array_sortIdsByProperty = function (listHash, properties) {
 		if (valA < valB) { return -1; }
 		if (valA > valB) { return 1; }
 		return 0;
-	}).map(function(id) { return parseInt(id); });
-}
+	}).map(function (id) { return parseInt(id); });
+};

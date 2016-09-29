@@ -6,7 +6,7 @@
 
 sharedApp.filter("lastCommaFirst", this.lastCommaFirst = function() {
 	return function (instructor) {
-		if (!(instructor && instructor.firstName && instructor.lastName)) return;
+		if (!(instructor && instructor.firstName && instructor.lastName)) { return; }
 		return [instructor.lastName, instructor.firstName].filter(function(name) {
 			return name.trim() !== ".";
 		}).join(", ");

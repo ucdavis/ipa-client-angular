@@ -23,4 +23,4 @@ var routeParamsThingy = function (state, action) {
 		default:
 			return state;
 	}
-}
+};

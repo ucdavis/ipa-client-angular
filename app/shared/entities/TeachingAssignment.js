@@ -10,7 +10,7 @@ angular.module('teachingAssignment', [])
 		if (teachingAssignmentData) {
 			this.setData(teachingAssignmentData);
 		}
-	};
+	}
 	TeachingAssignment.prototype = {
 			setData: function(teachingAssignmentData) {
 				angular.extend(this, teachingAssignmentData);

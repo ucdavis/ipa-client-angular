@@ -5,7 +5,7 @@ angular.module('scheduleTermState', [])
 		if (scheduleTermStateData) {
 			this.setData(scheduleTermStateData);
 		}
-	};
+	}
 	ScheduleTermState.prototype = {
 			setData: function(scheduleTermStateData) {
 				angular.extend(this, scheduleTermStateData);

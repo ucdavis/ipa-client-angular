@@ -3,7 +3,7 @@
  * Usage: <input auto-input on-enter="save()" on-blur="save()" on-escape="cancel()"></input>
  */
 
-sharedApp.directive("autoInput", this.autoInput = function($rootScope) {
+sharedApp.directive("autoInput", this.autoInput = function ($rootScope) {
 	return {
 		scope: {
 			ngModel: '=',
@@ -16,16 +16,16 @@ sharedApp.directive("autoInput", this.autoInput = function($rootScope) {
 			helpTextPlacement: '@'
 		},
 		require: '?ngModel',
-		controller: function($scope) {
-			this.preventActions = function() {
+		controller: function ($scope) {
+			this.preventActions = function () {
 				$scope.init();
 			};
 
-			this.resetTextbox = function() {
+			this.resetTextbox = function () {
 				$scope.resetTextbox(null, true);
 			};
 		},
-		link: function(scope, element, attrs, ngModelCtrl) {
+		link: function (scope, element, attrs, ngModelCtrl) {
 			var ENTER = 13;
 			var ESCAPE = 27;
 			scope.originalModel = scope.ngModel;
@@ -33,7 +33,7 @@ sharedApp.directive("autoInput", this.autoInput = function($rootScope) {
 
 			// Set the element to its initial state:
 			// Enter is disabled, and escape calls onEscape
-			scope.init = function() {
+			scope.init = function () {
 				ngModelCtrl.$setPristine();
 
 				if (scope.clearOnInit === 'true') {
@@ -41,11 +41,11 @@ sharedApp.directive("autoInput", this.autoInput = function($rootScope) {
 				}
 
 				element.unbind("blur keydown keypress");
-				element.bind("keydown keypress", function(event) {
+				element.bind("keydown keypress", function (event) {
 					if (event.which === ESCAPE) { // Escape
-						if (typeof attrs.onEscape === 'undefined') return;
+						if (typeof attrs.onEscape === 'undefined') { return; }
 
-						scope.$apply(function() {
+						scope.$apply(function () {
 							scope.onEscape();
 						});
 					}
@@ -56,18 +56,18 @@ sharedApp.directive("autoInput", this.autoInput = function($rootScope) {
 			};
 			scope.init();
 
-			scope.removeTooltip = function() {
+			scope.removeTooltip = function () {
 				element.tooltip('hide');
 				scope.toolTipShown = false;
 
 				// Decrement number of unsaved items, and enable Save Shield
 				// TODO: move this bit into a service
-				if (--$rootScope.unsavedItems === 0) window.onbeforeunload = null;
+				if (--$rootScope.unsavedItems === 0) { window.onbeforeunload = null; }
 			};
 
-			scope.$watch('ngModel', function(newVal, oldVal){
-				if (typeof newVal === 'undefined' || newVal === scope.originalModel) return;
-				if (typeof attrs.onChange !== 'undefined' && element.hasClass('ng-dirty')) scope.onChange({ previousValue: oldVal, currentValue: newVal });
+			scope.$watch('ngModel', function (newVal, oldVal) {
+				if (typeof newVal === 'undefined' || newVal === scope.originalModel) { return; }
+				if (typeof attrs.onChange !== 'undefined' && element.hasClass('ng-dirty')) { scope.onChange({ previousValue: oldVal, currentValue: newVal }); }
 
 				if (newVal !== oldVal && element.hasClass('ng-dirty') && !element.is(':focus')) {
 					// Blur after some delay. The reason for the delay is that on Firefox this was triggered each time the number
@@ -78,13 +78,12 @@ sharedApp.directive("autoInput", this.autoInput = function($rootScope) {
 
 				// Prevent window from closing and show tooltip if an onEnter method
 				// is defined and if if the input is focused
-				if (!scope.toolTipShown && typeof attrs.onEnter !== 'undefined'
-					&& element.is(':focus')) {
+				if (!scope.toolTipShown && typeof attrs.onEnter !== 'undefined' && element.is(':focus')) {
 
 					// Increment number of unsaved items, and enable Save Shield
 					// TODO: Move this bit into a service
 					$rootScope.unsavedItems++;
-					window.onbeforeunload = function() {
+					window.onbeforeunload = function () {
 						return "Some changes have not been saved yet";
 					};
 
@@ -100,14 +99,14 @@ sharedApp.directive("autoInput", this.autoInput = function($rootScope) {
 
 				element.unbind("blur keydown keypress");
 				// Start listening to Enter and Blur events
-				element.bind("keydown keypress", function(event) {
+				element.bind("keydown keypress", function (event) {
 					if (event.which === ENTER) { // Enter
-						if (typeof attrs.onEnter === 'undefined') return;
+						if (typeof attrs.onEnter === 'undefined') { return; }
 
 						scope.removeTooltip();
 
-						scope.$apply(function() {
-							scope.onEnter({originalValue: scope.originalModel});
+						scope.$apply(function () {
+							scope.onEnter({ originalValue: scope.originalModel });
 							scope.originalModel = scope.ngModel;
 							scope.init();
 						});
@@ -120,35 +119,36 @@ sharedApp.directive("autoInput", this.autoInput = function($rootScope) {
 			});
 
 			scope.blurTextbox = function (event, noApply) {
-				if (typeof attrs.onBlur === 'undefined') return;
+				if (typeof attrs.onBlur === 'undefined') { return; }
 
 				scope.removeTooltip();
 
-				var runBlurAction = function() {
-					scope.onBlur({originalValue: scope.originalModel});
+				var runBlurAction = function () {
+					scope.onBlur({ originalValue: scope.originalModel });
 					scope.originalModel = scope.ngModel;
 					scope.init();
 				};
 
-				if (noApply)
+				if (noApply) {
 					runBlurAction();
-				else
+				} else {
 					scope.$apply(runBlurAction);
-			}
+				}
+			};
 
-			scope.resetTextbox = function(event, noApply) {
-				if (event)
-					event.preventDefault();
+			scope.resetTextbox = function (event, noApply) {
+				if (event) { event.preventDefault(); }
 
 				scope.removeTooltip();
 
-				var resetModel = function() {
-					if (typeof attrs.onReset !== 'undefined')
-						scope.onReset({currentValue: scope.ngModel, originalValue: scope.originalModel});
+				var resetModel = function () {
+					if (typeof attrs.onReset !== 'undefined') {
+						scope.onReset({ currentValue: scope.ngModel, originalValue: scope.originalModel });
+					}
 
 					scope.ngModel = scope.originalModel;
 					scope.init();
-					if (typeof attrs.onEscape !== 'undefined') scope.onEscape();
+					if (typeof attrs.onEscape !== 'undefined') { scope.onEscape(); }
 				};
 
 				if (noApply) {
@@ -158,5 +158,5 @@ sharedApp.directive("autoInput", this.autoInput = function($rootScope) {
 				}
 			};
 		}
-	}
-})
+	};
+});

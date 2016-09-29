@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc service
  * @name ipaClientAngularApp.authService
@@ -34,6 +32,7 @@ angular.module('sharedApp')
 						deferred.reject();
 					}
 				}, function (error) {
+					var message;
 					if (error.status == 400) {
 						// Token is invalid. Grab a new token
 						localStorage.removeItem('JWT');
@@ -44,7 +43,7 @@ angular.module('sharedApp')
 						localStorage.clear();
 						$window.location.href = "/access-denied.html";
 					} else if(error.status == -1) {
-						var message = "Request was aborted or server was not found. Check that the backend is running.";
+						message = "Request was aborted or server was not found. Check that the backend is running.";
 						console.error(message);
 						// Do not redirect until reportJsException comes back
 						self.reportJsException(error, message).then(function(res) {
@@ -54,7 +53,7 @@ angular.module('sharedApp')
 							$window.location.href = "/unknown-error.html";
 						});
 					} else {
-						var message = "Unknown error occurred while authenticating. Details:";
+						message = "Unknown error occurred while authenticating. Details:";
 						console.error(message);
 						console.error(error);
 						// Do not redirect until reportJsException comes back
@@ -123,7 +122,7 @@ angular.module('sharedApp')
 				localStorage.removeItem('userRoles');
 				localStorage.removeItem('displayName');
 				localStorage.removeItem('termStates');
-				redirectUrl = redirectUrl || serverRoot + "/logout"
+				redirectUrl = redirectUrl || serverRoot + "/logout";
 				$window.location.href = redirectUrl;
 			},
 
@@ -143,9 +142,9 @@ angular.module('sharedApp')
 				var userRoles = this.getUserRoles();
 				return _.uniq(
 					userRoles
-						.filter(function (ur) { return ur.workgroupId > 0 })
-						.map(function (ur) { return { id: ur.workgroupId, name: ur.workgroupName } })
-					, 'id'
+						.filter(function (ur) { return ur.workgroupId > 0; })
+						.map(function (ur) { return { id: ur.workgroupId, name: ur.workgroupName }; }),
+					'id'
 				);
 			},
 
@@ -169,7 +168,7 @@ angular.module('sharedApp')
 
 			isAdmin: function () {
 				var userRoles = this.getUserRoles();
-				return userRoles.some(function(ur) { return ur.roleName == "admin" && ur.workgroupId == 0; });
+				return userRoles.some(function(ur) { return ur.roleName == "admin" && ur.workgroupId === 0; });
 			},
 
 			isAcademicPlanner: function () {
@@ -208,7 +207,7 @@ angular.module('sharedApp')
 						var url = '/' + workgroupId + '/' + year;
 						$location.path(url);
 						return;
-					} else if (userRole.workgroupId == 0 && userRole.roleName == "admin") {
+					} else if (userRole.workgroupId === 0 && userRole.roleName == "admin") {
 						// scope.isAdmin = true;
 					}
 

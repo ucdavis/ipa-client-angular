@@ -1,5 +1,5 @@
 //Merges properties of 'other' into 'self'
-_object_merge = function(self, other) {
+_object_merge = function (self, other) {
 	for (var key in other) {
 		// hasOwnProperty() allows us to avoid copying prototype properties
 		if (other.hasOwnProperty(key)) {
@@ -8,10 +8,10 @@ _object_merge = function(self, other) {
 	}
 
 	return self;
-}
+};
 
 // Empties object without loosing reference
-_object_clear = function(self) {
+_object_clear = function (self) {
 	for (var key in self) {
 		// hasOwnProperty() allows us to avoid copying prototype properties
 		if (self.hasOwnProperty(key)) {
@@ -20,7 +20,7 @@ _object_clear = function(self) {
 	}
 
 	return self;
-}
+};
 
 /**
  * Searches the specified properties of the passed collection
@@ -57,4 +57,4 @@ _object_search_properties = function (query, tree, propertyKeyList) {
 
 		if (itemMatchesQuery) { tree.list[itemId].isFiltered = false; }
 	});
-}
+};

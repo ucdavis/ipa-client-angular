@@ -6,7 +6,7 @@ angular.module('course', [])
 		if (courseData) {
 			this.setData(courseData);
 		}
-	};
+	}
 	Course.prototype = {
 		setData: function(courseData) {
 			angular.extend(this, courseData);
