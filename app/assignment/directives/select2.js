@@ -8,7 +8,7 @@ assignmentApp.directive("select2", this.select2 = function () {
 		},
 		link: function (scope, element, attrs) {
 			scope.$watch("selectedIds", function () {
-				if (scope.optionIds == undefined) return;
+				if (scope.optionIds === undefined) { return; }
 
 				element.empty();
 				scope.optionIds.forEach(function (id) {
@@ -18,12 +18,12 @@ assignmentApp.directive("select2", this.select2 = function () {
 						.attr('selected', isSelected)
 						.html(scope.optionObjects[id].name);
 
-					element.append(optionBlock)
+					element.append(optionBlock);
 				});
 
 				element.select2();
 				element.addClass('visible');
 			});
 		}
-	}
+	};
 });

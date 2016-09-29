@@ -51,7 +51,7 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$wi
 				var allTerms = ['01','02','03','04','05','06','07','08','09','10'];
 
 				for (var i = 0; i < allTerms.length; i++) {
-					if (teachingCallConfig.activeTerms[allTerms[i]] == true) {
+					if (teachingCallConfig.activeTerms[allTerms[i]] === true) {
 						teachingCallConfig.termsBlob += "1";
 					} else {
 						teachingCallConfig.termsBlob += "0";
@@ -63,9 +63,9 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$wi
 				assignmentActionCreators.createTeachingCall(workgroupId, year, teachingCallConfig);
 			};
 
-			$scope.prepareTeachingCallStatusPage = function() {
-				var allTerms = ['01','02','03','04','05','06','07','08','09','10'];
-				var chronologicallyOrderedTerms = ['05','06','07','08','09','10','01','02','03'];
+			$scope.prepareTeachingCallStatusPage = function () {
+				var allTerms = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
+				var chronologicallyOrderedTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
 				var termNames = {
 					'05': 'Summer Session 1',
 					'06': 'Summer Special Session',
@@ -91,7 +91,7 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$wi
 					// Ensure terms are properly ordered
 					var orderedTermNames = [];
 
-					chronologicallyOrderedTerms.forEach( function(chronologicallyOrderedTerm) {
+					chronologicallyOrderedTerms.forEach(function (chronologicallyOrderedTerm) {
 						if (decodedTermsBlob.indexOf(chronologicallyOrderedTerm) > -1) {
 							orderedTermNames.push(termNames[chronologicallyOrderedTerm]);
 						}
@@ -99,14 +99,14 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$wi
 
 					teachingCall.terms = orderedTermNames;
 				}
-			}
+			};
 
-			$scope.toFullDate = function(shortDate) {
+			$scope.toFullDate = function (shortDate) {
 				return shortDate.toFullDate();
-			}
+			};
 
 			// Decode termsBlob into two digit terms (example: '02', '04')
-			$scope.termsBlobToTerms = function(termsBlob) {
+			$scope.termsBlobToTerms = function (termsBlob) {
 				var decodedTermsBlob = [];
 				for (var j = 0; j < termsBlob.length; j++) {
 					var isTermInTeachingCall = parseInt(termsBlob.charAt(j));
@@ -122,11 +122,11 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$wi
 					}
 				}
 				return decodedTermsBlob;
-			}
+			};
 	}]);
 
 TeachingCallStatusCtrl.validate = function (authService, assignmentActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then( function() {
+	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
 		assignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
-	})
-}
+	});
+};

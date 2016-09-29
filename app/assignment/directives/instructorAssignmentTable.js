@@ -8,7 +8,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 			scope.view = {};
 
 			// Filter instructors with assignmentsCompleted if filter is active
-			scope.showCompletedInstructor = function(instructor) {
+			scope.showCompletedInstructor = function (instructor) {
 				var scheduleInstructorNote = scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
 				var assignmentsCompleted = false;
 				if (scheduleInstructorNote) {
@@ -19,20 +19,20 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				}
 
 				return true;
-			}
+			};
 
-			scope.isTermLocked = function(termCode) {
+			scope.isTermLocked = function (termCode) {
 				var termState = scope.view.state.scheduleTermStates.list[termCode];
 				return termState.isLocked;
-			}
+			};
 
 			// Build a string of html to display a column header (course, terms, etc.)
-			scope.renderHeader = function() {
+			scope.renderHeader = function () {
 				// Render the header
 				var header = "<div class=\"course-list-row\">";
 				header += "<div class=\"course-header course-description-cell\">Course</div>";
 
-				$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
+				$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) {
 
 					var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
 					header += "<div class=\"term-header term-cell\">" + termCode.getTermCodeDisplayName(true) + "</div>";
@@ -41,7 +41,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				header += "</div>";
 
 				return header;
-			}
+			};
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				scope.view.state = data;
@@ -57,10 +57,10 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				var rowsSinceHeaderWasAdded = 0;
 
 				// Loop over instructors
-				$.each(scope.view.state.instructors.ids, function(i, instructorId) {
+				$.each(scope.view.state.instructors.ids, function (i, instructorId) {
 					var instructor = scope.view.state.instructors.list[instructorId];
 
-					if (instructor.isFiltered == false && scope.showCompletedInstructor(instructor) ) {
+					if (instructor.isFiltered === false && scope.showCompletedInstructor(instructor)) {
 						var scheduleInstructorNote = scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
 						var teachingCallReceipt = scope.view.state.teachingCallReceipts.list[instructor.teachingCallReceiptId];
 
@@ -119,16 +119,16 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 						courseHtml += "</div>"; // end description-cell
 
 						// Loop over active terms
-						$.each(scope.view.state.userInterface.enabledTerms.ids, function(i, termCodeId) {
+						$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) {
 							var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
 
 							courseHtml += "<div class=\"term-cell\">";
 
 							// Loop over teachingAssignments within a term
-							$.each(scope.view.state.instructors.list[instructor.id].teachingAssignmentTermCodeIds[termCode], function(j, teachingAssignmentId) {
+							$.each(scope.view.state.instructors.list[instructor.id].teachingAssignmentTermCodeIds[termCode], function (j, teachingAssignmentId) {
 								// Ensure it is approved already
 								if (scope.view.state.teachingAssignments.list[teachingAssignmentId].approved) {
-									var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId]
+									var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 									var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
 									var displayTitle = "";
@@ -158,7 +158,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 									courseHtml += unitsLow;
 									courseHtml += "</div>";
 
-									if (scope.isTermLocked(teachingAssignment.termCode) == false) {
+									if (scope.isTermLocked(teachingAssignment.termCode) === false) {
 										courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\" data-toggle=\"tooltip\" data-placement=\"top\"";
 										courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 										courseHtml += "data-original-title=\"Unassign\" data-container=\"body\"></i>";
@@ -167,89 +167,89 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 								}
 							});
 
-							if (scope.isTermLocked(termCode) == false) {
-							// Add an assign button to add more instructors
-							courseHtml += "<div class=\"dropdown assign-dropdown hidden-print\">";
-							courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
-							courseHtml += "Assign..<span class=\"caret\"></span></button>";
-							courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
+							if (scope.isTermLocked(termCode) === false) {
+								// Add an assign button to add more instructors
+								courseHtml += "<div class=\"dropdown assign-dropdown hidden-print\">";
+								courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
+								courseHtml += "Assign..<span class=\"caret\"></span></button>";
+								courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
 
-							// Track courses that were already present in 'interested', and should be filtered from 'other'
-							var interestedCourseIds = [];
-							var firstInterestedCourseAdded = false;
+								// Track courses that were already present in 'interested', and should be filtered from 'other'
+								var interestedCourseIds = [];
+								var firstInterestedCourseAdded = false;
 
-							// If the instructor has teachingAssignments in this term, show them first
-							if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
+								// If the instructor has teachingAssignments in this term, show them first
+								if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
 
-								// Loop over teachingAssignments
-								$.each(instructor.teachingAssignmentTermCodeIds[termCode], function(i, teachingAssignmentId) {
-									var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
-									var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
+									// Loop over teachingAssignments
+									$.each(instructor.teachingAssignmentTermCodeIds[termCode], function (i, teachingAssignmentId) {
+										var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+										var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
-									if (teachingAssignment.sectionGroupId == 0) {
-										return true;
-									}
-
-									var course = scope.view.state.courses.list[sectionGroup.courseId];
-									interestedCourseIds.push(course.id);
-
-									// Show option if the TeachingAssignments parent Course is not being suppressed and Assignment is not already approved
-									if (teachingAssignment.approved == false && course.isHidden == false) {
-										if (firstInterestedCourseAdded == false) {
-											courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
-											firstInterestedCourseAdded = true;
+										if (teachingAssignment.sectionGroupId === 0) {
+											return true;
 										}
 
-										var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
-										courseHtml += "<li><a";
-										courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
+										var course = scope.view.state.courses.list[sectionGroup.courseId];
+										interestedCourseIds.push(course.id);
 
+										// Show option if the TeachingAssignments parent Course is not being suppressed and Assignment is not already approved
+										if (teachingAssignment.approved === false && course.isHidden === false) {
+											if (firstInterestedCourseAdded === false) {
+												courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
+												firstInterestedCourseAdded = true;
+											}
+
+											var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
+											courseHtml += "<li><a";
+											courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
+
+											courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
+										}
+									});
+									if (firstInterestedCourseAdded) {
+										courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
+									}
+								}
+
+								// Add Buyout, Sabbatical, Course Release options
+								courseHtml += "<li><a";
+								courseHtml += " data-is-buyout=\"true\"";
+								courseHtml += " data-term-code=\"" + termCode + "\"";
+								courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+								courseHtml += " href=\"#\">Buyout</a></li>";
+
+								courseHtml += "<li><a";
+								courseHtml += " data-is-sabbatical=\"true\"";
+								courseHtml += " data-term-code=\"" + termCode + "\"";
+								courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+								courseHtml += " href=\"#\">Sabbatical</a></li>";
+
+								courseHtml += "<li><a";
+								courseHtml += " data-is-course-release=\"true\"";
+								courseHtml += " data-term-code=\"" + termCode + "\"";
+								courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+								courseHtml += " href=\"#\">Course Release</a></li>";
+								courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
+
+								// Loop over all other courses
+								$.each(scope.view.state.courses.ids, function (i, courseId) {
+									var course = scope.view.state.courses.list[courseId];
+									// Show option if course has a sectionGroup in this term, course is not suppressed, and course did not already show up in the interested section
+									if (course.sectionGroupTermCodeIds[termCode] && course.isHidden === false && interestedCourseIds.indexOf(course.id) < 0) {
+										var sectionGroupId = course.sectionGroupTermCodeIds[termCode];
+										var instructor = scope.view.state.instructors.list[instructorId];
+										courseHtml += "<li><a";
+										courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
+										courseHtml += " data-term-code=\"" + termCode + "\"";
+										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
 										courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
 									}
 								});
-								if (firstInterestedCourseAdded) {
-									courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
-								}
-							}
 
-							// Add Buyout, Sabbatical, Course Release options
-							courseHtml += "<li><a";
-							courseHtml += " data-is-buyout=\"true\"";
-							courseHtml += " data-term-code=\"" + termCode + "\"";
-							courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-							courseHtml += " href=\"#\">Buyout</a></li>";
-
-							courseHtml += "<li><a";
-							courseHtml += " data-is-sabbatical=\"true\"";
-							courseHtml += " data-term-code=\"" + termCode + "\"";
-							courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-							courseHtml += " href=\"#\">Sabbatical</a></li>";
-
-							courseHtml += "<li><a";
-							courseHtml += " data-is-course-release=\"true\"";
-							courseHtml += " data-term-code=\"" + termCode + "\"";
-							courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-							courseHtml += " href=\"#\">Course Release</a></li>";
-							courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
-
-							// Loop over all other courses
-							$.each(scope.view.state.courses.ids, function(i, courseId) {
-								var course = scope.view.state.courses.list[courseId]
-								// Show option if course has a sectionGroup in this term, course is not suppressed, and course did not already show up in the interested section
-								if (course.sectionGroupTermCodeIds[termCode] && course.isHidden == false && interestedCourseIds.indexOf(course.id) < 0) {
-									var sectionGroupId = course.sectionGroupTermCodeIds[termCode];
-									var instructor = scope.view.state.instructors.list[instructorId];
-									courseHtml += "<li><a";
-									courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
-									courseHtml += " data-term-code=\"" + termCode + "\"";
-									courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-									courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
-								}
-							});
-
-							courseHtml += "</ul></div>"; // End dropdown assign list
-						} // end isTermLocked
-						courseHtml += "</div>"; // Ending term-cell div
+								courseHtml += "</ul></div>"; // End dropdown assign list
+							} // end isTermLocked
+							courseHtml += "</div>"; // Ending term-cell div
 						});
 						courseHtml += "</div>"; // Ending course-row div
 
@@ -268,13 +268,14 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 				// Manually activate bootstrap tooltip triggers
 				$('body').tooltip({
-    			selector: '[data-toggle="tooltip"]'
+					selector: '[data-toggle="tooltip"]'
 				});
 			}); // end on event 'assignmentStateChanged'
 
 			// Handle Instructor UI events
-			element.click(function(e) {
+			element.click(function (e) {
 				$el = $(e.target);
+				var teachingAssignment, teachingAssignmentId, instructorId;
 				// Approving a teachingAssignment or creating a new one
 				if ($el.is('a')) {
 					var sectionGroupId = $el.data('section-group-id');
@@ -283,17 +284,17 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 					var isBuyout = $el.data('is-buyout');
 					var termCode = $el.data('term-code');
 
-					var instructorId = $el.data('instructor-id');
-					var teachingAssignmentId = $el.data('teaching-assignment-id');
+					instructorId = $el.data('instructor-id');
+					teachingAssignmentId = $el.data('teaching-assignment-id');
 
 					// Approving an existing teachingAssignment
 					if (teachingAssignmentId) {
 
-						var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+						teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 						assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
 					} else { // Creating a new teachingAssignment, and then approving it
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
-						var teachingAssignment = {
+						teachingAssignment = {
 							sectionGroupId: sectionGroupId,
 							instructorId: instructorId,
 							termCode: termCode,
@@ -302,28 +303,28 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 							buyout: isBuyout,
 							courseRelease: isCourseRelease,
 							sabbatical: isSabbatical
-						}
+						};
 
 						assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment, scope.view.state.userInterface.scheduleId);
 					}
 				}
 				// Unapproving a teachingAssignment
 				else if ($el.hasClass('assignment-remove')) {
-					var teachingAssignmentId = $el.data('teaching-assignment-id');
-					var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+					teachingAssignmentId = $el.data('teaching-assignment-id');
+					teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 					assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
 				}
 				else if ($el.hasClass('comment-btn')) {
-					var instructorId = $el.data('instructor-id');
+					instructorId = $el.data('instructor-id');
 					scope.openCommentModal(instructorId);
 				}
 				else if ($el.hasClass('avail-btn')) {
-					var instructorId = $el.data('instructor-id');
+					instructorId = $el.data('instructor-id');
 					scope.openUnavailabilityModal(instructorId);
 				}
 				else if ($el.hasClass('assignments-complete')) {
 					var scheduleInstructorNoteId = $el.data('schedule-instructor-note-id');
-					var instructorId = $el.data('instructor-id');
+					instructorId = $el.data('instructor-id');
 					var scheduleInstructorNote = scope.view.state.scheduleInstructorNotes.list[scheduleInstructorNoteId];
 
 					// Properly toggle assignmentsCompleted of existing scheduleInstructorNote
@@ -342,5 +343,5 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				}
 			}); // end UI event handler
 		} // end link
-	}
+	};
 });

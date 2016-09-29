@@ -192,7 +192,7 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 				'01': 'Winter Quarter',
 				'02': 'Spring Semester',
 				'03': 'Spring Quarter'
-			}
+			};
 
 			return allTerms;
 		}

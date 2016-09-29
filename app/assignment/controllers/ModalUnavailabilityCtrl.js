@@ -14,5 +14,5 @@ assignmentApp.controller('ModalUnavailabilityCtrl', this.ModalUnavailabilityCtrl
 	$scope.saveUnavailabilities = function (teachingCallResponse, blob) {
 		teachingCallResponse.availabilityBlob = blob;
 		assignmentActionCreators.updateTeachingCallResponse(teachingCallResponse);
-	}
+	};
 });

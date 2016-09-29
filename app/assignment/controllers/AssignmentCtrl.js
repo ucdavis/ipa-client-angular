@@ -18,20 +18,21 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 
 			$scope.showInstructors = function () {
 				assignmentActionCreators.showInstructors();
-			}
+			};
 
 			$scope.showCourses = function () {
 				assignmentActionCreators.showCourses();
 			};
 
-			$scope.termToggled = function(id) {
+			$scope.termToggled = function (id) {
 				assignmentActionCreators.toggleTermFilter(id);
-			}
+			};
 
-			$scope.toggleDisplayCompletedInstructors = function() {
+			$scope.toggleDisplayCompletedInstructors = function () {
 				assignmentActionCreators.toggleDisplayCompletedInstructors(!$scope.view.state.filters.showCompletedInstructors);
-			}
-			$scope.approveInstructorAssignment = function(teachingAssignmentId) {
+			};
+
+			$scope.approveInstructorAssignment = function (teachingAssignmentId) {
 				var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
 				assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
 			};
@@ -48,20 +49,20 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 					termCode: termCode,
 					priority: 1,
 					approved: true
-				}
+				};
 
 				assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
 			};
 
 			// Triggered by global search field, redraws table based on query
-			$scope.filterTable = function(query) {
+			$scope.filterTable = function (query) {
 				clearTimeout($scope.t);
 				$scope.t = setTimeout($scope.startFilter, 700, query);
-			}
+			};
 
-			$scope.startFilter = function(query) {
+			$scope.startFilter = function (query) {
 				assignmentActionCreators.updateTableFilter(query);
-			}
+			};
 
 			$scope.toggleTag = function (tagId) {
 				var tagFilters = $scope.view.state.filters.enabledTagIds;
@@ -109,7 +110,7 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 				var allTerms = ['05','06','07','08','09','10','01','02','03'];
 
 				for (var i = 0; i < allTerms.length; i++) {
-					if (teachingCallConfig.activeTerms[allTerms[i]] == true) {
+					if (teachingCallConfig.activeTerms[allTerms[i]] === true) {
 						teachingCallConfig.termsBlob += "1";
 					} else {
 						teachingCallConfig.termsBlob += "0";
@@ -229,5 +230,5 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 AssignmentCtrl.validate = function (authService, assignmentActionCreators, $route) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
 		assignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.tab);
-	})
-}
+	});
+};

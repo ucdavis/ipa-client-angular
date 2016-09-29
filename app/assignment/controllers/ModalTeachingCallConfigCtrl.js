@@ -28,20 +28,21 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 	$scope.allTerms = allTerms;
 	$scope.displayedFormPage = 1;
 
-	var allTerms = ['01','02','03','04','05','06','07','08','09','10'];
-	for (var i = 0; i < allTerms.length; i++) {
+	allTerms = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
+	var i;
+	for (i = 0; i < allTerms.length; i++) {
 		$scope.startTeachingCallConfig.activeTerms[allTerms[i]] = false;
 	}
 
 	// Use schedule data to pre-select terms in TeachingCall creation form
-	for (var i = 0; i < $scope.viewState.scheduleTermStates.ids.length; i++) {
+	for (i = 0; i < $scope.viewState.scheduleTermStates.ids.length; i++) {
 		var termCode = $scope.viewState.scheduleTermStates.ids[i];
 		var term = String(termCode).slice(-2);
 		$scope.startTeachingCallConfig.activeTerms[term] = true;
 	}
 
 	// If schedule had no terms, default to pre-select SS1,SS2,F,W,S in TeachingCall creation form
-	if ($scope.viewState.scheduleTermStates.ids.length == 0) {
+	if ($scope.viewState.scheduleTermStates.ids.length === 0) {
 		$scope.startTeachingCallConfig.activeTerms['05'] = true;
 		$scope.startTeachingCallConfig.activeTerms['07'] = true;
 		$scope.startTeachingCallConfig.activeTerms['01'] = true;
@@ -71,39 +72,39 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 	};
 
 	$scope.isFormIncomplete = function () {
-		if ($scope.startTeachingCallConfig.dueDate != "" && $scope.startTeachingCallConfig.message != "") {
+		if ($scope.startTeachingCallConfig.dueDate !== "" && $scope.startTeachingCallConfig.message !== "") {
 			if ($scope.startTeachingCallConfig.sentToFederation || $scope.startTeachingCallConfig.sentToSenate) {
 				return false;
 			}
 		}
 		return true;
-	}
+	};
 
 	// Transforms to ISO format
 	$scope.saveDueDate = function () {
-		if ($scope.parent.dueDate != "") {
-			$scope.startTeachingCallConfig.dueDate =  $scope.parent.dueDate.toISOString().slice(0, 10);
+		if ($scope.parent.dueDate !== "") {
+			$scope.startTeachingCallConfig.dueDate = $scope.parent.dueDate.toISOString().slice(0, 10);
 		}
-	}
+	};
 
-	$scope.isTermActive = function(term) {
+	$scope.isTermActive = function (term) {
 		if ($scope.startTeachingCallConfig.activeTerms != null) {
 			return $scope.startTeachingCallConfig.activeTerms[term];
 		}
 
 		return false;
-	}
+	};
 
-	$scope.toggleTermActive = function(term) {
-		var term = term.slice(-2);
+	$scope.toggleTermActive = function (term) {
+		term = term.slice(-2);
 		$scope.startTeachingCallConfig.activeTerms[term] = !$scope.startTeachingCallConfig.activeTerms[term];
-	}
+	};
 
-	$scope.getTermName = function(term) {
+	$scope.getTermName = function (term) {
 		return termService.getTermName(term);
-	}
+	};
 
-	$scope.activeTermsDescription = function() {
+	$scope.activeTermsDescription = function () {
 		var description = "";
 
 		for (var i = 0; i < $scope.allTerms.length; i++) {
@@ -116,15 +117,15 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 		}
 
 		return description;
-	}
+	};
 
-	$scope.toggleSenateInstructors = function() {
+	$scope.toggleSenateInstructors = function () {
 		$scope.startTeachingCallConfig.sentToSenate = !$scope.startTeachingCallConfig.sentToSenate;
-	}
+	};
 
-	$scope.toggleFederationInstructors = function() {
+	$scope.toggleFederationInstructors = function () {
 		$scope.startTeachingCallConfig.sentToFederation = !$scope.startTeachingCallConfig.sentToFederation;
-	}
+	};
 
 	$scope.getTermName = function(term) {
 		var endingYear = "";
@@ -160,7 +161,7 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 		minDate: new Date(),
 		startingDay: 1
 	};
-	
+
 	$scope.popup1 = {};
 	$scope.open1 = function() {
 		$scope.popup1.opened = true;

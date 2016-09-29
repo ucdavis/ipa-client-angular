@@ -306,9 +306,10 @@ module.exports = function (grunt) {
 				curly: true,
 				eqnull: true,
 				browser: true,
+				loopfunc: true
 			},
 			src: [
-				'<%= folders.webapp.root %>/shared/**/*.js',
+				'<%= folders.webapp.root %>/assignment/**/*.js',
 			]
 		}
 

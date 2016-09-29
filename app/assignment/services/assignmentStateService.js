@@ -36,7 +36,7 @@ assignmentApp.service('assignmentStateService', function (
 
 						action.payload.sectionGroups
 							.filter(function (sectionGroup) {
-								return sectionGroup.courseId === course.id
+								return sectionGroup.courseId === course.id;
 							})
 							.forEach(function (sectionGroup) {
 								coursesList[course.id].sectionGroupTermCodeIds[sectionGroup.termCode] = sectionGroup.id;
@@ -60,7 +60,7 @@ assignmentApp.service('assignmentStateService', function (
 					// Set the course.isFiltered flag to false if any tag matches the filters
 					courses.ids.forEach(function (courseId) {
 						// Display all courses if none of the tags is checked
-						if (action.payload.tagIds.length == 0) {
+						if (action.payload.tagIds.length === 0) {
 							courses.list[courseId].matchesTagFilters = true;
 						} else {
 							courses.list[courseId].matchesTagFilters = courses.list[courseId].tagIds
@@ -76,6 +76,7 @@ assignmentApp.service('assignmentStateService', function (
 		},
 		_teachingAssignmentReducers: function (action, teachingAssignments) {
 			var scope = this;
+			var i, payloadTeachingAssignments, slotTeachingAssignment, index;
 
 			switch (action.type) {
 				case INIT_ASSIGNMENT_VIEW:
@@ -85,7 +86,7 @@ assignmentApp.service('assignmentStateService', function (
 					};
 					var teachingAssignmentsList = {};
 					var length = action.payload.teachingAssignments ? action.payload.teachingAssignments.length : 0;
-					for (var i = 0; i < length; i++) {
+					for (i = 0; i < length; i++) {
 						var teachingAssignment = new TeachingAssignment(action.payload.teachingAssignments[i]);
 						teachingAssignmentsList[teachingAssignment.id] = teachingAssignment;
 					}
@@ -101,21 +102,21 @@ assignmentApp.service('assignmentStateService', function (
 					return teachingAssignments;
 				case ADD_PREFERENCE:
 					// Add a group of teachingAssignments created from a preference
-					var payloadTeachingAssignments = action.payload.teachingAssignments;
-					for (var i = 0; i < payloadTeachingAssignments.length; i++) {
-						var slotTeachingAssignment = payloadTeachingAssignments[i];
+					payloadTeachingAssignments = action.payload.teachingAssignments;
+					for (i = 0; i < payloadTeachingAssignments.length; i++) {
+						slotTeachingAssignment = payloadTeachingAssignments[i];
 						teachingAssignments.list[slotTeachingAssignment.id] = slotTeachingAssignment;
 						teachingAssignments.ids.push(slotTeachingAssignment.id);
 					}
 					return teachingAssignments;
 				case REMOVE_PREFERENCE:
-					var payloadTeachingAssignments = action.payload.teachingAssignments;
+					payloadTeachingAssignments = action.payload.teachingAssignments;
 					var termCode = action.payload.termCode;
 					// For each teachingAssignment associated to that preference
-					for (var i = 0; i < payloadTeachingAssignments.length; i++) {
-						var slotTeachingAssignment = payloadTeachingAssignments[i];
+					for (i = 0; i < payloadTeachingAssignments.length; i++) {
+						slotTeachingAssignment = payloadTeachingAssignments[i];
 						// Remove reference from ids
-						var index = teachingAssignments.ids.indexOf(slotTeachingAssignment.id);
+						index = teachingAssignments.ids.indexOf(slotTeachingAssignment.id);
 						if (index > -1) {
 							teachingAssignments.ids.splice(index, 1);
 						}
@@ -124,7 +125,7 @@ assignmentApp.service('assignmentStateService', function (
 					}
 					return teachingAssignments;
 				case REMOVE_TEACHING_ASSIGNMENT:
-					var index = teachingAssignments.ids.indexOf(action.payload.teachingAssignment.id);
+					index = teachingAssignments.ids.indexOf(action.payload.teachingAssignment.id);
 					if (index > -1) {
 						teachingAssignments.ids.splice(index, 1);
 					}
@@ -132,7 +133,7 @@ assignmentApp.service('assignmentStateService', function (
 				case UPDATE_TEACHING_ASSIGNMENT_ORDER:
 					var sortedTeachingAssignmentIds = action.payload.sortedTeachingAssignmentIds;
 
-					for (var i = 0; i < sortedTeachingAssignmentIds.length; i++) {
+					for (i = 0; i < sortedTeachingAssignmentIds.length; i++) {
 						var id = sortedTeachingAssignmentIds[i];
 						teachingAssignments.list[id].priority = i + 1;
 					}
@@ -144,6 +145,7 @@ assignmentApp.service('assignmentStateService', function (
 		},
 		_teachingCallReducers: function (action, teachingCalls) {
 			var scope = this;
+			var teachingCall;
 
 			switch (action.type) {
 				case INIT_ASSIGNMENT_VIEW:
@@ -158,7 +160,7 @@ assignmentApp.service('assignmentStateService', function (
 					var teachingCallsList = {};
 					var length = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
 					for (var i = 0; i < length; i++) {
-						var teachingCall = new TeachingCall(action.payload.teachingCalls[i]);
+						teachingCall = new TeachingCall(action.payload.teachingCalls[i]);
 						teachingCallsList[teachingCall.id] = teachingCall;
 
 						// Gather eligible group data
@@ -174,7 +176,7 @@ assignmentApp.service('assignmentStateService', function (
 					teachingCalls.list = teachingCallsList;
 					return teachingCalls;
 				case CREATE_TEACHING_CALL:
-					var teachingCall = action.payload.teachingCall;
+					teachingCall = action.payload.teachingCall;
 
 					if (teachingCall.sentToFederation) {
 						teachingCalls.eligibleGroups.federationInstructors = false;
@@ -192,7 +194,8 @@ assignmentApp.service('assignmentStateService', function (
 			}
 		},
 		_activeTeachingCallReducers: function (action, state) {
-			activeTeachingCall = state.activeTeachingCall;
+			var activeTeachingCall = state.activeTeachingCall;
+			var i, j, course, termCode;
 			switch (action.type) {
 				case INIT_ASSIGNMENT_VIEW:
 					payloadActiveTeachingCall = action.payload.activeTeachingCall;
@@ -204,40 +207,40 @@ assignmentApp.service('assignmentStateService', function (
 				case ADD_PREFERENCE:
 					payloadTeachingAssignments = action.payload.teachingAssignments;
 
-					for (var i = 0; i < payloadTeachingAssignments.length; i++) {
+					for (i = 0; i < payloadTeachingAssignments.length; i++) {
 						var teachingAssignment = payloadTeachingAssignments[i];
 
 						if (teachingAssignment.sectionGroupId) {
 							var sectionGroup = state.sectionGroups.list[teachingAssignment.sectionGroupId];
-							var course = state.courses.list[sectionGroup.courseId];
+							course = state.courses.list[sectionGroup.courseId];
 							teachingAssignment.subjectCode = course.subjectCode;
 							teachingAssignment.courseNumber = course.courseNumber;
 						}
 
-						var termCode = parseInt(teachingAssignment.termCode);
+						termCode = parseInt(teachingAssignment.termCode);
 
 
 						if (activeTeachingCall.termAssignments[teachingAssignment.termCode] == null) {
 							activeTeachingCall.termAssignments[teachingAssignment.termCode] = [];
-						};
+						}
 
 						// Ensure sectionGroup hasn't already been added as a preference
 						var preferenceAlreadyAdded = false;
-						for (var j = 0; j < activeTeachingCall.termAssignments[teachingAssignment.termCode].length; j++) {
+						for (j = 0; j < activeTeachingCall.termAssignments[teachingAssignment.termCode].length; j++) {
 							var slotAssignment = activeTeachingCall.termAssignments[teachingAssignment.termCode][j];
 
-							if (teachingAssignment.subjectCode == slotAssignment.subjectCode
-								&& teachingAssignment.courseNumber == slotAssignment.courseNumber) {
-									preferenceAlreadyAdded = true;
+							if (teachingAssignment.subjectCode == slotAssignment.subjectCode &&
+								teachingAssignment.courseNumber == slotAssignment.courseNumber) {
+								preferenceAlreadyAdded = true;
 							}
 						}
 
-						if (preferenceAlreadyAdded == false) {
+						if (preferenceAlreadyAdded === false) {
 							activeTeachingCall.termAssignments[teachingAssignment.termCode].push(teachingAssignment);
 						}
 
 						// Ensure scheduledCourses are flagged as having a preference
-						for (var j = 0; j < activeTeachingCall.scheduledCourses[teachingAssignment.termCode].length; j++) {
+						for (j = 0; j < activeTeachingCall.scheduledCourses[teachingAssignment.termCode].length; j++) {
 							slotCourse = activeTeachingCall.scheduledCourses[teachingAssignment.termCode][j];
 							if (course && (slotCourse.id == course.id)) {
 								slotCourse.hasPreference = true;
@@ -250,16 +253,16 @@ assignmentApp.service('assignmentStateService', function (
 						return activeTeachingCall;
 					}
 					var teachingAssignments = action.payload.teachingAssignments;
-					var termCode = action.payload.termCode;
+					termCode = action.payload.termCode;
 					var DTOinstructorId = action.payload.instructorId;
-					for (var i = 0; i < teachingAssignments.length; i++) {
+					for (i = 0; i < teachingAssignments.length; i++) {
 						var slotTeachingAssignment = teachingAssignments[i];
 						var index = -1;
-						for (var j = 0; j < activeTeachingCall.termAssignments[termCode].length; j++) {
-								if (activeTeachingCall.termAssignments[termCode][j].id == slotTeachingAssignment.id) {
-									var index = j;
-									break;
-								}
+						for (j = 0; j < activeTeachingCall.termAssignments[termCode].length; j++) {
+							if (activeTeachingCall.termAssignments[termCode][j].id == slotTeachingAssignment.id) {
+								index = j;
+								break;
+							}
 						}
 						if (index > -1) {
 							activeTeachingCall.termAssignments[termCode].splice(index, 1);
@@ -334,6 +337,7 @@ assignmentApp.service('assignmentStateService', function (
 		},
 		_instructorReducers: function (action, instructors) {
 			var scope = this;
+			var i, j, scheduleInstructorNote, instructor, teachingAssignments, termCode, slotTeachingAssignment, teachingAssignment;
 
 			switch (action.type) {
 				case INIT_ASSIGNMENT_VIEW:
@@ -345,20 +349,20 @@ assignmentApp.service('assignmentStateService', function (
 					var length = action.payload.instructors ? action.payload.instructors.length : 0;
 
 					// Loop over instructors
-					for (var i = 0; i < length; i++) {
-						var instructor = new Instructor(action.payload.instructors[i]);
+					for (i = 0; i < length; i++) {
+						instructor = new Instructor(action.payload.instructors[i]);
 						instructor.teachingAssignmentTermCodeIds = {};
 						instructor.isFiltered = false;
 
 						// Create arrays of teachingAssignmentIds for each termCode
-						for (var j = 0; j < action.payload.scheduleTermStates.length; j++) {
-							var termCode = action.payload.scheduleTermStates[j].termCode;
+						for (j = 0; j < action.payload.scheduleTermStates.length; j++) {
+							termCode = action.payload.scheduleTermStates[j].termCode;
 							instructor.teachingAssignmentTermCodeIds[termCode] = [];
 
 							// Create array of teachingAssignmentIds that are associated to this termCode and instructor
 							action.payload.teachingAssignments
 								.filter(function (teachingAssignment) {
-									return (teachingAssignment.instructorId === instructor.id && teachingAssignment.termCode === termCode)
+									return (teachingAssignment.instructorId === instructor.id && teachingAssignment.termCode === termCode);
 								})
 								.forEach(function (teachingAssignment) {
 									instructor.teachingAssignmentTermCodeIds[termCode].push(teachingAssignment.id);
@@ -368,7 +372,7 @@ assignmentApp.service('assignmentStateService', function (
 						// Create arrays of teachingCallResponseIds
 						instructor.teachingCallResponses = [];
 
-						for (var j = 0; j < action.payload.teachingCallResponses.length; j++) {
+						for (j = 0; j < action.payload.teachingCallResponses.length; j++) {
 							var teachingCallResponse = action.payload.teachingCallResponses[j];
 							if (teachingCallResponse.instructorId == instructor.id) {
 								instructor.teachingCallResponses.push(teachingCallResponse);
@@ -377,8 +381,8 @@ assignmentApp.service('assignmentStateService', function (
 
 						// Find scheduleInstructorNote associated to this instructor, if it exists
 						instructor.scheduleInstructorNoteId = null;
-						for (var j = 0; j < action.payload.scheduleInstructorNotes.length; j++) {
-							var scheduleInstructorNote = action.payload.scheduleInstructorNotes[j];
+						for (j = 0; j < action.payload.scheduleInstructorNotes.length; j++) {
+							scheduleInstructorNote = action.payload.scheduleInstructorNotes[j];
 							if (scheduleInstructorNote.instructorId == instructor.id) {
 								instructor.scheduleInstructorNoteId = scheduleInstructorNote.id;
 							}
@@ -386,7 +390,7 @@ assignmentApp.service('assignmentStateService', function (
 
 						// Find teachingCallReceipt associated to this instructor, if it exists
 						instructor.teachingCallReceiptId = null;
-						for (var j = 0; j < action.payload.teachingCallReceipts.length; j++) {
+						for (j = 0; j < action.payload.teachingCallReceipts.length; j++) {
 							var teachingCallReceipt = action.payload.teachingCallReceipts[j];
 							if (teachingCallReceipt.instructorId == instructor.id) {
 								instructor.teachingCallReceiptId = teachingCallReceipt.id;
@@ -407,35 +411,35 @@ assignmentApp.service('assignmentStateService', function (
 
 					return instructors;
 				case ADD_SCHEDULE_INSTRUCTOR_NOTE:
-					var scheduleInstructorNote = action.payload.scheduleInstructorNote;
-					for (var i = 0; i < instructors.ids.length; i++) {
-						var instructor = instructors.list[instructors.ids[i]];
+					scheduleInstructorNote = action.payload.scheduleInstructorNote;
+					for (i = 0; i < instructors.ids.length; i++) {
+						instructor = instructors.list[instructors.ids[i]];
 						if (instructor.id == scheduleInstructorNote.instructorId) {
 							instructor.scheduleInstructorNoteId = scheduleInstructorNote.id;
 						}
 					}
 					return instructors;
 				case ADD_TEACHING_ASSIGNMENT:
-					var teachingAssignment = action.payload.teachingAssignment;
-					var instructor = instructors.list[teachingAssignment.instructorId];
+					teachingAssignment = action.payload.teachingAssignment;
+					instructor = instructors.list[teachingAssignment.instructorId];
 					instructor.teachingAssignmentTermCodeIds[teachingAssignment.termCode].push(teachingAssignment.id);
 					return instructors;
 				case ADD_PREFERENCE:
-					var teachingAssignments = action.payload.teachingAssignments;
-					for (var i = 0; i < teachingAssignments.length; i++) {
-						var slotTeachingAssignment = teachingAssignments[i];
-						var instructor = instructors.list[slotTeachingAssignment.instructorId];
+					teachingAssignments = action.payload.teachingAssignments;
+					for (i = 0; i < teachingAssignments.length; i++) {
+						slotTeachingAssignment = teachingAssignments[i];
+						instructor = instructors.list[slotTeachingAssignment.instructorId];
 						instructor.teachingAssignmentTermCodeIds[slotTeachingAssignment.termCode].push(slotTeachingAssignment.id);
 					}
 					return instructors;
 				case REMOVE_PREFERENCE:
-					var teachingAssignments = action.payload.teachingAssignments;
-					var termCode = action.payload.termCode;
+					teachingAssignments = action.payload.teachingAssignments;
+					termCode = action.payload.termCode;
 					var DTOinstructorId = action.payload.instructorId;
-					var instructor = instructors.list[DTOinstructorId];
+					instructor = instructors.list[DTOinstructorId];
 					var instructorTeachingAssignments = instructor.teachingAssignmentTermCodeIds[termCode];
-					for (var i = 0; i < teachingAssignments.length; i++) {
-						var slotTeachingAssignment = teachingAssignments[i];
+					for (i = 0; i < teachingAssignments.length; i++) {
+						slotTeachingAssignment = teachingAssignments[i];
 						var index = instructorTeachingAssignments.indexOf(slotTeachingAssignment.id);
 						if (index > -1) {
 							instructorTeachingAssignments.splice(index, 1);
@@ -443,10 +447,10 @@ assignmentApp.service('assignmentStateService', function (
 					}
 					return instructors;
 				case REMOVE_TEACHING_ASSIGNMENT:
-					var teachingAssignment = action.payload.teachingAssignment;
-					var instructor = instructors.list[teachingAssignment.instructorId];
-					for (var i = 0; i < instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode].length; i++) {
-							var slotTeachingAssignmentId = instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode][i];
+					teachingAssignment = action.payload.teachingAssignment;
+					instructor = instructors.list[teachingAssignment.instructorId];
+					for (i = 0; i < instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode].length; i++) {
+						var slotTeachingAssignmentId = instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode][i];
 						if (slotTeachingAssignmentId == teachingAssignment.id) {
 							instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode].splice(i);
 							return instructors;
@@ -532,6 +536,7 @@ assignmentApp.service('assignmentStateService', function (
 		},
 		_sectionGroupReducers: function (action, sectionGroups) {
 			var scope = this;
+			var sectionGroup, i, slotTeachingAssignment, teachingAssignment, index;
 
 			switch (action.type) {
 				case INIT_ASSIGNMENT_VIEW:
@@ -543,8 +548,8 @@ assignmentApp.service('assignmentStateService', function (
 					var sectionGroupsList = {};
 
 					var length = action.payload.sectionGroups ? action.payload.sectionGroups.length : 0;
-					for (var i = 0; i < length; i++) {
-						var sectionGroup = new SectionGroup(action.payload.sectionGroups[i]);
+					for (i = 0; i < length; i++) {
+						sectionGroup = new SectionGroup(action.payload.sectionGroups[i]);
 						sectionGroupsList[sectionGroup.id] = sectionGroup;
 						sectionGroups.ids.push(sectionGroup.id);
 
@@ -552,7 +557,7 @@ assignmentApp.service('assignmentStateService', function (
 						sectionGroupsList[sectionGroup.id].teachingAssignmentIds = [];
 						action.payload.teachingAssignments
 							.filter(function (teachingAssignment) {
-								return teachingAssignment.sectionGroupId === sectionGroup.id
+								return teachingAssignment.sectionGroupId === sectionGroup.id;
 							})
 							.forEach(function (teachingAssignment) {
 								sectionGroupsList[sectionGroup.id].teachingAssignmentIds.push(teachingAssignment.id);
@@ -562,8 +567,8 @@ assignmentApp.service('assignmentStateService', function (
 					sectionGroups.list = sectionGroupsList;
 					return sectionGroups;
 				case ADD_TEACHING_ASSIGNMENT:
-					var teachingAssignment = action.payload.teachingAssignment;
-					var sectionGroup = {};
+					teachingAssignment = action.payload.teachingAssignment;
+					sectionGroup = {};
 					if (teachingAssignment.sectionGroupId) {
 						sectionGroup = sectionGroups.list[teachingAssignment.sectionGroupId];
 						sectionGroup.teachingAssignmentIds.push(teachingAssignment.id);
@@ -571,9 +576,9 @@ assignmentApp.service('assignmentStateService', function (
 					return sectionGroups;
 				case ADD_PREFERENCE:
 					var payloadTeachingAssignments = action.payload.teachingAssignments;
-					for (var i = 0; i < payloadTeachingAssignments.length; i++) {
-						var slotTeachingAssignment = payloadTeachingAssignments[i];
-						var sectionGroup = {};
+					for (i = 0; i < payloadTeachingAssignments.length; i++) {
+						slotTeachingAssignment = payloadTeachingAssignments[i];
+						sectionGroup = {};
 						if (slotTeachingAssignment.sectionGroupId) {
 							sectionGroup = sectionGroups.list[slotTeachingAssignment.sectionGroupId];
 							sectionGroup.teachingAssignmentIds.push(slotTeachingAssignment.id);
@@ -584,11 +589,11 @@ assignmentApp.service('assignmentStateService', function (
 					var teachingAssignments = action.payload.teachingAssignments;
 					var DTOtermCode = action.payload.termCode;
 					var DTOinstructorId = action.payload.instructorId;
-					for (var i = 0; i < teachingAssignments.length; i++) {
-						var slotTeachingAssignment = teachingAssignments[i];
-						var sectionGroup = sectionGroups.list[slotTeachingAssignment.sectionGroupId];
+					for (i = 0; i < teachingAssignments.length; i++) {
+						slotTeachingAssignment = teachingAssignments[i];
+						sectionGroup = sectionGroups.list[slotTeachingAssignment.sectionGroupId];
 						if (sectionGroup) {
-							var index = sectionGroup.teachingAssignmentIds.indexOf(slotTeachingAssignment.id);
+							index = sectionGroup.teachingAssignmentIds.indexOf(slotTeachingAssignment.id);
 							if (index > -1) {
 								sectionGroup.teachingAssignmentIds.splice(index, 1);
 							}
@@ -596,10 +601,10 @@ assignmentApp.service('assignmentStateService', function (
 					}
 					return sectionGroups;
 				case REMOVE_TEACHING_ASSIGNMENT:
-					var teachingAssignment = action.payload.teachingAssignment;
-					var sectionGroup = sectionGroups.list[teachingAssignment.sectionGroupId];
+					teachingAssignment = action.payload.teachingAssignment;
+					sectionGroup = sectionGroups.list[teachingAssignment.sectionGroupId];
 					if (sectionGroup) {
-						var index = sectionGroup.teachingAssignmentIds.indexOf(teachingAssignment.id);
+						index = sectionGroup.teachingAssignmentIds.indexOf(teachingAssignment.id);
 						if (index > -1) {
 							sectionGroup.teachingAssignmentIds.splice(index, 1);
 						}
@@ -639,10 +644,11 @@ assignmentApp.service('assignmentStateService', function (
 		},
 		_userInterfaceReducers: function (action, userInterface) {
 			var scope = this;
+			var i;
 
 			switch (action.type) {
 				case INIT_ASSIGNMENT_VIEW:
-					var userInterface = {};
+					userInterface = {};
 
 					userInterface.instructorId = action.payload.instructorId;
 					userInterface.userId = action.payload.userId;
@@ -658,7 +664,7 @@ assignmentApp.service('assignmentStateService', function (
 					var enabledTerms = {};
 					enabledTerms.list = {};
 					enabledTerms.ids = [];
-					for (var i = 0; i < action.payload.scheduleTermStates.length; i++) {
+					for (i = 0; i < action.payload.scheduleTermStates.length; i++) {
 						var term = action.payload.scheduleTermStates[i].termCode;
 						// Generate an id based off termCode
 						var id = Number(term.slice(-2));
@@ -668,10 +674,10 @@ assignmentApp.service('assignmentStateService', function (
 					enabledTerms.ids = orderTermsChronologically(enabledTerms.ids);
 
 					// Generate termCode list entries
-					for (var i = 1; i < 11; i++) {
+					for (i = 1; i < 11; i++) {
 						// 4 is not used as a termCode
 						if (i != 4) {
-							var termCode = generateTermCode(action.year, i)
+							var termCode = generateTermCode(action.year, i);
 							enabledTerms.list[i] = termCode;
 						}
 					}
@@ -680,7 +686,7 @@ assignmentApp.service('assignmentStateService', function (
 
 					return userInterface;
 				case SWITCH_MAIN_VIEW:
-					if (userInterface == undefined) {
+					if (userInterface === undefined) {
 						userInterface = {};
 					}
 
@@ -691,7 +697,7 @@ assignmentApp.service('assignmentStateService', function (
 					var termId = action.payload.termId;
 					var idx = userInterface.enabledTerms.ids.indexOf(termId);
 					// A term in the term filter dropdown has been toggled on or off.
-					if(idx === -1) {
+					if (idx === -1) {
 						// Toggle on
 						userInterface.enabledTerms.ids.push(termId);
 						userInterface.enabledTerms.ids = orderTermsChronologically(userInterface.enabledTerms.ids);
@@ -728,13 +734,13 @@ assignmentApp.service('assignmentStateService', function (
 
 			scope._state = newState;
 
-			$rootScope.$emit('assignmentStateChanged',scope._state);
+			$rootScope.$emit('assignmentStateChanged', scope._state);
 		}
-	}
+	};
 });
 
 // Returns false if course is a x98 or x99 series, unless the user has opted to show them
-isCourseSuppressed = function(course) {
+isCourseSuppressed = function (course) {
 	// TODO: implement this check once toggle is added
 	// if (suppressingDoNotPrint == false) { return false;}
 
@@ -744,9 +750,9 @@ isCourseSuppressed = function(course) {
 		return true;
 	}
 
-	var lastChar = course.courseNumber.charAt(course.courseNumber.length-1);
-	var secondLastChar = course.courseNumber.charAt(course.courseNumber.length-2);
-	var thirdLastChar = course.courseNumber.charAt(course.courseNumber.length-3);
+	var lastChar = course.courseNumber.charAt(course.courseNumber.length - 1);
+	var secondLastChar = course.courseNumber.charAt(course.courseNumber.length - 2);
+	var thirdLastChar = course.courseNumber.charAt(course.courseNumber.length - 3);
 
 	// Filter out courses like 299H
 	if (isLetter(lastChar)) {
@@ -760,31 +766,23 @@ isCourseSuppressed = function(course) {
 	}
 
 	return false;
-}
+};
 
-generateTermCode = function(year, term) {
+generateTermCode = function (year, term) {
 	if (term.toString().length == 1) {
 		term = "0" + Number(term);
 	}
 
-	switch(term) {
-		case "01":
-		case "02":
-		case "03":
-			year++;
-			break;
-		default:
-			year;
-	}
+	if (["01", "02", "03"].indexOf(term) >= 0) { year++; }
 	var termCode = year + term;
 
 	return termCode;
-}
+};
 
 // Sorts a list of termIds into chronological order
-orderTermsChronologically = function(terms) {
-	var orderedTermsReference = [5,6,7,8,9,10,1,2,3];
-	terms.sort(function(a,b) {
+orderTermsChronologically = function (terms) {
+	var orderedTermsReference = [5, 6, 7, 8, 9, 10, 1, 2, 3];
+	terms.sort(function (a, b) {
 		if (orderedTermsReference.indexOf(a) > orderedTermsReference.indexOf(b)) {
 			return 1;
 		}
@@ -792,4 +790,4 @@ orderTermsChronologically = function(terms) {
 	});
 
 	return terms;
-}
+};
