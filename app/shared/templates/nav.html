@@ -37,13 +37,6 @@
 			<li class="welcome">
 					<span class="title">Howdy, {{ sharedState.displayName }}</span>
 			</li>
-			<li ng-if="sharedState.isAdmin" ng-class="{ 'active': currentBaseHref == 'admin' }">
-				<a ng-href="/admin/{{ workgroupId }}/{{ year }}">
-					<i class="entypo-cog"></i>
-					<span class="title">Administration</span>
-				</a>
-			</li>
-
 			<li ng-class="{ 'active': currentBaseHref == 'summary' }" ng-if="sharedState.isAcademicPlanner && sharedState.isInstructor">
 				<a>
 					<i class="entypo-home"></i>
@@ -82,6 +75,7 @@
 					<span class="title">Workgroups</span>
 				</a>
 				<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}"
+					uib-tooltip="Manage {{ sharedState.workgroup.name }}" tooltip-append-to-body="true" tooltip-placement="right"
 					ng-if="sharedState.userWorkgroups.length == 1 && userHasRoles(['academicPlanner'])">
 					<i class="entypo-users"></i>
 					<span class="title">{{ sharedState.workgroup.name }}</span>
@@ -89,7 +83,8 @@
 				<ul class="visible" ng-if="sharedState.userWorkgroups.length > 1">
 					<li ng-repeat="workgroup in sharedState.userWorkgroups track by workgroup.id"
 					ng-class="{ 'active': sharedState.workgroup.id == workgroup.id }">
-						<a ng-href="/{{ currentBaseHref }}/{{ workgroup.id }}/{{ year }}/{{ termShortCode }}">
+						<a ng-href="/{{ currentBaseHref }}/{{ workgroup.id }}/{{ year }}/{{ termShortCode }}"
+							uib-tooltip="Switch to {{ sharedState.workgroup.name }}" tooltip-append-to-body="true" tooltip-placement="right">
 							<i class="entypo-check active-workgroup-icon" ng-if="sharedState.workgroup.id == workgroup.id"></i>
 							<span class="title">{{ workgroup.name }}</span>
 						</a>
@@ -113,6 +108,13 @@
 					</li>
 				</ul>
 			</li>
+			<li ng-if="sharedState.isAdmin" ng-class="{ 'active': currentBaseHref == 'admin' }">
+				<a ng-href="/admin/{{ workgroupId }}/{{ year }}">
+					<i class="entypo-cog"></i>
+					<span class="title">Administration</span>
+				</a>
+			</li>
+
 		</ul>
 
 		<!-- Year switcher -->
