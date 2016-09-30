@@ -51,6 +51,12 @@
 					<li id="pref-{{ preference.id }}" ng-if="!preference.approved" class="teaching-call-form-unapproved-preference"
 					ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
 
+						<div style="flex: 0 0 10px; display: flex; justify-content: center; align-items: center;">
+							<div>
+								{{$index + 1}}
+							</div>
+						</div>
+
 						<div style="flex: 0 0 auto; display: flex; align-items: center; padding-bottom: 5px;">
 							<i style="flex: 0 0 auto;" class="glyphicon glyphicon-option-vertical preference-sortable-handle"></i>
 						</div>
@@ -68,11 +74,6 @@
 								class="delete-preference-button glyphicon glyphicon-remove sortable-item-button close" style="font-size: 14px; flex 1 0 0px;"
 								aria-hidden="true" style="width: 10%;" uib-tooltip="Remove"
 								tooltip-placement="right"></div>
-						</div>
-						<div style="flex: 0 0 20px; display: flex; justify-content: center; align-items: center;">
-							<div>
-								{{$index + 1}}
-							</div>
 						</div>
 					</li>
 
