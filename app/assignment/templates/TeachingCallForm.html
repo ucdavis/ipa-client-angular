@@ -87,8 +87,8 @@
 			<ol class="sortable-list teaching-call-form-unapproved-preference-container">
 
 				<li class="scrollable-dropdown-menu">
-					<input type="text" ng-model="view.courseSearchQuery" placeholder="Search courses"
-						uib-typeahead="course as (course.displayText) for course in searchCourses(term, $viewValue)"
+					<input type="text" ng-model="view.courseSearchQuery[term]" placeholder="Search courses"
+						uib-typeahead="course as (getDisplayTextFromCourse(course)) for course in searchCourses(term, $viewValue)"
 						typeahead-loading="loadingCourses"
 						typeahead-no-results="noResults"
 						typeahead-wait-ms="400"

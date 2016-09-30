@@ -5,8 +5,8 @@
  * # TeachingCallFormCtrl
  * Controller of the ipaClientAngularApp
  */
-assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$window', '$routeParams', '$timeout', 'assignmentActionCreators',
-		this.TeachingCallFormCtrl = function ($scope, $rootScope, $window, $routeParams, $timeout, assignmentActionCreators) {
+assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$window', '$routeParams', '$timeout', 'assignmentActionCreators', 'assignmentService',
+		this.TeachingCallFormCtrl = function ($scope, $rootScope, $window, $routeParams, $timeout, assignmentActionCreators, assignmentService) {
 			$window.document.title = "Teaching Call";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
@@ -85,24 +85,28 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 
 						var scheduledCourses = $scope.view.state.activeTeachingCall.scheduledCourses[term]
 						results.push.apply(results, scheduledCourses);
-						results.forEach( function(entry) {
-							entry.displayText = $scope.getDisplayTextFromCourse(entry);
-						})
-
 					return results;
 				}
-/*
-				if (query.length > 3) {
-					return courseService.searchCourses(query).then(function (courseSearchResults) {
-						return courseSearchResults.slice(0, 20);
+
+				// Display courses from DW (may include courses already added to the schedule)
+				if (query.length >= 3) {
+					// This typehead library works better with a promise,
+					// so in this case the controller bypasses the normal state managaement data flow
+					return assignmentService.searchCourses(query).then(function (courseSearchResults) {
+						var results = courseSearchResults.slice(0, 20);
+						return results;
 					}, function (err) {
 						$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 					});
 				}
-*/
+
 			};
 
 			$scope.getDisplayTextFromCourse = function(course) {
+				if (course == undefined) {
+					return "";
+				}
+
 				// If entry is a buyout/sabbatical/course release
 				if (course.isBuyout) {
 					return "Buyout";
@@ -180,7 +184,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				teachingAssignment.scheduleId = scheduleId;
 
 				assignmentActionCreators.addPreference(teachingAssignment);
-				$scope.view.courseSearchQuery = "";
+				$scope.view.courseSearchQuery = {};
 			};
 
 			$scope.removePreference = function(teachingAssignment) {

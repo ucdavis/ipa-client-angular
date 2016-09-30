@@ -181,6 +181,19 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
+		searchCourses: function(query) {
+			var deferred = $q.defer();
+
+			$http.get(dwUrl + "/courses/search?q=" + query + "&token=" + dwToken)
+			.success(function(result) {
+				deferred.resolve(result);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		allTerms: function () {
 			var allTerms = {
 				'05': 'Summer Session 1',
