@@ -11,7 +11,10 @@
 
 				<uib-tab index="'tags'" heading="Tags" select="setActiveTab('tags')">
 					<div class="tags-section" ng-controller="TagCtrl">
-							<div class="col-md-6">
+						<div class="row">
+							<spinner ng-hide="view.state.tags"></spinner>
+							<div class="col-md-6" ng-show="view.state.tags">
+								<p ng-hide="view.state.tags.ids.length">No tags</p>
 								<ul class="tags-input">
 									<li ng-repeat="tagId in view.state.tags.ids">
 										<div class="row">
@@ -51,13 +54,16 @@
 									</li>
 								</ul>
 							</div>
+						</div>
 					</div>
 				</uib-tab>
 
 				<uib-tab index="'locations'" heading="Locations" select="setActiveTab('locations')">
 					<div class="locations-section" ng-controller="LocationCtrl">
 						<div class="row">
-							<div class="col-md-6">
+							<spinner ng-hide="view.state.locations"></spinner>
+							<div class="col-md-6" ng-show="view.state.locations">
+								<p ng-hide="view.state.locations.ids.length">No locations</p>
 								<ul class="locations-input">
 									<li ng-repeat="locationId in view.state.locations.ids">
 										<input class="form-control" type="text" name="text"  size="30" ng-model="view.state.locations.list[locationId].description"
@@ -86,7 +92,10 @@
 
 				<uib-tab index="'people'" heading="People &amp; Roles" select="setActiveTab('people')">
 					<div class="users-view" ng-controller="UserCtrl">
-						<div class="row">				<!-- this is search bar -->
+						<div class="row" ng-hide="view.state.users">				<!-- this is loading gif -->
+							<spinner></spinner>
+						</div>
+						<div class="row" ng-show="view.state.users">				<!-- this is search bar -->
 							<div class="col-md-4 pull-right">
 								<div class="input-group search-input">
 									<input type="text" ng-model="view.state.users.searchQuery" placeholder="Search by name or login ID"
@@ -115,10 +124,11 @@
 							</div><!-- /.col-lg-6 -->
 						</div>
 						<!--   Table  -->
-						<div class="row">
+						<div class="row" ng-show="view.state.users">
 							<div class="col-md-12">
 								<div class="role-section">
-									<table class="table table-hover">
+									<p class="text-center" ng-show="view.state.users && view.state.users.ids.length === 0">No users</p>
+									<table class="table table-hover" ng-show="view.state.users.ids.length">
 										<colgroup>
 											<col span="1" style="width: 20%;">
 											<col span="1" style="width: 20%;">

@@ -121,3 +121,7 @@ table th {
 .typeahead-status {
 	display: block;
 }
+
+.panel.minimal > .panel-heading {
+	border-bottom: none;
+}
