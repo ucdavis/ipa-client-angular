@@ -110,6 +110,10 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 
 				Chart.defaults.global.defaultFontColor = "#888";
 				Chart.defaults.global.tooltips.mode = 'x-axis';
+				Chart.defaults.global.tooltips.titleFontSize = 10;
+				Chart.defaults.global.tooltips.bodyFontSize = 10;
+				Chart.defaults.global.tooltips.caretSize = 3;
+				Chart.defaults.global.tooltips.cornerRadius = 3;
 
 				$timeout(function () {
 					var myChart = new Chart(ctx, {
