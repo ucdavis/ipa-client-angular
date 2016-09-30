@@ -133,15 +133,15 @@
 					<span class="title">Courses</span>
 				</a>
 			</li>
-			<li ng-class="{ 'active': currentBaseHref == 'assignments' && currentEndHref != 'teachingCallStatus' }" ng-if="userHasRoles(['academicPlanner'])">
-				<a ng-href="/assignments/{{ workgroupId }}/{{ year }}">
+			<li ng-class="{ 'active': currentEndHref == 'teachingCallStatus' }">
+				<a ng-href="/assignments/{{ workgroupId }}/{{ year }}/teachingCallStatus">
 					<i class="entypo-user-add"></i>
-					<span class="title">Assignments</span>
+					<span class="title">Teaching Call</span>
 				</a>
 				<ul class="visible">
-					<li ng-class="{ 'active': currentEndHref == 'teachingCallStatus' }">
-						<a ng-href="/assignments/{{ workgroupId }}/{{ year }}/teachingCallStatus">
-							Teaching Call
+					<li ng-class="{ 'active': currentBaseHref == 'assignments' && currentEndHref != 'teachingCallStatus' }" ng-if="userHasRoles(['academicPlanner'])">
+						<a ng-href="/assignments/{{ workgroupId }}/{{ year }}">
+							<span class="title">Assignments</span>
 						</a>
 					</li>
 				</ul>
