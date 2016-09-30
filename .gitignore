@@ -4,3 +4,4 @@ dist/
 .DS_STORE
 clientConfig.js
 .vscode/
+jsconfig.json
