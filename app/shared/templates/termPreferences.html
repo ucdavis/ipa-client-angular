@@ -35,7 +35,7 @@
 				<strong style="padding-left: 43px;">Sabbatical</strong>
 			</a>
 		</li>
-		<li role="presentation" class="divider courses-separator">
+		<li ng-if="courses.length > 0" role="presentation" class="divider courses-separator">
 		</li>
 		<li ng-repeat="course in courses | orderBy: ['subjectCode','courseNumber','title'] track by $index"
 		ng-if="course.hasPreference == false" role="presentation" class="clickable">
