@@ -17,27 +17,57 @@ module.exports = function (grunt) {
 		' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;\n*/\n',
 
 		ngtemplates: {
+			options: {
+				htmlmin: {
+					collapseBooleanAttributes: true,
+					collapseWhitespace: true,
+					removeAttributeQuotes: true,
+					removeComments: true,
+					removeEmptyAttributes: true,
+					removeRedundantAttributes: true,
+					removeScriptTypeAttributes: true,
+					removeStyleLinkTypeAttributes: true
+				},
+				// Return only file name
+				url: function (url) {
+					var path = url.split('/');
+					return path[path.length - 1];
+				}
+			},
+			adminApp: {
+				cwd: '<%= folders.webapp.root %>',
+				src: ['admin/**/*.html'],
+				dest: '<%= folders.webapp.build %>/js/adminTemplates.js'
+			},
+			assignmentApp: {
+				cwd: '<%= folders.webapp.root %>',
+				src: ['assignment/**/*.html'],
+				dest: '<%= folders.webapp.build %>/js/assignmentTemplates.js'
+			},
+			courseApp: {
+				cwd: '<%= folders.webapp.root %>',
+				src: ['course/**/*.html'],
+				dest: '<%= folders.webapp.build %>/js/courseTemplates.js'
+			},
+			schedulingApp: {
+				cwd: '<%= folders.webapp.root %>',
+				src: ['scheduling/**/*.html'],
+				dest: '<%= folders.webapp.build %>/js/schedulingTemplates.js'
+			},
 			sharedApp: {
 				cwd: '<%= folders.webapp.root %>',
-				src: ['**/*.html'],
-				dest: '<%= folders.webapp.build %>/js/templates.js',
-				options: {
-					htmlmin: {
-						collapseBooleanAttributes: true,
-						collapseWhitespace: true,
-						removeAttributeQuotes: true,
-						removeComments: true,
-						removeEmptyAttributes: true,
-						removeRedundantAttributes: true,
-						removeScriptTypeAttributes: true,
-						removeStyleLinkTypeAttributes: true
-					},
-					// Return only file name
-					url: function (url) {
-						var path = url.split('/');
-						return path[path.length - 1];
-					}
-				}
+				src: ['shared/**/*.html'],
+				dest: '<%= folders.webapp.build %>/js/sharedTemplates.js'
+			},
+			summaryApp: {
+				cwd: '<%= folders.webapp.root %>',
+				src: ['summary/**/*.html'],
+				dest: '<%= folders.webapp.build %>/js/summaryTemplates.js'
+			},
+			workgroupApp: {
+				cwd: '<%= folders.webapp.root %>',
+				src: ['workgroup/**/*.html'],
+				dest: '<%= folders.webapp.build %>/js/workgroupTemplates.js'
 			}
 		},
 
@@ -93,7 +123,8 @@ module.exports = function (grunt) {
 			jsCourse: {
 				src: [
 					'<%= folders.webapp.root %>/course/*.js',
-					'<%= folders.webapp.root %>/course/**/*.js'
+					'<%= folders.webapp.root %>/course/**/*.js',
+					'<%= ngtemplates.courseApp.dest %>'
 				],
 				dest: '<%= folders.webapp.build %>/js/courseApp.js'
 			},
@@ -101,7 +132,8 @@ module.exports = function (grunt) {
 			jsAdmin: {
 				src: [
 					'<%= folders.webapp.root %>/admin/*.js',
-					'<%= folders.webapp.root %>/admin/**/*.js'
+					'<%= folders.webapp.root %>/admin/**/*.js',
+					'<%= ngtemplates.adminApp.dest %>'
 				],
 				dest: '<%= folders.webapp.build %>/js/adminApp.js'
 			},
@@ -109,7 +141,8 @@ module.exports = function (grunt) {
 			jsWorkgroup: {
 				src: [
 					'<%= folders.webapp.root %>/workgroup/*.js',
-					'<%= folders.webapp.root %>/workgroup/**/*.js'
+					'<%= folders.webapp.root %>/workgroup/**/*.js',
+					'<%= ngtemplates.workgroupApp.dest %>'
 				],
 				dest: '<%= folders.webapp.build %>/js/workgroupApp.js'
 			},
@@ -117,7 +150,8 @@ module.exports = function (grunt) {
 			jsSummary: {
 				src: [
 					'<%= folders.webapp.root %>/summary/*.js',
-					'<%= folders.webapp.root %>/summary/**/*.js'
+					'<%= folders.webapp.root %>/summary/**/*.js',
+					'<%= ngtemplates.summaryApp.dest %>'
 				],
 				dest: '<%= folders.webapp.build %>/js/summaryApp.js'
 			},
@@ -125,7 +159,8 @@ module.exports = function (grunt) {
 			jsAssignment: {
 				src: [
 					'<%= folders.webapp.root %>/assignment/*.js',
-					'<%= folders.webapp.root %>/assignment/**/*.js'
+					'<%= folders.webapp.root %>/assignment/**/*.js',
+					'<%= ngtemplates.assignmentApp.dest %>'
 				],
 				dest: '<%= folders.webapp.build %>/js/assignmentApp.js'
 			},
@@ -133,7 +168,8 @@ module.exports = function (grunt) {
 			jsScheduling: {
 				src: [
 					'<%= folders.webapp.root %>/scheduling/*.js',
-					'<%= folders.webapp.root %>/scheduling/**/*.js'
+					'<%= folders.webapp.root %>/scheduling/**/*.js',
+					'<%= ngtemplates.schedulingApp.dest %>'
 				],
 				dest: '<%= folders.webapp.build %>/js/schedulingApp.js'
 			},
