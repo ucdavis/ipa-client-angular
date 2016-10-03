@@ -41,7 +41,7 @@
 
 		// Angular
 		// TODO: Add more angular rules https://github.com/Gillespie59/eslint-plugin-angular
-		"angular/angularelement": 1, // use angular.element instead of $ or jQuery
+		"angular/document-service": 2, // require and specify a prefix for all controller names
 	},
 	"plugins": [
 		"angular"

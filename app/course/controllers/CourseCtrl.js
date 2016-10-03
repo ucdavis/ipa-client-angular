@@ -226,24 +226,6 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 					$scope.view.state.uiState.massImportPrivate);
 			};
 
-			/**
-			 * Sends the selected courses to IPA-WEB to be imported to the schedule
-			 */
-			$scope.importCoursesAndSectionGroups = function () {
-				var selectedCourseIds = $scope.view.state.courses.importList
-					.filter(function (c) { return c.import;})
-					.map(function (c) { return c.subjectCode + c.courseNumber + c.sequencePattern + c.effectiveTermCode; });
-
-				var sectionGroupImports = $scope.view.state.sectionGroups.importList.filter(function (sg) {
-					var sgCourseId = sg.subjectCode + sg.courseNumber + sg.sequencePattern + sg.effectiveTermCode;
-					return selectedCourseIds.indexOf(sgCourseId) >= 0;
-				});
-
-				$scope.view.state.uiState.massImportInProgress = true;
-				courseActionCreators.importCoursesAndSectionGroups(
-					sectionGroupImports, $scope.workgroupId, $scope.year, selectedCourseIds.length);
-			};
-
 			$scope.sectionSeatTotal = function (sectionGroup) {
 				return sectionGroup.sectionIds.reduce(function (previousValue, sectionId) {
 					return previousValue + $scope.view.state.sections.list[sectionId].seats;

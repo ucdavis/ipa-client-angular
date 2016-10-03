@@ -200,9 +200,6 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 						}
 					}
 				});
-
-				modalInstance.result.then(function () {
-				});
 			};
 
 			$scope.download = function () {
