@@ -165,7 +165,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 					} // end loop appending teaching calls
 
 					// Filter dwTerm to only use terms for the current school year
-					var relevantTerms = action.payload.dwTerm.filter(function (term) {
+					var relevantTerms = action.payload.dwTerms.filter(function (term) {
 						// action.year is the academic school year
 						// * 100 adds the possible term code
 						var academicYearStart = action.year * 100;
