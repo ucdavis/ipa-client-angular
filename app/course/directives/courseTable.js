@@ -64,8 +64,22 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 						return (sg.termCode == data.state.uiState.selectedTermCode) && (sg.courseId == data.state.uiState.selectedCourseId);
 					});
 
-					$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]')
-						.data('section-group-id', sectionGroup.id);
+					if (sectionGroup) {
+						$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]')
+							.data('section-group-id', sectionGroup.id);
+					} else {
+						// Throw an exception with more details for further debugging: https://github.com/ucdavis/ipa-client-angular/issues/441
+						var message = "Could not find a sectionGroup for termCode: " +
+							data.state.uiState.selectedTermCode + ", and courseId: " +
+							data.state.uiState.selectedCourseId + ". Current sectionGroupIds are: " +
+							scope.view.state.sectionGroups.ids.join();
+						var stack = "app/course/directives/courseTable.js";
+
+						throw ({
+							"message": message,
+							"stack": stack
+						});
+					}
 
 					return;
 				}
