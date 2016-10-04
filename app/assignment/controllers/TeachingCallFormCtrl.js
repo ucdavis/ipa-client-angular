@@ -83,7 +83,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 						results.push({isCourseRelease: true})
 						results.push({isSabbatical: true})
 
-						var scheduledCourses = $scope.view.state.activeTeachingCall.scheduledCourses[term]
+						var scheduledCourses = $scope.view.state.activeTeachingCall.scheduledCourses[term];
 						results.push.apply(results, scheduledCourses);
 					return results;
 				}
@@ -94,6 +94,11 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 					// so in this case the controller bypasses the normal state managaement data flow
 					return assignmentService.searchCourses(query).then(function (courseSearchResults) {
 						var results = courseSearchResults.slice(0, 20);
+
+						results.forEach( function(course) {
+							course.isSuggested = true;
+						})
+
 						return results;
 					}, function (err) {
 						$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
@@ -148,7 +153,8 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				var courseNumber, subjectCode, sectionGroup;
 				var scheduleId = $scope.view.state.activeTeachingCall.scheduleId;
 
-				if (preference) {
+				// Preference is based on an existing course
+				if (preference && !preference.isSuggested) {
 					courseNumber = preference.courseNumber;
 					subjectCode = preference.subjectCode;
 
@@ -164,6 +170,15 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 					}
 				}
 
+				// Preference is based off a new course (from Data Warehouse)
+				if (preference && preference.isSuggested == true) {
+					preference.suggestedEffectiveTermCode = preference.effectiveTermCode;
+					preference.suggestedSubjectCode = preference.subjectCode;
+					preference.suggestedCourseNumber = preference.courseNumber;
+					preference.suggestedTitle = preference.title;
+				}
+
+				// Create a teachingAssignment based off the preference
 				var teachingAssignment = {};
 				teachingAssignment.termCode = term;
 				// Used as a model for courseNumber/sectionGroup/scheduleId association
@@ -183,6 +198,12 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				teachingAssignment.schedule = {id: scheduleId};
 				teachingAssignment.scheduleId = scheduleId;
 
+				if (preference && preference.isSuggested == true) {
+					teachingAssignment.suggestedEffectiveTermCode = preference.effectiveTermCode;
+					teachingAssignment.suggestedSubjectCode = preference.subjectCode;
+					teachingAssignment.suggestedCourseNumber = preference.courseNumber;
+					teachingAssignment.suggestedTitle = preference.title;
+				}
 				assignmentActionCreators.addPreference(teachingAssignment);
 				$scope.view.courseSearchQuery = {};
 			};
@@ -398,6 +419,9 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				else if (preference.buyout) { return 'Buyout'; }
 				else if (preference.sabbatical) { return 'Sabbatical'; }
 				else if (preference.courseRelease) { return 'Course Release'; }
+				else if (preference.suggestedSubjectCode && preference.suggestedCourseNumber) {
+					return preference.suggestedSubjectCode + ' ' + preference.suggestedCourseNumber;
+				}
 				else {
 					return preference.subjectCode + ' ' + preference.courseNumber;
 				}

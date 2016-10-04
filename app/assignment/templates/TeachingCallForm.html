@@ -74,15 +74,6 @@
 							tooltip-placement="right"></div>
 					</div>
 				</li>
-				<li ng-if="!teachingCallResponse[term].isComplete"
-					term-preferences courses="courseOfferings[term]" term="term" schedule-id="teachingCall.scheduleId"
-					class="unsortable preference-assignment-dropdown"
-					instructor-id="instructorId"
-					hidden-course-offering-ids="{{ getCourseOfferingIdsFromPreferences(termPreferences[term]) }}"
-					hidden-courses="{{ getCoursesFromPreferences(termPreferences[term]) }}"
-					on-update="refreshPreferences()"
-					on-select="addPreference(courseOffering, term, isBuyout, isSabbatical, isCourseRelease)">
-				</li>
 			</ol>
 			<ol class="sortable-list teaching-call-form-unapproved-preference-container">
 
