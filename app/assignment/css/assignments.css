@@ -436,15 +436,13 @@ ol.sortable-list>li .term-preference-dropdown {
 .teaching-call-approved-preference {
 	background-color: #d9edf7;
 	height: 30px;
-	padding-left: 6px;
 	padding-right: 6px;
-	width: 180px;
+	width: 162px;
 	margin-top: 10px;
 	margin-bottom: 0px;
 	display: flex;
-	flex-direction: column;
-	align-items: center;
 	justify-content: center;
+	margin-left: 14px;
 }
 
 .preference-assignment-dropdown {
