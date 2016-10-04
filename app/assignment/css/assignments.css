@@ -817,3 +817,17 @@ li.active-term .dropdown-term-row {
 	max-height: 400px;
 	overflow-y: auto;
 }
+
+.search-course-input {
+	width: 162px;
+	flex: 0 0 auto;
+}
+
+.search-course-container {
+	display: flex;
+	padding-left: 12px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	align-items: center;
+	justify-content: center;
+}
