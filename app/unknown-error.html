@@ -23,8 +23,16 @@
 		<?php
 			$body = "Date: " . date(DATE_RFC2822) . "\r\n\r\nRequest headers:\r\n\r\n";
 
+			// Add all request headers to the e-mail
 			foreach (getallheaders() as $name => $value) {
 				$body .= "\t$name: $value\n";
+			}
+
+			$body .= "\r\nPOST parameters:\r\n\r\n";
+
+			// Add all POST parameters to the e-mail
+			foreach ($_POST as $param_name => $param_val) {
+				$body .= "\tParam: $param_name; Value: $param_val\n";
 			}
 
 			$headers = 'From: no-reply@ipa.ucdavis.edu' . "\r\n" .

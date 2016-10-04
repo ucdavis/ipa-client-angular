@@ -45,24 +45,12 @@ angular.module('sharedApp')
 					} else if(error.status == -1) {
 						message = "Request was aborted or server was not found. Check that the backend is running.";
 						console.error(message);
-						// Do not redirect until reportJsException comes back
-						self.reportJsException(error, message).then(function(res) {
-							$window.location.href = "/unknown-error.html";
-						},
-						function(res) {
-							$window.location.href = "/unknown-error.html";
-						});
+						self.redirectToErrorPage(error, message);
 					} else {
 						message = "Unknown error occurred while authenticating. Details:";
 						console.error(message);
 						console.error(error);
-						// Do not redirect until reportJsException comes back
-						self.reportJsException(error, message).then(function(res) {
-							$window.location.href = "/unknown-error.html";
-						},
-						function(res) {
-							$window.location.href = "/unknown-error.html";
-						});
+						self.redirectToErrorPage(error, message);
 					}
 
 					deferred.reject();
@@ -259,16 +247,27 @@ angular.module('sharedApp')
 				return localStorage.getItem('sidebarCollapsed') == 'true';
 			},
 
-			reportJsException: function(error, message) {
+			/**
+			 * Redirects to an error page by POSTing the details of the error.
+			 *
+			 * It accomplishes this by creating a form and submitting that form.
+			 *
+			 * @param  {[type]} error   [description]
+			 * @param  {[type]} message [description]
+			 * @return {[type]}         [description]
+			 */
+			redirectToErrorPage: function(error, message) {
 				var stack = "method: " + error.config.method + ", url: " + error.config.url + ", status code: " + error.status;
-				var exceptionObject = {
-						message: message,
-						stack: stack,
-						url: error.config.url
-				};
 
-				$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("JWT"); // Set proper headers
-				return $http.post(serverRoot + "/api/reportJsException", exceptionObject);
+				var errorForm = "<form id=\"unknownErrorForm\" method=\"POST\" action=\"/unknown-error.html\" style=\"display: none;\">";
+				errorForm += "<input type=\"text\" name=\"message\" value=\"" + message + "\" />";
+				errorForm += "<input type=\"text\" name=\"stack\" value=\"" + stack + "\" />";
+				errorForm += "<input type=\"text\" name=\"url\" value=\"" + error.config.url + "\" />";
+				errorForm += "</form>";
+
+				$("body").append(errorForm);
+
+				$("form#unknownErrorForm").submit();
 			}
 		};
 	});
