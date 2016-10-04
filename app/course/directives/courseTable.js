@@ -144,6 +144,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					body += "<tr><td class=\"text-center text-muted\" colspan=\"" + numberOfColumns + "\">No Courses</td></tr>";
 				}
 
+				body += getTotalsRow(termsToRender, data.state);
 				element.append(body);
 				$('delete-course').popover();
 				element.find('input.planned-seats').blur(function (e) {
@@ -365,4 +366,24 @@ var savePlannedSeats = function ($el, scope, courseActionCreators) {
 
 	// Important: notify angular since this happends outside of the scope
 	scope.$apply();
+};
+
+var getTotalsRow = function (termsToRender, state) {
+	var row = "<tr class=\"term-totals\"><td>Totals</td>";
+	var coursesArray = state.courses.ids.map(function (id) { return state.courses.list[id]; });
+
+	termsToRender.forEach(function (term) {
+		var termTotal = state.courses.ids.reduce(function (total, courseId) {
+			var sectionGroup = _.find(state.sectionGroups.list, function (sg) { return (sg.termCode == term.code) && (sg.courseId == courseId); });
+			var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
+			var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : 0;
+
+			return total + plannedSeats;
+		}, 0);
+		row += "<td>" + termTotal + "</td>";
+	});
+
+	row += "</tr>";
+
+	if (state.courses.ids.length) { return row; }
 };
