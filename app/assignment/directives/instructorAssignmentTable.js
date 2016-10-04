@@ -181,17 +181,28 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 								// If the instructor has teachingAssignments in this term, show them first
 								if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
 
-									// Loop over teachingAssignments
 									$.each(instructor.teachingAssignmentTermCodeIds[termCode], function (i, teachingAssignmentId) {
 										var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 										var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
-										if (teachingAssignment.sectionGroupId === 0) {
+										// This teachingAssignment can't be displayed here
+										if (teachingAssignment.sectionGroupId === 0
+										&& (!teachingAssignment.suggestedSubjectCode || !teachingAssignment.suggestedCourseNumber)) {
 											return true;
 										}
 
-										var course = scope.view.state.courses.list[sectionGroup.courseId];
-										interestedCourseIds.push(course.id);
+										var course;
+
+										if (teachingAssignment.suggestedSubjectCode && teachingAssignment.suggestedCourseNumber) {
+											course = {};
+											course.subjectCode = teachingAssignment.suggestedSubjectCode;
+											course.courseNumber = teachingAssignment.suggestedCourseNumber;
+											course.sequencePattern = "()";
+											course.isHidden = false;
+										} else {
+											course = scope.view.state.courses.list[sectionGroup.courseId];
+											interestedCourseIds.push(course.id);
+										}
 
 										// Show option if the TeachingAssignments parent Course is not being suppressed and Assignment is not already approved
 										if (teachingAssignment.approved === false && course.isHidden === false) {
@@ -289,7 +300,6 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 					// Approving an existing teachingAssignment
 					if (teachingAssignmentId) {
-
 						teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 						assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
 					} else { // Creating a new teachingAssignment, and then approving it
