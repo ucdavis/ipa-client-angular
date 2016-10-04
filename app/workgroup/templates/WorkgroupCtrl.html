@@ -106,11 +106,11 @@
 													typeahead-wait-ms="400"
 													typeahead-min-length="2"
 													typeahead-on-select="searchUsersResultSelected($item, $model, $label, $event)"
-													class="form-control">
-									<ul class="typeahead-status dropdown-menu" ng-show="view.loadingPeople || view.noResults">
-										<li ng-show="view.loadingPeople"><a><spinner text="Loading..."></spinner></a></li>
-										<li ng-show="view.noResults"><a>No results</a></li>
+													class="form-control typeahead">
+									<ul class="typeahead-status dropdown-menu" ng-show="view.noResults">
+										<li><a>No results</a></li>
 									</ul>
+									<i ng-show="view.loadingPeople"><spinner size="20"></spinner></i>
 									<i ng-hide="view.state.users.searchQuery || view.loadingPeople" class="entypo-search"></i>
 									<i ng-show="view.state.users.searchQuery && !view.loadingPeople" class="entypo-cancel" ng-click="clearUserSearch()"></i>
 									<span class="input-group-btn">

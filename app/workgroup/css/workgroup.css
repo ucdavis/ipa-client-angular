@@ -13,6 +13,31 @@ table th {
 	text-indent: 20px;
 }
 
+.search-input ul.dropdown-menu {
+	min-width: 160px;
+	margin-top: 1px;
+	padding: 5px 0;
+	background-color: #fff;
+	border: 1px solid #ebebeb;
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding;
+	background-clip: padding-box;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	width: 100%;
+}
+
+.search-input ul.dropdown-menu li a {
+	display: block;
+	padding: 4px 12px;
+}
+
+.search-input ul.dropdown-menu li.active a {
+	color: #303641;
+	background: #f3f3f3;
+}
+
 .role-section tr .role-title {
 	text-align: center;
 }
