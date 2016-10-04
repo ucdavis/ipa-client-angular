@@ -75,7 +75,6 @@
 					<span class="title">Workgroups</span>
 				</a>
 				<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}"
-					uib-tooltip="Manage {{ sharedState.workgroup.name }}" tooltip-append-to-body="true" tooltip-placement="right"
 					ng-if="sharedState.userWorkgroups.length == 1 && userHasRoles(['academicPlanner'])">
 					<i class="entypo-users"></i>
 					<span class="title">{{ sharedState.workgroup.name }}</span>

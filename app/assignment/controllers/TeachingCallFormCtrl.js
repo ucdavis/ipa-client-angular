@@ -74,17 +74,17 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 			};
 
 			$scope.searchCourses = function (term, query) {
-				var term = $scope.termToTermCode(term);
+				term = $scope.termToTermCode(term);
 
 				// Display courses already on the schedule
 				if (!query || query.length == 0) {
 					var results = [];
-						results.push({isBuyout: true})
-						results.push({isCourseRelease: true})
-						results.push({isSabbatical: true})
+					results.push({ isBuyout: true });
+					results.push({ isCourseRelease: true });
+					results.push({ isSabbatical: true });
 
-						var scheduledCourses = $scope.view.state.activeTeachingCall.scheduledCourses[term];
-						results.push.apply(results, scheduledCourses);
+					var scheduledCourses = $scope.view.state.activeTeachingCall.scheduledCourses[term];
+					results.push.apply(results, scheduledCourses);
 					return results;
 				}
 
@@ -95,9 +95,9 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 					return assignmentService.searchCourses(query).then(function (courseSearchResults) {
 						var results = courseSearchResults.slice(0, 20);
 
-						results.forEach( function(course) {
+						results.forEach(function (course) {
 							course.isSuggested = true;
-						})
+						});
 
 						return results;
 					}, function (err) {
