@@ -130,7 +130,8 @@
 }
 
 .set-term-menu {
-	width: 300px;
+	width: 280px;
+	padding-left: 10px;
 }
 
 .dropdown-assign-header {

@@ -76,15 +76,17 @@
 										Set Terms <span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu set-term-menu" uib-dropdown-menu auto-close="outsideClick" role="menu" aria-labelledby="single-button">
-										<li ng-repeat="term in viewState.userInterface.enabledTerms.list" role="menuitem" 
-												ng-click="toggleTermActive(term)"
-												ng-class="{'active': startTeachingCallConfig.activeTerms[term.slice(-2)]}">
-											<a href="#" class="dropdown-term-row">{{getTermName(term)}}</a>
+										<li ng-repeat="term in viewState.userInterface.enabledTerms.list" role="menuitem" ng-click="toggleTermActive(term)">
+												<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+													ng-class="{ 'checked': startTeachingCallConfig.activeTerms[term.slice(-2)] }">
+													<label class="cb-wrapper">
+														<div class="checked"></div>
+													</label>
+													<label>{{ getTermName(term) }}</label>
+												</div>
 										</li>
 									</ul>
 								</div>
-
-
 							</div>
 						</div>
 						<!-- select dates&terms section ends-->
