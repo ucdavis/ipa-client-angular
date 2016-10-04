@@ -209,33 +209,5 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return allTerms;
 		}
-/*
-		getCoursesByWorkgroupIdAndYear: function(workgroupId, year) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/assignmentView/" + workgroupId + "/" + year + "/courses", { withCredentials: true })
-			.success(function(courses) {
-				deferred.resolve(courses);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		getSectionGroupsByWorkgroupIdAndYear: function(workgroupId, year) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/assignmentView/" + workgroupId + "/" + year + "/sectionGroups", { withCredentials: true })
-			.success(function(sectionGroups) {
-				deferred.resolve(sectionGroups);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		}
-*/
 	};
 });

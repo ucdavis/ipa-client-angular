@@ -167,21 +167,23 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		approveInstructorAssignment: function (teachingAssignment) {
+		approveInstructorAssignment: function (teachingAssignment, workgroupId, year) {
+			var self = this;
 			teachingAssignment.approved = true;
 
 			assignmentService.updateInstructorAssignment(teachingAssignment).then(function (teachingAssignment) {
 				$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
-				var action = {
-					type: UPDATE_TEACHING_ASSIGNMENT,
-					payload: {
-						teachingAssignment: teachingAssignment
-					}
-				};
-				assignmentStateService.reduce(action);
+					var action = {
+						type: UPDATE_TEACHING_ASSIGNMENT,
+						payload: {
+							teachingAssignment: teachingAssignment
+						}
+					};
+					assignmentStateService.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
+
 		},
 		unapproveInstructorAssignment: function (originalTeachingAssignment) {
 			originalTeachingAssignment.approved = false;
