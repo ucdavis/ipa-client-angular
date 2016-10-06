@@ -506,25 +506,28 @@ table.disabled-courses-table th {
 }
 .add-before {
   position: absolute;
-  left: -1em;
-  top: -1em;
+  left: -0.5em;
+  top: -0.75em;
   font-size: 24px;
   color: rgba(0, 166, 81, 0.8);
+  padding: 0;
 }
 .add-after {
   position: absolute;
-  left: -1em;
-  bottom: -1em;
+  left: -0.5em;
+  bottom: -0.75em;
   font-size: 24px;
   color: rgba(0, 166, 81, 0.8);
+  padding: 0;
 }
 .delete-sg {
   position: absolute;
-  left: -0.7em;
+  left: 0;
   top: 50%;
   transform: translateY(-50%);
   font-size: 24px;
   color: rgba(180, 20, 20, 0.8);
+  padding: 0;
 }
 .tt-menu {
   min-width: 160px;
