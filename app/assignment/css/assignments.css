@@ -799,6 +799,10 @@ li.active-term .dropdown-term-row {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	display: flex;
+	justify-content: space-between;
+	padding-right: 10px;
+	padding-left: 10px;
 }
 
 .teaching-call-form-unapproved-preference-container {
