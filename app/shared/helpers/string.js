@@ -93,5 +93,5 @@ String.prototype.toFullDate = function () {
 		return "";
 	}
 
-	return moment(this, "YYYY-MM-DD").format('LL')
+	return moment(this, "YYYY-MM-DD").format('LL');
 };

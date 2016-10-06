@@ -7,7 +7,7 @@
  * Central location for sharedState information.
  */
 
-summaryApp.service('summaryStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Section, Tag, Event, Activity) {
+summaryApp.service('summaryStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Section, Tag, Event, Activity, TeachingCall) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -363,6 +363,30 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 					return instructorCourses;
 			}
 		},
+		_teachingCallReducers: function (action, teachingCalls) {
+			var scope = this;
+			var data = action.payload;
+
+			switch (action.type) {
+				case INIT_STATE:
+					teachingCalls = {
+						ids: [],
+						list: {}
+					};
+					var teachingCallsList = {};
+					var length = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
+					for (var i = 0; i < length; i++) {
+						var teachingCallData = action.payload.teachingCalls[i];
+						teachingCallsList[teachingCallData.id] = new TeachingCall(teachingCallData);
+					}
+					teachingCalls.ids = _array_sortIdsByProperty(teachingCallsList, ["dueDate"]);
+					teachingCalls.list = teachingCallsList;
+
+					return teachingCalls;
+				default:
+					return teachingCalls;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -377,6 +401,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 			newState.activities = scope._activityReducers(action, scope._state.activities);
 			newState.events = scope._eventReducers(action, scope._state.events);
 			newState.instructorCourses = scope._instructorCourses(action, scope._state.instructorCourses);
+			newState.teachingCalls = scope._teachingCallReducers(action, scope._state.teachingCalls);
 
 			scope._state = newState;
 

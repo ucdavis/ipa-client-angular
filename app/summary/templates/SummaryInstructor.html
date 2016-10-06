@@ -10,34 +10,37 @@
 		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
 	</div>
 
-	<div class="course-table-row">
-		<div class="course-table__header">
-			<div class="course-table__header-detail">
-				<div>
-					Teaching Call
+	<!-- teachingCalls table -->
+	<div ng-if="view.state.teachingCalls">
+		<div class="course-table-row"><!-- table header -->
+			<div class="course-table__header">
+				<div class="course-table__header-detail">
+					<div>
+						Teaching Call
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="course-table__header">
-			<div class="course-table__header-detail">
-				<div>
-					Due Date
+			<div class="course-table__header">
+				<div class="course-table__header-detail">
+					<div>
+						Due Date
+					</div>
 				</div>
 			</div>
-		</div>
-	</div><!-- table header -->
+		</div><!-- table header -->
 
-	<!-- course table -->
-	<div class="course-table-row">
-		<div class="course-table__row-detail">
-			<div>
-				<a ng-href="{{ urlRoot }}/assignments/{{ workgroupId }}/{{ year }}/teachingCall">
-					Link to Teaching Call
-				</a>
+		<div class="course-table-row" ng-repeat="teachingCallId in view.state.teachingCalls.ids track by $index"
+			ng-if="userHasAccessToTeachingCall(sharedState.currentUserRoles, view.state.teachingCalls.list[teachingCallId])">
+			<div class="course-table__row-detail">
+				<div>
+					<a ng-href="{{ urlRoot }}/assignments/{{ workgroupId }}/{{ year }}/teachingCall">
+						Link to Teaching Call
+					</a>
+				</div>
 			</div>
-		</div>
-		<div class="course-table__row-detail">
-			October 24th, 2016
+			<div class="course-table__row-detail">
+				{{ view.state.teachingCalls.list[teachingCallId].dueDate.toFullDate() }}
+			</div>
 		</div>
 	</div>
 

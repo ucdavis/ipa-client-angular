@@ -76,6 +76,11 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope',
 
 				return false;
 			};
+
+			$scope.userHasAccessToTeachingCall = function (userRoles, teachingCall) {
+				return (teachingCall.sentToFederation && userRoles.indexOf('federationInstructor') >= 0) ||
+					(teachingCall.sentToSenate && userRoles.indexOf('senateInstructor') >= 0);
+			};
 }]);
 
 SummaryCtrl.authenticate = function (authService, $route, $window, summaryActionCreators) {
