@@ -6,7 +6,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 		restrict: 'A',
 		template: '<thead><tr><th>&nbsp;</th></tr></thead><tbody><tr><td>' +
 		'<div style="width: 100%;" align="center" class=\"text-muted\">' +
-		'<img src="/images/ajax-loader.gif" /> &nbsp; Loading schedule</div>' +
+		'<img src="/images/ajax-loader.gif" style="width: 32px; height: 32px;" /> &nbsp; Loading schedule</div>' +
 		'</td></tr></tbody>',
 		link: function (scope, element, attrs) {
 			scope.view = {};
