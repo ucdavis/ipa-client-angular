@@ -120,8 +120,8 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 					var teachingCallLength = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
 					for (i = 0; i < teachingCallLength; i++) {
 						var teachingCall = action.payload.teachingCalls[i];
-						startDate = new Date(teachingCall.startDate);
-						endDate = new Date(teachingCall.dueDate);
+						startDate = moment(teachingCall.startDate, "YYYY-MM-DD");
+						endDate = moment(teachingCall.dueDate, "YYYY-MM-DD");
 
 						// Build eventData object based on the teachingCall's start date
 						var teachingCallType = "";
@@ -137,14 +137,14 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						eventData = {
 							'type': "teaching_call",
 							'title': action.year + teachingCallType + "Teaching Call Starts",
-							'time': startDate.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
-							'date': startDate.toLocaleDateString(),
+							'time': undefined,
+							'date': startDate.format("l"),
 							'caption': teachingCall.message,
 							'link': "/assignments/" + action.workgroupId + "/" + action.year + "/teachingCallStatus"
 						};
 
 						// Only add the event if it happens in the future
-						if (startDate.getTime() > Date.now()) {
+						if (startDate.isAfter(moment())) {
 							eventsList.push(new Event(eventData));
 						}
 
@@ -153,12 +153,12 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 						eventData = {
 							'type': "teaching_call",
 							'title': action.year + teachingCallType + "Teaching Call Ends",
-							'time': endDate.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
-							'date': endDate.toLocaleDateString(),
+							'time': undefined,
+							'date': endDate.format("l"),
 							'caption': "",
 							'link': "/assignments/" + action.workgroupId + "/" + action.year + "/teachingCallStatus"
 						};
-						if (endDate.getTime() > Date.now()) {
+						if (endDate.isAfter(moment())) {
 							eventsList.push(new Event(eventData));
 						}
 
@@ -406,6 +406,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 			scope._state = newState;
 
 			$rootScope.$emit('summaryStateChanged', scope._state);
+			console.log(newState);
 		}
 	};
 });
