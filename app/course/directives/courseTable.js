@@ -110,7 +110,13 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 				$.each(termsToRender, function (i, term) {
 					// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
-					header += "<th class=\"\">" + term.description + "</th>";
+					var termState = data.state.scheduleTermStates.list[term.code];
+					var lockedIcon = "";
+					if (termState && termState.isLocked) {
+						lockedIcon = "<i class=\"fa fa-lock term-lock\"></i>";
+					}
+
+					header += "<th class=\"\">" + term.description + lockedIcon + "</th>";
 				});
 
 				header += "<th class=\"ui-overlay\"></th></tr></thead>";

@@ -678,3 +678,10 @@ td.import-course.course-cell {
   z-index: 10;
   transform: translateY(-50%);
 }
+
+.term-lock {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 1em;
+}
