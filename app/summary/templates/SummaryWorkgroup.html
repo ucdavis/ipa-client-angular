@@ -7,7 +7,13 @@
 			<h2>Planning At A Glance</h2>
 			<br />
 
-			<ul class="cbp_tmtimeline">
+			<div ng-hide="view.state.events" class="col-sm-5" style="padding-top: 2em;">
+				<spinner></spinner>
+			</div>
+			<div ng-show="view.state.events && view.state.events.ids.length === 0" class="col-sm-5 text-muted" style="padding-top: 2em;">
+				No Upcoming Events
+			</div>
+			<ul class="cbp_tmtimeline" ng-show="view.state.events.ids.length">
 				<li>
 					<time class="cbp_tmtime" datetime="2015-11-04T18:30"><span class="hidden">04/11/2015</span> <span class="large">Now</span></time>
 
