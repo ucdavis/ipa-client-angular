@@ -62,11 +62,11 @@
 		<div class="teaching-call-table__row-detail"
 		ng-init="teachingCall=view.state.teachingCalls.list[teachingCallId]">
 			<div>
-				{{ toFullDate(teachingCall.startDate) }}
+				{{ teachingCall.startDate.toFullDate() }}
 			</div>
 		</div>
 		<div class="teaching-call-table__row-detail">
-			{{ toFullDate(teachingCall.dueDate) }}
+			{{ teachingCall.dueDate.toFullDate() }}
 		</div>
 		<div class="teaching-call-table__row-detail">
 			<i class="glyphicon glyphicon-ok" ng-if="teachingCall.sentToSenate"></i>

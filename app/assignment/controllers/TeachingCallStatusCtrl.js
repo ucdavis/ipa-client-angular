@@ -101,10 +101,6 @@ assignmentApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$wi
 				}
 			};
 
-			$scope.toFullDate = function (shortDate) {
-				return shortDate.toFullDate();
-			};
-
 			// Decode termsBlob into two digit terms (example: '02', '04')
 			$scope.termsBlobToTerms = function (termsBlob) {
 				var decodedTermsBlob = [];

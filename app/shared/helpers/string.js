@@ -93,37 +93,5 @@ String.prototype.toFullDate = function () {
 		return "";
 	}
 
-	var explodedShortDate = this.split('-');
-
-	var monthNames = [
-		"January", "February", "March",
-		"April", "May", "June", "July",
-		"August", "September", "October",
-		"November", "December"
-	];
-
-	var day = Number(explodedShortDate[2]);
-	var monthIndex = explodedShortDate[1];
-	var year = explodedShortDate[0];
-
-	var daySuffix = "";
-
-	var lastNumberInDay = day.toString().charAt(day.length);
-	switch (lastNumberInDay) {
-		case '1':
-			daySuffix = "st";
-			break;
-		case '2':
-			daySuffix = "nd";
-			break;
-		case '3':
-			daySuffix = "rd";
-			break;
-		default:
-			daySuffix = "th";
-			break;
-	}
-
-	var fullDate = monthNames[Number(monthIndex)] + ' ' + day + daySuffix + ' ' + year;
-	return fullDate;
+	return moment(this, "YYYY-MM-DD").format('LL')
 };
