@@ -835,3 +835,7 @@ li.active-term .dropdown-term-row {
 	align-items: center;
 	justify-content: center;
 }
+
+.empty-table-message {
+	text-align: center;
+}
