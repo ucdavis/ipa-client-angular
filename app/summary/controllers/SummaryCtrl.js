@@ -82,7 +82,6 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope',
 				$scope.view.userTeachingCalls = $scope.view.state.teachingCalls.ids.map(function (teachingCallId) {
 					return $scope.view.state.teachingCalls.list[teachingCallId];
 				}).filter(function (teachingCall) {
-					console.log(teachingCall);
 					return (teachingCall.sentToFederation && userRoles.indexOf('federationInstructor') >= 0) ||
 						(teachingCall.sentToSenate && userRoles.indexOf('senateInstructor') >= 0);
 				});
