@@ -173,11 +173,13 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 
 	$scope.createWithoutEmail = function() {
 		$scope.startTeachingCallConfig.emailInstructors = false;
+		$scope.startTeachingCallConfig.message = "";
 		$uibModalInstance.close($scope.startTeachingCallConfig);
 	};
 
 	$scope.createAndEmail = function() {
 		$scope.startTeachingCallConfig.emailInstructors = true;
+		$scope.startTeachingCallConfig.message = $scope.startTeachingCallConfig.message.replace(/(?:\r\n|\r|\n)/g, '<br />');
 		$uibModalInstance.close($scope.startTeachingCallConfig);
 	};
 
