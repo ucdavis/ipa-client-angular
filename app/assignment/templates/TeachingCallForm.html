@@ -13,7 +13,7 @@
 			<h5>Please indicate your preferences:</h5>
 		</div>
 		<div class="col-md-6">
-			<div class="pull-right" tooltip-placement="left" 
+			<div class="pull-right" tooltip-placement="left"
 			uib-tooltip="Clicking the Add button will show you a list of all courses currently in the schedule (Use the comment box below
 			to request courses not on the list). Once you've added your preferences you can rank them by dragging and dropping them into the
 			preferred order">
@@ -83,6 +83,7 @@
 						typeahead-no-results="noResults"
 						typeahead-wait-ms="400"
 						typeahead-min-length="0"
+						typeahead-focus-on-select="false"
 						auto-close="always"
 						typeahead-on-select="addPreference($item, termToTermCode(term), isBuyout, isSabbatical, isCourseRelease)"
 						class="form-control search-course-input">
@@ -98,7 +99,7 @@
 			<h5>Please indicate your un-availabilities:</h5>
 		</div>
 		<div class="col-md-6">
-			<div class="pull-right" tooltip-placement="left" 
+			<div class="pull-right" tooltip-placement="left"
 			uib-tooltip="You can left click and drag to paint unavailability on the grids below.
 			Additionally you can use the copy to all terms button next to the term headers to
 			indicate the same unavailability on all terms.">
@@ -138,7 +139,7 @@
 		</div>
 	</div>
 	<div class="container-fluid margin-bottom-30">
-		<textarea class="form-control" style="height:150px;" 
+		<textarea class="form-control" style="height:150px;"
 		ng-model="view.state.activeTeachingCall.teachingCallReceipt.comment" auto-input on-blur="updateTeachingCallReceipt()"
 		placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment"></textarea>
 	</div>
