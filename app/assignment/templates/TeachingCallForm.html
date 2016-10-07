@@ -81,9 +81,9 @@
 						ng-init="courseSearchPlaceHolder = 'Add Preference'"
 						placeholder="{{ courseSearchPlaceHolder }}"
 						ng-focus="courseSearchPlaceHolder = 'Search Courses'"
-						ng-blur="courseSearchPlaceHolder = 'Add Preference'"
+						ng-blur="courseSearchPlaceHolder = 'Add Preference'; view.courseSearchQuery[term] = undefined;"
 						uib-typeahead="course as (getDisplayTextFromCourse(course)) for course in searchCourses(term, $viewValue)"
-						typeahead-loading="loadingCourses"
+						typeahead-loading="view.loadingCourses[term]"
 						typeahead-no-results="noResults"
 						typeahead-wait-ms="400"
 						typeahead-min-length="0"
@@ -91,6 +91,7 @@
 						auto-close="always"
 						typeahead-on-select="addPreference($item, termToTermCode(term), isBuyout, isSabbatical, isCourseRelease)"
 						class="form-control search-course-input">
+					<i ng-show="view.loadingCourses[term]"><spinner size="20"></spinner></i>
 				</li>
 			</ol>
 

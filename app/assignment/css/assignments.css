@@ -843,3 +843,9 @@ li.active-term .dropdown-term-row {
 .empty-table-message {
 	text-align: center;
 }
+
+.search-course-container i {
+	position: absolute;
+	right: 7px;
+	bottom: 7px;
+}
