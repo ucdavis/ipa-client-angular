@@ -140,8 +140,13 @@
 
 
 /* Instructor View */
-.course-status-header {
+.instructor-summary-header {
 	text-align: center;
+}
+
+.course-status-header, .teaching-call-status-header {
+	color: #babbbe;
+  margin: 2em 0;
 }
 
 .course-status-sub-header {
@@ -230,4 +235,9 @@
 
 .meeting-days {
 	color: rgb(166, 167, 170);
+}
+
+.empty-message {
+  color: #777;
+  text-indent: 2em;
 }

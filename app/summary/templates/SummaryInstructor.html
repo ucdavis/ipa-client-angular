@@ -1,124 +1,146 @@
 <nav></nav>
-<div></div>
 
 <div class="content-container">
 
-	<div class="course-status-header">
+	<div class="instructor-summary-header">
 		<h3>
-			Scheduled Courses {{ year }}-{{ nextYear }}
+			Instructor Summary {{ year.yearToAcademicYear() }}
 		</h3>
 		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
 	</div>
 
-	<!-- teachingCalls table -->
-	<div ng-if="view.state.teachingCalls">
-		<div class="course-table-row"><!-- table header -->
-			<div class="course-table__header">
-				<div class="course-table__header-detail">
-					<div>
-						Teaching Call
-					</div>
-				</div>
-			</div>
-			<div class="course-table__header">
-				<div class="course-table__header-detail">
-					<div>
-						Due Date
-					</div>
-				</div>
-			</div>
-		</div><!-- table header -->
-
-		<div class="course-table-row" ng-repeat="teachingCallId in view.state.teachingCalls.ids track by $index"
-			ng-if="userHasAccessToTeachingCall(sharedState.currentUserRoles, view.state.teachingCalls.list[teachingCallId])">
-			<div class="course-table__row-detail">
-				<div>
-					<a ng-href="{{ urlRoot }}/assignments/{{ workgroupId }}/{{ year }}/teachingCall">
-						View Teaching Call Form
-					</a>
-				</div>
-			</div>
-			<div class="course-table__row-detail">
-				{{ view.state.teachingCalls.list[teachingCallId].dueDate.toFullDate() }}
-			</div>
-		</div>
+	<div ng-hide="view.state">
+		<spinner></spinner>
 	</div>
-
-	<div ng-repeat="term in view.state.instructorCourses.terms">
-		<div class="course-status-sub-header">
-			<h5>{{ getTermName(term) }}</h5>
+	<div ng-show="view.state">
+		<div class="teaching-call-status-header">
+			<h5>
+				Teaching Calls {{ year.yearToAcademicYear() }}
+			</h5>
 		</div>
-		<!-- table headers -->
-		<div class="course-table-row">
-			<div class="course-table__header">
-				<div class="course-table__header-detail">
-					<div>
-						Course
-					</div>
-				</div>
-			</div>
-			<div class="course-table__header">
-				<div class="course-table__header-detail">
-					<div>
-						Location
-					</div>
-				</div>
-			</div>
-			<div class="course-table__header">
-				<div class="course-table__header-detail">
-					<div>
-						Time
-					</div>
-				</div>
-			</div>
-			<div class="course-table__header">
-				<div class="course-table__header-detail">
-					<div>
-						Activity
-					</div>
-				</div>
-			</div>
-			<div class="course-table__header">
-				<div class="course-table__header-detail">
-					<div>
-						Teaching Assistant(s)
-					</div>
-				</div>
-			</div>
-		</div><!-- table header -->
 
-		<!-- course table -->
-		<div class="course-table-row" ng-repeat="course in view.state.instructorCourses.list[term]">
-			<div class="course-table__row-detail">
-				<div class="course-table__row-detail-header">
-					{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
-				</div>
-			</div>
-			<div class="course-table__row-detail-middle">
-				<div class="meeting-inner" ng-repeat="meeting in course.meetings">
-					<div class="course-table__row-detail-location" style="flex: 1 1 0px; display: flex; justify-content: center;">
+		<!-- teachingCalls table -->
+		<div ng-show="view.userTeachingCalls && view.userTeachingCalls.length === 0" class="empty-message">
+			No Active Teaching Calls
+		</div>
+		<div ng-show="view.userTeachingCalls.length">
+			<div class="course-table-row"><!-- table header -->
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
 						<div>
-							{{ meeting.location }}
+							Teaching Call
 						</div>
 					</div>
-					<div style="flex: 1 1 0px; display: flex; justify-content: left; padding-left: 50px;">
-						<span class="meeting-days">
-							{{ dayIndicatorToDayCodes(meeting.dayIndicator) }}&nbsp;
-						</span>
-						<span class="meeting-time">
-							{{ meeting.startTime.toStandardTime() }}-{{ meeting.endTime.toStandardTime() }}
-						</span>
-					</div>
-					<div style="flex: 1 1 0px; display: flex; justify-content: center;">
-						{{ meeting.activityType }}
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Due Date
+						</div>
 					</div>
 				</div>
+			</div><!-- table header -->
+
+			<div class="course-table-row" ng-repeat="teachingCall in view.userTeachingCalls track by $index">
+				<div class="course-table__row-detail">
+					<div>
+						<a ng-href="{{ urlRoot }}/assignments/{{ workgroupId }}/{{ year }}/teachingCall">
+							View Teaching Call Form
+						</a>
+					</div>
+				</div>
+				<div class="course-table__row-detail">
+					{{ teachingCall.dueDate.toFullDate() }}
+				</div>
 			</div>
-			<div class="course-table__row-detail">
-				None Assigned
+		</div>
+
+		<div class="course-status-header">
+			<h5>
+				Scheduled Courses {{ year.yearToAcademicYear() }}
+			</h5>
+		</div>
+
+		<div ng-show="view.state.instructorCourses && view.state.instructorCourses.terms.length === 0" class="empty-message">
+			No Scheduled Courses
+		</div>
+		<div ng-repeat="term in view.state.instructorCourses.terms">
+			<div class="course-status-sub-header">
+				<h5>{{ getTermName(term) }}</h5>
+			</div>
+			<!-- table headers -->
+			<div class="course-table-row">
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Course
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Location
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Time
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Activity
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Teaching Assistant(s)
+						</div>
+					</div>
+				</div>
+			</div><!-- table header -->
+
+			<!-- course table -->
+			<div class="course-table-row" ng-repeat="course in view.state.instructorCourses.list[term]">
+				<div class="course-table__row-detail">
+					<div class="course-table__row-detail-header">
+						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
+					</div>
+				</div>
+				<div class="course-table__row-detail-middle">
+					<div class="meeting-inner" ng-repeat="meeting in course.meetings">
+						<div class="course-table__row-detail-location" style="flex: 1 1 0px; display: flex; justify-content: center;">
+							<div>
+								{{ meeting.location }}
+							</div>
+						</div>
+						<div style="flex: 1 1 0px; display: flex; justify-content: left; padding-left: 50px;">
+							<span class="meeting-days">
+								{{ dayIndicatorToDayCodes(meeting.dayIndicator) }}&nbsp;
+							</span>
+							<span class="meeting-time">
+								{{ meeting.startTime.toStandardTime() }}-{{ meeting.endTime.toStandardTime() }}
+							</span>
+						</div>
+						<div style="flex: 1 1 0px; display: flex; justify-content: center;">
+							{{ meeting.activityType }}
+						</div>
+					</div>
+				</div>
+				<div class="course-table__row-detail">
+					None Assigned
+				</div>
 			</div>
 		</div>
 	</div>
+
 	<div style="padding-bottom: 50px;">
 	</div>
 </div>

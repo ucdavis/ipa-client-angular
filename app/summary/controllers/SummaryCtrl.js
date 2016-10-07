@@ -10,11 +10,11 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope',
 		this.SummaryCtrl = function ($scope, $routeParams, $rootScope) {
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
-			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
 			$rootScope.$on('summaryStateChanged', function (event, data) {
 				$scope.view.state = data;
+				setUserTeachingCalls();
 			});
 
 			$rootScope.$on('sharedStateSet', function (event, data) {
@@ -77,9 +77,15 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope',
 				return false;
 			};
 
-			$scope.userHasAccessToTeachingCall = function (userRoles, teachingCall) {
-				return (teachingCall.sentToFederation && userRoles.indexOf('federationInstructor') >= 0) ||
-					(teachingCall.sentToSenate && userRoles.indexOf('senateInstructor') >= 0);
+			var setUserTeachingCalls = function () {
+				var userRoles = $scope.sharedState.currentUserRoles;
+				$scope.view.userTeachingCalls = $scope.view.state.teachingCalls.ids.map(function (teachingCallId) {
+					return $scope.view.state.teachingCalls.list[teachingCallId];
+				}).filter(function (teachingCall) {
+					console.log(teachingCall);
+					return (teachingCall.sentToFederation && userRoles.indexOf('federationInstructor') >= 0) ||
+						(teachingCall.sentToSenate && userRoles.indexOf('senateInstructor') >= 0);
+				});
 			};
 }]);
 
