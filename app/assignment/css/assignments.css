@@ -827,6 +827,10 @@ li.active-term .dropdown-term-row {
 	text-align: center;
 }
 
+.search-course-input:focus {
+	border-color: #337ab7;
+	text-align: left;
+}
 .search-course-container {
 	display: flex;
 	padding-left: 12px;
