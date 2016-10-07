@@ -123,6 +123,18 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					return users;
 				case ADD_USER_ROLE:
 					users.list[action.payload.user.id].userRoles.push(action.payload.userRole);
+
+					// Uncheck other mutually exclusive roles if any
+					var exclusiveRoles = ["federationInstructor", "senateInstructor"];
+					var exclusiveIndex = exclusiveRoles.indexOf(action.payload.userRole.role);
+					if (exclusiveIndex >= 0) {
+						exclusiveRoles.splice(exclusiveIndex, 1);
+						users.list[action.payload.user.id].userRoles = users.list[action.payload.user.id].userRoles
+							.filter(function (ur) {
+								return exclusiveRoles.indexOf(ur.role) < 0;
+							});
+					}
+
 					return users;
 				case REMOVE_USER_ROLE:
 					var userRoleIndex = users.list[action.payload.user.id].userRoles.indexOf(action.payload.userRole);
@@ -174,7 +186,6 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 
 			scope._state = newState;
 			$rootScope.$emit('workgroupStateChanged', scope._state);
-			console.log(scope._state);
 		}
 	};
 });
