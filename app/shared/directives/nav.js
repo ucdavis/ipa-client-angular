@@ -79,6 +79,26 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 					return ur.workgroupId == workgroup.id && roles.indexOf(ur.roleName) >= 0;
 				});
 			};
+
+			scope.nextYearUrl = function () {
+				return scope.offsetYearInUrl(1);
+			};
+
+			scope.previousYearUrl = function () {
+				return scope.offsetYearInUrl(-1);
+			};
+
+			// Example: "/assignments/15/2017?tab=courses" -> "/assignments/15/2018?tab=courses"
+			// Takes the current page url, offsets the year by the specified amount, and returns a new url
+			scope.offsetYearInUrl = function(offset) {
+				var originalYear = scope.sharedState.year;
+				var newYear = originalYear + offset;
+
+				var splitUrl = $location.absUrl().split($location.$$port)[1];
+				splitUrl = splitUrl.split(originalYear);
+
+				return splitUrl[0] + newYear + splitUrl[1];
+			};
 		}
 	};
 });
