@@ -179,8 +179,14 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 
 	$scope.createAndEmail = function() {
 		$scope.startTeachingCallConfig.emailInstructors = true;
-		$scope.startTeachingCallConfig.message = $scope.startTeachingCallConfig.message.replace(/(?:\r\n|\r|\n)/g, '<br />');
+		$scope.startTeachingCallConfig.message = $scope.startTeachingCallConfig.messageSummary;
 		$uibModalInstance.close($scope.startTeachingCallConfig);
+	};
+
+	$scope.showPageTwo = function() {
+		$scope.viewState.showPage1=false;
+		var messageInput = $('.teaching-call-message-input').val();
+		$scope.startTeachingCallConfig.messageSummary = messageInput.replace(/\r?\n/g, '<br />');
 	};
 
 	$scope.urlRoot = location.href;

@@ -97,9 +97,9 @@
 			<div class="modal-footer modal-footer--teaching-call">
 				<div class="email-style container-fluid">
 					<h5 class="pull-left">Email Message</h5>
-					<textarea ng-model="startTeachingCallConfig.message" class="form-control" placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment"></textarea>
+					<textarea ng-bind-html="startTeachingCallConfig.message" class="form-control teaching-call-message-input" placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment"></textarea>
 				</div>
-				<button ng-if="isFormIncomplete() == false" type="button" class="btn neon-dark-confirm-btn" ng-click="viewState.showPage1=false">Next</button>
+				<button ng-if="isFormIncomplete() == false" type="button" class="btn neon-dark-confirm-btn" ng-click="showPageTwo()">Next</button>
 				<button ng-if="isFormIncomplete() == true" tooltip-placement="left" uib-tooltip="You must select an instructor group and a due date" type="button" class="disabled btn btn-info neon-dark-confirm-btn">Next</button>
 
 			</div>
@@ -136,8 +136,9 @@
 								<h5 class="text-muted">Subject:</h5>
 								<p class="text-muted">IPA: Teaching Call has Started</p>	
 								<h5 class="text-muted">Body:</h5>
-								<p class="text-muted">
-									{{ startTeachingCallConfig.message }}
+								<p class="text-muted" ng-bind-html="startTeachingCallConfig.messageSummary">
+								</p>
+								<p>
 								<br>
 								{{ urlRoot }}/assignments/{{ workgroupId }}/{{ scheduleYear }}/teachingCall
 								</p>

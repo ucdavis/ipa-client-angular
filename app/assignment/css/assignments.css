@@ -849,3 +849,7 @@ li.active-term .dropdown-term-row {
 	right: 7px;
 	bottom: 7px;
 }
+
+#modal-1 {
+	height: 100vh;
+}
