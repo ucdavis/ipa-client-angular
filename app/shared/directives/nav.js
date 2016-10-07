@@ -93,8 +93,9 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 			scope.offsetYearInUrl = function(offset) {
 				var originalYear = scope.sharedState.year;
 				var newYear = originalYear + offset;
+				var domainAndPort = $location.absUrl().split('/')[2];
 
-				var splitUrl = $location.absUrl().split($location.$$port)[1];
+				var splitUrl = $location.absUrl().split(domainAndPort)[1];
 				splitUrl = splitUrl.split(originalYear);
 
 				return splitUrl[0] + newYear + splitUrl[1];
