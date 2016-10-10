@@ -108,15 +108,15 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					}
 				});
 
-				$.each(termsToRender, function (i, term) {
+				$.each(termsToRender, function (i, termToRender) {
 					// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
-					var termState = data.state.scheduleTermStates.list[term.code];
+					var term = data.state.terms.list[termToRender.code];
 					var lockedIcon = "";
-					if (termState && termState.isLocked) {
+					if (term && term.isLocked()) {
 						lockedIcon = "<i class=\"fa fa-lock term-lock\"></i>";
 					}
 
-					header += "<th class=\"\">" + term.description + lockedIcon + "</th>";
+					header += "<th class=\"\">" + termToRender.description + lockedIcon + "</th>";
 				});
 
 				header += "<th class=\"ui-overlay\"></th></tr></thead>";
@@ -301,8 +301,8 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 		row += "</td>";
 
 		// Term column(s)
-		$.each(termsToRender, function (i, term) {
-			var termCode = term.code;
+		$.each(termsToRender, function (i, termToRender) {
+			var termCode = termToRender.code;
 			var sectionGroup = _.find(state.sectionGroups.list, function (sg) { return (sg.termCode == termCode) && (sg.courseId == courseId); });
 			var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
 			var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
@@ -311,8 +311,8 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 			var requiresAttention = false;
 
 			// Determine if the term is readonly
-			var termState = state.scheduleTermStates.list[termCode];
-			var isLocked = termState ? termState.isLocked : true;
+			var term = state.terms.list[termCode];
+			var isLocked = term ? term.isLocked() : true;
 
 			row += "<td data-term-code=\"" + termCode + "\" data-section-group-id=\"" + sectionGroupId + "\" class=\"sg-cell\"><div>";
 			if (isLocked) {

@@ -16,7 +16,7 @@
 	<div class="panel-body no-padding">
 		<div class="section-group-details" style="padding: 1em;">
 			<census-chart census="view.state.courses.list[view.selectedEntity.courseId].census"
-				schedule-term-state="view.state.scheduleTermStates.list[view.selectedEntity.termCode]"
+				term="view.state.terms.list[view.selectedEntity.termCode]"
 				course-id="view.selectedEntity.courseId"></census-chart>
 			<hr />
 			<table class="table sections-table" style="margin-bottom: 5px;" ng-if="view.selectedEntity.sectionIds.length">

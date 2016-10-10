@@ -6,8 +6,8 @@ sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function (
 		link: function (scope, element, attrs) {
 			scope.isLocked = function () {
 				var termCode = scope.view.selectedEntity.termCode;
-				var termState = scope.view.state.scheduleTermStates.list[termCode];
-				return termState ? termState.isLocked : true;
+				var term = scope.view.state.terms.list[termCode];
+				return term ? term.isLocked() : true;
 			};
 		}
 	};

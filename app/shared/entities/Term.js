@@ -50,6 +50,12 @@ angular.module('term', [])
 				var termId = Number(termShortCode);
 				var allTerms = this.generateTable(year);
 				return _array_findById(allTerms, termId);
+			},
+
+			isLocked: function () {
+				var termEnd = moment(this.endDate);
+				var now = moment();
+				return termEnd.isBefore(now);
 			}
 
 	};

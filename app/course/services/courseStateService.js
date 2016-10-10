@@ -6,29 +6,29 @@
  * Service in the courseApp.
  * Central location for sharedState information.
  */
-courseApp.service('courseStateService', function ($rootScope, $log, Course, ScheduleTermState, SectionGroup, Section, Tag) {
+courseApp.service('courseStateService', function ($rootScope, $log, Course, Term, SectionGroup, Section, Tag) {
 	return {
 		_state: {},
-		_scheduleTermStateReducers: function (action, scheduleTermStates) {
+		_termReducers: function (action, terms) {
 			var scope = this;
 
 			switch (action.type) {
 				case INIT_STATE:
-					scheduleTermStates = {
+					terms = {
 						ids: []
 					};
-					var scheduleTermStateList = {};
-					var length = action.payload.scheduleTermStates ? action.payload.scheduleTermStates.length : 0;
+					var termList = {};
+					var length = action.payload.terms ? action.payload.terms.length : 0;
 					for (var i = 0; i < length; i++) {
-						var scheduleTermStateData = action.payload.scheduleTermStates[i];
-						// Using termCode as key since the scheduleTermState does not have an id
-						scheduleTermStateList[scheduleTermStateData.termCode] = new ScheduleTermState(scheduleTermStateData);
+						var termData = action.payload.terms[i];
+						// Using termCode as key since the Term does not have an id
+						termList[termData.termCode] = new Term(termData);
 					}
-					scheduleTermStates.ids = _array_sortIdsByProperty(scheduleTermStateList, "termCode");
-					scheduleTermStates.list = scheduleTermStateList;
-					return scheduleTermStates;
+					terms.ids = _array_sortIdsByProperty(termList, "termCode");
+					terms.list = termList;
+					return terms;
 				default:
-					return scheduleTermStates;
+					return terms;
 			}
 		},
 		_courseReducers: function (action, courses) {
@@ -412,7 +412,7 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Sche
 			}
 
 			newState = {};
-			newState.scheduleTermStates = scope._scheduleTermStateReducers(action, scope._state.scheduleTermStates);
+			newState.terms = scope._termReducers(action, scope._state.terms);
 			newState.courses = scope._courseReducers(action, scope._state.courses);
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
