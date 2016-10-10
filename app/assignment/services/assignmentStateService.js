@@ -189,6 +189,22 @@ assignmentApp.service('assignmentStateService', function (
 					teachingCalls.ids.push(teachingCall.id);
 
 					return teachingCalls;
+				case DELETE_TEACHING_CALL:
+					teachingCall = action.payload.teachingCall;
+
+					if (teachingCall.sentToFederation) {
+						teachingCalls.eligibleGroups.federationInstructors = true;
+					}
+					if (teachingCall.sentToSenate) {
+						teachingCalls.eligibleGroups.senateInstructors = true;
+					}
+					// taco
+					teachingCalls.list[teachingCall.id] = null;
+					var index = teachingCalls.ids.indexOf(teachingCall.id);
+					if (index > -1) {
+						teachingCalls.ids.splice(index, 1);
+					}
+					return teachingCalls;
 				default:
 					return teachingCalls;
 			}
