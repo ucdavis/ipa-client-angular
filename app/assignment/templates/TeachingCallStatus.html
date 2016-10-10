@@ -55,6 +55,8 @@
 				</div>
 			</div>
 		</div>
+		<div class="teaching-call-table__header-hover-ui">
+		</div>
 	</div><!-- table header -->
 
 	<!-- teaching call table -->
@@ -77,11 +79,19 @@
 		<div class="teaching-call-table__row-detail">
 			<i class="glyphicon glyphicon-ok" ng-if="teachingCall.emailInstructors"></i>
 		</div>
-		<div class="teaching-call-table__row-detail">
+		<div class="teaching-call-table__row-detail-last">
 			<div ng-repeat="term in teachingCall.terms">
 				<div>
 					{{ term }}
 				</div>
+			</div>
+		</div>
+		<div class="teaching-call-table__row-hover-ui">
+			<div class="teaching-call-table__row-hover-ui-detail">
+				<i class="btn entypo-minus-circled delete-teaching-call-button"
+				confirm-button="deleteTeachingCall(teachingCall)"
+				message="Are you sure you want to delete this teaching call? All of the collected preferences will be lost."
+				yes="Confirm" no="Cancel" placement="top"></i>
 			</div>
 		</div>
 	</div>
