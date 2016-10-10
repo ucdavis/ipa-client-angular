@@ -241,6 +241,20 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		deleteTeachingCall: function (teachingCall) {
+			assignmentService.deleteTeachingCall(teachingCall).then(function (teachingCall) {
+				$rootScope.$emit('toast', { message: "Removed Teaching Call", type: "SUCCESS" });
+				var action = {
+					type: DELETE_TEACHING_CALL,
+					payload: {
+						teachingCall: teachingCall
+					}
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		showCourses: function () {
 			var action = {
 				type: SWITCH_MAIN_VIEW,

@@ -74,6 +74,19 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
+		deleteTeachingCall: function (teachingCall) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/assignmentView/teachingCalls/" + teachingCall.id, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		addInstructorAssignment: function (teachingAssignment, scheduleId) {
 			var deferred = $q.defer();
 			teachingAssignment.termCode = String(teachingAssignment.termCode);
