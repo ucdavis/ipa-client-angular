@@ -5,12 +5,12 @@
  * # SharedCtrl
  * Controller of the ipaClientAngularApp
  */
-sharedApp.controller('SharedCtrl', ['$scope', '$rootScope', '$http', '$uibModal', 'authService',
-		this.SharedCtrl = function ($scope, $rootScope, $http, $uibModal, authService) {
+sharedApp.controller('SharedCtrl', ['$scope', '$rootScope', '$http', '$uibModal', '$log', 'authService',
+		this.SharedCtrl = function ($scope, $rootScope, $http, $uibModal, $log, authService) {
 
 			$rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
 				if (!$rootScope.loadingError) { $rootScope.loadingError = 'unknown'; }
-				console.error('Failed to change routes. Error code: ' + $rootScope.loadingError);
+				$log.error('Failed to change routes. Error code: ' + $rootScope.loadingError);
 			});
 
 			$scope.print = function () {

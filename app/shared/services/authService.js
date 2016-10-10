@@ -6,7 +6,7 @@
  * Service in the ipaClientAngularApp.
  */
 angular.module('sharedApp')
-	.service('authService', function ($http, $window, $q, $location, $rootScope) {
+	.service('authService', function ($http, $window, $q, $location, $rootScope, $log) {
 		return {
 			validateToken: function (token) {
 				var self = this;
@@ -39,17 +39,17 @@ angular.module('sharedApp')
 						location.reload();
 					} else if (error.status == 403) {
 						// User has no access, redirect to Access Denied page
-						console.error("Authentication request received a 403. Redirecting to access denied page ...");
+						$log.error("Authentication request received a 403. Redirecting to access denied page ...");
 						localStorage.clear();
 						$window.location.href = "/access-denied.html";
 					} else if(error.status == -1) {
 						message = "Request was aborted or server was not found. Check that the backend is running.";
-						console.error(message);
+						$log.error(message);
 						self.redirectToErrorPage(error, message);
 					} else {
 						message = "Unknown error occurred while authenticating. Details:";
-						console.error(message);
-						console.error(error);
+						$log.error(message);
+						$log.error(error);
 						self.redirectToErrorPage(error, message);
 					}
 
@@ -120,7 +120,7 @@ angular.module('sharedApp')
 				try {
 					userRoles = JSON.parse(localStorage.getItem('userRoles')) || [];
 				} catch(err) {
-					console.log(err);
+					$log.error(err);
 				}
 
 				return userRoles;
@@ -142,7 +142,7 @@ angular.module('sharedApp')
 				try {
 					termStates = JSON.parse(localStorage.getItem('termStates')) || [];
 				} catch(err) {
-					console.log(err);
+					$log.error(err);
 				}
 
 				return termStates;
@@ -208,7 +208,7 @@ angular.module('sharedApp')
 					return;
 				} else {
 					// Other users don't have access to any workgroup, redirect to Access Denied page
-					console.error("Authentication request received a 403. Redirecting to access denied page ...");
+					$log.error("Authentication request received a 403. Redirecting to access denied page ...");
 					localStorage.clear();
 					$window.location.href = "/access-denied.html";
 					return;

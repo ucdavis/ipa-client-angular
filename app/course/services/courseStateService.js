@@ -6,7 +6,7 @@
  * Service in the courseApp.
  * Central location for sharedState information.
  */
-courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Section, Tag) {
+courseApp.service('courseStateService', function ($rootScope, $log, Course, ScheduleTermState, SectionGroup, Section, Tag) {
 	return {
 		_state: {},
 		_scheduleTermStateReducers: function (action, scheduleTermStates) {
@@ -426,8 +426,8 @@ courseApp.service('courseStateService', function ($rootScope, Course, ScheduleTe
 				actionType: action.type
 			});
 
-			console.debug("Course state updated:");
-			console.debug(scope._state, action.type);
+			$log.debug("Course state updated:");
+			$log.debug(scope._state, action.type);
 		}
 	};
 });

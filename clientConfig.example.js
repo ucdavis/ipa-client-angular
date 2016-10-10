@@ -9,3 +9,7 @@ var serverRoot = 'http://ipa.server.com:8080'
 var dwUrl = 'http://dw.server.com:8080'
 var dwToken = 'secretToken';
 
+/**
+ * Debugger mode
+ */
+var debuggerEnabled = false;

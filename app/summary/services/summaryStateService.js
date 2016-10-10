@@ -7,7 +7,7 @@
  * Central location for sharedState information.
  */
 
-summaryApp.service('summaryStateService', function ($rootScope, Course, ScheduleTermState, SectionGroup, Section, Tag, Event, Activity, TeachingCall) {
+summaryApp.service('summaryStateService', function ($rootScope, $log, Course, ScheduleTermState, SectionGroup, Section, Tag, Event, Activity, TeachingCall) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -406,7 +406,7 @@ summaryApp.service('summaryStateService', function ($rootScope, Course, Schedule
 			scope._state = newState;
 
 			$rootScope.$emit('summaryStateChanged', scope._state);
-			console.log(newState);
+			$log.debug(newState);
 		}
 	};
 });

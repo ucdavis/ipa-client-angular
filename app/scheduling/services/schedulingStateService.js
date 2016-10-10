@@ -6,7 +6,7 @@
  schedulingApp.
  * Central location for sharedState information.
  */
-schedulingApp.service('schedulingStateService', function ($rootScope, Course, SectionGroup, Section, Activity, Tag, Location, Instructor, TeachingCallResponse) {
+schedulingApp.service('schedulingStateService', function ($rootScope, $log, Course, SectionGroup, Section, Activity, Tag, Location, Instructor, TeachingCallResponse) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -388,8 +388,8 @@ schedulingApp.service('schedulingStateService', function ($rootScope, Course, Se
 				actionType: action.type
 			});
 
-			console.debug("Scheduling state updated:");
-			console.debug(scope._state);
+			$log.debug("Scheduling state updated:");
+			$log.debug(scope._state);
 		},
 		// Helper methods
 		fillSectionGroupDetails: function (sectionGroupDetails, sectionGroups) {

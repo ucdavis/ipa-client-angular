@@ -37,8 +37,8 @@ window.sharedApp = angular.module('sharedApp',
 
 sharedApp
 	// Set the CSRF token
-	.config(['$httpProvider', '$compileProvider', 'IdleProvider', '$locationProvider',
-		function ($httpProvider, $compileProvider, IdleProvider, $locationProvider) {
+	.config(['$httpProvider', '$compileProvider', '$logProvider', 'IdleProvider', '$locationProvider',
+		function ($httpProvider, $compileProvider, $logProvider, IdleProvider, $locationProvider) {
 			// Add CSRF token to all requests
 			var csrfHeader = $('meta[name=csrf-header]').attr('content');
 			if (csrfHeader === undefined) {
@@ -48,7 +48,16 @@ sharedApp
 			}
 
 			$httpProvider.useApplyAsync(true);
-			$compileProvider.debugInfoEnabled(false);
+
+			// Debugger mode
+			try {
+				$compileProvider.debugInfoEnabled(debuggerEnabled);
+				$logProvider.debugEnabled(debuggerEnabled);
+			} catch (e) {
+				console.warn("Debugger status not defined. Please set value in clientConfig. Defaulting to enabled.", e);
+				$compileProvider.debugInfoEnabled(true);
+				$logProvider.debugEnabled(true);
+			}
 
 			// Enable html5 mode paths
 			$locationProvider.html5Mode({

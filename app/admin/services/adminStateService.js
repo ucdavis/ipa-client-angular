@@ -6,7 +6,7 @@
  * Service in the adminApp.
  * Central location for sharedState information.
  */
-adminApp.service('adminStateService', function ($rootScope, Workgroup) {
+adminApp.service('adminStateService', function ($rootScope, Workgroup, $log) {
 	return {
 		_state: {},
 		_workgroupReducers: function (action, workgroups) {
@@ -73,8 +73,8 @@ adminApp.service('adminStateService', function ($rootScope, Workgroup) {
 				actionType: action.type
 			});
 
-			console.debug("Admin state updated:");
-			console.debug(scope._state, action.type);
+			$log.debug("Admin state updated:");
+			$log.debug(scope._state, action.type);
 		}
 	};
 });
