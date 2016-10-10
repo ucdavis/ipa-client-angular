@@ -74,8 +74,6 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 							borderColor: "rgba(179,181,198,1)",
 							pointBackgroundColor: "rgba(179,181,198,1)",
 							pointBorderColor: "#fff",
-							pointHoverBackgroundColor: "#fff",
-							pointHoverBorderColor: "rgba(179,181,198,1)",
 							data: getCensusEnrollmentByCensusCodes(snapshotCodes)
 						}
 					];
@@ -90,8 +88,6 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 							borderColor: "rgba(179,181,198,1)",
 							pointBackgroundColor: "rgba(179,181,198,1)",
 							pointBorderColor: "#fff",
-							pointHoverBackgroundColor: "#fff",
-							pointHoverBorderColor: "rgba(179,181,198,1)",
 							data: getCurrentCensusForProperty("maxEnrollmentCount")
 						},
 						{
@@ -101,8 +97,6 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 							borderColor: "rgba(200,181,150,1)",
 							pointBackgroundColor: "rgba(200,181,150,1)",
 							pointBorderColor: "#fff",
-							pointHoverBackgroundColor: "#fff",
-							pointHoverBorderColor: "rgba(179,181,198,1)",
 							data: getCurrentCensusForProperty("currentEnrolledCount")
 						}
 					];
@@ -114,6 +108,7 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 				Chart.defaults.global.tooltips.bodyFontSize = 10;
 				Chart.defaults.global.tooltips.caretSize = 3;
 				Chart.defaults.global.tooltips.cornerRadius = 3;
+				Chart.defaults.global.legend.display = false;
 
 				$timeout(function () {
 					var myChart = new Chart(ctx, {
