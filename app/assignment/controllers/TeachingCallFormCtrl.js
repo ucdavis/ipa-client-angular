@@ -158,7 +158,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 					return assignmentService.searchCourses(query).then(function (courseSearchResults) {
 						var courses = courseSearchResults.slice(0, 20);
 
-						results.forEach(function (course) {
+						courses.forEach(function (course) {
 							course.isSuggested = true;
 						});
 
@@ -351,7 +351,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 					var teachingAssignment = $scope.view.state.teachingAssignments.list[$scope.view.state.teachingAssignments.ids[i]];
 
 					if (teachingAssignment.instructorId == $scope.view.state.userInterface.instructorId) {
-
+						// If preference is course based, attach meta-data
 						if (teachingAssignment.sectionGroupId) {
 							sectionGroup = $scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 							course = $scope.view.state.courses.list[sectionGroup.courseId];
@@ -369,8 +369,11 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 						for (j = 0; j < activeTeachingCall.termAssignments[teachingAssignment.termCode].length; j++) {
 							var slotAssignment = activeTeachingCall.termAssignments[teachingAssignment.termCode][j];
 
-							if (teachingAssignment.subjectCode == slotAssignment.subjectCode &&
-								teachingAssignment.courseNumber == slotAssignment.courseNumber) {
+							if (teachingAssignment.subjectCode == slotAssignment.subjectCode
+								&& teachingAssignment.courseNumber == slotAssignment.courseNumber
+								&& teachingAssignment.buyout == slotAssignment.buyout
+								&& teachingAssignment.courseRelease == slotAssignment.courseRelease
+								&& teachingAssignment.sabbatical == slotAssignment.sabbatical) {
 								preferenceAlreadyAdded = true;
 							}
 						}
@@ -385,6 +388,13 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 
 				// Building an object separated by terms, of unique courses based on schedule sectionGroups
 				activeTeachingCall.scheduledCourses = {};
+
+				// Scaffold all teachingAssignment termCodeId arrays
+				var allTerms = ['01', '02', '03', '04', '06', '07', '08', '09', '10'];
+				allTerms.forEach( function (slotTerm) {
+					var generatedTermCode = $scope.generateTermCode($scope.year, slotTerm);
+					activeTeachingCall.scheduledCourses[generatedTermCode] = [];
+				});
 
 				for (i = 0; i < $scope.view.state.sectionGroups.ids.length; i++) {
 					sectionGroup = $scope.view.state.sectionGroups.list[$scope.view.state.sectionGroups.ids[i]];
@@ -456,6 +466,17 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				}
 
 				assignmentActionCreators.initializeActiveTeachingCall(activeTeachingCall);
+			};
+
+			$scope.generateTermCode = function (year, term) {
+				if (term.toString().length == 1) {
+					term = "0" + Number(term);
+				}
+
+				if (["01", "02", "03"].indexOf(term) >= 0) { year++; }
+				var termCode = year + term;
+
+				return termCode;
 			};
 
 			$scope.termToTermCode = function(term) {

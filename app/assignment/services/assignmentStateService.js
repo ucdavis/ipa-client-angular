@@ -206,7 +206,7 @@ assignmentApp.service('assignmentStateService', function (
 					return activeTeachingCall;
 				case ADD_PREFERENCE:
 					payloadTeachingAssignments = action.payload.teachingAssignments;
-
+					// Add Each preference (one or more, based on how many sectionGroups were in the course for the given term)
 					for (i = 0; i < payloadTeachingAssignments.length; i++) {
 						var teachingAssignment = payloadTeachingAssignments[i];
 
@@ -219,7 +219,6 @@ assignmentApp.service('assignmentStateService', function (
 
 						termCode = parseInt(teachingAssignment.termCode);
 
-
 						if (activeTeachingCall.termAssignments[teachingAssignment.termCode] == null) {
 							activeTeachingCall.termAssignments[teachingAssignment.termCode] = [];
 						}
@@ -229,8 +228,12 @@ assignmentApp.service('assignmentStateService', function (
 						for (j = 0; j < activeTeachingCall.termAssignments[teachingAssignment.termCode].length; j++) {
 							var slotAssignment = activeTeachingCall.termAssignments[teachingAssignment.termCode][j];
 
-							if (teachingAssignment.subjectCode == slotAssignment.subjectCode &&
-								teachingAssignment.courseNumber == slotAssignment.courseNumber) {
+							if (teachingAssignment.subjectCode == slotAssignment.subjectCode
+								&& teachingAssignment.courseNumber == slotAssignment.courseNumber
+								&& teachingAssignment.buyout == slotAssignment.buyout
+								&& teachingAssignment.courseRelease == slotAssignment.courseRelease
+								&& teachingAssignment.sabbatical == slotAssignment.sabbatical) {
+
 								preferenceAlreadyAdded = true;
 							}
 						}
@@ -352,6 +355,14 @@ assignmentApp.service('assignmentStateService', function (
 					for (i = 0; i < length; i++) {
 						instructor = new Instructor(action.payload.instructors[i]);
 						instructor.teachingAssignmentTermCodeIds = {};
+
+						// Scaffold all teachingAssignment termCodeId arrays
+						var allTerms = ['01', '02', '03', '04', '06', '07', '08', '09', '10'];
+						allTerms.forEach( function (slotTerm) {
+							var generatedTermCode = generateTermCode(action.year, slotTerm);
+							instructor.teachingAssignmentTermCodeIds[generatedTermCode] = [];
+						});
+
 						instructor.isFiltered = false;
 
 						// Create arrays of teachingAssignmentIds for each termCode
