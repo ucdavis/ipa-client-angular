@@ -73,19 +73,82 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				return termNames[term];
 			};
 
+			// Filter out courses that match an assignment
+			$scope.filterDuplicateCoursePreferences = function (courses, assignments) {
+				var filteredCourses = [];
+
+				courses.forEach( function (course) {
+					var isCourseDuplicate = false;
+					assignments.forEach ( function (assignment) {
+						if ($scope.assignmentMatchesCourse(assignment, course)) {
+							isCourseDuplicate = true;
+						}
+					});
+
+					if (isCourseDuplicate == false) {
+						filteredCourses.push(course);
+					}
+				});
+
+				return filteredCourses;
+			};
+
+			$scope.assignmentMatchesCourse = function (assignment, course) {
+				// Handle sab/release/buyout
+				if (course.isBuyout) {
+					if (assignment.isBuyout === course.isBuyout) {
+						return true;
+					} else {
+						return false;
+					}
+				} else if (course.isSabbatical) {
+					if (assignment.isSabbatical === course.isSabbatical) {
+						return true;
+					} else {
+						return false;
+					}
+				} else if (course.isCourseRelease) {
+					if (assignment.isCourseRelease === course.isCourseRelease) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+
+				// Handle course based preferences
+				var assignmentSubjectCode;
+				var assignmentCourseNumber;
+
+				if (assignment.subjectCode && assignment.courseNumber) {
+					assignmentSubjectCode = assignment.subjectCode;
+					assignmentCourseNumber = assignment.courseNumber;
+				} else if (assignment.suggestedSubjectCode && assignment.suggestedCourseNumber) {
+					assignmentSubjectCode = assignment.suggestedSubjectCode;
+					assignmentCourseNumber = assignment.suggestedCourseNumber;
+				}
+
+				if (assignmentSubjectCode === course.subjectCode && assignmentCourseNumber === course.courseNumber) {
+					return true;
+				}
+
+				return false;
+			};
+
 			$scope.searchCourses = function (term, query) {
 				term = $scope.termToTermCode(term);
+				var termAssignments = $scope.view.state.activeTeachingCall.termAssignments[term] || [];
+				var scheduledCourses = $scope.view.state.activeTeachingCall.scheduledCourses[term] || [];
 
 				// Display courses already on the schedule
 				if (!query || query.length == 0) {
-					var results = [];
-					results.push({ isBuyout: true });
-					results.push({ isCourseRelease: true });
-					results.push({ isSabbatical: true });
+					var courses = [];
+					courses.push({ isBuyout: true });
+					courses.push({ isCourseRelease: true });
+					courses.push({ isSabbatical: true });
+					var filteredCourses = $scope.filterDuplicateCoursePreferences(scheduledCourses, termAssignments);
 
-					var scheduledCourses = $scope.view.state.activeTeachingCall.scheduledCourses[term];
-					results.push.apply(results, scheduledCourses);
-					return results;
+					courses.push.apply(courses, filteredCourses);
+					return courses;
 				}
 
 				// Display courses from DW (may include courses already added to the schedule)
@@ -93,13 +156,13 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 					// This typehead library works better with a promise,
 					// so in this case the controller bypasses the normal state managaement data flow
 					return assignmentService.searchCourses(query).then(function (courseSearchResults) {
-						var results = courseSearchResults.slice(0, 20);
+						var courses = courseSearchResults.slice(0, 20);
 
 						results.forEach(function (course) {
 							course.isSuggested = true;
 						});
 
-						return results;
+						return courses;
 					}, function (err) {
 						$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 					});
