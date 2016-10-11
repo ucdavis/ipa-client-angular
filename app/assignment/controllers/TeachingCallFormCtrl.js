@@ -147,6 +147,8 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 					courses.push({ isSabbatical: true });
 					var filteredCourses = $scope.filterDuplicateCoursePreferences(scheduledCourses, termAssignments);
 
+					filteredCourses = $scope.sortCourses(filteredCourses);
+
 					courses.push.apply(courses, filteredCourses);
 					return courses;
 				}
@@ -162,12 +164,38 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 							course.isSuggested = true;
 						});
 
+						courses = $scope.sortCourses(courses);
 						return courses;
 					}, function (err) {
 						$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
 					});
 				}
 
+			};
+
+			$scope.sortCourses = function(courses) {
+					courses.sort(function (a, b) {
+						// Use subject codes to sort if they don't match
+						if (a.subjectCode > b.subjectCode) {
+							return 1;
+						}
+
+						if (a.subjectCode < b.subjectCode) {
+							return -1
+						}
+
+						// Subject codes must have matched, use course numbers to sort instead
+						if (a.courseNumber > b.courseNumber) {
+							return 1;
+						}
+
+						if (a.courseNumber < b.courseNumber) {
+							return -1;
+						}
+
+						return -1;
+					});
+				return courses;
 			};
 
 			$scope.getDisplayTextFromCourse = function(course) {
