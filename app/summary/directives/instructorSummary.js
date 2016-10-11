@@ -1,7 +1,7 @@
-summaryApp.directive("summaryInstructor", this.summaryInstructor = function () {
+summaryApp.directive("instructorSummary", this.instructorSummary = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'summaryInstructor.html',
+		templateUrl: 'instructorSummary.html',
 		replace: true,
 		link: function (scope, element, attrs) {
 			// Will translate a dayIndicator like '0010100' into 'TR'
