@@ -46,40 +46,6 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 			$scope.sharedState = data;
 		});
 
-		// Will translate a dayIndicator like '0010100' into 'TR'
-		$scope.dayIndicatorToDayCodes = function (dayIndicator) {
-			dayCodes = "";
-			// Handle incorrect data
-			if (dayIndicator.length === 0) {
-				return dayCodes;
-			}
-			dayStrings = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
-			for (var i = 0; i < dayIndicator.length; i++) {
-				char = dayIndicator.charAt(i);
-				if (Number(char) == 1) {
-					dayCodes += dayStrings[i];
-				}
-			}
-
-			return dayCodes;
-		};
-
-		$scope.isInstructor = function () {
-			if ($scope.userHasRolesForWorkgroup(['senateInstructor'], $scope.sharedState.workgroup) || $scope.userHasRolesForWorkgroup(['federationInstructor'], $scope.sharedState.workgroup)) {
-				return true;
-			}
-
-			return false;
-		};
-
-		$scope.isAcademicPlanner = function () {
-			if ($scope.userHasRolesForWorkgroup(['academicPlanner'], $scope.sharedState.workgroup)) {
-				return true;
-			}
-
-			return false;
-		};
-
 		var setUserTeachingCalls = function () {
 			var userRoles = $scope.sharedState.currentUserRoles;
 			$scope.view.userTeachingCalls = $scope.view.state.teachingCalls.ids.map(function (teachingCallId) {
