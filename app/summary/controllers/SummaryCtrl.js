@@ -27,9 +27,10 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 			$scope.view.mode = $routeParams.mode;
 		} else {
 			// Otherwise redirect to the default view
+			var isAdmin = authService.isAdmin();
 			var isAcademicPlanner = authService.isAcademicPlanner();
 			var isInstructor = authService.isInstructor();
-			if (isAcademicPlanner) {
+			if (isAcademicPlanner || isAdmin) {
 				$scope.setActiveMode("workgroup");
 			}
 			else if (isInstructor) {
