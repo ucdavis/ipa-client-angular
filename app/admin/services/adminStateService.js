@@ -70,7 +70,7 @@ adminApp.service('adminStateService', function ($rootScope, Workgroup, $log) {
 			scope._state = newState;
 			$rootScope.$emit('adminStateChanged', {
 				state: scope._state,
-				actionType: action.type
+				action: action
 			});
 
 			$log.debug("Admin state updated:");

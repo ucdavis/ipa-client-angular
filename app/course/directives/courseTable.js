@@ -32,9 +32,9 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
 				// Rerender only if on of the specified state actions
-				if (rerenderStateActions.indexOf(data.actionType) < 0) { return; }
+				if (rerenderStateActions.indexOf(data.action.type) < 0) { return; }
 
-				if (data.actionType == CLOSE_DETAILS) {
+				if (data.action.type == CLOSE_DETAILS) {
 					// Remove existing highlighting
 					element.find('tbody > tr').removeClass("selected-tr");
 					element.find('tbody > tr > td').removeClass("selected-td");
@@ -42,7 +42,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					return;
 				}
 
-				if (data.actionType == CELL_SELECTED) {
+				if (data.action.type == CELL_SELECTED) {
 					// Remove existing highlighting
 					element.find('tbody > tr').removeClass("selected-tr");
 					element.find('tbody > tr > td').removeClass("selected-td");
@@ -59,27 +59,11 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				}
 
 				// Set the correct section-group-id on the newly created sectionGroup cell
-				if (data.actionType == ADD_SECTION_GROUP) {
-					var sectionGroup = _.find(scope.view.state.sectionGroups.list, function (sg) {
-						return (sg.termCode == data.state.uiState.selectedTermCode) && (sg.courseId == data.state.uiState.selectedCourseId);
-					});
+				if (data.action.type == ADD_SECTION_GROUP) {
+					var sectionGroup = data.action.payload.sectionGroup;
 
-					if (sectionGroup) {
-						$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]')
-							.data('section-group-id', sectionGroup.id);
-					} else {
-						// Throw an exception with more details for further debugging: https://github.com/ucdavis/ipa-client-angular/issues/441
-						var message = "Could not find a sectionGroup for termCode: " +
-							data.state.uiState.selectedTermCode + ", and courseId: " +
-							data.state.uiState.selectedCourseId + ". Current sectionGroupIds are: " +
-							scope.view.state.sectionGroups.ids.join();
-						var stack = "app/course/directives/courseTable.js";
-
-						throw ({
-							"message": message,
-							"stack": stack
-						});
-					}
+					$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]')
+						.data('section-group-id', sectionGroup.id);
 
 					return;
 				}

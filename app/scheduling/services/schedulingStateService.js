@@ -385,7 +385,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 			scope._state = newState;
 			$rootScope.$emit('schedulingStateChanged', {
 				state: scope._state,
-				actionType: action.type
+				action: action
 			});
 
 			$log.debug("Scheduling state updated:");

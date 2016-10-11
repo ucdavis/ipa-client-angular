@@ -129,7 +129,7 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 					});
 					$rootScope.$on("courseStateChanged", function (event, data) {
 						// Destroy chart only if it exists and another cell was selected
-						if (myChart && data.actionType == "CELL_SELECTED" &&
+						if (myChart && data.action.type == "CELL_SELECTED" &&
 							(data.state.uiState.selectedTermCode != scope.term.termCode || data.state.uiState.selectedCourseId != scope.courseId)) {
 							myChart.destroy();
 						}

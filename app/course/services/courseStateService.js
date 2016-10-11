@@ -423,7 +423,7 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 			scope._state = newState;
 			$rootScope.$emit('courseStateChanged', {
 				state: scope._state,
-				actionType: action.type
+				action: action
 			});
 
 			$log.debug("Course state updated:");
