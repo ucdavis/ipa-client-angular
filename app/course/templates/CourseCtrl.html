@@ -105,6 +105,10 @@
 								<div class="col-sm-offset-4 col-sm-4">
 									<button class="btn btn-default btn-block" ng-click="searchImportCourses()"
 										ng-disabled="!(view.state.uiState.massImportCode && view.state.uiState.massImportYear)">Search</button>
+									<div class="mass-import-loading">
+										<spinner ng-if="view.state.courses.importList === null && view.searchingCourseToImport"
+											size="20"></spinner>
+									</div>
 								</div>
 							</div>
 						</div>

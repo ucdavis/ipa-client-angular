@@ -685,3 +685,10 @@ td.import-course.course-cell {
   transform: translateY(-50%);
   right: 1em;
 }
+
+.mass-import-loading {
+  position: absolute;
+  right: -1em;
+  top: 50%;
+  transform: translateY(-50%);
+}
