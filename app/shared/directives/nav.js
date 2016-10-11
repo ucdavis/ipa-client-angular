@@ -80,25 +80,18 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 				});
 			};
 
-			scope.nextYearUrl = function () {
-				return scope.offsetYearInUrl(1);
-			};
-
-			scope.previousYearUrl = function () {
-				return scope.offsetYearInUrl(-1);
-			};
-
 			// Example: "/assignments/15/2017?tab=courses" -> "/assignments/15/2018?tab=courses"
 			// Takes the current page url, offsets the year by the specified amount, and returns a new url
-			scope.offsetYearInUrl = function(offset) {
+			scope.offsetYearInUrl = function (offset) {
+				var workgroupId = scope.sharedState.workgroup.id;
 				var originalYear = scope.sharedState.year;
 				var newYear = originalYear + offset;
+
 				var domainAndPort = $location.absUrl().split('/')[2];
+				var fullPath = $location.absUrl().split(domainAndPort)[1];
+				var pathAfterYear = fullPath.split(originalYear)[1] || '';
 
-				var splitUrl = $location.absUrl().split(domainAndPort)[1];
-				splitUrl = splitUrl.split(originalYear);
-
-				return splitUrl[0] + newYear + splitUrl[1];
+				$location.url(workgroupId + '/' + newYear + pathAfterYear);
 			};
 		}
 	};
