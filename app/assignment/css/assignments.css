@@ -888,3 +888,7 @@ li.active-term .dropdown-term-row {
 #modal-1 {
 	height: 100vh;
 }
+
+.view-state-toggle {
+	font-size: 12px;
+}
