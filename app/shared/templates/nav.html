@@ -13,8 +13,8 @@
 
 			<!-- logo collapse icon -->
 			<div class="sidebar-collapse">
-				<a class="sidebar-collapse-icon clickable" ng-click="toggleSidebarState()"
-					uib-tooltip="Toggle Sidebar" tooltip-placement="right" tooltip-append-to-body="true">
+				<a class="sidebar-collapse-icon clickable" ng-click="toggleSidebarState()" uib-tooltip="Toggle Sidebar" tooltip-placement="right"
+					tooltip-append-to-body="true">
 					<!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
 					<i class="entypo-menu"></i>
 				</a>
@@ -23,7 +23,8 @@
 
 			<!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
 			<div class="sidebar-mobile-menu visible-xs">
-				<a href="#" class="with-animation"><!-- add class "with-animation" to support animation -->
+				<a href="#" class="with-animation">
+					<!-- add class "with-animation" to support animation -->
 					<i class="entypo-menu"></i>
 				</a>
 			</div>
@@ -35,7 +36,7 @@
 			<!-- add class "multiple-expanded" to allow multiple submenus to open -->
 			<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
 			<li class="welcome">
-					<span class="title">Howdy, {{ sharedState.displayName }}</span>
+				<span class="title">Howdy, {{ sharedState.displayName }}</span>
 			</li>
 			<li ng-class="{ 'active': currentBaseHref == 'summary' }" ng-if="sharedState.isAcademicPlanner && sharedState.isInstructor">
 				<a>
@@ -44,12 +45,12 @@
 				</a>
 				<ul class="visible">
 					<li ng-class="{ 'active': currentBaseHref == 'summary' && currentEndHref == 'workgroup' }">
-						<a ng-href="/summary/{{ workgroupId }}/{{ year }}/workgroup">
+						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=workgroup">
 							Workgroup Summary
 						</a>
 					</li>
 					<li ng-class="{ 'active': currentBaseHref == 'summary' && currentEndHref == 'instructor' }">
-						<a ng-href="/summary/{{ workgroupId }}/{{ year }}/instructor">
+						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=instructor">
 							Instructor Summary
 						</a>
 					</li>
@@ -74,21 +75,18 @@
 					<i class="entypo-users"></i>
 					<span class="title">Workgroups</span>
 				</a>
-				<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}"
-					ng-if="sharedState.userWorkgroups.length == 1 && userHasRoles(['academicPlanner'])">
+				<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}" ng-if="sharedState.userWorkgroups.length == 1 && userHasRoles(['academicPlanner'])">
 					<i class="entypo-users"></i>
 					<span class="title">{{ sharedState.workgroup.name }}</span>
 				</a>
 				<ul class="visible" ng-if="sharedState.userWorkgroups.length > 1">
-					<li ng-repeat="workgroup in sharedState.userWorkgroups track by workgroup.id"
-					ng-class="{ 'active': sharedState.workgroup.id == workgroup.id }">
-						<a ng-href="/{{ currentBaseHref }}/{{ workgroup.id }}/{{ year }}/{{ termShortCode }}"
-							uib-tooltip="Switch to {{ workgroup.name }}" tooltip-append-to-body="true" tooltip-placement="right">
+					<li ng-repeat="workgroup in sharedState.userWorkgroups track by workgroup.id" ng-class="{ 'active': sharedState.workgroup.id == workgroup.id }">
+						<a ng-href="/{{ currentBaseHref }}/{{ workgroup.id }}/{{ year }}/{{ termShortCode }}" uib-tooltip="Switch to {{ workgroup.name }}"
+							tooltip-append-to-body="true" tooltip-placement="right">
 							<i class="entypo-check active-workgroup-icon" ng-if="sharedState.workgroup.id == workgroup.id"></i>
 							<span class="title">{{ workgroup.name }}</span>
 						</a>
-						<a ng-href="/workgroups/{{ workgroup.id }}/{{ year }}"
-							ng-if="userHasRolesForWorkgroup(['academicPlanner'], workgroup)" class="icon-workgroup-manage"
+						<a ng-href="/workgroups/{{ workgroup.id }}/{{ year }}" ng-if="userHasRolesForWorkgroup(['academicPlanner'], workgroup)" class="icon-workgroup-manage"
 							uib-tooltip="Manage {{ workgroup.name }}" tooltip-append-to-body="true" tooltip-placement="right">
 							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						</a>
@@ -100,8 +98,8 @@
 							<i class="entypo-check active-workgroup-icon"></i>
 							<span class="title">({{ sharedState.workgroup.name }})</span>
 						</a>
-						<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}" class="icon-workgroup-manage"
-							uib-tooltip="Manage {{ sharedState.workgroup.name }}" tooltip-append-to-body="true" tooltip-placement="right">
+						<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}" class="icon-workgroup-manage" uib-tooltip="Manage {{ sharedState.workgroup.name }}"
+							tooltip-append-to-body="true" tooltip-placement="right">
 							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						</a>
 					</li>
@@ -119,7 +117,7 @@
 		<!-- Year switcher -->
 		<ul class="pager year-switcher">
 			<li class="previous"><a ng-href="{{ previousYearUrl() }}"><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
-			<li ><a>{{ year.yearToAcademicYear() }}</a></li>
+			<li><a>{{ year.yearToAcademicYear() }}</a></li>
 			<li class="next"><a ng-href="{{ nextYearUrl() }}"><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
 		</ul>
 
@@ -153,8 +151,7 @@
 					<span class="title">Scheduling</span>
 				</a>
 				<ul class="visible">
-					<li ng-repeat="term in getYearTerms() track by term.id" ng-class="{'active': term.shortCode == termShortCode}"
-						ng-class="{ 'active': currentBaseHref == 'scheduling' && termShortCode == term.shortCode }">
+					<li ng-repeat="term in getYearTerms() track by term.id" ng-class="{'active': term.shortCode == termShortCode}" ng-class="{ 'active': currentBaseHref == 'scheduling' && termShortCode == term.shortCode }">
 						<a ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ term.shortCode }}">
 							{{ term.description }}
 						</a>
