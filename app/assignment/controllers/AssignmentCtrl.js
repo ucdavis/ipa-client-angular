@@ -10,6 +10,7 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 			$window.document.title = "Assignments";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
+			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
