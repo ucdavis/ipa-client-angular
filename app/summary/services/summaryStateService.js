@@ -164,31 +164,22 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 
 					} // end loop appending teaching calls
 
-					// Filter dwTerm to only use terms for the current school year
-					var relevantTerms = action.payload.dwTerms.filter(function (term) {
-						// action.year is the academic school year
-						// * 100 adds the possible term code
-						var academicYearStart = action.year * 100;
-						var academicYearEnd = (parseInt(action.year) + 1) * 100;
-
-						return (
-							term.code == academicYearStart + 10 ||
-							term.code == academicYearStart + 9 ||
-							(term.code != academicYearEnd + 4 && term.code >= academicYearEnd + 1 && term.code <= academicYearEnd + 8)
-						);
+					var futureTerms = action.payload.terms.filter(function (term) {
+						// return only terms that will end in the future and exclude the unused '04' terms
+						return moment(term.endDate).isAfter(moment()) && term.termCode.slice(-2) != '04';
 					});
 
 					// Append future events retrieved from the terms
-					var termLength = relevantTerms ? relevantTerms.length : 0;
+					var termLength = futureTerms ? futureTerms.length : 0;
 					for (i = 0; i < termLength; i++) {
-						var term = relevantTerms[i];
-						startDate = new Date(parseInt(term.beginDate));
+						var term = futureTerms[i];
+						startDate = new Date(parseInt(term.startDate));
 						endDate = new Date(parseInt(term.endDate));
 
 						// Append future starting quarters / semesters
 						eventData = {
 							'type': "school",
-							'title': term.code.getTermCodeDisplayName() + " Starts",
+							'title': term.termCode.getTermCodeDisplayName() + " Starts",
 							'time': startDate.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 							'date': startDate.toLocaleDateString(),
 							'caption': "",
@@ -203,7 +194,7 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 						// Append future ending quarters / semesters
 						eventData = {
 							'type': "school",
-							'title': term.code.getTermCodeDisplayName() + " Ends",
+							'title': term.termCode.getTermCodeDisplayName() + " Ends",
 							'time': endDate.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 							'date': endDate.toLocaleDateString(),
 							'caption': "",
@@ -214,14 +205,14 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 						}
 
 						// This is wrapped in a if statement because not all terms have this value
-						if (term.maintenanceDate1Start != null) {
-							var upload1Start = new Date(parseInt(term.maintenanceDate1Start));
-							var upload1End = new Date(parseInt(term.maintenanceDate1End));
+						if (term.bannerStartWindow1 != null) {
+							var upload1Start = new Date(parseInt(term.bannerStartWindow1));
+							var upload1End = new Date(parseInt(term.bannerEndWindow1));
 
 							// Append notice for upload I start time
 							eventData = {
 								'type': "notice",
-								'title': term.code.getTermCodeDisplayName() + " Upload I Starts",
+								'title': term.termCode.getTermCodeDisplayName() + " Upload I Starts",
 								'time': upload1Start.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 								'date': upload1Start.toLocaleDateString(),
 								'caption': "",
@@ -235,7 +226,7 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 							// Append notice for upload I end time
 							eventData = {
 								'type': "notice",
-								'title': term.code.getTermCodeDisplayName() + " Upload I Ends",
+								'title': term.termCode.getTermCodeDisplayName() + " Upload I Ends",
 								'time': upload1End.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 								'date': upload1End.toLocaleDateString(),
 								'caption': "",
@@ -246,14 +237,14 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 							}
 						}
 
-						if (term.maintenanceDate2Start != null) {
-							var upload2Start = new Date(parseInt(term.maintenanceDate2Start));
-							var upload2End = new Date(parseInt(term.maintenanceDate2End));
+						if (term.bannerStartWindow2 != null) {
+							var upload2Start = new Date(parseInt(term.bannerStartWindow2));
+							var upload2End = new Date(parseInt(term.bannerEndWindow2));
 
 							// // Append notice for upload II start time
 							eventData = {
 								'type': "notice",
-								'title': term.code.getTermCodeDisplayName() + " Upload II Starts",
+								'title': term.termCode.getTermCodeDisplayName() + " Upload II Starts",
 								'time': upload2Start.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 								'date': upload2Start.toLocaleDateString(),
 								'caption': "",
@@ -267,7 +258,7 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 							// // Append notice for upload I end time
 							eventData = {
 								'type': "notice",
-								'title': term.code.getTermCodeDisplayName() + " Upload II Ends",
+								'title': term.termCode.getTermCodeDisplayName() + " Upload II Ends",
 								'time': upload2End.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }),
 								'date': upload2End.toLocaleDateString(),
 								'caption': "",
