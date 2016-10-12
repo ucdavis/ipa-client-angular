@@ -158,11 +158,6 @@
 										tooltip-append-to-body="true" confirm-button="removeActivity(sharedActivity)" message="Are you sure you want to remove this {{ sharedActivity.getCodeDescription() }}"
 										yes="Delete" no="Cancel" placement="right"></i>
 								</li>
-								<li class="add-activity" ng-class="{ 'add-selected-activity': view.state.uiState.selectedActivityId == sharedActivityId }"
-									ng-if="!isLocked()">
-									<i class="entypo-plus-circled text-success clickable" uib-tooltip="Add new shared {{ sharedActivity.getCodeDescription() }}"
-										tooltip-placement="right" tooltip-append-to-body="true"></i>
-								</li>
 							</ul>
 							<ul ng-if="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length > 0">
 								<li ng-repeat="activityType in view.state.courses.list[view.state.uiState.selectedCourseId].activityTypes track by $index">
@@ -185,11 +180,6 @@
 												yes="Delete" no="Cancel" placement="right"></i>
 											<i class="glyphicon glyphicon-warning-sign pull-right text-warning" uib-tooltip="Activity no longer matches standard pattern"
 												ng-show="activityId == view.state.uiState.selectedActivityId && view.state.uiState.selectedActivity.hasWarning"></i>
-										</li>
-										<li class="add-activity" ng-class="{ 'add-selected-activity': view.state.uiState.selectedActivityId == activityId }" ng-if="!isLocked()">
-											<i class="entypo-plus-circled text-success clickable" ng-class="{ 'text-success': view.state.uiState.selectedActivityId != activityId }"
-												uib-tooltip="Add new {{ sharedActivity.getCodeDescription() }}" tooltip-placement="right" tooltip-append-to-body="true"
-												ng-click="createActivity(activity, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"></i>
 										</li>
 									</ul>
 									<ul>
