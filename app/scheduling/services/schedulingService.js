@@ -73,10 +73,10 @@ schedulingApp.factory("schedulingService", this.schedulingService = function ($h
 
 			return deferred.promise;
 		},
-		createSharedActivity: function (activity) {
+		createSharedActivity: function (activityCode, sectionGroupId) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/schedulingView/sectionGroups/" + activity.sectionGroupId, activity, { withCredentials: true })
+			$http.post(serverRoot + "/api/schedulingView/sectionGroups/" + sectionGroupId + "/activities/" + activityCode, { withCredentials: true })
 				.success(function (payload) {
 					deferred.resolve(payload);
 				})
@@ -86,10 +86,10 @@ schedulingApp.factory("schedulingService", this.schedulingService = function ($h
 
 			return deferred.promise;
 		},
-		createActivity: function (activity) {
+		createActivity: function (activityCode, sectionId) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/schedulingView/sections/" + activity.sectionId, activity, { withCredentials: true })
+			$http.post(serverRoot + "/api/schedulingView/sections/" + sectionId + "/activities/" + activityCode, { withCredentials: true })
 				.success(function (payload) {
 					deferred.resolve(payload);
 				})

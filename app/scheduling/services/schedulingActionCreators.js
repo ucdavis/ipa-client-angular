@@ -47,9 +47,9 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		createSharedActivity: function (activity, sectionGroup) {
-			schedulingService.createSharedActivity(activity).then(function (newActivity) {
-				$rootScope.$emit('toast', { message: "Created new shared " + activity.getCodeDescription(), type: "SUCCESS" });
+		createSharedActivity: function (activityCode, sectionGroup) {
+			schedulingService.createSharedActivity(activityCode, sectionGroup.id).then(function (newActivity) {
+				$rootScope.$emit('toast', { message: "Created new shared " + activityCode.getActivityCodeDescription(), type: "SUCCESS" });
 				var action = {
 					type: CREATE_SHARED_ACTIVITY,
 					payload: {
@@ -62,9 +62,9 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		createActivity: function (activity, sectionGroup) {
-			schedulingService.createActivity(activity).then(function (newActivity) {
-				$rootScope.$emit('toast', { message: "Created new " + activity.getCodeDescription(), type: "SUCCESS" });
+		createActivity: function (activityCode, sectionId, sectionGroup) {
+			schedulingService.createActivity(activityCode, sectionId).then(function (newActivity) {
+				$rootScope.$emit('toast', { message: "Created new " + activityCode.getActivityCodeDescription(), type: "SUCCESS" });
 				var action = {
 					type: CREATE_ACTIVITY,
 					payload: {

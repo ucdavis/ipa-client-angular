@@ -128,12 +128,12 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			schedulingActionCreators.removeActivity(activity);
 		};
 
-		$scope.createSharedActivity = function (sharedActivity, sectionGroup) {
-			schedulingActionCreators.createSharedActivity(sharedActivity, sectionGroup);
+		$scope.createSharedActivity = function (activityCode, sectionGroup) {
+			schedulingActionCreators.createSharedActivity(activityCode, sectionGroup);
 		};
 
-		$scope.createActivity = function (activity, sectionGroup) {
-			schedulingActionCreators.createActivity(activity, sectionGroup);
+		$scope.createActivity = function (activityCode, sectionId, sectionGroup) {
+			schedulingActionCreators.createActivity(activityCode, sectionId, sectionGroup);
 		};
 
 		$scope.closeActivityDetails = function () {

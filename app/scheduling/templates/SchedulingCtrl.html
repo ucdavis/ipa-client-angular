@@ -144,10 +144,12 @@
 							No Sections
 						</p>
 						<div ng-show="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length">
+							<!-- All Sections header (or the first section if sequence pattern is numeric) -->
 							<div class="section-pattern" ng-show="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">All Sections</div>
 							<div class="section-pattern" ng-hide="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">
 								Section {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
 							</div>
+							<!-- List of shared activities -->
 							<ul ng-repeat="sharedActivityId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sharedActivityIds track by $index"
 								class="activity-group" ng-init="sharedActivity = view.state.activities.list[sharedActivityId];">
 								<li class="activity-item clickable" ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }" ng-click="setSelectedActivity(sharedActivityId)">
@@ -159,8 +161,18 @@
 								<li class="add-activity" ng-class="{ 'add-selected-activity': view.state.uiState.selectedActivityId == sharedActivityId }"
 									ng-if="!isLocked()">
 									<i class="entypo-plus-circled text-success clickable" uib-tooltip="Add new shared {{ sharedActivity.getCodeDescription() }}"
-										tooltip-placement="right" tooltip-append-to-body="true" ng-click="createSharedActivity(sharedActivity, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"></i>
+										tooltip-placement="right" tooltip-append-to-body="true"></i>
+								</li>
 							</ul>
+							<ul ng-if="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length > 0">
+								<li ng-repeat="activityType in view.state.courses.list[view.state.uiState.selectedCourseId].activityTypes track by $index">
+									<a ng-click="createSharedActivity(activityType, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"
+										class="clickable">
+										Add {{ activityType.getActivityCodeDescription() }}
+									</a>
+								</li>
+							</ul>
+							<!-- List of sections if the sectionGroup is a series -->
 							<ul ng-if="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">
 								<li class="section-item" ng-repeat="sectionId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds"
 									ng-init="section = view.state.sections.list[sectionId];">
@@ -178,6 +190,14 @@
 											<i class="entypo-plus-circled text-success clickable" ng-class="{ 'text-success': view.state.uiState.selectedActivityId != activityId }"
 												uib-tooltip="Add new {{ sharedActivity.getCodeDescription() }}" tooltip-placement="right" tooltip-append-to-body="true"
 												ng-click="createActivity(activity, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"></i>
+										</li>
+									</ul>
+									<ul>
+										<li ng-repeat="activityType in view.state.courses.list[view.state.uiState.selectedCourseId].activityTypes track by $index">
+											<a ng-click="createActivity(activityType, sectionId, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"
+												class="clickable">
+												Add {{ activityType.getActivityCodeDescription() }}
+											</a>
 										</li>
 									</ul>
 								</li>

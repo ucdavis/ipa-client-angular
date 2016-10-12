@@ -1,10 +1,10 @@
 // Returns false on null, undefined, zero characters, or only whitespace
-String.prototype.isEmpty = function() {
-	return (!this || this.length === 0 || !this.trim() );
+String.prototype.isEmpty = function () {
+	return (!this || this.length === 0 || !this.trim());
 };
 
 // Returns the appropriate suffix, e.g. 1st, 2nd, 3rd, 4th, etc.
-String.prototype.appendOrdinalSuffix = function() {
+String.prototype.appendOrdinalSuffix = function () {
 	var j = this % 10, k = this % 100;
 
 	if (j == 1 && k != 11) {
@@ -20,36 +20,36 @@ String.prototype.appendOrdinalSuffix = function() {
 };
 
 // Removes leading zeroes from a number
-String.prototype.toNumber = function() {
+String.prototype.toNumber = function () {
 	return Number(this).toString();
 };
 
 // Converts a 4-digit year to academic year format. Example: 2015 -> 2015-16
-String.prototype.yearToAcademicYear = function() {
+String.prototype.yearToAcademicYear = function () {
 	return this + "-" + (Number(this) + 1).toString().slice(-2);
 };
 
 // Converts 24 'military time' to 12 hour am/pm time
 String.prototype.toStandardTime = function () {
 	//If time is already in standard time then don't format.
-	if(this.indexOf('AM') > -1 || this.indexOf('PM') > -1) {
+	if (this.indexOf('AM') > -1 || this.indexOf('PM') > -1) {
 		return this;
 	} else {
-			//If value is the expected length for military time then process to standard time.
-		if(this.length == 8) {
-			var hour = this.substring ( 0,2 ); //Extract hour
-			var minutes = this.substring ( 3,5 ); //Extract minutes
+		//If value is the expected length for military time then process to standard time.
+		if (this.length == 8) {
+			var hour = this.substring(0, 2); //Extract hour
+			var minutes = this.substring(3, 5); //Extract minutes
 			var identifier = 'AM'; //Initialize AM PM identifier
 
-			if(hour === 12){ //If hour is 12 then should set AM PM identifier to PM
+			if (hour === 12) { //If hour is 12 then should set AM PM identifier to PM
 				identifier = 'PM';
 			}
-			if(hour === 0){ //If hour is 0 then set to 12 for standard time 12 AM
-				hour=12;
+			if (hour === 0) { //If hour is 0 then set to 12 for standard time 12 AM
+				hour = 12;
 			}
-			if(hour > 12){ //If hour is greater than 12 then convert to standard 12 hour format and set the AM PM identifier to PM
+			if (hour > 12) { //If hour is greater than 12 then convert to standard 12 hour format and set the AM PM identifier to PM
 				hour = hour - 12;
-				identifier='PM';
+				identifier = 'PM';
 			}
 			return hour + ':' + minutes + ' ' + identifier; //Return the constructed standard time
 		} else { //If value is not the expected length than just return the value as is
@@ -94,4 +94,44 @@ String.prototype.toFullDate = function () {
 	}
 
 	return moment(this, "YYYY-MM-DD").format('LL');
+};
+
+// Turns 'D' into 'Discussion'
+String.prototype.getActivityCodeDescription = function () {
+	var codeDescriptions = {
+		'%': "World Wide Web Electronic Discussion",
+		'0': "World Wide Web Virtual Lecture",
+		'1': "Conference",
+		'2': "Term Paper/Discussion",
+		'3': "Film Viewing",
+		'6': "Dummy Course",
+		'7': "Combined Schedule",
+		'8': "Project",
+		'9': "Extensive Writing or Discussion",
+		'A': "Lecture",
+		'B': "Lecture/Discussion",
+		'C': "Laboratory",
+		'D': "Discussion",
+		'E': "Seminar",
+		'F': "Fieldwork",
+		'G': "Discussion/Laboratory",
+		'H': "Laboratory/Discussion",
+		'I': "Internship",
+		'J': "Independent Study",
+		'K': "Workshop",
+		'L': "Lecture/Lab",
+		'O': "Clinic",
+		'P': "PE Activity",
+		'Q': "Listening",
+		'R': "Recitation",
+		'S': "Studio",
+		'T': "Tutorial",
+		'U': "Auto Tutorial",
+		'V': "Variable",
+		'W': "Practice",
+		'X': "Performance Instruction",
+		'Y': "Rehearsal",
+		'Z': "Term Paper"
+	};
+	return codeDescriptions[this];
 };
