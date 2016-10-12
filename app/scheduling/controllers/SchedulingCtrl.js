@@ -38,10 +38,16 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 
 		$scope.getSectionGroupDetails = function (sectionGroupId) {
 			var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroupId];
+			var course = $scope.view.state.courses.list[sectionGroup.courseId];
 
 			// Initialize sectionGroup sections if not done already
 			if (sectionGroup && sectionGroup.sectionIds === undefined) {
 				schedulingActionCreators.getSectionGroupDetails(sectionGroup);
+			}
+
+			// Initialize course activity types if not done already
+			if (course && course.activityTypes === undefined) {
+				schedulingActionCreators.getCourseActivityTypes(course);
 			}
 		};
 

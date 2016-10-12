@@ -36,6 +36,9 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 							});
 					});
 					return courses;
+				case FETCH_COURSE_ACTIVITY_TYPES:
+					courses.list[action.payload.course.id].activityTypes = action.payload.activityTypes;
+					return courses;
 				default:
 					return courses;
 			}

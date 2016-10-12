@@ -124,6 +124,20 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		getCourseActivityTypes: function (course) {
+			schedulingService.getCourseActivityTypes(course).then(function (activityTypes) {
+				var action = {
+					type: FETCH_COURSE_ACTIVITY_TYPES,
+					payload: {
+						activityTypes: activityTypes,
+						course: course
+					}
+				};
+				schedulingStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		getAllSectionGroupDetails: function (workgroupId, year, termCode) {
 			schedulingService.getAllSectionGroupDetails(workgroupId, year, termCode).then(function (payload) {
 				var action = {
