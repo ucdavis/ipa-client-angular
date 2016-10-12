@@ -5,7 +5,7 @@
 	<h3 style="text-align: center;">{{ sharedState.workgroup.name }} Workgroup</h3>
 
 	<div class="panel minimal minimal-gray">
-	<!-- 	nav tab  -->
+		<!-- 	nav tab  -->
 		<div class="panel-heading">
 			<uib-tabset active="activeWorkgroupTab" justified="false" class="panel-options pull-left nav-tabs">
 
@@ -19,36 +19,32 @@
 									<li ng-repeat="tagId in view.state.tags.ids">
 										<div class="row">
 											<div class="col-sm-5">
-												<input class="form-control" type="text" name="text"  size="30" ng-model="view.state.tags.list[tagId].name"
-													auto-input on-enter="updateTag(view.state.tags.list[tagId])" help-text-placement="top">
+												<input class="form-control" type="text" name="text" size="30" ng-model="view.state.tags.list[tagId].name" auto-input on-enter="updateTag(view.state.tags.list[tagId])"
+													help-text-placement="top">
 											</div>
 											<div class="col-sm-4">
-												<colorpicker type="text" color="view.state.tags.list[tagId].color"
-													on-change="updateTag(view.state.tags.list[tagId])" />
+												<colorpicker type="text" color="view.state.tags.list[tagId].color" on-change="updateTag(view.state.tags.list[tagId])" />
 											</div>
 											<div class="col-sm-3">
-												<a class="text-danger clickable btn-remove-tag"
-													confirm-button="removeTag(tagId)"
-													message="Are you sure you want to remove this tag"
-													yes="Remove" no="Cancel" placement="right"
-													aria-hidden="true">
+												<a class="text-danger clickable btn-remove-tag" confirm-button="removeTag(tagId)" message="Are you sure you want to remove this tag"
+													yes="Remove" no="Cancel" placement="right" aria-hidden="true">
 													<i class="entypo-cancel-squared"></i><small>Remove</small>
 												</a>
 											</div>
 										</div>
 
 									</li>
-									<li>      <!-- add button -->
+									<li>
+										<!-- add button -->
 										<div class="row">
 											<div class="col-sm-5">
-												<input class="form-control" type="text" name="text"  size="30" placeholder="Add New Tag"
-												ng-model="view.state.tags.newTag.name">
+												<input class="form-control" type="text" name="text" size="30" placeholder="Add New Tag" ng-model="view.state.tags.newTag.name">
 											</div>
 											<div class="col-sm-4">
 												<colorpicker type="text" color="view.state.tags.newTag.color" />
 											</div>
 											<div class="col-sm-3">
-												<button type="button" class="btn btn-blue btn-block" ng-click="addTag()">Add</button>
+												<button type="button" class="btn btn-blue btn-block" ng-click="addTag()" ng-disabled="!view.state.tags.newTag.name">Add</button>
 											</div>
 										</div>
 									</li>
@@ -66,22 +62,19 @@
 								<p ng-hide="view.state.locations.ids.length">No locations</p>
 								<ul class="locations-input">
 									<li ng-repeat="locationId in view.state.locations.ids">
-										<input class="form-control" type="text" name="text"  size="30" ng-model="view.state.locations.list[locationId].description"
+										<input class="form-control" type="text" name="text" size="30" ng-model="view.state.locations.list[locationId].description"
 											auto-input on-enter="updateLocation(view.state.locations.list[locationId])" help-text-placement="top">
-										<a class="text-danger clickable"
-											confirm-button="removeLocation(locationId)"
-											message="Are you sure you want to remove this location"
-											yes="Remove" no="Cancel" placement="right"
-											aria-hidden="true">
+										<a class="text-danger clickable" confirm-button="removeLocation(locationId)" message="Are you sure you want to remove this location"
+											yes="Remove" no="Cancel" placement="right" aria-hidden="true">
 											<i class="entypo-cancel-squared"></i><small>Remove</small>
 										</a>
 
 									</li>
-									<li>      <!-- add button -->
+									<li>
+										<!-- add button -->
 										<div class="form-horizontal">
-											<input class="form-control" type="text" name="text"  size="30" placeholder="Add New Location"
-												ng-model="view.state.locations.newLocation.description">
-											<button type="button" class="btn btn-blue" ng-click="addLocation()">Add</button>
+											<input class="form-control" type="text" name="text" size="30" placeholder="Add New Location" ng-model="view.state.locations.newLocation.description">
+											<button type="button" class="btn btn-blue" ng-click="addLocation()" ng-disabled="!view.state.locations.newLocation.description">Add</button>
 										</div>
 									</li>
 								</ul>
@@ -92,21 +85,18 @@
 
 				<uib-tab index="'people'" heading="People &amp; Roles" select="setActiveTab('people')">
 					<div class="users-view" ng-controller="UserCtrl">
-						<div class="row" ng-hide="view.state.users">				<!-- this is loading gif -->
+						<div class="row" ng-hide="view.state.users">
+							<!-- this is loading gif -->
 							<spinner></spinner>
 						</div>
-						<div class="row" ng-show="view.state.users">				<!-- this is search bar -->
+						<div class="row" ng-show="view.state.users">
+							<!-- this is search bar -->
 							<div class="col-md-4 pull-right">
 								<div class="input-group search-input">
-									<input type="text" ng-model="view.state.users.searchQuery" placeholder="Search by name or login ID"
-													uib-typeahead="person.name for person in searchUsers($viewValue)"
-													ng-change="view.state.users.newUser = {}"
-													typeahead-loading="view.loadingPeople"
-													typeahead-no-results="view.noResults"
-													typeahead-wait-ms="400"
-													typeahead-min-length="2"
-													typeahead-on-select="searchUsersResultSelected($item, $model, $label, $event)"
-													class="form-control typeahead">
+									<input type="text" ng-model="view.state.users.searchQuery" placeholder="Search by name or login ID" uib-typeahead="person.name for person in searchUsers($viewValue)"
+										ng-change="view.state.users.newUser = {}" typeahead-loading="view.loadingPeople" typeahead-no-results="view.noResults"
+										typeahead-wait-ms="400" typeahead-min-length="2" typeahead-on-select="searchUsersResultSelected($item, $model, $label, $event)"
+										class="form-control typeahead">
 									<ul class="typeahead-status dropdown-menu" ng-show="view.noResults">
 										<li><a>No results</a></li>
 									</ul>
@@ -120,8 +110,10 @@
 											Add Person
 										</button>
 									</span>
-								</div><!-- /input-group -->
-							</div><!-- /.col-lg-6 -->
+								</div>
+								<!-- /input-group -->
+							</div>
+							<!-- /.col-lg-6 -->
 						</div>
 						<!--   Table  -->
 						<div class="row" ng-show="view.state.users">
@@ -132,11 +124,11 @@
 										<colgroup>
 											<col span="1" style="width: 20%;">
 											<col span="1" style="width: 20%;">
-											<col ng-repeat="roleId in view.state.roles.ids track by $index"
-												span="1" ng-style="{ 'width' : 55 / (view.state.roles.ids.length) + '%' }">
-												<col span="1" style="width: 5%;">
+											<col ng-repeat="roleId in view.state.roles.ids track by $index" span="1" ng-style="{ 'width' : 55 / (view.state.roles.ids.length) + '%' }">
+											<col span="1" style="width: 5%;">
 										</colgroup>
-										<thead>							<!-- title for name, email, and checkboxes-->
+										<thead>
+											<!-- title for name, email, and checkboxes-->
 											<tr>
 												<th class="table-name-padding">Name</th>
 												<th class="table-email-padding">Email</th>
@@ -146,7 +138,8 @@
 												<th></th>
 											</tr>
 										</thead>
-										<tbody>  						<!-- people lists-->
+										<tbody>
+											<!-- people lists-->
 											<tr class="user-list-item" ng-repeat="userId in view.state.users.ids track by userId">
 												<td>
 													{{ view.state.users.list[userId].name }}
@@ -155,16 +148,12 @@
 													{{ view.state.users.list[userId].email }}
 												</td>
 												<td class="role-selector" ng-repeat="roleId in view.state.roles.ids track by $index">
-													<input type="checkbox" ng-checked="userHasRole(userId, view.state.roles.list[roleId])"
-														ng-click="toggleUserRole(userId, roleId)">
+													<input type="checkbox" ng-checked="userHasRole(userId, view.state.roles.list[roleId])" ng-click="toggleUserRole(userId, roleId)">
 												</td>
 												<td class="hover-ui">
-													<span confirm-button="removeUserFromWorkgroup(userId)"
-														message="Are you sure you want to remove this person"
-														yes="Remove" no="Cancel" placement="left"
-														class="entypo-minus-circled text-danger"
-														aria-hidden="true" style="width: 10%;" uib-tooltip="Remove"
-														tooltip-placement="top"></span>
+													<span confirm-button="removeUserFromWorkgroup(userId)" message="Are you sure you want to remove this person" yes="Remove"
+														no="Cancel" placement="left" class="entypo-minus-circled text-danger" aria-hidden="true" style="width: 10%;"
+														uib-tooltip="Remove" tooltip-placement="top"></span>
 												</td>
 											</tr>
 										</tbody>
@@ -173,11 +162,11 @@
 							</div>
 						</div>
 					</div>
-					</div>
-
-				</uib-tab>
-			</uib-tabset>
-
 		</div>
+
+		</uib-tab>
+		</uib-tabset>
+
 	</div>
+</div>
 </div>
