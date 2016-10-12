@@ -7,177 +7,177 @@
  */
 schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParams', 'Activity', 'Term', 'schedulingActionCreators', 'authService',
 		this.SchedulingCtrl = function ($scope, $rootScope, $routeParams, Activity, Term, schedulingActionCreators, authService) {
-			$scope.workgroupId = $routeParams.workgroupId;
-			$scope.year = $routeParams.year;
-			$scope.termShortCode = $routeParams.termShortCode;
-			$scope.term = Term.prototype.getTermByTermShortCodeAndYear($scope.termShortCode, $scope.year);
-			$scope.view = {};
+		$scope.workgroupId = $routeParams.workgroupId;
+		$scope.year = $routeParams.year;
+		$scope.termShortCode = $routeParams.termShortCode;
+		$scope.term = Term.prototype.getTermByTermShortCodeAndYear($scope.termShortCode, $scope.year);
+		$scope.view = {};
 
-			$scope.days = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
-			$scope.standardPatterns = Activity.prototype.getStandardTimes();
+		$scope.days = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
+		$scope.standardPatterns = Activity.prototype.getStandardTimes();
 
-			$rootScope.$on('schedulingStateChanged', function (event, data) {
-				$scope.view.state = data.state;
+		$rootScope.$on('schedulingStateChanged', function (event, data) {
+			$scope.view.state = data.state;
+		});
+
+		$scope.setSelectedSectionGroup = function (sectionGroupId) {
+			var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroupId];
+			schedulingActionCreators.setSelectedSectionGroup(sectionGroup);
+			$scope.getSectionGroupDetails(sectionGroupId);
+		};
+
+		$scope.toggleCheckedSectionGroup = function (sectionGroupId) {
+			schedulingActionCreators.toggleCheckedSectionGroup(sectionGroupId);
+			$scope.getSectionGroupDetails(sectionGroupId);
+		};
+
+		$scope.setSelectedActivity = function (activityId) {
+			var activity = $scope.view.state.activities.list[activityId];
+			schedulingActionCreators.setSelectedActivity(activity);
+		};
+
+		$scope.getSectionGroupDetails = function (sectionGroupId) {
+			var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroupId];
+
+			// Initialize sectionGroup sections if not done already
+			if (sectionGroup && sectionGroup.sectionIds === undefined) {
+				schedulingActionCreators.getSectionGroupDetails(sectionGroup);
+			}
+		};
+
+		$scope.getWeekDays = function (dayIndicator, dayIndicators) {
+			var dayArr = dayIndicator.split('');
+
+			var dayStr = '';
+			angular.forEach(dayArr, function (day, i) {
+				if (day === '1') { dayStr = dayStr + $scope.days[i]; }
 			});
 
-			$scope.setSelectedSectionGroup = function (sectionGroupId) {
-				var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroupId];
-				schedulingActionCreators.setSelectedSectionGroup(sectionGroup);
-				$scope.getSectionGroupDetails(sectionGroupId);
-			};
+			return dayStr;
+		};
 
-			$scope.toggleCheckedSectionGroup = function (sectionGroupId) {
-				schedulingActionCreators.toggleCheckedSectionGroup(sectionGroupId);
-				$scope.getSectionGroupDetails(sectionGroupId);
-			};
+		$scope.getMeridianTime = function (time) {
+			time = Activity.prototype.getMeridianTime(time);
+			return ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ' ' + time.meridian;
+		};
 
-			$scope.setSelectedActivity = function (activityId) {
-				var activity = $scope.view.state.activities.list[activityId];
-				schedulingActionCreators.setSelectedActivity(activity);
-			};
+		$scope.toggleCalendarDay = function (index) {
+			schedulingActionCreators.toggleDay(index);
+		};
 
-			$scope.getSectionGroupDetails = function (sectionGroupId) {
-				var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroupId];
+		$scope.toggleTagFilter = function (tagId) {
+			var tagFilters = $scope.view.state.filters.enabledTagIds;
+			var tagIndex = tagFilters.indexOf(tagId);
 
-				// Initialize sectionGroup sections if not done already
-				if (sectionGroup && sectionGroup.sectionIds === undefined) {
-					schedulingActionCreators.getSectionGroupDetails(sectionGroup);
-				}
-			};
+			if (tagIndex < 0) {
+				tagFilters.push(tagId);
+			} else {
+				tagFilters.splice(tagIndex, 1);
+			}
 
-			$scope.getWeekDays = function(dayIndicator, dayIndicators) {
-				var dayArr = dayIndicator.split('');
+			schedulingActionCreators.updateTagFilters(tagFilters);
+		};
 
-				var dayStr = '';
-				angular.forEach(dayArr, function(day, i) {
-					if (day === '1') { dayStr = dayStr + $scope.days[i]; }
+		$scope.toggleLocationFilter = function (locationId) {
+			var locationFilters = $scope.view.state.filters.enabledLocationIds;
+			var locationIndex = locationFilters.indexOf(locationId);
+
+			if (locationIndex < 0) {
+				locationFilters.push(locationId);
+			} else {
+				locationFilters.splice(locationIndex, 1);
+			}
+
+			schedulingActionCreators.updateLocationFilters(locationFilters);
+		};
+
+		$scope.clearLocation = function () {
+			var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+			activity.locationId = 0;
+			$scope.saveActivity();
+		};
+
+		$scope.toggleActivityDay = function (index) {
+			var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+			var dayArr = activity.dayIndicator.split('');
+			dayArr[index] = Math.abs(1 - parseInt(dayArr[index])).toString();
+			activity.dayIndicator = dayArr.join('');
+			$scope.saveActivity();
+		};
+
+		$scope.setActivityStandardTime = function (time) {
+			var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+			activity.frequency = 1;
+			activity.startTime = time.start;
+			activity.endTime = time.end;
+			$scope.saveActivity();
+		};
+
+		$scope.saveActivity = function () {
+			var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+			schedulingActionCreators.updateActivity(activity);
+		};
+
+		$scope.removeActivity = function (activity) {
+			schedulingActionCreators.removeActivity(activity);
+		};
+
+		$scope.createSharedActivity = function (sharedActivity, sectionGroup) {
+			schedulingActionCreators.createSharedActivity(sharedActivity, sectionGroup);
+		};
+
+		$scope.createActivity = function (activity, sectionGroup) {
+			schedulingActionCreators.createActivity(activity, sectionGroup);
+		};
+
+		$scope.closeActivityDetails = function () {
+			schedulingActionCreators.setSelectedActivity();
+		};
+
+		$scope.toggleCheckAll = function () {
+			var sectionGroupIdsToCheck = $scope.view.state.sectionGroups.ids.filter(function (sgId) {
+				return $scope.matchesFilters($scope.view.state.sectionGroups.list[sgId]);
+			});
+			schedulingActionCreators.toggleCheckAll(sectionGroupIdsToCheck);
+
+			// Initialize all sectionGroup sections if not done already
+			if ($scope.view.state.uiState.allSectionGroupsDetailsCached === false) {
+				schedulingActionCreators.getAllSectionGroupDetails(
+					$scope.workgroupId, $scope.year, $scope.term.code);
+			}
+		};
+
+		$scope.isLocked = function () {
+			var termState = authService.getTermStateByTermCode($scope.term.code);
+			return termState ? termState.isLocked : true;
+		};
+
+		$scope.matchesFilters = function (sectionGroup) {
+			var satisfiesTagFilters = (
+				$scope.view.state.filters.enabledTagIds.length === 0 ||
+				$scope.view.state.courses.list[sectionGroup.courseId].matchesTagFilters
+			);
+
+			var satisfiesLocationFilters = (
+				$scope.view.state.filters.enabledLocationIds.length === 0 ||
+				matchesLocationFilters(sectionGroup)
+			);
+
+			return satisfiesTagFilters && satisfiesLocationFilters;
+		};
+
+		var matchesLocationFilters = function (sectionGroup) {
+			var sectionGroupLocationIds = $scope.view.state.activities.ids
+				.filter(function (activityId) {
+					return $scope.view.state.activities.list[activityId].sectionGroupId == sectionGroup.id;
+				}).map(function (activityId) {
+					return $scope.view.state.activities.list[activityId].locationId;
 				});
 
-				return dayStr;
-			};
-
-			$scope.getMeridianTime = function (time) {
-				time = Activity.prototype.getMeridianTime(time);
-				return ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ' ' + time.meridian;
-			};
-
-			$scope.toggleCalendarDay = function (index) {
-				schedulingActionCreators.toggleDay(index);
-			};
-
-			$scope.toggleTagFilter = function (tagId) {
-				var tagFilters = $scope.view.state.filters.enabledTagIds;
-				var tagIndex = tagFilters.indexOf(tagId);
-
-				if (tagIndex < 0) {
-					tagFilters.push(tagId);
-				} else {
-					tagFilters.splice(tagIndex, 1);
-				}
-
-				schedulingActionCreators.updateTagFilters(tagFilters);
-			};
-
-			$scope.toggleLocationFilter = function (locationId) {
-				var locationFilters = $scope.view.state.filters.enabledLocationIds;
-				var locationIndex = locationFilters.indexOf(locationId);
-
-				if (locationIndex < 0) {
-					locationFilters.push(locationId);
-				} else {
-					locationFilters.splice(locationIndex, 1);
-				}
-
-				schedulingActionCreators.updateLocationFilters(locationFilters);
-			};
-
-			$scope.clearLocation = function () {
-				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
-				activity.locationId = 0;
-				$scope.saveActivity();
-			};
-
-			$scope.toggleActivityDay = function(index) {
-				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
-				var dayArr = activity.dayIndicator.split('');
-				dayArr[index] = Math.abs(1 - parseInt(dayArr[index])).toString();
-				activity.dayIndicator = dayArr.join('');
-				$scope.saveActivity();
-			};
-
-			$scope.setActivityStandardTime = function (time) {
-				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
-				activity.frequency = 1;
-				activity.startTime = time.start;
-				activity.endTime = time.end;
-				$scope.saveActivity();
-			};
-
-			$scope.saveActivity = function () {
-				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
-				schedulingActionCreators.updateActivity(activity);
-			};
-
-			$scope.removeActivity = function (activity) {
-				schedulingActionCreators.removeActivity(activity);
-			};
-
-			$scope.createSharedActivity = function (sharedActivity, sectionGroup) {
-				schedulingActionCreators.createSharedActivity(sharedActivity, sectionGroup);
-			};
-
-			$scope.createActivity = function (activity, sectionGroup) {
-				schedulingActionCreators.createActivity(activity, sectionGroup);
-			};
-
-			$scope.closeActivityDetails = function () {
-				schedulingActionCreators.setSelectedActivity();
-			};
-
-			$scope.toggleCheckAll = function () {
-				var sectionGroupIdsToCheck = $scope.view.state.sectionGroups.ids.filter(function (sgId) {
-					return $scope.matchesFilters($scope.view.state.sectionGroups.list[sgId]);
-				});
-				schedulingActionCreators.toggleCheckAll(sectionGroupIdsToCheck);
-
-				// Initialize all sectionGroup sections if not done already
-				if ($scope.view.state.uiState.allSectionGroupsDetailsCached === false) {
-					schedulingActionCreators.getAllSectionGroupDetails(
-						$scope.workgroupId, $scope.year, $scope.term.code);
-				}
-			};
-
-			$scope.isLocked = function () {
-				var termState = authService.getTermStateByTermCode($scope.term.code);
-				return termState ? termState.isLocked : true;
-			};
-
-			$scope.matchesFilters = function (sectionGroup) {
-				var satisfiesTagFilters = (
-					$scope.view.state.filters.enabledTagIds.length === 0 ||
-					$scope.view.state.courses.list[sectionGroup.courseId].matchesTagFilters
-				);
-
-				var satisfiesLocationFilters = (
-					$scope.view.state.filters.enabledLocationIds.length === 0 ||
-					matchesLocationFilters(sectionGroup)
-				);
-
-				return satisfiesTagFilters && satisfiesLocationFilters;
-			};
-
-			var matchesLocationFilters = function (sectionGroup) {
-				var sectionGroupLocationIds = $scope.view.state.activities.ids
-					.filter(function (activityId) {
-						return $scope.view.state.activities.list[activityId].sectionGroupId == sectionGroup.id;
-					}).map(function (activityId) {
-						return $scope.view.state.activities.list[activityId].locationId;
-					});
-
-				return $scope.view.state.filters.enabledLocationIds.some(function (locationId) {
-					return sectionGroupLocationIds.indexOf(locationId) >= 0;
-				});
-			};
+			return $scope.view.state.filters.enabledLocationIds.some(function (locationId) {
+				return sectionGroupLocationIds.indexOf(locationId) >= 0;
+			});
+		};
 		}
 ]);
 

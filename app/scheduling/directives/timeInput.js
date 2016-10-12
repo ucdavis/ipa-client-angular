@@ -6,7 +6,7 @@
  *				on-change="saveChanges()"
  * 				link-minute-hour="true"></time-input>
  */
-schedulingApp.directive("timeInput", this.timeInput = function($timeout) {
+schedulingApp.directive("timeInput", this.timeInput = function ($timeout) {
 	return {
 		restrict: "E",
 		templateUrl: 'timeInput.html',
@@ -145,12 +145,13 @@ schedulingApp.directive("timeInput", this.timeInput = function($timeout) {
 			};
 
 			scope.updateTime = function (time) {
+				$timeout.cancel(scope.timer);
 				if (time.meridian === 'PM' && time.hours !== 12) { time.hours = time.hours + 12; }
 				else if (time.meridian === 'AM' && time.hours === 12) { time.hours = 0; }
 
 				scope.time = ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ":00";
 
-				$timeout(function () {
+				scope.timer = $timeout(function () {
 					scope.onChange();
 				}, parseInt(scope.onChangeDelay));
 			};

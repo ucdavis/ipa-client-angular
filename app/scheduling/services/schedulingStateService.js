@@ -195,9 +195,6 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 						scope.fillActivityDetails(details, activities);
 					});
 					return activities;
-				case UPDATE_ACTIVITY:
-					activities.list[action.payload.activity.id] = new Activity(action.payload.activity);
-					return activities;
 				case REMOVE_ACTIVITY:
 					var activityIndex = activities.ids.indexOf(action.payload.activity.id);
 					activities.ids.splice(activityIndex, 1);
