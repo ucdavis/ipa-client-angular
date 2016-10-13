@@ -192,5 +192,11 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 		$scope.startTeachingCallConfig.messageSummary = messageInput.replace(/\r?\n/g, '<br />');
 	};
 
+	// Generate the assignments root url
+	// example: http://localhost:9000/assignments/10/2012/
+
 	$scope.urlRoot = location.href;
+	var splitUrl = $scope.urlRoot.split('/');
+	var endOfUrl = splitUrl[splitUrl.length-1];
+	$scope.urlRoot = $scope.urlRoot.replace(endOfUrl, '');
 });
