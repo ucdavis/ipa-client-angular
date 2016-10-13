@@ -897,3 +897,16 @@ li.active-term .dropdown-term-row {
 	width: 250px;
 	color: black;
 }
+
+
+.uib-datepicker .uib-title {
+   border: none;
+}
+
+.uib-daypicker .btn {
+   border: none;
+}
+
+.uib-datepicker-popup {
+   width: 285px;
+}
