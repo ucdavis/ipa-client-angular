@@ -164,6 +164,7 @@ p.activity-list-header {
   padding: 5px;
   background: #FAFAFA;
   color: #333;
+  border-bottom: 1px solid #6AA4C1;
 }
 .activity-item.active {
   background: #578090;
@@ -266,32 +267,12 @@ ul.activity-group {
   position: relative;
   margin: 10px 15px;
 }
-li.add-activity {
-  position: absolute;
-  width: 100%;
-  border-top: 1px solid #6AA4C1;
-}
-ul.activity-group:hover li.add-activity {
-  width: calc(100% - 1em);
-  border-top: 1px solid green;
-}
-li.add-activity i {
-  font-size: 120%;
-  visibility: hidden;
-  right: -1em;
-  position: absolute;
-  bottom: -0.6em;
-  color: green;
-}
 ul.activity-group:hover li.add-selected-activity {
   border-color: #777;
 }
 li.add-selected-activity i {
   color: white;
   text-shadow: 0 1px 1px #333;
-}
-ul.activity-group:hover li.add-activity i {
-  visibility: visible;
 }
 .delete-activity {
   display: none;
@@ -327,4 +308,32 @@ i.selected-section-group-remove {
 .activity-page-title > p {
   font-size: 12px;
   margin: 0;
+}
+
+.add-activity-list {
+  margin: 10px 15px;
+  position: relative;
+}
+
+.add-activity-list ul {
+  background-color: #ffffff;
+  opacity: 0;
+  position: absolute;
+  left: 1.5em;
+  top: 0;
+  width: 90%;
+
+  -webkit-transition: opacity 100ms ease-in;
+      -moz-transition: opacity 100ms ease-in;
+      -ms-transition: opacity 100ms ease-in;
+        -o-transition: opacity 100ms ease-in;
+          transition: opacity 100ms ease-in;
+}
+
+.add-activity-list:hover ul {
+  opacity: 1;
+}
+
+.add-activity-list ul li {
+  margin: 3px 6px;
 }

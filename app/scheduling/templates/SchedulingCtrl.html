@@ -154,19 +154,22 @@
 								class="activity-group" ng-init="sharedActivity = view.state.activities.list[sharedActivityId];">
 								<li class="activity-item clickable" ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }" ng-click="setSelectedActivity(sharedActivityId)">
 									<span>{{ sharedActivity.getCodeDescription() }}</span>
-									<i class="entypo-minus-circled pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove shared {{ sharedActivity.getCodeDescription() }}"
+									<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove shared {{ sharedActivity.getCodeDescription() }}"
 										tooltip-append-to-body="true" confirm-button="removeActivity(sharedActivity)" message="Are you sure you want to remove this {{ sharedActivity.getCodeDescription() }}"
 										yes="Delete" no="Cancel" placement="right"></i>
 								</li>
 							</ul>
-							<ul ng-if="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length > 0">
-								<li ng-repeat="activityType in view.state.courses.list[view.state.uiState.selectedCourseId].activityTypes track by $index">
-									<a ng-click="createSharedActivity(activityType, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"
-										class="clickable">
-										Add {{ activityType.getActivityCodeDescription() }}
-									</a>
-								</li>
-							</ul>
+							<div ng-if="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length > 0" class="add-activity-list entypo-plus-squared">
+								<ul>
+									<li ng-repeat="activityType in view.state.courses.list[view.state.uiState.selectedCourseId].activityTypes track by $index"
+										class="activity-item">
+										<a ng-click="createSharedActivity(activityType, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"
+											class="clickable">
+											Add {{ activityType.getActivityCodeDescription() }}
+										</a>
+									</li>
+								</ul>
+							</div>
 							<!-- List of sections if the sectionGroup is a series -->
 							<ul ng-if="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">
 								<li class="section-item" ng-repeat="sectionId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds"
@@ -175,21 +178,24 @@
 									<ul class="activity-group" ng-repeat="activityId in section.activityIds track by $index" ng-init="activity = view.state.activities.list[activityId];">
 										<li class="activity-item clickable" ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }" ng-click="setSelectedActivity(activityId)">
 											<span>{{ activity.getCodeDescription() }}</span>
-											<i class="entypo-minus-circled pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove {{ activity.getCodeDescription() }}"
+											<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove {{ activity.getCodeDescription() }}"
 												tooltip-append-to-body="true" confirm-button="removeActivity(activity)" message="Are you sure you want to remove this {{ activity.getCodeDescription() }}"
 												yes="Delete" no="Cancel" placement="right"></i>
 											<i class="glyphicon glyphicon-warning-sign pull-right text-warning" uib-tooltip="Activity no longer matches standard pattern"
 												ng-show="activityId == view.state.uiState.selectedActivityId && view.state.uiState.selectedActivity.hasWarning"></i>
 										</li>
 									</ul>
-									<ul>
-										<li ng-repeat="activityType in view.state.courses.list[view.state.uiState.selectedCourseId].activityTypes track by $index">
-											<a ng-click="createActivity(activityType, sectionId, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"
-												class="clickable">
-												Add {{ activityType.getActivityCodeDescription() }}
-											</a>
-										</li>
-									</ul>
+									<div class="add-activity-list entypo-plus-squared">
+										<ul>
+											<li ng-repeat="activityType in view.state.courses.list[view.state.uiState.selectedCourseId].activityTypes track by $index"
+												class="activity-item">
+												<a ng-click="createActivity(activityType, sectionId, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"
+													class="clickable">
+													Add {{ activityType.getActivityCodeDescription() }}
+												</a>
+											</li>
+										</ul>
+									</div>
 								</li>
 							</ul>
 						</div>
