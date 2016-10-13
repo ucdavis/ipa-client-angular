@@ -7,7 +7,7 @@
  * Central location for sharedState information.
  */
 
-summaryApp.service('summaryStateService', function ($rootScope, $log, Course, ScheduleTermState, SectionGroup, Section, Tag, Event, Activity, TeachingCall) {
+summaryApp.service('summaryStateService', function ($rootScope, $log, Course, ScheduleTermState, SectionGroup, Section, Tag, Event, Activity, TeachingCall, TeachingCallReceipt) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -378,6 +378,30 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					return teachingCalls;
 			}
 		},
+		_teachingCallReceiptReducers: function (action, teachingCallReceipts) {
+			var scope = this;
+			var data = action.payload;
+
+			switch (action.type) {
+				case INIT_STATE:
+					teachingCallReceipts = {
+						ids: [],
+						list: {}
+					};
+					var teachingCallReceiptsList = {};
+					var length = action.payload.teachingCallReceipts ? action.payload.teachingCallReceipts.length : 0;
+					for (var i = 0; i < length; i++) {
+						var teachingCallReceiptData = action.payload.teachingCallReceipts[i];
+						teachingCallReceiptsList[teachingCallReceiptData.id] = new TeachingCallReceipt(teachingCallReceiptData);
+					}
+					teachingCallReceipts.ids = _array_sortIdsByProperty(teachingCallReceiptsList, ["notifiedAt"]);
+					teachingCallReceipts.list = teachingCallReceiptsList;
+
+					return teachingCallReceipts;
+				default:
+					return teachingCallReceipts;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -393,7 +417,7 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 			newState.events = scope._eventReducers(action, scope._state.events);
 			newState.instructorCourses = scope._instructorCourses(action, scope._state.instructorCourses);
 			newState.teachingCalls = scope._teachingCallReducers(action, scope._state.teachingCalls);
-
+			newState.teachingCallReceipts = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipts);
 			scope._state = newState;
 
 			$rootScope.$emit('summaryStateChanged', scope._state);

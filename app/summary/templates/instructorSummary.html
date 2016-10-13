@@ -38,6 +38,13 @@
 						</div>
 					</div>
 				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Submitted Preferences
+						</div>
+					</div>
+				</div>
 			</div>
 			<!-- table header -->
 
@@ -51,6 +58,9 @@
 				</div>
 				<div class="course-table__row-detail">
 					{{ teachingCall.dueDate.toFullDate() }}
+				</div>
+				<div class="course-table__row-detail">
+					<i class="glyphicon glyphicon-ok" ng-if="teachingCall.preferencesSubmitted"></i>
 				</div>
 			</div>
 		</div>

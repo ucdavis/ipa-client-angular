@@ -55,6 +55,15 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 				return (teachingCall.sentToFederation && userRoles.indexOf('federationInstructor') >= 0) ||
 					(teachingCall.sentToSenate && userRoles.indexOf('senateInstructor') >= 0);
 			});
+
+			$scope.view.userTeachingCalls.forEach( function(userTeachingCall) {
+				$scope.view.state.teachingCallReceipts.ids.forEach( function (teachingCallReceiptId) {
+					var teachingCallReceipt = $scope.view.state.teachingCallReceipts.list[teachingCallReceiptId];
+					if (teachingCallReceipt.teachingCallId === userTeachingCall.id) {
+						userTeachingCall.preferencesSubmitted = true;
+					}
+				})
+			})
 		};
 	}]);
 
