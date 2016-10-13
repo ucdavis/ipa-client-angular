@@ -329,7 +329,7 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 
 								slotMeeting.startTime = activity.startTime;
 								slotMeeting.endTime = activity.endTime;
-								if (activity.locationDescription.length === 0) {
+								if (!activity.locationDescription) {
 									slotMeeting.location = "To Be Announced";
 								} else {
 									slotMeeting.location = activity.locationDescription;
