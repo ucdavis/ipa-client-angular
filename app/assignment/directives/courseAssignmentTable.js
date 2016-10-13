@@ -116,9 +116,13 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 												courseHtml += instructor.fullName;
 											}
 											if (scope.isTermLocked(sectionGroup.termCode) === false) {
-												courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\" data-toggle=\"tooltip\"";
-												courseHtml += " data-placement=\"top\" data-original-title=\"Unassign\" data-container=\"body\"";
-												courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"></i>";
+												var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
+													"<div class='text-center'><button class='btn btn-red' data-event-type='deleteAssignment' data-teaching-assignment-id='" + teachingAssignment.id + "'>Delete</button>" +
+													"<button class='btn btn-white' data-event-type='dismissDeleteAssignmentPop'>Cancel</button></div>";
+
+												courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
+												courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\" data-event-type=\"deleteAssignmentPop\" " +
+													"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
 											}
 											courseHtml += "</div>"; // Ending Teaching assignment div
 										}
@@ -236,12 +240,26 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 						assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment, scope.view.state.userInterface.scheduleId);
 					}
 				}
-				// Unapproving a teachingAssignment
-				else if ($el.hasClass('assignment-remove')) {
+				
+				// Open Assignment deletion confirmation popover
+				else if ($el.data('event-type') == 'deleteAssignmentPop') {
+					// Delete course confirmation
+					$el.popover('show');
+				}
+
+				// User has confirmed deletion of the assignment
+				else if ($el.data('event-type') == 'deleteAssignment') {
 					teachingAssignmentId = $el.data('teaching-assignment-id');
 					teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 					assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
 				}
+
+				// Close Assignment deletion confirmation popover
+				else if ($el.data('event-type') == 'dismissDeleteAssignmentPop') {
+					// Dismiss the delete course dialog
+					$el.closest("div.popover").popover('hide');
+				}
+
 			}); // end UI event handler
 		} // end link
 	};

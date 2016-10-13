@@ -892,3 +892,8 @@ li.active-term .dropdown-term-row {
 .view-state-toggle {
 	font-size: 12px;
 }
+
+.popover-content {
+	width: 250px;
+	color: black;
+}
