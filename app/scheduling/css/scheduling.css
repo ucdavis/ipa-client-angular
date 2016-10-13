@@ -132,7 +132,7 @@ body {
 }
 .activity-list.collapsed {
   flex: 0 0 40%;
-  background-color: #F9F9F9;
+  background-color: #FEFEFE;
   -webkit-box-shadow: inset 0px 0px 5px 1px rgba(235,235,235,1);
   -moz-box-shadow: inset 0px 0px 5px 1px rgba(235,235,235,1);
   box-shadow: inset 0px 0px 5px 1px rgba(235,235,235,1);
@@ -164,10 +164,11 @@ p.activity-list-header {
   padding: 5px;
   background: #FAFAFA;
   color: #333;
+  border: 1px solid #EEEEEE;
   border-bottom: 1px solid #6AA4C1;
 }
 .activity-item.active {
-  background: #578090;
+  background: #6AA4C1;
   color: white;
   border: none;
 }
@@ -194,15 +195,20 @@ p.activity-details-header {
   float: none;
 }
 a.fc-event,
-a.fc-event:hover,
 .ui-widget a.fc-event {
   font-size: 10px ;
   line-height: 1em;
   border-radius: 0;
   cursor: pointer;
 }
-a.fc-event:hover,
-.ui-widget a.fc-event:hover {
+a.unavailability-event,
+.ui-widget a.unavailability-event {
+  opacity: 0.8;
+  border-style: dashed;
+  border-width: 2px;
+}
+a.activity-event:hover,
+.ui-widget a.activity-event:hover {
   border-color: #000 !important;
 }
 .fc-unthemed .fc-today {
