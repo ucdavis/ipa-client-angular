@@ -23,7 +23,12 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 			scope.isTermLocked = function (termCode) {
 				var termState = scope.view.state.scheduleTermStates.list[termCode];
-				return termState.isLocked;
+
+				if (termState) {
+					return termState.isLocked;
+				} else {
+					return false;
+				}
 			};
 
 			// Build a string of html to display a column header (course, terms, etc.)
