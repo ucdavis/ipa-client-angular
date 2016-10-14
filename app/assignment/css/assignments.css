@@ -893,8 +893,7 @@ li.active-term .dropdown-term-row {
 	font-size: 12px;
 }
 
-.popover-content {
-	width: 250px;
+.tile-assignment .popover-content {
 	color: black;
 }
 
