@@ -48,6 +48,16 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 				});
 			};
 
+			scope.getFirstYearTerm = function () {
+				var yearTerms = scope.getYearTerms();
+
+				// Does a yearTerm exist?
+				if (yearTerms && yearTerms.length > 0) {
+					return yearTerms[0];
+				}
+				return null;
+			}
+
 			/**
 			 * Return true only if the user is viewing a workgroup they are not part of
 			 * (happens if the current user is admin and managing a workgroup they're not in)

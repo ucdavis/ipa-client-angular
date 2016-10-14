@@ -6,7 +6,7 @@
 
 			<!-- logo -->
 			<div class="logo">
-				<a ng-href="/summary/{{ workgroupId }}/{{ year }}">
+				<a ng-href="/summary/{{ workgroupId }}/{{ year }}" target="_self">
 					<h1 style="color: #fff; margin:0;">IPA</h1>
 				</a>
 			</div>
@@ -39,7 +39,7 @@
 				<span class="title">Howdy, {{ sharedState.displayName }}</span>
 			</li>
 			<li ng-class="{ 'active': currentBaseHref == 'summary' }" ng-if="sharedState.isAcademicPlanner && sharedState.isInstructor">
-				<a>
+				<a ng-href="/summary/{{ workgroupId }}/{{ year }}" target="_self">
 					<i class="entypo-home"></i>
 					<span class="title">Home</span>
 				</a>
@@ -146,7 +146,11 @@
 				</ul>
 			</li>
 			<li ng-class="{ 'active': currentBaseHref == 'scheduling' }" ng-if="userHasRoles(['academicPlanner'])">
-				<a>
+				<a ng-if="getFirstYearTerm()" ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ getFirstYearTerm().shortCode }}">
+					<i class="entypo-calendar"></i>
+					<span class="title">Scheduling</span>
+				</a>
+				<a ng-if="getFirstYearTerm() == false">
 					<i class="entypo-calendar"></i>
 					<span class="title">Scheduling</span>
 				</a>
