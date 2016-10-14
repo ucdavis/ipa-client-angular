@@ -226,17 +226,27 @@
 												Custom
 										</label>
 									</div>
-									<div ng-show="!view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom">
+									<div ng-hide="view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom">
 
-										<ui-select ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].locationId" theme="bootstrap" search-enabled="false"
-											close-on-select="true" on-select="saveActivity()">
-											<ui-select-match placeholder="Select location...">
-												{{ view.state.locations.list[view.state.activities.list[view.state.uiState.selectedActivityId].locationId].description }}
-											</ui-select-match>
-											<ui-select-choices repeat="locationId in view.state.locations.ids track by $index">
-												<div ng-bind-html="view.state.locations.list[locationId].description | highlight: $select.search"></div>
-											</ui-select-choices>
-										</ui-select>
+										<!-- Show the locations dropdown only if the current workgroup has at least a location set -->
+										<div ng-if="view.state.locations.ids.length > 0">
+
+											<ui-select ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].locationId" theme="bootstrap" search-enabled="false"
+												close-on-select="true" on-select="saveActivity()">
+												<ui-select-match placeholder="Select location...">
+													{{ view.state.locations.list[view.state.activities.list[view.state.uiState.selectedActivityId].locationId].description }}
+												</ui-select-match>
+												<ui-select-choices repeat="locationId in view.state.locations.ids track by $index">
+													<div ng-bind-html="view.state.locations.list[locationId].description | highlight: $select.search"></div>
+												</ui-select-choices>
+											</ui-select>
+
+										</div>
+
+										<!-- IF the workgroup does not have any custom locations -->
+										<div ng-if="view.state.locations.ids.length === 0">
+											<small>No custom locations are available, <br />please add some in the workgroup configuration</small>
+										</div>
 
 									</div>
 								</div>
