@@ -21,7 +21,7 @@ angular.module('sharedApp')
 						localStorage.setItem('JWT', token);
 
 						deferred.resolve(response);
-					} else if(response.data != null && response.data.redirect != null && response.data.redirect.length > 0) {
+					} else if (response.data != null && response.data.redirect != null && response.data.redirect.length > 0) {
 						// Received a request to redirect to CAS. Obey!
 						localStorage.removeItem('JWT');
 						localStorage.removeItem('userRoles');
@@ -42,7 +42,7 @@ angular.module('sharedApp')
 						$log.error("Authentication request received a 403. Redirecting to access denied page ...");
 						localStorage.clear();
 						$window.location.href = "/access-denied.html";
-					} else if(error.status == -1) {
+					} else if (error.status == -1) {
 						message = "Request was aborted or server was not found. Check that the backend is running.";
 						$log.error(message);
 						self.redirectToErrorPage(error, message);
@@ -65,7 +65,7 @@ angular.module('sharedApp')
 				localStorage.setItem('termStates', JSON.stringify(data.termStates));
 
 				// If workgroupId or year NOT set, and the ignoreFallBackUrl is not set to true
-				if ( !(workgroupId && year) && !ignoreFallBackUrl) {
+				if (!(workgroupId && year) && !ignoreFallBackUrl) {
 					this.fallbackToDefaultUrl();
 					$rootScope.$emit('sharedStateSet', this.getSharedState());
 					return false;
@@ -90,7 +90,7 @@ angular.module('sharedApp')
 				scope.validateToken(token).then(
 					// Success
 					function (response) {
-						if(scope.validateState(response.data, workgroupId, year, ignoreFallBackUrl)) {
+						if (scope.validateState(response.data, workgroupId, year, ignoreFallBackUrl)) {
 							deferred.resolve();
 						} else {
 							deferred.reject();
@@ -119,7 +119,7 @@ angular.module('sharedApp')
 
 				try {
 					userRoles = JSON.parse(localStorage.getItem('userRoles')) || [];
-				} catch(err) {
+				} catch (err) {
 					$log.error(err);
 				}
 
@@ -141,7 +141,7 @@ angular.module('sharedApp')
 
 				try {
 					termStates = JSON.parse(localStorage.getItem('termStates')) || [];
-				} catch(err) {
+				} catch (err) {
 					$log.error(err);
 				}
 
@@ -156,19 +156,19 @@ angular.module('sharedApp')
 
 			isAdmin: function () {
 				var userRoles = this.getUserRoles();
-				return userRoles.some(function(ur) { return ur.roleName == "admin" && ur.workgroupId === 0; });
+				return userRoles.some(function (ur) { return ur.roleName == "admin" && ur.workgroupId === 0; });
 			},
 
 			isAcademicPlanner: function () {
 				var userRoles = this.getUserRoles();
 				var workgroup = this.getCurrentWorkgroup();
-				return userRoles.some(function(userRole) { return userRole.roleName == "academicPlanner" && userRole.workgroupId == workgroup.id; });
+				return userRoles.some(function (userRole) { return userRole.roleName == "academicPlanner" && userRole.workgroupId == workgroup.id; });
 			},
 
 			isInstructor: function () {
 				var userRoles = this.getUserRoles();
 				var workgroup = this.getCurrentWorkgroup();
-				return userRoles.some(function(userRole) { return (userRole.roleName == "senateInstructor" || userRole.roleName == "federationInstructor") && userRole.workgroupId == workgroup.id; });
+				return userRoles.some(function (userRole) { return (userRole.roleName == "senateInstructor" || userRole.roleName == "federationInstructor") && userRole.workgroupId == workgroup.id; });
 			},
 
 			getCurrentWorkgroup: function () {
@@ -186,23 +186,24 @@ angular.module('sharedApp')
 			fallbackToDefaultUrl: function () {
 				var scope = this;
 				var userRoles = scope.getUserRoles();
+
+				// Loop over the user roles to look for user workgroups
 				for (var i = 0; i < userRoles.length; i++) {
 					userRole = userRoles[i];
 
+					// Find the first valid workgroup in the roles and do the redirect
 					if (userRole.workgroupId > 0) {
 						var workgroupId = userRole.workgroupId;
 						var year = new Date().getFullYear();
 						var url = '/' + workgroupId + '/' + year;
 						$location.path(url);
 						return;
-					} else if (userRole.workgroupId === 0 && userRole.roleName == "admin") {
-						// scope.isAdmin = true;
 					}
 
 				}
 
 				// If no workgroups...
-				if (scope.isAdmin) {
+				if (scope.isAdmin()) {
 					// Admin users can go to the administration view
 					$window.location.href = "/admin";
 					return;
@@ -256,7 +257,7 @@ angular.module('sharedApp')
 			 * @param  {[type]} message [description]
 			 * @return {[type]}         [description]
 			 */
-			redirectToErrorPage: function(error, message) {
+			redirectToErrorPage: function (error, message) {
 				var stack = "method: " + error.config.method + ", url: " + error.config.url + ", status code: " + error.status;
 
 				var errorForm = "<form id=\"unknownErrorForm\" method=\"POST\" action=\"/unknown-error.html\" style=\"display: none;\">";
