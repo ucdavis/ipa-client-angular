@@ -44,12 +44,12 @@
 					<span class="title">Home</span>
 				</a>
 				<ul class="visible">
-					<li ng-class="{ 'active': currentBaseHref == 'summary' && currentEndHref == 'workgroup' }">
+					<li ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'workgroup' }">
 						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=workgroup">
 							Workgroup Summary
 						</a>
 					</li>
-					<li ng-class="{ 'active': currentBaseHref == 'summary' && currentEndHref == 'instructor' }">
+					<li ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'instructor' }">
 						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=instructor">
 							Instructor Summary
 						</a>
