@@ -1,9 +1,21 @@
-sharedApp.directive("newCourse", this.newCourse = function (courseActionCreators) {
+sharedApp.directive("newCourse", this.newCourse = function (courseActionCreators, courseService) {
 	return {
 		restrict: 'E',
 		templateUrl: 'newCourse.html',
 		replace: true,
 		link: function (scope, element, attrs) {
+
+			scope.newCourseIsValid = function () {
+				return scope.view.state.courses.newCourse.title && scope.view.state.courses.newCourse.sequencePattern;
+			};
+
+			scope.searchCourses = function (query) {
+				return courseService.searchCourses(query).then(function (courseSearchResults) {
+					return courseSearchResults.slice(0, 20);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				});
+			};
 
 			scope.searchCoursesResultSelected = function ($item, $model, $label, $event) {
 				scope.view.state.courses.newCourse.title = $item.title;

@@ -15,8 +15,7 @@
 
 	<div class="panel-body no-padding">
 		<div class="section-group-details" style="padding: 1em;">
-			<census-chart census="view.state.courses.list[view.selectedEntity.courseId].census"
-				term="view.state.terms.list[view.selectedEntity.termCode]"
+			<census-chart census="view.state.courses.list[view.selectedEntity.courseId].census" term="view.state.terms.list[view.selectedEntity.termCode]"
 				course-id="view.selectedEntity.courseId"></census-chart>
 			<hr />
 			<table class="table sections-table" style="margin-bottom: 5px;" ng-if="view.selectedEntity.sectionIds.length">
@@ -40,24 +39,16 @@
 						<!-- TODO: Get enrollment live from DW? -->
 						<!--<td>{{ section.enrollment }}</td>-->
 						<td>
-							<input auto-input ng-if="!isLocked()"
-								type="number" min="0"
-								class="form-control section-seats-edit text-center"
-								on-enter="updateSection(view.state.sections.list[sectionId])"
-								on-blur="updateSection(view.state.sections.list[sectionId])"
-								help-text-placement="left"
-								ng-model="view.state.sections.list[sectionId].seats" />
+							<input auto-input ng-if="!isLocked()" type="number" min="0" class="form-control section-seats-edit text-center" on-enter="updateSection(view.state.sections.list[sectionId])"
+								on-blur="updateSection(view.state.sections.list[sectionId])" help-text-placement="left" ng-model="view.state.sections.list[sectionId].seats"
+							/>
 
-							<span ng-if="isLocked()"
-								ng-bind="view.state.sections.list[sectionId].seats"></span>
+							<span ng-if="isLocked()" ng-bind="view.state.sections.list[sectionId].seats"></span>
 						</td>
 						<td>
-							<a class="text-danger clickable"
-								uib-tooltip="Delete" ng-if="!isLocked()"
-								confirm-button="deleteSection(view.state.sections.list[sectionId])"
-								message="Are you sure you want to remove this section"
-								yes="Delete" no="Cancel" placement="left">
-									<i class="entypo-cancel-squared"></i>
+							<a class="text-danger clickable" uib-tooltip="Delete" ng-if="!isLocked()" confirm-button="deleteSection(view.state.sections.list[sectionId])"
+								message="Are you sure you want to remove this section" yes="Delete" no="Cancel" placement="left">
+								<i class="entypo-cancel-squared"></i>
 							</a>
 						</td>
 					</tr>
@@ -70,18 +61,19 @@
 					</tr>
 				</tbody>
 			</table>
-			<div ng-if="view.selectedEntity.sectionIds.length == 0"
-				class="text-center text-muted" style="padding: 1em;">No sections available</div>
-			<div class="col-sm-12 text-center" ng-if="nextSequence() && !isLocked()">
-					<button class="btn btn-white" uib-tooltip="Add a section" tooltip-placement="right"
-						ng-click="addSection()">Create {{ nextSequence() }}</button>
-			</div>
-			<div class="text-center text-muted" ng-if="nextSequence() == ''">
-				You need to set the course sequence pattern before you can create sections
+			<spinner ng-show="view.selectedEntity.id && !view.selectedEntity.sectionIds"></spinner>
+			<div ng-show="view.selectedEntity.sectionIds">
+				<div ng-if="view.selectedEntity.sectionIds.length == 0" class="text-center text-muted" style="padding: 1em;">No sections available</div>
+				<div class="col-sm-12 text-center" ng-if="nextSequence() && !isLocked()">
+					<button class="btn btn-white" uib-tooltip="Add a section" tooltip-placement="right" ng-click="addSection()">Create {{ nextSequence() }}</button>
+				</div>
+				<div class="text-center text-muted" ng-if="nextSequence() == ''">
+					You need to set the course sequence pattern before you can create sections
+				</div>
 			</div>
 			<div class="col-sm-12 text-center" ng-if="!view.selectedEntity.id">
-					<p>No Course Offering for {{view.selectedEntity.termCode.getTermCodeDisplayName()}}</p>
-					<button class="btn btn-primary" ng-click="addSectionGroup()" ng-if="!isLocked()">Create Offering</button>
+				<p>No Course Offering for {{view.selectedEntity.termCode.getTermCodeDisplayName()}}</p>
+				<button class="btn btn-primary" ng-click="addSectionGroup()" ng-if="!isLocked()">Create Offering</button>
 			</div>
 		</div>
 	</div>

@@ -25,7 +25,6 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				BEGIN_IMPORT_MODE,
 				END_IMPORT_MODE,
 				SEARCH_IMPORT_COURSES,
-				ADD_SECTION_GROUP,
 				UPDATE_TAG_FILTERS,
 				TOGGLE_UNPUBLISHED_COURSES
 			];
@@ -54,16 +53,6 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 						// Highlight single cell if a sectionGroup is selected
 						$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]').addClass("selected-td");
 					}
-
-					return;
-				}
-
-				// Set the correct section-group-id on the newly created sectionGroup cell
-				if (data.action.type == ADD_SECTION_GROUP) {
-					var sectionGroup = data.action.payload.sectionGroup;
-
-					$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]')
-						.data('section-group-id', sectionGroup.id);
 
 					return;
 				}
@@ -298,7 +287,7 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 			var term = state.terms.list[termCode];
 			var isLocked = term ? term.isLocked() : true;
 
-			row += "<td data-term-code=\"" + termCode + "\" data-section-group-id=\"" + sectionGroupId + "\" class=\"sg-cell\"><div>";
+			row += "<td data-term-code=\"" + termCode + "\" class=\"sg-cell\"><div>";
 			if (isLocked) {
 				row += plannedSeats;
 			} else {
@@ -328,20 +317,18 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 var savePlannedSeats = function ($el, scope, courseActionCreators) {
 	var courseId = $el.closest("tr").data('course-id');
 	var termCode = $el.closest("td").data('term-code').toString();
-	var sectionGroupId = $el.closest("td").data('section-group-id');
+	var sectionGroup = _.findWhere(scope.view.state.sectionGroups.list, { courseId: courseId, termCode: termCode });
 	var plannedSeats = parseInt($el.val());
-	var sectionGroup;
 
 	if (isNaN(plannedSeats)) { return; }
 
-	if (sectionGroupId) {
+	if (sectionGroup) {
 		// Ignore if unchanged
-		if (scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats == plannedSeats) {
+		if (sectionGroup.plannedSeats == plannedSeats) {
 			return;
 		}
 
 		// Save existing sectionGroup
-		sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 		sectionGroup.plannedSeats = plannedSeats;
 		courseActionCreators.updateSectionGroup(sectionGroup);
 	} else {
