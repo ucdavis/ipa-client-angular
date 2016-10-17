@@ -28,9 +28,10 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 		} else {
 			// Otherwise redirect to the default view
 			var isAdmin = authService.isAdmin();
-			var isAcademicPlanner = authService.isAcademicPlanner();
-			var isInstructor = authService.isInstructor();
-			if (isAcademicPlanner || isAdmin) {
+			var isAcademicPlanner = authService.hasRole('academicPlanner');
+			var isReviewer = authService.hasRole('reviewer');
+			var isInstructor = authService.hasRoles(['senateInstructor', 'federationInstructor']);
+			if (isAcademicPlanner || isReviewer || isAdmin) {
 				$scope.setActiveMode("workgroup");
 			}
 			else if (isInstructor) {

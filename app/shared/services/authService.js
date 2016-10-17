@@ -159,16 +159,20 @@ angular.module('sharedApp')
 				return userRoles.some(function (ur) { return ur.roleName == "admin" && ur.workgroupId === 0; });
 			},
 
-			isAcademicPlanner: function () {
+			hasRole: function (roleName) {
 				var userRoles = this.getUserRoles();
 				var workgroup = this.getCurrentWorkgroup();
-				return userRoles.some(function (userRole) { return userRole.roleName == "academicPlanner" && userRole.workgroupId == workgroup.id; });
+				return userRoles.some(function (userRole) { return userRole.roleName == roleName && userRole.workgroupId == workgroup.id; });
 			},
 
-			isInstructor: function () {
+			hasRoles: function (roleNames) {
+				if (roleNames instanceof Array === false) {
+					$log.error("Parameter passed to hasRoles() is not valid", roleNames);
+					return false;
+				}
 				var userRoles = this.getUserRoles();
 				var workgroup = this.getCurrentWorkgroup();
-				return userRoles.some(function (userRole) { return (userRole.roleName == "senateInstructor" || userRole.roleName == "federationInstructor") && userRole.workgroupId == workgroup.id; });
+				return userRoles.some(function (userRole) { return roleNames.indexOf(userRole.roleName) >= 0 && userRole.workgroupId == workgroup.id; });
 			},
 
 			getCurrentWorkgroup: function () {
@@ -233,8 +237,9 @@ angular.module('sharedApp')
 					displayName: localStorage.getItem('displayName') || '',
 					termStates: this.getTermStates(),
 					isAdmin: this.isAdmin(),
-					isAcademicPlanner: this.isAcademicPlanner(),
-					isInstructor: this.isInstructor()
+					isAcademicPlanner: this.hasRole('academicPlanner'),
+					isReviewer: this.hasRole('reviewer'),
+					isInstructor: this.hasRoles(['senateInstructor', 'federationInstructor'])
 				};
 			},
 
