@@ -1,5 +1,6 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
-<div>
+<div ng-hide="view.state" style="margin-top:300px;">
+	<spinner></spinner>
 </div>
 <div ng-if="view.state && view.state.activeTeachingCall.id" class="teaching-call-form-container">
 	<div class="margin-bottom-30">
