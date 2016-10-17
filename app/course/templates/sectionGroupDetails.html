@@ -1,8 +1,9 @@
 <div class="panel panel-primary panel-highlight">
 	<div class="panel-heading">
 		<div class="panel-title">
-			<h4 ng-init="parentCourse = view.state.courses.list[view.selectedEntity.courseId]">
-				{{ parentCourse.subjectCode }} {{ parentCourse.courseNumber }}
+			<h4>
+				{{ view.state.courses.list[view.selectedEntity.courseId].subjectCode }} {{ view.state.courses.list[view.selectedEntity.courseId].courseNumber
+				}}
 				<br>
 				<small>{{ view.selectedEntity.termCode.getTermCodeDisplayName() }}</small>
 			</h4>
