@@ -35,6 +35,8 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 			}
 			else if (isInstructor) {
 				$scope.setActiveMode("instructor");
+			} else {
+				$scope.setActiveMode("unknown");
 			}
 		}
 
@@ -56,8 +58,8 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 					(teachingCall.sentToSenate && userRoles.indexOf('senateInstructor') >= 0);
 			});
 
-			$scope.view.userTeachingCalls.forEach( function(userTeachingCall) {
-				$scope.view.state.teachingCallReceipts.ids.forEach( function (teachingCallReceiptId) {
+			$scope.view.userTeachingCalls.forEach(function (userTeachingCall) {
+				$scope.view.state.teachingCallReceipts.ids.forEach(function (teachingCallReceiptId) {
 					var teachingCallReceipt = $scope.view.state.teachingCallReceipts.list[teachingCallReceiptId];
 					if (teachingCallReceipt.teachingCallId === userTeachingCall.id) {
 						userTeachingCall.preferencesSubmitted = true;
