@@ -221,7 +221,9 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						.map(function (section) { return section.id; });
 					return sectionGroups;
 				case CREATE_SECTION:
-					sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.push(action.payload.section.id);
+					var sectionGroup = sectionGroups.list[action.payload.section.sectionGroupId];
+					if (!sectionGroup.sectionIds) { sectionGroup.sectionIds = []; }
+					sectionGroup.sectionIds.push(action.payload.section.id);
 					return sectionGroups;
 				case REMOVE_SECTION:
 					var sectionIdIndex = sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.indexOf(action.payload.section.id);
