@@ -151,7 +151,7 @@
 													<input type="checkbox" ng-checked="userHasRole(userId, view.state.roles.list[roleId])" ng-click="toggleUserRole(userId, roleId)">
 												</td>
 												<td class="hover-ui">
-													<span confirm-button="removeUserFromWorkgroup(userId)" message="Are you sure you want to remove this person" yes="Remove"
+													<span confirm-button="removeUserFromWorkgroup(userId)" message="This will completely remove this person from the workgroup, are you sure?" yes="Remove"
 														no="Cancel" placement="left" class="entypo-minus-circled text-danger" aria-hidden="true" style="width: 10%;"
 														uib-tooltip="Remove" tooltip-placement="top"></span>
 												</td>
