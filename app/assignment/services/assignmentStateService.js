@@ -711,6 +711,12 @@ assignmentApp.service('assignmentStateService', function (
 
 					userInterface.enabledTerms = enabledTerms;
 
+					// Check localStorage for saved termFilter settings
+					var termFiltersBlob = localStorage.getItem("termFilters");
+					if (termFiltersBlob) {
+						userInterface.enabledTerms.ids = deserializeTermFiltersBlob(termFiltersBlob);
+					}
+
 					return userInterface;
 				case SWITCH_MAIN_VIEW:
 					if (userInterface === undefined) {
@@ -732,6 +738,8 @@ assignmentApp.service('assignmentStateService', function (
 						// Toggle off
 						userInterface.enabledTerms.ids.splice(idx, 1);
 					}
+					var termFiltersBlob = serializeTermFilters(userInterface.enabledTerms.ids);
+					localStorage.setItem("termFilters", termFiltersBlob);
 					return userInterface;
 				default:
 					return userInterface;
@@ -818,3 +826,34 @@ orderTermsChronologically = function (terms) {
 
 	return terms;
 };
+
+// Creates a buildfield to store enabled term filters
+// Always 9 digits (skips 4th unused term), and in chronologic order
+// Example: "101010001"
+serializeTermFilters = function (termFilters) {
+	var termsBlob = "";
+	var orderedTerms = [5, 6, 7, 8, 9, 10, 1, 2, 3];
+
+	orderedTerms.forEach( function (term) {
+		if (termFilters.indexOf(term) > -1) {
+			termsBlob += "1";
+		} else {
+			termsBlob += "0";
+		}
+	});
+	return termsBlob;
+}
+
+deserializeTermFiltersBlob = function (termFiltersBlob) {
+	var termFiltersArray = [];
+	var orderedTerms = [5, 6, 7, 8, 9, 10, 1, 2, 3];
+
+	for (var i = 0; i < orderedTerms.length; i++) {
+
+		if (termFiltersBlob[i] == "1") {
+			termFiltersArray.push(orderedTerms[i]);
+		}
+	}
+
+	return termFiltersArray;
+}
