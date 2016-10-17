@@ -350,17 +350,30 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 			$scope.updateTeachingCallReceipt = function(markAsDone) {
 				var teachingCallReceipt = $scope.view.state.activeTeachingCall.teachingCallReceipt;
 
-				if (markAsDone) {
-					teachingCallReceipt.isDone = true;
-				}
+				// Update TeachingCallReceipt
+				if (teachingCallReceipt.id) {
+					if (markAsDone) {
+						teachingCallReceipt.isDone = true;
+					}
 
-				assignmentActionCreators.updateTeachingCallReceipt(teachingCallReceipt);
+					assignmentActionCreators.updateTeachingCallReceipt(teachingCallReceipt);
+				}
 			};
 
 			$scope.isScheduleTermLocked = function(term) {
 				var termCode = $scope.termToTermCode(term);
 
 				return $scope.view.state.scheduleTermStates.list[termCode].isLocked;
+			};
+
+			$scope.submitTeachingCall = function() {
+				var teachingCallReceipt = $scope.view.state.activeTeachingCall.teachingCallReceipt;
+
+				if (teachingCallReceipt.id) {
+					teachingCallReceipt.isDone = true;
+
+					assignmentActionCreators.submitTeachingCall(teachingCallReceipt, $scope.workgroupId, $scope.year);
+				}
 			};
 
 			$scope.prepareTeachingCall = function () {

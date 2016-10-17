@@ -6,7 +6,7 @@
  * Service in the workgroupApp.
  * Central location for sharedState information.
  */
-assignmentApp.service('assignmentActionCreators', function (assignmentStateService, assignmentService, $rootScope, Role) {
+assignmentApp.service('assignmentActionCreators', function (assignmentStateService, assignmentService, $rootScope, $window, Role) {
 	return {
 		getInitialState: function (workgroupId, year, tab) {
 			assignmentService.getInitialState(workgroupId, year).then(function (payload) {
@@ -109,7 +109,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 		},
 		updateTeachingCallReceipt: function (teachingCallReceipt) {
 			assignmentService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
-				$rootScope.$emit('toast', { message: "Updated Reponse", type: "SUCCESS" });
+				$rootScope.$emit('toast', { message: "Updated Preferences", type: "SUCCESS" });
 				var action = {
 					type: UPDATE_TEACHING_CALL_RECEIPT,
 					payload: {
@@ -117,6 +117,14 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 					}
 				};
 				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		submitTeachingCall: function (teachingCallReceipt, workgroupId, year) {
+			assignmentService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
+				var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor";
+				$window.location.href = instructorSummaryUrl;
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});

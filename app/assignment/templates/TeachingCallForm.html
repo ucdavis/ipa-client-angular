@@ -1,7 +1,19 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
+
 <div ng-hide="view.state" style="margin-top:300px;">
 	<spinner></spinner>
 </div>
+
+
+<!-- handle lack of active teaching call -->
+<div ng-if="view.state && !view.state.activeTeachingCall.id">
+		<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+			<p class="lead">You are not in a {{sharedState.workgroup.name}} {{ year }}-{{ nextYear }} Teaching Call</p>
+<br />
+			<p class="lead">If you feel this is in error please contact the Academic Planner for Psychology.</p>
+		</div>
+</div>
+
 <div ng-if="view.state && view.state.activeTeachingCall.id" class="teaching-call-form-container">
 	<div class="margin-bottom-30">
 		<h3 class="text-align--center">
@@ -154,23 +166,20 @@
 	<!-- Submit button -->
 	<div class="row teaching-call-form-submit-container">
 		<div class="container-fluid pull-right">
-			<button type="button" class="btn btn-default"
-			 confirm-button="updateTeachingCallReceipt(true)"
+			<button ng-if="!view.state.activeTeachingCall.teachingCallReceipt.isDone" type="button" class="btn btn-default"
+			 confirm-button="submitTeachingCall()"
 			 confirm-is-enabled="!view.state.activeTeachingCall.teachingCallReceipt.isDone"
 			 btn-class="btn-primary"
-			 message="Are you sure you want to submit the preferences for this term?"
+			 message="Are you sure you want to submit your preferences?"
 			 yes="Confirm" no="Cancel" placement="top">
-				{{ view.state.activeTeachingCall.teachingCallReceipt.isDone ? 'Update Preferences' : 'Submit Preferences' }}
+				Submit Preferences
 			</button>
+
+			<button ng-if="view.state.activeTeachingCall.teachingCallReceipt.isDone"
+				ng-click="updateTeachingCallReceipt(true)" type="button" class="btn btn-default">
+				Update Preferences
+			</button>
+
 		</div>
 	</div>
-</div>
-
-<!-- handle lack of active teaching call -->
-<div ng-if="view.state && !view.state.activeTeachingCall.id">
-		<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
-			<p class="lead">You are not in a {{sharedState.workgroup.name}} {{ year }}-{{ nextYear }} Teaching Call</p>
-<br />
-			<p class="lead">If you feel this is in error please contact the Academic Planner for Psychology.</p>
-		</div>
 </div>
