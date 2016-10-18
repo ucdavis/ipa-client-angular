@@ -489,7 +489,7 @@ table.courses-table:not(.locked-courses-table) tr:not(.term-totals):hover td:not
   z-index: 9999;
 }
 table.courses-table tr td.ui-overlay,
-th.ui-overlay {
+table.courses-table th.ui-overlay {
   visibility: hidden;
   border: 0px !important;
   position: relative;
@@ -500,11 +500,11 @@ th.ui-overlay {
 }
 table.grayed-out-courses-table td:not(.new-course-td):not(.import-course),
 table.grayed-out-courses-table th {
+  pointer-events: none;
   opacity: 0.5;
 }
 table.locked-courses-table td:not(.new-course-td):not(.import-course),
 table.locked-courses-table th {
-  pointer-events: none;
   cursor: default;
 }
 .add-before {

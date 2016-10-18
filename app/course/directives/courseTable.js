@@ -379,5 +379,5 @@ var getTotalsRow = function (termsToRender, state) {
 };
 
 var hasWriteAccess = function (sharedState) {
-	return sharedState.isAcademicPlanner || sharedState.currentUser.isAdmin();
+	return sharedState.currentUser.hasRole('academicPlanner', sharedState.workgroup.id) || sharedState.currentUser.isAdmin();
 };
