@@ -65,8 +65,8 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 					if (teachingCallReceipt.teachingCallId === userTeachingCall.id) {
 						userTeachingCall.preferencesSubmitted = true;
 					}
-				})
-			})
+				});
+			});
 		};
 	}]);
 

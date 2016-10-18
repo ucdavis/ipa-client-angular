@@ -357,6 +357,7 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 				case TOGGLE_UNPUBLISHED_COURSES:
 					uiState = {
 						tableLocked: false,
+						tableGrayedOut: false,
 						selectedCourseId: null,
 						selectedTermCode: null,
 						massImportMode: false,
@@ -368,10 +369,12 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					return uiState;
 				case NEW_COURSE:
 					uiState.tableLocked = true;
+					uiState.tableGrayedOut = true;
 					return uiState;
 				case CREATE_COURSE:
 					uiState.selectedCourseId = action.payload.course.id;
 					uiState.tableLocked = false;
+					uiState.tableGrayedOut = false;
 					return uiState;
 				case CELL_SELECTED:
 					uiState.selectedCourseId = action.payload.courseId;
@@ -383,15 +386,18 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					return uiState;
 				case CLOSE_NEW_COURSE_DETAILS:
 					uiState.tableLocked = false;
+					uiState.tableGrayedOut = false;
 					return uiState;
 				case BEGIN_IMPORT_MODE:
 					uiState.tableLocked = true;
+					uiState.tableGrayedOut = true;
 					uiState.massImportMode = true;
 					uiState.selectedCourseId = null;
 					uiState.selectedTermCode = null;
 					return uiState;
 				case END_IMPORT_MODE:
 					uiState.tableLocked = false;
+					uiState.tableGrayedOut = false;
 					uiState.massImportMode = false;
 					uiState.massImportCode = null;
 					uiState.massImportYear = null;

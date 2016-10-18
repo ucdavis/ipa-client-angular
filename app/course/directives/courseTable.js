@@ -59,14 +59,27 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 				scope.view.state = data.state;
 
-				if (data.state.uiState.tableLocked) {
-					element.addClass("disabled-courses-table");
-				} else {
-					element.removeClass("disabled-courses-table");
-				}
-
 				// Clear the table
 				element.empty();
+
+				var userHasWriteAccess = hasWriteAccess(scope.sharedState);
+				if (!userHasWriteAccess) {
+					data.state.uiState.tableLocked = true;
+				}
+
+				// Lock table if appropriate
+				if (data.state.uiState.tableLocked) {
+					element.addClass("locked-courses-table");
+				} else {
+					element.removeClass("locked-courses-table");
+				}
+
+				// Gray out table if appropriate
+				if (data.state.uiState.tableGrayedOut) {
+					element.addClass("grayed-out-courses-table");
+				} else {
+					element.removeClass("grayed-out-courses-table");
+				}
 
 				// Render the header
 				// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
@@ -285,10 +298,10 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 
 			// Determine if the term is readonly
 			var term = state.terms.list[termCode];
-			var isLocked = term ? term.isLocked() : true;
+			var termIsLocked = term ? term.isLocked() : true;
 
 			row += "<td data-term-code=\"" + termCode + "\" class=\"sg-cell\"><div>";
-			if (isLocked) {
+			if (termIsLocked || state.uiState.tableLocked) {
 				row += plannedSeats;
 			} else {
 				if (requiresAttention) {
@@ -363,4 +376,8 @@ var getTotalsRow = function (termsToRender, state) {
 	row += "</tr>";
 
 	if (state.courses.ids.length) { return row; }
+};
+
+var hasWriteAccess = function (sharedState) {
+	return sharedState.isAcademicPlanner || sharedState.isAdmin;
 };

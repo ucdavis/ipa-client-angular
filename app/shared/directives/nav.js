@@ -58,7 +58,7 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 					return yearTerms[0];
 				}
 				return null;
-			}
+			};
 
 			/**
 			 * Return true only if the user is viewing a workgroup they are not part of
