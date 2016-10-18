@@ -6,7 +6,7 @@
  * Service in the ipaClientAngularApp.
  */
 angular.module('sharedApp')
-	.service('authService', function ($http, $window, $q, $location, $rootScope, $log) {
+	.service('authService', function ($http, $window, $q, $location, $rootScope, $log, CurrentUser) {
 		return {
 			validateToken: function (token) {
 				var self = this;
@@ -27,7 +27,7 @@ angular.module('sharedApp')
 						localStorage.removeItem('userRoles');
 						localStorage.removeItem('displayName');
 						localStorage.removeItem('termStates');
-						$window.location.href = response.data.redirect + "?ref=" + $location.absUrl();
+						$window.location.href = response.data.redirect + "?ref=" + $location.absUrl(); ı
 
 						deferred.reject();
 					}
@@ -60,8 +60,12 @@ angular.module('sharedApp')
 			},
 
 			validateState: function (data, workgroupId, year, ignoreFallBackUrl) {
-				localStorage.setItem('userRoles', JSON.stringify(data.userRoles));
-				localStorage.setItem('displayName', data.displayName);
+				var currentUser = new CurrentUser(data.displayName, data.userRoles);
+				currentUser.setDisplayName(data.displayName);
+				currentUser.setUserRoles(data.userRoles);
+				console.log(currentUser);
+
+				localStorage.setItem('currentUser', JSON.stringify(currentUser));
 				localStorage.setItem('termStates', JSON.stringify(data.termStates));
 
 				// If workgroupId or year NOT set, and the ignoreFallBackUrl is not set to true
@@ -231,11 +235,13 @@ angular.module('sharedApp')
 				return {
 					workgroup: this.getCurrentWorkgroup(),
 					year: Number(localStorage.getItem('year')) || moment().year(),
+					termStates: this.getTermStates(),
+					// currentUser: this.getCurrentUser()
+
 					allUserRoles: this.getUserRoles(),
 					currentUserRoles: this.getCurrentUserRoles(),
 					userWorkgroups: this.getWorkgroups(),
 					displayName: localStorage.getItem('displayName') || '',
-					termStates: this.getTermStates(),
 					isAdmin: this.isAdmin(),
 					isAcademicPlanner: this.hasRole('academicPlanner'),
 					isReviewer: this.hasRole('reviewer'),
