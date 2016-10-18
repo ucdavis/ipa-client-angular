@@ -65,9 +65,10 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 			 * (happens if the current user is admin and managing a workgroup they're not in)
 			 */
 			scope.hasExtraWorkgroup = function () {
-				if (scope.sharedState.userWorkgroups === undefined) { return false; }
+				var userWorkgroups = scope.sharedState.currentUser.getWorkgroups();
+				if (userWorkgroups === undefined) { return false; }
 
-				return scope.sharedState.userWorkgroups
+				return userWorkgroups
 					.some(function (w) { return w.id == scope.sharedState.workgroup.id; }) === false;
 			};
 
@@ -75,18 +76,15 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 			 * Checks if user has any of the given roles for the current active workgroup
 			 */
 			scope.userHasRoles = function (roleNames) {
-				if (scope.sharedState.isAdmin) { return true; }
+				if (scope.sharedState.currentUser.isAdmin()) { return true; }
 
-				return authService.hasRoles(roleNames);
+				return scope.sharedState.currentUser.hasRoles(roleNames, scope.sharedState.workgroup.id);
 			};
 
-			scope.userHasRolesForWorkgroup = function (roles, workgroup) {
-				if (scope.sharedState.isAdmin) { return true; }
+			scope.userHasRolesForWorkgroup = function (roleNames, workgroup) {
+				if (scope.sharedState.currentUser.isAdmin()) { return true; }
 
-				if (roles instanceof Array === false) { return false; }
-				return scope.sharedState.allUserRoles.some(function (ur) {
-					return ur.workgroupId == workgroup.id && roles.indexOf(ur.roleName) >= 0;
-				});
+				return scope.sharedState.currentUser.hasRoles(roleNames, workgroup.id);
 			};
 
 			// Example: "/assignments/15/2017?tab=courses" -> "/assignments/15/2018?tab=courses"

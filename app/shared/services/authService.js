@@ -63,7 +63,6 @@ angular.module('sharedApp')
 				var currentUser = new CurrentUser(data.displayName, data.userRoles);
 				currentUser.setDisplayName(data.displayName);
 				currentUser.setUserRoles(data.userRoles);
-				console.log(currentUser);
 
 				localStorage.setItem('currentUser', JSON.stringify(currentUser));
 				localStorage.setItem('termStates', JSON.stringify(data.termStates));
@@ -118,28 +117,6 @@ angular.module('sharedApp')
 				$window.location.href = redirectUrl;
 			},
 
-			getUserRoles: function () {
-				var userRoles = [];
-
-				try {
-					userRoles = JSON.parse(localStorage.getItem('userRoles')) || [];
-				} catch (err) {
-					$log.error(err);
-				}
-
-				return userRoles;
-			},
-
-			getWorkgroups: function () {
-				var userRoles = this.getUserRoles();
-				return _.uniq(
-					userRoles
-						.filter(function (ur) { return ur.workgroupId > 0; })
-						.map(function (ur) { return { id: ur.workgroupId, name: ur.workgroupName }; }),
-					'id'
-				);
-			},
-
 			getTermStates: function () {
 				var termStates = [];
 
@@ -158,42 +135,18 @@ angular.module('sharedApp')
 				})[0];
 			},
 
-			isAdmin: function () {
-				var userRoles = this.getUserRoles();
-				return userRoles.some(function (ur) { return ur.roleName == "admin" && ur.workgroupId === 0; });
-			},
-
-			hasRole: function (roleName) {
-				var userRoles = this.getUserRoles();
-				var workgroup = this.getCurrentWorkgroup();
-				return userRoles.some(function (userRole) { return userRole.roleName == roleName && userRole.workgroupId == workgroup.id; });
-			},
-
-			hasRoles: function (roleNames) {
-				if (roleNames instanceof Array === false) {
-					$log.error("Parameter passed to hasRoles() is not valid", roleNames);
-					return false;
-				}
-				var userRoles = this.getUserRoles();
-				var workgroup = this.getCurrentWorkgroup();
-				return userRoles.some(function (userRole) { return roleNames.indexOf(userRole.roleName) >= 0 && userRole.workgroupId == workgroup.id; });
+			getCurrentUser: function () {
+				return new CurrentUser(JSON.parse(localStorage.getItem('currentUser')) || {});
 			},
 
 			getCurrentWorkgroup: function () {
 				return JSON.parse(localStorage.getItem('workgroup')) || {};
 			},
 
-			getCurrentUserRoles: function () {
-				var userRoles = this.getUserRoles();
-				var workgroup = this.getCurrentWorkgroup();
-				return userRoles
-					.filter(function (ur) { return ur.workgroupId == workgroup.id; })
-					.map(function (ur) { return ur.roleName; });
-			},
-
 			fallbackToDefaultUrl: function () {
 				var scope = this;
-				var userRoles = scope.getUserRoles();
+				var currentUser = scope.getCurrentUser();
+				var userRoles = currentUser.userRoles;
 
 				// Loop over the user roles to look for user workgroups
 				for (var i = 0; i < userRoles.length; i++) {
@@ -211,7 +164,7 @@ angular.module('sharedApp')
 				}
 
 				// If no workgroups...
-				if (scope.isAdmin()) {
+				if (currentUser.isAdmin()) {
 					// Admin users can go to the administration view
 					$window.location.href = "/admin";
 					return;
@@ -236,16 +189,7 @@ angular.module('sharedApp')
 					workgroup: this.getCurrentWorkgroup(),
 					year: Number(localStorage.getItem('year')) || moment().year(),
 					termStates: this.getTermStates(),
-					// currentUser: this.getCurrentUser()
-
-					allUserRoles: this.getUserRoles(),
-					currentUserRoles: this.getCurrentUserRoles(),
-					userWorkgroups: this.getWorkgroups(),
-					displayName: localStorage.getItem('displayName') || '',
-					isAdmin: this.isAdmin(),
-					isAcademicPlanner: this.hasRole('academicPlanner'),
-					isReviewer: this.hasRole('reviewer'),
-					isInstructor: this.hasRoles(['senateInstructor', 'federationInstructor'])
+					currentUser: this.getCurrentUser()
 				};
 			},
 

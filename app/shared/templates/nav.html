@@ -36,9 +36,9 @@
 			<!-- add class "multiple-expanded" to allow multiple submenus to open -->
 			<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
 			<li class="welcome">
-				<span class="title">Howdy, {{ sharedState.displayName }}</span>
+				<span class="title">Howdy, {{ sharedState.currentUser.displayName }}</span>
 			</li>
-			<li ng-class="{ 'active': currentBaseHref == 'summary' }" ng-if="(sharedState.isAcademicPlanner || sharedState.isReviewer) && sharedState.isInstructor">
+			<li ng-class="{ 'active': currentBaseHref == 'summary' }" ng-if="userHasRoles(['academicPlanner','reviewer']) && userHasRoles(['senateInstructor','federationInstructor'])">
 				<a ng-href="/summary/{{ workgroupId }}/{{ year }}" target="_self">
 					<i class="entypo-home"></i>
 					<span class="title">Home</span>
@@ -57,13 +57,13 @@
 				</ul>
 			</li>
 			<!-- handle UI for users with either academicPlanner or instructor, but not both -->
-			<li ng-if="(sharedState.isAcademicPlanner || sharedState.isReviewer) && (sharedState.isInstructor == false)" ng-class="{ 'active': currentBaseHref == 'summary' && pageMode == 'workgroup' }">
+			<li ng-if="userHasRoles(['academicPlanner','reviewer']) && !userHasRoles(['senateInstructor','federationInstructor'])" ng-class="{ 'active': currentBaseHref == 'summary' && pageMode == 'workgroup' }">
 				<a class="clickable" ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=workgroup">
 					<i class="entypo-home"></i>
 					<span class="title">Summary</span>
 				</a>
 			</li>
-			<li ng-if="(sharedState.isAcademicPlanner == false) && (sharedState.isAcademicPlanner == false) && sharedState.isInstructor"
+			<li ng-if="!(userHasRoles(['academicPlanner','reviewer'], sharedState.workgroup.id)) && userHasRoles(['senateInstructor','federationInstructor'], sharedState.workgroup.id)"
 				ng-class="{ 'active': currentBaseHref == 'summary' && pageMode == 'instructor' }">
 				<a class="clickable" ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=instructor">
 					<i class="entypo-home"></i>
@@ -106,7 +106,7 @@
 					</li>
 				</ul>
 			</li>
-			<li ng-if="sharedState.isAdmin" ng-class="{ 'active': currentBaseHref == 'admin' }">
+			<li ng-if="sharedState.currentUser.isAdmin()" ng-class="{ 'active': currentBaseHref == 'admin' }">
 				<a ng-href="/admin/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-cog"></i>
 					<span class="title">Administration</span>

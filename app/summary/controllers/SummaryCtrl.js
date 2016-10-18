@@ -27,10 +27,11 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 			$scope.view.mode = $routeParams.mode;
 		} else {
 			// Otherwise redirect to the default view
-			var isAdmin = authService.isAdmin();
-			var isAcademicPlanner = authService.hasRole('academicPlanner');
-			var isReviewer = authService.hasRole('reviewer');
-			var isInstructor = authService.hasRoles(['senateInstructor', 'federationInstructor']);
+			var currentUser = authService.getCurrentUser();
+			var isAdmin = currentUser.isAdmin();
+			var isAcademicPlanner = currentUser.hasRole('academicPlanner', $scope.workgroupId);
+			var isReviewer = currentUser.hasRole('reviewer', $scope.workgroupId);
+			var isInstructor = currentUser.hasRoles(['senateInstructor', 'federationInstructor'], $scope.workgroupId);
 			if (isAcademicPlanner || isReviewer || isAdmin) {
 				$scope.setActiveMode("workgroup");
 			}
@@ -51,12 +52,13 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 		});
 
 		var setUserTeachingCalls = function () {
-			var userRoles = $scope.sharedState.currentUserRoles;
+			var isFederationInstructor = $scope.sharedState.currentUser.hasRole('federationInstructor', $scope.workgroupId);
+			var isSenateInstructor = $scope.sharedState.currentUser.hasRole('senateInstructor', $scope.workgroupId);
 			$scope.view.userTeachingCalls = $scope.view.state.teachingCalls.ids.map(function (teachingCallId) {
 				return $scope.view.state.teachingCalls.list[teachingCallId];
 			}).filter(function (teachingCall) {
-				return (teachingCall.sentToFederation && userRoles.indexOf('federationInstructor') >= 0) ||
-					(teachingCall.sentToSenate && userRoles.indexOf('senateInstructor') >= 0);
+				return (teachingCall.sentToFederation && isFederationInstructor) ||
+					(teachingCall.sentToSenate && isSenateInstructor);
 			});
 
 			$scope.view.userTeachingCalls.forEach(function (userTeachingCall) {
