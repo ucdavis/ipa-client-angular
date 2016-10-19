@@ -58,13 +58,13 @@
 			</li>
 			<!-- handle UI for users with either academicPlanner or instructor, but not both -->
 			<li ng-if="(sharedState.isAcademicPlanner && (sharedState.isInstructor == false))" ng-class="{ 'active': currentBaseHref == 'summary' && currentEndHref == 'workgroup' }">
-				<a class="clickable" ng-href="/summary/{{ workgroupId }}/{{ year }}/workgroup">
+				<a class="clickable" ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=workgroup">
 					<i class="entypo-home"></i>
 					<span class="title">Summary</span>
 				</a>
 			</li>
 			<li ng-if="((sharedState.isAcademicPlanner == false) && sharedState.isInstructor)" ng-class="{ 'active': currentBaseHref == 'summary' && currentEndHref == 'instructor' }">
-				<a class="clickable" ng-href="/summary/{{ workgroupId }}/{{ year }}/instructor">
+				<a class="clickable" ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=instructor">
 					<i class="entypo-home"></i>
 					<span class="title">Summary</span>
 				</a>
