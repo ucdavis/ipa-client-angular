@@ -7,7 +7,9 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 			scope.sharedState = authService.getSharedState();
 			scope.termShortCode = attrs.termShortCode;
 			scope.currentBaseHref = $location.absUrl().split('/')[3];
-			scope.currentEndHref = $location.absUrl().split('/')[6];
+			var lastUrlSegmentIndex = $location.absUrl().split('/').length - 1;
+			scope.currentEndHref = $location.absUrl().split('/')[lastUrlSegmentIndex];
+			scope.pageMode = $location.absUrl().split('mode=')[1];
 
 			// TODO: Shouldn't this be set somewhere to be shared outside of <nav> ? -CT
 			$rootScope.$on('sharedStateSet', function (event, data) {
