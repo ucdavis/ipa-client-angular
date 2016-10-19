@@ -44,10 +44,6 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 		};
 
 		$rootScope.$on('courseStateChanged', function (event, data) {
-			$scope.workgroupId = $routeParams.workgroupId;
-			$scope.year = $routeParams.year;
-			$scope.termDefinitions = Term.prototype.generateTable($scope.year);
-
 			$scope.view.state = data.state;
 			$scope.tagsSelectConfig.options = $scope.view.state.tags.availableIds.map(function (tagId) {
 				return $scope.view.state.tags.list[tagId];
@@ -82,15 +78,11 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				delete $scope.view.selectedEntity;
 			}
 
-			// Set table write state
+			// Update table write state
 			var hasAuthorizedRole = $scope.sharedState.currentUser.isAdmin() ||
 				$scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id);
 
-			var someTermsActive = $scope.termDefinitions.some(function (term) {
-				return !$scope.view.state.terms.list[term.code].isLocked();
-			});
-
-			$scope.view.courseTableWritable = hasAuthorizedRole && someTermsActive;
+			$scope.view.state.uiState.tableLocked = $scope.view.state.uiState.tableLocked || !(hasAuthorizedRole);
 
 		});
 

@@ -7,9 +7,8 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 			scope.sharedState = authService.getSharedState();
 			scope.termShortCode = attrs.termShortCode;
 			scope.currentBaseHref = $location.absUrl().split('/')[3];
-			var lastUrlSegmentIndex = $location.absUrl().split('/').length - 1;
-			scope.currentEndHref = $location.absUrl().split('/')[lastUrlSegmentIndex];
-			scope.pageMode = $location.absUrl().split('mode=')[1];
+			scope.currentEndHref = $location.path().split('/').pop();
+			scope.pageMode = $location.search().mode;
 			scope.userWorkgroups = scope.sharedState.currentUser ? scope.sharedState.currentUser.getWorkgroups() : [];
 
 			// TODO: Shouldn't this be set somewhere to be shared outside of <nav> ? -CT
@@ -93,12 +92,8 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 			// Takes the current page url, offsets the year by the specified amount, and returns a new url
 			scope.offsetYearInUrl = function (offset) {
 				var workgroupId = scope.sharedState.workgroup.id;
-				var originalYear = scope.sharedState.year;
-				var newYear = originalYear + offset;
-
-				var domainAndPort = $location.absUrl().split('/')[2];
-				var fullPath = $location.absUrl().split(domainAndPort)[1];
-				var pathAfterYear = fullPath.split(originalYear)[1] || '';
+				var newYear = scope.sharedState.year + offset;
+				var pathAfterYear = $location.url().split(scope.sharedState.year)[1] || '';
 
 				$location.url(workgroupId + '/' + newYear + pathAfterYear);
 			};

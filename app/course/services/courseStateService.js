@@ -366,6 +366,14 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						massImportPrivate: false,
 						massImportInProgress: false
 					};
+
+					// lock the table if all terms are locked
+					var termDefinitions = Term.prototype.generateTable(action.payload.year);
+					uiState.tableLocked = termDefinitions.every(function (td) {
+						var term = new Term(_.findWhere(action.payload.terms, { termCode: td.code }));
+						return term.isLocked();
+					});
+
 					return uiState;
 				case NEW_COURSE:
 					uiState.tableLocked = true;

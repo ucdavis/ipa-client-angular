@@ -62,10 +62,6 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				// Clear the table
 				element.empty();
 
-				if (!scope.view.courseTableWritable) {
-					data.state.uiState.tableLocked = true;
-				}
-
 				// Lock table if appropriate
 				if (data.state.uiState.tableLocked) {
 					element.addClass("locked-courses-table");

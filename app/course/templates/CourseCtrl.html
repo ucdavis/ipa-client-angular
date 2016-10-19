@@ -16,7 +16,8 @@
 	<div class="row hidden-print">
 		<div class="col-sm-12">
 			<div class="table-toolbar">
-				<span class="tool-icon glyphicon glyphicon-plus" uib-tooltip="Add multiple courses" ng-if="view.courseTableWritable" ng-click="beginImportMode()"></span>
+				<span class="tool-icon glyphicon glyphicon-plus" uib-tooltip="Add multiple courses" ng-if="!view.state.uiState.tableLocked"
+					ng-click="beginImportMode()"></span>
 
 				<div class="btn-group" uib-tooltip="Toggle terms">
 					<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>

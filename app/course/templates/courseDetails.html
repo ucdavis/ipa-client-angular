@@ -22,9 +22,9 @@
 						<div class="col-sm-10 col-sm-offset-1">
 							<strong>Title</strong>
 							<br />
-							<input auto-input ng-if="view.courseTableWritable" type="text" class="form-control course-title-edit" on-enter="updateCourse()"
+							<input auto-input ng-if="!view.state.uiState.tableLocked" type="text" class="form-control course-title-edit" on-enter="updateCourse()"
 								on-blur="updateCourse()" help-text-placement="bottom" ng-model="view.selectedEntity.title" />
-							<p ng-if="!view.courseTableWritable" ng-bind="view.selectedEntity.title" class="form-control-static"></p>
+							<p ng-if="view.state.uiState.tableLocked" ng-bind="view.selectedEntity.title" class="form-control-static"></p>
 						</div>
 					</div>
 				</div>
@@ -33,9 +33,9 @@
 						<div class="col-sm-10 col-sm-offset-1">
 							<strong>Tags</strong>
 							<br />
-							<selectize config="tagsSelectConfig" ng-model="view.selectedEntity.tagIds" ng-if="view.courseTableWritable"></selectize>
+							<selectize config="tagsSelectConfig" ng-model="view.selectedEntity.tagIds" ng-if="!view.state.uiState.tableLocked"></selectize>
 							<div class="label" style="padding: 3px; margin-left: 3px;" ng-repeat="tagId in view.selectedEntity.tagIds track by $index"
-								ng-if="!view.courseTableWritable" ng-style="{ 'background-color': view.state.tags.list[tagId].color || '#333', 'color': view.state.tags.list[tagId].getTextColor() }">
+								ng-if="view.state.uiState.tableLocked" ng-style="{ 'background-color': view.state.tags.list[tagId].color || '#333', 'color': view.state.tags.list[tagId].getTextColor() }">
 								{{ view.state.tags.list[tagId].name }}
 							</div>
 						</div>
@@ -47,8 +47,8 @@
 						<div class="col-sm-7">
 							<input type="text" ng-model="view.selectedEntity.sequencePattern" uib-typeahead="sequencePattern for sequencePattern in sequencePatternsScopedByCurrentType() | filter:$viewValue | limitTo:8"
 								typeahead-loading="loadingSequences" typeahead-no-results="noResults" typeahead-editable="false" typeahead-on-select="updateCourse()"
-								class="form-control course-sequence-pattern" ng-if="view.courseTableWritable">
-							<p ng-if="!view.courseTableWritable" ng-bind="view.selectedEntity.sequencePattern" class="form-control-static"></p>
+								class="form-control course-sequence-pattern" ng-if="!view.state.uiState.tableLocked">
+							<p ng-if="view.state.uiState.tableLocked" ng-bind="view.selectedEntity.sequencePattern" class="form-control-static"></p>
 						</div>
 					</div>
 				</div>
