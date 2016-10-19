@@ -72,16 +72,16 @@
 			</li>
 
 			<li ng-class="{ 'active': currentBaseHref == 'workgroups' }">
-				<a ng-if="sharedState.userWorkgroups.length > 1">
+				<a ng-if="userWorkgroups.length > 1">
 					<i class="entypo-users"></i>
 					<span class="title">Workgroups</span>
 				</a>
-				<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}" ng-if="sharedState.userWorkgroups.length == 1 && userHasRoles(['academicPlanner','reviewer'])">
+				<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}" ng-if="userWorkgroups.length == 1 && userHasRoles(['academicPlanner','reviewer'])">
 					<i class="entypo-users"></i>
 					<span class="title">{{ sharedState.workgroup.name }}</span>
 				</a>
-				<ul class="visible" ng-if="sharedState.userWorkgroups.length > 1">
-					<li ng-repeat="workgroup in sharedState.userWorkgroups track by workgroup.id" ng-class="{ 'active': sharedState.workgroup.id == workgroup.id }">
+				<ul class="visible" ng-if="userWorkgroups.length > 1">
+					<li ng-repeat="workgroup in userWorkgroups track by workgroup.id" ng-class="{ 'active': sharedState.workgroup.id == workgroup.id }">
 						<a ng-href="/{{ currentBaseHref }}/{{ workgroup.id }}/{{ year }}/{{ termShortCode }}" uib-tooltip="Switch to {{ workgroup.name }}"
 							tooltip-append-to-body="true" tooltip-placement="right">
 							<i class="entypo-check active-workgroup-icon" ng-if="sharedState.workgroup.id == workgroup.id"></i>

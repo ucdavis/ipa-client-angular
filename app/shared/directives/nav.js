@@ -10,10 +10,12 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 			var lastUrlSegmentIndex = $location.absUrl().split('/').length - 1;
 			scope.currentEndHref = $location.absUrl().split('/')[lastUrlSegmentIndex];
 			scope.pageMode = $location.absUrl().split('mode=')[1];
+			scope.userWorkgroups = scope.sharedState.currentUser ? scope.sharedState.currentUser.getWorkgroups() : [];
 
 			// TODO: Shouldn't this be set somewhere to be shared outside of <nav> ? -CT
 			$rootScope.$on('sharedStateSet', function (event, data) {
 				scope.sharedState = data;
+				scope.userWorkgroups = scope.sharedState.currentUser ? scope.sharedState.currentUser.getWorkgroups() : [];
 			});
 			// TODO: Move shared data being put into the nav directive. Yay clean architecture. -CT
 			// A list of all possible terms, not necessarily the ones

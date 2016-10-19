@@ -5,8 +5,8 @@
  * # CourseCtrl
  * Controller of the ipaClientAngularApp
  */
-courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'courseActionCreators', 'courseService',
-		this.CourseCtrl = function ($scope, $rootScope, $routeParams, courseActionCreators, courseService) {
+courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'courseActionCreators', 'courseService', 'Term',
+		this.CourseCtrl = function ($scope, $rootScope, $routeParams, courseActionCreators, courseService, Term) {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.view = {};
@@ -44,6 +44,10 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 		};
 
 		$rootScope.$on('courseStateChanged', function (event, data) {
+			$scope.workgroupId = $routeParams.workgroupId;
+			$scope.year = $routeParams.year;
+			$scope.termDefinitions = Term.prototype.generateTable($scope.year);
+
 			$scope.view.state = data.state;
 			$scope.tagsSelectConfig.options = $scope.view.state.tags.availableIds.map(function (tagId) {
 				return $scope.view.state.tags.list[tagId];
