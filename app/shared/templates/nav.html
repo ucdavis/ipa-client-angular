@@ -132,7 +132,7 @@
 					<span class="title">Courses</span>
 				</a>
 			</li>
-			<li ng-class="{ 'active': currentEndHref == 'teachingCallStatus' }">
+			<li ng-class="{ 'active': currentEndHref == 'teachingCallStatus' }" ng-if="userHasRoles(['academicPlanner'])">
 				<a ng-href="/assignments/{{ workgroupId }}/{{ year }}/teachingCallStatus">
 					<i class="entypo-user-add"></i>
 					<span class="title">Teaching Call</span>
