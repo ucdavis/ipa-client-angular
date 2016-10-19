@@ -514,6 +514,20 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				assignmentActionCreators.initializeActiveTeachingCall(activeTeachingCall);
 			};
 
+			// Generates a 'display rank' for the subset of preferences that are not approved.
+			// This is needed because approved preferences still have a 'priority' (rank) value, despite not being shown in the list
+			$scope.generateDisplayRank = function (preference, preferences) {
+				var displayRank = 1;
+
+				preferences.forEach( function(slotPreference) {
+					if (slotPreference.approved == false && preference.priority > slotPreference.priority) {
+						displayRank++;
+					}
+				});
+
+				return displayRank;
+			}
+
 			$scope.generateTermCode = function (year, term) {
 				if (term.toString().length == 1) {
 					term = "0" + Number(term);
