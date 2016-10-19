@@ -519,11 +519,13 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 			$scope.generateDisplayRank = function (preference, preferences) {
 				var displayRank = 1;
 
-				preferences.forEach( function(slotPreference) {
-					if (slotPreference.approved == false && preference.priority > slotPreference.priority) {
-						displayRank++;
-					}
-				});
+				if (preferences) {
+					preferences.forEach( function(slotPreference) {
+						if (slotPreference.approved == false && preference.priority > slotPreference.priority) {
+							displayRank++;
+						}
+					});
+				}
 
 				return displayRank;
 			}
