@@ -27,7 +27,7 @@ angular.module('sharedApp')
 						localStorage.removeItem('userRoles');
 						localStorage.removeItem('displayName');
 						localStorage.removeItem('termStates');
-						$window.location.href = response.data.redirect + "?ref=" + $location.absUrl(); ı
+						$window.location.href = response.data.redirect + "?ref=" + $location.absUrl();
 
 						deferred.reject();
 					}

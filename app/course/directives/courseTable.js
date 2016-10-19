@@ -62,8 +62,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 				// Clear the table
 				element.empty();
 
-				var userHasWriteAccess = hasWriteAccess(scope.sharedState);
-				if (!userHasWriteAccess) {
+				if (!scope.view.courseTableWritable) {
 					data.state.uiState.tableLocked = true;
 				}
 
@@ -376,8 +375,4 @@ var getTotalsRow = function (termsToRender, state) {
 	row += "</tr>";
 
 	if (state.courses.ids.length) { return row; }
-};
-
-var hasWriteAccess = function (sharedState) {
-	return sharedState.currentUser.hasRole('academicPlanner', sharedState.workgroup.id) || sharedState.currentUser.isAdmin();
 };

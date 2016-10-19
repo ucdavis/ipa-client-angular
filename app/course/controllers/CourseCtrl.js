@@ -77,6 +77,17 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 			} else {
 				delete $scope.view.selectedEntity;
 			}
+
+			// Set table write state
+			var hasAuthorizedRole = $scope.sharedState.currentUser.isAdmin() ||
+				$scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id);
+
+			var someTermsActive = $scope.termDefinitions.some(function (term) {
+				return !$scope.view.state.terms.list[term.code].isLocked();
+			});
+
+			$scope.view.courseTableWritable = hasAuthorizedRole && someTermsActive;
+
 		});
 
 		$scope.download = function () {

@@ -7,7 +7,8 @@
 
 	<div class="row" style="margin-bottom: 2em;">
 		<div class="col-sm-offset-3 col-sm-6 input-group">
-			<input type="search" class="form-control hidden-print" placeholder="Search Schedule" ng-model="view.searchQuery" ng-change="filterTable(view.searchQuery)" />
+			<input type="search" class="form-control hidden-print" placeholder="Search Schedule" ng-model="view.searchQuery" ng-change="filterTable(view.searchQuery)"
+			/>
 			<i class="entypo-cancel clear-search close" ng-show="view.searchQuery" ng-click="clearSearch()"></i>
 		</div>
 	</div>
@@ -15,12 +16,13 @@
 	<div class="row hidden-print">
 		<div class="col-sm-12">
 			<div class="table-toolbar">
-				<span class="tool-icon glyphicon glyphicon-plus" uib-tooltip="Add multiple courses" ng-click="beginImportMode()"></span>
+				<span class="tool-icon glyphicon glyphicon-plus" uib-tooltip="Add multiple courses" ng-if="view.courseTableWritable" ng-click="beginImportMode()"></span>
 
 				<div class="btn-group" uib-tooltip="Toggle terms">
 					<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-					<ul class="dropdown-menu" multiselect-dropdown items="termDefinitions" active-ids="view.state.filters.enabledTerms" toggle-item="termToggled(id)" ></ul>
-				</div> <!-- .btn-group -->
+					<ul class="dropdown-menu" multiselect-dropdown items="termDefinitions" active-ids="view.state.filters.enabledTerms" toggle-item="termToggled(id)"></ul>
+				</div>
+				<!-- .btn-group -->
 
 				<div class="btn-group" uib-tooltip="Filters">
 					<span class="tool-icon glyphicon glyphicon-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
@@ -39,14 +41,18 @@
 							</a>
 						</li>
 					</ul>
-				</div> <!-- .btn-group -->
+				</div>
+				<!-- .btn-group -->
 
 				<span class="tool-icon glyphicon glyphicon-download-alt" uib-tooltip="Download as Excel" ng-click="download()"></span>
 
 				<span class="tool-icon glyphicon glyphicon-print" uib-tooltip="Print" ng-click="print()"></span>
-			</div> <!-- .table-toolbar -->
-		</div> <!-- .col-sm-12 -->
-	</div> <!-- .row -->
+			</div>
+			<!-- .table-toolbar -->
+		</div>
+		<!-- .col-sm-12 -->
+	</div>
+	<!-- .row -->
 
 	<div class="row hidden-print" ng-if="view.state.uiState.massImportMode">
 		<div class="col-md-12">
@@ -71,8 +77,7 @@
 							<label class="col-sm-4 control-label">Subject Code</label>
 
 							<div class="col-sm-4">
-								<selectize config="{maxItems: 1, valueField: 'code', labelField: 'code', searchField: ['code']}"
-									options="subjectCodes" ng-model="view.state.uiState.massImportCode"></selectize>
+								<selectize config="{maxItems: 1, valueField: 'code', labelField: 'code', searchField: ['code']}" options="subjectCodes" ng-model="view.state.uiState.massImportCode"></selectize>
 							</div>
 						</div>
 
@@ -80,8 +85,8 @@
 							<label class="col-sm-4 control-label">Academic Year</label>
 
 							<div class="col-sm-4">
-								<selectize config="{maxItems: 1, valueField: 'year', labelField: 'academicYear', searchField: ['academicYear']}"
-									options="recentAcademicYears" ng-model="view.state.uiState.massImportYear"></selectize>
+								<selectize config="{maxItems: 1, valueField: 'year', labelField: 'academicYear', searchField: ['academicYear']}" options="recentAcademicYears"
+									ng-model="view.state.uiState.massImportYear"></selectize>
 							</div>
 						</div>
 
@@ -89,8 +94,7 @@
 							<label class="col-sm-4 control-label"></label>
 
 							<div class="col-sm-4">
-								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-									ng-click="view.state.uiState.massImportPrivate = !view.state.uiState.massImportPrivate"
+								<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-click="view.state.uiState.massImportPrivate = !view.state.uiState.massImportPrivate"
 									ng-class="{ 'checked': view.state.uiState.massImportPrivate }">
 									<label class="cb-wrapper">
 										<div class="checked"></div>
@@ -103,11 +107,9 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-offset-4 col-sm-4">
-									<button class="btn btn-default btn-block" ng-click="searchImportCourses()"
-										ng-disabled="!(view.state.uiState.massImportCode && view.state.uiState.massImportYear)">Search</button>
+									<button class="btn btn-default btn-block" ng-click="searchImportCourses()" ng-disabled="!(view.state.uiState.massImportCode && view.state.uiState.massImportYear)">Search</button>
 									<div class="mass-import-loading">
-										<spinner ng-if="view.state.courses.importList === null && view.searchingCourseToImport"
-											size="20"></spinner>
+										<spinner ng-if="view.state.courses.importList === null && view.searchingCourseToImport" size="20"></spinner>
 									</div>
 								</div>
 							</div>
@@ -119,7 +121,8 @@
 			</div>
 
 		</div>
-	</div> <!-- .row -->
+	</div>
+	<!-- .row -->
 
 	<table course-table class="table table-bordered courses-table"></table>
 
