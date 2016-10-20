@@ -44,7 +44,7 @@ sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function (
 					// Calculate next section sequence if sections already exist
 					var lstSectionId = sg.sectionIds[sg.sectionIds.length - 1];
 					var lastSection = scope.view.state.sections.list[lstSectionId];
-					var number = ("0" + (parseInt(lastSection.sequenceNumber.slice(-1)) + 1)).slice(-2);
+					var number = ("0" + (parseInt(lastSection.sequenceNumber.slice(-2)) + 1)).slice(-2);
 					return course.sequencePattern + number;
 				} else {
 					// Default to 'X01' for the first section
