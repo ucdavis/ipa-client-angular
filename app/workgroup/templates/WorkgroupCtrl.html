@@ -20,12 +20,17 @@
 										<div class="row">
 											<div class="col-sm-5">
 												<input class="form-control" type="text" name="text" size="30" ng-model="view.state.tags.list[tagId].name" auto-input on-enter="updateTag(view.state.tags.list[tagId])"
-													help-text-placement="top">
+													help-text-placement="top" ng-if="hasWriteAccess()">
+												<span class="list-box form-control" ng-bind="view.state.tags.list[tagId].name" ng-hide="hasWriteAccess()"></span>
 											</div>
 											<div class="col-sm-4">
-												<colorpicker type="text" color="view.state.tags.list[tagId].color" on-change="updateTag(view.state.tags.list[tagId])" />
+												<colorpicker type="text" color="view.state.tags.list[tagId].color" on-change="updateTag(view.state.tags.list[tagId])" ng-if="hasWriteAccess()"></colorpicker>
+												<div class="list-box form-control" ng-hide="hasWriteAccess()">
+													<span class="label" ng-style="{ 'background-color': view.state.tags.list[tagId].color }">&nbsp;</span>
+													<span ng-bind="view.state.tags.list[tagId].color"></span>
+												</div>
 											</div>
-											<div class="col-sm-3">
+											<div class="col-sm-3" ng-if="hasWriteAccess()">
 												<a class="text-danger clickable btn-remove-tag" confirm-button="removeTag(tagId)" message="Are you sure you want to remove this tag"
 													yes="Remove" no="Cancel" placement="right" aria-hidden="true">
 													<i class="entypo-cancel-squared"></i><small>Remove</small>
@@ -34,14 +39,14 @@
 										</div>
 
 									</li>
-									<li>
+									<li ng-if="hasWriteAccess()">
 										<!-- add button -->
 										<div class="row">
 											<div class="col-sm-5">
 												<input class="form-control" type="text" name="text" size="30" placeholder="Add New Tag" ng-model="view.state.tags.newTag.name">
 											</div>
 											<div class="col-sm-4">
-												<colorpicker type="text" color="view.state.tags.newTag.color" />
+												<colorpicker type="text" color="view.state.tags.newTag.color"></colorpicker>
 											</div>
 											<div class="col-sm-3">
 												<button type="button" class="btn btn-blue btn-block" ng-click="addTag()" ng-disabled="!view.state.tags.newTag.name">Add</button>
@@ -63,14 +68,15 @@
 								<ul class="locations-input">
 									<li ng-repeat="locationId in view.state.locations.ids">
 										<input class="form-control" type="text" name="text" size="30" ng-model="view.state.locations.list[locationId].description"
-											auto-input on-enter="updateLocation(view.state.locations.list[locationId])" help-text-placement="top">
+											auto-input on-enter="updateLocation(view.state.locations.list[locationId])" help-text-placement="top" ng-if="hasWriteAccess()">
+										<span class="list-box form-control" ng-bind="view.state.locations.list[locationId].description" ng-hide="hasWriteAccess()"></span>
 										<a class="text-danger clickable" confirm-button="removeLocation(locationId)" message="Are you sure you want to remove this location"
-											yes="Remove" no="Cancel" placement="right" aria-hidden="true">
+											yes="Remove" no="Cancel" placement="right" aria-hidden="true" ng-if="hasWriteAccess()">
 											<i class="entypo-cancel-squared"></i><small>Remove</small>
 										</a>
 
 									</li>
-									<li>
+									<li ng-if="hasWriteAccess()">
 										<!-- add button -->
 										<div class="form-horizontal">
 											<input class="form-control" type="text" name="text" size="30" placeholder="Add New Location" ng-model="view.state.locations.newLocation.description">
@@ -91,7 +97,7 @@
 						</div>
 						<div class="row" ng-show="view.state.users">
 							<!-- this is search bar -->
-							<div class="col-md-4 pull-right">
+							<div class="col-md-4 pull-right" ng-if="hasWriteAccess()">
 								<div class="input-group search-input">
 									<input type="text" ng-model="view.state.users.searchQuery" placeholder="Search by name or login ID" uib-typeahead="person.name for person in searchUsers($viewValue)"
 										ng-change="view.state.users.newUser = {}" typeahead-loading="view.loadingPeople" typeahead-no-results="view.noResults"
@@ -148,12 +154,14 @@
 													{{ view.state.users.list[userId].email }}
 												</td>
 												<td class="role-selector" ng-repeat="roleId in view.state.roles.ids track by $index">
-													<input type="checkbox" ng-checked="userHasRole(userId, view.state.roles.list[roleId])" ng-click="toggleUserRole(userId, roleId)">
+													<input type="checkbox" ng-checked="userHasRole(userId, view.state.roles.list[roleId])" ng-click="toggleUserRole(userId, roleId)"
+														ng-disabled="!hasWriteAccess()">
 												</td>
-												<td class="hover-ui">
-													<span confirm-button="removeUserFromWorkgroup(userId)" message="This will completely remove this person from the workgroup, are you sure?" yes="Remove"
-														no="Cancel" placement="left" class="entypo-minus-circled text-danger" aria-hidden="true" style="width: 10%;"
-														uib-tooltip="Remove" tooltip-placement="top"></span>
+												<td class="hover-ui" ng-if="hasWriteAccess()">
+													<span confirm-button="removeUserFromWorkgroup(userId) " message="This will completely remove this person from
+														the workgroup, are you sure? " yes="Remove " no="Cancel " placement="left " class="entypo-minus-circled text-danger "
+														aria-hidden="true
+														" style="width: 10%; " uib-tooltip="Remove " tooltip-placement="top "></span>
 												</td>
 											</tr>
 										</tbody>
