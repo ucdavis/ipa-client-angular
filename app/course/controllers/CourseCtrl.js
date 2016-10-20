@@ -198,7 +198,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 ]);
 
 CourseCtrl.getPayload = function (authService, $route, courseActionCreators) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
 		return courseActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
 	});
 };

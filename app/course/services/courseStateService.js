@@ -356,7 +356,6 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 				case IMPORT_COURSES:
 				case TOGGLE_UNPUBLISHED_COURSES:
 					uiState = {
-						tableLocked: false,
 						tableGrayedOut: false,
 						selectedCourseId: null,
 						selectedTermCode: null,
@@ -368,11 +367,9 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					};
 
 					// lock the table if all terms are locked
-					var termDefinitions = Term.prototype.generateTable(action.payload.year);
-					uiState.tableLocked = termDefinitions.every(function (td) {
-						var term = new Term(_.findWhere(action.payload.terms, { termCode: td.code }));
-						return term.isLocked();
-					});
+					uiState.tableLocked = action.payload.terms
+						.map(function (term) { return new Term(term); })
+						.every(function (term) { return term.isLocked(); });
 
 					return uiState;
 				case NEW_COURSE:
