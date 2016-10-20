@@ -6,7 +6,7 @@
  schedulingApp.
  * Central location for sharedState information.
  */
-schedulingApp.service('schedulingStateService', function ($rootScope, $log, Course, SectionGroup, Section, Activity, Tag, Location, Instructor, TeachingCallResponse) {
+schedulingApp.service('schedulingStateService', function ($rootScope, $log, Course, SectionGroup, Section, Activity, Tag, Location, Instructor, TeachingCallResponse, Term) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -304,7 +304,8 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 						selectedCourseId: null,
 						selectedActivityId: null,
 						checkedSectionGroupIds: [],
-						allSectionGroupsDetailsCached: false
+						allSectionGroupsDetailsCached: false,
+						term: new Term(action.payload.term)
 					};
 					return uiState;
 				case SECTION_GROUP_SELECTED:

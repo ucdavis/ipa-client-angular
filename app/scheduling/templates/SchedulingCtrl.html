@@ -5,7 +5,7 @@
 
 		<div class="activity-page-header">
 			<div class="activity-page-title">
-				<h3>{{ term.fullDescription }}</h3>
+				<h3>{{ view.state.uiState.term.termCode.getTermCodeDisplayName() }}</h3>
 				<p>{{ sharedState.workgroup.name }}</p>
 			</div>
 			<div class="activity-filters">
@@ -159,7 +159,8 @@
 										yes="Delete" no="Cancel" placement="right"></i>
 								</li>
 							</ul>
-							<div ng-if="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length > 0" class="add-activity-list entypo-plus-squared">
+							<div ng-if="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length > 0 && !isLocked()"
+								class="add-activity-list entypo-plus-squared">
 								<ul>
 									<li ng-repeat="activityType in view.state.courses.list[view.state.uiState.selectedCourseId].activityTypes track by $index"
 										class="activity-item">
@@ -185,7 +186,7 @@
 												ng-show="activityId == view.state.uiState.selectedActivityId && view.state.uiState.selectedActivity.hasWarning"></i>
 										</li>
 									</ul>
-									<div class="add-activity-list entypo-plus-squared">
+									<div ng-if="!isLocked()" class="add-activity-list entypo-plus-squared">
 										<ul>
 											<li ng-repeat="activityType in view.state.courses.list[view.state.uiState.selectedCourseId].activityTypes track by $index"
 												class="activity-item">

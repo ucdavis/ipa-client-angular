@@ -10,7 +10,6 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.termShortCode = $routeParams.termShortCode;
-		$scope.term = Term.prototype.getTermByTermShortCodeAndYear($scope.termShortCode, $scope.year);
 		$scope.view = {};
 
 		$scope.days = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
@@ -149,13 +148,17 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			// Initialize all sectionGroup sections if not done already
 			if ($scope.view.state.uiState.allSectionGroupsDetailsCached === false) {
 				schedulingActionCreators.getAllSectionGroupDetails(
-					$scope.workgroupId, $scope.year, $scope.term.code);
+					$scope.workgroupId, $scope.year, $scope.view.state.uiState.term.termCode);
 			}
 		};
 
 		$scope.isLocked = function () {
-			var termState = authService.getTermStateByTermCode($scope.term.code);
-			return termState ? termState.isLocked : true;
+			if (!$scope.view.state) { return true; }
+			var term = $scope.view.state.uiState.term;
+			var hasAuthorizedRole = $scope.sharedState.currentUser.isAdmin() ||
+				$scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id);
+			// Return true if the term is locked or the user has not write access
+			return term ? term.isLocked() || !(hasAuthorizedRole) : true;
 		};
 
 		$scope.matchesFilters = function (sectionGroup) {
@@ -188,7 +191,7 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 ]);
 
 SchedulingCtrl.getPayload = function (authService, $route, Term, schedulingActionCreators) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
 		var term = Term.prototype.getTermByTermShortCodeAndYear($route.current.params.termShortCode, $route.current.params.year);
 		return schedulingActionCreators.getInitialState(
 			$route.current.params.workgroupId,
