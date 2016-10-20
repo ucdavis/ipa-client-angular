@@ -7,7 +7,7 @@
  * Central location for sharedState information.
  */
 assignmentApp.service('assignmentStateService', function (
-	$rootScope, SectionGroup, Course, ScheduleTermState,
+	$rootScope, $log, SectionGroup, Course, ScheduleTermState,
 	ScheduleInstructorNote, Term, Tag, Instructor, TeachingAssignment,
 	TeachingCall, TeachingCallReceipt, TeachingCallResponse) {
 	return {
@@ -374,7 +374,7 @@ assignmentApp.service('assignmentStateService', function (
 
 						// Scaffold all teachingAssignment termCodeId arrays
 						var allTerms = ['01', '02', '03', '04', '06', '07', '08', '09', '10'];
-						allTerms.forEach( function (slotTerm) {
+						allTerms.forEach(function (slotTerm) {
 							var generatedTermCode = generateTermCode(action.year, slotTerm);
 							instructor.teachingAssignmentTermCodeIds[generatedTermCode] = [];
 						});
@@ -770,6 +770,9 @@ assignmentApp.service('assignmentStateService', function (
 			scope._state = newState;
 
 			$rootScope.$emit('assignmentStateChanged', scope._state);
+
+			$log.debug("Assignment state updated:");
+			$log.debug(scope._state, action.type);
 		}
 	};
 });
@@ -834,7 +837,7 @@ serializeTermFilters = function (termFilters) {
 	var termsBlob = "";
 	var orderedTerms = [5, 6, 7, 8, 9, 10, 1, 2, 3];
 
-	orderedTerms.forEach( function (term) {
+	orderedTerms.forEach(function (term) {
 		if (termFilters.indexOf(term) > -1) {
 			termsBlob += "1";
 		} else {

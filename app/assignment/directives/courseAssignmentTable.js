@@ -14,9 +14,12 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 
 			scope.isTermLocked = function (termCode) {
 				var termState = scope.view.state.scheduleTermStates.list[termCode];
+				var hasAuthorizedRole = scope.sharedState.currentUser.isAdmin() ||
+					scope.sharedState.currentUser.hasRole('academicPlanner', scope.sharedState.workgroup.id);
 
 				if (termState) {
-					return termState.isLocked;
+					// Return true if the term is locked or if the user has no write access
+					return termState.isLocked || !(hasAuthorizedRole);
 				} else {
 					return false;
 				}
@@ -250,7 +253,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 						assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment, scope.view.state.userInterface.scheduleId);
 					}
 				}
-				
+
 				// Open Assignment deletion confirmation popover
 				else if ($el.data('event-type') == 'deleteAssignmentPop') {
 					// Delete course confirmation

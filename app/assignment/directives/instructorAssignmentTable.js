@@ -23,9 +23,12 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 			scope.isTermLocked = function (termCode) {
 				var termState = scope.view.state.scheduleTermStates.list[termCode];
+				var hasAuthorizedRole = scope.sharedState.currentUser.isAdmin() ||
+					scope.sharedState.currentUser.hasRole('academicPlanner', scope.sharedState.workgroup.id);
 
 				if (termState) {
-					return termState.isLocked;
+					// Return true if the term is locked or if the user has no write access
+					return termState.isLocked || !(hasAuthorizedRole);
 				} else {
 					return false;
 				}
@@ -172,7 +175,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 												}
 											}
 
-											if (displayTitle.replace(/ /g,'').length == 0) {
+											if (displayTitle.replace(/ /g, '').length == 0) {
 												displayTitle += teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber + "-" + "001";
 												plannedSeats = "<small>Seats: 0</small>";
 												unitsLow = "<small>Units: 4</small>";
@@ -223,7 +226,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 												// This teachingAssignment can't be displayed here
 												if (teachingAssignment.sectionGroupId === 0
-												&& (!teachingAssignment.suggestedSubjectCode || !teachingAssignment.suggestedCourseNumber)) {
+													&& (!teachingAssignment.suggestedSubjectCode || !teachingAssignment.suggestedCourseNumber)) {
 													return true;
 												}
 

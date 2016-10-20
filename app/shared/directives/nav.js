@@ -66,6 +66,8 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 			 * (happens if the current user is admin and managing a workgroup they're not in)
 			 */
 			scope.hasExtraWorkgroup = function () {
+				if (scope.sharedState.currentUser === undefined) { return false; }
+
 				var userWorkgroups = scope.sharedState.currentUser.getWorkgroups();
 				if (userWorkgroups === undefined) { return false; }
 
@@ -77,14 +79,14 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 			 * Checks if user has any of the given roles for the current active workgroup
 			 */
 			scope.userHasRoles = function (roleNames) {
+				if (scope.sharedState.currentUser === undefined) { return false; }
 				if (scope.sharedState.currentUser.isAdmin()) { return true; }
-
 				return scope.sharedState.currentUser.hasRoles(roleNames, scope.sharedState.workgroup.id);
 			};
 
 			scope.userHasRolesForWorkgroup = function (roleNames, workgroup) {
+				if (scope.sharedState.currentUser === undefined) { return false; }
 				if (scope.sharedState.currentUser.isAdmin()) { return true; }
-
 				return scope.sharedState.currentUser.hasRoles(roleNames, workgroup.id);
 			};
 
