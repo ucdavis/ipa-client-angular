@@ -24,6 +24,7 @@ angular.module('currentUser', ['userRole'])
 			},
 
 			getWorkgroups: function () {
+				if (!this.userRoles) { return []; }
 				return _.uniq(
 					this.userRoles
 						.filter(function (ur) { return ur.workgroupId > 0; })
@@ -33,12 +34,14 @@ angular.module('currentUser', ['userRole'])
 			},
 
 			getUserRolesForWorkgroupId: function (workgroupId) {
+				if (!this.userRoles) { return []; }
 				return this.userRoles
 					.filter(function (ur) { return ur.workgroupId == workgroupId; })
 					.map(function (ur) { return ur.roleName; });
 			},
 
 			isAdmin: function () {
+				if (!this.userRoles) { return false; }
 				return this.userRoles
 					.some(function (ur) {
 						return ur.roleName == "admin" && ur.workgroupId === 0;
@@ -46,6 +49,7 @@ angular.module('currentUser', ['userRole'])
 			},
 
 			hasRole: function (roleName, workgroupId) {
+				if (!this.userRoles) { return false; }
 				return this.userRoles
 					.some(function (userRole) {
 						return userRole.roleName == roleName && userRole.workgroupId == workgroupId;
@@ -57,6 +61,7 @@ angular.module('currentUser', ['userRole'])
 					$log.error("Parameter passed to hasRoles() is not valid", roleNames);
 					return false;
 				}
+				if (!this.userRoles) { return false; }
 
 				return this.userRoles
 					.some(function (userRole) {
