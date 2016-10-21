@@ -75,8 +75,23 @@ angular.module('sharedApp')
 				} else {
 					var matchingRole = _.findWhere(data.userRoles, { workgroupId: Number(workgroupId) });
 					if (matchingRole) {
-						var workgroup = { id: matchingRole.workgroupId, name: matchingRole.workgroupName };
+						// User has access to requested page, let them in
+						var workgroup = { id: workgroupId, name: matchingRole.workgroupName };
 						this.setSharedState(workgroup, year);
+					} else if (currentUser.isAdmin()) {
+						// If the user is an admin, the current workgroup might have been set
+						// in the admin page, and we don't have information about the name of
+						// the workgroup in the payload. So, set the workgroupName to whatever
+						// is already in localStorage if any.
+						var currentWorkgroup = this.getCurrentWorkgroup();
+						var workgroupName = (currentWorkgroup.id == Number(workgroupId)) ? currentWorkgroup.name : '';
+						var workgroup = { id: workgroupId, name: workgroupName };
+						this.setSharedState(workgroup, year);
+					} else {
+						// User is neither an admin nor has access to requested workgroup. redirect to access denied
+						$log.error("User " + data.displayName + " does not have access to workgroupId " + workgroupId);
+						$window.location.href = "/access-denied.html";
+						return false;
 					}
 				}
 
