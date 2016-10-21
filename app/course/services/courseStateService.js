@@ -141,7 +141,8 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					});
 					return courses;
 				case GET_COURSE_CENSUS:
-					courses.list[action.payload.course.id].census = action.payload.census;
+					var course = courses.list[action.payload.course.id];
+					if (course) { course.census = action.payload.census; }
 					return courses;
 				case END_IMPORT_MODE:
 					courses.importList = null;
