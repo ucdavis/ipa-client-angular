@@ -68,6 +68,11 @@ module.exports = function (grunt) {
 				cwd: '<%= folders.webapp.root %>',
 				src: ['workgroup/**/*.html'],
 				dest: '<%= folders.webapp.build %>/js/workgroupTemplates.js'
+			},
+			reportApp: {
+				cwd: '<%= folders.webapp.root %>',
+				src: ['report/**/*.html'],
+				dest: '<%= folders.webapp.build %>/js/reportTemplates.js'
 			}
 		},
 
@@ -172,6 +177,15 @@ module.exports = function (grunt) {
 					'<%= ngtemplates.schedulingApp.dest %>'
 				],
 				dest: '<%= folders.webapp.build %>/js/schedulingApp.js'
+			},
+			// reportApp module files
+			jsScheduling: {
+				src: [
+					'<%= folders.webapp.root %>/report/*.js',
+					'<%= folders.webapp.root %>/report/**/*.js',
+					'<%= ngtemplates.reportApp.dest %>'
+				],
+				dest: '<%= folders.webapp.build %>/js/reportApp.js'
 			},
 			// Vendor CSS files
 			cssLib: {
@@ -325,6 +339,7 @@ module.exports = function (grunt) {
 							'^/assignments.* /assignment.html [L]',
 							'^/teachingCalls.* /teachingCall.html [L]',
 							'^/scheduling.* /scheduling.html [L]',
+							'^/reports.* /report.html [L]',
 						]));
 
 						return middlewares;
