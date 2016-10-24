@@ -6,29 +6,29 @@
  * Service in the reportApp.
  * Central location for sharedState information.
  */
-reportApp.service('reportStateService', function ($rootScope, $log, Schedule) {
+reportApp.service('reportStateService', function ($rootScope, $log, Term) {
 	return {
 		_state: {},
-		_scheduleReducers: function (action, schedules) {
+		_termReducers: function (action, terms) {
 			var scope = this;
 
 			switch (action.type) {
 				case INIT_STATE:
-					schedules = {
+					terms = {
 						ids: []
 					};
-					var scheduleList = {};
-					var length = action.payload.schedules ? action.payload.schedules.length : 0;
+					var termList = {};
+					var length = action.payload ? action.payload.length : 0;
 					for (var i = 0; i < length; i++) {
-						var scheduleData = action.payload.schedules[i];
+						var termData = action.payload[i];
 						// Using termCode as key since the Term does not have an id
-						scheduleList[scheduleData.termCode] = new Term(scheduleData);
+						termList[termData.termCode] = new Term(termData);
 					}
-					schedules.ids = _array_sortIdsByProperty(scheduleList, "year");
-					schedules.list = scheduleList;
-					return schedules;
+					terms.ids = _array_sortIdsByProperty(termList, "termCode");
+					terms.list = termList;
+					return terms;
 				default:
-					return schedules;
+					return terms;
 			}
 		},
 		reduce: function (action) {
@@ -39,7 +39,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Schedule) {
 			}
 
 			newState = {};
-			newState.schedules = scope._termReducers(action, scope._state.schedules);
+			newState.terms = scope._termReducers(action, scope._state.terms);
 
 			scope._state = newState;
 			$rootScope.$emit('reportStateChanged', {

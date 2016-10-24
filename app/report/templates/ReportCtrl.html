@@ -1,5 +1,13 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 
 <div class="main-content">
-	<h1>Report App</h1>
+
+	<div class="col-sm-6">
+		<li ng-repeat="year in view.state.terms.ids | termUniqueYears track by $index" ng-click="view.selectedYear = year;">{{ year }}</li>
+	</div>
+
+	<div class="col-sm-6" ng-if="view.selectedYear">
+		<li ng-repeat="termCode in view.state.terms.ids | termsInYear:view.selectedYear track by $index">{{ termCode }}</li>
+	</div>
+
 </div>
