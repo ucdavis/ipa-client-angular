@@ -5,6 +5,8 @@
 
 reportApp.filter("termsInYear", this.termsInYear = function () {
 	return function (arr, field) {
-		return arr.filter(function (termCode) { return Math.floor(termCode / 100) == field; });
+		if (arr instanceof Array) {
+			return arr.filter(function (termCode) { return termCode.toString().substr(0, 4) == field; });
+		}
 	};
 });

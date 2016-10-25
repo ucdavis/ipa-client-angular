@@ -2,12 +2,33 @@
 
 <div class="main-content">
 
-	<div class="col-sm-6">
-		<li ng-repeat="year in view.state.terms.ids | termUniqueYears track by $index" ng-click="view.selectedYear = year;">{{ year }}</li>
-	</div>
+	<h3 style="text-align: center;">{{ sharedState.workgroup.name }} {{ year.yearToAcademicYear() }} Reports</h3>
+	<br />
 
-	<div class="col-sm-6" ng-if="view.selectedYear">
-		<li ng-repeat="termCode in view.state.terms.ids | termsInYear:view.selectedYear track by $index">{{ termCode }}</li>
+	<div class="row">
+
+		<div class="col-sm-2 col-sm-offset-3">
+			<select class="form-control" ng-model="view.selectedYear" ng-change="view.selectedTermCode = undefined">
+				<option value="">Select Year</option>
+				<option ng-repeat="year in view.state.terms.ids | termUniqueYears track by $index" ng-value="year">{{ year }}</option>
+			</select>
+		</div>
+
+		<div class="col-sm-2">
+			<select class="form-control" ng-model="view.selectedTermCode" ng-disabled="!view.selectedYear">
+				<option value="">Select Term</option>
+				<option ng-repeat="termCode in view.state.terms.ids | termsInYear:view.selectedYear track by $index" ng-value="termCode">
+					{{ termCode.toString().getTermCodeDisplayName(true) }}
+				</option>
+			</select>
+		</div>
+
+		<div class="col-sm-2">
+			<button ng-disabled="!view.selectedTermCode" ng-click="startComparison()" class="form-control btn btn-default">
+				Start Comparison
+			</button>
+		</div>
+
 	</div>
 
 </div>

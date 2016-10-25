@@ -6,7 +6,7 @@
  * Controller of the ipaClientAngularApp
  */
 reportApp.controller('ReportCtrl', ['$scope', '$rootScope', '$routeParams', 'reportActionCreators',
-		this.ReportCtrl = function ($scope, $rootScope, $routeParams, reportActionCreators) {
+	this.ReportCtrl = function ($scope, $rootScope, $routeParams, reportActionCreators) {
 
 		$scope.year = $routeParams.year;
 		$scope.view = {};
@@ -15,7 +15,10 @@ reportApp.controller('ReportCtrl', ['$scope', '$rootScope', '$routeParams', 'rep
 			$scope.view.state = data.state;
 		});
 
-		}
+		$scope.startComparison = function () {
+			console.log("Starting comparison!!!");
+		};
+	}
 ]);
 
 ReportCtrl.getPayload = function (authService, $route, reportActionCreators) {
