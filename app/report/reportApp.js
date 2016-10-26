@@ -22,3 +22,4 @@ reportApp.config(function ($routeProvider) {
 });
 
 var INIT_STATE = "INIT_STATE";
+var GET_TERM_COMPARISON_REPORT = "GET_TERM_COMPARISON_REPORT";

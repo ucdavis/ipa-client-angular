@@ -18,6 +18,19 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
+		},
+		getTermComparisonReport: function (workgroupId, year, termCode) {
+			reportService.getTermComparisonReport(workgroupId, year, termCode).then(function (sectionDiffs) {
+				var action = {
+					type: GET_TERM_COMPARISON_REPORT,
+					payload: {
+						sectionDiffs: sectionDiffs
+					}
+				};
+				reportStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
 		}
 	};
 });

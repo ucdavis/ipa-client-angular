@@ -8,15 +8,23 @@
 reportApp.controller('ReportCtrl', ['$scope', '$rootScope', '$routeParams', 'reportActionCreators',
 	this.ReportCtrl = function ($scope, $rootScope, $routeParams, reportActionCreators) {
 
+		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
-		$scope.view = {};
+		$scope.view = {
+			selectedYear: null,
+			selectedTermCode: null
+		};
 
 		$rootScope.$on('reportStateChanged', function (event, data) {
 			$scope.view.state = data.state;
 		});
 
 		$scope.startComparison = function () {
-			console.log("Starting comparison!!!");
+			reportActionCreators.getTermComparisonReport(
+				$scope.workgroupId,
+				$scope.year,
+				$scope.view.selectedTermCode
+			);
 		};
 	}
 ]);

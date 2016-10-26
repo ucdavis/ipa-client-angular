@@ -8,7 +8,7 @@
 	<div class="row">
 
 		<div class="col-sm-2 col-sm-offset-3">
-			<select class="form-control" ng-model="view.selectedYear" ng-change="view.selectedTermCode = undefined">
+			<select class="form-control" ng-model="view.selectedYear" ng-change="view.selectedTermCode = null">
 				<option value="">Select Year</option>
 				<option ng-repeat="year in view.state.terms.ids | termUniqueYears track by $index" ng-value="year">{{ year }}</option>
 			</select>
@@ -29,6 +29,16 @@
 			</button>
 		</div>
 
+	</div>
+
+	<div class="row">
+		<div class="col-sm-10 col-sm-offset-1">
+			<ul ng-if="view.state.sections.ids.length">
+				<li ng-repeat="sectionId in view.state.sections.ids track by $index">
+					Comparing section with id #{{ sectionId }}
+				</li>
+			</ul>
+		</div>
 	</div>
 
 </div>

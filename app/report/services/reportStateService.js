@@ -31,6 +31,22 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term) {
 					return terms;
 			}
 		},
+		_sectionReducers: function (action, sections) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					sections = {
+						ids: []
+					};
+					return sections;
+				case GET_TERM_COMPARISON_REPORT:
+					// TODO: translate DiffView payload into stateService language
+					return sections;
+				default:
+					return sections;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -40,6 +56,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term) {
 
 			newState = {};
 			newState.terms = scope._termReducers(action, scope._state.terms);
+			newState.sections = scope._sectionReducers(action, scope._state.sections);
 
 			scope._state = newState;
 			$rootScope.$emit('reportStateChanged', {

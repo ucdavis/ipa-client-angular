@@ -20,6 +20,19 @@ reportApp.factory("reportService", this.reportService = function ($http, $q, $wi
 				});
 
 			return deferred.promise;
+		},
+		getTermComparisonReport: function (workgroupId, year, termCode) {
+			var deferred = $q.defer();
+
+			$http.get(serverRoot + "/api/reportView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termCode, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
 		}
 	};
 });
