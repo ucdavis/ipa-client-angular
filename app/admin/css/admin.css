@@ -6,4 +6,5 @@
 .workgroups-input li .btn-workgroup {
 	display: inline-block;
 	padding: 8px 12px;
+	padding-top: 0 !important;
 }
