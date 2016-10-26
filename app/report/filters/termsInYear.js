@@ -1,6 +1,6 @@
 /**
- * Returns a string in the form 5th"
- * Expects an Integer
+ * Returns a filtered array of termCodes with the given year
+ * Expects an array of termCodes and a year field
  */
 
 reportApp.filter("termsInYear", this.termsInYear = function () {

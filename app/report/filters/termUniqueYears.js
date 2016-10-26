@@ -1,6 +1,6 @@
 /**
- * Returns a string in the form 5th"
- * Expects an Integer
+ * Returns a array of unique years
+ * Expects an array of termCodes
  */
 
 reportApp.filter("termUniqueYears", this.termUniqueYears = function () {
