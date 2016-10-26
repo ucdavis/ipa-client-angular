@@ -6,7 +6,7 @@
  * Service in the reportApp.
  * Central location for sharedState information.
  */
-reportApp.service('reportStateService', function ($rootScope, $log, Term) {
+reportApp.service('reportStateService', function ($rootScope, $log, Term, Section) {
 	return {
 		_state: {},
 		_termReducers: function (action, terms) {
@@ -41,7 +41,30 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term) {
 					};
 					return sections;
 				case GET_TERM_COMPARISON_REPORT:
-					// TODO: translate DiffView payload into stateService language
+					var sectionList = {};
+					var length = action.payload.sections ? action.payload.sections.length : 0;
+					for (var i = 0; i < length; i++) {
+						var sectionData = action.payload.sections[i];
+						sectionList[sectionData.id] = new Section(sectionData);
+
+						// translate DiffView changes list into stateService language
+						var sectionChanges = _.where(action.payload.changes, { "affectedLocalId": sectionData.uniqueKey });
+						if (sectionChanges.length === 0) {
+							// DW version matches IPA!
+							sectionList[sectionData.id].dwChanges = {};
+						} else if (sectionChanges.length === 1 && typeof sectionChanges[0].propertyName === "undefined") {
+							// DW version does not exist
+							sectionList[sectionData.id].dwChanges = null;
+						} else {
+							// DW version does have some changes
+							sectionList[sectionData.id].dwChanges = {};
+							sectionChanges.forEach(function (change) {
+								sectionList[sectionData.id].dwChanges[sectionChanges[0].propertyName] = sectionChanges[0].right;
+							});
+						}
+					}
+					sections.ids = _array_sortIdsByProperty(sectionList, ["subjectCode", "courseNumber", "sequenceNumber"]);
+					sections.list = sectionList;
 					return sections;
 				default:
 					return sections;
