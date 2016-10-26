@@ -7,14 +7,14 @@
 
 	<div class="row">
 
-		<div class="col-sm-2 col-sm-offset-3">
+		<div class="col-sm-3 col-sm-offset-2">
 			<select class="form-control" ng-model="view.selectedYear" ng-change="view.selectedTermCode = null">
 				<option value="">Select Year</option>
 				<option ng-repeat="year in view.state.terms.ids | termUniqueYears track by $index" ng-value="year">{{ year }}</option>
 			</select>
 		</div>
 
-		<div class="col-sm-2">
+		<div class="col-sm-3">
 			<select class="form-control" ng-model="view.selectedTermCode" ng-disabled="!view.selectedYear">
 				<option value="">Select Term</option>
 				<option ng-repeat="termCode in view.state.terms.ids | termsInYear:view.selectedYear track by $index" ng-value="termCode">
@@ -32,10 +32,32 @@
 	</div>
 
 	<div class="row">
-		<div class="col-sm-10 col-sm-offset-1">
-			<ul ng-if="view.state.sections.ids.length">
-				<li ng-repeat="sectionId in view.state.sections.ids track by $index">
-					Comparing section with id #{{ sectionId }}
+		<div class="col-sm-8 col-sm-offset-2">
+			<ul ng-if="view.state.sections.ids.length" class="section-diff-list">
+				<li ng-repeat="sectionId in view.state.sections.ids track by $index" class="section-diff-row" ng-class="{ 'no-changes': view.state.sections.list[sectionId].dwHasChanges === false, 'no-remote': view.state.sections.list[sectionId].dwChanges === null }">
+					<!-- CRN -->
+					<div class="section-diff-element section-crn" ng-class="{ 'has-changes' : view.state.sections.list[sectionId].dwChanges.crn !== undefined }">
+						<span class="ipa-version">
+							{{ view.state.sections.list[sectionId].crn || "No CRN" }}
+						</span>
+						<span class="dw-version" ng-if="view.state.sections.list[sectionId].dwChanges.crn !== undefined">
+							Banner has: {{ view.state.sections.list[sectionId].dwChanges.crn }}
+						</span>
+					</div>
+					<!-- Section unique key: Subject Code, Course Number, and Sequence Number -->
+					<div class="section-diff-element section-unique-key">
+						{{ view.state.sections.list[sectionId].subjectCode }} {{ view.state.sections.list[sectionId].courseNumber }} {{ view.state.sections.list[sectionId].sequenceNumber
+						}}
+					</div>
+					<!-- Seats -->
+					<div class="section-diff-element section-seats" ng-class="{ 'has-changes' : view.state.sections.list[sectionId].dwChanges.seats !== undefined }">
+						<span class="ipa-version">
+							{{ view.state.sections.list[sectionId].seats }}
+						</span>
+						<span class="dw-version" ng-if="view.state.sections.list[sectionId].dwChanges.seats !== undefined">
+							Banner has: {{ view.state.sections.list[sectionId].dwChanges.seats }}
+						</span>
+					</div>
 				</li>
 			</ul>
 		</div>

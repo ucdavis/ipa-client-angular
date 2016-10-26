@@ -1,0 +1,59 @@
+ul.section-diff-list {
+	list-style: none;
+	margin-top: 3em;
+	padding: 0;
+}
+
+li.section-diff-row {
+	margin: 1.5em 0;
+}
+
+li.section-diff-row.no-changes {
+	color: green;
+	font-weight: bold;
+}
+
+li.section-diff-row.no-remote {
+	color: red;
+	font-weight: bold;
+}
+
+.section-diff-element {
+	position: relative;
+	display: inline-block;
+	margin: 0 0.2em;
+}
+
+.section-diff-element.has-changes {
+	cursor: pointer;
+	border: 1px dashed #aaa;
+	color: #777;
+}
+
+.section-diff-element.has-changes:hover {
+	background-color: #eee;
+	border-bottom: none;
+}
+
+.ipa-version {
+	padding: 0 0.2em;
+}
+
+.dw-version {
+	position:  absolute;
+	color: #750f0f;
+	font-weight: bold;
+	white-space: nowrap;
+	display: none;
+	padding: 0 0.2em;
+	left: 50%;
+	transform: translateX(-50%);
+	min-width: 100%;
+	text-align: center;
+	background-color: #eee;
+	border: 1px dashed #aaa;
+}
+
+.section-diff-element:hover .dw-version {
+	display: inline-block;
+}

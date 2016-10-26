@@ -51,15 +51,17 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 						var sectionChanges = _.where(action.payload.changes, { "affectedLocalId": sectionData.uniqueKey });
 						if (sectionChanges.length === 0) {
 							// DW version matches IPA!
-							sectionList[sectionData.id].dwChanges = {};
+							sectionList[sectionData.id].dwHasChanges = false;
 						} else if (sectionChanges.length === 1 && typeof sectionChanges[0].propertyName === "undefined") {
 							// DW version does not exist
+							sectionList[sectionData.id].dwHasChanges = true;
 							sectionList[sectionData.id].dwChanges = null;
 						} else {
 							// DW version does have some changes
+							sectionList[sectionData.id].dwHasChanges = true;
 							sectionList[sectionData.id].dwChanges = {};
 							sectionChanges.forEach(function (change) {
-								sectionList[sectionData.id].dwChanges[sectionChanges[0].propertyName] = sectionChanges[0].right;
+								sectionList[sectionData.id].dwChanges[change.propertyName] = change.right;
 							});
 						}
 					}
