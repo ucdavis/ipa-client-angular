@@ -179,7 +179,7 @@ module.exports = function (grunt) {
 				dest: '<%= folders.webapp.build %>/js/schedulingApp.js'
 			},
 			// reportApp module files
-			jsScheduling: {
+			jsReport: {
 				src: [
 					'<%= folders.webapp.root %>/report/*.js',
 					'<%= folders.webapp.root %>/report/**/*.js',
@@ -372,10 +372,10 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("gruntify-eslint");
 
 	grunt.registerTask('build', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsProdSnippets',
-		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:cssLib', 'uglify:dist', 'cssmin']);
+		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsReport', 'concat:cssLib', 'uglify:dist', 'cssmin']);
 
 	grunt.registerTask('serve', ['clean', 'eslint', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsDevSnippets',
-		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:cssLib', 'connect', 'watch']);
+		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsReport', 'concat:cssLib', 'connect', 'watch']);
 
 	grunt.registerTask('default', ['serve']);
 
