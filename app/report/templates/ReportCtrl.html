@@ -2,7 +2,7 @@
 
 <div class="main-content">
 
-	<h3 style="text-align: center;">{{ sharedState.workgroup.name }} {{ year.yearToAcademicYear() }} Reports</h3>
+	<h3 style="text-align: center;">{{ sharedState.workgroup.name }} Reports</h3>
 	<br />
 
 	<div class="row">
@@ -32,7 +32,8 @@
 	</div>
 
 	<div class="row">
-		<div class="col-sm-8 col-sm-offset-2">
+		<spinner ng-show="view.state.uiState.comparisonInProgress" style="margin-top: 3em;"></spinner>
+		<div class="col-sm-8 col-sm-offset-2" ng-hide="view.state.uiState.comparisonInProgress">
 			<ul ng-if="view.state.sections.ids.length" class="section-diff-list">
 				<li ng-repeat="sectionId in view.state.sections.ids track by $index" class="section-diff-row" ng-class="{ 'no-changes': view.state.sections.list[sectionId].dwHasChanges === false, 'no-remote': view.state.sections.list[sectionId].dwChanges === null }">
 					<!-- CRN -->

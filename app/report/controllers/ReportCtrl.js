@@ -20,6 +20,7 @@ reportApp.controller('ReportCtrl', ['$scope', '$rootScope', '$routeParams', 'rep
 		});
 
 		$scope.startComparison = function () {
+			reportActionCreators.beginComparison();
 			reportActionCreators.getTermComparisonReport(
 				$scope.workgroupId,
 				$scope.year,

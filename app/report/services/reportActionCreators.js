@@ -19,6 +19,13 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		beginComparison: function () {
+			var action = {
+				type: BEGIN_COMPARISON,
+				payload: {}
+			};
+			reportStateService.reduce(action);
+		},
 		getTermComparisonReport: function (workgroupId, year, termCode) {
 			reportService.getTermComparisonReport(workgroupId, year, termCode).then(function (payload) {
 				var action = {

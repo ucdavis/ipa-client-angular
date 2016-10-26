@@ -72,6 +72,25 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					return sections;
 			}
 		},
+		_uiStateReducers: function (action, uiState) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					uiState = {
+						comparisonInProgress: false
+					};
+					return uiState;
+				case BEGIN_COMPARISON:
+					uiState.comparisonInProgress = true;
+					return uiState;
+				case GET_TERM_COMPARISON_REPORT:
+					uiState.comparisonInProgress = false;
+					return uiState;
+				default:
+					return uiState;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -82,6 +101,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 			newState = {};
 			newState.terms = scope._termReducers(action, scope._state.terms);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
+			newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
 
 			scope._state = newState;
 			$rootScope.$emit('reportStateChanged', {
