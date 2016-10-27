@@ -32,11 +32,19 @@ li.section-diff-row.no-remote {
 
 .section-diff-element.has-changes:hover {
 	background-color: #eee;
-	border-bottom: none;
+	border-bottom-color: transparent;
 }
 
-.ipa-version {
+.ipa-version, .no-remote, .no-local {
 	padding: 0 0.2em;
+}
+
+.no-remote {
+	color: pink;
+}
+
+.no-local {
+	color: darkorange;
 }
 
 .dw-version {

@@ -61,7 +61,40 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 							sectionList[sectionData.id].dwHasChanges = true;
 							sectionList[sectionData.id].dwChanges = {};
 							sectionChanges.forEach(function (change) {
-								sectionList[sectionData.id].dwChanges[change.propertyName] = change.right;
+								switch (change.propertyName) {
+									case "instructors":
+										// Code to handle instructors
+										// DW missing instructor: Add a (noRemote) flag to ipaSection.instructors
+										change.changes
+											.filter(function (instructorChange) {
+												return instructorChange.removedValue;
+											}).forEach(function (instructorChange) {
+												var uniqueKey = instructorChange.removedValue.cdoId;
+												var instructor = _.find(sectionList[sectionData.id].instructors, { uniqueKey: uniqueKey });
+												instructor.noRemote = true;
+											});
+										// DW has extra instructor
+										sectionList[sectionData.id].dwChanges[change.propertyName] = change.changes
+											.filter(function (instructorChange) {
+												return instructorChange.addedValue;
+											}).map(function (instructorChange) {
+												var instructorKeys = instructorChange.addedValue.cdoId.split("-");
+												return {
+													loginId: instructorKeys[0],
+													ucdStudentSID: instructorKeys[1],
+													uniqueKey: instructorChange.addedValue.cdoId,
+													location: "DW"
+												};
+											});
+										break;
+									case "crn":
+									case "seats":
+										sectionList[sectionData.id].dwChanges[change.propertyName] = change.right;
+										break;
+									default:
+										// Handle null/undefined/unknown property name
+										break;
+								}
 							});
 						}
 					}

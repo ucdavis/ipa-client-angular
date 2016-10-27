@@ -59,6 +59,22 @@
 							Banner has: {{ view.state.sections.list[sectionId].dwChanges.seats }}
 						</span>
 					</div>
+					<!-- Instructors -->
+					<div class="section-diff-element section-instructors-header">
+						- Instructors:
+					</div>
+					<!-- Instructors only in IPA -->
+					<div ng-repeat="instructor in view.state.sections.list[sectionId].instructors track by $index" ng-class="{ 'has-changes' : instructor.noRemote }"
+						class="section-diff-element section-instructors">
+						<span class="ipa-version" ng-class="{ 'no-remote' : instructor.noRemote }">
+							{{ instructor | lastSpaceInitial }}
+						</span>
+					</div>
+					<div ng-repeat="instructor in view.state.sections.list[sectionId].dwChanges.instructors track by $index" class="section-diff-element section-instructors has-changes">
+						<span class="no-local">
+							{{ instructor.uniqueKey }}
+						</span>
+					</div>
 				</li>
 			</ul>
 		</div>
