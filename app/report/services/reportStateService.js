@@ -42,20 +42,20 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					return sections;
 				case GET_TERM_COMPARISON_REPORT:
 					var sectionList = {};
-					var length = action.payload.sections ? action.payload.sections.length : 0;
+					var length = action.payload.sectionDiffs ? action.payload.sectionDiffs.length : 0;
 					for (var i = 0; i < length; i++) {
-						var sectionData = action.payload.sections[i];
+						var sectionData = action.payload.sectionDiffs[i].section;
+						var sectionChanges = action.payload.sectionDiffs[i].changes;
 						sectionList[sectionData.id] = new Section(sectionData);
 
 						// translate DiffView changes list into stateService language
-						var sectionChanges = _.where(action.payload.changes, { "affectedLocalId": sectionData.uniqueKey });
-						if (sectionChanges.length === 0) {
-							// DW version matches IPA!
-							sectionList[sectionData.id].dwHasChanges = false;
-						} else if (sectionChanges.length === 1 && typeof sectionChanges[0].propertyName === "undefined") {
+						if (sectionChanges === null) {
 							// DW version does not exist
 							sectionList[sectionData.id].dwHasChanges = true;
 							sectionList[sectionData.id].dwChanges = null;
+						} else if (sectionChanges.length === 0) {
+							// DW version matches IPA!
+							sectionList[sectionData.id].dwHasChanges = false;
 						} else {
 							// DW version does have some changes
 							sectionList[sectionData.id].dwHasChanges = true;

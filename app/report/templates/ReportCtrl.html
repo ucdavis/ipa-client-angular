@@ -45,15 +45,15 @@
 							Banner has: {{ view.state.sections.list[sectionId].dwChanges.crn }}
 						</span>
 					</div>
-					<!-- Section unique key: Subject Code, Course Number, and Sequence Number -->
+					<!-- Section immutable fields: Title, Subject Code, Course Number, and Sequence Number -->
 					<div class="section-diff-element section-unique-key">
-						{{ view.state.sections.list[sectionId].subjectCode }} {{ view.state.sections.list[sectionId].courseNumber }} {{ view.state.sections.list[sectionId].sequenceNumber
-						}}
+						- {{ view.state.sections.list[sectionId].subjectCode }} {{ view.state.sections.list[sectionId].courseNumber }} {{ view.state.sections.list[sectionId].title
+						}} - {{ view.state.sections.list[sectionId].sequenceNumber }} -
 					</div>
 					<!-- Seats -->
 					<div class="section-diff-element section-seats" ng-class="{ 'has-changes' : view.state.sections.list[sectionId].dwChanges.seats !== undefined }">
 						<span class="ipa-version">
-							{{ view.state.sections.list[sectionId].seats }}
+							Seats: {{ view.state.sections.list[sectionId].seats }}
 						</span>
 						<span class="dw-version" ng-if="view.state.sections.list[sectionId].dwChanges.seats !== undefined">
 							Banner has: {{ view.state.sections.list[sectionId].dwChanges.seats }}

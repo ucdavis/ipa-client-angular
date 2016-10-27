@@ -27,10 +27,12 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 			reportStateService.reduce(action);
 		},
 		getTermComparisonReport: function (workgroupId, year, termCode) {
-			reportService.getTermComparisonReport(workgroupId, year, termCode).then(function (payload) {
+			reportService.getTermComparisonReport(workgroupId, year, termCode).then(function (sectionDiffs) {
 				var action = {
 					type: GET_TERM_COMPARISON_REPORT,
-					payload: payload
+					payload: {
+						sectionDiffs: sectionDiffs
+					}
 				};
 				reportStateService.reduce(action);
 			}, function (err) {
