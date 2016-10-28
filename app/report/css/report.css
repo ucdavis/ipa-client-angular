@@ -47,7 +47,7 @@ li.section-diff-row.no-remote {
 	color: darkorange;
 }
 
-.dw-version {
+.change-action {
 	position:  absolute;
 	color: #750f0f;
 	font-weight: bold;
@@ -62,6 +62,6 @@ li.section-diff-row.no-remote {
 	border: 1px dashed #aaa;
 }
 
-.section-diff-element:hover .dw-version {
+.section-diff-element:hover .change-action {
 	display: inline-block;
 }

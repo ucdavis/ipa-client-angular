@@ -44,22 +44,23 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					var sectionList = {};
 					var length = action.payload.sectionDiffs ? action.payload.sectionDiffs.length : 0;
 					for (var i = 0; i < length; i++) {
-						var sectionData = action.payload.sectionDiffs[i].section;
+						var ipaSectionData = action.payload.sectionDiffs[i].ipaSection;
+						var dwSectionData = action.payload.sectionDiffs[i].dwSection;
 						var sectionChanges = action.payload.sectionDiffs[i].changes;
-						sectionList[sectionData.id] = new Section(sectionData);
+						sectionList[ipaSectionData.id] = new Section(ipaSectionData);
 
 						// translate DiffView changes list into stateService language
 						if (sectionChanges === null) {
 							// DW version does not exist
-							sectionList[sectionData.id].dwHasChanges = true;
-							sectionList[sectionData.id].dwChanges = null;
+							sectionList[ipaSectionData.id].dwHasChanges = true;
+							sectionList[ipaSectionData.id].dwChanges = null;
 						} else if (sectionChanges.length === 0) {
 							// DW version matches IPA!
-							sectionList[sectionData.id].dwHasChanges = false;
+							sectionList[ipaSectionData.id].dwHasChanges = false;
 						} else {
 							// DW version does have some changes
-							sectionList[sectionData.id].dwHasChanges = true;
-							sectionList[sectionData.id].dwChanges = {};
+							sectionList[ipaSectionData.id].dwHasChanges = true;
+							sectionList[ipaSectionData.id].dwChanges = {};
 							sectionChanges.forEach(function (change) {
 								switch (change.propertyName) {
 									case "instructors":
@@ -70,26 +71,20 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 												return instructorChange.removedValue;
 											}).forEach(function (instructorChange) {
 												var uniqueKey = instructorChange.removedValue.cdoId;
-												var instructor = _.find(sectionList[sectionData.id].instructors, { uniqueKey: uniqueKey });
+												var instructor = _.find(sectionList[ipaSectionData.id].instructors, { uniqueKey: uniqueKey });
 												instructor.noRemote = true;
 											});
 										// DW has extra instructor
-										sectionList[sectionData.id].dwChanges[change.propertyName] = change.changes
+										sectionList[ipaSectionData.id].dwChanges[change.propertyName] = change.changes
 											.filter(function (instructorChange) {
 												return instructorChange.addedValue;
 											}).map(function (instructorChange) {
-												var instructorKeys = instructorChange.addedValue.cdoId.split("-");
-												return {
-													loginId: instructorKeys[0],
-													ucdStudentSID: instructorKeys[1],
-													uniqueKey: instructorChange.addedValue.cdoId,
-													location: "DW"
-												};
+												return _.find(dwSectionData.instructors, { uniqueKey: instructorChange.addedValue.cdoId });
 											});
 										break;
 									case "crn":
 									case "seats":
-										sectionList[sectionData.id].dwChanges[change.propertyName] = change.right;
+										sectionList[ipaSectionData.id].dwChanges[change.propertyName] = change.right;
 										break;
 									default:
 										// Handle null/undefined/unknown property name

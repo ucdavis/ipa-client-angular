@@ -41,7 +41,7 @@
 						<span class="ipa-version">
 							{{ view.state.sections.list[sectionId].crn || "No CRN" }}
 						</span>
-						<span class="dw-version" ng-if="view.state.sections.list[sectionId].dwChanges.crn !== undefined">
+						<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges.crn !== undefined">
 							Banner has: {{ view.state.sections.list[sectionId].dwChanges.crn }}
 						</span>
 					</div>
@@ -55,7 +55,7 @@
 						<span class="ipa-version">
 							Seats: {{ view.state.sections.list[sectionId].seats }}
 						</span>
-						<span class="dw-version" ng-if="view.state.sections.list[sectionId].dwChanges.seats !== undefined">
+						<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges.seats !== undefined">
 							Banner has: {{ view.state.sections.list[sectionId].dwChanges.seats }}
 						</span>
 					</div>
@@ -69,10 +69,16 @@
 						<span class="ipa-version" ng-class="{ 'no-remote' : instructor.noRemote }">
 							{{ instructor | lastSpaceInitial }}
 						</span>
+						<span class="change-action" ng-if="instructor.noRemote">
+							Banner does not have this instructor (Mark for creation)
+						</span>
 					</div>
 					<div ng-repeat="instructor in view.state.sections.list[sectionId].dwChanges.instructors track by $index" class="section-diff-element section-instructors has-changes">
 						<span class="no-local">
-							{{ instructor.uniqueKey }}
+							{{ instructor | lastSpaceInitial }}
+						</span>
+						<span class="change-action">
+							IPA does not have this instructor (Click to assign)
 						</span>
 					</div>
 				</li>
