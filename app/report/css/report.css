@@ -6,16 +6,11 @@ ul.section-diff-list {
 
 li.section-diff-row {
 	margin: 1.5em 0;
+	color: #777;
 }
 
 li.section-diff-row.no-changes {
-	color: green;
-	font-weight: bold;
-}
-
-li.section-diff-row.no-remote {
-	color: red;
-	font-weight: bold;
+	color: #aaa;
 }
 
 .section-diff-element {
@@ -27,7 +22,7 @@ li.section-diff-row.no-remote {
 .section-diff-element.has-changes {
 	cursor: pointer;
 	border: 1px dashed #aaa;
-	color: #777;
+	color: #000;
 }
 
 .section-diff-element.has-changes:hover {
@@ -35,12 +30,12 @@ li.section-diff-row.no-remote {
 	border-bottom-color: transparent;
 }
 
-.ipa-version, .no-remote, .no-local {
+span.ipa-version, span.no-remote, span.no-local {
 	padding: 0 0.2em;
 }
 
-.no-remote {
-	color: pink;
+.no-remote, li.no-remote {
+	color: darkred;
 }
 
 .no-local {

@@ -7,17 +7,10 @@
 
 	<div class="row">
 
-		<div class="col-sm-3 col-sm-offset-2">
-			<select class="form-control" ng-model="view.selectedYear" ng-change="view.selectedTermCode = null">
-				<option value="">Select Year</option>
-				<option ng-repeat="year in view.state.terms.ids | termUniqueYears track by $index" ng-value="year">{{ year }}</option>
-			</select>
-		</div>
-
-		<div class="col-sm-3">
-			<select class="form-control" ng-model="view.selectedTermCode" ng-disabled="!view.selectedYear">
+		<div class="col-sm-4 col-sm-offset-3">
+			<select class="form-control" ng-model="view.selectedTermCode" ng-disabled="!year">
 				<option value="">Select Term</option>
-				<option ng-repeat="termCode in view.state.terms.ids | termsInYear:view.selectedYear track by $index" ng-value="termCode">
+				<option ng-repeat="termCode in view.state.terms.ids | termsInYear:year track by $index" ng-value="termCode">
 					{{ termCode.toString().getTermCodeDisplayName(true) }}
 				</option>
 			</select>

@@ -11,7 +11,6 @@ reportApp.controller('ReportCtrl', ['$scope', '$rootScope', '$routeParams', 'rep
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.view = {
-			selectedYear: null,
 			selectedTermCode: null
 		};
 
