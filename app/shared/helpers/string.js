@@ -29,32 +29,24 @@ String.prototype.yearToAcademicYear = function () {
 	return this + "-" + (Number(this) + 1).toString().slice(-2);
 };
 
-// Converts 24 'military time' to 12 hour am/pm time
+/**
+ * Converts 24 'military time' to 12 hour am/pm time
+ * handled cases:
+ * - "13:00:00"
+ * - "13:00"
+ * - "1300"
+ */
 String.prototype.toStandardTime = function () {
-	//If time is already in standard time then don't format.
-	if (this.indexOf('AM') > -1 || this.indexOf('PM') > -1) {
-		return this;
-	} else {
-		//If value is the expected length for military time then process to standard time.
-		if (this.length == 8) {
-			var hour = this.substring(0, 2); //Extract hour
-			var minutes = this.substring(3, 5); //Extract minutes
-			var identifier = 'AM'; //Initialize AM PM identifier
-
-			if (hour === 12) { //If hour is 12 then should set AM PM identifier to PM
-				identifier = 'PM';
-			}
-			if (hour === 0) { //If hour is 0 then set to 12 for standard time 12 AM
-				hour = 12;
-			}
-			if (hour > 12) { //If hour is greater than 12 then convert to standard 12 hour format and set the AM PM identifier to PM
-				hour = hour - 12;
-				identifier = 'PM';
-			}
-			return hour + ':' + minutes + ' ' + identifier; //Return the constructed standard time
-		} else { //If value is not the expected length than just return the value as is
-			return this;
-		}
+	var returnFormat = "h:mm A";
+	if (/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-9][0-9]$/.test(this)) {
+		// Case "13:00:00"
+		return moment(this, "HH:mm:ss").format(returnFormat);
+	} else if (/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(this)) {
+		// Case "13:00"
+		return moment(this, "HH:mm").format(returnFormat);
+	} else if (/^([0-9]|0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/.test(this)) {
+		// Case "1300"
+		return moment(this, "HHmm").format(returnFormat);
 	}
 };
 
@@ -134,4 +126,17 @@ String.prototype.getActivityCodeDescription = function () {
 		'Z': "Term Paper"
 	};
 	return codeDescriptions[this];
+};
+
+// Turns 0101010 into MWF
+String.prototype.getWeekDays = function () {
+	var days = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
+	var dayArr = this.split('');
+
+	var dayStr = '';
+	angular.forEach(dayArr, function (day, i) {
+				if (day === '1') { dayStr = dayStr + days[i]; }
+	});
+
+	return dayStr;
 };

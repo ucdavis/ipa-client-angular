@@ -50,17 +50,6 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			}
 		};
 
-		$scope.getWeekDays = function (dayIndicator, dayIndicators) {
-			var dayArr = dayIndicator.split('');
-
-			var dayStr = '';
-			angular.forEach(dayArr, function (day, i) {
-				if (day === '1') { dayStr = dayStr + $scope.days[i]; }
-			});
-
-			return dayStr;
-		};
-
 		$scope.getMeridianTime = function (time) {
 			time = Activity.prototype.getMeridianTime(time);
 			return ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ' ' + time.meridian;
