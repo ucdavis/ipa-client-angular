@@ -62,6 +62,8 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 							sectionList[ipaSectionData.id].dwHasChanges = true;
 							sectionList[ipaSectionData.id].dwChanges = {};
 							sectionChanges.forEach(function (change) {
+								var changeId = change.affectedLocalId;
+								sectionList[ipaSectionData.id].dwChanges[changeId] = sectionList[ipaSectionData.id].dwChanges[changeId] || {};
 								switch (change.propertyName) {
 									case "instructors":
 										// Code to handle instructors
@@ -75,19 +77,48 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 												instructor.noRemote = true;
 											});
 										// DW has extra instructor
-										sectionList[ipaSectionData.id].dwChanges[change.propertyName] = change.changes
+										sectionList[ipaSectionData.id].dwChanges[changeId][change.propertyName] = change.changes
 											.filter(function (instructorChange) {
 												return instructorChange.addedValue;
 											}).map(function (instructorChange) {
 												return _.find(dwSectionData.instructors, { uniqueKey: instructorChange.addedValue.cdoId });
 											});
 										break;
+									case "activities":
+										// Code to handle activities
+										// DW missing activity: Add a (noRemote) flag to corresponding ipa activity
+										change.changes
+											.filter(function (activityChange) {
+												return activityChange.removedValue;
+											}).forEach(function (activityChange) {
+												var uniqueKey = activityChange.removedValue.cdoId;
+												var activities = sectionList[ipaSectionData.id].activities;
+												activities[activityChange.index].noRemote = true;
+											});
+										// DW has extra activity
+										sectionList[ipaSectionData.id].dwChanges[changeId][change.propertyName] = change.changes
+											.filter(function (activityChange) {
+												return activityChange.addedValue;
+											}).map(function (activityChange) {
+												var activities = sectionList[ipaSectionData.id].activities;
+												return activities[activityChange.index];
+											});
+										console.log(sectionList[ipaSectionData.id]);
+										break;
+									case "location":
+									case "startTime":
+									case "endTime":
+									case "dayIndicator":
 									case "crn":
 									case "seats":
-										sectionList[ipaSectionData.id].dwChanges[change.propertyName] = change.right;
+										sectionList[ipaSectionData.id].dwChanges[changeId][change.propertyName] = change.right;
+										break;
+									case undefined:
+										// Handle undefined property, currently no special action
 										break;
 									default:
-										// Handle null/undefined/unknown property name
+										// Unhandled properties, log them
+										$log.debug("Unhandled diff property", change.propertyName);
 										break;
 								}
 							});

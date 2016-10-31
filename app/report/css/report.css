@@ -4,28 +4,38 @@ ul.section-diff-list {
 	padding: 0;
 }
 
-li.section-diff-row {
-	margin: 1.5em 0;
+li.section-diff-row, li.section-activity-diff-row {
+	margin-top: 1.5em;
 	color: #777;
 }
 
-li.section-diff-row.no-changes {
+li.section-diff-row {
+	padding: 1em;
+	margin: 1em 0;
+	border: 1px solid #aaa;
+	border-radius: 5px;
+}
+
+li.section-diff-row.no-changes,
+li.section-activity-diff-row.no-changes {
 	color: #aaa;
 }
 
-.section-diff-element {
+.section-diff-element, .activity-diff-element {
 	position: relative;
 	display: inline-block;
 	margin: 0 0.2em;
 }
 
-.section-diff-element.has-changes {
+.section-diff-element.has-changes,
+.activity-diff-element.has-changes {
 	cursor: pointer;
 	border: 1px dashed #aaa;
 	color: #000;
 }
 
-.section-diff-element.has-changes:hover {
+.section-diff-element.has-changes:hover,
+.activity-diff-element.has-changes:hover {
 	background-color: #eee;
 	border-bottom-color: transparent;
 }
@@ -55,8 +65,10 @@ span.ipa-version, span.no-remote, span.no-local {
 	text-align: center;
 	background-color: #eee;
 	border: 1px dashed #aaa;
+	z-index: 1;
 }
 
-.section-diff-element:hover .change-action {
+.section-diff-element:hover .change-action,
+.activity-diff-element:hover .change-action {
 	display: inline-block;
 }
