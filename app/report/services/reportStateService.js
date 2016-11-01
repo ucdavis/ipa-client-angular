@@ -100,7 +100,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 											.filter(function (activityChange) {
 												return activityChange.addedValue;
 											}).map(function (activityChange) {
-												var activities = sectionList[ipaSectionData.id].activities;
+												var activities = dwSectionData.activities;
 												return activities[activityChange.index];
 											});
 										console.log(sectionList[ipaSectionData.id]);

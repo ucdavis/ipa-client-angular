@@ -1,0 +1,8 @@
+<div class="section-diff-element section-crn" ng-class="{ 'has-changes' : view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].crn !== undefined }">
+	<span class="ipa-version">
+		{{ view.state.sections.list[sectionId].crn || "No CRN" }}
+	</span>
+	<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].crn !== undefined">
+		Banner has: {{ view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].crn }}
+	</span>
+</div>

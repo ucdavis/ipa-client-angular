@@ -1,0 +1,15 @@
+<div ng-class="{ 'has-changes' : instructor.noRemote || noLocal }" class="section-diff-element section-instructors">
+	<span class="ipa-version" ng-class="{ 'no-remote' : instructor.noRemote, 'no-local': noLocal }">
+		{{ instructor | lastSpaceInitial }}
+	</span>
+	<span class="change-action" ng-if="instructor.noRemote">
+		Banner does not have this instructor
+		<button class="form-control">Mark to assign in Banner</button>
+		<button class="form-control">Un-assign in IPA</button>
+	</span>
+	<span class="change-action" ng-if="noLocal">
+		IPA does not have this instructor
+		<button class="form-control">Mark to un-assign in Banner</button>
+		<button class="form-control">Assign in IPA</button>
+	</span>
+</div>

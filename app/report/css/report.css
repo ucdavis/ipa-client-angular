@@ -11,9 +11,8 @@ li.section-diff-row, li.section-activity-diff-row {
 
 li.section-diff-row {
 	padding: 1em;
-	margin: 1em 0;
-	border: 1px solid #aaa;
-	border-radius: 5px;
+	margin: 0.5em 0;
+	border: 1px solid #ddd;
 }
 
 li.section-diff-row.no-changes,
@@ -31,13 +30,12 @@ li.section-activity-diff-row.no-changes {
 .activity-diff-element.has-changes {
 	cursor: pointer;
 	border: 1px dashed #aaa;
-	color: #000;
+	color: darkmagenta;
 }
 
 .section-diff-element.has-changes:hover,
 .activity-diff-element.has-changes:hover {
 	background-color: #eee;
-	border-bottom-color: transparent;
 }
 
 span.ipa-version, span.no-remote, span.no-local {
@@ -45,11 +43,11 @@ span.ipa-version, span.no-remote, span.no-local {
 }
 
 .no-remote, li.no-remote {
-	color: darkred;
+	color: darkred !important;
 }
 
 .no-local {
-	color: darkorange;
+	color: darkorange !important;
 }
 
 .change-action {
