@@ -3,6 +3,14 @@
 		{{ activity.location || 'none' }}
 	</span>
 	<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location !== undefined">
-		Banner: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location }}
+		Value does not match with Banner
+		<!-- Action to apply Banner value -->
+		<button class="form-control">
+			Set IPA to what Banner has: {{  view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location }}
+		</button>
+		<!-- Action to apply IPA value if any -->
+		<button class="form-control" ng-if="activity.location">
+			Mark to modify in Banner: {{ activity.location }}
+		</button>
 	</span>
 </div>
