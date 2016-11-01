@@ -1,7 +1,13 @@
 FROM httpd:2.4
 MAINTAINER Christopher Thielen
 #VOLUME /tmp
+COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
 COPY ./dist/ /usr/local/apache2/htdocs/
-#ADD gs-spring-boot-docker-0.1.0.jar app.jar
-#RUN sh -c 'touch /app.jar'
-#ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+
+COPY ./ipa_ucdavis_edu.crt /usr/local/apache2/conf/server.crt
+COPY ./ipa_ucdavis_edu.key /usr/local/apache2/conf/server.key
+
+EXPOSE 443
+
+ENV SERVER_ADMIN_EMAIL root@localhost
+ENV SERVER_NAME ipa.ucdavis.edu
