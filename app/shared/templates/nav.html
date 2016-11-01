@@ -13,8 +13,8 @@
 
 			<!-- logo collapse icon -->
 			<div class="sidebar-collapse">
-				<a class="sidebar-collapse-icon clickable" ng-click="toggleSidebarState()" uib-tooltip="Toggle Sidebar" tooltip-placement="right"
-					tooltip-append-to-body="true">
+				<a class="sidebar-collapse-icon clickable" ng-click="toggleSidebarState()" uib-tooltip="Toggle Sidebar"
+					tooltip-placement="right" tooltip-append-to-body="true">
 					<!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
 					<i class="entypo-menu"></i>
 				</a>
@@ -57,7 +57,8 @@
 				</ul>
 			</li>
 			<!-- handle UI for users with either academicPlanner or instructor, but not both -->
-			<li ng-if="userHasRoles(['academicPlanner','reviewer']) && !userHasRoles(['senateInstructor','federationInstructor'])" ng-class="{ 'active': currentBaseHref == 'summary' && pageMode == 'workgroup' }">
+			<li ng-if="userHasRoles(['academicPlanner','reviewer']) && !userHasRoles(['senateInstructor','federationInstructor'])"
+				ng-class="{ 'active': currentBaseHref == 'summary' && pageMode == 'workgroup' }">
 				<a class="clickable" ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=workgroup">
 					<i class="entypo-home"></i>
 					<span class="title">Summary</span>
@@ -88,7 +89,8 @@
 							<span class="title">{{ workgroup.name }}</span>
 						</a>
 						<a ng-href="/workgroups/{{ workgroup.id }}/{{ year }}" ng-if="userHasRolesForWorkgroup(['academicPlanner','reviewer'], workgroup)"
-							class="icon-workgroup-manage" uib-tooltip="Manage {{ workgroup.name }}" tooltip-append-to-body="true" tooltip-placement="right">
+							class="icon-workgroup-manage" uib-tooltip="Manage {{ workgroup.name }}" tooltip-append-to-body="true"
+							tooltip-placement="right">
 							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						</a>
 					</li>
@@ -139,7 +141,8 @@
 					<span class="title">Teaching Call</span>
 				</a>
 				<ul class="visible">
-					<li ng-class="{ 'active': currentBaseHref == 'assignments' && currentEndHref != 'teachingCallStatus' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
+					<li ng-class="{ 'active': currentBaseHref == 'assignments' && currentEndHref != 'teachingCallStatus' }"
+						ng-if="userHasRoles(['academicPlanner','reviewer'])">
 						<a ng-href="/assignments/{{ workgroupId }}/{{ year }}">
 							<span class="title">Assignments</span>
 						</a>
@@ -156,12 +159,19 @@
 					<span class="title">Scheduling</span>
 				</a>
 				<ul class="visible">
-					<li ng-repeat="term in getYearTerms() track by term.id" ng-class="{'active': term.shortCode == termShortCode}" ng-class="{ 'active': currentBaseHref == 'scheduling' && termShortCode == term.shortCode }">
+					<li ng-repeat="term in getYearTerms() track by term.id" ng-class="{'active': term.shortCode == termShortCode}"
+						ng-class="{ 'active': currentBaseHref == 'scheduling' && termShortCode == term.shortCode }">
 						<a ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ term.shortCode }}">
 						{{ term.description }}
 					</a>
 					</li>
 				</ul>
+			</li>
+			<li ng-class="{ 'active': currentBaseHref == 'reports' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
+				<a ng-href="/reports/{{ workgroupId }}/{{ year }}">
+					<i class="entypo-doc-text"></i>
+					<span class="title">Reports</span>
+				</a>
 			</li>
 
 		</ul>
