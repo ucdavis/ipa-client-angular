@@ -58,7 +58,7 @@ span.ipa-version, span.no-remote, span.no-local {
 	font-weight: bold;
 	white-space: nowrap;
 	display: none;
-	padding: 0 0.2em;
+	padding: 1em;
 	left: 50%;
 	transform: translateX(-50%);
 	min-width: 100%;

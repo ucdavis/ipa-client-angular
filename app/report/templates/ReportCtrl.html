@@ -17,8 +17,7 @@
 		</div>
 
 		<div class="col-sm-2">
-			<button ng-disabled="!view.selectedTermCode" ng-click="startComparison()"
-				class="form-control btn btn-default">
+			<button ng-disabled="!view.selectedTermCode" ng-click="startComparison()" class="form-control btn btn-default">
 				Start Comparison
 			</button>
 		</div>
@@ -29,8 +28,7 @@
 		<spinner ng-show="view.state.uiState.comparisonInProgress" style="margin-top: 3em;"></spinner>
 		<div class="col-sm-8 col-sm-offset-2" ng-hide="view.state.uiState.comparisonInProgress">
 			<ul ng-if="view.state.sections.ids.length" class="section-diff-list">
-				<li ng-repeat="sectionId in view.state.sections.ids track by $index" class="section-diff-row"
-					ng-class="{ 'no-changes': view.state.sections.list[sectionId].dwHasChanges === false, 'no-remote': view.state.sections.list[sectionId].dwChanges === null }"
+				<li ng-repeat="sectionId in view.state.sections.ids track by $index" class="section-diff-row" ng-class="{ 'no-changes': view.state.sections.list[sectionId].dwHasChanges === false, 'no-remote': view.state.sections.list[sectionId].dwChanges === null }"
 					ng-init="sectionUniqueKey = view.state.sections.list[sectionId].uniqueKey">
 					<!-- CRN -->
 					<div class="section-diff-element section-crn" ng-class="{ 'has-changes' : view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].crn !== undefined }">
@@ -61,13 +59,15 @@
 						- Instructors:
 					</div>
 					<!-- Instructors in IPA -->
-					<div ng-repeat="instructor in view.state.sections.list[sectionId].instructors track by $index"
-						ng-class="{ 'has-changes' : instructor.noRemote }" class="section-diff-element section-instructors">
+					<div ng-repeat="instructor in view.state.sections.list[sectionId].instructors track by $index" ng-class="{ 'has-changes' : instructor.noRemote }"
+						class="section-diff-element section-instructors">
 						<span class="ipa-version" ng-class="{ 'no-remote' : instructor.noRemote }">
 							{{ instructor | lastSpaceInitial }}
 						</span>
 						<span class="change-action" ng-if="instructor.noRemote">
-							Banner does not have this instructor (Mark for creation)
+							Banner does not have this instructor
+							<button class="form-control">Mark to assign on Banner</button>
+							<button class="form-control">Un-assign in IPA</button>
 						</span>
 					</div>
 					<!-- Instructors only in DW -->
@@ -83,45 +83,49 @@
 					<!-- Activities -->
 					<ul class="section-activities-diff-list">
 						<!-- Activities in IPA -->
-						<li ng-repeat="activity in view.state.sections.list[sectionId].activities track by $index"
-							ng-class="{ 'has-changes' : activity.noRemote }" class="section-activity-diff-row">
+						<li ng-repeat="activity in view.state.sections.list[sectionId].activities track by $index" ng-class="{ 'no-remote' : activity.noRemote }"
+							class="section-activity-diff-row">
 							<!-- typeCode -->
 							<div class="activity-diff-element activity-type-code">
 								{{ activity.typeCode.getActivityCodeDescription() }}
 							</div>
 							<!-- dayIndicator -->
-							<div class="activity-diff-element activity-day-indicator" ng-class="{ 'has-changes' : view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator !== undefined }">
+							- Days:
+							<div class="activity-diff-element activity-day-indicator" ng-class="{ 'has-changes' : !activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator !== undefined }">
 								<span class="ipa-version">
-										Days: {{ activity.dayIndicator.getWeekDays() || 'none' }}
+										{{ activity.dayIndicator.getWeekDays() || 'none' }}
 									</span>
-								<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator !== undefined">
+								<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator !== undefined">
 										Banner days: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator.getWeekDays() }}
 									</span>
 							</div>
 							<!-- startTime -->
-							<div class="activity-diff-element activity-start-time" ng-class="{ 'has-changes' : view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].startTime !== undefined }">
+							- Start Time:
+							<div class="activity-diff-element activity-start-time" ng-class="{ 'has-changes' : !activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].startTime !== undefined }">
 								<span class="ipa-version">
-										Start: {{ activity.startTime.toStandardTime() || 'none' }}
+										{{ activity.startTime.toStandardTime() || 'none' }}
 									</span>
-								<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].startTime !== undefined">
+								<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].startTime !== undefined">
 										Banner: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].startTime.toStandardTime() }}
 									</span>
 							</div>
 							<!-- endTime -->
-							<div class="activity-diff-element activity-end-time" ng-class="{ 'has-changes' : view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime !== undefined }">
+							- End Time:
+							<div class="activity-diff-element activity-end-time" ng-class="{ 'has-changes' : !activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime !== undefined }">
 								<span class="ipa-version">
-										End: {{ activity.endTime.toStandardTime() || 'none' }}
+										{{ activity.endTime.toStandardTime() || 'none' }}
 									</span>
-								<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime !== undefined">
+								<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime !== undefined">
 										Banner: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime }}
 									</span>
 							</div>
 							<!-- location -->
-							<div class="activity-diff-element activity-location" ng-class="{ 'has-changes' : view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location !== undefined }">
+							- Location:
+							<div class="activity-diff-element activity-location" ng-class="{ 'has-changes' : !activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location !== undefined }">
 								<span class="ipa-version">
-										Location: {{ activity.location || 'none' }}
+										{{ activity.location || 'none' }}
 									</span>
-								<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location !== undefined">
+								<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location !== undefined">
 										Banner: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location }}
 									</span>
 							</div>
@@ -133,15 +137,19 @@
 								<div class="activity-diff-element activity-type-code">
 									{{ activity.typeCode.getActivityCodeDescription() }}
 								</div>
+								- Days:
 								<div class="activity-diff-element activity-day-indicator">
 									{{ activity.dayIndicator.getWeekDays() || 'none' }}
 								</div>
+								- Start Time:
 								<div class="activity-diff-element activity-start-time">
 									{{ activity.startTime.toStandardTime() || 'none' }}
 								</div>
+								- End Time:
 								<div class="activity-diff-element activity-end-time">
 									{{ activity.endTime.toStandardTime() || 'none' }}
 								</div>
+								- Location:
 								<div class="activity-diff-element activity-location">
 									{{ activity.location || 'none' }}
 								</div>
