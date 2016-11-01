@@ -22,4 +22,30 @@
 	- Location:
 	<location-diff></location-diff>
 
+	<!-- Action when activity does not exist in Banner -->
+	<span class="change-action" ng-if="activity.noRemote">
+		Activity does not exist in Banner
+		<!-- Action to apply Banner value -->
+		<button class="form-control">
+			Delete from IPA
+		</button>
+		<!-- Action to apply IPA value -->
+		<button class="form-control">
+			Mark to add in Banner
+		</button>
+	</span>
+
+	<!-- Action when activity does not exist in IPA -->
+	<span class="change-action" ng-if="noLocal">
+		Activity does not exist in IPA
+		<!-- Action to apply Banner value -->
+		<button class="form-control">
+			Create in IPA
+		</button>
+		<!-- Action to apply IPA value -->
+		<button class="form-control">
+			Mark to delete in Banner
+		</button>
+	</span>
+
 </li>

@@ -20,12 +20,12 @@ li.section-diff-row.no-changes * {
 }
 
 .section-diff-element, .activity-diff-element {
-	position: relative;
 	display: inline-block;
 	margin: 0 0.2em;
 }
 
 .has-changes {
+	position: relative;
 	cursor: pointer;
 	border: 1px dashed #aaa !important;
 	color: darkmagenta;
@@ -55,6 +55,7 @@ span.ipa-version, span.no-remote, span.no-local {
 	display: none;
 	padding: 1em;
 	left: 50%;
+	top: 100%;
 	transform: translateX(-50%);
 	min-width: 100%;
 	text-align: center;

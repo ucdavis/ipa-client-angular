@@ -32,4 +32,12 @@
 			no-local="true"></activity-diff>
 	</ul>
 
+	<!-- Action when section does not exist in Banner -->
+	<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges === null">
+		Section does not exist in Banner
+		<button class="form-control">
+			Mark to add in Banner
+		</button>
+	</span>
+
 </li>
