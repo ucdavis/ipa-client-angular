@@ -3,6 +3,14 @@
 		{{ view.state.sections.list[sectionId].crn || "No CRN" }}
 	</span>
 	<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].crn !== undefined">
-		Banner has: {{ view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].crn }}
+		Value does not match with Banner
+		<!-- Action to apply Banner value -->
+		<button class="form-control">
+			Set IPA to what Banner has: {{ view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].crn }}
+		</button>
+		<!-- Action to apply IPA value if any -->
+		<button class="form-control" ng-if="view.state.sections.list[sectionId].crn">
+			Mark to modify in Banner: {{ view.state.sections.list[sectionId].crn }}
+		</button>
 	</span>
 </div>

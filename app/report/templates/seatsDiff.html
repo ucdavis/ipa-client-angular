@@ -1,8 +1,16 @@
 <div class="section-diff-element section-seats" ng-class="{ 'has-changes' : view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].seats !== undefined }">
 	<span class="ipa-version">
-		Seats: {{ view.state.sections.list[sectionId].seats }}
+		{{ view.state.sections.list[sectionId].seats }}
 	</span>
 	<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].seats !== undefined">
-		Banner has: {{ view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].seats }}
+		Value does not match with Banner
+		<!-- Action to apply Banner value -->
+		<button class="form-control">
+			Set IPA to what Banner has: {{ view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].seats }}
+		</button>
+		<!-- Action to apply IPA value if any -->
+		<button class="form-control" ng-if="view.state.sections.list[sectionId].seats">
+			Mark to modify in Banner: {{ view.state.sections.list[sectionId].seats }}
+		</button>
 	</span>
 </div>

@@ -1,0 +1,8 @@
+<div class="activity-diff-element activity-day-indicator" ng-class="{ 'has-changes' : !activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator !== undefined }">
+	<span class="ipa-version">
+		{{ activity.dayIndicator.getWeekDays() || 'none' }}
+	</span>
+	<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator !== undefined">
+		Banner days: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator.getWeekDays() }}
+	</span>
+</div>

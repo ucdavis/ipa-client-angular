@@ -1,0 +1,8 @@
+<div class="activity-diff-element activity-end-time" ng-class="{ 'has-changes' : !activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime !== undefined }">
+	<span class="ipa-version">
+		{{ activity.endTime.toStandardTime() || 'none' }}
+	</span>
+	<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime !== undefined">
+		Banner: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime }}
+	</span>
+</div>

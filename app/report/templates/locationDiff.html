@@ -1,0 +1,8 @@
+<div class="activity-diff-element activity-location" ng-class="{ 'has-changes' : !activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location !== undefined }">
+	<span class="ipa-version">
+		{{ activity.location || 'none' }}
+	</span>
+	<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location !== undefined">
+		Banner: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location }}
+	</span>
+</div>

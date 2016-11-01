@@ -1,24 +1,28 @@
 <li class="section-diff-row" ng-class="{ 'no-changes': view.state.sections.list[sectionId].dwHasChanges === false, 'no-remote has-changes': view.state.sections.list[sectionId].dwChanges === null }"
 	ng-init="sectionUniqueKey = view.state.sections.list[sectionId].uniqueKey">
+
 	<!-- CRN -->
 	<crn-diff></crn-diff>
+
 	<!-- Section immutable fields: Title, Subject Code, Course Number, and Sequence Number -->
 	<div class="section-diff-element section-unique-key">
 		- {{ view.state.sections.list[sectionId].subjectCode }} {{ view.state.sections.list[sectionId].courseNumber
 		}} {{ view.state.sections.list[sectionId].title }} - {{ view.state.sections.list[sectionId].sequenceNumber
 		}} -
 	</div>
+
 	<!-- Seats -->
+	Seats:
 	<seats-diff></seats-diff>
+
 	<!-- Instructors -->
-	<div class="section-diff-element section-instructors-header">
-		- Instructors:
-	</div>
+	- Instructors:
 	<!-- Instructors in IPA -->
 	<instructor-diff ng-repeat="instructor in view.state.sections.list[sectionId].instructors track by $index"></instructor-diff>
 	<!-- Instructors only in DW -->
 	<instructor-diff ng-repeat="instructor in view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].instructors track by $index"
 		no-local="true"></instructor-diff>
+
 	<!-- Activities -->
 	<ul class="section-activities-diff-list">
 		<!-- Activities in IPA -->
@@ -27,4 +31,5 @@
 		<activity-diff ng-repeat="activity in view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].activities track by $index"
 			no-local="true"></activity-diff>
 	</ul>
+
 </li>

@@ -4,12 +4,16 @@
 	</span>
 	<span class="change-action" ng-if="instructor.noRemote">
 		Banner does not have this instructor
+		<!-- Action to apply Banner value -->
+		<button class="form-control">Un-assign in IPA (All sections)</button>
+		<!-- Action to apply IPA value -->
 		<button class="form-control">Mark to assign in Banner</button>
-		<button class="form-control">Un-assign in IPA</button>
 	</span>
 	<span class="change-action" ng-if="noLocal">
 		IPA does not have this instructor
+		<!-- Action to apply Banner value -->
+		<button class="form-control">Assign in IPA (All sections)</button>
+		<!-- Action to apply IPA value -->
 		<button class="form-control">Mark to un-assign in Banner</button>
-		<button class="form-control">Assign in IPA</button>
 	</span>
 </div>

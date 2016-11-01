@@ -1,47 +1,25 @@
 <li ng-class="{ 'no-remote' : activity.noRemote, 'no-local': noLocal, 'has-changes': activity.noRemote || noLocal }"
 	class="section-activity-diff-row section-diff-element">
+
 	<!-- typeCode -->
 	<div class="activity-diff-element activity-type-code">
 		{{ activity.typeCode.getActivityCodeDescription() }}
 	</div>
+
 	<!-- dayIndicator -->
 	- Days:
-	<div class="activity-diff-element activity-day-indicator" ng-class="{ 'has-changes' : !activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator !== undefined }">
-		<span class="ipa-version">
-			{{ activity.dayIndicator.getWeekDays() || 'none' }}
-		</span>
-		<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator !== undefined">
-			Banner days: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator.getWeekDays() }}
-		</span>
-	</div>
+	<day-indicator-diff></day-indicator-diff>
+
 	<!-- startTime -->
 	- Start Time:
-	<div class="activity-diff-element activity-start-time" ng-class="{ 'has-changes' : !activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].startTime !== undefined }">
-		<span class="ipa-version">
-			{{ activity.startTime.toStandardTime() || 'none' }}
-		</span>
-		<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].startTime !== undefined">
-			Banner: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].startTime.toStandardTime() }}
-		</span>
-	</div>
+	<start-time-diff></start-time-diff>
+
 	<!-- endTime -->
 	- End Time:
-	<div class="activity-diff-element activity-end-time" ng-class="{ 'has-changes' : !activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime !== undefined }">
-		<span class="ipa-version">
-			{{ activity.endTime.toStandardTime() || 'none' }}
-		</span>
-		<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime !== undefined">
-			Banner: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime }}
-		</span>
-	</div>
+	<end-time-diff></end-time-diff>
+
 	<!-- location -->
 	- Location:
-	<div class="activity-diff-element activity-location" ng-class="{ 'has-changes' : !activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location !== undefined }">
-		<span class="ipa-version">
-			{{ activity.location || 'none' }}
-		</span>
-		<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location !== undefined">
-			Banner: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].location }}
-		</span>
-	</div>
+	<location-diff></location-diff>
+
 </li>
