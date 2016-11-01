@@ -1,4 +1,4 @@
-<li class="section-diff-row" ng-class="{ 'no-changes': view.state.sections.list[sectionId].dwHasChanges === false, 'no-remote': view.state.sections.list[sectionId].dwChanges === null }"
+<li class="section-diff-row" ng-class="{ 'no-changes': view.state.sections.list[sectionId].dwHasChanges === false, 'no-remote has-changes': view.state.sections.list[sectionId].dwChanges === null }"
 	ng-init="sectionUniqueKey = view.state.sections.list[sectionId].uniqueKey">
 	<!-- CRN -->
 	<crn-diff></crn-diff>

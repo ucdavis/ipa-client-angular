@@ -5,6 +5,7 @@
 reportApp.directive("sectionDiff", this.sectionDiff = function () {
 	return {
 		restrict: "E",
-		templateUrl: 'sectionDiff.html'
+		templateUrl: 'sectionDiff.html',
+		replace: true
 	};
 });

@@ -5,6 +5,7 @@
 reportApp.directive("crnDiff", this.crnDiff = function () {
 	return {
 		restrict: "E",
-		templateUrl: 'crnDiff.html'
+		templateUrl: 'crnDiff.html',
+		replace: true
 	};
 });

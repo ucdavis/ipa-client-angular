@@ -15,8 +15,7 @@ li.section-diff-row {
 	border: 1px solid #ddd;
 }
 
-li.section-diff-row.no-changes,
-li.section-activity-diff-row.no-changes {
+li.section-diff-row.no-changes * {
 	color: #aaa;
 }
 
@@ -26,15 +25,13 @@ li.section-activity-diff-row.no-changes {
 	margin: 0 0.2em;
 }
 
-.section-diff-element.has-changes,
-.activity-diff-element.has-changes {
+.has-changes {
 	cursor: pointer;
-	border: 1px dashed #aaa;
+	border: 1px dashed #aaa !important;
 	color: darkmagenta;
 }
 
-.section-diff-element.has-changes:hover,
-.activity-diff-element.has-changes:hover {
+.has-changes:hover {
 	background-color: #eee;
 }
 
@@ -42,7 +39,7 @@ span.ipa-version, span.no-remote, span.no-local {
 	padding: 0 0.2em;
 }
 
-.no-remote, li.no-remote {
+.no-remote, li.no-remote * {
 	color: darkred !important;
 }
 
@@ -66,7 +63,6 @@ span.ipa-version, span.no-remote, span.no-local {
 	z-index: 1;
 }
 
-.section-diff-element:hover .change-action,
-.activity-diff-element:hover .change-action {
+.has-changes:hover .change-action {
 	display: inline-block;
 }

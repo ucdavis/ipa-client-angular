@@ -5,6 +5,7 @@
 reportApp.directive("seatsDiff", this.seatsDiff = function () {
 	return {
 		restrict: "E",
-		templateUrl: 'seatsDiff.html'
+		templateUrl: 'seatsDiff.html',
+		replace: true
 	};
 });
