@@ -15,7 +15,7 @@ li.section-diff-row {
 	border: 1px solid #ddd;
 }
 
-li.section-diff-row.no-changes * {
+li.section-diff-row.no-changes *, li.section-activity-diff-row.no-changes * {
 	color: #aaa;
 }
 

@@ -1,4 +1,4 @@
-<li class="section-diff-row" ng-class="{ 'no-changes': view.state.sections.list[sectionId].dwHasChanges === false, 'no-remote has-changes': view.state.sections.list[sectionId].dwChanges === null }"
+<li class="section-diff-row" ng-class="{ 'no-changes': view.state.sections.list[sectionId].dwHasChanges === false, 'no-remote has-changes': view.state.sections.list[sectionId].noRemote }"
 	ng-init="sectionUniqueKey = view.state.sections.list[sectionId].uniqueKey">
 
 	<!-- CRN -->
@@ -12,11 +12,11 @@
 	</div>
 
 	<!-- Seats -->
-	Seats:
+	<div class="section-diff-element section-diff-element-header">Seats:</div>
 	<seats-diff></seats-diff>
 
 	<!-- Instructors -->
-	- Instructors:
+	<div class="section-diff-element section-diff-element-header">- Instructors:</div>
 	<!-- Instructors in IPA -->
 	<instructor-diff ng-repeat="instructor in view.state.sections.list[sectionId].instructors track by $index"></instructor-diff>
 	<!-- Instructors only in DW -->
@@ -33,7 +33,7 @@
 	</ul>
 
 	<!-- Action when section does not exist in Banner -->
-	<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges === null">
+	<span class="change-action" ng-if="view.state.sections.list[sectionId].noRemote">
 		Section does not exist in Banner
 		<button class="form-control">
 			Mark to add in Banner

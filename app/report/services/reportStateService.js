@@ -53,7 +53,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 						if (sectionChanges === null) {
 							// DW version does not exist
 							sectionList[ipaSectionData.id].dwHasChanges = true;
-							sectionList[ipaSectionData.id].dwChanges = null;
+							sectionList[ipaSectionData.id].noRemote = true;
 						} else if (sectionChanges.length === 0) {
 							// DW version matches IPA!
 							sectionList[ipaSectionData.id].dwHasChanges = false;
