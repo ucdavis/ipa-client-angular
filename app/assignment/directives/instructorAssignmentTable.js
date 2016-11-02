@@ -216,6 +216,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 										// Track courses that were already present in 'interested', and should be filtered from 'other'
 										var interestedCourseIds = [];
 										var firstInterestedCourseAdded = false;
+										var nonCoursePreferences = {buyout: false, sabbatical: false, courseRelease: false};
 
 										// If the instructor has teachingAssignments in this term, show them first
 										if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
@@ -223,6 +224,26 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 											$.each(instructor.teachingAssignmentTermCodeIds[termCode], function (i, teachingAssignmentId) {
 												var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 												var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
+
+												// This teachingAssignment is a buyout/sabb/release
+												if (teachingAssignment.approved == false && (teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.sabbatical)) {
+													if (teachingAssignment.buyout) {
+														preferenceDisplayText = "Buyout";
+														nonCoursePreferences.buyout = true;
+													} else if (teachingAssignment.courseRelease) {
+														preferenceDisplayText = "Course Release";
+														nonCoursePreferences.courseRelease = true;
+													} else if (teachingAssignment.sabbatical) {
+														preferenceDisplayText = "Sabbatical";
+														nonCoursePreferences.sabbatical = true;
+													}
+
+													courseHtml += "<li><a";
+													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
+													courseHtml += " href=\"#\">" + preferenceDisplayText + "</a></li>";
+
+													return true;
+												}
 
 												// This teachingAssignment can't be displayed here
 												if (teachingAssignment.sectionGroupId === 0
@@ -265,23 +286,29 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 										}
 
 										// Add Buyout, Sabbatical, Course Release options
-										courseHtml += "<li><a";
-										courseHtml += " data-is-buyout=\"true\"";
-										courseHtml += " data-term-code=\"" + termCode + "\"";
-										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-										courseHtml += " href=\"#\">Buyout</a></li>";
+										if (nonCoursePreferences.buyout == false) {
+											courseHtml += "<li><a";
+											courseHtml += " data-is-buyout=\"true\"";
+											courseHtml += " data-term-code=\"" + termCode + "\"";
+											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+											courseHtml += " href=\"#\">Buyout</a></li>";
+										}
 
-										courseHtml += "<li><a";
-										courseHtml += " data-is-sabbatical=\"true\"";
-										courseHtml += " data-term-code=\"" + termCode + "\"";
-										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-										courseHtml += " href=\"#\">Sabbatical</a></li>";
+										if (nonCoursePreferences.sabbatical == false) {
+											courseHtml += "<li><a";
+											courseHtml += " data-is-sabbatical=\"true\"";
+											courseHtml += " data-term-code=\"" + termCode + "\"";
+											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+											courseHtml += " href=\"#\">Sabbatical</a></li>";
+										}
+										if (nonCoursePreferences.courseRelease == false) {
+											courseHtml += "<li><a";
+											courseHtml += " data-is-course-release=\"true\"";
+											courseHtml += " data-term-code=\"" + termCode + "\"";
+											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+											courseHtml += " href=\"#\">Course Release</a></li>";
+										}
 
-										courseHtml += "<li><a";
-										courseHtml += " data-is-course-release=\"true\"";
-										courseHtml += " data-term-code=\"" + termCode + "\"";
-										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-										courseHtml += " href=\"#\">Course Release</a></li>";
 										courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
 
 										// Loop over all other courses
