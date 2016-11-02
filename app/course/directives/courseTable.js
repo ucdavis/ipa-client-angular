@@ -133,10 +133,21 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 				body += getTotalsRow(termsToRender, data.state);
 				element.append(body);
+
 				$('delete-course').popover();
+
 				element.find('input.planned-seats').blur(function (e) {
 					$el = $(e.target);
 					savePlannedSeats($el, scope, courseActionCreators);
+				}).focus(function (e) {
+					$el = $(e.target);
+					// Select a cell/row
+					courseId = $el.closest("tr").data('course-id');
+					var termCode = $el.closest("td").data('term-code');
+
+					courseActionCreators.setActiveCell(courseId, termCode);
+					// Important: notify angular since this happends outside of the scope
+					scope.$apply();
 				});
 			});
 
@@ -192,8 +203,6 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 					scope.$apply();
 				} else if ($el.is('td:not(.new-course-td):not(.import-course), td:not(.new-course-td):not(.import-course) *')) {
 					// Select a cell/row
-
-					// TODO: termCode and courseId may not be found if clicking on the first column ...
 					courseId = $el.closest("tr").data('course-id');
 					var termCode = $el.closest("td").data('term-code');
 
