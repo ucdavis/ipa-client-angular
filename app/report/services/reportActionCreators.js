@@ -60,6 +60,27 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
+		},
+		/**
+		 * Updates a section and takes a property as an argument
+		 * in order for the state service to clear that property
+		 * from the dwChanges object
+		 *
+		 * @param section
+		 * @param property
+		 */
+		addBannerToDoItem: function (entity, type, action, property, newValue) {
+			var action = {
+				type: ADD_BANNER_TODO,
+				payload: {
+					entity: entity,
+					type: type,
+					action: action,
+					property: property,
+					newValue: newValue
+				}
+			};
+			reportStateService.reduce(action);
 		}
 	};
 });

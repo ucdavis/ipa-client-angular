@@ -5,11 +5,11 @@
 	<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].seats !== undefined">
 		Value does not match with Banner
 		<!-- Action to apply Banner value -->
-		<button class="form-control">
+		<button class="form-control" ng-click="updateSeats(sectionId, view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].seats)">
 			Set IPA to what Banner has: {{ view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].seats }}
 		</button>
 		<!-- Action to apply IPA value if any -->
-		<button class="form-control" ng-if="view.state.sections.list[sectionId].seats">
+		<button class="form-control" ng-if="view.state.sections.list[sectionId].seats" ng-click="addBannerToDoItem(sectionId, view.state.sections.list[sectionId].seats)">
 			Mark to modify in Banner: {{ view.state.sections.list[sectionId].seats }}
 		</button>
 	</span>
