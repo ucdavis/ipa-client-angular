@@ -1,0 +1,13 @@
+<div class="sis-todo-container">
+	<div class="sis-todo-header">
+		Banner to-do list
+		<button class="close"><i ng-class="{ 'entypo-up-open': viewMinimized, 'entypo-down-open': !viewMinimized }" ng-click="toggleView()"></i></button>
+	</div>
+	<div class="sis-todo-content">
+		<ul class="sis-todo-list">
+			<li ng-repeat="item in listItems track by $index" class="sis-todo-item">
+				{{ item }}
+			</li>
+		</ul>
+	</div>
+</div>

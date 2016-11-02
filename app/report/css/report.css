@@ -79,3 +79,43 @@ span.ipa-version, span.no-remote, span.no-local {
 	color: darkred;
 	background-color: #fff;
 }
+
+/* To-do section */
+.sis-todo-container {
+	position: fixed;
+	bottom: 0;
+	right: 1em;
+	width: 35%;
+}
+
+.sis-todo-container .sis-todo-header {
+	background-color: #303641;
+	color: #fff;
+	padding: 6px 12px;
+	font-weight: bold;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.sis-todo-container.sis-todo-minimized .sis-todo-header {
+	background: rgba(48, 54, 65, 0.3);
+}
+
+.sis-todo-container .sis-todo-content {
+	background-color: #fff;
+	border-left: 1px solid #303641;
+	border-right: 1px solid #303641;
+	color: #333;
+	padding: 6px 12px;
+	max-height: 250px;
+	min-height: 100px;
+	overflow-y: auto;
+}
+
+.sis-todo-container.sis-todo-minimized .sis-todo-content {
+	display: none;
+}
+
+ul.sis-todo-list li.sis-todo-item {
+	padding: 3px 6px;
+}
