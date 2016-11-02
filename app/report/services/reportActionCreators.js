@@ -49,6 +49,7 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 		 */
 		updateSection: function (section, property) {
 			reportService.updateSection(section).then(function (section) {
+				$rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber + " " + property, type: "SUCCESS" });
 				var action = {
 					type: UPDATE_SECTION,
 					payload: {
@@ -69,13 +70,13 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 		 * @param section
 		 * @param property
 		 */
-		addBannerToDoItem: function (entity, type, action, property, newValue) {
+		addBannerToDoItem: function (entity, toDoAction, property, newValue) {
+			$rootScope.$emit('toast', { message: "Added to Banner to-do list", type: "SUCCESS" });
 			var action = {
 				type: ADD_BANNER_TODO,
 				payload: {
 					entity: entity,
-					type: type,
-					action: action,
+					toDoAction: toDoAction,
 					property: property,
 					newValue: newValue
 				}

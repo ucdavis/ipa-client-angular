@@ -10,8 +10,6 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 	return {
 		_state: {},
 		_termReducers: function (action, terms) {
-			var scope = this;
-
 			switch (action.type) {
 				case INIT_STATE:
 					terms = {
@@ -32,8 +30,6 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 			}
 		},
 		_sectionReducers: function (action, sections) {
-			var scope = this;
-
 			switch (action.type) {
 				case INIT_STATE:
 					sections = {
@@ -133,13 +129,44 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					// Delete the applied change from the dwChanges object
 					delete section.dwChanges[section.uniqueKey][action.payload.property]
 					return sections;
+				case ADD_BANNER_TODO:
+					var entity = action.payload.entity;
+					// Check the type of entity we are adding the to-do for
+					if (entity instanceof Section) {
+						// Section
+						var section = sections.list[entity.id];
+						// Delete the applied change from the dwChanges object
+						delete section.dwChanges[section.uniqueKey][action.payload.property]
+					}
+					return sections;
 				default:
 					return sections;
 			}
 		},
-		_uiStateReducers: function (action, uiState) {
-			var scope = this;
+		_bannerToDoReducers: function (action, bannerToDos) {
+			switch (action.type) {
+				case INIT_STATE:
+					bannerToDos = [];
+					return bannerToDos;
+				case ADD_BANNER_TODO:
+					var entity = action.payload.entity;
+					var toDoAction = action.payload.toDoAction;
+					var property = action.payload.property;
+					var newValue = action.payload.newValue;
 
+					// Check the type of entity we are adding the to-do for
+					if (entity instanceof Section) {
+						// Section
+						bannerToDos.push(toDoAction + " section " + entity.sequenceNumber + " " + property + " to " + newValue);
+					}
+
+					console.log(bannerToDos);
+					return bannerToDos;
+				default:
+					return bannerToDos;
+			}
+		},
+		_uiStateReducers: function (action, uiState) {
 			switch (action.type) {
 				case INIT_STATE:
 					uiState = {
@@ -166,6 +193,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 			newState = {};
 			newState.terms = scope._termReducers(action, scope._state.terms);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
+			newState.bannerToDos = scope._bannerToDoReducers(action, scope._state.bannerToDos);
 			newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
 
 			scope._state = newState;

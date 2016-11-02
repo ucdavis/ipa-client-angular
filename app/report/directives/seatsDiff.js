@@ -2,7 +2,7 @@
  * example:
  * <seats-diff></seats-diff>
  */
-reportApp.directive("seatsDiff", this.seatsDiff = function () {
+reportApp.directive("seatsDiff", this.seatsDiff = function (reportActionCreators) {
 	return {
 		restrict: "E",
 		templateUrl: 'seatsDiff.html',
@@ -18,7 +18,7 @@ reportApp.directive("seatsDiff", this.seatsDiff = function () {
 
 			scope.addBannerToDoItem = function (sectionId, seats) {
 				var section = scope.view.state.sections.list[sectionId];
-				reportActionCreators.addBannerToDoItem(section, 'section', 'update', 'seats', seats);
+				reportActionCreators.addBannerToDoItem(section, UPDATE, 'seats', seats);
 			};
 		}
 	};
