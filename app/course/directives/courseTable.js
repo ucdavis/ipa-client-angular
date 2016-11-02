@@ -1,7 +1,7 @@
 /**
  * Provides the main course table in the Courses View
  */
-courseApp.directive("courseTable", this.courseTable = function ($rootScope, courseActionCreators) {
+courseApp.directive("courseTable", this.courseTable = function ($rootScope, $timeout, courseActionCreators) {
 	return {
 		restrict: 'A',
 		template: '<thead><tr><th>&nbsp;</th></tr></thead><tbody><tr><td>' +
@@ -147,7 +147,9 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 					courseActionCreators.setActiveCell(courseId, termCode);
 					// Important: notify angular since this happends outside of the scope
-					scope.$apply();
+					$timeout(function () {
+						scope.$apply();
+					});
 				});
 			});
 
@@ -186,7 +188,9 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 					courseActionCreators.deleteCourse(course);
 					// Important: notify angular since this happends outside of the scope
-					scope.$apply();
+					$timeout(function () {
+						scope.$apply();
+					});
 				} else if ($el.data('event-type') == 'dismissCoursePop') {
 					// Dismiss the delete course dialog
 
@@ -200,7 +204,9 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 					courseActionCreators.newCourse(index);
 					// Important: notify angular since this happends outside of the scope
-					scope.$apply();
+					$timeout(function () {
+						scope.$apply();
+					});
 				} else if ($el.is('td:not(.new-course-td):not(.import-course), td:not(.new-course-td):not(.import-course) *')) {
 					// Select a cell/row
 					courseId = $el.closest("tr").data('course-id');
@@ -208,7 +214,9 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 					courseActionCreators.setActiveCell(courseId, termCode);
 					// Important: notify angular since this happends outside of the scope
-					scope.$apply();
+					$timeout(function () {
+						scope.$apply();
+					});
 				} else if ($el.is('td.import-course, td.import-course *')) {
 					// Toggle import flag on the mass import courses list
 
@@ -228,7 +236,9 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, cour
 
 					courseActionCreators.toggleImportCourse(courseSubjectCode, courseNumber, courseSequencePattern);
 					// Important: notify angular since this happends outside of the scope
-					scope.$apply();
+					$timeout(function () {
+						scope.$apply();
+					});
 				}
 			});
 
@@ -359,7 +369,9 @@ var savePlannedSeats = function ($el, scope, courseActionCreators) {
 	}
 
 	// Important: notify angular since this happends outside of the scope
-	scope.$apply();
+	$timeout(function () {
+		scope.$apply();
+	});
 };
 
 var getTotalsRow = function (termsToRender, state) {
