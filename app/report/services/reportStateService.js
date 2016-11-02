@@ -103,7 +103,6 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 												var activities = dwSectionData.activities;
 												return activities[activityChange.index];
 											});
-										console.log(sectionList[ipaSectionData.id]);
 										break;
 									case "location":
 									case "startTime":
@@ -126,6 +125,13 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					}
 					sections.ids = _array_sortIdsByProperty(sectionList, ["subjectCode", "courseNumber", "sequenceNumber"]);
 					sections.list = sectionList;
+					return sections;
+				case UPDATE_SECTION:
+					var section = sections.list[action.payload.section.id];
+					// Apply the changes on the section
+					section[action.payload.property] = action.payload.section[action.payload.property]
+					// Delete the applied change from the dwChanges object
+					delete section.dwChanges[section.uniqueKey][action.payload.property]
 					return sections;
 				default:
 					return sections;

@@ -33,6 +33,19 @@ reportApp.factory("reportService", this.reportService = function ($http, $q, $wi
 				});
 
 			return deferred.promise;
+		},
+		updateSection: function (section) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/reportView/sections/" + section.id, section, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
 		}
 	};
 });

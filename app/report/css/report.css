@@ -67,3 +67,15 @@ span.ipa-version, span.no-remote, span.no-local {
 .has-changes:hover .change-action {
 	display: inline-block;
 }
+
+.btn-dw {
+	border-color: darkorange;
+	color: darkorange;
+	background-color: #fff;
+}
+
+.btn-ipa {
+	border-color: darkred;
+	color: darkred;
+	background-color: #fff;
+}

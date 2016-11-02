@@ -38,6 +38,28 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
+		},
+		/**
+		 * Updates a section and takes a property as an argument
+		 * in order for the state service to clear that property
+		 * from the dwChanges object
+		 *
+		 * @param section
+		 * @param property
+		 */
+		updateSection: function (section, property) {
+			reportService.updateSection(section).then(function (section) {
+				var action = {
+					type: UPDATE_SECTION,
+					payload: {
+						section: section,
+						property: property
+					}
+				};
+				reportStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
 		}
 	};
 });

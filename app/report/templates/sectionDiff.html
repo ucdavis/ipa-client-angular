@@ -35,9 +35,10 @@
 	<!-- Action when section does not exist in Banner -->
 	<span class="change-action" ng-if="view.state.sections.list[sectionId].noRemote">
 		Section does not exist in Banner
-		<button class="form-control">
-			Mark to add in Banner
-		</button>
+		<!-- Action to apply Banner value -->
+		<button class="form-control">Delete from IPA</button>
+		<!-- Action to apply IPA value -->
+		<button class="form-control">Mark to add in Banner</button>
 	</span>
 
 </li>
