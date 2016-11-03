@@ -45,8 +45,11 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					var length = action.payload.sectionGroups ? action.payload.sectionGroups.length : 0;
 					for (var i = 0; i < length; i++) {
 						var sectionGroupData = action.payload.sectionGroups[i];
-						sectionGroupsList[sectionGroupData.id] = new SectionGroup(sectionGroupData);
-						sectionGroups.ids.push(sectionGroupData.id);
+
+						if (sectionGroupData) {
+							sectionGroupsList[sectionGroupData.id] = new SectionGroup(sectionGroupData);
+							sectionGroups.ids.push(sectionGroupData.id);
+						}
 					}
 					sectionGroups.list = sectionGroupsList;
 					return sectionGroups;
@@ -298,6 +301,10 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					terms = [];
 
 					data.sectionGroups.forEach(function (sectionGroup) {
+						if (!sectionGroup) {
+							return;
+						}
+
 						var termCode = sectionGroup.termCode;
 
 						// If this is the first sectionGroup of a termCode
