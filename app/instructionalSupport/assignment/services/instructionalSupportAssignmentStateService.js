@@ -76,7 +76,7 @@ sortCourseIds = function(courseIds, courses) {
 			}
 
 			if (a.subjectCode < b.subjectCode) {
-				return -1
+				return -1;
 			}
 
 			// Subject codes matched, use course numbers to sort
