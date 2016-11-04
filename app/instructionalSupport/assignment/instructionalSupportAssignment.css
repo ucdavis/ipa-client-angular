@@ -1,0 +1,321 @@
+.border-bottom--gray {
+		border-bottom: 2px solid rgb(235, 235, 235);
+		padding-bottom: 25px;
+}
+
+.assignment {
+		text-align: left;
+		width: 40%;
+		height: 30px;
+		padding: 6px;
+		margin-bottom: 17px;
+}
+
+.info--bg_black {
+		background-color: #373e4a;
+		font-size: 12px;
+		margin-bottom: 15px;
+		margin-top: 30px;
+}
+
+.course-info {
+		list-style: outside none none;
+		padding-left: 0px;
+}
+
+.course-info li {
+		padding-bottom: 10px;
+}
+
+.course-info--color_green {
+		color: green;
+}
+
+.course-info--color_red {
+		color: red;
+}
+
+.people-selector {
+		width: 65%;
+		margin-bottom: 17px;
+		align-self: center;
+}
+
+.add-new-slot {
+		width: 65%;
+		margin-bottom: 20px;
+		position: relative;
+		height: 30px;
+		padding: 6px;
+		border: 1px solid #ebebeb;
+		align-self: center;
+}
+
+.preference-title {
+		padding: 5px 10px;
+		font-size: 11px;
+		line-height: 1.5;
+		border-radius: 2px;
+		border: 1px solid #ebebeb;
+		color: #303641;
+		cursor: default;
+}
+
+.ta-info {
+		font-size: 8pt;
+		line-height: 20px;
+		width: 300px;
+		padding-left: 0px;
+		list-style: outside none none;
+}
+
+.ta-info li {
+		padding-bottom: 10px;
+}
+
+.assignment_add-course {
+		height: 30px !important;
+		padding: 6px !important;
+		line-height: 17.15px !important;
+}
+
+.assignment:hover .icon-remove_person {
+		display: block !important;
+}
+
+.assignment--poniter {
+		cursor: pointer;
+}
+
+.assignment-title {
+		margin-bottom: 2px !important;
+}
+
+.assignment-section {
+		position: relative;
+		height: 60px;
+}
+
+.assignment-details {
+		padding-top: 3px;
+		font-size: 10px;
+		color: rgba(44, 126, 161, 0.7);
+}
+
+.assignment-detail-info {
+		margin-bottom: 2px;
+		font-size: 8pt;
+}
+
+.assignment-info-section {
+		margin-left: 45px;
+}
+
+.assignment-selector {
+		width: 40%;
+		margin-bottom: 17px;
+}
+
+#courses-view .assignment-remove {
+		position: absolute;
+		right: 0;
+		top: 0;
+		color: #000;
+}
+
+#people-view .assignment-remove {
+		position: absolute;
+		right: 0;
+		top: 15px;
+		color: #000;
+}
+
+.assignment {
+		width: 65%;
+		align-self: center;
+		text-align: center;
+		position: relative;
+		height: 30px;
+		padding: 6px;
+}
+
+.ta-slot--width {
+		width: 450px;
+}
+
+.icon-remove_person {
+		/* remove person icon */
+		display: none;
+		color: #ee4749;
+		float: right;
+		position: absolute;
+		right: -20px;
+		font-size: 12pt;
+		padding-left: 20px;
+		padding-top: 7px;
+		padding-bottom: 7px;
+		cursor: pointer;
+}
+
+.icon-remove_course {
+		/* remove course icon */
+		display: none;
+		color: #ee4749;
+		float: right;
+		position: absolute;
+		top: 8px;
+		right: -20px;
+		font-size: 12pt;
+		padding-left: 20px;
+		padding-top: 7px;
+		padding-bottom: 7px;
+		cursor: pointer;
+}
+
+.support-staff-header {
+		text-align: center;
+		padding-bottom: 5px;
+}
+
+.course-requriement {
+		color: #2c7ea1;
+		right: 80%;
+		top: -1px;
+		position: absolute;
+}
+
+.course-requriement:hover,
+.course-requriement:focus {
+		color: #1b4e64;
+}
+
+
+/* flex components */
+
+.search-flex {
+		margin-bottom: 50px;
+		display: flex;
+		justify-content: center;
+}
+
+.search-flex-children {
+		flex: 0 1 35%;
+}
+
+.flex-row {
+		display: flex;
+		flex-direction: row;
+}
+
+.flex-row-children {
+		flex: 1 1 auto;
+}
+
+.flex-row-children h4 {
+		margin-top: 20px;
+}
+
+.flex-selector-course_view {
+		margin-top: 10px;
+		display: flex;
+		flex: 1 1 20%;
+		flex-direction: column;
+}
+
+.flex-selector-people_view {
+		display: flex;
+		flex: 1 1 40%;
+		flex-direction: column;
+}
+
+.flex-selector_style {
+		margin-top: 75px;
+}
+
+.flex-slector-children {
+		flex: 0 1 auto;
+		display: flex;
+		flex-flow: row wrap;
+}
+
+.view-switcher {
+		flex: 1 1 auto;
+}
+
+.review-switcher {
+		display: flex;
+		justify-content: end;
+		flex: 1 1 auto;
+}
+
+.ta_course-section {
+		flex-direction: column;
+		display: flex;
+}
+
+.ta_course-section-swticher {
+		display: flex;
+		margin-top: 15px;
+		margin-bottom: 40px;
+		align-self: center;
+}
+
+
+/*bootstrap overwrite*/
+
+.row {
+		margin-left: 0px;
+		margin-right: 0px;
+}
+
+.btn-default p {
+		text-align: center;
+}
+
+td {
+		border: 1px solid white !important;
+		border-bottom: 2px solid rgb(235, 235, 235) !important;
+}
+
+.table-bordered--white {
+		border: solid white !important;
+}
+
+.popover-content {
+		color: gray;
+}
+
+.panel-options-drop_down {
+		width: 60px;
+		text-align: center;
+		background: none !important;
+		padding: 5px;
+}
+
+.panel-heading .panel-options {
+		padding: 5px 0px 5px 0px;
+}
+
+.panel-primary>.panel-heading>.panel-options>a {
+		padding: 0px;
+		margin: 0px;
+}
+
+
+/* bootstrap overwrite ends */
+
+
+/* some neon overwrite */
+
+.form-groups-bordered>.form-group {
+		border-bottom: none;
+}
+
+.selectboxit .selectboxit-option-icon-container {
+		margin-left: 25% !important;
+}
+
+.page-body .select2-container {
+		width: 40%;
+		float: left;
+}
