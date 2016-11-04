@@ -1,7 +1,7 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 <div></div>
 
-<div class="page-container sidebar-collapsed">
+<div class="page-container">
 		<!-- This is where the legendary TA Call all begins -->
 		<div class="main-content">
 				<div class="support-staff-header">
@@ -45,17 +45,18 @@
 
 				<div id="courses-view">
 						<!-- first course -->
-						<div class="container-fluid border-bottom--gray">
+						<div class="container-fluid border-bottom--gray" ng-repeat="sectionGroupId in view.state.sectionGroups.ids"
+						 ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]">
 								<div class="flex-row">
 										<div class="flex-row-children">
-												<h4>PSC 001 Introduction to Psychology - 001</h4>
-												<h5>Session 001</h5>
+												<h4>{{sectionGroup.subjectCode}} {{sectionGroup.courseNumber}} {{sectionGroup.title}}</h4>
+												<h5>Section {{sectionGroup.sequencePattern}}</h5>
 												<div class="label ng-binding ng-scope info--bg_black">
-														Seat: 2421
+														Seats: {{sectionGroup.plannedSeats}}
 												</div>
 												<div>
 														<ul class="course-info">
-																<li>Units: 4</li>
+																<li>Units: {{sectionGroup.units}}</li>
 																<li>TA: 5/5</li>
 																<li>Reader: 0/5</li>
 														</ul>
@@ -82,44 +83,44 @@
 														</div>
 														<!-- drop down -->
 														<div class="people-selector">
-																<select name="test " class="selectboxit " data-first-option="false ">
-								<option>Assign 30%</option>
-								<optgroup label="Faculty Preference ">
-									<option value="1 ">John, Loffer</option>
-									<option value="2 ">Lee, Chris</option>
-									<option value="3 ">Qi, Ji</option>
-									<option value="4 ">Jackson, Andrew</option>
-								</optgroup>
-								<optgroup label="Master Students ">
-									<option value="1 ">Stans, Crystal</option>
-									<option value="2 ">Smith, Steven</option>
-									<option value="3 ">Lee, Yuan</option>
-									<option value="4 ">Lu, Shang</option>
-								</optgroup>
-							</select>
+															<select name="test " class="selectboxit " data-first-option="false ">
+																<option>Assign 30%</option>
+																<optgroup label="Faculty Preference ">
+																	<option value="1 ">John, Loffer</option>
+																	<option value="2 ">Lee, Chris</option>
+																	<option value="3 ">Qi, Ji</option>
+																	<option value="4 ">Jackson, Andrew</option>
+																</optgroup>
+																<optgroup label="Master Students ">
+																	<option value="1 ">Stans, Crystal</option>
+																	<option value="2 ">Smith, Steven</option>
+																	<option value="3 ">Lee, Yuan</option>
+																	<option value="4 ">Lu, Shang</option>
+																</optgroup>
+															</select>
 														</div>
 														<div class="people-selector ">
-																<select name="test " class="selectboxit " data-first-option="false ">
-								<option>Assign 30%</option>
-								<optgroup label="Faculty Preference ">
-									<option value="1 ">John, Loffer</option>
-									<option value="2 ">Lee, Chris</option>
-									<option value="3 ">Qi, Ji</option>
-									<option value="4 ">Jackson, Andrew</option>
-								</optgroup>
-								<optgroup label="Master Students ">
-									<option value="1 ">Stans, Crystal</option>
-									<option value="2 ">Smith, Steven</option>
-									<option value="3 ">Lee, Yuan</option>
-									<option value="4 ">Lu, Shang</option>
-								</optgroup>
-							</select>
+															<select name="test " class="selectboxit " data-first-option="false ">
+																<option>Assign 30%</option>
+																<optgroup label="Faculty Preference ">
+																	<option value="1 ">John, Loffer</option>
+																	<option value="2 ">Lee, Chris</option>
+																	<option value="3 ">Qi, Ji</option>
+																	<option value="4 ">Jackson, Andrew</option>
+																</optgroup>
+																<optgroup label="Master Students ">
+																	<option value="1 ">Stans, Crystal</option>
+																	<option value="2 ">Smith, Steven</option>
+																	<option value="3 ">Lee, Yuan</option>
+																	<option value="4 ">Lu, Shang</option>
+																</optgroup>
+															</select>
 														</div>
 														<!-- drop down ends-->
 														<!--add new slot button-->
-														<a class="btn btn-default add-new-slot pull-left" href="javascript:;" onclick="jQuery( '#modal-1').modal( 'show'); ">
-						Add New TA Slots
-							</a>
+													<a class="btn btn-default add-new-slot pull-left" href="javascript:;" onclick="jQuery( '#modal-1').modal( 'show'); ">
+														Add New TA Slots
+													</a>
 														<!--add new slot button-->
 												</div>
 										</div>
@@ -137,26 +138,26 @@
 														<!-- drop down -->
 														<div class="people-selector ">
 																<select name="test " class="selectboxit " data-first-option="false ">
-								<option>Assign 30%</option>
-								<optgroup label="Faculty Preference ">
-									<option value="1 ">John, Loffer</option>
-									<option value="2 ">Lee, Chris</option>
-									<option value="3 ">Qi, Ji</option>
-									<option value="4 ">Jackson, Andrew</option>
-								</optgroup>
-								<optgroup label="Master Students ">
-									<option value="1 ">Stans, Crystal</option>
-									<option value="2 ">Smith, Steven</option>
-									<option value="3 ">Lee, Yuan</option>
-									<option value="4 ">Lu, Shang</option>
-								</optgroup>
-							</select>
+																	<option>Assign 30%</option>
+																	<optgroup label="Faculty Preference ">
+																		<option value="1 ">John, Loffer</option>
+																		<option value="2 ">Lee, Chris</option>
+																		<option value="3 ">Qi, Ji</option>
+																		<option value="4 ">Jackson, Andrew</option>
+																	</optgroup>
+																	<optgroup label="Master Students ">
+																		<option value="1 ">Stans, Crystal</option>
+																		<option value="2 ">Smith, Steven</option>
+																		<option value="3 ">Lee, Yuan</option>
+																		<option value="4 ">Lu, Shang</option>
+																	</optgroup>
+																</select>
 														</div>
 														<!-- drop down ends-->
 														<!--add new slot button-->
 														<a class="btn btn-default add-new-slot pull-left" href="javascript:;" onclick="jQuery( '#modal-1').modal( 'show'); ">
-						Add New TA Slots
-					</a>
+															Add New TA Slots
+														</a>
 												</div>
 										</div>
 										<div class="flex-selector-course_view">
@@ -177,335 +178,32 @@
 														<!-- drop down -->
 														<div class="people-selector ">
 																<select name="test " class="selectboxit " data-first-option="false ">
-								<option>Assign 30%</option>
-								<optgroup label="Faculty Preference ">
-									<option value="1 ">John, Loffer</option>
-									<option value="2 ">Lee, Chris</option>
-									<option value="3 ">Qi, Ji</option>
-									<option value="4 ">Jackson, Andrew</option>
-								</optgroup>
-								<optgroup label="Master Students ">
-									<option value="1 ">Stans, Crystal</option>
-									<option value="2 ">Smith, Steven</option>
-									<option value="3 ">Lee, Yuan</option>
-									<option value="4 ">Lu, Shang</option>
-								</optgroup>
-							</select>
+																	<option>Assign 30%</option>
+																	<optgroup label="Faculty Preference ">
+																		<option value="1 ">John, Loffer</option>
+																		<option value="2 ">Lee, Chris</option>
+																		<option value="3 ">Qi, Ji</option>
+																		<option value="4 ">Jackson, Andrew</option>
+																	</optgroup>
+																	<optgroup label="Master Students ">
+																		<option value="1 ">Stans, Crystal</option>
+																		<option value="2 ">Smith, Steven</option>
+																		<option value="3 ">Lee, Yuan</option>
+																		<option value="4 ">Lu, Shang</option>
+																	</optgroup>
+																</select>
 														</div>
 														<!-- drop down ends-->
 														<!--add new slot button-->
 														<a class="btn btn-default add-new-slot pull-left" href="javascript:;" onclick="jQuery( '#modal-1').modal( 'show'); ">
-						Add New TA Slots
-							</a>
+															Add New TA Slots
+														</a>
 														<!--add new slot button-->
 												</div>
 										</div>
 								</div>
 						</div>
 						<!-- first course ends-->
-
-						<!-- second course -->
-						<div class="container-fluid border-bottom--gray">
-								<div class="flex-row">
-										<div class="flex-row-children">
-												<h4>PSC 001 Introduction to Psychology - 001</h4>
-												<h5>Session 001</h5>
-												<div class="label ng-binding ng-scope info--bg_black">
-														Seat: 2421
-												</div>
-												<div>
-														<ul class="course-info">
-																<li>Units: 4</li>
-																<li>TA: 5/5</li>
-																<li>Reader: 0/5</li>
-														</ul>
-												</div>
-										</div>
-										<div class="flex-selector-course_view">
-												<div class="ta_course-section-swticher">
-														<div class="preference-title">
-																Course TA
-														</div>
-												</div>
-												<div class="ta_course-section">
-														<div class=" alert alert-info assignment ">
-																<p>Lu, Sammy</p>
-																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
-														</div>
-														<div class="alert alert-info assignment ">
-																<p>Lu, Sammy</p>
-																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
-														</div>
-														<div class="alert alert-info assignment ">
-																<p>Lu, Sammy</p>
-																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
-														</div>
-														<!-- drop down -->
-														<div class="people-selector ">
-																<select name="test " class="selectboxit " data-first-option="false ">
-								<option>Assign 30%</option>
-								<optgroup label="Faculty Preference ">
-									<option value="1 ">John, Loffer</option>
-									<option value="2 ">Lee, Chris</option>
-									<option value="3 ">Qi, Ji</option>
-									<option value="4 ">Jackson, Andrew</option>
-								</optgroup>
-								<optgroup label="Master Students ">
-									<option value="1 ">Stans, Crystal</option>
-									<option value="2 ">Smith, Steven</option>
-									<option value="3 ">Lee, Yuan</option>
-									<option value="4 ">Lu, Shang</option>
-								</optgroup>
-							</select>
-														</div>
-														<div class="people-selector ">
-																<select name="test " class="selectboxit " data-first-option="false ">
-								<option>Assign 30%</option>
-								<optgroup label="Faculty Preference ">
-									<option value="1 ">John, Loffer</option>
-									<option value="2 ">Lee, Chris</option>
-									<option value="3 ">Qi, Ji</option>
-									<option value="4 ">Jackson, Andrew</option>
-								</optgroup>
-								<optgroup label="Master Students ">
-									<option value="1 ">Stans, Crystal</option>
-									<option value="2 ">Smith, Steven</option>
-									<option value="3 ">Lee, Yuan</option>
-									<option value="4 ">Lu, Shang</option>
-								</optgroup>
-							</select>
-														</div>
-														<!-- drop down ends-->
-														<!--add new slot button-->
-														<a class="btn btn-default add-new-slot pull-left" href="javascript:;" onclick="jQuery( '#modal-1').modal( 'show'); ">
-						Add New TA Slots
-							</a>
-														<!--add new slot button-->
-												</div>
-										</div>
-										<div class="flex-selector-course_view">
-												<div class="ta_course-section-swticher">
-														<div class="preference-title">
-																Course Reader
-														</div>
-												</div>
-												<div class="ta_course-section">
-														<div class=" alert alert-info assignment ">
-																<p>Lu, Sammy</p>
-																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
-														</div>
-														<!-- drop down -->
-														<div class="people-selector ">
-																<select name="test " class="selectboxit " data-first-option="false ">
-								<option>Assign 30%</option>
-								<optgroup label="Faculty Preference ">
-									<option value="1 ">John, Loffer</option>
-									<option value="2 ">Lee, Chris</option>
-									<option value="3 ">Qi, Ji</option>
-									<option value="4 ">Jackson, Andrew</option>
-								</optgroup>
-								<optgroup label="Master Students ">
-									<option value="1 ">Stans, Crystal</option>
-									<option value="2 ">Smith, Steven</option>
-									<option value="3 ">Lee, Yuan</option>
-									<option value="4 ">Lu, Shang</option>
-								</optgroup>
-							</select>
-														</div>
-														<!-- drop down ends-->
-														<!--add new slot button-->
-														<a class="btn btn-default add-new-slot pull-left" href="javascript:;" onclick="jQuery( '#modal-1').modal( 'show'); ">
-						Add New TA Slots
-							</a>
-														<!--add new slot button-->
-												</div>
-										</div>
-										<div class="flex-selector-course_view">
-												<div class="ta_course-section-swticher">
-														<div class="preference-title">
-																Course AI
-														</div>
-												</div>
-												<div class="ta_course-section">
-														<div class=" alert alert-info assignment ">
-																<p>Lu, Sammy</p>
-																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
-														</div>
-														<div class="alert alert-info assignment ">
-																<p>Lu, Sammy</p>
-																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
-														</div>
-														<!-- drop down -->
-														<div class="people-selector ">
-																<select name="test " class="selectboxit " data-first-option="false ">
-								<option>Assign 30%</option>
-								<optgroup label="Faculty Preference ">
-									<option value="1 ">John, Loffer</option>
-									<option value="2 ">Lee, Chris</option>
-									<option value="3 ">Qi, Ji</option>
-									<option value="4 ">Jackson, Andrew</option>
-								</optgroup>
-								<optgroup label="Master Students ">
-									<option value="1 ">Stans, Crystal</option>
-									<option value="2 ">Smith, Steven</option>
-									<option value="3 ">Lee, Yuan</option>
-									<option value="4 ">Lu, Shang</option>
-								</optgroup>
-							</select>
-														</div>
-														<!-- drop down ends-->
-														<!--add new slot button-->
-														<a class="btn btn-default add-new-slot pull-left" href="javascript:;" onclick="jQuery( '#modal-1').modal( 'show'); ">
-						Add New TA Slots
-							</a>
-														<!--add new slot button-->
-												</div>
-										</div>
-								</div>
-						</div>
-						<!-- second course ends -->
-
-						<!-- third course -->
-						<div class="container-fluid border-bottom--gray">
-								<div class="flex-row">
-										<div class="flex-row-children">
-												<h4>PSC 001 Introduction to Psychology - 001</h4>
-												<h5>Session 001</h5>
-												<div class="label ng-binding ng-scope info--bg_black">
-														Seat: 2421
-												</div>
-												<div>
-														<ul class="course-info">
-																<li>Units: 4</li>
-																<li>TA: 5/5</li>
-																<li>Reader: 0/5</li>
-														</ul>
-												</div>
-										</div>
-
-										<div class="flex-selector-course_view">
-												<div class="ta_course-section-swticher">
-														<div class="preference-title">
-																Course TA
-														</div>
-												</div>
-												<div class="ta_course-section">
-														<!-- drop down -->
-														<div class="people-selector ">
-																<select name="test " class="selectboxit " data-first-option="false ">
-								<option>Assign 30%</option>
-								<optgroup label="Faculty Preference ">
-									<option value="1 ">John, Loffer</option>
-									<option value="2 ">Lee, Chris</option>
-									<option value="3 ">Qi, Ji</option>
-									<option value="4 ">Jackson, Andrew</option>
-								</optgroup>
-								<optgroup label="Master Students ">
-									<option value="1 ">Stans, Crystal</option>
-									<option value="2 ">Smith, Steven</option>
-									<option value="3 ">Lee, Yuan</option>
-									<option value="4 ">Lu, Shang</option>
-								</optgroup>
-							</select>
-														</div>
-														<div class="people-selector ">
-																<select name="test " class="selectboxit " data-first-option="false ">
-								<option>Assign 30%</option>
-								<optgroup label="Faculty Preference ">
-									<option value="1 ">John, Loffer</option>
-									<option value="2 ">Lee, Chris</option>
-									<option value="3 ">Qi, Ji</option>
-									<option value="4 ">Jackson, Andrew</option>
-								</optgroup>
-								<optgroup label="Master Students ">
-									<option value="1 ">Stans, Crystal</option>
-									<option value="2 ">Smith, Steven</option>
-									<option value="3 ">Lee, Yuan</option>
-									<option value="4 ">Lu, Shang</option>
-								</optgroup>
-							</select>
-														</div>
-														<!-- drop down ends-->
-														<!--add new slot button-->
-														<a class="btn btn-default add-new-slot pull-left" href="javascript:;" onclick="jQuery( '#modal-1').modal( 'show'); ">
-						Add New TA Slots
-							</a>
-														<!--add new slot button-->
-												</div>
-										</div>
-										<div class="flex-selector-course_view">
-												<div class="ta_course-section-swticher">
-														<div class="preference-title">
-																Course Reader
-														</div>
-												</div>
-												<div class="ta_course-section">
-														<div class=" alert alert-info assignment ">
-																<p>Lu, Sammy</p>
-																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
-														</div>
-														<!-- drop down -->
-														<div class="people-selector ">
-																<select name="test " class="selectboxit " data-first-option="false ">
-								<option>Assign 30%</option>
-								<optgroup label="Faculty Preference ">
-									<option value="1 ">John, Loffer</option>
-									<option value="2 ">Lee, Chris</option>
-									<option value="3 ">Qi, Ji</option>
-									<option value="4 ">Jackson, Andrew</option>
-								</optgroup>
-								<optgroup label="Master Students ">
-									<option value="1 ">Stans, Crystal</option>
-									<option value="2 ">Smith, Steven</option>
-									<option value="3 ">Lee, Yuan</option>
-									<option value="4 ">Lu, Shang</option>
-								</optgroup>
-							</select>
-														</div>
-														<!-- drop down ends-->
-														<!--add new slot button-->
-														<a class="btn btn-default add-new-slot pull-left" href="javascript:;" onclick="jQuery( '#modal-1').modal( 'show'); ">
-						Add New TA Slots
-							</a>
-														<!--add new slot button ends-->
-												</div>
-										</div>
-										<div class="flex-selector-course_view">
-												<div class="ta_course-section-swticher">
-														<div class="preference-title">
-																Course AI
-														</div>
-												</div>
-												<div class="ta_course-section">
-														<!-- drop down -->
-														<div class="people-selector ">
-																<select name="test " class="selectboxit " data-first-option="false ">
-								<option>Assign 30%</option>
-								<optgroup label="Faculty Preference ">
-									<option value="1 ">John, Loffer</option>
-									<option value="2 ">Lee, Chris</option>
-									<option value="3 ">Qi, Ji</option>
-									<option value="4 ">Jackson, Andrew</option>
-								</optgroup>
-								<optgroup label="Master Students ">
-									<option value="1 ">Stans, Crystal</option>
-									<option value="2 ">Smith, Steven</option>
-									<option value="3 ">Lee, Yuan</option>
-									<option value="4 ">Lu, Shang</option>
-								</optgroup>
-							</select>
-														</div>
-														<!-- drop down ends-->
-														<!--add new slot button-->
-														<a class="btn btn-default add-new-slot pull-left" href="javascript:;" onclick="jQuery( '#modal-1').modal( 'show'); ">
-						Add New TA Slots
-							</a>
-														<!--add new slot button ends-->
-												</div>
-										</div>
-								</div>
-						</div>
-						<!-- third course ends-->
 
 						<!-- modal-1 -->
 						<div class="modal fade" id="modal-1">

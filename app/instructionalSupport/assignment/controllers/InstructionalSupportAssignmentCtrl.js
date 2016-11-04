@@ -13,8 +13,8 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
-			$rootScope.$on('assignmentStateChanged', function (event, data) {
-				$scope.view.state = data;
+			$rootScope.$on('instructionalSupportAssignmentStateChanged', function (event, data) {
+				$scope.view.state = data.state;
 			});
 
 			$scope.setActiveTab = function (tabName) {

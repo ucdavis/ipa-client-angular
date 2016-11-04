@@ -34,7 +34,9 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						}
 					}
 
+					sectionGroups.ids = sortCourseIds(sectionGroups.ids, sectionGroupsList);
 					sectionGroups.list = sectionGroupsList;
+
 					return sectionGroups;
 				default:
 					return sectionGroups;
@@ -51,9 +53,9 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 
 			scope._state = newState;
+
 			$rootScope.$emit('instructionalSupportAssignmentStateChanged', {
-				state: scope._state,
-				action: action
+				state: scope._state
 			});
 
 			$log.debug("Instructional Support state updated:");
@@ -61,3 +63,42 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 		}
 	};
 });
+
+// Sort the course Ids by subject Code and then course number
+sortCourseIds = function(courseIds, courses) {
+
+		courseIds.sort(function (aId, bId) {
+			a = courses[aId];
+			b = courses[bId];
+			// Use subject codes to sort
+			if (a.subjectCode > b.subjectCode) {
+				return 1;
+			}
+
+			if (a.subjectCode < b.subjectCode) {
+				return -1
+			}
+
+			// Subject codes matched, use course numbers to sort
+			if (a.courseNumber > b.courseNumber) {
+				return 1;
+			}
+
+			if (a.courseNumber < b.courseNumber) {
+				return -1;
+			}
+
+			// Course numbers matched, use sequencePattern to sort
+			if (a.sequencePattern > b.sequencePattern) {
+				return 1;
+			}
+
+			if (a.sequencePattern < b.sequencePattern) {
+				return -1;
+			}
+
+			return -1;
+		});
+
+	return courseIds;
+};
