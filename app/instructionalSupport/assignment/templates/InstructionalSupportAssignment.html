@@ -1,105 +1,7 @@
+<nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
+<div></div>
+
 <div class="page-container sidebar-collapsed">
-		<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
-
-		<div class="sidebar-menu">
-
-				<div class="sidebar-menu-inner">
-
-						<header class="logo-env">
-
-								<!-- logo -->
-								<div class="logo">
-										<a href="index.html">
-												<h1 style="color: #fff; margin:0;">IPA</h1>
-										</a>
-								</div>
-
-								<!-- logo collapse icon -->
-								<div class="sidebar-collapse">
-										<a href="#" class="sidebar-collapse-icon">
-												<!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
-												<i class="entypo-menu"></i>
-										</a>
-								</div>
-
-
-								<!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
-								<div class="sidebar-mobile-menu visible-xs">
-										<a href="#" class="with-animation">
-												<!-- add class "with-animation" to support animation -->
-												<i class="entypo-menu"></i>
-										</a>
-								</div>
-
-						</header>
-
-						<!-- User and Organization -->
-						<ul id="main-menu" class="main-menu">
-								<!-- add class "multiple-expanded" to allow multiple submenus to open -->
-								<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-								<li class="welcome">
-										<span class="title">Welcome John Henderson</span>
-								</li>
-								<li>
-										<a href="logout.html">
-												<i class="entypo-logout"></i>
-												<span class="title">Logout</span>
-										</a>
-								</li>
-								<li>
-										<a href="workgroup.html">
-												<i class="entypo-users"></i>
-												<span class="title">Computer Science</span>
-										</a>
-								</li>
-						</ul>
-
-						<!-- Year switcher -->
-						<ul class="pager year-switcher">
-								<li class="previous"><a href="#"><i class="entypo-left-open-mini"></i></a></li>
-								<li><a href="#">2016</a></li>
-								<li class="next"><a href="#"><i class="entypo-right-open-mini"></i></a></li>
-						</ul>
-
-						<!-- Sidebar links -->
-						<ul id="main-menu" class="main-menu">
-								<!-- add class "multiple-expanded" to allow multiple submenus to open -->
-								<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-								<li>
-										<a href="courses.html">
-												<i class="entypo-book"></i>
-												<span class="title">Courses</span>
-										</a>
-								</li>
-								<li class="active">
-										<a href="assignments.html">
-												<i class="entypo-user-add"></i>
-												<span class="title">Assignments</span>
-										</a>
-								</li>
-								<li>
-										<a href="scheduling.html">
-												<i class="entypo-calendar"></i>
-												<span class="title">Scheduling</span>
-										</a>
-										<ul class="visible">
-												<li><a href="scheduling.html">Fall Quarter 2015</a></li>
-												<li><a href="scheduling.html">Winter Quarter 2016</a></li>
-												<li><a href="scheduling.html">Spring Quarter 2016</a></li>
-										</ul>
-								</li>
-								<li>
-										<a href="reports.html">
-												<i class="entypo-newspaper"></i>
-												<span class="title">Reports</span>
-										</a>
-								</li>
-
-						</ul>
-
-				</div>
-		</div>
-
 		<!-- This is where the legendary TA Call all begins -->
 		<div class="main-content">
 				<div class="support-staff-header">
@@ -117,28 +19,28 @@
 				</div>
 				<!-- search bar ends -->
 				<div class="row">
-						<div class="container-fluid flex-box">
-								<div class="btn-group border-bottom--gray view-switcher" data-toggle="buttons">
-										<label class="btn btn-white btn-sm active" id="courses-pivot">
-				<input type="radio" name="options">
-				<span class="tool-icon glyphicon glyphicon-education"></span> By Course
-			</label>
-										<label class="btn btn-white btn-sm" id="instructors-pivot">
-				<input type="radio" name="options">
-				<span class="tool-icon glyphicon glyphicon-user"></span> By People
-			</label>
-								</div>
-								<div class="btn-group border-bottom--gray review-switcher" data-toggle="buttons">
-										<label class="btn btn-white btn-sm active" id="courses-pivot">
-				<input type="radio" name="options">
-										Open review for instructors
-			</label>
-										<label class="btn btn-white btn-sm" id="instructors-pivot">
-				<input type="radio" name="options">
-				Open review for graduate students
-			</label>
-								</div>
+					<div class="container-fluid flex-box">
+						<div class="btn-group border-bottom--gray view-switcher" data-toggle="buttons">
+							<label class="btn btn-white btn-sm active" id="courses-pivot">
+								<input type="radio" name="options">
+								<span class="tool-icon glyphicon glyphicon-education"></span> By Course
+							</label>
+							<label class="btn btn-white btn-sm" id="instructors-pivot">
+								<input type="radio" name="options">
+								<span class="tool-icon glyphicon glyphicon-user"></span> By People
+							</label>
 						</div>
+						<div class="btn-group border-bottom--gray review-switcher" data-toggle="buttons">
+							<label class="btn btn-white btn-sm active" id="courses-pivot">
+								<input type="radio" name="options">
+									Open review for instructors
+							</label>
+							<label class="btn btn-white btn-sm" id="instructors-pivot">
+								<input type="radio" name="options">
+								Open review for graduate students
+							</label>
+						</div>
+					</div>
 				</div>
 
 				<div id="courses-view">
@@ -673,5 +575,191 @@
 				</div>
 				<!-- modal-ends -->
 				<!-- by course end -->
+
+				<!-- by people -->
+				<div id="people-view">
+						<div class="container-fluid border-bottom--gray">
+								<div class="flex-row">
+										<!-- TA info -->
+										<div class="flex-row-children">
+												<h4>Brown, Suzi</h4>
+												<div class="label ng-binding ng-scope info--bg_black">
+														Master
+												</div>
+												<div>
+														<ul class="ta-info">
+																<li>
+																		<strong>Teaching Experience:</strong>
+																</li>
+																<li>
+																		<p>
+																				- Psychology TA (Winter 2014 to Spring 2016)
+																		</p>
+																		<p>
+																				- Research assistant (Spring 2015 to winter 2016)
+																		</p>
+																</li>
+																<li>
+																		<strong>Comments:</strong>
+																</li>
+																<li>
+																		<p>
+																				Finished Bachelor of Psychology, 2006, UCLA, Master of Applied Psychology, 2011, Washington Univeristy, and Currently studying and researching Cognitive Psychology in UC Davis’s PhD program.
+																		</p>
+																</li>
+														</ul>
+												</div>
+										</div>
+										<!-- TA info ends -->
+										<!-- TA course section -->
+										<div class="flex-selector-people_view flex-selector_style">
+												<div class="ta_course-section">
+														<div class="alert alert-info assignment assignment-section">
+																<i tabindex="0" class="btn glyphicon glyphicon-exclamation-sign course-requriement text-primary" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="Focus on Pychological study based on human interaction and behaviors" data-original-title="PSC 113"></i>
+																<div class="assignment-info-section">
+																		<p class="assignment-title">PSC 113 - Session 001</p>
+																		<div class="assignment-details">
+																				<p class="assignment-detail-info">Seats: 75 Unit: 3</p>
+																				<p class="assignment-detail-info">Course TA</p>
+																				<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary"></i>
+																		</div>
+																</div>
+														</div>
+														<!--add new slot button-->
+														<a href="javascript:;" onclick="jQuery('#modal-2').modal('show');" class="btn btn-default assignment ta assignment_add-course pull-left">
+																<p>Add Courses</p>
+														</a>
+														<!--add new slot button ends-->
+												</div>
+										</div>
+										<!-- TA course section ends-->
+								</div>
+						</div>
+						<div class="container-fluid border-bottom--gray">
+								<div class="flex-row">
+										<!-- TA info -->
+										<div class="flex-row-children">
+												<h4>Brown, Suzi</h4>
+												<div class="label ng-binding ng-scope info--bg_black">
+														Master
+												</div>
+												<div>
+														<ul class="ta-info">
+																<li>
+																		<strong>Teaching Experience:</strong>
+																</li>
+																<li>
+																		<p>
+																				- Psychology TA (Winter 2014 to Spring 2016)
+																		</p>
+																		<p>
+																				- Research assistant (Spring 2015 to winter 2016)
+																		</p>
+																</li>
+																<li>
+																		<strong>Comments:</strong>
+																</li>
+																<li>
+																		<p>
+																				Finished Bachelor of Psychology, 2006, UCLA, Master of Applied Psychology, 2011, Washington Univeristy, and Currently studying and researching Cognitive Psychology in UC Davis’s PhD program.
+																		</p>
+																</li>
+														</ul>
+												</div>
+										</div>
+										<!-- TA INFO ends-->
+										<!-- TA course section -->
+										<div class="flex-selector-people_view flex-selector_style">
+												<div class="ta_course-section">
+														<div class="alert alert-info assignment assignment-section">
+																<i tabindex="0" class="btn glyphicon glyphicon-exclamation-sign course-requriement text-primary" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="Focus on Pychological study based on human interaction and behaviors" data-original-title="PSC 113"></i>
+																<div class="assignment-info-section">
+																		<p class="assignment-title">PSC 113 - Session 001</p>
+																		<div class="assignment-details">
+																				<p class="assignment-detail-info">Seats: 75 Unit: 3</p>
+																				<p class="assignment-detail-info">Course TA</p>
+																				<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary"></i>
+																		</div>
+																</div>
+														</div>
+														<!--add new slot button-->
+														<a href="javascript:;" onclick="jQuery('#modal-2').modal('show');" class="btn btn-default assignment ta assignment_add-course pull-left">
+																<p>Add Courses</p>
+														</a>
+														<!--add new slot button-->
+												</div>
+										</div>
+										<!-- TA course section ends-->
+								</div>
+						</div>
+						<div class="container-fluid border-bottom--gray">
+								<div class="flex-row">
+										<!-- TA info -->
+										<div class="flex-row-children">
+												<h4>Brown, Suzi</h4>
+												<div class="label ng-binding ng-scope info--bg_black">
+														Master
+												</div>
+												<div>
+														<ul class="ta-info">
+																<li>
+																		<strong>Teaching Experience:</strong>
+																</li>
+																<li>
+																		<p>
+																				- Psychology TA (Winter 2014 to Spring 2016)
+																		</p>
+																		<p>
+																				- Research assistant (Spring 2015 to winter 2016)
+																		</p>
+																</li>
+																<li>
+																		<strong>Comments:</strong>
+																</li>
+																<li>
+																		<p>
+																				Finished Bachelor of Psychology, 2006, UCLA, Master of Applied Psychology, 2011, Washington Univeristy, and Currently studying and researching Cognitive Psychology in UC Davis’s PhD program.
+																		</p>
+																</li>
+														</ul>
+												</div>
+										</div>
+										<!-- TA info ends -->
+										<!-- TA course section -->
+										<div class="flex-selector-people_view flex-selector_style">
+												<div class="ta_course-section">
+														<div class="alert alert-info assignment assignment-section">
+																<i tabindex="0" class="btn glyphicon glyphicon-exclamation-sign course-requriement text-primary" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="Focus on Pychological study based on human interaction and behaviors" data-original-title="PSC 113"></i>
+																<div class="assignment-info-section">
+																		<p class="assignment-title">PSC 113 - Session 001</p>
+																		<div class="assignment-details">
+																				<p class="assignment-detail-info">Seats: 75 Unit: 3</p>
+																				<p class="assignment-detail-info">Course TA</p>
+																				<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary"></i>
+																		</div>
+																</div>
+														</div>
+														<div class="alert alert-info assignment assignment-section">
+																<i tabindex="0" class="btn glyphicon glyphicon-exclamation-sign course-requriement text-primary" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="Focus on Pychological study based on human interaction and behaviors" data-original-title="PSC 113"></i>
+																<div class="assignment-info-section">
+																		<p class="assignment-title">PSC 113 - Session 001</p>
+																		<div class="assignment-details">
+																				<p class="assignment-detail-info">Seats: 75 Unit: 3</p>
+																				<p class="assignment-detail-info">Course TA</p>
+																				<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary"></i>
+																		</div>
+																</div>
+														</div>
+														<!--add new slot button-->
+														<a href="javascript:;" onclick="jQuery('#modal-2').modal('show');" class="btn btn-default assignment ta assignment_add-course pull-left">
+																<p>Add Courses</p>
+														</a>
+														<!--add new slot button ends-->
+												</div>
+										</div>
+										<!-- TA course section ends-->
+								</div>
+						</div>
+				</div>
 		</div>
 		<!-- This is where the legendary TA Call all ends -->

@@ -2,7 +2,7 @@ window.instructionalSupportApp = angular.module("instructionalSupportApp", ["sha
 
 instructionalSupportApp.config(function ($routeProvider) {
 	return $routeProvider
-		.when("/:workgroupId/:year", {
+		.when("/:workgroupId/:year/:termShortCode", {
 			templateUrl: "InstructionalSupportAssignment.html",
 			controller: "InstructionalSupportAssignmentCtrl",
 			reloadOnSearch: false,
