@@ -46,6 +46,35 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 				});
 			};
 
+			$scope.isTeachingAssistant = function (instructionalSupportAssignment) {
+				if (instructionalSupportAssignment.appointmentType == "teachingAssistant") {
+					return true;
+				}
+				return false;
+			};
+
+			$scope.isReader = function (instructionalSupportAssignment) {
+				if (instructionalSupportAssignment.appointmentType == "reader") {
+					return true;
+				}
+				return false;
+			};
+
+			$scope.isAssociateInstructor = function (instructionalSupportAssignment) {
+				if (instructionalSupportAssignment.appointmentType == "associateInstructor") {
+					return true;
+				}
+				return false;
+			};
+
+			$scope.isUnassigned = function (instructionalSupportAssignment) {
+				if (instructionalSupportAssignment.instructionalSupportStaffId == 0) {
+					return true;
+				}
+
+				return false;
+			};
+
 			// Set the active tab according to the URL
 			// Otherwise redirect to the default view
 			$scope.setActiveTab($routeParams.tab || "courses");

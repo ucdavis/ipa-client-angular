@@ -58,15 +58,15 @@
 												<div>
 														<ul class="course-info">
 																<li>Units: {{sectionGroup.units}}</li>
-																<li>TA: 5/5</li>
-																<li>Reader: 0/5</li>
+																<li>TA: [5/5]</li>
+																<li>Reader: [0/5]</li>
 														</ul>
 												</div>
 										</div>
 										<div class="flex-selector-course_view">
 												<div class="ta_course-section-swticher">
 														<div class="preference-title">
-																Course TA
+															TAs
 														</div>
 												</div>
 												<div class="ta_course-section">
@@ -82,27 +82,15 @@
 																<p>Lu, Sammy</p>
 																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
 														</div>
-														<div class="support-staff-selector alert assignment" support-staff-selector></div>
 
+														<!-- Display unfilled assignment slots -->
+														<support-staff-selector 
+															ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]"
+															ng-show="isTeachingAssistant(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment) "
+															ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
+															class="support-staff-selector alert assignment">
+														</support-staff-selector>
 
-														<div class="people-selector ">
-															<select name="test " class="selectboxit " data-first-option="false ">
-																<option>Assign 30%</option>
-																<optgroup label="Faculty Preference ">
-																	<option value="1 ">John, Loffer</option>
-																	<option value="2 ">Lee, Chris</option>
-																	<option value="3 ">Qi, Ji</option>
-																	<option value="4 ">Jackson, Andrew</option>
-																</optgroup>
-																<optgroup label="Master Students ">
-																	<option value="1 ">Stans, Crystal</option>
-																	<option value="2 ">Smith, Steven</option>
-																	<option value="3 ">Lee, Yuan</option>
-																	<option value="4 ">Lu, Shang</option>
-																</optgroup>
-															</select>
-														</div>
-														<!-- drop down ends-->
 														<!--add new slot button-->
 														<div ng-click="openAddAppointmentSlotModal(sectionGroup.id, 'teachingAssistant')" class="btn btn-default add-new-slot pull-left">
 															Add TA Slots...
@@ -112,7 +100,7 @@
 										<div class="flex-selector-course_view">
 												<div class="ta_course-section-swticher">
 														<div class="preference-title">
-																Course Reader
+															Readers
 														</div>
 												</div>
 												<div class="ta_course-section">
@@ -120,25 +108,15 @@
 																<p>Lu, Sammy</p>
 																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
 														</div>
-														<!-- drop down -->
-														<div class="people-selector ">
-																<select name="test " class="selectboxit " data-first-option="false ">
-																	<option>Assign 30%</option>
-																	<optgroup label="Faculty Preference ">
-																		<option value="1 ">John, Loffer</option>
-																		<option value="2 ">Lee, Chris</option>
-																		<option value="3 ">Qi, Ji</option>
-																		<option value="4 ">Jackson, Andrew</option>
-																	</optgroup>
-																	<optgroup label="Master Students ">
-																		<option value="1 ">Stans, Crystal</option>
-																		<option value="2 ">Smith, Steven</option>
-																		<option value="3 ">Lee, Yuan</option>
-																		<option value="4 ">Lu, Shang</option>
-																	</optgroup>
-																</select>
-														</div>
-														<!-- drop down ends-->
+
+														<!-- Display unfilled assignment slots -->
+														<support-staff-selector 
+															ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]"
+															ng-show="isReader(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment) "
+															ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
+															class="support-staff-selector alert assignment">
+														</support-staff-selector>
+
 														<!--add new slot button-->
 														<div ng-click="openAddAppointmentSlotModal(sectionGroup.id, 'reader')" class="btn btn-default add-new-slot pull-left">
 															Add Reader Slots...
@@ -148,7 +126,7 @@
 										<div class="flex-selector-course_view">
 												<div class="ta_course-section-swticher">
 														<div class="preference-title">
-																Course AI
+															AIs
 														</div>
 												</div>
 												<div class="ta_course-section">
@@ -160,25 +138,15 @@
 																<p>Lu, Sammy</p>
 																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
 														</div>
-														<!-- drop down -->
-														<div class="people-selector ">
-																<select name="test " class="selectboxit " data-first-option="false ">
-																	<option>Assign 30%</option>
-																	<optgroup label="Faculty Preference ">
-																		<option value="1 ">John, Loffer</option>
-																		<option value="2 ">Lee, Chris</option>
-																		<option value="3 ">Qi, Ji</option>
-																		<option value="4 ">Jackson, Andrew</option>
-																	</optgroup>
-																	<optgroup label="Master Students ">
-																		<option value="1 ">Stans, Crystal</option>
-																		<option value="2 ">Smith, Steven</option>
-																		<option value="3 ">Lee, Yuan</option>
-																		<option value="4 ">Lu, Shang</option>
-																	</optgroup>
-																</select>
-														</div>
-														<!-- drop down ends-->
+
+														<!-- Display unfilled assignment slots -->
+														<support-staff-selector 
+															ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]"
+															ng-show="isAssociateInstructor(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment) "
+															ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
+															class="support-staff-selector alert assignment">
+														</support-staff-selector>
+
 														<!--add new slot button-->
 														<div ng-click="openAddAppointmentSlotModal(sectionGroup.id, 'associateInstructor')" class="btn btn-default add-new-slot pull-left">
 															Add AI Slots...

@@ -27,6 +27,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 								sectionGroup.courseNumber = courseData.courseNumber;
 								sectionGroup.title = courseData.title;
 								sectionGroup.units = courseData.unitsLow;
+								sectionGroup.instructionalSupportAssignmentIds = [];
 
 								sectionGroupsList[sectionGroupData.id] = sectionGroup;
 								sectionGroups.ids.push(sectionGroupData.id);
@@ -34,6 +35,17 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						}
 					}
 
+					// Add instructionalSupportAssignment associations to parent sectionGroups
+					var instructionalSupportAssignmentsLength = action.payload.instructionalSupportAssignments ? action.payload.instructionalSupportAssignments.length : 0;
+
+					for (var k = 0; k < instructionalSupportAssignmentsLength; k++) {
+						var instructionalSupportAssignmentData = action.payload.instructionalSupportAssignments[k];
+						var sectionGroupId = instructionalSupportAssignmentData.sectionGroupId;
+
+						sectionGroupsList[sectionGroupId].instructionalSupportAssignmentIds.push(instructionalSupportAssignmentData.id);
+					}
+
+					// Put together sectionGroup state data
 					sectionGroups.ids = sortCourseIds(sectionGroups.ids, sectionGroupsList);
 					sectionGroups.list = sectionGroupsList;
 
