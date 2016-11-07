@@ -113,7 +113,7 @@
 	</div>
 
 	<!-- Select Unavailabilities -->
-	<div class="row provide-unavailabilities-header">
+	<div ng-show="view.state.activeTeachingCall.showUnavailabilities" class="row provide-unavailabilities-header">
 		<div class="col-md-6">
 			<h5>Please indicate your un-availabilities:</h5>
 		</div>
@@ -130,7 +130,7 @@
 			</small>
 		</div>
 	</div>
-	<div class="unavailability-container">
+	<div ng-show="view.state.activeTeachingCall.showUnavailabilities" class="unavailability-container">
 		<div class="unavailability-term-container" style="flex: 1 1 auto;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
 			<div ng-init="teachingCallResponse=view.state.activeTeachingCall.teachingCallResponsesByTermCode[termToTermCode(term)]">
 				<div class="unavailability-term-header" style="text-align: center;">
