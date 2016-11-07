@@ -50,6 +50,18 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					sectionGroups.list = sectionGroupsList;
 
 					return sectionGroups;
+
+				case ADD_ASSIGNMENT_SLOTS:
+					var instructionalSupportAssignmentsLength = action.payload ? action.payload.length : 0;
+
+					for (var k = 0; k < instructionalSupportAssignmentsLength; k++) {
+						var instructionalSupportAssignmentData = action.payload[k];
+						var sectionGroupId = instructionalSupportAssignmentData.sectionGroupId;
+
+						sectionGroups.list[sectionGroupId].instructionalSupportAssignmentIds.push(instructionalSupportAssignmentData.id);
+					}
+
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}
@@ -75,6 +87,19 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					}
 
 					instructionalSupportAssignments.list = instructionalSupportAssignmentsList;
+
+					return instructionalSupportAssignments;
+				case ADD_ASSIGNMENT_SLOTS:
+					instructionalSupportAssignmentsList = {};
+
+					instructionalSupportAssignmentsLength = action.payload ? action.payload.length : 0;
+
+					for (var i = 0; i < instructionalSupportAssignmentsLength; i++) {
+						var instructionalSupportAssignmentData = action.payload[i];
+
+						instructionalSupportAssignments.list[instructionalSupportAssignmentData.id] = instructionalSupportAssignmentData;
+						instructionalSupportAssignments.ids.push(instructionalSupportAssignmentData.id);
+					}
 
 					return instructionalSupportAssignments;
 				default:
