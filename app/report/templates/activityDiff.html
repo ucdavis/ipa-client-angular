@@ -1,25 +1,21 @@
-<li ng-class="{ 'no-remote' : activity.noRemote, 'no-local': noLocal, 'has-changes': activity.noRemote || noLocal, 'no-changes': view.state.sections.list[sectionId].dwChanges[activity.uniqueKey] === undefined }"
-	class="section-activity-diff-row section-diff-element">
+<div ng-class="{ 'no-remote' : activity.noRemote, 'no-local': noLocal, 'has-changes': activity.noRemote || noLocal, 'no-changes': view.state.sections.list[sectionId].dwChanges[activity.uniqueKey] === undefined }"
+	class="section-activity-diff-row">
 
-	<!-- typeCode -->
+	<!-- Activity Type -->
 	<div class="activity-diff-element activity-type-code">
 		{{ activity.typeCode.getActivityCodeDescription() }}
 	</div>
 
 	<!-- dayIndicator -->
-	<div class="activity-diff-element activity-diff-element-header">- Days:</div>
 	<day-indicator-diff></day-indicator-diff>
 
 	<!-- startTime -->
-	<div class="activity-diff-element activity-diff-element-header">- Start Time:</div>
 	<start-time-diff></start-time-diff>
 
 	<!-- endTime -->
-	<div class="activity-diff-element activity-diff-element-header">- End Time:</div>
 	<end-time-diff></end-time-diff>
 
 	<!-- location -->
-	<div class="activity-diff-element activity-diff-element-header">- Location:</div>
 	<location-diff></location-diff>
 
 	<!-- Action when activity does not exist in Banner -->
@@ -48,4 +44,4 @@
 		</button>
 	</span>
 
-</li>
+</div>

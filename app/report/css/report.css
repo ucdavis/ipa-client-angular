@@ -1,33 +1,47 @@
-ul.section-diff-list {
-	list-style: none;
+table.section-diff-table {
 	margin-top: 3em;
-	padding: 0;
+	border-collapse: separate;
 }
 
-li.section-diff-row, li.section-activity-diff-row {
-	margin-top: 1.5em;
+table.section-diff-table > tbody > tr.section-diff-row > td {
 	color: #777;
+	border-top: none;
 }
 
-li.section-diff-row {
-	padding: 1em;
-	margin: 0.5em 0;
-	border: 1px solid #ddd;
+table.section-diff-table > tbody > tr.section-diff-row.head-section > td {
+	border-top: 1px solid #ddd;
 }
 
-li.section-diff-row.no-changes *, li.section-activity-diff-row.no-changes * {
+tr.section-diff-row.no-changes *, .section-activity-diff-row.no-changes * {
 	color: #aaa;
 }
 
-.section-diff-element, .activity-diff-element {
+.section-diff-element {
 	display: inline-block;
-	margin: 0 0.2em;
+	margin-right: 0.5em;
 }
 
-.has-changes {
+.section-unique-key {
+	margin-bottom: 1em;
+}
+
+.section-activity-diff-row {
+	display: flex;
+}
+
+.section-activity-diff-row:not(:last-child) {
+	margin-bottom: 1em;
+}
+
+.activity-diff-element {
+	flex: 1 1 20%;
+	padding: 0 8px;
+}
+
+.has-changes, tr.has-changes > td {
 	position: relative;
 	cursor: pointer;
-	border: 1px dashed #aaa !important;
+	border-bottom: 1px dashed #aaa !important;
 	color: darkmagenta;
 }
 
@@ -35,11 +49,7 @@ li.section-diff-row.no-changes *, li.section-activity-diff-row.no-changes * {
 	background-color: #eee;
 }
 
-span.ipa-version, span.no-remote, span.no-local {
-	padding: 0 0.2em;
-}
-
-.no-remote, li.no-remote * {
+.no-remote, tr.no-remote * {
 	color: darkred !important;
 }
 

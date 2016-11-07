@@ -26,10 +26,34 @@
 
 	<div class="row">
 		<spinner ng-show="view.state.uiState.comparisonInProgress" style="margin-top: 3em;"></spinner>
-		<div class="col-sm-8 col-sm-offset-2" ng-hide="view.state.uiState.comparisonInProgress">
-			<ul ng-if="view.state.sections.ids.length" class="section-diff-list">
-				<section-diff ng-repeat="sectionId in view.state.sections.ids track by $index"></section-diff>
-			</ul>
+		<div class="col-sm-10 col-sm-offset-1" ng-hide="view.state.uiState.comparisonInProgress">
+			<table ng-if="view.state.sections.ids.length" class="table section-diff-table">
+				<colgroup>
+					<col span="1" style="width: 25%;">
+					<col span="1" style="width: 8%;">
+					<col span="1" style="width: 9%;">
+					<col span="1" style="width: 8%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+				</colgroup>
+				<thead>
+					<th>Title</th>
+					<th>Section</th>
+					<th>CRN</th>
+					<th>Seats</th>
+					<th>Activity</th>
+					<th>Days</th>
+					<th>Start</th>
+					<th>End</th>
+					<th>Location</th>
+				</thead>
+				<tbody>
+					<tr section-diff ng-repeat="sectionId in view.state.sections.ids track by $index"></tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 

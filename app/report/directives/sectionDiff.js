@@ -4,7 +4,7 @@
  */
 reportApp.directive("sectionDiff", this.sectionDiff = function () {
 	return {
-		restrict: "E",
+		restrict: "A",
 		templateUrl: 'sectionDiff.html',
 		replace: true
 	};
