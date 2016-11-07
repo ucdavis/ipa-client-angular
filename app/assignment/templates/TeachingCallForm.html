@@ -37,7 +37,7 @@
 
 
 	<div class="preference-container" style="display:flex; margin-left:15px; margin-right:15px;">
-		<div class="unavailability-term-container" style="flex: 1 0 200px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
+		<div class="unavailability-term-container" style="flex: 1 0 0px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
 			<div>
 				<div class="unavailability-term-header" style="text-align: center;">
 					<div>
@@ -48,7 +48,7 @@
 		</div>
 	</div>
 	<div class="preference-container" style="display:flex; margin-left:15px; margin-right:15px;">
-		<div class="unavailability-term-container" style="flex: 1 1 200px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
+		<div class="unavailability-term-container" style="flex: 1 1 0px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
 			<!-- confirmed preferences -->
 			<div class="approved-preference-container">
 				<div ng-if="preference.approved" class="teaching-call-approved-preference alert-info alert"

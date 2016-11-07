@@ -437,7 +437,7 @@ ol.sortable-list>li .term-preference-dropdown {
 	background-color: #d9edf7;
 	height: 30px;
 	padding-right: 6px;
-	width: 162px;
+	width: 132px;
 	margin-top: 10px;
 	margin-bottom: 0px;
 	display: flex;
@@ -604,7 +604,7 @@ ol.sortable-list>li .term-preference-dropdown {
 }
 
 .term-preference-dropdown {
-	width: 162px;
+	width: 132px;
 	border-color: rgb(173, 173, 173);
 }
 
@@ -829,7 +829,7 @@ li.active-term .dropdown-term-row {
 	border-radius: 4px;
 	border: 1px solid #adadad;
 	background-color: white;
-	width: 162px;
+	width: 132px;
 	height: 32px;
 	display: flex;
 	align-items: center;
@@ -857,7 +857,7 @@ li.active-term .dropdown-term-row {
 }
 
 .search-course-input {
-	width: 162px;
+	width: 132px;
 	flex: 0 0 auto;
 	text-align: center;
 }
