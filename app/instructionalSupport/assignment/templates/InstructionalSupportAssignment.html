@@ -104,10 +104,9 @@
 														</div>
 														<!-- drop down ends-->
 														<!--add new slot button-->
-													<a class="btn btn-default add-new-slot pull-left" href="javascript:;" onclick="jQuery( '#modal-1').modal( 'show'); ">
-														Add New TA Slots
-													</a>
-														<!--add new slot button-->
+														<div ng-click="openAddAppointmentSlotModal(sectionGroup.id, 'teachingAssistant')" class="btn btn-default add-new-slot pull-left">
+															Add TA Slots...
+														</div>
 												</div>
 										</div>
 										<div class="flex-selector-course_view">
@@ -141,9 +140,9 @@
 														</div>
 														<!-- drop down ends-->
 														<!--add new slot button-->
-														<a class="btn btn-default add-new-slot pull-left" href="javascript:;" onclick="jQuery( '#modal-1').modal( 'show'); ">
-															Add New TA Slots
-														</a>
+														<div ng-click="openAddAppointmentSlotModal(sectionGroup.id, 'reader')" class="btn btn-default add-new-slot pull-left">
+															Add Reader Slots...
+														</div>
 												</div>
 										</div>
 										<div class="flex-selector-course_view">
@@ -181,9 +180,9 @@
 														</div>
 														<!-- drop down ends-->
 														<!--add new slot button-->
-														<a class="btn btn-default add-new-slot pull-left" href="javascript:;" onclick="jQuery( '#modal-1').modal( 'show'); ">
-															Add New TA Slots
-														</a>
+														<div ng-click="openAddAppointmentSlotModal(sectionGroup.id, 'associateInstructor')" class="btn btn-default add-new-slot pull-left">
+															Add AI Slots...
+														</div>
 														<!--add new slot button-->
 												</div>
 										</div>
