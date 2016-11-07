@@ -6,6 +6,7 @@ table.section-diff-table {
 table.section-diff-table > tbody > tr.section-diff-row > td {
 	color: #777;
 	border-top: none;
+	line-height: 1.1em;
 }
 
 table.section-diff-table > tbody > tr.section-diff-row.head-section > td {
@@ -19,6 +20,7 @@ tr.section-diff-row.no-changes *, .section-activity-diff-row.no-changes * {
 .section-diff-element {
 	display: inline-block;
 	margin-right: 0.5em;
+	padding: 0.4em 0 0;
 }
 
 .section-unique-key {
@@ -35,7 +37,8 @@ tr.section-diff-row.no-changes *, .section-activity-diff-row.no-changes * {
 
 .activity-diff-element {
 	flex: 1 1 20%;
-	padding: 0 8px;
+	margin: 0 8px;
+	padding: 0.4em 0 0;
 }
 
 .has-changes, tr.has-changes > td {
