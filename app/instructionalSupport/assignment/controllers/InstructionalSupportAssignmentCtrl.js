@@ -29,10 +29,26 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 				}
 			};
 
+			$scope.openAddAppointmentSlotModal = function(sectionGroupId, appointmentType) {
+
+				modalInstance = $uibModal.open({
+					templateUrl: 'AddAssignmentSlotModal.html',
+					controller: ModalAddAssignmentSlotCtrl,
+					size: 'xs',
+					resolve: {
+						appointmentType: function () {
+							return appointmentType;
+						},
+						sectionGroupId: function () {
+							return sectionGroupId;
+						}
+					}
+				});
+			};
+
 			// Set the active tab according to the URL
 			// Otherwise redirect to the default view
 			$scope.setActiveTab($routeParams.tab || "courses");
-
 	}]);
 
 InstructionalSupportAssignmentCtrl.getPayload = function (authService, instructionalSupportAssignmentActionCreators, $route) {

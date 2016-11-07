@@ -13,8 +13,16 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		updatePreference: function (instructionalSupportAssignment) {
-			return null;
+		addAssignmentSlots: function (appointmentType, appointmentPercentage, numberOfAppointments, sectionGroupId) {
+			instructionalSupportAssignmentService.addAssignmentSlots(appointmentType, appointmentPercentage, numberOfAppointments, sectionGroupId).then(function (payload) {
+				var action = {
+					type: ADD_ASSIGNMENT_SLOTS,
+					payload: payload
+				};
+				instructionalSupportAssignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
 		}
 	};
 });

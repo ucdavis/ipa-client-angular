@@ -12,6 +12,21 @@ instructionalSupportApp.factory("instructionalSupportAssignmentService", this.in
 			});
 
 			return deferred.promise;
+		},
+		addAssignmentSlots: function(appointmentType, appointmentPercentage, numberOfAssignments, sectionGroupId) {
+
+			var instructionalSupportAssignment = {appointmentPercentage : appointmentPercentage, appointmentType: appointmentType};
+
+			var deferred = $q.defer();
+			$http.post(serverRoot + "/api/instructionalSupportView/sectionGroups/" + sectionGroupId + "/instructionalSupportAssignments/" + numberOfAssignments, instructionalSupportAssignment, { withCredentials: true })
+			.success(function(assignmentView) {
+				deferred.resolve(assignmentView);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });

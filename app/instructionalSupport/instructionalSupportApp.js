@@ -23,3 +23,4 @@ instructionalSupportApp.config(function ($routeProvider) {
 });
 
 var INIT_STATE = "INIT_STATE";
+var ADD_ASSIGNMENT_SLOTS = "ADD_ASSIGNMENT_SLOTS";
