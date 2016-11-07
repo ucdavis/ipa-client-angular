@@ -419,7 +419,8 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 								&& teachingAssignment.courseNumber == slotAssignment.courseNumber
 								&& teachingAssignment.buyout == slotAssignment.buyout
 								&& teachingAssignment.courseRelease == slotAssignment.courseRelease
-								&& teachingAssignment.sabbatical == slotAssignment.sabbatical) {
+								&& teachingAssignment.sabbatical == slotAssignment.sabbatical
+								&& teachingAssignment.subjectCode != null) {
 								preferenceAlreadyAdded = true;
 							}
 						}
