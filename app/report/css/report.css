@@ -3,10 +3,14 @@ table.section-diff-table {
 	border-collapse: separate;
 }
 
+table.section-diff-table > thead > tr > th {
+	font-weight: 500;
+}
+
 table.section-diff-table > tbody > tr.section-diff-row > td {
 	color: #777;
 	border-top: none;
-	line-height: 1.1em;
+	line-height: 1.2em;
 }
 
 table.section-diff-table > tbody > tr.section-diff-row.head-section > td {
@@ -29,6 +33,7 @@ tr.section-diff-row.no-changes *, .section-activity-diff-row.no-changes * {
 
 .section-activity-diff-row {
 	display: flex;
+	margin-left: 8px;
 }
 
 .section-activity-diff-row:not(:last-child) {
@@ -37,8 +42,11 @@ tr.section-diff-row.no-changes *, .section-activity-diff-row.no-changes * {
 
 .activity-diff-element {
 	flex: 1 1 20%;
-	margin: 0 8px;
 	padding: 0.4em 0 0;
+}
+
+.activity-diff-element:not(:first-child) {
+	margin-left: 8px;
 }
 
 .has-changes, tr.has-changes > td {
@@ -111,7 +119,7 @@ tr.section-diff-row.no-changes *, .section-activity-diff-row.no-changes * {
 }
 
 .sis-todo-container.sis-todo-minimized .sis-todo-header {
-	background: rgba(48, 54, 65, 0.3);
+	background: rgba(48, 54, 65, 0.5);
 }
 
 .sis-todo-container .sis-todo-content {

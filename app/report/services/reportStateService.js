@@ -192,10 +192,12 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					// Check the type of entity we are adding the to-do for
 					if (entity instanceof Section) {
 						// Section
-						bannerToDos.push(toDoAction + " section " + entity.sequenceNumber + " " + property + " to " + newValue);
+						bannerToDos.push(
+							toDoAction + " " + entity.subjectCode + " " + entity.courseNumber +
+							" section " + entity.sequenceNumber + " " + property + " to " + newValue
+						);
 					}
 
-					console.log(bannerToDos);
 					return bannerToDos;
 				default:
 					return bannerToDos;
