@@ -29,31 +29,6 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					return terms;
 			}
 		},
-		_sectionGroupReducers: function (action, sectionGroups) {
-			switch (action.type) {
-				case INIT_STATE:
-					sectionGroups = [];
-					return sectionGroups;
-				case GET_TERM_COMPARISON_REPORT:
-					sectionGroups = [];
-					var length = action.payload.sectionDiffs ? action.payload.sectionDiffs.length : 0;
-					for (var i = 0; i < length; i++) {
-						var ipaSectionData = action.payload.sectionDiffs[i].ipaSection;
-						var sectionGroup = {
-							uniqueKey: ipaSectionData.subjectCode + '-' + ipaSectionData.courseNumber,
-							subjectCode: ipaSectionData.subjectCode,
-							courseNumber: ipaSectionData.courseNumber,
-							title: ipaSectionData.title
-						};
-						if (sectionGroups.map(function (sg) { return sg.uniqueKey; }).indexOf(sectionGroup.uniqueKey) < 0) {
-							sectionGroups.push(sectionGroup);
-						}
-					}
-					return _.sortBy(sectionGroups, 'uniqueKey');
-				default:
-					return sectionGroups;
-			}
-		},
 		_sectionReducers: function (action, sections) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -239,7 +214,6 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 
 			newState = {};
 			newState.terms = scope._termReducers(action, scope._state.terms);
-			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
 			newState.bannerToDos = scope._bannerToDoReducers(action, scope._state.bannerToDos);
 			newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
