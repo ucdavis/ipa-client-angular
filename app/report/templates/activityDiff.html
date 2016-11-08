@@ -1,5 +1,9 @@
-<div ng-class="{ 'no-remote' : activity.noRemote, 'no-local': noLocal, 'has-changes': activity.noRemote || noLocal, 'no-changes': view.state.sections.list[sectionId].dwChanges[activity.uniqueKey] === undefined }"
-	class="section-activity-diff-row">
+<div ng-class="{
+	'no-remote' : activity.noRemote,
+	'no-local': noLocal,
+	'has-changes': activity.noRemote || noLocal,
+	'no-changes': !activity.noRemote && !noLocal && !view.state.sections.list[sectionId].dwChanges[activity.uniqueKey]
+ }" class="section-activity-diff-row">
 
 	<!-- Activity Type -->
 	<div class="activity-diff-element activity-type-code">

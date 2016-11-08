@@ -58,6 +58,9 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 							sectionList[ipaSectionData.id].dwHasChanges = true;
 							sectionList[ipaSectionData.id].dwChanges = {};
 							sectionChanges.forEach(function (change) {
+								// Skip changes that have no property specified
+								if (!change.propertyName) { return; }
+
 								var changeId = change.affectedLocalId;
 								sectionList[ipaSectionData.id].dwChanges[changeId] = sectionList[ipaSectionData.id].dwChanges[changeId] || {};
 								switch (change.propertyName) {
