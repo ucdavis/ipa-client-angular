@@ -6,7 +6,7 @@
 		Value does not match with Banner
 		<!-- Action to apply Banner value -->
 		<button class="form-control">
-			Set IPA to what Banner has: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator.getWeekDays() }}
+			Set IPA to what Banner has: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator.value.getWeekDays() }}
 		</button>
 		<!-- Action to apply IPA value if any -->
 		<button class="form-control" ng-if="activity.dayIndicator">

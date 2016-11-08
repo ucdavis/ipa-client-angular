@@ -80,7 +80,10 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 											.filter(function (instructorChange) {
 												return instructorChange.addedValue;
 											}).map(function (instructorChange) {
-												return _.find(dwSectionData.instructors, { uniqueKey: instructorChange.addedValue.cdoId });
+												return {
+													isResolved: false,
+													value: _.find(dwSectionData.instructors, { uniqueKey: instructorChange.addedValue.cdoId })
+												};
 											});
 										break;
 									case "activities":
@@ -99,8 +102,10 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 											.filter(function (activityChange) {
 												return activityChange.addedValue;
 											}).map(function (activityChange) {
-												var activities = dwSectionData.activities;
-												return activities[activityChange.index];
+												return {
+													isResolved: false,
+													value: dwSectionData.activities[activityChange.index]
+												};
 											});
 										break;
 									case "location":
@@ -109,7 +114,8 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 									case "dayIndicator":
 									case "crn":
 									case "seats":
-										sectionList[ipaSectionData.id].dwChanges[changeId][change.propertyName] = change.right;
+										sectionList[ipaSectionData.id].dwChanges[changeId][change.propertyName] = { isResolved: false };
+										sectionList[ipaSectionData.id].dwChanges[changeId][change.propertyName].value = change.right;
 										break;
 									case undefined:
 										// Handle undefined property, currently no special action
