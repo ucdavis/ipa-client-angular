@@ -46,6 +46,19 @@ reportApp.factory("reportService", this.reportService = function ($http, $q, $wi
 				});
 
 			return deferred.promise;
+		},
+		assignInstructor: function (sectionGroupId, instructor) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/reportView/sectionGroups/" + sectionGroupId + "/instructors", instructor, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
 		}
 	};
 });

@@ -63,6 +63,27 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 			});
 		},
 		/**
+		 * Assigns instructor to the sectionGroup
+		 *
+		 * @param sectionGroupId
+		 * @param instructor
+		 */
+		assignInstructor: function (section, instructor) {
+			reportService.assignInstructor(section.sectionGroupId, instructor).then(function (teachingAssingment) {
+				$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
+				var action = {
+					type: ASSIGN_INSTRUCTOR,
+					payload: {
+						section: section,
+						instructor: instructor
+					}
+				};
+				reportStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		/**
 		 * Updates a section and takes a property as an argument
 		 * in order for the state service to clear that property
 		 * from the dwChanges object

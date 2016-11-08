@@ -164,6 +164,16 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					// Delete the applied change from the dwChanges object
 					delete section.dwChanges[section.uniqueKey][action.payload.property];
 					return sections;
+				case ASSIGN_INSTRUCTOR:
+					var section = sections.list[action.payload.section.id];
+					// Apply the changes on the section
+					section.instructors.push(action.payload.instructor);
+					// Delete the applied change from the dwChanges object
+					delete section.dwChanges[section.uniqueKey][action.payload.instructor.uniqueKey];
+					var instructorIndex = section.dwChanges[section.uniqueKey].instructors.indexOf(action.payload.instructor);
+					section.dwChanges[section.uniqueKey].instructors.splice(instructorIndex, 1);
+
+					return sections;
 				case ADD_BANNER_TODO:
 					var entity = action.payload.entity;
 					// Check the type of entity we are adding the to-do for
