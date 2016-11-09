@@ -1,12 +1,12 @@
-<div class="activity-diff-element activity-day-indicator" ng-class="{ 'has-changes' : !activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator !== undefined }">
-	<span class="ipa-version">
+<div class="activity-diff-element activity-day-indicator" ng-class="{ 'has-changes' : !activity.noRemote && activity.dwChanges.dayIndicator !== undefined }">
+	<span class="diff-content">
 		{{ activity.dayIndicator.getWeekDays() || 'none' }}
 	</span>
-	<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator !== undefined">
+	<span class="change-action" ng-if="!activity.noRemote && activity.dwChanges.dayIndicator !== undefined">
 		Value does not match with Banner
 		<!-- Action to apply Banner value -->
 		<button class="form-control">
-			Set IPA to what Banner has: {{ view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].dayIndicator.value.getWeekDays() }}
+			Set IPA to what Banner has: {{ activity.dwChanges.dayIndicator.value.getWeekDays() }}
 		</button>
 		<!-- Action to apply IPA value if any -->
 		<button class="form-control" ng-if="activity.dayIndicator">

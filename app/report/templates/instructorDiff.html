@@ -1,5 +1,5 @@
-<div ng-class="{ 'has-changes' : instructor.noRemote || noLocal }" class="section-diff-element section-instructors">
-	<span class="ipa-version" ng-class="{ 'no-remote' : instructor.noRemote, 'no-local': noLocal }">
+<div ng-class="{ 'has-changes' : instructor.noRemote || instructor.noLocal }" class="section-diff-element section-instructors">
+	<span class="diff-content" ng-class="{ 'no-remote' : instructor.noRemote, 'no-local': instructor.noLocal }">
 		{{ instructor | lastSpaceInitial }}
 	</span>
 	<span class="change-action" ng-if="instructor.noRemote">
@@ -13,7 +13,7 @@
 			Mark to assign in Banner
 		</button>
 	</span>
-	<span class="change-action" ng-if="noLocal">
+	<span class="change-action" ng-if="instructor.noLocal">
 		IPA does not have this instructor
 		<!-- Action to apply Banner value -->
 		<button class="btn btn-dw btn-block" ng-click="assignInstructor(view.state.sections.list[sectionId], instructor)">

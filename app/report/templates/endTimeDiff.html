@@ -1,12 +1,12 @@
-<div class="activity-diff-element activity-end-time" ng-class="{ 'has-changes' : !activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime !== undefined }">
-	<span class="ipa-version">
+<div class="activity-diff-element activity-end-time" ng-class="{ 'has-changes' : !activity.noRemote && activity.dwChanges.endTime }">
+	<span class="diff-content">
 		{{ activity.endTime.toStandardTime() || 'none' }}
 	</span>
-	<span class="change-action" ng-if="!activity.noRemote && view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime !== undefined">
+	<span class="change-action" ng-if="!activity.noRemote && activity.dwChanges.endTime">
 		Value does not match with Banner
 		<!-- Action to apply Banner value -->
 		<button class="form-control">
-			Set IPA to what Banner has: {{  view.state.sections.list[sectionId].dwChanges[activity.uniqueKey].endTime.value.toStandardTime() }}
+			Set IPA to what Banner has: {{  activity.dwChanges.endTime.value.toStandardTime() }}
 		</button>
 		<!-- Action to apply IPA value if any -->
 		<button class="form-control" ng-if="activity.endTime">

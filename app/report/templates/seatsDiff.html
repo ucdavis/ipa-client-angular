@@ -1,16 +1,16 @@
-<div class="section-diff-element section-seats" ng-class="{ 'has-changes' : view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].seats !== undefined }">
-	<span class="ipa-version">
-		{{ view.state.sections.list[sectionId].seats }}
+<div class="section-diff-element section-seats" ng-class="{ 'has-changes' : section.dwChanges.seats !== undefined }">
+	<span class="diff-content">
+		{{ section.seats }}
 	</span>
-	<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].seats !== undefined">
+	<span class="change-action" ng-if="section.dwChanges.seats !== undefined">
 		Value does not match with Banner
 		<!-- Action to apply Banner value -->
-		<button class="btn btn-dw btn-block" ng-click="updateSeats(sectionId, view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].seats.value)">
-			Set IPA to what Banner has: {{ view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].seats.value }}
+		<button class="btn btn-dw btn-block" ng-click="updateSeats(sectionId, section.dwChanges.seats.value)">
+			Set IPA to what Banner has: {{ section.dwChanges.seats.value }}
 		</button>
 		<!-- Action to apply IPA value if any -->
-		<button class="btn btn-ipa btn-block" ng-if="view.state.sections.list[sectionId].seats" ng-click="addBannerToDoItem(sectionId, view.state.sections.list[sectionId].seats)">
-			Mark to modify in Banner: {{ view.state.sections.list[sectionId].seats }}
+		<button class="btn btn-ipa btn-block" ng-if="section.seats" ng-click="addBannerToDoItem(sectionId, section.seats)">
+			Mark to modify in Banner: {{ section.seats }}
 		</button>
 	</span>
 </div>

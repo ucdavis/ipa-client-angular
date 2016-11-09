@@ -2,7 +2,7 @@
 	'no-remote' : activity.noRemote,
 	'no-local': activity.noLocal,
 	'has-changes': activity.noRemote || activity.noLocal,
-	'no-changes': !activity.noRemote && !activity.noLocal && !view.state.sections.list[sectionId].dwChanges[activity.uniqueKey]
+	'no-changes': !activity.noRemote && !activity.noLocal && !activity.dwChanges
  }" class="section-activity-diff-row">
 
 	<!-- Activity Type -->

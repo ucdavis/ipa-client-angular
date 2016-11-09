@@ -8,6 +8,8 @@ reportApp.directive("seatsDiff", this.seatsDiff = function (reportActionCreators
 		templateUrl: 'seatsDiff.html',
 		replace: true,
 		link: function (scope, element, attrs) {
+			scope.section = scope.view.state.sections.list[scope.sectionId];
+
 			scope.updateSeats = function (sectionId, seats) {
 				var section = {
 					id: sectionId,
