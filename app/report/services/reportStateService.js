@@ -56,13 +56,8 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 						} else {
 							// DW version does have some changes
 							sectionList[ipaSectionData.id].dwHasChanges = true;
-							sectionList[ipaSectionData.id].dwChanges = {};
 							sectionChanges.forEach(function (change) {
-								// Skip changes that have no property specified
-								if (!change.propertyName) { return; }
 
-								var changeId = change.affectedLocalId;
-								sectionList[ipaSectionData.id].dwChanges[changeId] = sectionList[ipaSectionData.id].dwChanges[changeId] || {};
 								switch (change.propertyName) {
 									case "instructors":
 										// Code to handle instructors
@@ -75,15 +70,17 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 												var instructor = _.find(sectionList[ipaSectionData.id].instructors, { uniqueKey: uniqueKey });
 												instructor.noRemote = true;
 											});
-										// DW has extra instructor
-										sectionList[ipaSectionData.id].dwChanges[changeId][change.propertyName] = change.changes
+										// DW has extra instructors, flag them, then add them to the current section
+										change.changes
 											.filter(function (instructorChange) {
 												return instructorChange.addedValue;
 											}).map(function (instructorChange) {
-												return {
-													isResolved: false,
-													value: _.find(dwSectionData.instructors, { uniqueKey: instructorChange.addedValue.cdoId })
-												};
+												var instructor = _.find(dwSectionData.instructors, { uniqueKey: instructorChange.addedValue.cdoId });
+												instructor.noLocal = true;
+												return instructor;
+											}).forEach(function (instructor) {
+												var instructors = sectionList[ipaSectionData.id].instructors;
+												instructors.push(instructor);
 											});
 										break;
 									case "activities":
@@ -97,29 +94,37 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 												var activities = sectionList[ipaSectionData.id].activities;
 												activities[activityChange.index].noRemote = true;
 											});
-										// DW has extra activity
-										sectionList[ipaSectionData.id].dwChanges[changeId][change.propertyName] = change.changes
+										// DW has extra activities, flag them, then add them to the current section
+										change.changes
 											.filter(function (activityChange) {
 												return activityChange.addedValue;
 											}).map(function (activityChange) {
-												return {
-													isResolved: false,
-													value: dwSectionData.activities[activityChange.index]
-												};
+												var activity = dwSectionData.activities[activityChange.index];
+												activity.noLocal = true;
+												return activity;
+											}).forEach(function (activity) {
+												var activities = sectionList[ipaSectionData.id].activities;
+												activities.push(activity);
 											});
 										break;
 									case "location":
 									case "startTime":
 									case "endTime":
 									case "dayIndicator":
+										activity = _.find(sectionList[ipaSectionData.id].activities, { uniqueKey: change.affectedLocalId });
+										activity.dwChanges = activity.dwChanges || {};
+										activity.dwChanges[change.propertyName] = { isToDo: false };
+										activity.dwChanges[change.propertyName].value = change.right;
+										break;
 									case "crn":
 									case "seats":
-										sectionList[ipaSectionData.id].dwChanges[changeId][change.propertyName] = { isResolved: false };
-										sectionList[ipaSectionData.id].dwChanges[changeId][change.propertyName].value = change.right;
+										sectionList[ipaSectionData.id].dwChanges = sectionList[ipaSectionData.id].dwChanges || {};
+										sectionList[ipaSectionData.id].dwChanges[change.propertyName] = { isToDo: false };
+										sectionList[ipaSectionData.id].dwChanges[change.propertyName].value = change.right;
 										break;
 									case undefined:
-										// Handle undefined property, currently no special action
-										break;
+										// Skip changes that have no property specified
+										return;
 									default:
 										// Unhandled properties, log them
 										$log.debug("Unhandled diff property", change.propertyName);
@@ -172,31 +177,6 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					return sections;
 			}
 		},
-		_bannerToDoReducers: function (action, bannerToDos) {
-			switch (action.type) {
-				case INIT_STATE:
-					bannerToDos = [];
-					return bannerToDos;
-				case ADD_BANNER_TODO:
-					var entity = action.payload.entity;
-					var toDoAction = action.payload.toDoAction;
-					var property = action.payload.property;
-					var newValue = action.payload.newValue;
-
-					// Check the type of entity we are adding the to-do for
-					if (entity instanceof Section) {
-						// Section
-						bannerToDos.push(
-							toDoAction + " " + entity.subjectCode + " " + entity.courseNumber +
-							" section " + entity.sequenceNumber + " " + property + " to " + newValue
-						);
-					}
-
-					return bannerToDos;
-				default:
-					return bannerToDos;
-			}
-		},
 		_uiStateReducers: function (action, uiState) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -224,7 +204,6 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 			newState = {};
 			newState.terms = scope._termReducers(action, scope._state.terms);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
-			newState.bannerToDos = scope._bannerToDoReducers(action, scope._state.bannerToDos);
 			newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
 
 			scope._state = newState;

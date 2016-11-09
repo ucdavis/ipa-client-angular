@@ -1,8 +1,8 @@
 <div ng-class="{
 	'no-remote' : activity.noRemote,
-	'no-local': noLocal,
-	'has-changes': activity.noRemote || noLocal,
-	'no-changes': !activity.noRemote && !noLocal && !view.state.sections.list[sectionId].dwChanges[activity.uniqueKey]
+	'no-local': activity.noLocal,
+	'has-changes': activity.noRemote || activity.noLocal,
+	'no-changes': !activity.noRemote && !activity.noLocal && !view.state.sections.list[sectionId].dwChanges[activity.uniqueKey]
  }" class="section-activity-diff-row">
 
 	<!-- Activity Type -->
@@ -36,7 +36,7 @@
 	</span>
 
 	<!-- Action when activity does not exist in IPA -->
-	<span class="change-action" ng-if="noLocal">
+	<span class="change-action" ng-if="activity.noLocal">
 		Activity does not exist in IPA
 		<!-- Action to apply Banner value -->
 		<button class="form-control">
