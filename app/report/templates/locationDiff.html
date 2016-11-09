@@ -5,11 +5,11 @@
 	<span class="change-action" ng-if="!activity.noRemote && activity.dwChanges.location !== undefined">
 		Value does not match with Banner
 		<!-- Action to apply Banner value -->
-		<button class="form-control">
+		<button class="btn btn-dw btn-block">
 			Set IPA to what Banner has: {{  activity.dwChanges.location.value }}
 		</button>
 		<!-- Action to apply IPA value if any -->
-		<button class="form-control" ng-if="activity.location">
+		<button class="btn btn-ipa btn-block" ng-if="activity.location" ng-click="addBannerToDoItem(section, activity)">
 			Mark to modify in Banner: {{ activity.location }}
 		</button>
 	</span>

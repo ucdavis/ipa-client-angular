@@ -5,22 +5,22 @@
 	<span class="change-action" ng-if="instructor.noRemote">
 		Banner does not have this instructor
 		<!-- Action to apply Banner value -->
-		<button class="btn btn-dw btn-block" ng-click="unAssignInstructor(view.state.sections.list[sectionId], instructor)">
+		<button class="btn btn-dw btn-block" ng-click="unAssignInstructor(section, instructor)">
 			Un-assign in IPA (All sections)
 		</button>
 		<!-- Action to apply IPA value -->
-		<button class="btn btn-ipa btn-block" ng-click="addBannerToDoItem(sectionId, instructor)">
+		<button class="btn btn-ipa btn-block" ng-click="addBannerToDoItem(section, instructor)">
 			Mark to assign in Banner
 		</button>
 	</span>
 	<span class="change-action" ng-if="instructor.noLocal">
 		IPA does not have this instructor
 		<!-- Action to apply Banner value -->
-		<button class="btn btn-dw btn-block" ng-click="assignInstructor(view.state.sections.list[sectionId], instructor)">
+		<button class="btn btn-dw btn-block" ng-click="assignInstructor(section, instructor)">
 			Assign in IPA (All sections)
 		</button>
 		<!-- Action to apply IPA value -->
-		<button class="btn btn-ipa btn-block" ng-click="addBannerToDoItem(sectionId, instructor)">
+		<button class="btn btn-ipa btn-block" ng-click="addBannerToDoItem(section, instructor)">
 			Mark to un-assign in Banner
 		</button>
 	</span>

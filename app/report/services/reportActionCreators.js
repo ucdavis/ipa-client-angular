@@ -84,22 +84,23 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 			});
 		},
 		/**
-		 * Updates a section and takes a property as an argument
-		 * in order for the state service to clear that property
-		 * from the dwChanges object
+		 * Adds the to-do flag to the specified section or its properties or children. This to-do flag can then
+		 * be used to calculate the Banner todo list view.
 		 *
 		 * @param section
-		 * @param property
+		 * @param sectionProperty: i.e. seats, crn, activities, instructor. null value applies the to-do to the whole section
+		 * @param child: can be an activity or an instructor
+		 * @param childProperty: for activities this can be dayIndicator, startTime, endTime, location. null value applies the to-do to the whole activity
 		 */
-		addBannerToDoItem: function (entity, toDoAction, property, newValue) {
+		addBannerToDoItem: function (section, sectionProperty, child, childProperty) {
 			$rootScope.$emit('toast', { message: "Added to Banner to-do list", type: "SUCCESS" });
 			var action = {
 				type: ADD_BANNER_TODO,
 				payload: {
-					entity: entity,
-					toDoAction: toDoAction,
-					property: property,
-					newValue: newValue
+					section: section,
+					sectionProperty: sectionProperty,
+					child: child,
+					childProperty: childProperty
 				}
 			};
 			reportStateService.reduce(action);

@@ -5,12 +5,12 @@
 	<span class="change-action" ng-if="!activity.noRemote && activity.dwChanges.dayIndicator !== undefined">
 		Value does not match with Banner
 		<!-- Action to apply Banner value -->
-		<button class="form-control">
+		<button class="btn btn-dw btn-block">
 			Set IPA to what Banner has: {{ activity.dwChanges.dayIndicator.value.getWeekDays() }}
 		</button>
 		<!-- Action to apply IPA value if any -->
-		<button class="form-control" ng-if="activity.dayIndicator">
-			Mark to modify in Banner: {{ activity.dayIndicator.getWeekDays() }}
+		<button class="btn btn-ipa btn-block" ng-if="activity.dayIndicator" ng-click="addBannerToDoItem(section, activity)">
+			Mark to modify in Banner: {{ activity.dayIndicator.getWeekDays() || 'none' }}
 		</button>
 	</span>
 </div>

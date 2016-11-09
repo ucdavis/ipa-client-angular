@@ -5,11 +5,11 @@
 	<span class="change-action" ng-if="!activity.noRemote && activity.dwChanges.endTime">
 		Value does not match with Banner
 		<!-- Action to apply Banner value -->
-		<button class="form-control">
-			Set IPA to what Banner has: {{  activity.dwChanges.endTime.value.toStandardTime() }}
+		<button class="btn btn-dw btn-block">
+			Set IPA to what Banner has: {{ activity.dwChanges.endTime.value.toStandardTime() }}
 		</button>
 		<!-- Action to apply IPA value if any -->
-		<button class="form-control" ng-if="activity.endTime">
+		<button class="btn btn-ipa btn-block" ng-if="activity.endTime" ng-click="addBannerToDoItem(section, activity)">
 			Mark to modify in Banner: {{ activity.endTime.toStandardTime() }}
 		</button>
 	</span>

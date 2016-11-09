@@ -26,11 +26,11 @@
 	<span class="change-action" ng-if="activity.noRemote">
 		Activity does not exist in Banner
 		<!-- Action to apply Banner value -->
-		<button class="form-control">
+		<button class="btn btn-dw btn-block">
 			Delete from IPA
 		</button>
 		<!-- Action to apply IPA value -->
-		<button class="form-control">
+		<button class="btn btn-ipa btn-block" ng-click="addBannerToDoItem(section, activity)">
 			Mark to add in Banner
 		</button>
 	</span>
@@ -39,11 +39,11 @@
 	<span class="change-action" ng-if="activity.noLocal">
 		Activity does not exist in IPA
 		<!-- Action to apply Banner value -->
-		<button class="form-control">
+		<button class="btn btn-dw btn-block">
 			Create in IPA
 		</button>
 		<!-- Action to apply IPA value -->
-		<button class="form-control">
+		<button class="btn btn-ipa btn-block" ng-click="addBannerToDoItem(section, activity)">
 			Mark to delete in Banner
 		</button>
 	</span>

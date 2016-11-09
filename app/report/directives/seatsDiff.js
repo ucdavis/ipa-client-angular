@@ -20,7 +20,7 @@ reportApp.directive("seatsDiff", this.seatsDiff = function (reportActionCreators
 
 			scope.addBannerToDoItem = function (sectionId, seats) {
 				var section = scope.view.state.sections.list[sectionId];
-				reportActionCreators.addBannerToDoItem(section, UPDATE, 'seats', seats);
+				reportActionCreators.addBannerToDoItem(section, 'seats');
 			};
 		}
 	};
