@@ -30,6 +30,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 			}
 		},
 		_sectionReducers: function (action, sections) {
+			var section;
 			switch (action.type) {
 				case INIT_STATE:
 					sections = {
@@ -147,20 +148,22 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					sections.list = sectionList;
 					return sections;
 				case UPDATE_SECTION:
-					var section = sections.list[action.payload.section.id];
+					section = sections.list[action.payload.section.id];
 					// Apply the changes on the section
 					section[action.payload.property] = action.payload.section[action.payload.property];
 					// Delete the applied change from the dwChanges object
-					delete section.dwChanges[section.uniqueKey][action.payload.property];
+					delete section.dwChanges[action.payload.property];
+					// Delete dwChanges if this was the last change
+					if (Object.keys(section.dwChanges).length === 0) {
+						delete section.dwChanges;
+					}
 					return sections;
 				case ASSIGN_INSTRUCTOR:
-					var section = sections.list[action.payload.section.id];
-					// Apply the changes on the section
-					section.instructors.push(action.payload.instructor);
-					// Delete the applied change from the dwChanges object
-					delete section.dwChanges[section.uniqueKey][action.payload.instructor.uniqueKey];
-					var instructorIndex = section.dwChanges[section.uniqueKey].instructors.indexOf(action.payload.instructor);
-					section.dwChanges[section.uniqueKey].instructors.splice(instructorIndex, 1);
+					section = sections.list[action.payload.section.id];
+					var instructorIndex = section.instructors.indexOf(action.payload.instructor);
+
+					// Remove the noLocal flag from the assigned instructor
+					delete section.instructors[instructorIndex].noLocal;
 
 					return sections;
 				case ADD_BANNER_TODO:
@@ -168,7 +171,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					// Check the type of entity we are adding the to-do for
 					if (entity instanceof Section) {
 						// Section
-						var section = sections.list[entity.id];
+						section = sections.list[entity.id];
 						// Delete the applied change from the dwChanges object
 						delete section.dwChanges[section.uniqueKey][action.payload.property];
 					}

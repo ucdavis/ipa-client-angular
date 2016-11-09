@@ -1,12 +1,12 @@
-<div class="section-diff-element section-crn" ng-class="{ 'has-changes' : view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].crn !== undefined }">
+<div class="section-diff-element section-crn" ng-class="{ 'has-changes' : section.dwChanges.crn !== undefined }">
 	<span class="diff-content">
-		{{ view.state.sections.list[sectionId].crn || "No CRN" }}
+		{{ section.crn || "No CRN" }}
 	</span>
-	<span class="change-action" ng-if="view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].crn !== undefined">
+	<span class="change-action" ng-if="section.dwChanges.crn !== undefined">
 		Value does not match with Banner
 		<!-- Action to apply Banner value to IPA -->
-		<button class="btn btn-dw btn-block" ng-click="updateCrn(sectionId, view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].crn.value)">
-			Set IPA to what Banner has: {{ view.state.sections.list[sectionId].dwChanges[sectionUniqueKey].crn.value }}
+		<button class="btn btn-dw btn-block" ng-click="updateCrn(sectionId, section.dwChanges.crn.value)">
+			Set IPA to what Banner has: {{ section.dwChanges.crn.value }}
 		</button>
 		<!-- No actions to change values in Banner since Banner is the authority when it comes to CRNs -->
 	</span>

@@ -8,6 +8,8 @@ reportApp.directive("crnDiff", this.crnDiff = function (reportActionCreators) {
 		templateUrl: 'crnDiff.html',
 		replace: true,
 		link: function (scope, element, attrs) {
+			scope.section = scope.view.state.sections.list[scope.sectionId];
+
 			scope.updateCrn = function (sectionId, crn) {
 				var section = {
 					id: sectionId,
