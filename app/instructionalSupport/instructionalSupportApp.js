@@ -24,6 +24,20 @@ instructionalSupportApp.config(function ($routeProvider) {
 				payload: InstructionalSupportAssignmentCtrl.getPayload
 			}
 		})
+		.when("/:workgroupId/:year/:termShortCode/instructorSupportCallForm", {
+			templateUrl: "InstructorSupportCallForm.html",
+			controller: "InstructorSupportCallFormCtrl",
+			resolve: {
+				payload: InstructorSupportCallFormCtrl.getPayload
+			}
+		})
+		.when("/:workgroupId/:year/:termShortCode/studentSupportCallForm", {
+			templateUrl: "StudentSupportCallForm.html",
+			controller: "StudentSupportCallFormCtrl",
+			resolve: {
+				payload: StudentSupportCallFormCtrl.getPayload
+			}
+		})
 		.otherwise({
 			redirectTo: "/"
 		});
