@@ -82,3 +82,11 @@
 .people-info-icon {
 	color: #4686A5;
 }
+
+
+.begin-support-call-button {
+	margin-top:20px;
+	background-color: white;
+	width: 200px;
+	border-color: #ccc;
+}

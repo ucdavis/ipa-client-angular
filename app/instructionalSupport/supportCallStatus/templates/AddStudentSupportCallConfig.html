@@ -1,0 +1,97 @@
+                <div class="modal-content">
+                    <div class="modal-header config-header_style">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Support Call Settings</h4>
+                    </div>
+                    <!-- modal-body -->
+                    <div class="modal-body">
+                        <!-- ta-call-info section-->
+                        <div class="flex-box_row">
+                            <div class="config-flex-auto container-fluid">
+                                <!-- collect ta preference -->
+                                <div class="row btn-group" data-toggle="buttons" style="margin-bottom: 25px;">
+                                    <h5 style="margin-bottom: 15px;">Collect Preference on </h5>
+                                    <label class="btn btn-white btn-sm active" id="courses-pivot">
+							<input type="radio" name="options">
+							<span></span>TA
+						</label>
+                                    <label class="btn btn-white btn-sm" id="instructors-pivot">
+								<input type="radio" name="options">
+								<span></span>Reader
+							</label>
+                                    <label class="btn btn-white btn-sm" id="instructors-pivot">
+								<input type="radio" name="options">
+								<span></span>AI
+							</label>
+                                </div>
+                                <!-- collect ta preference ends-->
+                                <!-- collect required information-->
+                                <div class="row">
+                                    <h5>Required Information</h5>
+                                    <div class="checkbox">
+                                        <label class="checkbox-inline check-box-TA-call"><input type="checkbox" value="">Require Eligibility Confirmation ?</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkbox-inline check-box-TA-call"><input type="checkbox" value="">Collect Preference Qualifications ?</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkbox-inline check-box-TA-call"><input type="checkbox" value="">Collect Preference Comments ?</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkbox-inline check-box-TA-call"><input type="checkbox" value="">Collect General Comments ?</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkbox-inline check-box-TA-call"><input type="checkbox" value="">Allow submission after due date ?</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkbox-inline check-box-TA-call">Minimum number of preferences</label>
+                                        <div class="input-spinner">
+                                            <button type="button" class="btn btn-default">-</button>
+                                            <input class="form-control size-1" value="1" type="text">
+                                            <button type="button" class="btn btn-default">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- collect required information ends-->
+                            </div>
+                            <!-- ta-call-info section ends-->
+                            <div class="config-flex-auto">
+                                <!-- select dates&terms section-->
+                                <div class="container-fluid">
+                                    <h5>Set Due Date</h5>
+
+																		<div uib-datepicker ng-model="dt" datepicker-options="dateOptions"></div>
+                                </div>
+                                <!-- select dates&terms section ends-->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- modal-body ends -->
+                    <!-- modal-footer -->
+                    <div class="modal-footer">
+                        <div class="flex-box_column email-section container-fluid">
+                            <!-- email section begin -->
+                            <div class="preference-selector btn-group" data-toggle="buttons">
+                                <!-- email preference  -->
+                                <h5>Select Email Preference</h5>
+                                <label class="btn btn-white btn-sm active" id="courses-pivot">
+							<input type="radio" name="options">
+							<span></span>Begin With Email
+						</label>
+                                <label class="btn btn-white btn-sm" id="instructors-pivot">
+								<input type="radio" name="options">
+								<span></span>Begin Without Email
+							</label>
+                            </div>
+                            <div class="message-section">
+                                <!-- enter email message  -->
+                                <h5 class="pull-left">Email Message</h5>
+                                <textarea class="form-control" placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment"></textarea>
+                            </div>
+                        </div>
+                        <!-- email section ends -->
+                        <button ng-click="gotoUserSelectionPage()" type="button" class="btn btn-default">Back</button>
+                        <button ng-click="gotoStudentSummaryPage()" type="button" class="btn btn-info">Next</button>
+                    </div>
+                    <!-- modal-footer ends -->
+                </div>

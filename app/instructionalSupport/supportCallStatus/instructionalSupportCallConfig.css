@@ -1,0 +1,222 @@
+/*ta-call-config css*/
+
+.term-selector {
+    width: 30%;
+}
+
+.config-flex-auto {
+    flex: 1 1 auto;
+}
+
+.preference-selector {
+    margin-bottom: 20px;
+    flex: 0 1 100%;
+}
+
+.email-section {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.message-section {
+    flex: 0 1 100%;
+}
+
+.flex-box_row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-box_column {
+    display: flex;
+    flex-direction: column;
+}
+
+.table_header--gray {
+    color: gray;
+}
+
+.table_header--margin {
+    margin-bottom: 25px;
+}
+
+.check-box-TA-call {
+    font-size: 8pt;
+}
+
+.config-header_style {
+    /*make modal header color black */
+    background: #303641;
+}
+
+.config-textarea_height {
+    height: 174px !important;
+}
+
+.config-header_style h4 {
+    color: white;
+}
+
+.config-header_style button {
+    /*assign style to "x" button */
+    color: white;
+    opacity: 1;
+}
+
+.config-width {
+    width: 750px;
+}
+
+.checkbox-inline input {
+    /* fixed position of the checkbox */
+    top: -3px !important;
+}
+
+
+/* ta-call-config-student-summary-page (used in summary-page only)*/
+
+.config-summary-title {
+    flex: 0 1 100%;
+    align-self: center;
+    margin-bottom: 10px;
+}
+
+.term-quarter {
+    flex: 0 1 100%;
+    margin-bottom: 10px;
+}
+
+.people-list-section {
+    flex: 0 1 100%;
+    margin-bottom: 10px;
+}
+
+.preference-and-due_date {
+    flex: 0 1 100%;
+    margin-bottom: 10px;
+}
+
+.preference-and-due_date .row {
+    margin-bottom: 10px;
+}
+
+.info-collected-section {
+    flex: 0 1 50%;
+    margin-bottom: 25px;
+}
+
+.info-collected-list {
+    display: flex;
+    flex: 0 1 75%;
+    flex-wrap: wrap;
+}
+
+.info-collected {
+    flex: 0 1 40%;
+    margin: 5px;
+    margin-left: 0px;
+}
+
+.info-collected i {
+    /* give the check mark icon a margin */
+    margin-right: 5px;
+}
+
+.email-message {
+    flex: 0 1 100%;
+    margin-bottom: 10px;
+}
+
+.bold-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: black;
+    margin-right: 5px;
+}
+
+.receivers-input-section {
+    height: 120px;
+    overflow-y: auto;
+}
+
+.receivers-input-section .label>input {
+    /* fix checkbox position */
+    position: relative;
+    left: -6px;
+}
+
+.add_people_input {
+    flex: 0 1 200px;
+}
+
+.add_people_btn {
+    flex: 0 1 auto;
+    margin-left: 10px;
+    color: white;
+}
+
+.add_people_btn>a {
+    color: white;
+}
+
+.disabled-tag {
+    background-color: #f0f0f1;
+    border-color: #f0f0f1;
+    cursor: not-allowed;
+}
+
+.unselected-tag {
+    background-color: #f0f0f1;
+    border-color: #ebebeb !important;
+}
+
+
+/* ta-call-config-student-summary-page ends */
+
+
+/* modal overwrite */
+
+.modal .modal-header .close {
+    background: none;
+    display: inline-block;
+    padding: 0px 5px;
+    line-height: 1;
+    color: white;
+    zoom: 1;
+    opacity: 1 !important;
+}
+
+
+/*bootstrap overwrite*/
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.teaching-call--info_flex h5 {
+    margin-top: 0px;
+}
+
+
+/* neon overwrite */
+
+.datepicker-inline {
+    font-size: 8pt !important;
+}
+
+div.datepicker {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.input-spinner {
+    /* give margin-left to Minimum number of preferences input*/
+    margin-left: 20px !important;
+    margin-top: 5px;
+    margin-bottom: 30px;
+}
+
+.uib-daypicker:focus {
+	outline-width: 0;
+}

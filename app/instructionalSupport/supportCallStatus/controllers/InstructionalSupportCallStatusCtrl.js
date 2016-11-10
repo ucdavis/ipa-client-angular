@@ -17,6 +17,23 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 				$scope.view.state = data.state;
 			});
 
+			$scope.openSupportCallConfig = function(sectionGroupId, appointmentType) {
+
+				modalInstance = $uibModal.open({
+					templateUrl: 'AddSupportCallModal.html',
+					controller: ModalAddSupportCallCtrl,
+					size: 'lg',
+					resolve: {
+						appointmentType: function () {
+							return appointmentType;
+						},
+						sectionGroupId: function () {
+							return sectionGroupId;
+						}
+					}
+				});
+			};
+
 	}]);
 
 InstructionalSupportCallStatusCtrl.getPayload = function (authService, instructionalSupportAssignmentActionCreators, $route) {
