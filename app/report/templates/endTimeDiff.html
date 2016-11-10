@@ -9,7 +9,7 @@
 			Set IPA to what Banner has: {{ activity.dwChanges.endTime.value.toStandardTime() }}
 		</button>
 		<!-- Action to apply IPA value if any -->
-		<button class="btn btn-ipa btn-block" ng-if="activity.endTime" ng-click="addBannerToDoItem(section, activity)">
+		<button class="btn btn-ipa btn-block" ng-if="activity.endTime" ng-click="addBannerToDoItem(section, activity, 'endTime')">
 			Mark to modify in Banner: {{ activity.endTime.toStandardTime() }}
 		</button>
 	</span>

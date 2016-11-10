@@ -6,11 +6,6 @@ reportApp.directive("dayIndicatorDiff", this.dayIndicatorDiff = function (report
 	return {
 		restrict: "E",
 		templateUrl: 'dayIndicatorDiff.html',
-		replace: true,
-		link: function (scope, element, attrs) {
-			scope.addBannerToDoItem = function (section, activity) {
-				reportActionCreators.addBannerToDoItem(section, "activities", activity, "dayIndicator");
-			};
-		}
+		replace: true
 	};
 });

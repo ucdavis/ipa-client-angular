@@ -6,11 +6,6 @@ reportApp.directive("startTimeDiff", this.startTimeDiff = function (reportAction
 	return {
 		restrict: "E",
 		templateUrl: 'startTimeDiff.html',
-		replace: true,
-		link: function (scope, element, attrs) {
-			scope.addBannerToDoItem = function (section, activity) {
-				reportActionCreators.addBannerToDoItem(section, "activities", activity, "startTime");
-			};
-		}
+		replace: true
 	};
 });

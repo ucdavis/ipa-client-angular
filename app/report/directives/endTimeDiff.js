@@ -6,11 +6,6 @@ reportApp.directive("endTimeDiff", this.endTimeDiff = function (reportActionCrea
 	return {
 		restrict: "E",
 		templateUrl: 'endTimeDiff.html',
-		replace: true,
-		link: function (scope, element, attrs) {
-			scope.addBannerToDoItem = function (section, activity) {
-				reportActionCreators.addBannerToDoItem(section, "activities", activity, "endTime");
-			};
-		}
+		replace: true
 	};
 });

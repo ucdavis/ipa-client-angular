@@ -8,8 +8,8 @@ reportApp.directive("activityDiff", this.activityDiff = function (reportActionCr
 		templateUrl: 'activityDiff.html',
 		replace: true,
 		link: function (scope, element, attrs) {
-			scope.addBannerToDoItem = function (section, activity) {
-				reportActionCreators.addBannerToDoItem(section, "activities", activity);
+			scope.addBannerToDoItem = function (section, activity, property) {
+				reportActionCreators.addBannerToDoItem(section, "activities", activity, property);
 			};
 		}
 	};

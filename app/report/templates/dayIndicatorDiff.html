@@ -9,7 +9,7 @@
 			Set IPA to what Banner has: {{ activity.dwChanges.dayIndicator.value.getWeekDays() }}
 		</button>
 		<!-- Action to apply IPA value if any -->
-		<button class="btn btn-ipa btn-block" ng-if="activity.dayIndicator" ng-click="addBannerToDoItem(section, activity)">
+		<button class="btn btn-ipa btn-block" ng-if="activity.dayIndicator" ng-click="addBannerToDoItem(section, activity, 'dayIndicator')">
 			Mark to modify in Banner: {{ activity.dayIndicator.getWeekDays() || 'none' }}
 		</button>
 	</span>
