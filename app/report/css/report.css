@@ -107,6 +107,7 @@ tr.section-diff-row.no-changes *, .section-activity-diff-row.no-changes * {
 	bottom: 0;
 	right: 1em;
 	width: 35%;
+	z-index: 999;
 }
 
 .sis-todo-container .sis-todo-header {

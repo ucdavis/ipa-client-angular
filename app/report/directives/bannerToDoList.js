@@ -131,7 +131,7 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 
 			scope.toggleView = function () {
 				element.toggleClass('sis-todo-minimized');
-				scope.viewMinimized = !scope.viewMinimized;
+				scope.view.isMinimized = !scope.view.isMinimized;
 			};
 
 			function getPattern(sequenceNumber) {
