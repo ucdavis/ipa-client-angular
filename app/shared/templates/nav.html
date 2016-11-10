@@ -53,6 +53,11 @@
 							Instructor Summary
 						</a>
 					</li>
+					<li ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'instructionalSupport' }">
+						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=instructionalSupport">
+							Instructional Support Summary
+						</a>
+					</li>
 				</ul>
 			</li>
 			<!-- handle UI for users with either academicPlanner or instructor, but not both -->
@@ -112,7 +117,7 @@
 				</ul>
 			</li>
 			<li ng-class="{ 'active': currentEndHref == 'supportCallStatus' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
-				<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/instructionalSupportStatus">
+				<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/supportCallStatus">
 					<i class="entypo-user-add"></i>
 					<span class="title">Support Call</span>
 				</a>

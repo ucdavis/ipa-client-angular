@@ -1,0 +1,88 @@
+.flex {
+	display: flex;
+}
+
+.flex-auto {
+	flex: auto;
+	margin: 2px;
+	padding: 2px;
+	overflow: hidden;
+}
+
+.flex-table-content {
+	flex: 10 0 0px;
+}
+
+.flex-ui-overlay {
+	flex: 1 0 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+}
+
+.support-call-row:hover .flex-ui-overlay {
+	visibility: visible;
+}
+
+.delete-support-call-button {
+	color: rgba(180, 20, 20, 0.8);
+	font-size: 24px;
+	padding: 0px;
+}
+
+.table {
+	margin-top: 20px;
+}
+
+.table-content {
+	flex: 1 1 0%;
+	color: black;
+	align-self: center;
+	margin: 2px;
+	padding: 2px;
+	overflow: hidden;
+}
+
+.table-header {
+	font-weight: bold;
+}
+
+.table-body {
+	background: #fff;
+}
+
+.student-summary-header {
+	text-align: center;
+	padding-bottom: 5px;
+	padding-bottom: 25px;
+}
+
+.container-box {
+	text-align: center;
+	border-radius: 3px;
+	border: 1px solid lightgray;
+	border-left: 4px solid black;
+	padding: 15px 0px 15px 0px;
+	text-align: center;
+}
+
+.container-box-title {
+	text-align: center;
+}
+
+.survey-number {
+	color: #4686A5;
+}
+
+.people-info-icon {
+	color: #4686A5;
+}
+
+.term-header {
+	font-size: 16px;
+	font-weight: 500;
+	margin-top:40px;
+	margin-bottom: 20px;
+	margin-left: -20px;
+}
