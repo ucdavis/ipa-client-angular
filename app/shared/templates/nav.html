@@ -111,6 +111,19 @@
 					</li>
 				</ul>
 			</li>
+			<li ng-class="{ 'active': currentEndHref == 'supportCallStatus' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
+				<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/instructionalSupportStatus">
+					<i class="entypo-user-add"></i>
+					<span class="title">Support Call</span>
+				</a>
+				<ul class="visible">
+					<li ng-repeat="term in getYearTerms() track by term.id" ng-class="{'active': term.shortCode == termShortCode}" ng-class="{ 'active': currentBaseHref == 'instructionalSupport' && termShortCode == term.shortCode }">
+						<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ term.shortCode }}">
+						{{ term.description }}
+					</a>
+					</li>
+				</ul>
+			</li>
 			<li ng-class="{ 'active': currentBaseHref == 'scheduling', 'opened': expanded == 'scheduling' || (!expanded && currentBaseHref == 'scheduling') }"
 				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('scheduling')">
