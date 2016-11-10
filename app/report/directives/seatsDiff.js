@@ -17,11 +17,6 @@ reportApp.directive("seatsDiff", this.seatsDiff = function (reportActionCreators
 				};
 				reportActionCreators.updateSection(section, 'seats');
 			};
-
-			scope.addBannerToDoItem = function (sectionId, seats) {
-				var section = scope.view.state.sections.list[sectionId];
-				reportActionCreators.addBannerToDoItem(section, 'seats');
-			};
 		}
 	};
 });

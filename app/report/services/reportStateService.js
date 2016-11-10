@@ -169,25 +169,28 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 				case ADD_BANNER_TODO:
 					// Mandatory params
 					section = action.payload.section;
-					var sectionProperty = action.payload.sectionProperty;
-					if (!section || !sectionProperty) { return sections; }
+					if (!section) { return sections; }
 
 					// Optional params
+					var sectionProperty = action.payload.sectionProperty;
 					var child = action.payload.child;
 					var childProperty = action.payload.childProperty;
 
 					// Decide where to apply the todo flag based on the provided params
-					if (child && childProperty) {
+					if (sectionProperty && child && childProperty) {
 						// Flag child property as todo (examples: update dayIndicator, startTime...)
 						var childIndex = section[sectionProperty].indexOf(child);
 						section[sectionProperty][childIndex].dwChanges[childProperty].isToDo = true;
-					} else if (child) {
+					} else if (sectionProperty && child) {
 						// Flag child as todo (examples: add/remove entire instructor/activity)
 						var childIndex = section[sectionProperty].indexOf(child);
 						section[sectionProperty][childIndex].isToDo = true;
-					} else {
+					} else if (sectionProperty) {
 						// Flag section property as todo (example: update seats)
 						section.dwChanges[sectionProperty].isToDo = true;
+					} else {
+						// Flag the section itself as todo
+						section.isToDo = true;
 					}
 
 					return sections;

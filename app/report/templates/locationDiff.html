@@ -9,7 +9,7 @@
 			Set IPA to what Banner has: {{  activity.dwChanges.location.value }}
 		</button>
 		<!-- Action to apply IPA value if any -->
-		<button class="btn btn-ipa btn-block" ng-if="activity.location" ng-click="addBannerToDoItem(section, activity, 'location')">
+		<button class="btn btn-ipa btn-block" ng-if="activity.location" ng-click="addBannerToDoItem('activities', activity, 'location')">
 			Mark to modify in Banner: {{ activity.location }}
 		</button>
 	</span>

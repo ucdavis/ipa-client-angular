@@ -11,10 +11,6 @@ reportApp.directive("instructorDiff", this.instructorDiff = function (reportActi
 			scope.assignInstructor = function (section, instructor) {
 				reportActionCreators.assignInstructor(section, instructor);
 			};
-
-			scope.addBannerToDoItem = function (section, instructor) {
-				reportActionCreators.addBannerToDoItem(section, "instructors", instructor);
-			};
 		}
 	};
 });

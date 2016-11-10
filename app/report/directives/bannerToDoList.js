@@ -31,6 +31,20 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 				data.state.sections.ids.forEach(function (id) {
 					var section = data.state.sections.list[id];
 
+					// The entire section
+					if (section.isToDo) {
+						var activities = section.activities.length ? ", and the following meeting(s):<ul>" : "";
+						section.activities.forEach(function (activity) {
+							var activityDetails = getActivityDetails(activity);
+							activities += "<li>" + activity.typeCode.getActivityCodeDescription() + activityDetails + "</li>";
+						});
+						activities += "</ul>";
+						var instructors = section.instructors.length ? "(" + section.instructors.map(function (i) { return i.firstName + " " + i.lastName; }).join(", ") + ")" : "";
+						scope.view.listItems.push("Create " + section.subjectCode + " " + section.courseNumber + " section " +
+							section.sequenceNumber + " with " + section.seats + " seats " + instructors + activities);
+					}
+
+
 					// Direct properties
 					if (section.dwChanges) {
 						Object.keys(section.dwChanges).filter(function (propName) {
@@ -67,11 +81,7 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 							return activity.isToDo;
 						}).forEach(function (activity) {
 							// Construct activity details
-							var activityDetailsArr = [];
-							if (activity.dayIndicator && parseInt(activity.dayIndicator)) { activityDetailsArr.push(activity.dayIndicator.getWeekDays()); }
-							if (activity.startTime) { activityDetailsArr.push(activity.startTime.toStandardTime()); }
-							if (activity.endTime) { activityDetailsArr.push(activity.endTime.toStandardTime()); }
-							var activityDetails = activityDetailsArr.length ? " (" + activityDetailsArr.join(" - ") + ")" : "";
+							var activityDetails = getActivityDetails(activity);
 
 							if (activity.noRemote) {
 								scope.view.listItems.push("Create " + activity.typeCode.getActivityCodeDescription() + activityDetails + " for " +
@@ -131,6 +141,15 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 				} else {
 					return sequenceNumber;
 				}
+			}
+
+			function getActivityDetails(activity) {
+				var activityDetailsArr = [];
+				if (activity.dayIndicator && parseInt(activity.dayIndicator)) { activityDetailsArr.push(activity.dayIndicator.getWeekDays()); }
+				if (activity.startTime) { activityDetailsArr.push(activity.startTime.toStandardTime()); }
+				if (activity.endTime) { activityDetailsArr.push(activity.endTime.toStandardTime()); }
+				if (activity.location) { activityDetailsArr.push(activity.location); }
+				return activityDetailsArr.length ? ": " + activityDetailsArr.join(" - ") + "" : "";
 			}
 		}
 	};
