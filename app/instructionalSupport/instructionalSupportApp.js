@@ -2,17 +2,24 @@ window.instructionalSupportApp = angular.module("instructionalSupportApp", ["sha
 
 instructionalSupportApp.config(function ($routeProvider) {
 	return $routeProvider
-		.when("/:workgroupId/:year/:termShortCode", {
+		.when("/", {
 			templateUrl: "InstructionalSupportAssignment.html",
 			controller: "InstructionalSupportAssignmentCtrl",
-			reloadOnSearch: false,
 			resolve: {
 				payload: InstructionalSupportAssignmentCtrl.getPayload
 			}
 		})
-		.when("/", {
+		.when("/:workgroupId/:year/supportCallStatus", {
+			templateUrl: "SupportCallStatus.html",
+			controller: "InstructionalSupportCallStatusCtrl",
+			resolve: {
+				validate: InstructionalSupportCallStatusCtrl.getPayload
+			}
+		})
+		.when("/:workgroupId/:year/:termShortCode", {
 			templateUrl: "InstructionalSupportAssignment.html",
 			controller: "InstructionalSupportAssignmentCtrl",
+			reloadOnSearch: false,
 			resolve: {
 				payload: InstructionalSupportAssignmentCtrl.getPayload
 			}

@@ -1,0 +1,59 @@
+.flex {
+	display: flex;
+}
+
+.flex-auto {
+	flex: auto;
+	margin: 2px;
+	padding: 2px;
+	overflow: hidden;
+}
+
+.table {
+	margin-top: 20px;
+}
+
+.table-content {
+	flex: 1 1 0%;
+	color: black;
+	align-self: center;
+	margin: 2px;
+	padding: 2px;
+	overflow: hidden;
+}
+
+.table-header {
+	font-weight: bold;
+}
+
+.table-body {
+	background: #fff;
+}
+
+.student-summary-header {
+	text-align: center;
+	padding-bottom: 5px;
+	padding-bottom: 25px;
+}
+
+.container-box {
+	text-align: center;
+	border-radius: 3px;
+	border: 1px solid lightgray;
+	border-left: 4px solid black;
+	padding: 15px 0px 15px 0px;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.container-box-title {
+	text-align: center;
+}
+
+.survey-number {
+	color: #4686A5;
+}
+
+.people-info-icon {
+	color: #4686A5;
+}
