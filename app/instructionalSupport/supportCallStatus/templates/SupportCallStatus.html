@@ -1,54 +1,85 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 <div></div>
 
-    <div class="page-container">
-        <!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
-        <!-- Summary Page Start -->
-        <div class="main-content">
-            <div class="container-fluid">
-                <!-- page header -->
-                <div class="student-summary-header">
-                    <h3>Support Call 2016-17</h3>
-                    <p>Psychology Fall</p>
-                </div>
-                <!-- page header ends -->
-            </div>
-            <div class="row">
-							<div class="container-fluid table">
-								<div class="flex table-header container-box-title"> <!-- table title -->
-									<div class="table-content">Start Date</div>
-									<div class="table-content">End Date</div>
-									<div class="table-content">Group</div>
-									<div class="table-content">Via Email</div>
-									<div class="table-content">Term</div>
-									<div class="table-content">Responded/Surveyed</div>
-								</div>
-							</div>
-                <!-- table #1 -->
-                <div class="container-fluid table">
-                    <div class="flex table-body container-box"> <!-- table contents -->
-                        <div class="table-content">October 5, 2016</div>
-                        <div class="table-content">October 10, 2016</div>
-                        <div class="table-content">Graduate Students<i tabindex="0" class="btn glyphicon glyphicon-exclamation-sign people-info-icon" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="Steve,Lee   John,Smith   Jerry,Armstrong" data-original-title="Graudate Students"></i></div>
-                        <div class="table-content"><i class="glyphicon glyphicon-ok"></i></div>
-                        <div class="table-content">Winter Quarter</div>
-												<div class="table-content">35/55</div>
-                    </div>
-                </div>
-                <!-- table #1 ends -->
+<div class="page-container">
+	<div class="main-content">
 
-                <!-- table #2 -->
-                <div class="container-fluid table">
-                    <div class="flex table-body container-box"> <!-- table contents -->
-                        <div class="table-content">October 5, 2016</div>
-                        <div class="table-content">October 10, 2016</div>
-                        <div class="table-content">Instructors<i tabindex="0" class="btn glyphicon glyphicon-exclamation-sign people-info-icon" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="Steve,Lee   John,Smith   Jerry,Armstrong" data-original-title="Graudate Students"></i></div>
-                        <div class="table-content"><i class="glyphicon glyphicon-ok"></i></div>
-                        <div class="table-content">Fall Quarter</div>
-												<div class="table-content">35/55</div>
-                    </div>
-                  </div>
-                <!-- table #2 ends -->
-            </div>
-        </div>
-    </div>
+		<!-- page header -->
+		<div class="container-fluid">
+			<div class="student-summary-header">
+				<h3>Support Call 2016-17</h3>
+				<p>Psychology</p>
+			</div>
+		</div>
+		<!-- page header ends -->
+
+		<div class="row">
+			<div class="flex">
+				<div class="flex-table-content flex table-header container-box-title"> <!-- table title -->
+					<div class="table-content">Start Date</div>
+					<div class="table-content">End Date</div>
+					<div class="table-content">Group</div>
+					<div class="table-content">Via Email</div>
+					<div class="table-content">Term</div>
+					<div class="table-content">Responded/Surveyed</div>
+				</div>
+				<div class="flex-ui-overlay"></div>
+			</div>
+
+			<div class="support-call-row flex">
+				<div class="flex-table-content flex table-body container-box"> <!-- table contents -->
+					<div class="table-content">October 5, 2016</div>
+					<div class="table-content">October 10, 2016</div>
+					<div class="table-content">Graduate Students<i tabindex="0" class="btn glyphicon glyphicon-exclamation-sign people-info-icon" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="Steve,Lee   John,Smith   Jerry,Armstrong" data-original-title="Graudate Students"></i></div>
+					<div class="table-content"><i class="glyphicon glyphicon-ok"></i></div>
+					<div class="table-content">Winter Quarter</div>
+					<div class="table-content">35/55</div>
+				</div>
+				<div class="flex-ui-overlay">
+					<i class="btn entypo-minus-circled delete-support-call-button"
+					uib-tooltip="Delete Support Call" tooltip-placement="bottom"
+					confirm-button="deleteTeachingCall(teachingCall)"
+					message="Are you sure you want to delete this support call? All of the collected preferences will be lost."
+					yes="Confirm" no="Cancel" placement="top"></i>
+				</div>
+			</div>
+
+			<div class="support-call-row flex">
+				<div class="flex-table-content flex table-body container-box"> <!-- table contents -->
+					<div class="table-content">October 5, 2016</div>
+					<div class="table-content">October 10, 2016</div>
+					<div class="table-content">Graduate Students<i tabindex="0" class="btn glyphicon glyphicon-exclamation-sign people-info-icon" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="Steve,Lee   John,Smith   Jerry,Armstrong" data-original-title="Graudate Students"></i></div>
+					<div class="table-content"><i class="glyphicon glyphicon-ok"></i></div>
+					<div class="table-content">Winter Quarter</div>
+					<div class="table-content">35/55</div>
+				</div>
+				<div class="flex-ui-overlay">
+					<i class="btn entypo-minus-circled delete-support-call-button"
+					uib-tooltip="Delete Support Call" tooltip-placement="bottom"
+					confirm-button="deleteTeachingCall(teachingCall)"
+					message="Are you sure you want to delete this support call? All of the collected preferences will be lost."
+					yes="Confirm" no="Cancel" placement="top"></i>
+				</div>
+			</div>
+
+			<div class="support-call-row flex">
+				<div class="flex-table-content flex table-body container-box"> <!-- table contents -->
+					<div class="table-content">October 5, 2016</div>
+					<div class="table-content">October 10, 2016</div>
+					<div class="table-content">Graduate Students<i tabindex="0" class="btn glyphicon glyphicon-exclamation-sign people-info-icon" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="Steve,Lee   John,Smith   Jerry,Armstrong" data-original-title="Graudate Students"></i></div>
+					<div class="table-content"><i class="glyphicon glyphicon-ok"></i></div>
+					<div class="table-content">Winter Quarter</div>
+					<div class="table-content">35/55</div>
+				</div>
+				<div class="flex-ui-overlay">
+					<i class="btn entypo-minus-circled delete-support-call-button"
+					uib-tooltip="Delete Support Call" tooltip-placement="bottom"
+					confirm-button="deleteTeachingCall(teachingCall)"
+					message="Are you sure you want to delete this support call? All of the collected preferences will be lost."
+					yes="Confirm" no="Cancel" placement="top"></i>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

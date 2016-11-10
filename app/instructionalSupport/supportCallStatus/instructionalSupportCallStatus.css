@@ -9,6 +9,32 @@
 	overflow: hidden;
 }
 
+.flex-table-content {
+	flex: 10 0 0px;
+}
+
+.flex-ui-overlay {
+	flex: 1 0 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+}
+
+.support-call-row {
+	margin-top: 20px;
+}
+
+.support-call-row:hover .flex-ui-overlay {
+	visibility: visible;
+}
+
+.delete-support-call-button {
+	color: rgba(180, 20, 20, 0.8);
+	font-size: 24px;
+	padding: 0px;
+}
+
 .table {
 	margin-top: 20px;
 }
@@ -43,7 +69,6 @@
 	border-left: 4px solid black;
 	padding: 15px 0px 15px 0px;
 	text-align: center;
-	margin-top: 20px;
 }
 
 .container-box-title {
