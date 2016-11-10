@@ -101,16 +101,16 @@ module.exports = function (grunt) {
 				src: [
 					'clientConfig.js',
 					'<%= folders.webapp.root %>/shared/exceptionHandler.js',
-					'<%= folders.webapp.root %>/shared/sharedInterceptors.js',
-					'<%= folders.webapp.root %>/shared/konami.js'
+					'<%= folders.webapp.root %>/shared/sharedInterceptors.js'
 				],
 				dest: '<%= folders.webapp.build %>/js/sharedConfig.js'
 			},
 			// Production Snippets from various 3rd party services
 			jsProdSnippets: {
 				src: [
-					'<%= folders.webapp.root %>/shared/userEcho.js',
-					'<%= folders.webapp.root %>/shared/googleAnalytics.js'
+					'vendor/js/userEcho.js',
+					'vendor/js/googleAnalytics.js',
+					'vendor/js/konami.js'
 				],
 				dest: '<%= folders.webapp.build %>/js/snippets.js'
 			},
