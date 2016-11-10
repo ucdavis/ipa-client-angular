@@ -85,9 +85,9 @@
 
 														<!-- Display unfilled assignment slots -->
 														<support-staff-selector 
-															ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]"
-															ng-show="isTeachingAssistant(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment) "
 															ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
+															ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=instructionalSupportAssignment"
+															ng-show="isTeachingAssistant(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment) "
 															class="support-staff-selector alert assignment">
 														</support-staff-selector>
 

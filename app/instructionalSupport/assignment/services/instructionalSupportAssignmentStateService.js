@@ -106,6 +106,30 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					return instructionalSupportAssignments;
 			}
 		},
+		_instructionalSupportStaffsReducers: function (action, instructionalSupportStaffs) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					instructionalSupportStaffs = {
+						ids: [],
+						list: {}
+					};
+
+					var instructionalSupportStaffsLength = action.payload.instructionalSupportStaffList ? action.payload.instructionalSupportStaffList.length : 0;
+
+					for (var i = 0; i < instructionalSupportStaffsLength; i++) {
+						var instructionalSupportStaffData = action.payload.instructionalSupportStaffList[i];
+
+						instructionalSupportStaffs.list[instructionalSupportStaffData.id] = instructionalSupportStaffData;
+						instructionalSupportStaffs.ids.push(instructionalSupportStaffData.id);
+					}
+
+					return instructionalSupportStaffs;
+				default:
+					return instructionalSupportStaffs;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -116,6 +140,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 			newState = {};
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.instructionalSupportAssignments = scope._instructionalSupportAssignmentsReducers(action, scope._state.instructionalSupportAssignments);
+			newState.instructionalSupportStaffs = scope._instructionalSupportStaffsReducers(action, scope._state.instructionalSupportStaffList);
 			scope._state = newState;
 
 			$rootScope.$emit('instructionalSupportAssignmentStateChanged', {
