@@ -52,7 +52,7 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 						}).forEach(function (propName) {
 							var crn = section.crn ? " (" + section.crn + ")" : "";
 							scope.view.listItems.push("Change " + section.subjectCode + " " + section.courseNumber + " section " +
-								section.sequenceNumber + crn + " " + propName + " from " + section.dwChanges[propName].value + " to " + section[propName]);
+								section.sequenceNumber + crn + " " + getHumanName(propName) + " from " + section.dwChanges[propName].value + " to " + section[propName]);
 						});
 					}
 
@@ -111,15 +111,15 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 								var newValue = activity[propName];
 
 								if (propName == "dayIndicator") {
-									oldValue = oldValue.getWeekDays();
-									newValue = newValue.getWeekDays();
+									oldValue = oldValue.getWeekDays() || 'none';
+									newValue = newValue.getWeekDays() || 'none';
 								} else if (propName == "startTime" || propName == "endTime") {
 									oldValue = oldValue.toStandardTime();
 									newValue = newValue.toStandardTime();
 								}
 
 								scope.view.listItems.push("Change " + section.subjectCode + " " + section.courseNumber + " section " +
-									section.sequenceNumber + crn + " " + activity.typeCode.getActivityCodeDescription() + " " + propName +
+									section.sequenceNumber + crn + " " + activity.typeCode.getActivityCodeDescription() + " " + getHumanName(propName) +
 									" from " + oldValue + " to " + newValue);
 							});
 						});
@@ -150,6 +150,15 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 				if (activity.endTime) { activityDetailsArr.push(activity.endTime.toStandardTime()); }
 				if (activity.location) { activityDetailsArr.push(activity.location); }
 				return activityDetailsArr.length ? ": " + activityDetailsArr.join(" - ") + "" : "";
+			}
+
+			function getHumanName(property) {
+				var map = {
+					dayIndicator: "days",
+					startTime: "start time",
+					endTime: "end time"
+				};
+				return map[property] || property;
 			}
 		}
 	};
