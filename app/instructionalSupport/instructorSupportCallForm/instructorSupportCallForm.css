@@ -1,0 +1,135 @@
+.tacall-instructor-header {
+    text-align: center;
+    padding-bottom: 5px;
+    border-bottom: 2px solid rgb(235, 235, 235);
+    padding-bottom: 25px;
+}
+
+.main-content {
+    display: block !important;
+}
+
+.ta-selector {
+    width: 65%;
+    margin-bottom: 17px;
+    align-self: center;
+}
+
+.add-new-slot {
+    width: 65%;
+    margin-bottom: 20px;
+    position: relative;
+    height: 30px;
+    padding: 6px;
+    border: 1px solid #ebebeb;
+    align-self: center;
+}
+
+.ta-info {
+    font-size: 8pt;
+    line-height: 20px;
+    width: 300px;
+    padding-left: 0px;
+    list-style: outside none none;
+}
+
+.ta-slot-remove {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #000;
+}
+
+.ta-slot {
+    width: 65%;
+    align-self: center;
+    text-align: center;
+    position: relative;
+    height: 30px;
+    padding: 6px;
+    margin-bottom: 25px;
+}
+
+.instructor-application {
+    display: flex;
+    flex-direction: row;
+}
+
+.instructor-course-section {
+    margin-top: 10px;
+    display: flex;
+    flex: 1 1 20%;
+    flex-direction: column;
+}
+
+.ta-section {
+    flex-direction: column;
+    display: flex;
+}
+
+.instructor-application_title {
+    margin-top: 15px;
+    margin-bottom: 40px;
+    align-self: center;
+}
+
+.move-ta-icon {
+    position: absolute;
+    left: -30px;
+    font-size: 15pt;
+    color: #373e4a;
+    cursor: pointer;
+}
+
+.submit-application {
+    display: flex;
+    justify-content: center;
+}
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.btn-default p {
+    text-align: center;
+}
+
+.popover-content {
+    color: gray;
+}
+
+.selectboxit .selectboxit-option-icon-container {
+    margin-left: 25% !important;
+}
+
+.page-body .select2-container .select2-choice {
+    /* adjust selector's height and padding-left */
+    height: 30px;
+    line-height: 30px;
+    padding-left: 65px;
+}
+
+
+/* Comments btn */
+
+.instructor-comments-btn {
+    margin-left: 30px;
+}
+
+.instructor-comments-btn i {
+    font-size: 12pt;
+    color: #95989A;
+}
+
+.instructor-comments-btn span {
+    color: #95989A;
+}
+
+.instructor-comment-container {
+	flex: 1 0 auto;
+}
+
+h4, .h4 {
+    font-size: 15px;
+}
