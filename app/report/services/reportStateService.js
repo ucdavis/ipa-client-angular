@@ -166,6 +166,11 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					delete section.instructors[instructorIndex].noLocal;
 
 					return sections;
+				case UNASSIGN_INSTRUCTOR:
+					section = sections.list[action.payload.section.id];
+					var instructorIndex = section.instructors.indexOf(action.payload.instructor);
+					section.instructors.splice(instructorIndex, 1);
+					return sections;
 				case ADD_BANNER_TODO:
 					// Mandatory params
 					section = action.payload.section;

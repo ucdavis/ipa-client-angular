@@ -63,9 +63,9 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 			});
 		},
 		/**
-		 * Assigns instructor to the sectionGroup
+		 * Assigns instructor to the section's sectionGroup
 		 *
-		 * @param sectionGroupId
+		 * @param section
 		 * @param instructor
 		 */
 		assignInstructor: function (section, instructor) {
@@ -73,6 +73,27 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 				$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
 				var action = {
 					type: ASSIGN_INSTRUCTOR,
+					payload: {
+						section: section,
+						instructor: instructor
+					}
+				};
+				reportStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		/**
+		 * Un-Assigns instructor from the section's sectionGroup
+		 *
+		 * @param section
+		 * @param instructor
+		 */
+		unAssignInstructor: function (section, instructor) {
+			reportService.unAssignInstructor(section.sectionGroupId, instructor).then(function (teachingAssingment) {
+				$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
+				var action = {
+					type: UNASSIGN_INSTRUCTOR,
 					payload: {
 						section: section,
 						instructor: instructor

@@ -16,15 +16,7 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 				listItems: []
 			};
 
-			var rerenderStateActions = [
-				GET_TERM_COMPARISON_REPORT,
-				ADD_BANNER_TODO
-			];
-
 			$rootScope.$on('reportStateChanged', function (event, data) {
-				// Rerender only if on of the specified state actions
-				if (rerenderStateActions.indexOf(data.action.type) < 0) { return; }
-
 				// Empty the current list to rescan/rebuild
 				scope.view.listItems.length = 0;
 

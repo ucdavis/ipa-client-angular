@@ -8,8 +8,12 @@ reportApp.directive("instructorDiff", this.instructorDiff = function (reportActi
 		templateUrl: 'instructorDiff.html',
 		replace: true,
 		link: function (scope, element, attrs) {
-			scope.assignInstructor = function (section, instructor) {
-				reportActionCreators.assignInstructor(section, instructor);
+			scope.assignInstructor = function () {
+				reportActionCreators.assignInstructor(scope.section, scope.instructor);
+			};
+
+			scope.unAssignInstructor = function () {
+				reportActionCreators.unAssignInstructor(scope.section, scope.instructor);
 			};
 		}
 	};
