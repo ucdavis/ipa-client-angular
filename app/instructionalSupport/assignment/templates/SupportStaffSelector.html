@@ -1,9 +1,9 @@
-<div>
-	<span class="clickable" data-toggle="dropdown" aria-haspopup="true" style="width: 100%; display: block;" aria-expanded="false">
+<div class="assignment support-staff-selector">
+	<div class="clickable assignment-description" style="width: 100%; text-align: center; color: #303641;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		Assign {{ instructionalSupportAssignment.appointmentPercentage }}%
-	</span>
-	<ul class="dropdown-menu">
-		<li class="dropdown-header" stop-event="click">Faculty Preferences</li>
+	</div>
+	<ul class="dropdown-menu" style="width: 100%;">
+		<li class="dropdown-header" stop-event="click"><b>Faculty Preferences</b></li>
 		<li role="separator" class="divider"></li>
 
 		<li ng-repeat="tagId in view.state.tags.ids track by $index" class="clickable" ng-click="tagToggled(tagId)">

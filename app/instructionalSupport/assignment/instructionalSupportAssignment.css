@@ -14,8 +14,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .support-staff-selector {
-	background: #fff;
-	border: 1px solid #ebebeb;	
+	background: #fff !important;
+	border: 1px solid #ebebeb !important;
+	position: relative;
 }
 
 .support-staff-selector:hover {
@@ -28,13 +29,20 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .assignment {
-		text-align: left;
-		width: 40%;
-		height: 30px;
-		padding: 6px;
-		margin-bottom: 17px;
+	flex: 4 1 0px;
+	border: 1px solid #bce8f1;
+	border-radius: 4px;
+	color: #31708f;
+	background-color: #d9edf7;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 30px;
 }
 
+.assignment-description {
+	flex: 0 0 auto;
+}
 .info--bg_black {
 		background-color: #373e4a;
 		font-size: 12px;
@@ -76,6 +84,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .preference-title {
+		width: 30%;
+		text-align: center;
 		padding: 5px 10px;
 		font-size: 11px;
 		line-height: 1.5;
@@ -83,6 +93,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 		border: 1px solid #ebebeb;
 		color: #303641;
 		cursor: default;
+}
+
+.preference-title-container {
+	flex: 4 1 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .ta-info {
@@ -152,15 +169,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 		right: 0;
 		top: 15px;
 		color: #000;
-}
-
-.assignment {
-		width: 65%;
-		align-self: center;
-		text-align: center;
-		position: relative;
-		height: 30px;
-		padding: 6px;
 }
 
 .ta-slot--width {
@@ -261,31 +269,29 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .flex-slector-children {
-		flex: 0 1 auto;
-		display: flex;
-		flex-flow: row wrap;
+	flex: 0 1 auto;
+	display: flex;
+	flex-flow: row wrap;
 }
 
 .view-switcher {
-		flex: 1 1 auto;
+	flex: 1 1 auto;
 }
 
 .review-switcher {
-		display: flex;
-		justify-content: end;
-		flex: 1 1 auto;
+	display: flex;
+	justify-content: end;
+	flex: 1 1 auto;
 }
 
 .ta_course-section {
-		flex-direction: column;
-		display: flex;
+	flex-direction: column;
+	display: flex;
 }
 
 .ta_course-section-swticher {
-		display: flex;
-		margin-top: 15px;
-		margin-bottom: 40px;
-		align-self: center;
+	display: flex;
+	margin-bottom: 17px;
 }
 
 
@@ -584,4 +590,23 @@ margin-left: 6px;
 .modal--footer-skin {
 	background-color: rgb(248, 248, 248);
 	border-top-color: rgb(229, 229, 229);
+}
+
+.remove-tile-container {
+	flex: 1 0 0px;
+}
+
+.tile-container {
+	display: flex;
+	margin-bottom: 17px;
+}
+
+.assignment-remove-button {
+	color: rgba(220,220,220, .5);
+	padding: 4px;
+}
+
+.assignment-remove-button:hover {
+	color: red;
+	padding: 4px;
 }

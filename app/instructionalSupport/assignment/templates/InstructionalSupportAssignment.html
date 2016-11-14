@@ -65,31 +65,71 @@
 										</div>
 										<div class="flex-selector-course_view">
 												<div class="ta_course-section-swticher">
+													<div class="remove-tile-container">
+													</div>
+													<div class="preference-title-container">
 														<div class="preference-title">
 															TAs
 														</div>
+													</div>
+													<div class="remove-tile-container">
+													</div>
 												</div>
 												<div class="ta_course-section">
-														<div class=" alert alert-info assignment ">
-																<p>Lu, Sammy</p>
-																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
+													<div class="tile-container">
+														<div class="remove-tile-container">
 														</div>
-														<div class="alert alert-info assignment ">
-																<p>Lu, Sammy</p>
-																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
+														<div class="assignment">
+																<div class="assignment-description">
+																	Lu, Sammy
+																</div>
 														</div>
-														<div class="alert alert-info assignment ">
-																<p>Lu, Sammy</p>
-																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
+														<div class="remove-tile-container">
+															<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary "></i>
+														</div>
+													</div>
+													<div class="tile-container">
+														<div class="remove-tile-container">
+														</div>
+														<div class="assignment">
+																<div class="assignment-description">
+																	Lu, Sammy
+																</div>
+														</div>
+														<div class="remove-tile-container">
+															<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary "></i>
+														</div>
+													</div>
+													<div class="tile-container">
+														<div class="remove-tile-container">
+														</div>
+														<div class="assignment">
+																<div class="assignment-description">
+																	Lu, Sammy
+																</div>
+														</div>
+														<div class="remove-tile-container">
+															<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary "></i>
+														</div>
+													</div>
+
+													<!-- Display unfilled assignment slots -->
+													<div class="tile-container"
+														ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
+														ng-show="isTeachingAssistant(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment)">
+
+														<div class="remove-tile-container">
 														</div>
 
-														<!-- Display unfilled assignment slots -->
 														<support-staff-selector 
-															ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
 															ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=instructionalSupportAssignment"
-															ng-show="isTeachingAssistant(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment) "
-															class="support-staff-selector alert assignment">
+															class="support-staff-selector assignment">
 														</support-staff-selector>
+
+														<div class="remove-tile-container">
+															<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary "></i>
+														</div>
+													</div>
 
 														<!--add new slot button-->
 														<div ng-click="openAddAppointmentSlotModal(sectionGroup.id, 'teachingAssistant')" class="btn btn-default add-new-slot pull-left">
@@ -99,24 +139,59 @@
 										</div>
 										<div class="flex-selector-course_view">
 												<div class="ta_course-section-swticher">
+													<div class="remove-tile-container">
+													</div>
+													<div class="preference-title-container">
 														<div class="preference-title">
 															Readers
 														</div>
+													</div>
+													<div class="remove-tile-container">
+													</div>
 												</div>
 												<div class="ta_course-section">
-														<div class=" alert alert-info assignment ">
-																<p>Lu, Sammy</p>
-																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
+													<div class="tile-container">
+														<div class="remove-tile-container">
+														</div>
+														<div class="assignment">
+																<div class="assignment-description">
+																	Lu, Sammy
+																</div>
+														</div>
+														<div class="remove-tile-container">
+															<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary "></i>
+														</div>
+													</div>
+													<div class="tile-container">
+														<div class="remove-tile-container">
+														</div>
+														<div class="assignment">
+																<div class="assignment-description">
+																	Lu, Sammy
+																</div>
+														</div>
+														<div class="remove-tile-container">
+															<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary "></i>
+														</div>
+													</div>
+
+													<!-- Display unfilled assignment slots -->
+													<div class="tile-container"
+														ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
+														ng-show="isTeachingAssistant(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment)">
+
+														<div class="remove-tile-container">
 														</div>
 
-														<!-- Display unfilled assignment slots -->
 														<support-staff-selector 
-															ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]"
-															ng-show="isReader(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment) "
-															ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
-															class="support-staff-selector alert assignment">
+															ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=instructionalSupportAssignment"
+															class="support-staff-selector assignment">
 														</support-staff-selector>
 
+														<div class="remove-tile-container">
+															<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary "></i>
+														</div>
+													</div>
 														<!--add new slot button-->
 														<div ng-click="openAddAppointmentSlotModal(sectionGroup.id, 'reader')" class="btn btn-default add-new-slot pull-left">
 															Add Reader Slots...
@@ -125,33 +200,76 @@
 										</div>
 										<div class="flex-selector-course_view">
 												<div class="ta_course-section-swticher">
+													<div class="remove-tile-container">
+													</div>
+													<div class="preference-title-container">
 														<div class="preference-title">
 															AIs
 														</div>
+													</div>
+													<div class="remove-tile-container">
+													</div>
 												</div>
 												<div class="ta_course-section">
-														<div class=" alert alert-info assignment ">
-																<p>Lu, Sammy</p>
-																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
+													<div class="tile-container">
+														<div class="remove-tile-container">
 														</div>
-														<div class="alert alert-info assignment ">
-																<p>Lu, Sammy</p>
-																<i class=" btn glyphicon glyphicon-remove assignment-remove text-primary "></i>
+														<div class="assignment">
+																<div class="assignment-description">
+																	Lu, Sammy
+																</div>
+														</div>
+														<div class="remove-tile-container">
+															<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary "></i>
+														</div>
+													</div>
+													<div class="tile-container">
+														<div class="remove-tile-container">
+														</div>
+														<div class="assignment">
+																<div class="assignment-description">
+																	Lu, Sammy
+																</div>
+														</div>
+														<div class="remove-tile-container">
+															<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary "></i>
+														</div>
+													</div>
+													<div class="tile-container">
+														<div class="remove-tile-container">
+														</div>
+														<div class="assignment">
+																<div class="assignment-description">
+																	Lu, Sammy
+																</div>
+														</div>
+														<div class="remove-tile-container">
+															<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary "></i>
+														</div>
+													</div>
+
+													<!-- Display unfilled assignment slots -->
+													<div class="tile-container"
+														ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
+														ng-show="isTeachingAssistant(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment)">
+
+														<div class="remove-tile-container">
 														</div>
 
-														<!-- Display unfilled assignment slots -->
 														<support-staff-selector 
-															ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]"
-															ng-show="isAssociateInstructor(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment) "
-															ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
-															class="support-staff-selector alert assignment">
+															ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=instructionalSupportAssignment"
+															class="support-staff-selector assignment">
 														</support-staff-selector>
+
+														<div class="remove-tile-container">
+															<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary "></i>
+														</div>
+													</div>
 
 														<!--add new slot button-->
 														<div ng-click="openAddAppointmentSlotModal(sectionGroup.id, 'associateInstructor')" class="btn btn-default add-new-slot pull-left">
 															Add AI Slots...
 														</div>
-														<!--add new slot button-->
 												</div>
 										</div>
 								</div>
