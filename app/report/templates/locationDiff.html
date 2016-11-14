@@ -1,11 +1,11 @@
-<div class="activity-diff-element activity-location" ng-class="{ 'has-changes' : !activity.noRemote && activity.dwChanges.bannerLocation !== undefined }">
+<div class="activity-diff-element activity-location" ng-class="{ 'has-changes' : !activity.noRemote && activity.dwChanges.bannerLocation !== undefined && !activity.dwChanges.bannerLocation.isToDo }">
 	<span class="diff-content">
-		{{ activity.annerLocation || 'none' }}
+		{{ activity.bannerLocation || 'none' }}
 	</span>
 	<span class="change-action" ng-if="!activity.noRemote && activity.dwChanges.bannerLocation !== undefined">
 		Value does not match with Banner
 		<!-- Action to apply Banner value -->
-		<button class="btn btn-dw btn-block">
+		<button class="btn btn-dw btn-block" ng-click="updateBannerLocation(activity.dwChanges.bannerLocation.value)">
 			Set IPA to what Banner has: {{  activity.dwChanges.bannerLocation.value }}
 		</button>
 		<!-- Action to apply IPA value if any -->
