@@ -231,11 +231,15 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 		flex-direction: row;
 }
 
-.flex-row-children {
-		flex: 1 1 auto;
+.assignment-title-container {
+		flex: 3 1 0px;
 }
 
-.flex-row-children h4 {
+.assignment-term-container {
+	flex: 1 1 0px;
+}
+
+.assignment-title-header {
 		margin-top: 20px;
 }
 
