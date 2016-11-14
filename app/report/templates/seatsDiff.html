@@ -1,4 +1,4 @@
-<div class="section-diff-element section-seats" ng-class="{ 'has-changes' : section.dwChanges.seats !== undefined }">
+<div class="section-diff-element section-seats" ng-class="{ 'has-changes' : section.dwChanges.seats !== undefined && !section.dwChanges.seats.isToDo }">
 	<span class="diff-content">
 		{{ section.seats }}
 	</span>

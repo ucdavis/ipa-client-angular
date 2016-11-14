@@ -1,5 +1,6 @@
-<div ng-class="{ 'has-changes' : instructor.noRemote || instructor.noLocal }" class="section-diff-element section-instructors">
-	<span class="diff-content" ng-class="{ 'no-remote' : instructor.noRemote, 'no-local': instructor.noLocal }">
+<div ng-class="{ 'has-changes' : (instructor.noRemote || instructor.noLocal) && !instructor.isToDo }"
+	class="section-diff-element section-instructors">
+	<span class="diff-content" ng-class="{ 'no-remote' : instructor.noRemote && !instructor.isToDo, 'no-local': instructor.noLocal && !instructor.isToDo }">
 		{{ instructor | lastSpaceInitial }}
 	</span>
 	<span class="change-action" ng-if="instructor.noRemote">
