@@ -140,7 +140,7 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 				if (activity.dayIndicator && parseInt(activity.dayIndicator)) { activityDetailsArr.push(activity.dayIndicator.getWeekDays()); }
 				if (activity.startTime) { activityDetailsArr.push(activity.startTime.toStandardTime()); }
 				if (activity.endTime) { activityDetailsArr.push(activity.endTime.toStandardTime()); }
-				if (activity.location) { activityDetailsArr.push(activity.location); }
+				if (activity.bannerLocation) { activityDetailsArr.push(activity.bannerLocation); }
 				return activityDetailsArr.length ? ": " + activityDetailsArr.join(" - ") + "" : "";
 			}
 

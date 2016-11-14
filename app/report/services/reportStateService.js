@@ -108,7 +108,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 												activities.push(activity);
 											});
 										break;
-									case "location":
+									case "bannerLocation":
 									case "startTime":
 									case "endTime":
 									case "dayIndicator":
