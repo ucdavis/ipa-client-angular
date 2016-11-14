@@ -23,6 +23,13 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
+		},
+		togglePivotView: function (viewName) {
+			var action = {
+				type: TOGGLE_ASSIGNMENT_PIVOT_VIEW,
+				payload: {viewName: viewName}
+			};
+			instructionalSupportAssignmentStateService.reduce(action);
 		}
 	};
 });

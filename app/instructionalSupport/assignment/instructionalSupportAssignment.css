@@ -37,7 +37,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	justify-content: center;
 	align-items: center;
 	display: flex;
-	height: 30px;
 }
 
 .assignment-description {
@@ -609,4 +608,36 @@ margin-left: 6px;
 .assignment-remove-button:hover {
 	color: red;
 	padding: 4px;
+}
+
+.support-staff-details-container {
+	margin-top: 60px;
+	display: flex;
+	flex: 0 0 auto;
+	width: 55%;
+	flex-direction: column;
+}
+
+.support-staff-details-layout {
+	display: flex;
+	justify-content:center;
+	flex: 9 0 0px;
+}
+
+.support-student-assignment-detail-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+.support-staff-assignment-detail,
+.support-staff-assignment-sub-detail {
+	padding-left: 10px;
+	flex: 0 0 auto;
+	font-weight: bold;
+}
+
+.support-staff-assignment-sub-detail {
+	font-weight: normal;
 }

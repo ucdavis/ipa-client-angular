@@ -47,21 +47,21 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 			};
 
 			$scope.isTeachingAssistant = function (instructionalSupportAssignment) {
-				if (instructionalSupportAssignment.appointmentType == "teachingAssistant") {
+				if (instructionalSupportAssignment && instructionalSupportAssignment.appointmentType == "teachingAssistant") {
 					return true;
 				}
 				return false;
 			};
 
 			$scope.isReader = function (instructionalSupportAssignment) {
-				if (instructionalSupportAssignment.appointmentType == "reader") {
+				if (instructionalSupportAssignment && instructionalSupportAssignment.appointmentType == "reader") {
 					return true;
 				}
 				return false;
 			};
 
 			$scope.isAssociateInstructor = function (instructionalSupportAssignment) {
-				if (instructionalSupportAssignment.appointmentType == "associateInstructor") {
+				if (instructionalSupportAssignment && instructionalSupportAssignment.appointmentType == "associateInstructor") {
 					return true;
 				}
 				return false;
@@ -73,6 +73,10 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 				}
 
 				return false;
+			};
+
+			$scope.togglePivotView = function (viewName) {
+				instructionalSupportAssignmentActionCreators.togglePivotView(viewName);
 			};
 
 			// Set the active tab according to the URL

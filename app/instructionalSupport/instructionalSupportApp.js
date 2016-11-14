@@ -45,3 +45,4 @@ instructionalSupportApp.config(function ($routeProvider) {
 
 var INIT_STATE = "INIT_STATE";
 var ADD_ASSIGNMENT_SLOTS = "ADD_ASSIGNMENT_SLOTS";
+var TOGGLE_ASSIGNMENT_PIVOT_VIEW = "TOGGLE_ASSIGNMENT_PIVOT_VIEW";

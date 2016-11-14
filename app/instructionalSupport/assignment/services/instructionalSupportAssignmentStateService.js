@@ -130,6 +130,35 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					return instructionalSupportStaffs;
 			}
 		},
+		_userInterfaceReducers: function (action, userInterface) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					userInterface = {};
+
+					userInterface.displayCoursePivot = true;
+					userInterface.displaySupportStaffPivot = false;
+
+					return userInterface;
+				case TOGGLE_ASSIGNMENT_PIVOT_VIEW:
+					userInterface.displayCoursePivot = false;
+					userInterface.displaySupportStaffPivot = false;
+
+					switch(action.payload.viewName) {
+						case "course":
+							userInterface.displayCoursePivot = true;
+							return userInterface;
+						case "supportStaff":
+						default:
+							userInterface.displaySupportStaffPivot = true;
+							return userInterface;
+					}
+				default:
+					return userInterface;
+			}
+		},
+
 		reduce: function (action) {
 			var scope = this;
 
@@ -141,6 +170,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.instructionalSupportAssignments = scope._instructionalSupportAssignmentsReducers(action, scope._state.instructionalSupportAssignments);
 			newState.instructionalSupportStaffs = scope._instructionalSupportStaffsReducers(action, scope._state.instructionalSupportStaffList);
+			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
 			scope._state = newState;
 
 			$rootScope.$emit('instructionalSupportAssignmentStateChanged', {
