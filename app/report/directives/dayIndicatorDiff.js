@@ -6,6 +6,16 @@ reportApp.directive("dayIndicatorDiff", this.dayIndicatorDiff = function (report
 	return {
 		restrict: "E",
 		templateUrl: 'dayIndicatorDiff.html',
-		replace: true
+		replace: true,
+		link: function (scope, element, attrs) {
+			scope.updateDayIndicator = function (dayIndicator) {
+				var activity = {
+					id: scope.activity.id,
+					typeCode: scope.activity.typeCode,
+					dayIndicator: dayIndicator
+				};
+				reportActionCreators.updateActivity(activity, 'dayIndicator');
+			};
+		}
 	};
 });

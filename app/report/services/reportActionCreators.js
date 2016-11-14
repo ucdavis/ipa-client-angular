@@ -48,12 +48,35 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 		 * @param property
 		 */
 		updateSection: function (section, property) {
-			reportService.updateSection(section).then(function (section) {
-				$rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber + " " + property, type: "SUCCESS" });
+			reportService.updateSection(section).then(function (updatedSection) {
+				$rootScope.$emit('toast', { message: "Updated section " + updatedSection.sequenceNumber + " " + property, type: "SUCCESS" });
 				var action = {
 					type: UPDATE_SECTION,
 					payload: {
-						section: section,
+						section: updatedSection,
+						property: property
+					}
+				};
+				reportStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		/**
+		 * Updates an activity and takes a property as an argument
+		 * in order for the state service to clear that property
+		 * from the dwChanges object
+		 *
+		 * @param activity
+		 * @param property
+		 */
+		updateActivity: function (activity, property) {
+			reportService.updateActivity(activity).then(function (updatedActivity) {
+				$rootScope.$emit('toast', { message: "Updated " + activity.typeCode.getActivityCodeDescription() + " " + property, type: "SUCCESS" });
+				var action = {
+					type: UPDATE_ACTIVITY,
+					payload: {
+						activity: updatedActivity,
 						property: property
 					}
 				};

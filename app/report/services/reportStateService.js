@@ -171,6 +171,28 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					var instructorIndex = section.instructors.indexOf(action.payload.instructor);
 					section.instructors.splice(instructorIndex, 1);
 					return sections;
+				case UPDATE_ACTIVITY:
+					// TODO avoid looking for other sections by maintaining a separate activity collection
+					var otherSectionIds = sections.ids
+						.filter(function (sid) {
+							return sections.list[sid].activities
+								.some(function (a) { return a.id == action.payload.activity.id; });
+						});
+
+					otherSectionIds.forEach(function (sectionId) {
+						section = sections.list[sectionId];
+						var activity = _.find(section.activities, { id: action.payload.activity.id });
+						// Apply the changes on the activity
+						activity[action.payload.property] = action.payload.activity[action.payload.property];
+						// Delete the applied change from the dwChanges object
+						delete activity.dwChanges[action.payload.property];
+						// Delete dwChanges if this was the last change
+						if (Object.keys(activity.dwChanges).length === 0) {
+							delete activity.dwChanges;
+						}
+					});
+
+					return sections;
 				case ADD_BANNER_TODO:
 					// Mandatory params
 					section = action.payload.section;
