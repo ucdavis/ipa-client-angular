@@ -136,6 +136,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					}
 					sections.ids = _array_sortIdsByProperty(sectionList, ["subjectCode", "courseNumber", "sequenceNumber"]);
 
+					// Flag the first section in a sectionGroup as a groupHead
 					var uniqSectionGroupKeys = [];
 					sections.ids.forEach(function (id) {
 						var uniqueKey = sectionList[id].subjectCode + '-' + sectionList[id].courseNumber;
@@ -172,13 +173,14 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					section.instructors.splice(instructorIndex, 1);
 					return sections;
 				case UPDATE_ACTIVITY:
-					// TODO avoid looking for other sections by maintaining a separate activity collection
+					// Find other sections that might have this activity (shared activity)
 					var otherSectionIds = sections.ids
 						.filter(function (sid) {
 							return sections.list[sid].activities
 								.some(function (a) { return a.id == action.payload.activity.id; });
 						});
 
+					// Apply the requested changes to all matching activities
 					otherSectionIds.forEach(function (sectionId) {
 						section = sections.list[sectionId];
 						var activity = _.find(section.activities, { id: action.payload.activity.id });
