@@ -17,7 +17,8 @@ table.section-diff-table > tbody > tr.section-diff-row.head-section > td {
 	border-top: 1px solid #ddd;
 }
 
-tr.section-diff-row.no-changes *, .section-activity-diff-row.no-changes * {
+tr.section-diff-row.no-changes *,
+tr.section-activity-diff-row.no-changes * {
 	color: #aaa;
 }
 
@@ -52,7 +53,7 @@ tr.section-diff-row.no-changes *, .section-activity-diff-row.no-changes * {
 .has-changes, tr.has-changes > td {
 	position: relative;
 	cursor: pointer;
-	border-bottom: 1px dashed #aaa !important;
+	border-bottom: 1px dashed #aaa;
 	color: darkmagenta;
 }
 
@@ -60,17 +61,21 @@ tr.section-diff-row.no-changes *, .section-activity-diff-row.no-changes * {
 	background-color: #eee;
 }
 
-.no-remote, tr.no-remote * {
-	color: darkred !important;
+.no-remote,
+tr.no-remote td,
+table.section-diff-table > tbody > tr.section-diff-row.no-remote > td,
+table.section-diff-table > tbody > tr.activity-diff-row.no-remote > td
+ {
+	color: seagreen;
 }
 
 .no-local {
-	color: darkorange !important;
+	color: darkred;
 }
 
 .change-action {
 	position:  absolute;
-	color: #750f0f;
+	color: #333;
 	font-weight: bold;
 	white-space: nowrap;
 	display: none;
@@ -89,15 +94,15 @@ tr.section-diff-row.no-changes *, .section-activity-diff-row.no-changes * {
 	display: inline-block;
 }
 
-.btn-dw {
-	border-color: darkorange;
-	color: darkorange;
+button.btn-dw {
+	border-color: darkred;
+	color: darkred;
 	background-color: #fff;
 }
 
-.btn-ipa {
-	border-color: darkred;
-	color: darkred;
+button.btn-ipa {
+	border-color: seagreen;
+	color: seagreen;
 	background-color: #fff;
 }
 
