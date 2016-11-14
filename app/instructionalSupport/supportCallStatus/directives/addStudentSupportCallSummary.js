@@ -9,6 +9,10 @@ instructionalSupportApp.directive("addStudentSupportCallSummary", this.addStuden
 		scope: false,
 		link: function (scope, element, attrs) {
 
+			scope.gotoStudentSummaryConfig = function () {
+				scope.supportCallConfigData.displayPage = 2;
+			}
+
 		} // end link
 	};
 });
