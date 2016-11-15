@@ -1,33 +1,6 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 <div></div>
 
-<!-- modal-input comments -->
-<div class="modal fade" id="modal-3">
-    <div class="modal-dialog instructor-modal-width">
-        <div class="modal-content">
-            <div class="modal-header instructor-modal-header_style">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Comments</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="form-group" class="comments-modal">
-                        <label class="control-label">Comments Here</label>
-                        <div>
-                            <textarea class="form-control" placeholder="Please add any comments here " rows="5 " id="comment" placeholder="Input comments here...">
-                                </textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- modal-ends -->
 <div class="main-content">
     <div class="container-fluid">
         <!-- page header -->
@@ -63,25 +36,10 @@
                             <p>Lu, Sammy</p>
                             <i class=" btn glyphicon glyphicon-remove ta-slot-remove text-primary "></i>
                         </div>
-                        <!-- drop down -->
-                        <select name="test" class="select2 ta-selector" data-allow-clear="true" data-placeholder="Assign Courses">
-                            <option></option>
-                            <optgroup label="Faculty Preference">
-                                <option value="1">Sagit, Bob</option>
-                                <option value="2">Johnson, Smith</option>
-                            </optgroup>
-                            <optgroup label="Master">
-                                <option value="3">McCormick, Janet</option>
-                                <option value="4">McGlophlin, Sarah</option>
-                                <option value="5">Brown, Suzi</option>
-                            </optgroup>
-                            <optgroup label="Phd">
-                                <option value="6">James, Kim</option>
-                                <option value="7">John,Boster</option>
-                            </optgroup>
-		    									</select>
-                        <!-- drop down ends-->
                     </div>
+										<instructor-preference-selector>
+										</instructor-preference-selector>
+
                 </div>
                 <div class="instructor-course-section">
                     <div class="instructor-application_title">
@@ -94,26 +52,11 @@
                             <p>Wallace, Grant</p>
                             <i class=" btn glyphicon glyphicon-remove ta-slot-remove text-primary "></i>
                         </div>
-                        <!-- drop down -->
-                        <select name="test" class="select2 ta-selector" data-allow-clear="true" data-placeholder="Assign Courses">
-                            <option></option>
-                            <optgroup label="Faculty Preference">
-                                <option value="1">Sagit, Bob</option>
-                                <option value="2">Johnson, Smith</option>
-                            </optgroup>
-                            <optgroup label="Master">
-                                <option value="3">McCormick, Janet</option>
-                                <option value="4">McGlophlin, Sarah</option>
-                                <option value="5">Brown, Suzi</option>
-                            </optgroup>
-                            <optgroup label="Phd">
-                                <option value="6">James, Kim</option>
-                                <option value="7">John,Boster</option>
-                            </optgroup>
-	    									</select>
-                        <!-- drop down ends-->
                         <!--add new slot button-->
                     </div>
+										<instructor-preference-selector>
+										</instructor-preference-selector>
+
                 </div>
                 <div class="instructor-course-section">
                     <div class="instructor-application_title">
@@ -131,25 +74,10 @@
                             <p>Jenny, Green</p>
                             <i class=" btn glyphicon glyphicon-remove ta-slot-remove text-primary "></i>
                         </div>
-                        <!-- drop down -->
-                        <select name="test" class="select2 ta-selector" data-allow-clear="true" data-placeholder="Assign Courses">
-                            <option></option>
-                            <optgroup label="Faculty Preference">
-                                <option value="1">Sagit, Bob</option>
-                                <option value="2">Johnson, Smith</option>
-                            </optgroup>
-                            <optgroup label="Master">
-                                <option value="3">McCormick, Janet</option>
-                                <option value="4">McGlophlin, Sarah</option>
-                                <option value="5">Brown, Suzi</option>
-                            </optgroup>
-                            <optgroup label="Phd">
-                                <option value="6">James, Kim</option>
-                                <option value="7">John,Boster</option>
-                            </optgroup>
-		    								</select>
-                        <!-- drop down ends-->
                     </div>
+										<instructor-preference-selector>
+										</instructor-preference-selector>
+
                 </div>
             </div>
         </div>
@@ -164,6 +92,6 @@
 				<textarea class="form-control" placeholder="Please add any comments here"></textarea>
 			</div>
 		</div>
-		<button type="button " class="btn btn-info pull-right ">Submit Preferences</button>
+		<button type="button" class="btn btn-info pull-right">Submit Preferences</button>
 	</div>
 </div>

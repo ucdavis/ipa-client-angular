@@ -133,3 +133,16 @@
 h4, .h4 {
     font-size: 15px;
 }
+
+
+.instructor-preference-selector {
+	width: 65%;
+	align-self: center;
+	text-align: center;
+	position: relative;
+	height: 30px;
+	border: 1px solid #ebebeb;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+}
