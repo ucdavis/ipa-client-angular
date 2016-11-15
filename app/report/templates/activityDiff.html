@@ -39,7 +39,7 @@
 	<span class="change-action" ng-if="activity.noLocal">
 		Activity does not exist in IPA
 		<!-- Action to apply Banner value -->
-		<button class="btn btn-dw btn-block">
+		<button class="btn btn-dw btn-block" ng-click="createActivity(section, $index)">
 			Create in IPA
 		</button>
 		<!-- Action to apply IPA value -->

@@ -210,6 +210,13 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					});
 
 					return sections;
+				case CREATE_ACTIVITY:
+					section = sections.list[action.payload.section.id];
+					// Set the id of the persisted activity
+					section.activities[action.payload.activityIndex].id = action.payload.activity.id;
+					// Remove the noLocal flag
+					delete section.activities[action.payload.activityIndex].noLocal;
+					return sections;
 				case ADD_BANNER_TODO:
 					// Mandatory params
 					section = action.payload.section;

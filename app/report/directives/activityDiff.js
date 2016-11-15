@@ -11,6 +11,9 @@ reportApp.directive("activityDiff", this.activityDiff = function (reportActionCr
 			scope.deleteActivity = function (activity) {
 				reportActionCreators.deleteActivity(activity);
 			};
+			scope.createActivity = function (section, activityIndex) {
+				reportActionCreators.createActivity(section, activityIndex);
+			};
 		}
 	};
 });

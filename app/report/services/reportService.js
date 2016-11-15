@@ -73,6 +73,19 @@ reportApp.factory("reportService", this.reportService = function ($http, $q, $wi
 
 			return deferred.promise;
 		},
+		createActivity: function (sectionId, activity) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/reportView/sections/" + sectionId + "/activities/" + activity.typeCode, activity, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
+		},
 		assignInstructor: function (sectionGroupId, instructor) {
 			var deferred = $q.defer();
 

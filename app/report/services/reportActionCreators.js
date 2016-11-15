@@ -105,6 +105,33 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 			});
 		},
 		/**
+		 * Creates an activity
+		 *
+		 * @param section
+		 * @param activity
+		 */
+		createActivity: function (section, activityIndex) {
+			// Set the time to match the server format
+			var activity = section.activities[activityIndex];
+			activity.startTime = moment(activity.startTime, "HHmm").format("HH:mm:ss");
+			activity.endTime = moment(activity.endTime, "HHmm").format("HH:mm:ss");
+
+			reportService.createActivity(section.id, activity).then(function (createdActivity) {
+				$rootScope.$emit('toast', { message: "Created " + activity.typeCode.getActivityCodeDescription(), type: "SUCCESS" });
+				var action = {
+					type: CREATE_ACTIVITY,
+					payload: {
+						section: section,
+						activityIndex: activityIndex,
+						activity: createdActivity
+					}
+				};
+				reportStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		/**
 		 * Assigns instructor to the section's sectionGroup
 		 *
 		 * @param section
