@@ -198,10 +198,22 @@ h4, .h4 {
 .sortable-instructor-preferences,
 .sortable-student-preferences {
 	list-style: none;
+	margin-bottom: 0px;
 }
 
 .sortable-instructor-preference-placeholder,
 .sortable-student-preference-placeholder {
 	width: 20px;
 	height: 50px;
+}
+
+.student-preference-selector {
+	margin-left: 40px;
+	width: 42%;
+	position: relative;
+	height: 30px;
+	border: 1px solid #ebebeb;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
 }
