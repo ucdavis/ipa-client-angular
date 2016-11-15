@@ -227,3 +227,12 @@ div.datepicker {
 	background-color: #21a9e1 !important;
 	color: white !important;
 }
+
+.people-summary-container {
+	border: 1px solid #949494;
+	width: 80%;
+	overflow-y: scroll;
+	height: 50px;
+	padding: 5px;
+	border-radius: 4px;
+}
