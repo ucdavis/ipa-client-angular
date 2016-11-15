@@ -195,6 +195,21 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					});
 
 					return sections;
+				case DELETE_ACTIVITY:
+					// Find sections that have this activity
+					var sectionIds = sections.ids
+						.filter(function (sid) {
+							return sections.list[sid].activities
+								.some(function (a) { return a.id == action.payload.activity.id; });
+						});
+
+					// remove the activity from the section(s)
+					sectionIds.forEach(function (sid) {
+						var activityIndex = sections.list[sid].activities.indexOf(action.payload.activity);
+						sections.list[sid].activities.splice(activityIndex, 1);
+					});
+
+					return sections;
 				case ADD_BANNER_TODO:
 					// Mandatory params
 					section = action.payload.section;

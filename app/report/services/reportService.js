@@ -60,6 +60,19 @@ reportApp.factory("reportService", this.reportService = function ($http, $q, $wi
 
 			return deferred.promise;
 		},
+		deleteActivity: function (activity) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/reportView/activities/" + activity.id, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
+		},
 		assignInstructor: function (sectionGroupId, instructor) {
 			var deferred = $q.defer();
 

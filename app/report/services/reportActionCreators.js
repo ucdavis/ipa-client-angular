@@ -86,6 +86,25 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 			});
 		},
 		/**
+		 * Deletes an activity
+		 *
+		 * @param activity
+		 */
+		deleteActivity: function (activity) {
+			reportService.deleteActivity(activity).then(function () {
+				$rootScope.$emit('toast', { message: "Deleted " + activity.typeCode.getActivityCodeDescription(), type: "SUCCESS" });
+				var action = {
+					type: DELETE_ACTIVITY,
+					payload: {
+						activity: activity
+					}
+				};
+				reportStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		/**
 		 * Assigns instructor to the section's sectionGroup
 		 *
 		 * @param section

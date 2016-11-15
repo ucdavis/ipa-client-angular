@@ -1,8 +1,8 @@
 <div ng-class="{
-	'no-remote' : activity.noRemote,
-	'no-local': activity.noLocal,
-	'has-changes': activity.noRemote || activity.noLocal,
-	'no-changes': !activity.noRemote && !activity.noLocal && !activity.dwChanges
+	'no-remote' : activity.noRemote && !activity.isToDo,
+	'no-local': activity.noLocal && !activity.isToDo,
+	'has-changes': (activity.noRemote || activity.noLocal) && !activity.isToDo,
+	'no-changes': activity.isToDo || !(activity.noRemote || activity.noLocal || activity.dwChanges)
  }" class="section-activity-diff-row">
 
 	<!-- Activity Type -->
@@ -26,7 +26,7 @@
 	<span class="change-action" ng-if="activity.noRemote">
 		Activity does not exist in Banner
 		<!-- Action to apply Banner value -->
-		<button class="btn btn-dw btn-block">
+		<button class="btn btn-dw btn-block" ng-click="deleteActivity(activity)">
 			Delete from IPA
 		</button>
 		<!-- Action to apply IPA value -->
