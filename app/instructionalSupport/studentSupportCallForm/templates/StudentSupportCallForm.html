@@ -10,15 +10,13 @@
             <div class="modal-content">
                 <div class="modal-header student-modal-header_style">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Comments</h4>
+                    <h4 class="modal-title">Preference Comments</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group" class="comments-modal">
-                            <label class="control-label">Comments Here</label>
                             <div>
-                                <textarea class="form-control" placeholder="Please add any comments here " rows="5 " id="comment" placeholder="Input comments here...">
-                                    </textarea>
+                                <textarea class="form-control" placeholder="Add Preference Comments..." id="comment"></textarea>
                             </div>
                         </div>
                     </div>
@@ -34,9 +32,12 @@
     <div class="main-content">
         <div class="container-fluid">
             <!-- page header -->
-            <div class="student-form-header">
-                <h3>Support Call 2016 Fall </h3>
-            </div>
+						<div class="tacall-instructor-header">
+		            <h3>Support Call 2016 Fall</h3>
+								<p class="text-align--center department-title">
+									Computer Science
+								</p>
+		        </div>
             <!-- page header ends -->
         </div>
 
@@ -64,13 +65,12 @@
                         <div class="due-day-header">
                             <h4>Due Date: 08/23/2016 </h4>
                         </div>
-                        <div class="student-course-section">
+											<ul id="sortable" class="sortable-student-preferences">
+                        <li class="student-course-section">
                             <div class="alert alert-info student-course">
                                 <i class="glyphicon glyphicon-menu-hamburger move-course-icon"></i>
-                                <i tabindex="0 " class="btn glyphicon glyphicon-exclamation-sign student-course-requirement text-primary" data-toggle="popover" data-trigger="focus " data-placement="right " data-content="Focus on Pychological study
-                                         based on human interaction and behaviors" data-original-title="PSC 113 "></i>
                                 <div class="student-course-info">
-                                    <p class="student-course_title">PSC 113 - Session 001</p>
+                                    <p class="student-course_title">ECS 001 - 001</p>
                                     <div class="student-course_details">
                                         <div>
                                         </div>
@@ -84,14 +84,12 @@
                                         <span>Comments...</span>
                                         </a>
                             </div>
-                        </div>
-                        <div class="student-course-section">
+                        </li>
+                        <li class="student-course-section">
                             <div class="alert alert-info student-course">
                                 <i class="glyphicon glyphicon-menu-hamburger move-course-icon"></i>
-                                <i tabindex="0 " class="btn glyphicon glyphicon-exclamation-sign student-course-requirement text-primary" data-toggle="popover" data-trigger="focus " data-placement="right " data-content="Focus on Pychological study
-                                         based on human interaction and behaviors" data-original-title="PSC 113 "></i>
                                 <div class="student-course-info ">
-                                    <p class="student-course_title ">PSC 113 - Session 001</p>
+                                    <p class="student-course_title ">ECS 041 - 002</p>
                                     <div class="student-course_details ">
                                         <div>
                                         </div>
@@ -105,18 +103,16 @@
                                         <span>Comments...</span>
                                         </a>
                             </div>
-                        </div>
-                        <div class="student-course-section">
+                        </li>
+                        <li class="student-course-section">
                             <div class="alert alert-info student-course">
                                 <i class="glyphicon glyphicon-menu-hamburger move-course-icon "></i>
-                                <i tabindex="0 " class="btn glyphicon glyphicon-exclamation-sign student-course-requirement text-primary" data-toggle="popover" data-trigger="focus " data-placement="right " data-content="Focus on Pychological study
-                                         based on human interaction and behaviors" data-original-title="PSC 113 "></i>
                                 <div class="student-course-info ">
-                                    <p class="student-course_title ">PSC 113 - Session 001</p>
+                                    <p class="student-course_title ">ECS 121 - 001</p>
                                     <div class="student-course_details ">
                                         <div>
                                         </div>
-                                        <p class="student-preference ">Course TA</p>
+                                        <p class="student-preference ">Reader</p>
                                         <i class=" btn glyphicon glyphicon-remove student-course-remove text-primary "></i>
                                     </div>
                                 </div>
@@ -126,31 +122,32 @@
                                         <span>Comments...</span>
                                         </a>
                             </div>
-                        </div>
+                        </li>
+											</ul>
                         <!-- drop down -->
                         <div class="course-preference-selector ">
                             <select name="test " class="selectboxit " data-first-option="false ">
-								<option>Select Preference</option>
-								<optgroup label="Faculty Preference ">
-									<option value="1 ">Psychology 001 (TA)</option>
-									<option value="2 ">Psychology 050 (TA)</option>
-									<option value="3 ">Pychological 101 (Reader)</option>
-								</optgroup>
-								<optgroup label="TA ">
-									<option value="1 ">Psychology 015</option>
-									<option value="2 ">Psychology 020</option>
-                                        <option value="3 ">Psychology 115</option>
-									<option value="4 ">Psychology 120</option>
-								</optgroup>
-                                    <optgroup label="Reader ">
-									<option value="1 ">Psychology 015</option>
-									<option value="2 ">Psychology 020</option>
-								</optgroup>
-                                    <optgroup label="AI ">
-									<option value="1 ">Psychology 002</option>
-									<option value="2 ">Psychology 020</option>
-								</optgroup>
-							</select>
+															<option>Select Preference</option>
+															<optgroup label="Faculty Preference ">
+																<option value="1 ">ECS 001 (TA)</option>
+																<option value="2 ">ECS 050 (TA)</option>
+																<option value="3 ">ECS 101 (Reader)</option>
+															</optgroup>
+															<optgroup label="TA ">
+																<option value="1 ">ECS 015</option>
+																<option value="2 ">ECS 020</option>
+							                <option value="3 ">ECS 115</option>
+																<option value="4 ">ECS 120</option>
+															</optgroup>
+							                <optgroup label="Reader ">
+																<option value="1 ">ECS 015</option>
+																<option value="2 ">ECS 020</option>
+															</optgroup>
+							                <optgroup label="AI ">
+																<option value="1 ">ECS 002</option>
+																<option value="2 ">ECS 020</option>
+															</optgroup>
+														</select>
                         </div>
                         <!-- drop down ends-->
                         <!--add new slot button

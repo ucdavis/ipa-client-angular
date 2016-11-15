@@ -17,6 +17,19 @@ instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '
 				$scope.view.state = data.state;
 			});
 
+			$( "#sortable1" ).sortable({
+				placeholder: "sortable-instructor-preference-placeholder",
+				axis: "y"
+			});
+			$( "#sortable2" ).sortable({
+				placeholder: "sortable-instructor-preference-placeholder",
+				axis: "y"
+			});
+			$( "#sortable3" ).sortable({
+				placeholder: "sortable-instructor-preference-placeholder",
+				axis: "y"
+			});
+
 	}]);
 
 InstructorSupportCallFormCtrl.getPayload = function (authService, instructionalSupportAssignmentActionCreators, $route) {

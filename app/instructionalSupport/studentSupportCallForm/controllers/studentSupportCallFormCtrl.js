@@ -17,6 +17,10 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 				$scope.view.state = data.state;
 			});
 
+			$( "#sortable" ).sortable({
+				placeholder: "sortable-student-preference-placeholder",
+				axis: "y"
+			});
 	}]);
 
 StudentSupportCallFormCtrl.getPayload = function (authService, instructionalSupportAssignmentActionCreators, $route) {
