@@ -28,4 +28,43 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 
 		$uibModalInstance.dismiss('cancel');
 	};
+
+	$scope.toggleInstructor = function () {
+		$scope.supportCallConfigData.instructorParticipants = true;
+
+		$scope.supportCallConfigData.phdParticipants = false;
+		$scope.supportCallConfigData.mastersParticipants = false;
+		$scope.supportCallConfigData.instructionalSupportParticipants = false;
+	};
+
+	$scope.togglePhd = function () {
+		$scope.supportCallConfigData.instructorParticipants = false;
+
+		if ($scope.supportCallConfigData.phdParticipants) {
+			$scope.supportCallConfigData.phdParticipants = false;
+		} else {
+			$scope.supportCallConfigData.phdParticipants = true;
+		}
+	};
+
+	$scope.toggleMasters = function () {
+		$scope.supportCallConfigData.instructorParticipants = false;
+
+		if ($scope.supportCallConfigData.mastersParticipants) {
+			$scope.supportCallConfigData.mastersParticipants = false;
+		} else {
+			$scope.supportCallConfigData.mastersParticipants = true;
+		}
+	};
+
+	$scope.toggleInstructionalSupport = function () {
+		$scope.supportCallConfigData.instructorParticipants = false;
+
+		if ($scope.supportCallConfigData.instructionalSupportParticipants) {
+			$scope.supportCallConfigData.instructionalSupportParticipants = false;
+		} else {
+			$scope.supportCallConfigData.instructionalSupportParticipants = true;
+		}
+	};
+
 });

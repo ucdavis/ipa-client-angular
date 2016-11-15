@@ -220,3 +220,10 @@ div.datepicker {
 .uib-daypicker:focus {
 	outline-width: 0;
 }
+
+.support-call-group-active,
+.support-call-group-active:focus,
+.support-call-group-active:hover {
+	background-color: #21a9e1 !important;
+	color: white !important;
+}

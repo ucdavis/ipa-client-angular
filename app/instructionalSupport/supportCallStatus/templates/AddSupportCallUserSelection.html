@@ -24,26 +24,43 @@
                                 </div>
                             </div>
 
+
+
                             <div class="people-list-section">
                                 <div class="row">
                                     <h5>Participants</h5>
                                     <div class="preference-selector btn-group" data-toggle="buttons">
-                                      <label class="btn btn-white btn-sm active" id="courses-pivot">
-																				<input type="radio" name="options">
-																				<span></span>Phd
-																			</label>
-													                                        <label class="btn btn-white btn-sm" id="courses-pivot">
-																				<input type="radio" name="options">
-																				<span></span>Master
-																			</label>
-													                                        <label class="btn btn-white btn-sm" id="courses-pivot">
-																				<input type="radio" name="options">
-																				<span></span>Non-departmental
-																			</label>
-													                                        <label class="btn btn-white btn-sm" id="courses-pivot">
-																				<input type="radio" name="options">
-																				<span></span>Faculty
-																			</label>
+
+																			<div class="btn-group" data-toggle="buttons">
+																				<label class="instructor-toggle-btn btn btn-white"
+																				ng-click="togglePhd()"
+																				ng-class="{'support-call-group-active': supportCallConfigData.phdParticipants}">
+																					<input type="checkbox" name="options">
+																					<span></span> Phd
+																				</label>
+
+																				<label class="instructor-toggle-btn btn btn-white"
+																				ng-click="toggleMasters()"
+																				ng-class="{'support-call-group-active': supportCallConfigData.mastersParticipants}">
+																					<input type="checkbox" name="options">
+																					<span></span> Master
+																				</label>
+
+																				<label class="instructor-toggle-btn btn btn-white"
+																				ng-click="toggleInstructionalSupport()"
+																				ng-class="{'support-call-group-active': supportCallConfigData.instructionalSupportParticipants}">
+																					<input type="checkbox" name="options">
+																					<span></span> Non-departmental
+																				</label>
+																				
+																				<label class="instructor-toggle-btn btn btn-white"
+																				ng-click="toggleInstructor()"
+																				ng-class="{'support-call-group-active': supportCallConfigData.instructorParticipants}">
+																					<input type="checkbox" name="options">
+																					<span></span> Instructors
+																				</label>
+																			</div>
+
                                     </div>
                                     <div class="bootstrap-tagsinput receivers-input-section">
                                         <span class="tag label label-info"><input type="checkbox">Wang, Linda</span>
