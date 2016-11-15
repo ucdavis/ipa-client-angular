@@ -30,7 +30,14 @@
             </div>
             <div class="preference-and-due_date">
                 <div class="row">
-                    <span class="bold-title">Preference:</span><span>TA</span>
+                    <span class="bold-title">
+											Preferences:
+										</span>
+
+										<span ng-if="supportCallConfigData.collectTAPreferences">TA &nbsp;</span>
+										<span ng-if="supportCallConfigData.collectReaderPreferences">reader &nbsp;</span>
+										<span ng-if="supportCallConfigData.collectAIPreferences">AI &nbsp;</span>
+
                 </div>
                 <div class="row">
                     <span class="bold-title">Due Date:</span><span>October 11, 2016</span>

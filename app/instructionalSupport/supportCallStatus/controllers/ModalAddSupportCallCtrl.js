@@ -139,8 +139,6 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 			participant.enabled = true;
 			$scope.supportCallConfigData.participantPool.push(participant);
 		}
-
-		console.log($scope.supportCallConfigData.participantPool);
 	};
 
 	$scope.toggleEnabled = function (participant) {
@@ -148,6 +146,30 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 			participant.enabled = false;
 		} else {
 			participant.enabled = true;
+		}
+	};
+
+	$scope.toggleReaderPreferences = function () {
+		if ($scope.supportCallConfigData.collectReaderPreferences) {
+			$scope.supportCallConfigData.collectReaderPreferences = false;
+		} else {
+			$scope.supportCallConfigData.collectReaderPreferences = true;
+		}
+	};
+
+	$scope.toggleAIPreferences = function () {
+		if ($scope.supportCallConfigData.collectAIPreferences) {
+			$scope.supportCallConfigData.collectAIPreferences = false;
+		} else {
+			$scope.supportCallConfigData.collectAIPreferences = true;
+		}
+	};
+
+	$scope.toggleTAPreferences = function () {
+		if ($scope.supportCallConfigData.collectTAPreferences) {
+			$scope.supportCallConfigData.collectTAPreferences = false;
+		} else {
+			$scope.supportCallConfigData.collectTAPreferences = true;
 		}
 	};
 
