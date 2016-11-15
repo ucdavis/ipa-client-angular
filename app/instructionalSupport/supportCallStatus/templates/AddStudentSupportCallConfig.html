@@ -10,7 +10,7 @@
 	        <div class="config-flex-auto container-fluid">
 	            <!-- collect ta preference -->
 	            <div class="row btn-group" data-toggle="buttons" style="margin-bottom: 25px;">
-	            	<h5 style="margin-bottom: 15px;">Collect Preference on </h5>
+	            	<h5 style="margin-bottom: 15px;">Collect Preferences for:</h5>
 
 								<div class="preference-selector btn-group" data-toggle="buttons">
 									<div class="btn-group" data-toggle="buttons">
@@ -42,7 +42,7 @@
 	            <!-- collect ta preference ends-->
 	            <!-- collect required information-->
 	            <div class="row">
-	                <h5>Required Information</h5>
+	                <h5>Additional Form Fields</h5>
 	                <div class="checkbox">
 	                    <label class="checkbox-inline check-box-TA-call">
 												<input type="checkbox" value="">
@@ -116,7 +116,7 @@
             <div class="message-section">
                 <!-- enter email message  -->
                 <h5 class="pull-left">Email Message</h5>
-                <textarea class="form-control" rows="5" id="comment"></textarea>
+                <textarea style="height: 100px;" ng-model="supportCallConfigData.emailMessage" class="form-control"></textarea>
             </div>
         </div>
         <!-- email section ends -->

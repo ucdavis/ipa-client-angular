@@ -13,11 +13,6 @@
                     <h5>Term: Fall Quarter 2016</h5>
                 </div>
             </div>
-            <div class="config-summary-title">
-                <div class="row">
-                    <h4>Graduate Student Group</h4>
-                </div>
-            </div>
             <div class="people-list-section">
                 <div class="row">
                     <h5>People</h5>
@@ -45,7 +40,7 @@
             </div>
             <div class="info-collected-section">
                 <div class="row">
-                    <h5>Information Needed:</h5>
+                    <h5>Requested Information:</h5>
                     <div class="flex-box_row">
                         <div class="info-collected-list">
                             <div class="info-collected">
@@ -72,8 +67,10 @@
             </div>
             <div class="email-message">
                 <div class="row">
-                    <h5>Email Message to Student Group:</h5>
-                    <textarea class="form-control" placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment"></textarea>
+                    <h5>Email Message:</h5>
+										<div class="people-summary-container">
+											{{ supportCallConfigData.emailMessage }}
+										</div>
                 </div>
             </div>
 

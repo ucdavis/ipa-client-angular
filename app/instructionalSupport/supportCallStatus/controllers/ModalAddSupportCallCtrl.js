@@ -22,6 +22,7 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	];
 
 	$scope.supportCallConfigData = {mode: "instructor", displayPage: 1};
+	$scope.supportCallConfigData.emailMessage = "Please consider your preferences for next year. As always, we will attempt to accommodate your requests, but we may need to ask some of you to make changes in order to balance our course offerings effectively."
 	$scope.supportCallConfigData.phdParticipants = false;
 	$scope.supportCallConfigData.mastersParticipants = false;
 	$scope.supportCallConfigData.participantPool = [];
