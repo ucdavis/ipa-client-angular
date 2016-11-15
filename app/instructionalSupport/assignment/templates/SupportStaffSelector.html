@@ -3,28 +3,75 @@
 		Assign {{ instructionalSupportAssignment.appointmentPercentage }}%
 	</div>
 	<ul class="dropdown-menu" style="width: 100%;">
-		<li class="dropdown-header" stop-event="click"><b>Faculty Preferences</b></li>
-		<li role="separator" class="divider"></li>
 
-		<li ng-repeat="tagId in view.state.tags.ids track by $index" class="clickable" ng-click="tagToggled(tagId)">
+		<!-- Instructor preferences -->
+		<li class="dropdown-header" stop-event="click"><b>Instructor Preferences</b></li>
+
+		<li class="clickable">
 			<a class="small">
-				<span class="course-filter-item">{{ view.state.tags.list[tagId].name }}</span>
+				<span class="course-filter-item">Brown, Suzi (2)</span>
 			</a>
 		</li>
-		<li class="clickable" ng-click="tagToggled(tagId)">
+
+		<!-- Student preferences -->
+		<li role="separator" class="divider"></li>
+		<li class="dropdown-header" stop-event="click"><b>Student Preferences</b></li>
+
+		<li class="clickable">
 			<a class="small">
-				<span class="course-filter-item">Rogers, Mister</span>
+				<span class="course-filter-item">Smith, John (1)</span>
 			</a>
 		</li>
-		<li class="clickable" ng-click="tagToggled(tagId)">
+		<li class="clickable">
 			<a class="small">
-				<span class="course-filter-item">Phillips, Jeremy </span>
+				<span class="course-filter-item">Wallace, Grant (1)</span>
 			</a>
 		</li>
-		<li class="clickable" ng-click="tagToggled(tagId)">
+		<li class="clickable">
 			<a class="small">
-				<span class="course-filter-item">Dole, Bob</span>
+				<span class="course-filter-item">Green, Jenny (4)</span>
 			</a>
 		</li>
+
+
+		<!-- phds -->
+		<li ng-if="assignmentOptions.phdStudentIds.length > 0" role="separator" class="divider"></li>
+		<li ng-if="assignmentOptions.phdStudentIds.length > 0" class="dropdown-header" stop-event="click"><b>Phd Students</b></li>
+
+		<li ng-if="assignmentOptions.phdStudentIds.length > 0" class="clickable"
+			ng-repeat="instructionalSupportStaffId in assignmentOptions.phdStudentIds"
+			ng-click="pretend(instructionalSupportStaffId)"
+			ng-init="instructionalSupportStaff=view.state.instructionalSupportStaff.list[instructionalSupportStaffId]">
+			<a class="small">
+				<span class="course-filter-item">{{ view.state.instructionalSupportStaffs.list[instructionalSupportStaffId].fullName }}</span>
+			</a>
+		</li>
+
+		<!-- masters -->
+		<li ng-if="assignmentOptions.mastersStudentIds.length > 0" role="separator" class="divider"></li>
+		<li ng-if="assignmentOptions.mastersStudentIds.length > 0" class="dropdown-header" stop-event="click"><b>Masters Students</b></li>
+
+		<li ng-if="assignmentOptions.mastersStudentIds.length > 0" class="clickable"
+			ng-repeat="instructionalSupportStaffId in assignmentOptions.mastersStudentIds"
+			ng-click="pretendToast(instructionalSupportStaffId)"
+			ng-init="instructionalSupportStaff=view.state.instructionalSupportStaff.list[instructionalSupportStaffId]">
+			<a class="small">
+				<span class="course-filter-item">{{ view.state.instructionalSupportStaffs.list[instructionalSupportStaffId].fullName }}</span>
+			</a>
+		</li>
+
+		<!-- instructionalSupport -->
+		<li ng-if="assignmentOptions.instructionalSupportIds.length > 0" role="separator" class="divider"></li>
+		<li ng-if="assignmentOptions.instructionalSupportIds.length > 0" class="dropdown-header" stop-event="click"><b>Instructional Support</b></li>
+
+		<li ng-if="assignmentOptions.instructionalSupportIds.length > 0" class="clickable"
+			ng-repeat="instructionalSupportStaffId in assignmentOptions.instructionalSupportIds"
+			ng-click="pretendToast(instructionalSupportStaffId)"
+			ng-init="instructionalSupportStaff=view.state.instructionalSupportStaff.list[instructionalSupportStaffId]">
+			<a class="small">
+				<span class="course-filter-item">{{ view.state.instructionalSupportStaffs.list[instructionalSupportStaffId].fullName }}</span>
+			</a>
+		</li>
+
 	</ul>
 </div>

@@ -27,10 +27,26 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 								sectionGroup.courseNumber = courseData.courseNumber;
 								sectionGroup.title = courseData.title;
 								sectionGroup.units = courseData.unitsLow;
-								sectionGroup.instructionalSupportAssignmentIds = [];
 
 								sectionGroupsList[sectionGroupData.id] = sectionGroup;
 								sectionGroups.ids.push(sectionGroupData.id);
+								sectionGroup.instructionalSupportAssignmentIds = [];
+
+								// Add assignment options
+								sectionGroup.taAssignmentOptions = {};
+								sectionGroup.taAssignmentOptions.phdStudentIds = action.payload.phdStudentIds;
+								sectionGroup.taAssignmentOptions.mastersStudentIds = action.payload.mastersStudentIds;
+								sectionGroup.taAssignmentOptions.instructionalSupportIds = action.payload.instructionalSupportIds;
+
+								sectionGroup.readerAssignmentOptions = {};
+								sectionGroup.readerAssignmentOptions.phdStudentIds = action.payload.phdStudentIds;
+								sectionGroup.readerAssignmentOptions.mastersStudentIds = action.payload.mastersStudentIds;
+								sectionGroup.readerAssignmentOptions.instructionalSupportIds = action.payload.instructionalSupportIds;
+
+								sectionGroup.aiAssignmentOptions = {};
+								sectionGroup.aiAssignmentOptions.phdStudentIds = action.payload.phdStudentIds;
+								sectionGroup.aiAssignmentOptions.mastersStudentIds = action.payload.mastersStudentIds;
+								sectionGroup.aiAssignmentOptions.instructionalSupportIds = action.payload.instructionalSupportIds;
 							}
 						}
 					}
