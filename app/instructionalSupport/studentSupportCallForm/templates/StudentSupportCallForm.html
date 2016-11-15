@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="form-group" class="comments-modal">
                             <div>
-                                <textarea class="form-control" placeholder="Add Preference Comments..." id="comment"></textarea>
+                                <textarea class="form-control" id="comment"></textarea>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,11 @@
                                         <div>
                                         </div>
                                         <p class="student-preference">Course TA</p>
-                                        <i class="btn glyphicon glyphicon-remove student-course-remove text-primary"></i>
+                                        <i class="btn glyphicon glyphicon-remove student-course-remove text-primary"
+																					uib-tooltip="Delete Assignment" tooltip-placement="bottom"
+																					confirm-button="deleteTeachingCall(teachingCall)"
+																					message="Are you sure you want to delete this Assignment?"
+																					yes="Confirm" no="Cancel" placement="top"></i>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +98,11 @@
                                         <div>
                                         </div>
                                         <p class="student-preference ">Course TA</p>
-                                        <i class=" btn glyphicon glyphicon-remove student-course-remove text-primary "></i>
+																				<i class="btn glyphicon glyphicon-remove student-course-remove text-primary"
+																					uib-tooltip="Delete Assignment" tooltip-placement="bottom"
+																					confirm-button="deleteTeachingCall(teachingCall)"
+																					message="Are you sure you want to delete this Assignment?"
+																					yes="Confirm" no="Cancel" placement="top"></i>
                                     </div>
                                 </div>
                             </div>
@@ -113,7 +121,11 @@
                                         <div>
                                         </div>
                                         <p class="student-preference ">Reader</p>
-                                        <i class=" btn glyphicon glyphicon-remove student-course-remove text-primary "></i>
+																				<i class="btn glyphicon glyphicon-remove student-course-remove text-primary"
+																					uib-tooltip="Delete Assignment" tooltip-placement="bottom"
+																					confirm-button="deleteTeachingCall(teachingCall)"
+																					message="Are you sure you want to delete this Assignment?"
+																					yes="Confirm" no="Cancel" placement="top"></i>
                                     </div>
                                 </div>
                             </div>
@@ -139,16 +151,18 @@
             <div class="input-box-section ">
                 <div class="input-box-area ">
                     <h5 class="pull-left ">Teaching Qualification</h5>
-                    <textarea class="form-control" placeholder="Please indicate you teaching qualification here"></textarea>
+                    <textarea class="form-control"></textarea>
                 </div>
                 <div class="empty-flex-box_input-box ">
                 </div>
                 <div class="input-box-area ">
                     <h5 class="pull-left">Comments</h5>
-                    <textarea class="form-control" placeholder="Please add any comments here"></textarea>
+                    <textarea class="form-control"></textarea>
                 </div>
             </div>
-            <button type="button " class="btn btn-info pull-right ">Submit Preferences</button>
+						<a href="/summary/20/2016?mode=instructionalSupport">
+            	<button type="button" class="btn btn-info pull-right">Submit Preferences</button>
+						</a>
         </div>
     </div>
     <!-- input box section ends -->
