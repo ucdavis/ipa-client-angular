@@ -185,7 +185,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 			newState = {};
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.instructionalSupportAssignments = scope._instructionalSupportAssignmentsReducers(action, scope._state.instructionalSupportAssignments);
-			newState.instructionalSupportStaffs = scope._instructionalSupportStaffsReducers(action, scope._state.instructionalSupportStaffList);
+			newState.instructionalSupportStaffs = scope._instructionalSupportStaffsReducers(action, scope._state.instructionalSupportStaffs);
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
 			scope._state = newState;
 
