@@ -236,3 +236,9 @@ div.datepicker {
 	padding: 5px;
 	border-radius: 4px;
 }
+
+/* Ensure this override for the neon theme button styling
+ does not override the uib-datepicker 'selected day' styling */
+.uib-datepicker .btn-default:not(.active):not(.btn-info) {
+	background-color: white;
+}
