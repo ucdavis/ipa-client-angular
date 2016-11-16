@@ -54,7 +54,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 				$scope.view.selectedEntity = $scope.view.state.courses.newCourse;
 				$scope.view.selectedEntityType = "newCourse";
 				$timeout(function () {
-					scope.$apply();
+					$scope.$apply();
 				});
 			} else if (data.state.uiState.selectedCourseId && !data.state.uiState.selectedTermCode) {
 				// A course is selected
