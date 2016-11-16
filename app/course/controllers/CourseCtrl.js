@@ -5,8 +5,8 @@
  * # CourseCtrl
  * Controller of the ipaClientAngularApp
  */
-courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'courseActionCreators', 'courseService', 'Term',
-		this.CourseCtrl = function ($scope, $rootScope, $routeParams, courseActionCreators, courseService, Term) {
+courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$timeout', 'courseActionCreators', 'courseService', 'Term',
+		this.CourseCtrl = function ($scope, $rootScope, $routeParams, $timeout, courseActionCreators, courseService, Term) {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.view = {};
@@ -53,7 +53,9 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', 'cou
 				// A new course is being created
 				$scope.view.selectedEntity = $scope.view.state.courses.newCourse;
 				$scope.view.selectedEntityType = "newCourse";
-				$scope.$apply();
+				$timeout(function () {
+					scope.$apply();
+				});
 			} else if (data.state.uiState.selectedCourseId && !data.state.uiState.selectedTermCode) {
 				// A course is selected
 				$scope.view.selectedEntity = angular.copy($scope.view.state.courses.list[data.state.uiState.selectedCourseId]);

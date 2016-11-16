@@ -2,7 +2,7 @@
  * Colorpicker input directive
  * Example: <colorpicker type="text" color="my.model" />
  */
-sharedApp.directive("colorpicker", this.colorpicker = function () {
+sharedApp.directive("colorpicker", this.colorpicker = function ($timeout) {
 	return {
 		restrict: "E",
 		template: "<div class=\"input-group\"> " +
@@ -36,12 +36,16 @@ sharedApp.directive("colorpicker", this.colorpicker = function () {
 
 			var applyNewColor = function (newColor) {
 				scope.color = newColor;
-				scope.$apply();
+				$timeout(function () {
+					scope.$apply();
+				});
 			};
 
 			var applyChange = function () {
 				scope.onChange();
-				scope.$apply();
+				$timeout(function () {
+					scope.$apply();
+				});
 			};
 		}
 	};

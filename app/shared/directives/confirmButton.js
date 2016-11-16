@@ -1,4 +1,4 @@
-sharedApp.directive("confirmButton", this.confirmButton = function ($document) {
+sharedApp.directive("confirmButton", this.confirmButton = function ($document, $timeout) {
 	return {
 		restrict: 'A',
 		scope: {
@@ -32,10 +32,14 @@ sharedApp.directive("confirmButton", this.confirmButton = function ($document) {
 				container: 'body'
 			}).on('hidden.bs.popover', function () {
 				scope.confirmIsShown = false;
-				scope.$apply();
+				$timeout(function () {
+					scope.$apply();
+				});
 			}).on('shown.bs.popover', function () {
 				scope.confirmIsShown = true;
-				scope.$apply();
+				$timeout(function () {
+					scope.$apply();
+				});
 			});
 
 			element.bind('click', function (e) {

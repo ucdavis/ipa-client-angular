@@ -51,11 +51,15 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 						var activity = scope.view.state.activities.list[calEvent.activityId];
 						schedulingActionCreators.setSelectedActivity(activity);
 						// Important: notify angular since this happends outside of the scope
-						scope.$apply();
+						$timeout(function () {
+							scope.$apply();
+						});
 					},
 					dayClick: function (date, jsEvent, view) {
 						schedulingActionCreators.setSelectedActivity();
-						scope.$apply();
+						$timeout(function () {
+							scope.$apply();
+						});
 					}
 				});
 			};
