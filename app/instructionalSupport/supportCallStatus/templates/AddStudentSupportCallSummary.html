@@ -30,12 +30,12 @@
 										</span>
 
 										<span ng-if="supportCallConfigData.collectTAPreferences">TA &nbsp;</span>
-										<span ng-if="supportCallConfigData.collectReaderPreferences">reader &nbsp;</span>
+										<span ng-if="supportCallConfigData.collectReaderPreferences">Reader &nbsp;</span>
 										<span ng-if="supportCallConfigData.collectAIPreferences">AI &nbsp;</span>
 
                 </div>
                 <div class="row">
-                    <span class="bold-title">Due Date:</span><span>October 11, 2016</span>
+                    <span class="bold-title">Due Date:</span><span>{{ supportCallConfigData.dueDate }}</span>
                 </div>
             </div>
             <div class="info-collected-section">
@@ -81,7 +81,7 @@
     <!-- modal-footer -->
     <div class="modal-footer">
         <!-- email section ends -->
-				<button ng-click="gotoStudentSummaryConfig()" type="button" class="btn btn-default">Back</button>
+				<button ng-click="gotoConfigPage()" type="button" class="btn btn-default">Back</button>
         <button type="button" class="btn btn-info">Begin Support Call</button>
     </div>
     <!-- modal-footer ends -->

@@ -1,3 +1,55 @@
-<div>
-	Add Instructor Support Call Summary page here
+<div class="modal-content">
+    <div class="modal-header config-header_style">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">TA Call Summary</h4>
+    </div>
+
+    <!-- modal-body -->
+    <div class="modal-body">
+        <!-- ta-call-info section-->
+        <div class="flex-box_column container-fluid">
+            <div class="term-quarter">
+                <div class="row">
+                    <h5>Term: Fall Quarter 2016</h5>
+                </div>
+            </div>
+            <div class="people-list-section">
+                <div class="row">
+                    <h5>Instructors</h5>
+                    <div class="people-summary-container">
+											<span ng-repeat="participant in supportCallConfigData.participantPool">
+												{{ participant.displayName }}, &nbsp;
+											</span>
+										</div>
+                </div>
+            </div>
+            <div class="preference-and-due_date">
+                <div class="row">
+                    <span class="bold-title">
+											Preferences:
+										</span>
+										<span>TA</span>
+                </div>
+                <div class="row">
+                    <span class="bold-title">Due Date:</span><span>{{ supportCallConfigData.dueDate }}</span>
+                </div>
+            </div>
+            <div class="email-message">
+                <div class="row">
+                    <h5>Email Message:</h5>
+										<div class="people-summary-container">
+											{{ supportCallConfigData.emailMessage }}
+										</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal-body ends -->
+    <!-- modal-footer -->
+    <div class="modal-footer">
+        <!-- email section ends -->
+				<button ng-click="gotoConfigPage()" type="button" class="btn btn-default">Back</button>
+        <button type="button" class="btn btn-info">Begin Support Call</button>
+    </div>
+    <!-- modal-footer ends -->
 </div>

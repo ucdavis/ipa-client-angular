@@ -1,3 +1,49 @@
-<div>
-	add instructor support call config page goes here
+<div class="modal-content">
+	<div class="modal-header config-header_style">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h4 class="modal-title">Support Call Settings</h4>
+	</div>
+	<!-- modal-body -->
+	<div class="modal-body">
+	    <!-- ta-call-info section-->
+	    <div class="flex-box_row">
+	        <div class="config-flex-auto">
+	            <!-- select dates&terms section-->
+	            <div class="container-fluid">
+	                <h5>Set Due Date</h5>
+									{{rawDueDate}}
+									<div uib-datepicker ng-model="supportCallConfigData.rawDueDate" datepicker-options="dateOptions"></div>
+	            </div>
+	            <!-- select dates&terms section ends-->
+	        </div>
+	    </div>
+	</div>
+    <!-- modal-body ends -->
+    <!-- modal-footer -->
+    <div class="modal-footer">
+        <div class="flex-box_column email-section container-fluid">
+            <!-- email section begin -->
+            <div class="preference-selector btn-group" data-toggle="buttons">
+                <!-- email preference  -->
+                <h5>Email Preference</h5>
+                <label class="btn btn-white btn-sm active" id="courses-pivot">
+									<input type="radio" name="options">
+									<span></span>Begin With Email
+								</label>
+                <label class="btn btn-white btn-sm" id="instructors-pivot">
+									<input type="radio" name="options">
+									<span></span>Begin Without Email
+								</label>
+            </div>
+            <div class="message-section">
+                <!-- enter email message  -->
+                <h5 class="pull-left">Email Message</h5>
+                <textarea style="height: 100px;" ng-model="supportCallConfigData.emailMessage" class="form-control"></textarea>
+            </div>
+        </div>
+        <!-- email section ends -->
+        <button ng-click="gotoUserSelectionPage()" type="button" class="btn btn-default">Back</button>
+        <button ng-click="gotoSummaryPage()" type="button" class="btn btn-info">Next</button>
+    </div>
+    <!-- modal-footer ends -->
 </div>

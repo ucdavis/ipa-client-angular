@@ -1,5 +1,4 @@
 instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSupportCallCtrl = function($scope, $rootScope, $uibModalInstance, instructionalSupportAssignmentActionCreators, sectionGroupId, appointmentType) {
-
 	$scope.phdPool = [
 		{id: 1, displayName: "John Smith", group: "phd", enabled: true},
 		{id: 2, displayName: "Jenny Garcia", group: "phd", enabled: true},
@@ -22,13 +21,16 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	];
 
 	$scope.supportCallConfigData = {mode: "instructor", displayPage: 1};
-	$scope.supportCallConfigData.emailMessage = "Please consider your preferences for next year. As always, we will attempt to accommodate your requests, but we may need to ask some of you to make changes in order to balance our course offerings effectively."
+	$scope.supportCallConfigData.dueDate;
+	$scope.supportCallConfigData.rawDueDate;
+
+	$scope.supportCallConfigData.emailMessage = "Please consider your preferences for next year. As always, we will attempt to accommodate your requests, but we may need to ask some of you to make changes in order to balance our course offerings effectively.";
 	$scope.supportCallConfigData.phdParticipants = false;
 	$scope.supportCallConfigData.mastersParticipants = false;
 	$scope.supportCallConfigData.participantPool = [];
 
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate', 'yyyy-MM-dd'];
-	$scope.format = $scope.formats[4];
+	$scope.format = $scope.formats[0];
 
 	// Datepicker config
 	$scope.inlineOptions = {
@@ -55,15 +57,21 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	};
 
 	$scope.toggleInstructor = function () {
-		$scope.supportCallConfigData.instructorParticipants = true;
-		addGroupToPool("instructor");
-
 		$scope.supportCallConfigData.phdParticipants = false;
-		removeGroupFromPool("phd");
 		$scope.supportCallConfigData.mastersParticipants = false;
-		removeGroupFromPool("masters");
 		$scope.supportCallConfigData.instructionalSupportParticipants = false;
+
+		removeGroupFromPool("phd");
+		removeGroupFromPool("masters");
 		removeGroupFromPool("instructionalSupport");
+
+		if ($scope.supportCallConfigData.instructorParticipants) {
+			$scope.supportCallConfigData.instructorParticipants = false;
+			removeGroupFromPool("instructor");
+		} else {
+			$scope.supportCallConfigData.instructorParticipants = true;
+			addGroupToPool("instructor");
+		}
 	};
 
 	$scope.togglePhd = function () {
@@ -174,4 +182,24 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		}
 	};
 
+	$scope.gotoConfigPage = function () {
+		if ($scope.supportCallConfigData.instructorParticipants) {
+			$scope.supportCallConfigData.displayPage = 4;
+		} else {
+			$scope.supportCallConfigData.displayPage = 2;
+		}
+	}
+
+	$scope.gotoUserSelectionPage = function () {
+		$scope.supportCallConfigData.displayPage = 1;
+	}
+
+	$scope.gotoSummaryPage = function () {
+		$scope.supportCallConfigData.dueDate = $scope.supportCallConfigData.rawDueDate.toISOString().slice(0, 10);
+		if ($scope.supportCallConfigData.instructorParticipants) {
+			$scope.supportCallConfigData.displayPage = 5;
+		} else {
+			$scope.supportCallConfigData.displayPage = 3;
+		}
+	}
 });
