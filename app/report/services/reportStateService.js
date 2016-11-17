@@ -33,12 +33,9 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 			var section;
 			switch (action.type) {
 				case INIT_STATE:
-				case BEGIN_COMPARISON:
 					sections = {
 						ids: []
 					};
-					return sections;
-				case GET_TERM_COMPARISON_REPORT:
 					var sectionList = {};
 					var length = action.payload.sectionDiffs ? action.payload.sectionDiffs.length : 0;
 					for (var i = 0; i < length; i++) {
@@ -258,15 +255,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 		_uiStateReducers: function (action, uiState) {
 			switch (action.type) {
 				case INIT_STATE:
-					uiState = {
-						comparisonInProgress: false
-					};
-					return uiState;
-				case BEGIN_COMPARISON:
-					uiState.comparisonInProgress = true;
-					return uiState;
-				case GET_TERM_COMPARISON_REPORT:
-					uiState.comparisonInProgress = false;
+					uiState = {};
 					return uiState;
 				default:
 					return uiState;

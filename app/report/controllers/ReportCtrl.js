@@ -5,33 +5,29 @@
  * # ReportCtrl
  * Controller of the ipaClientAngularApp
  */
-reportApp.controller('ReportCtrl', ['$scope', '$rootScope', '$routeParams', 'reportActionCreators',
-	this.ReportCtrl = function ($scope, $rootScope, $routeParams, reportActionCreators) {
+reportApp.controller('ReportCtrl', ['$scope', '$rootScope', '$routeParams', 'Term', 'reportActionCreators',
+	this.ReportCtrl = function ($scope, $rootScope, $routeParams, Term, reportActionCreators) {
 
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.termShortCode = $routeParams.termShortCode;
-		$scope.view = {
-			selectedTermCode: null
-		};
+		$scope.term = Term.prototype.getTermByTermShortCodeAndYear($scope.termShortCode, $scope.year);
+		$scope.view = {};
 
 		$rootScope.$on('reportStateChanged', function (event, data) {
 			$scope.view.state = data.state;
 		});
 
-		$scope.startComparison = function () {
-			reportActionCreators.beginComparison();
-			reportActionCreators.getTermComparisonReport(
-				$scope.workgroupId,
-				$scope.year,
-				$scope.view.selectedTermCode
-			);
-		};
 	}
 ]);
 
-ReportCtrl.getPayload = function (authService, $route, reportActionCreators) {
+ReportCtrl.getPayload = function (authService, $route, Term, reportActionCreators) {
 	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		return reportActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+		var term = Term.prototype.getTermByTermShortCodeAndYear($route.current.params.termShortCode, $route.current.params.year);
+		return reportActionCreators.getInitialState(
+			$route.current.params.workgroupId,
+			$route.current.params.year,
+			term.code
+		);
 	});
 };

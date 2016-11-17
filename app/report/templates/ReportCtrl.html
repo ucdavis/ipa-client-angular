@@ -2,31 +2,14 @@
 
 <div class="main-content">
 
-	<h3 style="text-align: center;">{{ sharedState.workgroup.name }} Reports</h3>
-	<br />
-
-	<div class="row">
-
-		<div class="col-sm-4 col-sm-offset-3">
-			<select class="form-control" ng-model="view.selectedTermCode" ng-disabled="!year">
-				<option value="">Select Term</option>
-				<option ng-repeat="termCode in view.state.terms.ids | termsInYear:year track by $index" ng-value="termCode">
-					{{ termCode.toString().getTermCodeDisplayName(true) }}
-				</option>
-			</select>
-		</div>
-
-		<div class="col-sm-2">
-			<button ng-disabled="!view.selectedTermCode" ng-click="startComparison()" class="btn btn-primary btn-block">
-				Start Comparison
-			</button>
-		</div>
-
+	<div class="report-page-title">
+		<h3>{{ term.fullDescription }}</h3>
+		<p>{{ sharedState.workgroup.name }}</p>
 	</div>
 
 	<div class="row">
-		<spinner ng-show="view.state.uiState.comparisonInProgress" style="margin-top: 3em;"></spinner>
-		<div class="col-sm-10 col-sm-offset-1" ng-hide="view.state.uiState.comparisonInProgress">
+		<spinner ng-hide="view.state" style="margin-top: 3em;"></spinner>
+		<div class="col-sm-10 col-sm-offset-1" ng-show="view.state">
 			<table ng-if="view.state.sections.ids.length" class="table section-diff-table">
 				<colgroup>
 					<col span="1" style="width: 25%;">
