@@ -1,85 +1,151 @@
 <div class="content-container">
-	<!-- page header -->
-	<div class="container-fluid">
-		<div class="student-summary-header">
-			<h3>Instructional Support Summary 2016-17</h3>
-			<p>Psychology</p>
-		</div>
+
+	<div class="instructor-summary-header">
+		<h3>
+			Instructor Summary {{ year.yearToAcademicYear() }}
+		</h3>
+		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
 	</div>
-	<!-- page header ends -->
 
-	<!-- support Calls -->
-	<div class="row">
-		<div class="flex term-header">
-			Support Calls
+	<div ng-hide="view.state">
+		<spinner></spinner>
+	</div>
+	<div ng-show="view.state">
+		<div class="course-status-header">
+			<h5>
+				Support Calls
+			</h5>
 		</div>
 
-		<div class="support-call-row flex">
-			<div class="flex-table-content flex table-body container-box"> <!-- table contents -->
-				<div class="table-content">
-					<a ng-href="{{ urlRoot }}/instructionalSupport/20/2016/10/studentSupportCallForm">
-						View Support Call Form
-					</a>
+		<div>
+			<div class="course-table-row">
+				<!-- table header -->
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Support Call
+						</div>
+					</div>
 				</div>
-				<div class="table-content">Due Date: December 23rd, 2017</div>
-				<div class="table-content"></div>
-				<div class="table-content"></div>
-				<div class="table-content"></div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Due Date
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Submitted Preferences
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- table header -->
 
+			<div class="course-table-row">
+				<div class="course-table__row-detail">
+					<div>
+						<a ng-href="{{ urlRoot }}/instructionalSupport/20/2016/10/studentSupportCallForm">
+							View Support Call Form
+						</a>
+					</div>
+				</div>
+				<div class="course-table__row-detail">
+					December 23rd, 2016
+				</div>
+				<div class="course-table__row-detail">
+					<i class="glyphicon glyphicon-ok" ng-if="teachingCall.preferencesSubmitted"></i>
+				</div>
 			</div>
 		</div>
 
+		<div class="course-status-header">
+			<h5>
+				Scheduled Courses {{ year.yearToAcademicYear() }}
+			</h5>
+		</div>
+
+		<div ng-show="view.state.instructorCourses && view.state.instructorCourses.terms.length === 0" class="empty-message">
+			No Scheduled Courses
+		</div>
+		<div ng-repeat="term in view.state.instructorCourses.terms">
+			<div class="course-status-sub-header">
+				<h5>{{ term.getTermCodeDisplayName() }}</h5>
+			</div>
+			<!-- table headers -->
+			<div class="course-table-row">
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Course
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Location
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Time
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Activity
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Position
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- table header -->
+
+			<!-- course table -->
+			<div class="course-table-row" ng-repeat="course in view.state.instructorCourses.list[term]">
+				<div class="course-table__row-detail">
+					<div class="course-table__row-detail-header">
+						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
+					</div>
+				</div>
+				<div class="course-table__row-detail-middle">
+					<div class="meeting-inner" ng-repeat="meeting in course.meetings">
+						<div class="course-table__row-detail-location" style="flex: 1 1 0px; display: flex; justify-content: center;">
+							<div>
+								{{ meeting.location }}
+							</div>
+						</div>
+						<div style="flex: 1 1 0px; display: flex; justify-content: left; padding-left: 50px;">
+							<span class="meeting-days">
+								{{ dayIndicatorToDayCodes(meeting.dayIndicator) }}&nbsp;
+							</span>
+							<span class="meeting-time">
+								{{ meeting.startTime.toStandardTime() }}-{{ meeting.endTime.toStandardTime() }}
+							</span>
+						</div>
+						<div style="flex: 1 1 0px; display: flex; justify-content: center;">
+							{{ meeting.activityType }}
+						</div>
+					</div>
+				</div>
+				<div class="course-table__row-detail">
+					TA (50%)
+				</div>
+			</div>
+		</div>
 	</div>
 
-	<!-- support assignments -->
-	<div class="row">
-		<div class="flex term-header">
-			2017 Winter Assignments
-		</div>
-
-		<div class="flex">
-			<div class="flex-table-content flex table-header container-box-title"> <!-- table title -->
-				<div class="table-content">Title</div>
-				<div class="table-content">Position</div>
-				<div class="table-content">Location</div>
-				<div class="table-content">Time</div>
-				<div class="table-content">Activity</div>
-			</div>
-		</div>
-
-		<div class="support-call-row flex">
-			<div class="flex-table-content flex table-body container-box"> <!-- table contents -->
-				<div class="table-content">ECS 015 Intro to Computers</div>
-				<div class="table-content">Teaching Assistant</div>
-				<div class="table-content">SSH 1205</div>
-				<div class="table-content">MWF 2:10pm-3:00pm</div>
-				<div class="table-content">Discussion / Lecture</div>
-			</div>
-		</div>
-
-		<div class="flex term-header">
-			2017 Spring Assignments
-		</div>
-
-		<div class="flex">
-			<div class="flex-table-content flex table-header container-box-title"> <!-- table title -->
-				<div class="table-content">Title</div>
-				<div class="table-content">Position</div>
-				<div class="table-content">Location</div>
-				<div class="table-content">Time</div>
-				<div class="table-content">Activity</div>
-			</div>
-		</div>
-
-		<div class="support-call-row flex">
-			<div class="flex-table-content flex table-body container-box"> <!-- table contents -->
-				<div class="table-content">ANS 200 Strategic Mgmt</div>
-				<div class="table-content">Reader</div>
-				<div class="table-content">Young 120</div>
-				<div class="table-content">MTWRF 1:10pm-2:00pm</div>
-				<div class="table-content">Discussion / Lecture</div>
-			</div>
-		</div>
-
-	</div>
 </div>

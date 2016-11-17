@@ -641,3 +641,13 @@ margin-left: 6px;
 .support-staff-assignment-sub-detail {
 	font-weight: normal;
 }
+
+.course-assignment-selector {
+	width: 42%;
+	position: relative;
+	height: 30px;
+	border: 1px solid #ebebeb;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+}
