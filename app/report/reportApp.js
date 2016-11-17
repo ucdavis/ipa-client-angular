@@ -2,7 +2,7 @@ window.reportApp = angular.module("reportApp", ["sharedApp", "ngRoute"]);
 
 reportApp.config(function ($routeProvider) {
 	return $routeProvider
-		.when("/:workgroupId/:year", {
+		.when("/:workgroupId/:year/:termShortCode", {
 			templateUrl: "ReportCtrl.html",
 			controller: "ReportCtrl",
 			resolve: {
@@ -17,7 +17,9 @@ reportApp.config(function ($routeProvider) {
 			}
 		})
 		.otherwise({
-			redirectTo: "/"
+			redirectTo: function () {
+				window.location = "/not-found.html";
+			}
 		});
 });
 

@@ -9,9 +9,6 @@ schedulingApp.config(function ($routeProvider) {
 				payload: SchedulingCtrl.getPayload
 			}
 		})
-		.when("/:workgroupId/:year", {
-			templateUrl: "not-found.html"
-		})
 		.when("/", {
 			templateUrl: "SchedulingCtrl.html",
 			controller: "SchedulingCtrl",
@@ -20,7 +17,9 @@ schedulingApp.config(function ($routeProvider) {
 			}
 		})
 		.otherwise({
-			redirectTo: "/"
+			redirectTo: function () {
+				window.location = "/not-found.html";
+			}
 		});
 });
 

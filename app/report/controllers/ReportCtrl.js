@@ -10,6 +10,7 @@ reportApp.controller('ReportCtrl', ['$scope', '$rootScope', '$routeParams', 'rep
 
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
+		$scope.termShortCode = $routeParams.termShortCode;
 		$scope.view = {
 			selectedTermCode: null
 		};
