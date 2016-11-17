@@ -51,7 +51,7 @@
 					<th>Location</th>
 				</thead>
 				<tbody>
-					<tr section-diff ng-repeat="sectionId in view.state.sections.ids track by $index"></tr>
+					<tr section-diff ng-repeat="sectionId in view.state.sections.ids track by sectionId"></tr>
 				</tbody>
 			</table>
 		</div>

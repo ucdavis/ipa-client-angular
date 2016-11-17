@@ -33,6 +33,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 			var section;
 			switch (action.type) {
 				case INIT_STATE:
+				case BEGIN_COMPARISON:
 					sections = {
 						ids: []
 					};
@@ -216,6 +217,11 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					section.activities[action.payload.activityIndex].id = action.payload.activity.id;
 					// Remove the noLocal flag
 					delete section.activities[action.payload.activityIndex].noLocal;
+					return sections;
+				case DELETE_SECTION:
+					var idIndex = sections.ids.indexOf(action.payload.section.id);
+					sections.ids.splice(idIndex, 1);
+					delete sections.list[action.payload.section.id];
 					return sections;
 				case ADD_BANNER_TODO:
 					// Mandatory params

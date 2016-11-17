@@ -1,6 +1,6 @@
 /**
  * example:
- * <section-diff></section-diff>
+ * <tr section-diff></tr>
  */
 reportApp.directive("sectionDiff", this.sectionDiff = function (reportActionCreators) {
 	return {
@@ -12,6 +12,10 @@ reportApp.directive("sectionDiff", this.sectionDiff = function (reportActionCrea
 
 			scope.addBannerToDoItem = function (property, subEntity, subProperty) {
 				reportActionCreators.addBannerToDoItem(scope.section, property, subEntity, subProperty);
+			};
+
+			scope.deleteSection = function (section) {
+				reportActionCreators.deleteSection(section);
 			};
 		}
 	};

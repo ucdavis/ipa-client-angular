@@ -111,6 +111,19 @@ reportApp.factory("reportService", this.reportService = function ($http, $q, $wi
 				});
 
 			return deferred.promise;
+		},
+		deleteSection: function (section) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/reportView/sections/" + section.id, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
 		}
 	};
 });

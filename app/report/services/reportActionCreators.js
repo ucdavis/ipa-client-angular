@@ -174,6 +174,31 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 			});
 		},
 		/**
+		 * Deletes a section
+		 *
+		 * @param section
+		 */
+		deleteSection: function (section) {
+			reportService.deleteSection(section).then(function () {
+				$rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
+				var action = {
+					type: DELETE_SECTION,
+					payload: {
+						section: section
+					}
+				};
+				reportStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		/**
+		 * Creates an activity
+		 *
+		 * @param section
+		 * @param activity
+		 */
+		/**
 		 * Adds the to-do flag to the specified section or its properties or children. This to-do flag can then
 		 * be used to calculate the Banner todo list view.
 		 *
