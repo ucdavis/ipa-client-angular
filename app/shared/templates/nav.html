@@ -38,12 +38,14 @@
 			<li class="welcome">
 				<span class="title">Howdy, {{ sharedState.currentUser.displayName }}</span>
 			</li>
-			<li ng-class="{ 'active': currentBaseHref == 'summary' }" ng-if="userHasRoles(['academicPlanner','reviewer']) && userHasRoles(['senateInstructor','federationInstructor'])">
-				<a ng-href="/summary/{{ workgroupId }}/{{ year }}" target="_self">
+			<li ng-class="{ 'active': currentBaseHref == 'summary', 'opened': expanded == 'summary' || (!expanded && currentBaseHref == 'summary') }"
+				ng-if="userHasRoles(['academicPlanner','reviewer']) && userHasRoles(['senateInstructor','federationInstructor'])"
+				class="has-sub root-level">
+				<a class="clickable" ng-click="toggleMenuItem('summary')">
 					<i class="entypo-home"></i>
 					<span class="title">Home</span>
 				</a>
-				<ul class="visible">
+				<ul ng-class="{ 'visible': expanded == 'summary' || (!expanded && currentBaseHref == 'summary') }">
 					<li ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'workgroup' }">
 						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=workgroup">
 							Workgroup Summary
@@ -135,12 +137,19 @@
 					<span class="title">Courses</span>
 				</a>
 			</li>
-			<li ng-class="{ 'active': currentEndHref == 'teachingCallStatus' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
-				<a ng-href="/assignments/{{ workgroupId }}/{{ year }}/teachingCallStatus">
+			<li ng-class="{ 'active': currentBaseHref == 'assignments', 'opened': expanded == 'assignments' || (!expanded && currentBaseHref == 'assignments') }"
+				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
+				<a class="clickable" ng-click="toggleMenuItem('assignments')">
 					<i class="entypo-user-add"></i>
-					<span class="title">Teaching Call</span>
+					<span class="title">Teaching</span>
 				</a>
-				<ul class="visible">
+				<ul ng-class="{ 'visible': expanded == 'assignments' || (!expanded && currentBaseHref == 'assignments') }">
+					<li ng-class="{ 'active': currentBaseHref == 'assignments' && currentEndHref == 'teachingCallStatus' }"
+						ng-if="userHasRoles(['academicPlanner','reviewer'])">
+						<a ng-href="/assignments/{{ workgroupId }}/{{ year }}/teachingCallStatus">
+							<span class="title">Teaching Calls</span>
+						</a>
+					</li>
 					<li ng-class="{ 'active': currentBaseHref == 'assignments' && currentEndHref != 'teachingCallStatus' }"
 						ng-if="userHasRoles(['academicPlanner','reviewer'])">
 						<a ng-href="/assignments/{{ workgroupId }}/{{ year }}">
@@ -149,16 +158,13 @@
 					</li>
 				</ul>
 			</li>
-			<li ng-class="{ 'active': currentBaseHref == 'scheduling' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
-				<a ng-if="getFirstYearTerm()" ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ getFirstYearTerm().shortCode }}">
+			<li ng-class="{ 'active': currentBaseHref == 'scheduling', 'opened': expanded == 'scheduling' || (!expanded && currentBaseHref == 'scheduling') }"
+				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
+				<a class="clickable" ng-click="toggleMenuItem('scheduling')">
 					<i class="entypo-calendar"></i>
 					<span class="title">Scheduling</span>
 				</a>
-				<a ng-if="getFirstYearTerm() == false">
-					<i class="entypo-calendar"></i>
-					<span class="title">Scheduling</span>
-				</a>
-				<ul class="visible">
+				<ul ng-class="{ 'visible': expanded == 'scheduling' || (!expanded && currentBaseHref == 'scheduling') }">
 					<li ng-repeat="term in getYearTerms() track by term.id" ng-class="{'active': term.shortCode == termShortCode}"
 						ng-class="{ 'active': currentBaseHref == 'scheduling' && termShortCode == term.shortCode }">
 						<a ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ term.shortCode }}">
