@@ -9,10 +9,7 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 		scope: true,
 		replace: true,
 		link: function (scope, element, attrs) {
-			// Minimize by default
-			element.addClass('sis-todo-minimized');
 			scope.view = {
-				isMinimized: true,
 				listItems: []
 			};
 
@@ -120,11 +117,6 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 				});
 
 			});
-
-			scope.toggleView = function () {
-				element.toggleClass('sis-todo-minimized');
-				scope.view.isMinimized = !scope.view.isMinimized;
-			};
 
 			function getPattern(sequenceNumber) {
 				var firstChar = sequenceNumber.slice(0, 1);

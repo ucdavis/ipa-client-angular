@@ -9,7 +9,7 @@
 
 	<div class="row">
 		<spinner ng-hide="view.state" style="margin-top: 3em;"></spinner>
-		<div class="col-sm-10 col-sm-offset-1" ng-show="view.state">
+		<div class="col-sm-12" ng-show="view.state">
 			<table ng-if="view.state.sections.ids.length" class="table section-diff-table">
 				<colgroup>
 					<col span="1" style="width: 25%;">
@@ -40,5 +40,7 @@
 		</div>
 	</div>
 
+</div>
+<div class="right-details">
 	<banner-to-do-list></banner-to-do-list>
 </div>

@@ -1,3 +1,11 @@
+.page-container .main-content {
+  width: 70%;
+}
+
+.page-container:not(.sidebar-collapsed) .main-content {
+  width: 65%;
+}
+
 .report-page-title {
   text-align: center;
 }
@@ -111,27 +119,34 @@ button.btn-ipa {
 }
 
 /* To-do section */
-.sis-todo-container {
+.right-details {
 	position: fixed;
-	bottom: 0;
-	right: 1em;
-	width: 35%;
-	z-index: 999;
-
-	-moz-transition: width .5s;
-	-ms-transition: width .5s;
-	-o-transition: width .5s;
-	-webkit-transition: width .5s;
-	transition: width .5s;
+	width: 25%;
+	height: 100%;
+	display: table-cell;
+	background-color: #fff;
+	padding: 2em 2em 2em 0;
 }
 
-.sis-todo-container.sis-todo-minimized {
-	width: 15em;
+.page-container:not(.sidebar-collapsed) .right-details {
+	width: 20%;
+}
+
+.sis-todo-container {
+	height: 100%;
+	position: relative;
+	border: 1px solid #ebebeb;
+	-webkit-border-radius: 3px;
+	-webkit-background-clip: padding-box;
+	-moz-border-radius: 3px;
+	-moz-background-clip: padding;
+	border-radius: 3px;
+	background-clip: padding-box;
 }
 
 .sis-todo-container .sis-todo-header {
-	background-color: #303641;
-	color: #fff;
+	background: rgba(179, 181, 198, 0.5);
+	height: 30px;
 	padding: 6px 12px;
 	font-weight: bold;
 	border-top-left-radius: 4px;
@@ -140,31 +155,24 @@ button.btn-ipa {
 	white-space: nowrap;
 }
 
-.sis-todo-container.sis-todo-minimized .sis-todo-header {
-	background: rgba(48, 54, 65, 0.5);
-}
-
 .sis-todo-container .sis-todo-content {
 	background-color: #fff;
-	border-left: 1px solid #303641;
-	border-right: 1px solid #303641;
+	border-color: #ebebeb;
 	color: #333;
 	padding: 6px 12px;
-	height: 200px;
+	height: calc(100% - 30px);
 	overflow-y: auto;
-
-	-moz-transition: height .5s;
-	-ms-transition: height .5s;
-	-o-transition: height .5s;
-	-webkit-transition: height .5s;
-	transition: height .5s;
 }
 
-.sis-todo-container.sis-todo-minimized .sis-todo-content {
-	height: 0;
+ul.sis-todo-list {
 	padding: 0;
+	list-style: none;
 }
 
 ul.sis-todo-list li.sis-todo-item {
 	padding: 3px 6px;
+}
+
+ul.sis-todo-list li.sis-todo-item:not(:last-child) {
+	border-bottom: 1px solid #ebebeb;
 }
