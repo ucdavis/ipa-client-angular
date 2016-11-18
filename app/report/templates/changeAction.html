@@ -2,13 +2,25 @@
 	<div class="arrow"></div>
 	<h3 class="popover-title">{{ title }}</h3>
 	<div class="popover-content">
-		<!-- Action to apply SIS value -->
-		<button class="btn btn-dw btn-block" ng-click="applySis()" ng-if="sisValueMessage && !hideSisMessage">
-			{{ sisValueMessage }}
-		</button>
-		<!-- Action to apply IPA value -->
-		<button class="btn btn-ipa btn-block" ng-click="applyIpa()" ng-if="ipaValueMessage && !hideIpaMessage">
-			{{ ipaValueMessage }}
-		</button>
+		<div class="row">
+			<div ng-class="{ 'col-xs-6': !hideIpaMessage, 'col-xs-12': hideIpaMessage }" ng-if="!hideSisMessage">
+				<!-- Action to apply SIS value -->
+				<div class="change-message">
+					{{ sisValueMessage }}
+				</div>
+				<button class="btn btn-dw btn-block" ng-click="applySis()">
+					Apply
+				</button>
+			</div>
+			<div ng-class="{ 'col-xs-6': !hideSisMessage, 'col-xs-12': hideSisMessage }" ng-if="!hideIpaMessage" style="border-left: 1px solid #ebebeb;">
+				<!-- Action to apply IPA value -->
+				<div class="change-message">
+					{{ ipaValueMessage }}
+				</div>
+				<button class="btn btn-ipa btn-block" ng-click="applyIpa()">
+					Apply
+				</button>
+			</div>
+		</div>
 	</div>
 </span>

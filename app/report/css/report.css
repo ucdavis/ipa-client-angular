@@ -121,15 +121,15 @@ table.section-diff-table > tbody > tr.activity-diff-row.no-remote > td
 .change-action {
 	position:  absolute;
 	color: #333;
-	white-space: nowrap;
 	display: none;
 	left: 0;
 	top: 100%;
-	min-width: 100%;
+	min-width: 250px;
 	text-align: center;
 	padding-top: 10px;
 	border: none;
 	background-color: transparent;
+	font-size: 12px;
 }
 
 .change-action.popover.bottom > .arrow {
@@ -141,16 +141,41 @@ table.section-diff-table > tbody > tr.activity-diff-row.no-remote > td
 	display: inline-block;
 }
 
+.change-action .popover-title {
+	border: 1px solid #ccc;
+}
+
+.change-action .popover-content {
+	border: 1px solid #ccc;
+	border-top: none;
+	background-color: #fff;
+	border-radius: 0 0 5px 5px;
+}
+
+.change-message {
+	min-height: 4em;
+}
+
 button.btn-dw {
 	border-color: darkred;
 	color: darkred;
 	background-color: #fff;
 }
 
+button.btn-dw:hover {
+	color: #fff;
+	background-color: darkred;
+}
+
 button.btn-ipa {
 	border-color: seagreen;
 	color: seagreen;
 	background-color: #fff;
+}
+
+button.btn-ipa:hover {
+	color: #fff;
+	background-color: seagreen;
 }
 
 /* To-do section */
@@ -210,15 +235,4 @@ ul.sis-todo-list li.sis-todo-item {
 
 ul.sis-todo-list li.sis-todo-item:not(:last-child) {
 	border-bottom: 1px solid #ebebeb;
-}
-
-.popover-title {
-	border: 1px solid #ccc;
-}
-
-.popover-content {
-	border: 1px solid #ccc;
-	border-top: none;
-	background-color: #fff;
-	border-radius: 0 0 5px 5px;
 }
