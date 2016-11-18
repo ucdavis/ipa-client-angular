@@ -2,15 +2,10 @@
 	<span class="diff-content">
 		{{ activity.endTime.toStandardTime() || 'none' }}
 	</span>
-	<span class="change-action" ng-if="!activity.noRemote && activity.dwChanges.endTime">
-		Value does not match with Banner
-		<!-- Action to apply Banner value -->
-		<button class="btn btn-dw btn-block" ng-click="updateEndTime(activity.dwChanges.endTime.value)">
-			Set IPA to what Banner has: {{ activity.dwChanges.endTime.value.toStandardTime() }}
-		</button>
-		<!-- Action to apply IPA value if any -->
-		<button class="btn btn-ipa btn-block" ng-if="activity.endTime" ng-click="addBannerToDoItem('activities', activity, 'endTime')">
-			Mark to modify in Banner: {{ activity.endTime.toStandardTime() }}
-		</button>
-	</span>
+
+	<change-action ng-if="!activity.noRemote && activity.dwChanges.endTime" title="Value does not match with Banner"
+		sis-value-message="Set IPA to what Banner has: {{ activity.dwChanges.endTime.value.toStandardTime() }}"
+		ipa-value-message="Mark to modify in Banner: {{ activity.endTime.toStandardTime() }}" apply-sis="updateEndTime(activity.dwChanges.endTime.value)"
+		apply-ipa="addBannerToDoItem('activities', activity, 'endTime')"></change-action>
+
 </div>

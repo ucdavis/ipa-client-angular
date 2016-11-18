@@ -2,15 +2,10 @@
 	<span class="diff-content">
 		{{ activity.bannerLocation || 'none' }}
 	</span>
-	<span class="change-action" ng-if="!activity.noRemote && activity.dwChanges.bannerLocation !== undefined">
-		Value does not match with Banner
-		<!-- Action to apply Banner value -->
-		<button class="btn btn-dw btn-block" ng-click="updateBannerLocation(activity.dwChanges.bannerLocation.value)">
-			Set IPA to what Banner has: {{  activity.dwChanges.bannerLocation.value }}
-		</button>
-		<!-- Action to apply IPA value if any -->
-		<button class="btn btn-ipa btn-block" ng-if="activity.bannerLocation" ng-click="addBannerToDoItem('activities', activity, 'location')">
-			Mark to modify in Banner: {{ activity.bannerLocation }}
-		</button>
-	</span>
+
+	<change-action ng-if="!activity.noRemote && activity.dwChanges.bannerLocation !== undefined" title="Value does not match with Banner"
+		sis-value-message="Set IPA to what Banner has: {{  activity.dwChanges.bannerLocation.value }}" ipa-value-message="Mark to modify in Banner: {{ activity.bannerLocation }}"
+		apply-sis="updateBannerLocation(activity.dwChanges.bannerLocation.value)" apply-ipa="addBannerToDoItem('activities', activity, 'location')"
+		hide-ipa-message="{{ activity.bannerLocation == '' }}"></change-action>
+
 </div>

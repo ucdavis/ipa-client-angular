@@ -12,17 +12,9 @@
 		</div>
 
 		<!-- Action when section does not exist in Banner -->
-		<span class="change-action" ng-if="section.noRemote">
-			Section {{ section.sequenceNumber }} does not exist in Banner
-			<!-- Action to apply Banner value -->
-			<button class="btn btn-dw btn-block" ng-click="deleteSection(section)">
-				Delete from IPA
-			</button>
-			<!-- Action to apply IPA value -->
-			<button class="btn btn-ipa btn-block" ng-click="addBannerToDoItem()">
-				Mark to add in Banner
-			</button>
-		</span>
+		<change-action ng-if="section.noRemote" title="Section {{ section.sequenceNumber }} does not exist in Banner"
+			sis-value-message="Delete from IPA" ipa-value-message="Mark to add in Banner" apply-sis="deleteSection(section)"
+			apply-ipa="addBannerToDoItem()"></change-action>
 
 	</td>
 

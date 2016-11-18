@@ -1,28 +1,15 @@
-<div ng-class="{ 'has-changes' : (instructor.noRemote || instructor.noLocal) && !instructor.isToDo }"
-	class="section-diff-element section-instructors">
-	<span class="diff-content" ng-class="{ 'no-remote' : instructor.noRemote && !instructor.isToDo, 'no-local': instructor.noLocal && !instructor.isToDo }">
+<div ng-class="{
+	'has-changes' : (instructor.noRemote || instructor.noLocal) && !instructor.isToDo,
+	'no-remote' : instructor.noRemote && !instructor.isToDo,
+	'no-local': instructor.noLocal && !instructor.isToDo }" class="section-diff-element section-instructors">
+	<span class="diff-content">
 		{{ instructor | lastSpaceInitial }}
 	</span>
-	<span class="change-action" ng-if="instructor.noRemote">
-		Banner does not have this instructor
-		<!-- Action to apply Banner value -->
-		<button class="btn btn-dw btn-block" ng-click="unAssignInstructor(section, instructor)">
-			Un-assign in IPA (All sections)
-		</button>
-		<!-- Action to apply IPA value -->
-		<button class="btn btn-ipa btn-block" ng-click="addBannerToDoItem('instructors', instructor)">
-			Mark to assign in Banner
-		</button>
-	</span>
-	<span class="change-action" ng-if="instructor.noLocal">
-		IPA does not have this instructor
-		<!-- Action to apply Banner value -->
-		<button class="btn btn-dw btn-block" ng-click="assignInstructor(section, instructor)">
-			Assign in IPA (All sections)
-		</button>
-		<!-- Action to apply IPA value -->
-		<button class="btn btn-ipa btn-block" ng-click="addBannerToDoItem('instructors', instructor)">
-			Mark to un-assign in Banner
-		</button>
-	</span>
+
+	<change-action ng-if="instructor.noRemote" title="Banner does not have this instructor" sis-value-message="Un-assign in IPA (All sections)"
+		ipa-value-message="Mark to assign in Banner" apply-sis="unAssignInstructor(section, instructor)" apply-ipa="addBannerToDoItem('instructors', instructor)"></change-action>
+
+	<change-action ng-if="instructor.noLocal" title="IPA does not have this instructor" sis-value-message="Assign in IPA (All sections)"
+		ipa-value-message="Mark to un-assign in Banner" apply-sis="assignInstructor(section, instructor)" apply-ipa="addBannerToDoItem('instructors', instructor)"></change-action>
+
 </div>

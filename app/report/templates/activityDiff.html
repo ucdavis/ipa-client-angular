@@ -23,29 +23,11 @@
 	<location-diff></location-diff>
 
 	<!-- Action when activity does not exist in Banner -->
-	<span class="change-action" ng-if="activity.noRemote">
-		Activity does not exist in Banner
-		<!-- Action to apply Banner value -->
-		<button class="btn btn-dw btn-block" ng-click="deleteActivity(activity)">
-			Delete from IPA
-		</button>
-		<!-- Action to apply IPA value -->
-		<button class="btn btn-ipa btn-block" ng-click="addBannerToDoItem('activities', activity)">
-			Mark to add in Banner
-		</button>
-	</span>
+	<change-action ng-if="activity.noRemote" title="Activity does not exist in Banner" sis-value-message="Delete from IPA"
+		ipa-value-message="Mark to add in Banner" apply-sis="deleteActivity(activity)" apply-ipa="addBannerToDoItem('activities', activity)"></change-action>
 
 	<!-- Action when activity does not exist in IPA -->
-	<span class="change-action" ng-if="activity.noLocal">
-		Activity does not exist in IPA
-		<!-- Action to apply Banner value -->
-		<button class="btn btn-dw btn-block" ng-click="createActivity(section, $index)">
-			Create in IPA
-		</button>
-		<!-- Action to apply IPA value -->
-		<button class="btn btn-ipa btn-block" ng-click="addBannerToDoItem('activities', activity)">
-			Mark to delete in Banner
-		</button>
-	</span>
+	<change-action ng-if="activity.noLocal" title="Activity does not exist in IPA" sis-value-message="Create in IPA"
+		ipa-value-message="Mark to delete in Banner" apply-sis="createActivity(section, $index)" apply-ipa="addBannerToDoItem('activities', activity)"></change-action>
 
 </div>

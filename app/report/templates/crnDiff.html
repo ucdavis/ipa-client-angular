@@ -2,12 +2,8 @@
 	<span class="diff-content">
 		{{ section.crn || "No CRN" }}
 	</span>
-	<span class="change-action" ng-if="section.dwChanges.crn !== undefined">
-		Value does not match with Banner
-		<!-- Action to apply Banner value to IPA -->
-		<button class="btn btn-dw btn-block" ng-click="updateCrn(sectionId, section.dwChanges.crn.value)">
-			Set IPA to what Banner has: {{ section.dwChanges.crn.value }}
-		</button>
-		<!-- No actions to change values in Banner since Banner is the authority when it comes to CRNs -->
-	</span>
+
+	<change-action ng-if="section.dwChanges.crn !== undefined" title="Value does not match with Banner" sis-value-message="Set IPA to what Banner has: {{ section.dwChanges.crn.value }}"
+		apply-sis="updateCrn(sectionId, section.dwChanges.crn.value)" hide-ipa-message="true"></change-action>
+
 </div>

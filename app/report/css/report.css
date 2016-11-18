@@ -46,7 +46,7 @@ tr.section-activity-diff-row.no-changes * {
 .section-diff-element {
 	display: inline-block;
 	margin-right: 0.5em;
-	padding: 0.4em 0 0;
+	min-width: 50px;
 }
 
 .section-unique-key {
@@ -64,51 +64,77 @@ tr.section-activity-diff-row.no-changes * {
 
 .activity-diff-element {
 	flex: 1 1 20%;
-	padding: 0.4em 0 0;
 }
 
 .activity-diff-element:not(:first-child) {
 	margin-left: 8px;
 }
 
-.has-changes, tr.has-changes > td {
+.has-changes {
 	position: relative;
 	cursor: pointer;
-	border-bottom: 1px dashed #aaa;
-	color: darkmagenta;
+	color: #fff;
+	background-color: rgba(139, 0, 139, 0.5);
+	border: 1px solid darkmagenta;
+	border-radius: 3px;
+	padding: 2px 4px;
 }
 
 .has-changes:hover {
-	background-color: #eee;
+	background-color: rgba(139, 0, 139, 0.8);
 }
 
-.no-remote,
+.no-remote
+ {
+	color: #fff;
+	background-color: rgba(46, 139, 87, 0.5);
+	border-color: seagreen;
+}
+
+/* Special styles for changes that affect entire row */
 tr.no-remote td,
 table.section-diff-table > tbody > tr.section-diff-row.no-remote > td,
 table.section-diff-table > tbody > tr.activity-diff-row.no-remote > td
- {
-	color: seagreen;
+{
+	position: relative;
+	color: #fff;
+}
+
+.no-remote:hover {
+	background-color: rgba(46, 139, 87, 0.8);
 }
 
 .no-local {
-	color: darkred;
+	color: #fff;
+	background-color: rgba(139, 0, 0, 0.5);
+	border-color: darkred;
+}
+
+.no-local:hover {
+	background-color: rgba(139, 0, 0, 0.8);
+}
+
+.change-action.popover.bottom {
+	margin-top: 0;
 }
 
 .change-action {
 	position:  absolute;
 	color: #333;
-	font-weight: bold;
 	white-space: nowrap;
 	display: none;
-	padding: 1em;
-	left: 50%;
+	left: 0;
 	top: 100%;
-	transform: translateX(-50%);
 	min-width: 100%;
 	text-align: center;
-	background-color: #eee;
-	border: 1px dashed #aaa;
-	z-index: 1;
+	padding-top: 10px;
+	border: none;
+	background-color: transparent;
+}
+
+.change-action.popover.bottom > .arrow {
+	top: 0;
+	left: 10%;
 }
 
 .has-changes:hover .change-action {
@@ -184,4 +210,15 @@ ul.sis-todo-list li.sis-todo-item {
 
 ul.sis-todo-list li.sis-todo-item:not(:last-child) {
 	border-bottom: 1px solid #ebebeb;
+}
+
+.popover-title {
+	border: 1px solid #ccc;
+}
+
+.popover-content {
+	border: 1px solid #ccc;
+	border-top: none;
+	background-color: #fff;
+	border-radius: 0 0 5px 5px;
 }

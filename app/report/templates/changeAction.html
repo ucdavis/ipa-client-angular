@@ -1,0 +1,14 @@
+<span class="change-action popover bottom">
+	<div class="arrow"></div>
+	<h3 class="popover-title">{{ title }}</h3>
+	<div class="popover-content">
+		<!-- Action to apply SIS value -->
+		<button class="btn btn-dw btn-block" ng-click="applySis()" ng-if="sisValueMessage && !hideSisMessage">
+			{{ sisValueMessage }}
+		</button>
+		<!-- Action to apply IPA value -->
+		<button class="btn btn-ipa btn-block" ng-click="applyIpa()" ng-if="ipaValueMessage && !hideIpaMessage">
+			{{ ipaValueMessage }}
+		</button>
+	</div>
+</span>

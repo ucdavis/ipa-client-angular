@@ -2,15 +2,8 @@
 	<span class="diff-content">
 		{{ section.seats }}
 	</span>
-	<span class="change-action" ng-if="section.dwChanges.seats !== undefined">
-		Value does not match with Banner
-		<!-- Action to apply Banner value -->
-		<button class="btn btn-dw btn-block" ng-click="updateSeats(section.dwChanges.seats.value)">
-			Set IPA to what Banner has: {{ section.dwChanges.seats.value }}
-		</button>
-		<!-- Action to apply IPA value if any -->
-		<button class="btn btn-ipa btn-block" ng-if="section.seats" ng-click="addBannerToDoItem('seats')">
-			Mark to modify in Banner: {{ section.seats }}
-		</button>
-	</span>
+
+	<change-action ng-if="section.dwChanges.seats !== undefined" title="Value does not match with Banner"
+		sis-value-message="Set IPA to what Banner has: {{ section.dwChanges.seats.value }}" ipa-value-message="Mark to modify in Banner: {{ section.seats }}"
+		apply-sis="updateSeats(section.dwChanges.seats.value)" apply-ipa="addBannerToDoItem('seats')"></change-action>
 </div>
