@@ -78,6 +78,19 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					}
 
 					return sectionGroups;
+
+				case DELETE_ASSIGNMENT:
+
+					sectionGroupId = action.payload.sectionGroupId;
+					assignmentId = action.payload.id;
+
+					var index = sectionGroups.list[sectionGroupId].instructionalSupportAssignmentIds.indexOf(assignmentId);
+
+					if (index > -1) {
+						sectionGroups.list[sectionGroupId].instructionalSupportAssignmentIds.splice(index,1);
+					}
+
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}
@@ -105,19 +118,29 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					instructionalSupportAssignments.list = instructionalSupportAssignmentsList;
 
 					return instructionalSupportAssignments;
-				case ADD_ASSIGNMENT_SLOTS:
-					instructionalSupportAssignmentsList = {};
+				case DELETE_ASSIGNMENT:
+					var index = instructionalSupportAssignments.ids.indexOf(action.payload.id)
 
-					instructionalSupportAssignmentsLength = action.payload ? action.payload.length : 0;
-
-					for (var i = 0; i < instructionalSupportAssignmentsLength; i++) {
-						var instructionalSupportAssignmentData = action.payload[i];
-
-						instructionalSupportAssignments.list[instructionalSupportAssignmentData.id] = instructionalSupportAssignmentData;
-						instructionalSupportAssignments.ids.push(instructionalSupportAssignmentData.id);
+					if (index > -1) {
+						instructionalSupportAssignments.list[index] = null;
+						instructionalSupportAssignments.ids.splice(index, 1);
 					}
 
 					return instructionalSupportAssignments;
+					case ADD_ASSIGNMENT_SLOTS:
+						instructionalSupportAssignmentsList = {};
+
+						instructionalSupportAssignmentsLength = action.payload ? action.payload.length : 0;
+
+						for (var i = 0; i < instructionalSupportAssignmentsLength; i++) {
+							var instructionalSupportAssignmentData = action.payload[i];
+
+							instructionalSupportAssignments.list[instructionalSupportAssignmentData.id] = instructionalSupportAssignmentData;
+							instructionalSupportAssignments.ids.push(instructionalSupportAssignmentData.id);
+						}
+
+						return instructionalSupportAssignments;
+
 				default:
 					return instructionalSupportAssignments;
 			}

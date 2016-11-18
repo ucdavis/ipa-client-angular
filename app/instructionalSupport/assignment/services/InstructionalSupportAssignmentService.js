@@ -27,6 +27,19 @@ instructionalSupportApp.factory("instructionalSupportAssignmentService", this.in
 			});
 
 			return deferred.promise;
+		},
+		deleteAssignment: function(instructionalSupportAssignment) {
+
+			var deferred = $q.defer();
+			$http.delete(serverRoot + "/api/instructionalSupportView/instructionalSupportAssignments/" + instructionalSupportAssignment.id, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });

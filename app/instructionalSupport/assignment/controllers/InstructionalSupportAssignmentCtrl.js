@@ -79,6 +79,11 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 				instructionalSupportAssignmentActionCreators.togglePivotView(viewName);
 			};
 
+			// Will delete an empty assignment
+			$scope.deleteAssignment = function (instructionalSupportAssignment) {
+				instructionalSupportAssignmentActionCreators.deleteAssignment(instructionalSupportAssignment);
+			}
+
 			// Set the active tab according to the URL
 			// Otherwise redirect to the default view
 			$scope.setActiveTab($routeParams.tab || "courses");
