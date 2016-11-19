@@ -19,9 +19,14 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 
 				data.state.sections.ids.forEach(function (id) {
 					var section = data.state.sections.list[id];
+					var changeItem = {};
 
 					// The entire section
 					if (section.isToDo) {
+						changeItem = {
+							sectionId: section.id
+						};
+
 						var activities = section.activities.length ? ", and the following meeting(s):<ul>" : "";
 						section.activities.forEach(function (activity) {
 							var activityDetails = getActivityDetails(activity);
@@ -29,8 +34,10 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 						});
 						activities += "</ul>";
 						var instructors = section.instructors.length ? "(" + section.instructors.map(function (i) { return i.firstName + " " + i.lastName; }).join(", ") + ")" : "";
-						scope.view.listItems.push("Create " + section.subjectCode + " " + section.courseNumber + " section " +
-							section.sequenceNumber + " with " + section.seats + " seats " + instructors + activities);
+						changeItem.description = "Create " + section.subjectCode + " " + section.courseNumber + " section " +
+							section.sequenceNumber + " with " + section.seats + " seats " + instructors + activities;
+
+						scope.view.listItems.push(changeItem);
 					}
 
 
@@ -39,9 +46,16 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 						Object.keys(section.dwChanges).filter(function (propName) {
 							return section.dwChanges[propName].isToDo;
 						}).forEach(function (propName) {
+							changeItem = {
+								sectionId: section.id,
+								sectionProperty: propName
+							};
+
 							var crn = section.crn ? " (" + section.crn + ")" : "";
-							scope.view.listItems.push("Change " + section.subjectCode + " " + section.courseNumber + " section " +
-								section.sequenceNumber + crn + " " + getHumanName(propName) + " from " + section.dwChanges[propName].value + " to " + section[propName]);
+							changeItem.description = "Change " + section.subjectCode + " " + section.courseNumber + " section " +
+								section.sequenceNumber + crn + " " + getHumanName(propName) + " from " + section.dwChanges[propName].value + " to " + section[propName];
+
+							scope.view.listItems.push(changeItem);
 						});
 					}
 
@@ -52,14 +66,24 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 						section.instructors.filter(function (instructor) {
 							return instructor.isToDo;
 						}).forEach(function (instructor) {
+							changeItem = {
+								sectionId: section.id,
+								sectionProperty: "instructors",
+								childId: instructor.id
+							};
+
 							if (instructor.noRemote) {
 								// TODO: Need to assign instructor to all sibling sections
-								scope.view.listItems.push("Assign " + instructor.firstName + " " + instructor.lastName + " to " +
-									section.subjectCode + " " + section.courseNumber + " - " + getPattern(section.sequenceNumber));
+								changeItem.description = "Assign " + instructor.firstName + " " + instructor.lastName + " to " +
+									section.subjectCode + " " + section.courseNumber + " - " + getPattern(section.sequenceNumber);
+
+								scope.view.listItems.push(changeItem);
 							} else if (instructor.noLocal) {
 								// TODO: Need to assign instructor to all sibling sections
-								scope.view.listItems.push("Unassign " + instructor.firstName + " " + instructor.lastName + " from " +
-									section.subjectCode + " " + section.courseNumber + " - " + getPattern(section.sequenceNumber));
+								changeItem.description = "Unassign " + instructor.firstName + " " + instructor.lastName + " from " +
+									section.subjectCode + " " + section.courseNumber + " - " + getPattern(section.sequenceNumber);
+
+								scope.view.listItems.push(changeItem);
 							}
 						});
 					}
@@ -71,13 +95,20 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 						}).forEach(function (activity) {
 							// Construct activity details
 							var activityDetails = getActivityDetails(activity);
+							changeItem = {
+								sectionId: section.id,
+								sectionProperty: "activities",
+								childId: activity.id
+							};
 
 							if (activity.noRemote) {
-								scope.view.listItems.push("Create " + activity.typeCode.getActivityCodeDescription() + activityDetails + " for " +
-									section.subjectCode + " " + section.courseNumber + " section " + section.sequenceNumber);
+								changeItem.description = "Create " + activity.typeCode.getActivityCodeDescription() + activityDetails + " for " +
+									section.subjectCode + " " + section.courseNumber + " section " + section.sequenceNumber;
+								scope.view.listItems.push(changeItem);
 							} else if (activity.noLocal) {
-								scope.view.listItems.push("Remove " + activity.typeCode.getActivityCodeDescription() + activityDetails + " from " +
-									section.subjectCode + " " + section.courseNumber + " section " + section.sequenceNumber);
+								changeItem.description = "Remove " + activity.typeCode.getActivityCodeDescription() + activityDetails + " from " +
+									section.subjectCode + " " + section.courseNumber + " section " + section.sequenceNumber;
+								scope.view.listItems.push(changeItem);
 							}
 						});
 					}
@@ -98,6 +129,12 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 								var crn = section.crn ? " (" + section.crn + ")" : "";
 								var oldValue = activity.dwChanges[propName].value;
 								var newValue = activity[propName];
+								changeItem = {
+									sectionId: section.id,
+									sectionProperty: "activities",
+									childId: activity.id,
+									childProperty: propName
+								};
 
 								if (propName == "dayIndicator") {
 									oldValue = oldValue.getWeekDays() || 'none';
@@ -107,9 +144,11 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 									newValue = newValue.toStandardTime();
 								}
 
-								scope.view.listItems.push("Change " + section.subjectCode + " " + section.courseNumber + " section " +
+								changeItem.description = "Change " + section.subjectCode + " " + section.courseNumber + " section " +
 									section.sequenceNumber + crn + " " + activity.typeCode.getActivityCodeDescription() + " " + getHumanName(propName) +
-									" from " + oldValue + " to " + newValue);
+									" from " + oldValue + " to " + newValue;
+
+								scope.view.listItems.push(changeItem);
 							});
 						});
 					}

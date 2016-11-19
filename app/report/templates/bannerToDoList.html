@@ -4,7 +4,9 @@
 	</div>
 	<div class="sis-todo-content">
 		<ul class="sis-todo-list">
-			<li ng-repeat="item in view.listItems track by $index" class="sis-todo-item" ng-bind-html="item"></li>
+			<li ng-repeat="item in view.listItems track by $index" class="sis-todo-item">
+				<div class="change-item-description" ng-bind-html="item.description"></div>
+			</li>
 		</ul>
 	</div>
 </div>
