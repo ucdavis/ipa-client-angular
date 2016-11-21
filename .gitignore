@@ -5,3 +5,5 @@ dist/
 clientConfig.js
 .vscode/
 jsconfig.json
+certs/
+ipa-ucdavis-edu.env
