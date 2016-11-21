@@ -222,23 +222,23 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					return sections;
 				case TOGGLE_BANNER_TODO:
 					// Mandatory params
-					section = action.payload.section;
+					section = sections.list[action.payload.sectionId];
 					if (!section) { return sections; }
 
 					// Optional params
 					var sectionProperty = action.payload.sectionProperty;
-					var child = action.payload.child;
+					var childUniqueKey = action.payload.childUniqueKey;
 					var childProperty = action.payload.childProperty;
 
 					// Decide where to apply the todo flag based on the provided params
-					if (sectionProperty && child && childProperty) {
-						// Flag child property as todo (examples: update dayIndicator, startTime...)
-						var childIndex = section[sectionProperty].indexOf(child);
-						section[sectionProperty][childIndex].dwChanges[childProperty].isToDo = !section[sectionProperty][childIndex].dwChanges[childProperty].isToDo;
-					} else if (sectionProperty && child) {
-						// Flag child as todo (examples: add/remove entire instructor/activity)
-						var childIndex = section[sectionProperty].indexOf(child);
-						section[sectionProperty][childIndex].isToDo = !section[sectionProperty][childIndex].isToDo;
+					if (sectionProperty && childUniqueKey && childProperty) {
+						// Toggle child property isTodo (examples: update dayIndicator, startTime...)
+						var child = section[sectionProperty].find(function (c) { return c.uniqueKey == childUniqueKey; });
+						child.dwChanges[childProperty].isToDo = !child.dwChanges[childProperty].isToDo;
+					} else if (sectionProperty && childUniqueKey) {
+						// Toggle child isTodo (examples: add/remove entire instructor/activity)
+						var child = section[sectionProperty].find(function (c) { return c.uniqueKey == childUniqueKey; });
+						child.isToDo = !child.isToDo;
 					} else if (sectionProperty) {
 						// Flag section property as todo (example: update seats)
 						section.dwChanges[sectionProperty].isToDo = !section.dwChanges[sectionProperty].isToDo;

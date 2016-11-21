@@ -10,8 +10,8 @@ reportApp.directive("sectionDiff", this.sectionDiff = function (reportActionCrea
 		link: function (scope, element, attrs) {
 			scope.section = scope.view.state.sections.list[scope.sectionId];
 
-			scope.toggleBannerToDoItem = function (property, subEntity, subProperty) {
-				reportActionCreators.toggleBannerToDoItem(scope.section, property, subEntity, subProperty);
+			scope.toggleBannerToDoItem = function (property, childUniqueKey, childProperty) {
+				reportActionCreators.toggleBannerToDoItem(scope.section.id, property, childUniqueKey, childProperty);
 			};
 
 			scope.deleteSection = function (section) {

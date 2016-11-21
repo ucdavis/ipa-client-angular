@@ -178,18 +178,18 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 		 * Toggles the to-do flag on the specified section or its properties or children. This to-do flag can then
 		 * be used to calculate the Banner todo list view.
 		 *
-		 * @param section
+		 * @param sectionId
 		 * @param sectionProperty: i.e. seats, crn, activities, instructor. null value applies the to-do to the whole section
-		 * @param child: can be an activity or an instructor
+		 * @param childUniqueKey: can be an activity or an instructor uniqueKey
 		 * @param childProperty: for activities this can be dayIndicator, startTime, endTime, location. null value applies the to-do to the whole activity
 		 */
-		toggleBannerToDoItem: function (section, sectionProperty, child, childProperty) {
+		toggleBannerToDoItem: function (sectionId, sectionProperty, childUniqueKey, childProperty) {
 			var action = {
 				type: TOGGLE_BANNER_TODO,
 				payload: {
-					section: section,
+					sectionId: sectionId,
 					sectionProperty: sectionProperty,
-					child: child,
+					childUniqueKey: childUniqueKey,
 					childProperty: childProperty
 				}
 			};

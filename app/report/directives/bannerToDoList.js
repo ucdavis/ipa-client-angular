@@ -14,7 +14,11 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 			};
 
 			scope.toggleBannerToDoItem = function (item) {
-				reportActionCreators.toggleBannerToDoItem(item.section, item.sectionProperty, item.child, item.childProperty);
+				reportActionCreators.toggleBannerToDoItem(
+					item.sectionId,
+					item.sectionProperty,
+					item.childUniqueKey,
+					item.childProperty);
 			};
 
 			$rootScope.$on('reportStateChanged', function (event, data) {
@@ -28,7 +32,7 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 					// The entire section
 					if (section.isToDo) {
 						changeItem = {
-							section: section
+							sectionId: section.id
 						};
 
 						var activities = section.activities.length ? ", and the following meeting(s):<ul>" : "";
@@ -51,7 +55,7 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 							return section.dwChanges[propName].isToDo;
 						}).forEach(function (propName) {
 							changeItem = {
-								section: section,
+								sectionId: section.id,
 								sectionProperty: propName
 							};
 
@@ -71,9 +75,9 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 							return instructor.isToDo;
 						}).forEach(function (instructor) {
 							changeItem = {
-								section: section,
+								sectionId: section.id,
 								sectionProperty: "instructors",
-								child: instructor
+								childUniqueKey: instructor.uniqueKey
 							};
 
 							if (instructor.noRemote) {
@@ -100,9 +104,9 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 							// Construct activity details
 							var activityDetails = getActivityDetails(activity);
 							changeItem = {
-								section: section,
+								sectionId: section.id,
 								sectionProperty: "activities",
-								child: activity
+								childUniqueKey: activity.uniqueKey
 							};
 
 							if (activity.noRemote) {
@@ -134,9 +138,9 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 								var oldValue = activity.dwChanges[propName].value;
 								var newValue = activity[propName];
 								changeItem = {
-									section: section,
+									sectionId: section.id,
 									sectionProperty: "activities",
-									child: activity,
+									childUniqueKey: activity.uniqueKey,
 									childProperty: propName
 								};
 
