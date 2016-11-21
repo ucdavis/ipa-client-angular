@@ -1,4 +1,7 @@
-<tr class="section-diff-row" ng-class="{'no-changes': !section.dwHasChanges, 'no-remote has-changes': section.noRemote, 'head-section': section.groupHead }">
+<tr class="section-diff-row" ng-class="{
+	'no-changes': !section.dwHasChanges,
+	'no-remote has-changes': section.noRemote && !section.isToDo,
+	'head-section': section.groupHead }">
 
 	<!-- SectionGroup Title: Subject Code, Course Number, and Title -->
 	<td>
