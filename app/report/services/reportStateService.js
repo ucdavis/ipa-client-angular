@@ -220,7 +220,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					sections.ids.splice(idIndex, 1);
 					delete sections.list[action.payload.section.id];
 					return sections;
-				case ADD_BANNER_TODO:
+				case TOGGLE_BANNER_TODO:
 					// Mandatory params
 					section = action.payload.section;
 					if (!section) { return sections; }
@@ -234,17 +234,17 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					if (sectionProperty && child && childProperty) {
 						// Flag child property as todo (examples: update dayIndicator, startTime...)
 						var childIndex = section[sectionProperty].indexOf(child);
-						section[sectionProperty][childIndex].dwChanges[childProperty].isToDo = true;
+						section[sectionProperty][childIndex].dwChanges[childProperty].isToDo = !section[sectionProperty][childIndex].dwChanges[childProperty].isToDo;
 					} else if (sectionProperty && child) {
 						// Flag child as todo (examples: add/remove entire instructor/activity)
 						var childIndex = section[sectionProperty].indexOf(child);
-						section[sectionProperty][childIndex].isToDo = true;
+						section[sectionProperty][childIndex].isToDo = !section[sectionProperty][childIndex].isToDo;
 					} else if (sectionProperty) {
 						// Flag section property as todo (example: update seats)
-						section.dwChanges[sectionProperty].isToDo = true;
+						section.dwChanges[sectionProperty].isToDo = !section.dwChanges[sectionProperty].isToDo;
 					} else {
 						// Flag the section itself as todo
-						section.isToDo = true;
+						section.isToDo = !section.isToDo;
 					}
 
 					return sections;

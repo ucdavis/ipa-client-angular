@@ -7,9 +7,9 @@
 	</span>
 
 	<change-action ng-if="instructor.noRemote" title="Banner does not have this instructor" sis-value-message="Un-assign in IPA (All sections)"
-		ipa-value-message="Mark to assign in Banner" apply-sis="unAssignInstructor(section, instructor)" apply-ipa="addBannerToDoItem('instructors', instructor)"></change-action>
+		ipa-value-message="Mark to assign in Banner" apply-sis="unAssignInstructor(section, instructor)" apply-ipa="toggleBannerToDoItem('instructors', instructor)"></change-action>
 
 	<change-action ng-if="instructor.noLocal" title="IPA does not have this instructor" sis-value-message="Assign in IPA (All sections)"
-		ipa-value-message="Mark to un-assign in Banner" apply-sis="assignInstructor(section, instructor)" apply-ipa="addBannerToDoItem('instructors', instructor)"></change-action>
+		ipa-value-message="Mark to un-assign in Banner" apply-sis="assignInstructor(section, instructor)" apply-ipa="toggleBannerToDoItem('instructors', instructor)"></change-action>
 
 </div>

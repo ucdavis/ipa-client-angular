@@ -5,5 +5,5 @@
 
 	<change-action ng-if="section.dwChanges.seats !== undefined" title="Value does not match with Banner"
 		sis-value-message="Set IPA to what Banner has: {{ section.dwChanges.seats.value }}" ipa-value-message="Mark to modify in Banner: {{ section.seats }}"
-		apply-sis="updateSeats(section.dwChanges.seats.value)" apply-ipa="addBannerToDoItem('seats')"></change-action>
+		apply-sis="updateSeats(section.dwChanges.seats.value)" apply-ipa="toggleBannerToDoItem('seats')"></change-action>
 </div>

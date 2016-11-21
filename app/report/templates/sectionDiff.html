@@ -14,7 +14,7 @@
 		<!-- Action when section does not exist in Banner -->
 		<change-action ng-if="section.noRemote" title="Section {{ section.sequenceNumber }} does not exist in Banner"
 			sis-value-message="Delete from IPA" ipa-value-message="Mark to add in Banner" apply-sis="deleteSection(section)"
-			apply-ipa="addBannerToDoItem()"></change-action>
+			apply-ipa="toggleBannerToDoItem()"></change-action>
 
 	</td>
 

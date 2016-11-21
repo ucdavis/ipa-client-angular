@@ -2,7 +2,7 @@
  * example:
  * <banner-to-do-list list-items="toDoItems"></banner-to-do-list>
  */
-reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope) {
+reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope, reportActionCreators) {
 	return {
 		restrict: "E",
 		templateUrl: 'bannerToDoList.html',
@@ -11,6 +11,10 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 		link: function (scope, element, attrs) {
 			scope.view = {
 				listItems: []
+			};
+
+			scope.toggleBannerToDoItem = function (item) {
+				reportActionCreators.toggleBannerToDoItem(item.section, item.sectionProperty, item.child, item.childProperty);
 			};
 
 			$rootScope.$on('reportStateChanged', function (event, data) {
@@ -24,7 +28,7 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 					// The entire section
 					if (section.isToDo) {
 						changeItem = {
-							sectionId: section.id
+							section: section
 						};
 
 						var activities = section.activities.length ? ", and the following meeting(s):<ul>" : "";
@@ -47,7 +51,7 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 							return section.dwChanges[propName].isToDo;
 						}).forEach(function (propName) {
 							changeItem = {
-								sectionId: section.id,
+								section: section,
 								sectionProperty: propName
 							};
 
@@ -67,9 +71,9 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 							return instructor.isToDo;
 						}).forEach(function (instructor) {
 							changeItem = {
-								sectionId: section.id,
+								section: section,
 								sectionProperty: "instructors",
-								childId: instructor.id
+								child: instructor
 							};
 
 							if (instructor.noRemote) {
@@ -96,9 +100,9 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 							// Construct activity details
 							var activityDetails = getActivityDetails(activity);
 							changeItem = {
-								sectionId: section.id,
+								section: section,
 								sectionProperty: "activities",
-								childId: activity.id
+								child: activity
 							};
 
 							if (activity.noRemote) {
@@ -130,9 +134,9 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 								var oldValue = activity.dwChanges[propName].value;
 								var newValue = activity[propName];
 								changeItem = {
-									sectionId: section.id,
+									section: section,
 									sectionProperty: "activities",
-									childId: activity.id,
+									child: activity,
 									childProperty: propName
 								};
 

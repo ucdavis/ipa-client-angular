@@ -175,13 +175,7 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 			});
 		},
 		/**
-		 * Creates an activity
-		 *
-		 * @param section
-		 * @param activity
-		 */
-		/**
-		 * Adds the to-do flag to the specified section or its properties or children. This to-do flag can then
+		 * Toggles the to-do flag on the specified section or its properties or children. This to-do flag can then
 		 * be used to calculate the Banner todo list view.
 		 *
 		 * @param section
@@ -189,10 +183,9 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 		 * @param child: can be an activity or an instructor
 		 * @param childProperty: for activities this can be dayIndicator, startTime, endTime, location. null value applies the to-do to the whole activity
 		 */
-		addBannerToDoItem: function (section, sectionProperty, child, childProperty) {
-			$rootScope.$emit('toast', { message: "Added to Banner to-do list", type: "SUCCESS" });
+		toggleBannerToDoItem: function (section, sectionProperty, child, childProperty) {
 			var action = {
-				type: ADD_BANNER_TODO,
+				type: TOGGLE_BANNER_TODO,
 				payload: {
 					section: section,
 					sectionProperty: sectionProperty,
