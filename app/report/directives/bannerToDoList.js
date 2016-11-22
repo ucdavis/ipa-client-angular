@@ -14,11 +14,7 @@ reportApp.directive("bannerToDoList", this.bannerToDoList = function ($rootScope
 			};
 
 			scope.toggleBannerToDoItem = function (item) {
-				reportActionCreators.toggleBannerToDoItem(
-					item.sectionId,
-					item.sectionProperty,
-					item.childUniqueKey,
-					item.childProperty);
+				reportActionCreators.deleteBannerToDoItem(item);
 			};
 
 			$rootScope.$on('reportStateChanged', function (event, data) {

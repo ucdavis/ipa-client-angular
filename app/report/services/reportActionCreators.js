@@ -175,25 +175,56 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 			});
 		},
 		/**
-		 * Toggles the to-do flag on the specified section or its properties or children. This to-do flag can then
-		 * be used to calculate the Banner todo list view.
+		 * Creates a SyncAction and sets the to-do flag on the specified section or its properties or children.
+		 * This to-do flag can then be used to calculate the Banner todo list view.
 		 *
 		 * @param sectionId
 		 * @param sectionProperty: i.e. seats, crn, activities, instructor. null value applies the to-do to the whole section
 		 * @param childUniqueKey: can be an activity or an instructor uniqueKey
 		 * @param childProperty: for activities this can be dayIndicator, startTime, endTime, location. null value applies the to-do to the whole activity
 		 */
-		toggleBannerToDoItem: function (sectionId, sectionProperty, childUniqueKey, childProperty) {
-			var action = {
-				type: TOGGLE_BANNER_TODO,
-				payload: {
-					sectionId: sectionId,
-					sectionProperty: sectionProperty,
-					childUniqueKey: childUniqueKey,
-					childProperty: childProperty
-				}
+		createBannerToDoItem: function (sectionId, sectionProperty, childUniqueKey, childProperty) {
+			var syncAction = {
+				sectionId: sectionId,
+				sectionProperty: sectionProperty,
+				childUniqueKey: childUniqueKey,
+				childProperty: childProperty
 			};
-			reportStateService.reduce(action);
+			reportService.createSyncAction(syncAction).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Created to-do item", type: "SUCCESS" });
+				var action = {
+					type: CREATE_SYNC_ACTION,
+					payload: payload
+				};
+				reportStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		/**
+		 * Deletes the SyncAction and unsets the to-do flag on the specified section or its properties or children.
+		 *
+		 * @param sectionId
+		 * @param sectionProperty: i.e. seats, crn, activities, instructor. null value applies the to-do to the whole section
+		 * @param childUniqueKey: can be an activity or an instructor uniqueKey
+		 * @param childProperty: for activities this can be dayIndicator, startTime, endTime, location. null value applies the to-do to the whole activity
+		 */
+		deleteBannerToDoItem: function (syncAction) {
+			reportService.deleteSyncAction(syncAction.id).then(function () {
+				$rootScope.$emit('toast', { message: "Deleted to-do item", type: "SUCCESS" });
+				var action = {
+					type: DELETE_SYNC_ACTION,
+					payload: {
+						sectionId: syncAction.sectionId,
+						sectionProperty: syncAction.sectionProperty,
+						childUniqueKey: syncAction.childUniqueKey,
+						childProperty: syncAction.childProperty
+					}
+				};
+				reportStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
 		}
 	};
 });

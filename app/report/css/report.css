@@ -233,6 +233,6 @@ ul.sis-todo-list li.sis-todo-item {
 	padding: 3px 6px;
 }
 
-ul.sis-todo-list li.sis-todo-item:not(:last-child) {
+ul.sis-todo-list li.sis-todo-item {
 	border-bottom: 1px solid #ebebeb;
 }

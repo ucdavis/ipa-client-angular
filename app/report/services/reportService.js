@@ -124,6 +124,32 @@ reportApp.factory("reportService", this.reportService = function ($http, $q, $wi
 				});
 
 			return deferred.promise;
+		},
+		createSyncAction: function (syncAction) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/reportView/syncActions", syncAction, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
+		},
+		deleteSyncAction: function (syncActionId) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/reportView/syncActions/" + syncActionId, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
 		}
 	};
 });

@@ -220,7 +220,8 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					sections.ids.splice(idIndex, 1);
 					delete sections.list[action.payload.section.id];
 					return sections;
-				case TOGGLE_BANNER_TODO:
+				case CREATE_SYNC_ACTION:
+				case DELETE_SYNC_ACTION:
 					// Mandatory params
 					section = sections.list[action.payload.sectionId];
 					if (!section) { return sections; }
