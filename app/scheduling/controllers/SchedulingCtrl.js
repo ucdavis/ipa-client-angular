@@ -13,6 +13,8 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		$scope.view = {};
 
 		$scope.days = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
+		// Meeting codes in the order of popularity
+		$scope.allActivityTypes = ['V', 'D', 'A', 'I', 'C', 'T', 'J', 'B', 'E', 'H', 'O', 'G', '8', 'S', 'F', '2', 'X', 'L', '9', 'Y', '0', '1', '3', 'K', '%', 'W', '6', 'U', 'Q', 'R', 'P', '7', 'Z'];
 		$scope.standardPatterns = Activity.prototype.getStandardTimes();
 
 		$rootScope.$on('schedulingStateChanged', function (event, data) {

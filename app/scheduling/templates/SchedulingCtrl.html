@@ -12,13 +12,12 @@
 				<div class="activity-filter-menu">
 					<div class="btn-group pull-left">
 						<div class="btn" ng-click="toggleCheckAll()">
-							{{ view.state.uiState.checkedSectionGroupIds.length ? "Unselect" : "Select"
-							}} all
+							{{ view.state.uiState.checkedSectionGroupIds.length ? "Unselect" : "Select" }} all
 						</div>
 					</div>
 					<div class="btn-group pull-right">
-						<button class="btn btn-white btn-block dropdown-toggle" type="button" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false">
+						<button class="btn btn-white btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">
 							Filters <span class="caret"></span>
 						</button>
 						<div class="dropdown-menu" style="width: 400px; padding: 0;">
@@ -27,8 +26,7 @@
 									<h3>Tags</h3>
 									<ul>
 										<li ng-repeat="tagId in view.state.tags.ids track by $index" ng-click="toggleTagFilter(tagId)">
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-												ng-class="{ 'checked': view.state.filters.enabledTagIds.indexOf(tagId) >= 0 }">
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.enabledTagIds.indexOf(tagId) >= 0 }">
 												<label class="cb-wrapper" ng-style="{ 'border-color': view.state.tags.list[tagId].color }">
 													<div class="checked" ng-style="{ 'background': view.state.tags.list[tagId].color }"></div>
 												</label>
@@ -42,8 +40,7 @@
 									<ul>
 										<li ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] track by $index"
 											ng-click="toggleCalendarDay($index)">
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-												ng-class="{ 'checked': view.state.filters.hiddenDays.indexOf($index) < 0 }">
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.hiddenDays.indexOf($index) < 0 }">
 												<label class="cb-wrapper">
 													<div class="checked"></div>
 												</label>
@@ -55,10 +52,8 @@
 								<div class="locations-filter">
 									<h3>Locations</h3>
 									<ul>
-										<li ng-repeat="locationId in view.state.locations.ids track by $index"
-											ng-click="toggleLocationFilter(locationId)">
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-												ng-class="{ 'checked': view.state.filters.enabledLocationIds.indexOf(locationId) >= 0 }">
+										<li ng-repeat="locationId in view.state.locations.ids track by $index" ng-click="toggleLocationFilter(locationId)">
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.enabledLocationIds.indexOf(locationId) >= 0 }">
 												<label class="cb-wrapper">
 													<div class="checked"></div>
 												</label>
@@ -74,20 +69,17 @@
 				<div class="activity-filter-tokens text-center">
 					<div class="label label-selected-section-group" ng-repeat="tagId in view.state.filters.enabledTagIds track by $index">
 						{{ view.state.tags.list[tagId].name }}
-						<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable"
-							ng-click="toggleTagFilter(tagId)"></i>
+						<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleTagFilter(tagId)"></i>
 					</div>
 					<div class="label label-selected-section-group" ng-repeat="locationId in view.state.filters.enabledLocationIds track by $index">
 						{{ view.state.locations.list[locationId].description }}
-						<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable"
-							ng-click="toggleLocationFilter(locationId)"></i>
+						<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleLocationFilter(locationId)"></i>
 					</div>
 					<div class="label label-selected-section-group" ng-repeat="sectionGroupId in view.state.uiState.checkedSectionGroupIds track by $index"
 						ng-init="sg = view.state.sectionGroups.list[sectionGroupId];">
 						{{ view.state.courses.list[sg.courseId].subjectCode }} {{ view.state.courses.list[sg.courseId].courseNumber
 						}} - {{ view.state.courses.list[sg.courseId].sequencePattern }}
-						<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable"
-							ng-click="toggleCheckedSectionGroup(sectionGroupId)"></i>
+						<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleCheckedSectionGroup(sectionGroupId)"></i>
 					</div>
 				</div>
 			</div>
@@ -99,16 +91,13 @@
 				</div>
 				<ul ng-show="view.state.sectionGroups.ids">
 					<li class="section-group-item" ng-repeat="sectionGroupId in view.state.sectionGroups.ids track by $index"
-						ng-init="sg = view.state.sectionGroups.list[sectionGroupId];" ng-show="matchesFilters(sg)"
-						ng-class="{ 'active': view.state.uiState.selectedSectionGroupId == sectionGroupId }"
+						ng-init="sg = view.state.sectionGroups.list[sectionGroupId];" ng-show="matchesFilters(sg)" ng-class="{ 'active': view.state.uiState.selectedSectionGroupId == sectionGroupId }"
 						ng-click="setSelectedSectionGroup(sectionGroupId)">
 
 						<div class="section-group-check" ng-if="view.state.uiState.selectedSectionGroupId != sectionGroupId"
 							ng-click="toggleCheckedSectionGroup(sectionGroupId)" stop-event="click">
-							<i ng-show="view.state.uiState.checkedSectionGroupIds.indexOf(sectionGroupId) >= 0"
-								class="sg-checkbox fa fa-check-square-o"></i>
-							<i ng-hide="view.state.uiState.checkedSectionGroupIds.indexOf(sectionGroupId) >= 0"
-								class="sg-checkbox fa fa-square-o"></i>
+							<i ng-show="view.state.uiState.checkedSectionGroupIds.indexOf(sectionGroupId) >= 0" class="sg-checkbox fa fa-check-square-o"></i>
+							<i ng-hide="view.state.uiState.checkedSectionGroupIds.indexOf(sectionGroupId) >= 0" class="sg-checkbox fa fa-square-o"></i>
 						</div>
 						<div class="section-group-check" ng-if="view.state.uiState.selectedSectionGroupId == sectionGroupId">
 						</div>
@@ -145,17 +134,14 @@
 			</div>
 			<div class="activity-container" ng-class="{ 'collapsed': !view.state.uiState.selectedSectionGroupId }">
 				<div class="activity-list" ng-class="{ 'collapsed': view.state.uiState.selectedActivityId && !isLocked() }">
-					<div ng-hide="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds"
-						class="loading-center">
+					<div ng-hide="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds" class="loading-center">
 						<spinner></spinner>
 					</div>
 					<div ng-show="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds">
 
 						<p class="activity-list-header">
-							{{ view.state.courses.list[view.state.uiState.selectedCourseId].subjectCode
-							}} {{ view.state.courses.list[view.state.uiState.selectedCourseId].courseNumber
-							}} - {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern
-							}}
+							{{ view.state.courses.list[view.state.uiState.selectedCourseId].subjectCode }} {{ view.state.courses.list[view.state.uiState.selectedCourseId].courseNumber
+							}} - {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
 						</p>
 						<p ng-hide="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length"
 							class="text-center text-muted">
@@ -165,8 +151,7 @@
 							<!-- All Sections header (or the first section if sequence pattern is numeric) -->
 							<div class="section-pattern" ng-show="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">All Sections</div>
 							<div class="section-pattern" ng-hide="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">
-								Section {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern
-								}}
+								Section {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
 							</div>
 							<!-- List of shared activities -->
 							<ul ng-repeat="sharedActivityId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sharedActivityIds track by $index"
@@ -174,53 +159,37 @@
 								<li class="activity-item clickable" ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
 									ng-click="setSelectedActivity(sharedActivityId)">
 									<span>{{ sharedActivity.getCodeDescription() }}</span>
-									<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()"
-										uib-tooltip="Remove shared {{ sharedActivity.getCodeDescription() }}"
-										tooltip-append-to-body="true" confirm-button="removeActivity(sharedActivity)"
-										message="Are you sure you want to remove this {{ sharedActivity.getCodeDescription() }}"
+									<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove shared {{ sharedActivity.getCodeDescription() }}"
+										tooltip-append-to-body="true" confirm-button="removeActivity(sharedActivity)" message="Are you sure you want to remove this {{ sharedActivity.getCodeDescription() }}"
 										yes="Delete" no="Cancel" placement="right"></i>
 								</li>
 							</ul>
 							<div ng-if="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length > 0 && !isLocked()"
-								class="add-activity-list entypo-plus-squared">
-								<ul>
-									<li ng-repeat="activityType in view.state.courses.list[view.state.uiState.selectedCourseId].activityTypes track by $index"
-										class="activity-item">
-										<a ng-click="createSharedActivity(activityType, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"
-											class="clickable">
-											Add {{ activityType.getActivityCodeDescription() }}
-										</a>
-									</li>
-								</ul>
+								class="add-activity-btn clickable hoverable" uib-popover-template="'addSharedActivityList.html'"
+								popover-placement="bottom-left" popover-append-to-body="true" popover-class="add-activity-popover"
+								popover-trigger="outsideClick">
+								<i class="entypo-plus-squared"></i> Add
 							</div>
 							<!-- List of sections if the sectionGroup is a series -->
 							<ul ng-if="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">
 								<li class="section-item" ng-repeat="sectionId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds"
 									ng-init="section = view.state.sections.list[sectionId];">
 									<div class="section-pattern">Section {{ section.sequenceNumber }}</div>
-									<ul class="activity-group" ng-repeat="activityId in section.activityIds track by $index"
-										ng-init="activity = view.state.activities.list[activityId];">
+									<ul class="activity-group" ng-repeat="activityId in section.activityIds track by $index" ng-init="activity = view.state.activities.list[activityId];">
 										<li class="activity-item clickable" ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }"
 											ng-click="setSelectedActivity(activityId)">
 											<span>{{ activity.getCodeDescription() }}</span>
-											<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()"
-												uib-tooltip="Remove {{ activity.getCodeDescription() }}" tooltip-append-to-body="true"
-												confirm-button="removeActivity(activity)" message="Are you sure you want to remove this {{ activity.getCodeDescription() }}"
+											<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove {{ activity.getCodeDescription() }}"
+												tooltip-append-to-body="true" confirm-button="removeActivity(activity)" message="Are you sure you want to remove this {{ activity.getCodeDescription() }}"
 												yes="Delete" no="Cancel" placement="right"></i>
 											<i class="glyphicon glyphicon-warning-sign pull-right text-warning" uib-tooltip="Activity no longer matches standard pattern"
 												ng-show="activityId == view.state.uiState.selectedActivityId && view.state.uiState.selectedActivity.hasWarning"></i>
 										</li>
 									</ul>
-									<div ng-if="!isLocked()" class="add-activity-list entypo-plus-squared">
-										<ul>
-											<li ng-repeat="activityType in view.state.courses.list[view.state.uiState.selectedCourseId].activityTypes track by $index"
-												class="activity-item">
-												<a ng-click="createActivity(activityType, sectionId, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"
-													class="clickable">
-													Add {{ activityType.getActivityCodeDescription() }}
-												</a>
-											</li>
-										</ul>
+									<div class="add-activity-btn clickable hoverable" ng-if="!isLocked()" uib-popover-template="'addActivityList.html'"
+										popover-placement="bottom-left" popover-append-to-body="true" popover-class="add-activity-popover"
+										popover-trigger="outsideClick">
+										<i class="entypo-plus-squared"></i> Add
 									</div>
 								</li>
 							</ul>
@@ -231,8 +200,7 @@
 					ng-if="!isLocked()">
 					<div ng-show="view.state.uiState.selectedActivityId">
 						<p class="activity-details-header">
-							{{ view.state.activities.list[view.state.uiState.selectedActivityId].getCodeDescription()
-							}}
+							{{ view.state.activities.list[view.state.uiState.selectedActivityId].getCodeDescription() }}
 							<a ng-click="closeActivityDetails()" class="close"><i class="entypo-cancel"></i></a>
 						</p>
 						<form class="form-horizontal">
@@ -259,9 +227,8 @@
 										<!-- Show the locations dropdown only if the current workgroup has at least a location set -->
 										<div ng-if="view.state.locations.ids.length > 0">
 
-											<ui-select ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].locationId"
-												theme="bootstrap" search-enabled="false" close-on-select="true"
-												on-select="saveActivity()">
+											<ui-select ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].locationId" theme="bootstrap"
+												search-enabled="false" close-on-select="true" on-select="saveActivity()">
 												<ui-select-match placeholder="Select location...">
 													{{ view.state.locations.list[view.state.activities.list[view.state.uiState.selectedActivityId].locationId].description
 													}}
@@ -331,8 +298,8 @@
 												</label>
 												<div class="col-sm-5" style="padding-left: 0;">
 													<div class="input-group input-group-sm">
-														<input auto-input type="number" class="form-control" on-enter="saveActivity()"
-															on-blur="saveActivity()" help-text-placement="top" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].frequency"
+														<input auto-input type="number" class="form-control" on-enter="saveActivity()" on-blur="saveActivity()"
+															help-text-placement="top" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].frequency"
 														/>
 														<span class="input-group-addon">weeks</span>
 													</div>
@@ -351,12 +318,12 @@
 										</div>
 										<div class="form-group">
 											<div class="col-sm-offset-1 col-sm-5 text-center">
-												<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].startTime"
-													minute-step="5" on-change-delay="500" on-change="saveActivity()"></time-input>
+												<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].startTime" minute-step="5"
+													on-change-delay="500" on-change="saveActivity()"></time-input>
 											</div>
 											<div class="col-sm-5 text-center">
-												<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].endTime"
-													minute-step="5" on-change-delay="500" on-change="saveActivity()"></time-input>
+												<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].endTime" minute-step="5"
+													on-change-delay="500" on-change="saveActivity()"></time-input>
 											</div>
 										</div>
 									</div>
