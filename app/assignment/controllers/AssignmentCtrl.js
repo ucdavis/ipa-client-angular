@@ -159,7 +159,11 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 							return scheduleInstructorNote.instructorComment;
 						},
 						instructorComment: function () {
-							return teachingCallReceipt.comment;
+							if (teachingCallReceipt && teachingCallReceipt.comment) {
+								return teachingCallReceipt.comment;
+							} else {
+								return "";
+							}
 						}
 					}
 				});

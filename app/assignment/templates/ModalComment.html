@@ -3,7 +3,9 @@
 		Comments
 	</h3>
 	<div>
-		<div class="modal-comment-subheader">From Instructor</div>
+		<div class="modal-comment-subheader">
+			From Instructor
+		</div>
 
 		<div ng-hide="instructorComment.length > 0" class="gray-text instructor-comment-modal__comment-text">
 			No Instructor comments.
@@ -13,7 +15,9 @@
 			{{ instructorComment }}
 		</div>
 	</div>
-	<div class="modal-comment-subheader">From Staff</div>
+	<div class="modal-comment-subheader">
+		Staff Notes (Private)
+	</div>
 	
 	<textarea rows="6" class="form-control wysihtml5" ng-model="privateComment" style="margin-top: 10px;"></textarea>
 
