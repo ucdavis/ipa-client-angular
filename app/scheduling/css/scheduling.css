@@ -326,7 +326,7 @@ i.selected-section-group-remove {
 }
 
 .add-activity-popover .popover-content {
-	padding: 0;
+	padding: 0.5em;
 }
 
 .add-activity-list {
@@ -339,7 +339,6 @@ i.selected-section-group-remove {
 	column-count: auto;
 	column-width: 10em;
 	column-gap: 0;
-	height: 14em;
 	width: 60em;
 	font-size: 90%;
 }
@@ -352,8 +351,13 @@ i.selected-section-group-remove {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	margin: 0;
+	padding: 5px;
+}
+
+.add-activity-item:hover {
+	background: #EFEFEF;
 }
 
 .add-activity-item.used a {
-	font-weight: bold;
+	/*font-weight: bold;*/
 }

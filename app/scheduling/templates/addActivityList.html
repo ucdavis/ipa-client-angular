@@ -1,10 +1,9 @@
 <div class="add-activity-list" ng-init="usedTypes = view.state.courses.list[view.state.uiState.selectedCourseId].activityTypes">
-	<div ng-repeat="activityType in allActivityTypes track by $index" class="activity-item add-activity-item"
-		ng-class="{ 'used': usedTypes.indexOf(activityType) >= 0 }">
-		<a ng-click="createActivity(activityType, sectionId, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"
-			class="clickable">
-			{{ activityType.getActivityCodeDescription() }}
-			<i class="fa fa-star" ng-if="usedTypes.indexOf(activityType) >= 0"></i>
+	<div ng-click="createActivity(activityType, sectionId, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"
+		ng-repeat="activityType in allActivityTypes track by $index" class="add-activity-item" ng-class="{ 'used': usedTypes.indexOf(activityType) >= 0 }">
+		<a class="clickable">
+			{{ activityType }} - {{ activityType.getActivityCodeDescription() }}
+			<i class="fa fa-star" ng-if="usedTypes.indexOf(activityType) >= 0" uib-tooltip="Used in previous terms"></i>
 		</a>
 	</div>
 </div>
