@@ -1,4 +1,4 @@
-instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSupportCallCtrl = function($scope, $rootScope, $uibModalInstance, instructionalSupportAssignmentActionCreators, sectionGroupId, appointmentType) {
+instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSupportCallCtrl = function($scope, $rootScope, $uibModalInstance, instructionalSupportAssignmentActionCreators, supportCallMode) {
 	$scope.phdPool = [
 		{id: 1, displayName: "John Smith", group: "phd", enabled: true},
 		{id: 2, displayName: "Jenny Garcia", group: "phd", enabled: true},
@@ -20,7 +20,10 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		{id: 9, displayName: "Jenny Green", group: "instructor", enabled: true}
 	];
 
-	$scope.supportCallConfigData = {mode: "instructor", displayPage: 1};
+	$scope.supportCallConfigData = {displayPage: 1};
+	// Indicates which button started this support call: 'student' or 'instructor'
+	$scope.supportCallConfigData.mode = supportCallMode;
+
 	$scope.supportCallConfigData.dueDate;
 	$scope.supportCallConfigData.rawDueDate;
 

@@ -63,17 +63,21 @@
 				</div>
 			</div>
 
-			<div style="display: flex;">
-				<div style="display: flex; flex: 10 0 0px; align-items: center; justify-content: center;">
+			<div style="display: flex; justify-content: center;">
+				<div style="display: flex; flex: 0 0 auto; align-items: center; justify-content: center;">
 					<a ng-if="true"
-					class="btn btn-default btn-block begin-support-call-button" ng-click="openSupportCallConfig()">
+					class="btn btn-default btn-block begin-support-call-button" ng-click="openSupportCallConfig('student')">
 						<span style="padding-right: 5px;" class="glyphicon glyphicon-plus"></span>
-						Create Support Call
+						Student Support Call
 					</a>
 				</div>
-				<div style="flex: 1 0 0px;">
+				<div style="display: flex; flex: 0 0 auto; align-items: center; justify-content: center;">
+					<a ng-if="true"
+					class="btn btn-default btn-block begin-support-call-button" ng-click="openSupportCallConfig('instructor')">
+						<span style="padding-right: 5px;" class="glyphicon glyphicon-plus"></span>
+						Instructor Support Call
+					</a>
 				</div>
-
 			</div>
 
 		</div>

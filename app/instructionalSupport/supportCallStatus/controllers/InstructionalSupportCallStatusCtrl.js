@@ -17,18 +17,15 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 				$scope.view.state = data.state;
 			});
 
-			$scope.openSupportCallConfig = function(sectionGroupId, appointmentType) {
+			$scope.openSupportCallConfig = function(supportCallMode) {
 
 				modalInstance = $uibModal.open({
 					templateUrl: 'AddSupportCallModal.html',
 					controller: ModalAddSupportCallCtrl,
 					size: 'lg',
 					resolve: {
-						appointmentType: function () {
-							return appointmentType;
-						},
-						sectionGroupId: function () {
-							return sectionGroupId;
+						supportCallMode: function () {
+							return supportCallMode;
 						}
 					}
 				});
