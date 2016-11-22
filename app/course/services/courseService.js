@@ -52,6 +52,7 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 		},
 		updateSectionGroup: function (sectionGroup) {
 			var deferred = $q.defer();
+			if (!sectionGroup) { return; }
 
 			$http.put(serverRoot + "/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup, { withCredentials: true })
 				.success(function (payload) {
@@ -65,6 +66,8 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 		},
 		createCourse: function (course, workgroupId, year) {
 			var deferred = $q.defer();
+			if (!course) { return; }
+
 			course.tags = [];
 			course.tagIds.forEach(function (tagId) {
 				course.tags.push({ id: parseInt(tagId) });
@@ -95,6 +98,7 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 		},
 		updateCourse: function (course) {
 			var deferred = $q.defer();
+			if (!course) { return; }
 
 			$http.put(serverRoot + "/api/courseView/courses/" + course.id, course, { withCredentials: true })
 				.success(function (payload) {
@@ -108,6 +112,7 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 		},
 		deleteCourse: function (course) {
 			var deferred = $q.defer();
+			if (!course) { return; }
 
 			$http.delete(serverRoot + "/api/courseView/courses/" + course.id, { withCredentials: true })
 				.success(function (payload) {
@@ -148,6 +153,7 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 		},
 		addTagToCourse: function (course, tag) {
 			var deferred = $q.defer();
+			if (!course) { return; }
 
 			$http.post(serverRoot + "/api/courseView/courses/" + course.id + "/tags/" + tag.id, tag, { withCredentials: true })
 				.success(function (payload) {
@@ -161,6 +167,7 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 		},
 		removeTagFromCourse: function (course, tag) {
 			var deferred = $q.defer();
+			if (!course || !tag) { return; }
 
 			$http.delete(serverRoot + "/api/courseView/courses/" + course.id + "/tags/" + tag.id, { withCredentials: true })
 				.success(function (payload) {
@@ -187,6 +194,7 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 		},
 		updateSection: function (section) {
 			var deferred = $q.defer();
+			if (!section) { return; }
 
 			$http.put(serverRoot + "/api/courseView/sections/" + section.id, section, { withCredentials: true })
 				.success(function (payload) {
@@ -200,6 +208,7 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 		},
 		createSection: function (section) {
 			var deferred = $q.defer();
+			if (!section) { return; }
 
 			$http.post(serverRoot + "/api/courseView/sectionGroups/" + section.sectionGroupId + "/sections", section, { withCredentials: true })
 				.success(function (payload) {
@@ -213,6 +222,7 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 		},
 		deleteSection: function (section) {
 			var deferred = $q.defer();
+			if (!section) { return; }
 
 			$http.delete(serverRoot + "/api/courseView/sections/" + section.id, { withCredentials: true })
 				.success(function (payload) {
@@ -226,6 +236,7 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 		},
 		getCourseCensus: function (course) {
 			var deferred = $q.defer();
+			if (!course) { return; }
 
 			$http.get(dwUrl + "/census?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + dwToken)
 				.success(function (result) {

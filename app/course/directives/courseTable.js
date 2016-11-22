@@ -139,6 +139,11 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				element.find('input.planned-seats').blur(function (e) {
 					$el = $(e.target);
 					savePlannedSeats($el, scope, courseActionCreators);
+
+					// Important: notify angular since this happends outside of the scope
+					$timeout(function () {
+						scope.$apply();
+					});
 				}).focus(function (e) {
 					$el = $(e.target);
 					// Select a cell/row
@@ -161,6 +166,11 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 
 					if ($el.hasClass('planned-seats')) {
 						savePlannedSeats($el, scope, courseActionCreators);
+
+						// Important: notify angular since this happends outside of the scope
+						$timeout(function () {
+							scope.$apply();
+						});
 					}
 				} else if (e.which == 45) {
 					// Disallow '-' value
@@ -367,11 +377,6 @@ var savePlannedSeats = function ($el, scope, courseActionCreators) {
 		};
 		courseActionCreators.addSectionGroup(sectionGroup);
 	}
-
-	// Important: notify angular since this happends outside of the scope
-	$timeout(function () {
-		scope.$apply();
-	});
 };
 
 var getTotalsRow = function (termsToRender, state) {
