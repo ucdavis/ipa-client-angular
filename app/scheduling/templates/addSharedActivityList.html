@@ -1,0 +1,9 @@
+<div class="add-activity-list" ng-init="usedTypes = view.state.courses.list[view.state.uiState.selectedCourseId].activityTypes">
+	<div ng-click="createSharedActivity(activityType, view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])"
+		ng-repeat="activityType in allActivityTypes track by $index" class="add-activity-item" ng-class="{ 'used': usedTypes.indexOf(activityType) >= 0 }">
+		<a class="clickable">
+			{{ activityType }} - {{ activityType.getActivityCodeDescription() }}
+			<i class="fa fa-star" ng-if="usedTypes.indexOf(activityType) >= 0" uib-tooltip="Used in previous terms"></i>
+		</a>
+	</div>
+</div>
