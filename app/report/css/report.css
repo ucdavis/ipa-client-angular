@@ -222,6 +222,7 @@ button.btn-ipa:hover {
 	padding: 6px 12px;
 	height: calc(100% - 30px);
 	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 ul.sis-todo-list {

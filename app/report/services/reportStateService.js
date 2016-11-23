@@ -6,29 +6,9 @@
  * Service in the reportApp.
  * Central location for sharedState information.
  */
-reportApp.service('reportStateService', function ($rootScope, $log, Term, Section) {
+reportApp.service('reportStateService', function ($rootScope, $log, Term, Section, SyncAction) {
 	return {
 		_state: {},
-		_termReducers: function (action, terms) {
-			switch (action.type) {
-				case INIT_STATE:
-					terms = {
-						ids: []
-					};
-					var termList = {};
-					var length = action.payload ? action.payload.length : 0;
-					for (var i = 0; i < length; i++) {
-						var termData = action.payload[i];
-						// Using termCode as key since the Term does not have an id
-						termList[termData.termCode] = new Term(termData);
-					}
-					terms.ids = _array_sortIdsByProperty(termList, "termCode");
-					terms.list = termList;
-					return terms;
-				default:
-					return terms;
-			}
-		},
 		_sectionReducers: function (action, sections) {
 			var section;
 			switch (action.type) {
@@ -42,6 +22,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 						var ipaSectionData = action.payload.sectionDiffs[i].ipaSection;
 						var dwSectionData = action.payload.sectionDiffs[i].dwSection;
 						var sectionChanges = action.payload.sectionDiffs[i].changes;
+						var syncActions = action.payload.sectionDiffs[i].syncActions;
 						sectionList[ipaSectionData.id] = new Section(ipaSectionData);
 
 						// translate DiffView changes list into stateService language
@@ -130,6 +111,11 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 										break;
 								}
 							});
+						}
+
+						// Apply syncActions to section properties
+						for (var s = 0; s < syncActions.length; s++) {
+							sectionList[ipaSectionData.id] = this._togglePropertyToDo(sectionList[ipaSectionData.id], syncActions[s]);
 						}
 					}
 					sections.ids = _array_sortIdsByProperty(sectionList, ["subjectCode", "courseNumber", "sequenceNumber"]);
@@ -231,6 +217,30 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					return sections;
 			}
 		},
+		_syncActionReducers: function (action, syncActions) {
+			switch (action.type) {
+				case INIT_STATE:
+					syncActions = {
+						ids: [],
+					};
+					var syncActionList = {};
+					var payloadLength, syncActionLength;
+					payloadLength = action.payload.sectionDiffs ? action.payload.sectionDiffs.length : 0;
+					for (var i = 0; i < payloadLength; i++) {
+						var sectionDiffData = action.payload.sectionDiffs[i];
+						syncActionLength = action.payload.sectionDiffs[i].syncActions.length;
+						for (var j = 0; j < syncActionLength; j++) {
+							var syncActionData = sectionDiffData.syncActions[j];
+							syncActionList[syncActionData.id] = new SyncAction(syncActionData);
+						}
+					}
+					syncActions.ids = _array_sortIdsByProperty(syncActionList, "sectionId");
+					syncActions.list = syncActionList;
+					return syncActions;
+				default:
+					return syncActions;
+			}
+		},
 		_uiStateReducers: function (action, uiState) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -248,8 +258,8 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 			}
 
 			newState = {};
-			newState.terms = scope._termReducers(action, scope._state.terms);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
+			newState.syncActions = scope._syncActionReducers(action, scope._state.syncActions);
 			newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
 
 			scope._state = newState;
@@ -272,12 +282,16 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 				// Toggle child property isTodo (examples: update dayIndicator, startTime...)
 				child = section[syncAction.sectionProperty]
 					.find(function (c) { return c.uniqueKey == syncAction.childUniqueKey; });
-				child.dwChanges[syncAction.childProperty].isToDo = !child.dwChanges[syncAction.childProperty].isToDo;
+				if (child) {
+					child.dwChanges[syncAction.childProperty].isToDo = !child.dwChanges[syncAction.childProperty].isToDo;
+				}
 			} else if (syncAction.sectionProperty && syncAction.childUniqueKey) {
 				// Toggle child isTodo (examples: add/remove entire instructor/activity)
 				child = section[syncAction.sectionProperty]
 					.find(function (c) { return c.uniqueKey == syncAction.childUniqueKey; });
-				child.isToDo = !child.isToDo;
+				if (child) {
+					child.isToDo = !child.isToDo;
+				}
 			} else if (syncAction.sectionProperty) {
 				// Flag section property as todo (example: update seats)
 				section.dwChanges[syncAction.sectionProperty].isToDo = !section.dwChanges[syncAction.sectionProperty].isToDo;
