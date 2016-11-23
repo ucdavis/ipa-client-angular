@@ -194,7 +194,9 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 				$rootScope.$emit('toast', { message: "Created to-do item", type: "SUCCESS" });
 				var action = {
 					type: CREATE_SYNC_ACTION,
-					payload: payload
+					payload: {
+						syncAction: syncAction
+					}
 				};
 				reportStateService.reduce(action);
 			}, function (err) {
@@ -215,10 +217,7 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 				var action = {
 					type: DELETE_SYNC_ACTION,
 					payload: {
-						sectionId: syncAction.sectionId,
-						sectionProperty: syncAction.sectionProperty,
-						childUniqueKey: syncAction.childUniqueKey,
-						childProperty: syncAction.childProperty
+						syncAction: syncAction
 					}
 				};
 				reportStateService.reduce(action);

@@ -222,32 +222,10 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					return sections;
 				case CREATE_SYNC_ACTION:
 				case DELETE_SYNC_ACTION:
-					// Mandatory params
-					section = sections.list[action.payload.sectionId];
+					section = sections.list[action.payload.syncAction.sectionId];
 					if (!section) { return sections; }
 
-					// Optional params
-					var sectionProperty = action.payload.sectionProperty;
-					var childUniqueKey = action.payload.childUniqueKey;
-					var childProperty = action.payload.childProperty;
-
-					// Decide where to apply the todo flag based on the provided params
-					if (sectionProperty && childUniqueKey && childProperty) {
-						// Toggle child property isTodo (examples: update dayIndicator, startTime...)
-						var child = section[sectionProperty].find(function (c) { return c.uniqueKey == childUniqueKey; });
-						child.dwChanges[childProperty].isToDo = !child.dwChanges[childProperty].isToDo;
-					} else if (sectionProperty && childUniqueKey) {
-						// Toggle child isTodo (examples: add/remove entire instructor/activity)
-						var child = section[sectionProperty].find(function (c) { return c.uniqueKey == childUniqueKey; });
-						child.isToDo = !child.isToDo;
-					} else if (sectionProperty) {
-						// Flag section property as todo (example: update seats)
-						section.dwChanges[sectionProperty].isToDo = !section.dwChanges[sectionProperty].isToDo;
-					} else {
-						// Flag the section itself as todo
-						section.isToDo = !section.isToDo;
-					}
-
+					section = this._togglePropertyToDo(section, action.payload.syncAction);
 					return sections;
 				default:
 					return sections;
@@ -282,6 +260,33 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 
 			$log.debug("Report state updated:");
 			$log.debug(scope._state, action.type);
+		},
+		// ------------------------------- //
+		// Helper methods used in reducers //
+		// ------------------------------- //
+		_togglePropertyToDo: function (section, syncAction) {
+			var child;
+
+			// Decide where to apply the todo flag based on the provided params
+			if (syncAction.sectionProperty && syncAction.childUniqueKey && syncAction.childProperty) {
+				// Toggle child property isTodo (examples: update dayIndicator, startTime...)
+				child = section[syncAction.sectionProperty]
+					.find(function (c) { return c.uniqueKey == syncAction.childUniqueKey; });
+				child.dwChanges[syncAction.childProperty].isToDo = !child.dwChanges[syncAction.childProperty].isToDo;
+			} else if (syncAction.sectionProperty && syncAction.childUniqueKey) {
+				// Toggle child isTodo (examples: add/remove entire instructor/activity)
+				child = section[syncAction.sectionProperty]
+					.find(function (c) { return c.uniqueKey == syncAction.childUniqueKey; });
+				child.isToDo = !child.isToDo;
+			} else if (syncAction.sectionProperty) {
+				// Flag section property as todo (example: update seats)
+				section.dwChanges[syncAction.sectionProperty].isToDo = !section.dwChanges[syncAction.sectionProperty].isToDo;
+			} else {
+				// Flag the section itself as todo
+				section.isToDo = !section.isToDo;
+			}
+
+			return section;
 		}
 	};
 });
