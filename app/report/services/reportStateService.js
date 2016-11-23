@@ -307,26 +307,26 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 				child = section[syncAction.sectionProperty]
 					.find(function (c) { return c.uniqueKey == syncAction.childUniqueKey; });
 				if (child) {
-					child.dwChanges[syncAction.childProperty].isToDo = !child.dwChanges[syncAction.childProperty].isToDo;
+					child.dwChanges[syncAction.childProperty].isToDo = isDelete ? false : true;
 				}
 			} else if (syncAction.sectionProperty && syncAction.childUniqueKey) {
 				// Toggle child isTodo (examples: add/remove entire instructor/activity)
 				child = section[syncAction.sectionProperty]
 					.find(function (c) {
-						var keyMatches = c.uniqueKey == syncAction.childUniqueKey;
-						// toDoMatches should be true if we are deleting (delete only existing toDos)
-						var toDoMatches = (!!c.isToDo == !!isDelete);
-						return keyMatches && toDoMatches;
+						var keyMatches = (c.uniqueKey == syncAction.childUniqueKey);
+						var hasChanges = (c.noLocal || c.noRemote);
+						var notApplied = (isDelete && c.isToDo) || (!isDelete && !c.isToDo);
+						return keyMatches && hasChanges && notApplied;
 					});
 				if (child) {
-					child.isToDo = !child.isToDo;
+					child.isToDo = isDelete ? false : true;
 				}
 			} else if (syncAction.sectionProperty) {
 				// Flag section property as todo (example: update seats)
-				section.dwChanges[syncAction.sectionProperty].isToDo = !section.dwChanges[syncAction.sectionProperty].isToDo;
+				section.dwChanges[syncAction.sectionProperty].isToDo = isDelete ? false : true;
 			} else {
 				// Flag the section itself as todo
-				section.isToDo = !section.isToDo;
+				section.isToDo = isDelete ? false : true;
 			}
 
 			return section;

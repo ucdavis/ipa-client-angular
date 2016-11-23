@@ -1,10 +1,11 @@
-<div class="activity-diff-element activity-start-time" ng-class="{ 'has-changes' : !activity.noRemote && activity.dwChanges.startTime && !activity.dwChanges.startTime.isToDo }">
+<div class="activity-diff-element activity-start-time" ng-class="{ 'has-changes' : !activity.noRemote && activity.dwChanges.startTime && !activity.dwChanges.startTime.isToDo }"
+	ng-click="setActiveChangeAction(activity.uniqueKey + $index + 'startTime', $event)">
 	<span class="diff-content">
 		{{ activity.startTime.toStandardTime() || 'none' }}
 	</span>
 
-	<change-action ng-if="!activity.noRemote && activity.dwChanges.startTime" title="Value does not match with Banner"
-		sis-value-message="Set IPA to what Banner has: {{ activity.dwChanges.startTime.value.toStandardTime() }}"
+	<change-action ng-if="!activity.noRemote && activity.dwChanges.startTime" ng-show="view.activeChangeAction == activity.uniqueKey + $index + 'startTime'"
+		title="Value does not match with Banner" sis-value-message="Set IPA to what Banner has: {{ activity.dwChanges.startTime.value.toStandardTime() }}"
 		ipa-value-message="Mark to modify in Banner: {{ activity.startTime.toStandardTime() }}" apply-sis="updateStartTime(activity.dwChanges.startTime.value)"
 		apply-ipa="toggleBannerToDoItem('activities', activity.uniqueKey, 'startTime')"></change-action>
 

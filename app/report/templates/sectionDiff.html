@@ -1,7 +1,7 @@
 <tr class="section-diff-row" ng-class="{
 	'no-changes': !section.dwHasChanges,
 	'no-remote has-changes': section.noRemote && !section.isToDo,
-	'head-section': section.groupHead }">
+	'head-section': section.groupHead }" ng-click="setActiveChangeAction(section.uniqueKey, $event)">
 
 	<!-- SectionGroup Title: Subject Code, Course Number, and Title -->
 	<td>
@@ -15,7 +15,7 @@
 		</div>
 
 		<!-- Action when section does not exist in Banner -->
-		<change-action ng-if="section.noRemote" title="Section {{ section.sequenceNumber }} does not exist in Banner"
+		<change-action ng-if="section.noRemote" ng-show="view.activeChangeAction == section.uniqueKey" title="Section {{ section.sequenceNumber }} does not exist in Banner"
 			sis-value-message="Delete from IPA" ipa-value-message="Mark to add in Banner" apply-sis="deleteSection(section)"
 			apply-ipa="toggleBannerToDoItem()"></change-action>
 

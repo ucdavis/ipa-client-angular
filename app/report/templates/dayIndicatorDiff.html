@@ -1,11 +1,12 @@
-<div class="activity-diff-element activity-day-indicator" ng-class="{ 'has-changes' : !activity.noRemote && activity.dwChanges.dayIndicator !== undefined && !activity.dwChanges.dayIndicator.isToDo }">
+<div class="activity-diff-element activity-day-indicator" ng-class="{ 'has-changes' : !activity.noRemote && activity.dwChanges.dayIndicator !== undefined && !activity.dwChanges.dayIndicator.isToDo }"
+	ng-click="setActiveChangeAction(activity.uniqueKey + $index + 'dayIndicator', $event)">
 	<span class="diff-content">
 		{{ activity.dayIndicator.getWeekDays() || 'none' }}
 	</span>
 
-	<change-action ng-if="!activity.noRemote && activity.dwChanges.dayIndicator !== undefined" title="Value does not match with Banner"
-		sis-value-message="Set IPA to what Banner has: {{ activity.dwChanges.dayIndicator.value.getWeekDays() }}"
-		ipa-value-message="Mark to modify in Banner: {{ activity.dayIndicator.getWeekDays() || 'none' }}" apply-sis="updateDayIndicator(activity.dwChanges.dayIndicator.value)"
-		apply-ipa="toggleBannerToDoItem('activities', activity.uniqueKey, 'dayIndicator')"></change-action>
+	<change-action ng-if="!activity.noRemote && activity.dwChanges.dayIndicator !== undefined" ng-show="view.activeChangeAction == activity.uniqueKey + $index + 'dayIndicator'"
+		title="Value does not match with Banner " sis-value-message="Set IPA to what Banner has: {{ activity.dwChanges.dayIndicator.value.getWeekDays()}}"
+		ipa-value-message="Mark to modify in Banner: {{ activity.dayIndicator.getWeekDays() || 'none' }}" apply-sis="updateDayIndicator(activity.dwChanges.dayIndicator.value) "
+		apply-ipa="toggleBannerToDoItem( 'activities', activity.uniqueKey, 'dayIndicator') "></change-action>
 
 </div>

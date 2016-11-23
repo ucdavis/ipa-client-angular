@@ -121,7 +121,7 @@ table.section-diff-table > tbody > tr.activity-diff-row.no-remote > td
 .change-action {
 	position:  absolute;
 	color: #333;
-	display: none;
+	display: inline-block;
 	left: 0;
 	top: 100%;
 	min-width: 250px;

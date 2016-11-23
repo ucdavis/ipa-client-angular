@@ -1,11 +1,12 @@
-<div class="activity-diff-element activity-location" ng-class="{ 'has-changes' : !activity.noRemote && activity.dwChanges.bannerLocation !== undefined && !activity.dwChanges.bannerLocation.isToDo }">
+<div class="activity-diff-element activity-location" ng-class="{ 'has-changes' : !activity.noRemote && activity.dwChanges.bannerLocation !== undefined && !activity.dwChanges.bannerLocation.isToDo }"
+	ng-click="setActiveChangeAction(activity.uniqueKey + $index + 'location', $event)">
 	<span class="diff-content">
 		{{ activity.bannerLocation || 'none' }}
 	</span>
 
-	<change-action ng-if="!activity.noRemote && activity.dwChanges.bannerLocation !== undefined" title="Value does not match with Banner"
-		sis-value-message="Set IPA to what Banner has: {{  activity.dwChanges.bannerLocation.value }}" ipa-value-message="Mark to modify in Banner: {{ activity.bannerLocation }}"
-		apply-sis="updateBannerLocation(activity.dwChanges.bannerLocation.value)" apply-ipa="toggleBannerToDoItem('activities', activity.uniqueKey, 'location')"
-		hide-ipa-message="{{ activity.bannerLocation == '' }}"></change-action>
+	<change-action ng-if="!activity.noRemote && activity.dwChanges.bannerLocation !== undefined" ng-show="view.activeChangeAction == activity.uniqueKey + $index + 'location'"
+		title="Value does not match with Banner" sis-value-message="Set IPA to what Banner has: {{  activity.dwChanges.bannerLocation.value }}"
+		ipa-value-message="Mark to modify in Banner: {{ activity.bannerLocation }}" apply-sis="updateBannerLocation(activity.dwChanges.bannerLocation.value)"
+		apply-ipa="toggleBannerToDoItem('activities', activity.uniqueKey, 'location')" hide-ipa-message="{{ activity.bannerLocation == '' }}"></change-action>
 
 </div>

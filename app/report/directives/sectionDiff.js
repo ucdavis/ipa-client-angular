@@ -14,6 +14,17 @@ reportApp.directive("sectionDiff", this.sectionDiff = function (reportActionCrea
 				reportActionCreators.createBannerToDoItem(scope.section.id, property, childUniqueKey, childProperty);
 			};
 
+			scope.setActiveChangeAction = function (actionKey, event) {
+				// Prevent click event from going up to parent divs like activity or section
+				event.stopPropagation(); debugger;
+
+				if (scope.view.activeChangeAction == actionKey) {
+					scope.view.activeChangeAction = '';
+				} else {
+					scope.view.activeChangeAction = actionKey;
+				}
+			};
+
 			scope.deleteSection = function (section) {
 				reportActionCreators.deleteSection(section);
 			};

@@ -52,7 +52,11 @@ reportApp.directive("syncActionList", this.syncActionList = function ($rootScope
 						// Child isTodo (examples: add/remove entire instructor/activity)
 						if (syncAction.sectionProperty == "instructors") {
 							// Instructors
-							var instructor = section.instructors.find(function (i) { return i.uniqueKey == syncAction.childUniqueKey; });
+							var instructor = section.instructors.find(function (i) {
+								var keyMatches = (i.uniqueKey == syncAction.childUniqueKey);
+								var hasChanges = (i.noLocal || i.noRemote);
+								return keyMatches && hasChanges;
+							});
 
 							if (instructor.noRemote) {
 								// TODO: Need to assign instructor to all sibling sections
@@ -69,7 +73,11 @@ reportApp.directive("syncActionList", this.syncActionList = function ($rootScope
 							}
 						} else if (syncAction.sectionProperty == "activities") {
 							// Activities
-							activity = section.activities.find(function (a) { return a.uniqueKey == syncAction.childUniqueKey; });
+							activity = section.activities.find(function (a) {
+								var keyMatches = (a.uniqueKey == syncAction.childUniqueKey);
+								var hasChanges = (a.noLocal || a.noRemote);
+								return keyMatches && hasChanges;
+							});
 							if (!activity) {
 								$log.debug("Activity with uniqueKey " + syncAction.childUniqueKey + " no longer exists in section " + section.uniqueKey);
 								return;
