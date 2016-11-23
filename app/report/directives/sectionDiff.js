@@ -16,7 +16,7 @@ reportApp.directive("sectionDiff", this.sectionDiff = function (reportActionCrea
 
 			scope.setActiveChangeAction = function (actionKey, event) {
 				// Prevent click event from going up to parent divs like activity or section
-				event.stopPropagation(); debugger;
+				event.stopPropagation();
 
 				if (scope.view.activeChangeAction == actionKey) {
 					scope.view.activeChangeAction = '';
