@@ -207,11 +207,16 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					delete sections.list[action.payload.section.id];
 					return sections;
 				case CREATE_SYNC_ACTION:
-				case DELETE_SYNC_ACTION:
 					section = sections.list[action.payload.syncAction.sectionId];
 					if (!section) { return sections; }
 
 					section = this._togglePropertyToDo(section, action.payload.syncAction);
+					return sections;
+				case DELETE_SYNC_ACTION:
+					section = sections.list[action.payload.syncAction.sectionId];
+					if (!section) { return sections; }
+
+					section = this._togglePropertyToDo(section, action.payload.syncAction, true);
 					return sections;
 				default:
 					return sections;
@@ -236,6 +241,15 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					}
 					syncActions.ids = _array_sortIdsByProperty(syncActionList, "sectionId");
 					syncActions.list = syncActionList;
+					return syncActions;
+				case CREATE_SYNC_ACTION:
+					syncActions.list[action.payload.syncAction.id] = action.payload.syncAction;
+					syncActions.ids.push(action.payload.syncAction.id);
+					return syncActions;
+				case DELETE_SYNC_ACTION:
+					var syncActionIndex = syncActions.ids.indexOf(action.payload.syncAction.id);
+					delete syncActions.list[action.payload.syncAction.id];
+					syncActions.ids.splice(syncActionIndex, 1);
 					return syncActions;
 				default:
 					return syncActions;
@@ -284,7 +298,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 		 * @param syncAction
 		 * @returns modifiedSection
 		 */
-		_togglePropertyToDo: function (section, syncAction) {
+		_togglePropertyToDo: function (section, syncAction, isDelete) {
 			var child;
 
 			// Decide where to apply the todo flag based on the provided params
@@ -298,7 +312,12 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 			} else if (syncAction.sectionProperty && syncAction.childUniqueKey) {
 				// Toggle child isTodo (examples: add/remove entire instructor/activity)
 				child = section[syncAction.sectionProperty]
-					.find(function (c) { return c.uniqueKey == syncAction.childUniqueKey && !c.isToDo; });
+					.find(function (c) {
+						var keyMatches = c.uniqueKey == syncAction.childUniqueKey;
+						// toDoMatches should be true if we are deleting (delete only existing toDos)
+						var toDoMatches = (!!c.isToDo == !!isDelete);
+						return keyMatches && toDoMatches;
+					});
 				if (child) {
 					child.isToDo = !child.isToDo;
 				}

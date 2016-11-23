@@ -184,13 +184,13 @@ reportApp.service('reportActionCreators', function (reportStateService, reportSe
 		 * @param childProperty: for activities this can be dayIndicator, startTime, endTime, location. null value applies the to-do to the whole activity
 		 */
 		createBannerToDoItem: function (sectionId, sectionProperty, childUniqueKey, childProperty) {
-			var syncAction = {
+			var newSyncAction = {
 				sectionId: sectionId,
 				sectionProperty: sectionProperty,
 				childUniqueKey: childUniqueKey,
 				childProperty: childProperty
 			};
-			reportService.createSyncAction(syncAction).then(function (payload) {
+			reportService.createSyncAction(newSyncAction).then(function (syncAction) {
 				$rootScope.$emit('toast', { message: "Created to-do item", type: "SUCCESS" });
 				var action = {
 					type: CREATE_SYNC_ACTION,
