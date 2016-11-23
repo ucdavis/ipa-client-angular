@@ -27,7 +27,7 @@ assignmentApp.service('assignmentStateService', function (
 						var course = new Course(action.payload.courses[i]);
 						coursesList[course.id] = course;
 						coursesList[course.id].isFiltered = false;
-						coursesList[course.id].isHidden = isCourseSuppressed(course);
+						coursesList[course.id].isHidden = false;
 						// Set all courses to true initially as no tag filters are set
 						coursesList[course.id].matchesTagFilters = true;
 
@@ -779,35 +779,6 @@ assignmentApp.service('assignmentStateService', function (
 		}
 	};
 });
-
-// Returns false if course is a x98 or x99 series, unless the user has opted to show them
-isCourseSuppressed = function (course) {
-	// TODO: implement this check once toggle is added
-	// if (suppressingDoNotPrint == false) { return false;}
-
-	// HardCoded courses that are suppressed
-	var suppressedCourseNumbers = ["194HA", "194HB", "197T", "201"];
-	if (suppressedCourseNumbers.indexOf(course.courseNumber) > -1) {
-		return true;
-	}
-
-	var lastChar = course.courseNumber.charAt(course.courseNumber.length - 1);
-	var secondLastChar = course.courseNumber.charAt(course.courseNumber.length - 2);
-	var thirdLastChar = course.courseNumber.charAt(course.courseNumber.length - 3);
-
-	// Filter out courses like 299H
-	if (isLetter(lastChar)) {
-		if (thirdLastChar == 9 && (secondLastChar == 8 || secondLastChar == 9)) {
-			return true;
-		}
-	} else {
-		if (secondLastChar == 9 && (lastChar == 8 || lastChar == 9)) {
-			return true;
-		}
-	}
-
-	return false;
-};
 
 generateTermCode = function (year, term) {
 	if (term.toString().length == 1) {

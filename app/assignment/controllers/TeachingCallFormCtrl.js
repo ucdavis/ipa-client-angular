@@ -452,36 +452,32 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 					// Adding metadata from sectionGroup
 					course.seatsTotal = sectionGroup.plannedSeats;
 
-					// Ignore courses being suppressed
-					if (course.isHidden === false) {
+					// Ensure termCode has been added
+					if (activeTeachingCall.scheduledCourses[termCode] == null) {
+						activeTeachingCall.scheduledCourses[termCode] = [];
+					}
 
-						// Ensure termCode has been added
-						if (activeTeachingCall.scheduledCourses[termCode] == null) {
-							activeTeachingCall.scheduledCourses[termCode] = [];
+					// Ensure course hasn't already been added
+					var courseAlreadyExists = false;
+
+					for (j = 0; j < activeTeachingCall.scheduledCourses[termCode].length; j++) {
+						var slotCourse = activeTeachingCall.scheduledCourses[termCode][j];
+
+						if (slotCourse.subjectCode == course.subjectCode &&
+							slotCourse.courseNumber == course.courseNumber) {
+							courseAlreadyExists = true;
+							break;
+						}
+					}
+
+					if (courseAlreadyExists === false) {
+						if (alreadyHasPreferenceSectionGroupIds.indexOf(course.sectionGroupTermCodeIds[termCode]) > -1) {
+							course.hasPreference = true;
+						} else {
+							course.hasPreference = false;
 						}
 
-						// Ensure course hasn't already been added
-						var courseAlreadyExists = false;
-
-						for (j = 0; j < activeTeachingCall.scheduledCourses[termCode].length; j++) {
-							var slotCourse = activeTeachingCall.scheduledCourses[termCode][j];
-
-							if (slotCourse.subjectCode == course.subjectCode &&
-								slotCourse.courseNumber == course.courseNumber) {
-								courseAlreadyExists = true;
-								break;
-							}
-						}
-
-						if (courseAlreadyExists === false) {
-							if (alreadyHasPreferenceSectionGroupIds.indexOf(course.sectionGroupTermCodeIds[termCode]) > -1) {
-								course.hasPreference = true;
-							} else {
-								course.hasPreference = false;
-							}
-
-							activeTeachingCall.scheduledCourses[termCode].push(course);
-						}
+						activeTeachingCall.scheduledCourses[termCode].push(course);
 					}
 				}
 
