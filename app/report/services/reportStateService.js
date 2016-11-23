@@ -271,9 +271,19 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 			$log.debug("Report state updated:");
 			$log.debug(scope._state, action.type);
 		},
+
 		// ------------------------------- //
 		// Helper methods used in reducers //
 		// ------------------------------- //
+
+		/**
+		 * Finds the corresponding property or object in the section
+		 * based on the syncAction, and toggles its isTodo flag
+		 *
+		 * @param section
+		 * @param syncAction
+		 * @returns modifiedSection
+		 */
 		_togglePropertyToDo: function (section, syncAction) {
 			var child;
 
@@ -288,7 +298,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 			} else if (syncAction.sectionProperty && syncAction.childUniqueKey) {
 				// Toggle child isTodo (examples: add/remove entire instructor/activity)
 				child = section[syncAction.sectionProperty]
-					.find(function (c) { return c.uniqueKey == syncAction.childUniqueKey; });
+					.find(function (c) { return c.uniqueKey == syncAction.childUniqueKey && !c.isToDo; });
 				if (child) {
 					child.isToDo = !child.isToDo;
 				}
