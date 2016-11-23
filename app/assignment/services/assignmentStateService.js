@@ -469,6 +469,7 @@ assignmentApp.service('assignmentStateService', function (
 					for (i = 0; i < teachingAssignments.length; i++) {
 						slotTeachingAssignment = teachingAssignments[i];
 						var index = instructorTeachingAssignments.indexOf(slotTeachingAssignment.id);
+
 						if (index > -1) {
 							instructorTeachingAssignments.splice(index, 1);
 						}
@@ -477,13 +478,14 @@ assignmentApp.service('assignmentStateService', function (
 				case REMOVE_TEACHING_ASSIGNMENT:
 					teachingAssignment = action.payload.teachingAssignment;
 					instructor = instructors.list[teachingAssignment.instructorId];
-					for (i = 0; i < instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode].length; i++) {
-						var slotTeachingAssignmentId = instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode][i];
-						if (slotTeachingAssignmentId == teachingAssignment.id) {
-							instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode].splice(i);
-							return instructors;
-						}
+					termCode = teachingAssignment.termCode;
+
+					index = instructor.teachingAssignmentTermCodeIds[termCode].indexOf(teachingAssignment.id);
+
+					if (index > -1) {
+						instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode].splice(index, 1);
 					}
+
 					return instructors;
 				default:
 					return instructors;
