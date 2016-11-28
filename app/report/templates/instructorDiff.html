@@ -2,7 +2,7 @@
 	'has-changes' : (instructor.noRemote || instructor.noLocal) && !instructor.isToDo,
 	'no-remote' : instructor.noRemote && !instructor.isToDo,
 	'no-local': instructor.noLocal && !instructor.isToDo }" class="section-diff-element section-instructors"
-	ng-click="setActiveChangeAction(instructor.uniqueKey + $index, $event)">
+	ng-click="setActiveChangeAction($event, instructor, $index)">
 	<span class="diff-content">
 		{{ instructor | lastSpaceInitial }}
 	</span>

@@ -1,5 +1,5 @@
 <div class="activity-diff-element activity-start-time" ng-class="{ 'has-changes' : !activity.noRemote && activity.dwChanges.startTime && !activity.dwChanges.startTime.isToDo }"
-	ng-click="setActiveChangeAction(activity.uniqueKey + $index + 'startTime', $event)">
+	ng-click="setActiveChangeAction($event, activity, $index, 'startTime')">
 	<span class="diff-content">
 		{{ activity.startTime.toStandardTime() || 'none' }}
 	</span>

@@ -1,5 +1,5 @@
 <div class="activity-diff-element activity-day-indicator" ng-class="{ 'has-changes' : !activity.noRemote && activity.dwChanges.dayIndicator !== undefined && !activity.dwChanges.dayIndicator.isToDo }"
-	ng-click="setActiveChangeAction(activity.uniqueKey + $index + 'dayIndicator', $event)">
+	ng-click="setActiveChangeAction($event, activity, $index, 'dayIndicator')">
 	<span class="diff-content">
 		{{ activity.dayIndicator.getWeekDays() || 'none' }}
 	</span>

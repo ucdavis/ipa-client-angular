@@ -1,10 +1,10 @@
 <div class="section-diff-element section-crn" ng-class="{ 'has-changes' : section.dwChanges.crn !== undefined }"
-	ng-click="setActiveChangeAction(section.uniqueKey + 'crn', $event)">
+	ng-click="setActiveChangeAction($event, section, $index, 'crn')">
 	<span class="diff-content">
 		{{ section.crn || "No CRN" }}
 	</span>
 
-	<change-action ng-if="section.dwChanges.crn !== undefined" ng-show="view.activeChangeAction == section.uniqueKey + 'crn'"
+	<change-action ng-if="section.dwChanges.crn !== undefined" ng-show="view.activeChangeAction == section.uniqueKey + $index + 'crn'"
 		title="Value does not match with Banner" sis-value-message="Set IPA to what Banner has: {{ section.dwChanges.crn.value }}"
 		apply-sis="updateCrn(sectionId, section.dwChanges.crn.value)" hide-ipa-message="true"></change-action>
 

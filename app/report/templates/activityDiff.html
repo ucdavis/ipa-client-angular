@@ -3,7 +3,7 @@
 	'no-local': activity.noLocal && !activity.isToDo,
 	'has-changes': (activity.noRemote || activity.noLocal) && !activity.isToDo,
 	'no-changes': activity.isToDo || !(activity.noRemote || activity.noLocal || activity.dwChanges)
- }" class="section-activity-diff-row" ng-click="setActiveChangeAction(activity.uniqueKey + $index, $event)">
+ }" class="section-activity-diff-row" ng-click="setActiveChangeAction($event, activity, $index)">
 
 	<!-- Activity Type -->
 	<div class="activity-diff-element activity-type-code">
