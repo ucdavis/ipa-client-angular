@@ -13,7 +13,7 @@ reportApp.directive("syncActionList", this.syncActionList = function ($rootScope
 				listItems: []
 			};
 
-			scope.toggleBannerToDoItem = function (item) {
+			scope.deleteBannerToDoItem = function (item) {
 				reportActionCreators.deleteBannerToDoItem(item);
 			};
 
@@ -30,6 +30,10 @@ reportApp.directive("syncActionList", this.syncActionList = function ($rootScope
 					if (syncAction.sectionProperty && syncAction.childUniqueKey && syncAction.childProperty) {
 						// Child property isTodo (examples: update dayIndicator, startTime...)
 						activity = section.activities.find(function (a) { return a.uniqueKey == syncAction.childUniqueKey; });
+						if (!(activity.dwChanges && activity.dwChanges[syncAction.childProperty])) {
+							$log.debug("Activity with uniqueKey " + syncAction.childUniqueKey + " property (" + syncAction.childProperty + ") no longer differs");
+							return;
+						}
 						var oldValue = activity.dwChanges[syncAction.childProperty].value;
 						var newValue = activity[syncAction.childProperty];
 
@@ -98,6 +102,10 @@ reportApp.directive("syncActionList", this.syncActionList = function ($rootScope
 						}
 					} else if (syncAction.sectionProperty) {
 						// Section property as todo (example: update seats)
+						if (!(section.dwChanges && section.dwChanges[syncAction.sectionProperty])) {
+							$log.debug("Section with uniqueKey " + section.uniqueKey + " property (" + syncAction.sectionProperty + ") no longer differs");
+							return;
+						}
 						var crn = section.crn ? " (" + section.crn + ")" : "";
 						syncAction.description = "Change " + section.subjectCode + " " + section.courseNumber + " section " +
 							section.sequenceNumber + crn + " " + getHumanName(syncAction.sectionProperty) + " from " +

@@ -306,7 +306,7 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 				// Toggle child property isTodo (examples: update dayIndicator, startTime...)
 				child = section[syncAction.sectionProperty]
 					.find(function (c) { return c.uniqueKey == syncAction.childUniqueKey; });
-				if (child) {
+				if (child && child.dwChanges && child.dwChanges[syncAction.childProperty]) {
 					child.dwChanges[syncAction.childProperty].isToDo = isDelete ? false : true;
 				}
 			} else if (syncAction.sectionProperty && syncAction.childUniqueKey) {
@@ -323,7 +323,9 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 				}
 			} else if (syncAction.sectionProperty) {
 				// Flag section property as todo (example: update seats)
-				section.dwChanges[syncAction.sectionProperty].isToDo = isDelete ? false : true;
+				if (section.dwChanges && section.dwChanges[syncAction.sectionProperty]) {
+					section.dwChanges[syncAction.sectionProperty].isToDo = isDelete ? false : true;
+				}
 			} else {
 				// Flag the section itself as todo
 				section.isToDo = isDelete ? false : true;
