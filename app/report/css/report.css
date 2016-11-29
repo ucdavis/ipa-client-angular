@@ -74,7 +74,6 @@ tr.section-activity-diff-row.no-changes * {
 	cursor: pointer;
 	color: #fff;
 	background-color: rgba(139, 0, 139, 0.5);
-	border: 1px solid darkmagenta;
 	border-radius: 3px;
 	padding: 2px 4px;
 	margin: -2px -4px;

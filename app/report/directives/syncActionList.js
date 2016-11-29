@@ -41,12 +41,13 @@ reportApp.directive("syncActionList", this.syncActionList = function ($rootScope
 							oldValue = oldValue.getWeekDays() || 'none';
 							newValue = newValue.getWeekDays() || 'none';
 						} else if (syncAction.childProperty == "startTime" || syncAction.childProperty == "endTime") {
-							oldValue = oldValue.toStandardTime();
-							newValue = newValue.toStandardTime();
+							oldValue = oldValue.toStandardTime() || 'none';
+							newValue = newValue.toStandardTime() || 'none';
 						} else {
 							$log.debug("Unknown child property in a syncAction", syncAction.childProperty);
 						}
 
+						var crn = section.crn ? " (" + section.crn + ")" : "";
 						syncAction.description = "Change " + section.subjectCode + " " + section.courseNumber + " section " +
 							section.sequenceNumber + crn + " " + activity.typeCode.getActivityCodeDescription() + " " + getHumanName(syncAction.childProperty) +
 							" from " + oldValue + " to " + newValue;
