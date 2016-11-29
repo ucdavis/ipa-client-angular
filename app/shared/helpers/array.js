@@ -10,6 +10,7 @@ _array_findById = function (arr, id) {
 };
 
 _array_getIndexById = function (arr, id) {
+	if (!(arr instanceof Array)) { return -1; }
 	return arr.findIndex(function (n) {
 		return n.id == id;
 	});
