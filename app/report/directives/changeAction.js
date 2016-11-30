@@ -19,7 +19,8 @@ reportApp.directive("changeAction", this.changeAction = function () {
 			sisValueMessage: '@',
 			ipaValueMessage: '@',
 			applySis: '&',
-			applyIpa: '&'
+			applyIpa: '&',
+			isActive: '='
 		},
 		link: function (scope, element, attrs) {
 			scope.hideSisMessage = attrs.hideSisMessage == 'true';

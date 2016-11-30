@@ -7,6 +7,7 @@
 	<change-action ng-if="!activity.noRemote && activity.dwChanges.bannerLocation !== undefined" ng-show="view.activeChangeAction == activity.uniqueKey + $index + 'bannerLocation'"
 		title="Value does not match with Banner" sis-value-message="Set IPA to what Banner has: {{  activity.dwChanges.bannerLocation.value }}"
 		ipa-value-message="Mark to modify in Banner: {{ activity.bannerLocation }}" apply-sis="updateBannerLocation(activity.dwChanges.bannerLocation.value)"
-		apply-ipa="toggleBannerToDoItem('activities', activity.uniqueKey, 'bannerLocation')" hide-ipa-message="{{ activity.bannerLocation === null }}"></change-action>
+		apply-ipa="toggleBannerToDoItem('activities', activity.uniqueKey, 'bannerLocation')" hide-ipa-message="{{ activity.bannerLocation === null }}"
+		is-active="view.hasAccess"></change-action>
 
 </div>

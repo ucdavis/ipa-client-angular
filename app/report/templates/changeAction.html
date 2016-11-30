@@ -2,7 +2,10 @@
 	<div class="arrow"></div>
 	<h3 class="popover-title">{{ title }}</h3>
 	<div class="popover-content">
-		<div class="row">
+		<div class="row text-muted" ng-if="!isActive">
+			No actions available
+		</div>
+		<div class="row" ng-if="isActive">
 			<div ng-class="{ 'col-xs-6': !hideIpaMessage, 'col-xs-12': hideIpaMessage }" ng-if="!hideSisMessage">
 				<!-- Action to apply SIS value -->
 				<div class="change-message">

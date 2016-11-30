@@ -11,8 +11,9 @@
 	<div class="sis-todo-content">
 		<ul class="sis-todo-list">
 			<li ng-repeat="item in view.listItems track by $index" class="row sis-todo-item">
-				<div class="change-item-description col-xs-10" ng-bind-html="item.description"></div>
-				<div class="col-xs-2">
+				<div class="change-item-description" ng-class="{'col-xs-10': view.hasAccess, 'col-xs-12': !view.hasAccess}"
+					ng-bind-html="item.description"></div>
+				<div class="col-xs-2" ng-if="view.hasAccess">
 					<button type="button" class="close hidden-print" ng-click="deleteBannerToDoItem(item)">&times;</button>
 				</div>
 			</li>

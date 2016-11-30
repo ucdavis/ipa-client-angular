@@ -6,6 +6,6 @@
 
 	<change-action ng-if="section.dwChanges.crn !== undefined" ng-show="view.activeChangeAction == section.uniqueKey + $index + 'crn'"
 		title="Value does not match with Banner" sis-value-message="Set IPA to what Banner has: {{ section.dwChanges.crn.value }}"
-		apply-sis="updateCrn(sectionId, section.dwChanges.crn.value)" hide-ipa-message="true"></change-action>
+		apply-sis="updateCrn(sectionId, section.dwChanges.crn.value)" hide-ipa-message="true" is-active="view.hasAccess"></change-action>
 
 </div>

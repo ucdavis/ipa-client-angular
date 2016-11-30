@@ -9,10 +9,12 @@
 
 	<change-action ng-if="instructor.noRemote" ng-show="view.activeChangeAction == instructor.uniqueKey + $index"
 		title="Banner does not have this instructor" sis-value-message="Un-assign in IPA (All sections)" ipa-value-message="Mark to assign in Banner"
-		apply-sis="unAssignInstructor(section, instructor)" apply-ipa="toggleBannerToDoItem('instructors', instructor.uniqueKey)"></change-action>
+		apply-sis="unAssignInstructor(section, instructor)" apply-ipa="toggleBannerToDoItem('instructors', instructor.uniqueKey)"
+		is-active="view.hasAccess"></change-action>
 
 	<change-action ng-if="instructor.noLocal" ng-show="view.activeChangeAction == instructor.uniqueKey + $index"
 		title="IPA does not have this instructor" sis-value-message="Assign in IPA (All sections)" ipa-value-message="Mark to un-assign in Banner"
-		apply-sis="assignInstructor(section, instructor)" apply-ipa="toggleBannerToDoItem('instructors', instructor.uniqueKey)"></change-action>
+		apply-sis="assignInstructor(section, instructor)" apply-ipa="toggleBannerToDoItem('instructors', instructor.uniqueKey)"
+		is-active="view.hasAccess"></change-action>
 
 </div>

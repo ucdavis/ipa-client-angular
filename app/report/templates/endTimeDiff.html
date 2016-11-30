@@ -7,6 +7,6 @@
 	<change-action ng-if="!activity.noRemote && activity.dwChanges.endTime" title="Value does not match with Banner"
 		ng-show="view.activeChangeAction == activity.uniqueKey + $index + 'endTime'" sis-value-message="Set IPA to what Banner has: {{ activity.dwChanges.endTime.value.toStandardTime() }}"
 		ipa-value-message="Mark to modify in Banner: {{ activity.endTime.toStandardTime() }}" apply-sis="updateEndTime(activity.dwChanges.endTime.value)"
-		apply-ipa="toggleBannerToDoItem('activities', activity.uniqueKey, 'endTime')"></change-action>
+		apply-ipa="toggleBannerToDoItem('activities', activity.uniqueKey, 'endTime')" is-active="view.hasAccess"></change-action>
 
 </div>

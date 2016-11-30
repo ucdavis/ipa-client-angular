@@ -16,6 +16,9 @@ reportApp.controller('ReportCtrl', ['$scope', '$rootScope', '$routeParams', 'Ter
 
 		$rootScope.$on('reportStateChanged', function (event, data) {
 			$scope.view.state = data.state;
+
+			$scope.view.hasAccess = $scope.sharedState.currentUser.isAdmin() ||
+				$scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id);
 		});
 
 	}

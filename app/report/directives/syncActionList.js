@@ -10,7 +10,9 @@ reportApp.directive("syncActionList", this.syncActionList = function ($rootScope
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.view = {
-				listItems: []
+				listItems: [],
+				hasAccess: scope.sharedState.currentUser.isAdmin() ||
+				scope.sharedState.currentUser.hasRole('academicPlanner', scope.sharedState.workgroup.id)
 			};
 
 			scope.deleteBannerToDoItem = function (item) {

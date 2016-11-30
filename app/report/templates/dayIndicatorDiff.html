@@ -7,6 +7,6 @@
 	<change-action ng-if="!activity.noRemote && activity.dwChanges.dayIndicator !== undefined" ng-show="view.activeChangeAction == activity.uniqueKey + $index + 'dayIndicator'"
 		title="Value does not match with Banner " sis-value-message="Set IPA to what Banner has: {{ activity.dwChanges.dayIndicator.value.getWeekDays()}}"
 		ipa-value-message="Mark to modify in Banner: {{ activity.dayIndicator.getWeekDays() || 'none' }}" apply-sis="updateDayIndicator(activity.dwChanges.dayIndicator.value) "
-		apply-ipa="toggleBannerToDoItem( 'activities', activity.uniqueKey, 'dayIndicator') "></change-action>
+		apply-ipa="toggleBannerToDoItem( 'activities', activity.uniqueKey, 'dayIndicator') " is-active="view.hasAccess"></change-action>
 
 </div>

@@ -25,11 +25,13 @@
 	<!-- Action when activity does not exist in Banner -->
 	<change-action ng-if="activity.noRemote" ng-show="view.activeChangeAction == activity.uniqueKey + $index"
 		title="Activity does not exist in Banner" sis-value-message="Delete from IPA" ipa-value-message="Mark to add in Banner"
-		apply-sis="deleteActivity(activity)" apply-ipa="toggleBannerToDoItem('activities', activity.uniqueKey)"></change-action>
+		apply-sis="deleteActivity(activity)" apply-ipa="toggleBannerToDoItem('activities', activity.uniqueKey)"
+		is-active="view.hasAccess"></change-action>
 
 	<!-- Action when activity does not exist in IPA -->
 	<change-action ng-if="activity.noLocal" ng-show="view.activeChangeAction == activity.uniqueKey + $index"
 		title="Activity does not exist in IPA" sis-value-message="Create in IPA" ipa-value-message="Mark to delete in Banner"
-		apply-sis="createActivity(section, $index)" apply-ipa="toggleBannerToDoItem('activities', activity.uniqueKey)"></change-action>
+		apply-sis="createActivity(section, $index)" apply-ipa="toggleBannerToDoItem('activities', activity.uniqueKey)"
+		is-active="view.hasAccess"></change-action>
 
 </div>
