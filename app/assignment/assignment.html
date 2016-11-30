@@ -26,34 +26,37 @@
 	<script src="/js/lib.js"></script>
 
 </head>
+
 <body class="page-body ng-cloak" ng-app="assignmentApp" ng-cloak ng-controller="SharedCtrl">
-		<base href="/assignments/">
+	<base href="/assignments/">
 
 	<div ng-if="loadingView" class="overlay">
 		<spinner class="vertical-center"></spinner>
 	</div>
 
 	<div class="page-container" collapsable-sidebar-container ng-view>
-			<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
-		</div>
+		<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+	</div>
 
 
-		<div id="toast-container" class="toast-top-right" ng-if="$root.toast.message.length > 0">
-			<div class="toast toast-error" style="display: block;">
-				<div class="toast-message" ng-bind="$root.toast.message">
-				</div>
+	<div id="toast-container" class="toast-top-right" ng-if="$root.toast.message.length > 0">
+		<div class="toast toast-error" style="display: block;">
+			<div class="toast-message" ng-bind="$root.toast.message">
 			</div>
 		</div>
+	</div>
 
-		<!-- Bottom scripts (common) -->
-		<script src="/js/select2.min.js"></script>
+	<!-- Bottom scripts (common) -->
+	<script src="/js/select2.min.js"></script>
 
-		<!-- JavaScripts initializations and stuff -->
+	<!-- JavaScripts initializations and stuff -->
 
-		<script src="/js/sharedApp.js"></script>
-		<script src="/js/sharedConfig.js"></script>
-		<script src="/js/snippets.js"></script>
-		<script src="/js/assignmentApp.js"></script>
-		<script src="/js/jquery-ui.min.js"></script>
-	</body>
+	<script src="/js/sharedApp.js"></script>
+	<script src="/js/clientConfig.js"></script>
+	<script src="/js/sharedConfig.js"></script>
+	<script src="/js/snippets.js"></script>
+	<script src="/js/assignmentApp.js"></script>
+	<script src="/js/jquery-ui.min.js"></script>
+</body>
+
 </html>

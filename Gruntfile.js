@@ -104,7 +104,6 @@ module.exports = function (grunt) {
 			// Configuration files, separated so that they can be excluded in JS testing
 			jsConfig: {
 				src: [
-					'clientConfig.js',
 					'<%= folders.webapp.root %>/shared/exceptionHandler.js',
 					'<%= folders.webapp.root %>/shared/sharedInterceptors.js'
 				],
@@ -245,6 +244,7 @@ module.exports = function (grunt) {
 				expand: true,
 				flatten: true,
 				src: [
+					'clientConfig.js',
 					'bower_components/bootstrap/dist/js/*',
 					'vendor/js/*'
 				],
