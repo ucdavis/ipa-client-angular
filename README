@@ -2,3 +2,12 @@ Installation
 ------------
 1. Ensure 'npm', 'bower', and 'grunt' are installed. Bower and Grunt can be installed via npm.
 
+Docker Notes
+------------
+1. Customize ipa-ucdavis-edu.env
+2. docker-compose build
+3. docker-compose up -d
+
+For production mode, you'll want to expose port 80 as port 80, 443 as 443. Use:
+
+$ docker-compose run -p 80:80 -p 443:443 web

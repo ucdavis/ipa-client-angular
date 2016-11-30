@@ -10,5 +10,5 @@ services:
         - ./certs/ipa_ucdavis_edu.cer:/usr/local/apache2/conf/server.crt
         - ./certs/ipa_ucdavis_edu.key:/usr/local/apache2/conf/server.key
     ports:
-      - 80:80
-      - 443:443
+      - 80
+      - 443
