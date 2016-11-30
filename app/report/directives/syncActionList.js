@@ -17,6 +17,19 @@ reportApp.directive("syncActionList", this.syncActionList = function ($rootScope
 				reportActionCreators.deleteBannerToDoItem(item);
 			};
 
+			scope.download = function () {
+				var blob = new Blob([
+					scope.view.listItems.map(function (li) {
+						return '- ' + li.description
+							.replace(/<\/?ul>|<\/li>?/g, '')
+							.replace(/<li>?/g, '\r\n  - ');
+					}).join('\r\n\r\n')
+				], {
+						type: "text/plain;charset=utf-8;",
+					});
+				saveAs(blob, "banner-to-do.txt");
+			};
+
 			$rootScope.$on('reportStateChanged', function (event, data) {
 
 				// Empty the current list to rescan/rebuild
