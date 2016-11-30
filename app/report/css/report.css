@@ -236,3 +236,44 @@ ul.sis-todo-list li.sis-todo-item {
 ul.sis-todo-list li.sis-todo-item {
 	border-bottom: 1px solid #ebebeb;
 }
+
+.sis-todo-toolbar {
+	float: right;
+}
+
+span.sis-tool-icon {
+	margin: 0 0.75em;
+	cursor: pointer;
+}
+
+/* Print view */
+@media print {
+	.right-details {
+		position: static;
+		display: inline;
+	}
+
+	.sis-todo-container {
+		border: none;
+	}
+
+	.sis-todo-container .sis-todo-content {
+		color: #000;
+		height: auto;
+	}
+
+	ul.sis-todo-list li.sis-todo-item {
+		position: relative;
+		padding-left: 2em;
+	}
+
+	ul.sis-todo-list li.sis-todo-item:before {
+		content: "";
+		width: 1.3em;
+		height: 1.3em;
+		border: 1px solid #333;
+		border-radius: 3px;
+		float: left;
+		vertical-align: middle;
+	}
+}

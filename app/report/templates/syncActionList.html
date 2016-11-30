@@ -1,13 +1,19 @@
 <div class="sis-todo-container" ng-show="view.listItems.length">
 	<div class="sis-todo-header">
 		Banner to-do list
+		<div class="sis-todo-toolbar hidden-print">
+			<span class="sis-tool-icon hoverable glyphicon glyphicon-download-alt" tooltip-placement="bottom" uib-tooltip="Download list (coming soon)"
+				ng-click="download()"></span>
+			<span class="sis-tool-icon hoverable glyphicon glyphicon-print" tooltip-placement="bottom" uib-tooltip="Print list"
+				ng-click="print()"></span>
+		</div>
 	</div>
 	<div class="sis-todo-content">
 		<ul class="sis-todo-list">
 			<li ng-repeat="item in view.listItems track by $index" class="row sis-todo-item">
 				<div class="change-item-description col-xs-10" ng-bind-html="item.description"></div>
 				<div class="col-xs-2">
-					<button type="button" class="close" ng-click="deleteBannerToDoItem(item)">&times;</button>
+					<button type="button" class="close hidden-print" ng-click="deleteBannerToDoItem(item)">&times;</button>
 				</div>
 			</li>
 		</ul>
