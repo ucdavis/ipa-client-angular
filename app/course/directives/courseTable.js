@@ -138,13 +138,14 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 
 				element.find('input.planned-seats').blur(function (e) {
 					$el = $(e.target);
-					savePlannedSeats($el, scope, courseActionCreators);
 
 					// Important: notify angular since this happends outside of the scope
 					$timeout(function () {
+						savePlannedSeats($el, scope, courseActionCreators);
 						scope.$apply();
-					});
+					}, 500);
 				}).focus(function (e) {
+					// Select the cell when the input is focused (In case user tabs between inputs)
 					$el = $(e.target);
 					// Select a cell/row
 					courseId = $el.closest("tr").data('course-id');

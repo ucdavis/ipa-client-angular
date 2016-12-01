@@ -237,7 +237,6 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					if (action.payload.termCode && sectionGroups.selectedSectionGroup === undefined) {
 						sectionGroupData = {
 							courseId: action.payload.courseId,
-							plannedSeats: 0,
 							termCode: action.payload.termCode.toString()
 						};
 						sectionGroups.newSectionGroup = new SectionGroup(sectionGroupData);
