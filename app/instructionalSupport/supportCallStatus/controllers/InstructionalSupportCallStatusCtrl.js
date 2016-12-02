@@ -13,8 +13,9 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
-			$rootScope.$on('instructionalSupportAssignmentStateChanged', function (event, data) {
+			$rootScope.$on('instructionalSupportCallStatusStateChanged', function (event, data) {
 				$scope.view.state = data.state;
+				console.log($scope.view.state);
 			});
 
 			$scope.openSupportCallConfig = function(supportCallMode) {
@@ -33,8 +34,8 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 
 	}]);
 
-InstructionalSupportCallStatusCtrl.getPayload = function (authService, instructionalSupportAssignmentActionCreators, $route) {
+InstructionalSupportCallStatusCtrl.getPayload = function (authService, instructionalSupportCallStatusActionCreators, $route) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		//instructionalSupportAssignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode, $route.current.params.tab);
+		instructionalSupportCallStatusActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
 	});
 };

@@ -1,4 +1,4 @@
-instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSupportCallCtrl = function($scope, $rootScope, $uibModalInstance, instructionalSupportAssignmentActionCreators, supportCallMode) {
+instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSupportCallCtrl = function($scope, $rootScope, $uibModalInstance, instructionalSupportCallStatusActionCreators, supportCallMode) {
 	$scope.phdPool = [
 		{id: 1, displayName: "John Smith", group: "phd", enabled: true},
 		{id: 2, displayName: "Jenny Garcia", group: "phd", enabled: true},
@@ -204,5 +204,9 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		} else {
 			$scope.supportCallConfigData.displayPage = 3;
 		}
+	}
+
+	$scope.beginSupportCall = function () {
+		instructionalSupportCallStatusActionCreators.addStudentSupportCall(20, $scope.supportCallConfigData);
 	}
 });
