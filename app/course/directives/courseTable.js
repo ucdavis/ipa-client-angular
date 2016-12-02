@@ -145,11 +145,11 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				$('delete-course').popover();
 
 				element.find('input.planned-seats').blur(function (e) {
-					$el = $(e.target);
-
-					// Important: notify angular since this happends outside of the scope
 					$timeout(function () {
+						$el = $(e.target);
 						savePlannedSeats($el, scope, courseActionCreators);
+
+						// Important: notify angular since this happens outside of the scope
 						scope.$apply();
 					}, 500);
 				}).focus(function (e) {
@@ -160,7 +160,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					var termCode = $el.closest("td").data('term-code');
 
 					courseActionCreators.setActiveCell(courseId, termCode);
-					// Important: notify angular since this happends outside of the scope
+					// Important: notify angular since this happens outside of the scope
 					$timeout(function () {
 						scope.$apply();
 					});
@@ -176,7 +176,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					if ($el.hasClass('planned-seats')) {
 						savePlannedSeats($el, scope, courseActionCreators);
 
-						// Important: notify angular since this happends outside of the scope
+						// Important: notify angular since this happens outside of the scope
 						$timeout(function () {
 							scope.$apply();
 						});
@@ -206,7 +206,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					var course = scope.view.state.courses.list[courseId];
 
 					courseActionCreators.deleteCourse(course);
-					// Important: notify angular since this happends outside of the scope
+					// Important: notify angular since this happens outside of the scope
 					$timeout(function () {
 						scope.$apply();
 					});
@@ -222,7 +222,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					var index = $el.data('index');
 
 					courseActionCreators.newCourse(index);
-					// Important: notify angular since this happends outside of the scope
+					// Important: notify angular since this happens outside of the scope
 					$timeout(function () {
 						scope.$apply();
 					});
@@ -232,7 +232,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					var termCode = $el.closest("td").data('term-code');
 
 					courseActionCreators.setActiveCell(courseId, termCode);
-					// Important: notify angular since this happends outside of the scope
+					// Important: notify angular since this happens outside of the scope
 					$timeout(function () {
 						scope.$apply();
 					});
@@ -254,7 +254,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					}
 
 					courseActionCreators.toggleImportCourse(courseSubjectCode, courseNumber, courseSequencePattern);
-					// Important: notify angular since this happends outside of the scope
+					// Important: notify angular since this happens outside of the scope
 					$timeout(function () {
 						scope.$apply();
 					});
