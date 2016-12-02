@@ -40,9 +40,9 @@
 						<!-- TODO: Get enrollment live from DW? -->
 						<!--<td>{{ section.enrollment }}</td>-->
 						<td>
-							<input auto-input ng-if="!isLocked()" type="number" min="0" class="form-control section-seats-edit text-center" on-enter="updateSection(view.state.sections.list[sectionId])"
-								on-blur="updateSection(view.state.sections.list[sectionId])" help-text-placement="left" ng-model="view.state.sections.list[sectionId].seats"
-							/>
+							<input auto-input ng-if="!isLocked()" type="number" min="0" class="form-control section-seats-edit text-center"
+								on-enter="updateSection(view.state.sections.list[sectionId])" on-blur="updateSection(view.state.sections.list[sectionId])"
+								help-text-placement="left" ng-model="view.state.sections.list[sectionId].seats" />
 
 							<span ng-if="isLocked()" ng-bind="view.state.sections.list[sectionId].seats"></span>
 						</td>
@@ -75,6 +75,12 @@
 			<div class="col-sm-12 text-center" ng-if="!view.selectedEntity.id">
 				<p>No Course Offering for {{view.selectedEntity.termCode.getTermCodeDisplayName()}}</p>
 				<button class="btn btn-primary" ng-click="addSectionGroup()" ng-if="!isLocked()">Create Offering</button>
+			</div>
+			<div class="col-sm-12 text-center" ng-if="view.selectedEntity.id">
+				<hr>
+				<button class="btn btn-danger" ng-if="!isLocked()" confirm-button="removeSectionGroup(view.selectedEntity)"
+					message="Are you sure you want to delete this offering; this will also delete all of its sections and meetings"
+					yes="Delete" no="Cancel" placement="left">Delete Offering</button>
 			</div>
 		</div>
 	</div>

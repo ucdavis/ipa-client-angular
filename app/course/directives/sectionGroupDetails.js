@@ -20,6 +20,10 @@ sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function (
 				courseActionCreators.createSection(section);
 			};
 
+			scope.removeSectionGroup = function (sectionGroup) {
+				courseActionCreators.removeSectionGroup(sectionGroup);
+			};
+
 			/**
 			 * For a given sectionGroup this returns the next sequence number if applicable.
 			 * Possible cases:

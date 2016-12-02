@@ -111,6 +111,21 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		removeSectionGroup: function (sectionGroup) {
+			if (!sectionGroup) { return; }
+			courseService.removeSectionGroup(sectionGroup.id).then(function () {
+				$rootScope.$emit('toast', { message: "Deleted course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
+				var action = {
+					type: REMOVE_SECTION_GROUP,
+					payload: {
+						sectionGroup: sectionGroup
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		deleteCourse: function (course) {
 			var courseTitle = course.title;
 			courseService.deleteCourse(course).then(function () {

@@ -26,7 +26,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				END_IMPORT_MODE,
 				SEARCH_IMPORT_COURSES,
 				UPDATE_TAG_FILTERS,
-				TOGGLE_UNPUBLISHED_COURSES
+				TOGGLE_UNPUBLISHED_COURSES,
+				REMOVE_SECTION_GROUP
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
@@ -37,6 +38,13 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					// Remove existing highlighting
 					element.find('tbody > tr').removeClass("selected-tr");
 					element.find('tbody > tr > td').removeClass("selected-td");
+
+					return;
+				}
+
+				if (data.action.type == REMOVE_SECTION_GROUP) {
+					// Empty the textbox
+					$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"] input.planned-seats').val("");
 
 					return;
 				}

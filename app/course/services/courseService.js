@@ -64,6 +64,19 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 
 			return deferred.promise;
 		},
+		removeSectionGroup: function (sectionGroupId) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/courseView/sectionGroups/" + sectionGroupId, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
+		},
 		createCourse: function (course, workgroupId, year) {
 			var deferred = $q.defer();
 			if (!course) { return; }
