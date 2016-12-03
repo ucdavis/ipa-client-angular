@@ -358,6 +358,8 @@ i.selected-section-group-remove {
 	background: #EFEFEF;
 }
 
-.add-activity-item.used a {
-	/*font-weight: bold;*/
+.nav > li.location-tab > a {
+	padding: 10px 3px;
+	white-space: nowrap;
+	overflow: hidden;
 }

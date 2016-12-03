@@ -207,45 +207,38 @@
 							<strong>Location</strong>
 							<hr style="margin: 0 0 5px 0;" />
 							<div class="form-group">
-								<div class="col-sm-12">
-									<div class="radio">
-										<label>
-											<input type="radio" ng-value="true" ng-click="clearLocation()"
-												ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom">
-												Registrar Provided
-										</label>
-									</div>
-									<div class="radio">
-										<label>
-											<input type="radio" ng-value="false"
-												ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom">
-												Custom
-										</label>
-									</div>
-									<div ng-hide="view.state.activities.list[view.state.uiState.selectedActivityId].isBannerRoom">
+								<div class="col-sm-12 text-center">
+									<uib-tabset active="view.state.activities.list[view.state.uiState.selectedActivityId].locationType" justified="true">
+										<uib-tab index="'registrar'" heading="Registrar Provided" classes="location-tab" select="clearLocation()">
 
-										<!-- Show the locations dropdown only if the current workgroup has at least a location set -->
-										<div ng-if="view.state.locations.ids.length > 0">
+											{{ view.state.activities.list[view.state.uiState.selectedActivityId].bannerLocation }}
 
-											<ui-select ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].locationId" theme="bootstrap"
-												search-enabled="false" close-on-select="true" on-select="saveActivity()">
-												<ui-select-match placeholder="Select location...">
-													{{ view.state.locations.list[view.state.activities.list[view.state.uiState.selectedActivityId].locationId].description
-													}}
-												</ui-select-match>
-												<ui-select-choices repeat="locationId in view.state.locations.ids track by $index">
-													<div ng-bind-html="view.state.locations.list[locationId].description | highlight: $select.search"></div>
-												</ui-select-choices>
-											</ui-select>
+										</uib-tab>
+										<uib-tab index="'custom'" heading="Custom" classes="location-tab">
 
-										</div>
+											<!-- Show the locations dropdown only if the current workgroup has at least a location set -->
+											<div ng-if="view.state.locations.ids.length > 0">
 
-										<!-- IF the workgroup does not have any custom locations -->
-										<div ng-if="view.state.locations.ids.length === 0">
-											<small>No custom locations are available, <br />please add some in the workgroup configuration</small>
-										</div>
+												<ui-select ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].locationId" theme="bootstrap"
+													search-enabled="false" close-on-select="true" on-select="saveActivity()">
+													<ui-select-match placeholder="Select location...">
+														{{ view.state.locations.list[view.state.activities.list[view.state.uiState.selectedActivityId].locationId].description
+														}}
+													</ui-select-match>
+													<ui-select-choices repeat="locationId in view.state.locations.ids track by $index">
+														<div ng-bind-html="view.state.locations.list[locationId].description | highlight: $select.search"></div>
+													</ui-select-choices>
+												</ui-select>
 
-									</div>
+											</div>
+
+											<!-- IF the workgroup does not have any custom locations -->
+											<div ng-if="view.state.locations.ids.length === 0">
+												<small>No custom locations are available, <br />please add some in the workgroup configuration</small>
+											</div>
+
+										</uib-tab>
+									</uib-tabset>
 								</div>
 							</div>
 							<strong>Time</strong>
