@@ -167,7 +167,7 @@
 							<div ng-if="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length > 0 && !isLocked()"
 								class="add-activity-btn clickable hoverable" uib-popover-template="'addSharedActivityList.html'"
 								popover-placement="bottom-left" popover-append-to-body="true" popover-class="add-activity-popover"
-								popover-trigger="outsideClick">
+								popover-trigger="outsideClick" popover-is-open="view.addSharedActivityPopoverIsOpen[view.state.uiState.selectedSectionGroupId]">
 								<i class="entypo-plus-squared"></i> Add
 							</div>
 							<!-- List of sections if the sectionGroup is a series -->
@@ -188,7 +188,7 @@
 									</ul>
 									<div class="add-activity-btn clickable hoverable" ng-if="!isLocked()" uib-popover-template="'addActivityList.html'"
 										popover-placement="bottom-left" popover-append-to-body="true" popover-class="add-activity-popover"
-										popover-trigger="outsideClick">
+										popover-trigger="outsideClick" popover-is-open="view.addActivityPopoverIsOpen[sectionId]">
 										<i class="entypo-plus-squared"></i> Add
 									</div>
 								</li>

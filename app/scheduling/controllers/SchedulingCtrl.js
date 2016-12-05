@@ -6,11 +6,14 @@
  * Controller of the ipaClientAngularApp
  */
 schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParams', 'Activity', 'Term', 'schedulingActionCreators', 'authService',
-		this.SchedulingCtrl = function ($scope, $rootScope, $routeParams, Activity, Term, schedulingActionCreators, authService) {
+	this.SchedulingCtrl = function ($scope, $rootScope, $routeParams, Activity, Term, schedulingActionCreators, authService) {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.termShortCode = $routeParams.termShortCode;
-		$scope.view = {};
+		$scope.view = {
+			addSharedActivityPopoverIsOpen: {},
+			addActivityPopoverIsOpen: {}
+		};
 
 		$scope.days = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
 		// Meeting codes in the order of popularity
@@ -121,10 +124,12 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 
 		$scope.createSharedActivity = function (activityCode, sectionGroup) {
 			schedulingActionCreators.createSharedActivity(activityCode, sectionGroup);
+			$scope.view.addSharedActivityPopoverIsOpen[sectionGroup.id] = false;
 		};
 
 		$scope.createActivity = function (activityCode, sectionId, sectionGroup) {
 			schedulingActionCreators.createActivity(activityCode, sectionId, sectionGroup);
+			$scope.view.addActivityPopoverIsOpen[sectionId] = false;
 		};
 
 		$scope.closeActivityDetails = function () {
@@ -179,7 +184,7 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				return sectionGroupLocationIds.indexOf(locationId) >= 0;
 			});
 		};
-		}
+	}
 ]);
 
 SchedulingCtrl.getPayload = function (authService, $route, Term, schedulingActionCreators) {

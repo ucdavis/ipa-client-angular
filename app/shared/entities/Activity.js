@@ -15,6 +15,7 @@ angular.module('activity', [])
 				this.setStandardTimes();
 				this.setLocationType();
 				this.setSelectedDuration();
+				this.setDefaultDayIndicator();
 			},
 			/**
 			 * Returns the human readable code description
@@ -133,6 +134,9 @@ angular.module('activity', [])
 				var end = moment(this.endTime, "HH:mm:ss");
 				var duration = moment.duration(end.diff(start));
 				this.selectedDuration = duration.asMinutes().toString();
+			},
+			setDefaultDayIndicator: function () {
+				this.dayIndicator = this.dayIndicator || "0000000";
 			}
 		};
 		return Activity;
