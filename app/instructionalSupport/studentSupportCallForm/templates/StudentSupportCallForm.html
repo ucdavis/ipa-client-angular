@@ -2,122 +2,125 @@
 <div></div>
 
 <div class="page-container">
-    <!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+	<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-    <!-- modal-input comments -->
-    <div class="modal fade" id="modal-3">
-        <div class="modal-dialog student-modal-width">
-            <div class="modal-content">
-                <div class="modal-header student-modal-header_style">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Preference Comments</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="form-group" class="comments-modal">
-                            <div>
-                                <textarea class="form-control" id="comment"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+	<!-- modal-input comments -->
+	<div class="modal fade" id="modal-3">
+		<div class="modal-dialog student-modal-width">
+			<div class="modal-content">
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-info">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- modal-ends -->
-    <div class="main-content">
-        <div class="container-fluid">
-            <!-- page header -->
-						<div class="tacall-instructor-header">
-		            <h3>Support Call {{ year }} Winter</h3>
-								<p class="text-align--center department-title">
-									DSS IT
-								</p>
-		        </div>
-            <!-- page header ends -->
-        </div>
+				<div class="modal-header student-modal-header_style">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title">Preference Comments</h4>
+				</div>
 
-        <div class="row">
-            <div class="container-fluid">
-                <div class="flex-row">
-                    <!-- TA Requirements -->
-                    <div class="student-requirement">
-                        <h4>TA Eligibility Requirements</h4>
-                        <div style="margin-top: 34px;">
-                            <p>
-                                Full-time (12 units) registered graduate student, current cumulative GPA is 3.00 or higher, total appointments for this quarter does not exceed 75%,
-                            </p>
-                        </div>
-                        <div class="checkbox religibility-checkbox">
-                            <label class="checkbox-inline"><input value="" type="checkbox">Confirm Eligibility</label>
-                        </div>
-                    </div>
-                    <!-- TA Requirements Ends -->
+				<div class="modal-body">
+					<div class="row">
+						<div class="form-group" class="comments-modal">
+							<div>
+								<textarea class="form-control" id="comment"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
 
-                    <div class="empty-flex-box_student-course">
-                    </div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-info">Save</button>
+				</div>
 
-                    <div class="student-course-container">
-                        <div class="due-day-header">
-                            <h4>Due Date: 08/23/2016 </h4>
-                        </div>
-											<ul id="sortable" class="sortable-student-preferences">
-                        <li ng-repeat="preference in view.state.preferences" class="student-course-section">
-                            <div class="alert alert-info student-course">
-                                <i class="glyphicon glyphicon-menu-hamburger move-course-icon"></i>
-                                <div class="student-course-info">
-                                    <p class="student-course_title">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern }}</p>
-                                    <div class="student-course_details">
-                                        <div>
-                                        </div>
-                                        <p class="student-preference">{{ preference.type}}</p>
-                                        <i class="btn glyphicon glyphicon-remove student-course-remove text-primary"
-																					uib-tooltip="Delete Assignment" tooltip-placement="bottom"
-																					confirm-button="deletePreference(preference)"
-																					message="Are you sure you want to delete this Assignment?"
-																					yes="Confirm" no="Cancel" placement="top"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comments-btn">
-                                <a href="javascript:;" onclick="jQuery( '#modal-3').modal( 'show'); "><i class="glyphicon glyphicon-edit"></i>
-                                        <span>Comments...</span>
-                                        </a>
-                            </div>
-                        </li>
-											</ul>
-											<student-preference-selector>
-											</student-preference-selector>
+			</div>
+		</div>
+	</div>
+	<!-- modal-ends -->
+	<div class="main-content">
+		<div class="container-fluid">
 
-                    </div>
+			<div class="tacall-instructor-header">
+				<h3>Support Call {{ year }} Winter</h3>
+				<p class="text-align--center department-title">
+					DSS IT
+				</p>
+			</div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- input box section -->
-    <div class="main-content input-box-container ">
-        <div class="container-fluid ">
-            <div class="input-box-section ">
-                <div class="input-box-area ">
-                    <h5 class="pull-left ">Teaching Qualification</h5>
-                    <textarea class="form-control"></textarea>
-                </div>
-                <div class="empty-flex-box_input-box ">
-                </div>
-                <div class="input-box-area ">
-                    <h5 class="pull-left">Comments</h5>
-                    <textarea class="form-control"></textarea>
-                </div>
-            </div>
-						<a href="/summary/20/2016?mode=instructionalSupport">
-            	<button type="button" class="btn btn-info pull-right">Submit Preferences</button>
-						</a>
-        </div>
-    </div>
-    <!-- input box section ends -->
+		</div>
+
+		<div class="row">
+			<div class="container-fluid">
+				<div class="flex-row">
+					<!-- TA Requirements -->
+					<div ng-show="view.state.supportCall.collectEligibilityConfirmation" class="student-requirement">
+						<h4>TA Eligibility Requirements</h4>
+						<div style="margin-top: 34px;">
+							<p>
+								Full-time (12 units) registered graduate student, current cumulative GPA is 3.00 or higher, total appointments for this quarter does not exceed 75%,
+							</p>
+						</div>
+						<div class="checkbox religibility-checkbox">
+							<label class="checkbox-inline"><input value="" type="checkbox">Confirm Eligibility</label>
+						</div>
+					</div>
+					<!-- TA Requirements Ends -->
+
+					<div class="empty-flex-box_student-course">
+					</div>
+
+					<div class="student-course-container">
+						<div class="due-day-header">
+							<h4>Due Date: 08/23/2016 </h4>
+						</div>
+						<ul id="sortable" class="sortable-student-preferences">
+							<li ng-repeat="preference in view.state.preferences" class="student-course-section">
+								<div class="alert alert-info student-course">
+									<i class="glyphicon glyphicon-menu-hamburger move-course-icon"></i>
+									<div class="student-course-info">
+										<p class="student-course_title">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern }}</p>
+										<div class="student-course_details">
+											<div>
+											</div>
+											<p class="student-preference">{{ preference.type}}</p>
+											<i class="btn glyphicon glyphicon-remove student-course-remove text-primary"
+												uib-tooltip="Delete Assignment" tooltip-placement="bottom"
+												confirm-button="deletePreference(preference)"
+												message="Are you sure you want to delete this Assignment?"
+												yes="Confirm" no="Cancel" placement="top"></i>
+										</div>
+									</div>
+									</div>
+								<div ng-show="view.state.supportCall.collectPreferenceComments" class="comments-btn">
+									<a href="javascript:;" onclick="jQuery( '#modal-3').modal( 'show'); "><i class="glyphicon glyphicon-edit"></i>
+										<span>Comments...</span>
+									</a>
+								</div>
+							</li>
+						</ul>
+						<student-preference-selector>
+						</student-preference-selector>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- input box section -->
+	<div class="main-content input-box-container ">
+		<div class="container-fluid ">
+			<div class="input-box-section ">
+				<div ng-show="view.state.supportCall.collectTeachingQualifications" class="input-box-area ">
+					<h5 class="pull-left ">Teaching Qualification</h5>
+					<textarea class="form-control"></textarea>
+				</div>
+				<div class="empty-flex-box_input-box ">
+				</div>
+				<div ng-show="view.state.supportCall.collectGeneralComments" class="input-box-area ">
+					<h5 class="pull-left">Comments</h5>
+					<textarea class="form-control"></textarea>
+				</div>
+			</div>
+			<a href="/summary/20/2016?mode=instructionalSupport">
+				<button type="button" class="btn btn-info pull-right">Submit Preferences</button>
+			</a>
+		</div>
+	</div>
+	<!-- input box section ends -->
 </div>

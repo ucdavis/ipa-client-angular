@@ -326,7 +326,18 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 					return userInterface;
 			}
 		},
+		_supportCallReducers: function (action, supportCall) {
+			var scope = this;
 
+			switch (action.type) {
+				case INIT_STATE:
+				
+					supportCall = action.payload.studentInstructionalSupportCall;
+					return supportCall;
+				default:
+					return supportCall;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -341,7 +352,7 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
 			newState.potentialPreferences = scope._potentialPreferenceReducers(action, scope._state.potentialPreferences);
 			newState.preferences = scope._preferenceReducers(action, scope._state.preferences);
-
+			newState.supportCall = scope._supportCallReducers(action, scope._state.supportCall);
 			scope._state = newState;
 
 			$rootScope.$emit('instructionalSupportStudentFormStateChanged', {
