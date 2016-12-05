@@ -37,30 +37,28 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 					supportCalls.studentSupportCalls = studentSupportCalls;
 
 					return supportCalls;
-				case ADD_ASSIGNMENT_SLOTS:
-					var instructionalSupportAssignmentsLength = action.payload ? action.payload.length : 0;
+				case ADD_STUDENT_SUPPORT_CALL:
 
-					for (var k = 0; k < instructionalSupportAssignmentsLength; k++) {
-						var instructionalSupportAssignmentData = action.payload[k];
-						var sectionGroupId = instructionalSupportAssignmentData.sectionGroupId;
+						var studentSupportCall = action.payload;
+						var supportCallId = studentSupportCall.id;
 
-						sectionGroups.list[sectionGroupId].instructionalSupportAssignmentIds.push(instructionalSupportAssignmentData.id);
-					}
+						supportCalls.studentSupportCalls.ids.push(studentSupportCall.id);
+						supportCalls.studentSupportCalls.list[supportCallId] = studentSupportCall;
 
-					return sectionGroups;
+					return supportCalls;
 
-				case DELETE_ASSIGNMENT:
+				case DELETE_STUDENT_SUPPORT_CALL:
+					var supportCallId = action.payload;
+					debugger;
 
-					sectionGroupId = action.payload.sectionGroupId;
-					assignmentId = action.payload.id;
-
-					var index = sectionGroups.list[sectionGroupId].instructionalSupportAssignmentIds.indexOf(assignmentId);
+					var index = supportCalls.studentSupportCalls.ids.indexOf(supportCallId);
 
 					if (index > -1) {
-						sectionGroups.list[sectionGroupId].instructionalSupportAssignmentIds.splice(index,1);
+						supportCalls.studentSupportCalls.ids.splice(index,1);
+						supportCalls.studentSupportCalls.list[supportCallId] = null;
 					}
 
-					return sectionGroups;
+					return supportCalls;
 				default:
 					return sectionGroups;
 			}

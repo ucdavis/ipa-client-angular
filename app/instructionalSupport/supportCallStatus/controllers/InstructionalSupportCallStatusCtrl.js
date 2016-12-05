@@ -5,8 +5,8 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'instructionalSupportAssignmentActionCreators',
-		this.InstructionalSupportCallStatusCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, instructionalSupportAssignmentActionCreators) {
+instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'instructionalSupportCallStatusActionCreators',
+		this.InstructionalSupportCallStatusCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, instructionalSupportCallStatusActionCreators) {
 			$window.document.title = "Instructional Support";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
@@ -17,6 +17,10 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 				$scope.view.state = data.state;
 				console.log($scope.view.state);
 			});
+
+			$scope.deleteStudentSupportCall = function(studentSupportCall) {
+				instructionalSupportCallStatusActionCreators.deleteStudentSupportCall(studentSupportCall);
+			};
 
 			$scope.openSupportCallConfig = function(supportCallMode) {
 

@@ -25,10 +25,9 @@ instructionalSupportApp.factory("instructionalSupportCallStatusService", this.in
 
 			return deferred.promise;
 		},
-		deleteAssignment: function(instructionalSupportAssignment) {
-
+		deleteStudentSupportCall: function(studentSupportCall) {
 			var deferred = $q.defer();
-			$http.delete(serverRoot + "/api/instructionalSupportView/instructionalSupportAssignments/" + instructionalSupportAssignment.id, { withCredentials: true })
+			$http.delete(serverRoot + "/api/instructionalSupportView/studentInstructionalSupportCalls/" + studentSupportCall.id, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
