@@ -261,6 +261,14 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				}
 			});
 
+			element.bind('mousewheel', function (e) {
+				$el = $(e.target);
+
+				// Disable scrolling on number inputs as it might increase accidental changes
+				if ($el.hasClass('planned-seats')) {
+					e.preventDefault();
+				}
+			});
 		}
 	};
 });
