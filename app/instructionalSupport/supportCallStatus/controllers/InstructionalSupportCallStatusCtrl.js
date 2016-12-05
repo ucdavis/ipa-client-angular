@@ -27,9 +27,52 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 					resolve: {
 						supportCallMode: function () {
 							return supportCallMode;
+						},
+						scheduleId: function () {
+							return $scope.view.state.userInterface.scheduleId;
+						},
+						mastersIds: function () {
+							return $scope.view.state.mastersIds;
+						},
+						phdIds: function () {
+							return $scope.view.state.phdIds;
+						},
+						instructionalSupportIds: function () {
+							return $scope.view.state.instructionalSupportIds;
+						},
+						instructionalSupportStaffs: function () {
+							return $scope.view.state.instructionalSupportStaffs;
+						},
+						year: function () {
+							return $scope.year;
+						},
+						nextYear: function () {
+							return $scope.nextYear;
 						}
 					}
 				});
+			};
+
+			$scope.getTermDescription = function(term) {
+				var endingYear = "";
+				if (term.length == 6) {
+					endingYear = term.substring(0,4);
+					term = term.slice(-2);
+				}
+
+				termNames = {
+					'05': 'Summer Session 1',
+					'06': 'Summer Special Session',
+					'07': 'Summer Session 2',
+					'08': 'Summer Quarter',
+					'09': 'Fall Semester',
+					'10': 'Fall Quarter',
+					'01': 'Winter Quarter',
+					'02': 'Spring Semester',
+					'03': 'Spring Quarter'
+				};
+
+				return termNames[term];
 			};
 
 	}]);

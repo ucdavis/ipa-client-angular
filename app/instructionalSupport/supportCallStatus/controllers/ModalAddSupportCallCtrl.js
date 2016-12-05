@@ -1,32 +1,67 @@
-instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSupportCallCtrl = function($scope, $rootScope, $uibModalInstance, instructionalSupportCallStatusActionCreators, supportCallMode) {
-	$scope.phdPool = [
-		{id: 1, displayName: "John Smith", group: "phd", enabled: true},
-		{id: 2, displayName: "Jenny Garcia", group: "phd", enabled: true},
-		{id: 3, displayName: "Lloyd Wheeler", group: "phd", enabled: true}
-	];
+instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSupportCallCtrl = function($scope, $rootScope, $uibModalInstance, instructionalSupportCallStatusActionCreators, supportCallMode, scheduleId, phdIds, mastersIds, instructionalSupportIds, instructionalSupportStaffs, year, nextYear) {
 
-	$scope.mastersPool = [
-		{id: 4, displayName: "Bobbi Hale", group: "masters", enabled: true},
-		{id: 5, displayName: "Jeremy Phillips", group: "masters", enabled: true}
-	];
+	$scope.year = year;
+	$scope.nextYear = nextYear;
 
-	$scope.instructionalSupportPool = [
-		{id: 6, displayName: "Joel Dobris", group: "instructionalSupport", enabled: true},
-		{id: 7, displayName: "Grant Wallace", group: "instructionalSupport", enabled: true}
-	];
+	$scope.phdPool = [];
+	for(i = 0; i < phdIds.length; i++) {
+		slotSupportStaffId = phdIds[i];
+		slotSupportStaff = instructionalSupportStaffs.list[slotSupportStaffId];
+
+		participant = {};
+		participant.id = slotSupportStaff.id;
+		participant.displayName = slotSupportStaff.fullName;
+		participant.group = "phd";
+		participant.enabled = true;
+
+		$scope.phdPool.push(participant);
+	}
+
+	$scope.mastersPool = [];
+	for(i = 0; i < mastersIds.length; i++) {
+		slotSupportStaffId = mastersIds[i];
+		slotSupportStaff = instructionalSupportStaffs.list[slotSupportStaffId];
+
+		participant = {};
+		participant.id = slotSupportStaff.id;
+		participant.displayName = slotSupportStaff.fullName;
+		participant.group = "masters";
+		participant.enabled = true;
+
+		$scope.mastersPool.push(participant);
+	}
+
+	$scope.instructionalSupportPool = [];
+	for(i = 0; i < instructionalSupportIds.length; i++) {
+		slotSupportStaffId = instructionalSupportIds[i];
+		slotSupportStaff = instructionalSupportStaffs.list[slotSupportStaffId];
+
+		participant = {};
+		participant.id = slotSupportStaff.id;
+		participant.displayName = slotSupportStaff.fullName;
+		participant.group = "instructionalSupport";
+		participant.enabled = true;
+
+		$scope.instructionalSupportPool.push(participant);
+	}
 
 	$scope.instructorPool = [
 		{id: 8, displayName: "Dave MacKinnon", group: "instructor", enabled: true},
 		{id: 9, displayName: "Jenny Green", group: "instructor", enabled: true}
 	];
 
+	$scope.scheduleId = scheduleId;
+	$scope.termCode = 10;
+
 	$scope.supportCallConfigData = {displayPage: 1};
+	$scope.supportCallConfigData.minimumNumberOfPreferences = 5;
+
 	// Indicates which button started this support call: 'student' or 'instructor'
 	$scope.supportCallConfigData.mode = supportCallMode;
 
 	$scope.supportCallConfigData.dueDate;
 	$scope.supportCallConfigData.rawDueDate;
-
+	
 	$scope.supportCallConfigData.emailMessage = "Please consider your preferences for next year. As always, we will attempt to accommodate your requests, but we may need to ask some of you to make changes in order to balance our course offerings effectively.";
 	$scope.supportCallConfigData.phdParticipants = false;
 	$scope.supportCallConfigData.mastersParticipants = false;
@@ -49,15 +84,13 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		showWeeks: false
 	};
 
-	$scope.submitSupportCall = function () {
-		instructionalSupportAssignmentActionCreators.addAssignmentSlots(
-			appointmentType,
-			$scope.formData.appointmentPercentage,
-			$scope.formData.numberOfAppointments,
-			sectionGroupId);
+	$scope.selectSendEmail = function () {
+		$scope.supportCallConfigData.sendEmails = true;
+	}
 
-		$uibModalInstance.dismiss('cancel');
-	};
+	$scope.selectNoEmail = function () {
+		$scope.supportCallConfigData.sendEmails = false;
+	}
 
 	$scope.toggleInstructor = function () {
 		$scope.supportCallConfigData.phdParticipants = false;
@@ -185,6 +218,9 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		}
 	};
 
+	$scope.setTermCode = function(fullTerm) {
+		$scope.supportCallConfigData.termCode = fullTerm;
+	}
 	$scope.gotoConfigPage = function () {
 		if ($scope.supportCallConfigData.instructorParticipants) {
 			$scope.supportCallConfigData.displayPage = 4;
@@ -207,6 +243,45 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	}
 
 	$scope.beginSupportCall = function () {
-		instructionalSupportCallStatusActionCreators.addStudentSupportCall(20, $scope.supportCallConfigData);
+		instructionalSupportCallStatusActionCreators.addStudentSupportCall($scope.scheduleId, $scope.supportCallConfigData);
+
+		$uibModalInstance.dismiss('cancel');
 	}
+
+	$scope.allTerms = ['01', '02', '03', '05', '06', '07', '08', '09', '10'];
+	$scope.fullTerms = [];
+
+	for (var i = 0; i < $scope.allTerms.length; i++) {
+		shortTermCode = $scope.allTerms[i];
+
+		if (parseInt(shortTermCode) < 4) {
+			slotYear = $scope.year;
+		} else {
+			slotYear = parseInt($scope.year) + 1;
+		}
+		fullTerm = slotYear + shortTermCode;
+		$scope.fullTerms.push(fullTerm);
+	}
+
+	$scope.getTermName = function(term) {
+		var endingYear = "";
+		if (term.length == 6) {
+			endingYear = term.substring(0,4);
+			term = term.slice(-2);
+		}
+
+		termNames = {
+			'05': 'Summer Session 1',
+			'06': 'Summer Special Session',
+			'07': 'Summer Session 2',
+			'08': 'Summer Quarter',
+			'09': 'Fall Semester',
+			'10': 'Fall Quarter',
+			'01': 'Winter Quarter',
+			'02': 'Spring Semester',
+			'03': 'Spring Quarter'
+		};
+
+		return termNames[term] + " " + endingYear;
+	};
 });

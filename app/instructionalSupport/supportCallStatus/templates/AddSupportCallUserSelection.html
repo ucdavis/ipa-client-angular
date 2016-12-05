@@ -14,10 +14,11 @@
 						<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Term
 						<span class="caret"></span></button>
 						<ul class="dropdown-menu">
-							<li><a href="#">Fall Quarter 2016</a></li>
-							<li><a href="#">Fall Semester 2016</a></li>
-							<li><a href="#">Winter Quarter 2017</a></li>
-							<li><a href="#">Spring Semester 2017</a></li>
+							<li ng-repeat="fullTerm in fullTerms">
+								<a ng-click="setTermCode(fullTerm)">
+									{{ getTermName(fullTerm) }}
+								</a>
+							</li>
 						</ul>
 					</div>
 				</div>

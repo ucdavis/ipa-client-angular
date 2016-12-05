@@ -45,31 +45,31 @@
 	                <h5>Additional Form Fields</h5>
 	                <div class="checkbox">
 	                    <label class="checkbox-inline check-box-TA-call">
-												<input type="checkbox" value="">
+												<input type="checkbox" value="" ng-model="supportCallConfigData.requireEligibilityConfirmation">
 												Require Eligibility Confirmation
 											</label>
 	                </div>
 	                <div class="checkbox">
 	                    <label class="checkbox-inline check-box-TA-call">
-												<input type="checkbox" value="">
-												Collect Course Qualifications
+												<input type="checkbox" value="" ng-model="supportCallConfigData.collectTeachingQualifications">
+												Collect Teaching Qualifications
 											</label>
 	                </div>
 	                <div class="checkbox">
 	                    <label class="checkbox-inline check-box-TA-call">
-												<input type="checkbox" value="">
+												<input type="checkbox" value="" ng-model="supportCallConfigData.collectPreferenceQualifications">
 												Collect Preference Comments
 											</label>
 	                </div>
 	                <div class="checkbox">
 	                  <label class="checkbox-inline check-box-TA-call">
-											<input type="checkbox" value="">
+											<input type="checkbox" value="" ng-model="supportCallConfigData.collectGeneralComments">
 											Collect General Comments
 										</label>
 	                </div>
 	                <div class="checkbox">
 	                  <label class="checkbox-inline check-box-TA-call">
-											<input type="checkbox" value="">
+											<input type="checkbox" value="" ng-model="supportCallConfigData.allowSubmissionAfterDueDate">
 											Allow submission after due date
 										</label>
 	                </div>
@@ -78,7 +78,7 @@
 											Minimum number of preferences
 										</label>
 	                  <div>
-	                  	<input style="width:12%; margin-left: 20px;" class="form-control" type="text">
+	                  	<input style="width:12%; margin-left: 20px;" class="form-control" type="text" ng-model="supportCallConfigData.minimumNumberOfPreferences">
 	                  </div>
 	                </div>
 	            </div>
@@ -104,11 +104,11 @@
             <div class="preference-selector btn-group" data-toggle="buttons">
                 <!-- email preference  -->
                 <h5>Email Preference</h5>
-                <label class="btn btn-white btn-sm active" id="courses-pivot">
+                <label ng-click="selectSendEmail()" class="btn btn-white btn-sm active" id="courses-pivot">
 									<input type="radio" name="options">
 									<span></span>Begin With Email
 								</label>
-                <label class="btn btn-white btn-sm" id="instructors-pivot">
+                <label ng-click="selectNoEmail()" class="btn btn-white btn-sm" id="instructors-pivot">
 									<input type="radio" name="options">
 									<span></span>Begin Without Email
 								</label>

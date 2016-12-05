@@ -7,24 +7,36 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 			switch (action.type) {
 				case INIT_STATE:
 					supportCalls = {
-						ids: []
+						studentSupportCalls: {
+							ids: []
+						},
+						instructorSupportCalls: {
+							ids: []
+						}
 					};
-					var supportCallsList = {};
 
-					var supportCallsLength = action.payload.supportCalls ? action.payload.supportCalls.length : 0;
+					var studentSupportCalls = {};
+					var studentSupportCallsList = {};
+					var studentSupportCallsIds = [];
+					var studentSupportCallsLength = action.payload.studentSupportCalls ? action.payload.studentSupportCalls.length : 0;
 
 					// For every course, find the relevant sectionGroup and add metadata to it from the course
-					for (var i = 0; i < supportCallsLength; i++) {
-						var supportCallData = action.payload.supportCalls[i];
+					for (var i = 0; i < studentSupportCallsLength; i++) {
+						var studentSupportCallData = action.payload.studentSupportCalls[i];
 
-						supportCallsList[supportCallData.id] = supportCallData;
-						supportCalls.ids.push(supportCallData.id);
+						studentSupportCallData.startDate = millisecondsToDate(studentSupportCallData.startDate);
+						studentSupportCallData.dueDate = millisecondsToDate(studentSupportCallData.dueDate);
+
+						studentSupportCallsList[studentSupportCallData.id] = studentSupportCallData;
+						studentSupportCallsIds.push(studentSupportCallData.id);
 					}
 
-					supportCalls.list = supportCallsList;
+					studentSupportCalls.list = studentSupportCallsList;
+					studentSupportCalls.ids = studentSupportCallsIds;
+
+					supportCalls.studentSupportCalls = studentSupportCalls;
 
 					return supportCalls;
-
 				case ADD_ASSIGNMENT_SLOTS:
 					var instructionalSupportAssignmentsLength = action.payload ? action.payload.length : 0;
 
@@ -88,7 +100,36 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 					return userInterface;
 			}
 		},
+		_phdIdsReducers: function (action, phdStudentIds) {
+			var scope = this;
 
+			switch (action.type) {
+				case INIT_STATE:
+ 					return action.payload.phdStudentIds;
+				default:
+					return phdStudentIds;
+			}
+		},
+		_mastersIdsReducers: function (action, mastersStudentIds) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					return action.payload.mastersStudentIds;
+				default:
+					return mastersStudentIds;
+			}
+		},
+		_instructionalSupportIdsReducers: function (action, instructionalSupportIds) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					return action.payload.instructionalSupportIds;
+				default:
+					return instructionalSupportIds;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -99,6 +140,11 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 			newState = {};
 			newState.supportCalls = scope._supportCallReducers(action, scope._state.supportCalls);
 			newState.instructionalSupportStaffs = scope._instructionalSupportStaffsReducers(action, scope._state.instructionalSupportStaffs);
+
+			newState.phdIds = scope._phdIdsReducers(action, scope._state.phdStudentIds);
+			newState.mastersIds = scope._mastersIdsReducers(action, scope._state.mastersStudentIds);
+			newState.instructionalSupportIds = scope._instructionalSupportIdsReducers(action, scope._state.instructionalSupportIds);
+
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
 			scope._state = newState;
 
@@ -111,3 +157,12 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 		}
 	};
 });
+
+millisecondsToDate = function(milliseconds) {
+	var d = new Date(milliseconds);
+	var day = d.getDate();
+	var month = d.getMonth() + 1;
+	var year = d.getFullYear();
+	var formattedDate = year + "-" + month + "-" + day;
+	return formattedDate;
+}

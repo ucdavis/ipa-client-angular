@@ -10,7 +10,7 @@
         <div class="flex-box_column container-fluid">
             <div class="term-quarter">
                 <div class="row">
-                    <h5>Term: Fall Quarter 2016</h5>
+                    <h5>Term: {{ getTermName(supportCallConfigData.termCode) }}</h5>
                 </div>
             </div>
             <div class="people-list-section">
@@ -43,23 +43,23 @@
                     <h5>Requested Information:</h5>
                     <div class="flex-box_row">
                         <div class="info-collected-list">
-                            <div class="info-collected">
+                            <div class="info-collected" ng-show="supportCallConfigData.requireEligibilityConfirmation">
                                 <i class="glyphicon glyphicon-ok"></i><span>Require Eligibility Confirmation</span>
                             </div>
-                            <div class="info-collected">
+                            <div class="info-collected" ng-show="supportCallConfigData.collectTeachingQualifications">
                                 <i class="glyphicon glyphicon-ok"></i><span>Collect Teaching Qualifications</span>
                             </div>
-                            <div class="info-collected">
-                                <i class="glyphicon glyphicon-ok"></i><span>Collect Preference Comments</span>
+                            <div class="info-collected" ng-show="supportCallConfigData.collectPreferenceQualifications">
+                                <i class="glyphicon glyphicon-ok"></i><span>Collect Preference Qualifications</span>
                             </div>
-                            <div class="info-collected">
+                            <div class="info-collected" ng-show="supportCallConfigData.allowSubmissionAfterDueDate">
                                 <i class="glyphicon glyphicon-ok"></i><span>Allow submission after due date</span>
                             </div>
-                            <div class="info-collected">
+                            <div class="info-collected" ng-show="supportCallConfigData.collectGeneralComments">
                                 <i class="glyphicon glyphicon-ok"></i><span>Collect General Comments</span>
                             </div>
                             <div class="info-collected">
-                                <span>Minimum number of preferences: 2</span>
+                                <span>Minimum number of preferences: {{ supportCallConfigData.minimumNumberOfPreferences }}</span>
                             </div>
                         </div>
                     </div>
