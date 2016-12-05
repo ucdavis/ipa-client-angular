@@ -1,21 +1,31 @@
-sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function (courseActionCreators) {
+sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function (courseActionCreators, $rootScope) {
 	return {
 		restrict: 'E',
 		templateUrl: 'sectionGroupDetails.html',
 		replace: true,
 		link: function (scope, element, attrs) {
+
+			$rootScope.$on('courseStateChanged', function (event, data) {
+				var course = scope.view.state.courses.list[scope.view.selectedEntity.courseId];
+				if (data.action.type == "ADD_SECTION_GROUP" && !course.isSeries()) {
+					// If the sectionGroup is new and it is numeric, create its only section by default with the seats filled in to the max
+					scope.addSection(scope.view.selectedEntity.plannedSeats);
+				}
+			});
+
 			scope.isLocked = function () {
 				var termCode = scope.view.selectedEntity.termCode;
 				var term = scope.view.state.terms.list[termCode];
 				return term ? term.isLocked() || scope.view.state.uiState.tableLocked : true;
 			};
 
-			scope.addSection = function () {
+			scope.addSection = function (seats) {
 				var sequenceNumber = scope.nextSequence();
 				var sectionGroupId = scope.view.selectedEntity.id;
 				var section = {
 					sectionGroupId: sectionGroupId,
-					sequenceNumber: sequenceNumber
+					sequenceNumber: sequenceNumber,
+					seats: seats
 				};
 				courseActionCreators.createSection(section);
 			};
