@@ -3,81 +3,28 @@
 		Add Preference...
 	</div>
 	<ul class="dropdown-menu" style="width: 100%;">
-		<li class="clickable">
+		<li ng-show="view.state.potentialPreferences.associateInstructors.length > 0"class="dropdown-header" stop-event="click"><b>Associate Instructor Positions</b></li>
+		<li ng-repeat="preference in view.state.potentialPreferences.associateInstructors"class="clickable"
+				ng-click="addPreference(preference)">
 			<a class="small">
-				<span class="course-filter-item">ECS 001 - 001 (reader)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 010 - 001 (AI)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 041 - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 050 - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 050 - 001 (AI)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 101 - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 121 - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 135 - 001 (reader)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 136A - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 141 - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 143 - 001 (reader)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 144A - 001 (reader)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 144B - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 150 - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 155 - 001 (TA)</span>
+				<span class="course-filter-item">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}}</span>
 			</a>
 		</li>
 
+		<li ng-show="view.state.potentialPreferences.teachingAssistants.length > 0"class="dropdown-header" stop-event="click"><b>Teaching Assistant Positions</b></li>
+		<li ng-repeat="preference in view.state.potentialPreferences.teachingAssistants"class="clickable"
+			ng-click="addPreference(preference)">
+			<a class="small">
+				<span class="course-filter-item">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}}</span>
+			</a>
+		</li>
+
+		<li ng-show="view.state.potentialPreferences.readers.length > 0"class="dropdown-header" stop-event="click"><b>Reader Positions</b></li>
+		<li ng-repeat="preference in view.state.potentialPreferences.readers"class="clickable"
+			ng-click="addPreference(preference)">
+			<a class="small">
+				<span class="course-filter-item">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}}</span>
+			</a>
+		</li>
 	</ul>
 </div>

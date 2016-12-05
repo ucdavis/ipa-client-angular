@@ -86,11 +86,11 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 
 	$scope.selectSendEmail = function () {
 		$scope.supportCallConfigData.sendEmails = true;
-	}
+	};
 
 	$scope.selectNoEmail = function () {
 		$scope.supportCallConfigData.sendEmails = false;
-	}
+	};
 
 	$scope.toggleInstructor = function () {
 		$scope.supportCallConfigData.phdParticipants = false;
@@ -220,18 +220,19 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 
 	$scope.setTermCode = function(fullTerm) {
 		$scope.supportCallConfigData.termCode = fullTerm;
-	}
+	};
+
 	$scope.gotoConfigPage = function () {
 		if ($scope.supportCallConfigData.instructorParticipants) {
 			$scope.supportCallConfigData.displayPage = 4;
 		} else {
 			$scope.supportCallConfigData.displayPage = 2;
 		}
-	}
+	};
 
 	$scope.gotoUserSelectionPage = function () {
 		$scope.supportCallConfigData.displayPage = 1;
-	}
+	};
 
 	$scope.gotoSummaryPage = function () {
 		$scope.supportCallConfigData.dueDate = $scope.supportCallConfigData.rawDueDate.toISOString().slice(0, 10);
@@ -240,13 +241,13 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		} else {
 			$scope.supportCallConfigData.displayPage = 3;
 		}
-	}
+	};
 
 	$scope.beginSupportCall = function () {
 		instructionalSupportCallStatusActionCreators.addStudentSupportCall($scope.scheduleId, $scope.supportCallConfigData);
 
 		$uibModalInstance.dismiss('cancel');
-	}
+	};
 
 	$scope.allTerms = ['01', '02', '03', '05', '06', '07', '08', '09', '10'];
 	$scope.fullTerms = [];
@@ -254,7 +255,7 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	for (var i = 0; i < $scope.allTerms.length; i++) {
 		shortTermCode = $scope.allTerms[i];
 
-		if (parseInt(shortTermCode) < 4) {
+		if (parseInt(shortTermCode) > 4) {
 			slotYear = $scope.year;
 		} else {
 			slotYear = parseInt($scope.year) + 1;

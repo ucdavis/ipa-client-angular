@@ -49,7 +49,6 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 
 				case DELETE_STUDENT_SUPPORT_CALL:
 					var supportCallId = action.payload;
-					debugger;
 
 					var index = supportCalls.studentSupportCalls.ids.indexOf(supportCallId);
 
