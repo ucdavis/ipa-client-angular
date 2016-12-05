@@ -68,7 +68,7 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 			};
 
 			$scope.isUnassigned = function (instructionalSupportAssignment) {
-				if (instructionalSupportAssignment.instructionalSupportStaffId == 0) {
+				if (instructionalSupportAssignment.instructionalSupportStaffId === 0) {
 					return true;
 				}
 
@@ -84,6 +84,9 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 				instructionalSupportAssignmentActionCreators.deleteAssignment(instructionalSupportAssignment);
 			}
 
+			$scope.removeStaffFromSlot = function (instructionalSupportAssignmentId) {
+				instructionalSupportAssignmentActionCreators.removeStaffFromSlot(instructionalSupportAssignmentId);
+			}
 			// Set the active tab according to the URL
 			// Otherwise redirect to the default view
 			$scope.setActiveTab($routeParams.tab || "courses");

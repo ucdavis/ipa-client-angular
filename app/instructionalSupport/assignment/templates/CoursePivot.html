@@ -31,18 +31,22 @@
 									</div>
 								</div>
 								<div class="ta_course-section">
-									<div class="tile-container">
+									<div class="tile-container"
+									ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
+									ng-show="isTeachingAssistant(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]) && view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId > 0"
+									ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]">
 										<div class="remove-tile-container">
 										</div>
-										<div class="assignment">
+										<div class="assignment"
+											ng-init="supportStaff=view.state.instructionalSupportStaffs.list[supportAssignment.instructionalSupportStaffId]">
 												<div class="assignment-description">
-													Lu, Sammy
+													{{ supportStaff.fullName }}
 												</div>
 										</div>
 										<div class="remove-tile-container">
 											<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary"
 												uib-tooltip="Delete Assignment" tooltip-placement="bottom"
-												confirm-button="unAssign(teachingCall)"
+												confirm-button="removeStaffFromSlot(instructionalSupportAssignmentId)"
 												message="Are you sure you want to delete this Assignment?"
 												yes="Confirm" no="Cancel" placement="top"></i>
 										</div>
@@ -55,7 +59,6 @@
 
 										<div class="remove-tile-container">
 										</div>
-
 										<support-staff-selector 
 											ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=view.state.sectionGroups.list[instructionalSupportAssignment.sectionGroupId].taAssignmentOptions"
 											class="support-staff-selector assignment">
@@ -91,26 +94,29 @@
 								<div class="ta_course-section">
 
 									<!-- Display unfilled assignment slots -->
+									
 									<div class="tile-container"
-										ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
-										ng-show="isReader(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment)">
-
+									ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
+									ng-show="isReader(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]) && (isUnassigned(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]) == false)"
+									ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]">
 										<div class="remove-tile-container">
 										</div>
-
-										<support-staff-selector 
-											ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=instructionalSupportAssignment"
-											class="support-staff-selector assignment">
-										</support-staff-selector>
-
+										<div class="assignment"
+											ng-init="supportStaff=view.state.instructionalSupportStaffs.list[supportAssignment.instructionalSupportStaffId]">
+												<div class="assignment-description">
+													{{ supportStaff.fullName }}
+												</div>
+										</div>
 										<div class="remove-tile-container">
 											<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary"
 												uib-tooltip="Delete Assignment" tooltip-placement="bottom"
-												confirm-button="deleteTeachingCall(teachingCall)"
+												confirm-button="removeStaffFromSlot(instructionalSupportAssignmentId)"
 												message="Are you sure you want to delete this Assignment?"
 												yes="Confirm" no="Cancel" placement="top"></i>
 										</div>
 									</div>
+
+									
 										<!--add new slot button-->
 										<div ng-click="openAddAppointmentSlotModal(sectionGroup.id, 'reader')" class="btn btn-default add-new-slot pull-left">
 											Add Reader Slots...

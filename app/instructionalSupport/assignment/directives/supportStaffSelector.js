@@ -9,6 +9,9 @@ instructionalSupportApp.directive("supportStaffSelector", this.supportStaffSelec
 		scope: false,
 		link: function (scope, element, attrs) {
 
+			scope.assignStaffToSlot = function (supportStaffId) {
+				instructionalSupportAssignmentActionCreators.assignStaffToSlot(supportStaffId, scope.instructionalSupportAssignment.id);
+			};
 		} // end link
 	};
 });

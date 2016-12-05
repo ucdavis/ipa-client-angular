@@ -37,16 +37,33 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 								sectionGroup.taAssignmentOptions.phdStudentIds = action.payload.phdStudentIds;
 								sectionGroup.taAssignmentOptions.mastersStudentIds = action.payload.mastersStudentIds;
 								sectionGroup.taAssignmentOptions.instructionalSupportIds = action.payload.instructionalSupportIds;
+								sectionGroup.taAssignmentOptions.studentPreferences = [];
 
 								sectionGroup.readerAssignmentOptions = {};
 								sectionGroup.readerAssignmentOptions.phdStudentIds = action.payload.phdStudentIds;
 								sectionGroup.readerAssignmentOptions.mastersStudentIds = action.payload.mastersStudentIds;
 								sectionGroup.readerAssignmentOptions.instructionalSupportIds = action.payload.instructionalSupportIds;
+								sectionGroup.readerAssignmentOptions.studentPreferences = [];
 
 								sectionGroup.aiAssignmentOptions = {};
 								sectionGroup.aiAssignmentOptions.phdStudentIds = action.payload.phdStudentIds;
 								sectionGroup.aiAssignmentOptions.mastersStudentIds = action.payload.mastersStudentIds;
 								sectionGroup.aiAssignmentOptions.instructionalSupportIds = action.payload.instructionalSupportIds;
+								sectionGroup.aiAssignmentOptions.studentPreferences = [];
+
+								for (var k = 0; k < action.payload.studentInstructionalSupportPreferences.length; k++) {
+									var slotPreference = action.payload.studentInstructionalSupportPreferences[k];
+									if (slotPreference.sectionGroupId == sectionGroup.id) {
+
+										if (slotPreference.type == "teachingAssistant") {
+											sectionGroup.taAssignmentOptions.studentPreferences.push(slotPreference);
+										} else if (slotPreference.type == "readerAssignmentOptions") {
+											sectionGroup.readerAssignmentOptions.studentPreferences.push(slotPreference);
+										} else if (slotPreference.type == "associateInstructor") {
+											sectionGroup.aiAssignmentOptions.studentPreferences.push(slotPreference);
+										}
+									}
+								}
 							}
 						}
 					}
@@ -66,7 +83,6 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					sectionGroups.list = sectionGroupsList;
 
 					return sectionGroups;
-
 				case ADD_ASSIGNMENT_SLOTS:
 					var instructionalSupportAssignmentsLength = action.payload ? action.payload.length : 0;
 
@@ -140,7 +156,17 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						}
 
 						return instructionalSupportAssignments;
+					case REMOVE_STAFF_FROM_SLOT:
+						var supportAssignment = action.payload;
 
+						instructionalSupportAssignments.list[supportAssignment.id] = supportAssignment;
+
+						return instructionalSupportAssignments;
+					case ASSIGN_STAFF_TO_SLOT:
+						var supportAssignment = action.payload;
+						instructionalSupportAssignments.list[supportAssignment.id] = supportAssignment;
+
+						return instructionalSupportAssignments;
 				default:
 					return instructionalSupportAssignments;
 			}
@@ -167,6 +193,30 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					return instructionalSupportStaffs;
 				default:
 					return instructionalSupportStaffs;
+			}
+		},
+		_preferenceReducers: function (action, preferences) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					preferences = {
+						ids: [],
+						list: {}
+					};
+
+					var preferencesLength = action.payload.studentInstructionalSupportPreferences ? action.payload.studentInstructionalSupportPreferences.length : 0;
+
+					for (var i = 0; i < preferencesLength; i++) {
+						var preferenceData = action.payload.studentInstructionalSupportPreferences[i];
+
+						preferences.list[preferenceData.id] = preferenceData;
+						preferences.ids.push(preferenceData.id);
+					}
+
+					return preferences;
+				default:
+					return preferences;
 			}
 		},
 		_userInterfaceReducers: function (action, userInterface) {
@@ -208,6 +258,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 			newState = {};
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.instructionalSupportAssignments = scope._instructionalSupportAssignmentsReducers(action, scope._state.instructionalSupportAssignments);
+			newState.preferences = scope._preferenceReducers(action, scope._state.preferences);
 			newState.instructionalSupportStaffs = scope._instructionalSupportStaffsReducers(action, scope._state.instructionalSupportStaffs);
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
 			scope._state = newState;

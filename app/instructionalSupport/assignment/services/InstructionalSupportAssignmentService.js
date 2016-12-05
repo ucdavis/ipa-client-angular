@@ -40,6 +40,32 @@ instructionalSupportApp.factory("instructionalSupportAssignmentService", this.in
 			});
 
 			return deferred.promise;
-		}
+		},
+		assignStaffToSlot: function(supportStaffId, assignmentId) {
+
+			var deferred = $q.defer();
+			$http.post(serverRoot + "/api/instructionalSupportView/instructionalSupportAssignments/" + assignmentId + "/supportStaff/" + supportStaffId, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		removeStaffFromSlot: function(assignmentId) {
+
+			var deferred = $q.defer();
+			$http.delete(serverRoot + "/api/instructionalSupportView/instructionalSupportAssignments/" + assignmentId + "/unassign", { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 	};
 });
