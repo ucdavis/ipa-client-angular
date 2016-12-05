@@ -209,9 +209,10 @@
 							<div class="form-group">
 								<div class="col-sm-12 text-center">
 									<uib-tabset active="view.state.activities.list[view.state.uiState.selectedActivityId].locationType" justified="true">
-										<uib-tab index="'registrar'" heading="Registrar Provided" classes="location-tab" select="clearLocation()">
+										<uib-tab index="'registrar'" heading="Registrar Provided" classes="location-tab" ng-click="clearLocation()">
 
-											{{ view.state.activities.list[view.state.uiState.selectedActivityId].bannerLocation }}
+											{{ view.state.activities.list[view.state.uiState.selectedActivityId].bannerLocation || 'Not yet set in
+											Banner' }}
 
 										</uib-tab>
 										<uib-tab index="'custom'" heading="Custom" classes="location-tab">
@@ -225,8 +226,8 @@
 														{{ view.state.locations.list[view.state.activities.list[view.state.uiState.selectedActivityId].locationId].description
 														}}
 													</ui-select-match>
-													<ui-select-choices repeat="locationId in view.state.locations.ids track by $index">
-														<div ng-bind-html="view.state.locations.list[locationId].description | highlight: $select.search"></div>
+													<ui-select-choices repeat="locationId in view.state.locations.ids track by locationId">
+														<div ng-bind-html="view.state.locations.list[locationId].description | highlight: null"></div>
 													</ui-select-choices>
 												</ui-select>
 

@@ -88,6 +88,7 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		};
 
 		$scope.clearLocation = function () {
+			if (!$scope.view.state.uiState.selectedActivityId) { return; }
 			var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
 			activity.locationId = 0;
 			$scope.saveActivity();
