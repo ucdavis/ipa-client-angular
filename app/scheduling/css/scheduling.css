@@ -46,6 +46,15 @@ body {
 	white-space: nowrap;
 	line-height: 40px;
 }
+.tags-filter label.filter-checkbox {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.tags-filter label.filter-label {
+	margin-left: 2em;
+	top: 50%;
+}
 .label-selected-section-group {
 	background-color: #e6e6e6;
 	color: #333;

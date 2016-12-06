@@ -27,10 +27,10 @@
 									<ul>
 										<li ng-repeat="tagId in view.state.tags.ids track by $index" ng-click="toggleTagFilter(tagId)">
 											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.enabledTagIds.indexOf(tagId) >= 0 }">
-												<label class="cb-wrapper" ng-style="{ 'border-color': view.state.tags.list[tagId].color }">
+												<label class="cb-wrapper filter-checkbox" ng-style="{ 'border-color': view.state.tags.list[tagId].color }">
 													<div class="checked" ng-style="{ 'background': view.state.tags.list[tagId].color }"></div>
 												</label>
-												<label ng-bind="view.state.tags.list[tagId].name"></label>
+												<label class="filter-label" ng-bind="view.state.tags.list[tagId].name"></label>
 											</div>
 										</li>
 									</ul>
@@ -41,10 +41,10 @@
 										<li ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] track by $index"
 											ng-click="toggleCalendarDay($index)">
 											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.hiddenDays.indexOf($index) < 0 }">
-												<label class="cb-wrapper">
+												<label class="cb-wrapper filter-checkbox">
 													<div class="checked"></div>
 												</label>
-												<label>{{ day }}</label>
+												<label class="filter-label">{{ day }}</label>
 											</div>
 										</li>
 									</ul>
@@ -54,10 +54,10 @@
 									<ul>
 										<li ng-repeat="locationId in view.state.locations.ids track by $index" ng-click="toggleLocationFilter(locationId)">
 											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.enabledLocationIds.indexOf(locationId) >= 0 }">
-												<label class="cb-wrapper">
+												<label class="cb-wrapper filter-checkbox">
 													<div class="checked"></div>
 												</label>
-												<label ng-bind="view.state.locations.list[locationId].description"></label>
+												<label class="filter-label" ng-bind="view.state.locations.list[locationId].description"></label>
 											</div>
 										</li>
 									</ul>
