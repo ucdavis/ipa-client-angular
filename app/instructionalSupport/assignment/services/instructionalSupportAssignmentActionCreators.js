@@ -15,6 +15,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 		},
 		addAssignmentSlots: function (appointmentType, appointmentPercentage, numberOfAppointments, sectionGroupId) {
 			instructionalSupportAssignmentService.addAssignmentSlots(appointmentType, appointmentPercentage, numberOfAppointments, sectionGroupId).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Added Assignment", type: "SUCCESS" });
 				var action = {
 					type: ADD_ASSIGNMENT_SLOTS,
 					payload: payload
@@ -26,6 +27,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 		},
 		deleteAssignment: function (instructionalSupportAssignment) {
 			instructionalSupportAssignmentService.deleteAssignment(instructionalSupportAssignment).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Removed Assignment", type: "SUCCESS" });
 				var action = {
 					type: DELETE_ASSIGNMENT,
 					payload: instructionalSupportAssignment
@@ -37,6 +39,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 		},
 		assignStaffToSlot: function (supportStaffId, assignmentId) {
 			instructionalSupportAssignmentService.assignStaffToSlot(supportStaffId, assignmentId).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Assigned Instructional Support Staff", type: "SUCCESS" });
 				var action = {
 					type: ASSIGN_STAFF_TO_SLOT,
 					payload: payload
@@ -48,6 +51,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 		},
 		removeStaffFromSlot: function (assignmentId) {
 			instructionalSupportAssignmentService.removeStaffFromSlot(assignmentId).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Unassigned Instructional Support Staff", type: "SUCCESS" });
 				var action = {
 					type: REMOVE_STAFF_FROM_SLOT,
 					payload: payload
@@ -56,13 +60,6 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
-		},
-		togglePivotView: function (viewName) {
-			var action = {
-				type: TOGGLE_ASSIGNMENT_PIVOT_VIEW,
-				payload: {viewName: viewName}
-			};
-			instructionalSupportAssignmentStateService.reduce(action);
 		}
 	};
 });

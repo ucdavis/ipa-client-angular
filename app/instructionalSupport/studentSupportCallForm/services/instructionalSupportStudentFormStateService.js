@@ -338,6 +338,17 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 					return supportCall;
 			}
 		},
+		_supportCallResponseReducers: function (action, supportCallResponse) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					supportCallResponse = action.payload.studentInstructionalSupportCallResponse;
+					return supportCallResponse;
+				default:
+					return supportCallResponse;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -353,6 +364,8 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 			newState.potentialPreferences = scope._potentialPreferenceReducers(action, scope._state.potentialPreferences);
 			newState.preferences = scope._preferenceReducers(action, scope._state.preferences);
 			newState.supportCall = scope._supportCallReducers(action, scope._state.supportCall);
+			newState.supportCallResponse = scope._supportCallResponseReducers(action, scope._state.supportCallResponse);
+
 			scope._state = newState;
 
 			$rootScope.$emit('instructionalSupportStudentFormStateChanged', {

@@ -14,6 +14,7 @@ instructionalSupportApp.service('instructionalSupportStudentFormActionCreators',
 		},
 		addStudentPreference: function (preference, viewState, supportCallId) {
 			instructionalSupportStudentFormService.addStudentPreference(preference, supportCallId).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
 				var action = {
 					type: ADD_STUDENT_PREFERENCE,
 					payload: payload,
@@ -26,6 +27,7 @@ instructionalSupportApp.service('instructionalSupportStudentFormActionCreators',
 		},
 		deleteStudentPreference: function (preference) {
 			instructionalSupportStudentFormService.deleteStudentPreference(preference.id).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Removed Preference", type: "SUCCESS" });
 				var action = {
 					type: DELETE_STUDENT_PREFERENCE,
 					payload: preference

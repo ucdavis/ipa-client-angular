@@ -12,6 +12,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 			});
 		},
 		addStudentSupportCall: function (scheduleId, studentSupportCall) {
+			$rootScope.$emit('toast', { message: "Support Call Created", type: "SUCCESS" });
 			instructionalSupportCallStatusService.addStudentSupportCall(scheduleId, studentSupportCall).then(function (payload) {
 				var action = {
 					type: ADD_STUDENT_SUPPORT_CALL,
@@ -23,6 +24,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 			});
 		},
 		deleteStudentSupportCall: function (studentSupportCall) {
+			$rootScope.$emit('toast', { message: "Support Call Removed", type: "SUCCESS" });
 			instructionalSupportCallStatusService.deleteStudentSupportCall(studentSupportCall).then(function (payload) {
 				var action = {
 					type: DELETE_STUDENT_SUPPORT_CALL,

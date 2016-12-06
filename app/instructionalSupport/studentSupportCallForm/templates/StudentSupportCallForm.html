@@ -108,13 +108,13 @@
 			<div class="input-box-section ">
 				<div ng-show="view.state.supportCall.collectTeachingQualifications" class="input-box-area ">
 					<h5 class="pull-left ">Teaching Qualification</h5>
-					<textarea class="form-control"></textarea>
+					<textarea ng-model="view.state.supportCallResponse.teachingQualifications" class="form-control"></textarea>
 				</div>
 				<div class="empty-flex-box_input-box ">
 				</div>
 				<div ng-show="view.state.supportCall.collectGeneralComments" class="input-box-area ">
 					<h5 class="pull-left">Comments</h5>
-					<textarea class="form-control"></textarea>
+					<textarea ng-model="view.state.supportCallResponse.generalComments" class="form-control"></textarea>
 				</div>
 			</div>
 			<a href="/summary/20/2016?mode=instructionalSupport">
