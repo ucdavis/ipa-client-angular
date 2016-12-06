@@ -139,6 +139,10 @@ table th {
 	visibility: visible;
 }
 
+.btn-add-person {
+	height: 34px;
+}
+
 .hover-ui {
 	visibility: hidden;
 }
