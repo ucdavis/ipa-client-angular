@@ -91,7 +91,6 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 			};
 
 			scope.toggleMenuItem = function (item) {
-				console.log('toggled');
 				scope.expanded = (scope.expanded == item) ? null : item;
 			};
 		}

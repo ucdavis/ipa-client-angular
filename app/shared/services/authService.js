@@ -24,9 +24,7 @@ angular.module('sharedApp')
 					} else if (response.data != null && response.data.redirect != null && response.data.redirect.length > 0) {
 						// Received a request to redirect to CAS. Obey!
 						localStorage.removeItem('JWT');
-						localStorage.removeItem('userRoles');
-						localStorage.removeItem('displayName');
-						localStorage.removeItem('termStates');
+						localStorage.removeItem('currentUser');
 						$window.location.href = response.data.redirect + "?ref=" + $location.absUrl();
 
 						deferred.reject();
@@ -62,6 +60,7 @@ angular.module('sharedApp')
 			validateState: function (data, workgroupId, year, ignoreFallBackUrl) {
 				var currentUser = new CurrentUser(data.displayName, data.userRoles);
 				currentUser.setDisplayName(data.displayName);
+				currentUser.setLoginId(data.loginId);
 				currentUser.setUserRoles(data.userRoles);
 
 				localStorage.setItem('currentUser', JSON.stringify(currentUser));

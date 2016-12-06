@@ -10,6 +10,10 @@ angular.module('currentUser', ['userRole'])
 				angular.extend(this, currentUserData);
 			},
 
+			setLoginId: function (loginId) {
+				this.loginId = loginId;
+			},
+
 			setDisplayName: function (displayName) {
 				this.displayName = displayName;
 			},

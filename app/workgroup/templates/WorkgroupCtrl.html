@@ -19,12 +19,13 @@
 									<li ng-repeat="tagId in view.state.tags.ids">
 										<div class="row">
 											<div class="col-sm-5">
-												<input class="form-control" type="text" name="text" size="30" ng-model="view.state.tags.list[tagId].name" auto-input on-enter="updateTag(view.state.tags.list[tagId])"
-													help-text-placement="top" ng-if="hasWriteAccess()">
+												<input class="form-control" type="text" name="text" size="30" ng-model="view.state.tags.list[tagId].name"
+													auto-input on-enter="updateTag(view.state.tags.list[tagId])" help-text-placement="top" ng-if="hasWriteAccess()">
 												<span class="list-box form-control" ng-bind="view.state.tags.list[tagId].name" ng-hide="hasWriteAccess()"></span>
 											</div>
 											<div class="col-sm-4">
-												<colorpicker type="text" color="view.state.tags.list[tagId].color" on-change="updateTag(view.state.tags.list[tagId])" ng-if="hasWriteAccess()"></colorpicker>
+												<colorpicker type="text" color="view.state.tags.list[tagId].color" on-change="updateTag(view.state.tags.list[tagId])"
+													ng-if="hasWriteAccess()"></colorpicker>
 												<div class="list-box form-control" ng-hide="hasWriteAccess()">
 													<span class="label" ng-style="{ 'background-color': view.state.tags.list[tagId].color }">&nbsp;</span>
 													<span ng-bind="view.state.tags.list[tagId].color"></span>
@@ -68,7 +69,8 @@
 								<ul class="locations-input">
 									<li ng-repeat="locationId in view.state.locations.ids">
 										<input class="form-control" type="text" name="text" size="30" ng-model="view.state.locations.list[locationId].description"
-											auto-input on-enter="updateLocation(view.state.locations.list[locationId])" help-text-placement="top" ng-if="hasWriteAccess()">
+											auto-input on-enter="updateLocation(view.state.locations.list[locationId])" help-text-placement="top"
+											ng-if="hasWriteAccess()">
 										<span class="list-box form-control" ng-bind="view.state.locations.list[locationId].description" ng-hide="hasWriteAccess()"></span>
 										<a class="text-danger clickable" confirm-button="removeLocation(locationId)" message="Are you sure you want to remove this location"
 											yes="Remove" no="Cancel" placement="right" aria-hidden="true" ng-if="hasWriteAccess()">
@@ -155,7 +157,7 @@
 												</td>
 												<td class="role-selector" ng-repeat="roleId in view.state.roles.ids track by $index">
 													<input type="checkbox" ng-checked="userHasRole(userId, view.state.roles.list[roleId])" ng-click="toggleUserRole(userId, roleId)"
-														ng-disabled="!hasWriteAccess()">
+														ng-disabled="!hasWriteAccess(roleId, view.state.users.list[userId].loginId)">
 												</td>
 												<td class="hover-ui" ng-if="hasWriteAccess()">
 													<span confirm-button="removeUserFromWorkgroup(userId) " message="This will completely remove this person from

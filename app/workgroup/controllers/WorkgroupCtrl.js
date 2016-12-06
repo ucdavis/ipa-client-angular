@@ -20,9 +20,14 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 			$location.search({ tab: tabName });
 		};
 
-		$scope.hasWriteAccess = function () {
-			return $scope.sharedState.currentUser.isAdmin() ||
-				$scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id);
+		$scope.hasWriteAccess = function (roleId, loginId) {
+			if (roleId && $scope.view.state.roles.list[roleId].name === 'academicPlanner' &&
+				$scope.sharedState.currentUser.loginId === loginId) {
+				return $scope.sharedState.currentUser.isAdmin();
+			} else {
+				return $scope.sharedState.currentUser.isAdmin() ||
+					$scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id);
+			}
 		};
 
 		if ($routeParams.tab) {
