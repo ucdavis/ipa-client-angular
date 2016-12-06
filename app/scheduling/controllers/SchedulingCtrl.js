@@ -90,10 +90,10 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			schedulingActionCreators.updateLocationFilters(locationFilters);
 		};
 
-		$scope.clearLocation = function () {
+		$scope.setLocation = function (locationId) {
 			if (!$scope.view.state.uiState.selectedActivityId) { return; }
 			var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
-			activity.locationId = 0;
+			activity.locationId = locationId;
 			$scope.saveActivity();
 		};
 
