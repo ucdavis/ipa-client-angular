@@ -103,20 +103,16 @@
             <!-- email section begin -->
             <div class="preference-selector btn-group" data-toggle="buttons">
                 <!-- email preference  -->
-                <h5>Email Preference</h5>
-                <label ng-click="selectSendEmail()" class="btn btn-white btn-sm active" id="courses-pivot">
-									<input type="radio" name="options">
-									<span></span>Begin With Email
-								</label>
-                <label ng-click="selectNoEmail()" class="btn btn-white btn-sm" id="instructors-pivot">
-									<input type="radio" name="options">
-									<span></span>Begin Without Email
-								</label>
+                <h5>Email</h5>
+								 <label ng-click="toggleSendEmails()" class="checkbox-inline check-box-TA-call">
+								 	<input type="checkbox" ng-click="checkboxToggle()" ng-model="supportCallConfigData.sendEmails">
+							    Email Participants
+						     </label>
             </div>
             <div class="message-section">
-                <!-- enter email message  -->
-                <h5 class="pull-left">Email Message</h5>
-                <textarea style="height: 100px;" ng-model="supportCallConfigData.emailMessage" class="form-control"></textarea>
+								Email Message
+								<textarea ng-if="supportCallConfigData.sendEmails == false" disabled style="height: 100px;" ng-model="supportCallConfigData.emailMessage" class="form-control"></textarea>
+                <textarea ng-if="supportCallConfigData.sendEmails" style="height: 100px;" ng-model="supportCallConfigData.emailMessage" class="form-control"></textarea>
             </div>
         </div>
         <!-- email section ends -->

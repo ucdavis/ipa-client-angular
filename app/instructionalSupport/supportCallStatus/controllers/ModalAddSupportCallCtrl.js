@@ -58,6 +58,7 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 
 	// Indicates which button started this support call: 'student' or 'instructor'
 	$scope.supportCallConfigData.mode = supportCallMode;
+	$scope.supportCallConfigData.sendEmails = true;
 
 	$scope.supportCallConfigData.dueDate;
 	$scope.supportCallConfigData.rawDueDate;
@@ -83,6 +84,20 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		startingDay: 1,
 		showWeeks: false
 	};
+
+	$scope.toggleSendEmails = function () {
+		if ($scope.supportCallConfigData.sendEmails) {
+			$scope.supportCallConfigData.sendEmails = false;
+		} else {
+			$scope.supportCallConfigData.sendEmails = true;
+		}
+		console.log($scope.supportCallConfigData.sendEmails);
+	};
+
+	$scope.checkboxToggle = function () {
+		console.log("testing");
+		$scope.toggleSendEmails();
+	}
 
 	$scope.selectSendEmail = function () {
 		$scope.supportCallConfigData.sendEmails = true;
