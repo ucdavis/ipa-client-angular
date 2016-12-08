@@ -81,7 +81,44 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 						sectionGroupsList[sectionGroupData.id] = new SectionGroup(sectionGroupData);
 						sectionGroups.ids.push(sectionGroupData.id);
 
-						// Set aectionGroup locationIds
+						// Set sectionGroup sectionIds
+						sectionGroupsList[sectionGroupData.id].sectionIds = action.payload.sections
+							.filter(function (section) {
+								return section.sectionGroupId === sectionGroupData.id;
+							})
+							.sort(function (sectionA, sectionB) {
+								if (sectionA.sequenceNumber < sectionB.sequenceNumber) { return -1; }
+								if (sectionA.sequenceNumber > sectionB.sequenceNumber) { return 1; }
+								return 0;
+							})
+							.map(function (section) { return section.id; });
+
+						// Set sectionGroup sharedActivityIds
+						sectionGroupsList[sectionGroupData.id].sharedActivityIds = action.payload.activities
+							.filter(function (activity) {
+								return activity.sectionGroupId === sectionGroupData.id && !(activity.sectionId);
+							})
+							.map(function (a) { return a.id; });
+
+						// Set sectionGroup instructorIds
+						sectionGroupsList[sectionGroupData.id].instructorIds = action.payload.teachingAssignments
+							.filter(function (ta) {
+								return ta.sectionGroupId === sectionGroupData.id;
+							})
+							.map(function (ta) { return ta.instructorId; });
+
+						// Set sectionGroup teachingCallResponseIds
+						if (sectionGroupsList[sectionGroupData.id].instructorIds.length) {
+							sectionGroupsList[sectionGroupData.id].teachingCallResponseIds = action.payload.teachingCallResponses
+								.filter(function (tr) {
+									return sectionGroupsList[sectionGroupData.id].instructorIds.indexOf(tr.instructorId) >= 0;
+								})
+								.map(function (tr) { return tr.id; });
+						} else {
+							sectionGroupsList[sectionGroupData.id].teachingCallResponseIds = [];
+						}
+
+						// Set sectionGroup locationIds
 						sectionGroupsList[sectionGroupData.id].locationIds = action.payload.activities
 							.filter(function (activity) {
 								// Return activities that have locationId set and belong to sectionGroup in hand
@@ -122,9 +159,22 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 			switch (action.type) {
 				case INIT_STATE:
 					sections = {
-						list: {},
 						ids: []
 					};
+
+					var sectionsList = {};
+					var length = action.payload.sections ? action.payload.sections.length : 0;
+					for (var i = 0; i < length; i++) {
+						var sectionData = action.payload.sections[i];
+						sectionsList[sectionData.id] = new Section(sectionData);
+						sections.ids.push(sectionData.id);
+
+						sectionsList[sectionData.id].activityIds = action.payload.activities
+							.filter(function (a) { return a.sectionId == sectionData.id; })
+							.map(function (a) { return a.id; });
+					}
+
+					sections.list = sectionsList;
 					return sections;
 				case FETCH_SECTION_GROUP_DETAILS:
 					scope.fillSectionDetails(action.payload, sections);
@@ -170,6 +220,20 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					return teachingCallResponses;
 				default:
 					return teachingCallResponses;
+			}
+		},
+		_teachingAssignmentReducers: function (action, teachingAssignments) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					teachingAssignments = {
+						list: {},
+						ids: []
+					};
+					return teachingAssignments;
+				default:
+					return teachingAssignments;
 			}
 		},
 		_activityReducers: function (action, activities) {
@@ -377,6 +441,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
 			newState.teachingCallResponses = scope._teachingCallResponseReducers(action, scope._state.teachingCallResponses);
+			newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
 			newState.activities = scope._activityReducers(action, scope._state.activities);
 			newState.tags = scope._tagReducers(action, scope._state.tags);
 			newState.locations = scope._locationReducers(action, scope._state.locations);
