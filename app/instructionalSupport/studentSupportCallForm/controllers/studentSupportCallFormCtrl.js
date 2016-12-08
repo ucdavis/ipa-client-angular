@@ -19,11 +19,15 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 
 			$scope.addPreference = function(preference) {
 				instructionalSupportStudentFormActionCreators.addStudentPreference(preference, $scope.view.state, $scope.view.state.userInterface.supportCallId);
-			}
+			};
 
 			$scope.deletePreference = function(preference) {
 				instructionalSupportStudentFormActionCreators.deleteStudentPreference(preference);
-			}
+			};
+
+			$scope.updateSupportCallResponse = function() {
+				instructionalSupportStudentFormActionCreators.updateSupportCallResponse($scope.view.state.supportCallResponse);
+			};
 
 			$( "#sortable" ).sortable({
 				placeholder: "sortable-student-preference-placeholder",

@@ -25,6 +25,18 @@ instructionalSupportApp.service('instructionalSupportStudentFormActionCreators',
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		updateSupportCallResponse: function (supportCallResponse) {
+			instructionalSupportStudentFormService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
+				var action = {
+					type: UPDATE_SUPPORT_CALL_RESPONSE,
+					payload: payload
+				};
+				instructionalSupportStudentFormStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		deleteStudentPreference: function (preference) {
 			instructionalSupportStudentFormService.deleteStudentPreference(preference.id).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Removed Preference", type: "SUCCESS" });

@@ -162,4 +162,4 @@ millisecondsToDate = function(milliseconds) {
 	var year = d.getFullYear();
 	var formattedDate = year + "-" + month + "-" + day;
 	return formattedDate;
-}
+};

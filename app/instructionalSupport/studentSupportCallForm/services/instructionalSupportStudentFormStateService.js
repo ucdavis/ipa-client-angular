@@ -333,6 +333,7 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 				case INIT_STATE:
 				
 					supportCall = action.payload.studentInstructionalSupportCall;
+					supportCall.dueDate = millisecondsToFullDate(supportCall.dueDate);
 					return supportCall;
 				default:
 					return supportCall;
@@ -344,6 +345,9 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 			switch (action.type) {
 				case INIT_STATE:
 					supportCallResponse = action.payload.studentInstructionalSupportCallResponse;
+					return supportCallResponse;
+				case UPDATE_SUPPORT_CALL_RESPONSE:
+					supportCallResponse = action.payload;
 					return supportCallResponse;
 				default:
 					return supportCallResponse;
@@ -387,7 +391,7 @@ isUniqueSectionGroup = function(preferences, sectionGroupId) {
 	}
 
 	return true;
-}
+};
 
 preferenceNotAlreadySet = function(sectionGroupId, type, preferences) {
 	for (var i = 0; i < preferences.length; i++) {
@@ -399,7 +403,7 @@ preferenceNotAlreadySet = function(sectionGroupId, type, preferences) {
 	}
 	
 	return true;
-}
+};
 
 addCourseDataToPreference = function(courses, preference) {
 	for (var i = 0; i < courses.length; i++) {
@@ -414,7 +418,19 @@ addCourseDataToPreference = function(courses, preference) {
 			break;
 		}
 	}
-}
+};
+
+millisecondsToFullDate = function(milliseconds) {
+	var d = new Date(milliseconds);
+	var day = d.getDate();
+	var month = d.getMonth() + 1;
+	var year = d.getFullYear();
+	var formattedDate = year + "-" + month + "-" + day;
+	formattedDate = moment(formattedDate, "YYYY-MM-DD").format('LL');
+
+	return formattedDate;
+};
+
 // Sort the course Ids by subject Code and then course number
 sortCourseIds = function(courseIds, courses) {
 

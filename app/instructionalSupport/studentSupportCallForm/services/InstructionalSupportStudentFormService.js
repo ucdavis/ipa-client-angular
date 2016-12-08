@@ -26,6 +26,19 @@ instructionalSupportApp.factory("instructionalSupportStudentFormService", this.i
 
 			return deferred.promise;
 		},
+		updateSupportCallResponse: function(supportCallResponse) {
+
+			var deferred = $q.defer();
+			$http.put(serverRoot + "/api/instructionalSupportStudentFormView/studentSupportCallResponses/" + supportCallResponse.id, supportCallResponse, { withCredentials: true })
+			.success(function(assignmentView) {
+				deferred.resolve(assignmentView);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		deleteStudentPreference: function(preferenceId) {
 
 			var deferred = $q.defer();

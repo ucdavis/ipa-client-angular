@@ -66,7 +66,7 @@
 
 					<div class="student-course-container">
 						<div class="due-day-header">
-							<h4>Due Date: 08/23/2016 </h4>
+							<h4>Due Date: {{ view.state.supportCall.dueDate }} </h4>
 						</div>
 						<ul id="sortable" class="sortable-student-preferences">
 							<li ng-repeat="preference in view.state.preferences" class="student-course-section">
@@ -108,13 +108,17 @@
 			<div class="input-box-section ">
 				<div ng-show="view.state.supportCall.collectTeachingQualifications" class="input-box-area ">
 					<h5 class="pull-left ">Teaching Qualification</h5>
-					<textarea ng-model="view.state.supportCallResponse.teachingQualifications" class="form-control"></textarea>
+					<textarea class="form-control"
+					ng-model="view.state.supportCallResponse.teachingQualifications"
+					auto-input on-blur="updateSupportCallResponse()"></textarea>
 				</div>
 				<div class="empty-flex-box_input-box ">
 				</div>
 				<div ng-show="view.state.supportCall.collectGeneralComments" class="input-box-area ">
 					<h5 class="pull-left">Comments</h5>
-					<textarea ng-model="view.state.supportCallResponse.generalComments" class="form-control"></textarea>
+					<textarea class="form-control"
+					ng-model="view.state.supportCallResponse.generalComments"
+					auto-input on-blur="updateSupportCallResponse()"></textarea>
 				</div>
 			</div>
 			<a href="/summary/20/2016?mode=instructionalSupport">
