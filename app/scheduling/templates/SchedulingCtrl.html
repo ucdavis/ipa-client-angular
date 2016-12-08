@@ -115,13 +115,18 @@
 							<small class="text-muted">{{ view.state.courses.list[sg.courseId].title }}</small>
 							<br />
 							<small class="text-muted">
-								<!-- TODO: Instructor -->
-								<!--{{ sg.instructor }} -->
-
 								Units: {{ view.state.courses.list[sg.courseId].unitsLow }}
 
 								<!-- TODO: Display enrollment and total seats (Involves modifying payload to include all sections) -->
 								<!-- {{ sg.enrollment[4] }} / {{ getSectionSeatsTotal(sg) }}-->
+
+								<div ng-if="sg.instructorIds.length">
+									instructor{{ sg.instructorIds.length > 1 ? 's':'' }}:
+									<div class="label label-default" style="padding: 3px; margin-left: 3px;"
+										ng-repeat="instructorId in sg.instructorIds track by instructorId">
+										{{ view.state.instructors.list[instructorId] | lastSpaceInitial }}{{ $last ? '':', '}}
+									</div>
+								</div>
 
 								<div ng-if="view.state.courses.list[sg.courseId].tagIds.length">
 									Tags:

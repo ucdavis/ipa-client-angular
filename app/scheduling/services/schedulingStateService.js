@@ -250,6 +250,8 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					for (var i = 0; i < length; i++) {
 						var activityData = action.payload.activities[i];
 						activitiesList[activityData.id] = new Activity(activityData);
+						activitiesList[activityData.id].courseId = action.payload.sectionGroups
+							.find(function (sg) { return sg.id === activityData.sectionGroupId; }).courseId;
 						activities.ids.push(activityData.id);
 					}
 					activities.list = activitiesList;
