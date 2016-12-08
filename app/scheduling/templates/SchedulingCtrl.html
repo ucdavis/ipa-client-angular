@@ -12,7 +12,11 @@
 				<div class="activity-filter-menu">
 					<div class="btn-group pull-left">
 						<div class="btn" ng-click="toggleCheckAll()">
-							{{ view.state.uiState.checkedSectionGroupIds.length ? "Unselect" : "Select" }} all
+							<i ng-show="view.state.uiState.checkedSectionGroupIds.length" class="sg-checkbox fa fa-check-square-o"></i>
+							<i ng-hide="view.state.uiState.checkedSectionGroupIds.length" class="sg-checkbox fa fa-square-o"></i>
+							<span style="margin-left: 0.3em;">
+								{{ view.state.uiState.checkedSectionGroupIds.length ? "Unselect" : "Select" }} all
+							</span>
 						</div>
 					</div>
 					<div class="btn-group pull-right">
