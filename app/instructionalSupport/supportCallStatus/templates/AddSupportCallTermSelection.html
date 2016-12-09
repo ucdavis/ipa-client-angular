@@ -1,0 +1,42 @@
+<div class="modal-content">
+	<div class="modal-header config-header_style">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h4 class="modal-title">Support Call</h4>
+	</div>
+	<!-- modal-body -->
+	<div class="modal-body">
+		<!-- ta-call-info section-->
+		<div class="flex-box_column container-fluid">
+			<div class="term-quarter">
+				<div class="row">
+					<h5>Term</h5>
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+							<span ng-if="!supportCallConfigData.termCode">
+								Select Term
+								<span class="caret"></span>
+							</span>
+							<span ng-if="supportCallConfigData.termCode">
+								{{ getTermName(supportCallConfigData.termCode) }}
+							</span>
+						</button>
+						<ul class="dropdown-menu">
+							<li ng-repeat="fullTerm in fullTerms">
+								<a ng-click="setTermCode(fullTerm)">
+									{{ getTermName(fullTerm) }}
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  <!-- modal-body ends -->
+  <!-- modal-footer -->
+  <div class="modal-footer">
+    <button ng-click="gotoUserSelectionPage()" type="button" class="btn btn-info">Next</button>
+  </div>
+  <!-- modal-footer ends -->
+</div>
+<!-- modal ends -->

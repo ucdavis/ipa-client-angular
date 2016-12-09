@@ -53,7 +53,7 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	$scope.scheduleId = scheduleId;
 	$scope.termCode = 10;
 
-	$scope.supportCallConfigData = {displayPage: 1};
+	$scope.supportCallConfigData = {displayPage: 6};
 	$scope.supportCallConfigData.minimumNumberOfPreferences = 5;
 
 	// Indicates which button started this support call: 'student' or 'instructor'
@@ -243,6 +243,10 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		} else {
 			$scope.supportCallConfigData.displayPage = 2;
 		}
+	};
+
+	$scope.gotoTermSelectionPage = function () {
+		$scope.supportCallConfigData.displayPage = 6;
 	};
 
 	$scope.gotoUserSelectionPage = function () {

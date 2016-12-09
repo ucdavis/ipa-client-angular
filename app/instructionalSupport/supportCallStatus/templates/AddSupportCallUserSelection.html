@@ -7,23 +7,6 @@
 	<div class="modal-body">
 		<!-- ta-call-info section-->
 		<div class="flex-box_column container-fluid">
-			<div class="term-quarter">
-				<div class="row">
-					<h5>Term</h5>
-					<div class="dropdown">
-						<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Term
-						<span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li ng-repeat="fullTerm in fullTerms">
-								<a ng-click="setTermCode(fullTerm)">
-									{{ getTermName(fullTerm) }}
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
 			<div class="people-list-section">
 			    <div class="row">
 			        <h5>Participants</h5>
@@ -74,6 +57,7 @@
   <!-- modal-body ends -->
   <!-- modal-footer -->
   <div class="modal-footer">
+		<button ng-click="gotoTermSelectionPage()" type="button" class="btn btn-default">Back</button>
     <button ng-click="gotoConfigPage()" type="button" class="btn btn-info">Next</button>
   </div>
   <!-- modal-footer ends -->
