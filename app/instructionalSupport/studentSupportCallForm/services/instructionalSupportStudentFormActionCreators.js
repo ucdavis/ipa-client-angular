@@ -62,6 +62,9 @@ instructionalSupportApp.service('instructionalSupportStudentFormActionCreators',
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
+		},
+		pretendToastMessage: function () {
+			$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
 		}
 
 	};

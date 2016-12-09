@@ -35,6 +35,10 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 
 			};
 
+			$scope.pretendToastMessage = function() {
+				instructionalSupportStudentFormActionCreators.pretendToastMessage();
+			};
+
 			$( "#sortable" ).sortable({
 				placeholder: "sortable-student-preference-placeholder",
 				axis: "y"
