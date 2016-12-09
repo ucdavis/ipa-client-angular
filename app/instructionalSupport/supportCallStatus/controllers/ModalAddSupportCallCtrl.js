@@ -263,7 +263,11 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	};
 
 	$scope.beginSupportCall = function () {
-		instructionalSupportCallStatusActionCreators.addStudentSupportCall($scope.scheduleId, $scope.supportCallConfigData);
+		if ($scope.supportCallConfigData.mode == "instructor") {
+			instructionalSupportCallStatusActionCreators.addInstructorSupportCall($scope.scheduleId, $scope.supportCallConfigData);
+		} else {
+			instructionalSupportCallStatusActionCreators.addStudentSupportCall($scope.scheduleId, $scope.supportCallConfigData);
+		}
 
 		$uibModalInstance.dismiss('cancel');
 	};

@@ -18,7 +18,8 @@
                     <h5>Instructors</h5>
                     <div class="people-summary-container">
 											<span ng-repeat="participant in supportCallConfigData.participantPool">
-												{{ participant.displayName }}, &nbsp;
+												<span ng-if="!$first"> ,</span>
+												{{ participant.displayName }}
 											</span>
 										</div>
                 </div>
@@ -49,7 +50,7 @@
     <div class="modal-footer">
         <!-- email section ends -->
 				<button ng-click="gotoConfigPage()" type="button" class="btn btn-default">Back</button>
-        <button type="button" class="btn btn-info">Begin</button>
+        <button ng-click="beginSupportCall()" type="button" class="btn btn-info">Begin</button>
     </div>
     <!-- modal-footer ends -->
 </div>

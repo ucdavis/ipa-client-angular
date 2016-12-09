@@ -22,6 +22,10 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 				instructionalSupportCallStatusActionCreators.deleteStudentSupportCall(studentSupportCall);
 			};
 
+			$scope.deleteInstructorSupportCall = function(instructorSupportCall) {
+				instructionalSupportCallStatusActionCreators.deleteInstructorSupportCall(instructorSupportCall);
+			};
+
 			$scope.openSupportCallConfig = function(supportCallMode) {
 
 				modalInstance = $uibModal.open({

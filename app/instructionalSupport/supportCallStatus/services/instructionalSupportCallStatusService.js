@@ -36,6 +36,30 @@ instructionalSupportApp.factory("instructionalSupportCallStatusService", this.in
 			});
 
 			return deferred.promise;
+		},
+		addInstructorSupportCall: function(scheduleId, instructorSupportCall) {
+			var deferred = $q.defer();
+			$http.post(serverRoot + "/api/instructionalSupportView/schedules/" + scheduleId + "/instructorInstructionalSupportCalls", instructorSupportCall, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		deleteInstructorSupportCall: function(instructorSupportCall) {
+			var deferred = $q.defer();
+			$http.delete(serverRoot + "/api/instructionalSupportView/instructorInstructionalSupportCalls/" + instructorSupportCall.id, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });

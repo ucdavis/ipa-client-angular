@@ -34,6 +34,30 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
+		},
+		addInstructorSupportCall: function (scheduleId, instructorSupportCall) {
+			$rootScope.$emit('toast', { message: "Support Call Created", type: "SUCCESS" });
+			instructionalSupportCallStatusService.addInstructorSupportCall(scheduleId, instructorSupportCall).then(function (payload) {
+				var action = {
+					type: ADD_INSTRUCTOR_SUPPORT_CALL,
+					payload: payload
+				};
+				instructionalSupportCallStatusStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		deleteInstructorSupportCall: function (instructorSupportCall) {
+			$rootScope.$emit('toast', { message: "Support Call Removed", type: "SUCCESS" });
+			instructionalSupportCallStatusService.deleteInstructorSupportCall(instructorSupportCall).then(function (payload) {
+				var action = {
+					type: DELETE_INSTRUCTOR_SUPPORT_CALL,
+					payload: payload
+				};
+				instructionalSupportCallStatusStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
 		}
 	};
 });

@@ -8,45 +8,54 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 				case INIT_STATE:
 					supportCalls = {
 						studentSupportCalls: {
+							list: {},
 							ids: []
 						},
 						instructorSupportCalls: {
+							list: {},
 							ids: []
 						}
 					};
 
-					var studentSupportCalls = {};
-					var studentSupportCallsList = {};
-					var studentSupportCallsIds = [];
 					var studentSupportCallsLength = action.payload.studentSupportCalls ? action.payload.studentSupportCalls.length : 0;
 
-					// For every course, find the relevant sectionGroup and add metadata to it from the course
 					for (var i = 0; i < studentSupportCallsLength; i++) {
 						var studentSupportCallData = action.payload.studentSupportCalls[i];
 
 						studentSupportCallData.startDate = millisecondsToDate(studentSupportCallData.startDate);
 						studentSupportCallData.dueDate = millisecondsToDate(studentSupportCallData.dueDate);
 
-						studentSupportCallsList[studentSupportCallData.id] = studentSupportCallData;
-						studentSupportCallsIds.push(studentSupportCallData.id);
+						supportCalls.studentSupportCalls.list[studentSupportCallData.id] = studentSupportCallData;
+						supportCalls.studentSupportCalls.ids.push(studentSupportCallData.id);
 					}
 
-					studentSupportCalls.list = studentSupportCallsList;
-					studentSupportCalls.ids = studentSupportCallsIds;
+					var instructorSupportCallsLength = action.payload.instructorSupportCalls ? action.payload.instructorSupportCalls.length : 0;
 
-					supportCalls.studentSupportCalls = studentSupportCalls;
+					for (var i = 0; i < instructorSupportCallsLength; i++) {
+						var instructorSupportCallData = action.payload.instructorSupportCalls[i];
+
+						instructorSupportCallData.startDate = millisecondsToDate(instructorSupportCallData.startDate);
+						instructorSupportCallData.dueDate = millisecondsToDate(instructorSupportCallData.dueDate);
+
+						supportCalls.instructorSupportCalls.list[instructorSupportCallData.id] = instructorSupportCallData;
+						supportCalls.instructorSupportCalls.ids.push(instructorSupportCallData.id);
+					}
 
 					return supportCalls;
 				case ADD_STUDENT_SUPPORT_CALL:
-
 						var studentSupportCall = action.payload;
 						var supportCallId = studentSupportCall.id;
 
 						supportCalls.studentSupportCalls.ids.push(studentSupportCall.id);
 						supportCalls.studentSupportCalls.list[supportCallId] = studentSupportCall;
-
 					return supportCalls;
+				case ADD_INSTRUCTOR_SUPPORT_CALL:
+						var instructorSupportCall = action.payload;
+						var supportCallId = instructorSupportCall.id;
 
+						supportCalls.instructorSupportCalls.ids.push(instructorSupportCall.id);
+						supportCalls.instructorSupportCalls.list[supportCallId] = instructorSupportCall;
+					return supportCalls;
 				case DELETE_STUDENT_SUPPORT_CALL:
 					var supportCallId = action.payload;
 
@@ -58,8 +67,18 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 					}
 
 					return supportCalls;
+				case DELETE_INSTRUCTOR_SUPPORT_CALL:
+					var supportCallId = action.payload;
+					var index = supportCalls.instructorSupportCalls.ids.indexOf(supportCallId);
+
+					if (index > -1) {
+						supportCalls.instructorSupportCalls.ids.splice(index,1);
+						supportCalls.instructorSupportCalls.list[supportCallId] = null;
+					}
+
+					return supportCalls;
 				default:
-					return sectionGroups;
+					return supportCalls;
 			}
 		},
 		_instructionalSupportStaffsReducers: function (action, instructionalSupportStaffs) {
@@ -97,24 +116,24 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 					return userInterface;
 			}
 		},
-		_phdIdsReducers: function (action, phdStudentIds) {
+		_phdIdsReducers: function (action, phdIds) {
 			var scope = this;
 
 			switch (action.type) {
 				case INIT_STATE:
  					return action.payload.phdStudentIds;
 				default:
-					return phdStudentIds;
+					return phdIds;
 			}
 		},
-		_mastersIdsReducers: function (action, mastersStudentIds) {
+		_mastersIdsReducers: function (action, mastersIds) {
 			var scope = this;
 
 			switch (action.type) {
 				case INIT_STATE:
 					return action.payload.mastersStudentIds;
 				default:
-					return mastersStudentIds;
+					return mastersIds;
 			}
 		},
 		_instructionalSupportIdsReducers: function (action, instructionalSupportIds) {
@@ -138,8 +157,8 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 			newState.supportCalls = scope._supportCallReducers(action, scope._state.supportCalls);
 			newState.instructionalSupportStaffs = scope._instructionalSupportStaffsReducers(action, scope._state.instructionalSupportStaffs);
 
-			newState.phdIds = scope._phdIdsReducers(action, scope._state.phdStudentIds);
-			newState.mastersIds = scope._mastersIdsReducers(action, scope._state.mastersStudentIds);
+			newState.phdIds = scope._phdIdsReducers(action, scope._state.phdIds);
+			newState.mastersIds = scope._mastersIdsReducers(action, scope._state.mastersIds);
 			newState.instructionalSupportIds = scope._instructionalSupportIdsReducers(action, scope._state.instructionalSupportIds);
 
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);

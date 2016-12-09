@@ -18,7 +18,8 @@
                     <h5>People</h5>
                     <div class="people-summary-container">
 											<span ng-repeat="participant in supportCallConfigData.participantPool">
-												{{ participant.displayName }}, &nbsp;
+												<span ng-if="!$first"> ,</span>
+												{{ participant.displayName }}
 											</span>
 										</div>
                 </div>
