@@ -1,5 +1,5 @@
 <div id="courses-view">
-		<!-- first course -->
+
 		<div class="container-fluid border-bottom--gray" ng-repeat="sectionGroupId in view.state.sectionGroups.ids"
 		 ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]">
 				<div class="flex-row">
@@ -37,15 +37,14 @@
 									ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]">
 										<div class="remove-tile-container">
 										</div>
-										<div class="assignment"
-											ng-init="supportStaff=view.state.instructionalSupportStaffs.list[supportAssignment.instructionalSupportStaffId]">
-												<div class="assignment-description">
-													{{ supportStaff.fullName }}
-												</div>
+										<div class="assignment">
+											<div class="assignment-description">
+												{{ view.state.instructionalSupportStaffs.list[view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId].fullName }}
+											</div>
 										</div>
 										<div class="remove-tile-container">
 											<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary"
-												uib-tooltip="Delete Assignment" tooltip-placement="bottom"
+												uib-tooltip="Unassign" tooltip-placement="bottom"
 												confirm-button="removeStaffFromSlot(instructionalSupportAssignmentId)"
 												message="Are you sure you want to delete this Assignment?"
 												yes="Confirm" no="Cancel" placement="top"></i>
@@ -55,7 +54,7 @@
 									<!-- Display unfilled assignment slots -->
 									<div class="tile-container"
 										ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
-										ng-show="isTeachingAssistant(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment)">
+										ng-show="isTeachingAssistant(instructionalSupportAssignment) && isUnassigned(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId])">
 
 										<div class="remove-tile-container">
 										</div>
@@ -79,6 +78,11 @@
 										</div>
 								</div>
 						</div>
+
+						<!-- END TA SECTION -->
+
+						<!-- START READER SECTION -->
+
 						<div class="flex-selector-course_view">
 								<div class="ta_course-section-swticher">
 									<div class="remove-tile-container">
@@ -92,37 +96,57 @@
 									</div>
 								</div>
 								<div class="ta_course-section">
-
-									<!-- Display unfilled assignment slots -->
-									
 									<div class="tile-container"
 									ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
-									ng-show="isReader(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]) && (isUnassigned(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]) == false)"
+									ng-show="isReader(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]) && view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId > 0"
 									ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]">
 										<div class="remove-tile-container">
 										</div>
-										<div class="assignment"
-											ng-init="supportStaff=view.state.instructionalSupportStaffs.list[supportAssignment.instructionalSupportStaffId]">
-												<div class="assignment-description">
-													{{ supportStaff.fullName }}
-												</div>
+										<div class="assignment">
+											<div class="assignment-description">
+												{{ view.state.instructionalSupportStaffs.list[view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId].fullName }}
+											</div>
 										</div>
 										<div class="remove-tile-container">
 											<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary"
-												uib-tooltip="Delete Assignment" tooltip-placement="bottom"
+												uib-tooltip="Unassign" tooltip-placement="bottom"
 												confirm-button="removeStaffFromSlot(instructionalSupportAssignmentId)"
 												message="Are you sure you want to delete this Assignment?"
 												yes="Confirm" no="Cancel" placement="top"></i>
 										</div>
 									</div>
 
-									
+									<!-- Display unfilled assignment slots -->
+									<div class="tile-container"
+										ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
+										ng-show="isReader(instructionalSupportAssignment) && isUnassigned(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId])">
+
+										<div class="remove-tile-container">
+										</div>
+										<support-staff-selector 
+											ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=view.state.sectionGroups.list[instructionalSupportAssignment.sectionGroupId].readerAssignmentOptions"
+											class="support-staff-selector assignment">
+										</support-staff-selector>
+
+										<div class="remove-tile-container">
+											<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary"
+												uib-tooltip="Delete Assignment" tooltip-placement="bottom"
+												confirm-button="deleteAssignment(instructionalSupportAssignment)"
+												message="Are you sure you want to delete this Assignment?"
+												yes="Confirm" no="Cancel" placement="top"></i>
+										</div>
+									</div>
+
 										<!--add new slot button-->
 										<div ng-click="openAddAppointmentSlotModal(sectionGroup.id, 'reader')" class="btn btn-default add-new-slot pull-left">
-											Add Reader Slots...
+											Add reader Slots...
 										</div>
 								</div>
 						</div>
+
+						<!-- END READER SECTION -->
+
+						<!-- START AI SECTION -->
 						<div class="flex-selector-course_view">
 								<div class="ta_course-section-swticher">
 									<div class="remove-tile-container">
@@ -136,24 +160,42 @@
 									</div>
 								</div>
 								<div class="ta_course-section">
+									<div class="tile-container"
+									ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
+									ng-show="isAssociateInstructor(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]) && view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId > 0"
+									ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]">
+										<div class="remove-tile-container">
+										</div>
+										<div class="assignment">
+											<div class="assignment-description">
+												{{ view.state.instructionalSupportStaffs.list[view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId].fullName }}
+											</div>
+										</div>
+										<div class="remove-tile-container">
+											<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary"
+												uib-tooltip="Unassign" tooltip-placement="bottom"
+												confirm-button="removeStaffFromSlot(instructionalSupportAssignmentId)"
+												message="Are you sure you want to delete this Assignment?"
+												yes="Confirm" no="Cancel" placement="top"></i>
+										</div>
+									</div>
 
 									<!-- Display unfilled assignment slots -->
 									<div class="tile-container"
 										ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
-										ng-show="isAssociateInstructor(instructionalSupportAssignment) && isUnassigned(instructionalSupportAssignment)">
+										ng-show="isAssociateInstructor(instructionalSupportAssignment) && isUnassigned(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId])">
 
 										<div class="remove-tile-container">
 										</div>
-
 										<support-staff-selector 
-											ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=instructionalSupportAssignment"
+											ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=view.state.sectionGroups.list[instructionalSupportAssignment.sectionGroupId].aiAssignmentOptions"
 											class="support-staff-selector assignment">
 										</support-staff-selector>
 
 										<div class="remove-tile-container">
 											<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary"
 												uib-tooltip="Delete Assignment" tooltip-placement="bottom"
-												confirm-button="deleteTeachingCall(teachingCall)"
+												confirm-button="deleteAssignment(instructionalSupportAssignment)"
 												message="Are you sure you want to delete this Assignment?"
 												yes="Confirm" no="Cancel" placement="top"></i>
 										</div>
@@ -165,45 +207,9 @@
 										</div>
 								</div>
 						</div>
+
+						<!-- END AI SECTION -->
 				</div>
 		</div>
-		<!-- first course ends-->
 
-		<!-- modal-1 -->
-		<div class="modal fade" id="modal-1">
-				<div class="modal-dialog ta-slot--width">
-						<div class="modal-content">
-								<div class="modal-header teaching-call--header_style">
-										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-										<h4 class="modal-title">New TA Slot</h4>
-								</div>
-								<div class="modal-body">
-										<div class="row">
-												<form role="form" class="form-horizontal form-groups-bordered">
-														<div class="form-group">
-																<label class="col-sm-6 control-label">% of Appointment Time:</label>
-																<div class="col-sm-5">
-																		<input class="form-control form-control--appointment-time" type="text" placeholder="%">
-																</div>
-														</div>
-														<div class="form-group">
-																<label class="col-sm-6 control-label">Number of Positions:</label>
-																<div class="col-sm-5">
-																		<div class="input-spinner">
-																				<button type="button" class="btn btn-default">-</button>
-																				<input type="text" class="form-control size-1" value="1">
-																				<button type="button" class="btn btn-default">+</button>
-																		</div>
-																</div>
-														</div>
-												</form>
-										</div>
-								</div>
-
-								<div class="modal-footer modal-footer--teaching-call">
-										<button type="button" class="btn btn-info">Create</button>
-								</div>
-						</div>
-				</div>
-		</div>
 </div>

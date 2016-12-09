@@ -5,8 +5,8 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'instructionalSupportAssignmentActionCreators',
-		this.InstructionalSupportAssignmentCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, instructionalSupportAssignmentActionCreators) {
+instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'instructionalSupportAssignmentActionCreators', '$timeout',
+		this.InstructionalSupportAssignmentCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, instructionalSupportAssignmentActionCreators, $timeout) {
 			$window.document.title = "Instructional Support";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
@@ -15,6 +15,10 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 
 			$rootScope.$on('instructionalSupportAssignmentStateChanged', function (event, data) {
 				$scope.view.state = data.state;
+				// Resolves occasional discrepancies with view binding, because we're using event listeners
+				$timeout(function() {
+					$scope.$apply();
+				});
 			});
 
 			$scope.setActiveTab = function (tabName) {

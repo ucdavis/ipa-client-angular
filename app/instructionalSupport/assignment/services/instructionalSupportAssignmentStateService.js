@@ -107,6 +107,12 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					}
 
 					return sectionGroups;
+				case ASSIGN_STAFF_TO_SLOT:
+					// Remove the user as an option in sectionGroup assignmentOptions where appropriate
+					return sectionGroups;
+				case REMOVE_STAFF_FROM_SLOT:
+					// Add the user as an option in sectionGroup assignmentOptions where appropriate
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}
@@ -158,14 +164,12 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						return instructionalSupportAssignments;
 					case REMOVE_STAFF_FROM_SLOT:
 						var supportAssignment = action.payload;
-
 						instructionalSupportAssignments.list[supportAssignment.id] = supportAssignment;
 
 						return instructionalSupportAssignments;
 					case ASSIGN_STAFF_TO_SLOT:
 						var supportAssignment = action.payload;
 						instructionalSupportAssignments.list[supportAssignment.id] = supportAssignment;
-
 						return instructionalSupportAssignments;
 				default:
 					return instructionalSupportAssignments;

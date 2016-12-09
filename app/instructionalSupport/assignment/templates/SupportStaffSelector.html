@@ -11,9 +11,9 @@
 		<li role="separator" class="divider"></li>
 		<li class="dropdown-header" stop-event="click"><b>Student Preferences</b></li>
 		<li class="clickable"
-		ng-repeat="studentPreference in assignmentOptions.studentPreferences"
-		ng-init="supportStaffStudent=view.state.instructionalSupportStaffs.list[studentPreference.instructionalSupportStaffId]"
-		ng-click="assignStaffToSlot(supportStaffStudent.id)">
+			ng-repeat="studentPreference in assignmentOptions.studentPreferences"
+			ng-init="supportStaffStudent=view.state.instructionalSupportStaffs.list[studentPreference.instructionalSupportStaffId]"
+			ng-click="assignStaffToSlot(supportStaffStudent.id)">
 			<a class="small">
 				<span class="course-filter-item">{{ supportStaffStudent.fullName }} ({{ studentPreference.priority }})</span>
 			</a>
