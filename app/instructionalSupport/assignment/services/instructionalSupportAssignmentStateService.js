@@ -210,6 +210,15 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 							}
 						}
 
+						// Find supportCallResponse for this support staff
+						for (var j = 0; j < action.payload.studentInstructionalSupportCallResponses.length; j++) {
+							slotSupportCallResponse = action.payload.studentInstructionalSupportCallResponses[j];
+
+							if (slotSupportCallResponse.instructionalSupportStaffId == instructionalSupportStaffData.id) {
+								instructionalSupportStaffData.supportCallResponse = slotSupportCallResponse;
+								break;
+							}
+						}
 						instructionalSupportStaffs.list[instructionalSupportStaffData.id] = instructionalSupportStaffData;
 						instructionalSupportStaffs.ids.push(instructionalSupportStaffData.id);
 					}

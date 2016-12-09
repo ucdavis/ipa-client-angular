@@ -48,6 +48,21 @@ instructionalSupportApp.service('instructionalSupportStudentFormActionCreators',
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
+		},
+		submitPreferences: function (supportCallResponse, workgroupId, year) {
+			instructionalSupportStudentFormService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
+				var action = {
+					type: UPDATE_SUPPORT_CALL_RESPONSE,
+					payload: payload
+				};
+				var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructionalSupport";
+				$window.location.href = instructorSummaryUrl;
+				instructionalSupportStudentFormStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
 		}
+
 	};
 });

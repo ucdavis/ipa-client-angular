@@ -121,8 +121,15 @@
 					auto-input on-blur="updateSupportCallResponse()"></textarea>
 				</div>
 			</div>
-			<a href="/summary/20/2016?mode=instructionalSupport">
-				<button type="button" class="btn btn-info pull-right">Submit Preferences</button>
+			<a>
+				<button ng-if="!view.state.supportCallResponse.submitted" type="button" class="btn btn-info pull-right"
+				 confirm-button="submitPreferences()"
+				 btn-class="btn-primary"
+				 message="Are you sure you want to submit your preferences?"
+				 yes="Confirm" no="Cancel" placement="top">
+					Submit Preferences
+				</button>
+				<button href="/summary/20/2016?mode=instructionalSupport" ng-if="view.state.supportCallResponse.submitted" type="button" class="btn btn-info pull-right">Update Preferences</button>
 			</a>
 		</div>
 	</div>

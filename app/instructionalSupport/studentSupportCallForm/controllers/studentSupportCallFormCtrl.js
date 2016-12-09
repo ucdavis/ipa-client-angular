@@ -29,6 +29,12 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 				instructionalSupportStudentFormActionCreators.updateSupportCallResponse($scope.view.state.supportCallResponse);
 			};
 
+			$scope.submitPreferences = function() {
+				$scope.view.state.supportCallResponse.submitted = true;
+				instructionalSupportStudentFormActionCreators.submitPreferences($scope.view.state.supportCallResponse, $scope.workgroupId, $scope.year);
+
+			};
+
 			$( "#sortable" ).sortable({
 				placeholder: "sortable-student-preference-placeholder",
 				axis: "y"

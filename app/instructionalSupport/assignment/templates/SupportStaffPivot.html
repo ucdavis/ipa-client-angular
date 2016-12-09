@@ -6,28 +6,25 @@
 					<div class="assignment-title-container">
 							<h4 class="assignment-title-header">{{ supportStaff.lastName }}, {{ supportStaff.firstName }}</h4>
 							<div class="label ng-binding ng-scope info--bg_black">
-									Phd
+								{{ userRoleToShorthand(supportStaff) }}
 							</div>
 							<div>
 									<ul class="ta-info">
-											<li>
-													<strong>Teaching Experience:</strong>
+											<li ng-if="supportStaff.supportCallResponse.teachingQualifications.length > 0">
+												<strong>Teaching Experience:</strong>
 											</li>
 											<li>
-													<p>
-															- Psychology TA (Winter 2014 to Spring 2016)
-													</p>
-													<p>
-															- Research assistant (Spring 2015 to winter 2016)
-													</p>
+												<p>
+													{{ supportStaff.supportCallResponse.teachingQualifications }}
+												</p>
+											</li>
+											<li ng-if="supportStaff.supportCallResponse.generalComments.length > 0">
+												<strong>Comments:</strong>
 											</li>
 											<li>
-													<strong>Comments:</strong>
-											</li>
-											<li>
-													<p>
-															Finished Bachelor of Psychology, 2006, UCLA, Master of Applied Psychology, 2011, Washington Univeristy, and Currently studying and researching Cognitive Psychology in UC Davis’s PhD program.
-													</p>
+												<p>
+													{{ supportStaff.supportCallResponse.generalComments }}
+												</p>
 											</li>
 									</ul>
 							</div>
