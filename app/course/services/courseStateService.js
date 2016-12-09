@@ -208,10 +208,11 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					var sectionGroupIndex = sectionGroups.ids.indexOf(action.payload.sectionGroup.id);
 					sectionGroups.ids.splice(sectionGroupIndex, 1);
 					delete sectionGroups.list[action.payload.sectionGroup.id];
-					sectionGroups.selectedSectionGroup = new SectionGroup({
+					sectionGroups.newSectionGroup = new SectionGroup({
 						courseId: action.payload.sectionGroup.courseId,
 						termCode: action.payload.sectionGroup.termCode
 					});
+					sectionGroups.selectedSectionGroup = sectionGroups.newSectionGroup;
 					return sectionGroups;
 				case UPDATE_SECTION_GROUP:
 					sectionGroups.list[action.payload.sectionGroup.id] = new SectionGroup(action.payload.sectionGroup);
