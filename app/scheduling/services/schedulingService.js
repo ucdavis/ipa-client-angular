@@ -21,32 +21,6 @@ schedulingApp.factory("schedulingService", this.schedulingService = function ($h
 
 			return deferred.promise;
 		},
-		getSectionGroupDetails: function (sectionGroupId) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/schedulingView/sectionGroups/" + sectionGroupId, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
-		},
-		getAllSectionGroupDetails: function (workgroupId, year, termCode) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/schedulingView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termCode + "/sectionGroupDetails", { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
-		},
 		updateActivity: function (activity) {
 			var deferred = $q.defer();
 

@@ -113,17 +113,6 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 			};
 			schedulingStateService.reduce(action);
 		},
-		getSectionGroupDetails: function (sectionGroup) {
-			schedulingService.getSectionGroupDetails(sectionGroup.id).then(function (payload) {
-				var action = {
-					type: FETCH_SECTION_GROUP_DETAILS,
-					payload: payload
-				};
-				schedulingStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
-			});
-		},
 		getCourseActivityTypes: function (course) {
 			schedulingService.getCourseActivityTypes(course).then(function (activityTypes) {
 				var action = {
@@ -132,17 +121,6 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 						activityTypes: activityTypes,
 						course: course
 					}
-				};
-				schedulingStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
-			});
-		},
-		getAllSectionGroupDetails: function (workgroupId, year, termCode) {
-			schedulingService.getAllSectionGroupDetails(workgroupId, year, termCode).then(function (payload) {
-				var action = {
-					type: FETCH_ALL_SECTION_GROUP_DETAILS,
-					payload: payload
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {

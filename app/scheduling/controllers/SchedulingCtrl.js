@@ -44,11 +44,6 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroupId];
 			var course = $scope.view.state.courses.list[sectionGroup.courseId];
 
-			// Initialize sectionGroup sections if not done already
-			if (sectionGroup && sectionGroup.sectionIds === undefined) {
-				schedulingActionCreators.getSectionGroupDetails(sectionGroup);
-			}
-
 			// Initialize course activity types if not done already
 			if (course && course.activityTypes === undefined) {
 				schedulingActionCreators.getCourseActivityTypes(course);
@@ -141,12 +136,6 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				return $scope.matchesFilters($scope.view.state.sectionGroups.list[sgId]);
 			});
 			schedulingActionCreators.toggleCheckAll(sectionGroupIdsToCheck);
-
-			// Initialize all sectionGroup sections if not done already
-			if ($scope.view.state.uiState.allSectionGroupsDetailsCached === false) {
-				schedulingActionCreators.getAllSectionGroupDetails(
-					$scope.workgroupId, $scope.year, $scope.view.state.uiState.term.termCode);
-			}
 		};
 
 		$scope.isLocked = function () {

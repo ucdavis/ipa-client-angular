@@ -129,14 +129,6 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					}
 					sectionGroups.list = sectionGroupsList;
 					return sectionGroups;
-				case FETCH_SECTION_GROUP_DETAILS:
-					scope.fillSectionGroupDetails(action.payload, sectionGroups);
-					return sectionGroups;
-				case FETCH_ALL_SECTION_GROUP_DETAILS:
-					action.payload.forEach(function (details) {
-						scope.fillSectionGroupDetails(details, sectionGroups);
-					});
-					return sectionGroups;
 				case REMOVE_ACTIVITY:
 					var sectionGroup = sectionGroups.list[action.payload.activity.sectionGroupId];
 					if (!sectionGroup.sharedActivityIds) { return sectionGroups; }
@@ -176,14 +168,6 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 
 					sections.list = sectionsList;
 					return sections;
-				case FETCH_SECTION_GROUP_DETAILS:
-					scope.fillSectionDetails(action.payload, sections);
-					return sections;
-				case FETCH_ALL_SECTION_GROUP_DETAILS:
-					action.payload.forEach(function (details) {
-						scope.fillSectionDetails(details, sections);
-					});
-					return sections;
 				case REMOVE_ACTIVITY:
 					var section = sections.list[action.payload.activity.sectionId];
 					if (section === undefined) { return sections; }
@@ -217,14 +201,6 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 						teachingCallResponses.ids.push(teachingCallResponseData.id);
 					}
 					teachingCallResponses.list = teachingCallResponsesList;
-					return teachingCallResponses;
-				case FETCH_SECTION_GROUP_DETAILS:
-					scope.fillTeachingCallResponseDetails(action.payload, teachingCallResponses);
-					return teachingCallResponses;
-				case FETCH_ALL_SECTION_GROUP_DETAILS:
-					action.payload.forEach(function (details) {
-						scope.fillTeachingCallResponseDetails(details, teachingCallResponses);
-					});
 					return teachingCallResponses;
 				default:
 					return teachingCallResponses;
@@ -271,14 +247,6 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 						activities.ids.push(activityData.id);
 					}
 					activities.list = activitiesList;
-					return activities;
-				case FETCH_SECTION_GROUP_DETAILS:
-					scope.fillActivityDetails(action.payload, activities);
-					return activities;
-				case FETCH_ALL_SECTION_GROUP_DETAILS:
-					action.payload.forEach(function (details) {
-						scope.fillActivityDetails(details, activities);
-					});
 					return activities;
 				case REMOVE_ACTIVITY:
 					var activityIndex = activities.ids.indexOf(action.payload.activity.id);
@@ -415,9 +383,6 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 						uiState.checkedSectionGroupIds = [];
 					}
 					return uiState;
-				case FETCH_ALL_SECTION_GROUP_DETAILS:
-					uiState.allSectionGroupsDetailsCached = true;
-					return uiState;
 				case ACTIVITY_SELECTED:
 					if (action.payload.activity && uiState.selectedActivityId != action.payload.activity.id) {
 						uiState.selectedActivityId = action.payload.activity.id;
@@ -474,47 +439,6 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 
 			$log.debug("Scheduling state updated:");
 			$log.debug(scope._state);
-		},
-		// Helper methods
-		fillSectionGroupDetails: function (sectionGroupDetails, sectionGroups) {
-			sectionGroups.list[sectionGroupDetails.id].sectionIds = sectionGroupDetails.sections
-				.sort(function (sectionA, sectionB) {
-					if (sectionA.sequenceNumber < sectionB.sequenceNumber) { return -1; }
-					if (sectionA.sequenceNumber > sectionB.sequenceNumber) { return 1; }
-					return 0;
-				})
-				.map(function (section) { return section.id; });
-			sectionGroups.list[sectionGroupDetails.id].sharedActivityIds = sectionGroupDetails.sharedActivities
-				.map(function (a) { return a.id; });
-			sectionGroups.list[sectionGroupDetails.id].teachingCallResponseIds = sectionGroupDetails.teachingCallResponses
-				.map(function (tr) { return tr.id; });
-		},
-		fillSectionDetails: function (sectionGroupDetails, sections) {
-			sectionGroupDetails.sections.forEach(function (section) {
-				section.activityIds = sectionGroupDetails.unsharedActivities
-					.filter(function (a) { return a.sectionId == section.id; })
-					.map(function (a) { return a.id; });
-				sections.list[section.id] = new Section(section);
-				sections.ids.push(section.id);
-			});
-		},
-		fillActivityDetails: function (sectionGroupDetails, activities) {
-			sectionGroupDetails.sharedActivities.forEach(function (activity) {
-				activities.list[activity.id] = new Activity(activity);
-				activities.list[activity.id].courseId = sectionGroupDetails.courseId;
-				activities.ids.push(activity.id);
-			});
-			sectionGroupDetails.unsharedActivities.forEach(function (activity) {
-				activities.list[activity.id] = new Activity(activity);
-				activities.list[activity.id].courseId = sectionGroupDetails.courseId;
-				activities.ids.push(activity.id);
-			});
-		},
-		fillTeachingCallResponseDetails: function (sectionGroupDetails, teachingCallResponses) {
-			sectionGroupDetails.teachingCallResponses.forEach(function (teachingCallResponse) {
-				teachingCallResponses.list[teachingCallResponse.id] = new TeachingCallResponse(teachingCallResponse);
-				teachingCallResponses.ids.push(teachingCallResponse.id);
-			});
 		}
 	};
 });
