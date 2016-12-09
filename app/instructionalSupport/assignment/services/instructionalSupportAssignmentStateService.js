@@ -190,10 +190,46 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					for (var i = 0; i < instructionalSupportStaffsLength; i++) {
 						var instructionalSupportStaffData = action.payload.instructionalSupportStaffList[i];
 
+						// Find assignments made to this support staff
+						instructionalSupportStaffData.supportAssignmentIds = [];
+						for (var j = 0; j < action.payload.instructionalSupportAssignments.length; j++) {
+							slotInstructionalSupportAssignment = action.payload.instructionalSupportAssignments[j];
+
+							if (slotInstructionalSupportAssignment.instructionalSupportStaffId == instructionalSupportStaffData.id) {
+								instructionalSupportStaffData.supportAssignmentIds.push(slotInstructionalSupportAssignment.id);
+							}
+						}
+
+						// Find preferences made by this support staff
+						instructionalSupportStaffData.preferenceIds = [];
+						for (var j = 0; j < action.payload.studentInstructionalSupportPreferences.length; j++) {
+							slotPreference = action.payload.studentInstructionalSupportPreferences[j];
+
+							if (slotPreference.instructionalSupportStaffId == instructionalSupportStaffData.id) {
+								instructionalSupportStaffData.preferenceIds.push(slotPreference.id);
+							}
+						}
+
 						instructionalSupportStaffs.list[instructionalSupportStaffData.id] = instructionalSupportStaffData;
 						instructionalSupportStaffs.ids.push(instructionalSupportStaffData.id);
 					}
 
+					return instructionalSupportStaffs;
+				case REMOVE_STAFF_FROM_SLOT:
+					var supportStaffAssignments = instructionalSupportStaffs.list[action.supportStaffId].supportAssignmentIds;
+					var supportAssignmentId = action.payload.id;
+
+					var index = supportStaffAssignments.indexOf(supportAssignmentId);
+
+					if (index > -1) {
+						supportStaffAssignments.splice(index);
+					}
+					return instructionalSupportStaffs;
+				case ASSIGN_STAFF_TO_SLOT:
+					var supportStaffId = action.payload.instructionalSupportStaffId;
+					var assignmentId = action.payload.id;
+
+					instructionalSupportStaffs.list[supportStaffId].supportAssignmentIds.push(assignmentId);
 					return instructionalSupportStaffs;
 				default:
 					return instructionalSupportStaffs;

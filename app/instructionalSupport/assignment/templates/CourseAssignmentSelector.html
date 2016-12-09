@@ -3,87 +3,27 @@
 		Assign..
 	</div>
 	<ul class="dropdown-menu" style="width: 100%;">
-		<li class="dropdown-header" stop-event="click"><b>Preferences</b></li>
+		<li ng-show="supportStaff.preferenceIds.length > 0" class="dropdown-header" stop-event="click"><b>Preferences</b></li>
 
-		<li class="clickable">
+		<!-- preferences tied to this supportStaff -->
+		<li ng-repeat="preferenceId in supportStaff.preferenceIds" class="clickable"
+				ng-init="preference=view.state.preferences.list[preferenceId]; sectionGroup=view.state.sectionGroups.list[view.state.preferences.list[preferenceId].sectionGroupId]">
 			<a class="small">
-				<span class="course-filter-item"><b>1</b> ECS 001 - 001 (reader)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item"><b>2</b> ECS 010 - 001 (AI)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item"><b>3</b> ECS 041 - 001 (TA)</span>
+				<span class="course-filter-item"><b>{{ preference.priority }}</b> {{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} - {{ sectionGroup.sequencePattern }} ({{ appointmentTypeToShorthand(preference.type) }})</span>
 			</a>
 		</li>
 
 		<li role="separator" class="divider"></li>
+
 		<li class="dropdown-header" stop-event="click"><b>Courses</b></li>
 
-		<li class="clickable">
+		<!-- all unassigned courses -->
+		<li ng-repeat="supportAssignmentId in view.state.instructionalSupportAssignments.ids" class="clickable"
+				ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[supportAssignmentId]; sectionGroup=view.state.sectionGroups.list[view.state.instructionalSupportAssignments.list[supportAssignmentId].sectionGroupId]"
+				ng-click="assignStaffToSlot(supportAssignmentId)">
 			<a class="small">
-				<span class="course-filter-item">ECS 050 - 001 (TA)</span>
+				<span class="course-filter-item">{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} - {{ sectionGroup.sequencePattern }} ({{ appointmentTypeToShorthand(supportAssignment.appointmentType) }})</span>
 			</a>
 		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 050 - 001 (AI)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 101 - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 121 - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 135 - 001 (reader)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 136A - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 141 - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 143 - 001 (reader)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 144A - 001 (reader)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 144B - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 150 - 001 (TA)</span>
-			</a>
-		</li>
-		<li class="clickable">
-			<a class="small">
-				<span class="course-filter-item">ECS 155 - 001 (TA)</span>
-			</a>
-		</li>
-
 	</ul>
 </div>

@@ -8,6 +8,9 @@ instructionalSupportApp.directive("courseAssignmentSelector", this.courseAssignm
 		replace: true,
 		scope: false,
 		link: function (scope, element, attrs) {
+			scope.assignStaffToSlot = function (supportAssignmentId) {
+				instructionalSupportAssignmentActionCreators.assignStaffToSlot(scope.supportStaff.id ,supportAssignmentId);
+			};
 
 		} // end link
 	};

@@ -49,12 +49,13 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		removeStaffFromSlot: function (assignmentId) {
+		removeStaffFromSlot: function (assignmentId, supportStaffId) {
 			instructionalSupportAssignmentService.removeStaffFromSlot(assignmentId).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Unassigned Instructional Support Staff", type: "SUCCESS" });
 				var action = {
 					type: REMOVE_STAFF_FROM_SLOT,
-					payload: payload
+					payload: payload,
+					supportStaffId: supportStaffId
 				};
 				instructionalSupportAssignmentStateService.reduce(action);
 			}, function (err) {

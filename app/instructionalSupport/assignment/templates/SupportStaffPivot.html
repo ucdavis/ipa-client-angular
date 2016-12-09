@@ -1,186 +1,70 @@
 <div id="people-view">
-		<div class="container-fluid border-bottom--gray">
-				<div class="flex-row">
-						<!-- TA info -->
-						<div class="assignment-title-container">
-								<h4 class="assignment-title-header">Brown, Suzi</h4>
-								<div class="label ng-binding ng-scope info--bg_black">
-										Phd
-								</div>
-								<div>
-										<ul class="ta-info">
-												<li>
-														<strong>Teaching Experience:</strong>
-												</li>
-												<li>
-														<p>
-																- Psychology TA (Winter 2014 to Spring 2016)
-														</p>
-														<p>
-																- Research assistant (Spring 2015 to winter 2016)
-														</p>
-												</li>
-												<li>
-														<strong>Comments:</strong>
-												</li>
-												<li>
-														<p>
-																Finished Bachelor of Psychology, 2006, UCLA, Master of Applied Psychology, 2011, Washington Univeristy, and Currently studying and researching Cognitive Psychology in UC Davis’s PhD program.
-														</p>
-												</li>
-										</ul>
-								</div>
-						</div>
-						<!-- TA info ends -->
-						<!-- TA course section -->
-						<div class="support-staff-details-layout">
-							<div class="support-staff-details-container">
-									<div class="ta_course-section">
-										<div class="tile-container">
-											<div class="remove-tile-container">
-											</div>
-											<div class="assignment">
-													<div class="support-student-assignment-detail-container">
-															<div class="support-staff-assignment-detail">ECS 113 - 001</div>
-															<div class="support-staff-assignment-sub-detail">TA (25%)</div>
-													</div>
-											</div>
-											<div class="remove-tile-container">
-												<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary "></i>
-											</div>
-										</div>
-
-											<course-assignment-selector class="add-new-slot"></course-assignment-selector>
-									</div>
+	<div ng-repeat="supportStaffId in view.state.instructionalSupportStaffs.ids" class="container-fluid border-bottom--gray"
+				ng-init="supportStaff=view.state.instructionalSupportStaffs.list[supportStaffId]">
+			<div class="flex-row">
+					<!-- TA info -->
+					<div class="assignment-title-container">
+							<h4 class="assignment-title-header">{{ supportStaff.lastName }}, {{ supportStaff.firstName }}</h4>
+							<div class="label ng-binding ng-scope info--bg_black">
+									Phd
 							</div>
-						</div>
-						<!-- TA course section ends-->
-				</div>
-		</div>
-
-		<div class="container-fluid border-bottom--gray">
-				<div class="flex-row">
-						<!-- TA info -->
-						<div class="assignment-title-container">
-								<h4 class="assignment-title-header">Dobris, Joel</h4>
-								<div class="label ng-binding ng-scope info--bg_black">
-										Phd
-								</div>
-								<div>
-										<ul class="ta-info">
-												<li>
+							<div>
+									<ul class="ta-info">
+											<li>
+													<strong>Teaching Experience:</strong>
+											</li>
+											<li>
+													<p>
+															- Psychology TA (Winter 2014 to Spring 2016)
+													</p>
+													<p>
+															- Research assistant (Spring 2015 to winter 2016)
+													</p>
+											</li>
+											<li>
 													<strong>Comments:</strong>
-												</li>
-												<li>
-														<p>
-																Professor Smith would like me to TA for ECS 100.
-														</p>
-												</li>
-										</ul>
-								</div>
-						</div>
-						<!-- TA info ends -->
-						<!-- TA course section -->
-						<div class="support-staff-details-layout">
-							<div class="support-staff-details-container">
-									<div class="ta_course-section">
-										<course-assignment-selector class="add-new-slot"></course-assignment-selector>
-									</div>
+											</li>
+											<li>
+													<p>
+															Finished Bachelor of Psychology, 2006, UCLA, Master of Applied Psychology, 2011, Washington Univeristy, and Currently studying and researching Cognitive Psychology in UC Davis’s PhD program.
+													</p>
+											</li>
+									</ul>
 							</div>
-						</div>
-						<!-- TA course section ends-->
-				</div>
-		</div>
+					</div>
+					<!-- TA info ends -->
+					<!-- TA course section -->
+					<div class="support-staff-details-layout">
+						<div class="support-staff-details-container">
+								<div class="ta_course-section">
 
 
-		<div class="container-fluid border-bottom--gray">
-				<div class="flex-row">
-						<!-- TA info -->
-						<div class="assignment-title-container">
-								<h4 class="assignment-title-header">Green, Jenny</h4>
-								<div class="label ng-binding ng-scope info--bg_black">
-										Master
-								</div>
-								<div>
-										<ul class="ta-info">
-										</ul>
-								</div>
-						</div>
-						<!-- TA info ends -->
-						<!-- TA course section -->
-						<div class="support-staff-details-layout">
-							<div class="support-staff-details-container">
-									<div class="ta_course-section">
-										<div class="tile-container">
-											<div class="remove-tile-container">
-											</div>
-											<div class="assignment">
-													<div class="support-student-assignment-detail-container">
-															<div class="support-staff-assignment-detail">ECS 143 - 001</div>
-															<div class="support-staff-assignment-sub-detail">TA (50%)</div>
-													</div>
-											</div>
-											<div class="remove-tile-container">
-												<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary "></i>
-											</div>
+									<div ng-repeat="supportAssignmentId in supportStaff.supportAssignmentIds" class="tile-container"
+											ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[supportAssignmentId]; sectionGroup=view.state.sectionGroups.list[view.state.instructionalSupportAssignments.list[supportAssignmentId].sectionGroupId]">
+										<div class="remove-tile-container">
 										</div>
-										<course-assignment-selector class="add-new-slot"></course-assignment-selector>
+										<div class="assignment">
+												<div class="support-student-assignment-detail-container">
+														<div class="support-staff-assignment-detail">{{ sectionGroup.subjectCode}} {{ sectionGroup.courseNumber}} - 001</div>
+														<div class="support-staff-assignment-sub-detail">{{ appointmentTypeToShorthand(supportAssignment.appointmentType) }} ({{ supportAssignment.appointmentPercentage }}%)</div>
+												</div>
+										</div>
+										<div class="remove-tile-container">
+											<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary"
+												uib-tooltip="Unassign" tooltip-placement="bottom"
+												confirm-button="removeStaffFromSlot(supportAssignmentId)"
+												message="Are you sure you want to delete this Assignment?"
+												yes="Confirm" no="Cancel" placement="top"></i>
+										</div>
 									</div>
-							</div>
-						</div>
-						<!-- TA course section ends-->
-				</div>
-		</div>
 
-		<div class="container-fluid border-bottom--gray">
-				<div class="flex-row">
-						<!-- TA info -->
-						<div class="assignment-title-container">
-								<h4 class="assignment-title-header">Hale, Bobbi</h4>
-								<div class="label ng-binding ng-scope info--bg_black">
-										Master
-								</div>
-								<div>
-										<ul class="ta-info">
-										</ul>
-								</div>
-						</div>
-						<!-- TA info ends -->
-						<!-- TA course section -->
-						<div class="support-staff-details-layout">
-							<div class="support-staff-details-container">
-									<div class="ta_course-section">
-										<course-assignment-selector class="add-new-slot"></course-assignment-selector>
-									</div>
-							</div>
-						</div>
-						<!-- TA course section ends-->
-				</div>
-		</div>
 
-		<div class="container-fluid border-bottom--gray">
-				<div class="flex-row">
-						<!-- TA info -->
-						<div class="assignment-title-container">
-								<h4 class="assignment-title-header">Wallace, Grant</h4>
-								<div class="label ng-binding ng-scope info--bg_black">
-										Master
-								</div>
-								<div>
-										<ul class="ta-info">
-										</ul>
+									<course-assignment-selector class="add-new-slot">
+									</course-assignment-selector>
 								</div>
 						</div>
-						<!-- TA info ends -->
-						<!-- TA course section -->
-						<div class="support-staff-details-layout">
-							<div class="support-staff-details-container">
-									<div class="ta_course-section">
-										<course-assignment-selector class="add-new-slot"></course-assignment-selector>
-									</div>
-							</div>
-						</div>
-						<!-- TA course section ends-->
-				</div>
-		</div>
+					</div>
+					<!-- TA course section ends-->
+			</div>
+	</div>
 </div>

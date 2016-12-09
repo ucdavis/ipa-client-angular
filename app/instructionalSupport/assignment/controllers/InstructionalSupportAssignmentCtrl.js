@@ -33,6 +33,19 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 				}
 			};
 
+			$scope.appointmentTypeToShorthand = function(appointmentType) {
+				switch(appointmentType) {
+					case "teachingAssistant":
+						return "TA";
+					case "reader":
+						return "Reader";
+					case "associateInstructor":
+						return "AI";
+				}
+
+				return "";
+			}
+
 			$scope.openAddAppointmentSlotModal = function(sectionGroupId, appointmentType) {
 
 				modalInstance = $uibModal.open({
@@ -89,7 +102,8 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 			}
 
 			$scope.removeStaffFromSlot = function (instructionalSupportAssignmentId) {
-				instructionalSupportAssignmentActionCreators.removeStaffFromSlot(instructionalSupportAssignmentId);
+				supportStaffId = $scope.view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId;
+				instructionalSupportAssignmentActionCreators.removeStaffFromSlot(instructionalSupportAssignmentId, supportStaffId);
 			}
 			// Set the active tab according to the URL
 			// Otherwise redirect to the default view
