@@ -6,7 +6,7 @@
  schedulingApp.
  * Central location for sharedState information.
  */
-schedulingApp.service('schedulingStateService', function ($rootScope, $log, Course, SectionGroup, Section, Activity, Tag, Location, Instructor, TeachingCallResponse, Term) {
+schedulingApp.service('schedulingStateService', function ($rootScope, $log, Course, SectionGroup, Section, Activity, Tag, Location, Instructor, TeachingCallResponse, Term, TeachingAssignment) {
 	return {
 		_state: {},
 		_courseReducers: function (action, courses) {
@@ -209,6 +209,14 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 						list: {},
 						ids: []
 					};
+					var teachingCallResponsesList = {};
+					var length = action.payload.teachingCallResponses ? action.payload.teachingCallResponses.length : 0;
+					for (var i = 0; i < length; i++) {
+						var teachingCallResponseData = action.payload.teachingCallResponses[i];
+						teachingCallResponsesList[teachingCallResponseData.id] = new TeachingCallResponse(teachingCallResponseData);
+						teachingCallResponses.ids.push(teachingCallResponseData.id);
+					}
+					teachingCallResponses.list = teachingCallResponsesList;
 					return teachingCallResponses;
 				case FETCH_SECTION_GROUP_DETAILS:
 					scope.fillTeachingCallResponseDetails(action.payload, teachingCallResponses);
@@ -231,6 +239,14 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 						list: {},
 						ids: []
 					};
+					var teachingAssignmentsList = {};
+					var length = action.payload.teachingAssignments ? action.payload.teachingAssignments.length : 0;
+					for (var i = 0; i < length; i++) {
+						var teachingAssignmentData = action.payload.teachingAssignments[i];
+						teachingAssignmentsList[teachingAssignmentData.id] = new TeachingAssignment(teachingAssignmentData);
+						teachingAssignments.ids.push(teachingAssignmentData.id);
+					}
+					teachingAssignments.list = teachingAssignmentsList;
 					return teachingAssignments;
 				default:
 					return teachingAssignments;
