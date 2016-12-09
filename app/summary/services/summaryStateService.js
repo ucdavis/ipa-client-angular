@@ -390,6 +390,73 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					return teachingCallReceipt;
 			}
 		},
+		_supportCallReducers: function (action, supportCalls) {
+			var scope = this;
+			var data = action.payload;
+
+			switch (action.type) {
+				case INIT_STATE:
+					supportCalls = {
+						studentSupportCalls: {
+							ids: [],
+							list: {}
+						},
+						instructorSupportCalls: {
+							ids: [],
+							list: {}
+						},
+						studentSupportCallResponses: {
+							ids: [],
+							list: {}
+						},
+						instructorSupportCallResponses: {
+							ids: [],
+							list: {}
+						}
+					};
+
+					var studentSupportCallLength = action.payload.studentSupportCalls ? action.payload.studentSupportCalls.length : 0;
+					for (var i = 0; i < studentSupportCallLength; i++) {
+						var slotStudentSupportCall = action.payload.studentSupportCalls[i];
+						slotStudentSupportCall.dueDate = millisecondsToFullDate(slotStudentSupportCall.dueDate);
+
+						supportCalls.studentSupportCalls.list[slotStudentSupportCall.id] = slotStudentSupportCall;
+						supportCalls.studentSupportCalls.ids.push(slotStudentSupportCall.id);
+					}
+
+					var instructorSupportCallLength = action.payload.instructorSupportCalls ? action.payload.instructorSupportCalls.length : 0;
+					for (var i = 0; i < instructorSupportCallLength; i++) {
+						var slotInstructorSupportCall = action.payload.instructorSupportCalls[i];
+						slotInstructorSupportCall.dueDate = millisecondsToFullDate(slotInstructorSupportCall.dueDate);
+
+						supportCalls.instructorSupportCalls.list[slotInstructorSupportCall.id] = slotInstructorSupportCall;
+						supportCalls.instructorSupportCalls.ids.push(slotInstructorSupportCall.id);
+					}
+
+					var studentSupportCallResponseLength = action.payload.studentInstructionalSupportCallResponses ? action.payload.studentInstructionalSupportCallResponses.length : 0;
+					for (var i = 0; i < studentSupportCallResponseLength; i++) {
+						var slotStudentSupportCallResponse = action.payload.studentInstructionalSupportCallResponses[i];
+
+						supportCalls.studentSupportCallResponses.list[slotStudentSupportCallResponse.id] = slotStudentSupportCallResponse;
+						supportCalls.studentSupportCallResponses.ids.push(slotStudentSupportCallResponse.id);
+
+						supportCalls.studentSupportCalls.list[slotStudentSupportCallResponse.studentSupportCallId].responseId = slotStudentSupportCallResponse.id;
+					}
+
+					var instructorSupportCallResponseLength = action.payload.instructorInstructionalSupportCallResponses ? action.payload.instructorInstructionalSupportCallResponses.length : 0;
+					for (var i = 0; i < instructorSupportCallResponseLength; i++) {
+						var slotInstructorSupportCallResponse = action.payload.instructorInstructionalSupportCallResponses[i];
+
+						supportCalls.instructorSupportCallResponses.list[slotInstructorSupportCallResponse.id] = slotInstructorSupportCallResponse;
+						supportCalls.instructorSupportCallResponses.ids.push(slotInstructorSupportCallResponse.id);
+
+						supportCalls.instructorSupportCalls.list[slotInstructorSupportCallResponse.instructorSupportCallId].responseId = slotInstructorSupportCallResponse.id;
+					}
+					return supportCalls;
+				default:
+					return supportCalls;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -412,3 +479,14 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 		}
 	};
 });
+
+millisecondsToFullDate = function(milliseconds) {
+	var d = new Date(milliseconds);
+	var day = d.getDate();
+	var month = d.getMonth() + 1;
+	var year = d.getFullYear();
+	var formattedDate = year + "-" + month + "-" + day;
+	formattedDate = moment(formattedDate, "YYYY-MM-DD").format('LL');
+
+	return formattedDate;
+};

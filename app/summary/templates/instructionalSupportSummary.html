@@ -11,13 +11,15 @@
 		<spinner></spinner>
 	</div>
 	<div ng-show="view.state">
-		<div class="course-status-header">
+		<div ng-show="view.state.supportCalls.studentSupportCalls.ids > 0" class="course-status-header">
 			<h5>
 				Support Calls
 			</h5>
 		</div>
 
-		<div>
+		<div ng-show="view.state.supportCalls.studentSupportCalls.ids > 0"
+					ng-repeat="studentSupportCallId in view.state.supportCalls.studentSupportCalls.ids"
+					ng-init="studentSupportCall=view.state.supportCalls.studentSupportCalls.list[studentSupportCallId]">
 			<div class="course-table-row">
 				<!-- table header -->
 				<div class="course-table__header">
@@ -47,16 +49,17 @@
 			<div class="course-table-row">
 				<div class="course-table__row-detail">
 					<div>
-						<a ng-href="{{ urlRoot }}/instructionalSupport/20/2016/10/studentSupportCallForm">
+						<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ studentSupportCall.termCode.slice(-2) }}/studentSupportCallForm">
 							View Support Call Form
 						</a>
 					</div>
 				</div>
 				<div class="course-table__row-detail">
-					December 23rd, 2016
+					{{ studentSupportCall.dueDate }}
 				</div>
-				<div class="course-table__row-detail">
-					<i class="glyphicon glyphicon-ok" ng-if="teachingCall.preferencesSubmitted"></i>
+				<div class="course-table__row-detail"
+				ng-init="supportCallResponse=view.state.supportCalls.studentSupportCallResponses.list[studentSupportCall.responseId]">
+					<i class="glyphicon glyphicon-ok" ng-if="supportCallResponse.submitted"></i>
 				</div>
 			</div>
 		</div>

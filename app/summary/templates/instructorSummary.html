@@ -51,14 +51,14 @@
 			</div>
 		</div>
 
-		<div class="course-status-header">
+		<div ng-if="view.state.supportCalls.instructorSupportCalls.ids > 0" class="course-status-header">
 			<h5>
 				Support Calls
 			</h5>
 		</div>
 
 		<div>
-			<div class="course-table-row">
+			<div ng-if="view.state.supportCalls.instructorSupportCalls.ids > 0" class="course-table-row">
 				<!-- table header -->
 				<div class="course-table__header">
 					<div class="course-table__header-detail">
@@ -84,7 +84,8 @@
 			</div>
 			<!-- table header -->
 
-			<div class="course-table-row">
+			<!-- instructor support calls -->
+			<div ng-repeat="instructorSupportCallId in view.state.supportCalls.instructorSupportCalls.ids" class="course-table-row">
 				<div class="course-table__row-detail">
 					<div>
 						<a ng-href="{{ urlRoot }}/instructionalSupport/20/2016/10/instructorSupportCallForm">
