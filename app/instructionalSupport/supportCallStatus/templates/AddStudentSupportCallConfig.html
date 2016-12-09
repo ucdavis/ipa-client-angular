@@ -47,35 +47,59 @@
 	                    <label class="checkbox-inline check-box-TA-call">
 												<input type="checkbox" value="" ng-model="supportCallConfigData.requireEligibilityConfirmation">
 												Require Eligibility Confirmation
+												<div style="padding-left: 5px;" class="pull-right" tooltip-placement="right"
+												uib-tooltip="This option will display the UC Davis TA requirements on the form and require a checkbox is clicked to confirm eligilibility.">
+													<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+												</div>
 											</label>
 	                </div>
 	                <div class="checkbox">
 	                    <label class="checkbox-inline check-box-TA-call">
 												<input type="checkbox" value="" ng-model="supportCallConfigData.collectTeachingQualifications">
 												Collect Teaching Qualifications
+												<div style="padding-left: 5px;" class="pull-right" tooltip-placement="right"
+												uib-tooltip="This option will display an additional text field on the form to capture general teaching qualification details from the applicant.">
+													<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+												</div>
 											</label>
 	                </div>
 	                <div class="checkbox">
 	                    <label class="checkbox-inline check-box-TA-call">
 												<input type="checkbox" value="" ng-model="supportCallConfigData.collectPreferenceQualifications">
 												Collect Preference Comments
+												<div style="padding-left: 5px;" class="pull-right" tooltip-placement="right"
+												uib-tooltip="This option will allow the applicant to provide individual comments for every preference they select.">
+													<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+												</div>
 											</label>
 	                </div>
 	                <div class="checkbox">
 	                  <label class="checkbox-inline check-box-TA-call">
 											<input type="checkbox" value="" ng-model="supportCallConfigData.collectGeneralComments">
 											Collect General Comments
+											<div style="padding-left: 5px;" class="pull-right" tooltip-placement="right"
+											uib-tooltip="This option will display an additional text field on the form to capture general comments from the applicant.">
+												<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+											</div>
 										</label>
 	                </div>
 	                <div class="checkbox">
 	                  <label class="checkbox-inline check-box-TA-call">
 											<input type="checkbox" value="" ng-model="supportCallConfigData.allowSubmissionAfterDueDate">
 											Allow submission after due date
+											<div style="padding-left: 5px;" class="pull-right" tooltip-placement="right"
+											uib-tooltip="If this option is selected applicants will be able to continue adding and removing preferences after the due date. When it is not selected the form becomes un-editable after the due date.">
+												<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+											</div>
 										</label>
 	                </div>
 	                <div class="checkbox">
 	                  <label class="checkbox-inline check-box-TA-call">
 											Minimum number of preferences
+											<div style="padding-left: 5px;" class="pull-right" tooltip-placement="right"
+											uib-tooltip="This option allows you to require the applicant to indicate a certain number of preferences before they can submit the form.">
+												<i class="glyphicon glyphicon-question-sign question--position"></i>
+											</div>
 										</label>
 	                  <div>
 	                  	<input style="width:12%; margin-left: 20px;" class="form-control" type="text" ng-model="supportCallConfigData.minimumNumberOfPreferences">
