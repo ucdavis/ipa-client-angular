@@ -7,7 +7,10 @@ sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function (
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
 				if (typeof scope.view.selectedEntity == "undefined") {
-					throw "sectionGroupDetails is trying to render with an undefined 'selectedEntity', action: " + data.action.type;
+					throw {
+						message: "sectionGroupDetails is trying to render with an undefined 'selectedEntity'",
+						stack: "State action: " + data.action.type
+					};
 				}
 
 				var course = scope.view.state.courses.list[scope.view.selectedEntity.courseId];
