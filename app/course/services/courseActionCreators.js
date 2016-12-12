@@ -142,6 +142,11 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			});
 		},
 		searchImportCourses: function (subjectCode, year, includePrivate) {
+			var action = {
+				type: BEGIN_SEARCH_IMPORT_COURSES,
+				payload: {}
+			};
+			courseStateService.reduce(action);
 			courseService.searchImportCourses(subjectCode, year, includePrivate).then(function (sectionGroups) {
 				var action = {
 					type: SEARCH_IMPORT_COURSES,

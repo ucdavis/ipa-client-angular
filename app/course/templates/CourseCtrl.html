@@ -7,8 +7,8 @@
 
 	<div class="row" style="margin-bottom: 2em;">
 		<div class="col-sm-offset-3 col-sm-6 input-group">
-			<input type="search" class="form-control hidden-print" placeholder="Search Schedule" ng-model="view.searchQuery" ng-change="filterTable(view.searchQuery)"
-			/>
+			<input type="search" class="form-control hidden-print" placeholder="Search Schedule" ng-model="view.searchQuery"
+				ng-change="filterTable(view.searchQuery)" />
 			<i class="entypo-cancel clear-search close" ng-show="view.searchQuery" ng-click="clearSearch()"></i>
 		</div>
 	</div>
@@ -21,14 +21,16 @@
 
 				<div class="btn-group" uib-tooltip="Toggle terms">
 					<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-					<ul class="dropdown-menu" multiselect-dropdown items="termDefinitions" active-ids="view.state.filters.enabledTerms" toggle-item="termToggled(id)"></ul>
+					<ul class="dropdown-menu" multiselect-dropdown items="termDefinitions" active-ids="view.state.filters.enabledTerms"
+						toggle-item="termToggled(id)"></ul>
 				</div>
 				<!-- .btn-group -->
 
 				<div class="btn-group" uib-tooltip="Filters">
 					<span class="tool-icon glyphicon glyphicon-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
 					<ul class="dropdown-menu">
-						<li ng-repeat="tagId in view.state.tags.ids track by $index" class="clickable" ng-click="tagToggled(tagId)" stop-event="click">
+						<li ng-repeat="tagId in view.state.tags.ids track by $index" class="clickable" ng-click="tagToggled(tagId)"
+							stop-event="click">
 							<a class="small">
 								<input type="checkbox" ng-checked="view.state.filters.enabledTagIds.indexOf(tagId) >= 0" />
 								<span class="course-filter-item">{{ view.state.tags.list[tagId].name }}</span>
@@ -78,7 +80,8 @@
 							<label class="col-sm-4 control-label">Subject Code</label>
 
 							<div class="col-sm-4">
-								<selectize config="{maxItems: 1, valueField: 'code', labelField: 'code', searchField: ['code']}" options="subjectCodes" ng-model="view.state.uiState.massImportCode"></selectize>
+								<selectize config="{maxItems: 1, valueField: 'code', labelField: 'code', searchField: ['code']}" options="subjectCodes"
+									ng-model="view.state.uiState.massImportCode"></selectize>
 							</div>
 						</div>
 
@@ -86,8 +89,8 @@
 							<label class="col-sm-4 control-label">Academic Year</label>
 
 							<div class="col-sm-4">
-								<selectize config="{maxItems: 1, valueField: 'year', labelField: 'academicYear', searchField: ['academicYear']}" options="recentAcademicYears"
-									ng-model="view.state.uiState.massImportYear"></selectize>
+								<selectize config="{maxItems: 1, valueField: 'year', labelField: 'academicYear', searchField: ['academicYear']}"
+									options="recentAcademicYears" ng-model="view.state.uiState.massImportYear"></selectize>
 							</div>
 						</div>
 
@@ -110,7 +113,8 @@
 								<div class="col-sm-offset-4 col-sm-4">
 									<button class="btn btn-default btn-block" ng-click="searchImportCourses()" ng-disabled="!(view.state.uiState.massImportCode && view.state.uiState.massImportYear)">Search</button>
 									<div class="mass-import-loading">
-										<spinner ng-if="view.state.courses.importList === null && view.searchingCourseToImport" size="20"></spinner>
+										<spinner ng-if="view.state.courses.importList === null && view.state.uiState.searchingCourseToImport"
+											size="20"></spinner>
 									</div>
 								</div>
 							</div>

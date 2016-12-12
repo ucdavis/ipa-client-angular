@@ -174,8 +174,6 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 		 * match the selected subjectCode and academicYear
 		 */
 		$scope.searchImportCourses = function () {
-			$scope.view.state.courses.importList = null;
-			$scope.view.searchingCourseToImport = true;
 			courseActionCreators.searchImportCourses(
 				$scope.view.state.uiState.massImportCode,
 				$scope.view.state.uiState.massImportYear,

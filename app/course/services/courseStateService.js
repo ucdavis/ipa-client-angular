@@ -53,6 +53,9 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					courses.ids = _array_sortIdsByProperty(coursesList, ["subjectCode", "courseNumber", "sequencePattern"]);
 					courses.list = coursesList;
 					return courses;
+				case BEGIN_SEARCH_IMPORT_COURSES:
+					courses.importList = null;
+					return courses;
 				case SEARCH_IMPORT_COURSES:
 					var importList = [];
 					action.payload.sectionGroups.forEach(function (sg) {
@@ -368,7 +371,8 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						massImportCode: null,
 						massImportYear: null,
 						massImportPrivate: false,
-						massImportInProgress: false
+						massImportInProgress: false,
+						searchingCourseToImport: false
 					};
 
 					// lock the table if all terms are locked
@@ -397,6 +401,12 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 				case CLOSE_NEW_COURSE_DETAILS:
 					uiState.tableLocked = false;
 					uiState.tableGrayedOut = false;
+					return uiState;
+				case BEGIN_SEARCH_IMPORT_COURSES:
+					uiState.searchingCourseToImport = true;
+					return uiState;
+				case SEARCH_IMPORT_COURSES:
+					uiState.searchingCourseToImport = false;
 					return uiState;
 				case BEGIN_IMPORT_MODE:
 					uiState.tableLocked = true;
