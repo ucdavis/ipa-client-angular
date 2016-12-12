@@ -483,11 +483,11 @@ table.courses-table tr.term-totals td {
 }
 table.courses-table:not(.locked-courses-table) tr:hover td.ui-overlay:not(.new-course-td) {
 	visibility: visible;
+	z-index: 5;
 }
 table.courses-table:not(.locked-courses-table) tr:not(.term-totals):hover td:not(.ui-overlay):not(.new-course-td) {
 	border-top: solid 1px rgba(0, 166, 81, 0.3) !important;
 	border-bottom-color: rgba(0, 166, 81, 0.3) !important;
-	z-index: 9999;
 }
 table.courses-table tr td.ui-overlay,
 table.courses-table th.ui-overlay {
@@ -648,8 +648,16 @@ table.sections-table > tbody tr > td {
 	width: calc(100% - 30px);
 }
 
+td.sg-cell {
+	position: relative;
+}
+
 td.sg-cell input[type=number] {
 	text-align: center;
+}
+
+td.sg-cell.is-offered input[type=number] {
+	border-color: #999;
 }
 
 td.import-course.course-cell {

@@ -45,6 +45,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				if (data.action.type == REMOVE_SECTION_GROUP) {
 					// Empty the textbox
 					$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"] input.planned-seats').val("");
+					$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]').removeClass("is-offered");
 
 					return;
 				}
@@ -340,8 +341,9 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 			// Determine if the term is readonly
 			var term = state.terms.list[termCode];
 			var termIsLocked = term ? term.isLocked() : true;
+			var cellClass = sectionGroupId ? "sg-cell is-offered" : "sg-cell";
 
-			row += "<td data-term-code=\"" + termCode + "\" class=\"sg-cell\"><div>";
+			row += "<td data-term-code=\"" + termCode + "\" class=\"" + cellClass + "\"><div>";
 			if (termIsLocked || state.uiState.tableLocked) {
 				row += plannedSeats;
 			} else {
@@ -372,7 +374,7 @@ var savePlannedSeats = function ($el, scope, courseActionCreators) {
 	var courseId = $el.closest("tr").data('course-id');
 	var termCode = $el.closest("td").data('term-code').toString();
 	var sectionGroup = _.findWhere(scope.view.state.sectionGroups.list, { courseId: courseId, termCode: termCode });
-	var plannedSeats = parseInt($el.val());
+	var plannedSeats = $el.val() === "" ? null : parseInt($el.val());
 
 	if (isNaN(plannedSeats)) { return; }
 
