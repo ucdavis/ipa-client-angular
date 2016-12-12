@@ -6,17 +6,13 @@ sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function (
 		link: function (scope, element, attrs) {
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
-				if (typeof scope.view.selectedEntity == "undefined") {
-					throw {
-						message: "sectionGroupDetails is trying to render with an undefined 'selectedEntity'",
-						stack: "State action: " + data.action.type
-					};
-				}
-
-				var course = scope.view.state.courses.list[scope.view.selectedEntity.courseId];
-				if (data.action.type == "ADD_SECTION_GROUP" && !course.isSeries()) {
-					// If the sectionGroup is new and it is numeric, create its only section by default with the seats filled in to the max
-					scope.addSection(scope.view.selectedEntity.plannedSeats);
+				if (data.action.type == "ADD_SECTION_GROUP") {
+					// If the sectionGroup is new and it is numeric,
+					// create its only section by default and set the seats to SG plannedSeats value
+					var course = scope.view.state.courses.list[scope.view.selectedEntity.courseId];
+					if (!course.isSeries()) {
+						scope.addSection(scope.view.selectedEntity.plannedSeats);
+					}
 				}
 			});
 
