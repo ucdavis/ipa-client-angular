@@ -92,13 +92,14 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				return calendarActivities;
 			};
 
-			var activityToEvents = function (activity, title) {
+			var activityToEvents = function (activity, courseTitle) {
 				var calendarActivities = [];
 				if (activity.startTime && activity.endTime) {
 					var dayArray = activity.dayIndicator.split('');
 
 					var start = activity.startTime.split(':').map(Number);
 					var end = activity.endTime.split(':').map(Number);
+					var location = activity.locationDescription || '';
 
 					dayArray.forEach(function (d, i) {
 						if (d === '1') {
@@ -106,10 +107,11 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 							var activityEnd = moment().day(i).hour(end[0]).minute(end[1]).second(0).format('llll');
 
 							calendarActivities.push({
-								title: title,
+								title: courseTitle + ' (' + activity.activityTypeCode.activityTypeCode + ') ' + location,
 								start: activityStart,
 								end: activityEnd,
 								activityId: activity.id,
+								sectionGroupId: activity.sectionGroupId,
 								className: 'activity-event'
 							});
 						}
