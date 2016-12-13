@@ -217,9 +217,16 @@ a.unavailability-event,
 	border-style: dashed;
 	border-width: 2px;
 }
-a.activity-event:hover,
-.ui-widget a.activity-event:hover {
+a.activity-event.hover-activity,
+.ui-widget a.activity-event.hover-activity {
 	border-color: #000 !important;
+}
+a.activity-event i.activity-remove,
+.ui-widget a.activity-event i.activity-remove {
+	position: absolute;
+	right: 1px;
+	filter: alpha(opacity = 30);
+	opacity: 0.3;
 }
 .fc-unthemed .fc-today {
 	background: transparent !important;

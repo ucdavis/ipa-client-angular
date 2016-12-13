@@ -30,7 +30,8 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			$scope.getSectionGroupDetails(sectionGroupId);
 		};
 
-		$scope.toggleCheckedSectionGroup = function (sectionGroupId) {
+		$scope.toggleCheckedSectionGroup = function (sectionGroupId, event) {
+			event.stopPropagation();
 			schedulingActionCreators.toggleCheckedSectionGroup(sectionGroupId);
 			$scope.getSectionGroupDetails(sectionGroupId);
 		};

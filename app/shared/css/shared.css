@@ -61,8 +61,8 @@ span.highlighted {
 .hoverable:hover {
 	text-decoration: none;
 	cursor: pointer;
-	filter: alpha(opacity = 60);
-	opacity: .6;
+	filter: alpha(opacity = 60) !important;
+	opacity: .6 !important;
 }
 
 /* Availability grid shared directive css */

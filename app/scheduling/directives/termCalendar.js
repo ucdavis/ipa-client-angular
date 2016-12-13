@@ -48,18 +48,34 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 						getUnavailabilities()
 					],
 					eventClick: function (calEvent, jsEvent, view) {
-						var activity = scope.view.state.activities.list[calEvent.activityId];
-						schedulingActionCreators.setSelectedActivity(activity);
+						var closeTarget = angular.element(jsEvent.target).hasClass('activity-remove');
+						if (closeTarget) {
+							schedulingActionCreators.toggleCheckedSectionGroup(calEvent.sectionGroupId);
+						} else {
+							var activity = scope.view.state.activities.list[calEvent.activityId];
+							schedulingActionCreators.setSelectedActivity(activity);
+						}
+
 						// Important: notify angular since this happends outside of the scope
 						$timeout(function () {
 							scope.$apply();
 						});
+					},
+					eventMouseover: function (event, jsEvent, view) {
+						element.find('a.activity-' + event.activityId).addClass('hover-activity');
+					},
+					eventMouseout: function (event, jsEvent, view) {
+						element.find('a.activity-' + event.activityId).removeClass('hover-activity');
 					},
 					dayClick: function (date, jsEvent, view) {
 						schedulingActionCreators.setSelectedActivity();
 						$timeout(function () {
 							scope.$apply();
 						});
+					},
+					eventAfterAllRender: function (view) {
+						var eventRemove = angular.element('<i class="glyphicon glyphicon-remove hoverable activity-remove"></i>');
+						element.find('a.activity-event .fc-content').append(eventRemove);
 					}
 				});
 			};
@@ -106,13 +122,21 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 							var activityStart = moment().day(i).hour(start[0]).minute(start[1]).second(0).format('llll');
 							var activityEnd = moment().day(i).hour(end[0]).minute(end[1]).second(0).format('llll');
 
+							// Add classes to group events that belong to the same activity
+							var activityClasses = ['activity-event'];
+							if (scope.view.state.uiState.selectedActivityId == activity.id) {
+								activityClasses.push('highlighted-activity-' + activity.id);
+							} else {
+								activityClasses.push('activity-' + activity.id);
+							}
+
 							calendarActivities.push({
 								title: courseTitle + ' (' + activity.activityTypeCode.activityTypeCode + ') ' + location,
 								start: activityStart,
 								end: activityEnd,
 								activityId: activity.id,
 								sectionGroupId: activity.sectionGroupId,
-								className: 'activity-event'
+								className: activityClasses
 							});
 						}
 					});
@@ -141,7 +165,7 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 								start: unavailabilityStart,
 								end: unavailabilityEnd,
 								teachingCallResponseId: teachingCallResponse.id,
-								className: 'unavailability-event'
+								className: ['unavailability-event']
 							});
 							unavailabilityStart = null;
 						}
