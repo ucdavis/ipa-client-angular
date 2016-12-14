@@ -706,12 +706,13 @@ td.import-course.course-cell {
 .new-course-search i {
 	position: absolute;
 	z-index: 1;
-	left: 25px;
 	bottom: 7px;
+	left: 15px;
+	transform: translateX(50%);
 }
 
 .new-course-search input {
-	text-indent: 20px;
+	padding-left: 30px;
 }
 
 .new-course-search ul.dropdown-menu {

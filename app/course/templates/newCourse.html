@@ -22,14 +22,14 @@
 								typeahead-loading="view.loadingCourses" typeahead-no-results="view.noResults" typeahead-wait-ms="400"
 								typeahead-min-length="2" typeahead-on-select="searchCoursesResultSelected($item, $model, $label, $event)"
 								class="form-control">
-							<div class="new-course-typeahead-status" ng-show="view.newCourseSearchQuery && view.noResults">
+							<div class="new-course-typeahead-status" ng-show="view.noResults">
 								<ul class="dropdown-menu">
 									<li><a>No results</a></li>
 								</ul>
 							</div>
 							<i ng-show="view.loadingCourses"><spinner size="20"></spinner></i>
 							<i ng-hide="view.newCourseSearchQuery || view.loadingCourses" class="entypo-search"></i>
-							<i ng-show="view.newCourseSearchQuery && !view.loadingCourses" class="entypo-cancel" ng-click="view.newCourseSearchQuery = ''"></i>
+							<i ng-show="view.newCourseSearchQuery && !view.loadingCourses" class="entypo-cancel" ng-click="clearNewCourseSearch()"></i>
 						</div>
 					</div>
 				</div>
@@ -37,7 +37,7 @@
 					<div class="row">
 						<label class="col-sm-3 col-sm-offset-1 control-label">Sequence</label>
 						<div class="col-sm-7">
-							<input type="text" ng-model="view.selectedEntity.sequencePattern" uib-typeahead="sequencePattern for sequencePattern in unoccupiedSequencePatterns() | filter:$viewValue | limitTo:10"
+							<input type="text" ng-model="view.state.courses.newCourse.sequencePattern" uib-typeahead="sequencePattern for sequencePattern in unoccupiedSequencePatterns() | filter:$viewValue | limitTo:10"
 								typeahead-loading="loadingSequences" typeahead-no-results="noResults" typeahead-editable="false"
 								class="form-control course-sequence-pattern">
 						</div>

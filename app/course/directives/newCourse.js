@@ -27,6 +27,12 @@ sharedApp.directive("newCourse", this.newCourse = function (courseActionCreators
 				delete scope.view.state.courses.newCourse.sequencePattern;
 			};
 
+			scope.clearNewCourseSearch = function () {
+				scope.view.state.courses.newCourse = {};
+				delete scope.view.newCourseSearchQuery;
+				delete scope.view.noResults;
+			};
+
 			scope.unoccupiedSequencePatterns = function () {
 				var occupiedSequencePatterns = scope.view.state.courses.ids
 					.filter(function (courseId) {
