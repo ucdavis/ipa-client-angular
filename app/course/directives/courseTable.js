@@ -27,7 +27,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				SEARCH_IMPORT_COURSES,
 				UPDATE_TAG_FILTERS,
 				TOGGLE_UNPUBLISHED_COURSES,
-				REMOVE_SECTION_GROUP
+				REMOVE_SECTION_GROUP,
+				ADD_SECTION_GROUP
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
@@ -42,10 +43,17 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					return;
 				}
 
+				if (data.action.type == ADD_SECTION_GROUP) {
+					// Indicate on the textbox that the sectionGroup is offered
+					$('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').addClass("is-offered");
+
+					return;
+				}
+
 				if (data.action.type == REMOVE_SECTION_GROUP) {
 					// Empty the textbox
-					$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"] input.planned-seats').val("");
-					$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]').removeClass("is-offered");
+					$('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input.planned-seats').val("");
+					$('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').removeClass("is-offered");
 
 					return;
 				}
@@ -387,7 +395,7 @@ var savePlannedSeats = function ($el, scope, courseActionCreators) {
 		// Save existing sectionGroup
 		sectionGroup.plannedSeats = plannedSeats;
 		courseActionCreators.updateSectionGroup(sectionGroup);
-	} else {
+	} else if (plannedSeats) {
 		// Create a new sectionGroup
 		sectionGroup = {
 			courseId: courseId,
