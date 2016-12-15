@@ -483,7 +483,7 @@ table.courses-table tr.term-totals td {
 }
 table.courses-table:not(.locked-courses-table) tr:hover td.ui-overlay:not(.new-course-td) {
 	visibility: visible;
-	z-index: 5;
+	z-index: 10;
 }
 table.courses-table:not(.locked-courses-table) tr:not(.term-totals):hover td:not(.ui-overlay):not(.new-course-td) {
 	border-top: solid 1px rgba(0, 166, 81, 0.3) !important;
