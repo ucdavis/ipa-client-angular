@@ -36,15 +36,23 @@ body {
 	display: flex;
 }
 .activity-filter-menu {
-	flex: 1 0 40%;
+	width: 40%;
 	padding: 0.5em;
 }
+.calendar-filter-header {
+	width: 60%;
+	display: flex;
+	-webkit-justify-content: flex-end;
+	justify-content: flex-end;
+}
 .activity-filter-tokens {
-	flex: 7 0 60%;
 	overflow-x: auto;
 	overflow-y: hidden;
 	white-space: nowrap;
-	line-height: 40px;
+	line-height: 35px;
+}
+.calendar-filter-menu {
+	padding: 0.5em;
 }
 .tags-filter label.filter-checkbox {
 	position: absolute;
@@ -275,15 +283,19 @@ a.activity-event i.activity-remove,
 	background-color: #ebebeb;
 }
 .tags-filter {
-	flex: 0 0 34%;
+	flex: 0 0 50%;
 	padding-right: 0.5em;
 }
+.instructors-filter {
+	flex: 0 0 50%;
+	padding-left: 0.5em;
+}
 .days-filter {
-	flex: 0 0 33%;
-	padding: 0 0.5em;
+	flex: 0 0 50%;
+	padding-right: 0.5em;
 }
 .locations-filter {
-	flex: 0 0 33%;
+	flex: 0 0 50%;
 	padding-left: 0.5em;
 }
 ul.activity-group {

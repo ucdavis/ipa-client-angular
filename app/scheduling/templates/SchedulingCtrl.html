@@ -39,29 +39,16 @@
 										</li>
 									</ul>
 								</div>
-								<div class="days-filter">
-									<h3>Days</h3>
+								<div class="instructors-filter">
+									<h3>Instructors</h3>
 									<ul>
-										<li ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] track by $index"
-											ng-click="toggleCalendarDay($index)">
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.hiddenDays.indexOf($index) < 0 }">
+										<li ng-repeat="instructor in ['Coming Soon'] track by $index"
+											ng-click="toggleInstructor($index)">
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.instructors.indexOf($index) < 0 }">
 												<label class="cb-wrapper filter-checkbox">
 													<div class="checked"></div>
 												</label>
-												<label class="filter-label">{{ day }}</label>
-											</div>
-										</li>
-									</ul>
-								</div>
-								<div class="locations-filter">
-									<h3>Locations</h3>
-									<ul>
-										<li ng-repeat="locationId in view.state.locations.ids track by $index" ng-click="toggleLocationFilter(locationId)">
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.enabledLocationIds.indexOf(locationId) >= 0 }">
-												<label class="cb-wrapper filter-checkbox">
-													<div class="checked"></div>
-												</label>
-												<label class="filter-label" ng-bind="view.state.locations.list[locationId].description"></label>
+												<label class="filter-label">{{ instructor }}</label>
 											</div>
 										</li>
 									</ul>
@@ -70,20 +57,61 @@
 						</div>
 					</div>
 				</div>
-				<div class="activity-filter-tokens text-center">
-					<div class="label label-selected-section-group" ng-repeat="tagId in view.state.filters.enabledTagIds track by $index">
-						{{ view.state.tags.list[tagId].name }}
-						<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleTagFilter(tagId)"></i>
+				<div class="calendar-filter-header">
+					<div class="activity-filter-tokens text-center">
+						<div class="label label-selected-section-group" ng-repeat="tagId in view.state.filters.enabledTagIds track by $index">
+							{{ view.state.tags.list[tagId].name }}
+							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleTagFilter(tagId)"></i>
+						</div>
+						<div class="label label-selected-section-group" ng-repeat="locationId in view.state.filters.enabledLocationIds track by $index">
+							{{ view.state.locations.list[locationId].description }}
+							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleLocationFilter(locationId)"></i>
+						</div>
+						<div class="label label-selected-section-group" ng-repeat="sectionGroupId in view.state.uiState.checkedSectionGroupIds track by $index"
+							ng-init="sg = view.state.sectionGroups.list[sectionGroupId];">
+							{{ view.state.courses.list[sg.courseId].subjectCode }} {{ view.state.courses.list[sg.courseId].courseNumber
+							}} - {{ view.state.courses.list[sg.courseId].sequencePattern }}
+							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleCheckedSectionGroup(sectionGroupId, $event)"></i>
+						</div>
 					</div>
-					<div class="label label-selected-section-group" ng-repeat="locationId in view.state.filters.enabledLocationIds track by $index">
-						{{ view.state.locations.list[locationId].description }}
-						<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleLocationFilter(locationId)"></i>
-					</div>
-					<div class="label label-selected-section-group" ng-repeat="sectionGroupId in view.state.uiState.checkedSectionGroupIds track by $index"
-						ng-init="sg = view.state.sectionGroups.list[sectionGroupId];">
-						{{ view.state.courses.list[sg.courseId].subjectCode }} {{ view.state.courses.list[sg.courseId].courseNumber
-						}} - {{ view.state.courses.list[sg.courseId].sequencePattern }}
-						<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleCheckedSectionGroup(sectionGroupId, $event)"></i>
+					<div class="calendar-filter-menu">
+						<div class="btn-group pull-right">
+							<button class="btn btn-white btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+								Filters <span class="caret"></span>
+							</button>
+							<div class="dropdown-menu" style="width: 400px; padding: 0;">
+								<div class="filters-container" stop-event="click">
+									<div class="days-filter">
+										<h3>Days</h3>
+										<ul>
+											<li ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] track by $index"
+												ng-click="toggleCalendarDay($index)">
+												<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.hiddenDays.indexOf($index) < 0 }">
+													<label class="cb-wrapper filter-checkbox">
+														<div class="checked"></div>
+													</label>
+													<label class="filter-label">{{ day }}</label>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<div class="locations-filter">
+										<h3>Locations</h3>
+										<ul>
+											<li ng-repeat="locationId in view.state.locations.ids track by $index" ng-click="toggleLocationFilter(locationId)">
+												<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.enabledLocationIds.indexOf(locationId) >= 0 }">
+													<label class="cb-wrapper filter-checkbox">
+														<div class="checked"></div>
+													</label>
+													<label class="filter-label" ng-bind="view.state.locations.list[locationId].description"></label>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
