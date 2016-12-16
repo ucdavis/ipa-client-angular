@@ -153,6 +153,15 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				}
 			};
 			schedulingStateService.reduce(action);
+		},
+		updateInstructorFilters: function (instructorIds) {
+			var action = {
+				type: UPDATE_INSTRUCTOR_FILTERS,
+				payload: {
+					instructorIds: instructorIds
+				}
+			};
+			schedulingStateService.reduce(action);
 		}
 	};
 });

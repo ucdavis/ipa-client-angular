@@ -86,6 +86,19 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			schedulingActionCreators.updateLocationFilters(locationFilters);
 		};
 
+		$scope.toggleInstructorFilter = function (instructorId) {
+			var instructorFilters = $scope.view.state.filters.enabledInstructorIds;
+			var instructorIndex = instructorFilters.indexOf(instructorId);
+
+			if (instructorIndex < 0) {
+				instructorFilters.push(instructorId);
+			} else {
+				instructorFilters.splice(instructorIndex, 1);
+			}
+
+			schedulingActionCreators.updateInstructorFilters(instructorFilters);
+		};
+
 		$scope.setLocation = function (locationId) {
 			if (!$scope.view.state.uiState.selectedActivityId) { return; }
 			var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
@@ -159,7 +172,12 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				matchesLocationFilters(sectionGroup)
 			);
 
-			return satisfiesTagFilters && satisfiesLocationFilters;
+			var satisfiesInstructorFilters = (
+				$scope.view.state.filters.enabledInstructorIds.length === 0 ||
+				matchesInstructorFilters(sectionGroup)
+			);
+
+			return satisfiesTagFilters && satisfiesLocationFilters && satisfiesInstructorFilters;
 		};
 
 		var matchesLocationFilters = function (sectionGroup) {
@@ -174,6 +192,13 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				return sectionGroupLocationIds.indexOf(locationId) >= 0;
 			});
 		};
+
+		var matchesInstructorFilters = function (sectionGroup) {
+			return $scope.view.state.filters.enabledInstructorIds.some(function (instructorId) {
+				return sectionGroup.instructorIds.indexOf(instructorId) >= 0;
+			});
+		};
+
 	}
 ]);
 

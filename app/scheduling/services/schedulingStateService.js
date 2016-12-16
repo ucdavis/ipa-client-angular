@@ -320,6 +320,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					filters = {
 						enabledTagIds: [],
 						enabledLocationIds: [],
+						enabledInstructorIds: [],
 						hiddenDays: [0, 6], // Default hidden days: Sat and Sun
 						enableUnpublishedCourses: false
 					};
@@ -339,6 +340,9 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					return filters;
 				case UPDATE_LOCATION_FILTERS:
 					filters.enabledLocationIds = action.payload.locationIds;
+					return filters;
+				case UPDATE_INSTRUCTOR_FILTERS:
+					filters.enabledInstructorIds = action.payload.instructorIds;
 					return filters;
 				default:
 					return filters;
@@ -394,6 +398,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					return uiState;
 				case UPDATE_TAG_FILTERS:
 				case UPDATE_LOCATION_FILTERS:
+				case UPDATE_INSTRUCTOR_FILTERS:
 					// TODO: needs re-visiting, ultimately this should clear
 					// checkedSectionGroupIds, selectedSectionGroupId, selectedCourseId,
 					// and selectedActivityId ONLY if they don't match the filters

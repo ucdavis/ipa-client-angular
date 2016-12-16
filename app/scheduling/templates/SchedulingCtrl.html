@@ -42,13 +42,13 @@
 								<div class="instructors-filter">
 									<h3>Instructors</h3>
 									<ul>
-										<li ng-repeat="instructor in ['Coming Soon'] track by $index"
-											ng-click="toggleInstructor($index)">
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.instructors.indexOf($index) < 0 }">
+										<li ng-repeat="instructorId in view.state.instructors.ids track by instructorId"
+											ng-click="toggleInstructorFilter(instructorId)">
+											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.enabledInstructorIds.indexOf(instructorId) >= 0 }">
 												<label class="cb-wrapper filter-checkbox">
 													<div class="checked"></div>
 												</label>
-												<label class="filter-label">{{ instructor }}</label>
+												<label class="filter-label">{{ view.state.instructors.list[instructorId].fullName }}</label>
 											</div>
 										</li>
 									</ul>
@@ -66,6 +66,10 @@
 						<div class="label label-selected-section-group" ng-repeat="locationId in view.state.filters.enabledLocationIds track by $index">
 							{{ view.state.locations.list[locationId].description }}
 							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleLocationFilter(locationId)"></i>
+						</div>
+						<div class="label label-selected-section-group" ng-repeat="instructorId in view.state.filters.enabledInstructorIds track by $index">
+							{{ view.state.instructors.list[instructorId].fullName }}
+							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleInstructorFilter(instructorId)"></i>
 						</div>
 						<div class="label label-selected-section-group" ng-repeat="sectionGroupId in view.state.uiState.checkedSectionGroupIds track by $index"
 							ng-init="sg = view.state.sectionGroups.list[sectionGroupId];">
