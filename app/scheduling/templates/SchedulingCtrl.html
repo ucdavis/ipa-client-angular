@@ -71,10 +71,10 @@
 							{{ view.state.instructors.list[instructorId].fullName }}
 							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleInstructorFilter(instructorId)"></i>
 						</div>
-						<div class="label label-selected-section-group" ng-repeat="sectionGroupId in view.state.uiState.checkedSectionGroupIds track by $index"
-							ng-init="sg = view.state.sectionGroups.list[sectionGroupId];">
-							{{ view.state.courses.list[sg.courseId].subjectCode }} {{ view.state.courses.list[sg.courseId].courseNumber
-							}} - {{ view.state.courses.list[sg.courseId].sequencePattern }}
+						<div class="label label-selected-section-group" ng-repeat="sectionGroupId in view.state.uiState.checkedSectionGroupIds track by $index">
+							{{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].subjectCode }}
+							{{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].courseNumber }} -
+							{{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].sequencePattern }}
 							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleCheckedSectionGroup(sectionGroupId, $event)"></i>
 						</div>
 					</div>
@@ -127,7 +127,8 @@
 				</div>
 				<ul ng-show="view.state.sectionGroups.ids">
 					<li class="section-group-item" ng-repeat="sectionGroupId in view.state.sectionGroups.ids track by $index"
-						ng-init="sg = view.state.sectionGroups.list[sectionGroupId];" ng-show="matchesFilters(sg)" ng-class="{ 'active': view.state.uiState.selectedSectionGroupId == sectionGroupId }"
+						ng-show="matchesFilters(view.state.sectionGroups.list[sectionGroupId])"
+						ng-class="{ 'active': view.state.uiState.selectedSectionGroupId == sectionGroupId }"
 						ng-click="setSelectedSectionGroup(sectionGroupId)">
 
 						<div class="section-group-check" ng-if="view.state.uiState.selectedSectionGroupId != sectionGroupId"
@@ -139,31 +140,30 @@
 						</div>
 						<div class="section-group-description">
 							<span>
-								{{ view.state.courses.list[sg.courseId].subjectCode }}
-								{{ view.state.courses.list[sg.courseId].courseNumber }}
-								- {{ view.state.courses.list[sg.courseId].sequencePattern }}
+								{{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].subjectCode }}
+								{{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].courseNumber }}
+								- {{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].sequencePattern }}
 							</span>
 							<br />
-							<small class="text-muted">{{ view.state.courses.list[sg.courseId].title }}</small>
+							<small class="text-muted">{{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].title }}</small>
 							<br />
 							<small class="text-muted">
-								Units: {{ view.state.courses.list[sg.courseId].unitsLow }}
+								Units: {{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].unitsLow }}
 
 								<!-- TODO: Display enrollment and total seats (Involves modifying payload to include all sections) -->
-								<!-- {{ sg.enrollment[4] }} / {{ getSectionSeatsTotal(sg) }}-->
 
-								<div ng-if="sg.instructorIds.length">
-									instructor{{ sg.instructorIds.length > 1 ? 's':'' }}:
+								<div ng-if="view.state.sectionGroups.list[sectionGroupId].instructorIds.length">
+									instructor{{ view.state.sectionGroups.list[sectionGroupId].instructorIds.length > 1 ? 's':'' }}:
 									<div class="label label-default" style="padding: 3px; margin-left: 3px;"
-										ng-repeat="instructorId in sg.instructorIds track by instructorId">
+										ng-repeat="instructorId in view.state.sectionGroups.list[sectionGroupId].instructorIds track by instructorId">
 										{{ view.state.instructors.list[instructorId] | lastSpaceInitial }}{{ $last ? '':', '}}
 									</div>
 								</div>
 
-								<div ng-if="view.state.courses.list[sg.courseId].tagIds.length">
+								<div ng-if="view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].tagIds.length">
 									Tags:
 									<div class="label" style="padding: 3px; margin-left: 3px;"
-										ng-repeat="tagId in view.state.courses.list[sg.courseId].tagIds track by $index"
+										ng-repeat="tagId in view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].tagIds track by $index"
 										ng-style="{ 'background-color': view.state.tags.list[tagId].color || '#333', 'color': view.state.tags.list[tagId].getTextColor() }">
 										{{ view.state.tags.list[tagId].name }}
 									</div>
