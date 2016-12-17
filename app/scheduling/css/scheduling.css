@@ -225,6 +225,10 @@ a.unavailability-event,
 	border-style: dashed;
 	border-width: 2px;
 }
+a.activity-event.hover-section-group,
+.ui-widget a.activity-event.hover-section-group {
+	border-color: #6AA4C1 !important;
+}
 a.activity-event.hover-activity,
 .ui-widget a.activity-event.hover-activity {
 	border-color: #000 !important;
