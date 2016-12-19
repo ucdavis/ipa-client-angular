@@ -4,6 +4,11 @@ sharedApp.directive("courseDetails", this.courseDetails = function () {
 		templateUrl: 'courseDetails.html',
 		replace: true,
 		link: function (scope, element, attrs) {
+			/**
+			 * Filters out sequencePatterns based on the current course.
+			 * It also filters out patterns that are already used for
+			 * other courses of the same subjectCode and courseNumber
+			 */
 			scope.sequencePatternsScopedByCurrentType = function () {
 				var course = scope.view.state.courses.list[scope.view.selectedEntity.id];
 				var occupiedSequencePatterns = scope.view.state.courses.ids

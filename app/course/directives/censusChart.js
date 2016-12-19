@@ -1,3 +1,7 @@
+/**
+ * Uses Chart JS to display either a bar chart (historical courses), or a line chart (future courses)
+ * Example: <census-chart census="census" term="termCode"course-id="courseId"></census-chart>
+ */
 courseApp.directive("censusChart", this.censusChart = function ($rootScope, $timeout) {
 	return {
 		restrict: 'E',
@@ -10,7 +14,11 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 		},
 		link: function (scope, element, attrs) {
 			var ctx = element[0].getContext("2d");
+
+			// Watch for changing params: happens when selecting a different courses
+			// table cell or when the async data comes back from DW
 			scope.$watchGroup(['census', 'term', 'courseId'], function () {
+				// Display a loading message while no census data
 				if (scope.census === undefined) {
 					ctx.font = "14px Helvetica";
 					ctx.textAlign = "center";
@@ -18,14 +26,10 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 					return;
 				}
 
-				var getLastFiveYears = function () {
-					var lastFiveYears = [];
-					for (var y = 4; y >= 0; y--) { lastFiveYears.push(moment().year() - y); }
-					return lastFiveYears;
-				};
-
+				// Gets the "CURRENT" snapshot of the given property (e.g. currentEnrolledCount, maxEnrollmentCount)
 				var getCurrentCensusForProperty = function (property) {
-					var something = getLastFiveYears().map(function (year) {
+					var lastFiveYears = Array.from({length: 5}, (v, k) => moment().year() - k);
+					return lastFiveYears.map(function (year) {
 						return _.find(scope.census, function (c) {
 							var matchesTermCode = c.termCode.toString() == year + (scope.term.termCode + '').slice(-2);
 							var matchesCurrentCode = c.snapshotCode == "CURRENT";
@@ -34,9 +38,11 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 					}).map(function (c) {
 						return c ? c[property] : 0;
 					});
-					return something;
 				};
 
+				/**
+				 * Returns an arry of Enrollments for the given list of snapshot codes
+				 */
 				var getCensusEnrollmentByCensusCodes = function (snapshotCodes) {
 					var censusEnrollment = [];
 
@@ -62,7 +68,7 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 
 				var type, labels, datasets;
 
-				if (scope.term.isLocked()) {	// Locked mode
+				if (scope.term.isLocked()) {	// Historical mode (locked)
 					var snapshotCodes = ["INSTR_BEG", "DAY5", "DAY10", "DAY15", "CURRENT"];
 					type = 'bar';
 					labels = snapshotCodes;
@@ -77,9 +83,9 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 							data: getCensusEnrollmentByCensusCodes(snapshotCodes)
 						}
 					];
-				} else { // SG is in historical mode
+				} else { // SG is in the future (unlocked)
 					type = 'line';
-					labels = getLastFiveYears();
+					labels = Array.from({length: 5}, (v, k) => moment().year() - k); // Last 5 years
 					datasets = [
 						{
 							label: "Seats",
