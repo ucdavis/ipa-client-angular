@@ -35,15 +35,15 @@ sharedApp.directive("colorpicker", this.colorpicker = function ($timeout) {
 				});
 
 			var applyNewColor = function (newColor) {
-				scope.color = newColor;
 				$timeout(function () {
+					scope.color = newColor;
 					scope.$apply();
 				});
 			};
 
 			var applyChange = function () {
-				scope.onChange();
 				$timeout(function () {
+					scope.onChange();
 					scope.$apply();
 				});
 			};
