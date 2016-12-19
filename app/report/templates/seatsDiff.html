@@ -1,11 +1,11 @@
 <div class="section-diff-element section-seats" ng-class="{ 'has-changes' : section.dwChanges.seats !== undefined && !section.dwChanges.seats.isToDo }"
 	ng-click="setActiveChangeAction($event, section, $index, 'seats')">
 	<span class="diff-content">
-		{{ section.seats }}
+		{{ section.seats || 0 }}
 	</span>
 
 	<change-action ng-if="section.dwChanges.seats !== undefined" ng-show="view.activeChangeAction == section.uniqueKey + $index + 'seats'"
 		title="Value does not match with Banner " sis-value-message="Set IPA to what Banner has: {{ section.dwChanges.seats.value }} "
-		ipa-value-message="Mark to modify in Banner: {{ section.seats }} " apply-sis="updateSeats(section.dwChanges.seats.value) "
+		ipa-value-message="Mark to modify in Banner: {{ section.seats || 0 }} " apply-sis="updateSeats(section.dwChanges.seats.value) "
 		apply-ipa="toggleBannerToDoItem( 'seats') " is-active="view.hasAccess"></change-action>
 </div>
