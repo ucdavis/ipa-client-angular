@@ -218,7 +218,7 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					sectionGroups.selectedSectionGroup = sectionGroups.newSectionGroup;
 					return sectionGroups;
 				case UPDATE_SECTION_GROUP:
-					sectionGroups.list[action.payload.sectionGroup.id] = new SectionGroup(action.payload.sectionGroup);
+					sectionGroups.list[action.payload.sectionGroup.id].plannedSeats = action.payload.sectionGroup.plannedSeats;
 					return sectionGroups;
 				case FETCH_SECTIONS:
 					sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections
