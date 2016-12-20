@@ -1,7 +1,5 @@
 {
 	"env": {
-		//enable es6 environment
-		"es6": true,
 		//enable nodejs environment
 		"node": true,
 		//enable browser environment

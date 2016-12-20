@@ -10,6 +10,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 		'</td></tr></tbody>',
 		link: function (scope, element, attrs) {
 			scope.view = {};
+
+			// To limit the cases of rerendering the table, this the list of actions that will cause it to do so
 			var rerenderStateActions = [
 				INIT_STATE,
 				IMPORT_COURSES,

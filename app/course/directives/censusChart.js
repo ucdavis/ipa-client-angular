@@ -28,7 +28,7 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 
 				// Gets the "CURRENT" snapshot of the given property (e.g. currentEnrolledCount, maxEnrollmentCount)
 				var getCurrentCensusForProperty = function (property) {
-					var lastFiveYears = Array.from([4,3,2,1,0], k => moment().year() - k);
+					var lastFiveYears = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; });
 					return lastFiveYears.map(function (year) {
 						return _.find(scope.census, function (c) {
 							var matchesTermCode = c.termCode.toString() == year + (scope.term.termCode + '').slice(-2);
@@ -85,7 +85,7 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 					];
 				} else { // SG is in the future (unlocked)
 					type = 'line';
-					labels = Array.from([4,3,2,1,0], k => moment().year() - k); // Last 5 years
+					labels = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; }); // Last 5 years
 					datasets = [
 						{
 							label: "Seats",
