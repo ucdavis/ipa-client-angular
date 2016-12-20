@@ -181,7 +181,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 						}
 
 						if (a.subjectCode < b.subjectCode) {
-							return -1
+							return -1;
 						}
 
 						// Subject codes must have matched, use course numbers to sort instead
@@ -525,7 +525,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				}
 
 				return displayRank;
-			}
+			};
 
 			$scope.generateTermCode = function (year, term) {
 				if (term.toString().length == 1) {

@@ -1,5 +1,7 @@
 {
 	"env": {
+		//enable es6 environment
+		"es6": true,
 		//enable nodejs environment
 		"node": true,
 		//enable browser environment
@@ -30,7 +32,7 @@
 		"no-empty-pattern": 1, // warn about empty destructuring patterns
 		"no-eq-null": 0, // warn about null comparisons without type-checking operators
 		"no-eval": 2, // disallow the use of eval()
-		"no-redeclare": 1, // warn about variable redeclaration
+		"no-redeclare": 0, // warn about variable redeclaration
 
 		// Variables
 		"no-delete-var": 2, // The delete operator is used to remove a property from an object. deleting a variable might lead to unexpected behavior

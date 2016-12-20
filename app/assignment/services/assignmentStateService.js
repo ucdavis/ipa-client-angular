@@ -819,7 +819,7 @@ serializeTermFilters = function (termFilters) {
 		}
 	});
 	return termsBlob;
-}
+};
 
 deserializeTermFiltersBlob = function (termFiltersBlob) {
 	var termFiltersArray = [];
@@ -833,4 +833,4 @@ deserializeTermFiltersBlob = function (termFiltersBlob) {
 	}
 
 	return termFiltersArray;
-}
+};
