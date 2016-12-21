@@ -123,7 +123,9 @@ reportApp.service('reportStateService', function ($rootScope, $log, Term, Sectio
 					// Flag the first section in a sectionGroup as a groupHead
 					var uniqSectionGroupKeys = [];
 					sections.ids.forEach(function (id) {
-						var uniqueKey = sectionList[id].subjectCode + '-' + sectionList[id].courseNumber;
+						var sequencePattern = isNumber(sectionList[id].sequenceNumber) ?
+							sectionList[id].sequenceNumber : sectionList[id].sequenceNumber.charAt(0);
+						var uniqueKey = sectionList[id].subjectCode + '-' + sectionList[id].courseNumber + '-' + sequencePattern;
 						if (uniqSectionGroupKeys.indexOf(uniqueKey) < 0) {
 							uniqSectionGroupKeys.push(uniqueKey);
 							sectionList[id].groupHead = true;
