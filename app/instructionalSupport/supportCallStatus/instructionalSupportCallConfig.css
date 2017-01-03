@@ -242,3 +242,8 @@ div.datepicker {
 .uib-datepicker .btn-default:not(.active):not(.btn-info) {
 	background-color: white;
 }
+
+.bootstrap-tagsinput .tag {
+	margin-top: 5px;
+	margin-left: 10px;
+}

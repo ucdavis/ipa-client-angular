@@ -4,54 +4,60 @@
 		<h4 class="modal-title">Support Call</h4>
 	</div>
 	<!-- modal-body -->
-	<div class="modal-body">
+	<div class="modal-body" style="height: 250px;">
 		<!-- ta-call-info section-->
-		<div class="flex-box_column container-fluid">
-			<div class="people-list-section">
-			    <div class="row">
-			        <h5>Participants</h5>
-			        <div class="preference-selector btn-group" data-toggle="buttons">
+		<div style="height: 100%; display: flex;">
 
-								<div class="btn-group" data-toggle="buttons">
-									<label ng-show="supportCallConfigData.mode == 'student'" class="instructor-toggle-btn btn btn-white"
-									ng-click="togglePhd()"
-									ng-class="{'support-call-group-active': supportCallConfigData.phdParticipants}">
-										<input type="checkbox" name="options">
-										<span></span> Phd
-									</label>
+			<div style="height: 100%; display: flex; flex-flow: column; flex: 0 0 20%;">
+				<div style="flex: 1 0 20%;">
+					<h5>Participants</h5>
+				</div>
 
-									<label ng-show="supportCallConfigData.mode == 'student'" class="instructor-toggle-btn btn btn-white"
-									ng-click="toggleMasters()"
-									ng-class="{'support-call-group-active': supportCallConfigData.mastersParticipants}">
-										<input type="checkbox" name="options">
-										<span></span> Master
-									</label>
+				<div style="flex: 1 0 80%;" class="preference-selector btn-group" data-toggle="buttons">
 
-									<label ng-show="supportCallConfigData.mode == 'student'" class="instructor-toggle-btn btn btn-white"
-									ng-click="toggleInstructionalSupport()"
-									ng-class="{'support-call-group-active': supportCallConfigData.instructionalSupportParticipants}">
-										<input type="checkbox" name="options">
-										<span></span> Non-departmental
-									</label>
-									
-									<label ng-show="supportCallConfigData.mode == 'instructor'" class="instructor-toggle-btn btn btn-white"
-									ng-click="toggleInstructor()"
-									ng-class="{'support-call-group-active': supportCallConfigData.instructorParticipants}">
-										<input type="checkbox" name="options">
-										<span></span> Instructors
-									</label>
-								</div>
+					<div style="height: 70%; justify-content: space-around; display: flex; flex-flow: column" class="btn-group" data-toggle="buttons">
+						<label ng-show="supportCallConfigData.mode == 'student'" class="instructor-toggle-btn btn btn-white"
+						ng-click="togglePhd()"
+						ng-class="{'support-call-group-active': supportCallConfigData.phdParticipants}">
+							<input type="checkbox" name="options">
+							<span></span> Phd
+						</label>
 
-			        </div>
-			        <div class="bootstrap-tagsinput receivers-input-section">
-			            <span ng-repeat="participant in supportCallConfigData.participantPool"
-										ng-click="toggleEnabled(participant)" class="tag label label-info">
-										<input ng-checked="participant.enabled" type="checkbox">
-										{{ participant.displayName }}
-									</span>
-			        </div>
-			    </div>
+						<label ng-show="supportCallConfigData.mode == 'student'" class="instructor-toggle-btn btn btn-white"
+						ng-click="toggleMasters()"
+						ng-class="{'support-call-group-active': supportCallConfigData.mastersParticipants}">
+							<input type="checkbox" name="options">
+							<span></span> Master
+						</label>
+
+						<label ng-show="supportCallConfigData.mode == 'student'" class="instructor-toggle-btn btn btn-white"
+						ng-click="toggleInstructionalSupport()"
+						ng-class="{'support-call-group-active': supportCallConfigData.instructionalSupportParticipants}">
+							<input type="checkbox" name="options">
+							<span></span> Non-departmental
+						</label>
+						
+						<label ng-show="supportCallConfigData.mode == 'instructor'" class="instructor-toggle-btn btn btn-white"
+						ng-click="toggleInstructor()"
+						ng-class="{'support-call-group-active': supportCallConfigData.instructorParticipants}">
+							<input type="checkbox" name="options">
+							<span></span> Instructors
+						</label>
+					</div>
+
+				</div>
 			</div>
+
+			<div style="flex: 0 0 80%;">
+				<div style="height: 100%;" class="bootstrap-tagsinput receivers-input-section">
+				    <span ng-repeat="participant in supportCallConfigData.participantPool"
+							ng-click="toggleEnabled(participant)" class="tag label label-info">
+							<input ng-checked="participant.enabled" type="checkbox">
+							{{ participant.displayName }}
+						</span>
+				</div>
+			</div>
+
     </div>
 	</div>
   <!-- modal-body ends -->
