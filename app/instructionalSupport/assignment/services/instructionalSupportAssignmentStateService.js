@@ -219,6 +219,39 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 								break;
 							}
 						}
+
+						// Determine the type of support staff
+						var supportStaffId = instructionalSupportStaffData.id;
+						instructionalSupportStaffData.type = null;
+
+						for (var m = 0; m < action.payload.mastersStudentIds.length; m++) {
+							var mastersId = action.payload.mastersStudentIds[m];
+							if (supportStaffId == mastersId) {
+								instructionalSupportStaffData.type = "Masters";
+								break;
+							}
+						}
+
+						if (instructionalSupportStaffData.type == null) {
+							for (var m = 0; m < action.payload.phdStudentIds.length; m++) {
+								var phdId = action.payload.phdStudentIds[m];
+								if (supportStaffId == phdId) {
+									instructionalSupportStaffData.type = "PhD";
+									break;
+								}
+							}
+						}
+
+						if (instructionalSupportStaffData.type == null) {
+							for (var m = 0; m < action.payload.instructionalSupportIds.length; m++) {
+								var instructionalSupportId = action.payload.instructionalSupportIds[m];
+								if (supportStaffId == instructionalSupportId) {
+									instructionalSupportStaffData.type = "Instructional Support";
+									break;
+								}
+							}
+						}
+
 						instructionalSupportStaffs.list[instructionalSupportStaffData.id] = instructionalSupportStaffData;
 						instructionalSupportStaffs.ids.push(instructionalSupportStaffData.id);
 					}

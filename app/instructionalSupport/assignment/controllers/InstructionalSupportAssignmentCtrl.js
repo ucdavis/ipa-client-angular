@@ -92,10 +92,6 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 				return false;
 			};
 
-			$scope.userRoleToShorthand = function (supportStaff) {
-				return "PhD";
-			}
-
 			$scope.togglePivotView = function (viewName) {
 				instructionalSupportAssignmentActionCreators.togglePivotView(viewName);
 			};
