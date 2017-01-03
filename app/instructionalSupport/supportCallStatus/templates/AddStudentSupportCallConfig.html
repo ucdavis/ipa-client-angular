@@ -8,39 +8,45 @@
 	    <!-- ta-call-info section-->
 	    <div class="flex-box_row">
 	        <div class="config-flex-auto container-fluid">
-	            <!-- collect ta preference -->
-	            <div class="row btn-group" data-toggle="buttons" style="margin-bottom: 25px;">
-	            	<h5 style="margin-bottom: 15px;">Collect Preferences for:</h5>
-
-								<div class="preference-selector btn-group" data-toggle="buttons">
-									<div class="btn-group">
-
-										<label class="instructor-toggle-btn btn btn-white"
-											ng-click="toggleTAPreferences()"
-											ng-class="{'support-call-group-active': supportCallConfigData.collectTAPreferences}">
-											<input type="checkbox" name="options">
-											TA
+							<div class="row">
+								<h5>
+									Collect Preferences For
+								</h5>
+								<div class="checkbox">
+										<label class="checkbox-inline check-box-TA-call">
+											<input type="checkbox" value="" ng-model="supportCallConfigData.collectTAPreferences">
+											Collect TA Preferences
+											<div style="padding-left: 5px;" class="pull-right" tooltip-placement="right"
+											uib-tooltip="This option will include courses with TA assignments in the support call.">
+												<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+											</div>
 										</label>
-
-										<label class="instructor-toggle-btn btn btn-white"
-											ng-click="toggleReaderPreferences()"
-											ng-class="{'support-call-group-active': supportCallConfigData.collectReaderPreferences}">
-											<input type="checkbox" name="options">
-											Reader
-										</label>
-
-										<label class="instructor-toggle-btn btn btn-white"
-											ng-click="toggleAIPreferences()"
-											ng-class="{'support-call-group-active': supportCallConfigData.collectAIPreferences}">
-											<input type="checkbox" name="options">
-											AI
-										</label>
-
-									</div>
 								</div>
-	            </div>
-	            <!-- collect ta preference ends-->
-	            <!-- collect required information-->
+
+								<div class="checkbox">
+										<label class="checkbox-inline check-box-TA-call">
+											<input type="checkbox" value="" ng-model="supportCallConfigData.collectReaderPreferences">
+											Collect Reader Preferences
+											<div style="padding-left: 5px;" class="pull-right" tooltip-placement="right"
+											uib-tooltip="This option will include courses with reader assignments in the support call.">
+												<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+											</div>
+										</label>
+								</div>
+
+								<div class="checkbox">
+										<label class="checkbox-inline check-box-TA-call">
+											<input type="checkbox" value="" ng-model="supportCallConfigData.collectAIPreferences">
+											Collect AI Preferences
+											<div style="padding-left: 5px;" class="pull-right" tooltip-placement="right"
+											uib-tooltip="This option will include courses with AI assignments in the support call.">
+												<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+											</div>
+										</label>
+								</div>
+
+							</div>
+
 	            <div class="row">
 	                <h5>Additional Form Fields</h5>
 	                <div class="checkbox">

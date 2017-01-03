@@ -209,30 +209,6 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		}
 	};
 
-	$scope.toggleReaderPreferences = function () {
-		if ($scope.supportCallConfigData.collectReaderPreferences) {
-			$scope.supportCallConfigData.collectReaderPreferences = false;
-		} else {
-			$scope.supportCallConfigData.collectReaderPreferences = true;
-		}
-	};
-
-	$scope.toggleAIPreferences = function () {
-		if ($scope.supportCallConfigData.collectAIPreferences) {
-			$scope.supportCallConfigData.collectAIPreferences = false;
-		} else {
-			$scope.supportCallConfigData.collectAIPreferences = true;
-		}
-	};
-
-	$scope.toggleTAPreferences = function () {
-		if ($scope.supportCallConfigData.collectTAPreferences) {
-			$scope.supportCallConfigData.collectTAPreferences = false;
-		} else {
-			$scope.supportCallConfigData.collectTAPreferences = true;
-		}
-	};
-
 	$scope.setTermCode = function(fullTerm) {
 		$scope.supportCallConfigData.termCode = fullTerm;
 	};
