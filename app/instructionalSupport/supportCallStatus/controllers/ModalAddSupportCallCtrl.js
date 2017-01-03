@@ -1,4 +1,4 @@
-instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSupportCallCtrl = function($scope, $rootScope, $uibModalInstance, instructionalSupportCallStatusActionCreators, supportCallMode, scheduleId, phdIds, mastersIds, instructionalSupportIds, instructionalSupportStaffs, year, nextYear) {
+instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSupportCallCtrl = function($scope, $rootScope, $uibModalInstance, instructionalSupportCallStatusActionCreators, supportCallMode, scheduleId, phdIds, mastersIds, instructionalSupportIds, instructionalSupportStaffs, instructors, instructorsByShortTermCode, year, nextYear) {
 
 	$scope.year = year;
 	$scope.nextYear = nextYear;
@@ -44,11 +44,6 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 
 		$scope.instructionalSupportPool.push(participant);
 	}
-
-	$scope.instructorPool = [
-		{id: 8, displayName: "Dave MacKinnon", group: "instructor", enabled: true},
-		{id: 9, displayName: "Jenny Green", group: "instructor", enabled: true}
-	];
 
 	$scope.scheduleId = scheduleId;
 	$scope.termCode = 10;
@@ -227,6 +222,10 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 
 	$scope.gotoUserSelectionPage = function () {
 		$scope.supportCallConfigData.displayPage = 1;
+
+		if ($scope.supportCallConfigData.mode == "instructor") {
+			$scope.calculateInstructorPool();
+		}
 	};
 
 	$scope.gotoSummaryPage = function () {
@@ -246,6 +245,24 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		}
 
 		$uibModalInstance.dismiss('cancel');
+	};
+
+	$scope.calculateInstructorPool = function () {
+		$scope.instructorPool = [];
+		$scope.supportCallConfigData;
+		var shortTermCode = $scope.supportCallConfigData.termCode.slice(-2);
+
+		instructorsByShortTermCode[shortTermCode].forEach( function (instructorId) {
+			var instructor = instructors.list[instructorId];
+
+			participant = {};
+			participant.id = instructor.id;
+			participant.displayName = instructor.fullName;
+			participant.group = "instructor";
+			participant.enabled = true;
+
+			$scope.instructorPool.push(participant);
+		});
 	};
 
 	$scope.allTerms = ['01', '02', '03', '05', '06', '07', '08', '09', '10'];

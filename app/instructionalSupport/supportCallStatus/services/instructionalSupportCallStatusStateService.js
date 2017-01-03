@@ -104,6 +104,29 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 					return instructionalSupportStaffs;
 			}
 		},
+		_instructorReducers: function (action, instructors) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					instructors = {
+						ids: [],
+						list: {}
+					};
+
+					var instructorsLength = action.payload.activeInstructors ? action.payload.activeInstructors.length : 0;
+
+					for (var i = 0; i < instructorsLength; i++) {
+						var instructorData = action.payload.activeInstructors[i];
+
+						instructors.list[instructorData.id] = instructorData;
+						instructors.ids.push(instructorData.id);
+					}
+					return instructors;
+				default:
+					return instructors;
+			}
+		},
 		_userInterfaceReducers: function (action, userInterface) {
 			var scope = this;
 
@@ -111,6 +134,20 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 				case INIT_STATE:
 					userInterface = {};
 					userInterface.scheduleId = action.payload.scheduleId;
+
+					// Build InstructorsByTerm associative array
+					var instructorsByTerm = {};
+					action.payload.teachingAssignments.forEach( function(teachingAssignment) {
+						instructorId = teachingAssignment.instructorId;
+						shortTermCode = teachingAssignment.termCode.slice(-2);
+
+						if (instructorsByTerm[shortTermCode] == null) {
+							instructorsByTerm[shortTermCode] = [];
+						} else if (instructorsByTerm[shortTermCode].indexOf(instructorId) == -1) {
+							instructorsByTerm[shortTermCode].push(instructorId);
+						}
+					});
+						userInterface.instructorsByShortTermCode = instructorsByTerm;
 					return userInterface;
 				default:
 					return userInterface;
@@ -156,6 +193,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 			newState = {};
 			newState.supportCalls = scope._supportCallReducers(action, scope._state.supportCalls);
 			newState.instructionalSupportStaffs = scope._instructionalSupportStaffsReducers(action, scope._state.instructionalSupportStaffs);
+			newState.instructors = scope._instructorReducers(action, scope._state.instructors);
 
 			newState.phdIds = scope._phdIdsReducers(action, scope._state.phdIds);
 			newState.mastersIds = scope._mastersIdsReducers(action, scope._state.mastersIds);

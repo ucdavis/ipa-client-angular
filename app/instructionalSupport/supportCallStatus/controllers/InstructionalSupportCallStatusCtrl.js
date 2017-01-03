@@ -51,6 +51,12 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 						instructionalSupportStaffs: function () {
 							return $scope.view.state.instructionalSupportStaffs;
 						},
+						instructors: function () {
+							return $scope.view.state.instructors;
+						},
+						instructorsByShortTermCode: function () {
+							return $scope.view.state.userInterface.instructorsByShortTermCode;
+						},
 						year: function () {
 							return $scope.year;
 						},
