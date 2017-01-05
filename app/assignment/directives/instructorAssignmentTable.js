@@ -170,6 +170,8 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 													displayTitle += "BUYOUT";
 												} else if (teachingAssignment.courseRelease) {
 													displayTitle += "COURSE RELEASE";
+												} else if (teachingAssignment.inResidence) {
+													displayTitle += "IN RESIDENCE";
 												} else if (teachingAssignment.sabbatical) {
 													displayTitle += "SABBATICAL";
 												}
@@ -216,7 +218,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 										// Track courses that were already present in 'interested', and should be filtered from 'other'
 										var interestedCourseIds = [];
 										var firstInterestedCourseAdded = false;
-										var nonCoursePreferences = {buyout: false, sabbatical: false, courseRelease: false};
+										var nonCoursePreferences = {buyout: false, sabbatical: false, inResidence: false, courseRelease: false};
 
 										// If the instructor has teachingAssignments in this term, show them first
 										if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
@@ -226,13 +228,16 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 												var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
 												// This teachingAssignment is a buyout/sabb/release
-												if (teachingAssignment.approved == false && (teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.sabbatical)) {
+												if (teachingAssignment.approved == false && (teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.sabbatical)) {
 													if (teachingAssignment.buyout) {
 														preferenceDisplayText = "Buyout";
 														nonCoursePreferences.buyout = true;
 													} else if (teachingAssignment.courseRelease) {
 														preferenceDisplayText = "Course Release";
 														nonCoursePreferences.courseRelease = true;
+													} else if (teachingAssignment.inResidence) {
+														preferenceDisplayText = "In Residence";
+														nonCoursePreferences.inResidence = true;
 													} else if (teachingAssignment.sabbatical) {
 														preferenceDisplayText = "Sabbatical";
 														nonCoursePreferences.sabbatical = true;
@@ -300,6 +305,13 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
 											courseHtml += " href=\"#\">Sabbatical</a></li>";
 										}
+										if (nonCoursePreferences.inResidence == false) {
+											courseHtml += "<li><a";
+											courseHtml += " data-is-in-residence=\"true\"";
+											courseHtml += " data-term-code=\"" + termCode + "\"";
+											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+											courseHtml += " href=\"#\">In Residence</a></li>";
+										}
 										if (nonCoursePreferences.courseRelease == false) {
 											courseHtml += "<li><a";
 											courseHtml += " data-is-course-release=\"true\"";
@@ -360,6 +372,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 					var sectionGroupId = $el.data('section-group-id');
 					var isCourseRelease = $el.data('is-course-release');
 					var isSabbatical = $el.data('is-sabbatical');
+					var isInResidence = $el.data('is-in-residence');
 					var isBuyout = $el.data('is-buyout');
 					var termCode = $el.data('term-code');
 
@@ -381,6 +394,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 							approved: true,
 							buyout: isBuyout,
 							courseRelease: isCourseRelease,
+							inResidence: isInResidence,
 							sabbatical: isSabbatical
 						};
 

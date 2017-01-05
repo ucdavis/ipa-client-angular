@@ -107,6 +107,12 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 					} else {
 						return false;
 					}
+				} else if (course.isInResidence) {
+					if (assignment.isInResidence === course.isInResidence) {
+						return true;
+					} else {
+						return false;
+					}
 				} else if (course.isCourseRelease) {
 					if (assignment.isCourseRelease === course.isCourseRelease) {
 						return true;
@@ -145,6 +151,8 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 					courses.push({ isBuyout: true });
 					courses.push({ isCourseRelease: true });
 					courses.push({ isSabbatical: true });
+					courses.push({ isInResidence: true });
+
 					var filteredCourses = $scope.filterDuplicateCoursePreferences(scheduledCourses, termAssignments);
 
 					filteredCourses = $scope.sortCourses(filteredCourses);
@@ -208,6 +216,8 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 					return "Buyout";
 				} else if (course.isSabbatical) {
 					return "Sabbatical";
+				} else if (course.isInResidence) {
+					return "In Residence";
 				} else if (course.isCourseRelease) {
 					return "Course Release";
 				}
@@ -240,7 +250,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				});
 			};
 
-			$scope.addPreference = function(preference, term, isBuyout, isSabbatical, isCourseRelease) {
+			$scope.addPreference = function(preference, term, isBuyout, isSabbatical, isInResidence, isCourseRelease) {
 				// Reset add preference UI state
 				var elements = $('.search-course-input');
 				elements[0].focus();
@@ -290,6 +300,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 
 				teachingAssignment.buyout = preference.isBuyout;
 				teachingAssignment.sabbatical = preference.isSabbatical;
+				teachingAssignment.inResidence = preference.isInResidence;
 				teachingAssignment.courseRelease = preference.isCourseRelease;
 				teachingAssignment.schedule = {id: scheduleId};
 				teachingAssignment.scheduleId = scheduleId;
@@ -420,6 +431,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 								&& teachingAssignment.buyout == slotAssignment.buyout
 								&& teachingAssignment.courseRelease == slotAssignment.courseRelease
 								&& teachingAssignment.sabbatical == slotAssignment.sabbatical
+								&& teachingAssignment.inResidence == slotAssignment.inResidence
 								&& teachingAssignment.subjectCode != null) {
 								preferenceAlreadyAdded = true;
 							}
@@ -559,6 +571,7 @@ assignmentApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wind
 				if (typeof preference === 'undefined') { return 'Add'; }
 				else if (preference.buyout) { return 'Buyout'; }
 				else if (preference.sabbatical) { return 'Sabbatical'; }
+				else if (preference.inResidence) { return 'In Residence'; }
 				else if (preference.courseRelease) { return 'Course Release'; }
 				else if (preference.suggestedSubjectCode && preference.suggestedCourseNumber) {
 					return preference.suggestedSubjectCode + ' ' + preference.suggestedCourseNumber;

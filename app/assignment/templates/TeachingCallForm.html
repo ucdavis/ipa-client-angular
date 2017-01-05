@@ -103,7 +103,7 @@
 						typeahead-min-length="0"
 						typeahead-focus-on-select="false"
 						auto-close="always"
-						typeahead-on-select="addPreference($item, termToTermCode(term), isBuyout, isSabbatical, isCourseRelease)"
+						typeahead-on-select="addPreference($item, termToTermCode(term), isBuyout, isSabbatical, isInResidence, isCourseRelease)"
 						class="form-control search-course-input">
 					<i ng-show="view.loadingCourses[term]"><spinner size="20"></spinner></i>
 				</li>

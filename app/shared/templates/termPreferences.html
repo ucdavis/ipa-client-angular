@@ -29,6 +29,11 @@
 				<strong style="padding-left: 43px;">Course Release</strong>
 			</a>
 		</li>
+		<li role="presentation" class="clickable">
+			<a role="menuitem" ng-click="onSelect({isInResidence: true})">
+				<strong style="padding-left: 43px;">In Residence</strong>
+			</a>
+		</li>
 		<li disable-element="disableSabbatical && !preference.isSabbatical" role="presentation" class="clickable" ng-class="{ 'active': preference.isSabbatical }"
 			uib-tooltip="{{ sabbaticalDisableMessage }}" tooltip-enable="disableSabbatical && !preference.isSabbatical">
 			<a role="menuitem" ng-click="onSelect({isSabbatical: true})">

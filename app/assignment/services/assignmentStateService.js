@@ -248,6 +248,7 @@ assignmentApp.service('assignmentStateService', function (
 								&& teachingAssignment.courseNumber == slotAssignment.courseNumber
 								&& teachingAssignment.buyout == slotAssignment.buyout
 								&& teachingAssignment.courseRelease == slotAssignment.courseRelease
+								&& teachingAssignment.inResidence == slotAssignment.inResidence
 								&& teachingAssignment.sabbatical == slotAssignment.sabbatical
 								&& teachingAssignment.subjectCode != null) {
 
