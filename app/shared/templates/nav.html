@@ -179,9 +179,9 @@
 					<span class="title">Reports</span>
 				</a>
 				<ul ng-class="{ 'visible': expanded == 'reports' || (!expanded && currentBaseHref == 'reports') }">
-					<li ng-repeat="term in getYearTerms() track by term.id" ng-class="{ 'active': currentBaseHref == 'reports' && termShortCode == term.shortCode }">
-						<a ng-href="/reports/{{ workgroupId }}/{{ year }}/{{ term.shortCode }}">
-						{{ term.description }}
+					<li ng-class="{ 'active': currentBaseHref == 'reports' }">
+						<a ng-href="/reports/{{ workgroupId }}/{{ year }}">
+						Registrar Reconciliation
 					</a>
 					</li>
 				</ul>
