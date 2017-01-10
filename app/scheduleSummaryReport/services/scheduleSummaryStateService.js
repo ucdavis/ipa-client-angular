@@ -47,7 +47,7 @@ scheduleSummaryReportApp.service('scheduleSummaryReportStateService', function (
 						sectionGroups.list[slotSectionGroup.id] = slotSectionGroup;
 					});
 
-
+					sectionGroups.ids = _array_sortIdsByProperty(sectionGroups.list, ["courseNumber"]);
 
 					// Build instructors metadata for searching
 					instructors = {
@@ -133,6 +133,7 @@ scheduleSummaryReportApp.service('scheduleSummaryReportStateService', function (
 						}
 
 						slotSectionGroup.sections.push(slotSection);
+						slotSectionGroup.sections = sortSections(slotSectionGroup.sections);
 					});
 
 					// Add any shared activities to the appropriate sections
@@ -182,11 +183,22 @@ scheduleSummaryReportApp.service('scheduleSummaryReportStateService', function (
 			$log.debug("Report state updated:");
 			$log.debug(scope._state, action.type);
 		}
-
-		// ------------------------------- //
-		// Helper methods used in reducers //
-		// ------------------------------- //
-
-
 	};
 });
+
+sortSections = function(sections) {
+	sections.sort(function (a, b) {
+		// Use subject codes to sort if they don't match
+		if (a.sequenceNumber > b.sequenceNumber) {
+			return 1;
+		}
+
+		if (a.sequenceNumber < b.sequenceNumber) {
+			return -1;
+		}
+
+		return -1;
+	});
+
+	return sections;
+};
