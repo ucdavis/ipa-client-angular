@@ -2,7 +2,7 @@
  * example:
  * <instructor-diff></instructor-diff>
  */
-reportApp.directive("instructorDiff", this.instructorDiff = function (reportActionCreators) {
+registrarReconciliationReportApp.directive("instructorDiff", this.instructorDiff = function (reportActionCreators) {
 	return {
 		restrict: "E",
 		templateUrl: 'instructorDiff.html',

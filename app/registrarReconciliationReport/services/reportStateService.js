@@ -1,12 +1,12 @@
 /**
  * @ngdoc service
- * @name reportApp.reportStateService
+ * @name registrarReconciliationReportApp.reportStateService
  * @description
  * # reportStateService
  * Service in the reportApp.
  * Central location for sharedState information.
  */
-reportApp.service('reportStateService', function ($rootScope, $log, Term, Section, SyncAction) {
+registrarReconciliationReportApp.service('reportStateService', function ($rootScope, $log, Term, Section, SyncAction) {
 	return {
 		_state: {},
 		_sectionReducers: function (action, sections) {

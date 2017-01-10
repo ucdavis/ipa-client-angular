@@ -5,7 +5,7 @@
  * # ReportCtrl
  * Controller of the ipaClientAngularApp
  */
-reportApp.controller('ReportCtrl', ['$scope', '$rootScope', '$routeParams', 'Term', 'reportActionCreators',
+registrarReconciliationReportApp.controller('ReportCtrl', ['$scope', '$rootScope', '$routeParams', 'Term', 'reportActionCreators',
 	this.ReportCtrl = function ($scope, $rootScope, $routeParams, Term, reportActionCreators) {
 
 		$scope.workgroupId = $routeParams.workgroupId;

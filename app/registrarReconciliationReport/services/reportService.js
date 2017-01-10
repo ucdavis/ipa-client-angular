@@ -1,12 +1,12 @@
 /**
  * @ngdoc service
- * @name reportApp.reportService
+ * @name registrarReconciliationReportApp.reportService
  * @description
  * # reportService
  * Service in the reportApp.
  * reportApp specific api calls.
  */
-reportApp.factory("reportService", this.reportService = function ($http, $q, $window) {
+registrarReconciliationReportApp.factory("reportService", this.reportService = function ($http, $q, $window) {
 	return {
 		getSchedulesToCompare: function (workgroupId) {
 			var deferred = $q.defer();

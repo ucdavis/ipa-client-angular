@@ -1,6 +1,6 @@
-window.reportApp = angular.module("reportApp", ["sharedApp", "ngRoute"]);
+window.registrarReconciliationReportApp = angular.module("registrarReconciliationReportApp", ["sharedApp", "ngRoute"]);
 
-reportApp.config(function ($routeProvider) {
+registrarReconciliationReportApp.config(function ($routeProvider) {
 	return $routeProvider
 		.when("/:workgroupId/:year", {
 			templateUrl: "ReportCtrl.html",

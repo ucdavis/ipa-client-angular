@@ -9,7 +9,7 @@
  *	hide-ipa-message="true"
  * ></change-action>
  */
-reportApp.directive("changeAction", this.changeAction = function () {
+registrarReconciliationReportApp.directive("changeAction", this.changeAction = function () {
 	return {
 		restrict: "E",
 		templateUrl: 'changeAction.html',

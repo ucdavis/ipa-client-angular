@@ -2,7 +2,7 @@
  * example:
  * <crn-diff></crn-diff>
  */
-reportApp.directive("crnDiff", this.crnDiff = function (reportActionCreators) {
+registrarReconciliationReportApp.directive("crnDiff", this.crnDiff = function (reportActionCreators) {
 	return {
 		restrict: "E",
 		templateUrl: 'crnDiff.html',

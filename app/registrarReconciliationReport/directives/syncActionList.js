@@ -2,7 +2,7 @@
  * example:
  * <sync-action-list></sync-action-list>
  */
-reportApp.directive("syncActionList", this.syncActionList = function ($rootScope, $log, reportActionCreators) {
+registrarReconciliationReportApp.directive("syncActionList", this.syncActionList = function ($rootScope, $log, reportActionCreators) {
 	return {
 		restrict: "E",
 		templateUrl: 'syncActionList.html',

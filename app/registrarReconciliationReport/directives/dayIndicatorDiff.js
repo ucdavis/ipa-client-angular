@@ -2,7 +2,7 @@
  * example:
  * <day-indicator-diff></day-indicator-diff>
  */
-reportApp.directive("dayIndicatorDiff", this.dayIndicatorDiff = function (reportActionCreators) {
+registrarReconciliationReportApp.directive("dayIndicatorDiff", this.dayIndicatorDiff = function (reportActionCreators) {
 	return {
 		restrict: "E",
 		templateUrl: 'dayIndicatorDiff.html',

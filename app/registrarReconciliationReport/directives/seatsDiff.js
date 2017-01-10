@@ -2,7 +2,7 @@
  * example:
  * <seats-diff></seats-diff>
  */
-reportApp.directive("seatsDiff", this.seatsDiff = function (reportActionCreators) {
+registrarReconciliationReportApp.directive("seatsDiff", this.seatsDiff = function (reportActionCreators) {
 	return {
 		restrict: "E",
 		templateUrl: 'seatsDiff.html',

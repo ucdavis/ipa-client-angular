@@ -2,7 +2,7 @@
  * example:
  * <tr section-diff></tr>
  */
-reportApp.directive("sectionDiff", this.sectionDiff = function (reportActionCreators) {
+registrarReconciliationReportApp.directive("sectionDiff", this.sectionDiff = function (reportActionCreators) {
 	return {
 		restrict: "A",
 		templateUrl: 'sectionDiff.html',

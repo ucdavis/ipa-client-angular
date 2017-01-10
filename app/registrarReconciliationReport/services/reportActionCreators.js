@@ -1,12 +1,12 @@
 /**
  * @ngdoc service
- * @name reportApp.reportActionCreators
+ * @name registrarReconciliationReportApp.reportActionCreators
  * @description
  * # reportActionCreators
  * Service in the reportApp.
  * Central location for sharedState information.
  */
-reportApp.service('reportActionCreators', function (reportStateService, reportService, $rootScope) {
+registrarReconciliationReportApp.service('reportActionCreators', function (reportStateService, reportService, $rootScope) {
 	return {
 		getInitialState: function (workgroupId, year, termCode) {
 			reportService.getTermComparisonReport(workgroupId, year, termCode).then(function (sectionDiffs) {

@@ -20,7 +20,7 @@
 		</button>
 		<ul class="dropdown-menu">
 			<li ng-repeat="fullTerm in fullTerms">
-				<a ng-href="/reports/{{ sharedState.workgroup.id }}/{{ year }}/{{ fullTerm.slice(-2) }}">
+				<a ng-href="/registrarReconciliationReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ fullTerm.slice(-2) }}">
 					{{ getTermName(fullTerm) }}
 				</a>
 			</li>
