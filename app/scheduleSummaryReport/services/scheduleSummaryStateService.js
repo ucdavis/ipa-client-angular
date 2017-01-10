@@ -135,6 +135,29 @@ scheduleSummaryReportApp.service('scheduleSummaryReportStateService', function (
 						slotSectionGroup.sections.push(slotSection);
 					});
 
+					// Add any shared activities to the appropriate sections
+					action.payload.activities.forEach( function(slotActivity) {
+						slotSection = sections.list[slotActivity.sectionId];
+						slotSectionGroup = sectionGroups.list[slotActivity.sectionGroupId];
+
+						// Check if this activity is a shared activity
+						if (!slotSection && slotSectionGroup) {
+							
+							slotSectionGroup.sections.forEach ( function (slotSection) {
+								// Scaffold section activities if necessary
+								if (slotSection.activities == null) {
+									slotSection.activities = [];
+								}
+
+								slotSection.activities.push(slotActivity);
+							});
+						}
+
+						activities.ids.push(slotActivity.id);
+						activities.list[slotActivity.id] = slotActivity;
+					});
+
+
 					return sectionGroups;
 				default:
 					return sectionGroups;
