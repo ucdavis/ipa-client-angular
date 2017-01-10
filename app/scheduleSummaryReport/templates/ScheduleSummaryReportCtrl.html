@@ -1,0 +1,157 @@
+<nav year="{{ year }}" term-short-code="{{ termShortCode }}" workgroup-id="{{ workgroupId }}"></nav>
+
+<div class="main-content hidden-print">
+
+	<div class="report-page-title">
+		<h3>Registrar Reconciliation Report</h3>
+		<h3 ng-if="term.fullDescription">{{ term.fullDescription }}</h3>
+		<h3 ng-if="!(term.fullDescription)">{{ year }}</h3>
+
+		<p>{{ sharedState.workgroup.name }}</p>
+	</div>
+
+	<div class="dropdown">
+		<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
+		style="background-color: #f9f9f9; border-color: #b8b8b8;">
+			<span>
+				Select Term
+				<span class="caret"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu">
+			<li ng-repeat="fullTerm in fullTerms">
+				<a ng-href="/scheduleSummaryReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ fullTerm.slice(-2) }}">
+					{{ getTermName(fullTerm) }}
+				</a>
+			</li>
+		</ul>
+	</div>
+
+
+	<div class="row">
+		<spinner ng-hide="view.state" style="margin-top: 3em;"></spinner>
+		<div class="col-sm-12" ng-show="view.state">
+			<table ng-if="view.state.sectionGroups.list" class="table section-diff-table">
+				<colgroup>
+					<col span="1" style="width: 25%;">
+					<col span="1" style="width: 8%;">
+					<col span="1" style="width: 9%;">
+					<col span="1" style="width: 8%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+				</colgroup>
+				<thead>
+					<th>Title</th>
+					<th>Section</th>
+					<th>CRN</th>
+					<th>Seats</th>
+					<th>Activity</th>
+					<th>Days</th>
+					<th>Start</th>
+					<th>End</th>
+					<th>Location</th>
+				</thead>
+
+				<tbody ng-repeat="sectionGroupId in view.state.sectionGroups.ids track by sectionGroupId"
+						ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]">
+
+					<tr ng-repeat="section in sectionGroup.sections"
+							class="section-diff-row">
+
+						<!-- SectionGroup Title: Subject Code, Course Number, and Title -->
+						<td>
+							<div ng-show="$index==0"
+								class="section-diff-element section-unique-key">
+								{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} {{ sectionGroup.title }}
+							</div>
+
+							<!-- Instructors -->
+							<div ng-show="$index==0"
+								class="section-group-instructors">
+								<div ng-repeat="instructor in sectionGroup.instructors track by $index"
+									class="section-diff-element section-instructors"
+									ng-click="setActiveChangeAction($event, instructor, $index)">
+									<span class="diff-content">
+										{{ instructor.fullName }}
+									</span>
+								</div>
+							</div>
+						</td>
+
+						<!-- Sequence Number -->
+						<td>
+							<div class="section-diff-element section-unique-key">
+								{{ section.sequenceNumber }}
+							</div>
+						</td>
+
+						<!-- CRN -->
+						<td>
+							<div ng-if="section.crn">
+								{{ section.crn }}
+							</div>
+							<div ng-if="!section.crn">
+								No CRN
+							</div>
+						</td>
+
+						<!-- Seats -->
+						<td>
+							<div>
+								{{ section.seats }}
+							</div>
+						</td>
+
+						<!-- Activities -->
+						<td colspan="5" style="padding: 8px;">
+							<div ng-repeat="activity in section.activities track by $index"
+									class="section-activity-diff-row">
+
+								<!-- Activity Type -->
+								<div class="activity-diff-element activity-type-code">
+									{{ activity.activityTypeCode.activityTypeCode.getActivityCodeDescription() }}
+								</div>
+
+								<!-- dayIndicator -->
+								<div class="activity-diff-element activity-day-indicator">
+									<span class="diff-content">
+										{{ activity.dayIndicator.getWeekDays() || 'none' }}
+									</span>
+								</div>
+
+
+								<!-- startTime -->
+								<div class="activity-diff-element activity-start-time">
+									<span class="diff-content">
+										{{ activity.startTime.toStandardTime() || 'none' }}
+									</span>
+								</div>
+
+								<!-- endTime -->
+								<div class="activity-diff-element activity-end-time">
+									<span class="diff-content">
+										{{ activity.endTime.toStandardTime() || 'none' }}
+									</span>
+								</div>
+
+								<!-- location -->
+								<div class="activity-diff-element activity-location">
+									<span class="diff-content">
+										{{ activity.bannerLocation || 'none' }}
+									</span>
+								</div>
+
+							</div>
+
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>

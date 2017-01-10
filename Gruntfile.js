@@ -73,6 +73,11 @@ module.exports = function (grunt) {
 				cwd: '<%= folders.webapp.root %>',
 				src: ['registrarReconciliationReport/**/*.html'],
 				dest: '<%= folders.webapp.build %>/js/registrarReconciliationReportTemplates.js'
+			},
+			scheduleSummaryReportApp: {
+				cwd: '<%= folders.webapp.root %>',
+				src: ['scheduleSummaryReport/**/*.html'],
+				dest: '<%= folders.webapp.build %>/js/scheduleSummaryReportTemplates.js'
 			}
 		},
 
@@ -185,6 +190,15 @@ module.exports = function (grunt) {
 					'<%= ngtemplates.registrarReconciliationReportApp.dest %>'
 				],
 				dest: '<%= folders.webapp.build %>/js/registrarReconciliationReportApp.js'
+			},
+			// reportApp module files
+			jsScheduleSummaryReport: {
+				src: [
+					'<%= folders.webapp.root %>/scheduleSummaryReport/*.js',
+					'<%= folders.webapp.root %>/scheduleSummaryReport/**/*.js',
+					'<%= ngtemplates.scheduleSummaryReportApp.dest %>'
+				],
+				dest: '<%= folders.webapp.build %>/js/scheduleSummaryReportApp.js'
 			},
 			// Vendor CSS files
 			cssLib: {
@@ -340,6 +354,7 @@ module.exports = function (grunt) {
 							'^/teachingCalls.* /teachingCall.html [L]',
 							'^/scheduling.* /scheduling.html [L]',
 							'^/registrarReconciliationReport.* /registrarReconciliationReport.html [L]',
+							'^/scheduleSummaryReport.* /scheduleSummaryReport.html [L]'
 						]));
 
 						return middlewares;
@@ -372,10 +387,10 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("gruntify-eslint");
 
 	grunt.registerTask('build', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsProdSnippets',
-		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsRegistrarReconciliationReport', 'concat:cssLib', 'uglify:dist', 'cssmin']);
+		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsRegistrarReconciliationReport', 'concat:jsScheduleSummaryReport', 'concat:cssLib', 'uglify:dist', 'cssmin']);
 
 	grunt.registerTask('serve', ['clean', 'eslint', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsDevSnippets',
-		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsRegistrarReconciliationReport', 'concat:cssLib', 'connect', 'watch']);
+		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsRegistrarReconciliationReport', 'concat:jsScheduleSummaryReport', 'concat:cssLib', 'connect', 'watch']);
 
 	grunt.registerTask('default', ['serve']);
 

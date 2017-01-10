@@ -185,6 +185,13 @@
 					</a>
 					</li>
 				</ul>
+				<ul ng-class="{ 'visible': expanded == 'reports' || (!expanded && currentBaseHref == 'reports') }">
+					<li ng-class="{ 'active': currentBaseHref == 'scheduleSummaryReport' }">
+						<a ng-href="/scheduleSummaryReport/{{ workgroupId }}/{{ year }}">
+						Schedule Summary
+					</a>
+					</li>
+				</ul>
 			</li>
 
 		</ul>
