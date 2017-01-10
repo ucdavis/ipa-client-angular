@@ -184,9 +184,7 @@
 						Registrar Reconciliation
 					</a>
 					</li>
-				</ul>
-				<ul ng-if="sharedState.currentUser.isAdmin()" ng-class="{ 'visible': expanded == 'reports' || (!expanded && currentBaseHref == 'reports') }">
-					<li ng-class="{ 'active': currentBaseHref == 'scheduleSummaryReport' }">
+					<li ng-if="sharedState.currentUser.isAdmin()" ng-class="{ 'active': currentBaseHref == 'scheduleSummaryReport' }">
 						<a ng-href="/scheduleSummaryReport/{{ workgroupId }}/{{ year }}">
 						Schedule Summary
 					</a>
