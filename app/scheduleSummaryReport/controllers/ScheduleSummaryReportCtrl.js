@@ -5,12 +5,18 @@
  * # ReportCtrl
  * Controller of the ipaClientAngularApp
  */
-scheduleSummaryReportApp.controller('ScheduleSummaryReportCtrl', ['$scope', '$rootScope', '$routeParams', 'Term', 'scheduleSummaryReportActionCreators',
-	this.ScheduleSummaryReportCtrl = function ($scope, $rootScope, $routeParams, Term, scheduleSummaryReportActionCreators) {
+scheduleSummaryReportApp.controller('ScheduleSummaryReportCtrl', ['$scope', '$rootScope', '$routeParams', 'Term', 'scheduleSummaryReportActionCreators', 'authService',
+	this.ScheduleSummaryReportCtrl = function ($scope, $rootScope, $routeParams, Term, scheduleSummaryReportActionCreators, authService) {
 
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.termShortCode = $routeParams.termShortCode;
+
+		if (!$scope.termShortCode) {
+			var termStates = authService.getTermStates();
+			$scope.termShortCode = calculateCurrentTermShortCode(termStates);
+		}
+
 		$scope.term = Term.prototype.getTermByTermShortCodeAndYear($scope.termShortCode, $scope.year);
 		$scope.view = {};
 
@@ -19,6 +25,9 @@ scheduleSummaryReportApp.controller('ScheduleSummaryReportCtrl', ['$scope', '$ro
 			$rootScope.loadingView = false;
 			$scope.view.state = {};
 		}
+		$rootScope.$on('sharedStateSet'), function (event, data) {
+			debugger;
+		};
 
 		$rootScope.$on('reportStateChanged', function (event, data) {
 			$scope.view.state = data.state;
@@ -29,6 +38,18 @@ scheduleSummaryReportApp.controller('ScheduleSummaryReportCtrl', ['$scope', '$ro
 
 		$scope.allTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
 		$scope.fullTerms = [];
+
+		index = $scope.allTerms.indexOf($scope.termShortCode) - 1;
+		if (index < 0) {
+			index = 8;
+		}
+		$scope.previousShortTermCode = $scope.allTerms[index];
+
+		var index = $scope.allTerms.indexOf($scope.termShortCode) + 1;
+		if (index > 8) {
+			index = 0;
+		}
+		$scope.nextShortTermCode = $scope.allTerms[index];
 
 		for (var i = 0; i < $scope.allTerms.length; i++) {
 			shortTermCode = $scope.allTerms[i];
@@ -70,16 +91,34 @@ scheduleSummaryReportApp.controller('ScheduleSummaryReportCtrl', ['$scope', '$ro
 ScheduleSummaryReportCtrl.getPayload = function (authService, $route, Term, scheduleSummaryReportActionCreators) {
 	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
 
-		// Don't attempt to get payload if page is reached via global nav link
-		if ($route.current.params.termShortCode) {
-			var term = Term.prototype.getTermByTermShortCodeAndYear($route.current.params.termShortCode, $route.current.params.year);
-			return scheduleSummaryReportActionCreators.getInitialState(
-				$route.current.params.workgroupId,
-				$route.current.params.year,
-				term.code
-			);
-		} else {
-			return {};
+		var termShortCode = $route.current.params.termShortCode;
+
+		if (!termShortCode) {
+			var termStates = authService.getTermStates();
+			var termShortCode = calculateCurrentTermShortCode(termStates);
+		}
+
+		var term = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, $route.current.params.year);
+		return scheduleSummaryReportActionCreators.getInitialState(
+			$route.current.params.workgroupId,
+			$route.current.params.year,
+			term.code
+		);
+	});
+};
+
+calculateCurrentTermShortCode = function(termStates) {
+	var earliestTermCode = null;
+
+	termStates.forEach( function(termState) {
+
+		if (termState.state == "ANNUAL_DRAFT") {
+
+			if ( (earliestTermCode == null) || earliestTermCode > termState.termCode) {
+				earliestTermCode = termState.termCode;
+			}
 		}
 	});
+
+	return earliestTermCode.slice(-2);
 };

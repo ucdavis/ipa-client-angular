@@ -3,29 +3,27 @@
 
 	<div class="report-page-title">
 		<h3>Schedule Summary Report</h3>
-		<h3 ng-if="term.fullDescription">{{ term.fullDescription }}</h3>
+		<h3 ng-if="term.fullDescription">
+			<a ng-href="/scheduleSummaryReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ previousShortTermCode }}">
+				<button type="button" class="btn btn-default chevron-button" aria-label="Left Align">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				</button>
+			</a>
+
+			{{ term.fullDescription }}
+
+			<a ng-href="/scheduleSummaryReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ nextShortTermCode }}">
+				<button type="button" class="btn btn-default chevron-button" aria-label="Left Align">
+					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				</button>
+			</a>
+
+		</h3>
+
 		<h3 ng-if="!(term.fullDescription)">{{ year }}</h3>
 
 		<p>{{ sharedState.workgroup.name }}</p>
 	</div>
-
-	<div class="dropdown">
-		<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
-		style="background-color: #f9f9f9; border-color: #b8b8b8;">
-			<span>
-				Select Term
-				<span class="caret"></span>
-			</span>
-		</button>
-		<ul class="dropdown-menu">
-			<li ng-repeat="fullTerm in fullTerms">
-				<a ng-href="/scheduleSummaryReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ fullTerm.slice(-2) }}">
-					{{ getTermName(fullTerm) }}
-				</a>
-			</li>
-		</ul>
-	</div>
-
 
 	<div class="row">
 		<spinner ng-hide="view.state" style="margin-top: 3em;"></spinner>
@@ -53,13 +51,15 @@
 					<th>End</th>
 					<th>Location</th>
 				</thead>
-
-				<tbody ng-repeat="sectionGroupId in view.state.sectionGroups.ids track by sectionGroupId"
+				<tr>
+					<td colspan="9" style="text-align: center;" ng-if="view.state.sectionGroups.ids.length == 0">
+						No schedule data available.
+					</td>
+				</tr>
+				<tbody ng-repeat="sectionGroupId in view.state.sectionGroups.ids"
 						ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]">
-
 					<tr ng-repeat="section in sectionGroup.sections"
 							class="section-diff-row">
-
 						<!-- SectionGroup Title: Subject Code, Course Number, and Title -->
 						<td>
 							<div ng-show="$index==0"

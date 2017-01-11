@@ -1,5 +1,5 @@
 .page-container:not(.sidebar-collapsed) .main-content {
-  width: 65%;
+  width: 85%;
 }
 
 .report-page-title {
@@ -272,4 +272,10 @@ span.sis-tool-icon {
 		float: left;
 		vertical-align: middle;
 	}
+}
+
+.chevron-button {
+	background-color: white;
+	border-color: #f1f1f1;
+	color: #444444;
 }
