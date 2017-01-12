@@ -25,10 +25,23 @@
 		<p>{{ sharedState.workgroup.name }}</p>
 	</div>
 
+	<div class="row hidden-print">
+		<div class="col-sm-12">
+			<div class="table-toolbar">
+
+				<span class="tool-icon glyphicon glyphicon-download-alt" uib-tooltip="Download as Excel" ng-click="download()"></span>
+
+				<span class="tool-icon glyphicon glyphicon-print" uib-tooltip="Print" ng-click="print()"></span>
+			</div>
+			<!-- .table-toolbar -->
+		</div>
+		<!-- .col-sm-12 -->
+	</div>
+	<!-- .row -->
+
 	<div class="row">
-		<spinner ng-hide="view.state" style="margin-top: 3em;"></spinner>
-		<div class="col-sm-12" ng-show="view.state">
-			<table ng-if="view.state.sectionGroups.list" class="table section-diff-table">
+		<div class="col-sm-12">
+			<table class="table section-diff-table" style="margin-top: 0px;">
 				<colgroup>
 					<col span="1" style="width: 25%;">
 					<col span="1" style="width: 8%;">
@@ -51,6 +64,11 @@
 					<th>End</th>
 					<th>Location</th>
 				</thead>
+				<tr ng-hide="view.state">
+					<td>
+						<spinner></spinner>
+					</td>
+				</tr>
 				<tr>
 					<td colspan="9" style="text-align: center;" ng-if="view.state.sectionGroups.ids.length == 0">
 						No schedule data available.

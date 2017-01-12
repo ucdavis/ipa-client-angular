@@ -51,8 +51,8 @@
 					<th>End</th>
 					<th>Location</th>
 				</thead>
-				<tr>
-					<td colspan="9" style="text-align: center;" ng-if="view.state.sections.ids.length == 0">
+				<tr ng-if="view.state.sections.ids.length == 0">
+					<td colspan="9" style="text-align: center;">
 						No schedule data available.
 					</td>
 				</tr>

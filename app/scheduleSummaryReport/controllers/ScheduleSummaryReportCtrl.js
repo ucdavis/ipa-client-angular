@@ -5,8 +5,8 @@
  * # ReportCtrl
  * Controller of the ipaClientAngularApp
  */
-scheduleSummaryReportApp.controller('ScheduleSummaryReportCtrl', ['$scope', '$rootScope', '$routeParams', 'Term', 'scheduleSummaryReportActionCreators', 'authService',
-	this.ScheduleSummaryReportCtrl = function ($scope, $rootScope, $routeParams, Term, scheduleSummaryReportActionCreators, authService) {
+scheduleSummaryReportApp.controller('ScheduleSummaryReportCtrl', ['$scope', '$rootScope', '$routeParams', 'Term', 'scheduleSummaryReportActionCreators', 'authService', 'scheduleSummaryReportService',
+	this.ScheduleSummaryReportCtrl = function ($scope, $rootScope, $routeParams, Term, scheduleSummaryReportActionCreators, authService, scheduleSummaryReportService) {
 
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
@@ -25,10 +25,12 @@ scheduleSummaryReportApp.controller('ScheduleSummaryReportCtrl', ['$scope', '$ro
 			$rootScope.loadingView = false;
 			$scope.view.state = {};
 		}
-		$rootScope.$on('sharedStateSet'), function (event, data) {
-			debugger;
+
+		$scope.download = function () {
+			scheduleSummaryReportService.downloadSchedule($scope.workgroupId, $scope.year, $scope.termShortCode);
 		};
 
+		// Identifying
 		$rootScope.$on('reportStateChanged', function (event, data) {
 			$scope.view.state = data.state;
 

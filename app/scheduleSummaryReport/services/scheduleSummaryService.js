@@ -11,8 +11,22 @@ scheduleSummaryReportApp.factory("scheduleSummaryReportService", this.scheduleSu
 		getInitialState: function (workgroupId, year, termCode) {
 			var deferred = $q.defer();
 
-			$http.get(serverRoot + "/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termCode, { withCredentials: true })
+			$http.get(serverRoot + "/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + termCode, { withCredentials: true })
 				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
+		},
+		downloadSchedule: function (workgroupId, year, shortTermCode) {
+			var deferred = $q.defer();
+
+			$http.get(serverRoot + "/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + shortTermCode + "/generateExcel", { withCredentials: true })
+				.success(function (payload) {
+					$window.location.href = payload.redirect;
 					deferred.resolve(payload);
 				})
 				.error(function () {
