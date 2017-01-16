@@ -265,7 +265,7 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		});
 	};
 
-	$scope.allTerms = ['01', '02', '03', '05', '06', '07', '08', '09', '10'];
+	$scope.allTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
 	$scope.fullTerms = [];
 
 	for (var i = 0; i < $scope.allTerms.length; i++) {
