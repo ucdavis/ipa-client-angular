@@ -35,7 +35,8 @@
   <!-- modal-body ends -->
   <!-- modal-footer -->
   <div class="modal-footer">
-    <button ng-click="gotoUserSelectionPage()" type="button" class="btn btn-info">Next</button>
+    <button ng-if="isTermSelectionValid()" ng-click="gotoUserSelectionPage()" type="button" class="btn btn-info">Next</button>
+		<button ng-if="isTermSelectionValid() == false" type="button" class="btn btn-info disabled">Next</button>
   </div>
   <!-- modal-footer ends -->
 </div>

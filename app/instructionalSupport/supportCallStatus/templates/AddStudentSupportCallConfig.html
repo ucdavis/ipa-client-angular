@@ -127,27 +127,27 @@
 	    </div>
 	</div>
     <!-- modal-body ends -->
-    <!-- modal-footer -->
-    <div class="modal-footer">
-        <div class="flex-box_column email-section container-fluid">
-            <!-- email section begin -->
-            <div class="preference-selector btn-group" data-toggle="buttons">
-                <!-- email preference  -->
-                <h5>Email</h5>
-								 <label ng-click="toggleSendEmails()" class="checkbox-inline check-box-TA-call">
-								 	<input type="checkbox" ng-click="checkboxToggle()" ng-model="supportCallConfigData.sendEmails">
-							    Email Participants
-						     </label>
-            </div>
-            <div class="message-section">
-								Email Message
-								<textarea ng-if="supportCallConfigData.sendEmails == false" disabled style="height: 100px;" ng-model="supportCallConfigData.emailMessage" class="form-control"></textarea>
-                <textarea ng-if="supportCallConfigData.sendEmails" style="height: 100px;" ng-model="supportCallConfigData.emailMessage" class="form-control"></textarea>
-            </div>
-        </div>
-        <!-- email section ends -->
-        <button ng-click="gotoUserSelectionPage()" type="button" class="btn btn-default">Back</button>
-        <button ng-click="gotoSummaryPage()" type="button" class="btn btn-info">Next</button>
-    </div>
-    <!-- modal-footer ends -->
+
+	<div class="modal-footer">
+		<div class="flex-box_column email-section container-fluid">
+			<div class="preference-selector btn-group" data-toggle="buttons">
+
+				<h5>Email</h5>
+				<label ng-click="toggleSendEmails()" class="checkbox-inline check-box-TA-call">
+					<input type="checkbox" ng-click="checkboxToggle()" ng-model="supportCallConfigData.sendEmails">
+					Email Participants
+				</label>
+			</div>
+			<div class="message-section">
+				Email Message
+				<textarea ng-if="supportCallConfigData.sendEmails == false" disabled style="height: 100px;" ng-model="supportCallConfigData.emailMessage" class="form-control"></textarea>
+				<textarea ng-if="supportCallConfigData.sendEmails" style="height: 100px;" ng-model="supportCallConfigData.emailMessage" class="form-control"></textarea>
+			</div>
+		</div>
+
+		<button ng-click="gotoUserSelectionPage()" type="button" class="btn btn-default">Back</button>
+
+		<button ng-if="isStudentConfigValid()" ng-click="gotoSummaryPage()" type="button" class="btn btn-info">Next</button>
+		<button ng-if="isStudentConfigValid() == false" type="button" class="btn btn-info disabled">Next</button>
+	</div>
 </div>

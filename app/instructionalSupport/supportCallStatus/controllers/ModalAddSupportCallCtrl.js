@@ -265,6 +265,45 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		});
 	};
 
+	$scope.isTermSelectionValid = function() {
+		// Ensure termcode is set
+		if (!$scope.supportCallConfigData.termCode) {
+			return false;
+		}
+
+		return true;
+	};
+
+	$scope.isUserSelectionValid = function() {
+		// Ensure at least one participant is set
+		if(!$scope.supportCallConfigData.participantPool || $scope.supportCallConfigData.participantPool.length == 0) {
+			return false;
+		}
+
+		return true;
+	};
+
+	$scope.isStudentConfigValid = function() {
+		// Ensure at least one preference type is set
+		if(!$scope.supportCallConfigData.collectAIPreferences
+			&& !$scope.supportCallConfigData.collectReaderPreferences
+			&& !$scope.supportCallConfigData.collectTAPreferences) {
+			return false;
+		}
+
+		// Ensure a date is set
+		if(!$scope.supportCallConfigData.dueDate
+		&& !$scope.supportCallConfigData.rawDueDate) {
+			return false;
+		}
+
+		return true;
+	};
+
+	$scope.isInstructorConfigValid = function() {
+		return true;
+	};
+
 	$scope.allTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
 	$scope.fullTerms = [];
 

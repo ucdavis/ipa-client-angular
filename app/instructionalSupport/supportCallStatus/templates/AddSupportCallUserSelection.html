@@ -58,14 +58,16 @@
 				</div>
 			</div>
 
-    </div>
+		</div>
 	</div>
-  <!-- modal-body ends -->
-  <!-- modal-footer -->
-  <div class="modal-footer">
+	<!-- modal-body ends -->
+
+	<div class="modal-footer">
 		<button ng-click="gotoTermSelectionPage()" type="button" class="btn btn-default">Back</button>
-    <button ng-click="gotoConfigPage()" type="button" class="btn btn-info">Next</button>
-  </div>
-  <!-- modal-footer ends -->
+		<button ng-if="isUserSelectionValid()" ng-click="gotoConfigPage()" type="button" class="btn btn-info">Next</button>
+		<button ng-if="isUserSelectionValid() == false" type="button" class="btn btn-info disabled">Next</button>
+
+	</div>
+
 </div>
 <!-- modal ends -->
