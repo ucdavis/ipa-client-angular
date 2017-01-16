@@ -39,6 +39,18 @@ instructionalSupportApp.factory("instructionalSupportStudentFormService", this.i
 
 			return deferred.promise;
 		},
+		updatePreferencesOrder: function(preferenceIds, scheduleId, termCode) {
+			var deferred = $q.defer();
+			$http.put(serverRoot + "/api/instructionalSupportStudentFormView/schedules/" + scheduleId + "/terms/" + termCode, preferenceIds, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		deleteStudentPreference: function(preferenceId) {
 
 			var deferred = $q.defer();

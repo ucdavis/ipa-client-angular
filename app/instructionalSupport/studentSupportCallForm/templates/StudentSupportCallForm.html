@@ -69,7 +69,7 @@
 							<h4>Due Date: {{ view.state.supportCall.dueDate }} </h4>
 						</div>
 						<ul id="sortable" class="sortable-student-preferences">
-							<li ng-repeat="preference in view.state.preferences" class="student-course-section">
+							<li ng-repeat="preference in view.state.preferences | orderBy: 'priority'" class="student-course-section" id="{{ preference.id }}">
 								<div class="alert alert-info student-course">
 									<i class="glyphicon glyphicon-menu-hamburger move-course-icon"></i>
 									<div class="student-course-info">

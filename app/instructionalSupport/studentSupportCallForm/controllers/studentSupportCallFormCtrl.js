@@ -12,7 +12,7 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 			$scope.year = $routeParams.year;
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
-
+			
 			$rootScope.$on('instructionalSupportStudentFormStateChanged', function (event, data) {
 				$scope.view.state = data.state;
 			});
@@ -35,14 +35,36 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 
 			};
 
+			$scope.updatePreferencesOrder = function(preferenceIds) {
+				instructionalSupportStudentFormActionCreators.updatePreferencesOrder(preferenceIds, $scope.view.state.supportCall.scheduleId, $scope.termCode);
+			}
 			$scope.pretendToastMessage = function() {
 				instructionalSupportStudentFormActionCreators.pretendToastMessage();
 			};
 
+			$scope.termShortCodeToTermCode = function(termShortCode) {
+				// Already a termCode
+				if (termShortCode.length == 6) {
+					return termShortCode;
+				}
+				var year = $scope.year;
+
+				if (["01", "02", "03"].indexOf(termShortCode) >= 0) { year++; }
+				var termCode = year + termShortCode;
+
+				return termCode;
+			};
+
 			$( "#sortable" ).sortable({
 				placeholder: "sortable-student-preference-placeholder",
+				update: function( event, ui ) {
+					var preferenceIds = $( "#sortable" ).sortable( "toArray" );
+					$scope.updatePreferencesOrder(preferenceIds);
+				},
 				axis: "y"
 			});
+
+			$scope.termCode = $scope.termShortCodeToTermCode($routeParams.termShortCode);
 	}]);
 
 StudentSupportCallFormCtrl.getPayload = function (authService, instructionalSupportStudentFormActionCreators, $route) {

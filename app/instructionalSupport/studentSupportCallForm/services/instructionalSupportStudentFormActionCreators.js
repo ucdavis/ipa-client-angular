@@ -63,6 +63,18 @@ instructionalSupportApp.service('instructionalSupportStudentFormActionCreators',
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		updatePreferencesOrder: function (preferenceIds, scheduleId, termCode) {
+			instructionalSupportStudentFormService.updatePreferencesOrder(preferenceIds, scheduleId, termCode).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
+				var action = {
+					type: UPDATE_PREFERENCES_ORDER,
+					payload: payload
+				};
+				instructionalSupportStudentFormStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		pretendToastMessage: function () {
 			$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
 		}
