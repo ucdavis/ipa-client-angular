@@ -12,6 +12,17 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 			});
 		},
 		addStudentSupportCall: function (scheduleId, studentSupportCall) {
+
+			// Remove participants that were disabled in the UI
+			filteredParticipants = [];
+			studentSupportCall.participantPool.forEach( function(participant) {
+				if (participant.enabled == true) {
+					filteredParticipants.push(participant);
+				}
+			});
+
+			studentSupportCall.participantPool = filteredParticipants;
+
 			$rootScope.$emit('toast', { message: "Support Call Created", type: "SUCCESS" });
 			instructionalSupportCallStatusService.addStudentSupportCall(scheduleId, studentSupportCall).then(function (payload) {
 				var action = {

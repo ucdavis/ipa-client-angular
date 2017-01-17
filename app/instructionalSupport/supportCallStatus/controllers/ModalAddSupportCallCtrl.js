@@ -92,7 +92,7 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	$scope.checkboxToggle = function () {
 		console.log("testing");
 		$scope.toggleSendEmails();
-	}
+	};
 
 	$scope.selectSendEmail = function () {
 		$scope.supportCallConfigData.sendEmails = true;
@@ -103,6 +103,7 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	};
 
 	$scope.toggleInstructor = function () {
+		// Ensure student groups are not part of this support Call if instructors are selected
 		$scope.supportCallConfigData.phdParticipants = false;
 		$scope.supportCallConfigData.mastersParticipants = false;
 		$scope.supportCallConfigData.instructionalSupportParticipants = false;
