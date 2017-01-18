@@ -4,7 +4,8 @@
 	<div class="report-page-title">
 		<h3>Schedule Summary Report</h3>
 		<h3 ng-if="term.fullDescription">
-			<a ng-href="/scheduleSummaryReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ previousShortTermCode }}">
+			<a ng-if="previousShortTermCode"
+				ng-href="/scheduleSummaryReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ previousShortTermCode }}">
 				<button type="button" class="btn btn-default chevron-button" aria-label="Left Align">
 					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 				</button>
@@ -12,7 +13,8 @@
 
 			{{ term.fullDescription }}
 
-			<a ng-href="/scheduleSummaryReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ nextShortTermCode }}">
+			<a ng-if="nextShortTermCode"
+				ng-href="/scheduleSummaryReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ nextShortTermCode }}">
 				<button type="button" class="btn btn-default chevron-button" aria-label="Left Align">
 					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 				</button>

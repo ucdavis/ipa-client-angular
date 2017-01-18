@@ -43,15 +43,17 @@ scheduleSummaryReportApp.controller('ScheduleSummaryReportCtrl', ['$scope', '$ro
 
 		index = $scope.allTerms.indexOf($scope.termShortCode) - 1;
 		if (index < 0) {
-			index = 8;
+			$scope.previousShortTermCode = null;
+		} else {
+			$scope.previousShortTermCode = $scope.allTerms[index];
 		}
-		$scope.previousShortTermCode = $scope.allTerms[index];
 
 		var index = $scope.allTerms.indexOf($scope.termShortCode) + 1;
 		if (index > 8) {
-			index = 0;
+			$scope.nextShortTermCode = null;
+		} else {
+			$scope.nextShortTermCode = $scope.allTerms[index];
 		}
-		$scope.nextShortTermCode = $scope.allTerms[index];
 
 		for (var i = 0; i < $scope.allTerms.length; i++) {
 			shortTermCode = $scope.allTerms[i];
