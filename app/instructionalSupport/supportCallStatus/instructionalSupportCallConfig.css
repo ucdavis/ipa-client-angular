@@ -237,6 +237,17 @@ div.datepicker {
 	border-radius: 4px;
 }
 
+.participant-enabled {
+	background-color: white;
+	border: 1px gray solid;
+	color: gray;
+}
+
+.participant-disabled {
+	background-color: rgb(234,234,234);
+	border: 1px gray solid;
+	color: gray;
+}
 /* Ensure this override for the neon theme button styling
  does not override the uib-datepicker 'selected day' styling */
 .uib-datepicker .btn-default:not(.active):not(.btn-info) {
