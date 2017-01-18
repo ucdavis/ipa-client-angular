@@ -281,7 +281,16 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 			return false;
 		}
 
-		return true;
+		// Ensure at least one participant is enabled
+		for (var i = 0; i < $scope.supportCallConfigData.participantPool.length; i++) {
+			var participant = $scope.supportCallConfigData.participantPool[i];
+
+			if (participant.enabled) {
+				return true;
+			}
+		}
+
+		return false;
 	};
 
 	$scope.isStudentConfigValid = function() {

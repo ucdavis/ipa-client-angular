@@ -17,8 +17,10 @@
                 <div class="row">
                     <h5>People</h5>
                     <div class="people-summary-container">
-											<span ng-repeat="participant in supportCallConfigData.participantPool">
-												<span ng-if="!$first"> ,</span>
+											<span ng-repeat="participant in supportCallConfigData.participantPool"
+														ng-if="participant.enabled">
+
+												<span ng-if="!$first">,</span>
 												{{ participant.displayName }}
 											</span>
 										</div>

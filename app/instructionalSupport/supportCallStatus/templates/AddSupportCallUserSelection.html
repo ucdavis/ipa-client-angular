@@ -51,9 +51,10 @@
 			<div style="flex: 0 0 80%;">
 				<div style="height: 100%;" class="bootstrap-tagsinput receivers-input-section">
 				    <span ng-repeat="participant in supportCallConfigData.participantPool"
-							ng-click="toggleEnabled(participant)" class="tag label label-info"
+							ng-click="toggleEnabled(participant)" class="participant-tile"
 							ng-class="{ 'participant-enabled': participant.enabled, 'participant-disabled': !participant.enabled}">
-							<input ng-checked="participant.enabled" type="checkbox">
+
+							<i ng-show="participant.enabled" style="color: green; padding: 0; margin: 0;" class="btn glyphicon glyphicon-ok"></i>
 							{{ participant.displayName }}
 						</span>
 				</div>
