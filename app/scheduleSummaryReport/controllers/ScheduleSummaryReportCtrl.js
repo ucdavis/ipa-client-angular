@@ -124,5 +124,11 @@ calculateCurrentTermShortCode = function(termStates) {
 		}
 	});
 
+	// Default to fall quarter if current term cannot be deduced from termStates
+	if (earliestTermCode == null) {
+		return "10";
+	}
+
+
 	return earliestTermCode.slice(-2);
 };
