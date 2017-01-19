@@ -10,6 +10,7 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 			$window.document.title = "Instructional Support";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
+			$scope.termShortCode = $routeParams.termShortCode;
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
