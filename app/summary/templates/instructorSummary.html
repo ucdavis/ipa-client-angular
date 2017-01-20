@@ -85,21 +85,23 @@
 			<!-- table header -->
 
 			<!-- instructor support calls -->
-			<div ng-repeat="instructorSupportCallId in view.state.supportCalls.instructorSupportCalls.ids" class="course-table-row">
+			<div ng-repeat="instructorSupportCallId in view.state.supportCalls.instructorSupportCalls.ids" class="course-table-row"
+					ng-init="instructorSupportCall=view.state.supportCalls.instructorSupportCalls.list[instructorSupportCallId]">
 				<div class="course-table__row-detail">
 					<div>
-						<a ng-href="{{ urlRoot }}/instructionalSupport/20/2016/10/instructorSupportCallForm">
+						<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ instructorSupportCall.termCode.slice(-2) }}/instructorSupportCallForm">
 							View Support Call Form
 						</a>
 					</div>
 				</div>
 				<div class="course-table__row-detail">
-					November 6, 2016
+					{{ instructorSupportCall.dueDate }}
 				</div>
 				<div class="course-table__row-detail">
-					<i class="glyphicon glyphicon-ok" ng-if="teachingCall.preferencesSubmitted"></i>
+					<i class="glyphicon glyphicon-ok" ng-if="instructorSupportCall.submitted"></i>
 				</div>
 			</div>
+
 		</div>
 
 		<div class="course-status-header">
