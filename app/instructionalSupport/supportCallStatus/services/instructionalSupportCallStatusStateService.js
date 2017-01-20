@@ -142,7 +142,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 							}
 
 							// Add the supportStaffId to the supportCall
-							instructorSupportCall.participants.push(supportStaffId);
+							instructorSupportCall.participants.push(instructorId);
 						});
 
 						var index = supportCalls.eligibleInstructors[termCode].indexOf(instructorId);

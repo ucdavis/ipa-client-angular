@@ -12,6 +12,7 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 			$scope.year = $routeParams.year;
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
+			$scope.termShortCode = $routeParams.termShortCode;
 
 			$rootScope.$on('instructionalSupportCallStatusStateChanged', function (event, data) {
 				$scope.view.state = data.state;
@@ -91,7 +92,6 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 
 				return termNames[term];
 			};
-
 	}]);
 
 InstructionalSupportCallStatusCtrl.getPayload = function (authService, instructionalSupportCallStatusActionCreators, $route) {

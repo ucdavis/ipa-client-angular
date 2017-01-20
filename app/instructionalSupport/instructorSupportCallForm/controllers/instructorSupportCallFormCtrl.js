@@ -13,6 +13,8 @@ instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
+//			$scope.participantPool = participants.ids;
+
 			$rootScope.$on('instructionalSupportAssignmentStateChanged', function (event, data) {
 				$scope.view.state = data.state;
 			});

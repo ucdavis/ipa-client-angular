@@ -107,6 +107,41 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 				instructionalSupportAssignmentActionCreators.removeStaffFromSlot(instructionalSupportAssignmentId, supportStaffId);
 			};
 
+			$scope.getTermDescription = function(term) {
+				var endingYear = "";
+				if (term.length == 6) {
+					endingYear = term.substring(0,4);
+					term = term.slice(-2);
+				}
+
+				termNames = {
+					'05': 'Summer Session 1',
+					'06': 'Summer Special Session',
+					'07': 'Summer Session 2',
+					'08': 'Summer Quarter',
+					'09': 'Fall Semester',
+					'10': 'Fall Quarter',
+					'01': 'Winter Quarter',
+					'02': 'Spring Semester',
+					'03': 'Spring Quarter'
+				};
+
+				return termNames[term];
+			};
+
+			$scope.getTermYearDescription = function(term, year) {
+
+				var description = "";
+				if (parseInt(term) < 4) {
+					year = parseInt(year) + 1;
+				}
+
+				description = $scope.getTermDescription(term) + " " + year;
+				return description;
+			};
+
+			$scope.termYearDescription = $scope.getTermYearDescription($scope.termShortCode, $scope.year);
+
 			// Set the active tab according to the URL
 			// Otherwise redirect to the default view
 			$scope.setActiveTab($routeParams.tab || "courses");
