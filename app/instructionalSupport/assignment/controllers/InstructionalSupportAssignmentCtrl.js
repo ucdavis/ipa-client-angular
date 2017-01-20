@@ -140,6 +140,14 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 				return description;
 			};
 
+			$scope.openStudentSupportCallReview = function() {
+				instructionalSupportAssignmentActionCreators.openStudentSupportCallReview($scope.view.state.schedule.id);
+			};
+
+			$scope.openInstructorSupportCallReview = function() {
+				instructionalSupportAssignmentActionCreators.openInstructorSupportCallReview($scope.view.state.schedule.id);
+			};
+
 			$scope.termYearDescription = $scope.getTermYearDescription($scope.termShortCode, $scope.year);
 
 			// Set the active tab according to the URL

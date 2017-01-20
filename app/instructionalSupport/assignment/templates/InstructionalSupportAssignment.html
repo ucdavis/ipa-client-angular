@@ -33,13 +33,32 @@
 							</label>
 						</div>
 						<div class="btn-group border-bottom--gray review-switcher" data-toggle="buttons">
-							<label class="btn btn-white btn-sm" id="courses-pivot">
+							<label ng-if="view.state.schedule.instructorSupportCallReviewOpen == false"
+								class="btn btn-white btn-sm" id="instructors-pivot"
+								confirm-button="openInstructorSupportCallReview()"
+								message="Are you sure you want to open this schedule for instructor review? This cannot be undone."
+								yes="Confirm" no="Cancel" placement="top">
 								<input type="radio" name="options">
 								Open instructor review
 							</label>
-							<label class="btn btn-white btn-sm" id="instructors-pivot">
+							<label ng-if="view.state.schedule.instructorSupportCallReviewOpen"
+								style="color: green;padding-right: 20px;">
+								Instructor Review is open
+								<span class="glyphicon glyphicon-ok"></span>
+							</label>
+
+							<label ng-if="view.state.schedule.studentSupportCallReviewOpen == false"
+								class="btn btn-white btn-sm" id="instructors-pivot"
+								confirm-button="openStudentSupportCallReview()"
+								message="Are you sure you want to open this schedule for student review? This cannot be undone."
+								yes="Confirm" no="Cancel" placement="top">
 								<input type="radio" name="options">
 								Open student review
+							</label>
+							<label ng-if="view.state.schedule.studentSupportCallReviewOpen"
+								style="color: green;">
+								Student Review is open
+								<span class="glyphicon glyphicon-ok"></span>
 							</label>
 						</div>
 					</div>

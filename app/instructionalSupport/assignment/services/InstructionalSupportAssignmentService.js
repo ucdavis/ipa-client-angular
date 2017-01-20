@@ -67,5 +67,30 @@ instructionalSupportApp.factory("instructionalSupportAssignmentService", this.in
 
 			return deferred.promise;
 		},
+		openStudentSupportCallReview: function(scheduleId) {
+			var deferred = $q.defer();
+			$http.put(serverRoot + "/api/instructionalSupportView/schedules/" + scheduleId + "/openStudentSupportCallReview", { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		openInstructorSupportCallReview: function(scheduleId) {
+			var deferred = $q.defer();
+			$http.put(serverRoot + "/api/instructionalSupportView/schedules/" + scheduleId + "/openInstructorSupportCallReview", { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+
 	};
 });

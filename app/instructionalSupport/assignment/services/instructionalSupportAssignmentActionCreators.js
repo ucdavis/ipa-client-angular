@@ -25,6 +25,30 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		openStudentSupportCallReview: function (scheduleId) {
+			instructionalSupportAssignmentService.openStudentSupportCallReview(scheduleId).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Added Assignment", type: "SUCCESS" });
+				var action = {
+					type: OPEN_STUDENT_SUPPORT_CALL_REVIEW,
+					payload: payload
+				};
+				instructionalSupportAssignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		openInstructorSupportCallReview: function (scheduleId) {
+			instructionalSupportAssignmentService.openInstructorSupportCallReview(scheduleId).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Added Assignment", type: "SUCCESS" });
+				var action = {
+					type: OPEN_INSTRUCTOR_SUPPORT_CALL_REVIEW,
+					payload: payload
+				};
+				instructionalSupportAssignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		deleteAssignment: function (instructionalSupportAssignment) {
 			instructionalSupportAssignmentService.deleteAssignment(instructionalSupportAssignment).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Removed Assignment", type: "SUCCESS" });

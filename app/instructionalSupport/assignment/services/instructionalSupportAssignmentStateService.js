@@ -301,6 +301,24 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					return preferences;
 			}
 		},
+		_scheduleReducers: function (action, schedule) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					schedule = {};
+					schedule = action.payload.schedule;
+					return schedule;
+				case OPEN_STUDENT_SUPPORT_CALL_REVIEW:
+					schedule.studentSupportCallReviewOpen = true;
+					return schedule;
+				case OPEN_INSTRUCTOR_SUPPORT_CALL_REVIEW:
+					schedule.instructorSupportCallReviewOpen = true;
+					return schedule;
+				default:
+					return schedule;
+			}
+		},
 		_userInterfaceReducers: function (action, userInterface) {
 			var scope = this;
 
@@ -343,6 +361,8 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 			newState.preferences = scope._preferenceReducers(action, scope._state.preferences);
 			newState.instructionalSupportStaffs = scope._instructionalSupportStaffsReducers(action, scope._state.instructionalSupportStaffs);
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
+			newState.schedule = scope._scheduleReducers(action, scope._state.schedule);
+
 			scope._state = newState;
 
 			$rootScope.$emit('instructionalSupportAssignmentStateChanged', {
