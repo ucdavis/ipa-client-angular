@@ -57,7 +57,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 
 										if (slotPreference.type == "teachingAssistant") {
 											sectionGroup.taAssignmentOptions.studentPreferences.push(slotPreference);
-										} else if (slotPreference.type == "readerAssignmentOptions") {
+										} else if (slotPreference.type == "reader") {
 											sectionGroup.readerAssignmentOptions.studentPreferences.push(slotPreference);
 										} else if (slotPreference.type == "associateInstructor") {
 											sectionGroup.aiAssignmentOptions.studentPreferences.push(slotPreference);
