@@ -141,7 +141,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 
 					return instructionalSupportAssignments;
 				case DELETE_ASSIGNMENT:
-					var index = instructionalSupportAssignments.ids.indexOf(action.payload.id)
+					var index = instructionalSupportAssignments.ids.indexOf(action.payload.id);
 
 					if (index > -1) {
 						instructionalSupportAssignments.list[index] = null;

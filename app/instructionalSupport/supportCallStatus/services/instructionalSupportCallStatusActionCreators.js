@@ -4,7 +4,8 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 			instructionalSupportCallStatusService.getInitialState(workgroupId, year).then(function (payload) {
 				var action = {
 					type: INIT_STATE,
-					payload: payload
+					payload: payload,
+					year: year
 				};
 				instructionalSupportCallStatusStateService.reduce(action);
 			}, function (err) {

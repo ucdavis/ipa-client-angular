@@ -250,7 +250,7 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 
 	$scope.calculateInstructorPool = function () {
 		$scope.instructorPool = [];
-		$scope.supportCallConfigData;
+
 		var shortTermCode = $scope.supportCallConfigData.termCode.slice(-2);
 
 		instructorsByShortTermCode[shortTermCode].forEach( function (instructorId) {

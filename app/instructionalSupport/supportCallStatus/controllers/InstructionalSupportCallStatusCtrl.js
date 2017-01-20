@@ -26,6 +26,9 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 				instructionalSupportCallStatusActionCreators.deleteInstructorSupportCall(instructorSupportCall);
 			};
 
+			$scope.numberToFloor = function(number) {
+				return Math.floor(number);
+			}
 			$scope.openSupportCallConfig = function(supportCallMode) {
 
 				modalInstance = $uibModal.open({
