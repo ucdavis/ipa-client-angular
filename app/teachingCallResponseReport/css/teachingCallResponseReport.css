@@ -1,0 +1,319 @@
+.page-container:not(.sidebar-collapsed) .main-content {
+  width: 85%;
+}
+
+.report-page-title {
+  text-align: center;
+}
+
+table.section-diff-table {
+	margin-top: 3em;
+	border-collapse: separate;
+}
+
+table.section-diff-table > thead > tr > th {
+	font-weight: 500;
+}
+
+table.section-diff-table > tbody > tr.section-diff-row > td:first-child {
+	border-top: none;
+	border-left: 1px solid #ddd;
+}
+
+table.section-diff-table > tbody > tr.section-diff-row:last-child > td {
+	border-bottom: 1px solid #ddd;
+}
+
+table.section-diff-table > tbody > tr.section-diff-row > td {
+	color: #777;
+	line-height: 1.2em;
+	border-right: 1px solid #ddd;
+}
+
+table.section-diff-table > tbody > tr.section-diff-row.head-section > td {
+	border-top: 1px solid #ddd;
+}
+
+tr.section-diff-row.no-changes *,
+tr.section-activity-diff-row.no-changes * {
+	color: #aaa;
+}
+
+.section-diff-element {
+	display: inline-block;
+	margin-right: 0.5em;
+	min-width: 50px;
+}
+
+.section-unique-key {
+	margin-bottom: 1em;
+}
+
+.section-activity-diff-row {
+	display: flex;
+}
+
+.section-activity-diff-row:not(:last-child) {
+	margin-bottom: 1em;
+}
+
+.activity-diff-element {
+	flex: 1 1 20%;
+}
+
+.activity-diff-element:not(:first-child) {
+	margin-left: 8px;
+}
+
+.has-changes {
+	position: relative;
+	cursor: pointer;
+	color: #fff;
+	background-color: rgba(139, 0, 139, 0.5);
+	border-radius: 3px;
+	padding: 2px 4px;
+	margin: -2px -4px;
+}
+
+.has-changes:hover {
+	background-color: rgba(139, 0, 139, 0.8);
+}
+
+.no-remote
+ {
+	color: #fff;
+	background-color: rgba(46, 139, 87, 0.5);
+	border-color: seagreen;
+}
+
+/* Special styles for changes that affect entire row */
+tr.no-remote td,
+table.section-diff-table > tbody > tr.section-diff-row.no-remote > td,
+table.section-diff-table > tbody > tr.activity-diff-row.no-remote > td
+{
+	position: relative;
+	color: #fff;
+}
+
+.no-remote:hover {
+	background-color: rgba(46, 139, 87, 0.8);
+}
+
+.no-local {
+	color: #fff;
+	background-color: rgba(139, 0, 0, 0.5);
+	border-color: darkred;
+}
+
+.no-local:hover {
+	background-color: rgba(139, 0, 0, 0.8);
+}
+
+.change-action.popover.bottom {
+	margin-top: 0;
+}
+
+.change-action {
+	position:  absolute;
+	color: #333;
+	display: inline-block;
+	left: 0;
+	top: 100%;
+	min-width: 250px;
+	text-align: center;
+	padding-top: 10px;
+	border: none;
+	background-color: transparent;
+	font-size: 12px;
+}
+
+.change-action.popover.bottom > .arrow {
+	top: 0;
+	left: 10%;
+}
+
+.has-changes:hover .change-action {
+	display: inline-block;
+}
+
+.change-action .popover-title {
+	border: 1px solid #ccc;
+}
+
+.change-action .popover-content {
+	border: 1px solid #ccc;
+	border-top: none;
+	background-color: #fff;
+	border-radius: 0 0 5px 5px;
+}
+
+.change-message {
+	min-height: 4em;
+}
+
+button.btn-dw {
+	border-color: darkred;
+	color: darkred;
+	background-color: #fff;
+}
+
+button.btn-dw:hover {
+	color: #fff;
+	background-color: darkred;
+}
+
+button.btn-ipa {
+	border-color: seagreen;
+	color: seagreen;
+	background-color: #fff;
+}
+
+button.btn-ipa:hover {
+	color: #fff;
+	background-color: seagreen;
+}
+
+/* To-do section */
+.right-details {
+	position: fixed;
+	width: 25%;
+	height: 100%;
+	display: table-cell;
+	background-color: #fff;
+	padding: 2em 2em 2em 0;
+}
+
+.page-container:not(.sidebar-collapsed) .right-details {
+	width: 20%;
+}
+
+.sis-todo-container {
+	height: 100%;
+	position: relative;
+	border: 1px solid #ebebeb;
+	-webkit-border-radius: 3px;
+	-webkit-background-clip: padding-box;
+	-moz-border-radius: 3px;
+	-moz-background-clip: padding;
+	border-radius: 3px;
+	background-clip: padding-box;
+}
+
+.sis-todo-container .sis-todo-header {
+	background: rgba(179, 181, 198, 0.5);
+	height: 30px;
+	padding: 6px 12px;
+	font-weight: bold;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.sis-todo-container .sis-todo-content {
+	background-color: #fff;
+	border-color: #ebebeb;
+	color: #333;
+	padding: 6px 12px;
+	height: calc(100% - 30px);
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+ul.sis-todo-list {
+	padding: 0;
+	list-style: none;
+}
+
+ul.sis-todo-list li.sis-todo-item {
+	padding: 3px 6px;
+}
+
+ul.sis-todo-list li.sis-todo-item {
+	border-bottom: 1px solid #ebebeb;
+}
+
+.sis-todo-toolbar {
+	float: right;
+}
+
+span.sis-tool-icon {
+	margin: 0 0.75em;
+	cursor: pointer;
+}
+
+/* Print view */
+@media print {
+	.right-details {
+		position: static;
+		display: inline;
+	}
+
+	.sis-todo-container {
+		border: none;
+	}
+
+	.sis-todo-container .sis-todo-content {
+		color: #000;
+		height: auto;
+	}
+
+	ul.sis-todo-list li.sis-todo-item {
+		position: relative;
+		padding-left: 2em;
+	}
+
+	ul.sis-todo-list li.sis-todo-item:before {
+		content: "";
+		width: 1.3em;
+		height: 1.3em;
+		border: 1px solid #333;
+		border-radius: 3px;
+		float: left;
+		vertical-align: middle;
+	}
+}
+
+.chevron-button {
+	background-color: white;
+	border-color: #f1f1f1;
+	color: #444444;
+}
+
+.table-toolbar {
+  width: 100%;
+  text-align: right;
+  padding-bottom: 5px;
+	margin: 0px;
+  border-radius: 3px;
+}
+.tool-icon {
+  margin: 0 0.5em;
+  padding: 0.5em;
+}
+.tool-icon:hover {
+  cursor: pointer;
+  background: #ebebeb;
+  border-radius: 3px;
+}
+
+/* .btn-group vertical-align pushes the icons with dropdown menus out of veritcal
+   alignment with the icons without a dropdown menu */
+.table-toolbar>.btn-group {
+  vertical-align: initial;
+}
+
+.table-toolbar .dropdown-menu {
+	min-width: 200px;
+}
+
+.table-toolbar .tool-icon {
+  margin: 0 0.5em;
+  padding: 0.5em;
+}
+
+.table-toolbar .tool-icon:hover {
+  cursor: pointer;
+  background: #ebebeb;
+  border-radius: 3px;
+}
