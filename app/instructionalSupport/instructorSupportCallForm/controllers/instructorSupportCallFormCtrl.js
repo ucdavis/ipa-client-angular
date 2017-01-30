@@ -5,17 +5,39 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'instructionalSupportAssignmentActionCreators',
-		this.InstructorSupportCallFormCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, instructionalSupportAssignmentActionCreators) {
+instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'instructionalSupportInstructorFormActionCreators',
+		this.InstructorSupportCallFormCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, instructionalSupportInstructorFormActionCreators) {
 			$window.document.title = "Instructional Support";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
-			$rootScope.$on('instructionalSupportAssignmentStateChanged', function (event, data) {
+			$rootScope.$on('instructionalSupportStudentFormStateChanged', function (event, data) {
 				$scope.view.state = data.state;
 			});
+
+			$scope.addPreference = function(sectionGroupId, supportStaffId) {
+				instructionalSupportInstructorFormActionCreators.addInstructorPreference(sectionGroupId, supportStaffId, $scope.view.state.userInterface.supportCallId);
+			};
+
+			$scope.deleteInstructorPreference = function(preference) {
+				instructionalSupportInstructorFormActionCreators.deleteInstructorPreference(preference, $scope.view.state.studentPreferences);
+			};
+
+			$scope.updateSupportCallResponse = function() {
+				instructionalSupportInstructorFormActionCreators.updateSupportCallResponse($scope.view.state.supportCallResponse);
+			};
+
+			$scope.submitPreferences = function() {
+				$scope.view.state.supportCallResponse.submitted = true;
+				instructionalSupportInstructorFormActionCreators.submitInstructorPreferences($scope.view.state.supportCallResponse, $scope.workgroupId, $scope.year);
+			};
+
+			// Used on 'update preferences' button, since saving is not required again.
+			$scope.pretendToastMessage = function() {
+				instructionalSupportInstructorFormActionCreators.pretendToastMessage();
+			};
 
 			$( "#sortable1" ).sortable({
 				placeholder: "sortable-instructor-preference-placeholder",
@@ -32,8 +54,8 @@ instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '
 
 	}]);
 
-InstructorSupportCallFormCtrl.getPayload = function (authService, instructionalSupportAssignmentActionCreators, $route) {
+InstructorSupportCallFormCtrl.getPayload = function (authService, instructionalSupportInstructorFormActionCreators, $route) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		instructionalSupportAssignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode, $route.current.params.tab);
+		instructionalSupportInstructorFormActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode);
 	});
 };

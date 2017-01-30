@@ -32,7 +32,6 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 			$scope.submitPreferences = function() {
 				$scope.view.state.supportCallResponse.submitted = true;
 				instructionalSupportStudentFormActionCreators.submitPreferences($scope.view.state.supportCallResponse, $scope.workgroupId, $scope.year);
-
 			};
 
 			$scope.updatePreferencesOrder = function(preferenceIds) {
