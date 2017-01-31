@@ -140,3 +140,11 @@ String.prototype.getWeekDays = function () {
 
 	return dayStr;
 };
+
+function setCharAt(str,index,newChar) {
+	if (index > str.length-1) {
+		return str;
+	}
+
+	return str.substr(0,index) + newChar + str.substr(index+1);
+}

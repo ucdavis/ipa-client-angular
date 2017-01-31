@@ -27,151 +27,216 @@
 		<p>{{ sharedState.workgroup.name }}</p>
 	</div>
 
-	<div class="row hidden-print">
-		<div class="col-sm-12">
-			<div class="table-toolbar">
+	<!-- table header -->
+	<div style="display: flex; width: 100%; font-weight: bold; font-size:16px;">
+		<div style="flex: 1 0 0px;">
+			Instructors
+		</div>
+		<div style="flex: 1 0 0px;">
+			Fall Quarter
+		</div>
+		<div style="flex: 1 0 0px;">
+			Winter Quarter
+		</div>
+		<div style="flex: 1 0 0px;">
+			Spring Quarter
+		</div>
+		<div style="flex: 1 0 0px;">
+			Summer Session I
+		</div>
+		<div style="flex: 1 0 0px;">
+			Summer Session II
+		</div>
+	</div>
 
-				<span class="tool-icon glyphicon glyphicon-download-alt" uib-tooltip="Download as Excel" ng-click="download()"></span>
-
-				<span class="tool-icon glyphicon glyphicon-print" uib-tooltip="Print" ng-click="print()"></span>
+	<!-- table body -->
+	<div style="margin-top: 20px; display: flex; width: 100%;">
+		<div style="flex: 1 0 0px;">
+			Smith, Daniels
+			<div>
+				No Comments.
 			</div>
-			<!-- .table-toolbar -->
 		</div>
-		<!-- .col-sm-12 -->
-	</div>
-	<!-- .row -->
-
-	<div class="row">
-		<div class="col-sm-12">
-			<table class="table section-diff-table" style="margin-top: 0px;">
-				<colgroup>
-					<col span="1" style="width: 25%;">
-					<col span="1" style="width: 8%;">
-					<col span="1" style="width: 9%;">
-					<col span="1" style="width: 8%;">
-					<col span="1" style="width: 10%;">
-					<col span="1" style="width: 10%;">
-					<col span="1" style="width: 10%;">
-					<col span="1" style="width: 10%;">
-					<col span="1" style="width: 10%;">
-				</colgroup>
-				<thead>
-					<th>Title</th>
-					<th>Section</th>
-					<th>CRN</th>
-					<th>Seats</th>
-					<th>Activity</th>
-					<th>Days</th>
-					<th>Start</th>
-					<th>End</th>
-					<th>Location</th>
-				</thead>
-				<tr ng-hide="view.state">
-					<td>
-						<spinner></spinner>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="9" style="text-align: center;" ng-if="view.state.sectionGroups.ids.length == 0">
-						No schedule data available.
-					</td>
-				</tr>
-				<tbody ng-repeat="sectionGroupId in view.state.sectionGroups.ids"
-						ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]">
-					<tr ng-repeat="section in sectionGroup.sections"
-							class="section-diff-row">
-						<!-- SectionGroup Title: Subject Code, Course Number, and Title -->
-						<td>
-							<div ng-show="$index==0"
-								class="section-diff-element section-unique-key">
-								<b>{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} {{ sectionGroup.title }}</b>
-							</div>
-
-							<!-- Instructors -->
-							<div ng-show="$index==0"
-								class="section-group-instructors">
-								<div ng-repeat="instructor in sectionGroup.instructors track by $index"
-									class="section-diff-element section-instructors"
-									ng-click="setActiveChangeAction($event, instructor, $index)">
-									<span class="diff-content">
-										{{ instructor.fullName }}
-									</span>
-								</div>
-							</div>
-						</td>
-
-						<!-- Sequence Number -->
-						<td>
-							<div class="section-diff-element section-unique-key">
-								{{ section.sequenceNumber }}
-							</div>
-						</td>
-
-						<!-- CRN -->
-						<td>
-							<div ng-if="section.crn">
-								{{ section.crn }}
-							</div>
-							<div ng-if="!section.crn">
-								No CRN
-							</div>
-						</td>
-
-						<!-- Seats -->
-						<td>
-							<div>
-								{{ section.seats }}
-							</div>
-						</td>
-
-						<!-- Activities -->
-						<td colspan="5" style="padding: 8px;">
-							<div ng-repeat="activity in section.activities track by $index"
-									class="section-activity-diff-row">
-
-								<!-- Activity Type -->
-								<div class="activity-diff-element activity-type-code">
-									{{ activity.activityTypeCode.activityTypeCode.getActivityCodeDescription() }}
-								</div>
-
-								<!-- dayIndicator -->
-								<div class="activity-diff-element activity-day-indicator">
-									<span class="diff-content">
-										{{ activity.dayIndicator.getWeekDays() || 'none' }}
-									</span>
-								</div>
-
-
-								<!-- startTime -->
-								<div class="activity-diff-element activity-start-time">
-									<span class="diff-content">
-										{{ activity.startTime.toStandardTime() || 'none' }}
-									</span>
-								</div>
-
-								<!-- endTime -->
-								<div class="activity-diff-element activity-end-time">
-									<span class="diff-content">
-										{{ activity.endTime.toStandardTime() || 'none' }}
-									</span>
-								</div>
-
-								<!-- location -->
-								<div class="activity-diff-element activity-location">
-									<span class="diff-content">
-										{{ activity.bannerLocation || 'none' }}
-									</span>
-								</div>
-
-							</div>
-
-						</td>
-					</tr>
-
-				</tbody>
-			</table>
+		<div style="flex: 1 0 0px;">
+			No preferences.
+		</div>
+		<div style="flex: 1 0 0px;">
+			<div>
+				ECS 120 - A
+			</div>
+			<div>
+				PSC 001 - 001
+			</div>
+			<div>
+				<availability-grid blob="blob" read-only="true" style="cursor: default; width: 95%;">
+				</availability-grid>
+			</div>
+		</div>
+		<div style="flex: 1 0 0px;">
+			<div>
+				PSC 001 - A
+			</div>
+			<div>
+				PSC 003 - 001
+			</div>
+			<div>
+				PSC 141 - A
+			</div>
+			<div>
+				PSC 041 - 003
+			</div>
+			<div>
+				ECS 113A - B
+			</div>
+			<div>
+				PSC 199 - 001
+			</div>
+			<div>
+				<availability-grid blob="blob" read-only="true" style="cursor: default; width: 95%;">
+				</availability-grid>
+			</div>
+		</div>
+		<div style="flex: 1 0 0px;">
+			No preferences.
+		</div>
+		<div style="flex: 1 0 0px;">
+			No preferences.
 		</div>
 	</div>
-
+	<!-- table body -->
+	<div style="margin-top: 20px; display: flex; width: 100%;">
+		<div style="flex: 1 0 0px;">
+			Smith, Daniels
+			<div>
+				No Comments.
+			</div>
+		</div>
+		<div style="flex: 1 0 0px;">
+			No preferences.
+		</div>
+		<div style="flex: 1 0 0px;">
+			<div>
+				ECS 120 - A
+			</div>
+			<div>
+				PSC 001 - 001
+			</div>
+		</div>
+		<div style="flex: 1 0 0px;">
+			<div>
+				PSC 001 - A
+			</div>
+			<div>
+				PSC 003 - 001
+			</div>
+			<div>
+				PSC 141 - A
+			</div>
+			<div>
+				PSC 041 - 003
+			</div>
+			<div>
+				ECS 113A - B
+			</div>
+			<div>
+				PSC 199 - 001
+			</div>
+		</div>
+		<div style="flex: 1 0 0px;">
+			No preferences.
+		</div>
+		<div style="flex: 1 0 0px;">
+			No preferences.
+		</div>
+	</div>	<!-- table body -->
+		<div style="margin-top: 20px; display: flex; width: 100%;">
+			<div style="flex: 1 0 0px;">
+				Smith, Daniels
+				<div>
+					No Comments.
+				</div>
+			</div>
+			<div style="flex: 1 0 0px;">
+				No preferences.
+			</div>
+			<div style="flex: 1 0 0px;">
+				<div>
+					ECS 120 - A
+				</div>
+				<div>
+					PSC 001 - 001
+				</div>
+			</div>
+			<div style="flex: 1 0 0px;">
+				<div>
+					PSC 001 - A
+				</div>
+				<div>
+					PSC 003 - 001
+				</div>
+				<div>
+					PSC 141 - A
+				</div>
+				<div>
+					PSC 041 - 003
+				</div>
+				<div>
+					ECS 113A - B
+				</div>
+				<div>
+					PSC 199 - 001
+				</div>
+			</div>
+			<div style="flex: 1 0 0px;">
+				No preferences.
+			</div>
+			<div style="flex: 1 0 0px;">
+				No preferences.
+			</div>
+		</div>	<!-- table body -->
+			<div style="margin-top: 20px; display: flex; width: 100%;">
+				<div style="flex: 1 0 0px;">
+					Smith, Daniels
+					<div>
+						No Comments.
+					</div>
+				</div>
+				<div style="flex: 1 0 0px;">
+					No preferences.
+				</div>
+				<div style="flex: 1 0 0px;">
+					<div>
+						ECS 120 - A
+					</div>
+					<div>
+						PSC 001 - 001
+					</div>
+				</div>
+				<div style="flex: 1 0 0px;">
+					<div>
+						PSC 001 - A
+					</div>
+					<div>
+						PSC 003 - 001
+					</div>
+					<div>
+						PSC 141 - A
+					</div>
+					<div>
+						PSC 041 - 003
+					</div>
+					<div>
+						ECS 113A - B
+					</div>
+					<div>
+						PSC 199 - 001
+					</div>
+				</div>
+				<div style="flex: 1 0 0px;">
+					No preferences.
+				</div>
+				<div style="flex: 1 0 0px;">
+					No preferences.
+				</div>
+			</div>
 </div>
-<div></div>

@@ -8,6 +8,7 @@
 teachingCallResponseReportApp.controller('TeachingCallResponseReportCtrl', ['$scope', '$rootScope', '$routeParams', 'Term', 'teachingCallResponseReportActionCreators', 'authService',
 	this.TeachingCallResponseReportCtrl = function ($scope, $rootScope, $routeParams, Term, scheduleSummaryReportActionCreators, authService) {
 
+		$scope.blob = "0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0";
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 

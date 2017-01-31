@@ -4,7 +4,8 @@ teachingCallResponseReportApp.service('teachingCallResponseReportActionCreators'
 			teachingCallResponseReportService.getInitialState(workgroupId, year).then(function (payload) {
 				var action = {
 					type: INIT_STATE,
-					payload: payload
+					payload: payload,
+					year: year
 				};
 				teachingCallResponseReportStateService.reduce(action);
 			}, function (err) {
