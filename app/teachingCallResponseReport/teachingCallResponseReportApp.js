@@ -3,10 +3,10 @@ window.teachingCallResponseReportApp = angular.module("teachingCallResponseRepor
 teachingCallResponseReportApp.config(function ($routeProvider) {
 	return $routeProvider
 		.when("/:workgroupId/:year", {
-			templateUrl: "ScheduleSummaryReportCtrl.html",
-			controller: "ScheduleSummaryReportCtrl",
+			templateUrl: "TeachingCallResponseReportCtrl.html",
+			controller: "TeachingCallResponseReportCtrl",
 			resolve: {
-				payload: ScheduleSummaryReportCtrl.getPayload
+				payload: TeachingCallResponseReportCtrl.getPayload
 			}
 		})
 		.otherwise({

@@ -1,7 +1,7 @@
-teachingCallResponseReportApp.service('teachingCallResponseReportActionCreators', function (scheduleSummaryReportStateService, scheduleSummaryReportService, $rootScope) {
+teachingCallResponseReportApp.service('teachingCallResponseReportActionCreators', function (teachingCallResponseReportStateService, teachingCallResponseReportService, $rootScope) {
 	return {
 		getInitialState: function (workgroupId, year, termCode) {
-			teachingCallResponseReportService.getInitialState(workgroupId, year, termCode).then(function (payload) {
+			teachingCallResponseReportService.getInitialState(workgroupId, year).then(function (payload) {
 				var action = {
 					type: INIT_STATE,
 					payload: payload
