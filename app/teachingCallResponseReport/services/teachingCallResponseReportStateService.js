@@ -19,7 +19,7 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 									instructor.availabilityByTermCode = {};
 								}
 
-								instructor.availabilityByTermCode[teachingCallResponse.termCode] = teachingCallResponse.availabilityBlob;
+								instructor.availabilityByTermCode[teachingCallResponse.termCode] = availabilityBlobToDescriptions(teachingCallResponse.availabilityBlob);
 							}
 						});
 					});
@@ -231,20 +231,75 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 		}
 	};
 });
+availabilityBlobToDescriptions = function(blob) {
+	var hoursArray = blob.split(',');
 
-sortSections = function(sections) {
-	sections.sort(function (a, b) {
-		// Use subject codes to sort if they don't match
-		if (a.sequenceNumber > b.sequenceNumber) {
-			return 1;
+	if (hoursArray.length != 75) {
+		return null;
+	}
+
+	var mondayArray = hoursArray.slice(0,14);
+	var tuesdayArray = hoursArray.slice(15,29);
+	var wednesdayArray = hoursArray.slice(30,44);
+	var thursdayArray = hoursArray.slice(45,59);
+	var fridayArray = hoursArray.slice(60,74);
+
+	var descriptions = [];
+	var descriptions = descriptions.concat(dayArrayToDescriptions(mondayArray, "M"));
+	var descriptions = descriptions.concat(dayArrayToDescriptions(tuesdayArray, "T"));
+	var descriptions = descriptions.concat(dayArrayToDescriptions(wednesdayArray, "W"));
+	var descriptions = descriptions.concat(dayArrayToDescriptions(thursdayArray, "R"));
+	var descriptions = descriptions.concat(dayArrayToDescriptions(fridayArray, "F"));
+
+	return descriptions;
+};
+
+dayArrayToDescriptions = function(dayArray, dayCode) {
+	var descriptions = [];
+	var startHour = 7;
+
+	var startTimeBlock = null;
+	var endTimeBlock = null;
+
+	dayArray.forEach( function(hourFlag, i) {
+		if (hourFlag == "1") {
+			if (startTimeBlock == null) {
+				startTimeBlock = startHour + i;
+				endTimeBlock = startHour + i + 1;
+			} else {
+				endTimeBlock++;
+			}
 		}
 
-		if (a.sequenceNumber < b.sequenceNumber) {
-			return -1;
-		}
+		if (hourFlag == "0" && startTimeBlock != null) {
+			var startTimeAdjusted = startTimeBlock;
+			var endTimeAdjusted = endTimeBlock;
 
-		return -1;
+			if (startTimeBlock > 12) {
+				startTimeAdjusted -= 12;
+			}
+			if (endTimeBlock > 12) {
+				endTimeAdjusted -= 12;
+			}
+
+			var startTime = startTimeAdjusted + timeSuffix(startTimeBlock);
+			var endTime = endTimeAdjusted + timeSuffix(endTimeBlock);
+
+			description = {};
+			description.day = dayCode;
+			description.time = startTime + "-" + endTime;
+			descriptions.push(description);
+			startTimeBlock = null;
+		}
 	});
 
-	return sections;
+	return descriptions;
 };
+
+timeSuffix = function(time) {
+	if (time < 12) {
+		return "am";
+	}
+
+	return "pm";
+}

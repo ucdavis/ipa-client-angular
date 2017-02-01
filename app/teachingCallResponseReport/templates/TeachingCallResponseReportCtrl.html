@@ -7,11 +7,11 @@
 	</div>
 
 	<!-- table header -->
-	<div style="display: flex; width: 100%; font-size:14px; text-align: center;">
-		<div style="flex: 1 0 0px; text-align: left;">
+	<div class="table-header">
+		<div class="instructor-header">
 			Instructors
 		</div>
-		<div ng-repeat="termCode in view.state.termCodes" style="flex: 2 0 0px;">
+		<div ng-repeat="termCode in view.state.termCodes" class="term-header">
 			{{ getTermName(termCode) }}
 		</div>
 	</div>
@@ -19,25 +19,34 @@
 	<!-- table body (row pairs) -->
 	<div ng-repeat="instructor in view.state.instructors">
 		<!-- instructor row -->
-		<div style="margin-top: 10px; display: flex; width: 100%; text-align: center;">
-			<div style="flex: 1 0 0px; font-weight: bold; text-align: left;">
+		<div class="instructor-row">
+			<div class="instructor-cell">
 				{{ instructor.fullName }}
-				<i ng-if="instructor.submitted" style="color: green;" class="glyphicon glyphicon-ok"
+				<i ng-if="instructor.submitted" class="green glyphicon glyphicon-ok"
 				uib-tooltip="Submitted Preferences" tooltip-placement="top" tooltip-append-to-body="true"></i>
 			</div>
-			<div ng-repeat="termCode in view.state.termCodes" style="flex: 2 0 0px;">
+			<div ng-repeat="termCode in view.state.termCodes" class="term-cell">
 				<div ng-repeat="preference in instructor.preferencesByTermCode[termCode]">
 					{{ preference.description }}
 				</div>
+				<div ng-if="instructor.availabilityByTermCode[termCode].length > 0">
+					Availability:
+				</div>
+				<div ng-repeat="availabilityDescription in instructor.availabilityByTermCode[termCode]">
+					<b>{{ availabilityDescription.day }}</b> {{ availabilityDescription.time }}
+				</div>
 			</div>
 		</div>
+
 		<!-- comment row -->
-		<div ng-if="instructor.comment.length > 0" style="margin-top: 10px; display: flex; width: 100%;">
+		<div ng-if="instructor.comment.length > 0" class="comment-row">
 			<div style="flex: 1 0 0px; color: #9e9e9e;">
 				{{ instructor.comment }}
 			</div>
 		</div>
-		<div style="margin-top:10px; border-bottom: 1px solid #ddd;">
+
+		<div ng-if="$last == false" class="dividing-bar">
 		</div>
+
 	</div>
 </div>
