@@ -37,6 +37,11 @@
 	width: 100%;
 }
 
+.comment-cell {
+	flex: 1 0 0px;
+	color: #888888;
+}
+
 .green {
 	color: green;
 }
@@ -48,4 +53,9 @@
 .dividing-bar {
 	margin-top:10px;
 	border-bottom: 1px solid #ddd;
+}
+
+.dividing-bar-darker {
+	margin-top:10px;
+	border-bottom: 1px solid #848484;
 }

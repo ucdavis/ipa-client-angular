@@ -16,6 +16,9 @@
 		</div>
 	</div>
 
+	<div class="dividing-bar-darker">
+	</div>
+
 	<!-- table body (row pairs) -->
 	<div ng-repeat="instructor in view.state.instructors">
 		<!-- instructor row -->
@@ -29,18 +32,18 @@
 				<div ng-repeat="preference in instructor.preferencesByTermCode[termCode]">
 					{{ preference.description }}
 				</div>
-				<div ng-if="instructor.availabilityByTermCode[termCode].length > 0">
+				<div >
 					Availability:
 				</div>
-				<div ng-repeat="availabilityDescription in instructor.availabilityByTermCode[termCode]">
-					<b>{{ availabilityDescription.day }}</b> {{ availabilityDescription.time }}
+				<div ng-if="availability.times.length > 0" ng-repeat="availability in instructor.availabilityByTermCode[termCode]">
+					<b>{{ availability.day }}</b> {{ availability.times }}
 				</div>
 			</div>
 		</div>
 
 		<!-- comment row -->
 		<div ng-if="instructor.comment.length > 0" class="comment-row">
-			<div style="flex: 1 0 0px; color: #9e9e9e;">
+			<div class="comment-cell">
 				{{ instructor.comment }}
 			</div>
 		</div>

@@ -255,11 +255,15 @@ availabilityBlobToDescriptions = function(blob) {
 };
 
 dayArrayToDescriptions = function(dayArray, dayCode) {
-	var descriptions = [];
+	var descriptions = {};
+	descriptions.day = dayCode;
+	descriptions.times = "";
+
 	var startHour = 7;
 
 	var startTimeBlock = null;
 	var endTimeBlock = null;
+	var firstTimeBlock = true;
 
 	dayArray.forEach( function(hourFlag, i) {
 		if (hourFlag == "1") {
@@ -285,10 +289,13 @@ dayArrayToDescriptions = function(dayArray, dayCode) {
 			var startTime = startTimeAdjusted + timeSuffix(startTimeBlock);
 			var endTime = endTimeAdjusted + timeSuffix(endTimeBlock);
 
-			description = {};
-			description.day = dayCode;
-			description.time = startTime + "-" + endTime;
-			descriptions.push(description);
+			if (firstTimeBlock == false) {
+				descriptions.times += ", ";
+			}
+			firstTimeBlock = false;
+
+			description = startTime + "-" + endTime;
+			descriptions.times += description;
 			startTimeBlock = null;
 		}
 	});
