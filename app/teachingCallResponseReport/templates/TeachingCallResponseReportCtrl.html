@@ -3,240 +3,41 @@
 
 	<div class="report-page-title">
 		<h3>Teaching Call Response Report</h3>
-		<h3 ng-if="term.fullDescription">
-			<a ng-if="previousShortTermCode"
-				ng-href="/scheduleSummaryReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ previousShortTermCode }}">
-				<button type="button" class="btn btn-default chevron-button" aria-label="Left Align">
-					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-				</button>
-			</a>
-
-			{{ term.fullDescription }}
-
-			<a ng-if="nextShortTermCode"
-				ng-href="/scheduleSummaryReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ nextShortTermCode }}">
-				<button type="button" class="btn btn-default chevron-button" aria-label="Left Align">
-					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-				</button>
-			</a>
-
-		</h3>
-
-		<h3 ng-if="!(term.fullDescription)">{{ year }}</h3>
-
 		<p>{{ sharedState.workgroup.name }}</p>
 	</div>
 
 	<!-- table header -->
-	<div style="display: flex; width: 100%; font-weight: bold; font-size:16px;">
-		<div style="flex: 1 0 0px;">
+	<div style="display: flex; width: 100%; font-size:14px; text-align: center;">
+		<div style="flex: 1 0 0px; text-align: left;">
 			Instructors
 		</div>
-		<div style="flex: 1 0 0px;">
-			Fall Quarter
-		</div>
-		<div style="flex: 1 0 0px;">
-			Winter Quarter
-		</div>
-		<div style="flex: 1 0 0px;">
-			Spring Quarter
-		</div>
-		<div style="flex: 1 0 0px;">
-			Summer Session I
-		</div>
-		<div style="flex: 1 0 0px;">
-			Summer Session II
+		<div ng-repeat="termCode in view.state.termCodes" style="flex: 2 0 0px;">
+			{{ getTermName(termCode) }}
 		</div>
 	</div>
 
-	<!-- table body -->
-	<div style="margin-top: 20px; display: flex; width: 100%;">
-		<div style="flex: 1 0 0px;">
-			Smith, Daniels
-			<div>
-				No Comments.
+	<!-- table body (row pairs) -->
+	<div ng-repeat="instructor in view.state.instructors">
+		<!-- instructor row -->
+		<div style="margin-top: 10px; display: flex; width: 100%; text-align: center;">
+			<div style="flex: 1 0 0px; font-weight: bold; text-align: left;">
+				{{ instructor.fullName }}
+				<i ng-if="instructor.submitted" style="color: green;" class="glyphicon glyphicon-ok"
+				uib-tooltip="Submitted Preferences" tooltip-placement="top" tooltip-append-to-body="true"></i>
+			</div>
+			<div ng-repeat="termCode in view.state.termCodes" style="flex: 2 0 0px;">
+				<div ng-repeat="preference in instructor.preferencesByTermCode[termCode]">
+					{{ preference.description }}
+				</div>
 			</div>
 		</div>
-		<div style="flex: 1 0 0px;">
-			No preferences.
-		</div>
-		<div style="flex: 1 0 0px;">
-			<div>
-				ECS 120 - A
-			</div>
-			<div>
-				PSC 001 - 001
-			</div>
-			<div>
-				<availability-grid blob="blob" read-only="true" style="cursor: default; width: 95%;">
-				</availability-grid>
+		<!-- comment row -->
+		<div ng-if="instructor.comment.length > 0" style="margin-top: 10px; display: flex; width: 100%;">
+			<div style="flex: 1 0 0px; color: #9e9e9e;">
+				{{ instructor.comment }}
 			</div>
 		</div>
-		<div style="flex: 1 0 0px;">
-			<div>
-				PSC 001 - A
-			</div>
-			<div>
-				PSC 003 - 001
-			</div>
-			<div>
-				PSC 141 - A
-			</div>
-			<div>
-				PSC 041 - 003
-			</div>
-			<div>
-				ECS 113A - B
-			</div>
-			<div>
-				PSC 199 - 001
-			</div>
-			<div>
-				<availability-grid blob="blob" read-only="true" style="cursor: default; width: 95%;">
-				</availability-grid>
-			</div>
-		</div>
-		<div style="flex: 1 0 0px;">
-			No preferences.
-		</div>
-		<div style="flex: 1 0 0px;">
-			No preferences.
+		<div style="margin-top:10px; border-bottom: 1px solid #ddd;">
 		</div>
 	</div>
-	<!-- table body -->
-	<div style="margin-top: 20px; display: flex; width: 100%;">
-		<div style="flex: 1 0 0px;">
-			Smith, Daniels
-			<div>
-				No Comments.
-			</div>
-		</div>
-		<div style="flex: 1 0 0px;">
-			No preferences.
-		</div>
-		<div style="flex: 1 0 0px;">
-			<div>
-				ECS 120 - A
-			</div>
-			<div>
-				PSC 001 - 001
-			</div>
-		</div>
-		<div style="flex: 1 0 0px;">
-			<div>
-				PSC 001 - A
-			</div>
-			<div>
-				PSC 003 - 001
-			</div>
-			<div>
-				PSC 141 - A
-			</div>
-			<div>
-				PSC 041 - 003
-			</div>
-			<div>
-				ECS 113A - B
-			</div>
-			<div>
-				PSC 199 - 001
-			</div>
-		</div>
-		<div style="flex: 1 0 0px;">
-			No preferences.
-		</div>
-		<div style="flex: 1 0 0px;">
-			No preferences.
-		</div>
-	</div>	<!-- table body -->
-		<div style="margin-top: 20px; display: flex; width: 100%;">
-			<div style="flex: 1 0 0px;">
-				Smith, Daniels
-				<div>
-					No Comments.
-				</div>
-			</div>
-			<div style="flex: 1 0 0px;">
-				No preferences.
-			</div>
-			<div style="flex: 1 0 0px;">
-				<div>
-					ECS 120 - A
-				</div>
-				<div>
-					PSC 001 - 001
-				</div>
-			</div>
-			<div style="flex: 1 0 0px;">
-				<div>
-					PSC 001 - A
-				</div>
-				<div>
-					PSC 003 - 001
-				</div>
-				<div>
-					PSC 141 - A
-				</div>
-				<div>
-					PSC 041 - 003
-				</div>
-				<div>
-					ECS 113A - B
-				</div>
-				<div>
-					PSC 199 - 001
-				</div>
-			</div>
-			<div style="flex: 1 0 0px;">
-				No preferences.
-			</div>
-			<div style="flex: 1 0 0px;">
-				No preferences.
-			</div>
-		</div>	<!-- table body -->
-			<div style="margin-top: 20px; display: flex; width: 100%;">
-				<div style="flex: 1 0 0px;">
-					Smith, Daniels
-					<div>
-						No Comments.
-					</div>
-				</div>
-				<div style="flex: 1 0 0px;">
-					No preferences.
-				</div>
-				<div style="flex: 1 0 0px;">
-					<div>
-						ECS 120 - A
-					</div>
-					<div>
-						PSC 001 - 001
-					</div>
-				</div>
-				<div style="flex: 1 0 0px;">
-					<div>
-						PSC 001 - A
-					</div>
-					<div>
-						PSC 003 - 001
-					</div>
-					<div>
-						PSC 141 - A
-					</div>
-					<div>
-						PSC 041 - 003
-					</div>
-					<div>
-						ECS 113A - B
-					</div>
-					<div>
-						PSC 199 - 001
-					</div>
-				</div>
-				<div style="flex: 1 0 0px;">
-					No preferences.
-				</div>
-				<div style="flex: 1 0 0px;">
-					No preferences.
-				</div>
-			</div>
 </div>

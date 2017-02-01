@@ -5,36 +5,6 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 			switch (action.type) {
 				case INIT_STATE:
 
-					var collapsedTermsBlob = "0000000000";
-
-					// Collapse the teachingCall termsBlobs into one
-					teachingCalls = action.payload.teachingCalls;
-
-					teachingCalls.forEach( function(teachingCall) {
-
-						// Loop through blobFlags in teachingCalls termBlob
-						for (var i = 0; i < teachingCall.termsBlob.length; i++) {
-							var blobFlag = teachingCall.termsBlob[i];
-							if (blobFlag == "1") {
-								// Change the relevant flag to 1
-								collapsedTermsBlob = setCharAt(collapsedTermsBlob,i,"1");
-							}
-						}
-					});
-
-					// Get relevant termCodes for report from collapsed termsBlob
-					var relevantTermCodes = [];
-
-					var allTerms = ['01', '02', '03', '04', '05', '06', '07', '08', '09','10'];
-
-					for (var i = 0; i < collapsedTermsBlob.length; i++) {
-						var blobFlag = collapsedTermsBlob[i];
-						if (blobFlag == "1") {
-							var termCode = allTerms[i];
-							relevantTermCodes.push(termCode);
-						}
-					}
-
 					// Root state object
 					instructors = action.payload.instructors;
 
@@ -60,7 +30,7 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 					teachingCallReceipts.forEach( function(teachingCallReceipt) {
 						instructors.forEach( function(instructor) {
 							if (instructor.id == teachingCallReceipt.instructorId) {
-								instructor.isDone = teachingCallReceipt.isDone;
+								instructor.submitted = teachingCallReceipt.isDone;
 								instructor.comment = teachingCallReceipt.comment;
 							}
 						});
@@ -95,16 +65,15 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 
 					teachingAssignments.forEach( function(teachingAssignment) {
 						// Ignore assignments from the academic coordinator
-
-
-						// TODO: why is this never true?
-						if (teachingAssignment.fromInstructor == false) {
+						if (teachingAssignment.fromInstructor) {
 							// Find the relevant instructor
 							var instructor = null;
 
 							for (var j=0; j < instructors.length; j++) {
-								if (teachingAssignment.instructorId = instructors[j].id) {
-									instructor = instructors[j];
+								var slotInstructor = instructors[j];
+
+								if (teachingAssignment.instructorId == slotInstructor.id) {
+									instructor = slotInstructor;
 									break;
 								}
 							}
@@ -149,9 +118,13 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 							// Do we already have that course listed for this term?
 							var alreadyExists = false;
 
+
+
 							for (var i = 0; i < preferences.length; i++) {
 								var preference = preferences[i];
-								if (preference.courseId == course.id) {
+								if (preference.effectiveTermCode == course.effectiveTermCode
+										&& preference.subjectCode == course.subjectCode
+										&& preference.courseNumber == course.courseNumber) {
 									alreadyExists = true;
 									break;
 								}
@@ -160,6 +133,9 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 							if (alreadyExists == false) {
 								var newPreference = {};
 								newPreference.courseId = course.id;
+								newPreference.subjectCode = course.subjectCode;
+								newPreference.courseNumber = course.courseNumber;
+								newPreference.effectiveTermCode = course.effectiveTermCode;
 								newPreference.description = course.subjectCode + " " + course.courseNumber;
 								newPreference.order = teachingAssignment.priority;
 								preferences.push(newPreference);
@@ -167,12 +143,70 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 						}
 					});
 
-					instructors;
-					debugger;
-					
 					return instructors;
 				default:
 					return instructors;
+			}
+		},
+		_termCodeReducers: function (action, termCodes) {
+			switch (action.type) {
+				case INIT_STATE:
+
+					var collapsedTermsBlob = "0000000000";
+
+					// Collapse the teachingCall termsBlobs into one
+					teachingCalls = action.payload.teachingCalls;
+
+					teachingCalls.forEach( function(teachingCall) {
+
+						// Loop through blobFlags in teachingCalls termBlob
+						for (var i = 0; i < teachingCall.termsBlob.length; i++) {
+							var blobFlag = teachingCall.termsBlob[i];
+							if (blobFlag == "1") {
+								// Change the relevant flag to 1
+								collapsedTermsBlob = setCharAt(collapsedTermsBlob,i,"1");
+							}
+						}
+					});
+
+					// Convert termsBlob to terms
+					var allTerms = ['01', '02', '03', '04', '05', '06', '07', '08', '09','10'];
+					var relevantTerms = [];
+
+					for (var i = 0; i < collapsedTermsBlob.length; i++) {
+						var blobFlag = collapsedTermsBlob[i];
+						if (blobFlag == "1") {
+							var termCode = allTerms[i];
+							relevantTerms.push(termCode);
+						}
+					}
+
+					// sort terms Chronologically
+					var chronologicallyOrderedTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
+					var sortedTerms = [];
+					chronologicallyOrderedTerms.forEach( function(term) {
+						if (relevantTerms.indexOf(term) > -1) {
+							sortedTerms.push(term);
+						}
+					});
+
+					var relevantTermCodes = [];
+					// Convert terms to termCodes
+					for (var i = 0; i < sortedTerms.length; i++) {
+						var term = sortedTerms[i];
+						var termYear = action.year;
+
+						if (parseInt(term) < 4) {
+							termYear++;
+						}
+
+						var termCode = termYear + term;
+						relevantTermCodes.push(termCode);
+					}
+
+					return relevantTermCodes;
+				default:
+					return termCodes;
 			}
 		},
 		reduce: function (action) {
@@ -184,6 +218,7 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 
 			newState = {};
 			newState.instructors = scope._instructorReducers(action, scope._state.instructors);
+			newState.termCodes = scope._termCodeReducers(action, scope._state.termCodes);
 
 			scope._state = newState;
 			$rootScope.$emit('reportStateChanged', {
