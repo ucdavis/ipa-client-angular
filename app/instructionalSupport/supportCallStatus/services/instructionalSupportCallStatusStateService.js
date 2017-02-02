@@ -23,9 +23,13 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 						}
 					};
 
-					// Collect instructors of interest (by term) from teachingAssignments
+					// Build instructorsByTermCode structure
 					var instructorsByTermCode = {};
 					action.payload.teachingAssignments.forEach( function(teachingAssignment) {
+						if (teachingAssignment.approved == false) {
+							return;
+						}
+
 						instructorId = teachingAssignment.instructorId;
 						termCode = teachingAssignment.termCode;
 
@@ -106,6 +110,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 						var supportCallId = response.studentSupportCallId;
 						var termCode = "";
 
+						// Add the supportStaff to the supportCall
 						action.payload.studentSupportCalls.forEach( function (studentSupportCall) {
 							if (supportCallId == studentSupportCall.id) {
 								// Identify the termCode associated to the response
@@ -116,6 +121,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 							}
 						});
 
+						// Remove the supportStaff from the eligibleStaff for that term
 						var index = supportCalls.eligibleSupportStaff[termCode].indexOf(supportStaffId);
 						if (index >= 0) {
 							supportCalls.eligibleSupportStaff[termCode].splice(index,1);
@@ -137,6 +143,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 						var termCode = "";
 
 						action.payload.instructorSupportCalls.forEach( function (instructorSupportCall) {
+
 							if (supportCallId == instructorSupportCall.id) {
 								termCode = instructorSupportCall.termCode; 
 							}
@@ -146,7 +153,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 						});
 
 						var index = supportCalls.eligibleInstructors[termCode].indexOf(instructorId);
-						if (index >= 0) {
+						if (index > -1) {
 							supportCalls.eligibleInstructors[termCode].splice(index,1);
 						}
 
