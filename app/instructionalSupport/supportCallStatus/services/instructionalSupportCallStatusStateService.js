@@ -176,6 +176,11 @@ instructionalSupportApp.service('instructionalSupportCallStatusStateService', fu
 					return supportCalls;
 				case ADD_INSTRUCTOR_SUPPORT_CALL:
 						var instructorSupportCall = action.payload;
+
+						// Makes the '% Responded' column in the template display 0% initially, which is correct'
+						instructorSupportCall.responded = 0;
+						instructorSupportCall.contacted = 1;
+
 						var supportCallId = instructorSupportCall.id;
 
 						supportCalls.instructorSupportCalls.ids.push(instructorSupportCall.id);
