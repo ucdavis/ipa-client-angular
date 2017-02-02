@@ -6,6 +6,13 @@
 		<p>{{ sharedState.workgroup.name }}</p>
 	</div>
 
+	<div style="margin-bottom: 20px; width: 100%; display: flex; justify-content: flex-end;">
+		<div style="font-size: 10px; color: #888; width: 30%;">
+			Please note that this report will only include preferences created by the Instructor.
+			To see preferences and assignments created by the Academic Planner please see the Assignments view.
+		</div>
+	</div>
+
 	<!-- table header -->
 	<div class="table-header">
 		<div class="instructor-header">
@@ -32,7 +39,7 @@
 				<div ng-repeat="preference in instructor.preferencesByTermCode[termCode]">
 					{{ preference.description }}
 				</div>
-				<div >
+				<div ng-if="instructor.availabilityByTermCode[termCode].length > 0">
 					Availability:
 				</div>
 				<div ng-if="availability.times.length > 0" ng-repeat="availability in instructor.availabilityByTermCode[termCode]">

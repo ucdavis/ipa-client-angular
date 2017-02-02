@@ -245,11 +245,30 @@ availabilityBlobToDescriptions = function(blob) {
 	var fridayArray = hoursArray.slice(60,74);
 
 	var descriptions = [];
-	var descriptions = descriptions.concat(dayArrayToDescriptions(mondayArray, "M"));
-	var descriptions = descriptions.concat(dayArrayToDescriptions(tuesdayArray, "T"));
-	var descriptions = descriptions.concat(dayArrayToDescriptions(wednesdayArray, "W"));
-	var descriptions = descriptions.concat(dayArrayToDescriptions(thursdayArray, "R"));
-	var descriptions = descriptions.concat(dayArrayToDescriptions(fridayArray, "F"));
+	var mondayDescriptions = dayArrayToDescriptions(mondayArray, "M");
+	if (mondayDescriptions.times.length > 0) {
+		var descriptions = descriptions.concat(mondayDescriptions);
+	}
+
+	var tuesdayDescriptions = dayArrayToDescriptions(tuesdayArray, "T");
+	if (tuesdayDescriptions.times.length > 0) {
+		var descriptions = descriptions.concat(tuesdayDescriptions);
+	}
+
+	var wednesdayDescriptions = dayArrayToDescriptions(wednesdayArray, "W");
+	if (wednesdayDescriptions.times.length > 0) {
+		var descriptions = descriptions.concat(wednesdayDescriptions);
+	}
+
+	var thursdayDescriptions = dayArrayToDescriptions(thursdayArray, "R");
+	if (thursdayDescriptions.times.length > 0) {
+		var descriptions = descriptions.concat(thursdayDescriptions);
+	}
+
+	var fridayDescriptions = dayArrayToDescriptions(fridayArray, "F");
+	if (fridayDescriptions.times.length > 0) {
+		var descriptions = descriptions.concat(fridayDescriptions);
+	}
 
 	return descriptions;
 };
