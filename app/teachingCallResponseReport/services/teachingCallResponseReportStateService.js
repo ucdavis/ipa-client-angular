@@ -99,6 +99,8 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 									description = "In Residence";
 								} else if (teachingAssignment.sabbatical) {
 									description = "Sabbatical";
+								} else {
+									description = teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber;
 								}
 
 								var newPreference = {};
