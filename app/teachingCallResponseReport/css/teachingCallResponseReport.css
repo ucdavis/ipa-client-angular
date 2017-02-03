@@ -25,10 +25,15 @@
 	flex: 2 0 0px;
 }
 
+.term-cell-container {
+	flex: 8 0 0px;
+	display: flex;
+}
+
 .instructor-cell {
-	flex: 1 0 0px;
 	font-weight: bold;
 	text-align: left;
+	flex: 1 1 0px;
 }
 
 .comment-row {
@@ -37,9 +42,19 @@
 	width: 100%;
 }
 
+.comment-label {
+	flex: 2 0 0px;
+	display: flex;
+}
+
+.comment-label-container {
+	
+}
+
 .comment-cell {
-	flex: 1 0 0px;
 	color: #888888;
+	flex: 8 0 0px;
+	display: flex;
 }
 
 .green {
