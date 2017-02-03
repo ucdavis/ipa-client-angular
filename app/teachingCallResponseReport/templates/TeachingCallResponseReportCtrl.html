@@ -1,5 +1,16 @@
 <nav year="{{ year }}" term-short-code="{{ termShortCode }}" workgroup-id="{{ workgroupId }}"></nav>
-<div class="main-content">
+<div>
+</div>
+
+<!-- handle lack of teaching call data-->
+<div ng-if="view.state && view.state.termCodes.length == 0">
+		<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+			<p class="lead">No Teaching Call Responses found for {{sharedState.workgroup.name}} {{ year.yearToAcademicYear() }}</p>
+		</div>
+</div>
+
+
+<div ng-if="view.state && view.state.termCodes.length > 0" class="main-content">
 
 	<div class="report-page-title">
 		<h3>Teaching Call Response Report</h3>
