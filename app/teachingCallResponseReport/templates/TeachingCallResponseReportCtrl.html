@@ -30,11 +30,11 @@
 	</div>
 
 	<!-- table body (row pairs) -->
-	<div ng-repeat="instructor in view.state.instructors">
+	<div ng-repeat="instructor in view.state.instructors | orderBy: 'lastName'">
 		<!-- instructor row -->
 		<div class="instructor-row">
 			<div class="instructor-cell">
-				{{ instructor.fullName }}
+				{{ instructor.lastName }}, {{ instructor.firstName }}
 				<i ng-if="instructor.submitted" class="green glyphicon glyphicon-ok"
 				uib-tooltip="Submitted Preferences" tooltip-placement="top" tooltip-append-to-body="true"></i>
 			</div>
