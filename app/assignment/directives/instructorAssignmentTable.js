@@ -243,6 +243,11 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 														nonCoursePreferences.sabbatical = true;
 													}
 
+													if (firstInterestedCourseAdded === false) {
+														courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
+														firstInterestedCourseAdded = true;
+													}
+
 													courseHtml += "<li><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 													courseHtml += " href=\"#\">" + preferenceDisplayText + "</a></li>";
@@ -252,7 +257,11 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 												// This teachingAssignment can't be displayed here
 												if (teachingAssignment.sectionGroupId === 0
-													&& (!teachingAssignment.suggestedSubjectCode || !teachingAssignment.suggestedCourseNumber)) {
+													&& (!teachingAssignment.suggestedSubjectCode || !teachingAssignment.suggestedCourseNumber)
+													&& teachingAssignment.buyout == false
+													&& teachingAssignment.sabbatical == false
+													&& teachingAssignment.inResidence == false
+													&& teachingAsssignment.courseRelease == false) {
 													return true;
 												}
 
