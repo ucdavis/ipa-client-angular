@@ -36,6 +36,9 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 			// 
 			scope.isValidCourseBased = function(teachingAssignment) {
+				if (!teachingAssignment) {
+					return false;
+				}
 				if (teachingAssignment.sectionGroupId === 0
 					&& (!teachingAssignment.suggestedSubjectCode || !teachingAssignment.suggestedCourseNumber)
 					&& teachingAssignment.buyout == false
