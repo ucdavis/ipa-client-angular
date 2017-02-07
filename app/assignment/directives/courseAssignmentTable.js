@@ -110,7 +110,10 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 										courseHtml += "<div class=\"assignment-seats-container\">";
 										courseHtml += "<span class=\"assignment-seats\" data-toggle=\"tooltip\" data-placement=\"top\"";
 										courseHtml += "data-original-title=\"Seats\" data-container=\"body\">";
-										courseHtml += scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats + "</span>";
+
+										// Display nothing if plannedSeats is not set
+										var plannedSeats = scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats || "";
+										courseHtml += plannedSeats + "</span>";
 										courseHtml += "</div>";
 
 										// Loop over teachingAssignments that are approved
