@@ -34,6 +34,19 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				}
 			};
 
+			// 
+			scope.isValidCourseBased = function(teachingAssignment) {
+				if (teachingAssignment.sectionGroupId === 0
+					&& (!teachingAssignment.suggestedSubjectCode || !teachingAssignment.suggestedCourseNumber)
+					&& teachingAssignment.buyout == false
+					&& teachingAssignment.sabbatical == false
+					&& teachingAssignment.courseRelease == false
+					&& teachingAssignment.inResidence == false) {
+						return true;
+				}
+					return false;
+			};
+			// waffle
 			// Build a string of html to display a column header (course, terms, etc.)
 			scope.renderHeader = function () {
 				// Render the header
@@ -256,15 +269,10 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 												}
 
 												// This teachingAssignment can't be displayed here
-												if (teachingAssignment.sectionGroupId === 0
-													&& (!teachingAssignment.suggestedSubjectCode || !teachingAssignment.suggestedCourseNumber)
-													&& teachingAssignment.buyout == false
-													&& teachingAssignment.sabbatical == false
-													&& teachingAssignment.inResidence == false
-													&& teachingAsssignment.courseRelease == false) {
+												if (scope.isValidCourseBased(teachingAssignment) == false) {
 													return true;
 												}
-
+	
 												var course;
 
 												if (teachingAssignment.suggestedSubjectCode && teachingAssignment.suggestedCourseNumber) {
