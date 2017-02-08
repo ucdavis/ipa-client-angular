@@ -84,7 +84,6 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			course.tags = [];
 
 			if (course.tagIds) {
-				debugger;
 				course.tagIds.forEach(function (tagId) {
 					course.tags.push({ id: parseInt(tagId) });
 				});

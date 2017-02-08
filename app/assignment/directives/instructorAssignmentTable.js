@@ -39,17 +39,31 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				if (!teachingAssignment) {
 					return false;
 				}
-				if (teachingAssignment.sectionGroupId === 0
-					&& (!teachingAssignment.suggestedSubjectCode || !teachingAssignment.suggestedCourseNumber)
-					&& teachingAssignment.buyout == false
-					&& teachingAssignment.sabbatical == false
-					&& teachingAssignment.courseRelease == false
-					&& teachingAssignment.inResidence == false) {
-						return true;
+
+				// Is it sectionGroup based?
+				if (teachingAssignment.sectionGroupId != 0) {
+					return true;
 				}
-					return false;
+
+				// Is it suggested?
+				if (teachingAssignment.suggestedSubjectCode
+					&& teachingAssignment.suggestedSubjectCode.length > 0
+					&& teachingAssignment.suggestedCourseNumber
+					&& teachingAssignment.suggestedCourseNumber.length > 0) {
+					return true;
+				}
+
+				// Is it non-course based?
+				if (teachingAssignment.buyout == true
+				|| teachingAssignment.sabbatical == true
+				|| teachingAssignment.courseRelease == true
+				|| teachingAssignment.inResidence == true) {
+					return true;
+				}
+
+				return false;
 			};
-			// waffle
+
 			// Build a string of html to display a column header (course, terms, etc.)
 			scope.renderHeader = function () {
 				// Render the header
