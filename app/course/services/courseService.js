@@ -82,9 +82,13 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			if (!course) { return; }
 
 			course.tags = [];
-			course.tagIds.forEach(function (tagId) {
-				course.tags.push({ id: parseInt(tagId) });
-			});
+
+			if (course.tagIds) {
+				debugger;
+				course.tagIds.forEach(function (tagId) {
+					course.tags.push({ id: parseInt(tagId) });
+				});
+			}
 
 			$http.post(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/courses", course, { withCredentials: true })
 				.success(function (payload) {
