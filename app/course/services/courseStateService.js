@@ -307,12 +307,12 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					var length = action.payload.tags ? action.payload.tags.length : 0;
 					for (var i = 0; i < length; i++) {
 						var tagData = action.payload.tags[i];
-						if (tagData.archived) { continue; }
 						tagsList[tagData.id] = new Tag(tagData);
 					}
 					tags.ids = _array_sortIdsByProperty(tagsList, "name");
 					tags.availableIds = tags.ids.filter(function (tagId) { return tagsList[tagId].archived === false; });
 					tags.list = tagsList;
+
 					return tags;
 				default:
 					return tags;
