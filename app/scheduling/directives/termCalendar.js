@@ -111,8 +111,10 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			};
 
 			var activityToEvents = function (activity, courseTitle) {
+
 				var calendarActivities = [];
-				if (activity.startTime && activity.endTime) {
+
+				if (activity.startTime && activity.endTime && activity.dayIndicator) {
 					var dayArray = activity.dayIndicator.split('');
 
 					var start = activity.startTime.split(':').map(Number);
