@@ -1,0 +1,919 @@
+.right-inner-addon {
+  position: relative;
+}
+.right-inner-addon i {
+  position: absolute;
+  right: 0px;
+  padding: 8px 12px;
+  pointer-events: none;
+}
+.text-warning {
+  color: #f7d227;
+}
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+  display: none !important;
+}
+
+.tile-assignment, .select2-choice {
+	font-size: 12px;
+}
+
+#instructors-table .tile-assignment {
+  position: relative;
+  height: 45px;
+  line-height: .9em;
+  padding: 4px 6px;
+}
+
+#courses-table .tile-assignment {
+  position: relative;
+  height: 30px;
+  padding: 6px;
+}
+.tile-assignment-details {
+  padding-top: 3px;
+  font-size: 10px;
+  color: rgba(44, 126, 161, 0.7);
+}
+#courses-table .assignment-remove {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #000;
+	padding: 3px 12px;
+}
+#instructors-table .assignment-remove {
+  position: absolute;
+  right: 0;
+  top: 7px;
+  color: #000;
+}
+.page-body #courses-table .select2-container .select2-choice {
+  line-height: 30px;
+  height: 30px;
+}
+.page-body #instructors-table .select2-container .select2-choice {
+  line-height: 45px;
+  height: 45px;
+}
+
+.assignment-seats {
+  top: 0;
+  left: 0;
+  text-align: right;
+  padding: 5px 8px 10px;
+  color: #aaa;
+	padding-bottom: 10px;
+}
+
+.assignment-seats-container {
+	margin-bottom: 10px;
+}
+.select2-drop.select2-drop-above.select2-drop-active {
+  border-top: none !important;
+  border-bottom: 1px solid #ebebeb;
+}
+.select2-dropdown-open.select2-drop-above .select2-choice {
+  background: none !important;
+}
+
+.course-list-row {
+	display: flex;
+}
+
+.course-header {
+	color: #a6a7aa;
+	background-color: #f5f5f6;
+}
+
+.term-header {
+	color: #a6a7aa;
+	background-color: #f5f5f6;
+}
+
+.term-cell, .description-cell, .course-description-cell {
+	color: rgb(153, 153, 153);
+	padding: 8px;
+	font-size: 12px;
+	border: 1px solid #ebebeb;
+}
+.term-cell {
+	flex: 1 1 200px;
+}
+
+.description-cell, .course-description-cell {
+	flex: 2 1 200px;
+}
+
+.description-cell div {
+	display: flex;
+}
+
+.course-title {
+	color: #949494;
+	font-weight: bold;
+}
+
+.course-units {
+	color: #949494;
+}
+
+.assign-dropdown .dropdown-toggle {
+	background: white;
+	width: 100%;
+	text-align: left;
+}
+
+.set-term-menu {
+	width: 280px;
+	padding-left: 10px;
+}
+
+.dropdown-assign-header {
+	font-weight: bold;
+	color: rgb(0,0,0);
+	padding-left: 10px;
+}
+
+ul.dropdown-menu li div {
+	color: rgb(0, 0, 0);
+	font-size: 12px;
+}
+
+ul.dropdown-menu li a {
+	color: rgb(153, 153, 153);
+	font-size: 12px;
+}
+
+div.dropdown button.dropdown-toggle {
+	font-size: 12px;
+	color: rgb(153, 153, 153);
+}
+
+button.btn.assign-dropdown-btn {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.caret {
+	position: absolute;
+	top: 50%;
+	right: 5%;
+}
+.select2-default {
+	border-color: rgb(235, 235, 235);
+}
+
+.scrollable-menu {
+	height: auto;
+	max-height: 200px;
+	overflow-x: hidden;
+}
+
+.table-toolbar {
+  width: 100%;
+  text-align: right;
+  padding-bottom: 5px;
+	margin: 0px;
+  border-radius: 3px;
+}
+.tool-icon {
+  margin: 0 0.5em;
+  padding: 0.5em;
+}
+.tool-icon:hover {
+  cursor: pointer;
+  background: #ebebeb;
+  border-radius: 3px;
+}
+
+/* .btn-group vertical-align pushes the icons with dropdown menus out of veritcal
+   alignment with the icons without a dropdown menu */
+.table-toolbar>.btn-group {
+  vertical-align: initial;
+}
+
+.table-toolbar .dropdown-menu {
+	min-width: 200px;
+}
+
+.table-toolbar .tool-icon {
+  margin: 0 0.5em;
+  padding: 0.5em;
+}
+
+.table-toolbar .tool-icon:hover {
+  cursor: pointer;
+  background: #ebebeb;
+  border-radius: 3px;
+}
+
+.description-cell__comment-btn-container {
+	margin-left: 5px;
+}
+
+.description-cell__avail-btn-container {
+	margin-left: 5px;
+}
+
+.description-cell__comment-btn-container i,
+.description-cell__avail-btn-container i {
+	cursor: pointer;
+}
+
+.description-cell__comment-btn-container:hover i,
+.description-cell__avail-btn-container:hover i {
+	color: black;
+}
+
+.modal-confirm-btn {
+	color: #fff;
+	background-color: #337ab7;
+	border-color: #2e6da4;
+}
+
+.modal-cancel-btn {
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
+}
+
+table.teaching-call tr td.quarter_column, table.teaching-call tr th {
+	text-align: center;
+}
+
+small.legend {
+	display:block;
+	margin: 10px;
+	font-size: 12px;
+}
+
+.disabled-calendar {
+	color: #E6E6E6;
+	cursor: default;
+}
+div:hover .disabled-calendar {
+	color: #E6E6E6;
+	cursor: default;
+}
+
+.modal-comment-subheader {
+	color: #5f625f;
+	font-size: 14px;
+	font-weight: bold;
+	margin-top: 20px;
+}
+
+/* Sortable-list */
+ol.sortable-list {
+	padding-left: 5px;
+	position: relative;
+}
+
+ol.sortable-list > li {
+	position: relative;
+	list-style: none;
+}
+
+ol.sortable-list > li:not(.unsortable) {
+	cursor: auto;
+	list-style: none;
+}
+
+ol.sortable-list > li .term-preference-dropdown {
+	cursor: auto;
+}
+
+ol.sortable-list > li span.sortable-item-button {
+	position: absolute;
+	right: 0;
+	padding-top: 0.5em;
+	font-size: 16px;
+	font-weight: normal;
+}
+
+ol.sortable-list>li span.dropdown-text {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 80%;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+ul.dropdown-menu li.hidden-column a {
+	color: #AAA;
+}
+
+ul.dropdown-menu li.hidden-column a:before  {
+	content: "\e157";
+	font-family: 'Glyphicons Halflings';
+	position: absolute;
+	left: 15px;
+}
+
+ul.dropdown-menu li.visible-column a:before  {
+	content: "\e067";
+	font-family: 'Glyphicons Halflings';
+	position: absolute;
+	left: 15px;
+}
+
+ul.dropdown-menu li.selected a:before  {
+	content: "\e013";
+	font-family: 'Glyphicons Halflings';
+	position: absolute;
+	left: 15px;
+}
+
+.dropdown-menu > li.left-icon > a {
+	padding: 3px 20px 3px 35px;
+}
+
+element.style {
+	width: 88%;
+}
+ol.sortable-list>li .term-preference-dropdown {
+	cursor: auto;
+}
+
+.dropdown-toggle {
+	border-color: #ccc;
+}
+.btn-default {
+	color: #333;
+		background-color: #fff;
+		border-color: #ccc;
+}
+
+.btn {
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	border-radius: 4px;
+}
+
+.btn, .btn-group, .btn-group-vertical, .caret, .checkbox-inline, .radio-inline, img {
+	vertical-align: middle;
+}
+
+.badge {
+	display: inline-block;
+	min-width: 10px;
+	padding: 3px 7px;
+	font-size: 12px;
+	color: #fff;
+	vertical-align: middle;
+	background-color: #777;
+	border-radius: 10px;
+}
+
+.badge, .label {
+	font-weight: 700;
+	line-height: 1;
+	white-space: nowrap;
+	text-align: center;
+}
+
+
+.preference-display {
+	margin-bottom: 5px;
+	height: 31px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 88%;
+}
+
+.preference-display-detail {
+	text-align: center;
+	justify-content: center;
+	flex: 1 1 auto;
+}
+
+.open > .dropdown-toggle.btn:hover,
+.open > .dropdown-toggle.btn:focus,
+.open > .dropdown-toggle.btn-default:active,
+.open > .dropdown-toggle.btn-default.active,
+.open > .dropdown-toggle.btn-default:hover,
+.open > .dropdown-toggle.btn-default.hover,
+.open > .dropdown-toggle.btn-default {
+	background-color: rgba(245, 245, 246, 0.8) !important;
+}
+
+.muted-term-name {
+	color: #949494;
+}
+
+.approved-preference,
+.approved-preference:hover {
+	background-color: #d9edf7;
+	height: 30px;
+	padding-left: 6px;
+	padding-right: 6px;
+	width: 180px;
+	margin-top: 10px;
+}
+
+.teaching-call-approved-preference {
+	background-color: #d9edf7;
+	height: 30px;
+	padding-right: 6px;
+	width: 132px;
+	margin-top: 10px;
+	margin-bottom: 0px;
+	display: flex;
+	justify-content: center;
+	margin-left: 14px;
+}
+
+.preference-assignment-dropdown {
+	padding-top: 10px;
+	padding-right: 6px;
+	padding-bottom: 6px;
+	margin-left:15px;
+}
+
+.unapproved-preference,
+.unapproved-preference:hover {
+	background-color: white;
+	border: 1px solid #adadad;
+	width: 180px;
+}
+
+.preference-display-detail {
+	color: rgb(0, 0, 0);
+}
+
+.dropdown-menu .divider.courses-separator {
+	margin: 4px;
+}
+
+.text-align--center {
+    text-align: center;
+}
+
+.tile-assignment--180_width {
+    width: 180px;
+    margin-right: 20px;
+}
+
+.question--position {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: rgb(166, 167, 170);
+    font-size: 12pt;
+}
+
+.question--position:hover {
+    color: black;
+}
+
+.margin-bottom-30 {
+    margin-bottom: 30px;
+}
+
+.icon-option-vertical_ta-assignment {
+    float: left;
+    left: -15px;
+    color: rgb(166, 167, 170);
+}
+
+.icon-remove_ta-assignment {/* remove course icon */
+    display: none;
+    color: #ee4749;
+    float: right;
+    position: absolute;
+    right: -20px;
+    font-size: 12pt;
+    padding-left: 20px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    cursor: pointer;
+}
+
+.department-title {
+	font-size: 14px;
+}
+
+.tile-assignment:hover .icon-remove_ta-assignment {
+    display: block !important;
+}
+
+.glyphicon {
+    cursor: pointer;
+}
+
+.confirmed-course {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.confirmed-course-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.unconfirmed-course {
+    padding: 6px 12px 6px 0px !important; /*this padding make the course title center*/
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.unconfirmed-course-info {
+    color: black;
+    background-color: white;
+    border:1px solid #adadad;
+}
+
+.course-tag {
+	padding: 3px;
+	margin-left: 3px;
+	background-color: #333;
+	color: #FFFFFF;
+}
+
+.preference-container,
+.unavailability-container {
+	border: 1px solid;
+	border-color: rgb(235, 235, 235);
+}
+
+.unavailability-container {
+	display:flex;
+	margin-left:15px;
+	margin-right:15px;
+}
+
+.unavailability-term-header {
+	background-color: rgb(245, 245, 246);
+	height: 34px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 14px;
+	position: relative;
+}
+
+.unavailability-term-container {
+	border-right: 1px solid;
+	border-color: rgb(235, 235, 235);
+}
+
+.unapproved-preference-container {
+	padding-right: 28px; /* accounting for drag handle on unapproved preferences */
+	padding-top: 0px;
+}
+
+.approved-preference-container {
+	margin-bottom: 0px;
+	text-align: center;
+	justify-content: center;
+}
+
+.approved-preference-container,
+.unapproved-preference-container {
+	display: flex;
+	flex-direction: column;
+	align-items:center;
+}
+
+.delete-preference-button {
+	opacity: 1 !important;
+}
+
+.term-preference-dropdown {
+	width: 132px;
+	border-color: rgb(173, 173, 173);
+}
+
+.dropdown-text {
+	color: black;
+}
+
+.preference-sortable-handle {
+	cursor: move;
+}
+
+.provide-unavailabilities-header,
+.provide-comments-header {
+	margin-top: 50px;
+}
+
+.teaching-call-form-submit-container {
+	margin-bottom: 50px;
+}
+
+.ui-state-highlight {
+	height: 40px; /* preserve space for preference while dragging */
+}
+
+/* Teaching Call Status ------------------------------------ */
+.teaching-call-status-container {
+	padding-left: 30px;
+	padding-right: 30px;
+}
+.teaching-call-status-header {
+	text-align: center;
+	padding-bottom: 50px;
+}
+
+.teaching-call-status-sub-header {
+	padding-left: 1%;
+	margin-top: 50px;
+}
+
+.teaching-call-table-row {
+	display:flex;
+	margin-left:15px;
+}
+
+.teaching-call-table__header {
+	border: 1px solid;
+	border-color: rgb(235, 235, 235);
+	flex: 10 0 50px;
+	background-color: rgb(245, 245, 246);
+	height: 30px;
+	text-align: center;
+	padding-top: 5px;
+}
+
+.teaching-call-table__header-detail {
+	text-align: center;
+	color: rgb(166, 167, 170);
+}
+
+.teaching-call-table__row-detail-last {
+	border-right: 1px solid;
+}
+
+.teaching-call-table__row-detail-last,
+.teaching-call-table__row-detail {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 10 0 50px;
+	border-left: 1px solid;
+	border-bottom: 1px solid;
+	border-color: rgb(235, 235, 235);
+	padding-top: 5px;
+	flex-direction: column;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.teaching-call-table__row-hover-ui-detail {
+	visibility: hidden;
+}
+
+.teaching-call-table-row:hover .teaching-call-table__row-hover-ui-detail {
+	visibility: visible;
+}
+
+.delete-teaching-call-button {
+	color: rgba(180, 20, 20, 0.8);
+	font-size: 24px;
+	padding: 0px;
+}
+
+.teaching-call-table__row-hover-ui {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1 0 50px;
+	padding-top: 5px;
+	flex-direction: column;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.teaching-call-table__header-hover-ui {
+	visibility: hidden;
+	flex: 1 0 50px;
+	border: none;
+	outline: none;
+}
+
+.begin-teaching-call-container {
+	margin-top: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.begin-teaching-call-button {
+	background-color: white;
+	margin-left: 15px;
+	flex: 0 0 200px;
+	width: 20%;
+}
+
+.neon-dark-confirm-btn,
+.neon-dark-confirm-btn:focus,
+.neon-dark-confirm-btn:active,
+.neon-dark-confirm-btn,
+.confirmbutton-yes {
+	background-color: rgb(48, 54, 65);
+	border-color: rgb(48, 54, 65);
+	color: white;
+}
+
+.neon-dark-confirm-btn:hover,
+.confirmbutton-yes:hover {
+	background-color: rgb(18, 24, 35); /* Darker Version for hover */
+	color: white;
+}
+
+.neon-dark-confirm-btn.disabled,
+.neon-dark-confirm-btn.disabled:hover,
+.neon-dark-confirm-btn.disabled:focus,
+.neon-dark-confirm-btn.disabled:active {
+	background-color: rgb(48, 54, 65);
+	color: white;
+}
+
+.teaching-call-complete-container {
+	display: flex;
+}
+
+.teaching-call-complete-check {
+	padding-right: 5px;
+	color: rgba(0, 166, 81, 0.8);
+	cursor: default;
+}
+
+.teaching-call-complete-msg {
+	cursor: default;
+}
+
+.provide-unavailabilities-header,
+.provide-comments-header,
+.provide-preferences-header {
+	color: rgb(186, 187, 190);
+}
+
+.teaching-call-form-container {
+	padding-left: 6%;
+	padding-right:6%;
+}
+
+li.active-term .dropdown-term-row {
+	background-color: #ffffff;
+	color: #333;
+	font-weight: bold;
+}
+
+/* unavailability modal */
+.flex-term_title {
+	display: flex;
+	justify-content: space-around;
+	text-align: center;
+	margin: 20px 10px 15px 10px;
+}
+
+.flex-term_title-children {
+	flex: 1 1 20%;
+}
+
+.flex-unavability_chart {
+	display: flex;
+	justify-content: space-around;
+	text-align: center;
+	margin: 10px;
+}
+
+.flex-unavability_chart-children {
+	flex: 1 1 20%;
+}
+
+.unavability_chart {
+	border: 1px solid #95989A;
+	margin-bottom: 10px;
+}
+
+.invisible {
+	visibility:hidden;
+}
+
+.teaching-call-form-unapproved-preference {
+	padding-right: 12px;
+	margin-top: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.teaching-call-form-unapproved-preference-panel {
+	flex: 0 0 auto;
+	border-radius: 4px;
+	border: 1px solid #adadad;
+	background-color: white;
+	width: 132px;
+	height: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	justify-content: space-between;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.teaching-call-form-unapproved-preference-container {
+	margin-bottom: 0px;
+	display: flex;
+	flex-direction: column;
+	align-items:center;
+	padding-left: 5px;
+	position: relative;
+}
+
+.uib-daypicker {
+	outline-width: 0;
+}
+
+.scrollable-dropdown-menu .dropdown-menu {
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+.search-course-input {
+	width: 132px;
+	flex: 0 0 auto;
+	text-align: center;
+}
+
+.search-course-input:focus {
+	border-color: #337ab7;
+	text-align: left;
+}
+.search-course-container {
+	display: flex;
+	padding-left: 12px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	align-items: center;
+	justify-content: center;
+}
+
+.empty-table-message {
+	text-align: center;
+}
+
+.search-course-container i {
+	position: absolute;
+	right: 7px;
+	bottom: 7px;
+}
+
+#modal-1 {
+	height: 100vh;
+}
+
+.view-state-toggle {
+	font-size: 12px;
+}
+
+.tile-assignment .popover-content {
+	color: black;
+}
+
+
+.uib-datepicker .uib-title {
+   border: none;
+}
+
+.uib-daypicker .btn {
+   border: none;
+}
+
+.uib-datepicker-popup {
+   width: 285px;
+}
+
+.instructor-comment-modal__comment-text {
+	margin-top: 10px;
+	border: 1px solid #F2F2F2;
+	padding: 5px;
+}

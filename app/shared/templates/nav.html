@@ -146,7 +146,7 @@
 				<ul ng-class="{ 'visible': expanded == 'assignments' || (!expanded && currentBaseHref == 'assignments') }">
 					<li ng-class="{ 'active': currentBaseHref == 'assignments' && currentEndHref == 'teachingCallStatus' }"
 						ng-if="userHasRoles(['academicPlanner','reviewer'])">
-						<a ng-href="/assignments/{{ workgroupId }}/{{ year }}/teachingCallStatus">
+						<a ng-href="/teachingCalls/{{ workgroupId }}/{{ year }}/teachingCallStatus">
 							<span class="title">Teaching Calls</span>
 						</a>
 					</li>

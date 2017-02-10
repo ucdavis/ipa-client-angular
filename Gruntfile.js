@@ -44,6 +44,11 @@ module.exports = function (grunt) {
 				src: ['assignment/**/*.html'],
 				dest: '<%= folders.webapp.build %>/js/assignmentTemplates.js'
 			},
+			teachingCallApp: {
+				cwd: '<%= folders.webapp.root %>',
+				src: ['teachingCall/**/*.html'],
+				dest: '<%= folders.webapp.build %>/js/teachingCallTemplates.js'
+			},
 			courseApp: {
 				cwd: '<%= folders.webapp.root %>',
 				src: ['course/**/*.html'],
@@ -178,6 +183,14 @@ module.exports = function (grunt) {
 					'<%= ngtemplates.assignmentApp.dest %>'
 				],
 				dest: '<%= folders.webapp.build %>/js/assignmentApp.js'
+			},
+			jsTeachingCall: {
+				src: [
+					'<%= folders.webapp.root %>/teachingCall/*.js',
+					'<%= folders.webapp.root %>/teachingCall/**/*.js',
+					'<%= ngtemplates.teachingCallApp.dest %>'
+				],
+				dest: '<%= folders.webapp.build %>/js/teachingCallApp.js'
 			},
 			// schedulingApp module files
 			jsScheduling: {
@@ -402,10 +415,11 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("gruntify-eslint");
 
 	grunt.registerTask('build', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsProdSnippets',
-		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsRegistrarReconciliationReport', 'concat:jsScheduleSummaryReport', 'concat:jsTeachingCallResponseReport', 'concat:cssLib', 'uglify:dist', 'cssmin']);
+		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsTeachingCall',
+		'concat:jsRegistrarReconciliationReport', 'concat:jsScheduleSummaryReport', 'concat:jsTeachingCallResponseReport', 'concat:cssLib', 'uglify:dist', 'cssmin']);
 
 	grunt.registerTask('serve', ['clean', 'eslint', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsDevSnippets',
-		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsRegistrarReconciliationReport', 'concat:jsScheduleSummaryReport', 'concat:jsTeachingCallResponseReport', 'concat:cssLib', 'connect', 'watch']);
+		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsTeachingCall', 'concat:jsScheduling', 'concat:jsRegistrarReconciliationReport', 'concat:jsScheduleSummaryReport', 'concat:jsTeachingCallResponseReport', 'concat:cssLib', 'connect', 'watch']);
 
 	grunt.registerTask('default', ['serve']);
 
