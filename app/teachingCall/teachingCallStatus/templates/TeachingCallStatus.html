@@ -2,112 +2,74 @@
 <div>
 </div>
 
-<div ng-if="view.state" class="teaching-call-status-container">
+<div><!-- main content container -->
 
-	<div class="teaching-call-status-header">
+
+	This file is currently affected by css from:
+	<ul>
+		<li>
+			/teachingCall/css/teaching-call-modal.css
+		</li>
+		<li>
+			/teachingCall/css/teaching-call-form.css
+		</li>
+		<li>
+			/teachingCall/css/teaching-call-status.css
+		</li>
+	</ul>
+	<div>
+		/teaching-call-status.css is where you should put NEW CSS that you write
+	</div>
+	<div>
+		Most of the CSS in /teaching-call-form.css and /teaching-call-modal.css is very old and poorly written, I don't recommend trying to reuse it
+	</div>
+	<div>
+		However, if you do want to reuse any of that CSS, first move the specific rule to teaching-call.css (to make it clear it is now a shared style)
+	</div>
+
+	<h3 style="text-align: center;">
+		TeachingCalls {{ year }}-{{ nextYear }}
+	</h3>
+	<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
+
+	<div class="btn btn-default">
+		'Add Users' (This will launch a modal to select users)
+	</div>
+
+	<!-- Federation Instructors -->
+	<h2>
+		Senate instructors section
+	</h2>
+	<div class="btn btn-default">
+		Contact Selected Senate Instructors
+	</div>
+	(This will launch a modal to confirm selected instructors)
+	<div>
 		<h3>
-			Teaching Call {{ year }}-{{ nextYear }}
-		</h3>
-		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
+		Table of Senate Instructors
+	</h3>
+		Rows should have: Checkbox to select this instructor (The header of the table should also have a checkbox for selecting all instructors)
+		/ Name 
+		/ Date we last contacted them 
+		/ Date we will contact them next
 	</div>
 
-	<!-- table headers -->
-	<div class="teaching-call-table-row">
-		<div class="teaching-call-table__header">
-			<div class="teaching-call-table__header-detail">
-				<div>
-					Start Date
-				</div>
-			</div>
-		</div>
-		<div class="teaching-call-table__header">
-			<div class="teaching-call-table__header-detail">
-				<div>
-					End Date
-				</div>
-			</div>
-		</div>
-		<div class="teaching-call-table__header">
-			<div class="teaching-call-table__header-detail">
-				<div>
-					Senate
-				</div>
-			</div>
-		</div>
-		<div class="teaching-call-table__header">
-			<div class="teaching-call-table__header-detail">
-				<div>
-					Federation
-				</div>
-			</div>
-		</div>
-		<div class="teaching-call-table__header">
-			<div class="teaching-call-table__header-detail">
-				<div>
-					Via Email
-				</div>
-			</div>
-		</div>
-		<div class="teaching-call-table__header">
-			<div class="teaching-call-table__header-detail">
-				<div>
-					Terms
-				</div>
-			</div>
-		</div>
-		<div class="teaching-call-table__header-hover-ui">
-		</div>
-	</div><!-- table header -->
-
-	<!-- teaching call table -->
-	<div class="teaching-call-table-row" ng-repeat="teachingCallId in view.state.teachingCalls.ids">
-		<div class="teaching-call-table__row-detail"
-		ng-init="teachingCall=view.state.teachingCalls.list[teachingCallId]">
-			<div>
-				{{ teachingCall.startDate.toFullDate() }}
-			</div>
-		</div>
-		<div class="teaching-call-table__row-detail">
-			{{ teachingCall.dueDate.toFullDate() }}
-		</div>
-		<div class="teaching-call-table__row-detail">
-			<i class="glyphicon glyphicon-ok" ng-if="teachingCall.sentToSenate"></i>
-		</div>
-		<div class="teaching-call-table__row-detail">
-			<i class="glyphicon glyphicon-ok" ng-if="teachingCall.sentToFederation"></i>
-		</div>
-		<div class="teaching-call-table__row-detail">
-			<i class="glyphicon glyphicon-ok" ng-if="teachingCall.emailInstructors"></i>
-		</div>
-		<div class="teaching-call-table__row-detail-last">
-			<div ng-repeat="term in teachingCall.terms">
-				<div>
-					{{ term }}
-				</div>
-			</div>
-		</div>
-		<div class="teaching-call-table__row-hover-ui">
-			<div class="teaching-call-table__row-hover-ui-detail">
-				<i class="btn entypo-minus-circled delete-teaching-call-button"
-				uib-tooltip="Delete Teaching Call" tooltip-placement="bottom"
-				confirm-button="deleteTeachingCall(teachingCall)"
-				message="Are you sure you want to delete this teaching call? All of the collected preferences will be lost."
-				yes="Confirm" no="Cancel" placement="top"></i>
-			</div>
-		</div>
+	<!-- Federation Instructors -->
+	<h2>
+		Federation instructors section
+	</h2>
+	<div class="btn btn-default">
+		Contact Selected Federation Instructors
+	</div>
+	(This will launch a modal to confirm selected instructors)
+	<div>
+		<h3>
+		Table of Federation Instructors
+	</h3>
+		Rows should have: Checkbox to select this instructor (The header of the table should also have a checkbox for selecting all instructors)
+		/ Name 
+		/ Date we last contacted them 
+		/ Date we will contact them next
 	</div>
 
-	<!-- Create new teaching call -->
-	<div class="begin-teaching-call-container">
-		<a ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors || view.state.teachingCalls.eligibleGroups.senateInstructors"
-		class="btn btn-block btn-default begin-teaching-call-button" ng-click="openTeachingCallConfig()">
-			<span style="padding-right: 5px;" class="glyphicon glyphicon-plus"></span>
-			Create Teaching Call
-		</a>
-		<div class="teaching-call-complete-container" ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors == false && view.state.teachingCalls.eligibleGroups.senateInstructors == false">
-			<i class="glyphicon glyphicon-ok teaching-call-complete-check"></i>
-			<div class="teaching-call-complete-msg">All instructors have been assigned to a teaching call.</div>
-		</div>
-	</div>
-
-</div> <!-- end cloak -->
+</div>

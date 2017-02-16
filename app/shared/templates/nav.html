@@ -141,19 +141,19 @@
 				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('assignments')">
 					<i class="entypo-user-add"></i>
-					<span class="title">Teaching</span>
+					<span class="title">Assignments</span>
 				</a>
 				<ul ng-class="{ 'visible': expanded == 'assignments' || (!expanded && currentBaseHref == 'assignments') }">
+					<li ng-class="{ 'active': currentBaseHref == 'assignments' && currentEndHref != 'teachingCallStatus' }"
+						ng-if="userHasRoles(['academicPlanner','reviewer'])">
+						<a ng-href="/assignments/{{ workgroupId }}/{{ year }}">
+							<span class="title">Assign Instructors</span>
+						</a>
+					</li>
 					<li ng-class="{ 'active': currentBaseHref == 'assignments' && currentEndHref == 'teachingCallStatus' }"
 						ng-if="userHasRoles(['academicPlanner','reviewer'])">
 						<a ng-href="/teachingCalls/{{ workgroupId }}/{{ year }}/teachingCallStatus">
 							<span class="title">Teaching Calls</span>
-						</a>
-					</li>
-					<li ng-class="{ 'active': currentBaseHref == 'assignments' && currentEndHref != 'teachingCallStatus' }"
-						ng-if="userHasRoles(['academicPlanner','reviewer'])">
-						<a ng-href="/assignments/{{ workgroupId }}/{{ year }}">
-							<span class="title">Assignments</span>
 						</a>
 					</li>
 				</ul>
