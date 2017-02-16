@@ -1,0 +1,113 @@
+<nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
+<div>
+</div>
+
+<div ng-if="view.state" class="teaching-call-status-container">
+
+	<div class="teaching-call-status-header">
+		<h3>
+			Teaching Call {{ year }}-{{ nextYear }}
+		</h3>
+		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
+	</div>
+
+	<!-- table headers -->
+	<div class="teaching-call-table-row">
+		<div class="teaching-call-table__header">
+			<div class="teaching-call-table__header-detail">
+				<div>
+					Start Date
+				</div>
+			</div>
+		</div>
+		<div class="teaching-call-table__header">
+			<div class="teaching-call-table__header-detail">
+				<div>
+					End Date
+				</div>
+			</div>
+		</div>
+		<div class="teaching-call-table__header">
+			<div class="teaching-call-table__header-detail">
+				<div>
+					Senate
+				</div>
+			</div>
+		</div>
+		<div class="teaching-call-table__header">
+			<div class="teaching-call-table__header-detail">
+				<div>
+					Federation
+				</div>
+			</div>
+		</div>
+		<div class="teaching-call-table__header">
+			<div class="teaching-call-table__header-detail">
+				<div>
+					Via Email
+				</div>
+			</div>
+		</div>
+		<div class="teaching-call-table__header">
+			<div class="teaching-call-table__header-detail">
+				<div>
+					Terms
+				</div>
+			</div>
+		</div>
+		<div class="teaching-call-table__header-hover-ui">
+		</div>
+	</div><!-- table header -->
+
+	<!-- teaching call table -->
+	<div class="teaching-call-table-row" ng-repeat="teachingCallId in view.state.teachingCalls.ids">
+		<div class="teaching-call-table__row-detail"
+		ng-init="teachingCall=view.state.teachingCalls.list[teachingCallId]">
+			<div>
+				{{ teachingCall.startDate.toFullDate() }}
+			</div>
+		</div>
+		<div class="teaching-call-table__row-detail">
+			{{ teachingCall.dueDate.toFullDate() }}
+		</div>
+		<div class="teaching-call-table__row-detail">
+			<i class="glyphicon glyphicon-ok" ng-if="teachingCall.sentToSenate"></i>
+		</div>
+		<div class="teaching-call-table__row-detail">
+			<i class="glyphicon glyphicon-ok" ng-if="teachingCall.sentToFederation"></i>
+		</div>
+		<div class="teaching-call-table__row-detail">
+			<i class="glyphicon glyphicon-ok" ng-if="teachingCall.emailInstructors"></i>
+		</div>
+		<div class="teaching-call-table__row-detail-last">
+			<div ng-repeat="term in teachingCall.terms">
+				<div>
+					{{ term }}
+				</div>
+			</div>
+		</div>
+		<div class="teaching-call-table__row-hover-ui">
+			<div class="teaching-call-table__row-hover-ui-detail">
+				<i class="btn entypo-minus-circled delete-teaching-call-button"
+				uib-tooltip="Delete Teaching Call" tooltip-placement="bottom"
+				confirm-button="deleteTeachingCall(teachingCall)"
+				message="Are you sure you want to delete this teaching call? All of the collected preferences will be lost."
+				yes="Confirm" no="Cancel" placement="top"></i>
+			</div>
+		</div>
+	</div>
+
+	<!-- Create new teaching call -->
+	<div class="begin-teaching-call-container">
+		<a ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors || view.state.teachingCalls.eligibleGroups.senateInstructors"
+		class="btn btn-block btn-default begin-teaching-call-button" ng-click="openTeachingCallConfig()">
+			<span style="padding-right: 5px;" class="glyphicon glyphicon-plus"></span>
+			Create Teaching Call
+		</a>
+		<div class="teaching-call-complete-container" ng-if="view.state.teachingCalls.eligibleGroups.federationInstructors == false && view.state.teachingCalls.eligibleGroups.senateInstructors == false">
+			<i class="glyphicon glyphicon-ok teaching-call-complete-check"></i>
+			<div class="teaching-call-complete-msg">All instructors have been assigned to a teaching call.</div>
+		</div>
+	</div>
+
+</div> <!-- end cloak -->

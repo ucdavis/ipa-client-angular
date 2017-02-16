@@ -6,7 +6,7 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
-			$rootScope.$on('teachingCallStateChanged', function (event, data) {
+			$rootScope.$on('teachingCallStatusStateChanged', function (event, data) {
 				$scope.view.state = data;
 				$scope.prepareTeachingCallStatusPage();
 			});
@@ -120,6 +120,6 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 
 TeachingCallStatusCtrl.validate = function (authService, teachingCallStatusActionCreators, $route) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		teachingCallStatusActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+		//teachingCallStatusActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
 	});
 };
