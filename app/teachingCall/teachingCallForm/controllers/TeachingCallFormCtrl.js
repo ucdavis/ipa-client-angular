@@ -348,10 +348,11 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				// Report changes back to server after some delay
 				$timeout.cancel($scope.timeout[term]);
 				$scope.timeout[term] = $timeout(function() {
+					// Either create or update the teachingCallResponse
 					if (teachingCallResponse.id) {
 						teachingCallFormActionCreators.updateTeachingCallResponse(teachingCallResponse);
 					} else {
-						teachingCallFormActionCreators.addTeachingCallResponse(teachingCallResponse);
+						teachingCallFormActionCreators.createTeachingCallResponse(teachingCallResponse);
 					}
 				}, delay);
 			};

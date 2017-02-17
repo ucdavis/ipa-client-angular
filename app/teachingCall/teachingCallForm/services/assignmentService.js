@@ -160,10 +160,10 @@ teachingCallApp.factory("assignmentSerteachingCallFormServicevice", this.teachin
 
 			return deferred.promise;
 		},
-		addTeachingCallResponse: function (teachingCallResponse) {
+		createTeachingCallResponse: function (teachingCallResponse) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/assignmentView/teachingCallResponses/" + teachingCallResponse.teachingCallId  + "/" + teachingCallResponse.instructorId, teachingCallResponse, { withCredentials: true })
+			$http.post(serverRoot + "/api/assignmentView/teachingCallResponses/" + teachingCallResponse.scheduleId  + "/" + teachingCallResponse.instructorId, teachingCallResponse, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
