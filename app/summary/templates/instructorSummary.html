@@ -18,10 +18,10 @@
 		</div>
 
 		<!-- teachingCalls table -->
-		<div ng-show="view.userTeachingCalls && view.userTeachingCalls.length === 0" class="empty-message">
+		<div ng-hide="view.state.teachingCallReceipt" class="empty-message">
 			No Active Teaching Calls
 		</div>
-		<div ng-show="view.userTeachingCalls.length">
+		<div ng-show="view.state.teachingCallReceipt">
 			<div class="course-table-row">
 				<!-- table header -->
 				<div class="course-table__header">
@@ -48,7 +48,7 @@
 			</div>
 			<!-- table header -->
 
-			<div class="course-table-row" ng-repeat="teachingCall in view.userTeachingCalls track by $index">
+			<div class="course-table-row">
 				<div class="course-table__row-detail">
 					<div>
 						<a ng-href="{{ urlRoot }}/assignments/{{ workgroupId }}/{{ year }}/teachingCall">
@@ -57,10 +57,10 @@
 					</div>
 				</div>
 				<div class="course-table__row-detail">
-					{{ teachingCall.dueDate.toFullDate() }}
+					{{ view.teachingCallReceipt.dueDate.toFullDate() }}
 				</div>
 				<div class="course-table__row-detail">
-					<i class="glyphicon glyphicon-ok" ng-if="teachingCall.preferencesSubmitted"></i>
+					<i class="glyphicon glyphicon-ok" ng-if="teachingCallReceipt.isDone"></i>
 				</div>
 			</div>
 		</div>
