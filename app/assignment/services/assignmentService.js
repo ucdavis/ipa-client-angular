@@ -171,7 +171,7 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 		addTeachingCallResponse: function (teachingCallResponse) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/assignmentView/teachingCallResponses/" + teachingCallResponse.teachingCallId  + "/" + teachingCallResponse.instructorId, teachingCallResponse, { withCredentials: true })
+			$http.post(serverRoot + "/api/assignmentView/teachingCallResponses/" + teachingCallResponse.scheduleId  + "/" + teachingCallResponse.instructorId, teachingCallResponse, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})

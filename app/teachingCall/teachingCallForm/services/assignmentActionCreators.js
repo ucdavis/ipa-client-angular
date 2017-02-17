@@ -213,8 +213,8 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		addTeachingCallResponse: function (teachingCallResponse) {
-			teachingCallFormService.addTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
+		createTeachingCallResponse: function (teachingCallResponse) {
+			teachingCallFormService.createTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
 				$rootScope.$emit('toast', { message: "Updated availablities", type: "SUCCESS" });
 				var action = {
 					type: ADD_TEACHING_CALL_RESPONSE,
