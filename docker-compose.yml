@@ -9,6 +9,7 @@ services:
     volumes:
         - ./certs/ipa_ucdavis_edu.cer:/usr/local/apache2/conf/server.crt
         - ./certs/ipa_ucdavis_edu.key:/usr/local/apache2/conf/server.key
+        - ./clientConfig.js:/usr/local/apache2/htdocs/js/clientConfig.js
     ports:
       - 80
       - 443
