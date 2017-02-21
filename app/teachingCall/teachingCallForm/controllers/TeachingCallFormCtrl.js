@@ -6,12 +6,8 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
-			$rootScope.$on('assignmentStateChanged', function (event, data) {
+			$rootScope.$on('teachingCallFormStateChanged', function (event, data) {
 				$scope.view.state = data;
-				if ($scope.view.state.activeTeachingCall && $scope.view.state.activeTeachingCall.scheduledCourses == null) {
-					$scope.prepareTeachingCall();
-				}
-
 			});
 
 			$scope.viewState = {};
@@ -133,25 +129,10 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				return false;
 			};
 
-			$scope.searchCourses = function (term, query) {
-				term = $scope.termToTermCode(term);
-				var termAssignments = $scope.view.state.activeTeachingCall.termAssignments[term] || [];
-				var scheduledCourses = $scope.view.state.activeTeachingCall.scheduledCourses[term] || [];
-
+			$scope.searchCourses = function (termContainer, query) {
 				// Display courses already on the schedule
 				if (!query || query.length == 0) {
-					var courses = [];
-					courses.push({ isBuyout: true });
-					courses.push({ isCourseRelease: true });
-					courses.push({ isSabbatical: true });
-					courses.push({ isInResidence: true });
-
-					var filteredCourses = $scope.filterDuplicateCoursePreferences(scheduledCourses, termAssignments);
-
-					filteredCourses = $scope.sortCourses(filteredCourses);
-
-					courses.push.apply(courses, filteredCourses);
-					return courses;
+					return termContainer.preferenceOptions;
 				}
 
 				// Display courses from DW (may include courses already added to the schedule)
@@ -250,24 +231,7 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				elements[0].blur();
 
 				var courseNumber, subjectCode, sectionGroup;
-				var scheduleId = $scope.view.state.activeTeachingCall.scheduleId;
-
-				// Preference is based on an existing course
-				if (preference && !preference.isSuggested) {
-					courseNumber = preference.courseNumber;
-					subjectCode = preference.subjectCode;
-
-					// Find an appropriate sectionGroup
-					for (var i = 0; i < $scope.view.state.sectionGroups.ids.length; i++) {
-						var slotSectionGroup = $scope.view.state.sectionGroups.list[$scope.view.state.sectionGroups.ids[i]];
-						var slotCourse = $scope.view.state.courses.list[slotSectionGroup.courseId];
-						var instructor = $scope.view.state.instructors.list[$scope.view.state.userInterface.instructorId];
-						if (slotCourse.subjectCode == subjectCode && slotCourse.courseNumber == courseNumber) {
-							sectionGroup = slotSectionGroup;
-							break;
-						}
-					}
-				}
+				var scheduleId = $scope.view.state.pageState.scheduleId;
 
 				// Preference is based off a new course (from Data Warehouse)
 				if (preference && preference.isSuggested == true) {
@@ -277,34 +241,7 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 					preference.suggestedTitle = preference.title;
 				}
 
-				// Create a teachingAssignment based off the preference
-				var teachingAssignment = {};
-				teachingAssignment.termCode = term;
-				// Used as a model for courseNumber/sectionGroup/scheduleId association
-
-				if (sectionGroup && sectionGroup.id) {
-					teachingAssignment.sectionGroup = sectionGroup;
-					teachingAssignment.sectionGroupId = sectionGroup.id;
-				}
-
-				var instructorId = $scope.view.state.userInterface.instructorId;
-				teachingAssignment.instructor = $scope.view.state.instructors.list[instructorId];
-				teachingAssignment.instructorId = instructorId;
-
-				teachingAssignment.buyout = preference.isBuyout;
-				teachingAssignment.sabbatical = preference.isSabbatical;
-				teachingAssignment.inResidence = preference.isInResidence;
-				teachingAssignment.courseRelease = preference.isCourseRelease;
-				teachingAssignment.schedule = {id: scheduleId};
-				teachingAssignment.scheduleId = scheduleId;
-
-				if (preference && preference.isSuggested == true) {
-					teachingAssignment.suggestedEffectiveTermCode = preference.effectiveTermCode;
-					teachingAssignment.suggestedSubjectCode = preference.subjectCode;
-					teachingAssignment.suggestedCourseNumber = preference.courseNumber;
-					teachingAssignment.suggestedTitle = preference.title;
-				}
-				teachingCallFormActionCreators.addPreference(teachingAssignment);
+				teachingCallFormActionCreators.addPreference(preference);
 				$scope.view.courseSearchQuery = {};
 			};
 
@@ -324,7 +261,7 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				return false;
 			};
 
-			$scope.copyUnabailabilitiesToAllTerms = function(blob) {
+			$scope.copyUnavailabilitiesToAllTerms = function(blob) {
 				//Cancel all pending timeouts
 				for (var term in $scope.timeout) {
 					$timeout.cancel($scope.timeout[term]);
@@ -386,137 +323,6 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				}
 			};
 
-			$scope.prepareTeachingCall = function () {
-				var activeTeachingCall = $scope.view.state.activeTeachingCall;
-
-				activeTeachingCall.terms = $scope.getActiveTerms();
-
-				activeTeachingCall.termAssignments = {};
-
-				// Holds sectionGroupIds that should not be offered as preferences to add
-				var alreadyHasPreferenceSectionGroupIds = [];
-
-				// Building an object of teachingAssignments for this instructor, separated by term
-				var i, j, sectionGroup, course, termCode;
-				for (i = 0; i < $scope.view.state.teachingAssignments.ids.length; i++) {
-					var teachingAssignment = $scope.view.state.teachingAssignments.list[$scope.view.state.teachingAssignments.ids[i]];
-
-					if (teachingAssignment.instructorId == $scope.view.state.userInterface.instructorId) {
-						// If preference is course based, attach meta-data
-						if (teachingAssignment.sectionGroupId) {
-							sectionGroup = $scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
-							course = $scope.view.state.courses.list[sectionGroup.courseId];
-
-							teachingAssignment.subjectCode = course.subjectCode;
-							teachingAssignment.courseNumber = course.courseNumber;
-						}
-
-						if (activeTeachingCall.termAssignments[teachingAssignment.termCode] == null) {
-							activeTeachingCall.termAssignments[teachingAssignment.termCode] = [];
-						}
-
-						var preferenceAlreadyAdded = false;
-						// Ensure sectionGroup hasn't already been added as a preference
-						for (j = 0; j < activeTeachingCall.termAssignments[teachingAssignment.termCode].length; j++) {
-							var slotAssignment = activeTeachingCall.termAssignments[teachingAssignment.termCode][j];
-
-							if (teachingAssignment.subjectCode == slotAssignment.subjectCode
-								&& teachingAssignment.courseNumber == slotAssignment.courseNumber
-								&& teachingAssignment.buyout == slotAssignment.buyout
-								&& teachingAssignment.courseRelease == slotAssignment.courseRelease
-								&& teachingAssignment.sabbatical == slotAssignment.sabbatical
-								&& teachingAssignment.inResidence == slotAssignment.inResidence
-								&& teachingAssignment.subjectCode != null) {
-								preferenceAlreadyAdded = true;
-							}
-						}
-
-						if (preferenceAlreadyAdded === false) {
-							activeTeachingCall.termAssignments[teachingAssignment.termCode].push(teachingAssignment);
-						}
-
-						alreadyHasPreferenceSectionGroupIds.push(teachingAssignment.sectionGroupId);
-					}
-				}
-
-				// Building an object separated by terms, of unique courses based on schedule sectionGroups
-				activeTeachingCall.scheduledCourses = {};
-
-				// Scaffold all teachingAssignment termCodeId arrays
-				var allTerms = ['01', '02', '03', '04', '06', '07', '08', '09', '10'];
-				allTerms.forEach( function (slotTerm) {
-					var generatedTermCode = $scope.generateTermCode($scope.year, slotTerm);
-					activeTeachingCall.scheduledCourses[generatedTermCode] = [];
-				});
-
-				for (i = 0; i < $scope.view.state.sectionGroups.ids.length; i++) {
-					sectionGroup = $scope.view.state.sectionGroups.list[$scope.view.state.sectionGroups.ids[i]];
-					var originalCourse = $scope.view.state.courses.list[sectionGroup.courseId];
-					course = jQuery.extend(true, {}, originalCourse);
-
-					termCode = parseInt(sectionGroup.termCode);
-					// Adding metadata from sectionGroup
-					course.seatsTotal = sectionGroup.plannedSeats;
-
-					// Ensure termCode has been added
-					if (activeTeachingCall.scheduledCourses[termCode] == null) {
-						activeTeachingCall.scheduledCourses[termCode] = [];
-					}
-
-					// Ensure course hasn't already been added
-					var courseAlreadyExists = false;
-
-					for (j = 0; j < activeTeachingCall.scheduledCourses[termCode].length; j++) {
-						var slotCourse = activeTeachingCall.scheduledCourses[termCode][j];
-
-						if (slotCourse.subjectCode == course.subjectCode &&
-							slotCourse.courseNumber == course.courseNumber) {
-							courseAlreadyExists = true;
-							break;
-						}
-					}
-
-					if (courseAlreadyExists === false) {
-						if (alreadyHasPreferenceSectionGroupIds.indexOf(course.sectionGroupTermCodeIds[termCode]) > -1) {
-							course.hasPreference = true;
-						} else {
-							course.hasPreference = false;
-						}
-
-						activeTeachingCall.scheduledCourses[termCode].push(course);
-					}
-				}
-
-				// Set teachingCallReceipt
-				for (i = 0; i < $scope.view.state.teachingCallReceipts.ids.length; i++) {
-					var slotTeachingCallReceipt = $scope.view.state.teachingCallReceipts.list[$scope.view.state.teachingCallReceipts.ids[i]];
-					if (slotTeachingCallReceipt.instructorId == $scope.view.state.userInterface.instructorId &&
-						slotTeachingCallReceipt.teachingCallId == activeTeachingCall.id) {
-						activeTeachingCall.teachingCallReceiptId = slotTeachingCallReceipt.id;
-						activeTeachingCall.teachingCallReceipt = slotTeachingCallReceipt;
-						break;
-					}
-				}
-				activeTeachingCall.teachingCallReceipt = $scope.view.state.teachingCallReceipts.list[$scope.view.state.activeTeachingCall.teachingCallReceiptId];
-				activeTeachingCall.teachingCallResponsesByTermCode = {};
-
-				for (i = 0; i < $scope.view.state.activeTeachingCall.terms.length; i++) {
-					termCode = $scope.termToTermCode($scope.view.state.activeTeachingCall.terms[i]);
-					activeTeachingCall.teachingCallResponsesByTermCode[termCode] = {};
-
-					for (j = 0; j < $scope.view.state.teachingCallResponses.ids.length; j++) {
-						var slotTeachingCallResponse = $scope.view.state.teachingCallResponses.list[$scope.view.state.teachingCallResponses.ids[j]];
-
-						if (slotTeachingCallResponse.instructorId == $scope.view.state.userInterface.instructorId &&
-							slotTeachingCallResponse.termCode == termCode) {
-							activeTeachingCall.teachingCallResponsesByTermCode[termCode] = slotTeachingCallResponse;
-						}
-					}
-				}
-
-				teachingCallFormActionCreators.initializeActiveTeachingCall(activeTeachingCall);
-			};
-
 			// Generates a 'display rank' for the subset of preferences that are not approved.
 			// This is needed because approved preferences still have a 'priority' (rank) value, despite not being shown in the list
 			$scope.generateDisplayRank = function (preference, preferences) {
@@ -524,24 +330,13 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 
 				if (preferences) {
 					preferences.forEach( function(slotPreference) {
-						if (slotPreference.approved == false && preference.priority > slotPreference.priority) {
+						if (preference.priority > slotPreference.priority) {
 							displayRank++;
 						}
 					});
 				}
 
 				return displayRank;
-			};
-
-			$scope.generateTermCode = function (year, term) {
-				if (term.toString().length == 1) {
-					term = "0" + Number(term);
-				}
-
-				if (["01", "02", "03"].indexOf(term) >= 0) { year++; }
-				var termCode = year + term;
-
-				return termCode;
 			};
 
 			$scope.termToTermCode = function(term) {
@@ -555,24 +350,6 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				var termCode = year + term;
 
 				return termCode;
-			};
-
-			$scope.termCodeToTerm = function(termCode) {
-				return termCode.slice(-2);
-			};
-
-			$scope.getDescription = function(preference) {
-				if (typeof preference === 'undefined') { return 'Add'; }
-				else if (preference.buyout) { return 'Buyout'; }
-				else if (preference.sabbatical) { return 'Sabbatical'; }
-				else if (preference.inResidence) { return 'In Residence'; }
-				else if (preference.courseRelease) { return 'Course Release'; }
-				else if (preference.suggestedSubjectCode && preference.suggestedCourseNumber) {
-					return preference.suggestedSubjectCode + ' ' + preference.suggestedCourseNumber;
-				}
-				else {
-					return preference.subjectCode + ' ' + preference.courseNumber;
-				}
 			};
 
 			$scope.timeout = {};

@@ -99,6 +99,7 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 			});
 		},
 		addPreference: function (teachingAssignment) {
+			debugger;
 			teachingCallFormService.addPreference(teachingAssignment).then(function (teachingAssignments) {
 				$rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
 				var action = {
