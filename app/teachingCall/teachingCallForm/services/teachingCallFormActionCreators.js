@@ -3,7 +3,7 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 		getInitialState: function (workgroupId, year, tab) {
 			teachingCallFormService.getInitialState(workgroupId, year).then(function (payload) {
 				var action = {
-					type: INIT_ASSIGNMENT_VIEW,
+					type: INIT_STATE,
 					payload: payload,
 					year: year,
 					tab: tab
@@ -13,34 +13,14 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		getInitialTeachingCallState: function (workgroupId, year) {
-			teachingCallFormService.getInitialTeachingCallState(workgroupId, year).then(function (payload) {
-				var action = {
-					type: INIT_TEACHING_CALL_VIEW,
-					payload: payload,
-					year: year
-				};
-				teachingCallFormStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
-			});
-		},
-		initializeActiveTeachingCall: function (activeTeachingCall) {
-			var action = {
-				type: INIT_ACTIVE_TEACHING_CALL,
-				payload: {
-					activeTeachingCall: activeTeachingCall
-				}
-			};
-			teachingCallFormStateService.reduce(action);
-		},
-		updateAssignmentsOrder: function (sortedTeachingAssignmentIds, scheduleId) {
+		updateAssignmentsOrder: function (sortedTeachingAssignmentIds, scheduleId, termCode) {
 			teachingCallFormService.updateAssignmentsOrder(sortedTeachingAssignmentIds, scheduleId).then(function (sortedTeachingAssignmentIds) {
 				$rootScope.$emit('toast', { message: "Updated Assignment Priority", type: "SUCCESS" });
 				var action = {
 					type: UPDATE_TEACHING_ASSIGNMENT_ORDER,
 					payload: {
-						sortedTeachingAssignmentIds: sortedTeachingAssignmentIds
+						sortedTeachingAssignmentIds: sortedTeachingAssignmentIds,
+						termCode: termCode
 					}
 				};
 				teachingCallFormStateService.reduce(action);
@@ -98,14 +78,14 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		addPreference: function (teachingAssignment) {
-			debugger;
+		addPreference: function (teachingAssignment, termCode) {
 			teachingCallFormService.addPreference(teachingAssignment).then(function (teachingAssignments) {
 				$rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
 				var action = {
 					type: ADD_PREFERENCE,
 					payload: {
-						teachingAssignments: teachingAssignments
+						teachingAssignments: teachingAssignments,
+						termCode: termCode
 					}
 				};
 				teachingCallFormStateService.reduce(action);

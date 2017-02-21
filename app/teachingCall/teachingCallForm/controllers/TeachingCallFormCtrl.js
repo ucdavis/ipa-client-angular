@@ -241,7 +241,7 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 					preference.suggestedTitle = preference.title;
 				}
 
-				teachingCallFormActionCreators.addPreference(preference);
+				teachingCallFormActionCreators.addPreference(preference, term);
 				$scope.view.courseSearchQuery = {};
 			};
 
@@ -249,8 +249,8 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				teachingCallFormActionCreators.removePreference(teachingAssignment);
 			};
 
-			$scope.updateAssignmentsOrder = function(sortedTeachingPreferenceIds, term) {
-				teachingCallFormActionCreators.updateAssignmentsOrder(sortedTeachingPreferenceIds, $scope.view.state.userInterface.scheduleId);
+			$scope.updateAssignmentsOrder = function(sortedTeachingPreferenceIds, termContainer) {
+				teachingCallFormActionCreators.updateAssignmentsOrder(sortedTeachingPreferenceIds, $scope.view.state.pageState.scheduleId, termContainer.termCode);
 			};
 
 			$scope.termHasSabbatical = function(term) {
