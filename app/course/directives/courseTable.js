@@ -311,6 +311,8 @@ var getImportCourseRow = function (course, termsToRender, state) {
 	return row;
 };
 
+// Renders a course row for all courses except when in mass import mode,
+// when the "proposed rows" will be rendered by getImportCourseRow.
 var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 	var rowClass = "odd gradeX";
 	if (state.uiState.selectedCourseId == courseId) {
@@ -343,7 +345,7 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 			var termCode = termToRender.code;
 			var sectionGroup = _.find(state.sectionGroups.list, function (sg) { return (sg.termCode == termCode) && (sg.courseId == courseId); });
 			var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
-			var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : "";
+			var plannedSeats = (sectionGroup && sectionGroup.plannedSeats) ? sectionGroup.plannedSeats : "";
 
 			// TODO: Calculate this boolean by comparing the sum of all section seats to the plannedSeats
 			var requiresAttention = false;
