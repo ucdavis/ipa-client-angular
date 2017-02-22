@@ -120,33 +120,37 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 
 			$scope.copyUnavailabilitiesToAllTerms = function(blob) {
 				//Cancel all pending timeouts
-				for (var term in $scope.timeout) {
-					$timeout.cancel($scope.timeout[term]);
+				for (var termCode in $scope.timeout) {
+					$timeout.cancel($scope.timeout[termCode]);
 				}
 
-				angular.forEach($scope.view.state.activeTeachingCall.terms, function(term) {
-					$scope.saveTeachingCallResponse(term, blob, 0);
+				angular.forEach($scope.view.state.pageState.terms, function(termContainer) {
+					termContainer.availabilityBlob = blob;
+					$scope.saveTeachingCallResponse(termContainer, blob, 0);
 				});
 			};
 
-			$scope.saveTeachingCallResponse = function(term, blob, delay) {
+			$scope.saveTeachingCallResponse = function(termContainer, newBlob, delay) {
 				// Identify is updating or creating
 
-				var termCode = $scope.termToTermCode(term);
-				var teachingCallResponse = $scope.view.state.activeTeachingCall.teachingCallResponsesByTermCode[termCode] || {};
-				teachingCallResponse.availabilityBlob = blob || teachingCallResponse.availabilityBlob;
-				teachingCallResponse.termCode = termCode;
-				teachingCallResponse.instructorId = $scope.view.state.userInterface.instructorId;
-				teachingCallResponse.teachingCallId = $scope.view.state.activeTeachingCall.id;
+				var termCode = termContainer.termCode;
+
+				var payload = {
+					id: termContainer.teachingCallResponseId,
+					availabilityBlob: newBlob || termContainer.availabilityBlob,
+					termCode: termCode,
+					instructorId: $scope.view.state.pageState.instructorId,
+					scheduleId: $scope.view.state.pageState.scheduleId
+				};
 
 				// Report changes back to server after some delay
-				$timeout.cancel($scope.timeout[term]);
-				$scope.timeout[term] = $timeout(function() {
+				$timeout.cancel($scope.timeout[termCode]);
+				$scope.timeout[termCode] = $timeout(function() {
 					// Either create or update the teachingCallResponse
-					if (teachingCallResponse.id) {
-						teachingCallFormActionCreators.updateTeachingCallResponse(teachingCallResponse);
+					if (termContainer.teachingCallResponseId) {
+						teachingCallFormActionCreators.updateTeachingCallResponse(payload);
 					} else {
-						teachingCallFormActionCreators.createTeachingCallResponse(teachingCallResponse);
+						teachingCallFormActionCreators.createAvailability(payload);
 					}
 				}, delay);
 			};
