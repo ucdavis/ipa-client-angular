@@ -22,11 +22,15 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				if (query.length >= 3) {
 					// This typehead library works better with a promise,
 					// so in this case the controller bypasses the normal state managaement data flow
-					return assignmentService.searchCourses(query).then(function (courseSearchResults) {
+					return teachingCallFormService.searchCourses(query).then(function (courseSearchResults) {
 						var courses = courseSearchResults.slice(0, 20);
 
 						courses.forEach(function (course) {
 							course.isSuggested = true;
+							course.description = course.subjectCode + " " + course.courseNumber;
+							course.scheduleId = $scope.view.state.scheduleId;
+							course.instructorId = $scope.view.state.instructorId;
+							course.termCode = termContainer.termCode;
 						});
 
 						courses = $scope.sortCourses(courses);
@@ -149,6 +153,8 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 			// Generates a 'display rank' for the subset of preferences that are not approved.
 			// This is needed because approved preferences still have a 'priority' (rank) value, despite not being shown in the list
 			$scope.generateDisplayRank = function (preference, preferences) {
+				console.log(preference);
+				console.log(preferences);
 				var displayRank = 1;
 
 				if (preferences) {
@@ -159,6 +165,7 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 					});
 				}
 
+				console.log("-----------------");
 				return displayRank;
 			};
 
