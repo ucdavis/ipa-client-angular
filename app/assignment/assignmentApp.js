@@ -10,20 +10,6 @@ assignmentApp.config(function ($routeProvider) {
 				validate: AssignmentCtrl.validate
 			}
 		})
-		.when("/:workgroupId/:year/teachingCall", {
-			templateUrl: "TeachingCallForm.html",
-			controller: "TeachingCallFormCtrl",
-			resolve: {
-				validate: TeachingCallFormCtrl.validate
-			}
-		})
-		.when("/:workgroupId/:year/teachingCallStatus", {
-			templateUrl: "TeachingCallStatus.html",
-			controller: "TeachingCallStatusCtrl",
-			resolve: {
-				validate: TeachingCallStatusCtrl.validate
-			}
-		})
 		.when("/", {
 			templateUrl: "AssignmentCtrl.html",
 			controller: "AssignmentCtrl",
