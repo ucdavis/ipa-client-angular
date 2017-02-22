@@ -8,7 +8,6 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 
 			$rootScope.$on('teachingCallStatusStateChanged', function (event, data) {
 				$scope.view.state = data;
-				$scope.prepareTeachingCallStatusPage();
 			});
 
 			// Launches TeachingCall Config modal and controller
@@ -56,65 +55,8 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 				assignmentActionCreators.createTeachingCall(workgroupId, year, teachingCallConfig);
 			};
 
-			$scope.prepareTeachingCallStatusPage = function () {
-				var allTerms = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
-				var chronologicallyOrderedTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
-				var termNames = {
-					'05': 'Summer Session 1',
-					'06': 'Summer Special Session',
-					'07': 'Summer Session 2',
-					'08': 'Summer Quarter',
-					'09': 'Fall Semester',
-					'10': 'Fall Quarter',
-					'01': 'Winter Quarter',
-					'02': 'Spring Semester',
-					'03': 'Spring Quarter'
-				};
-
-				// Build each teachingCall
-
-				for (var i = 0; i < $scope.view.state.teachingCalls.ids.length; i++) {
-					var teachingCall = $scope.view.state.teachingCalls.list[$scope.view.state.teachingCalls.ids[i]];
-
-					teachingCall.terms = [];
-
-					// Decode termsBlob into two digit terms (example: '02', '04')
-					var decodedTermsBlob = $scope.termsBlobToTerms(teachingCall.termsBlob);
-
-					// Ensure terms are properly ordered
-					var orderedTermNames = [];
-
-					chronologicallyOrderedTerms.forEach(function (chronologicallyOrderedTerm) {
-						if (decodedTermsBlob.indexOf(chronologicallyOrderedTerm) > -1) {
-							orderedTermNames.push(termNames[chronologicallyOrderedTerm]);
-						}
-					});
-
-					teachingCall.terms = orderedTermNames;
-				}
-			};
-
 			$scope.deleteTeachingCall = function (teachingCall) {
 				assignmentActionCreators.deleteTeachingCall(teachingCall);
-			};
-
-			// Decode termsBlob into two digit terms (example: '02', '04')
-			$scope.termsBlobToTerms = function (termsBlob) {
-				var decodedTermsBlob = [];
-				for (var j = 0; j < termsBlob.length; j++) {
-					var isTermInTeachingCall = parseInt(termsBlob.charAt(j));
-
-					if (isTermInTeachingCall) {
-						term = j + 1;
-						term = term.toString();
-						if (term.toString().length == 1) {
-							term = "0" + term;
-						}
-
-						decodedTermsBlob.push(term);
-					}
-				}
-				return decodedTermsBlob;
 			};
 	}]);
 
