@@ -4,468 +4,6 @@ teachingCallApp.service('teachingCallFormStateService', function (
 	TeachingCall, TeachingCallReceipt, TeachingCallResponse) {
 	return {
 		_state: {},
-		_courseReducers: function (action, courses) {
-			var scope = this;
-
-			switch (action.type) {
-				case INIT_STATE:
-					courses = {
-						ids: [],
-						list: []
-					};
-					var coursesList = {};
-					var length = action.payload.courses ? action.payload.courses.length : 0;
-					for (var i = 0; i < length; i++) {
-						var course = new Course(action.payload.courses[i]);
-						coursesList[course.id] = course;
-						coursesList[course.id].isFiltered = false;
-						coursesList[course.id].isHidden = false;
-						// Set all courses to true initially as no tag filters are set
-						coursesList[course.id].matchesTagFilters = true;
-
-						// Add the termCode:sectionGroupId pairs
-						coursesList[course.id].sectionGroupTermCodeIds = {};
-
-						action.payload.sectionGroups
-							.filter(function (sectionGroup) {
-								return sectionGroup.courseId === course.id;
-							})
-							.forEach(function (sectionGroup) {
-								coursesList[course.id].sectionGroupTermCodeIds[sectionGroup.termCode] = sectionGroup.id;
-							});
-					}
-					courses.ids = _array_sortIdsByProperty(coursesList, ["subjectCode", "courseNumber", "sequencePattern"]);
-					courses.list = coursesList;
-					return courses;
-				default:
-					return courses;
-			}
-		},
-		_teachingAssignmentReducers: function (action, teachingAssignments) {
-			var scope = this;
-			var i, payloadTeachingAssignments, slotTeachingAssignment, index;
-
-			switch (action.type) {
-				case INIT_STATE:
-					teachingAssignments = {
-						ids: [],
-						list: []
-					};
-					var teachingAssignmentsList = {};
-					var length = action.payload.teachingAssignments ? action.payload.teachingAssignments.length : 0;
-					for (i = 0; i < length; i++) {
-						var teachingAssignment = new TeachingAssignment(action.payload.teachingAssignments[i]);
-						teachingAssignmentsList[teachingAssignment.id] = teachingAssignment;
-					}
-					teachingAssignments.ids = _array_sortIdsByProperty(teachingAssignmentsList, ["approved"]);
-					teachingAssignments.list = teachingAssignmentsList;
-					return teachingAssignments;
-				case ADD_PREFERENCE:
-					// Add a group of teachingAssignments created from a preference
-					payloadTeachingAssignments = action.payload.teachingAssignments;
-					for (i = 0; i < payloadTeachingAssignments.length; i++) {
-						slotTeachingAssignment = payloadTeachingAssignments[i];
-						teachingAssignments.list[slotTeachingAssignment.id] = slotTeachingAssignment;
-						teachingAssignments.ids.push(slotTeachingAssignment.id);
-					}
-					return teachingAssignments;
-				case REMOVE_PREFERENCE:
-					payloadTeachingAssignments = action.payload.teachingAssignments;
-					var termCode = action.payload.termCode;
-					// For each teachingAssignment associated to that preference
-					for (i = 0; i < payloadTeachingAssignments.length; i++) {
-						slotTeachingAssignment = payloadTeachingAssignments[i];
-						// Remove reference from ids
-						index = teachingAssignments.ids.indexOf(slotTeachingAssignment.id);
-						if (index > -1) {
-							teachingAssignments.ids.splice(index, 1);
-						}
-						// Remove reference from list
-						delete teachingAssignments.list[slotTeachingAssignment.id];
-					}
-					return teachingAssignments;
-				default:
-					return teachingAssignments;
-			}
-		},
-		_teachingCallReducers: function (action, teachingCalls) {
-			var scope = this;
-			var teachingCall;
-
-			switch (action.type) {
-				case INIT_STATE:
-					teachingCalls = {
-						ids: [],
-						list: [],
-						eligibleGroups: {}
-					};
-					teachingCalls.eligibleGroups.senateInstructors = true;
-					teachingCalls.eligibleGroups.federationInstructors = true;
-
-					var teachingCallsList = {};
-					var length = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
-					for (var i = 0; i < length; i++) {
-						teachingCall = new TeachingCall(action.payload.teachingCalls[i]);
-						teachingCallsList[teachingCall.id] = teachingCall;
-
-						// Gather eligible group data
-						if (teachingCall.sentToSenate) {
-							teachingCalls.eligibleGroups.senateInstructors = false;
-						}
-						if (teachingCall.sentToFederation) {
-							teachingCalls.eligibleGroups.federationInstructors = false;
-						}
-
-					}
-					teachingCalls.ids = _array_sortIdsByProperty(teachingCallsList, ["id"]);
-					teachingCalls.list = teachingCallsList;
-					return teachingCalls;
-				default:
-					return teachingCalls;
-			}
-		},
-		_activeTeachingCallReducers: function (action, state) {
-			var activeTeachingCall = state.activeTeachingCall;
-			var i, j, course, termCode;
-			switch (action.type) {
-				case INIT_STATE:
-					payloadActiveTeachingCall = action.payload.activeTeachingCall;
-					return payloadActiveTeachingCall;
-				case REMOVE_PREFERENCE:
-					if (activeTeachingCall == null) {
-						return activeTeachingCall;
-					}
-					var teachingAssignments = action.payload.teachingAssignments;
-					termCode = action.payload.termCode;
-					var DTOinstructorId = action.payload.instructorId;
-					for (i = 0; i < teachingAssignments.length; i++) {
-						var slotTeachingAssignment = teachingAssignments[i];
-						var index = -1;
-						for (j = 0; j < activeTeachingCall.termAssignments[termCode].length; j++) {
-							if (activeTeachingCall.termAssignments[termCode][j].id == slotTeachingAssignment.id) {
-								index = j;
-								break;
-							}
-						}
-						if (index > -1) {
-							activeTeachingCall.termAssignments[termCode].splice(index, 1);
-						}
-
-						for (var k = 0; k < activeTeachingCall.scheduledCourses[termCode].length; k++) {
-							slotCourse = activeTeachingCall.scheduledCourses[termCode][k];
-							if (slotTeachingAssignment.sectionGroupId == slotCourse.sectionGroupTermCodeIds[termCode]) {
-								slotCourse.hasPreference = false;
-							}
-						}
-					}
-
-					return activeTeachingCall;
-				case UPDATE_TEACHING_CALL_RESPONSE:
-					return activeTeachingCall;
-				default:
-					return activeTeachingCall;
-			}
-		},
-		_teachingCallReceiptReducers: function (action, teachingCallReceipts) {
-			var scope = this;
-
-			switch (action.type) {
-				case INIT_STATE:
-					teachingCallReceipts = {
-						ids: [],
-						list: []
-					};
-
-					var teachingCallReceiptsList = {};
-					var length = action.payload.teachingCallReceipts ? action.payload.teachingCallReceipts.length : 0;
-					for (var i = 0; i < length; i++) {
-						var teachingCallReceipt = new TeachingCallReceipt(action.payload.teachingCallReceipts[i]);
-						teachingCallReceiptsList[teachingCallReceipt.id] = teachingCallReceipt;
-					}
-					teachingCallReceipts.ids = _array_sortIdsByProperty(teachingCallReceiptsList, ["id"]);
-					teachingCallReceipts.list = teachingCallReceiptsList;
-					return teachingCallReceipts;
-				case UPDATE_TEACHING_CALL_RECEIPT:
-					teachingCallReceipts.list[action.payload.teachingCallReceipt.id] = action.payload.teachingCallReceipt;
-					return teachingCallReceipts;
-				default:
-					return teachingCallReceipts;
-			}
-		},
-		_teachingCallResponseReducers: function (action, teachingCallResponses) {
-			var scope = this;
-
-			switch (action.type) {
-				case INIT_STATE:
-					teachingCallResponses = {
-						ids: [],
-						list: []
-					};
-
-					var teachingCallResponsesList = {};
-					var length = action.payload.teachingCallResponses ? action.payload.teachingCallResponses.length : 0;
-					for (var i = 0; i < length; i++) {
-						var teachingCallResponse = new TeachingCallResponse(action.payload.teachingCallResponses[i]);
-						teachingCallResponsesList[teachingCallResponse.id] = teachingCallResponse;
-					}
-					teachingCallResponses.ids = _array_sortIdsByProperty(teachingCallResponsesList, ["id"]);
-					teachingCallResponses.list = teachingCallResponsesList;
-					return teachingCallResponses;
-				case UPDATE_TEACHING_CALL_RESPONSE:
-					teachingCallResponses.list[action.payload.teachingCallResponse.id] = action.payload.teachingCallResponse;
-					return teachingCallResponses;
-				default:
-					return teachingCallResponses;
-			}
-		},
-		_instructorReducers: function (action, instructors) {
-			var scope = this;
-			var i, j, scheduleInstructorNote, instructor, teachingAssignments, termCode, slotTeachingAssignment, teachingAssignment;
-
-			switch (action.type) {
-				case INIT_STATE:
-					instructors = {
-						ids: [],
-						list: []
-					};
-					var instructorsList = {};
-					var length = action.payload.instructors ? action.payload.instructors.length : 0;
-
-					// Loop over instructors
-					for (i = 0; i < length; i++) {
-						instructor = new Instructor(action.payload.instructors[i]);
-						instructor.teachingAssignmentTermCodeIds = {};
-
-						// Scaffold all teachingAssignment termCodeId arrays
-						var allTerms = ['01', '02', '03', '04', '06', '07', '08', '09', '10'];
-						allTerms.forEach(function (slotTerm) {
-							var generatedTermCode = generateTermCode(action.year, slotTerm);
-							instructor.teachingAssignmentTermCodeIds[generatedTermCode] = [];
-						});
-
-						instructor.isFiltered = false;
-
-						// Create arrays of teachingAssignmentIds for each termCode
-						for (j = 0; j < action.payload.scheduleTermStates.length; j++) {
-							termCode = action.payload.scheduleTermStates[j].termCode;
-							instructor.teachingAssignmentTermCodeIds[termCode] = [];
-
-							// Create array of teachingAssignmentIds that are associated to this termCode and instructor
-							action.payload.teachingAssignments
-								.filter(function (teachingAssignment) {
-									return (teachingAssignment.instructorId === instructor.id && teachingAssignment.termCode === termCode);
-								})
-								.forEach(function (teachingAssignment) {
-									instructor.teachingAssignmentTermCodeIds[termCode].push(teachingAssignment.id);
-								});
-						}
-
-						// Create arrays of teachingCallResponseIds
-						instructor.teachingCallResponses = [];
-
-						for (j = 0; j < action.payload.teachingCallResponses.length; j++) {
-							var teachingCallResponse = action.payload.teachingCallResponses[j];
-							if (teachingCallResponse.instructorId == instructor.id) {
-								instructor.teachingCallResponses.push(teachingCallResponse);
-							}
-						}
-
-						// Find scheduleInstructorNote associated to this instructor, if it exists
-						instructor.scheduleInstructorNoteId = null;
-						for (j = 0; j < action.payload.scheduleInstructorNotes.length; j++) {
-							scheduleInstructorNote = action.payload.scheduleInstructorNotes[j];
-							if (scheduleInstructorNote.instructorId == instructor.id) {
-								instructor.scheduleInstructorNoteId = scheduleInstructorNote.id;
-							}
-						}
-
-						// Find teachingCallReceipt associated to this instructor, if it exists
-						instructor.teachingCallReceiptId = null;
-						for (j = 0; j < action.payload.teachingCallReceipts.length; j++) {
-							var teachingCallReceipt = action.payload.teachingCallReceipts[j];
-							if (teachingCallReceipt.instructorId == instructor.id) {
-								instructor.teachingCallReceiptId = teachingCallReceipt.id;
-							}
-						}
-
-						instructorsList[instructor.id] = instructor;
-					}
-					instructors.ids = _array_sortIdsByProperty(instructorsList, ["lastName"]);
-					instructors.list = instructorsList;
-					return instructors;
-				case ADD_PREFERENCE:
-					teachingAssignments = action.payload.teachingAssignments;
-					for (i = 0; i < teachingAssignments.length; i++) {
-						slotTeachingAssignment = teachingAssignments[i];
-						instructor = instructors.list[slotTeachingAssignment.instructorId];
-						instructor.teachingAssignmentTermCodeIds[slotTeachingAssignment.termCode].push(slotTeachingAssignment.id);
-					}
-					return instructors;
-				case REMOVE_PREFERENCE:
-					teachingAssignments = action.payload.teachingAssignments;
-					termCode = action.payload.termCode;
-					var DTOinstructorId = action.payload.instructorId;
-					instructor = instructors.list[DTOinstructorId];
-					var instructorTeachingAssignments = instructor.teachingAssignmentTermCodeIds[termCode];
-					for (i = 0; i < teachingAssignments.length; i++) {
-						slotTeachingAssignment = teachingAssignments[i];
-						var index = instructorTeachingAssignments.indexOf(slotTeachingAssignment.id);
-
-						if (index > -1) {
-							instructorTeachingAssignments.splice(index, 1);
-						}
-					}
-					return instructors;
-				default:
-					return instructors;
-			}
-		},
-		_scheduleTermStateReducers: function (action, scheduleTermStates) {
-			var scope = this;
-
-			switch (action.type) {
-				case INIT_STATE:
-					scheduleTermStates = {
-						ids: []
-					};
-					var scheduleTermStateList = {};
-					var length = action.payload.scheduleTermStates ? action.payload.scheduleTermStates.length : 0;
-					for (var i = 0; i < length; i++) {
-						var scheduleTermStateData = action.payload.scheduleTermStates[i];
-						// Using termCode as key since the scheduleTermState does not have an id
-						scheduleTermStateList[scheduleTermStateData.termCode] = new ScheduleTermState(scheduleTermStateData);
-					}
-					scheduleTermStates.ids = _array_sortIdsByProperty(scheduleTermStateList, "termCode");
-					scheduleTermStates.list = scheduleTermStateList;
-					return scheduleTermStates;
-				default:
-					return scheduleTermStates;
-			}
-		},
-		_tagReducers: function (action, tags) {
-			var scope = this;
-
-			switch (action.type) {
-				case INIT_STATE:
-					tags = {
-						ids: [],
-						list: []
-					};
-					var tagsList = {};
-					var length = action.payload.tags ? action.payload.tags.length : 0;
-					for (var i = 0; i < length; i++) {
-						var tagData = action.payload.tags[i];
-						tagsList[tagData.id] = new Tag(tagData);
-					}
-					tags.ids = _array_sortIdsByProperty(tagsList, "id");
-					tags.list = tagsList;
-					return tags;
-				default:
-					return tags;
-			}
-		},
-		_scheduleInstructorNoteReducers: function (action, scheduleInstructorNotes) {
-			var scope = this;
-
-			switch (action.type) {
-				case INIT_STATE:
-					scheduleInstructorNotes = {
-						ids: [],
-						list: []
-					};
-					var scheduleInstructorNotesList = {};
-					var length = action.payload.scheduleInstructorNotes ? action.payload.scheduleInstructorNotes.length : 0;
-					for (var i = 0; i < length; i++) {
-						var scheduleInstructorNote = new ScheduleInstructorNote(action.payload.scheduleInstructorNotes[i]);
-						scheduleInstructorNotesList[scheduleInstructorNote.id] = scheduleInstructorNote;
-					}
-					scheduleInstructorNotes.ids = _array_sortIdsByProperty(scheduleInstructorNotesList, ["id"]);
-					scheduleInstructorNotes.list = scheduleInstructorNotesList;
-					return scheduleInstructorNotes;
-				default:
-					return scheduleInstructorNotes;
-			}
-		},
-		_sectionGroupReducers: function (action, sectionGroups) {
-			var scope = this;
-			var sectionGroup, i, slotTeachingAssignment, teachingAssignment, index;
-
-			switch (action.type) {
-				case INIT_STATE:
-					sectionGroups = {
-						newSectionGroup: {},
-						ids: []
-					};
-
-					var sectionGroupsList = {};
-
-					var length = action.payload.sectionGroups ? action.payload.sectionGroups.length : 0;
-					for (i = 0; i < length; i++) {
-						sectionGroup = new SectionGroup(action.payload.sectionGroups[i]);
-						sectionGroupsList[sectionGroup.id] = sectionGroup;
-						sectionGroups.ids.push(sectionGroup.id);
-
-						// Create a list of teachingAssignmentIds that are associated to this sectionGroup
-						sectionGroupsList[sectionGroup.id].teachingAssignmentIds = [];
-						action.payload.teachingAssignments
-							.filter(function (teachingAssignment) {
-								return teachingAssignment.sectionGroupId === sectionGroup.id;
-							})
-							.forEach(function (teachingAssignment) {
-								sectionGroupsList[sectionGroup.id].teachingAssignmentIds.push(teachingAssignment.id);
-							});
-					}
-
-					sectionGroups.list = sectionGroupsList;
-					return sectionGroups;
-				case ADD_PREFERENCE:
-					var payloadTeachingAssignments = action.payload.teachingAssignments;
-					for (i = 0; i < payloadTeachingAssignments.length; i++) {
-						slotTeachingAssignment = payloadTeachingAssignments[i];
-						sectionGroup = {};
-						if (slotTeachingAssignment.sectionGroupId) {
-							sectionGroup = sectionGroups.list[slotTeachingAssignment.sectionGroupId];
-							sectionGroup.teachingAssignmentIds.push(slotTeachingAssignment.id);
-						}
-					}
-					return sectionGroups;
-				case REMOVE_PREFERENCE:
-					var teachingAssignments = action.payload.teachingAssignments;
-					var DTOtermCode = action.payload.termCode;
-					var DTOinstructorId = action.payload.instructorId;
-					for (i = 0; i < teachingAssignments.length; i++) {
-						slotTeachingAssignment = teachingAssignments[i];
-						sectionGroup = sectionGroups.list[slotTeachingAssignment.sectionGroupId];
-						if (sectionGroup) {
-							index = sectionGroup.teachingAssignmentIds.indexOf(slotTeachingAssignment.id);
-							if (index > -1) {
-								sectionGroup.teachingAssignmentIds.splice(index, 1);
-							}
-						}
-					}
-					return sectionGroups;
-				default:
-					return sectionGroups;
-			}
-		},
-		_filterReducers: function (action, filters) {
-			var scope = this;
-
-			switch (action.type) {
-				case INIT_STATE:
-					// A filter is 'enabled' if it is checked, i.e. the category it represents
-					// is selected to be shown/on/active.
-					filters = {
-						enabledTagIds: [],
-						enableUnpublishedCourses: false
-					};
-					// Here is where we might load stored data about what filters
-					// were left on last time.
-					return filters;
-				default:
-					return filters;
-			}
-		},
 		_pageStateReducers: function (action, pageState) {
 			var self = this;
 			switch (action.type) {
@@ -477,7 +15,8 @@ teachingCallApp.service('teachingCallFormStateService', function (
 						isDone: null, // True
 						scheduleId: action.payload.scheduleId,
 						terms: [],
-						instructorId: action.payload.instructorId
+						instructorId: action.payload.instructorId,
+						teachingCallReceiptId: null
 					};
 
 					var termsBlob = null;
@@ -493,6 +32,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 							pageState.isDone = teachingCallReceipt.isDone;
 							pageState.dueDate = teachingCallReceipt.dueDate;
 							pageState.comment = teachingCallReceipt.comment;
+							pageState.teachingCallReceiptId = teachingCallReceipt.id;
 							termsBlob = teachingCallReceipt.termsBlob;
 						}
 					});
@@ -536,7 +76,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					pageState.terms.forEach( function(termData) {
 						termData.preferences = self.generatePreferences(action.payload.scheduleId, termData.termCode, action.payload.instructorId, teachingAssignments, pageState.sectionGroupsIndex, pageState.coursesIndex);
 						termData.assignments = self.generateAssignments(action.payload.scheduleId, termData.termCode, action.payload.instructorId, teachingAssignments, pageState.sectionGroupsIndex, pageState.coursesIndex);
-						termData.preferenceOptions = self.generatePreferenceOptions(action.payload.instructorId, termData.termCode, termData.preferences, termData.assignments, pageState.sectionGroups, pageState.coursesIndex);
+						termData.preferenceOptions = self.generatePreferenceOptions(action.payload.scheduleId, action.payload.instructorId, termData.termCode, termData.preferences, termData.assignments, pageState.sectionGroups, pageState.coursesIndex);
 					});
 
 					return pageState;
@@ -580,61 +120,41 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					preferences.push(newPreferenceObject);
 
 					return pageState;
+				case REMOVE_PREFERENCE:
+					var termCode = action.payload.termCode;
+					preferenceIdsToMove = [];
+
+					action.payload.teachingAssignments.forEach( function(slotAssignment) {
+						preferenceIdsToMove.push(slotAssignment.id);
+					});
+
+					var preferences = null;
+					var preferenceOptions = null;
+
+					pageState.terms.forEach( function (termContainer) {
+						if (termContainer.termCode == termCode) {
+							preferences = termContainer.preferences;
+							preferenceOptions = termContainer.preferenceOptions;
+						}
+					});
+
+					preferenceOfInterest = null;
+					removePreferenceIndex = null;
+					preferences.forEach( function (slotPreference, index) {
+						if (preferenceIdsToMove.indexOf(slotPreference.id) > -1) {
+							preferenceOfInterest = slotPreference;
+							removePreferenceIndex = index;
+							return;
+						}
+					});
+
+					preferences.splice(removePreferenceIndex, 1);
+					preferenceOptions.push(preferenceOfInterest);
+					preferenceOptions = self.sortCourses(preferenceOptions);
+
+					return pageState;
 				default:
 					return pageState;
-			}
-		},
-		_userInterfaceReducers: function (action, userInterface) {
-			var scope = this;
-			var i;
-
-			switch (action.type) {
-				case INIT_STATE:
-					userInterface = {};
-
-					userInterface.instructorId = action.payload.instructorId;
-					userInterface.userId = action.payload.userId;
-
-					userInterface.federationInstructorIds = action.payload.federationInstructorIds;
-					userInterface.senateInstructorIds = action.payload.senateInstructorIds;
-					userInterface.scheduleId = action.payload.scheduleId;
-
-					userInterface.showInstructors = (action.tab == "instructors");
-					userInterface.showCourses = (action.tab != "instructors");
-
-					// Set default enabledTerms based on scheduleTermState data
-					var enabledTerms = {};
-					enabledTerms.list = {};
-					enabledTerms.ids = [];
-					for (i = 0; i < action.payload.scheduleTermStates.length; i++) {
-						var term = action.payload.scheduleTermStates[i].termCode;
-						// Generate an id based off termCode
-						var id = Number(term.slice(-2));
-						enabledTerms.ids.push(id);
-					}
-
-					enabledTerms.ids = orderTermsChronologically(enabledTerms.ids);
-
-					// Generate termCode list entries
-					for (i = 1; i < 11; i++) {
-						// 4 is not used as a termCode
-						if (i != 4) {
-							var termCode = generateTermCode(action.year, i);
-							enabledTerms.list[i] = termCode;
-						}
-					}
-
-					userInterface.enabledTerms = enabledTerms;
-
-					// Check localStorage for saved termFilter settings
-					var termFiltersBlob = localStorage.getItem("termFilters");
-					if (termFiltersBlob) {
-						userInterface.enabledTerms.ids = deserializeTermFiltersBlob(termFiltersBlob);
-					}
-
-					return userInterface;
-				default:
-					return userInterface;
 			}
 		},
 		reduce: function (action) {
@@ -645,19 +165,6 @@ teachingCallApp.service('teachingCallFormStateService', function (
 			}
 
 			newState = {};
-			newState.scheduleTermStates = scope._scheduleTermStateReducers(action, scope._state.scheduleTermStates);
-			newState.courses = scope._courseReducers(action, scope._state.courses);
-			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
-			newState.instructors = scope._instructorReducers(action, scope._state.instructors);
-			newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
-			newState.teachingCallReceipts = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipts);
-			newState.teachingCallResponses = scope._teachingCallResponseReducers(action, scope._state.teachingCallResponses);
-			newState.teachingCalls = scope._teachingCallReducers(action, scope._state.teachingCalls);
-			newState.scheduleInstructorNotes = scope._scheduleInstructorNoteReducers(action, scope._state.scheduleInstructorNotes);
-			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
-			newState.activeTeachingCall = scope._activeTeachingCallReducers(action, scope._state);
-			newState.tags = scope._tagReducers(action, scope._state.tags);
-			newState.filters = scope._filterReducers(action, scope._state.filters);
 			newState.pageState = scope._pageStateReducers(action, scope._state.pageState);
 
 			scope._state = newState;
@@ -871,7 +378,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 			var approved = true;
 			return this.generateAbstractCourses(scheduleId, termCode, instructorId, teachingAssignments, sectionGroups, courses, approved);
 		},
-		generatePreferenceOptions: function (instructorId, termCode, preferences, assignments, sectionGroups, courses) {
+		generatePreferenceOptions: function (scheduleId, instructorId, termCode, preferences, assignments, sectionGroups, courses) {
 			// Gather all course identifiers that already exist as a preference or assignment
 			var courseIdentifiersToFilter = [];
 
@@ -886,10 +393,34 @@ teachingCallApp.service('teachingCallFormStateService', function (
 
 			// Build the scheduledCourses as a subset of all Courses
 			var preferenceOptions = [];
-			preferenceOptions.push({ isBuyout: true, description: "Buyout" });
-			preferenceOptions.push({ isCourseRelease: true, description: "Course Release" });
-			preferenceOptions.push({ isSabbatical: true, description: "Sabbatical" });
-			preferenceOptions.push({ isInResidence: true, description: "In Residence" });
+			preferenceOptions.push({
+				buyout: true,
+				description: "Buyout",
+				scheduleId: scheduleId,
+				instructorId: instructorId,
+				termCode: termCode
+			});
+			preferenceOptions.push({
+				courseRelease: true,
+				description: "Course Release",
+				scheduleId: scheduleId,
+				instructorId: instructorId,
+				termCode: termCode
+			});
+			preferenceOptions.push({
+				sabbatical: true,
+				description: "Sabbatical",
+				scheduleId: scheduleId,
+				instructorId: instructorId,
+				termCode: termCode
+			});
+			preferenceOptions.push({
+				inResidence: true,
+				description: "In Residence",
+				scheduleId: scheduleId,
+				instructorId: instructorId,
+				termCode: termCode
+			});
 
 			allCourses.forEach( function (course) {
 				// Skip courses that are already an assignment or preference
