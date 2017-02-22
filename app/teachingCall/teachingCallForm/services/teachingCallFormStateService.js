@@ -16,7 +16,8 @@ teachingCallApp.service('teachingCallFormStateService', function (
 						scheduleId: action.payload.scheduleId,
 						terms: [],
 						instructorId: action.payload.instructorId,
-						teachingCallReceiptId: null
+						teachingCallReceiptId: null,
+						courseSearchQuery: {}
 					};
 
 					var termsBlob = null;
@@ -104,7 +105,8 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					return pageState;
 				case ADD_PREFERENCE:
 					var termCode = action.payload.termCode;
-					// We're not interested in the potentnial extras that were created for different sequencePatterns
+
+					// Ignore potential extra preferences created for different sequencePatterns
 					var newPreference = action.payload.teachingAssignments[0];
 					var newPreferenceArray = [];
 					newPreferenceArray.push(newPreference);
@@ -231,7 +233,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 
 			return terms;
 		},
-		// Return flattened objects that can be both preferences or assignments
+		// Return flattened objects that can be preferences, assignments, or preferenceOptions
 		// Filtered by termCode and instructor, and whether or not it should be approved
 		generateAbstractCourses: function (scheduleId, termCode, instructorId, teachingAssignments, sectionGroups, courses, approved) {
 			var self = this;
@@ -274,7 +276,6 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					newPreference.uniqueIdentifier = newPreference.subjectCode + newPreference.courseNumber + newPreference.effectiveTermCode;
 
 					// Ensure this preference has not already been added
-
 					if (uniqueAddedPreferences.indexOf(newPreference.uniqueIdentifier) > -1) {
 						return;
 					}
@@ -311,10 +312,13 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					newPreference.courseNumber = slotAssignment.suggestedCourseNumber;
 					newPreference.subjectCode = slotAssignment.suggestedSubjectCode;
 					newPreference.effectiveTermCode = slotAssignment.suggestedEffectiveTermCode;
+					newPreference.description = newPreference.subjectCode + " " + newPreference.courseNumber;
 
 					newPreference.suggestedCourseNumber = slotAssignment.suggestedCourseNumber;
 					newPreference.suggestedSubjectCode = slotAssignment.suggestedSubjectCode;
 					newPreference.suggestedEffectiveTermCode = slotAssignment.suggestedEffectiveTermCode;
+
+					preferences.push(newPreference);
 				}
 				// Unknown preference type
 				else {

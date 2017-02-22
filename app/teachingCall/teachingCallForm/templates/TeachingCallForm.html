@@ -68,7 +68,7 @@
 				id="pref-{{ preference.id }}" class="teaching-call-form-unapproved-preference">
 					<div style="flex: 0 0 10px; display: flex; justify-content: center; align-items: center;">
 						<div>
-							{{generateDisplayRank(preference, term.preferences) }}
+							{{ generateDisplayRank(preference, term.preferences) }}
 						</div>
 					</div>
 
@@ -93,13 +93,13 @@
 			</ol>
 			<ol class="teaching-call-form-unapproved-preference-container">
 				<li class="scrollable-dropdown-menu search-course-container">
-					<input type="text" ng-model="view.courseSearchQuery[term]"
+					<input type="text" ng-model="view.courseSearchQuery[term.termCode]"
 						ng-init="courseSearchPlaceHolder = 'Add Preference'"
 						placeholder="{{ courseSearchPlaceHolder }}"
 						ng-focus="courseSearchPlaceHolder = 'Search Courses'"
-						ng-blur="courseSearchPlaceHolder = 'Add Preference'; view.courseSearchQuery[term] = undefined;"
+						ng-blur="courseSearchPlaceHolder = 'Add Preference'; view.courseSearchQuery[term.termCode] = undefined;"
 						uib-typeahead="course as (course.description) for course in searchCourses(term, $viewValue)"
-						typeahead-loading="view.loadingCourses[term]"
+						typeahead-loading="view.loadingCourses[term.termCode]"
 						typeahead-no-results="noResults"
 						typeahead-wait-ms="400"
 						typeahead-min-length="0"
