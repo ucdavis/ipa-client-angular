@@ -12,123 +12,6 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 
 			$scope.viewState = {};
 
-			// Convert teachingCall active terms 'termsBlob' to array
-			$scope.getActiveTerms = function () {
-				var sortedTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
-				var terms = $scope.termsBlobToTerms($scope.view.state.activeTeachingCall.termsBlob);
-				var teachingCallTerms = [];
-
-				for (var i = 0; i < sortedTerms.length; i++) {
-					if (terms.indexOf(sortedTerms[i]) > -1) {
-						teachingCallTerms.push(sortedTerms[i]);
-					}
-				}
-
-				return teachingCallTerms;
-			};
-
-			// Decode termsBlob into two digit terms (example: '02', '04')
-			$scope.termsBlobToTerms = function (termsBlob) {
-				var decodedTermsBlob = [];
-				for (var j = 0; j < termsBlob.length; j++) {
-					var isTermInTeachingCall = parseInt(termsBlob.charAt(j));
-
-					if (isTermInTeachingCall) {
-						term = j + 1;
-						term = term.toString();
-						if (term.toString().length == 1) {
-							term = "0" + term;
-						}
-
-						decodedTermsBlob.push(term);
-					}
-				}
-				return decodedTermsBlob;
-			};
-
-			$scope.getTermName = function(term) {
-				termNames = {
-					'05': 'Summer Session 1',
-					'06': 'Summer Special Session',
-					'07': 'Summer Session 2',
-					'08': 'Summer Quarter',
-					'09': 'Fall Semester',
-					'10': 'Fall Quarter',
-					'01': 'Winter Quarter',
-					'02': 'Spring Semester',
-					'03': 'Spring Quarter'
-				};
-
-				return termNames[term];
-			};
-
-			// Filter out courses that match an assignment
-			$scope.filterDuplicateCoursePreferences = function (courses, assignments) {
-				var filteredCourses = [];
-
-				courses.forEach( function (course) {
-					var isCourseDuplicate = false;
-					assignments.forEach ( function (assignment) {
-						if ($scope.assignmentMatchesCourse(assignment, course)) {
-							isCourseDuplicate = true;
-						}
-					});
-
-					if (isCourseDuplicate == false) {
-						filteredCourses.push(course);
-					}
-				});
-
-				return filteredCourses;
-			};
-
-			$scope.assignmentMatchesCourse = function (assignment, course) {
-				// Handle sab/release/buyout
-				if (course.isBuyout) {
-					if (assignment.isBuyout === course.isBuyout) {
-						return true;
-					} else {
-						return false;
-					}
-				} else if (course.isSabbatical) {
-					if (assignment.isSabbatical === course.isSabbatical) {
-						return true;
-					} else {
-						return false;
-					}
-				} else if (course.isInResidence) {
-					if (assignment.isInResidence === course.isInResidence) {
-						return true;
-					} else {
-						return false;
-					}
-				} else if (course.isCourseRelease) {
-					if (assignment.isCourseRelease === course.isCourseRelease) {
-						return true;
-					} else {
-						return false;
-					}
-				}
-
-				// Handle course based preferences
-				var assignmentSubjectCode;
-				var assignmentCourseNumber;
-
-				if (assignment.subjectCode && assignment.courseNumber) {
-					assignmentSubjectCode = assignment.subjectCode;
-					assignmentCourseNumber = assignment.courseNumber;
-				} else if (assignment.suggestedSubjectCode && assignment.suggestedCourseNumber) {
-					assignmentSubjectCode = assignment.suggestedSubjectCode;
-					assignmentCourseNumber = assignment.suggestedCourseNumber;
-				}
-
-				if (assignmentSubjectCode === course.subjectCode && assignmentCourseNumber === course.courseNumber) {
-					return true;
-				}
-
-				return false;
-			};
-
 			$scope.searchCourses = function (termContainer, query) {
 				// Display courses already on the schedule
 				if (!query || query.length == 0) {
@@ -206,24 +89,6 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				}
 			};
 
-			$scope.getCourseOfferingIdsFromPreferences = function(preferences) {
-				if (!preferences) { return; }
-				return preferences.filter(function(preference) {
-					return preference.courseOffering;
-				}).map(function(preference) {
-					return preference.courseOffering.id;
-				});
-			};
-
-			$scope.getCoursesFromPreferences = function(preferences) {
-				if (!preferences) { return; }
-				return preferences.filter(function(preference) {
-					return preference.course;
-				}).map(function(preference) {
-					return preference.course;
-				});
-			};
-
 			$scope.addPreference = function(preference, term, isBuyout, isSabbatical, isInResidence, isCourseRelease) {
 				// Reset add preference UI state
 				var elements = $('.search-course-input');
@@ -251,14 +116,6 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 
 			$scope.updateAssignmentsOrder = function(sortedTeachingPreferenceIds, termContainer) {
 				teachingCallFormActionCreators.updateAssignmentsOrder(sortedTeachingPreferenceIds, $scope.view.state.pageState.scheduleId, termContainer.termCode);
-			};
-
-			$scope.termHasSabbatical = function(term) {
-				var termPrefs = $scope.termPreferences[term] || [];
-				for (var i = 0; i < termPrefs.length ; i++) {
-					if (termPrefs[i].isSabbatical) { return true; }
-				}
-				return false;
 			};
 
 			$scope.copyUnavailabilitiesToAllTerms = function(blob) {
@@ -294,33 +151,29 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				}, delay);
 			};
 
-			$scope.updateTeachingCallReceipt = function(markAsDone) {
-				var teachingCallReceipt = $scope.view.state.activeTeachingCall.teachingCallReceipt;
+			$scope.updateComment = function() {
+				var payload = {
+					comment: $scope.view.state.pageState.comment,
+					id: $scope.view.state.pageState.teachingCallReceiptId
+				};
 
-				// Update TeachingCallReceipt
-				if (teachingCallReceipt.id) {
-					if (markAsDone) {
-						teachingCallReceipt.isDone = true;
-					}
-
-					teachingCallFormActionCreators.updateTeachingCallReceipt(teachingCallReceipt);
-				}
+				teachingCallFormActionCreators.updateTeachingCallReceipt(payload);
 			};
+			$scope.submitTeachingCallForm = function() {
+				var payload = {
+					comment: $scope.view.state.pageState.comment,
+					id: $scope.view.state.pageState.teachingCallReceiptId,
+					isDone: true
+				};
+
+				teachingCallFormActionCreators.submitTeachingCall(payload, $scope.workgroupId, $scope.year);
+			};
+
 
 			$scope.isScheduleTermLocked = function(term) {
 				var termCode = $scope.termToTermCode(term);
 
 				return $scope.view.state.scheduleTermStates.list[termCode].isLocked;
-			};
-
-			$scope.submitTeachingCall = function() {
-				var teachingCallReceipt = $scope.view.state.activeTeachingCall.teachingCallReceipt;
-
-				if (teachingCallReceipt.id) {
-					teachingCallReceipt.isDone = true;
-
-					teachingCallFormActionCreators.submitTeachingCall(teachingCallReceipt, $scope.workgroupId, $scope.year);
-				}
 			};
 
 			// Generates a 'display rank' for the subset of preferences that are not approved.

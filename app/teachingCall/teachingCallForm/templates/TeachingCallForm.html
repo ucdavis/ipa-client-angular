@@ -161,7 +161,7 @@
 	</div>
 	<div class="container-fluid margin-bottom-30">
 		<textarea class="form-control" style="height:150px;"
-		ng-model="view.state.pageState.comment" auto-input on-blur="updateTeachingCallReceipt()"
+		ng-model="view.state.pageState.comment" auto-input on-blur="updateComment()"
 		placeholder="(Optional) Add any additional comments or requests here." rows="5" id="comment"></textarea>
 	</div>
 		<!-- Comments ends -->
@@ -170,7 +170,7 @@
 	<div class="row teaching-call-form-submit-container">
 		<div class="container-fluid pull-right">
 			<button ng-if="!view.state.pageState.isDone" type="button" class="btn btn-default"
-			 confirm-button="submitTeachingCall()"
+			 confirm-button="submitTeachingCallForm()"
 			 confirm-is-enabled="!view.state.pageState.isDone"
 			 btn-class="btn-primary"
 			 message="Are you sure you want to submit your preferences?"
@@ -179,7 +179,7 @@
 			</button>
 
 			<button ng-if="view.state.pageState.isDone"
-				ng-click="updateTeachingCallReceipt(true)" type="button" class="btn btn-default">
+				ng-click="submitTeachingCallForm()" type="button" class="btn btn-default">
 				Update Preferences
 			</button>
 
