@@ -1,8 +1,10 @@
 .instructor-table thead tr :first-child {
+    /*center checkbox */
     text-align: center !important;
 }
 
 .instructor-table tbody tr :first-child {
+    /*center checkbox */
     text-align: center !important;
 }
 
