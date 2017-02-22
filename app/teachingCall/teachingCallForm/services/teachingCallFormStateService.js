@@ -45,6 +45,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 						pageState.terms.forEach( function(termContainer) {
 							if (termContainer.termCode == teachingCallResponse.termCode) {
 								termContainer.availabilityBlob = teachingCallResponse.availabilityBlob;
+								termContainer.teachingCallResponseId = teachingCallResponse.id;
 							}
 						});
 					});
