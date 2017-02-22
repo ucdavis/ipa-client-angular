@@ -63,32 +63,6 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				return courses;
 			};
 
-			$scope.getDisplayTextFromCourse = function(course) {
-				if (course == undefined) {
-					return "";
-				}
-
-				// If entry is a buyout/sabbatical/course release
-				if (course.isBuyout) {
-					return "Buyout";
-				} else if (course.isSabbatical) {
-					return "Sabbatical";
-				} else if (course.isInResidence) {
-					return "In Residence";
-				} else if (course.isCourseRelease) {
-					return "Course Release";
-				}
-				// If entry is a standard course that was already added to the schedule
-				else if ( course.subjectCode.length > 0
-					&& course.courseNumber.length > 0
-					&& course.title.length > 0 ) {
-						var displayText = course.subjectCode + ' ' + course.courseNumber + ' ' + course.title;
-						return displayText;
-				} else {
-					return "";
-				}
-			};
-
 			$scope.addPreference = function(preference, term, isBuyout, isSabbatical, isInResidence, isCourseRelease) {
 				// Reset add preference UI state
 				var elements = $('.search-course-input');
@@ -96,7 +70,7 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				elements[0].blur();
 
 				var courseNumber, subjectCode, sectionGroup;
-				var scheduleId = $scope.view.state.pageState.scheduleId;
+				var scheduleId = $scope.view.state.scheduleId;
 
 				// Preference is based off a new course (from Data Warehouse)
 				if (preference && preference.isSuggested == true) {
@@ -115,7 +89,7 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 			};
 
 			$scope.updateAssignmentsOrder = function(sortedTeachingPreferenceIds, termContainer) {
-				teachingCallFormActionCreators.updateAssignmentsOrder(sortedTeachingPreferenceIds, $scope.view.state.pageState.scheduleId, termContainer.termCode);
+				teachingCallFormActionCreators.updateAssignmentsOrder(sortedTeachingPreferenceIds, $scope.view.state.scheduleId, termContainer.termCode);
 			};
 
 			$scope.copyUnavailabilitiesToAllTerms = function(blob) {
@@ -124,7 +98,7 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 					$timeout.cancel($scope.timeout[termCode]);
 				}
 
-				angular.forEach($scope.view.state.pageState.terms, function(termContainer) {
+				angular.forEach($scope.view.state.terms, function(termContainer) {
 					termContainer.availabilityBlob = blob;
 					$scope.saveTeachingCallResponse(termContainer, blob, 0);
 				});
@@ -139,8 +113,8 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 					id: termContainer.teachingCallResponseId,
 					availabilityBlob: newBlob || termContainer.availabilityBlob,
 					termCode: termCode,
-					instructorId: $scope.view.state.pageState.instructorId,
-					scheduleId: $scope.view.state.pageState.scheduleId
+					instructorId: $scope.view.state.instructorId,
+					scheduleId: $scope.view.state.scheduleId
 				};
 
 				// Report changes back to server after some delay
@@ -154,30 +128,22 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 					}
 				}, delay);
 			};
-
 			$scope.updateComment = function() {
 				var payload = {
-					comment: $scope.view.state.pageState.comment,
-					id: $scope.view.state.pageState.teachingCallReceiptId
+					comment: $scope.view.state.comment,
+					id: $scope.view.state.teachingCallReceiptId
 				};
 
 				teachingCallFormActionCreators.updateTeachingCallReceipt(payload);
 			};
 			$scope.submitTeachingCallForm = function() {
 				var payload = {
-					comment: $scope.view.state.pageState.comment,
-					id: $scope.view.state.pageState.teachingCallReceiptId,
+					comment: $scope.view.state.comment,
+					id: $scope.view.state.teachingCallReceiptId,
 					isDone: true
 				};
 
 				teachingCallFormActionCreators.submitTeachingCall(payload, $scope.workgroupId, $scope.year);
-			};
-
-
-			$scope.isScheduleTermLocked = function(term) {
-				var termCode = $scope.termToTermCode(term);
-
-				return $scope.view.state.scheduleTermStates.list[termCode].isLocked;
 			};
 
 			// Generates a 'display rank' for the subset of preferences that are not approved.
@@ -194,19 +160,6 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				}
 
 				return displayRank;
-			};
-
-			$scope.termToTermCode = function(term) {
-				// Already a termCode
-				if (term.length == 6) {
-					return term;
-				}
-				var year = $scope.year;
-
-				if (["01", "02", "03"].indexOf(term) >= 0) { year++; }
-				var termCode = year + term;
-
-				return termCode;
 			};
 
 			$scope.timeout = {};

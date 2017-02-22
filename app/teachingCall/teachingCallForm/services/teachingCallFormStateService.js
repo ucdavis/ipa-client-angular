@@ -165,8 +165,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 				return;
 			}
 
-			newState = {};
-			newState.pageState = scope._pageStateReducers(action, scope._state.pageState);
+			newState = scope._pageStateReducers(action, scope._state);
 
 			scope._state = newState;
 
@@ -175,6 +174,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 			$log.debug("Assignment state updated:");
 			$log.debug(scope._state, action.type);
 		},
+
 
 		// Helper Methods
 		scaffoldTermsFromBlob: function(termsBlob, academicYear) {
@@ -470,58 +470,3 @@ teachingCallApp.service('teachingCallFormStateService', function (
 		}
 	};
 });
-
-generateTermCode = function (year, term) {
-	if (term.toString().length == 1) {
-		term = "0" + Number(term);
-	}
-
-	if (["01", "02", "03"].indexOf(term) >= 0) { year++; }
-	var termCode = year + term;
-
-	return termCode;
-};
-
-// Sorts a list of termIds into chronological order
-orderTermsChronologically = function (terms) {
-	var orderedTermsReference = [5, 6, 7, 8, 9, 10, 1, 2, 3];
-	terms.sort(function (a, b) {
-		if (orderedTermsReference.indexOf(a) > orderedTermsReference.indexOf(b)) {
-			return 1;
-		}
-		return -1;
-	});
-
-	return terms;
-};
-
-// Creates a buildfield to store enabled term filters
-// Always 9 digits (skips 4th unused term), and in chronologic order
-// Example: "101010001"
-serializeTermFilters = function (termFilters) {
-	var termsBlob = "";
-	var orderedTerms = [5, 6, 7, 8, 9, 10, 1, 2, 3];
-
-	orderedTerms.forEach(function (term) {
-		if (termFilters.indexOf(term) > -1) {
-			termsBlob += "1";
-		} else {
-			termsBlob += "0";
-		}
-	});
-	return termsBlob;
-};
-
-deserializeTermFiltersBlob = function (termFiltersBlob) {
-	var termFiltersArray = [];
-	var orderedTerms = [5, 6, 7, 8, 9, 10, 1, 2, 3];
-
-	for (var i = 0; i < orderedTerms.length; i++) {
-
-		if (termFiltersBlob[i] == "1") {
-			termFiltersArray.push(orderedTerms[i]);
-		}
-	}
-
-	return termFiltersArray;
-};
