@@ -1,0 +1,20 @@
+.instructor-table thead tr :first-child {
+    text-align: center !important;
+}
+
+.instructor-table tbody tr :first-child {
+    text-align: center !important;
+}
+
+.instructor-section {
+    margin-bottom: 50px;
+}
+
+.instructor-section .panel-title {
+    font-weight: bold;
+}
+
+.btn-group {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}

@@ -2,74 +2,132 @@
 <div>
 </div>
 
-<div><!-- main content container -->
-
-
-	This file is currently affected by css from:
-	<ul>
-		<li>
-			/teachingCall/css/teaching-call-modal.css
-		</li>
-		<li>
-			/teachingCall/css/teaching-call-form.css
-		</li>
-		<li>
-			/teachingCall/css/teaching-call-status.css
-		</li>
-	</ul>
-	<div>
-		/teaching-call-status.css is where you should put NEW CSS that you write
-	</div>
-	<div>
-		Most of the CSS in /teaching-call-form.css and /teaching-call-modal.css is very old and poorly written, I don't recommend trying to reuse it
-	</div>
-	<div>
-		However, if you do want to reuse any of that CSS, first move the specific rule to teaching-call.css (to make it clear it is now a shared style)
-	</div>
+<div class="container-fluid"><!-- main content container -->
 
 	<h3 style="text-align: center;">
 		TeachingCalls {{ year }}-{{ nextYear }}
 	</h3>
 	<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
 
-	<div class="btn btn-default">
-		'Add Users' (This will launch a modal to select users)
+<!-- page starts -->
+<div class="row pull-right">
+	<div class="col-md-12 btn-group">
+		<div class="btn btn-default">
+			Invite Instructors
+		</div>
+		<div class="btn btn-default">
+			Contact Instructors
+		</div>
 	</div>
+</div>
 
 	<!-- Federation Instructors -->
-	<h2>
-		Senate instructors section
-	</h2>
-	<div class="btn btn-default">
-		Contact Selected Senate Instructors
+	<div class="row">
+		<div class="col-md-12 instructor-section">
+			<div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="panel-title">Federation Instructors</div>
+				</div>
+					
+				<div class="panel-body with-table">
+					<table class="table table-bordered table-responsive instructor-table">
+						<thead>
+							<tr>
+								<th><input type="checkbox"></th>
+								<th>Name</th>
+								<th>Scheduled Contact Date</th>
+								<th>Last Contacted Date</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr>
+								<td><input type="checkbox"></td>
+								<td>Arlind Gemerz</td>
+								<td>10/25/16</td>
+								<td>
+									3/25/17
+								</td>
+							</tr>
+							
+							<tr>
+								<td><input type="checkbox"></td>
+								<td>John Smith</td>
+								<td>12/10/16</td>
+								<td>
+									3/25/17
+								</td>
+							</tr>
+							
+							<tr>
+								<td><input type="checkbox"></td>
+								<td>Freddy O'young</td>
+								<td>10/25/16</td>
+								<td>
+									3/25/17
+								</td>
+							</tr>
+						</tbody>
+				</table>
+				</div>
+			</div>
+			</div>
+		</div>
 	</div>
-	(This will launch a modal to confirm selected instructors)
-	<div>
-		<h3>
-		Table of Senate Instructors
-	</h3>
-		Rows should have: Checkbox to select this instructor (The header of the table should also have a checkbox for selecting all instructors)
-		/ Name 
-		/ Date we last contacted them 
-		/ Date we will contact them next
-	</div>
-
 	<!-- Federation Instructors -->
-	<h2>
-		Federation instructors section
-	</h2>
-	<div class="btn btn-default">
-		Contact Selected Federation Instructors
-	</div>
-	(This will launch a modal to confirm selected instructors)
-	<div>
-		<h3>
-		Table of Federation Instructors
-	</h3>
-		Rows should have: Checkbox to select this instructor (The header of the table should also have a checkbox for selecting all instructors)
-		/ Name 
-		/ Date we last contacted them 
-		/ Date we will contact them next
+	<div class="row">
+		<div class="col-md-12 instructor-section">
+			<div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="panel-title">Senate Instructors</div>
+				</div>
+					
+				<div class="panel-body with-table">
+					<table class="table table-bordered table-responsive instructor-table">
+						<thead>
+							<tr>
+								<th><input type="checkbox"></th>
+								<th>Name</th>
+								<th>Scheduled Contact Date</th>
+								<th>Last Contacted Date</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr>
+								<td><input type="checkbox"></td>
+								<td>Arlind Gemerz</td>
+								<td>10/25/16</td>
+								<td>
+									3/25/17
+								</td>
+							</tr>
+							
+							<tr>
+								<td><input type="checkbox"></td>
+								<td>John Smith</td>
+								<td>12/10/16</td>
+								<td>
+									3/25/17
+								</td>
+							</tr>
+							
+							<tr>
+								<td><input type="checkbox"></td>
+								<td>Freddy O'young</td>
+								<td>10/25/16</td>
+								<td>
+									3/25/17
+								</td>
+							</tr>
+						</tbody>
+				</table>
+				</div>
+			</div>
+			</div>
+		</div>
 	</div>
 
 </div>
