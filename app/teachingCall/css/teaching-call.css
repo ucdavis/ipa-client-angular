@@ -1,0 +1,11 @@
+.btn {
+    border: 1px solid #ebebeb !important;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
