@@ -119,7 +119,4 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 	}]);
 
 TeachingCallStatusCtrl.validate = function (authService, teachingCallStatusActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		teachingCallStatusActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
-	});
 };
