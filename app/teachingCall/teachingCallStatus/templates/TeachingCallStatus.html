@@ -10,7 +10,7 @@
 	<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
 
 <!-- page starts -->
-<div class="row pull-right">
+<div class="row pull-right teaching-call-status">
 	<div class="col-md-12 btn-group">
 			<a href="javascript:;" onclick="jQuery('#modal-1').modal('show');" class="btn btn-default">Invite Instructors</a>
 			<a href="javascript:;" onclick="jQuery('#modal-2').modal('show');" class="btn btn-default">Contact Instructors</a>
@@ -20,8 +20,7 @@
 	<!-- Federation Instructors -->
 	<div class="row">
 		<div class="col-md-12 instructor-section">
-			<div>
-			<div class="panel panel-primary">
+			<div class="panel panel-primary panel-teaching-call-status">
 				<div class="panel-heading">
 					<div class="panel-title">Federation Instructors</div>
 				</div>
@@ -68,14 +67,12 @@
 				</table>
 				</div>
 			</div>
-			</div>
 		</div>
 	</div>
 	<!-- Federation Instructors -->
 	<div class="row">
 		<div class="col-md-12 instructor-section">
-			<div>
-			<div class="panel panel-primary">
+			<div class="panel panel-primary panel-teaching-call-status">
 				<div class="panel-heading">
 					<div class="panel-title">Senate Instructors</div>
 				</div>
@@ -122,24 +119,20 @@
 				</table>
 				</div>
 			</div>
-			</div>
 		</div>
 	</div>
 
 </div>
 
-
-
 <!-- modal invite Instructor -->
 <div class="modal fade" id="modal-1" style="display: none;">
-		<div class="modal-dialog invite-instructors-modal">
+		<div class="modal-dialog instructors-modal">
 			<div class="modal-content">
 				
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<h4 class="modal-title">Invite Instructors</h4>
 				</div>
-				
 				<div class="modal-body">
 					<div class="container-fluid">
 						<!-- toggle -->
@@ -208,7 +201,6 @@
 							</div>
 						</div>
 					</div>
-				
 				<div class="modal-footer">
 					<div class="row">
 						<div class="col-md-12 email-message">
@@ -226,14 +218,12 @@
 
 <!-- modal contact Instructors -->
 <div class="modal fade" id="modal-2" style="display: none;">
-		<div class="modal-dialog invite-instructors-modal">
+		<div class="modal-dialog instructors-modal">
 			<div class="modal-content">
-				
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<h4 class="modal-title">Invite Instructors</h4>
 				</div>
-				
 				<div class="modal-body">
 					<div class="container-fluid">
 						<div class="row">
@@ -243,7 +233,6 @@
 							</div>
 						</div>
 					</div>
-				
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<button type="button" class="btn btn-info">Confirm</button>
