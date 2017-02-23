@@ -1,3 +1,5 @@
+/* teahing-call-status */
+
 .instructor-table thead tr :first-child {
     /*center checkbox */
     text-align: center !important;
@@ -25,13 +27,17 @@
 
 /* modal style */
 
+.invite-instructors-modal {
+    width: 950px;
+}
+
 .modal-header {
     border-radius: 5px 5px 0px 0px;
     background: #303641;
     color: white;
 }
 
-/* modal boday */
+/* modal body */
 .modal-body {
  padding: 0px !important;
 }
@@ -53,9 +59,13 @@
     font-size: 9pt !important;
 }
 
-.instructor-list {
+.instructor-box {
     border: 1px solid #ccc !important;
     border-radius: 5px;
+}
+
+.instructor-box .instructor-list {
+    height: 255px;
 }
 
 .instructor-tag {
@@ -72,7 +82,10 @@
     background-color: #ebebeb;
     color: lightgray;
     border: 1px solid #ebebeb !important;
+}
 
+.instructor-message-box {
+    height: 180px !important;
 }
 
 .select-term {
@@ -80,13 +93,16 @@
 }
 
 .email-message {
-    margin-bottom: 15px;
+    margin-top: 25px;
+    margin-bottom: 45px;
 }
 
 /* date-picker style-overwrite */
 
 .uib-datepicker table {
     width: 370px;
+    margin: auto;
+    margin-top: 5px;
 }
 
 .uib-datepicker table button{
