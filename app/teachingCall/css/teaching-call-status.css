@@ -20,3 +20,92 @@
     margin-top: 25px;
     margin-bottom: 25px;
 }
+
+
+
+/* modal style */
+
+.modal-header {
+    border-radius: 5px 5px 0px 0px;
+    background: #303641;
+    color: white;
+}
+
+/* modal boday */
+.modal-body {
+ padding: 0px !important;
+}
+
+.modal-footer {
+    background-color:#f8f8f8;
+}
+.instructor-toggle {
+    margin: 15px 0px 15px 0px;
+}
+
+.instructor-toggle label {
+    border: 1px solid #ccc !important;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.instructor-toggle span {
+    font-size: 9pt !important;
+}
+
+.instructor-list {
+    border: 1px solid #ccc !important;
+    border-radius: 5px;
+}
+
+.instructor-tag {
+    background-color: white !important;
+    border: 1px solid #ebebeb;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.label-toggleout {
+    /* styles when toggled out */
+    background-color: #ebebeb;
+    color: lightgray;
+    border: 1px solid #ebebeb !important;
+
+}
+
+.select-term {
+    margin-bottom: 25px;
+}
+
+.email-message {
+    margin-bottom: 15px;
+}
+
+/* date-picker style-overwrite */
+
+.uib-datepicker table {
+    width: 370px;
+}
+
+.uib-datepicker table button{
+    font-size: 12px;
+    padding: 6px 5px !important;
+}
+
+.uib-datepicker .uib-title {
+   border: none !important;
+}
+
+.uib-daypicker .btn {
+   border: none !important;
+}
+
+.uib-daypicker button {
+   border: none !important;
+}
+
+.uib-datepicker-popup {
+   width: 285px !important;
+}

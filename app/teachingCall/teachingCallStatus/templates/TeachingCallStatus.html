@@ -12,9 +12,7 @@
 <!-- page starts -->
 <div class="row pull-right">
 	<div class="col-md-12 btn-group">
-		<div class="btn btn-default">
-			Invite Instructors
-		</div>
+			<a href="javascript:;" onclick="jQuery('#modal-1').modal('show');" class="btn btn-default">Invite Instructors</a>
 		<div class="btn btn-default">
 			Contact Instructors
 		</div>
@@ -131,3 +129,96 @@
 	</div>
 
 </div>
+
+
+
+<!-- modal -->
+<div class="modal fade" id="modal-1" style="display: none;">
+		<div class="modal-dialog" style="width: 1000px">
+			<div class="modal-content">
+				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title">Basic Modal</h4>
+				</div>
+				
+				<div class="modal-body">
+					<div class="container-fluid">
+						<!-- toggle -->
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row btn-group instructor-toggle" data-toggle="buttons">
+									<label class="btn btn-white btn-sm active" id="courses-pivot">
+										<input name="options" type="radio">
+										<span>Senate</span>
+									</label>
+									<label class="btn btn-white btn-sm" id="instructors-pivot">
+										<input name="options" type="radio">
+										<span>Federation</span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<!-- main content -->
+						<div class="row">
+							<div class="col-md-6">
+								<h6>Senate Instructors Selected</h6>
+								<div class="flex flex-wrap padding-sm instructor-list">
+									<div style="height: 240px;">
+										<div class="label label-default instructor-tag">Jackson Smith</div>
+										<div class="label instructor-tag label-toggleout">Ginna Johnson</div>
+										<div class="label label-default instructor-tag">Zack Potter</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-1">
+							</div>
+							<div class="col-md-5">
+								<h6>Set Due Date</h6>
+								<input class="form-control datepicker" type="text">
+								<div uib-datepicker="form-control" ng-model="dt" class="uib-datepicker" datepicker-options="options" role="application">
+								</div>	
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="checkbox"> 
+									<label class="checkbox-inline"><input value="" type="checkbox">Ask for unavailabilities</label>
+									<label class="checkbox-inline"><input value="" type="checkbox">Send Email</label>
+								</div>
+							</div>
+							<div class="col-md-5 col-md-offset-3">
+								<h6>Select Term</h6>
+								<div class="select-term" uib-dropdown auto-close="outsideClick" is-open="status.isopen">
+									<button id="single-button" type="button" class="btn btn-default dropdown-toggle set-terms-teaching-call-btn" uib-dropdown-toggle ng-disabled="disabled">
+										Set Terms <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu set-term-menu" uib-dropdown-menu auto-close="outsideClick" role="menu" aria-labelledby="single-button">
+										<li ng-repeat="term in viewState.userInterface.enabledTerms.list" role="menuitem" ng-click="toggleTermActive(term)">
+												<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+													ng-class="{ 'checked': startTeachingCallConfig.activeTerms[term.slice(-2)] }">
+													<label class="cb-wrapper">
+														<div class="checked"></div>
+													</label>
+													<label>{{ getTermName(term) }}</label>
+												</div>
+										</li>
+									</ul>
+								</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-md-12 email-message">
+							<h6 class="pull-left">Email Message</h6>
+							<textarea class="form-control" placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment" style="height:77px;"></textarea>
+						</div>
+					</div>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-info">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
