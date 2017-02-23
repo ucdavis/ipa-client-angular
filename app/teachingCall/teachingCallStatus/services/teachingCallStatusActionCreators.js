@@ -3,22 +3,10 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 		getInitialState: function (workgroupId, year, tab) {
 			teachingCallStatusService.getInitialState(workgroupId, year).then(function (payload) {
 				var action = {
-					type: INIT_ASSIGNMENT_VIEW,
+					type: INIT_STATE,
 					payload: payload,
 					year: year,
 					tab: tab
-				};
-				teachingCallStatusStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
-			});
-		},
-		getInitialTeachingCallState: function (workgroupId, year) {
-			teachingCallStatusService.getInitialTeachingCallState(workgroupId, year).then(function (payload) {
-				var action = {
-					type: INIT_TEACHING_CALL_VIEW,
-					payload: payload,
-					year: year
 				};
 				teachingCallStatusStateService.reduce(action);
 			}, function (err) {

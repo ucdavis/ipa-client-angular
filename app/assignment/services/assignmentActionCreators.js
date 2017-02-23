@@ -121,14 +121,6 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		submitTeachingCall: function (teachingCallReceipt, workgroupId, year) {
-			assignmentService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
-				var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor";
-				$window.location.href = instructorSummaryUrl;
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
-			});
-		},
 		addInstructorAssignment: function (instructorId, year, workgroupId, comment) {
 			var scheduleInstructorNote = {};
 			scheduleInstructorNote.instructorId = instructorId;
@@ -235,34 +227,6 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		createTeachingCall: function (workgroupId, year, teachingCallConfig) {
-			assignmentService.createTeachingCall(workgroupId, year, teachingCallConfig).then(function (teachingCall) {
-				$rootScope.$emit('toast', { message: "Started Teaching Call", type: "SUCCESS" });
-				var action = {
-					type: CREATE_TEACHING_CALL,
-					payload: {
-						teachingCall: teachingCall
-					}
-				};
-				assignmentStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
-			});
-		},
-		deleteTeachingCall: function (teachingCall) {
-			assignmentService.deleteTeachingCall(teachingCall).then(function (teachingCall) {
-				$rootScope.$emit('toast', { message: "Removed Teaching Call", type: "SUCCESS" });
-				var action = {
-					type: DELETE_TEACHING_CALL,
-					payload: {
-						teachingCall: teachingCall
-					}
-				};
-				assignmentStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
-			});
-		},
 		showCourses: function () {
 			var action = {
 				type: SWITCH_MAIN_VIEW,
@@ -309,37 +273,6 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				}
 			};
 			assignmentStateService.reduce(action);
-		},
-		addPreference: function (teachingAssignment) {
-			assignmentService.addPreference(teachingAssignment).then(function (teachingAssignments) {
-				$rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
-				var action = {
-					type: ADD_PREFERENCE,
-					payload: {
-						teachingAssignments: teachingAssignments
-					}
-				};
-				assignmentStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
-			});
-		},
-		removePreference: function (teachingAssignment) {
-			assignmentService.removePreference(teachingAssignment).then(function (teachingAssignments) {
-				$rootScope.$emit('toast', { message: "Removed Preference", type: "SUCCESS" });
-				var action = {
-					type: REMOVE_PREFERENCE,
-					payload: {
-						teachingAssignments: teachingAssignments,
-						instructorId: teachingAssignment.instructorId,
-						termCode: teachingAssignment.termCode
-					}
-				};
-
-				assignmentStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
-			});
 		}
 	};
 });

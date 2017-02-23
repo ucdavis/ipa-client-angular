@@ -79,7 +79,7 @@ teachingCallApp.factory("teachingCallFormService", this.teachingCallFormService 
 
 			return deferred.promise;
 		},
-		createTeachingCallResponse: function (teachingCallResponse) {
+		createAvailability: function (teachingCallResponse) {
 			var deferred = $q.defer();
 
 			$http.post(serverRoot + "/api/assignmentView/teachingCallResponses/" + teachingCallResponse.scheduleId  + "/" + teachingCallResponse.instructorId, teachingCallResponse, { withCredentials: true })
