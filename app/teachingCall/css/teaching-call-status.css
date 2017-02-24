@@ -1,0 +1,133 @@
+/* teahing-call-status */
+
+.instructor-table thead tr :first-child {
+    /*center checkbox */
+    text-align: center !important;
+}
+
+.instructor-table tbody tr :first-child {
+    /*center checkbox */
+    text-align: center !important;
+}
+
+.instructor-section {
+    margin-bottom: 50px;
+}
+
+.instructor-section .panel-title {
+    font-weight: bold;
+}
+
+.instructor-section .panel-teaching-call-status{
+    border-radius: 0px !important;
+}
+
+.teaching-call-status .btn-default {
+    border: 1px solid #ebebeb !important;
+}
+
+.teaching-call-status .btn-group {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+
+
+/* modal style */
+
+.instructors-modal {
+    width: 950px;
+}
+
+.instructors-modal .modal-header {
+    background: #303641;
+    color: white;
+}
+
+/* modal body */
+.instructors-modal .modal-body {
+ padding: 0px !important;
+}
+
+.instructors-modal .modal-footer {
+    background-color:#f8f8f8;
+}
+.instructor-toggle {
+    margin: 15px 0px 15px 0px;
+}
+
+.instructor-toggle label {
+    border: 1px solid #ccc !important;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.instructor-toggle span {
+    font-size: 9pt !important;
+}
+
+.instructor-box {
+    border: 1px solid #ccc !important;
+    border-radius: 5px;
+}
+
+.instructor-box .instructor-list {
+    height: 255px;
+}
+
+.instructor-tag {
+    background-color: white !important;
+    border: 1px solid #ccc !important;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.label-toggleout {
+    /* styles when toggled out */
+    background-color: #ebebeb;
+    color: lightgray;
+    border: 1px solid #ebebeb !important;
+}
+
+.instructor-message-box {
+    height: 180px !important;
+}
+
+.instructors-modal .select-term {
+    margin-bottom: 25px;
+}
+
+.instructors-modal .email-message {
+    margin-bottom: 35px;
+}
+
+/* date-picker style-overwrite */
+
+.uib-datepicker table {
+    width: 370px;
+    margin: auto;
+    margin-top: 5px;
+}
+
+.uib-datepicker table button{
+    font-size: 12px;
+    padding: 6px 5px !important;
+}
+
+.uib-datepicker .uib-title {
+   border: none !important;
+}
+
+.uib-daypicker .btn {
+   border: none !important;
+}
+
+.uib-daypicker button {
+   border: none !important;
+}
+
+.uib-datepicker-popup {
+   width: 285px !important;
+}
