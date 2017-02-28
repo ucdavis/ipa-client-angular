@@ -21,6 +21,13 @@
 		</h3>
 		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
 	</div>
+
+
+
+
+
+
+<!-- 
 	<div class="row provide-preferences-header">
 		<div class="col-md-6">
 			<h5>Please indicate your preferences:</h5>
@@ -49,7 +56,6 @@
 	</div>
 	<div class="preference-container" style="display:flex; margin-left:15px; margin-right:15px;">
 		<div class="unavailability-term-container" style="flex: 1 1 0px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
-			<!-- confirmed preferences -->
 			<div class="approved-preference-container">
 				<div ng-if="preference.approved" class="teaching-call-approved-preference alert-info alert"
 				ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
@@ -109,10 +115,9 @@
 				</li>
 			</ol>
 
-		</div> <!-- term container -->
+		</div> 
 	</div>
 
-	<!-- Select Unavailabilities -->
 	<div ng-show="view.state.activeTeachingCall.showUnavailabilities" class="row provide-unavailabilities-header">
 		<div class="col-md-6">
 			<h5>Please indicate your un-availabilities:</h5>
@@ -149,9 +154,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- Select Unavailabilities ends -->
 
-	<!-- Comments -->
 	<div class="row provide-comments-header">
 		<div class="col-md-12">
 			<h5>Additional comments:</h5>
@@ -162,9 +165,8 @@
 		ng-model="view.state.activeTeachingCall.teachingCallReceipt.comment" auto-input on-blur="updateTeachingCallReceipt()"
 		placeholder="(Optional) Add any additional comments or requests here." rows="5" id="comment"></textarea>
 	</div>
-		<!-- Comments ends -->
 
-	<!-- Submit button -->
+
 	<div class="row teaching-call-form-submit-container">
 		<div class="container-fluid pull-right">
 			<button ng-if="!view.state.activeTeachingCall.teachingCallReceipt.isDone" type="button" class="btn btn-default"
@@ -183,4 +185,5 @@
 
 		</div>
 	</div>
+	-->
 </div>
