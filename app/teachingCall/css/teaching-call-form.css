@@ -991,3 +991,18 @@ li.active-term .dropdown-term-row {
 .teaching-call--course-preference table {
 	table-layout: fixed;
 }
+
+
+/* instructor- unavability-table */
+
+.unavailiability-table-header {
+	text-align: center;
+	font-size: 12px !important;
+}
+
+
+table .unavailiability-table-header tr th {
+    border: none;
+    font-weight: normal;
+    padding: 0 !important;
+}
