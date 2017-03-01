@@ -917,3 +917,41 @@ li.active-term .dropdown-term-row {
 	border: 1px solid #F2F2F2;
 	padding: 5px;
 }
+
+/* TeachingCallForm */
+
+.teaching-call--progress-sidebar {
+	position: fixed;
+	padding: 15px 35px 15px 35px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.teaching-call--progress-sidebar h5 {
+	margin-bottom: 30px;
+}
+
+.teaching-call--progress-sidebar ul {
+	padding-left: 10px;
+	list-style: none;
+}
+
+.teaching-call--progress-sidebar ul li:first-child {
+	margin-left: -20px;
+	font-size: 10pt;
+	font-weight: 500;
+}
+
+.teaching-call--progress-sidebar ul li:last-child {
+	margin-top: 25px;
+	margin-left: -20px;
+	font-size: 10pt;
+	font-weight: 500;
+}
+
+.teaching-call--progress-sidebar ul li {
+	margin: 10px;
+}
+
+.teaching-call--progress-sidebar ul li input {
+	margin-right: 10px;
+}
