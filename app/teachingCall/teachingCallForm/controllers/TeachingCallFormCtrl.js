@@ -177,7 +177,7 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 	}]);
 
 TeachingCallFormCtrl.validate = function (authService, teachingCallFormActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		teachingCallFormActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
-	});
+	//authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+		//teachingCallFormActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+	//});
 };
