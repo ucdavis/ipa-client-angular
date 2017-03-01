@@ -14,15 +14,27 @@
 	<div style="width: 100%; display: flex; padding-right: 15px; padding-bottom: 15px;" class="teaching-call-status">
 		<div style="flex: 20 1 0px; display: flex; justify-content: flex-end;">
 			<div style="padding-right: 5px;">
-				<a ng-if="view.state.eligible.senate.length > 0 || view.state.eligible.federation.length > 0" ng-click="openAddInstructorsModal()" class="btn btn-default">Add Instructors</a>
+				<a ng-if="view.state.eligible.senate.length > 0 || view.state.eligible.federation.length > 0" ng-click="openAddInstructorsModal()" class="btn btn-default">
+					<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
+					Add Instructors
+				</a>
 				<span ng-if="view.state.eligible.senate.length == 0 && view.state.eligible.federation.length == 0" uib-tooltip="All instructors already in teaching call">
-					<a class="disabled btn btn-default">Add Instructors</a>
+					<a class="disabled btn btn-default">
+						<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
+						Add Instructors
+					</a>
 				</span>
 			</div>
 			<div>
-				<a ng-if="atLeastOneInstructorSelected()" ng-click="openContactInstructorsModal()" class="btn btn-default">Contact Instructors</a>
+				<a ng-if="atLeastOneInstructorSelected()" ng-click="openContactInstructorsModal()" class="btn btn-default">
+					<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
+					Contact Instructors
+				</a>
 				<span ng-if="atLeastOneInstructorSelected() == false" uib-tooltip="You must select at least one instructor">
-					<a class="disabled btn btn-default">Contact Instructors</a>
+					<a class="disabled btn btn-default">
+						<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
+						Contact Instructors
+					</a>
 				</span>
 			</div>
 		</div>
