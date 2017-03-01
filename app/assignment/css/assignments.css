@@ -955,3 +955,8 @@ li.active-term .dropdown-term-row {
 .teaching-call--progress-sidebar ul li input {
 	margin-right: 10px;
 }
+
+.teaching-call--progress-sidebar button {
+	width: 100%;
+    margin-top: 35px;
+}
