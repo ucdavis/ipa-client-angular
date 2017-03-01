@@ -91,6 +91,84 @@
 	visibility: hidden;
 }
 
-tr:hover .remove-instructor-ui {
+.table-row:hover .remove-instructor-ui {
 	visibility: visible;
+}
+
+.teaching-call-status .first-cell {
+	border-left: 1px solid #ebebeb;
+}
+
+.teaching-call-status .cell {
+	border-bottom: 1px solid #ebebeb;
+	border-right: 1px solid #ebebeb;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 45px;
+}
+
+.teaching-call-status .left-cell {
+	border-bottom: 1px solid #ebebeb;
+	border-right: 1px solid #ebebeb;
+	display: flex;
+	align-items: center;
+	min-height: 45px;
+}
+
+.teaching-call-status .header-left-cell {
+	display: flex;
+	align-items: center;
+	border: 1px solid #ebebeb;
+	color: #a6a7aa;
+	background-color: #f5f5f6;
+	min-height: 36px;
+}
+
+.teaching-call-status .header-cell {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #ebebeb;
+	color: #a6a7aa;
+	background-color: #f5f5f6;
+	min-height: 36px;
+}
+
+.teaching-call-status .column-checkbox {
+	flex: 1 1 0px;
+}
+
+.teaching-call-status .column-name {
+	flex: 3 1 0px;
+}
+
+.teaching-call-status .column-last {
+	flex: 5 1 0px;
+}
+
+.teaching-call-status .column-due {
+	flex: 5 1 0px;
+}
+
+.teaching-call-status .column-next {
+	flex: 5 1 0px;
+}
+
+.teaching-call-status .column-hover-ui {
+	flex: 1 1 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.table-title {
+	flex: 19 1 0px;
+	display: flex;
+	align-items: center;
+	font-weight: bold;
+	min-height: 36px;
+	color: #373e4a;
+	background-color: #ffffff;
+	border: 1px solid #ebebeb;
 }
