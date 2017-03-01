@@ -6,3 +6,7 @@
 .flex-wrap {
     flex-wrap: wrap;
 }
+
+.text-centered {
+	text-align: center;
+}

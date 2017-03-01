@@ -10,12 +10,67 @@
 	<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
 
 <!-- page starts -->
-<div class="row pull-right teaching-call-status">
-	<div class="col-md-12 btn-group">
-			<a href="javascript:;" onclick="jQuery('#modal-1').modal('show');" class="btn btn-default">Invite Instructors</a>
-			<a href="javascript:;" onclick="jQuery('#modal-2').modal('show');" class="btn btn-default">Contact Instructors</a>
+<div style="width: 100%; display: flex; justify-content: flex-end; padding-right: 15px; padding-bottom: 15px;" class="teaching-call-status">
+	<div style="padding-right: 5px;">
+		<a ng-if="view.state.eligible.senate.length > 0 || view.state.eligible.federation.length > 0" ng-click="openAddInstructorsModal()" class="btn btn-default">Add Instructors</a>
+		<span ng-if="view.state.eligible.senate.length == 0 && view.state.eligible.federation.length == 0" uib-tooltip="All instructors already in teaching call">
+			<a class="disabled btn btn-default">Add Instructors</a>
+		</span>
+	</div>
+	<div>
+		<a ng-if="atLeastOneInstructorSelected()" ng-click="openContactInstructorsModal()" class="btn btn-default">Contact Instructors</a>
+		<span ng-if="atLeastOneInstructorSelected() == false" uib-tooltip="You must select at least one instructor">
+			<a class="disabled btn btn-default">Contact Instructors</a>
+		</span>
 	</div>
 </div>
+
+	<!-- Senate Instructors -->
+	<div class="row">
+		<div class="col-md-12 instructor-section">
+			<div class="panel panel-primary panel-teaching-call-status">
+				<div class="panel-heading">
+					<div class="panel-title">Senate Instructors</div>
+				</div>
+					
+				<div class="panel-body with-table">
+					<table class="table table-bordered table-responsive instructor-table">
+						<thead>
+							<tr style="border-right: none;">
+								<th><input ng-click="toggleSenateInstructors()" type="checkbox"></th>
+								<th>Name</th>
+								<th class="text-centered">Last Contacted</th>
+								<th class="text-centered">Next Contact</th>
+								<th class="text-centered">Due Date</th>
+								<th></th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr ng-repeat="instructor in view.state.teachingCall.senate">
+								<td><input type="checkbox" ng-checked="instructor.selected" ng-click="toggleSelectedInstructor(instructor)"></td>
+								<td>{{ instructor.lastName }}, {{ instructor.firstName }}</td>
+								<td class="text-centered">{{ instructor.lastContactedAt }}</td>
+								<td class="text-centered">{{ instructor.nextContactAt }}</td>
+								<td class="text-centered">{{ instructor.dueDate }}</td>
+								<td>
+									<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
+										class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
+										tooltip-placement="bottom"
+										uib-tooltip="Remove Instructor"
+										confirm-button="removeInstructor(instructor)"
+										message="Are you sure you want to remove this instructor?
+											This will cancel any pending notifications."
+										yes="Remove" no="Cancel" placement="top">
+									</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Federation Instructors -->
 	<div class="row">
@@ -29,215 +84,39 @@
 					<table class="table table-bordered table-responsive instructor-table">
 						<thead>
 							<tr>
-								<th><input type="checkbox"></th>
+								<th><input ng-click="toggleFederationInstructors()" type="checkbox"></th>
 								<th>Name</th>
-								<th>Scheduled Contact Date</th>
-								<th>Last Contacted Date</th>
+								<th class="text-centered">Last Contacted</th>
+								<th class="text-centered">Next Contact</th>
+								<th class="text-centered">Due Date</th>
+								<th></th>
 							</tr>
 						</thead>
 						
 						<tbody>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>Arlind Gemerz</td>
-								<td>10/25/16</td>
+							<tr ng-repeat="instructor in view.state.teachingCall.federation">
+								<td><input ng-checked="instructor.selected" ng-click="toggleSelectedInstructor(instructor)" type="checkbox"></td>
+								<td>{{ instructor.lastName }}, {{ instructor.firstName }}</td>
+								<td class="text-centered">{{ instructor.lastContactedAt }}</td>
+								<td class="text-centered">{{ instructor.nextContactAt }}</td>
+								<td class="text-centered">{{ instructor.dueDate }}</td>
 								<td>
-									3/25/17
-								</td>
-							</tr>
-							
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>John Smith</td>
-								<td>12/10/16</td>
-								<td>
-									3/25/17
-								</td>
-							</tr>
-							
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>Freddy O'young</td>
-								<td>10/25/16</td>
-								<td>
-									3/25/17
+									<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
+										class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
+										tooltip-placement="bottom"
+										uib-tooltip="Remove Instructor"
+										confirm-button="removeInstructor(instructor)"
+										message="Are you sure you want to remove this instructor?
+											This will cancel any pending notifications."
+										yes="Remove" no="Cancel" placement="top">
+									</span>
 								</td>
 							</tr>
 						</tbody>
-				</table>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Federation Instructors -->
-	<div class="row">
-		<div class="col-md-12 instructor-section">
-			<div class="panel panel-primary panel-teaching-call-status">
-				<div class="panel-heading">
-					<div class="panel-title">Senate Instructors</div>
-				</div>
-					
-				<div class="panel-body with-table">
-					<table class="table table-bordered table-responsive instructor-table">
-						<thead>
-							<tr>
-								<th><input type="checkbox"></th>
-								<th>Name</th>
-								<th>Scheduled Contact Date</th>
-								<th>Last Contacted Date</th>
-							</tr>
-						</thead>
-						
-						<tbody>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>Arlind Gemerz</td>
-								<td>10/25/16</td>
-								<td>
-									3/25/17
-								</td>
-							</tr>
-							
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>John Smith</td>
-								<td>12/10/16</td>
-								<td>
-									3/25/17
-								</td>
-							</tr>
-							
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>Freddy O'young</td>
-								<td>10/25/16</td>
-								<td>
-									3/25/17
-								</td>
-							</tr>
-						</tbody>
-				</table>
+					</table>
 				</div>
 			</div>
 		</div>
 	</div>
 
-</div>
-
-<!-- modal invite Instructor -->
-<div class="modal fade" id="modal-1" style="display: none;">
-		<div class="modal-dialog instructors-modal">
-			<div class="modal-content">
-				
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h4 class="modal-title">Invite Instructors</h4>
-				</div>
-				<div class="modal-body">
-					<div class="container-fluid">
-						<!-- toggle -->
-						<div class="row">
-							<div class="col-md-12">
-								<div class="row btn-group instructor-toggle" data-toggle="buttons">
-									<label class="btn btn-white btn-sm active" id="courses-pivot">
-										<input name="options" type="radio">
-										<span>Senate</span>
-									</label>
-									<label class="btn btn-white btn-sm" id="instructors-pivot">
-										<input name="options" type="radio">
-										<span>Federation</span>
-									</label>
-								</div>
-							</div>
-						</div>
-						<!-- main content -->
-						<div class="row">
-							<div class="col-md-6">
-								<h6>Senate Instructors Selected</h6>
-								<div class="flex flex-wrap padding-sm instructor-box">
-									<div class="instructor-list">
-										<div class="label label-default instructor-tag">Jackson Smith</div>
-										<div class="label label-default instructor-tag label-toggleout">Ginna Johnson</div>
-										<div class="label label-default instructor-tag">Zack Potter</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-1">
-							</div>
-							<div class="col-md-4">
-								<!-- set due date -->
-								<h6>Set Due Date</h6>
-								<input class="form-control datepicker" type="text">
-								<div uib-datepicker="form-control" ng-model="dt" class="uib-datepicker" datepicker-options="options" role="application">
-								</div>	
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-4">
-								<!-- check unavailabilities and send message -->
-								<div class="checkbox"> 
-									<label class="checkbox-inline"><input value="" type="checkbox">Ask for unavailabilities</label>
-									<label class="checkbox-inline"><input value="" type="checkbox">Send Email</label>
-								</div>
-							</div>
-							<div class="col-md-4 col-md-offset-3">
-								<h6>Select Term</h6>
-								<!-- selet term dropdown-menu -->
-								<div class="select-term" uib-dropdown auto-close="outsideClick" is-open="status.isopen">
-									<button id="single-button" type="button" class="btn btn-default dropdown-toggle set-terms-teaching-call-btn" uib-dropdown-toggle ng-disabled="disabled">
-										Set Terms <span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu set-term-menu" uib-dropdown-menu auto-close="outsideClick" role="menu" aria-labelledby="single-button">
-										<li ng-repeat="term in viewState.userInterface.enabledTerms.list" role="menuitem" ng-click="toggleTermActive(term)">
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': startTeachingCallConfig.activeTerms[term.slice(-2)] }">
-												<label class="cb-wrapper">
-													<div class="checked"></div>
-												</label>
-												<label>{{ getTermName(term) }}</label>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				<div class="modal-footer">
-					<div class="row">
-						<div class="col-md-12 email-message">
-							<h6 class="pull-left">Email Message</h6>
-							<textarea class="form-control" placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment" style="height:77px;"></textarea>
-						</div>
-					</div>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-info">Confirm</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- modal contact Instructors -->
-<div class="modal fade" id="modal-2" style="display: none;">
-		<div class="modal-dialog instructors-modal">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h4 class="modal-title">Invite Instructors</h4>
-				</div>
-				<div class="modal-body">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-md-12 email-message">
-								<h6 class="pull-left">Email Message</h6>
-								<textarea class="form-control instructor-message-box" placeholder="Important: Instructor Name, Due Date, and Quarter Term will all be included." rows="5" id="comment" style="height:77px;"></textarea>
-							</div>
-						</div>
-					</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-info">Confirm</button>
-				</div>
-			</div>
-		</div>
-	</div>
 </div>

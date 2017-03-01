@@ -157,13 +157,13 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 					var collapsedTermsBlob = "0000000000";
 
 					// Collapse the teachingCall termsBlobs into one
-					teachingCalls = action.payload.teachingCalls;
+					teachingCallReceipts = action.payload.teachingCallReceipts;
 
-					teachingCalls.forEach( function(teachingCall) {
+					teachingCallReceipts.forEach( function(teachingCallReceipt) {
 
 						// Loop through blobFlags in teachingCalls termBlob
-						for (var i = 0; i < teachingCall.termsBlob.length; i++) {
-							var blobFlag = teachingCall.termsBlob[i];
+						for (var i = 0; i < teachingCallReceipt.termsBlob.length; i++) {
+							var blobFlag = teachingCallReceipt.termsBlob[i];
 							if (blobFlag == "1") {
 								// Change the relevant flag to 1
 								collapsedTermsBlob = setCharAt(collapsedTermsBlob,i,"1");

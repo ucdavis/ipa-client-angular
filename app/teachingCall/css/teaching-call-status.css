@@ -35,18 +35,9 @@
 
 /* modal style */
 
-.instructors-modal {
-    width: 950px;
-}
-
 .instructors-modal .modal-header {
     background: #303641;
     color: white;
-}
-
-/* modal body */
-.instructors-modal .modal-body {
- padding: 0px !important;
 }
 
 .instructors-modal .modal-footer {
@@ -67,67 +58,39 @@
 }
 
 .instructor-box {
-    border: 1px solid #ccc !important;
-    border-radius: 5px;
-}
-
-.instructor-box .instructor-list {
-    height: 255px;
+	border: 1px solid #ccc !important;
+	border-radius: 5px;
 }
 
 .instructor-tag {
-    background-color: white !important;
-    border: 1px solid #ccc !important;
-    margin-bottom: 5px;
-    margin-left: 5px;
-    margin-top: 5px;
-    cursor: pointer;
+	background-color: white !important;
+	border: 1px solid #ccc !important;
+	margin-bottom: 5px;
+	margin-left: 10px;
+	margin-top: 5px;
+	cursor: pointer;
+}
+
+.instructor-tag-display {
+	background-color: white !important;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	margin-top: 5px;
+	cursor: default;
+
 }
 
 .label-toggleout {
     /* styles when toggled out */
     background-color: #ebebeb;
-    color: lightgray;
+    color: #adadad;
     border: 1px solid #ebebeb !important;
 }
 
-.instructor-message-box {
-    height: 180px !important;
+.remove-instructor-ui {
+	visibility: hidden;
 }
 
-.instructors-modal .select-term {
-    margin-bottom: 25px;
-}
-
-.instructors-modal .email-message {
-    margin-bottom: 35px;
-}
-
-/* date-picker style-overwrite */
-
-.uib-datepicker table {
-    width: 370px;
-    margin: auto;
-    margin-top: 5px;
-}
-
-.uib-datepicker table button{
-    font-size: 12px;
-    padding: 6px 5px !important;
-}
-
-.uib-datepicker .uib-title {
-   border: none !important;
-}
-
-.uib-daypicker .btn {
-   border: none !important;
-}
-
-.uib-daypicker button {
-   border: none !important;
-}
-
-.uib-datepicker-popup {
-   width: 285px !important;
+tr:hover .remove-instructor-ui {
+	visibility: visible;
 }
