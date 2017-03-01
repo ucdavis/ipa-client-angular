@@ -3,7 +3,7 @@ teachingCallApp.factory("teachingCallStatusService", this.teachingCallStatusServ
 		getInitialState: function(workgroupId, year) {
 			var deferred = $q.defer();
 
-			$http.get(serverRoot + "/api/assignmentView/" + workgroupId + "/" + year, { withCredentials: true })
+			$http.get(serverRoot + "/api/teachingCallView/" + workgroupId + "/" + year + "/teachingCallStatus", { withCredentials: true })
 			.success(function(assignmentView) {
 				deferred.resolve(assignmentView);
 			})
@@ -13,24 +13,10 @@ teachingCallApp.factory("teachingCallStatusService", this.teachingCallStatusServ
 
 			return deferred.promise;
 		},
-		download: function (workgroupId, year) {
+		addInstructorsToTeachingCall: function (workgroupId, year, teachingCallConfig) {
 			var deferred = $q.defer();
 
-			$http.get(serverRoot + "/api/assignmentView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
-			.success(function(payload) {
-				$window.location.href = payload.redirect;
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		createTeachingCall: function (workgroupId, year, teachingCallConfig) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/assignmentView/" + workgroupId + "/" + year + "/teachingCalls", teachingCallConfig, { withCredentials: true })
+			$http.post(serverRoot + "/api/teachingCallView/" + workgroupId + "/" + year + "/addInstructors", teachingCallConfig, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
@@ -40,10 +26,24 @@ teachingCallApp.factory("teachingCallStatusService", this.teachingCallStatusServ
 
 			return deferred.promise;
 		},
-		deleteTeachingCall: function (teachingCall) {
+		contactInstructors: function (workgroupId, year, receiptsPayload) {
+			payload = {};
+			payload.receipts = receiptsPayload;
+			var deferred = $q.defer();
+			$http.put(serverRoot + "/api/teachingCallView/" + workgroupId + "/" + year + "/contactInstructors", payload, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		removeInstructorFromTeachingCall: function (teachingCallReceiptId) {
 			var deferred = $q.defer();
 
-			$http.delete(serverRoot + "/api/assignmentView/teachingCalls/" + teachingCall.id, { withCredentials: true })
+			$http.delete(serverRoot + "/api/teachingCallView/teachingCallReceipts/" + teachingCallReceiptId, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
