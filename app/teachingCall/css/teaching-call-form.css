@@ -984,3 +984,9 @@ li.active-term .dropdown-term-row {
 .teaching-call--academic-term-sidebar ul li {
 	margin: 10px;
 }
+
+/* instructor- preference */
+
+.teaching-call--course-preference table {
+	table-layout: fixed;
+}

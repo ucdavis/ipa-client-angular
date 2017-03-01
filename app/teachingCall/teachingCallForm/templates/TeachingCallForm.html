@@ -11,17 +11,60 @@
     <div class="row">
 		<div class="col-md-9">
 			<div class="row teaching-call--course-preference">
-				<div class="col-md-3">
-				</div>
-				<div class="col-md-9">
+				<div class="col-md-12">
+					<h5>Choose Your Course Preference</h5>
+					<table class="table table-bordered ">
+						<thead>
+							<tr>
+								<th>Preference</th>
+								<th>Course</th>
+								<th>Number of Seats</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>PSY 001 General Psychology</td>
+								<td>200</td>
+							</tr>
+							
+							<tr>
+								<td>2</td>
+								<td>PSY 015 Cognitive Psychology</td>
+								<td>146</td>
+							</tr>
+							
+							<tr>
+								<td>3</td>
+								<td>PSY 110 Advanced Psychology</td>
+								<td>158</td>
+							</tr>
+						</tbody>
+				</table>
 				</div>
 			</div>
 			<div class="row teaching-call--check-unavailiability">
 				<div class="col-md-12">
+					<h5>Indicate Your Unavailiability</h5>
+					<table class="table availability-grid">
+						<thead>
+							<tr>
+								<th></th>
+								<th ng-repeat="day in days" class="availability-day-header">M</th>
+								<th ng-repeat="day in days" class="availability-day-header">T</th>
+								<th ng-repeat="day in days" class="availability-day-header">W</th>
+								<th ng-repeat="day in days" class="availability-day-header">R</th>
+								<th ng-repeat="day in days" class="availability-day-header">F</th>
+							</tr>
+						</thead>
+					</table>
 				</div>
 			</div>
 			<div class="row teaching-call--additional-information">
 				<div class="col-md-12">
+					<h5>Additional Message</h5>
+					<textarea class="form-control ng-pristine ng-untouched ng-valid ng-empty" style="height:150px" ng-model="view.state.activeTeachingCall.teachingCallReceipt.comment" auto-input="" on-blur="updateTeachingCallReceipt()" placeholder="(Optional) Add any additional comments or requests here." rows="5" id="comment"></textarea>
 				</div>
 			</div>
 		</div>
