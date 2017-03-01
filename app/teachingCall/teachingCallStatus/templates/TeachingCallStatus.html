@@ -65,8 +65,28 @@
 						{{ instructor.lastName }}, {{ instructor.firstName }}
 					</div>
 				</div>
-				<div class="column-last cell">{{ instructor.lastContactedAt }}</div>
-				<div class="column-next cell">{{ instructor.nextContactAt }}</div>
+				<div class="column-last cell">
+					{{ instructor.lastContactedAt }}
+					<div ng-if="instructor.lastContactedAt != null && instructor.nextContactAt == null" style="padding-left:10px;">
+						<i class="glyphicon glyphicon-list-alt"
+							class="text-primary clickable hovrable"
+							info-tooltip
+							title="Email"
+							message="{{instructor.message}}"
+							placement="top">
+					</div>
+				</div>
+				<div class="column-next cell">
+					{{ instructor.nextContactAt }}
+					<div ng-if="instructor.nextContactAt != null" style="padding-left:10px;">
+						<i class="glyphicon glyphicon-list-alt"
+							class="text-primary clickable hovrable"
+							info-tooltip
+							title="Email"
+							message="{{instructor.message}}"
+							placement="top">
+					</div>
+				</div>
 				<div class="column-due cell">{{ instructor.dueDate }}</div>
 				<div class="column-hover-ui">
 					<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
@@ -119,8 +139,28 @@
 						{{ instructor.lastName }}, {{ instructor.firstName }}
 					</div>
 				</div>
-				<div class="column-last cell">{{ instructor.lastContactedAt }}</div>
-				<div class="column-next cell">{{ instructor.nextContactAt }}</div>
+				<div class="column-last cell">
+					{{ instructor.lastContactedAt }}
+					<div ng-if="instructor.lastContactedAt != null && instructor.nextContactAt == null" style="padding-left:10px;">
+						<i class="glyphicon glyphicon-list-alt"
+							class="text-primary clickable hovrable"
+							info-tooltip
+							title="Email"
+							message="{{instructor.message}}"
+							placement="top">
+					</div>
+				</div>
+				<div class="column-next cell">
+					{{ instructor.nextContactAt }}
+					<div ng-if="instructor.nextContactAt != null" style="padding-left:10px;">
+						<i class="glyphicon glyphicon-list-alt"
+							class="text-primary clickable hovrable"
+							info-tooltip
+							title="Email"
+							message="{{instructor.message}}"
+							placement="top">
+					</div>
+				</div>
 				<div class="column-due cell">{{ instructor.dueDate }}</div>
 				<div class="column-hover-ui">
 					<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
