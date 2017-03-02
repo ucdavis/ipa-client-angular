@@ -923,15 +923,15 @@ li.active-term .dropdown-term-row {
 /* TeachingCallForm */
 
 .teaching-call--progress-sidebar {
-	width: 250px;
+	width: 230px;
 	position: fixed;
-	top: 300px;
+	top: 275px;
 	padding: 15px 35px 15px 35px;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .teaching-call--progress-sidebar h5 {
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 }
 
 .teaching-call--progress-sidebar ul {
@@ -966,7 +966,7 @@ li.active-term .dropdown-term-row {
 }
 
 .teaching-call--academic-term-sidebar {
-	width: 250px;
+	width: 230px;
 	position: fixed;
 	top: 50px;
 	padding: 15px 35px 15px 35px;
@@ -974,7 +974,7 @@ li.active-term .dropdown-term-row {
 }
 
 .teaching-call--academic-term-sidebar h5 {
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 }
 
 .teaching-call--academic-term-sidebar ul {
