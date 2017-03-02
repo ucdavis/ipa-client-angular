@@ -1000,6 +1000,14 @@ li.active-term .dropdown-term-row {
 	font-size: 12px !important;
 }
 
+table.availability-grid tr th {
+	text-align: center !important;
+}
+
+.availability-grid thead tr th:first-child {
+	width: 5% !important;
+	text-align: center !important;
+}
 
 table .unavailiability-table-header tr th {
     border: none;
