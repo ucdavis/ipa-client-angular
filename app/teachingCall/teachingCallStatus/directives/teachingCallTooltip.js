@@ -59,7 +59,7 @@ sharedApp.directive("teachingCallTooltip", this.confirmButton = function ($docum
 			};
 
 			var buttonId = Math.floor(Math.random() * 10000000000),
-				message = attrs.message || "no message",
+				message = attrs.message || "",
 				termsBlob = attrs.termsBlob || "no termsBlob",
 				showUnavail = attrs.showUnavail || "no showUnavail",
 
