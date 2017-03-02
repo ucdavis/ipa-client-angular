@@ -67,6 +67,9 @@ sharedApp.directive("teachingCallTooltip", this.confirmButton = function ($docum
 				btnClass = attrs.btnClass || "btn-danger",
 				placement = attrs.placement || "bottom";
 
+			if (typeof showUnavail === 'string') {
+				showUnavail = (showUnavail == "true");
+			}
 			var collectUnavailDescription = showUnavail ? 'Yes' : 'No';
 			var termsList = scope.termsBlobToTerms(termsBlob);
 

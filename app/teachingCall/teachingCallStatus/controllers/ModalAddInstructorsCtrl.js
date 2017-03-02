@@ -90,11 +90,24 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 		$uibModalInstance.dismiss('cancel');
 	};
 
-	$scope.isFormIncomplete = function () {
-		if ($scope.startTeachingCallConfig.message !== "") {
-			return false;
-		}
-		return true;
+	$scope.isAddInstructorFormComplete = function () {
+		var atLeastOneInstructor = false;
+		var atLeastOneTerm = false;
+
+		$scope.startTeachingCallConfig.invitedInstructors.forEach( function(slotInstructor) {
+			if (slotInstructor.invited == true) {
+				atLeastOneInstructor = true;
+			}
+		});
+
+		Object.keys($scope.startTeachingCallConfig.activeTerms).forEach(function (key) { 
+				var value = $scope.startTeachingCallConfig.activeTerms[key];
+				if (value == true) {
+					atLeastOneTerm = true;
+				}
+		});
+
+		return atLeastOneInstructor && atLeastOneTerm;
 	};
 
 	// Transforms to ISO format
@@ -115,6 +128,7 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 	$scope.toggleTermActive = function (term) {
 		term = term.slice(-2);
 		$scope.startTeachingCallConfig.activeTerms[term] = !$scope.startTeachingCallConfig.activeTerms[term];
+		$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
 	};
 
 	$scope.activeTermsDescription = function () {
@@ -140,6 +154,8 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 				slotInstructor.invited = $scope.startTeachingCallConfig.sentToSenate;
 			}
 		});
+
+		$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
 	};
 
 	$scope.toggleFederationInstructors = function () {
@@ -150,10 +166,13 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 				slotInstructor.invited = $scope.startTeachingCallConfig.sentToFederation;
 			}
 		});
+
+		$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
 	};
 
 	$scope.toggleInstructor = function(instructor) {
 		instructor.invited = !instructor.invited;
+		$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
 	};
 
 	$scope.toggleSendEmail = function() {
@@ -212,4 +231,5 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 		$uibModalInstance.close($scope.startTeachingCallConfig);
 	};
 
+	$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
 });
