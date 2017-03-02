@@ -47,10 +47,6 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 			delete teachingCallConfig.invitedInstructors;
 
 			// Ensure dueDate is valid or null
-			var taco = teachingCallConfig.dueDate.getTime().length;
-			var time = teachingCallConfig.dueDate.getTime();
-			debugger;
-
 			if (teachingCallConfig.dueDate && teachingCallConfig.dueDate.getTime() > 0) {
 				teachingCallConfig.dueDate = teachingCallConfig.dueDate.getTime();
 			} else {

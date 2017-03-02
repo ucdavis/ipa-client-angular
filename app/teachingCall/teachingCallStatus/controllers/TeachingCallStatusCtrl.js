@@ -43,7 +43,7 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 							instructorIsSelected = true;
 						}
 					});
-					$scope.view.state.teachingCall.senate.forEach(function(instructor) {
+					$scope.view.state.teachingCall.federation.forEach(function(instructor) {
 						if (instructor.selected) {
 							instructorIsSelected = true;
 						}
