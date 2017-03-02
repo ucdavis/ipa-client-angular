@@ -925,8 +925,9 @@ li.active-term .dropdown-term-row {
 .teaching-call--progress-sidebar {
 	width: 230px;
 	position: fixed;
-	top: 275px;
-	padding: 15px 35px 15px 35px;
+	top: 310px;
+	padding: 5px 25px 10px 25px;
+	background-color: white;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
@@ -941,19 +942,17 @@ li.active-term .dropdown-term-row {
 
 .teaching-call--progress-sidebar ul li:first-child {
 	margin-left: -20px;
-	font-size: 10pt;
 	font-weight: 500;
 }
 
 .teaching-call--progress-sidebar ul li:last-child {
 	margin-top: 25px;
 	margin-left: -20px;
-	font-size: 10pt;
 	font-weight: 500;
 }
 
 .teaching-call--progress-sidebar ul li {
-	margin: 10px;
+	padding: 5px;
 }
 
 .teaching-call--progress-sidebar ul li input {
@@ -968,8 +967,8 @@ li.active-term .dropdown-term-row {
 .teaching-call--academic-term-sidebar {
 	width: 230px;
 	position: fixed;
-	top: 50px;
-	padding: 15px 35px 15px 35px;
+	padding: 5px 25px 5px 25px;
+	background-color: white;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
@@ -988,20 +987,87 @@ li.active-term .dropdown-term-row {
 
 /* instructor- preference */
 
-.teaching-call--course-preference table {
+#teaching-call--course-preference {
+	margin-bottom: 25px;
+}
+
+#teaching-call--course-preference .search-course-input {
+	width: 40%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.set-preference-btn {
+	position: absolute;
+	top: 3px;
+	left: 5px
+}
+
+.set-preference-btn .glyphicon:hover {
+	background-color: lightgray;
+	transition: 1s;
+
+}
+
+.set-preference-btn i {
+	display: block;
+	border: 1px solid #ddd;
+	padding: 2px 4px 2px 5px;
+	font-size: 10px;
+	margin-bottom: 2px;
+	border-radius: 3px;
+}
+
+#teaching-call--course-preference table {
 	table-layout: fixed;
+	text-align: center !important;
+}
+
+#teaching-call--course-preference table thead tr th {
+	text-align: center !important;
+}
+
+#teaching-call--course-preference table td {
+	/* set up padding and relative position for 'table td' in order hold 'set-preference-btn' */
+	position: relative;
+	padding: 13px;
+}
+
+#teaching-call--course-preference table thead tr th:first-child {
+	/* set width for preference section in the table */
+	width: 15% !important;
+}
+
+#teaching-call--course-preference table thead tr th:last-child {
+	/* set width for seat-number section in the table */
+	width: 20% !important;
 }
 
 
-/* instructor- unavability-table */
+/* instructor--unavability-table */
+
+#teaching-call--check-unavailiability {
+	margin-bottom: 25px;
+}
+
+.unavailiability-table {
+	table-layout: fixed;
+	margin-top: 15px;
+}
 
 .unavailiability-table-header {
 	text-align: center;
 	font-size: 12px !important;
 }
 
+
 table.availability-grid tr th {
 	text-align: center !important;
+	padding: 10px !important;
+}
+
+table.availability-grid tr td {
+	border: 1px solid #ddd !important;
 }
 
 .availability-grid thead tr th:first-child {
@@ -1009,8 +1075,8 @@ table.availability-grid tr th {
 	text-align: center !important;
 }
 
-table .unavailiability-table-header tr th {
-    border: none;
-    font-weight: normal;
-    padding: 0 !important;
+/*instructor--additional information */
+
+#teaching-call--additional-information {
+	margin-bottom: 25px;
 }
