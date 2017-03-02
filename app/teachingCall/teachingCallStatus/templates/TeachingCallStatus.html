@@ -10,166 +10,174 @@
 	</h3>
 	<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
 
-	<!-- Toolbar Buttons -->
-	<div style="width: 100%; display: flex; padding-right: 15px; padding-bottom: 15px;" class="teaching-call-status">
-		<div style="flex: 20 1 0px; display: flex; justify-content: flex-end;">
-			<div style="padding-right: 5px;">
-				<a ng-if="view.state.eligible.senate.length > 0 || view.state.eligible.federation.length > 0" ng-click="openAddInstructorsModal()" class="btn btn-default">
-					<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
-					Add Instructors
-				</a>
-				<span ng-if="view.state.eligible.senate.length == 0 && view.state.eligible.federation.length == 0" uib-tooltip="All instructors already in teaching call">
-					<a class="disabled btn btn-default">
+	<spinner ng-if="!view.state"
+		size="20" style="padding-top: 200px;">
+	</spinner>
+
+	<div ng-if="view.state">
+
+		<!-- Toolbar Buttons -->
+		<div style="width: 100%; display: flex; padding-right: 15px; padding-bottom: 15px;" class="teaching-call-status">
+			<div style="flex: 20 1 0px; display: flex; justify-content: flex-end;">
+				<div style="padding-right: 5px;">
+					<a ng-if="view.state.eligible.senate.length > 0 || view.state.eligible.federation.length > 0" ng-click="openAddInstructorsModal()" class="btn btn-default">
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
 						Add Instructors
 					</a>
-				</span>
-			</div>
-			<div>
-				<a ng-if="atLeastOneInstructorSelected()" ng-click="openContactInstructorsModal()" class="btn btn-default">
-					<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
-					Contact Instructors
-				</a>
-				<span ng-if="atLeastOneInstructorSelected() == false" uib-tooltip="You must select at least one instructor">
-					<a class="disabled btn btn-default">
+					<span ng-if="view.state.eligible.senate.length == 0 && view.state.eligible.federation.length == 0" uib-tooltip="All instructors already in teaching call">
+						<a class="disabled btn btn-default">
+							<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
+							Add Instructors
+						</a>
+					</span>
+				</div>
+				<div>
+					<a ng-if="atLeastOneInstructorSelected()" ng-click="openContactInstructorsModal()" class="btn btn-default">
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
 						Contact Instructors
 					</a>
-				</span>
-			</div>
-		</div>
-		<div class="column-hover-ui">
-		</div>
-	</div>
-
-	<!-- Senate Instructors -->
-	<div style="display: flex; padding-left: 15px; padding-right: 15px; width: 100%;">
-		<div class="instructor-section" style="width: 100%;">
-			<!-- table title -->
-			<div style="display: flex;">
-				<div class="table-title">
-					<div style="padding-left: 20px;">Senate Instructors</div>
-				</div>
-				<div class="column-hover-ui">
-				</div>
-			</div>
-
-			<!-- table header -->
-			<div style="display: flex;">
-				<div class="header-cell first-cell cell column-checkbox">
-					<input ng-click="toggleSenateInstructors()" type="checkbox">
-				</div>
-				<div class="header-left-cell column-name">
-					<div style="padding-left:10px;">Name</div>
-				</div>
-				<div class="header-cell column-last">Last Contacted</div>
-				<div class="header-cell column-next">Next Contact</div>
-				<div class="header-cell column-due">Due Date</div>
-				<div class="column-hover-ui"></div>
-			</div>
-
-			<div class="table-row" style="display: flex;" ng-repeat="instructor in view.state.teachingCall.senate">
-				<div class="column-checkbox cell first-cell">
-					<input type="checkbox" ng-checked="instructor.selected" ng-click="toggleSelectedInstructor(instructor)">
-				</div>
-				<div class="column-name left-cell">
-					<div  style="padding-left: 10px;">
-						{{ instructor.lastName }}, {{ instructor.firstName }}
-						<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
-							class="text-primary clickable hovrable"
-							teaching-call-tooltip
-							title="Teaching Call"
-							terms-blob="{{instructor.termsBlob}}"
-							show-unavail="{{instructor.showUnavailabilities}}"
-							message="{{instructor.message}}"
-							placement="right">
-					</div>
-				</div>
-				<div class="column-last cell">
-					{{ instructor.lastContactedAt }}
-				</div>
-				<div class="column-next cell">
-					{{ instructor.nextContactAt }}
-				</div>
-				<div class="column-due cell">{{ instructor.dueDate }}</div>
-				<div class="column-hover-ui">
-					<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
-						class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
-						tooltip-placement="left"
-						uib-tooltip="Remove Instructor"
-						confirm-button="removeInstructor(instructor)"
-						message="Are you sure you want to remove this instructor?
-							This will cancel any pending notifications."
-						yes="Remove" no="Cancel" placement="top">
+					<span ng-if="atLeastOneInstructorSelected() == false" uib-tooltip="You must select at least one instructor">
+						<a class="disabled btn btn-default">
+							<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
+							Contact Instructors
+						</a>
 					</span>
 				</div>
 			</div>
+			<div class="column-hover-ui">
+			</div>
 		</div>
-	</div>
 
-
-	<!-- Federation Instructors -->
-	<div style="display: flex; padding-left: 15px; padding-right: 15px; width: 100%;">
-		<div class="instructor-section" style="width: 100%;">
-			<!-- table title -->
-			<div style="display: flex;">
-				<div class="table-title">
-					<div style="padding-left: 20px;">Federation Instructors</div>
-				</div>
-				<div class="column-hover-ui">
-				</div>
-			</div>
-
-			<!-- table header -->
-			<div style="display: flex;">
-				<div class="header-cell first-cell cell column-checkbox">
-					<input ng-click="toggleFederationInstructors()" type="checkbox">
-				</div>
-				<div class="header-left-cell column-name">
-					<div style="padding-left:10px;">Name</div>
-				</div>
-				<div class="header-cell column-last">Last Contacted</div>
-				<div class="header-cell column-next">Next Contact</div>
-				<div class="header-cell column-due">Due Date</div>
-				<div class="column-hover-ui"></div>
-			</div>
-
-			<div class="table-row" style="display: flex;" ng-repeat="instructor in view.state.teachingCall.federation">
-				<div class="column-checkbox cell first-cell">
-					<input type="checkbox" ng-checked="instructor.selected" ng-click="toggleSelectedInstructor(instructor)">
-				</div>
-				<div class="column-name left-cell">
-					<div  style="padding-left: 10px;">
-						{{ instructor.lastName }}, {{ instructor.firstName }}
-						<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
-							class="text-primary clickable hovrable"
-							teaching-call-tooltip
-							title="Teaching Call"
-							terms-blob="{{instructor.termsBlob}}"
-							show-unavail="{{instructor.showUnavailabilities}}"
-							message="{{instructor.message}}"
-							placement="right">
+		<!-- Senate Instructors -->
+		<div style="display: flex; padding-left: 15px; padding-right: 15px; width: 100%;">
+			<div class="instructor-section" style="width: 100%;">
+				<!-- table title -->
+				<div style="display: flex;">
+					<div class="table-title">
+						<div style="padding-left: 20px;">Senate Instructors</div>
+					</div>
+					<div class="column-hover-ui">
 					</div>
 				</div>
-				<div class="column-last cell">
-					{{ instructor.lastContactedAt }}
+
+				<!-- table header -->
+				<div style="display: flex;">
+					<div class="header-cell first-cell cell column-checkbox">
+						<input ng-click="toggleSenateInstructors()" type="checkbox">
+					</div>
+					<div class="header-left-cell column-name">
+						<div style="padding-left:10px;">Name</div>
+					</div>
+					<div class="header-cell column-last">Last Contacted</div>
+					<div class="header-cell column-next">Next Contact</div>
+					<div class="header-cell column-due">Due Date</div>
+					<div class="column-hover-ui"></div>
 				</div>
-				<div class="column-next cell">
-					{{ instructor.nextContactAt }}
-				</div>
-				<div class="column-due cell">{{ instructor.dueDate }}</div>
-				<div class="column-hover-ui">
-					<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
-						class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
-						tooltip-placement="left"
-						uib-tooltip="Remove Instructor"
-						confirm-button="removeInstructor(instructor)"
-						message="Are you sure you want to remove this instructor?
-							This will cancel any pending notifications."
-						yes="Remove" no="Cancel" placement="top">
-					</span>
+
+				<div class="table-row" style="display: flex;" ng-repeat="instructor in view.state.teachingCall.senate">
+					<div class="column-checkbox cell first-cell">
+						<input type="checkbox" ng-checked="instructor.selected" ng-click="toggleSelectedInstructor(instructor)">
+					</div>
+					<div class="column-name left-cell">
+						<div  style="padding-left: 10px;">
+							{{ instructor.lastName }}, {{ instructor.firstName }}
+							<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
+								class="text-primary clickable hovrable"
+								teaching-call-tooltip
+								title="Teaching Call"
+								terms-blob="{{instructor.termsBlob}}"
+								show-unavail="{{instructor.showUnavailabilities}}"
+								message="{{instructor.message}}"
+								placement="right">
+						</div>
+					</div>
+					<div class="column-last cell">
+						{{ instructor.lastContactedAt }}
+					</div>
+					<div class="column-next cell">
+						{{ instructor.nextContactAt }}
+					</div>
+					<div class="column-due cell">{{ instructor.dueDate }}</div>
+					<div class="column-hover-ui">
+						<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
+							class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
+							tooltip-placement="left"
+							uib-tooltip="Remove Instructor"
+							confirm-button="removeInstructor(instructor)"
+							message="Are you sure you want to remove this instructor?
+								This will cancel any pending notifications."
+							yes="Remove" no="Cancel" placement="top">
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+
+
+		<!-- Federation Instructors -->
+		<div style="display: flex; padding-left: 15px; padding-right: 15px; width: 100%;">
+			<div class="instructor-section" style="width: 100%;">
+				<!-- table title -->
+				<div style="display: flex;">
+					<div class="table-title">
+						<div style="padding-left: 20px;">Federation Instructors</div>
+					</div>
+					<div class="column-hover-ui">
+					</div>
+				</div>
+
+				<!-- table header -->
+				<div style="display: flex;">
+					<div class="header-cell first-cell cell column-checkbox">
+						<input ng-click="toggleFederationInstructors()" type="checkbox">
+					</div>
+					<div class="header-left-cell column-name">
+						<div style="padding-left:10px;">Name</div>
+					</div>
+					<div class="header-cell column-last">Last Contacted</div>
+					<div class="header-cell column-next">Next Contact</div>
+					<div class="header-cell column-due">Due Date</div>
+					<div class="column-hover-ui"></div>
+				</div>
+
+				<div class="table-row" style="display: flex;" ng-repeat="instructor in view.state.teachingCall.federation">
+					<div class="column-checkbox cell first-cell">
+						<input type="checkbox" ng-checked="instructor.selected" ng-click="toggleSelectedInstructor(instructor)">
+					</div>
+					<div class="column-name left-cell">
+						<div  style="padding-left: 10px;">
+							{{ instructor.lastName }}, {{ instructor.firstName }}
+							<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
+								class="text-primary clickable hovrable"
+								teaching-call-tooltip
+								title="Teaching Call"
+								terms-blob="{{instructor.termsBlob}}"
+								show-unavail="{{instructor.showUnavailabilities}}"
+								message="{{instructor.message}}"
+								placement="right">
+						</div>
+					</div>
+					<div class="column-last cell">
+						{{ instructor.lastContactedAt }}
+					</div>
+					<div class="column-next cell">
+						{{ instructor.nextContactAt }}
+					</div>
+					<div class="column-due cell">{{ instructor.dueDate }}</div>
+					<div class="column-hover-ui">
+						<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
+							class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
+							tooltip-placement="left"
+							uib-tooltip="Remove Instructor"
+							confirm-button="removeInstructor(instructor)"
+							message="Are you sure you want to remove this instructor?
+								This will cancel any pending notifications."
+							yes="Remove" no="Cancel" placement="top">
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div><!-- view.state check mask -->
 </div>
