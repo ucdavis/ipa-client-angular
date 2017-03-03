@@ -63,8 +63,9 @@
 }
 
 .instructor-tag {
+	font-size: 12px;
 	background-color: white !important;
-	border: 1px solid #ccc !important;
+	border: 1px solid #303641 !important;
 	margin-bottom: 5px;
 	margin-left: 10px;
 	margin-top: 5px;
