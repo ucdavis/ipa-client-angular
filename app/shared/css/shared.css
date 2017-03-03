@@ -67,7 +67,7 @@ span.highlighted {
 
 /* Availability grid shared directive css */
 table.availability-grid {
-	font-size: 0.7em;
+	font-size: 0.9em;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
