@@ -8,362 +8,361 @@
 </div>
 
 <div class="container-fluid">
-    <div class="row">
-		<div id="teaching-call-form--container">
-			<div id="teaching-call--course-preference" class="row">
-				<div class="col-md-12">
-					<h5 class="inline-block">Choose Your Course Preference</h5>
-					<div class="pull-right" tooltip-placement="left" uib-tooltip="Clicking the Add button will show you a list of all courses currently in the schedule (Use the comment box below
-			to request courses not on the list). Once you've added your preferences you can rank them by dragging and dropping them into the
-			preferred order"><i class="glyphicon glyphicon-question-sign pull-right question--position"></i></div>
-					<table class="table table-bordered ">
-						<thead>
-							<tr>
-								<th>Preference</th>
-								<th>Course</th>
-								<th>Number of Seats</th>
-							</tr>
-						</thead>
+	<div id="teaching-call-form--container">
+		<!-- course preference -->
+		<div id="teaching-call--course-preference" class="row">
+			<div class="col-md-12">
+				<h5 class="inline-block">Choose Your Course Preference</h5>
+				<div class="pull-right" tooltip-placement="left" uib-tooltip="Clicking the Add button will show you a list of all courses currently in the schedule (Use the comment box below
+				to request courses not on the list). Once you've added your preferences you can rank them by clicking the moving buttons to place the courses into your
+				preferred order"><i class="glyphicon glyphicon-question-sign pull-right question--position"></i></div>
+				<table class="table table-bordered ">
+					<thead>
+						<tr>
+							<th>Preference</th>
+							<th>Course</th>
+							<th>Number of Seats</th>
+						</tr>
+					</thead>
 						
-						<tbody>
-							<tr>
-								<td>
-									<div class="select-preference-btn">
-										<i class="glyphicon glyphicon-chevron-up"></i>
-										<i class="glyphicon glyphicon-chevron-down"></i>
-									</div>
-									<span>1</span></td>
-								<td>PSY 001 General Psychology</td>
-								<td>200</td>
-							</tr>
+					<tbody>
+						<tr>
+							<td>
+								<div class="select-preference-btn">
+									<i class="glyphicon glyphicon-chevron-up"></i>
+									<i class="glyphicon glyphicon-chevron-down"></i>
+								</div>
+								<span>1</span></td>
+							<td>PSY 001 General Psychology</td>
+							<td>200</td>
+						</tr>
 							
-							<tr>
-								<td>
-									<div class="select-preference-btn">
-										<i class="glyphicon glyphicon-chevron-up"></i>
-										<i class="glyphicon glyphicon-chevron-down"></i>
-									</div>
-									<span>2</span>
-								</td>
-								<td>PSY 015 Cognitive Psychology</td>
-								<td>146</td>
-							</tr>
+						<tr>
+							<td>
+								<div class="select-preference-btn">
+									<i class="glyphicon glyphicon-chevron-up"></i>
+									<i class="glyphicon glyphicon-chevron-down"></i>
+								</div>
+								<span>2</span>
+							</td>
+							<td>PSY 015 Cognitive Psychology</td>
+							<td>146</td>
+						</tr>
 							
-							<tr>
-								<td>
-									<div class="select-preference-btn">
-										<i class="glyphicon glyphicon-chevron-up"></i>
-										<i class="glyphicon glyphicon-chevron-down"></i>
-									</div>
-									<span>3</span>
-								</td>
-								<td>PSY 110 Advanced Psychology</td>
-								<td>158</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>
-									<input ng-model="view.courseSearchQuery[term]" ng-init="courseSearch" PlaceHolder = 'Add Preference' placeholder="Add Preference" ng-focus="courseSearchPlaceHolder = 'Search Courses'" ng-blur="course" SearchPlaceHolder = 'Add Preference' typeahead-on-select="addPreference($item, termToTermCode(term), isBuyout, isSabbatical, isInResidence, isCourseRelease)" class="form-control search-course-input ng-pristine ng-valid ng-empty ng-touched" aria-autocomplete="list" aria-expanded="false">
-								</td>
-								<td></td>
-							</tr>
-						</tbody>
+						<tr>
+							<td>
+								<div class="select-preference-btn">
+									<i class="glyphicon glyphicon-chevron-up"></i>
+									<i class="glyphicon glyphicon-chevron-down"></i>
+								</div>
+								<span>3</span>
+							</td>
+							<td>PSY 110 Advanced Psychology</td>
+							<td>158</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<input ng-model="view.courseSearchQuery[term]" ng-init="courseSearch" PlaceHolder = 'Add Preference' placeholder="Add Preference" ng-focus="courseSearchPlaceHolder = 'Search Courses'" ng-blur="course" SearchPlaceHolder = 'Add Preference' typeahead-on-select="addPreference($item, termToTermCode(term), isBuyout, isSabbatical, isInResidence, isCourseRelease)" class="form-control search-course-input ng-pristine ng-valid ng-empty ng-touched" aria-autocomplete="list" aria-expanded="false">
+							</td>
+							<td></td>
+						</tr>
+					</tbody>
 				</table>
-				</div>
-			</div>
-			<div id="teaching-call--check-unavailiability" class="row">
-				<div class="col-md-12">
-					<h5 class="inline-block">Please indicate your un-availabilities</h5>
-					<div class="pull-right" tooltip-placement="left" uib-tooltip="You can left click and drag to paint unavailability on the grids below.
-						Additionally you can use the copy to all terms button next to the term headers to indicate the same unavailability on all terms.">
-						<i class="glyphicon glyphicon-question-sign  question--position"></i>
-					</div>
-					<small class="legend pull-right" style="text-align: center;">
-						<div class="legend-square" style="background-color:#fff"></div>Available
-						<div class="legend-square" style="background-color:#ccc"></div>Unavailable
-					</small>
-					<table class="table availability-grid unavailiability-table">
-						<thead>
-							<tr>
-								<th></th>
-								<th class="unavailiability-table-header">Monday</th>
-								<th class="unavailiability-table-header">Tuesday</th>
-								<th class="unavailiability-table-header">Wednesday</th>
-								<th class="unavailiability-table-header">Thrusday</th>
-								<th class="unavailiability-table-header">Friday</th>
-								<tbody>
-									<tr>
-										<th>
-											7
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>
-											8
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>
-											9
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>
-											10
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>
-											11
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>
-											12
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>
-											1
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>
-											2
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>
-											3
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>
-											5
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>
-											6
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>
-											7
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>
-											8
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>
-											9
-										</th>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-										<td>
-										</td>
-									</tr>
-								</tbody>
-							</tr>
-						</thead>
-					</table>
-				</div>
-			</div>
-			<div id="teaching-call--additional-information" class="row">
-				<div class="col-md-12">
-					<h5>Additional Message</h5>
-					<textarea class="form-control ng-pristine ng-untouched ng-valid ng-empty" style="height:150px" ng-model="view.state.activeTeachingCall.teachingCallReceipt.comment" auto-input="" on-blur="updateTeachingCallReceipt()" placeholder="(Optional) Add any additional comments or requests here." rows="5" id="comment"></textarea>
-				</div>
 			</div>
 		</div>
-			<aside class="teaching-call--academic-term-sidebar">
-				<h5 class="text-center">Select Academic Term</h5>
-				<ul>
-					<li class="current-academic-term">
-						Summer Session 1
-					</li>
-					<li>
-						Summer Session 2
-					</li>
-					<li>
-						Fall Quarter
-					</li>
-					<li>
-						Winter Quarter
-					</li>
-					<li class="unassigned-academic-term">
-						Spring Quarter
-					</li>
-				</ul>
-			</aside>
-			<aside class="teaching-call--progress-sidebar">
-				<h5 class="text-center">TeachingCall Checkbox</h5>
-				<ul>
-					<li>
-						<input class="list-checkbox" type="checkbox">Preference
-					</li>
-					<li>
-						<input class="list-checkbox" type="checkbox">Summer Session 1
-					</li>
-					<li>
-						<input class="list-checkbox" type="checkbox">Summer Session 2
-					</li>
-					<li>
-						<input class="list-checkbox" type="checkbox">Fall Quarter
-					</li>
-					<li>
-						<input class="list-checkbox" type="checkbox">Winter Quarter
-					</li>
-					<li>
-						<input class="list-checkbox" type="checkbox">Spring Quarter
-					</li>
-
-					<li>
-						<input class="list-checkbox" type="checkbox">Additional Information
-					</li>
-				</ul>
-				<button type="button" class="btn btn-white">Submit</button>
-			</aside>
+		<!-- check-unavailiability table -->
+		<div id="teaching-call--check-unavailiability" class="row">
+			<div class="col-md-12">
+				<h5 class="inline-block">Please indicate your un-availabilities</h5>
+				<div class="pull-right" tooltip-placement="left" uib-tooltip="You can left click and drag to paint unavailability on the grids below.
+					Additionally you can use the copy to all terms button next to the term headers to indicate the same unavailability on all terms.">
+					<i class="glyphicon glyphicon-question-sign  question--position"></i>
+				</div>
+				<small class="legend pull-right" style="text-align: center;">
+					<div class="legend-square" style="background-color:#fff"></div>Available
+					<div class="legend-square" style="background-color:#ccc"></div>Unavailable
+				</small>
+				<table class="table availability-grid unavailiability-table">
+					<thead>
+						<tr>
+							<th></th>
+							<th class="unavailiability-table-header">Monday</th>
+							<th class="unavailiability-table-header">Tuesday</th>
+							<th class="unavailiability-table-header">Wednesday</th>
+							<th class="unavailiability-table-header">Thrusday</th>
+							<th class="unavailiability-table-header">Friday</th>
+							<tbody>
+								<tr>
+									<th>
+										7
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										8
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										9
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										10
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										11
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										12
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										1
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										2
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										3
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										5
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										6
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										7
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										8
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										9
+									</th>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+							</tbody>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		<!-- additional message -->
+		<div id="teaching-call--additional-information" class="row">
+			<div class="col-md-12">
+				<h5>Additional Message</h5>
+				<textarea class="form-control ng-pristine ng-untouched ng-valid ng-empty" style="height:150px" ng-model="view.state.activeTeachingCall.teachingCallReceipt.comment" auto-input="" on-blur="updateTeachingCallReceipt()" placeholder="(Optional) Add any additional comments or requests here." rows="5" id="comment"></textarea>
+			</div>
+		</div>
+		<!-- right sidebars -->
+		<aside class="teaching-call--academic-term-sidebar">
+			<h5 class="text-center">Select Academic Term</h5>
+			<ul>
+				<li class="current-academic-term">
+					Summer Session 1
+				</li>
+				<li>
+					Summer Session 2
+				</li>
+				<li>
+					Fall Quarter
+				</li>
+				<li>
+					Winter Quarter
+				</li>
+				<li class="unassigned-academic-term">
+					Spring Quarter
+				</li>
+			</ul>
+		</aside>
+		<aside class="teaching-call--progress-sidebar">
+			<h5 class="text-center">TeachingCall Checkbox</h5>
+			<ul>
+				<li>
+					<input class="list-checkbox" type="checkbox">Preference
+				</li>
+				<li>
+					<input class="list-checkbox" type="checkbox">Summer Session 1
+				</li>
+				<li>
+					<input class="list-checkbox" type="checkbox">Summer Session 2
+				</li>
+				<li>
+					<input class="list-checkbox" type="checkbox">Fall Quarter
+				</li>
+				<li>
+					<input class="list-checkbox" type="checkbox">Winter Quarter
+				</li>
+				<li>
+					<input class="list-checkbox" type="checkbox">Spring Quarter
+				</li>
+				<li>
+					<input class="list-checkbox" type="checkbox">Additional Information
+				</li>
+			</ul>
+			<button type="button" class="btn btn-white">Submit</button>
+		</aside>
 	</div>
-
-
 </div>
