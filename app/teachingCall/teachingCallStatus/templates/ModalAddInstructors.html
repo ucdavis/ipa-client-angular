@@ -14,18 +14,18 @@
 					<div class="teaching-call--info_style">
 						<h5 style="margin-top: 0px;">Instructors</h5>
 
-						<div style="padding-left: 0px;" class="row btn-group btn-group--position container-fluid" data-toggle="buttons">
-							<label class="instructor-toggle-btn btn btn-sm" id="courses-pivot"
+						<div style="padding-left: 0px; width: 100%; padding-bottom: 10px;" class="btn-group" data-toggle="buttons">
+							<label class="instructor-toggle-btn btn btn-sm" style="width: 50%;" id="courses-pivot"
 							ng-click="toggleSenateInstructors()"
 							ng-class="{'instructor-group-active': startTeachingCallConfig.sentToSenate}">
 								<input type="checkbox" name="options">
-								<span></span> Senate
+								Add Senate
 							</label>
-							<label class="instructor-toggle-btn btn btn-sm" id="courses-pivot"
+							<label class="instructor-toggle-btn btn btn-sm" style="width: 50%;" id="courses-pivot"
 							ng-click="toggleFederationInstructors()"
 							ng-class="{'instructor-group-active': startTeachingCallConfig.sentToFederation}">
 								<input type="checkbox" name="options">
-								<span></span> Federation
+								Add Federation
 							</label>
 						</div>
 
