@@ -922,6 +922,23 @@ li.active-term .dropdown-term-row {
 
 /* TeachingCallForm */
 
+.current-academic-term {
+	border: 1px solid #00A651;
+	border-radius: 3px;
+	color: #00A651;
+	cursor: pointer;
+}
+
+.removed-academic-term {
+	color: #CECECE !important;
+	cursor: no-drop !important;
+}
+
+.removed-academic-term:hover {
+	color: #CECECE;
+	cursor: no-drop;
+}
+
 .teaching-call--progress-sidebar {
 	width: 230px;
 	position: fixed;
@@ -977,11 +994,18 @@ li.active-term .dropdown-term-row {
 }
 
 .teaching-call--academic-term-sidebar ul {
-	padding-left: 10px;
+	padding-left: 0px;
 	list-style: none;
 }
 
 .teaching-call--academic-term-sidebar ul li {
+	cursor: pointer;
+	padding: 5px;
+}
+
+.teaching-call--academic-term-sidebar ul li:hover {
+	color: #00A651;
+	cursor: pointer;
 	padding: 5px;
 }
 
@@ -1005,7 +1029,6 @@ li.active-term .dropdown-term-row {
 
 .set-preference-btn .glyphicon:hover {
 	background-color: lightgray;
-	transition: 1s;
 
 }
 
