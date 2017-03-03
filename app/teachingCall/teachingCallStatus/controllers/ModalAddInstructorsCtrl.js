@@ -21,9 +21,9 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 		'03': 'Spring Quarter'
 	};
 
-	var senateGroup = angular.copy(state.eligible.senate);
-	var federationGroup = angular.copy(state.eligible.federation);
-	$scope.startTeachingCallConfig.invitedInstructors = senateGroup.concat(federationGroup);
+	$scope.senateGroup = angular.copy(state.eligible.senate);
+	$scope.federationGroup = angular.copy(state.eligible.federation);
+	$scope.startTeachingCallConfig.invitedInstructors = $scope.senateGroup.concat($scope.federationGroup);
 
 	$scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
 		slotInstructor.invited = false;
@@ -146,24 +146,44 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 		return description;
 	};
 
-	$scope.toggleSenateInstructors = function () {
-		$scope.startTeachingCallConfig.sentToSenate = !$scope.startTeachingCallConfig.sentToSenate;
-
+	$scope.addSenateInstructors = function () {
 		$scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
 			if(slotInstructor.isSenateInstructor) {
-				slotInstructor.invited = $scope.startTeachingCallConfig.sentToSenate;
+				slotInstructor.invited = true;
 			}
 		});
 
 		$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
 	};
 
-	$scope.toggleFederationInstructors = function () {
-		$scope.startTeachingCallConfig.sentToFederation = !$scope.startTeachingCallConfig.sentToFederation;
+	$scope.areAllSenateInvited = function() {
+		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
+			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
 
+			if(slotInstructor.isSenateInstructor && !slotInstructor.invited) {
+				return false;
+			}
+		}
+
+		return true;
+	};
+
+	$scope.areAllFederationInvited = function() {
+		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
+			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
+
+			if(slotInstructor.isFederationInstructor && !slotInstructor.invited) {
+				return false;
+			}
+		}
+
+		return true;
+	};
+
+	$scope.addFederationInstructors = function () {
 		$scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
 			if(slotInstructor.isFederationInstructor) {
-				slotInstructor.invited = $scope.startTeachingCallConfig.sentToFederation;
+				slotInstructor.invited = true;
 			}
 		});
 
