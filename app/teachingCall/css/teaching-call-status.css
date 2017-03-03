@@ -171,3 +171,15 @@
 	color: #373e4a;
 	background-color: #ffffff;
 }
+
+.assignments-app .teaching-call-status-tooltip.confirmbutton-yes {
+	color: #fff;
+	background-color: rgba(180, 20, 20, 0.8);
+	border: rgba(180, 20, 20, 0.8);
+}
+.assignments-app .teaching-call-status-tooltip.confirmbutton-yes:hover {
+
+	color: #fff;
+	background-color: #a11c1c;
+	border-color: #821717;
+}
