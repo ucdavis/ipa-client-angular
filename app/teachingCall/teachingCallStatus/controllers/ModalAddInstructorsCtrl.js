@@ -231,5 +231,55 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 		$uibModalInstance.close($scope.startTeachingCallConfig);
 	};
 
+	$scope.termDescriptions = function () {
+		$scope.startTeachingCallConfig.activeTerms;
+		// Convert termsBlob to terms
+		var allTerms = ['01', '02', '03', '04', '05', '06', '07', '08', '09','10'];
+		var relevantTerms = [];
+
+		allTerms.forEach( function(term) {
+			if ($scope.startTeachingCallConfig.activeTerms[term]) {
+				relevantTerms.push(term);
+			}
+		});
+
+		// sort terms Chronologically
+		var chronologicallyOrderedTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
+		var sortedTerms = [];
+		chronologicallyOrderedTerms.forEach( function(term) {
+			if (relevantTerms.indexOf(term) > -1) {
+				sortedTerms.push(term);
+			}
+		});
+		// Convert termCodes to term descriptions
+		allTermDescriptions = {
+			'05': 'Summer Session 1',
+			'06': 'Summer Special Session',
+			'07': 'Summer Session 2',
+			'08': 'Summer Quarter',
+			'09': 'Fall Semester',
+			'10': 'Fall Quarter',
+			'01': 'Winter Quarter',
+			'02': 'Spring Semester',
+			'03': 'Spring Quarter'
+		};
+
+		// Comma Separated term descriptions
+		termDescriptions = "";
+		firstTerm = true;
+		sortedTerms.forEach(function(term) {
+
+			if (firstTerm) {
+				termDescriptions += allTermDescriptions[term];
+				firstTerm = false;
+			} else {
+				termDescriptions += ", ";
+				termDescriptions += allTermDescriptions[term];
+			}
+		});
+
+		return termDescriptions;
+	};
+
 	$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
 });

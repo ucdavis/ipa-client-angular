@@ -31,7 +31,7 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 
 				$scope.view.state.teachingCall.federation.forEach(function(instructor) {
 					instructor.selected = $scope.federationInstructorsSelected;
-				})
+				});
 			};
 
 			$scope.atLeastOneInstructorSelected = function() {
@@ -51,7 +51,8 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 				}
 
 				return instructorIsSelected;
-			}
+			};
+
 			// Launches Contact Instructor Modal
 			$scope.openContactInstructorsModal = function() {
 				selectedInstructors = [];
@@ -59,12 +60,12 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 					if (instructor.selected) {
 						selectedInstructors.push(instructor);
 					}
-				})
+				});
 				$scope.view.state.teachingCall.federation.forEach(function(instructor) {
 					if (instructor.selected) {
 						selectedInstructors.push(instructor);
 					}
-				})
+				});
 
 				modalInstance = $uibModal.open({
 					templateUrl: 'ModalContactInstructors.html',
@@ -154,7 +155,7 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 
 			$scope.removeInstructor = function(instructor) {
 				teachingCallStatusActionCreators.removeInstructorFromTeachingCall($scope.workgroupId, $scope.year, instructor);
-			}
+			};
 	}]);
 
 TeachingCallStatusCtrl.validate = function (authService, teachingCallStatusActionCreators, $route) {
