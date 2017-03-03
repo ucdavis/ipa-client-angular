@@ -1,6 +1,6 @@
 teachingCallApp.controller('ModalContactInstructorsCtrl', this.ModalContactInstructorsCtrl = function($scope, $rootScope, $uibModalInstance, scheduleYear, workgroupId, state, selectedInstructors) {
 	$scope.startTeachingCallConfig = {};
-	$scope.startTeachingCallConfig.dueDate = "";
+	$scope.startTeachingCallConfig.dueDate = new Date();
 	$scope.startTeachingCallConfig.showUnavailabilities = true;
 	$scope.startTeachingCallConfig.message = "Please consider your teaching for next year in light of what you have taught in recent years.";
 	$scope.startTeachingCallConfig.message += " As always, we will attempt to accommodate your requests, but we may need to ask some of you to make changes in order to balance our course offerings effectively.";
@@ -160,12 +160,14 @@ teachingCallApp.controller('ModalContactInstructorsCtrl', this.ModalContactInstr
 		showWeeks: true
 	};
 
+
 	$scope.dateOptions = {
 		formatYear: 'yy',
 		maxDate: new Date(2020, 5, 22),
 		minDate: new Date(),
 		startingDay: 1,
-		showWeeks: false
+		showWeeks: false,
+		initDate: new Date()
 	};
 
 	$scope.popup1 = {};
