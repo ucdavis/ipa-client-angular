@@ -238,7 +238,8 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 		var relevantTerms = [];
 
 		allTerms.forEach( function(term) {
-			if ($scope.startTeachingCallConfig.activeTerms[term]) {
+			$scope.startTeachingCallConfig;
+			if ($scope.startTeachingCallConfig.activeTerms && $scope.startTeachingCallConfig.activeTerms[term]) {
 				relevantTerms.push(term);
 			}
 		});
