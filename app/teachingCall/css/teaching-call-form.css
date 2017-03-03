@@ -920,96 +920,17 @@ li.active-term .dropdown-term-row {
 
 
 
-/* TeachingCallForm */
+/* Teaching-Call-Form
+---------------------
+*/
 
-.current-academic-term {
-	border: 1px solid #00A651;
-	border-radius: 3px;
-	color: #00A651;
-	cursor: pointer;
+#teaching-call-form--container {
+	width: calc(100% - 270px);
 }
 
-.removed-academic-term {
-	color: #CECECE !important;
-	cursor: no-drop !important;
-}
-
-.removed-academic-term:hover {
-	color: #CECECE;
-	cursor: no-drop;
-}
-
-.teaching-call--progress-sidebar {
-	width: 230px;
-	position: fixed;
-	top: 310px;
-	padding: 5px 25px 10px 25px;
-	background-color: white;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-}
-
-.teaching-call--progress-sidebar h5 {
-	margin-bottom: 10px;
-}
-
-.teaching-call--progress-sidebar ul {
-	padding-left: 10px;
-	list-style: none;
-}
-
-.teaching-call--progress-sidebar ul li:first-child {
-	margin-left: -20px;
-	font-weight: 500;
-}
-
-.teaching-call--progress-sidebar ul li:last-child {
-	margin-top: 25px;
-	margin-left: -20px;
-	font-weight: 500;
-}
-
-.teaching-call--progress-sidebar ul li {
-	padding: 5px;
-}
-
-.teaching-call--progress-sidebar ul li input {
-	margin-right: 10px;
-}
-
-.teaching-call--progress-sidebar button {
-	width: 100%;
-    margin-top: 10px;
-}
-
-.teaching-call--academic-term-sidebar {
-	width: 230px;
-	position: fixed;
-	padding: 5px 25px 5px 25px;
-	background-color: white;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-}
-
-.teaching-call--academic-term-sidebar h5 {
-	margin-bottom: 10px;
-}
-
-.teaching-call--academic-term-sidebar ul {
-	padding-left: 0px;
-	list-style: none;
-}
-
-.teaching-call--academic-term-sidebar ul li {
-	cursor: pointer;
-	padding: 5px;
-}
-
-.teaching-call--academic-term-sidebar ul li:hover {
-	color: #00A651;
-	cursor: pointer;
-	padding: 5px;
-}
-
-/* instructor- preference */
+/* Teaching-Call-Form--course-preference-section
+-----------------------------------
+*/
 
 #teaching-call--course-preference {
 	margin-bottom: 25px;
@@ -1021,18 +942,18 @@ li.active-term .dropdown-term-row {
 	margin-right: auto;
 }
 
-.set-preference-btn {
+.select-preference-btn {
 	position: absolute;
 	top: 3px;
 	left: 5px
 }
 
-.set-preference-btn .glyphicon:hover {
+.select-preference-btn .glyphicon:hover {
 	background-color: lightgray;
 
 }
 
-.set-preference-btn i {
+.select-preference-btn i {
 	display: block;
 	border: 1px solid #ddd;
 	padding: 2px 4px 2px 5px;
@@ -1050,24 +971,41 @@ li.active-term .dropdown-term-row {
 	text-align: center !important;
 }
 
+#teaching-call--course-preference table thead tr th:nth-child(2) {
+	text-align: left !important;
+}
+
 #teaching-call--course-preference table td {
-	/* set up padding and relative position for 'table td' in order hold 'set-preference-btn' */
 	position: relative;
 	padding: 13px;
 }
 
+#teaching-call--course-preference table td:nth-child(2) {
+	text-align: left !important;
+}
+
+#teaching-call--course-preference table tr:first-child td .glyphicon-chevron-up {
+	cursor: no-drop;
+	background-color: white;
+}
+
+#teaching-call--course-preference table tr:nth-last-child(2) td .glyphicon-chevron-down {
+	cursor: no-drop;
+	background-color: white;
+}
+
 #teaching-call--course-preference table thead tr th:first-child {
-	/* set width for preference section in the table */
 	width: 15% !important;
 }
 
 #teaching-call--course-preference table thead tr th:last-child {
-	/* set width for seat-number section in the table */
-	width: 20% !important;
+	width: 15% !important;
 }
 
 
-/* instructor--unavability-table */
+/* Teaching-Call-Form--unavability-table
+-----------------------------------
+*/
 
 #teaching-call--check-unavailiability {
 	margin-bottom: 25px;
@@ -1098,8 +1036,109 @@ table.availability-grid tr td {
 	text-align: center !important;
 }
 
-/*instructor--additional information */
+/* Teaching-Call-Form--additional information
+-----------------------------------
+*/
 
 #teaching-call--additional-information {
 	margin-bottom: 25px;
+}
+
+/* Teaching-Call-Form--right-sidebars
+-----------------------------------
+*/
+
+/* progress-sidebar */
+
+.teaching-call--progress-sidebar {
+	width: 230px;
+	position: fixed;
+	top: 350px;
+	right: 35px;
+	padding: 5px 25px 10px 25px;
+	background-color: white;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.teaching-call--progress-sidebar h5 {
+	margin-bottom: 10px;
+}
+
+.teaching-call--progress-sidebar ul {
+	padding-left: 10px;
+	list-style: none;
+}
+
+.teaching-call--progress-sidebar ul li:first-child {
+	margin-left: -20px;
+	font-weight: 500;
+}
+
+.teaching-call--progress-sidebar ul li:last-child {
+	margin-left: -20px;
+	font-weight: 500;
+}
+
+.teaching-call--progress-sidebar ul li {
+	padding: 5px;
+}
+
+.teaching-call--progress-sidebar ul li input {
+	margin-right: 10px;
+}
+
+.teaching-call--progress-sidebar button {
+	width: 100%;
+    margin-top: 10px;
+}
+
+/* academic-sidebar */
+
+.teaching-call--academic-term-sidebar {
+	width: 230px;
+	right: 35px;
+	top: 140px;
+	position: fixed;
+	padding: 5px 25px 5px 25px;
+	background-color: white;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.teaching-call--academic-term-sidebar h5 {
+	margin-bottom: 10px;
+}
+
+.teaching-call--academic-term-sidebar ul {
+	padding-left: 0px;
+	list-style: none;
+}
+
+.teaching-call--academic-term-sidebar ul li {
+	cursor: pointer;
+	padding: 5px;
+}
+
+.current-academic-term {
+	border: 1px solid #00A651;
+	border-radius: 3px;
+	color: #00A651;
+	cursor: pointer;
+}
+
+.unassigned-academic-term {
+	color: #CECECE !important;
+}
+
+.unassigned-academic-term:hover {
+	color: #CECECE;
+}
+
+.teaching-call--academic-term-sidebar ul {
+	margin-top: 15px;
+}
+
+.teaching-call--academic-term-sidebar ul li:hover {
+	color: #00A651;
+	cursor: pointer;
+	padding: 5px;
 }
