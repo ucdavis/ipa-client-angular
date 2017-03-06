@@ -112,7 +112,10 @@ sharedApp.directive("teachingCallTooltip", this.confirmButton = function ($docum
 
 				var dontBubble = true;
 				e.stopPropagation();
+				// First remove all pre-existing popups
+				$(".popover").hide();
 
+				// Activate this popup
 				element.popover('show');
 				element.addClass('active');
 
