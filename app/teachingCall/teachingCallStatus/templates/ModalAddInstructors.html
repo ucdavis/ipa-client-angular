@@ -112,8 +112,17 @@
 					</div>
 					<textarea ng-if="startTeachingCallConfig.sendEmail == true" ng-bind-html="startTeachingCallConfig.message" class="form-control teaching-call-message-input" placeholder="" rows="5" id="comment"></textarea>
 				</div>
-				<button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == true" type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Send</button>
-				<button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false" tooltip-placement="left" uib-tooltip="You must select at least one term and one instructor" type="button" class="disabled btn btn-info neon-dark-confirm-btn">Send</button>
+				<!-- send buttons -->
+				<button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == true && startTeachingCallConfig.sendEmail"
+								type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Send</button>
+				<button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false && startTeachingCallConfig.sendEmail"
+								tooltip-placement="left" uib-tooltip="You must select at least one term and one instructor" type="button" class="disabled btn btn-info neon-dark-confirm-btn">Send</button>
+
+				<!-- start buttons (no email) -->
+				<button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == true && !startTeachingCallConfig.sendEmail"
+								type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Start</button>
+				<button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false && !startTeachingCallConfig.sendEmail"
+								tooltip-placement="left" uib-tooltip="You must select at least one term and one instructor" type="button" class="disabled btn btn-info neon-dark-confirm-btn">Start</button>
 
 			</div>
 			<!-- modal-footer ends -->
