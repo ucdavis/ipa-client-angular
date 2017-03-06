@@ -1,4 +1,4 @@
-<div style="display: block;" id="modal-1" class="modal">
+<div style="display: block; overflow-y: hidden;" id="modal-1" class="modal">
 	<!-- modal page 1 -->
 	<div class="modal-dialog teaching-call--width">
 		<div class="modal-content">
@@ -45,7 +45,7 @@
 							</label>
 						</div>
 
-						<div style="height: 115px;" rows="5" class="overflow-auto flex flex-wrap padding-sm instructor-box">
+						<div rows="5" class="overflow-auto flex flex-wrap padding-sm instructor-box">
 							<div class="instructor-list">
 								<div ng-repeat="instructor in startTeachingCallConfig.invitedInstructors" 
 										ng-click="toggleInstructor(instructor)" class="label label-default instructor-tag"
@@ -60,10 +60,7 @@
 						</div>
 					</div>
 					<!-- faculty member info ends-->
-					<!-- empty flex-box -->
-					<div style="flex:0 1 5%;">
-					</div>
-					<!-- empty flex-box ends-->
+
 					<!-- select dates&terms section-->
 					<div class="teaching-call--info_style container-fluid">
 						<h5 style="margin-top: 0px;">Due Date</h5>
@@ -76,26 +73,17 @@
 							</span>
 						</p>
 						<div>
-							<div style="display: flex; align-items: center">
-								<div style="font-size: 14px; font-weight: bold;">Terms</div>
-								<div style="padding-left: 5px; color: #a6a7aa;">{{termDescriptions()}}</div>
-							</div>
-							<div class="btn-group set-terms-container" uib-dropdown auto-close="outsideClick" is-open="status.isopen">
-								<button id="single-button" type="button" class="btn btn-default dropdown-toggle set-terms-teaching-call-btn" uib-dropdown-toggle ng-disabled="disabled">
-									Set Terms <span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu set-term-menu" uib-dropdown-menu auto-close="outsideClick" role="menu" aria-labelledby="single-button">
-									<li ng-repeat="term in dropDownTerms" role="menuitem" ng-click="toggleTermActive(term)">
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-												ng-class="{ 'checked': startTeachingCallConfig.activeTerms[term.slice(-2)] }">
-												<label class="cb-wrapper">
-													<div class="checked"></div>
-												</label>
-												<label>{{ getTermName(term) }}</label>
-											</div>
-									</li>
-								</ul>
-							</div>
+							<ul style="list-style: none; padding-left: 0px; margin-bottom: 0px;">
+								<li ng-repeat="term in dropDownTerms" role="menuitem" ng-click="toggleTermActive(term)">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': startTeachingCallConfig.activeTerms[term.slice(-2)] }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>{{ getTermName(term) }}</label>
+										</div>
+								</li>
+							</ul>
 						</div>
 					</div>
 					<!-- select dates&terms section ends-->

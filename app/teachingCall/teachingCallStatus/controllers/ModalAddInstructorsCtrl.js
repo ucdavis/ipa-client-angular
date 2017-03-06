@@ -24,6 +24,7 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 	$scope.senateGroup = angular.copy(state.eligible.senate);
 	$scope.federationGroup = angular.copy(state.eligible.federation);
 	$scope.startTeachingCallConfig.invitedInstructors = $scope.senateGroup.concat($scope.federationGroup);
+	$scope.startTeachingCallConfig.invitedInstructors = _array_sortByProperty($scope.startTeachingCallConfig.invitedInstructors, "lastName");
 
 	$scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
 		slotInstructor.invited = false;
