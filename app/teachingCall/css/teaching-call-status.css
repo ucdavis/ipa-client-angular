@@ -186,3 +186,7 @@
 	background-color: #a11c1c;
 	border-color: #821717;
 }
+
+.datepicker-bar {
+	width: 285px;
+}
