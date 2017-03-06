@@ -26,7 +26,11 @@
 }
 
 .teaching-call--info_style {
-	flex:0 1 45%;
+	flex:0 1 55%;
+}
+
+.teaching-call-modal--right-column {
+	flex:0 1 35%;
 }
 
 .modal-footer--teaching-call {

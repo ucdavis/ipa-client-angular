@@ -54,10 +54,6 @@
 								</div>
 							</div>
 						</div>
-
-						<div class="checkbox">
-							<label class="checkbox-inline"><input type="checkbox" ng-model="startTeachingCallConfig.showUnavailabilities">Ask for unavailabilities</label>
-						</div>
 					</div>
 					<!-- faculty member info ends-->
 
@@ -92,11 +88,29 @@
 
 			<div class="modal-footer modal-footer--teaching-call">
 				<div class="email-style container-fluid">
-					<div class="checkbox">
-						<label class="checkbox-inline"><input checked type="checkbox" ng-click="toggleSendEmail()">Send Email</label>
+					<div class="checkbox" style="display: flex; ">
+						<div ng-click="toggleSendEmail()">
+								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+									ng-class="{ 'checked': startTeachingCallConfig.sendEmail }">
+									<label class="cb-wrapper">
+										<div class="checked"></div>
+									</label>
+									<label>Send Email</label>
+								</div>
+						</div>
+
+						<div ng-click="startTeachingCallConfig.showUnavailabilities = !startTeachingCallConfig.showUnavailabilities" style="padding-left: 20px;">
+								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+									ng-class="{ 'checked': startTeachingCallConfig.showUnavailabilities }">
+									<label class="cb-wrapper">
+										<div class="checked"></div>
+									</label>
+									<label>Ask for unavailabilities</label>
+								</div>
+						</div>
+
 					</div>
 					<textarea ng-if="startTeachingCallConfig.sendEmail == true" ng-bind-html="startTeachingCallConfig.message" class="form-control teaching-call-message-input" placeholder="" rows="5" id="comment"></textarea>
-					<textarea ng-if="startTeachingCallConfig.sendEmail == false" disabled ng-bind-html="startTeachingCallConfig.message" class="form-control teaching-call-message-input" placeholder="" rows="5" id="comment"></textarea>
 				</div>
 				<button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == true" type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Send</button>
 				<button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false" tooltip-placement="left" uib-tooltip="You must select at least one term and one instructor" type="button" class="disabled btn btn-info neon-dark-confirm-btn">Send</button>
