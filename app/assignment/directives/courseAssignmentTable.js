@@ -153,7 +153,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 
 											var interestedInstructorIds = [];
 											var firstInstructorAdded = false;
-
+											var numberOfInstructorsAdded = 0;
 											if (sectionGroup.teachingAssignmentIds.length > 0) {
 
 												// Loop over instructors who are interested in this course
@@ -170,6 +170,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 														if (firstInstructorAdded === false) {
 															courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
 															firstInstructorAdded = true;
+															numberOfInstructorsAdded++;
 														}
 
 														courseHtml += "<li><a";
@@ -178,6 +179,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 														courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 
 														courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
+														numberOfInstructorsAdded++;
 													}
 												});
 												if (firstInstructorAdded) {
@@ -193,9 +195,14 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 													courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
 													courseHtml += " data-instructor-id=\"" + instructorId + "\"";
 													courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
+													numberOfInstructorsAdded++;
 												}
 											});
 
+											// Display Message if there are no unused courses available
+											if (numberOfInstructorsAdded == 0) {
+												courseHtml += '<li style="padding-left: 20px; cursor: default;">No unused instructors</li>';
+											}
 											courseHtml += "</ul></div>";
 										} // End scope.isTermLocked check
 
