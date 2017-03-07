@@ -1,11 +1,5 @@
 teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$window', '$routeParams', '$uibModal', 'teachingCallStatusActionCreators', 'teachingCallStatusService',
 		this.TeachingCallStatusCtrl = function ($scope, $rootScope, $window, $routeParams, $uibModal, teachingCallStatusActionCreators, teachingCallStatusService) {
-
-			$scope.modalShown = false;
-			$scope.toggleModal = function() {
-				$scope.modalShown = !$scope.modalShown;
-			};
-
 			$window.document.title = "Teaching Call Status";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
