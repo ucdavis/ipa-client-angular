@@ -158,6 +158,10 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 	};
 
 	$scope.areAllSenateInvited = function() {
+		if (!$scope.startTeachingCallConfig.invitedInstructors) {
+			return true;
+		}
+
 		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
 			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
 
@@ -170,6 +174,10 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 	};
 
 	$scope.areAllFederationInvited = function() {
+		if (!$scope.startTeachingCallConfig.invitedInstructors) {
+			return true;
+		}
+
 		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
 			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
 
@@ -247,7 +255,9 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 
 	$scope.submit = function() {
 		var messageInput = $('.teaching-call-message-input').val();
-		$scope.startTeachingCallConfig.message = messageInput.replace(/\r?\n/g, '<br />');
+		if (messageInput) {
+			$scope.startTeachingCallConfig.message = messageInput.replace(/\r?\n/g, '<br />');
+		}
 
 		$uibModalInstance.close($scope.startTeachingCallConfig);
 	};
