@@ -6,7 +6,7 @@
 
 
 	<h3 style="text-align: center;">
-		TeachingCalls {{ year }}-{{ nextYear }}
+		Teaching Calls {{ year }}-{{ nextYear }}
 	</h3>
 	<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
 
@@ -24,7 +24,7 @@
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
 						Add Instructors
 					</a>
-					<span ng-if="view.state.eligible.senate.length == 0 && view.state.eligible.federation.length == 0" uib-tooltip="All instructors already in teaching call">
+					<span ng-if="view.state.eligible.senate.length == 0 && view.state.eligible.federation.length == 0" uib-tooltip="All instructors called">
 						<a class="disabled btn btn-default" style="color: #808080;">
 							<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
 							Add Instructors
@@ -36,7 +36,7 @@
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
 						Contact Instructors
 					</a>
-					<span ng-if="atLeastOneInstructorSelected() == false" uib-tooltip="You must select at least one instructor">
+					<span ng-if="atLeastOneInstructorSelected() == false" uib-tooltip="Select at least one instructor to contact">
 						<a class="disabled btn btn-default" style="color: #808080;">
 							<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
 							Contact Instructors
@@ -68,6 +68,7 @@
 					<div class="header-left-cell column-name">
 						<div style="padding-left:10px;">Name</div>
 					</div>
+					<div class="header-cell column-last">Submitted</div>
 					<div class="header-cell column-last">Last Contacted</div>
 					<div class="header-cell column-next">Next Contact</div>
 					<div class="header-cell column-due">Due Date</div>
@@ -90,6 +91,9 @@
 								message="{{instructor.message}}"
 								placement="right">
 						</div>
+					</div>
+					<div class="column-last cell">
+						<i class="glyphicon glyphicon-ok" ng-if="instructor.isDone"></i>
 					</div>
 					<div class="column-last cell">
 						{{ instructor.lastContactedAt }}
@@ -135,6 +139,7 @@
 					<div class="header-left-cell column-name">
 						<div style="padding-left:10px;">Name</div>
 					</div>
+					<div class="header-cell column-last">Submitted</div>
 					<div class="header-cell column-last">Last Contacted</div>
 					<div class="header-cell column-next">Next Contact</div>
 					<div class="header-cell column-due">Due Date</div>
@@ -157,6 +162,9 @@
 								message="{{instructor.message}}"
 								placement="right">
 						</div>
+					</div>
+					<div class="column-last cell">
+						<i class="glyphicon glyphicon-ok" ng-if="instructor.isDone"></i>
 					</div>
 					<div class="column-last cell">
 						{{ instructor.lastContactedAt }}

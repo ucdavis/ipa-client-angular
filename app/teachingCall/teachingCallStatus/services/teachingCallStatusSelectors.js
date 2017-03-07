@@ -57,6 +57,7 @@ teachingCallApp.service('teachingCallStatusSelectors', function () {
 				newInstructor.showUnavailabilities = null;
 				newInstructor.workgroupId = null;
 				newInstructor.scheduleId = null;
+				newInstructor.isDone = null;
 
 			if (teachingCallReceiptCopy) {
 
@@ -77,6 +78,7 @@ teachingCallApp.service('teachingCallStatusSelectors', function () {
 				newInstructor.showUnavailabilities = teachingCallReceiptCopy.showUnavailabilities;
 				newInstructor.workgroupId = teachingCallReceiptCopy.workgroupId;
 				newInstructor.scheduleId = teachingCallReceiptCopy.scheduleId;
+				newInstructor.isDone = teachingCallReceiptCopy.isDone;
 			}
 			
 			return newInstructor;
