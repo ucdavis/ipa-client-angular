@@ -376,6 +376,11 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 
 						if (teachingCallReceiptData.workgroupId == action.workgroupId
 							&& teachingCallReceiptData.academicYear == action.year) {
+								if (teachingCallReceiptData.dueDate) {
+									teachingCallReceiptData.dueDateDescription = moment(teachingCallReceiptData.dueDate).format("YYYY-MM-DD").toFullDate();
+								} else {
+									teachingCallReceiptData.dueDateDescription = "";
+								}
 							return teachingCallReceiptData;
 						}
 					}
