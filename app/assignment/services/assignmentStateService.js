@@ -54,7 +54,12 @@ assignmentApp.service('assignmentStateService', function (
 						var courseKeyList = ['courseNumber', 'sequencePattern', 'subjectCode', 'title'];
 
 						_object_search_properties(query, courses, courseKeyList);
+					} else {
+						courses.ids.forEach(function(courseId) {
+							courses.list[courseId].isFiltered = false;
+						});
 					}
+
 					return courses;
 				case UPDATE_TAG_FILTERS:
 					// Set the course.isFiltered flag to false if any tag matches the filters
@@ -275,10 +280,17 @@ assignmentApp.service('assignmentStateService', function (
 					return instructors;
 				case UPDATE_TABLE_FILTER:
 					var query = action.payload.query;
-					// Specify the properties that we are interested in searching
-					var instructorKeyList = ['emailAddress', 'firstName', 'lastName', 'fullName', 'loginId', 'ucdStudentSID'];
 
-					_object_search_properties(query, instructors, instructorKeyList);
+					if (query.length > 0) {
+						// Specify the properties that we are interested in searching
+						var instructorKeyList = ['emailAddress', 'firstName', 'lastName', 'fullName', 'loginId', 'ucdStudentSID'];
+
+						_object_search_properties(query, instructors, instructorKeyList);
+					} else {
+						instructors.ids.forEach(function (instructorId) {
+							instructors.list[instructorId].isFiltered = false;
+						});
+					}
 
 					return instructors;
 				case ADD_SCHEDULE_INSTRUCTOR_NOTE:
