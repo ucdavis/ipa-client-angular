@@ -212,3 +212,15 @@ table.availability-grid tr td {
 	font-weight: 300;
 	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
+
+.dss-header {
+	display: flex;
+	width: 100%;
+}
+.dss-header .left-column {
+	flex: 1 1 0px;
+}
+
+.dss-header .right-column {
+	flex: 1 1 0px;
+}
