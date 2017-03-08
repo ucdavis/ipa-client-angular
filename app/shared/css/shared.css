@@ -213,14 +213,14 @@ table.availability-grid tr td {
 	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
-.dss-header {
+.ipa-header {
 	display: flex;
 	width: 100%;
 }
-.dss-header .left-column {
+.ipa-header .left-column {
 	flex: 1 1 0px;
 }
 
-.dss-header .right-column {
+.ipa-header .right-column {
 	flex: 1 1 0px;
 }

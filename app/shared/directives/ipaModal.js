@@ -1,4 +1,4 @@
-sharedApp.directive('dssModal', function() {
+sharedApp.directive('ipaModal', function() {
 	return {
 		restrict: 'E', // Use this via an element selector <dss-modal></dss-modal>
 		templateUrl: 'dssModal.html', // directive html found here:
