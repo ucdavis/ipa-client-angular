@@ -93,6 +93,11 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 			scope.toggleMenuItem = function (item) {
 				scope.expanded = (scope.expanded == item) ? null : item;
 			};
-		}
+
+			scope.impersonate = function () {
+				var jwt = localStorage.getItem('JWT');
+				authService.impersonate(jwt);
+			};
+		} // End link
 	};
 });

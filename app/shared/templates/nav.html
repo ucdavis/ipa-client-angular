@@ -37,6 +37,8 @@
 			<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
 			<li class="welcome">
 				<span class="title">Howdy, {{ sharedState.currentUser.displayName }}</span>
+				<span class="title" ng-click="impersonate()">Impersonate</span>
+				
 			</li>
 			<li ng-class="{ 'active': currentBaseHref == 'summary', 'opened': expanded == 'summary' || (!expanded && currentBaseHref == 'summary') }"
 				ng-if="userHasRoles(['academicPlanner','reviewer']) && userHasRoles(['senateInstructor','federationInstructor'])"

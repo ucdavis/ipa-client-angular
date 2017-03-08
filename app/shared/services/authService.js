@@ -57,6 +57,22 @@ angular.module('sharedApp')
 				return deferred.promise;
 			},
 
+			impersonate: function (token) {
+				var self = this;
+				var deferred = $q.defer();
+				$http.post(serverRoot + '/impersonate', { token: token }, { withCredentials: true }).then(function (response) {
+					console.log("impersonate responded");
+					console.log(response);
+
+
+				}, function (error) {
+					console.log("impersonate failed");
+					console.log(error);
+				});
+
+				return deferred.promise;
+			},
+
 			validateState: function (data, workgroupId, year, ignoreFallBackUrl) {
 				var currentUser = new CurrentUser(data.displayName, data.userRoles);
 				currentUser.setDisplayName(data.displayName);
