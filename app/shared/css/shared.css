@@ -216,7 +216,13 @@ table.availability-grid tr td {
 .ipa-header {
 	display: flex;
 	width: 100%;
+	position: fixed;
+	background-color: white;
+	box-shadow: 0px 3px 2px 0px rgba(224,224,224,1);
+	height: 60px;
+	z-index: 99;
 }
+
 .ipa-header .left-column {
 	flex: 1 1 0px;
 }
