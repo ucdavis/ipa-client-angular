@@ -1,4 +1,4 @@
-assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallConfigCtrl = function($scope, $rootScope, $uibModalInstance, scheduleYear, viewState, workgroupId, allTerms) {
+teachingCallApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallConfigCtrl = function($scope, $rootScope, $uibModalInstance, scheduleYear, viewState, workgroupId, allTerms) {
 	$scope.startTeachingCallConfig = {};
 	$scope.startTeachingCallConfig.sentToFederation = false;
 	$scope.startTeachingCallConfig.sentToSenate = false;
@@ -193,8 +193,8 @@ assignmentApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCallCo
 		$scope.startTeachingCallConfig.messageSummary = messageInput.replace(/\r?\n/g, '<br />');
 	};
 
-	// Generate the assignments root url
-	// example: http://localhost:9000/assignments/10/2012/
+	// Generate the teachingCall root url
+	// example: http://localhost:9000/teachingCalls/10/2012/
 
 	$scope.urlRoot = location.href;
 	var splitUrl = $scope.urlRoot.split('/');

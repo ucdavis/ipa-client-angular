@@ -1,0 +1,16 @@
+<div class='dss-modal'>
+	<div class='dss-modal-overlay' ng-click='close()'>
+	</div>
+
+	<div class='dss-modal-dialog' ng-style='dialogStyle'>
+		<div class="dss-modal-header">
+			<div>
+				{{ headerText }}
+			</div>
+			<div class='dss-modal-close' ng-click='close()'>
+				×
+			</div>
+		</div>
+		<div class='dss-modal-dialog-content' ng-transclude></div>
+	</div>
+</div>

@@ -1,12 +1,4 @@
-/**
- * @ngdoc service
- * @name workgroupApp.workgroupService
- * @description
- * # workgroupService
- * Service in the workgroupApp.
- * workgroupApp specific api calls.
- */
-assignmentApp.factory("assignmentService", this.assignmentService = function($http, $q, $window) {
+teachingCallApp.factory("teachingCallFormService", this.teachingCallFormService = function($http, $q, $window) {
 	return {
 		getInitialState: function(workgroupId, year) {
 			var deferred = $q.defer();
@@ -35,23 +27,10 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
-		createTeachingCall: function (workgroupId, year, teachingCallConfig) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/assignmentView/" + workgroupId + "/" + year + "/teachingCalls", teachingCallConfig, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
 		addPreference: function (teachingAssignment) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/assignmentView/preferences/" + teachingAssignment.schedule.id, teachingAssignment, { withCredentials: true })
+			$http.post(serverRoot + "/api/assignmentView/preferences/" + teachingAssignment.scheduleId, teachingAssignment, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
@@ -65,74 +44,6 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 			var deferred = $q.defer();
 
 			$http.delete(serverRoot + "/api/assignmentView/preferences/" + teachingAssignment.id, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		deleteTeachingCall: function (teachingCall) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/assignmentView/teachingCalls/" + teachingCall.id, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		addInstructorAssignment: function (teachingAssignment, scheduleId) {
-			var deferred = $q.defer();
-			teachingAssignment.termCode = String(teachingAssignment.termCode);
-			$http.post(serverRoot + "/api/assignmentView/schedules/" + scheduleId + "/teachingAssignments/", teachingAssignment, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		updateInstructorAssignment: function (teachingAssignment) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/assignmentView/teachingAssignments/" + teachingAssignment.id, teachingAssignment, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		addScheduleInstructorNote: function (instructorId, year, workgroupId, comment, assignmentsCompleted) {
-			var deferred = $q.defer();
-			var scheduleInstructorNote = {};
-			scheduleInstructorNote.instructorComment = comment;
-			scheduleInstructorNote.assignmentsCompleted = assignmentsCompleted;
-
-			$http.post(serverRoot + "/api/assignmentView/scheduleInstructorNotes/" + instructorId + "/" + workgroupId + "/" + year, scheduleInstructorNote, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		updateScheduleInstructorNote: function (scheduleInstructorNote) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/assignmentView/scheduleInstructorNotes/" + scheduleInstructorNote.id, scheduleInstructorNote, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
@@ -168,7 +79,7 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
-		addTeachingCallResponse: function (teachingCallResponse) {
+		createAvailability: function (teachingCallResponse) {
 			var deferred = $q.defer();
 
 			$http.post(serverRoot + "/api/assignmentView/teachingCallResponses/" + teachingCallResponse.scheduleId  + "/" + teachingCallResponse.instructorId, teachingCallResponse, { withCredentials: true })

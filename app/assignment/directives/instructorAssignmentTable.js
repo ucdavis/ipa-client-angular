@@ -462,6 +462,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 					instructorId = $el.data('instructor-id');
 					scope.openUnavailabilityModal(instructorId);
 				}
+
 				else if ($el.hasClass('assignments-complete')) {
 					var scheduleInstructorNoteId = $el.data('schedule-instructor-note-id');
 					instructorId = $el.data('instructor-id');
@@ -471,10 +472,11 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 					if (scheduleInstructorNote) {
 						if ($el.hasClass('glyphicon-unchecked')) {
 							scheduleInstructorNote.assignmentsCompleted = true;
+							assignmentActionCreators.markInstructorComplete(scheduleInstructorNote);
 						} else {
 							scheduleInstructorNote.assignmentsCompleted = false;
+							assignmentActionCreators.markInstructorIncomplete(scheduleInstructorNote);
 						}
-						assignmentActionCreators.updateScheduleInstructorNote(scheduleInstructorNote);
 					}
 					// Make a new scheduleInstructorNote
 					else {

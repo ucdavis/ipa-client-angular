@@ -361,52 +361,33 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					return instructorCourses;
 			}
 		},
-		_teachingCallReducers: function (action, teachingCalls) {
+		_teachingCallReceiptReducers: function (action, teachingCallReceipt) {
 			var scope = this;
 			var data = action.payload;
 
 			switch (action.type) {
 				case INIT_STATE:
-					teachingCalls = {
-						ids: [],
-						list: {}
-					};
-					var teachingCallsList = {};
-					var length = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
-					for (var i = 0; i < length; i++) {
-						var teachingCallData = action.payload.teachingCalls[i];
-						teachingCallsList[teachingCallData.id] = new TeachingCall(teachingCallData);
-					}
-					teachingCalls.ids = _array_sortIdsByProperty(teachingCallsList, ["dueDate"]);
-					teachingCalls.list = teachingCallsList;
+				// Return the teachingCallReceipt for the workgroupId and year if it exists
+					teachingCallReceipt = null;
 
-					return teachingCalls;
-				default:
-					return teachingCalls;
-			}
-		},
-		_teachingCallReceiptReducers: function (action, teachingCallReceipts) {
-			var scope = this;
-			var data = action.payload;
-
-			switch (action.type) {
-				case INIT_STATE:
-					teachingCallReceipts = {
-						ids: [],
-						list: {}
-					};
-					var teachingCallReceiptsList = {};
 					var length = action.payload.teachingCallReceipts ? action.payload.teachingCallReceipts.length : 0;
 					for (var i = 0; i < length; i++) {
 						var teachingCallReceiptData = action.payload.teachingCallReceipts[i];
-						teachingCallReceiptsList[teachingCallReceiptData.id] = new TeachingCallReceipt(teachingCallReceiptData);
-					}
-					teachingCallReceipts.ids = _array_sortIdsByProperty(teachingCallReceiptsList, ["notifiedAt"]);
-					teachingCallReceipts.list = teachingCallReceiptsList;
 
-					return teachingCallReceipts;
+						if (teachingCallReceiptData.workgroupId == action.workgroupId
+							&& teachingCallReceiptData.academicYear == action.year) {
+								if (teachingCallReceiptData.dueDate) {
+									teachingCallReceiptData.dueDateDescription = moment(teachingCallReceiptData.dueDate).format("YYYY-MM-DD").toFullDate();
+								} else {
+									teachingCallReceiptData.dueDateDescription = "";
+								}
+							return teachingCallReceiptData;
+						}
+					}
+
+					return teachingCallReceipt;
 				default:
-					return teachingCallReceipts;
+					return teachingCallReceipt;
 			}
 		},
 		reduce: function (action) {
@@ -423,8 +404,7 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 			newState.activities = scope._activityReducers(action, scope._state.activities);
 			newState.events = scope._eventReducers(action, scope._state.events);
 			newState.instructorCourses = scope._instructorCourses(action, scope._state.instructorCourses);
-			newState.teachingCalls = scope._teachingCallReducers(action, scope._state.teachingCalls);
-			newState.teachingCallReceipts = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipts);
+			newState.teachingCallReceipt = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipt);
 			scope._state = newState;
 
 			$rootScope.$emit('summaryStateChanged', scope._state);

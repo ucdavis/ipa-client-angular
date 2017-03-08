@@ -6,15 +6,15 @@
 
 
 <!-- handle lack of active teaching call -->
-<div ng-if="view.state && !view.state.activeTeachingCall.id">
+<div ng-if="view.state && !view.state.isInstructorInTeachingCall">
 		<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
 			<p class="lead">You are not in a {{sharedState.workgroup.name}} {{ year }}-{{ nextYear }} Teaching Call</p>
-<br />
+			<br />
 			<p class="lead">If you feel this is in error please contact the Academic Planner for Psychology.</p>
 		</div>
 </div>
 
-<div ng-if="view.state && view.state.activeTeachingCall.id" class="teaching-call-form-container">
+<div ng-if="view.state && view.state.isInstructorInTeachingCall" class="teaching-call-form-container">
 	<div class="margin-bottom-30">
 		<h3 class="text-align--center">
 			Teaching Call {{ year }}-{{ nextYear }}
@@ -95,35 +95,42 @@
 
 
 	<div class="preference-container" style="display:flex; margin-left:15px; margin-right:15px;">
-		<div class="unavailability-term-container" style="flex: 1 0 0px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
+		<div class="unavailability-term-container" style="flex: 1 0 0px;" ng-repeat="term in ::view.state.terms track by $index">
 			<div>
 				<div class="unavailability-term-header" style="text-align: center;">
 					<div>
-						{{ getTermName(term) }}
+						{{term.termDescription}}
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="preference-container" style="display:flex; margin-left:15px; margin-right:15px;">
+<<<<<<< HEAD:app/assignment/templates/TeachingCallForm.html
 		<div class="unavailability-term-container" style="flex: 1 1 0px;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
+=======
+		<div class="unavailability-term-container" style="flex: 1 1 0px;" ng-repeat="term in ::view.state.terms track by $index">
+
+			<!-- Assignments -->
+>>>>>>> f021d846b9c5170f677e65b1d22b545cb973150a:app/teachingCall/teachingCallForm/templates/TeachingCallForm.html
 			<div class="approved-preference-container">
-				<div ng-if="preference.approved" class="teaching-call-approved-preference alert-info alert"
-				ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
+				<div class="teaching-call-approved-preference alert-info alert"
+				ng-repeat="assignment in term.assignments">
 					<div style="display: flex; height: 100%: justify-content: center; align-items: center;">
 						<div>
-							{{getDescription(preference)}}
+							{{ assignment.description }}
 						</div>
 					</div>
 				</div>
 			</div>
-			<ol sortable drag-end="updateAssignmentsOrder(sortedIds, term)" class="sortable-list teaching-call-form-unapproved-preference-container"
-				ng-init="preferences=view.state.activeTeachingCall.termAssignments[termToTermCode(term)]">
-				<li id="pref-{{ preference.id }}" ng-if="!preference.approved" class="teaching-call-form-unapproved-preference"
-				ng-repeat="preference in view.state.activeTeachingCall.termAssignments[termToTermCode(term)] | orderBy: 'priority' track by preference.id">
+
+			<!-- Preferences -->
+			<ol sortable drag-end="updateAssignmentsOrder(sortedIds, term)" class="sortable-list teaching-call-form-unapproved-preference-container">
+				<li ng-repeat="preference in term.preferences | orderBy: 'priority' track by preference.id"
+				id="pref-{{ preference.id }}" class="teaching-call-form-unapproved-preference">
 					<div style="flex: 0 0 10px; display: flex; justify-content: center; align-items: center;">
 						<div>
-							{{generateDisplayRank(preference, preferences) }}
+							{{ generateDisplayRank(preference, term.preferences) }}
 						</div>
 					</div>
 
@@ -134,9 +141,9 @@
 						<div style="flex 1 0 0px;">
 						</div>
 						<div style="flex 1 0 0px;">
-							{{getDescription(preference)}}
+							{{ preference.description }}
 						</div>
-						<div ng-if="preference && !preference.approved" confirm-button="removePreference(preference)"
+						<div confirm-button="removePreference(preference)"
 							message="Are you sure you want to delete this preference"
 							yes="Delete" no="Cancel" placement="bottom"
 							confirm-is-shown="status.confirmIsOpen"
@@ -148,19 +155,19 @@
 			</ol>
 			<ol class="teaching-call-form-unapproved-preference-container">
 				<li class="scrollable-dropdown-menu search-course-container">
-					<input type="text" ng-model="view.courseSearchQuery[term]"
+					<input type="text" ng-model="view.courseSearchQuery[term.termCode]"
 						ng-init="courseSearchPlaceHolder = 'Add Preference'"
 						placeholder="{{ courseSearchPlaceHolder }}"
 						ng-focus="courseSearchPlaceHolder = 'Search Courses'"
-						ng-blur="courseSearchPlaceHolder = 'Add Preference'; view.courseSearchQuery[term] = undefined;"
-						uib-typeahead="course as (getDisplayTextFromCourse(course)) for course in searchCourses(term, $viewValue)"
-						typeahead-loading="view.loadingCourses[term]"
+						ng-blur="courseSearchPlaceHolder = 'Add Preference'; view.courseSearchQuery[term.termCode] = undefined;"
+						uib-typeahead="course as (course.description) for course in searchCourses(term, $viewValue)"
+						typeahead-loading="view.loadingCourses[term.termCode]"
 						typeahead-no-results="noResults"
 						typeahead-wait-ms="400"
 						typeahead-min-length="0"
 						typeahead-focus-on-select="false"
 						auto-close="always"
-						typeahead-on-select="addPreference($item, termToTermCode(term), isBuyout, isSabbatical, isInResidence, isCourseRelease)"
+						typeahead-on-select="addPreference($item, term.termCode, isBuyout, isSabbatical, isInResidence, isCourseRelease)"
 						class="form-control search-course-input">
 					<i ng-show="view.loadingCourses[term]"><spinner size="20"></spinner></i>
 				</li>
@@ -169,7 +176,12 @@
 		</div> 
 	</div>
 
+<<<<<<< HEAD:app/assignment/templates/TeachingCallForm.html
 	<div ng-show="view.state.activeTeachingCall.showUnavailabilities" class="row provide-unavailabilities-header">
+=======
+	<!-- Select Unavailabilities -->
+	<div ng-show="view.state.showUnavailabilities" class="row provide-unavailabilities-header">
+>>>>>>> f021d846b9c5170f677e65b1d22b545cb973150a:app/teachingCall/teachingCallForm/templates/TeachingCallForm.html
 		<div class="col-md-6">
 			<h5>Please indicate your un-availabilities:</h5>
 		</div>
@@ -186,22 +198,22 @@
 			</small>
 		</div>
 	</div>
-	<div ng-show="view.state.activeTeachingCall.showUnavailabilities" class="unavailability-container">
-		<div class="unavailability-term-container" style="flex: 1 1 auto;" ng-repeat="term in ::view.state.activeTeachingCall.terms track by $index">
-			<div ng-init="teachingCallResponse=view.state.activeTeachingCall.teachingCallResponsesByTermCode[termToTermCode(term)]">
+	<div ng-show="view.state.showUnavailabilities" class="unavailability-container">
+		<div class="unavailability-term-container" style="flex: 1 1 auto;" ng-repeat="term in ::view.state.terms track by $index">
+			<div>
 				<div class="unavailability-term-header" style="text-align: center;">
 					<div>
-						{{ getTermName(term) }}
+						{{ term.termDescription }}
 					</div>
 					<span style="padding-left: 10px;" class="glyphicon glyphicon-transfer text-primary clickable hovrable" tooltip-placement="bottom" uib-tooltip="Copy to all terms"
-						confirm-button="copyUnabailabilitiesToAllTerms(teachingCallResponse.availabilityBlob)"
+						confirm-button="copyUnavailabilitiesToAllTerms(term.availabilityBlob)"
 						message="Are you sure you want to copy this term availabilities to all other terms?
 							This will overwrite existing availabilities."
 						yes="Confirm" no="Cancel" placement="top"></span>
 				</div>
-				<availability-grid blob="teachingCallResponse.availabilityBlob"
-					on-change="saveTeachingCallResponse(term, blob, 3000)"
-					read-only="teachingCallResponse.isComplete"></availability-grid>
+				<availability-grid blob="term.availabilityBlob"
+					on-change="saveTeachingCallResponse(term, blob, 3000)">
+				</availability-grid>
 			</div>
 		</div>
 	</div>
@@ -213,23 +225,23 @@
 	</div>
 	<div class="container-fluid margin-bottom-30">
 		<textarea class="form-control" style="height:150px;"
-		ng-model="view.state.activeTeachingCall.teachingCallReceipt.comment" auto-input on-blur="updateTeachingCallReceipt()"
+		ng-model="view.state.comment" auto-input on-blur="updateComment()"
 		placeholder="(Optional) Add any additional comments or requests here." rows="5" id="comment"></textarea>
 	</div>
 
 	<div class="row teaching-call-form-submit-container">
 		<div class="container-fluid pull-right">
-			<button ng-if="!view.state.activeTeachingCall.teachingCallReceipt.isDone" type="button" class="btn btn-default"
-			 confirm-button="submitTeachingCall()"
-			 confirm-is-enabled="!view.state.activeTeachingCall.teachingCallReceipt.isDone"
+			<button ng-if="!view.state.isDone" type="button" class="btn btn-default"
+			 confirm-button="submitTeachingCallForm()"
+			 confirm-is-enabled="!view.state.isDone"
 			 btn-class="btn-primary"
 			 message="Are you sure you want to submit your preferences?"
 			 yes="Confirm" no="Cancel" placement="top">
 				Submit Preferences
 			</button>
 
-			<button ng-if="view.state.activeTeachingCall.teachingCallReceipt.isDone"
-				ng-click="updateTeachingCallReceipt(true)" type="button" class="btn btn-default">
+			<button ng-if="view.state.isDone"
+				ng-click="submitTeachingCallForm()" type="button" class="btn btn-default">
 				Update Preferences
 			</button>
 

@@ -149,11 +149,11 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 											courseHtml += "<div class=\"dropdown assign-dropdown hidden-print\">";
 											courseHtml += "<button class=\"btn btn-default dropdown-toggle assign-dropdown-btn\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
 											courseHtml += "<div>Assign..</div><div class=\"caret\"></div></button>";
-											courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
+											courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right assign-instructor-dropdown scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
 
 											var interestedInstructorIds = [];
 											var firstInstructorAdded = false;
-
+											var numberOfInstructorsAdded = 0;
 											if (sectionGroup.teachingAssignmentIds.length > 0) {
 
 												// Loop over instructors who are interested in this course
@@ -170,6 +170,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 														if (firstInstructorAdded === false) {
 															courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
 															firstInstructorAdded = true;
+															numberOfInstructorsAdded++;
 														}
 
 														courseHtml += "<li><a";
@@ -178,6 +179,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 														courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 
 														courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
+														numberOfInstructorsAdded++;
 													}
 												});
 												if (firstInstructorAdded) {
@@ -193,9 +195,14 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 													courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
 													courseHtml += " data-instructor-id=\"" + instructorId + "\"";
 													courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
+													numberOfInstructorsAdded++;
 												}
 											});
 
+											// Display Message if there are no unused courses available
+											if (numberOfInstructorsAdded == 0) {
+												courseHtml += '<li style="padding-left: 20px; cursor: default;">No unused instructors</li>';
+											}
 											courseHtml += "</ul></div>";
 										} // End scope.isTermLocked check
 

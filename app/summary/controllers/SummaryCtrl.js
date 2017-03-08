@@ -44,32 +44,11 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 
 		$rootScope.$on('summaryStateChanged', function (event, data) {
 			$scope.view.state = data;
-			setUserTeachingCalls();
 		});
 
 		$rootScope.$on('sharedStateSet', function (event, data) {
 			$scope.sharedState = data;
 		});
-
-		var setUserTeachingCalls = function () {
-			var isFederationInstructor = $scope.sharedState.currentUser.hasRole('federationInstructor', $scope.workgroupId);
-			var isSenateInstructor = $scope.sharedState.currentUser.hasRole('senateInstructor', $scope.workgroupId);
-			$scope.view.userTeachingCalls = $scope.view.state.teachingCalls.ids.map(function (teachingCallId) {
-				return $scope.view.state.teachingCalls.list[teachingCallId];
-			}).filter(function (teachingCall) {
-				return (teachingCall.sentToFederation && isFederationInstructor) ||
-					(teachingCall.sentToSenate && isSenateInstructor);
-			});
-
-			$scope.view.userTeachingCalls.forEach(function (userTeachingCall) {
-				$scope.view.state.teachingCallReceipts.ids.forEach(function (teachingCallReceiptId) {
-					var teachingCallReceipt = $scope.view.state.teachingCallReceipts.list[teachingCallReceiptId];
-					if (teachingCallReceipt.teachingCallId === userTeachingCall.id) {
-						userTeachingCall.preferencesSubmitted = true;
-					}
-				});
-			});
-		};
 	}]);
 
 SummaryCtrl.authenticate = function (authService, $route, $window, $location, summaryActionCreators) {
