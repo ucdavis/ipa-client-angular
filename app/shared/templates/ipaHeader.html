@@ -1,8 +1,27 @@
-<div class="ipa-header">
+<div class="ipa-header container-fluid">
 	<div class="left-column">
-		Header left side
+		<h3>Teaching Call</h3>
+		<div style="display: flex;">
+		<ul class="pager header--year-switch">
+			<li class="previous"><a ng-click="offsetYearInUrl(-1)"><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
+			<li><a class="ng-binding">2017-18</a></li>
+			<li class="next"><a ng-click="offsetYearInUrl(1)"><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
+		</ul>
+		<div class="work-group btn-group" role="group" aria-label="...">
+			<button type="button" class="btn btn-default"><i class="entypo-cog"></i></button>
+			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Computer Science <span class="caret"></span>
+  			</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+				<li><a href="#">Action</a></li>
+				<li><a href="#">Another action</a></li>
+				<li><a href="#">Something else here</a></li>
+				<li role="separator" class="divider"></li>
+				<li><a href="#">Separated link</a></li>
+			</ul>
+		</div>
+		</div>
 	</div>
 	<div class="right-column">
-		header right side
+		<span>Howdy, Shang Lu</span>
 	</div>
 </div>

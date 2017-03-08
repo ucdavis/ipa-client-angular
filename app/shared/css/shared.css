@@ -219,8 +219,31 @@ table.availability-grid tr td {
 	position: fixed;
 	background-color: white;
 	box-shadow: 0px 3px 2px 0px rgba(224,224,224,1);
-	height: 60px;
+	height: 82px;
 	z-index: 99;
+}
+
+.ipa-header h3 {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.ipa-header .work-group .dropdown-toggle {
+	font-size: 12px;
+	padding: 6px 12px 6px 12px;
+}
+
+.ipa-header button {
+	background-color: white;
+	border: 1px solid #D6D6D6;
+}
+
+.ipa-header .btn-group button{
+    font-size: 15px;
+    padding-top: 3.5px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-bottom: 3.5px;
 }
 
 .ipa-header .left-column {
@@ -229,4 +252,34 @@ table.availability-grid tr td {
 
 .ipa-header .right-column {
 	flex: 1 1 0px;
+	display: flex;
+	flex-direction: row;
 }
+
+.ipa-header .right-column span {
+	font-weight: bold !important;
+	align-self: center;
+}
+.main-content {
+	position: relative;
+	top: 80px !important;
+}
+
+.header--year-switch {
+	margin: 0px;
+	width: 150px;
+	background-color: white;
+	border: 1px solid #D6D6D6;
+	border-radius: 4px;
+}
+
+.header--year-switch a {
+	color: black !important;
+}
+
+.header--year-switch li a {
+    background-color: transparent;
+    color: #aaa;
+    border: none;
+    padding: 5px;
+	}
