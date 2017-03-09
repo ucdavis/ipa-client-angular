@@ -235,6 +235,14 @@ table.availability-grid tr td {
 	padding: 6px 12px 6px 12px;
 }
 
+.ipa-header .work-group .dropdown-menu li i {
+	padding-left: 10px;
+}
+
+.ipa-header .work-group .dropdown-menu li a {
+	display: inline-block;
+}
+
 .ipa-header button {
 	background-color: white;
 	border: 1px solid #D6D6D6;
