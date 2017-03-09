@@ -94,10 +94,15 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 				scope.expanded = (scope.expanded == item) ? null : item;
 			};
 
-			scope.impersonate = function () {
+			scope.impersonate = function (loginIdToImpersonate) {
 				var jwt = localStorage.getItem('JWT');
-				authService.impersonate(jwt);
+				authService.impersonate(jwt, loginIdToImpersonate);
 			};
+			scope.unimpersonate = function () {
+				var jwt = localStorage.getItem('JWT');
+				authService.unimpersonate(jwt);
+			};
+
 		} // End link
 	};
 });
