@@ -1,8 +1,8 @@
 <div class="ipa-header container-fluid">
 	<div class="left-column">
-		<h3>Teaching Call</h3>
+		<h3>Teaching Calls</h3>
 		<div style="display: flex;">
-		<ul class="pager header--year-switch">
+		<ul class="pager header--year-switch" style="margin-right: 5px;">
 			<li class="previous"><a ng-click="offsetYearInUrl(-1)"><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
 			<li><a class="ng-binding">2017-18</a></li>
 			<li class="next"><a ng-click="offsetYearInUrl(1)"><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
@@ -22,6 +22,13 @@
 		</div>
 	</div>
 	<div class="right-column">
-		<span>Howdy, Shang Lu</span>
+		<div class="account-info">
+			<span>Howdy, Shang Lu <i class="entypo-right"></i></span>
+			<div class="impersonate btn-group" role="group" style="align-self: center;">
+				<button type="button" class="btn btn-default"><i class="entypo-user"></i></button>
+				<button class="impersonate-name btn btn-default" type="button">John Smith<i class="entypo-cancel-circled remove-impersonate-btn"></i></button>
+			</div>
+		</div>
+		<span class="logout">Logout</span>
 	</div>
 </div>

@@ -213,14 +213,16 @@ table.availability-grid tr td {
 	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
+/* ---------------------- IPA Header -----------------------*/
 .ipa-header {
 	display: flex;
 	width: 100%;
 	position: fixed;
 	background-color: white;
-	box-shadow: 0px 3px 2px 0px rgba(224,224,224,1);
-	height: 82px;
+	box-shadow: 0px 1px 2px 0px #F2F2F2;
+	height: 90px;
 	z-index: 99;
+	border: 1px solid #E5E5E5;
 }
 
 .ipa-header h3 {
@@ -247,7 +249,7 @@ table.availability-grid tr td {
 }
 
 .ipa-header .left-column {
-	flex: 1 1 0px;
+	flex: 0 1 65%;
 }
 
 .ipa-header .right-column {
@@ -257,9 +259,45 @@ table.availability-grid tr td {
 }
 
 .ipa-header .right-column span {
-	font-weight: bold !important;
+	font-size: 15px;
+	font-weight: bold;
 	align-self: center;
 }
+
+.ipa-header .account-info {
+	border-right: 2px solid #EBEBEB;
+	padding-right: 35px;
+	align-self: center;
+}
+
+.ipa-header .impersonate {
+	margin-left: 10px;
+}
+
+.ipa-header .impersonate-name {
+	font-size: 12px !important;
+	padding: 6px 12px 5px 12px !important;
+}
+
+.ipa-header .remove-impersonate-btn {
+	padding: 0px 5px 0px 5px;
+	color: #ee4749;
+}
+
+.ipa-header .impersonate button {
+	font-size: 15px;
+	padding-top: 3.5px;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-bottom: 3.5px;
+}
+
+.ipa-header .logout{
+	padding-left: 35px;
+	font-weight: 400 !important;
+	align-self: center;
+}
+
 .main-content {
 	position: relative;
 	top: 80px !important;
