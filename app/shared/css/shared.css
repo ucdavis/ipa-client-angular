@@ -237,10 +237,19 @@ table.availability-grid tr td {
 
 .ipa-header .work-group .dropdown-menu li i {
 	padding-left: 10px;
+	cursor: pointer;
 }
 
 .ipa-header .work-group .dropdown-menu li a {
 	display: inline-block;
+}
+
+.ipa-header .work-group .dropdown-menu li a:hover {
+	background-color: lightgray;
+}
+
+.ipa-header .work-group .dropdown-menu li:hover {
+	background-color: lightgray;
 }
 
 .ipa-header button {
