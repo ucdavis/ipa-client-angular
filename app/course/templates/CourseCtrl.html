@@ -1,8 +1,8 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
-
-<div class="main-content" unselect-cell>
+<div class="course-view-container">
 	<ipa-header></ipa-header>
-
+<div class="container-fluid">
+<div class="main-content" unselect-cell>
 	<h3 style="text-align: center;">{{ sharedState.workgroup.name }} {{ year.yearToAcademicYear() }} Courses</h3>
 	<br />
 
@@ -132,6 +132,8 @@
 
 	<table course-table class="table table-bordered courses-table"></table>
 
+</div>
+</div>
 </div>
 
 <div class="fixed right-details hidden-print">

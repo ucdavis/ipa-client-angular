@@ -217,7 +217,8 @@ table.availability-grid tr td {
 .ipa-header {
 	display: flex;
 	width: 100%;
-	position: fixed;
+	position: relative;
+	padding-left: 25px;
 	background-color: white;
 	box-shadow: 0px 1px 2px 0px #F2F2F2;
 	height: 90px;
@@ -230,27 +231,64 @@ table.availability-grid tr td {
 	margin-bottom: 10px;
 }
 
-.ipa-header .work-group .dropdown-toggle {
-	font-size: 12px;
-	padding: 6px 12px 6px 12px;
+.ipa-header .header--swtich-container {
+	display: flex;
+	flex-direction: row;
 }
 
-.ipa-header .work-group .dropdown-menu li i {
+.ipa-header .header--year-switch {
+	padding-left: 0;
+	text-align: center;
+	list-style: none;
+	margin: 0px 15px 0px 0px;
+	width: 150px;
+	background-color: white;
+	border: 1px solid #D6D6D6;
+	border-radius: 4px;
+}
+
+.ipa-header .header--year-switch a {
+	color: black !important;
+}
+
+.ipa-header .header--year-switch li a {
+    background-color: transparent;
+    color: #aaa;
+    border: none;
+    padding: 5px;
+}
+
+.ipa-header .header--year-switch li a:hover {
+	background-color: white !important;
+	cursor: pointer;
+}
+
+.ipa-header .header--work-group .dropdown-toggle {
+	font-size: 12px;
+	padding: 6px 12px 5px 12px;
+}
+
+.ipa-header .header--work-group .dropdown-menu li i {
 	padding-left: 10px;
 	cursor: pointer;
 }
 
-.ipa-header .work-group .dropdown-menu li a {
+.ipa-header .header--work-group .dropdown-menu li a {
 	display: inline-block;
 }
 
-.ipa-header .work-group .dropdown-menu li a:hover {
+.ipa-header .header--work-group .dropdown-menu li a:hover {
 	background-color: lightgray;
 }
 
-.ipa-header .work-group .dropdown-menu li:hover {
+.ipa-header .header--work-group .dropdown-menu li:hover {
 	background-color: lightgray;
 }
+
+.ipa-header .header--work-group .dropdown-toggle span{
+margin-left: 5px;
+}
+
 
 .ipa-header button {
 	background-color: white;
@@ -266,25 +304,26 @@ table.availability-grid tr td {
 }
 
 .ipa-header .left-column {
-	flex: 0 1 65%;
+	flex: 1 1 auto;
 }
 
 .ipa-header .right-column {
-	flex: 1 1 0px;
+	flex: 1 1 auto;
 	display: flex;
 	flex-direction: row;
+	justify-content: flex-end;
 }
 
 .ipa-header .right-column span {
 	font-size: 15px;
-	font-weight: bold;
-	align-self: center;
+	font-weight: 500;
 }
 
 .ipa-header .account-info {
 	border-right: 2px solid #EBEBEB;
-	padding-right: 35px;
+	padding-right: 20px;
 	align-self: center;
+	display: flex;
 }
 
 .ipa-header .impersonate {
@@ -309,32 +348,22 @@ table.availability-grid tr td {
 	padding-bottom: 3.5px;
 }
 
-.ipa-header .logout{
+.ipa-header .logout {
 	padding-left: 35px;
+	padding-right: 35px;
 	font-weight: 400 !important;
 	align-self: center;
-}
-
-.main-content {
-	position: relative;
-	top: 80px !important;
-}
-
-.header--year-switch {
-	margin: 0px;
-	width: 150px;
-	background-color: white;
-	border: 1px solid #D6D6D6;
+	border: 1px solid #d0d0d3;
 	border-radius: 4px;
+	padding: 6px 10px 6px 10px;
+	font-size: 12px !important;
+	margin-right: 20px;
+	margin-left: 20px;
 }
 
-.header--year-switch a {
-	color: black !important;
+.ipa-header .logout:hover {
+	background-color: #ee4749;
+	color: white;
+	border: 1px solid #ee4749;
+	cursor: pointer;
 }
-
-.header--year-switch li a {
-    background-color: transparent;
-    color: #aaa;
-    border: none;
-    padding: 5px;
-	}
