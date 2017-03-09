@@ -6,7 +6,7 @@
  * Service in the ipaClientAngularApp.
  */
 angular.module('sharedApp')
-	.service('authService', function ($http, $window, $q, $location, $rootScope, $log, CurrentUser) {
+	.service('authService', function ($http, $window, $q, $location, $rootScope, $log, CurrentUser, $route) {
 		return {
 			validateToken: function (token) {
 				var self = this;
@@ -57,26 +57,43 @@ angular.module('sharedApp')
 				return deferred.promise;
 			},
 
-			impersonate: function (token) {
+			impersonate: function (token, loginIdToImpersonate) {
 				var self = this;
 				var deferred = $q.defer();
-				$http.post(serverRoot + '/impersonate', { token: token }, { withCredentials: true }).then(function (response) {
-					console.log("impersonate responded");
-					console.log(response);
+				$http.post(serverRoot + '/impersonate/' + loginIdToImpersonate, { token: token }, { withCredentials: true }).then(function (response) {
+					var token = response.data.token;
+					$http.defaults.headers.common.Authorization = 'Bearer ' + token;
+					localStorage.setItem('JWT', token);
 
-
+					$window.location.href = "/summary";
 				}, function (error) {
-					console.log("impersonate failed");
-					console.log(error);
+
 				});
 
 				return deferred.promise;
 			},
+			unimpersonate: function (token) {
+				var self = this;
+				var deferred = $q.defer();
+				$http.post(serverRoot + '/unimpersonate', { token: token }, { withCredentials: true }).then(function (response) {
+					var token = response.data.token;
+					$http.defaults.headers.common.Authorization = 'Bearer ' + token;
+					localStorage.setItem('JWT', token);
 
+					$window.location.href = "/summary";
+				}, function (error) {
+
+				});
+
+				return deferred.promise;
+			},
 			validateState: function (data, workgroupId, year, ignoreFallBackUrl) {
 				var currentUser = new CurrentUser(data.displayName, data.userRoles);
 				currentUser.setDisplayName(data.displayName);
 				currentUser.setLoginId(data.loginId);
+				currentUser.setRealUserDisplayName(data.realUserDisplayName);
+				currentUser.setRealUserLoginId(data.realUserLoginId);
+
 				currentUser.setUserRoles(data.userRoles);
 
 				localStorage.setItem('currentUser', JSON.stringify(currentUser));
