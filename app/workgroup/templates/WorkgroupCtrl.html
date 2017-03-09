@@ -150,7 +150,11 @@
 											<!-- people lists-->
 											<tr class="user-list-item" ng-repeat="userId in view.state.users.ids track by userId">
 												<td>
-													{{ view.state.users.list[userId].name }}
+													{{ view.state.users.list[userId].name }} 
+													<i  ng-if="sharedState.currentUser.realUserLoginId == sharedState.currentUser.loginId"
+															class="clickable glyphicon glyphicon-sunglasses" ng-click="impersonate(view.state.users.list[userId].loginId)"
+															uib-tooltip="Impersonate {{ view.state.users.list[userId].name }}">
+													</i>
 												</td>
 												<td>
 													{{ view.state.users.list[userId].email }}
