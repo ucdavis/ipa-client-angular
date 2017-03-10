@@ -323,6 +323,26 @@ assignmentApp.service('assignmentStateService', function (
 					return instructors;
 			}
 		},
+		_instructorMasterListReducers: function (action, instructorMasterList) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					instructorMasterList = {
+						ids: [],
+						list: []
+					};
+
+					action.payload.instructorMasterList.forEach( function (slotInstructor) {
+						instructorMasterList.ids.push(slotInstructor.id);
+						instructorMasterList.list[slotInstructor.id] = slotInstructor;
+					});
+
+					return instructorMasterList;
+				default:
+					return instructorMasterList;
+			}
+		},
 		_scheduleTermStateReducers: function (action, scheduleTermStates) {
 			var scope = this;
 
@@ -566,6 +586,7 @@ assignmentApp.service('assignmentStateService', function (
 			newState.courses = scope._courseReducers(action, scope._state.courses);
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.instructors = scope._instructorReducers(action, scope._state.instructors);
+			newState.instructorMasterList = scope._instructorMasterListReducers(action, scope._state.instructorMasterList);
 			newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
 			newState.teachingCallReceipts = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipts);
 			newState.teachingCallResponses = scope._teachingCallResponseReducers(action, scope._state.teachingCallResponses);
