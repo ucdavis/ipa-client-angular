@@ -56,7 +56,13 @@ angular.module('sharedApp')
 
 				return deferred.promise;
 			},
-
+		/**
+			* Provide the loginId of the user you would like to impersonate
+			* The backend will modify the JWT and return an updated securityDTO.
+			* The returned userRoles and displayNames will match the user being impersonated.
+			* realUserLoginId and realUserDisplayName will hold the original identity if needed.
+			* Redirects to summary screen on completion.
+			*/
 			impersonate: function (loginIdToImpersonate) {
 				var token = localStorage.getItem('JWT');
 
@@ -74,6 +80,10 @@ angular.module('sharedApp')
 
 				return deferred.promise;
 			},
+
+			/**
+			 * This will remove impersonation and redirect to the summary screen.
+			 */
 			unimpersonate: function () {
 				var token = localStorage.getItem('JWT');
 
