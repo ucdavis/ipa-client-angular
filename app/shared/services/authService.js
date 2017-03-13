@@ -57,7 +57,9 @@ angular.module('sharedApp')
 				return deferred.promise;
 			},
 
-			impersonate: function (token, loginIdToImpersonate) {
+			impersonate: function (loginIdToImpersonate) {
+				var token = localStorage.getItem('JWT');
+
 				var self = this;
 				var deferred = $q.defer();
 				$http.post(serverRoot + '/impersonate/' + loginIdToImpersonate, { token: token }, { withCredentials: true }).then(function (response) {
@@ -72,7 +74,9 @@ angular.module('sharedApp')
 
 				return deferred.promise;
 			},
-			unimpersonate: function (token) {
+			unimpersonate: function () {
+				var token = localStorage.getItem('JWT');
+
 				var self = this;
 				var deferred = $q.defer();
 				$http.post(serverRoot + '/unimpersonate', { token: token }, { withCredentials: true }).then(function (response) {
