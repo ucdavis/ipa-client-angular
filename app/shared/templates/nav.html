@@ -38,11 +38,7 @@
 			<li class="welcome">
 				<span class="title">Howdy, {{ sharedState.currentUser.realUserDisplayName }}</span>
 			</li>
-			<li class="welcome" ng-if="sharedState.currentUser.realUserLoginId != sharedState.currentUser.loginId">
-				<span class="title">
-					({{ sharedState.currentUser.displayName}})<i class="glyphicon glyphicon-remove-sign" ng-click="unimpersonate()"></i>
-				</span>
-			</li>
+
 			<li ng-class="{ 'active': currentBaseHref == 'summary', 'opened': expanded == 'summary' || (!expanded && currentBaseHref == 'summary') }"
 				ng-if="userHasRoles(['academicPlanner','reviewer']) && userHasRoles(['senateInstructor','federationInstructor'])"
 				class="has-sub root-level">
