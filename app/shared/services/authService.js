@@ -6,7 +6,7 @@
  * Service in the ipaClientAngularApp.
  */
 angular.module('sharedApp')
-	.service('authService', function ($http, $window, $q, $location, $rootScope, $log, CurrentUser) {
+	.service('authService', function ($http, $window, $q, $location, $rootScope, $log, CurrentUser, $route) {
 		return {
 			validateToken: function (token) {
 				var self = this;
@@ -56,11 +56,58 @@ angular.module('sharedApp')
 
 				return deferred.promise;
 			},
+		/**
+			* Provide the loginId of the user you would like to impersonate
+			* The backend will modify the JWT and return an updated securityDTO.
+			* The returned userRoles and displayNames will match the user being impersonated.
+			* realUserLoginId and realUserDisplayName will hold the original identity if needed.
+			* Redirects to summary screen on completion.
+			*/
+			impersonate: function (loginIdToImpersonate) {
+				var token = localStorage.getItem('JWT');
 
+				var self = this;
+				var deferred = $q.defer();
+				$http.post(serverRoot + '/impersonate/' + loginIdToImpersonate, { token: token }, { withCredentials: true }).then(function (response) {
+					var token = response.data.token;
+					$http.defaults.headers.common.Authorization = 'Bearer ' + token;
+					localStorage.setItem('JWT', token);
+
+					$window.location.href = "/summary";
+				}, function (error) {
+
+				});
+
+				return deferred.promise;
+			},
+
+			/**
+			 * This will remove impersonation and redirect to the summary screen.
+			 */
+			unimpersonate: function () {
+				var token = localStorage.getItem('JWT');
+
+				var self = this;
+				var deferred = $q.defer();
+				$http.post(serverRoot + '/unimpersonate', { token: token }, { withCredentials: true }).then(function (response) {
+					var token = response.data.token;
+					$http.defaults.headers.common.Authorization = 'Bearer ' + token;
+					localStorage.setItem('JWT', token);
+
+					$window.location.href = "/summary";
+				}, function (error) {
+
+				});
+
+				return deferred.promise;
+			},
 			validateState: function (data, workgroupId, year, ignoreFallBackUrl) {
 				var currentUser = new CurrentUser(data.displayName, data.userRoles);
 				currentUser.setDisplayName(data.displayName);
 				currentUser.setLoginId(data.loginId);
+				currentUser.setRealUserDisplayName(data.realUserDisplayName);
+				currentUser.setRealUserLoginId(data.realUserLoginId);
+
 				currentUser.setUserRoles(data.userRoles);
 
 				localStorage.setItem('currentUser', JSON.stringify(currentUser));

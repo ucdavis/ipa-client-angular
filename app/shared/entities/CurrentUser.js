@@ -18,6 +18,14 @@ angular.module('currentUser', ['userRole'])
 				this.displayName = displayName;
 			},
 
+			setRealUserLoginId: function (realUserLoginId) {
+				this.realUserLoginId = realUserLoginId;
+			},
+
+			setRealUserDisplayName: function (realUserDisplayName) {
+				this.realUserDisplayName = realUserDisplayName;
+			},
+
 			setUserRoles: function (userRoles) {
 				this.userRoles = [];
 				if (userRoles instanceof Array) {

@@ -121,15 +121,11 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 											var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 
 											if (teachingAssignment.approved === true) {
-												var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
+												var instructor = scope.view.state.instructorMasterList.list[teachingAssignment.instructorId];
 												// Add approved teachingAssignment to term
 												courseHtml += "<div class=\"alert alert-info tile-assignment\">";
+												courseHtml += instructor.fullName;
 
-												if (instructor === undefined) {
-													courseHtml += "instructorId not found: " + teachingAssignment.instructorId;
-												} else {
-													courseHtml += instructor.fullName;
-												}
 												if (scope.isTermLocked(sectionGroup.termCode) === false) {
 													var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
 														"<div class='text-center'><button class='btn btn-red' data-event-type='deleteAssignment' data-teaching-assignment-id='" + teachingAssignment.id + "'>Delete</button>" +
