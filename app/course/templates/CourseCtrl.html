@@ -2,7 +2,7 @@
 <div class="course-view-container">
 	<ipa-header></ipa-header>
 <div class="container-fluid">
-<div class="main-content" unselect-cell>
+<div class="col-md-9" unselect-cell>
 	<h3 style="text-align: center;">{{ sharedState.workgroup.name }} {{ year.yearToAcademicYear() }} Courses</h3>
 	<br />
 
@@ -133,9 +133,6 @@
 	<table course-table class="table table-bordered courses-table"></table>
 
 </div>
-</div>
-</div>
-
 <div class="fixed right-details hidden-print">
 
 	<new-course ng-if="view.selectedEntity && view.selectedEntityType == 'newCourse'"></new-course>
@@ -143,4 +140,6 @@
 	<section-group-details ng-if="view.selectedEntity && view.selectedEntityType == 'sectionGroup'"></section-group-details>
 	<mass-import-summary ng-if="view.state.uiState.massImportMode"></mass-import-summary>
 
+</div>
+</div>
 </div>

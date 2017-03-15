@@ -215,15 +215,30 @@ table.availability-grid tr td {
 
 /* ---------------------- IPA Header -----------------------*/
 .ipa-header {
+	margin-bottom: 35px;
+}
+
+.account-section {
 	display: flex;
 	width: 100%;
 	position: relative;
-	padding-left: 25px;
+	padding: 10px 20px 10px 20px;
 	background-color: white;
 	box-shadow: 0px 1px 2px 0px #F2F2F2;
-	height: 90px;
 	z-index: 99;
-	border: 1px solid #E5E5E5;
+	background-color: #F7F7F7;
+
+}
+
+.workgroup-year-section {
+	display: flex;
+	width: 100%;
+	position: relative;
+	padding: 10px 20px 10px 20px;
+	background-color: white;
+	z-index: 99;
+	border-top: 1px solid #E5E5E5;
+	border-bottom: 1px solid #E5E5E5;
 }
 
 .ipa-header h3 {
@@ -265,7 +280,7 @@ table.availability-grid tr td {
 
 .ipa-header .header--work-group .dropdown-toggle {
 	font-size: 12px;
-	padding: 6px 12px 5px 12px;
+	padding: 6px 12px 6px 12px;
 }
 
 .ipa-header .header--work-group .dropdown-menu li i {
@@ -297,10 +312,10 @@ margin-left: 5px;
 
 .ipa-header .btn-group button{
     font-size: 15px;
-    padding-top: 3.5px;
+    padding-top: 4px;
     padding-left: 6px;
     padding-right: 6px;
-    padding-bottom: 3.5px;
+    padding-bottom: 4px;
 }
 
 .ipa-header .left-column {
@@ -320,8 +335,6 @@ margin-left: 5px;
 }
 
 .ipa-header .account-info {
-	border-right: 2px solid #EBEBEB;
-	padding-right: 20px;
 	align-self: center;
 	display: flex;
 }
@@ -330,22 +343,14 @@ margin-left: 5px;
 	margin-left: 10px;
 }
 
-.ipa-header .impersonate-name {
-	font-size: 12px !important;
-	padding: 6px 12px 5px 12px !important;
-}
-
 .ipa-header .remove-impersonate-btn {
 	padding: 0px 5px 0px 5px;
 	color: #ee4749;
 }
 
 .ipa-header .impersonate button {
-	font-size: 15px;
-	padding-top: 3.5px;
-	padding-left: 6px;
-	padding-right: 6px;
-	padding-bottom: 3.5px;
+	font-size: 12px;
+	padding: 6px 12px 6px 12px;
 }
 
 .ipa-header .logout {
@@ -355,9 +360,8 @@ margin-left: 5px;
 	align-self: center;
 	border: 1px solid #d0d0d3;
 	border-radius: 4px;
-	padding: 6px 10px 6px 10px;
+	padding: 6px 12px 6px 12px;
 	font-size: 12px !important;
-	margin-right: 20px;
 	margin-left: 20px;
 }
 
