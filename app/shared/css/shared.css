@@ -218,7 +218,7 @@ table.availability-grid tr td {
 	margin-bottom: 50px;
 }
 
-.account-section {
+.ipa-header .account-section {
 	display: flex;
 	width: 100%;
 	position: relative;
