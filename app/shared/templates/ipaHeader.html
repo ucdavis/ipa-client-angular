@@ -3,33 +3,48 @@
 		<div class="left-column">
 			<h3>Teaching Calls</h3>
 		</div>
-	<div class="right-column">
-		<div class="account-info">
-			<h5>Howdy, Shang Lu <i class="entypo-right"></i></h5>
-			<div class="impersonate btn-group" role="group">
-				<button type="button" class="btn btn-default"><i class="entypo-user"></i></button>
-				<button class="impersonate-name btn btn-default" type="button">John Smith<i class="entypo-cancel-circled remove-impersonate-btn"></i></button>
+		<div class="right-column">
+			<div class="account-info">
+				<h5>Howdy, {{ sharedState.currentUser.realUserDisplayName }} <i class="entypo-right"></i></h5>
+				<div class="impersonate btn-group" role="group">
+					<button type="button" class="btn btn-default"><i class="entypo-user"></i></button>
+					<button class="impersonate-name btn btn-default" type="button">
+						{{ sharedState.currentUser.displayName }}
+						<i class="entypo-cancel-circled remove-impersonate-btn"></i>
+					</button>
+				</div>
+				<span class="logout" ng-click="logout()">Logout</span>
 			</div>
-			<span class="logout">Logout</span>
 		</div>
-	</div>
 	</div>
 	<div class="year-workgroup-section">
 		<div class="left-column">
 			<div class="header--swtich-container">
 				<ul class="pager header--year-switch">
-					<li class="previous"><a><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
-					<li><a class="ng-binding">2017-18</a></li>
-					<li class="next"><a><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
+					<li class="previous" ng-click="offsetYearInUrl(-1)"><a><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
+					<li><a style="cursor: default;">{{ year.yearToAcademicYear() }}</a></li>
+					<li class="next" ng-click="offsetYearInUrl(1)"><a><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
 				</ul>
 				<div class="header--work-group btn-group" role="group" aria-label="...">
-					<button type="button" class="btn btn-default"><i class="entypo-cog"></i></button>
-					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Computer Science <span class="caret"></span>
+					<button ng-if="userHasRolesForWorkgroup(['academicPlanner','reviewer'], workgroup)"
+									type="button" class="btn btn-default">
+									<a ng-href="/workgroups/{{ workgroup.id }}/{{ year }}" style="color: #303641">
+										<i class="entypo-cog"></i>
+									</a>
 					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li><i class="entypo-cog"></i><a href="#">DSS IT</a></li>
-						<li><i class="entypo-cog"></i><a href="#">History</a></li>
-						<li><i class="entypo-cog"></i><a href="#">Psychology</a></li>
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<span>
+							{{ sharedState.workgroup.name }}
+							<span class="caret"></span>
+						</span>
+					</button>
+					<ul class="dropdown-menu" style="width: 250px;" aria-labelledby="dropdownMenu1">
+						<li ng-repeat="workgroup in userWorkgroups" style="cursor: pointer;">
+							<a ng-href="/{{ currentBaseHref }}/{{ workgroup.id }}/{{ year }}/{{ termShortCode }}">
+								<i class="entypo-check active-workgroup-icon" ng-class="{'invisible': sharedState.workgroup.id != workgroup.id}"></i>
+								<span>{{ workgroup.name }}</span>
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>

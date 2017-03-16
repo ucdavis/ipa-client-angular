@@ -372,3 +372,7 @@ table.availability-grid tr td {
 	border: 1px solid #ee4749;
 	cursor: pointer;
 }
+
+.ipa-header .invisible {
+	visibility: hidden;
+}
