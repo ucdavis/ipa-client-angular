@@ -80,16 +80,21 @@
 						<input type="checkbox" ng-checked="instructor.selected" ng-click="toggleSelectedInstructor(instructor)">
 					</div>
 					<div class="column-name left-cell">
-						<div  style="padding-left: 10px;">
-							{{ instructor.lastName }}, {{ instructor.firstName }}
-							<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
-								class="text-primary clickable hovrable"
-								teaching-call-tooltip
-								title="Teaching Call"
-								terms-blob="{{instructor.termsBlob}}"
-								show-unavail="{{instructor.showUnavailabilities}}"
-								message="{{instructor.message}}"
-								placement="right">
+						<div style="padding-left: 10px; display: flex; flex-wrap: wrap;">
+							<span style="flex: 1 0 auto;">
+								{{ instructor.lastName }},
+							</span>
+							<span style="flex: 1 0 auto; padding-right: 10px;">
+								&nbsp;{{ instructor.firstName }}
+								<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
+									class="text-primary clickable hovrable"
+									teaching-call-tooltip
+									title="Teaching Call"
+									terms-blob="{{instructor.termsBlob}}"
+									show-unavail="{{instructor.showUnavailabilities}}"
+									message="{{instructor.message}}"
+									placement="right">
+							</span>
 						</div>
 					</div>
 					<div class="column-submitted cell">
