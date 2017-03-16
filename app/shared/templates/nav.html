@@ -35,10 +35,6 @@
 		<ul id="main-menu" class="main-menu">
 			<!-- add class "multiple-expanded" to allow multiple submenus to open -->
 			<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-			<li class="welcome">
-				<span class="title">Howdy, {{ sharedState.currentUser.realUserDisplayName }}</span>
-			</li>
-
 			<li ng-class="{ 'active': currentBaseHref == 'summary', 'opened': expanded == 'summary' || (!expanded && currentBaseHref == 'summary') }"
 				ng-if="userHasRoles(['academicPlanner','reviewer']) && userHasRoles(['senateInstructor','federationInstructor'])"
 				class="has-sub root-level">
@@ -75,56 +71,12 @@
 				</a>
 			</li>
 
-			<li ng-class="{ 'active': currentBaseHref == 'workgroups' }">
-				<a ng-if="userWorkgroups.length > 1">
-					<i class="entypo-users"></i>
-					<span class="title">Workgroups</span>
-				</a>
-				<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}" ng-if="userWorkgroups.length == 1 && userHasRoles(['academicPlanner','reviewer'])">
-					<i class="entypo-users"></i>
-					<span class="title">{{ sharedState.workgroup.name }}</span>
-				</a>
-				<ul class="visible" ng-if="userWorkgroups.length > 1">
-					<li ng-repeat="workgroup in userWorkgroups track by workgroup.id" ng-class="{ 'active': sharedState.workgroup.id == workgroup.id }">
-						<a ng-href="/{{ currentBaseHref }}/{{ workgroup.id }}/{{ year }}/{{ termShortCode }}" uib-tooltip="Switch to {{ workgroup.name }}"
-							tooltip-append-to-body="true" tooltip-placement="right">
-							<i class="entypo-check active-workgroup-icon" ng-if="sharedState.workgroup.id == workgroup.id"></i>
-							<span class="title">{{ workgroup.name }}</span>
-						</a>
-						<a ng-href="/workgroups/{{ workgroup.id }}/{{ year }}" ng-if="userHasRolesForWorkgroup(['academicPlanner','reviewer'], workgroup)"
-							class="icon-workgroup-manage" uib-tooltip="Manage {{ workgroup.name }}" tooltip-append-to-body="true"
-							tooltip-placement="right">
-							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-						</a>
-					</li>
-					<!--	Show the current workgroup separately if it is not in the user workgroups
-								(happens if the current user is admin and managing a workgroup they're not in) -->
-					<li ng-if="hasExtraWorkgroup()" class="active">
-						<a ng-href="/{{ currentBaseHref }}/{{ sharedState.workgroup.id }}/{{ year }}/{{ termShortCode }}">
-							<i class="entypo-check active-workgroup-icon"></i>
-							<span class="title">({{ sharedState.workgroup.name }})</span>
-						</a>
-						<a ng-href="/workgroups/{{ sharedState.workgroup.id }}/{{ year }}" class="icon-workgroup-manage" uib-tooltip="Manage {{ sharedState.workgroup.name }}"
-							tooltip-append-to-body="true" tooltip-placement="right">
-							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-						</a>
-					</li>
-				</ul>
-			</li>
 			<li ng-if="sharedState.currentUser.isAdmin()" ng-class="{ 'active': currentBaseHref == 'admin' }">
 				<a ng-href="/admin/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-cog"></i>
 					<span class="title">Administration</span>
 				</a>
 			</li>
-
-		</ul>
-
-		<!-- Year switcher -->
-		<ul class="pager year-switcher">
-			<li class="previous"><a ng-click="offsetYearInUrl(-1)"><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
-			<li><a>{{ year.yearToAcademicYear() }}</a></li>
-			<li class="next"><a ng-click="offsetYearInUrl(1)"><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
 		</ul>
 
 		<!-- Sidebar links -->
@@ -198,16 +150,6 @@
 				</ul>
 			</li>
 
-		</ul>
-
-		<!-- Logout -->
-		<ul id="main-menu" class="main-menu">
-			<li>
-				<a class="clickable" ng-click="logout()">
-					<i class="entypo-logout"></i>
-					<span class="title">Logout</span>
-				</a>
-			</li>
 		</ul>
 
 	</div>
