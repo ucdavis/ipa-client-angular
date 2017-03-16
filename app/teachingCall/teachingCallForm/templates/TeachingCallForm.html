@@ -21,6 +21,64 @@
 		</h3>
 		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
 	</div>
+
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="row teaching-call--course-preference">
+				<div class="col-md-3">
+				</div>
+				<div class="col-md-9">
+				</div>
+			</div>
+			<div class="row teaching-call--check-unavailiability">
+				<div class="col-md-12">
+				</div>
+			</div>
+			<div class="row teaching-call--additional-information">
+				<div class="col-md-12">
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<aside class="teaching-call--progress-sidebar">
+				<h5 class="text-center">TeachingCall Checkbox</h5>
+				<ul>
+					<li>
+						<input class="list-checkbox" type="checkbox">Preference
+					</li>
+					<li>
+						<input class="list-checkbox" type="checkbox">Summer Session 1
+					</li>
+					<li>
+						<input class="list-checkbox" type="checkbox">Summer Session 2
+					</li>
+					<li>
+						<input class="list-checkbox" type="checkbox">Fall Quarter
+					</li>
+					<li>
+						<input class="list-checkbox" type="checkbox">Winter Quarter
+					</li>
+					<li>
+						<input class="list-checkbox" type="checkbox">Spring Quarter
+					</li>
+
+					<li>
+						<input class="list-checkbox" type="checkbox">Additional Information
+					</li>
+				</ul>
+				<button type="button" class="btn btn-white">Submit</button>
+			</aside>
+		</div>
+
+	</div>
+
+
+
+
+
+
+<!-- 
 	<div class="row provide-preferences-header">
 		<div class="col-md-6">
 			<h5>Please indicate your preferences:</h5>
@@ -111,7 +169,7 @@
 				</li>
 			</ol>
 
-		</div> <!-- term container -->
+		</div> 
 	</div>
 
 	<!-- Select Unavailabilities -->
@@ -151,9 +209,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- Select Unavailabilities ends -->
 
-	<!-- Comments -->
 	<div class="row provide-comments-header">
 		<div class="col-md-12">
 			<h5>Additional comments:</h5>
@@ -164,9 +220,7 @@
 		ng-model="view.state.comment" auto-input on-blur="updateComment()"
 		placeholder="(Optional) Add any additional comments or requests here." rows="5" id="comment"></textarea>
 	</div>
-		<!-- Comments ends -->
 
-	<!-- Submit button -->
 	<div class="row teaching-call-form-submit-container">
 		<div class="container-fluid pull-right">
 			<button ng-if="!view.state.isDone" type="button" class="btn btn-default"
@@ -185,4 +239,5 @@
 
 		</div>
 	</div>
+	-->
 </div>

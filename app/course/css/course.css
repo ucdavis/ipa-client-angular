@@ -26,10 +26,12 @@
 	background: #303641;
 	z-index: 5;
 	display: none;
+	margin-top: 9%;
 }
 #chat,
 .page-container:not(.sidebar-collapsed) .right-details {
-	width: 20%;
+	/*width: 20%;*/
+	width: 22%;
 }
 #chat.fixed {
 	min-height: 0 !important;
