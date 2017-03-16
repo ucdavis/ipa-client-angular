@@ -213,14 +213,162 @@ table.availability-grid tr td {
 	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
+/* ---------------------- IPA Header -----------------------*/
 .ipa-header {
+	margin-bottom: 50px;
+}
+
+.ipa-header .account-section {
 	display: flex;
 	width: 100%;
+	position: relative;
+	padding: 10px 20px 10px 20px;
+	background-color: white;
+	box-shadow: 0px 1px 2px 0px #F2F2F2;
+	z-index: 99;
+	background-color: #F7F7F7;
+
 }
+
+.ipa-header .year-workgroup-section {
+	display: flex;
+	width: 100%;
+	position: relative;
+	padding: 10px 20px 10px 20px;
+	background-color: white;
+	z-index: 99;
+	border-top: 1px solid #E5E5E5;
+	border-bottom: 1px solid #E5E5E5;
+}
+
+.ipa-header h3 {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.ipa-header .header--swtich-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.ipa-header .header--year-switch {
+	padding-left: 0;
+	text-align: center;
+	list-style: none;
+	margin: 0px 20px 0px 0px;
+	width: 150px;
+	background-color: white;
+	border: 1px solid #D6D6D6;
+	border-radius: 4px;
+}
+
+.ipa-header .header--year-switch a {
+	color: black !important;
+}
+
+.ipa-header .header--year-switch li a {
+    background-color: transparent;
+    color: #aaa;
+    border: none;
+    padding: 5px;
+}
+
+.ipa-header .header--year-switch li a:hover {
+	background-color: white !important;
+	cursor: pointer;
+}
+
+.ipa-header .header--work-group .dropdown-toggle {
+	font-size: 12px;
+	padding: 6px 12px 6px 12px;
+}
+
+.ipa-header .header--work-group .dropdown-menu li i {
+	padding-left: 10px;
+	cursor: pointer;
+}
+
+.ipa-header .header--work-group .dropdown-menu li a {
+	display: inline-block;
+}
+
+.ipa-header .header--work-group .dropdown-menu li a:hover {
+	background-color: lightgray;
+}
+
+.ipa-header .header--work-group .dropdown-menu li:hover {
+	background-color: lightgray;
+}
+
+.ipa-header .header--work-group .dropdown-toggle span{
+	margin-left: 5px;
+}
+
+
+.ipa-header button {
+	background-color: white;
+	border: 1px solid #D6D6D6;
+}
+
+.ipa-header .btn-group button{
+    font-size: 15px;
+    padding-top: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-bottom: 4px;
+}
+
 .ipa-header .left-column {
-	flex: 1 1 0px;
+	flex: 1 1 auto;
 }
 
 .ipa-header .right-column {
-	flex: 1 1 0px;
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.ipa-header .right-column span {
+	font-size: 15px;
+	font-weight: 500;
+}
+
+.ipa-header .account-info {
+	align-self: center;
+	display: flex;
+}
+
+.ipa-header .impersonate {
+	margin-left: 20px;
+	align-self: center;
+}
+
+.ipa-header .remove-impersonate-btn {
+	padding: 0px 5px 0px 5px;
+	color: #ee4749;
+}
+
+.ipa-header .impersonate button {
+	font-size: 12px;
+	padding: 6px 12px 6px 12px;
+}
+
+.ipa-header .logout {
+	padding-left: 35px;
+	padding-right: 35px;
+	font-weight: 400 !important;
+	align-self: center;
+	border: 1px solid #d0d0d3;
+	border-radius: 4px;
+	padding: 6px 12px 6px 12px;
+	font-size: 12px !important;
+	margin-left: 20px;
+}
+
+.ipa-header .logout:hover {
+	background-color: #ee4749;
+	color: white;
+	border: 1px solid #ee4749;
+	cursor: pointer;
 }
