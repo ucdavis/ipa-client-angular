@@ -1,8 +1,8 @@
 /* teahing-call-status */
 
 .instructor-table thead tr :first-child {
-    /*center checkbox */
-    text-align: center !important;
+	/*center checkbox */
+	text-align: center !important;
 }
 
 .instructor-table tbody tr :first-child {
@@ -142,19 +142,23 @@
 }
 
 .teaching-call-status .column-name {
-	flex: 3 1 0px;
+	flex: 7 1 0px;
 }
 
 .teaching-call-status .column-last {
-	flex: 5 1 0px;
+	flex: 3 1 0px;
+}
+
+.teaching-call-status .column-submitted {
+	flex: 3 1 0px;
 }
 
 .teaching-call-status .column-due {
-	flex: 5 1 0px;
+	flex: 3 1 0px;
 }
 
 .teaching-call-status .column-next {
-	flex: 5 1 0px;
+	flex: 3 1 0px;
 }
 
 .teaching-call-status .column-hover-ui {
