@@ -1,20 +1,17 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 
 <div class="course-view-container">
-	<ipa-header></ipa-header>
+	<ipa-header page-title="Courses"></ipa-header>
 	
 	<div class="container-fluid">
 	 <div class="col-md-9" unselect-cell>
-		 <h3 style="text-align: center;">{{ sharedState.workgroup.name }} {{ year.yearToAcademicYear() }} Courses</h3>
-		 <br />
-
-	<div class="row" style="margin-bottom: 2em;">
-		<div class="col-sm-offset-3 col-sm-6 input-group">
-			<input type="search" class="form-control hidden-print" placeholder="Search Schedule" ng-model="view.searchQuery"
-				ng-change="filterTable(view.searchQuery)" />
-			<i class="entypo-cancel clear-search close" ng-show="view.searchQuery" ng-click="clearSearch()"></i>
+		<div class="row" style="margin-bottom: 2em;">
+			<div class="col-sm-offset-3 col-sm-6 input-group">
+				<input type="search" class="form-control hidden-print" placeholder="Search Schedule" ng-model="view.searchQuery"
+					ng-change="filterTable(view.searchQuery)" />
+				<i class="entypo-cancel clear-search close" ng-show="view.searchQuery" ng-click="clearSearch()"></i>
+			</div>
 		</div>
-	</div>
 
 	<div class="row hidden-print">
 		<div class="col-sm-12">
