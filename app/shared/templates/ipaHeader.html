@@ -5,10 +5,13 @@
 		</div>
 		<div class="right-column">
 			<div class="account-info">
-				<h5>Howdy, {{ sharedState.currentUser.realUserDisplayName }} <i class="entypo-right"></i></h5>
-				<div class="impersonate btn-group" role="group">
-					<button type="button" class="btn btn-default"><i class="entypo-user"></i></button>
-					<button class="impersonate-name btn btn-default" type="button">
+				<h5>Howdy, {{ sharedState.currentUser.realUserDisplayName }}
+				<i ng-if="sharedState.currentUser.loginId != sharedState.currentUser.realUserLoginId" class="entypo-right"></i>
+				</h5>
+				<div ng-if="sharedState.currentUser.loginId != sharedState.currentUser.realUserLoginId" class="impersonate btn-group" role="group">
+					<button class="impersonate-name btn btn-default" type="button"
+									ng-click="unImpersonate()">
+						<i class="entypo-user"></i>
 						{{ sharedState.currentUser.displayName }}
 						<i class="entypo-cancel-circled remove-impersonate-btn"></i>
 					</button>
@@ -26,7 +29,7 @@
 					<li class="next" ng-click="offsetYearInUrl(1)"><a><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
 				</ul>
 				<div class="header--work-group btn-group" role="group" aria-label="...">
-					<button ng-if="userHasRolesForWorkgroup(['academicPlanner','reviewer'], workgroup)"
+					<button ng-if="userHasRolesForWorkgroup(['academicPlanner','reviewer'], sharedState.workgroup)"
 									type="button" class="btn btn-default">
 									<a ng-href="/workgroups/{{ workgroup.id }}/{{ year }}" style="color: #303641">
 										<i class="entypo-cog"></i>
