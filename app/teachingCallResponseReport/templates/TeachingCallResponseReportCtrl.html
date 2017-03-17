@@ -2,6 +2,10 @@
 <div>
 </div>
 
+<div class="teaching-call-response-report-container">
+
+<ipa-header page-title="Teaching Call Response Report"></ipa-header>
+
 <!-- handle lack of teaching call data-->
 <div ng-if="view.state && view.state.termCodes.length == 0">
 		<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
@@ -11,12 +15,6 @@
 
 
 <div ng-if="view.state && view.state.termCodes.length > 0" class="main-content">
-
-	<div class="report-page-title">
-		<h3>Teaching Call Response Report</h3>
-		<h3>{{ year.yearToAcademicYear() }}</h3>
-		<p>{{ sharedState.workgroup.name }}</p>
-	</div>
 
 	<div style="margin-bottom: 20px; width: 100%; display: flex; justify-content: flex-end;">
 		<div style="font-size: 10px; color: #888; width: 30%;">
@@ -88,4 +86,5 @@
 		</div>
 
 	</div>
+</div>
 </div>

@@ -1,8 +1,11 @@
 <nav year="{{ year }}" term-short-code="{{ termShortCode }}" workgroup-id="{{ workgroupId }}"></nav>
+<div class="schedule-summary-report-container">
+
+<ipa-header page-title="Schedule Summary Report"></ipa-header>
+
 <div class="main-content">
 
 	<div class="report-page-title">
-		<h3>Schedule Summary Report</h3>
 		<h3 ng-if="term.fullDescription">
 			<a ng-if="previousShortTermCode"
 				ng-href="/scheduleSummaryReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ previousShortTermCode }}">
@@ -21,10 +24,6 @@
 			</a>
 
 		</h3>
-
-		<h3 ng-if="!(term.fullDescription)">{{ year }}</h3>
-
-		<p>{{ sharedState.workgroup.name }}</p>
 	</div>
 
 	<div class="row hidden-print">
@@ -173,5 +172,6 @@
 		</div>
 	</div>
 
+</div>
 </div>
 <div></div>

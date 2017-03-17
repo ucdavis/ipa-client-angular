@@ -74,3 +74,13 @@
 	margin-top:10px;
 	border-bottom: 1px solid #848484;
 }
+
+.teaching-call-response-report-container {
+	padding: 0px;
+	width: 100%;
+	margin: 0px;
+}
+
+.teaching-call-response-report-container .main-content {
+	display: block;
+}

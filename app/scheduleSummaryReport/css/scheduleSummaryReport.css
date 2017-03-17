@@ -1,5 +1,5 @@
 .page-container:not(.sidebar-collapsed) .main-content {
-  width: 85%;
+  width: 100%;
 }
 
 .report-page-title {
@@ -316,4 +316,14 @@ span.sis-tool-icon {
   cursor: pointer;
   background: #ebebeb;
   border-radius: 3px;
+}
+
+.schedule-summary-report-container {
+	padding: 0px;
+	width: 100%;
+	margin: 0px;
+}
+
+.schedule-summary-report-container .main-content {
+	display: block;
 }
