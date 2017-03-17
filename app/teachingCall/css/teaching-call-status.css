@@ -194,3 +194,11 @@
 .datepicker-bar {
 	width: 285px;
 }
+
+.teaching-call-status-buttons {
+	width: 100%;
+	display: flex;
+	padding-right: 15px;
+	padding-bottom: 15px;
+	padding-top: 20px;
+}

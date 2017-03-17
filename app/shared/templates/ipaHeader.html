@@ -25,7 +25,11 @@
 			<div class="header--swtich-container">
 				<ul class="pager header--year-switch">
 					<li class="previous" ng-click="offsetYearInUrl(-1)"><a><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
-					<li><a style="cursor: default;">{{ year.yearToAcademicYear() }}</a></li>
+					<li class="year-display">
+						<a style="cursor: default;">
+							{{ year.yearToAcademicYear() }}
+						</a>
+					</li>
 					<li class="next" ng-click="offsetYearInUrl(1)"><a><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
 				</ul>
 				<div class="header--work-group btn-group" role="group" aria-label="...">

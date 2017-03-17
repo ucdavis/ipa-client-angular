@@ -1,21 +1,8 @@
-<div class="content-container">
-
-	<div class="instructor-summary-header">
-		<h3>
-			Instructor Summary {{ year.yearToAcademicYear() }}
-		</h3>
-		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
-	</div>
-
+<div class="instructor-summary-container content-container">
 	<div ng-hide="view.state">
 		<spinner></spinner>
 	</div>
 	<div ng-show="view.state">
-		<div class="teaching-call-status-header">
-			<h5>
-				Teaching Calls {{ year.yearToAcademicYear() }}
-			</h5>
-		</div>
 
 		<!-- teachingCalls table -->
 		<div ng-hide="view.state.teachingCallReceipt" class="empty-message">
@@ -63,12 +50,6 @@
 					<i class="glyphicon glyphicon-ok" ng-if="view.state.teachingCallReceipt.isDone"></i>
 				</div>
 			</div>
-		</div>
-
-		<div class="course-status-header">
-			<h5>
-				Scheduled Courses {{ year.yearToAcademicYear() }}
-			</h5>
 		</div>
 
 		<div ng-show="view.state.instructorCourses && view.state.instructorCourses.terms.length === 0" class="empty-message">

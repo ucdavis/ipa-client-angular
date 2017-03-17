@@ -252,14 +252,17 @@ table.availability-grid tr td {
 }
 
 .ipa-header .header--year-switch {
-	padding-left: 0;
-	text-align: center;
-	list-style: none;
+	display: flex;
+	align-items: center;
 	margin: 0px 20px 0px 0px;
-	width: 150px;
 	background-color: white;
 	border: 1px solid #D6D6D6;
 	border-radius: 4px;
+}
+
+.ipa-header .year-display {
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .ipa-header .header--year-switch a {
