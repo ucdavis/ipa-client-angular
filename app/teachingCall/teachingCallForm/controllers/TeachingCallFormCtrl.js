@@ -153,8 +153,6 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 			// Generates a 'display rank' for the subset of preferences that are not approved.
 			// This is needed because approved preferences still have a 'priority' (rank) value, despite not being shown in the list
 			$scope.generateDisplayRank = function (preference, preferences) {
-				console.log(preference);
-				console.log(preferences);
 				var displayRank = 1;
 
 				if (preferences) {
@@ -165,7 +163,6 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 					});
 				}
 
-				console.log("-----------------");
 				return displayRank;
 			};
 

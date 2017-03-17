@@ -22,6 +22,10 @@ teachingCallApp.service('teachingCallFormStateService', function (
 
 					var termsBlob = null;
 
+					if (action.payload.teachingCallReceipts.length == 0) {
+						return pageState;
+					}
+
 					// Find Relevant teachingCallReceipt to fill in form config data
 					action.payload.teachingCallReceipts.forEach( function(teachingCallReceipt) {
 						if (teachingCallReceipt.scheduleId == action.payload.scheduleId
