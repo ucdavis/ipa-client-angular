@@ -1,12 +1,11 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 <div></div>
 
-<div class="main-content">
-	<h3 style="text-align: center;">
-		Assignments {{ year }}-{{ nextYear }}
-	</h3>
-	<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
+<div class="assignments-container">
 
+<ipa-header page-title="Assignments"></ipa-header>
+
+<div class="main-content">
 	<div class="row hidden-print" style="margin-bottom: 2em;">
 		<div class="col-sm-offset-3 col-sm-6">
 			<input type="search" class="form-control" placeholder="Search" ng-model="searchQuery" ng-change="filterTable(searchQuery)"/>
@@ -75,4 +74,5 @@
 	<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"></div>
 	<div instructor-assignment-table id="instructors-table" ng-show="view.state.userInterface.showInstructors"></div>
 
+</div>
 </div>

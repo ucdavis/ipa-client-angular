@@ -161,7 +161,7 @@ button.btn.assign-dropdown-btn {
 	align-items: center;
 }
 
-.caret {
+.main-content .caret {
 	position: absolute;
 	top: 50%;
 	right: 5%;
@@ -920,4 +920,14 @@ li.active-term .dropdown-term-row {
 
 .assign-instructor-dropdown {
 	width: 100%;
+}
+
+.assignments-container {
+	padding: 0px;
+	width: 100%;
+	margin: 0px;
+}
+
+.assignments-container .main-content {
+	display: block;
 }
