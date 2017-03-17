@@ -13,6 +13,17 @@ sharedApp.directive('ipaHeader', function($location, $rootScope, authService) {
 			scope.unImpersonate = function() {
 				authService.unimpersonate();
 			};
+
+			// Will generate a url for the current location, but substitube the passed in workgroupId where relevant
+			scope.changeWorkgroup = function(originalWorkgroupId, newWorkgroupId) {
+				var originalWorkgroupId = originalWorkgroupId.toString();
+				var newWorkgroupId = newWorkgroupId.toString();
+
+				var url = $location.absUrl();
+				url = url.replace(originalWorkgroupId, newWorkgroupId);
+
+				return url;
+			};
 		}
 	};
 });
