@@ -1,5 +1,7 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 
+<ipa-header page-title="Teaching Call"></ipa-header>
+
 <div ng-hide="view.state" style="margin-top:300px;">
 	<spinner></spinner>
 </div>
@@ -15,12 +17,6 @@
 </div>
 
 <div ng-if="view.state && view.state.isInstructorInTeachingCall" class="teaching-call-form-container">
-	<div class="margin-bottom-30">
-		<h3 class="text-align--center">
-			Teaching Call {{ year }}-{{ nextYear }}
-		</h3>
-		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
-	</div>
 	<div class="row provide-preferences-header">
 		<div class="col-md-6">
 			<h5>Please indicate your preferences:</h5>
