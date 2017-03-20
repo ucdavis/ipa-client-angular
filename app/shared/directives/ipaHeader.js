@@ -1,4 +1,4 @@
-sharedApp.directive('ipaHeader', function($location, $rootScope, authService) {
+sharedApp.directive('ipaHeader', function($window, $location, $rootScope, authService) {
 	return {
 		restrict: 'E', // Use this via an element selector <dss-modal></dss-modal>
 		templateUrl: 'ipaHeader.html', // directive html found here:
@@ -23,6 +23,14 @@ sharedApp.directive('ipaHeader', function($location, $rootScope, authService) {
 				url = url.replace(originalWorkgroupId, newWorkgroupId);
 
 				return url;
+			};
+
+			scope.loadWorkgroupPage = function(workgroupId) {
+				if (!scope.year) {
+					scope.year = "";
+				}
+
+				$window.location.href = "/workgroups/" + workgroupId + "/" + scope.year;
 			};
 		}
 	};
