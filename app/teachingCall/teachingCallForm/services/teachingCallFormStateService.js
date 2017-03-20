@@ -22,25 +22,25 @@ teachingCallApp.service('teachingCallFormStateService', function (
 
 					var termsBlob = null;
 
-					if (action.payload.teachingCallReceipts.length == 0) {
+					if (action.payload.teachingCallReceipt == null) {
 						return pageState;
 					}
 
-					// Find Relevant teachingCallReceipt to fill in form config data
-					action.payload.teachingCallReceipts.forEach( function(teachingCallReceipt) {
-						if (teachingCallReceipt.scheduleId == action.payload.scheduleId
-								&& teachingCallReceipt.instructorId == action.payload.instructorId) {
+					// Use teachingCallReceipt to fill in form config data
+					teachingCallReceipt = action.payload.teachingCallReceipt;
 
-							pageState.isInstructorInTeachingCall = true;
-							pageState.showUnavailabilities = teachingCallReceipt.showUnavailabilities;
-							pageState.termsBlob = teachingCallReceipt.termsBlob;
-							pageState.isDone = teachingCallReceipt.isDone;
-							pageState.dueDate = teachingCallReceipt.dueDate;
-							pageState.comment = teachingCallReceipt.comment;
-							pageState.teachingCallReceiptId = teachingCallReceipt.id;
-							termsBlob = teachingCallReceipt.termsBlob;
-						}
-					});
+					if (teachingCallReceipt.scheduleId == action.payload.scheduleId
+							&& teachingCallReceipt.instructorId == action.payload.instructorId) {
+
+						pageState.isInstructorInTeachingCall = true;
+						pageState.showUnavailabilities = teachingCallReceipt.showUnavailabilities;
+						pageState.termsBlob = teachingCallReceipt.termsBlob;
+						pageState.isDone = teachingCallReceipt.isDone;
+						pageState.dueDate = teachingCallReceipt.dueDate;
+						pageState.comment = teachingCallReceipt.comment;
+						pageState.teachingCallReceiptId = teachingCallReceipt.id;
+						termsBlob = teachingCallReceipt.termsBlob;
+					}
 
 					// Scaffold term objects to hold the rest of the data
 					pageState.terms = this.scaffoldTermsFromBlob(termsBlob, action.year);
