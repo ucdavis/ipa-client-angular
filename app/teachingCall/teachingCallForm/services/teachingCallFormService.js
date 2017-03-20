@@ -3,23 +3,9 @@ teachingCallApp.factory("teachingCallFormService", this.teachingCallFormService 
 		getInitialState: function(workgroupId, year) {
 			var deferred = $q.defer();
 
-			$http.get(serverRoot + "/api/assignmentView/" + workgroupId + "/" + year, { withCredentials: true })
+			$http.get(serverRoot + "/api/teachingCallView/" + workgroupId + "/" + year + "/teachingCallForm", { withCredentials: true })
 			.success(function(assignmentView) {
 				deferred.resolve(assignmentView);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		download: function (workgroupId, year) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/assignmentView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
-			.success(function(payload) {
-				$window.location.href = payload.redirect;
-				deferred.resolve(payload);
 			})
 			.error(function() {
 				deferred.reject();
