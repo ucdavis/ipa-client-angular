@@ -43,6 +43,8 @@ sharedApp.directive("newCourse", this.newCourse = function (courseActionCreators
 				scope.view.state.courses.newCourse.subjectCode = $item.subjectCode;
 				scope.view.state.courses.newCourse.courseNumber = $item.courseNumber;
 				scope.view.state.courses.newCourse.effectiveTermCode = $item.effectiveTermCode;
+				scope.view.state.courses.newCourse.unitsHigh = $item.creditHoursHigh;
+				scope.view.state.courses.newCourse.unitsLow = $item.creditHoursLow;
 
 				// Empty the sequencePattern to force checking for conflicts
 				delete scope.view.state.courses.newCourse.sequencePattern;
