@@ -10,7 +10,8 @@ sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function (
 					// If the sectionGroup is new and it is numeric,
 					// create its only section by default and set the seats to SG plannedSeats value
 					var course = scope.view.state.courses.list[data.action.payload.sectionGroup.courseId];
-					if (course && !course.isSeries()) {
+
+					if (course && !course.isSeries() && course.sequencePattern && course.sequencePattern.length > 0) {
 						scope.addSection(scope.view.selectedEntity.plannedSeats);
 					}
 				}
