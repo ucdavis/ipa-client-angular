@@ -1,2 +1,9 @@
-<div class="ipa-term-selector">
-</div>
+<ul class="ipa-term-selector pager header--year-switch">
+	<li class="previous" ng-click="gotoPreviousTerm()"><a><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
+	<li class="year-display">
+		<a style="cursor: default;">
+			{{ generateDisplayText() }}
+		</a>
+	</li>
+	<li class="next" ng-click="gotoNextTerm()"><a><i class="entypo-right-open-mini clickable hoverable"></i></a></li>
+</ul>
