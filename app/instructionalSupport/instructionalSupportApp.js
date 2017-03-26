@@ -9,7 +9,7 @@ instructionalSupportApp.config(function ($routeProvider) {
 				payload: InstructionalSupportAssignmentCtrl.getPayload
 			}
 		})
-		.when("/:workgroupId/:year/supportCallStatus", {
+		.when("/:workgroupId/:year/:termShortCode/supportCallStatus", {
 			templateUrl: "SupportCallStatus.html",
 			controller: "InstructionalSupportCallStatusCtrl",
 			resolve: {
