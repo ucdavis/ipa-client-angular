@@ -79,6 +79,28 @@ String.prototype.getTermCodeDisplayName = function (excludeYear) {
 	return description;
 };
 
+String.prototype.getTermDisplayName = function () {
+	var code = this;
+
+	if (code.length != 2) {
+		return "";
+	}
+
+	var termDescriptions = {
+		'05': 'Summer Session 1',
+		'06': 'Summer Special Session',
+		'07': 'Summer Session 2',
+		'08': 'Summer Quarter',
+		'09': 'Fall Semester',
+		'10': 'Fall Quarter',
+		'01': 'Winter Quarter',
+		'02': 'Spring Semester',
+		'03': 'Spring Quarter'
+	};
+
+	return termDescriptions[code];
+};
+
 // Turns '2016-10-01' into 'October 1st 2016'
 String.prototype.toFullDate = function () {
 	if (this.length === 0) {
