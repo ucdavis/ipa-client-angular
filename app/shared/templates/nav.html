@@ -139,13 +139,14 @@
 					<span class="title">Support</span>
 				</a>
 				<ul ng-class="{ 'visible': expanded == 'support' || (!expanded && currentBaseHref == 'instructionalSupport') }">
-					<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport' && termShortCode == null }">
-						<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/supportCallStatus">
-						Support Calls
+					<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport' && currentEndHref == 'supportCallStatus'}">
+						<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ termShortCode }}/supportCallStatus">
+							Support Calls
+						</a>
 					</li>
-					<li ng-repeat="term in getYearTerms() track by term.id" ng-class="{ 'active': currentBaseHref == 'instructionalSupport' && termShortCode == term.shortCode }">
-						<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ term.shortCode }}">
-						{{ term.description }}
+					<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport'}">
+						<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ termShortCode }}">
+							Assignments
 						</a>
 					</li>
 				</ul>
