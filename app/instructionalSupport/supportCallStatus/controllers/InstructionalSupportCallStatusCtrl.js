@@ -10,12 +10,14 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 			$window.document.title = "Instructional Support";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
+			$scope.termShortCode = $routeParams.termShortCode;
+
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 			$scope.termShortCode = $routeParams.termShortCode;
 
-			$rootScope.$on('instructionalSupportCallStatusStateChanged', function (event, data) {
-				$scope.view.state = data.state;
+			$rootScope.$on('supportCallStatusStateChanged', function (event, data) {
+				$scope.view.state = data;
 				console.log($scope.view.state);
 			});
 
@@ -29,7 +31,8 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 
 			$scope.numberToFloor = function(number) {
 				return Math.floor(number);
-			}
+			};
+
 			$scope.openSupportCallConfig = function(supportCallMode) {
 
 				modalInstance = $uibModal.open({
@@ -96,6 +99,6 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 
 InstructionalSupportCallStatusCtrl.getPayload = function (authService, instructionalSupportCallStatusActionCreators, $route) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		instructionalSupportCallStatusActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+		instructionalSupportCallStatusActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode);
 	});
 };

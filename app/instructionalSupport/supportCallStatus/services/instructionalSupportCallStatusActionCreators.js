@@ -1,13 +1,13 @@
-instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', function ($rootScope, $window, instructionalSupportCallStatusService, instructionalSupportCallStatusStateService) {
+instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', function ($rootScope, $window, instructionalSupportCallStatusService, supportCallStatusStateService) {
 	return {
-		getInitialState: function (workgroupId, year) {
-			instructionalSupportCallStatusService.getInitialState(workgroupId, year).then(function (payload) {
+		getInitialState: function (workgroupId, year, termShortCode) {
+			instructionalSupportCallStatusService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
 				var action = {
 					type: INIT_STATE,
 					payload: payload,
 					year: year
 				};
-				instructionalSupportCallStatusStateService.reduce(action);
+				supportCallStatusStateService.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
@@ -29,7 +29,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 					type: ADD_STUDENT_SUPPORT_CALL,
 					payload: payload
 				};
-				instructionalSupportCallStatusStateService.reduce(action);
+				supportCallStatusStateService.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
@@ -41,7 +41,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 					type: DELETE_STUDENT_SUPPORT_CALL,
 					payload: payload
 				};
-				instructionalSupportCallStatusStateService.reduce(action);
+				supportCallStatusStateService.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
@@ -64,7 +64,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 					type: ADD_INSTRUCTOR_SUPPORT_CALL,
 					payload: payload
 				};
-				instructionalSupportCallStatusStateService.reduce(action);
+				supportCallStatusStateService.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
@@ -76,7 +76,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 					type: DELETE_INSTRUCTOR_SUPPORT_CALL,
 					payload: payload
 				};
-				instructionalSupportCallStatusStateService.reduce(action);
+				supportCallStatusStateService.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});

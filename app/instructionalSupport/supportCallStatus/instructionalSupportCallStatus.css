@@ -90,3 +90,208 @@
 	width: 200px;
 	border-color: #ccc;
 }
+
+/* teahing-call-status */
+
+.instructor-table thead tr :first-child {
+	/*center checkbox */
+	text-align: center !important;
+}
+
+.instructor-table tbody tr :first-child {
+    /*center checkbox */
+    text-align: center !important;
+}
+
+.instructor-section {
+    margin-bottom: 50px;
+}
+
+.instructor-section .panel-title {
+    font-weight: bold;
+}
+
+.instructor-section .panel-teaching-call-status{
+    border-radius: 0px !important;
+}
+
+.teaching-call-status .btn-default {
+    border: 1px solid #d2d2d2 !important;
+}
+
+.teaching-call-status .btn-group {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+
+
+/* modal style */
+
+.instructors-modal .modal-header {
+    background: #303641;
+    color: white;
+}
+
+.instructors-modal .modal-footer {
+    background-color:#f8f8f8;
+}
+.instructor-toggle {
+    margin: 15px 0px 15px 0px;
+}
+
+.instructor-toggle label {
+    border: 1px solid #ccc !important;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.instructor-toggle span {
+    font-size: 9pt !important;
+}
+
+.instructor-box {
+	border: 1px solid #ccc !important;
+	border-radius: 5px;
+	height: 75%;
+}
+
+.instructor-tag {
+	font-size: 12px;
+	background-color: white !important;
+	border: 1px solid #303641 !important;
+	margin-bottom: 5px;
+	margin-left: 10px;
+	margin-top: 5px;
+	cursor: pointer;
+}
+
+.instructor-tag-display {
+	background-color: white !important;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	margin-top: 5px;
+	cursor: default;
+
+}
+
+.label-toggleout {
+    /* styles when toggled out */
+    background-color: #ebebeb;
+    color: #adadad;
+    border: 1px solid #ebebeb !important;
+}
+
+.remove-instructor-ui {
+	visibility: hidden;
+}
+
+.table-row:hover .remove-instructor-ui {
+	visibility: visible;
+}
+
+.teaching-call-status .first-cell {
+	border-left: 1px solid #ebebeb;
+}
+
+.teaching-call-status .cell {
+	border-bottom: 1px solid #ebebeb;
+	border-right: 1px solid #ebebeb;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 45px;
+}
+
+.teaching-call-status .left-cell {
+	border-bottom: 1px solid #ebebeb;
+	border-right: 1px solid #ebebeb;
+	display: flex;
+	align-items: center;
+	min-height: 45px;
+}
+
+.teaching-call-status .header-left-cell {
+	display: flex;
+	align-items: center;
+	border: 1px solid #ebebeb;
+	color: #a6a7aa;
+	background-color: #f5f5f6;
+	min-height: 36px;
+}
+
+.teaching-call-status .header-cell {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #ebebeb;
+	color: #a6a7aa;
+	background-color: #f5f5f6;
+	min-height: 36px;
+}
+
+.teaching-call-status .column-checkbox {
+	flex: 1 1 0px;
+}
+
+.teaching-call-status .column-name {
+	flex: 7 1 0px;
+}
+
+.teaching-call-status .column-last {
+	flex: 3 1 0px;
+}
+
+.teaching-call-status .column-submitted {
+	flex: 3 1 0px;
+}
+
+.teaching-call-status .column-due {
+	flex: 3 1 0px;
+}
+
+.teaching-call-status .column-next {
+	flex: 3 1 0px;
+}
+
+.teaching-call-status .column-hover-ui {
+	flex: 1 1 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.table-title {
+	flex: 19 1 0px;
+	display: flex;
+	align-items: center;
+	font-weight: bold;
+	min-height: 36px;
+	color: #373e4a;
+	background-color: #ffffff;
+	font-size: 14px;
+}
+
+.assignments-app .teaching-call-status-tooltip.confirmbutton-yes {
+	color: #fff;
+	background-color: rgba(180, 20, 20, 0.8);
+	border: rgba(180, 20, 20, 0.8);
+}
+.assignments-app .teaching-call-status-tooltip.confirmbutton-yes:hover {
+
+	color: #fff;
+	background-color: #a11c1c;
+	border-color: #821717;
+}
+
+.datepicker-bar {
+	width: 285px;
+}
+
+.teaching-call-status-buttons {
+	width: 100%;
+	display: flex;
+	padding-right: 15px;
+	padding-bottom: 15px;
+	padding-top: 20px;
+}
