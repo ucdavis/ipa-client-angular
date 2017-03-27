@@ -9,7 +9,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 					sectionGroups = [];
 
 					var allSupportStaffIds = [];
-					action.payload.instructionalSupportStaffList.forEach( function(slotSupportStaff) {
+					action.payload.supportStaffList.forEach( function(slotSupportStaff) {
 						allSupportStaffIds.push(slotSupportStaff.id);
 					});
 
@@ -37,7 +37,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 								sectionGroup.eligibleSupportStaff.other = allSupportStaffIds;
 								sectionGroup.eligibleSupportStaff.preferred = [];
 
-								action.payload.studentInstructionalSupportPreferences.forEach( function(slotPreference) {
+								action.payload.studentSupportPreferences.forEach( function(slotPreference) {
 									if (slotPreference.sectionGroupId == sectionGroup.id) {
 
 										sectionGroup.eligibleSupportStaff.preferred.push(slotPreference);
@@ -56,7 +56,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 
 					// Add preferences to sectionGroups
 					sectionGroups.forEach( function(sectionGroup) {
-						action.payload.instructorInstructionalSupportPreferences.forEach( function(instructorPreference) {
+						action.payload.instructorSupportPreferences.forEach( function(instructorPreference) {
 							if (instructorPreference.sectionGroupId == sectionGroup.id) {
 								sectionGroup.instructorPreferences.push(instructorPreference);
 							}
@@ -129,10 +129,10 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 
 					var coursesLength = action.payload.courses ? action.payload.courses.length : 0;
 					var sectionGroupsLength = action.payload.sectionGroups ? action.payload.sectionGroups.length : 0;
-					var preferencesLength = action.payload.studentInstructionalSupportPreferences ? action.payload.studentInstructionalSupportPreferences.length: 0;
+					var preferencesLength = action.payload.studentsupportPreferences ? action.payload.studentInstructionalSupportPreferences.length: 0;
 
 					for (var h = 0; h <  preferencesLength; h++) {
-						var preferenceData = action.payload.studentInstructionalSupportPreferences[h];
+						var preferenceData = action.payload.studentsupportPreferences[h];
 
 						for (var i = 0; i < sectionGroupsLength; i++) {
 							var sectionGroupData = action.payload.sectionGroups[i];
@@ -190,8 +190,6 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 			switch (action.type) {
 				case INIT_STATE:
 					userInterface = {};
-
-					userInterface.supportCallId = action.payload.instructorInstructionalSupportCall.id;
 					return userInterface;
 				default:
 					return userInterface;
@@ -207,7 +205,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 						list: {}
 					};
 
-					action.payload.instructionalSupportStaffList.forEach( function(slotSupportStaff) {
+					action.payload.supportStaffList.forEach( function(slotSupportStaff) {
 						supportStaff.ids.push(slotSupportStaff.id);
 						supportStaff.list[slotSupportStaff.id] = slotSupportStaff;
 					});
@@ -227,7 +225,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 						list: {}
 					};
 
-					action.payload.studentInstructionalSupportPreferences.forEach( function(slotStudentPreference) {
+					action.payload.studentSupportPreferences.forEach( function(slotStudentPreference) {
 						studentPreferences.ids.push(slotStudentPreference.id);
 						studentPreferences.list[slotStudentPreference.id] = slotStudentPreference;
 					});
@@ -242,7 +240,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 
 			switch (action.type) {
 				case INIT_STATE:
-					supportCallResponse = action.payload.instructorInstructionalSupportCallResponse;
+					supportCallResponse = action.payload.instructorSupportCallResponse;
 					return supportCallResponse;
 				case UPDATE_SUPPORT_CALL_RESPONSE:
 					supportCallResponse = action.payload;

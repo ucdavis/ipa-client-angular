@@ -18,7 +18,7 @@ instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '
 			});
 
 			$scope.addPreference = function(sectionGroupId, supportStaffId) {
-				instructionalSupportInstructorFormActionCreators.addInstructorPreference(sectionGroupId, supportStaffId, $scope.view.state.userInterface.supportCallId);
+				instructionalSupportInstructorFormActionCreators.addInstructorPreference(sectionGroupId, supportStaffId);
 			};
 
 			$scope.deleteInstructorPreference = function(preference) {

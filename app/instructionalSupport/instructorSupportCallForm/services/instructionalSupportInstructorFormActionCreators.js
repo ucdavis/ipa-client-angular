@@ -12,8 +12,8 @@ instructionalSupportApp.service('instructionalSupportInstructorFormActionCreator
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		addInstructorPreference: function (sectionGroupId, supportStaffId, supportCallId) {
-			instructionalSupportInstructorFormService.addInstructorPreference(sectionGroupId, supportStaffId, supportCallId).then(function (newPreference) {
+		addInstructorPreference: function (sectionGroupId, supportStaffId) {
+			instructionalSupportInstructorFormService.addInstructorPreference(sectionGroupId, supportStaffId).then(function (newPreference) {
 				$rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
 				var action = {
 					type: ADD_INSTRUCTOR_PREFERENCE,

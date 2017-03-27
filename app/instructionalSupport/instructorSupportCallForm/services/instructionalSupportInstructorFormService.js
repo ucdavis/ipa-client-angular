@@ -13,10 +13,10 @@ instructionalSupportApp.factory("instructionalSupportInstructorFormService", thi
 
 			return deferred.promise;
 		},
-		addInstructorPreference: function(sectionGroupId, supportStaffId, supportCallId) {
-
+		addInstructorPreference: function(sectionGroupId, supportStaffId) {
 			var deferred = $q.defer();
-			$http.post(serverRoot + "/api/instructionalSupportInstructorFormView/supportCalls/" + supportCallId + "/sectionGroups/" + sectionGroupId + "/supportStaff/" + supportStaffId, { withCredentials: true })
+
+			$http.post(serverRoot + "/api/instructionalSupportInstructorFormView/sectionGroups/" + sectionGroupId + "/supportStaff/" + supportStaffId, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
@@ -27,8 +27,8 @@ instructionalSupportApp.factory("instructionalSupportInstructorFormService", thi
 			return deferred.promise;
 		},
 		updateSupportCallResponse: function(supportCallResponse) {
-
 			var deferred = $q.defer();
+
 			$http.put(serverRoot + "/api/instructionalSupportInstructorFormView/instructorSupportCallResponses/" + supportCallResponse.id, supportCallResponse, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
@@ -41,6 +41,7 @@ instructionalSupportApp.factory("instructionalSupportInstructorFormService", thi
 		},
 		updatePreferencesOrder: function(preferenceIds, scheduleId, termCode) {
 			var deferred = $q.defer();
+
 			$http.put(serverRoot + "/api/instructionalSupportInstructorFormView/schedules/" + scheduleId + "/terms/" + termCode, preferenceIds, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
@@ -52,8 +53,8 @@ instructionalSupportApp.factory("instructionalSupportInstructorFormService", thi
 			return deferred.promise;
 		},
 		deleteInstructorPreference: function(preferenceId) {
-
 			var deferred = $q.defer();
+
 			$http.delete(serverRoot + "/api/instructionalSupportInstructorFormView/instructorInstructionalSupportPreferences/" + preferenceId, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
