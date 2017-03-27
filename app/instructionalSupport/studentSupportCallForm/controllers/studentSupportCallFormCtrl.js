@@ -18,7 +18,7 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 			});
 
 			$scope.addPreference = function(preference) {
-				instructionalSupportStudentFormActionCreators.addStudentPreference(preference, $scope.view.state, $scope.view.state.userInterface.supportCallId);
+				instructionalSupportStudentFormActionCreators.addStudentPreference(preference, $scope.view.state);
 			};
 
 			$scope.deletePreference = function(preference) {
@@ -36,7 +36,8 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 
 			$scope.updatePreferencesOrder = function(preferenceIds) {
 				instructionalSupportStudentFormActionCreators.updatePreferencesOrder(preferenceIds, $scope.view.state.supportCall.scheduleId, $scope.termCode);
-			}
+			};
+
 			$scope.pretendToastMessage = function() {
 				instructionalSupportStudentFormActionCreators.pretendToastMessage();
 			};

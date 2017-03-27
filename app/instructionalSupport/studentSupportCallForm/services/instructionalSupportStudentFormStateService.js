@@ -78,7 +78,7 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 						associateInstructors: []
 					};
 
-					var supportAssignmentsLength = action.payload.instructionalSupportAssignments ? action.payload.instructionalSupportAssignments.length : 0;
+					var supportAssignmentsLength = action.payload.supportAssignments ? action.payload.supportAssignments.length : 0;
 					var sectionGroupsLength = action.payload.sectionGroups ? action.payload.sectionGroups.length : 0;
 
 					// Look at each sectionGroup, and find each assignment that matches it
@@ -86,7 +86,7 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 						var sectionGroupData = action.payload.sectionGroups[i];
 
 						for (var j = 0; j < supportAssignmentsLength; j++) {
-							var supportAssignmentData = action.payload.instructionalSupportAssignments[j];
+							var supportAssignmentData = action.payload.supportAssignments[j];
 							if (supportAssignmentData.sectionGroupId === sectionGroupData.id) {
 
 								instructionalSupportAssignment = {};
@@ -102,12 +102,12 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 	
 								} else if (instructionalSupportAssignment.type == "teachingAssistant"
 								&& isUniqueSectionGroup(potentialPreferences.teachingAssistants, instructionalSupportAssignment.sectionGroupId)
-								&& preferenceNotAlreadySet(instructionalSupportAssignment.sectionGroupId, "teachingAssistant", action.payload.studentInstructionalSupportPreferences)) {
+								&& preferenceNotAlreadySet(instructionalSupportAssignment.sectionGroupId, "teachingAssistant", action.payload.studentSupportPreferences)) {
 									potentialPreferences.teachingAssistants.push(instructionalSupportAssignment);
 	
 								} else if (instructionalSupportAssignment.type == "associateInstructor"
 								&& isUniqueSectionGroup(potentialPreferences.associateInstructors, instructionalSupportAssignment.sectionGroupId)
-								&& preferenceNotAlreadySet(instructionalSupportAssignment.sectionGroupId, "associateInstructor", action.payload.studentInstructionalSupportPreferences)) {
+								&& preferenceNotAlreadySet(instructionalSupportAssignment.sectionGroupId, "associateInstructor", action.payload.studentSupportPreferences)) {
 									potentialPreferences.associateInstructors.push(instructionalSupportAssignment);
 								}
 							}
@@ -194,10 +194,10 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 
 					var coursesLength = action.payload.courses ? action.payload.courses.length : 0;
 					var sectionGroupsLength = action.payload.sectionGroups ? action.payload.sectionGroups.length : 0;
-					var preferencesLength = action.payload.studentInstructionalSupportPreferences ? action.payload.studentInstructionalSupportPreferences.length: 0;
+					var preferencesLength = action.payload.studentSupportPreferences ? action.payload.studentSupportPreferences.length: 0;
 
 					for (var h = 0; h <  preferencesLength; h++) {
-						var preferenceData = action.payload.studentInstructionalSupportPreferences[h];
+						var preferenceData = action.payload.studentSupportPreferences[h];
 
 						for (var i = 0; i < sectionGroupsLength; i++) {
 							var sectionGroupData = action.payload.sectionGroups[i];
@@ -260,10 +260,10 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 
 					var instructionalSupportAssignmentsList = {};
 
-					var instructionalSupportAssignmentsLength = action.payload.instructionalSupportAssignments ? action.payload.instructionalSupportAssignments.length : 0;
+					var instructionalSupportAssignmentsLength = action.payload.supportAssignments ? action.payload.supportAssignments.length : 0;
 
 					for (var i = 0; i < instructionalSupportAssignmentsLength; i++) {
-						var instructionalSupportAssignmentData = action.payload.instructionalSupportAssignments[i];
+						var instructionalSupportAssignmentData = action.payload.supportAssignments[i];
 
 						instructionalSupportAssignmentsList[instructionalSupportAssignmentData.id] = instructionalSupportAssignmentData;
 						instructionalSupportAssignments.ids.push(instructionalSupportAssignmentData.id);

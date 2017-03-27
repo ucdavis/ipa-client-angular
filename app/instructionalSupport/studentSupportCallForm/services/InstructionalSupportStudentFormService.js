@@ -13,10 +13,10 @@ instructionalSupportApp.factory("instructionalSupportStudentFormService", this.i
 
 			return deferred.promise;
 		},
-		addStudentPreference: function(preference, supportCallId) {
+		addStudentPreference: function(preference) {
 
 			var deferred = $q.defer();
-			$http.post(serverRoot + "/api/instructionalSupportStudentFormView/supportCalls/" + supportCallId + "/sectionGroups/" + preference.sectionGroupId + "/preferenceType/" + preference.type, { withCredentials: true })
+			$http.post(serverRoot + "/api/instructionalSupportStudentFormView/sectionGroups/" + preference.sectionGroupId + "/preferenceType/" + preference.type, { withCredentials: true })
 			.success(function(assignmentView) {
 				deferred.resolve(assignmentView);
 			})

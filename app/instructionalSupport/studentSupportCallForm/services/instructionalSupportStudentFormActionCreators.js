@@ -12,8 +12,8 @@ instructionalSupportApp.service('instructionalSupportStudentFormActionCreators',
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		addStudentPreference: function (preference, viewState, supportCallId) {
-			instructionalSupportStudentFormService.addStudentPreference(preference, supportCallId).then(function (payload) {
+		addStudentPreference: function (preference, viewState) {
+			instructionalSupportStudentFormService.addStudentPreference(preference).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
 				var action = {
 					type: ADD_STUDENT_PREFERENCE,

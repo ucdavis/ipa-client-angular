@@ -23,7 +23,9 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 			});
 
 			// Convert date to Unix time
-			supportCallData.dueDate = supportCallData.dueDate.valueOf();
+			if (supportCallData.dueDate) {
+				supportCallData.dueDate = supportCallData.dueDate.valueOf();
+			}
 
 			instructionalSupportCallStatusService.addStudentsSupportCall(scheduleId, supportCallData).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Students added to support call", type: "SUCCESS" });
@@ -47,7 +49,9 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 			});
 
 			// Convert date to Unix time
-			supportCallData.dueDate = supportCallData.dueDate.valueOf();
+			if (supportCallData.dueDate) {
+				supportCallData.dueDate = supportCallData.dueDate.valueOf();
+			}
 
 			instructionalSupportCallStatusService.addInstructorsSupportCall(scheduleId, supportCallData).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Instructors added to support call", type: "SUCCESS" });
@@ -68,7 +72,9 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 			});
 
 			// Convert date to Unix time
-			supportCallData.dueDate = supportCallData.dueDate.valueOf();
+			if (supportCallData.dueDate) {
+				supportCallData.dueDate = supportCallData.dueDate.valueOf();
+			}
 
 			instructionalSupportCallStatusService.contactInstructorsSupportCall(scheduleId, supportCallData).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Instructor contact scheduled", type: "SUCCESS" });
@@ -89,7 +95,9 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 			});
 
 			// Convert date to Unix time
-			supportCallData.dueDate = supportCallData.dueDate.valueOf();
+			if (supportCallData.dueDate) {
+				supportCallData.dueDate = supportCallData.dueDate.valueOf();
+			}
 
 			instructionalSupportCallStatusService.contactSupportStaffSupportCall(scheduleId, supportCallData).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Student contact scheduled", type: "SUCCESS" });
