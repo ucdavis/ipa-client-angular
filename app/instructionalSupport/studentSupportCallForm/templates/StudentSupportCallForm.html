@@ -38,7 +38,7 @@
 			<div class="tacall-instructor-header">
 				<h3>Support Call {{ year }}</h3>
 				<p class="text-align--center department-title">
-					DSS IT
+					{{ sharedState.workgroup.name }}
 				</p>
 			</div>
 
@@ -68,6 +68,16 @@
 						<div class="due-day-header">
 							<h4>Due Date: {{ view.state.supportCallResponse.dueDateDescription }} </h4>
 						</div>
+
+						<div style="margin-left: -200px;" ng-if="view.state && view.state.instructionalSupportAssignments.ids.length == 0">
+							<!-- handle lack of active teaching call -->
+							<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+								<p class="lead">There are no courses available for this support call.</p>
+								<br />
+								<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
+							</div>
+						</div>
+
 						<ul id="sortable" class="sortable-student-preferences">
 							<li ng-repeat="preference in view.state.preferences | orderBy: 'priority'" class="student-course-section" id="{{ preference.id }}">
 								<div class="alert alert-info student-course">
@@ -93,7 +103,7 @@
 								</div>
 							</li>
 						</ul>
-						<student-preference-selector>
+						<student-preference-selector ng-if="view.state && view.state.instructionalSupportAssignments.ids.length > 0">
 						</student-preference-selector>
 
 					</div>
