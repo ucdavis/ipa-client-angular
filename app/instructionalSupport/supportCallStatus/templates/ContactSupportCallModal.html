@@ -45,7 +45,7 @@
 					<textarea ng-bind-html="supportCallConfigData.message" class="form-control support-call-message-input" placeholder="" rows="5" id="comment"></textarea>
 				</div>
 				<button ng-if="isFormIncomplete() == false" type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Send</button>
-				<button ng-if="isFormIncomplete() == true" tooltip-placement="left" uib-tooltip="You must select a date and message" type="button" class="disabled btn btn-info neon-dark-confirm-btn">Send</button>
+				<button ng-if="isFormIncomplete() == true" tooltip-placement="left" uib-tooltip="You must select a date and message" type="button" class="disabled btn neon-dark-confirm-btn">Send</button>
 
 			</div>
 			<!-- modal-footer ends -->
