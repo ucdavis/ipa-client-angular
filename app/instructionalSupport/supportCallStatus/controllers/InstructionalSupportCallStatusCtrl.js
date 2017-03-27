@@ -13,6 +13,9 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.termShortCode = $routeParams.termShortCode;
 
+			$scope.instructorsSelected = false;
+			$scope.supportStaffSelected = false;
+
 			// Generate termCode
 			if ($scope.termShortCode < 4) {
 				$scope.termCode = (parseInt($scope.year) + 1) + $scope.termShortCode;
@@ -47,8 +50,31 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 				$scope.openAddParticipantsSupportCall("supportStaff");
 			};
 
-			$scope.openAddParticipantsSupportCall = function(supportCallMode) {
+			$scope.toggleParticipantSelection = function(participant) {
+				if (participant.selected) {
+					participant.selected = true;
+				} else {
+					participant.selected = false;
+				}
+			};
 
+			$scope.toggleInstructorsSelection = function() {
+				$scope.instructorsSelected = !$scope.instructorsSelected;
+
+				$scope.view.state.supportCall.instructors.forEach(function(instructor) {
+					instructor.selected = $scope.instructorsSelected;
+				});
+			};
+
+			$scope.toggleSupportStaffSelection = function() {
+				$scope.supportStaffSelected = !$scope.supportStaffSelected;
+
+				$scope.view.state.supportCall.supportStaff.forEach(function(slotSupportStaff) {
+					slotSupportStaff.selected = $scope.supportStaffSelected;
+				});
+			};
+
+			$scope.openAddParticipantsSupportCall = function(supportCallMode) {
 				modalInstance = $uibModal.open({
 					templateUrl: 'AddSupportCallModal.html',
 					controller: ModalAddSupportCallCtrl,

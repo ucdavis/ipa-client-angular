@@ -72,7 +72,7 @@
 				<!-- table header -->
 				<div style="display: flex;">
 					<div class="header-cell first-cell cell column-checkbox">
-						<input ng-click="toggleSenateInstructors()" type="checkbox">
+						<input ng-click="toggleInstructorsSelection()" type="checkbox">
 					</div>
 					<div class="header-left-cell column-name">
 						<div style="padding-left:10px;">Name</div>
@@ -86,7 +86,7 @@
 
 				<div class="table-row" style="display: flex;" ng-repeat="instructor in view.state.supportCall.instructors">
 					<div class="column-checkbox cell first-cell">
-						<input type="checkbox" ng-checked="instructor.selected" ng-click="toggleSelectedInstructor(instructor)">
+						<input type="checkbox" ng-checked="instructor.selected" ng-click="toggleParticipantSelection(instructor)">
 					</div>
 					<div class="column-name left-cell">
 						<div style="padding-left: 10px; display: flex; flex-wrap: wrap;">
@@ -148,7 +148,7 @@
 				<!-- table header -->
 				<div style="display: flex;">
 					<div class="header-cell first-cell cell column-checkbox">
-						<input ng-click="toggleFederationInstructors()" type="checkbox">
+						<input ng-click="toggleSupportStaffSelection()" type="checkbox">
 					</div>
 					<div class="header-left-cell column-name">
 						<div style="padding-left:10px;">Name</div>
@@ -162,7 +162,7 @@
 
 				<div class="table-row" style="display: flex;" ng-repeat="supportStaff in view.state.supportCall.supportStaff">
 					<div class="column-checkbox cell first-cell">
-						<input type="checkbox" ng-checked="supportStaff.selected" ng-click="toggleSelectedInstructor(instructor)">
+						<input type="checkbox" ng-checked="supportStaff.selected" ng-click="toggleParticipantSelection(instructor)">
 					</div>
 					<div class="column-name left-cell">
 						<div  style="padding-left: 10px;">
