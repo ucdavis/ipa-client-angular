@@ -49,9 +49,23 @@ instructionalSupportApp.factory("instructionalSupportCallStatusService", this.in
 
 			return deferred.promise;
 		},
-		deleteInstructorSupportCall: function(instructorSupportCall) {
+		removeInstructorFromSupportCall: function(instructor, scheduleId, termCode) {
 			var deferred = $q.defer();
-			$http.delete(serverRoot + "/api/instructionalSupportView/instructorInstructionalSupportCalls/" + instructorSupportCall.id, { withCredentials: true })
+
+			$http.delete(serverRoot + "/api/supportCallView/schedules/" + scheduleId + "/instructorSupportCallResponses/" + instructor.supportCallResponseId, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		removeStudentFromSupportCall: function(student, scheduleId, termCode) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/supportCallView/schedules/" + scheduleId + "/studentSupportCallResponses/" + student.supportCallResponseId, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})

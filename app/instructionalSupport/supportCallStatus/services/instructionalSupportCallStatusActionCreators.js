@@ -12,6 +12,8 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+
+		// ---- TODO: Refactor this
 		addSupportStaffSupportCall: function (scheduleId, studentSupportCall) {
 			// Remove participants that were disabled in the UI
 			filteredParticipants = [];
@@ -23,8 +25,9 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 
 			studentSupportCall.participantPool = filteredParticipants;
 
-			$rootScope.$emit('toast', { message: "Support Call Created", type: "SUCCESS" });
 			instructionalSupportCallStatusService.addStudentSupportCall(scheduleId, studentSupportCall).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Support Call Created", type: "SUCCESS" });
+
 				var action = {
 					type: ADD_STUDENT_SUPPORT_CALL,
 					payload: payload
@@ -34,18 +37,8 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		deleteStudentSupportCall: function (studentSupportCall) {
-			$rootScope.$emit('toast', { message: "Support Call Removed", type: "SUCCESS" });
-			instructionalSupportCallStatusService.deleteStudentSupportCall(studentSupportCall).then(function (payload) {
-				var action = {
-					type: DELETE_STUDENT_SUPPORT_CALL,
-					payload: payload
-				};
-				supportCallStatusStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
-			});
-		},
+		// -------
+
 		addInstructorsSupportCall: function (scheduleId, supportCallData) {
 			// Build addInstructorsDTO
 			supportCallData.instructorIds = [];
@@ -59,8 +52,8 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 			// Convert date to Unix time
 			supportCallData.dueDate = supportCallData.dueDate.valueOf();
 
-			$rootScope.$emit('toast', { message: "Support Call Created", type: "SUCCESS" });
 			instructionalSupportCallStatusService.addInstructorsSupportCall(scheduleId, supportCallData).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Support Call Created", type: "SUCCESS" });
 				var action = {
 					type: ADD_INSTRUCTOR_SUPPORT_CALL,
 					payload: payload
@@ -70,12 +63,30 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		deleteInstructorSupportCall: function (instructorSupportCall) {
-			$rootScope.$emit('toast', { message: "Support Call Removed", type: "SUCCESS" });
-			instructionalSupportCallStatusService.deleteInstructorSupportCall(instructorSupportCall).then(function (payload) {
+		removeInstructorFromSupportCall: function (instructor, scheduleId, termCode) {
+			instructionalSupportCallStatusService.removeInstructorFromSupportCall(instructor, scheduleId, termCode).then(function (supportCallResponseId) {
+				$rootScope.$emit('toast', { message: "Instructor removed from support call", type: "SUCCESS" });
 				var action = {
 					type: DELETE_INSTRUCTOR_SUPPORT_CALL,
-					payload: payload
+					payload: {
+						supportCallResponseId: supportCallResponseId,
+						instructorId: instructor.id
+					}
+				};
+				supportCallStatusStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		removeSupportStaffFromSupportCall: function (supportStaff, scheduleId, termCode) {
+			instructionalSupportCallStatusService.removeInstructorFromSupportCall(supportStaff, scheduleId, termCode).then(function (supportCallResponseId) {
+				$rootScope.$emit('toast', { message: "Student removed from support call", type: "SUCCESS" });
+				var action = {
+					type: DELETE_STUDENT_SUPPORT_CALL,
+					payload: {
+						supportCallResponseId: supportCallResponseId,
+						supportStaffId: supportStaff.id
+					}
 				};
 				supportCallStatusStateService.reduce(action);
 			}, function (err) {

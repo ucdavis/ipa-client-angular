@@ -19,6 +19,13 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 					});
 
 					return supportStaffSupportCallResponses;
+				case DELETE_STUDENT_SUPPORT_CALL:
+					var supportCallResponseId = action.payload;
+
+					var index = supportStaffSupportCallResponses.ids.indexOf(supportCallResponseId);
+					supportStaffSupportCallResponses.ids.splice(index, 1);
+
+					return supportStaffSupportCallResponses;
 				default:
 					return supportStaffSupportCallResponses;
 			}
@@ -38,6 +45,13 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 						instructorSupportCallResponses.ids.push(supportResponse.id);
 						instructorSupportCallResponses.list[supportResponse.id] = supportResponse;
 					});
+
+					return instructorSupportCallResponses;
+				case DELETE_INSTRUCTOR_SUPPORT_CALL:
+					var supportCallResponseId = action.payload.supportCallResponseId;
+
+					var index = instructorSupportCallResponses.ids.indexOf(supportCallResponseId);
+					instructorSupportCallResponses.ids.splice(index, 1);
 
 					return instructorSupportCallResponses;
 				default:
@@ -75,6 +89,9 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 					instructors.ids = _array_sortIdsByProperty(instructors.list, ["lastName"]);
 
 					return instructors;
+				case DELETE_INSTRUCTOR_SUPPORT_CALL:
+					var instructorId = action.payload.instructorId;
+					instructors.list[instructorId].supportCallResponseId = null;
 				default:
 					return instructors;
 			}
@@ -121,8 +138,24 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 					supportStaff.ids = _array_sortIdsByProperty(supportStaff.list, ["lastName"]);
 
 					return supportStaff;
+				case DELETE_STUDENT_SUPPORT_CALL:
+					var supportStaffId = action.payload.supportStaffId;
+					supportStaff.list[supportStaffId].supportCallResponseId = null;
+
+					return supportStaff;
 				default:
-					return instructors;
+					return supportStaff;
+			}
+		},
+		_miscReducers: function (action, misc) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					misc = {scheduleId: action.payload.scheduleId};
+					return misc;
+				default:
+					return misc;
 			}
 		},
 		reduce: function (action) {
@@ -135,6 +168,7 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 			newState.instructorSupportCallResponses = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponses);
 			newState.supportStaff = scope._supportStaffReducers(action, scope._state.supportStaff);
 			newState.supportStaffSupportCallResponses = scope._supportStaffSupportCallResponseReducers(action, scope._state.supportStaffSupportCallResponses);
+			newState.misc = scope._miscReducers(action, scope._state.misc);
 
 			scope._state = newState;
 
@@ -159,7 +193,7 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 			newPageState.eligible.instructionalSupports = supportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), true, "instructionalSupport");
 			newPageState.eligible.supportStaff = supportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), true, "all");
 
-			newPageState.misc.scheduleId = action.payload.scheduleId;
+			newPageState.misc = angular.copy(scope._state.misc);
 
 			$rootScope.$emit('supportCallStatusStateChanged', newPageState);
 		}

@@ -150,11 +150,11 @@
 
 				<div class="table-row" style="display: flex;" ng-repeat="supportStaff in view.state.supportCall.federation">
 					<div class="column-checkbox cell first-cell">
-						<input type="checkbox" ng-checked="instructor.selected" ng-click="toggleSelectedInstructor(instructor)">
+						<input type="checkbox" ng-checked="supportStaff.selected" ng-click="toggleSelectedInstructor(instructor)">
 					</div>
 					<div class="column-name left-cell">
 						<div  style="padding-left: 10px;">
-							{{ instructor.lastName }}, {{ instructor.firstName }}
+							{{ supportStaff.lastName }}, {{ supportStaff.firstName }}
 							<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
 								class="text-primary clickable hovrable"
 								teaching-call-tooltip
@@ -166,22 +166,22 @@
 						</div>
 					</div>
 					<div class="column-submitted cell">
-						<i class="glyphicon glyphicon-ok" ng-if="instructor.isDone"></i>
+						<i class="glyphicon glyphicon-ok" ng-if="supportStaff.submitted"></i>
 					</div>
 					<div class="column-last cell">
-						{{ instructor.lastContactedAt }}
+						{{ supportStaff.lastContactedAt }}
 					</div>
 					<div class="column-next cell">
-						{{ instructor.nextContactAt }}
+						{{ supportStaff.nextContactAt }}
 					</div>
-					<div class="column-due cell">{{ instructor.dueDate }}</div>
+					<div class="column-due cell">{{ supportStaff.dueDate }}</div>
 					<div class="column-hover-ui">
 						<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
 							class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
 							tooltip-placement="left"
-							uib-tooltip="Remove Instructor"
-							confirm-button="removeInstructor(instructor)"
-							message="Are you sure you want to remove this instructor?
+							uib-tooltip="Remove Support Staff"
+							confirm-button="removeSupportStaff(supportStaff)"
+							message="Are you sure you want to remove this Support staff?
 								This will cancel any pending notifications."
 							yes="Remove" no="Cancel" placement="top">
 						</span>

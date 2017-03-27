@@ -13,6 +13,13 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.termShortCode = $routeParams.termShortCode;
 
+			// Generate termCode
+			if ($scope.termShortCode < 4) {
+				$scope.termCode = (parseInt($scope.year) + 1) + $scope.termShortCode;
+			} else {
+				$scope.termCode = $scope.year + $scope.termShortCode;
+			}
+
 			$scope.view = {};
 
 			$rootScope.$on('supportCallStatusStateChanged', function (event, data) {
@@ -20,12 +27,12 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 				console.log($scope.view.state);
 			});
 
-			$scope.deleteStudentSupportCall = function(studentSupportCall) {
-				instructionalSupportCallStatusActionCreators.deleteStudentSupportCall(studentSupportCall);
+			$scope.removeInstructor = function(instructor) {
+				instructionalSupportCallStatusActionCreators.removeInstructorFromSupportCall(instructor, $scope.view.state.misc.scheduleId, $scope.termCode);
 			};
 
-			$scope.deleteInstructorSupportCall = function(instructorSupportCall) {
-				instructionalSupportCallStatusActionCreators.deleteInstructorSupportCall(instructorSupportCall);
+			$scope.removeSupportStaff = function(supportStaff) {
+				instructionalSupportCallStatusActionCreators.removeSupportStaffFromSupportCall(supportStaff, $scope.view.state.misc.scheduleId, $scope.termCode);
 			};
 
 			$scope.numberToFloor = function(number) {
