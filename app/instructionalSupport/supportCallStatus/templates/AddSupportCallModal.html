@@ -35,15 +35,15 @@
 							<label  
 							ng-if="areAllMastersInvited() == false && supportCallConfigData.mode == 'supportStaff'"
 							class="instructor-toggle-btn btn btn-sm"
-							style="width: 50%;" id="courses-pivot"
-							ng-click="inviteInstructors()">
+							style="width: 33%;" id="courses-pivot"
+							ng-click="inviteMasters()">
 								Add Masters
 							</label>
 							<label  
 							ng-if="areAllMastersInvited() && supportCallConfigData.mode == 'supportStaff'"
 							disabled class="instructor-toggle-btn btn btn-sm"
-							uib-tooltip="All Instructors Added"
-							style="width: 50%;" id="courses-pivot">
+							uib-tooltip="All Masters Added"
+							style="width: 33%;" id="courses-pivot">
 								Add Masters
 							</label>
 
@@ -51,15 +51,15 @@
 							<label  
 							ng-if="areAllPhdsInvited() == false && supportCallConfigData.mode == 'supportStaff'"
 							class="instructor-toggle-btn btn btn-sm"
-							style="width: 50%;" id="courses-pivot"
-							ng-click="inviteInstructors()">
+							style="width: 33%;" id="courses-pivot"
+							ng-click="invitePhds()">
 								Add Phds
 							</label>
 							<label  
 							ng-if="areAllPhdsInvited() && supportCallConfigData.mode == 'supportStaff'"
 							disabled class="instructor-toggle-btn btn btn-sm"
-							uib-tooltip="All Instructors Added"
-							style="width: 50%;" id="courses-pivot">
+							uib-tooltip="All Phd Added"
+							style="width: 33%;" id="courses-pivot">
 								Add Phds
 							</label>
 
@@ -67,16 +67,16 @@
 							<label  
 							ng-if="areAllInstructionalSupportInvited() == false && supportCallConfigData.mode == 'supportStaff'"
 							class="instructor-toggle-btn btn btn-sm"
-							style="width: 50%;" id="courses-pivot"
-							ng-click="inviteInstructors()">
-								Add Non-Departmentals
+							style="width: 34%;" id="courses-pivot"
+							ng-click="inviteInstructionalSupport()">
+								Add Instr. Support
 							</label>
 							<label  
 							ng-if="areAllInstructionalSupportInvited() && supportCallConfigData.mode == 'supportStaff'"
 							disabled class="instructor-toggle-btn btn btn-sm"
-							uib-tooltip="All Instructors Added"
-							style="width: 50%;" id="courses-pivot">
-								Add Non-Departmentals
+							uib-tooltip="All Instructional Support Added"
+							style="width: 34%;" id="courses-pivot">
+								Add Instr. Support
 							</label>
 
 						</div>
@@ -113,6 +113,76 @@
 												<div class="checked"></div>
 											</label>
 											<label>Allow submission after due date</label>
+										</div>
+								</li>
+
+								<li role="menuitem" ng-click="toggleCollectGeneralComments()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectGeneralComments }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect general comments</label>
+										</div>
+								</li>
+
+								<li role="menuitem" ng-click="toggleCollectTeachingQualifications()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectTeachingQualifications }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect teaching qualifications</label>
+										</div>
+								</li>
+
+								<li role="menuitem" ng-click="toggleCollectPreferenceComments()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectPreferenceComments }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect preference comments</label>
+										</div>
+								</li>
+
+								<li role="menuitem" ng-click="toggleCollectEligibilityConfirmation()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectEligibilityConfirmation }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect eligibility confirmation</label>
+										</div>
+								</li>
+
+								<li role="menuitem" ng-click="toggleCollectTeachingAssistantPreferences()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectTeachingAssistantPreferences }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect teachingAssistant preferences</label>
+										</div>
+								</li>
+
+								<li role="menuitem" ng-click="toggleCollectReaderPreferences()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectReaderPreferences }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect reader preferences</label>
+										</div>
+								</li>
+
+								<li role="menuitem" ng-click="toggleCollectAssociateInstructorPreferences()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectAssociateInstructorPreferences }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect associate instructor preferences</label>
 										</div>
 								</li>
 							</ul>

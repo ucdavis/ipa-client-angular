@@ -13,9 +13,9 @@ instructionalSupportApp.factory("instructionalSupportCallStatusService", this.in
 
 			return deferred.promise;
 		},
-		addStudentSupportCall: function(scheduleId, studentSupportCall) {
+		addStudentsSupportCall: function(scheduleId, studentSupportCall) {
 			var deferred = $q.defer();
-			$http.post(serverRoot + "/api/instructionalSupportView/schedules/" + scheduleId + "/studentInstructionalSupportCalls", studentSupportCall, { withCredentials: true })
+			$http.post(serverRoot + "/api/supportCallView/" + scheduleId + "/addStudents", studentSupportCall, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})

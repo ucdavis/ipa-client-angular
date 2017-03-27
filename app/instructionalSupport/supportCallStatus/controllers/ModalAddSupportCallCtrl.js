@@ -52,7 +52,7 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	// Populate participantPool
 	$scope.supportCallConfigData.participantPool = [];
 
-	if ($scope.supportCallConfigData.mode = "instructor") {
+	if ($scope.supportCallConfigData.mode == "instructor") {
 		$scope.supportCallConfigData.participantPool = $scope.state.eligible.instructors;
 	} else {
 		$scope.supportCallConfigData.participantPool = $scope.state.eligible.supportStaff;
@@ -72,6 +72,70 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 			$scope.supportCallConfigData.allowSubmissionAfterDueDate = false;
 		} else {
 			$scope.supportCallConfigData.allowSubmissionAfterDueDate = true;
+		}
+	};
+
+	$scope.toggleCollectGeneralComments = function () {
+		if ($scope.supportCallConfigData.collectGeneralComments) {
+			$scope.supportCallConfigData.collectGeneralComments = false;
+		} else {
+			$scope.supportCallConfigData.collectGeneralComments = true;
+		}
+	};
+
+	$scope.toggleCollectTeachingQualifications = function () {
+		if ($scope.supportCallConfigData.collectTeachingQualifications) {
+			$scope.supportCallConfigData.collectTeachingQualifications = false;
+		} else {
+			$scope.supportCallConfigData.collectTeachingQualifications = true;
+		}
+	};
+
+	$scope.toggleCollectPreferenceComments = function () {
+		if ($scope.supportCallConfigData.collectPreferenceComments) {
+			$scope.supportCallConfigData.collectPreferenceComments = false;
+		} else {
+			$scope.supportCallConfigData.collectPreferenceComments = true;
+		}
+	};
+
+	$scope.toggleCollectEligibilityConfirmation = function () {
+		if ($scope.supportCallConfigData.collectEligibilityConfirmation) {
+			$scope.supportCallConfigData.collectEligibilityConfirmation = false;
+		} else {
+			$scope.supportCallConfigData.collectEligibilityConfirmation = true;
+		}
+	};
+
+	$scope.toggleCollectTeachingAssistantPreferences = function () {
+		if ($scope.supportCallConfigData.collectTeachingAssistantPreferences) {
+			$scope.supportCallConfigData.collectTeachingAssistantPreferences = false;
+		} else {
+			$scope.supportCallConfigData.collectTeachingAssistantPreferences = true;
+		}
+	};
+
+	$scope.toggleCollectTeachingAssistantPreferences = function () {
+		if ($scope.supportCallConfigData.collectTeachingAssistantPreferences) {
+			$scope.supportCallConfigData.collectTeachingAssistantPreferences = false;
+		} else {
+			$scope.supportCallConfigData.collectTeachingAssistantPreferences = true;
+		}
+	};
+
+	$scope.toggleCollectReaderPreferences = function () {
+		if ($scope.supportCallConfigData.collectReaderPreferences) {
+			$scope.supportCallConfigData.collectReaderPreferences = false;
+		} else {
+			$scope.supportCallConfigData.collectReaderPreferences = true;
+		}
+	};
+
+	$scope.toggleCollectAssociateInstructorPreferences = function () {
+		if ($scope.supportCallConfigData.collectAssociateInstructorPreferences) {
+			$scope.supportCallConfigData.collectAssociateInstructorPreferences = false;
+		} else {
+			$scope.supportCallConfigData.collectAssociateInstructorPreferences = true;
 		}
 	};
 
@@ -150,6 +214,30 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	$scope.inviteInstructors = function() {
 		$scope.supportCallConfigData.participantPool.forEach( function(participant) {
 			if (participant.isInstructor) {
+				participant.invited = true;
+			}
+		});
+	};
+
+	$scope.inviteMasters = function() {
+		$scope.supportCallConfigData.participantPool.forEach( function(participant) {
+			if (participant.isMasters) {
+				participant.invited = true;
+			}
+		});
+	};
+
+	$scope.invitePhds = function() {
+		$scope.supportCallConfigData.participantPool.forEach( function(participant) {
+			if (participant.isPhd) {
+				participant.invited = true;
+			}
+		});
+	};
+
+	$scope.inviteInstructionalSupport = function() {
+		$scope.supportCallConfigData.participantPool.forEach( function(participant) {
+			if (participant.isInstructionalSupport) {
 				participant.invited = true;
 			}
 		});

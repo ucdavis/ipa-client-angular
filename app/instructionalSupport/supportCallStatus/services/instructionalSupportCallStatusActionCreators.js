@@ -12,22 +12,21 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-
-		// ---- TODO: Refactor this
-		addSupportStaffSupportCall: function (scheduleId, studentSupportCall) {
-			// Remove participants that were disabled in the UI
-			filteredParticipants = [];
-			studentSupportCall.participantPool.forEach( function(participant) {
-				if (participant.enabled == true) {
-					filteredParticipants.push(participant);
+		addSupportStaffSupportCall: function (scheduleId, supportCallData) {
+			// Build addInstructorsDTO
+			supportCallData.studentIds = [];
+			// Create an array of invitedParticipantIds
+			supportCallData.participantPool.forEach(function(student) {
+				if (student.invited) {
+					supportCallData.studentIds.push(student.id);
 				}
 			});
 
-			studentSupportCall.participantPool = filteredParticipants;
+			// Convert date to Unix time
+			supportCallData.dueDate = supportCallData.dueDate.valueOf();
 
-			instructionalSupportCallStatusService.addStudentSupportCall(scheduleId, studentSupportCall).then(function (payload) {
-				$rootScope.$emit('toast', { message: "Support Call Created", type: "SUCCESS" });
-
+			instructionalSupportCallStatusService.addStudentsSupportCall(scheduleId, supportCallData).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Students added to support call", type: "SUCCESS" });
 				var action = {
 					type: ADD_STUDENT_SUPPORT_CALL,
 					payload: payload
@@ -37,8 +36,6 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		// -------
-
 		addInstructorsSupportCall: function (scheduleId, supportCallData) {
 			// Build addInstructorsDTO
 			supportCallData.instructorIds = [];
@@ -53,7 +50,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 			supportCallData.dueDate = supportCallData.dueDate.valueOf();
 
 			instructionalSupportCallStatusService.addInstructorsSupportCall(scheduleId, supportCallData).then(function (payload) {
-				$rootScope.$emit('toast', { message: "Support Call Created", type: "SUCCESS" });
+				$rootScope.$emit('toast', { message: "Instructors added to support call", type: "SUCCESS" });
 				var action = {
 					type: ADD_INSTRUCTOR_SUPPORT_CALL,
 					payload: payload
@@ -79,7 +76,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 			});
 		},
 		removeSupportStaffFromSupportCall: function (supportStaff, scheduleId, termCode) {
-			instructionalSupportCallStatusService.removeInstructorFromSupportCall(supportStaff, scheduleId, termCode).then(function (supportCallResponseId) {
+			instructionalSupportCallStatusService.removeStudentFromSupportCall(supportStaff, scheduleId, termCode).then(function (supportCallResponseId) {
 				$rootScope.$emit('toast', { message: "Student removed from support call", type: "SUCCESS" });
 				var action = {
 					type: DELETE_STUDENT_SUPPORT_CALL,

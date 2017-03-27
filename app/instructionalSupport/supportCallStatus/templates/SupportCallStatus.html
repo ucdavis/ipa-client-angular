@@ -27,6 +27,18 @@
 						</a>
 					</span>
 				</div>
+				<div style="padding-right: 5px;">
+					<a ng-if="view.state.eligible.supportStaff.length > 0" ng-click="openAddSupportStaffModal()" class="btn btn-default">
+						<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
+						Add Students
+					</a>
+					<span ng-if="view.state.eligible.supportStaff.length == 0" uib-tooltip="All students called">
+						<a class="disabled btn btn-default" style="color: #808080;">
+							<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
+							Add Students
+						</a>
+					</span>
+				</div>
 				<div>
 					<a ng-if="atLeastOneInstructorSelected()" ng-click="openContactInstructorsModal()" class="btn btn-default">
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
@@ -86,7 +98,7 @@
 								<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
 									class="text-primary clickable hovrable"
 									teaching-call-tooltip
-									title="Teaching Call"
+									title="Support Call"
 									terms-blob="{{instructor.termsBlob}}"
 									show-unavail="{{instructor.showUnavailabilities}}"
 									message="{{instructor.message}}"
@@ -148,7 +160,7 @@
 					<div class="column-hover-ui"></div>
 				</div>
 
-				<div class="table-row" style="display: flex;" ng-repeat="supportStaff in view.state.supportCall.federation">
+				<div class="table-row" style="display: flex;" ng-repeat="supportStaff in view.state.supportCall.supportStaff">
 					<div class="column-checkbox cell first-cell">
 						<input type="checkbox" ng-checked="supportStaff.selected" ng-click="toggleSelectedInstructor(instructor)">
 					</div>
@@ -158,10 +170,10 @@
 							<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
 								class="text-primary clickable hovrable"
 								teaching-call-tooltip
-								title="Teaching Call"
-								terms-blob="{{instructor.termsBlob}}"
-								show-unavail="{{instructor.showUnavailabilities}}"
-								message="{{instructor.message}}"
+								title="Support Call"
+								terms-blob="{{supportStaff.termsBlob}}"
+								show-unavail="{{supportStaff.showUnavailabilities}}"
+								message="{{supportStaff.message}}"
 								placement="right">
 						</div>
 					</div>
