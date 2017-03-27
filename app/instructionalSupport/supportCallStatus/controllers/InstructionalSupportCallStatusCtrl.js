@@ -43,7 +43,7 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 			};
 
 			$scope.openAddInstructorsModal = function() {
-				$scope.openAddParticipantsSupportCall("instructors");
+				$scope.openAddParticipantsSupportCall("instructor");
 			};
 
 			$scope.openAddSupportStaffModal = function () {
@@ -52,9 +52,9 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 
 			$scope.toggleParticipantSelection = function(participant) {
 				if (participant.selected) {
-					participant.selected = true;
-				} else {
 					participant.selected = false;
+				} else {
+					participant.selected = true;
 				}
 			};
 
@@ -72,6 +72,34 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 				$scope.view.state.supportCall.supportStaff.forEach(function(slotSupportStaff) {
 					slotSupportStaff.selected = $scope.supportStaffSelected;
 				});
+			};
+
+			$scope.atLeastOneInstructorSelected = function() {
+				var instructorIsSelected = false;
+
+				if ($scope.view.state) {
+					$scope.view.state.supportCall.instructors.forEach(function(instructor) {
+						if (instructor.selected) {
+							instructorIsSelected = true;
+						}
+					});
+				}
+
+				return instructorIsSelected;
+			};
+
+			$scope.atLeastOneStudentSelected = function() {
+				var instructorIsSelected = false;
+
+				if ($scope.view.state) {
+					$scope.view.state.supportCall.supportStaff.forEach(function(participant) {
+						if (participant.selected) {
+							instructorIsSelected = true;
+						}
+					});
+				}
+
+				return instructorIsSelected;
 			};
 
 			$scope.openAddParticipantsSupportCall = function(supportCallMode) {
@@ -97,6 +125,60 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 						},
 						termShortCode: function () {
 							return $scope.termShortCode;
+						}
+					}
+				});
+			};
+
+			$scope.openContactStudentsModal = function() {
+				$scope.openContactParticipantModal("supportStaff");
+			};
+
+			$scope.openContactInstructorsModal = function() {
+				$scope.openContactParticipantModal("instructor");
+			};
+
+			// Launches Contact Modal
+			$scope.openContactParticipantModal = function(supportCallMode) {
+				selectedParticipants = [];
+
+				if (supportCallMode == "instructor") {
+					$scope.view.state.supportCall.instructors.forEach(function(instructor) {
+						if (instructor.selected) {
+							selectedParticipants.push(instructor);
+						}
+					});
+				}
+				if (supportCallMode == "supportStaff") {
+					$scope.view.state.supportCall.supportStaff.forEach(function(slotSupportStaff) {
+						if (slotSupportStaff.selected) {
+							selectedParticipants.push(slotSupportStaff);
+						}
+					});
+				}
+
+				modalInstance = $uibModal.open({
+					templateUrl: 'ContactSupportCallModal.html',
+					controller: ModalContactSupportCallCtrl,
+					size: 'lg',
+					resolve: {
+						supportCallMode: function () {
+							return supportCallMode;
+						},
+						scheduleId: function () {
+							return $scope.view.state.misc.scheduleId;
+						},
+						state: function () {
+							return $scope.view.state;
+						},
+						year: function () {
+							return $scope.year;
+						},
+						termShortCode: function () {
+							return $scope.termShortCode;
+						},
+						selectedParticipants: function () {
+							return selectedParticipants;
 						}
 					}
 				});

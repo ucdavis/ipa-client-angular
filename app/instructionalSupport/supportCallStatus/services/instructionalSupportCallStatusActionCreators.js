@@ -60,6 +60,48 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		contactInstructorsSupportCall: function (scheduleId, supportCallData) {
+			supportCallData.responseIds = [];
+
+			supportCallData.selectedParticipants.forEach(function(participant) {
+				supportCallData.responseIds.push(participant.supportCallResponseId);
+			});
+
+			// Convert date to Unix time
+			supportCallData.dueDate = supportCallData.dueDate.valueOf();
+
+			instructionalSupportCallStatusService.contactInstructorsSupportCall(scheduleId, supportCallData).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Instructor contact scheduled", type: "SUCCESS" });
+				var action = {
+					type: CONTACT_INSTRUCTOR_SUPPORT_CALL,
+					payload: payload
+				};
+				supportCallStatusStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		contactSupportStaffSupportCall: function (scheduleId, supportCallData) {
+			supportCallData.responseIds = [];
+
+			supportCallData.selectedParticipants.forEach(function(participant) {
+					supportCallData.responseIds.push(participant.supportCallResponseId);
+			});
+
+			// Convert date to Unix time
+			supportCallData.dueDate = supportCallData.dueDate.valueOf();
+
+			instructionalSupportCallStatusService.contactSupportStaffSupportCall(scheduleId, supportCallData).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Student contact scheduled", type: "SUCCESS" });
+				var action = {
+					type: CONTACT_STUDENT_SUPPORT_CALL,
+					payload: payload
+				};
+				supportCallStatusStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		removeInstructorFromSupportCall: function (instructor, scheduleId, termCode) {
 			instructionalSupportCallStatusService.removeInstructorFromSupportCall(instructor, scheduleId, termCode).then(function (supportCallResponseId) {
 				$rootScope.$emit('toast', { message: "Instructor removed from support call", type: "SUCCESS" });

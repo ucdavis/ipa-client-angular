@@ -25,9 +25,9 @@ instructionalSupportApp.factory("instructionalSupportCallStatusService", this.in
 
 			return deferred.promise;
 		},
-		deleteStudentSupportCall: function(studentSupportCall) {
+		addInstructorsSupportCall: function(scheduleId, instructorSupportCall) {
 			var deferred = $q.defer();
-			$http.delete(serverRoot + "/api/instructionalSupportView/studentInstructionalSupportCalls/" + studentSupportCall.id, { withCredentials: true })
+			$http.post(serverRoot + "/api/supportCallView/" + scheduleId + "/addInstructors", instructorSupportCall, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
@@ -37,9 +37,21 @@ instructionalSupportApp.factory("instructionalSupportCallStatusService", this.in
 
 			return deferred.promise;
 		},
-		addInstructorsSupportCall: function(scheduleId, instructorSupportCall) {
+		contactInstructorsSupportCall: function(scheduleId, supportCallData) {
 			var deferred = $q.defer();
-			$http.post(serverRoot + "/api/supportCallView/" + scheduleId + "/addInstructors", instructorSupportCall, { withCredentials: true })
+			$http.put(serverRoot + "/api/supportCallView/" + scheduleId + "/contactInstructors", supportCallData, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		contactSupportStaffSupportCall: function(scheduleId, supportCallData) {
+			var deferred = $q.defer();
+			$http.put(serverRoot + "/api/supportCallView/" + scheduleId + "/contactSupportStaff", supportCallData, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})

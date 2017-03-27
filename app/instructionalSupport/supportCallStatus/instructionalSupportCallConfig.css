@@ -299,6 +299,10 @@ div.datepicker {
 
 .teaching-call--info_style {
 	flex:0 1 45%;
+}
+
+.add-support-call--info_style {
+	flex:0 1 45%;
 	height: 250px;
 }
 
