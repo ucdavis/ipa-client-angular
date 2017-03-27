@@ -10,11 +10,10 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 			$window.document.title = "Instructional Support";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
+			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.termShortCode = $routeParams.termShortCode;
 
-			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
-			$scope.termShortCode = $routeParams.termShortCode;
 
 			$rootScope.$on('supportCallStatusStateChanged', function (event, data) {
 				$scope.view.state = data;
@@ -33,6 +32,14 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 				return Math.floor(number);
 			};
 
+			$scope.openAddInstructorsModal = function() {
+				$scope.openSupportCallConfig("instructors");
+			};
+
+			$scope.openAddInstructorsModal = function () {
+				$scope.openSupportCallConfig("supportStaff");
+			};
+
 			$scope.openSupportCallConfig = function(supportCallMode) {
 
 				modalInstance = $uibModal.open({
@@ -44,56 +51,22 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 							return supportCallMode;
 						},
 						scheduleId: function () {
-							return $scope.view.state.userInterface.scheduleId;
+							return $scope.view.state.misc.scheduleId;
 						},
-						mastersIds: function () {
-							return $scope.view.state.mastersIds;
-						},
-						phdIds: function () {
-							return $scope.view.state.phdIds;
-						},
-						instructionalSupportIds: function () {
-							return $scope.view.state.instructionalSupportIds;
-						},
-						instructionalSupportStaffs: function () {
-							return $scope.view.state.instructionalSupportStaffs;
-						},
-						instructors: function () {
-							return $scope.view.state.instructors;
-						},
-						instructorsByShortTermCode: function () {
-							return $scope.view.state.userInterface.instructorsByShortTermCode;
+						state: function () {
+							return $scope.view.state;
 						},
 						year: function () {
 							return $scope.year;
 						},
 						nextYear: function () {
 							return $scope.nextYear;
+						},
+						termShortCode: function () {
+							return $scope.termShortCode;
 						}
 					}
 				});
-			};
-
-			$scope.getTermDescription = function(term) {
-				var endingYear = "";
-				if (term.length == 6) {
-					endingYear = term.substring(0,4);
-					term = term.slice(-2);
-				}
-
-				termNames = {
-					'05': 'Summer Session 1',
-					'06': 'Summer Special Session',
-					'07': 'Summer Session 2',
-					'08': 'Summer Quarter',
-					'09': 'Fall Semester',
-					'10': 'Fall Quarter',
-					'01': 'Winter Quarter',
-					'02': 'Spring Semester',
-					'03': 'Spring Quarter'
-				};
-
-				return termNames[term];
 			};
 	}]);
 

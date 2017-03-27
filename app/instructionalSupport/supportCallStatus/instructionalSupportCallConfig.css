@@ -267,3 +267,132 @@ div.datepicker {
 	margin-top: 5px;
 	margin-left: 10px;
 }
+
+
+/* Imported Styles */
+/*modal css*/
+.flex-box {
+	display: flex;
+}
+
+.btn-group--position{
+	flex:0 1 100%;
+	margin-bottom: 10px;
+}
+
+.teaching-call--header_style {
+	background: #303641;
+}
+
+.teaching-call--header_style h4 {
+	color: white;
+}
+
+.teaching-call--header_style button { /*assign style to "x" button */
+	color: white;
+	opacity: 1;
+}
+
+.teaching-call--width {
+	width: 900px;
+}
+
+.teaching-call--info_style {
+	flex:0 1 45%;
+}
+
+.modal-footer--teaching-call {
+	background-color: rgb(248, 248, 248);
+}
+
+.checkbox-inline input{
+	top: -2px !important;
+}
+
+.email-style {
+	margin-bottom:30px;
+	text-align: left;
+}
+
+.ta-slot--width {
+	width: 450px;
+}
+
+.ta-application--info_style {
+	flex: 0 1 35%;
+}
+
+/* modal overwrite */
+.modal .modal-header .close {
+	background: none;
+	display: inline-block;
+	padding: 0px 5px;
+	line-height: 1;
+	color: white;
+	zoom: 1;
+	opacity: 1 !important;
+}
+
+/*bootstrap overwrite*/
+.row {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+#modal-1 {
+	height: 600px;
+}
+
+.set-terms-teaching-call-btn {
+	background-color: white;
+	text-align: left;
+	width: 100%;
+}
+
+.set-term-menu .active a,
+.set-term-menu .active a:hover,
+.set-term-menu .active a:focus,
+.set-term-menu.dropdown-menu > li.active > a:focus {
+	background-color: #303641;
+}
+
+.instructor-group-active,
+.instructor-group-active:focus,
+.instructor-group-active:hover {
+	background-color: #303641;
+	color: white;
+}
+
+.set-term-menu.dropdown-menu > li > a:focus {
+	background-color: white;
+}
+
+.instructor-toggle-btn {
+	border-radius: 4px;
+	border-color: rgb(204, 204, 204);
+}
+
+.instructor-toggle-btn:hover {
+	background-color: rgba(245, 245, 246, 0.8);
+}
+
+.instructor-toggle-btn.active,
+.instructor-toggle-btn.active:hover {
+	background-color: rgb(48, 54, 65);
+	color: white;
+}
+
+.instructor-toggle-btn.disabled,
+.instructor-toggle-btn.disabled:hover,
+.instructor-toggle-btn.disabled:focus {
+	background-color: rgba(0, 0, 0, 0);
+	color: #333;
+}
+
+.overflow-auto {
+	overflow-y: auto;
+}
+
+.set-terms-container {
+	width: 100%;
+}

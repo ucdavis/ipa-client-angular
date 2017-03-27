@@ -66,6 +66,8 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 							}
 						}
 
+						instructor.isInstructor = true;
+
 						instructors.list[instructor.id] = instructor;
 					});
 
@@ -141,6 +143,7 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 			newPageState = {};
 			newPageState.supportCall = {};
 			newPageState.eligible = {};
+			newPageState.misc = {};
 
 			newPageState.supportCall.instructors = supportCallStatusSelectors.generateInstructorGroup(angular.copy(scope._state.instructors), angular.copy(scope._state.instructorSupportCallResponses), false);
 
@@ -155,6 +158,9 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 			newPageState.eligible.phds = supportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), true, "phd");
 			newPageState.eligible.instructionalSupports = supportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), true, "instructionalSupport");
 			newPageState.eligible.supportStaff = supportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), true, "all");
+
+			newPageState.misc.scheduleId = action.payload.scheduleId;
+
 			$rootScope.$emit('supportCallStatusStateChanged', newPageState);
 		}
 	};
