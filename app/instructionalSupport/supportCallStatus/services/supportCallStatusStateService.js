@@ -26,6 +26,13 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 					supportStaffSupportCallResponses.ids.splice(index, 1);
 
 					return supportStaffSupportCallResponses;
+				case ADD_STUDENT_SUPPORT_CALL:
+					action.payload.forEach(function(supportCallResponse) {
+						supportStaffSupportCallResponses.ids.push(supportCallResponse.id);
+						supportStaffSupportCallResponses.list[supportCallResponse.id] = supportCallResponse;
+					});
+
+					return supportStaffSupportCallResponses;
 				default:
 					return supportStaffSupportCallResponses;
 			}
@@ -52,6 +59,13 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 
 					var index = instructorSupportCallResponses.ids.indexOf(supportCallResponseId);
 					instructorSupportCallResponses.ids.splice(index, 1);
+
+					return instructorSupportCallResponses;
+				case ADD_INSTRUCTOR_SUPPORT_CALL:
+					action.payload.forEach(function(supportCallResponse) {
+						instructorSupportCallResponses.ids.push(supportCallResponse.id);
+						instructorSupportCallResponses.list[supportCallResponse.id] = supportCallResponse;
+					});
 
 					return instructorSupportCallResponses;
 				default:
@@ -92,6 +106,14 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 				case DELETE_INSTRUCTOR_SUPPORT_CALL:
 					var instructorId = action.payload.instructorId;
 					instructors.list[instructorId].supportCallResponseId = null;
+					return instructors;
+				case ADD_INSTRUCTOR_SUPPORT_CALL:
+					action.payload.forEach(function(supportCallResponse) {
+						var instructor = instructors.list[supportCallResponse.instructorId];
+						instructor.supportCallResponseId = supportCallResponse.id;
+					});
+
+					return instructors;
 				default:
 					return instructors;
 			}
@@ -141,6 +163,13 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 				case DELETE_STUDENT_SUPPORT_CALL:
 					var supportStaffId = action.payload.supportStaffId;
 					supportStaff.list[supportStaffId].supportCallResponseId = null;
+
+					return supportStaff;
+				case ADD_STUDENT_SUPPORT_CALL:
+					action.payload.forEach(function(supportCallResponse) {
+						var supportStaffDTO = supportStaff.list[supportCallResponse.supportStaffId];
+						supportStaffDTO.supportCallResponseId = supportCallResponse.id;
+					});
 
 					return supportStaff;
 				default:
