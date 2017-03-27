@@ -193,7 +193,7 @@
 				</div>
 			</div>
 
-			<div class="modal-footer modal-footer--teaching-call">
+			<div class="modal-footer modal-footer--teaching-call" style="padding-top: 0px;">
 				<div class="email-style container-fluid">
 					<div class="checkbox" style="display: flex; ">
 						<div ng-click="toggleSendEmails()">
@@ -215,14 +215,14 @@
 				<button ng-if="isAddFormComplete() == true && supportCallConfigData.sendEmails"
 								type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Send</button>
 				<button ng-if="isAddFormComplete() == false && supportCallConfigData.sendEmails"
-								tooltip-placement="left" uib-tooltip="You must select at least one instructor" type="button"
+								tooltip-placement="left" uib-tooltip="You must select at least one instructor and preference type" type="button"
 								class="disabled btn btn-info neon-dark-confirm-btn">Send</button>
 
 				<!-- start buttons (no email) -->
 				<button ng-if="isAddFormComplete() == true && !supportCallConfigData.sendEmails"
 								type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Start</button>
 				<button ng-if="isAddFormComplete() == false && !supportCallConfigData.sendEmails"
-								tooltip-placement="left" uib-tooltip="You must select at least one instructor" type="button"
+								tooltip-placement="left" uib-tooltip="You must select at least one instructor and preference type" type="button"
 								class="disabled btn btn-info neon-dark-confirm-btn">Start</button>
 
 			</div>

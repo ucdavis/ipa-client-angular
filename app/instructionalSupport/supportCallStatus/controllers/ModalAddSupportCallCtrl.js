@@ -25,7 +25,7 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	$scope.supportCallConfigData.dueDate;
 	$scope.supportCallConfigData.rawDueDate;
 	
-	$scope.supportCallConfigData.emailMessage = "Please consider your preferences for next year. As always, we will attempt to accommodate your requests, but we may need to ask some of you to make changes in order to balance our course offerings effectively.";
+	$scope.supportCallConfigData.message = "Please consider your preferences for next year. As always, we will attempt to accommodate your requests, but we may need to ask some of you to make changes in order to balance our course offerings effectively.";
 
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate', 'yyyy-MM-dd'];
 	$scope.format = $scope.formats[0];
@@ -261,9 +261,9 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	$scope.isAddFormComplete = function() {
 		if ($scope.supportCallConfigData.mode == "supportStaff") {
 			// Ensure at least one preference type is set
-			if(!$scope.supportCallConfigData.collectAIPreferences
+			if(!$scope.supportCallConfigData.collectAssociateInstructorPreferences
 				&& !$scope.supportCallConfigData.collectReaderPreferences
-				&& !$scope.supportCallConfigData.collectTAPreferences) {
+				&& !$scope.supportCallConfigData.collectTeachingAssistantPreferences) {
 				return false;
 			}
 		}
