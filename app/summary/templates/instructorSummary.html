@@ -13,7 +13,7 @@
 				<div class="course-table__header">
 					<div class="course-table__header-detail">
 						<div>
-							Teaching Call
+							Teaching Calls
 						</div>
 					</div>
 				</div>
@@ -51,19 +51,19 @@
 			</div>
 		</div>
 
-		<div ng-if="view.state.supportCalls.instructorSupportCalls.ids > 0" class="course-status-header">
+		<div ng-if="view.state.instructorSupportCalls.ids > 0" class="course-status-header">
 			<h5>
 				Support Calls
 			</h5>
 		</div>
 
 		<div>
-			<div ng-if="view.state.supportCalls.instructorSupportCalls.ids > 0" class="course-table-row">
+			<div ng-if="view.state.instructorSupportCallResponses.length > 0" class="course-table-row">
 				<!-- table header -->
 				<div class="course-table__header">
 					<div class="course-table__header-detail">
 						<div>
-							Support Call
+							Support Calls
 						</div>
 					</div>
 				</div>
@@ -85,20 +85,19 @@
 			<!-- table header -->
 
 			<!-- instructor support calls -->
-			<div ng-repeat="instructorSupportCallId in view.state.supportCalls.instructorSupportCalls.ids" class="course-table-row"
-					ng-init="instructorSupportCall=view.state.supportCalls.instructorSupportCalls.list[instructorSupportCallId]">
+			<div ng-repeat="supportCallResponse in view.state.instructorSupportCallResponses" class="course-table-row">
 				<div class="course-table__row-detail">
 					<div>
-						<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ instructorSupportCall.termCode.slice(-2) }}/instructorSupportCallForm">
+						<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) }}/instructorSupportCallForm">
 							View Support Call Form
 						</a>
 					</div>
 				</div>
 				<div class="course-table__row-detail">
-					{{ instructorSupportCall.dueDate }}
+					{{ supportCallResponse.dueDate }}
 				</div>
 				<div class="course-table__row-detail">
-					<i class="glyphicon glyphicon-ok" ng-if="instructorSupportCall.submitted"></i>
+					<i class="glyphicon glyphicon-ok" ng-if="supportCallResponse.submitted"></i>
 				</div>
 			</div>
 

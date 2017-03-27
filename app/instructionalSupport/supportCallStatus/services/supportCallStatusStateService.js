@@ -33,6 +33,13 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 					});
 
 					return supportStaffSupportCallResponses;
+				case CONTACT_STUDENT_SUPPORT_CALL:
+					action.payload.forEach(function(supportCallResponse) {
+						supportStaffSupportCallResponses.ids.push(supportCallResponse.id);
+						supportStaffSupportCallResponses.list[supportCallResponse.id] = supportCallResponse;
+					});
+
+					return supportStaffSupportCallResponses;
 				default:
 					return supportStaffSupportCallResponses;
 			}
@@ -62,6 +69,13 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 
 					return instructorSupportCallResponses;
 				case ADD_INSTRUCTOR_SUPPORT_CALL:
+					action.payload.forEach(function(supportCallResponse) {
+						instructorSupportCallResponses.ids.push(supportCallResponse.id);
+						instructorSupportCallResponses.list[supportCallResponse.id] = supportCallResponse;
+					});
+
+					return instructorSupportCallResponses;
+				case CONTACT_INSTRUCTOR_SUPPORT_CALL:
 					action.payload.forEach(function(supportCallResponse) {
 						instructorSupportCallResponses.ids.push(supportCallResponse.id);
 						instructorSupportCallResponses.list[supportCallResponse.id] = supportCallResponse;

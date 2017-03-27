@@ -390,71 +390,33 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					return teachingCallReceipt;
 			}
 		},
-		_supportCallReducers: function (action, supportCalls) {
+		_instructorSupportCallResponseReducers: function (action, supportCallResponses) {
 			var scope = this;
-			var data = action.payload;
 
 			switch (action.type) {
 				case INIT_STATE:
-					supportCalls = {
-						studentSupportCalls: {
-							ids: [],
-							list: {}
-						},
-						instructorSupportCalls: {
-							ids: [],
-							list: {}
-						},
-						studentSupportCallResponses: {
-							ids: [],
-							list: {}
-						},
-						instructorSupportCallResponses: {
-							ids: [],
-							list: {}
-						}
-					};
+					var supportCallResponses = action.payload.instructorSupportCallResponses;
+					supportCallResponses.forEach(function(supportCallResponse) {
+						supportCallResponse.dueDate = millisecondsToFullDate(supportCallResponse.dueDate);
+					});
 
-					var studentSupportCallLength = action.payload.studentSupportCalls ? action.payload.studentSupportCalls.length : 0;
-					for (var i = 0; i < studentSupportCallLength; i++) {
-						var slotStudentSupportCall = action.payload.studentSupportCalls[i];
-						slotStudentSupportCall.dueDate = millisecondsToFullDate(slotStudentSupportCall.dueDate);
-
-						supportCalls.studentSupportCalls.list[slotStudentSupportCall.id] = slotStudentSupportCall;
-						supportCalls.studentSupportCalls.ids.push(slotStudentSupportCall.id);
-					}
-
-					var instructorSupportCallLength = action.payload.instructorSupportCalls ? action.payload.instructorSupportCalls.length : 0;
-					for (var i = 0; i < instructorSupportCallLength; i++) {
-						var slotInstructorSupportCall = action.payload.instructorSupportCalls[i];
-						slotInstructorSupportCall.dueDate = millisecondsToFullDate(slotInstructorSupportCall.dueDate);
-
-						supportCalls.instructorSupportCalls.list[slotInstructorSupportCall.id] = slotInstructorSupportCall;
-						supportCalls.instructorSupportCalls.ids.push(slotInstructorSupportCall.id);
-					}
-
-					var studentSupportCallResponseLength = action.payload.studentInstructionalSupportCallResponses ? action.payload.studentInstructionalSupportCallResponses.length : 0;
-					for (var i = 0; i < studentSupportCallResponseLength; i++) {
-						var slotStudentSupportCallResponse = action.payload.studentInstructionalSupportCallResponses[i];
-
-						supportCalls.studentSupportCallResponses.list[slotStudentSupportCallResponse.id] = slotStudentSupportCallResponse;
-						supportCalls.studentSupportCallResponses.ids.push(slotStudentSupportCallResponse.id);
-
-						supportCalls.studentSupportCalls.list[slotStudentSupportCallResponse.studentSupportCallId].responseId = slotStudentSupportCallResponse.id;
-					}
-
-					var instructorSupportCallResponseLength = action.payload.instructorInstructionalSupportCallResponses ? action.payload.instructorInstructionalSupportCallResponses.length : 0;
-					for (var i = 0; i < instructorSupportCallResponseLength; i++) {
-						var slotInstructorSupportCallResponse = action.payload.instructorInstructionalSupportCallResponses[i];
-
-						supportCalls.instructorSupportCallResponses.list[slotInstructorSupportCallResponse.id] = slotInstructorSupportCallResponse;
-						supportCalls.instructorSupportCallResponses.ids.push(slotInstructorSupportCallResponse.id);
-
-						supportCalls.instructorSupportCalls.list[slotInstructorSupportCallResponse.instructorSupportCallId].responseId = slotInstructorSupportCallResponse.id;
-					}
-					return supportCalls;
+					return supportCallResponses;
 				default:
-					return supportCalls;
+					return supportCallResponses;
+			}
+		},
+		_studentSupportCallResponseReducers: function (action, supportCallResponses) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					var supportCallResponses = action.payload.studentSupportCallResponses;
+					supportCallResponses.forEach(function(supportCallResponse) {
+						supportCallResponse.dueDate = millisecondsToFullDate(supportCallResponse.dueDate);
+					});
+					return supportCallResponses;
+				default:
+					return supportCallResponses;
 			}
 		},
 		reduce: function (action) {
@@ -472,6 +434,9 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 			newState.events = scope._eventReducers(action, scope._state.events);
 			newState.instructorCourses = scope._instructorCourses(action, scope._state.instructorCourses);
 			newState.teachingCallReceipt = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipt);
+			newState.instructorSupportCallResponses = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponses);
+			newState.studentSupportCallResponses = scope._studentSupportCallResponseReducers(action, scope._state.studentSupportCallResponses);
+
 			scope._state = newState;
 
 			$rootScope.$emit('summaryStateChanged', scope._state);
