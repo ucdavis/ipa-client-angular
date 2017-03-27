@@ -10,6 +10,10 @@ sharedApp.directive('ipaTermSelector', function($window, $location, $routeParams
 			scope.termShortCode = $routeParams.termShortCode;
 
 			scope.generateDisplayText = function() {
+				if (!scope.termShortCode || scope.termShortCode.length != 2) {
+					return "Annual";
+				}
+
 				var description = scope.termShortCode.getTermDisplayName();
 				if (description && description.length > 0) {
 					return description;

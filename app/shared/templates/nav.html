@@ -140,7 +140,7 @@
 				</a>
 				<ul ng-class="{ 'visible': expanded == 'support' || (!expanded && currentBaseHref == 'instructionalSupport') }">
 					<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport' && currentEndHref == 'supportCallStatus'}">
-						<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ termShortCode }}/supportCallStatus">
+						<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}/supportCallStatus">
 							Support Calls
 						</a>
 					</li>
