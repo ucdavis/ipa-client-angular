@@ -14,8 +14,9 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
-			$rootScope.$on('instructionalSupportAssignmentStateChanged', function (event, data) {
+			$rootScope.$on('supportAssignmentStateChanged', function (event, data) {
 				$scope.view.state = data.state;
+
 				// Resolves occasional discrepancies with view binding, because we're using event listeners
 				$timeout(function() {
 					$scope.$apply();

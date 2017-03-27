@@ -97,7 +97,7 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 
 								if (instructionalSupportAssignment.type == "reader" 
 								&& isUniqueSectionGroup(potentialPreferences.readers, instructionalSupportAssignment.sectionGroupId)
-								&& preferenceNotAlreadySet(instructionalSupportAssignment.sectionGroupId, "reader", action.payload.studentInstructionalSupportPreferences)) {
+								&& preferenceNotAlreadySet(instructionalSupportAssignment.sectionGroupId, "reader", action.payload.studentSupportPreferences)) {
 									potentialPreferences.readers.push(instructionalSupportAssignment);
 	
 								} else if (instructionalSupportAssignment.type == "teachingAssistant"

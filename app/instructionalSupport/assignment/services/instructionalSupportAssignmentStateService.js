@@ -30,7 +30,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 
 								sectionGroupsList[sectionGroupData.id] = sectionGroup;
 								sectionGroups.ids.push(sectionGroupData.id);
-								sectionGroup.instructionalSupportAssignmentIds = [];
+								sectionGroup.supportAssignmentIds = [];
 
 								// Add assignment options
 								sectionGroup.taAssignmentOptions = {};
@@ -51,8 +51,8 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 								sectionGroup.aiAssignmentOptions.instructionalSupportIds = action.payload.instructionalSupportIds;
 								sectionGroup.aiAssignmentOptions.studentPreferences = [];
 
-								for (var k = 0; k < action.payload.studentInstructionalSupportPreferences.length; k++) {
-									var slotPreference = action.payload.studentInstructionalSupportPreferences[k];
+								for (var k = 0; k < action.payload.studentSupportPreferences.length; k++) {
+									var slotPreference = action.payload.studentSupportPreferences[k];
 									if (slotPreference.sectionGroupId == sectionGroup.id) {
 
 										if (slotPreference.type == "teachingAssistant") {
@@ -69,13 +69,13 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					}
 
 					// Add instructionalSupportAssignment associations to parent sectionGroups
-					var instructionalSupportAssignmentsLength = action.payload.instructionalSupportAssignments ? action.payload.instructionalSupportAssignments.length : 0;
+					var instructionalSupportAssignmentsLength = action.payload.supportAssignments ? action.payload.supportAssignments.length : 0;
 
 					for (var k = 0; k < instructionalSupportAssignmentsLength; k++) {
-						var instructionalSupportAssignmentData = action.payload.instructionalSupportAssignments[k];
+						var instructionalSupportAssignmentData = action.payload.supportAssignments[k];
 						var sectionGroupId = instructionalSupportAssignmentData.sectionGroupId;
 
-						sectionGroupsList[sectionGroupId].instructionalSupportAssignmentIds.push(instructionalSupportAssignmentData.id);
+						sectionGroupsList[sectionGroupId].supportAssignmentIds.push(instructionalSupportAssignmentData.id);
 					}
 
 					// Put together sectionGroup state data
@@ -90,7 +90,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						var instructionalSupportAssignmentData = action.payload[k];
 						var sectionGroupId = instructionalSupportAssignmentData.sectionGroupId;
 
-						sectionGroups.list[sectionGroupId].instructionalSupportAssignmentIds.push(instructionalSupportAssignmentData.id);
+						sectionGroups.list[sectionGroupId].supportAssignmentIds.push(instructionalSupportAssignmentData.id);
 					}
 
 					return sectionGroups;
@@ -100,10 +100,10 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					sectionGroupId = action.payload.sectionGroupId;
 					assignmentId = action.payload.id;
 
-					var index = sectionGroups.list[sectionGroupId].instructionalSupportAssignmentIds.indexOf(assignmentId);
+					var index = sectionGroups.list[sectionGroupId].supportAssignmentIds.indexOf(assignmentId);
 
 					if (index > -1) {
-						sectionGroups.list[sectionGroupId].instructionalSupportAssignmentIds.splice(index,1);
+						sectionGroups.list[sectionGroupId].supportAssignmentIds.splice(index,1);
 					}
 
 					return sectionGroups;
@@ -128,10 +128,10 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 
 					var instructionalSupportAssignmentsList = {};
 
-					var instructionalSupportAssignmentsLength = action.payload.instructionalSupportAssignments ? action.payload.instructionalSupportAssignments.length : 0;
+					var instructionalSupportAssignmentsLength = action.payload.supportAssignments ? action.payload.supportAssignments.length : 0;
 
 					for (var i = 0; i < instructionalSupportAssignmentsLength; i++) {
-						var instructionalSupportAssignmentData = action.payload.instructionalSupportAssignments[i];
+						var instructionalSupportAssignmentData = action.payload.supportAssignments[i];
 
 						instructionalSupportAssignmentsList[instructionalSupportAssignmentData.id] = instructionalSupportAssignmentData;
 						instructionalSupportAssignments.ids.push(instructionalSupportAssignmentData.id);
@@ -185,15 +185,15 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						list: {}
 					};
 
-					var instructionalSupportStaffsLength = action.payload.instructionalSupportStaffList ? action.payload.instructionalSupportStaffList.length : 0;
+					var instructionalSupportStaffsLength = action.payload.supportStaffList ? action.payload.supportStaffList.length : 0;
 
 					for (var i = 0; i < instructionalSupportStaffsLength; i++) {
-						var instructionalSupportStaffData = action.payload.instructionalSupportStaffList[i];
+						var instructionalSupportStaffData = action.payload.supportStaffList[i];
 
 						// Find assignments made to this support staff
 						instructionalSupportStaffData.supportAssignmentIds = [];
-						for (var j = 0; j < action.payload.instructionalSupportAssignments.length; j++) {
-							slotInstructionalSupportAssignment = action.payload.instructionalSupportAssignments[j];
+						for (var j = 0; j < action.payload.supportAssignments.length; j++) {
+							slotInstructionalSupportAssignment = action.payload.supportAssignments[j];
 
 							if (slotInstructionalSupportAssignment.instructionalSupportStaffId == instructionalSupportStaffData.id) {
 								instructionalSupportStaffData.supportAssignmentIds.push(slotInstructionalSupportAssignment.id);
@@ -202,8 +202,8 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 
 						// Find preferences made by this support staff
 						instructionalSupportStaffData.preferenceIds = [];
-						for (var j = 0; j < action.payload.studentInstructionalSupportPreferences.length; j++) {
-							slotPreference = action.payload.studentInstructionalSupportPreferences[j];
+						for (var j = 0; j < action.payload.studentSupportPreferences.length; j++) {
+							slotPreference = action.payload.studentSupportPreferences[j];
 
 							if (slotPreference.instructionalSupportStaffId == instructionalSupportStaffData.id) {
 								instructionalSupportStaffData.preferenceIds.push(slotPreference.id);
@@ -211,8 +211,8 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						}
 
 						// Find supportCallResponse for this support staff
-						for (var j = 0; j < action.payload.studentInstructionalSupportCallResponses.length; j++) {
-							slotSupportCallResponse = action.payload.studentInstructionalSupportCallResponses[j];
+						for (var j = 0; j < action.payload.studentSupportCallResponses.length; j++) {
+							slotSupportCallResponse = action.payload.studentSupportCallResponses[j];
 
 							if (slotSupportCallResponse.instructionalSupportStaffId == instructionalSupportStaffData.id) {
 								instructionalSupportStaffData.supportCallResponse = slotSupportCallResponse;
@@ -257,22 +257,6 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					}
 
 					return instructionalSupportStaffs;
-				case REMOVE_STAFF_FROM_SLOT:
-					var supportStaffAssignments = instructionalSupportStaffs.list[action.supportStaffId].supportAssignmentIds;
-					var supportAssignmentId = action.payload.id;
-
-					var index = supportStaffAssignments.indexOf(supportAssignmentId);
-
-					if (index > -1) {
-						supportStaffAssignments.splice(index);
-					}
-					return instructionalSupportStaffs;
-				case ASSIGN_STAFF_TO_SLOT:
-					var supportStaffId = action.payload.instructionalSupportStaffId;
-					var assignmentId = action.payload.id;
-
-					instructionalSupportStaffs.list[supportStaffId].supportAssignmentIds.push(assignmentId);
-					return instructionalSupportStaffs;
 				default:
 					return instructionalSupportStaffs;
 			}
@@ -287,10 +271,10 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						list: {}
 					};
 
-					var preferencesLength = action.payload.studentInstructionalSupportPreferences ? action.payload.studentInstructionalSupportPreferences.length : 0;
+					var preferencesLength = action.payload.studentSupportPreferences ? action.payload.studentSupportPreferences.length : 0;
 
 					for (var i = 0; i < preferencesLength; i++) {
-						var preferenceData = action.payload.studentInstructionalSupportPreferences[i];
+						var preferenceData = action.payload.studentSupportPreferences[i];
 
 						preferences.list[preferenceData.id] = preferenceData;
 						preferences.ids.push(preferenceData.id);
@@ -365,7 +349,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 
 			scope._state = newState;
 
-			$rootScope.$emit('instructionalSupportAssignmentStateChanged', {
+			$rootScope.$emit('supportAssignmentStateChanged', {
 				state: scope._state
 			});
 

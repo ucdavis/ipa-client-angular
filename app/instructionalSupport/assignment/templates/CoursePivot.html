@@ -34,14 +34,14 @@
 								</div>
 								<div class="ta_course-section">
 									<div class="tile-container"
-									ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
-									ng-show="isTeachingAssistant(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]) && view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId > 0"
+									ng-repeat="instructionalSupportAssignmentId in sectionGroup.supportAssignmentIds"
+									ng-show="view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].appointmentType == 'teachingAssistant' && view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].supportStaffId > 0"
 									ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]">
 										<div class="remove-tile-container">
 										</div>
 										<div class="assignment">
 											<div class="assignment-description">
-												{{ view.state.instructionalSupportStaffs.list[view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId].fullName }}
+												{{ view.state.instructionalSupportStaffs.list[view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].supportStaffId].fullName }}
 											</div>
 										</div>
 										<div class="remove-tile-container">
@@ -55,13 +55,13 @@
 
 									<!-- Display unfilled assignment slots -->
 									<div class="tile-container"
-										ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
-										ng-show="isTeachingAssistant(instructionalSupportAssignment) && isUnassigned(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId])">
+										ng-repeat="supportAssignmentId in sectionGroup.supportAssignmentIds"
+										ng-show="view.state.instructionalSupportAssignments.list[supportAssignmentId].appointmentType == 'teachingAssistant' && view.state.instructionalSupportAssignments.list[supportAssignmentId].supportStaffId == 0">
 
 										<div class="remove-tile-container">
 										</div>
 										<support-staff-selector 
-											ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=view.state.sectionGroups.list[instructionalSupportAssignment.sectionGroupId].taAssignmentOptions"
+											ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[supportAssignmentId]; assignmentOptions=view.state.sectionGroups.list[view.state.instructionalSupportAssignments.list[supportAssignmentId].sectionGroupId].taAssignmentOptions"
 											class="support-staff-selector assignment">
 										</support-staff-selector>
 
@@ -99,14 +99,14 @@
 								</div>
 								<div class="ta_course-section">
 									<div class="tile-container"
-									ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
-									ng-show="isReader(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]) && view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId > 0"
+									ng-repeat="instructionalSupportAssignmentId in sectionGroup.supportAssignmentIds"
+									ng-show="view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].appointmentType == 'reader' && view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].supportStaffId > 0"
 									ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]">
 										<div class="remove-tile-container">
 										</div>
 										<div class="assignment">
 											<div class="assignment-description">
-												{{ view.state.instructionalSupportStaffs.list[view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId].fullName }}
+												{{ view.state.instructionalSupportStaffs.list[view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].supportStaffId].fullName }}
 											</div>
 										</div>
 										<div class="remove-tile-container">
@@ -120,13 +120,13 @@
 
 									<!-- Display unfilled assignment slots -->
 									<div class="tile-container"
-										ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
-										ng-show="isReader(instructionalSupportAssignment) && isUnassigned(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId])">
+										ng-repeat="instructionalSupportAssignmentId in sectionGroup.supportAssignmentIds"
+										ng-show="instructionalSupportAssignment.appointmentType == 'reader' && view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].supportStaffId == 0">
 
 										<div class="remove-tile-container">
 										</div>
 										<support-staff-selector 
-											ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=view.state.sectionGroups.list[instructionalSupportAssignment.sectionGroupId].readerAssignmentOptions"
+											ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=view.state.sectionGroups.list[view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].sectionGroupId].readerAssignmentOptions"
 											class="support-staff-selector assignment">
 										</support-staff-selector>
 
@@ -163,14 +163,14 @@
 								</div>
 								<div class="ta_course-section">
 									<div class="tile-container"
-									ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
-									ng-show="isAssociateInstructor(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]) && view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId > 0"
+									ng-repeat="instructionalSupportAssignmentId in sectionGroup.supportAssignmentIds"
+									ng-show="view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].appointmentType == 'associateInstructor' && view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].supportStaffId > 0"
 									ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]">
 										<div class="remove-tile-container">
 										</div>
 										<div class="assignment">
 											<div class="assignment-description">
-												{{ view.state.instructionalSupportStaffs.list[view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId].fullName }}
+												{{ view.state.instructionalSupportStaffs.list[view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].supportStaffId].fullName }}
 											</div>
 										</div>
 										<div class="remove-tile-container">
@@ -184,13 +184,13 @@
 
 									<!-- Display unfilled assignment slots -->
 									<div class="tile-container"
-										ng-repeat="instructionalSupportAssignmentId in sectionGroup.instructionalSupportAssignmentIds"
-										ng-show="isAssociateInstructor(instructionalSupportAssignment) && isUnassigned(view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId])">
+										ng-repeat="instructionalSupportAssignmentId in sectionGroup.supportAssignmentIds"
+										ng-show="instructionalSupportAssignment.appointmentType == 'associateInstructor' && view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].supportStaffId == 0">
 
 										<div class="remove-tile-container">
 										</div>
 										<support-staff-selector 
-											ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=view.state.sectionGroups.list[instructionalSupportAssignment.sectionGroupId].aiAssignmentOptions"
+											ng-init="instructionalSupportAssignment=view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId]; assignmentOptions=view.state.sectionGroups.list[view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].sectionGroupId].aiAssignmentOptions"
 											class="support-staff-selector assignment">
 										</support-staff-selector>
 
