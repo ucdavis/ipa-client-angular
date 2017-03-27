@@ -4,7 +4,11 @@
 		<div class="modal-content">
 			<div class="modal-header teaching-call--header_style">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
-				<h4 class="modal-title">Add Instructors</h4>
+				<h4 class="modal-title">
+					Add
+					<span ng-if="supportCallConfigData.mode == 'instructor'">Instructors</span>
+					<span ng-if="supportCallConfigData.mode == 'supportStaff'">Students</span>
+				</h4>
 			</div>
 			<!-- modal-body -->
 			<div class="modal-body">
@@ -12,7 +16,10 @@
 				<div class="row flex-box container-fluid">
 					<!-- faculty member info-->
 					<div class="add-support-call--info_style">
-						<h5 style="margin-top: 0px;">Instructors</h5>
+						<h5 style="margin-top: 0px;">
+							<span ng-if="supportCallConfigData.mode == 'instructor'">Instructors</span>
+							<span ng-if="supportCallConfigData.mode == 'supportStaff'">Students</span>
+						</h5>
 
 						<div style="padding-left: 0px; width: 100%; padding-bottom: 10px;" class="btn-group">
 							<!-- Add Instructors Button -->
