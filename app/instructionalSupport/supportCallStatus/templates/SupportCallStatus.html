@@ -108,12 +108,10 @@
 							</span>
 							<span style="flex: 1 0 auto; padding-right: 10px;">
 								&nbsp;{{ instructor.firstName }}
-								<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
-									class="text-primary clickable hovrable"
-									teaching-call-tooltip
+								<i class="glyphicon glyphicon-list-alt text-primary clickable hovrable" style="padding-left:10px;"
+									instructor-support-call-tooltip
 									title="Support Call"
-									terms-blob="{{instructor.termsBlob}}"
-									show-unavail="{{instructor.showUnavailabilities}}"
+									allow-submission-after-due-date="{{instructor.allowSubmissionAfterDueDate}}"
 									message="{{instructor.message}}"
 									placement="right">
 							</span>
@@ -180,12 +178,17 @@
 					<div class="column-name left-cell">
 						<div  style="padding-left: 10px;">
 							{{ supportStaff.lastName }}, {{ supportStaff.firstName }}
-							<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
-								class="text-primary clickable hovrable"
-								teaching-call-tooltip
+							<i class="text-primary clickable hovrable glyphicon glyphicon-list-alt" style="padding-left:10px;"
+								student-support-call-tooltip
 								title="Support Call"
-								terms-blob="{{supportStaff.termsBlob}}"
-								show-unavail="{{supportStaff.showUnavailabilities}}"
+								allow-submission-after-due-date="{{supportStaff.allowSubmissionAfterDueDate}}"
+								collect-associate-instructor-preferences="{{supportStaff.collectAssociateInstructorPreferences}}"
+								collect-eligibility-confirmation="{{supportStaff.collectEligibilityConfirmation}}"
+								collect-general-comments="{{supportStaff.collectGeneralComments}}"
+								collect-preference-comments="{{supportStaff.collectPreferenceComments}}"
+								collect-reader-preferences="{{supportStaff.collectReaderPreferences}}"
+								collect-teaching-assistant-preferences="{{supportStaff.collectTeachingAssistantPreferences}}"
+								collect-teaching-qualifications="{{supportStaff.collectTeachingQualifications}}"
 								message="{{supportStaff.message}}"
 								placement="right">
 						</div>

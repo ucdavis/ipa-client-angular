@@ -27,6 +27,7 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 
 			$rootScope.$on('supportCallStatusStateChanged', function (event, data) {
 				$scope.view.state = data;
+				console.log($scope.view.state);
 			});
 
 			$scope.removeInstructor = function(instructor) {
