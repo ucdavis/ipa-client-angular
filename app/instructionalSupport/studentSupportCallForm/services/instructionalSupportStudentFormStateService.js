@@ -305,9 +305,6 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 			switch (action.type) {
 				case INIT_STATE:
 					userInterface = {};
-
-					userInterface.supportCallId = action.payload.studentInstructionalSupportCall.id;
-
 					return userInterface;
 				case TOGGLE_ASSIGNMENT_PIVOT_VIEW:
 					userInterface.displayCoursePivot = false;
@@ -326,25 +323,13 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 					return userInterface;
 			}
 		},
-		_supportCallReducers: function (action, supportCall) {
-			var scope = this;
-
-			switch (action.type) {
-				case INIT_STATE:
-				
-					supportCall = action.payload.studentInstructionalSupportCall;
-					supportCall.dueDate = millisecondsToFullDate(supportCall.dueDate);
-					return supportCall;
-				default:
-					return supportCall;
-			}
-		},
 		_supportCallResponseReducers: function (action, supportCallResponse) {
 			var scope = this;
 
 			switch (action.type) {
 				case INIT_STATE:
-					supportCallResponse = action.payload.studentInstructionalSupportCallResponse;
+					supportCallResponse = action.payload.studentSupportCallResponse;
+					supportCallResponse.dueDateDescription = millisecondsToFullDate(supportCallResponse.dueDate);
 					return supportCallResponse;
 				case UPDATE_SUPPORT_CALL_RESPONSE:
 					supportCallResponse = action.payload;
@@ -367,7 +352,6 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
 			newState.potentialPreferences = scope._potentialPreferenceReducers(action, scope._state.potentialPreferences);
 			newState.preferences = scope._preferenceReducers(action, scope._state.preferences);
-			newState.supportCall = scope._supportCallReducers(action, scope._state.supportCall);
 			newState.supportCallResponse = scope._supportCallResponseReducers(action, scope._state.supportCallResponse);
 
 			scope._state = newState;

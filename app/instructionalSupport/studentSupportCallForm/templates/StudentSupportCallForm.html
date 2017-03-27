@@ -48,7 +48,7 @@
 			<div class="container-fluid">
 				<div class="flex-row">
 					<!-- TA Requirements -->
-					<div ng-show="view.state.supportCall.collectEligibilityConfirmation" class="student-requirement">
+					<div ng-show="view.state.supportCallResponse.collectEligibilityConfirmation" class="student-requirement">
 						<h4>TA Eligibility Requirements</h4>
 						<div style="margin-top: 34px;">
 							<p>
@@ -66,7 +66,7 @@
 
 					<div class="student-course-container">
 						<div class="due-day-header">
-							<h4>Due Date: {{ view.state.supportCall.dueDate }} </h4>
+							<h4>Due Date: {{ view.state.supportCallResponse.dueDateDescription }} </h4>
 						</div>
 						<ul id="sortable" class="sortable-student-preferences">
 							<li ng-repeat="preference in view.state.preferences | orderBy: 'priority'" class="student-course-section" id="{{ preference.id }}">
@@ -86,7 +86,7 @@
 										</div>
 									</div>
 									</div>
-								<div ng-show="view.state.supportCall.collectPreferenceComments" class="comments-btn">
+								<div ng-show="view.state.supportCallResponse.collectPreferenceComments" class="comments-btn">
 									<a href="javascript:;" onclick="jQuery( '#modal-3').modal( 'show'); "><i class="glyphicon glyphicon-edit"></i>
 										<span>Comments...</span>
 									</a>
@@ -106,7 +106,7 @@
 	<div class="main-content input-box-container ">
 		<div class="container-fluid ">
 			<div class="input-box-section ">
-				<div ng-show="view.state.supportCall.collectTeachingQualifications" class="input-box-area ">
+				<div ng-show="view.state.supportCallResponse.collectTeachingQualifications" class="input-box-area ">
 					<h5 class="pull-left ">Teaching Qualification</h5>
 					<textarea class="form-control"
 					ng-model="view.state.supportCallResponse.teachingQualifications"
@@ -114,7 +114,7 @@
 				</div>
 				<div class="empty-flex-box_input-box ">
 				</div>
-				<div ng-show="view.state.supportCall.collectGeneralComments" class="input-box-area ">
+				<div ng-show="view.state.supportCallResponse.collectGeneralComments" class="input-box-area ">
 					<h5 class="pull-left">Comments</h5>
 					<textarea class="form-control"
 					ng-model="view.state.supportCallResponse.generalComments"
