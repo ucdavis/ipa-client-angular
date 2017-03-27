@@ -15,20 +15,70 @@
 						<h5 style="margin-top: 0px;">Instructors</h5>
 
 						<div style="padding-left: 0px; width: 100%; padding-bottom: 10px;" class="btn-group">
+							<!-- Add Instructors Button -->
 							<label  
-							ng-if="areAllInstructorsInvited() == false"
+							ng-if="areAllInstructorsInvited() == false && supportCallConfigData.mode == 'instructor'"
 							class="instructor-toggle-btn btn btn-sm"
 							style="width: 50%;" id="courses-pivot"
 							ng-click="inviteInstructors()">
 								Add Instructors
 							</label>
 							<label  
-							ng-if="areAllInstructorsInvited()"
+							ng-if="areAllInstructorsInvited()  && supportCallConfigData.mode == 'instructor'"
 							disabled class="instructor-toggle-btn btn btn-sm"
-							uib-tooltip="All Senate Instructors Added"
+							uib-tooltip="All Instructors Added"
 							style="width: 50%;" id="courses-pivot">
 								Add Instructors
 							</label>
+
+							<!-- Add Masters Button -->
+							<label  
+							ng-if="areAllMastersInvited() == false && supportCallConfigData.mode == 'supportStaff'"
+							class="instructor-toggle-btn btn btn-sm"
+							style="width: 50%;" id="courses-pivot"
+							ng-click="inviteInstructors()">
+								Add Masters
+							</label>
+							<label  
+							ng-if="areAllMastersInvited() && supportCallConfigData.mode == 'supportStaff'"
+							disabled class="instructor-toggle-btn btn btn-sm"
+							uib-tooltip="All Instructors Added"
+							style="width: 50%;" id="courses-pivot">
+								Add Masters
+							</label>
+
+							<!-- Add Phds Button -->
+							<label  
+							ng-if="areAllPhdsInvited() == false && supportCallConfigData.mode == 'supportStaff'"
+							class="instructor-toggle-btn btn btn-sm"
+							style="width: 50%;" id="courses-pivot"
+							ng-click="inviteInstructors()">
+								Add Phds
+							</label>
+							<label  
+							ng-if="areAllPhdsInvited() && supportCallConfigData.mode == 'supportStaff'"
+							disabled class="instructor-toggle-btn btn btn-sm"
+							uib-tooltip="All Instructors Added"
+							style="width: 50%;" id="courses-pivot">
+								Add Phds
+							</label>
+
+							<!-- Add Non-Departmental Button -->
+							<label  
+							ng-if="areAllInstructionalSupportInvited() == false && supportCallConfigData.mode == 'supportStaff'"
+							class="instructor-toggle-btn btn btn-sm"
+							style="width: 50%;" id="courses-pivot"
+							ng-click="inviteInstructors()">
+								Add Non-Departmentals
+							</label>
+							<label  
+							ng-if="areAllInstructionalSupportInvited() && supportCallConfigData.mode == 'supportStaff'"
+							disabled class="instructor-toggle-btn btn btn-sm"
+							uib-tooltip="All Instructors Added"
+							style="width: 50%;" id="courses-pivot">
+								Add Non-Departmentals
+							</label>
+
 						</div>
 
 						<div rows="5" class="overflow-auto flex flex-wrap padding-sm instructor-box">
@@ -47,7 +97,7 @@
 					<div class="teaching-call--info_style container-fluid">
 						<h5 style="margin-top: 0px;">Due Date</h5>
 						<p class="input-group datepicker-bar">
-							<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="startTeachingCallConfig.dueDate" is-open="popup1.opened"
+							<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="supportCallConfigData.dueDate" is-open="popup1.opened"
 							datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" 
 							popup-placement="bottom-left" show-button-bar="false" ng-click="open1()"/>
 							<span class="input-group-btn">
@@ -56,59 +106,53 @@
 						</p>
 						<div>
 							<ul style="list-style: none; padding-left: 0px; margin-bottom: 0px;">
-								<li ng-repeat="term in dropDownTerms" role="menuitem" ng-click="toggleTermActive(term)">
+								<li role="menuitem" ng-click="toggleAllowSubmissionAfterDueDate()">
 										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-											ng-class="{ 'checked': startTeachingCallConfig.activeTerms[term.slice(-2)] }">
+											ng-class="{ 'checked': supportCallConfigData.allowSubmissionAfterDueDate }">
 											<label class="cb-wrapper">
 												<div class="checked"></div>
 											</label>
-											<label>{{ getTermName(term) }}</label>
+											<label>Allow submission after due date</label>
 										</div>
 								</li>
 							</ul>
 						</div>
 					</div>
-					<!-- select dates&terms section ends-->
+					<!-- select date section ends-->
 				</div>
 			</div>
 
 			<div class="modal-footer modal-footer--teaching-call">
 				<div class="email-style container-fluid">
 					<div class="checkbox" style="display: flex; ">
-						<div ng-click="toggleSendEmail()">
+						<div ng-click="toggleSendEmails()">
 								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-									ng-class="{ 'checked': startTeachingCallConfig.sendEmail }">
+									ng-class="{ 'checked': supportCallConfigData.sendEmails }">
 									<label class="cb-wrapper">
 										<div class="checked"></div>
 									</label>
-									<label>Send Email</label>
+									<label>Send Emails</label>
 								</div>
 						</div>
-
-						<div ng-click="startTeachingCallConfig.showUnavailabilities = !startTeachingCallConfig.showUnavailabilities" style="padding-left: 20px;">
-								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-									ng-class="{ 'checked': startTeachingCallConfig.showUnavailabilities }">
-									<label class="cb-wrapper">
-										<div class="checked"></div>
-									</label>
-									<label>Ask for unavailabilities</label>
-								</div>
-						</div>
-
 					</div>
-					<textarea ng-if="startTeachingCallConfig.sendEmail == true" ng-bind-html="startTeachingCallConfig.message" class="form-control teaching-call-message-input" placeholder="" rows="5" id="comment"></textarea>
+					<textarea ng-if="supportCallConfigData.sendEmails == true" ng-bind-html="supportCallConfigData.message"
+					class="form-control support-call-message-input" placeholder="" rows="5" id="comment"
+					style="height: 99px;"></textarea>
 				</div>
+
 				<!-- send buttons -->
-				<button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == true && startTeachingCallConfig.sendEmail"
+				<button ng-if="isAddFormComplete() == true && supportCallConfigData.sendEmails"
 								type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Send</button>
-				<button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false && startTeachingCallConfig.sendEmail"
-								tooltip-placement="left" uib-tooltip="You must select at least one term and one instructor" type="button" class="disabled btn btn-info neon-dark-confirm-btn">Send</button>
+				<button ng-if="isAddFormComplete() == false && supportCallConfigData.sendEmails"
+								tooltip-placement="left" uib-tooltip="You must select at least one instructor" type="button"
+								class="disabled btn btn-info neon-dark-confirm-btn">Send</button>
 
 				<!-- start buttons (no email) -->
-				<button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == true && !startTeachingCallConfig.sendEmail"
+				<button ng-if="isAddFormComplete() == true && !supportCallConfigData.sendEmails"
 								type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Start</button>
-				<button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false && !startTeachingCallConfig.sendEmail"
-								tooltip-placement="left" uib-tooltip="You must select at least one term and one instructor" type="button" class="disabled btn btn-info neon-dark-confirm-btn">Start</button>
+				<button ng-if="isAddFormComplete() == false && !supportCallConfigData.sendEmails"
+								tooltip-placement="left" uib-tooltip="You must select at least one instructor" type="button"
+								class="disabled btn btn-info neon-dark-confirm-btn">Start</button>
 
 			</div>
 			<!-- modal-footer ends -->

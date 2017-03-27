@@ -12,7 +12,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		addStudentSupportCall: function (scheduleId, studentSupportCall) {
+		addSupportStaffSupportCall: function (scheduleId, studentSupportCall) {
 			// Remove participants that were disabled in the UI
 			filteredParticipants = [];
 			studentSupportCall.participantPool.forEach( function(participant) {
@@ -46,20 +46,21 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		addInstructorSupportCall: function (scheduleId, instructorSupportCall) {
-
-			// Remove participants that were disabled in the UI
-			filteredParticipants = [];
-			instructorSupportCall.participantPool.forEach( function(participant) {
-				if (participant.enabled == true) {
-					filteredParticipants.push(participant);
+		addInstructorsSupportCall: function (scheduleId, supportCallData) {
+			// Build addInstructorsDTO
+			supportCallData.instructorIds = [];
+			// Create an array of invitedParticipantIds
+			supportCallData.participantPool.forEach(function(instructor) {
+				if (instructor.invited) {
+					supportCallData.instructorIds.push(instructor.id);
 				}
 			});
 
-			instructorSupportCall.participantPool = filteredParticipants;
+			// Convert date to Unix time
+			supportCallData.dueDate = supportCallData.dueDate.valueOf();
 
 			$rootScope.$emit('toast', { message: "Support Call Created", type: "SUCCESS" });
-			instructionalSupportCallStatusService.addInstructorSupportCall(scheduleId, instructorSupportCall).then(function (payload) {
+			instructionalSupportCallStatusService.addInstructorsSupportCall(scheduleId, supportCallData).then(function (payload) {
 				var action = {
 					type: ADD_INSTRUCTOR_SUPPORT_CALL,
 					payload: payload

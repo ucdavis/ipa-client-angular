@@ -5,9 +5,18 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	$scope.scheduleId = scheduleId;
 	$scope.state = state;
 	$scope.year = year;
-	$scope.nextYear = nextYear;
+	$scope.nextYear = parseInt(year) + 1;
 	$scope.termShortCode = termShortCode;
 	$scope.supportCallConfigData = {};
+
+	// Generate termCode
+	if (termShortCode < 4) {
+		$scope.supportCallConfigData.termCode = $scope.nextYear + $scope.termShortCode;
+	} else {
+		$scope.supportCallConfigData.termCode = $scope.year + $scope.termShortCode;
+	}
+
+	$scope.supportCallConfigData.termCode;
 
 	$scope.supportCallConfigData.minimumNumberOfPreferences = 5;
 
@@ -37,6 +46,11 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		showWeeks: false
 	};
 
+	$scope.popup1 = {};
+	$scope.open1 = function() {
+		$scope.popup1.opened = true;
+	};
+
 	// Populate participantPool
 	$scope.supportCallConfigData.participantPool = [];
 
@@ -46,6 +60,7 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		$scope.supportCallConfigData.participantPool = $scope.state.eligible.supportStaff;
 	}
 
+	/* View Methods */
 	$scope.toggleSendEmails = function () {
 		if ($scope.supportCallConfigData.sendEmails) {
 			$scope.supportCallConfigData.sendEmails = false;
@@ -54,118 +69,11 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		}
 	};
 
-	$scope.checkboxToggle = function () {
-		$scope.toggleSendEmails();
-	};
-
-	$scope.selectSendEmail = function () {
-		$scope.supportCallConfigData.sendEmails = true;
-	};
-
-	$scope.selectNoEmail = function () {
-		$scope.supportCallConfigData.sendEmails = false;
-	};
-
-	$scope.toggleInstructor = function () {
-		// Ensure student groups are not part of this support Call if instructors are selected
-		$scope.supportCallConfigData.phdParticipants = false;
-		$scope.supportCallConfigData.mastersParticipants = false;
-		$scope.supportCallConfigData.instructionalSupportParticipants = false;
-
-		removeGroupFromPool("phd");
-		removeGroupFromPool("masters");
-		removeGroupFromPool("instructionalSupport");
-
-		if ($scope.supportCallConfigData.instructorParticipants) {
-			$scope.supportCallConfigData.instructorParticipants = false;
-			removeGroupFromPool("instructor");
+	$scope.toggleAllowSubmissionAfterDueDate = function () {
+		if ($scope.supportCallConfigData.allowSubmissionAfterDueDate) {
+			$scope.supportCallConfigData.allowSubmissionAfterDueDate = false;
 		} else {
-			$scope.supportCallConfigData.instructorParticipants = true;
-			addGroupToPool("instructor");
-		}
-	};
-
-	$scope.togglePhd = function () {
-		$scope.supportCallConfigData.instructorParticipants = false;
-		removeGroupFromPool("instructor");
-
-		if ($scope.supportCallConfigData.phdParticipants) {
-			$scope.supportCallConfigData.phdParticipants = false;
-			removeGroupFromPool("phd");
-		} else {
-			$scope.supportCallConfigData.phdParticipants = true;
-			addGroupToPool("phd");
-		}
-	};
-
-	$scope.toggleMasters = function () {
-		$scope.supportCallConfigData.instructorParticipants = false;
-		removeGroupFromPool("instructor");
-
-		if ($scope.supportCallConfigData.mastersParticipants) {
-			$scope.supportCallConfigData.mastersParticipants = false;
-			removeGroupFromPool("masters");
-		} else {
-			$scope.supportCallConfigData.mastersParticipants = true;
-			addGroupToPool("masters");
-		}
-	};
-
-	$scope.toggleInstructionalSupport = function () {
-		$scope.supportCallConfigData.instructorParticipants = false;
-		removeGroupFromPool("instructor");
-
-		if ($scope.supportCallConfigData.instructionalSupportParticipants) {
-			$scope.supportCallConfigData.instructionalSupportParticipants = false;
-			removeGroupFromPool("instructionalSupport");
-		} else {
-			$scope.supportCallConfigData.instructionalSupportParticipants = true;
-			addGroupToPool("instructionalSupport");
-		}
-	};
-
-	// Looks in the current participant pool for any individuals from the specified group, and removes them
-	removeGroupFromPool = function (participantGroup) {
-		for (var i = $scope.supportCallConfigData.participantPool.length - 1; i >= 0; i--) {
-			var participant = $scope.supportCallConfigData.participantPool[i];
-
-			if (participant.group == participantGroup) {
-				$scope.supportCallConfigData.participantPool.splice(i, 1);
-			}
-		}
-	};
-
-	// Adds all users in the specified group to the participant pool
-	addGroupToPool = function (participantGroup) {
-		var groupToAdd = {};
-
-		switch(participantGroup) {
-			case "phd":
-				groupToAdd = $scope.phdPool;
-				break;
-			case "masters":
-				groupToAdd = $scope.mastersPool;
-				break;
-			case "instructionalSupport":
-				groupToAdd = $scope.instructionalSupportPool;
-				break;
-			case "instructor":
-				groupToAdd = $scope.instructorPool;
-				break;
-		}
-
-		for (var i = 0; i < groupToAdd.length; i++) {
-			var participant = groupToAdd[i];
-			participant.enabled = true;
-			$scope.supportCallConfigData.participantPool.push(participant);
-		}
-	};
-
-	$scope.toggleEnabled = function (participant) {
-		if (participant.enabled) {
-			participant.enabled = false;
-		} else {
-			participant.enabled = true;
+			$scope.supportCallConfigData.allowSubmissionAfterDueDate = true;
 		}
 	};
 
@@ -178,16 +86,63 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	};
 
 	$scope.areAllInstructorsInvited = function() {
+		invitedInstructors = 0;
+
 		$scope.supportCallConfigData.participantPool.forEach( function(participant) {
-			invitedInstructors = 0;
-		
 			if (participant.invited && participant.isInstructor) {
 				invitedInstructors++;
 			}
 		});
 
 		if (invitedInstructors == $scope.state.eligible.instructors.length) {
-			debugger;
+			return true;
+		}
+
+		return false;
+	};
+
+	$scope.areAllMastersInvited = function() {
+		invitedInstructors = 0;
+
+		$scope.supportCallConfigData.participantPool.forEach( function(participant) {
+			if (participant.invited && participant.isMasters) {
+				invitedInstructors++;
+			}
+		});
+
+		if (invitedInstructors == $scope.state.eligible.masters.length) {
+			return true;
+		}
+
+		return false;
+	};
+
+	$scope.areAllPhdsInvited = function() {
+		invitedInstructors = 0;
+
+		$scope.supportCallConfigData.participantPool.forEach( function(participant) {
+			if (participant.invited && participant.isPhd) {
+				invitedInstructors++;
+			}
+		});
+
+		if (invitedInstructors == $scope.state.eligible.phds.length) {
+			return true;
+		}
+
+		return false;
+	};
+
+	$scope.areAllInstructionalSupportInvited = function() {
+		invitedInstructors = 0;
+
+		$scope.supportCallConfigData.participantPool.forEach( function(participant) {
+			if (participant.invited && participant.isInstructionalSupport) {
+				invitedInstructors++;
+			}
+		});
+
+		if (invitedInstructors == $scope.state.eligible.instructionalSupports.length) {
 			return true;
 		}
 
@@ -200,134 +155,46 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 				participant.invited = true;
 			}
 		});
-	}
-
-	$scope.areAllMastersInvited = function() {
-		
 	};
 
-	$scope.areAllPhdInvited = function() {
-		
-	};
+	$scope.submit = function () {
+		var messageInput = $('.support-call-message-input').val();
+		if (messageInput) {
+			$scope.supportCallConfigData.message = messageInput.replace(/\r?\n/g, '<br />');
+		}
 
-	$scope.areAllInstructionalSupportInvited = function() {
-		
-	};
-
-	$scope.setTermCode = function(fullTerm) {
-		$scope.supportCallConfigData.termCode = fullTerm;
-	};
-
-	$scope.beginSupportCall = function () {
 		if ($scope.supportCallConfigData.mode == "instructor") {
-			instructionalSupportCallStatusActionCreators.addInstructorSupportCall($scope.scheduleId, $scope.supportCallConfigData);
+			instructionalSupportCallStatusActionCreators.addInstructorsSupportCall($scope.scheduleId, $scope.supportCallConfigData);
 		} else {
-			instructionalSupportCallStatusActionCreators.addStudentSupportCall($scope.scheduleId, $scope.supportCallConfigData);
+			instructionalSupportCallStatusActionCreators.addSupportStaffSupportCall($scope.scheduleId, $scope.supportCallConfigData);
 		}
 
 		$uibModalInstance.dismiss('cancel');
 	};
 
-	$scope.calculateInstructorPool = function () {
-		$scope.instructorPool = [];
-
-		var shortTermCode = $scope.supportCallConfigData.termCode.slice(-2);
-
-		instructorsByShortTermCode[shortTermCode].forEach( function (instructorId) {
-			var instructor = instructors.list[instructorId];
-
-			participant = {};
-			participant.id = instructor.id;
-			participant.displayName = instructor.fullName;
-			participant.group = "instructor";
-			participant.enabled = true;
-
-			$scope.instructorPool.push(participant);
-		});
-	};
-
-	$scope.isTermSelectionValid = function() {
-		// Ensure termcode is set
-		if (!$scope.supportCallConfigData.termCode) {
-			return false;
-		}
-
-		return true;
-	};
-
-	$scope.isUserSelectionValid = function() {
-		// Ensure at least one participant is set
-		if(!$scope.supportCallConfigData.participantPool || $scope.supportCallConfigData.participantPool.length == 0) {
-			return false;
-		}
-
-		// Ensure at least one participant is enabled
-		for (var i = 0; i < $scope.supportCallConfigData.participantPool.length; i++) {
-			var participant = $scope.supportCallConfigData.participantPool[i];
-
-			if (participant.enabled) {
-				return true;
+	$scope.isAddFormComplete = function() {
+		if ($scope.supportCallConfigData.mode == "supportStaff") {
+			// Ensure at least one preference type is set
+			if(!$scope.supportCallConfigData.collectAIPreferences
+				&& !$scope.supportCallConfigData.collectReaderPreferences
+				&& !$scope.supportCallConfigData.collectTAPreferences) {
+				return false;
 			}
 		}
 
-		return false;
-	};
+		// Ensure at least participant is selected
+		var atLeastOneInvited = false;
 
-	$scope.isStudentConfigValid = function() {
-		// Ensure at least one preference type is set
-		if(!$scope.supportCallConfigData.collectAIPreferences
-			&& !$scope.supportCallConfigData.collectReaderPreferences
-			&& !$scope.supportCallConfigData.collectTAPreferences) {
-			return false;
-		}
+		$scope.supportCallConfigData.participantPool.forEach( function (participant) {
+			if (participant.invited == true) {
+				atLeastOneInvited = true;
+			}
+		});
 
-		// Ensure a date is set
-		if(!$scope.supportCallConfigData.dueDate
-		&& !$scope.supportCallConfigData.rawDueDate) {
+		if (atLeastOneInvited == false) {
 			return false;
 		}
 
 		return true;
-	};
-
-	$scope.isInstructorConfigValid = function() {
-		return true;
-	};
-
-	$scope.allTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
-	$scope.fullTerms = [];
-
-	for (var i = 0; i < $scope.allTerms.length; i++) {
-		shortTermCode = $scope.allTerms[i];
-
-		if (parseInt(shortTermCode) > 4) {
-			slotYear = $scope.year;
-		} else {
-			slotYear = parseInt($scope.year) + 1;
-		}
-		fullTerm = slotYear + shortTermCode;
-		$scope.fullTerms.push(fullTerm);
-	}
-
-	$scope.getTermName = function(term) {
-		var endingYear = "";
-		if (term.length == 6) {
-			endingYear = term.substring(0,4);
-			term = term.slice(-2);
-		}
-
-		termNames = {
-			'05': 'Summer Session 1',
-			'06': 'Summer Special Session',
-			'07': 'Summer Session 2',
-			'08': 'Summer Quarter',
-			'09': 'Fall Semester',
-			'10': 'Fall Quarter',
-			'01': 'Winter Quarter',
-			'02': 'Spring Semester',
-			'03': 'Spring Quarter'
-		};
-
-		return termNames[term] + " " + endingYear;
 	};
 });

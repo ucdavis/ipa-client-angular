@@ -109,7 +109,7 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 
 			$scope.getTermDescription = function(term) {
 				var endingYear = "";
-				if (term.length == 6) {
+				if (term && term.length == 6) {
 					endingYear = term.substring(0,4);
 					term = term.slice(-2);
 				}

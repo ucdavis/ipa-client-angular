@@ -33,14 +33,14 @@ instructionalSupportApp.controller('InstructionalSupportCallStatusCtrl', ['$scop
 			};
 
 			$scope.openAddInstructorsModal = function() {
-				$scope.openSupportCallConfig("instructors");
+				$scope.openAddParticipantsSupportCall("instructors");
 			};
 
-			$scope.openAddInstructorsModal = function () {
-				$scope.openSupportCallConfig("supportStaff");
+			$scope.openAddSupportStaffModal = function () {
+				$scope.openAddParticipantsSupportCall("supportStaff");
 			};
 
-			$scope.openSupportCallConfig = function(supportCallMode) {
+			$scope.openAddParticipantsSupportCall = function(supportCallMode) {
 
 				modalInstance = $uibModal.open({
 					templateUrl: 'AddSupportCallModal.html',
