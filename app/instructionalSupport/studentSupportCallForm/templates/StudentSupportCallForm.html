@@ -3,7 +3,7 @@
 
 <ipa-header page-title="Support Call"></ipa-header>
 
-<div class="page-container">
+<div class="page-container student-support-call-form">
 	<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
 	<!-- modal-input comments -->
@@ -71,8 +71,10 @@
 
 						<ul id="sortable" class="sortable-student-preferences">
 							<li ng-repeat="preference in view.state.preferences | orderBy: 'priority'" class="student-course-section" id="{{ preference.id }}">
-								<div class="alert alert-info student-course">
-									<i class="glyphicon glyphicon-menu-hamburger move-course-icon"></i>
+								<div class="student-course">
+									<div style="position: absolute; left: -30px; top: 22px;"> {{ $index + 1 }}</div>
+									<i class="glyphicon glyphicon-option-vertical move-course-icon">
+									</i>
 									<div class="student-course-info">
 										<p class="student-course_title">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern }}</p>
 										<div class="student-course_details">
