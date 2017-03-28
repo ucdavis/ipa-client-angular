@@ -32,11 +32,16 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 			var isAcademicPlanner = currentUser.hasRole('academicPlanner', $scope.workgroupId);
 			var isReviewer = currentUser.hasRole('reviewer', $scope.workgroupId);
 			var isInstructor = currentUser.hasRoles(['senateInstructor', 'federationInstructor'], $scope.workgroupId);
+			var isInstructionalSupport = currentUser.hasRoles(['studentMasters', 'studentPhd', 'instructionalSupport'], $scope.workgroupId);
+
 			if (isAcademicPlanner || isReviewer || isAdmin) {
 				$scope.setActiveMode("workgroup");
 			}
 			else if (isInstructor) {
 				$scope.setActiveMode("instructor");
+			}
+			else if (isInstructionalSupport) {
+				$scope.setActiveMode("instructionalSupport");
 			} else {
 				$scope.setActiveMode("unknown");
 			}
