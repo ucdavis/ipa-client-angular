@@ -14,6 +14,51 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
+			$rootScope.$on('sharedStateSet', function (event, sharedStateData) {
+				$rootScope.$on('supportAssignmentStateChanged', function (event, data) {
+					$scope.sharedState = sharedStateData;
+
+					var isInstructorReviewOpen = data.state.schedule.instructorSupportCallReviewOpen;
+					var isStudentReviewOpen = data.state.schedule.studentSupportCallReviewOpen;
+					var userRoles = $scope.sharedState.currentUser.userRoles;
+
+					// Default access to none
+					$scope.isAllowed = false;
+					$scope.readOnlyMode = false;
+
+					// Determine access level
+					userRoles.forEach(function(userRole) {
+						if (userRole.roleName == "academicPlanner" || userRole.roleName == "admin") {
+							$scope.isAllowed = true;
+							$scope.readOnlyMode = false;
+						}
+					});
+
+					// If access has not yet been set
+					if ($scope.isAllowed == false) {
+						// Check if this is an instructor reviewing the support assignments
+						if (isInstructorReviewOpen) {
+							userRoles.forEach(function(userRole) {
+								if (userRole.roleName == "federationInstructor" || userRole.roleName == "senateInstructor") {
+									$scope.isAllowed = true;
+									$scope.readOnlyMode = true;
+								}
+							});
+						}
+
+						// Check if this is a student reviewing the support assignments
+						if (isStudentReviewOpen) {
+							userRoles.forEach(function(userRole) {
+								if (userRole.roleName == "studentPhd" || userRole.roleName == "studentMasters" || userRole.roleName == "instructionalSupport") {
+									$scope.isAllowed = true;
+									$scope.readOnlyMode = true;
+								}
+							});
+						}
+					}
+				});
+			});
+
 			$rootScope.$on('supportAssignmentStateChanged', function (event, data) {
 				$scope.view.state = data.state;
 
