@@ -144,7 +144,7 @@
 							Support Calls
 						</a>
 					</li>
-					<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport' && currentEndHref != 'supportCallStatus'}">
+					<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport' && currentEndHref.length == 2}">
 						<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}">
 							Support Assignments
 						</a>
