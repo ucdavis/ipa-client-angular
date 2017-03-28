@@ -3,9 +3,12 @@
 
 <ipa-header page-title="Support Call"></ipa-header>
 
+<div ng-hide="view.state" style="margin-top:300px;">
+	<spinner></spinner>
+</div>
 
 <!-- Main page container -->
-<div class="instructor-support-call-form">
+<div ng-if="view.state" class="instructor-support-call-form">
 
 	<!-- handle lack of active teaching call -->
 	<div style="padding-left: 14%;" ng-if="view.state && view.state.sectionGroups.length == 0">
