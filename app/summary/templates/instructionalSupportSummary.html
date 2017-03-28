@@ -1,22 +1,8 @@
-<div class="content-container">
-
-	<div class="instructor-summary-header">
-		<h3>
-			Instructor Summary {{ year.yearToAcademicYear() }}
-		</h3>
-		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
-	</div>
-
+<div class="instructional-support-summary content-container">
 	<div ng-hide="view.state">
 		<spinner></spinner>
 	</div>
 	<div ng-show="view.state">
-		<div ng-show="view.state.studentSupportCallResponses.length > 0" class="course-status-header">
-			<h5>
-				Support Calls
-			</h5>
-		</div>
-
 		<div ng-show="view.state.studentSupportCallResponses.length > 0"
 					ng-repeat="supportCallResponse in view.state.studentSupportCallResponses">
 			<div class="course-table-row">
