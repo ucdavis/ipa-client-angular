@@ -53,6 +53,7 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 
 		$rootScope.$on('sharedStateSet', function (event, data) {
 			$scope.sharedState = data;
+			debugger;
 		});
 	}]);
 

@@ -405,6 +405,17 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					return supportCallResponses;
 			}
 		},
+		_scheduleReducers: function (action, schedule) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					var schedule = action.payload.schedule;
+					return schedule;
+				default:
+					return schedule;
+			}
+		},
 		_studentSupportCallResponseReducers: function (action, supportCallResponses) {
 			var scope = this;
 
@@ -436,6 +447,7 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 			newState.teachingCallReceipt = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipt);
 			newState.instructorSupportCallResponses = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponses);
 			newState.studentSupportCallResponses = scope._studentSupportCallResponseReducers(action, scope._state.studentSupportCallResponses);
+			newState.schedule = scope._scheduleReducers(action, scope._state.schedule);
 
 			scope._state = newState;
 

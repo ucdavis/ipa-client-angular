@@ -37,7 +37,8 @@
 						</label>
 					</div>
 					<div class="btn-group border-bottom--gray review-switcher" data-toggle="buttons">
-						<label ng-if="view.state.schedule.instructorSupportCallReviewOpen == false"
+						<label ng-class="{'invisible' : readOnlyMode }"
+							ng-if="view.state.schedule.instructorSupportCallReviewOpen == false"
 							class="btn btn-white btn-sm" id="instructors-pivot"
 							confirm-button="openInstructorSupportCallReview()"
 							message="Are you sure you want to open this schedule for instructor review? This cannot be undone."
@@ -51,7 +52,8 @@
 							<span class="glyphicon glyphicon-ok"></span>
 						</label>
 
-						<label ng-if="view.state.schedule.studentSupportCallReviewOpen == false"
+						<label ng-class="{'invisible' : readOnlyMode }"
+							ng-if="view.state.schedule.studentSupportCallReviewOpen == false"
 							class="btn btn-white btn-sm" id="instructors-pivot"
 							confirm-button="openStudentSupportCallReview()"
 							message="Are you sure you want to open this schedule for student review? This cannot be undone."
