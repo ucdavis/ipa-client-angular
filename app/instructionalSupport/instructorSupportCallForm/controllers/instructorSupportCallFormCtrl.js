@@ -14,9 +14,10 @@ instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '
 
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
-
+			$scope.listenersActive = false;
 			$rootScope.$on('instructionalSupportStudentFormStateChanged', function (event, data) {
 				$scope.view.state = data.state;
+				$scope.listenForSort();
 			});
 
 			$scope.addPreference = function(sectionGroupId, supportStaffId) {
@@ -41,19 +42,45 @@ instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '
 				instructionalSupportInstructorFormActionCreators.pretendToastMessage();
 			};
 
-			$( "#sortable1" ).sortable({
-				placeholder: "sortable-instructor-preference-placeholder",
-				axis: "y"
-			});
-			$( "#sortable2" ).sortable({
-				placeholder: "sortable-instructor-preference-placeholder",
-				axis: "y"
-			});
-			$( "#sortable3" ).sortable({
-				placeholder: "sortable-instructor-preference-placeholder",
-				axis: "y"
-			});
+			$scope.listenForSort = function() {
+				if ($scope.listenersActive) {
+					return;
+				}
+				$scope.listenersActive = true;
 
+				setTimeout(function() {
+					var listenerIds = [];
+					$scope.view.state.sectionGroups.forEach(function(sectionGroup) {
+						var listener = "#sortable-" + sectionGroup.id;
+						listenerIds.push(listener);
+					});
+
+					listenerIds.forEach( function(listenerId) {
+						$(listenerId).sortable({
+							placeholder: "sortable-student-preference-placeholder",
+							update: function( event, ui ) {
+								var preferenceIds = $( listenerId ).sortable( "toArray" );
+								$scope.updatePreferencesOrder(preferenceIds, listenerId);
+							},
+							axis: "y"
+						});
+					});
+				}, 500);
+			};
+
+			$scope.updatePreferencesOrder = function(preferenceIds, listIndentifier) {
+				var filteredPreferenceIds = [];
+
+				preferenceIds.forEach(function(id) {
+					if (id.length > 0) {
+						filteredPreferenceIds.push(id);
+					}
+				});
+
+				var sectionGroupId = listIndentifier.slice(10);
+				var scheduleId = $scope.view.state.userInterface.scheduleId;
+				instructionalSupportInstructorFormActionCreators.updateInstructorPreferencesOrder(filteredPreferenceIds, scheduleId, sectionGroupId);
+			};
 	}]);
 
 InstructorSupportCallFormCtrl.getPayload = function (authService, instructionalSupportInstructorFormActionCreators, $route) {

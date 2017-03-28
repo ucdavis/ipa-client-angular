@@ -172,6 +172,7 @@ h4, .h4 {
 	border-bottom: 1px solid rgb(235, 235, 235);
 	padding-bottom: 10px;
 	height: 100%;
+	list-style: none;
 }
 
 .instructor-support-call-form .section-group-container:last-child {
@@ -184,7 +185,17 @@ h4, .h4 {
 	border: 1px solid #adadad;
 	background-color: white;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
+	width: 200px;
 	align-items: center;
 	padding: 10px;
+}
+
+.instructor-support-call-form .instructor-preference {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 10px;
+	color: black;
+	cursor: pointer;
 }

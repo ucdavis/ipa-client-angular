@@ -116,6 +116,24 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 						}
 
 						return sectionGroups;
+				case UPDATE_PREFERENCES_ORDER:
+					sectionGroups;
+					action;
+					var orderePreferenceIds =	action.payload;
+					var preferenceIdsList = {};
+					orderePreferenceIds.forEach(function(preferenceId, index) {
+						preferenceIdsList[preferenceId] = index+1;
+					});
+
+					sectionGroups.forEach(function(sectionGroup) {
+						sectionGroup.instructorPreferences.forEach(function(preference) {
+							var priority = preferenceIdsList[preference.id];
+							if (priority) {
+								preference.priority = priority;
+							}
+						});
+					});
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}

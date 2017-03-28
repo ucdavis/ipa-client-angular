@@ -39,10 +39,10 @@ instructionalSupportApp.factory("instructionalSupportInstructorFormService", thi
 
 			return deferred.promise;
 		},
-		updatePreferencesOrder: function(preferenceIds, scheduleId, termCode) {
+		updatePreferencesOrder: function(preferenceIds, scheduleId, sectionGroupId) {
 			var deferred = $q.defer();
 
-			$http.put(serverRoot + "/api/instructionalSupportInstructorFormView/schedules/" + scheduleId + "/terms/" + termCode, preferenceIds, { withCredentials: true })
+			$http.put(serverRoot + "/api/instructionalSupportInstructorFormView/schedules/" + scheduleId + "/sectionGroups/" + sectionGroupId, preferenceIds, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
