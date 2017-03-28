@@ -8,7 +8,18 @@ sharedApp.directive('ipaTermSelector', function($window, $location, $routeParams
 			scope.year = $routeParams.year;
 			scope.workgroupId = $routeParams.workgroupId;
 			scope.termShortCode = $routeParams.termShortCode;
+			scope.currentEndHref = $location.path().split('/').pop();
 
+			// Term navigation is disabled in read only mode
+			scope.readOnlyMode = false;
+
+			// Instructor/SupportStaff forms should not allow for term navigation
+			if (scope.currentEndHref == "instructorSupportCallForm"
+			|| scope.currentEndHref == "studentSupportCallForm") {
+					scope.readOnlyMode = true;
+				}
+
+			// Generates display text for the center of the term selector
 			scope.generateDisplayText = function() {
 				if (!scope.termShortCode || scope.termShortCode.length != 2) {
 					return "Annual";
@@ -22,6 +33,7 @@ sharedApp.directive('ipaTermSelector', function($window, $location, $routeParams
 				}
 			};
 
+			// Used by previous term UI button
 			scope.gotoPreviousTerm = function() {
 				var allTerms = ['05','06','07','08','09','10','01','02','03'];
 				var currentTerm = scope.termShortCode;
@@ -39,6 +51,7 @@ sharedApp.directive('ipaTermSelector', function($window, $location, $routeParams
 				$window.location.href = url;
 			};
 
+			// Controls next term UI button
 			scope.gotoNextTerm = function() {
 				var allTerms = ['05','06','07','08','09','10','01','02','03'];
 				var currentTerm = scope.termShortCode;
