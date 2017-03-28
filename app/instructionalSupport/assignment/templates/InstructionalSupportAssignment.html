@@ -18,7 +18,7 @@
 					<!-- search bar -->
 					<div class="search-flex">
 							<div class="search-flex-children">
-									<input type="search" class="form-control" placeholder="Search">
+									<input type="search" class="form-control" placeholder="Search" ng-model="searchQuery" ng-change="filterTable(searchQuery)">
 							</div>
 					</div>
 			</div>

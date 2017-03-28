@@ -113,6 +113,22 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 				case REMOVE_STAFF_FROM_SLOT:
 					// Add the user as an option in sectionGroup assignmentOptions where appropriate
 					return sectionGroups;
+				case UPDATE_TABLE_FILTER:
+					var query = action.payload.query;
+
+					// Apply search filters
+					if (query.length > 0) {
+						// Specify the properties that we are interested in searching
+						var sectionGroupKeyList = ['courseNumber', 'sequencePattern', 'subjectCode', 'title'];
+
+						_object_search_properties(query, sectionGroups, sectionGroupKeyList);
+					} else {
+						sectionGroups.ids.forEach(function(sectionGroupId) {
+							sectionGroups.list[sectionGroupId].isFiltered = false;
+						});
+					}
+
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}

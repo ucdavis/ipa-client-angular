@@ -68,6 +68,16 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 				});
 			});
 
+			// Triggered by global search field, redraws table based on query
+			$scope.filterTable = function (query) {
+				clearTimeout($scope.t);
+				$scope.t = setTimeout($scope.startFilter, 700, query);
+			};
+
+			$scope.startFilter = function (query) {
+				instructionalSupportAssignmentActionCreators.updateTableFilter(query);
+			};
+
 			$scope.setActiveTab = function (tabName) {
 				$location.search({ tab: tabName });
 				switch (tabName) {

@@ -92,6 +92,15 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				payload: {viewName: viewName}
 			};
 			instructionalSupportAssignmentStateService.reduce(action);
+		},
+		updateTableFilter: function (query) {
+			var action = {
+				type: UPDATE_TABLE_FILTER,
+				payload: {
+					query: query
+				}
+			};
+			instructionalSupportAssignmentStateService.reduce(action);
 		}
 	};
 });
