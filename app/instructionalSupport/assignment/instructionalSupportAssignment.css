@@ -651,3 +651,7 @@ margin-left: 6px;
 	display: flex;
 	align-items: center;
 }
+
+.invisible {
+	visibility: hidden;
+}

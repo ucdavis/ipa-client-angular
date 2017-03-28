@@ -47,7 +47,8 @@
 												</div>
 										</div>
 										<div class="remove-tile-container">
-											<i class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary"
+											<i  ng-class="{'invisible' : readOnlyMode }"
+													class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary"
 												uib-tooltip="Unassign" tooltip-placement="bottom"
 												confirm-button="removeStaffFromSlot(supportAssignmentId)"
 												message="Are you sure you want to delete this Assignment?"
@@ -56,7 +57,9 @@
 									</div>
 
 
-									<course-assignment-selector class="add-new-slot">
+									<course-assignment-selector
+									 ng-class="{'invisible' : readOnlyMode }"
+									 class="add-new-slot">
 									</course-assignment-selector>
 								</div>
 						</div>
