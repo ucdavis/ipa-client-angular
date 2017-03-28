@@ -3,48 +3,85 @@
 
 <ipa-header page-title="Support Call"></ipa-header>
 
-<div class="main-content">
-	<div class="row">
-		<div class="container-fluid">
-			<div class="instructor-application">
-				<div style="padding-left: 14%;" ng-if="view.state && view.state.sectionGroups.length == 0">
-					<!-- handle lack of active teaching call -->
-					<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
-						<p class="lead">You have not been assigned any courses in this term.</p>
-						<br />
-						<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
-					</div>
+
+<!-- Main page container -->
+<div class="instructor-support-call-form">
+
+	<!-- handle lack of active teaching call -->
+	<div style="padding-left: 14%;" ng-if="view.state && view.state.sectionGroups.length == 0">
+		<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+			<p class="lead">You have not been assigned any courses in this term.</p>
+			<br />
+			<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
+		</div>
+	</div>
+
+	<!-- Preference table header -->
+	<div class="row provide-preferences-header">
+		<div class="col-md-6">
+			<h5>Please indicate your preferences:</h5>
+		</div>
+		<div class="col-md-6">
+			<div class="pull-right" tooltip-placement="left"
+			uib-tooltip="Clicking the Add button will show you a list of all courses currently in the schedule (Use the comment box below
+			to request courses not on the list). Once you've added your preferences you can rank them by dragging and dropping them into the
+			preferred order">
+				<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+			</div>
+		</div>
+	</div>
+
+	<!-- SectionGroup headers -->
+	<div style="display:flex; width: 100%;">
+		<div ng-repeat="sectionGroup in ::view.state.sectionGroups track by $index" style="flex: 1 0 0px;">
+			<div class="section-group-header">
+				<div>
+					{{ sectionGroup.subjectCode}}
+					{{ sectionGroup.courseNumber }} -
+					{{ sectionGroup.sequencePattern }}
 				</div>
+			</div>
+		</div>
+	</div>
 
-				<div ng-repeat="sectionGroup in view.state.sectionGroups" class="instructor-course-section">
-					<div class="instructor-application_title">
-						<h4>{{ sectionGroup.subjectCode}} {{ sectionGroup.courseNumber }} - {{ sectionGroup.sequencePattern }}</h4>
-					</div>
+	<!-- Preferences for sectionGroup -->
+	<div style="display:flex; width: 100%;">
+		<div class="section-group-container" ng-repeat="sectionGroup in ::view.state.sectionGroups track by $index" style="flex: 1 0 0px;">
+			<div class="preferences-container">
 
-					<div ng-repeat="instructorPreference in sectionGroup.instructorPreferences"
-							ng-init="supportStaff=view.state.supportStaff.list[instructorPreference.supportStaffId]"
-					id="sortable1" class="ta-section">
-						<div class=" alert alert-info ta-slot">
-							<i class="glyphicon glyphicon-menu-hamburger move-ta-icon"></i>
-							<p>{{ supportStaff.fullName }}</p>
-							<i class="btn glyphicon glyphicon-remove ta-slot-remove text-primary"
+				<!-- Current preferences -->
+				<div ng-repeat="instructorPreference in sectionGroup.instructorPreferences"
+						ng-init="supportStaff=view.state.supportStaff.list[instructorPreference.supportStaffId]"
+						style="display: flex; align-items: center; justify-content: center; padding-top: 10px; color: black;">
+
+					<div>{{ $index + 1 }}</div>
+					<div><i class="glyphicon glyphicon-option-vertical preference-sortable-handle"><i></div>
+					<div class="preference-box">
+						<div>
+							{{ supportStaff.fullName }}
+						</div>
+						<div style="padding-left: 5px;">
+							<i class="btn glyphicon glyphicon-remove" style="color: black; padding: 0;"
 								uib-tooltip="Delete Assignment" tooltip-placement="bottom"
 								confirm-button="deleteInstructorPreference(instructorPreference)"
 								message="Are you sure you want to delete this Assignment?"
-								yes="Confirm" no="Cancel" placement="top"></i>
+								yes="Confirm" no="Cancel" placement="top">
+							</i>
 						</div>
 					</div>
+				</div>
 
+				<div style="display: flex; justify-content: center; text-align: center; padding-top: 10px;">
+					<!-- New preferences -->
 					<instructor-preference-selector>
 					</instructor-preference-selector>
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
+	</div><!-- end preferences area -->
 
-<div class="main-content input-box-container">
-	<div class="container-fluid">
+	<!-- Comments and submission area -->
+	<div class="input-box-container">
 		<div class="instructor-comment-container">
 			<div class="input-box-area">
 				<h5>Comments</h5>
@@ -67,5 +104,6 @@
 					Update Preferences
 			</button>
 		</a>
-	</div>
+	</div><!-- End comments and submission -->
+
 </div>
