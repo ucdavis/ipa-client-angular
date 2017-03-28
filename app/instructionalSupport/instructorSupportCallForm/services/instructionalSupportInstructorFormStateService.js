@@ -190,6 +190,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 			switch (action.type) {
 				case INIT_STATE:
 					userInterface = {};
+					userInterface.scheduleId = action.payload.scheduleId;
 					return userInterface;
 				default:
 					return userInterface;

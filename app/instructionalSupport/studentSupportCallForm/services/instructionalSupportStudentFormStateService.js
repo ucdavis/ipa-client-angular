@@ -305,6 +305,7 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 			switch (action.type) {
 				case INIT_STATE:
 					userInterface = {};
+					userInterface.scheduleId = action.payload.scheduleId;
 					return userInterface;
 				case TOGGLE_ASSIGNMENT_PIVOT_VIEW:
 					userInterface.displayCoursePivot = false;

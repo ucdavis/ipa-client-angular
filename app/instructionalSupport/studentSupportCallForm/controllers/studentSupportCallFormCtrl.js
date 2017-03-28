@@ -35,7 +35,7 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 			};
 
 			$scope.updatePreferencesOrder = function(preferenceIds) {
-				instructionalSupportStudentFormActionCreators.updatePreferencesOrder(preferenceIds, $scope.view.state.supportCall.scheduleId, $scope.termCode);
+				instructionalSupportStudentFormActionCreators.updatePreferencesOrder(preferenceIds, $scope.view.state.userInterface.scheduleId, $scope.termCode);
 			};
 
 			$scope.pretendToastMessage = function() {
