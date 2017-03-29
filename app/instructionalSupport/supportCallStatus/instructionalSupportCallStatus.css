@@ -323,3 +323,11 @@
 	padding-bottom: 15px;
 	padding-top: 20px;
 }
+
+body .support-call-status {
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-size: 12px;
+		line-height: 1.42857143;
+		background-color: #fff;
+		color: #333;
+}
