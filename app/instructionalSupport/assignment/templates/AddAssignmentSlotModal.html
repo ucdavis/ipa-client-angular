@@ -7,7 +7,7 @@
 				Add {{ title }} Slots
 			</div>
 
-			<div class="modal--header-item modal--header-cancel-skin">
+			<div ng-click="dismiss()" class="modal--header-item modal--header-cancel-skin">
 				X
 			</div>
 
@@ -40,6 +40,9 @@
 		</div>
 
 		<div class="modal--footer modal--footer-skin">
+			<button type="button" style="margin-right: 5px; border: 1px solid gainsboro;" class="btn btn-default" ng-click="dismiss()">
+				Cancel
+			</button>
 			<button type="button" class="btn btn-info" ng-click="addAssignmentSlots()">
 				Add
 			</button>

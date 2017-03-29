@@ -24,4 +24,8 @@ instructionalSupportApp.controller('ModalAddAssignmentSlotCtrl', this.ModalAddAs
 				return "";
 		}
 	}
+
+	$scope.dismiss = function () {
+		$uibModalInstance.dismiss('cancel');
+	};
 });
