@@ -53,13 +53,16 @@ instructionalSupportApp.controller('ModalContactSupportCallCtrl', this.ModalCont
 			$scope.supportCallConfigData.message = messageInput.replace(/\r?\n/g, '<br />');
 		}
 
-$scope.supportCallConfigData.mode;
 		if ($scope.supportCallConfigData.mode == "instructor") {
 			instructionalSupportCallStatusActionCreators.contactInstructorsSupportCall($scope.scheduleId, $scope.supportCallConfigData);
 		} else {
 			instructionalSupportCallStatusActionCreators.contactSupportStaffSupportCall($scope.scheduleId, $scope.supportCallConfigData);
 		}
 
+		$uibModalInstance.dismiss('cancel');
+	};
+
+	$scope.dismiss = function() {
 		$uibModalInstance.dismiss('cancel');
 	};
 
