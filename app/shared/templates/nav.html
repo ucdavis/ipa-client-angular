@@ -160,12 +160,12 @@
 				</a>
 				<ul ng-class="{ 'visible': expanded == 'reports' || (!expanded && (currentBaseHref == 'registrarReconciliationReport' || currentBaseHref == 'scheduleSummaryReport' || currentBaseHref == 'teachingCallResponseReport') ) }">
 					<li ng-class="{ 'active': currentBaseHref == 'registrarReconciliationReport' }">
-						<a ng-href="/registrarReconciliationReport/{{ workgroupId }}/{{ year }}">
+						<a ng-href="/registrarReconciliationReport/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03' }}">
 						Registrar Reconciliation
 					</a>
 					</li>
 					<li ng-class="{ 'active': currentBaseHref == 'scheduleSummaryReport' }">
-						<a ng-href="/scheduleSummaryReport/{{ workgroupId }}/{{ year }}">
+						<a ng-href="/scheduleSummaryReport/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03' }}">
 						Schedule Summary
 					</a>
 					</li>

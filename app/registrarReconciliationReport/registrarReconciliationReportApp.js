@@ -2,13 +2,6 @@ window.registrarReconciliationReportApp = angular.module("registrarReconciliatio
 
 registrarReconciliationReportApp.config(function ($routeProvider) {
 	return $routeProvider
-		.when("/:workgroupId/:year", {
-			templateUrl: "ReportCtrl.html",
-			controller: "ReportCtrl",
-			resolve: {
-				payload: ReportCtrl.getPayload
-			}
-		})
 		.when("/:workgroupId/:year/:termShortCode", {
 			templateUrl: "ReportCtrl.html",
 			controller: "ReportCtrl",

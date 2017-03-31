@@ -6,7 +6,7 @@ instructionalSupportApp.controller('ModalContactSupportCallCtrl', this.ModalCont
 	$scope.nextYear = parseInt(year) + 1;
 	$scope.termShortCode = termShortCode;
 	$scope.supportCallConfigData = {};
-	$scope.supportCallConfigData.selectedParticipants = selectedParticipants
+	$scope.supportCallConfigData.selectedParticipants = selectedParticipants;
 	$scope.supportCallConfigData.dueDate = new Date();
 
 	// Generate termCode

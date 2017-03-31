@@ -4,28 +4,6 @@
 <ipa-header class="hidden-print" page-title="Schedule Summary Report"></ipa-header>
 
 <div class="main-content">
-
-	<div class="report-page-title">
-		<h3 ng-if="term.fullDescription">
-			<a ng-if="previousShortTermCode" class="hidden-print"
-				ng-href="/scheduleSummaryReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ previousShortTermCode }}">
-				<button type="button" class="btn btn-default chevron-button" aria-label="Left Align">
-					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-				</button>
-			</a>
-
-			{{ term.fullDescription }}
-
-			<a ng-if="nextShortTermCode" class="hidden-print"
-				ng-href="/scheduleSummaryReport/{{ sharedState.workgroup.id }}/{{ year }}/{{ nextShortTermCode }}">
-				<button type="button" class="btn btn-default chevron-button" aria-label="Left Align">
-					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-				</button>
-			</a>
-
-		</h3>
-	</div>
-
 	<div class="row hidden-print">
 		<div class="col-sm-12">
 			<div class="table-toolbar">
