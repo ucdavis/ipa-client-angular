@@ -45,17 +45,17 @@
 				<ul ng-class="{ 'visible': expanded == 'summary' || (!expanded && currentBaseHref == 'summary') }">
 					<li ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'workgroup' }">
 						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=workgroup">
-							Workgroup Summary
+							Workgroup
 						</a>
 					</li>
 					<li ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'instructor' }">
 						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=instructor">
-							Instructor Summary
+							Instructor
 						</a>
 					</li>
 					<li ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'instructionalSupport' }">
 						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=instructionalSupport">
-							Instructional Support Summary
+							Support Staff
 						</a>
 					</li>
 				</ul>
