@@ -3,7 +3,7 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	supportCallMode, scheduleId, state, year, nextYear, termShortCode) {
 
 	$scope.scheduleId = scheduleId;
-	$scope.state = state;
+	$scope.state = angular.copy(state);
 	$scope.year = year;
 	$scope.nextYear = parseInt(year) + 1;
 	$scope.termShortCode = termShortCode;
