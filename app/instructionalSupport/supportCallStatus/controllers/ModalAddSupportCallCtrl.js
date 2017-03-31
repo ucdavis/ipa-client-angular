@@ -258,6 +258,10 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		$uibModalInstance.dismiss('cancel');
 	};
 
+	$scope.dismiss = function() {
+		$uibModalInstance.dismiss('cancel');
+	};
+
 	$scope.isAddFormComplete = function() {
 		if ($scope.supportCallConfigData.mode == "supportStaff") {
 			// Ensure at least one preference type is set
