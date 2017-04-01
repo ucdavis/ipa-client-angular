@@ -10,11 +10,14 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 			$window.document.title = "Instructional Support";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
+			$scope.termShortCode = $routeParams.termShortCode;
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
-			
+			$scope.listenersActive = false;
+
 			$rootScope.$on('instructionalSupportStudentFormStateChanged', function (event, data) {
 				$scope.view.state = data.state;
+				$scope.listenForSort();
 			});
 
 			$scope.addPreference = function(preference) {
@@ -55,16 +58,45 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 				return termCode;
 			};
 
-			$( "#sortable" ).sortable({
-				placeholder: "sortable-student-preference-placeholder",
-				update: function( event, ui ) {
-					var preferenceIds = $( "#sortable" ).sortable( "toArray" );
-					$scope.updatePreferencesOrder(preferenceIds);
-				},
-				axis: "y"
-			});
+			// Activates sortable lists for each sectionGroup, after a short delay to give the view time to render
+			$scope.listenForSort = function() {
+				if ($scope.listenersActive) {
+					return;
+				}
+				$scope.listenersActive = true;
 
-			$scope.termCode = $scope.termShortCodeToTermCode($routeParams.termShortCode);
+				setTimeout(function() {
+					var listenerIds = [];
+					var listener = "#sortable";
+					listenerIds.push(listener);
+
+					listenerIds.forEach( function(listenerId) {
+						$(listenerId).sortable({
+							placeholder: "sortable-student-preference-placeholder",
+							update: function( event, ui ) {
+								var preferenceIds = $( listenerId ).sortable( "toArray" );
+								$scope.updatePreferencesOrder(preferenceIds, listenerId);
+							},
+							axis: "y"
+						});
+					});
+				}, 500);
+			};
+
+			$scope.updatePreferencesOrder = function(preferenceIds, listIndentifier) {
+				var filteredPreferenceIds = [];
+
+				preferenceIds.forEach(function(id) {
+					if (id.length > 0) {
+						filteredPreferenceIds.push(id);
+					}
+				});
+
+				var scheduleId = $scope.view.state.userInterface.scheduleId;
+				instructionalSupportStudentFormActionCreators.updatePreferencesOrder(filteredPreferenceIds, scheduleId, $scope.termCode);
+			};
+
+			$scope.termCode = $scope.termShortCodeToTermCode($scope.termShortCode);
 	}]);
 
 StudentSupportCallFormCtrl.getPayload = function (authService, instructionalSupportStudentFormActionCreators, $route) {

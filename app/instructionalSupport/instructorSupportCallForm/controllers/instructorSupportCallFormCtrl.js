@@ -15,6 +15,7 @@ instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 			$scope.listenersActive = false;
+
 			$rootScope.$on('instructionalSupportStudentFormStateChanged', function (event, data) {
 				$scope.view.state = data.state;
 				$scope.listenForSort();
@@ -42,6 +43,7 @@ instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '
 				instructionalSupportInstructorFormActionCreators.pretendToastMessage();
 			};
 
+			// Activates sortable lists for each sectionGroup, after a short delay to give the view time to render
 			$scope.listenForSort = function() {
 				if ($scope.listenersActive) {
 					return;

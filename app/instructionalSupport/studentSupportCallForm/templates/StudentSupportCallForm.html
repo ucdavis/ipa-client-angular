@@ -76,7 +76,7 @@
 						<ul id="sortable" class="sortable-student-preferences">
 							<li ng-repeat="preference in view.state.preferences | orderBy: 'priority'" class="student-course-section" id="{{ preference.id }}">
 								<div class="student-course">
-									<div style="position: absolute; left: -30px; top: 22px;"> {{ $index + 1 }}</div>
+									<div style="position: absolute; left: -30px; top: 22px;"> {{ preference.priority }}</div>
 									<i class="glyphicon glyphicon-option-vertical move-course-icon">
 									</i>
 									<div class="student-course-info">

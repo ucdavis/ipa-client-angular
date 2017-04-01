@@ -245,6 +245,22 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 						}
 
 						return preferences;
+				case UPDATE_PREFERENCES_ORDER:
+					var orderePreferenceIds =	action.payload;
+
+					var preferenceIdsList = {};
+					orderePreferenceIds.forEach(function(preferenceId, index) {
+						preferenceIdsList[preferenceId] = index+1;
+					});
+
+					preferences.forEach(function(preference) {
+						var priority = preferenceIdsList[preference.id];
+						if (priority) {
+							preference.priority = priority;
+						}
+					});
+
+					return preferences;
 				default:
 					return preferences;
 			}
