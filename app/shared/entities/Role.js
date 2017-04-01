@@ -18,6 +18,10 @@ angular.module('role', [])
 			getDisplayName : function() {
 				if (typeof this.name !== 'string') { return ""; }
 
+				if (this.name == "studentPhd") {
+					return "Student PhD";
+				}
+
 				var lowercase = this.name.replace( /([A-Z])/g, " $1" );
 				return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);
 			}
