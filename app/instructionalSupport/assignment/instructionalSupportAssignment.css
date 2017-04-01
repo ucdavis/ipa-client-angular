@@ -611,6 +611,10 @@ margin-left: 6px;
 	padding: 4px;
 }
 
+.assignment-remove-button:focus {
+	visibility: hidden;
+}
+
 .support-staff-details-container {
 	margin-top: 60px;
 	display: flex;

@@ -1,8 +1,7 @@
 .neon-dark-confirm-btn,
 .neon-dark-confirm-btn:focus,
 .neon-dark-confirm-btn:active,
-.neon-dark-confirm-btn,
-.confirmbutton-yes {
+.neon-dark-confirm-btn {
 	background-color: rgb(48, 54, 65);
 	border-color: rgb(48, 54, 65);
 	color: white;
