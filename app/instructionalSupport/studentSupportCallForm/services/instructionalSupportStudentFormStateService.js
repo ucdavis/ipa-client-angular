@@ -350,6 +350,7 @@ instructionalSupportApp.service('instructionalSupportStudentFormStateService', f
 					return supportCallResponse;
 				case UPDATE_SUPPORT_CALL_RESPONSE:
 					supportCallResponse = action.payload;
+					supportCallResponse.dueDateDescription = millisecondsToFullDate(supportCallResponse.dueDate);
 					return supportCallResponse;
 				default:
 					return supportCallResponse;
