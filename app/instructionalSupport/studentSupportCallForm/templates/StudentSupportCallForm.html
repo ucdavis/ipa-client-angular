@@ -51,7 +51,15 @@
 							</p>
 						</div>
 						<div class="checkbox religibility-checkbox">
-							<label class="checkbox-inline"><input value="" type="checkbox">Confirm Eligibility</label>
+							<div role="menuitem" ng-click="toggleEligibilityConfirmed()">
+								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+									ng-class="{ 'checked': view.state.supportCallResponse.eligibilityConfirmed }">
+									<label class="cb-wrapper">
+										<div class="checked"></div>
+									</label>
+									<label>Confirm Eligibility</label>
+								</div>
+							</div>
 						</div>
 					</div>
 					<!-- TA Requirements Ends -->

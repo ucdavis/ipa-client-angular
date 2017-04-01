@@ -20,6 +20,17 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 				$scope.listenForSort();
 			});
 
+			$scope.toggleEligibilityConfirmed = function() {
+				console.log("toggle fired");
+				if ($scope.view.state.supportCallResponse.eligibilityConfirmed) {
+					$scope.view.state.supportCallResponse.eligibilityConfirmed = false;
+				} else {
+					$scope.view.state.supportCallResponse.eligibilityConfirmed = true;
+				}
+
+				instructionalSupportStudentFormActionCreators.updateSupportCallResponse($scope.view.state.supportCallResponse);
+			};
+
 			$scope.addPreference = function(preference) {
 				instructionalSupportStudentFormActionCreators.addStudentPreference(preference, $scope.view.state);
 			};
