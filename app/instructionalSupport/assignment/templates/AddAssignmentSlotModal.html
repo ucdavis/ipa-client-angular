@@ -21,7 +21,7 @@
 					</div>
 				</div>
 				<div class="modal--body-row-field">
-					<input class="modal--body-row-field-input modal--body-row-field-input-skin" ng-model="formData.appointmentPercentage">
+					<input type="number" min="1" max="100" class="modal--body-row-field-input-skin" ng-model="formData.appointmentPercentage">
 				</div>
 
 			</div>
@@ -31,7 +31,7 @@
 					Number of Positions:
 				</div>
 				<div class="modal--body-row-field">
-					<input class="modal--body-row-field-input modal--body-row-field-input-skin" ng-model="formData.numberOfAppointments">
+					<input type="number" min="1" max="10" class="modal--body-row-field-input-skin" ng-model="formData.numberOfAppointments">
 				</div>
 
 			</div>
