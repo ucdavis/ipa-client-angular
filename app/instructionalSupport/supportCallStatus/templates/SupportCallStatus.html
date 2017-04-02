@@ -30,12 +30,12 @@
 				<div style="padding-right: 5px;">
 					<a ng-if="view.state.eligible.supportStaff.length > 0" ng-click="openAddSupportStaffModal()" class="btn btn-default">
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
-						Add Students
+						Add Support Staff
 					</a>
-					<span ng-if="view.state.eligible.supportStaff.length == 0" uib-tooltip="All students called">
+					<span ng-if="view.state.eligible.supportStaff.length == 0" uib-tooltip="All Support Staff called">
 						<a class="disabled btn btn-default" style="color: #808080;">
 							<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
-							Add Students
+							Add Support Staff
 						</a>
 					</span>
 				</div>
@@ -55,12 +55,12 @@
 				<div>
 					<a ng-if="atLeastOneStudentSelected()" ng-click="openContactStudentsModal()" class="btn btn-default">
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
-						Contact Students
+						Contact Support Staff
 					</a>
 					<span ng-if="atLeastOneStudentSelected() == false" uib-tooltip="Select at least one instructor to contact">
 						<a class="disabled btn btn-default" style="color: #808080;">
 							<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
-							Contact Students
+							Contact Support Staff
 						</a>
 					</span>
 				</div>
@@ -150,7 +150,7 @@
 				<!-- table title -->
 				<div style="display: flex;">
 					<div class="table-title">
-						<div style="padding-left: 20px;">Students</div>
+						<div style="padding-left: 20px;">Support Staff</div>
 					</div>
 					<div class="column-hover-ui">
 					</div>
