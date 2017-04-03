@@ -8,11 +8,10 @@
 <!--		<li class="dropdown-header" stop-event="click"><b>Instructor Preferences</b></li>
 -->
 		<!-- Student preferences -->
-		<li role="separator" class="divider"></li>
-		<li class="dropdown-header" stop-event="click"><b>Student Preferences</b></li>
+		<li ng-if="assignmentOptions.studentPreferences.length > 0" class="dropdown-header" stop-event="click"><b>Support Staff Preferences</b></li>
 		<li class="clickable"
 			ng-repeat="studentPreference in assignmentOptions.studentPreferences"
-			ng-init="supportStaffStudent=view.state.instructionalSupportStaffs.list[studentPreference.instructionalSupportStaffId]"
+			ng-init="supportStaffStudent=view.state.instructionalSupportStaffs.list[studentPreference.supportStaffId]"
 			ng-click="assignStaffToSlot(supportStaffStudent.id)">
 			<a class="small">
 				<span class="course-filter-item">{{ supportStaffStudent.fullName }} ({{ studentPreference.priority }})</span>
@@ -20,7 +19,7 @@
 		</li>
 
 		<!-- phds -->
-		<li ng-if="assignmentOptions.phdStudentIds.length > 0" role="separator" class="divider"></li>
+		<li ng-if="assignmentOptions.studentPreferences.length > 0" role="separator" class="divider"></li>
 		<li ng-if="assignmentOptions.phdStudentIds.length > 0" class="dropdown-header" stop-event="click"><b>Phd Students</b></li>
 
 		<li ng-if="assignmentOptions.phdStudentIds.length > 0" class="clickable"
@@ -33,7 +32,7 @@
 		</li>
 
 		<!-- masters -->
-		<li ng-if="assignmentOptions.mastersStudentIds.length > 0" role="separator" class="divider"></li>
+		<li ng-if="assignmentOptions.phdStudentIds.length > 0" role="separator" class="divider"></li>
 		<li ng-if="assignmentOptions.mastersStudentIds.length > 0" class="dropdown-header" stop-event="click"><b>Masters Students</b></li>
 
 		<li ng-if="assignmentOptions.mastersStudentIds.length > 0" class="clickable"
@@ -46,7 +45,7 @@
 		</li>
 
 		<!-- instructionalSupport -->
-		<li ng-if="assignmentOptions.instructionalSupportIds.length > 0" role="separator" class="divider"></li>
+		<li ng-if="assignmentOptions.mastersStudentIds.length > 0" role="separator" class="divider"></li>
 		<li ng-if="assignmentOptions.instructionalSupportIds.length > 0" class="dropdown-header" stop-event="click"><b>Instructional Support</b></li>
 
 		<li ng-if="assignmentOptions.instructionalSupportIds.length > 0" class="clickable"
