@@ -3,8 +3,7 @@
 		<spinner></spinner>
 	</div>
 	<div ng-show="view.state">
-		<div ng-show="view.state.studentSupportCallResponses.length > 0"
-					ng-repeat="supportCallResponse in view.state.studentSupportCallResponses">
+		<div>
 			<div class="course-table-row">
 				<!-- table header -->
 				<div class="course-table__header">
@@ -31,7 +30,7 @@
 			</div>
 			<!-- table header -->
 
-			<div class="course-table-row">
+			<div ng-repeat="supportCallResponse in view.state.studentSupportCallResponses" class="course-table-row">
 				<div class="course-table__row-detail">
 					<div>
 						<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) }}/studentSupportCallForm">
@@ -48,97 +47,16 @@
 			</div>
 		</div>
 
+		<div ng-if="view.state.studentSupportCallResponses.length == 0" style="margin-left: 15px; margin-top: 15px; text-align: center;">
+			No available support calls.
+		</div>
+
 		<div ng-if="view.state.schedule.studentSupportCallReviewOpen" style="margin-top: 10px; margin-left: 15px">
 			<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) || '03' }}">
-				Support Call {{ year.yearToAcademicYear() }} is open for review
+				Schedule {{ year.yearToAcademicYear() }} is open for review
 			</a>
 		</div>
 
-		<div class="course-status-header">
-			<h5>
-				Scheduled Courses {{ year.yearToAcademicYear() }}
-			</h5>
-		</div>
 
-		<div ng-show="view.state.instructorCourses && view.state.instructorCourses.terms.length === 0" class="empty-message">
-			No Scheduled Courses
-		</div>
-		<div ng-repeat="term in view.state.instructorCourses.terms">
-			<div class="course-status-sub-header">
-				<h5>{{ term.getTermCodeDisplayName() }}</h5>
-			</div>
-			<!-- table headers -->
-			<div class="course-table-row">
-				<div class="course-table__header">
-					<div class="course-table__header-detail">
-						<div>
-							Course
-						</div>
-					</div>
-				</div>
-				<div class="course-table__header">
-					<div class="course-table__header-detail">
-						<div>
-							Location
-						</div>
-					</div>
-				</div>
-				<div class="course-table__header">
-					<div class="course-table__header-detail">
-						<div>
-							Time
-						</div>
-					</div>
-				</div>
-				<div class="course-table__header">
-					<div class="course-table__header-detail">
-						<div>
-							Activity
-						</div>
-					</div>
-				</div>
-				<div class="course-table__header">
-					<div class="course-table__header-detail">
-						<div>
-							Position
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- table header -->
-
-			<!-- course table -->
-			<div class="course-table-row" ng-repeat="course in view.state.instructorCourses.list[term]">
-				<div class="course-table__row-detail">
-					<div class="course-table__row-detail-header">
-						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
-					</div>
-				</div>
-				<div class="course-table__row-detail-middle">
-					<div class="meeting-inner" ng-repeat="meeting in course.meetings">
-						<div class="course-table__row-detail-location" style="flex: 1 1 0px; display: flex; justify-content: center;">
-							<div>
-								{{ meeting.location }}
-							</div>
-						</div>
-						<div style="flex: 1 1 0px; display: flex; justify-content: left; padding-left: 50px;">
-							<span class="meeting-days">
-								{{ dayIndicatorToDayCodes(meeting.dayIndicator) }}&nbsp;
-							</span>
-							<span class="meeting-time">
-								{{ meeting.startTime.toStandardTime() }}-{{ meeting.endTime.toStandardTime() }}
-							</span>
-						</div>
-						<div style="flex: 1 1 0px; display: flex; justify-content: center;">
-							{{ meeting.activityType }}
-						</div>
-					</div>
-				</div>
-				<div class="course-table__row-detail">
-					TA (50%)
-				</div>
-			</div>
-		</div>
 	</div>
-
 </div>
