@@ -204,8 +204,8 @@ h4, .h4 {
 }
 
 .student-preference-selector {
-	margin-left: 40px;
-	width: 42%;
+	margin-left: 20px;
+	width: 200px;
 	position: relative;
 	height: 30px;
 	border: 1px solid #ebebeb;
