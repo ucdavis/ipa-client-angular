@@ -1,4 +1,12 @@
 <div id="people-view">
+
+	<!-- handle lack of supportStaff -->
+	<div ng-if="view.state && view.state.instructionalSupportStaffs.ids == 0">
+			<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+				<p class="lead">There are no support staff for {{ sharedState.workgroup.name }}.</p>
+			</div>
+	</div>
+
 	<div ng-repeat="supportStaffId in view.state.instructionalSupportStaffs.ids" class="container-fluid border-bottom--gray"
 				ng-init="supportStaff=view.state.instructionalSupportStaffs.list[supportStaffId]">
 			<div class="flex-row">
