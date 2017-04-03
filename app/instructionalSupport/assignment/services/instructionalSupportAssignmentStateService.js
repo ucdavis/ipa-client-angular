@@ -208,10 +208,11 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 
 						// Find assignments made to this support staff
 						instructionalSupportStaffData.supportAssignmentIds = [];
+
 						for (var j = 0; j < action.payload.supportAssignments.length; j++) {
 							slotInstructionalSupportAssignment = action.payload.supportAssignments[j];
 
-							if (slotInstructionalSupportAssignment.instructionalSupportStaffId == instructionalSupportStaffData.id) {
+							if (slotInstructionalSupportAssignment.supportStaffId == instructionalSupportStaffData.id) {
 								instructionalSupportStaffData.supportAssignmentIds.push(slotInstructionalSupportAssignment.id);
 							}
 						}
@@ -221,7 +222,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						for (var j = 0; j < action.payload.studentSupportPreferences.length; j++) {
 							slotPreference = action.payload.studentSupportPreferences[j];
 
-							if (slotPreference.instructionalSupportStaffId == instructionalSupportStaffData.id) {
+							if (slotPreference.supportStaffId == instructionalSupportStaffData.id) {
 								instructionalSupportStaffData.preferenceIds.push(slotPreference.id);
 							}
 						}
@@ -230,7 +231,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						for (var j = 0; j < action.payload.studentSupportCallResponses.length; j++) {
 							slotSupportCallResponse = action.payload.studentSupportCallResponses[j];
 
-							if (slotSupportCallResponse.instructionalSupportStaffId == instructionalSupportStaffData.id) {
+							if (slotSupportCallResponse.supportStaffId == instructionalSupportStaffData.id) {
 								instructionalSupportStaffData.supportCallResponse = slotSupportCallResponse;
 								break;
 							}

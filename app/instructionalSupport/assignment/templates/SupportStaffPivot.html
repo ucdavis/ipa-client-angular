@@ -43,7 +43,7 @@
 						<div class="support-staff-details-container">
 								<div class="ta_course-section">
 
-
+									<!-- Repeat over assignments for this supportStaff -->
 									<div ng-repeat="supportAssignmentId in supportStaff.supportAssignmentIds" class="tile-container"
 											ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[supportAssignmentId]; sectionGroup=view.state.sectionGroups.list[view.state.instructionalSupportAssignments.list[supportAssignmentId].sectionGroupId]">
 										<div class="remove-tile-container">
