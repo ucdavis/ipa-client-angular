@@ -103,14 +103,8 @@
 					<!-- select dates&terms section-->
 					<div class="teaching-call--info_style container-fluid">
 						<h5 style="margin-top: 0px;">Due Date</h5>
-						<p class="input-group datepicker-bar">
-							<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="supportCallConfigData.dueDate" is-open="popup1.opened"
-							datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" 
-							popup-placement="bottom-left" show-button-bar="false" ng-click="open1()"/>
-							<span class="input-group-btn">
-								<button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-							</span>
-						</p>
+						<ipa-date-picker>
+						</ipa-date-picker>
 						<div>
 							<ul style="list-style: none; padding-left: 0px; margin-bottom: 0px;">
 								<li role="menuitem" ng-click="toggleAllowSubmissionAfterDueDate()">
