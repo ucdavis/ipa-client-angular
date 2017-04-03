@@ -255,7 +255,8 @@ module.exports = function (grunt) {
 			},
 			cssShared: {
 				src: [
-					'<%= folders.webapp.root %>/shared/**/*.css'
+					'<%= folders.webapp.root %>/shared/**/*.css',
+					'<%= folders.webapp.root %>/shared/directives/**/*.css'
 				],
 				dest: '<%= folders.webapp.build %>/css/shared.css'
 
