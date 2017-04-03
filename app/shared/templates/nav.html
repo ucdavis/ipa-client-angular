@@ -36,24 +36,23 @@
 			<!-- add class "multiple-expanded" to allow multiple submenus to open -->
 			<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
 			<li ng-class="{ 'active': currentBaseHref == 'summary', 'opened': expanded == 'summary' || (!expanded && currentBaseHref == 'summary') }"
-				ng-if="userHasRoles(['academicPlanner','reviewer']) && userHasRoles(['senateInstructor','federationInstructor'])"
-				class="has-sub root-level">
+				ng-if="showMultipleSummary()" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('summary')">
 					<i class="entypo-home"></i>
 					<span class="title">Home</span>
 				</a>
 				<ul ng-class="{ 'visible': expanded == 'summary' || (!expanded && currentBaseHref == 'summary') }">
-					<li ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'workgroup' }">
+					<li ng-if="isPlanner || isAdmin" ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'workgroup' }">
 						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=workgroup">
 							Workgroup
 						</a>
 					</li>
-					<li ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'instructor' }">
+					<li ng-if="isInstructor || isAdmin" ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'instructor' }">
 						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=instructor">
 							Instructor
 						</a>
 					</li>
-					<li ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'instructionalSupport' }">
+					<li ng-if="isSupportStaff || isAdmin" ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'instructionalSupport' }">
 						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=instructionalSupport">
 							Support Staff
 						</a>

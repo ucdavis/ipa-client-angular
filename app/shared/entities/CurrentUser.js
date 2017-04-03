@@ -60,6 +60,21 @@ angular.module('currentUser', ['userRole'])
 					});
 			},
 
+			isSupportStaff: function (workgroupId) {
+				var roleNames = ["studentMasters", "studentPhd", "instructionalSupport"];
+				return this.hasRoles(roleNames, workgroupId);
+			},
+
+			isInstructor: function (workgroupId) {
+				var roleNames = ["federationInstructor", "senateInstructor"];
+				return this.hasRoles(roleNames, workgroupId);
+			},
+
+			isPlanner: function (workgroupId) {
+				var roleNames = ["academicPlanner","reviewer"];
+				return this.hasRoles(roleNames, workgroupId);
+			},
+
 			hasRole: function (roleName, workgroupId) {
 				if (!this.userRoles) { return false; }
 				return this.userRoles
