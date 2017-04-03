@@ -330,3 +330,7 @@ body .support-call-status {
 		background-color: #fff;
 		color: #333;
 }
+
+.allow-submission-row {
+	margin-bottom: 20px;
+}
