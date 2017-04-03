@@ -67,9 +67,9 @@ instructionalSupportApp.factory("instructionalSupportAssignmentService", this.in
 
 			return deferred.promise;
 		},
-		openStudentSupportCallReview: function(scheduleId) {
+		toggleSupportStaffSupportCallReview: function(scheduleId, termShortCode) {
 			var deferred = $q.defer();
-			$http.put(serverRoot + "/api/instructionalSupportView/schedules/" + scheduleId + "/openStudentSupportCallReview", { withCredentials: true })
+			$http.put(serverRoot + "/api/instructionalSupportView/schedules/" + scheduleId + "/terms/" + termShortCode + "/toggleSupportStaffSupportCallReview", { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
@@ -79,9 +79,9 @@ instructionalSupportApp.factory("instructionalSupportAssignmentService", this.in
 
 			return deferred.promise;
 		},
-		openInstructorSupportCallReview: function(scheduleId) {
+		toggleInstructorSupportCallReview: function(scheduleId, termShortCode) {
 			var deferred = $q.defer();
-			$http.put(serverRoot + "/api/instructionalSupportView/schedules/" + scheduleId + "/openInstructorSupportCallReview", { withCredentials: true })
+			$http.put(serverRoot + "/api/instructionalSupportView/schedules/" + scheduleId + "/terms/" + termShortCode + "/toggleInstructorSupportCallReview", { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})

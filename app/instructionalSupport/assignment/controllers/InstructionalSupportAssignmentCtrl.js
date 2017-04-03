@@ -18,8 +18,8 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 				$rootScope.$on('supportAssignmentStateChanged', function (event, data) {
 					$scope.sharedState = sharedStateData;
 
-					var isInstructorReviewOpen = data.state.schedule.instructorSupportCallReviewOpen;
-					var isStudentReviewOpen = data.state.schedule.studentSupportCallReviewOpen;
+					var isInstructorReviewOpen = $scope.isInstructorSupportCallReviewOpen();
+					var isStudentReviewOpen = $scope.isSupportStaffSupportCallReviewOpen();
 					var userRoles = $scope.sharedState.currentUser.userRoles;
 
 					// Default access to none
@@ -72,6 +72,24 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 			$scope.filterTable = function (query) {
 				clearTimeout($scope.t);
 				$scope.t = setTimeout($scope.startFilter, 700, query);
+			};
+
+			$scope.isInstructorSupportCallReviewOpen = function () {
+				var index = parseInt($scope.termShortCode) - 1;
+
+				var value = $scope.view.state.schedule.instructorSupportCallReviewOpen[index];
+				var results = (value == "1");
+
+				return results;
+			};
+
+			$scope.isSupportStaffSupportCallReviewOpen = function () {
+				var index = parseInt($scope.termShortCode) - 1;
+
+				var value = $scope.view.state.schedule.supportStaffSupportCallReviewOpen[index];
+				var results = (value == "1");
+
+				return results;
 			};
 
 			$scope.startFilter = function (query) {
@@ -196,12 +214,12 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 				return description;
 			};
 
-			$scope.openStudentSupportCallReview = function() {
-				instructionalSupportAssignmentActionCreators.openStudentSupportCallReview($scope.view.state.schedule.id);
+			$scope.toggleSupportStaffSupportCallReview = function() {
+				instructionalSupportAssignmentActionCreators.toggleSupportStaffSupportCallReview($scope.view.state.schedule.id, $scope.termShortCode);
 			};
 
-			$scope.openInstructorSupportCallReview = function() {
-				instructionalSupportAssignmentActionCreators.openInstructorSupportCallReview($scope.view.state.schedule.id);
+			$scope.toggleInstructorSupportCallReview = function() {
+				instructionalSupportAssignmentActionCreators.toggleInstructorSupportCallReview($scope.view.state.schedule.id, $scope.termShortCode);
 			};
 
 			$scope.termYearDescription = $scope.getTermYearDescription($scope.termShortCode, $scope.year);

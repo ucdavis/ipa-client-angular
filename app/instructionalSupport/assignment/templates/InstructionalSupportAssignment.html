@@ -38,34 +38,43 @@
 					</div>
 					<div class="btn-group border-bottom--gray review-switcher" data-toggle="buttons">
 						<label ng-class="{'invisible' : readOnlyMode }"
-							ng-if="view.state.schedule.instructorSupportCallReviewOpen == false"
+							ng-hide="isInstructorSupportCallReviewOpen()"
 							class="btn btn-white btn-sm" id="instructors-pivot"
-							confirm-button="openInstructorSupportCallReview()"
-							message="Are you sure you want to open this schedule for instructor review? This cannot be undone."
+							confirm-button="toggleInstructorSupportCallReview()"
+							message="Are you sure you want to open this schedule for instructor review?"
 							yes="Confirm" no="Cancel" placement="top" btn-class="btn-info">
 							<input type="radio" name="options">
 							Open instructor review
 						</label>
-						<label ng-if="view.state.schedule.instructorSupportCallReviewOpen"
-							style="color: green;padding-right: 20px;">
-							Instructor Review is open
-							<span class="glyphicon glyphicon-ok"></span>
+						<label ng-class="{'invisible' : readOnlyMode }"
+							ng-show="isInstructorSupportCallReviewOpen()"
+							class="btn btn-white btn-sm" id="instructors-pivot"
+							confirm-button="toggleInstructorSupportCallReview()"
+							message="Are you sure you want to close the instructor review of this schedule?"
+							yes="Confirm" no="Cancel" placement="top" btn-class="btn-info">
+							<input type="radio" name="options">
+							Close instructor review
 						</label>
 
 						<label ng-class="{'invisible' : readOnlyMode }"
-							ng-if="view.state.schedule.studentSupportCallReviewOpen == false"
+							ng-hide="isSupportStaffSupportCallReviewOpen()"
 							class="btn btn-white btn-sm" id="instructors-pivot"
-							confirm-button="openStudentSupportCallReview()"
-							message="Are you sure you want to open this schedule for student review? This cannot be undone."
+							confirm-button="toggleSupportStaffSupportCallReview()"
+							message="Are you sure you want to open this schedule for support staff review?"
 							yes="Confirm" no="Cancel" placement="top" btn-class="btn-info">
 							<input type="radio" name="options">
-							Open student review
+							Open support staff review
 						</label>
-						<label ng-if="view.state.schedule.studentSupportCallReviewOpen"
-							style="color: green;">
-							Student Review is open
-							<span class="glyphicon glyphicon-ok"></span>
+						<label ng-class="{'invisible' : readOnlyMode }"
+							ng-show="isSupportStaffSupportCallReviewOpen()"
+							class="btn btn-white btn-sm" id="instructors-pivot"
+							confirm-button="toggleSupportStaffSupportCallReview()"
+							message="Are you sure you want to close the support staff review of this schedule?"
+							yes="Confirm" no="Cancel" placement="top" btn-class="btn-info">
+							<input type="radio" name="options">
+							Close support staff review
 						</label>
+
 					</div>
 				</div>
 			</div>

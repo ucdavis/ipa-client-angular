@@ -25,11 +25,11 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		openStudentSupportCallReview: function (scheduleId) {
-			instructionalSupportAssignmentService.openStudentSupportCallReview(scheduleId).then(function (payload) {
-				$rootScope.$emit('toast', { message: "Added Assignment", type: "SUCCESS" });
+		toggleSupportStaffSupportCallReview: function (scheduleId, termShortCode) {
+			instructionalSupportAssignmentService.toggleSupportStaffSupportCallReview(scheduleId, termShortCode).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Updated support staff support call review", type: "SUCCESS" });
 				var action = {
-					type: OPEN_STUDENT_SUPPORT_CALL_REVIEW,
+					type: UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW,
 					payload: payload
 				};
 				instructionalSupportAssignmentStateService.reduce(action);
@@ -37,11 +37,11 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		openInstructorSupportCallReview: function (scheduleId) {
-			instructionalSupportAssignmentService.openInstructorSupportCallReview(scheduleId).then(function (payload) {
-				$rootScope.$emit('toast', { message: "Added Assignment", type: "SUCCESS" });
+		toggleInstructorSupportCallReview: function (scheduleId, termShortCode) {
+			instructionalSupportAssignmentService.toggleInstructorSupportCallReview(scheduleId, termShortCode).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Updated instructor support call review", type: "SUCCESS" });
 				var action = {
-					type: OPEN_INSTRUCTOR_SUPPORT_CALL_REVIEW,
+					type: UPDATE_INSTRUCTOR_SUPPORT_CALL_REVIEW,
 					payload: payload
 				};
 				instructionalSupportAssignmentStateService.reduce(action);

@@ -309,11 +309,11 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					schedule = {};
 					schedule = action.payload.schedule;
 					return schedule;
-				case OPEN_STUDENT_SUPPORT_CALL_REVIEW:
-					schedule.studentSupportCallReviewOpen = true;
+				case UPDATE_INSTRUCTOR_SUPPORT_CALL_REVIEW:
+					schedule = action.payload;
 					return schedule;
-				case OPEN_INSTRUCTOR_SUPPORT_CALL_REVIEW:
-					schedule.instructorSupportCallReviewOpen = true;
+				case UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW:
+					schedule = action.payload;
 					return schedule;
 				default:
 					return schedule;
