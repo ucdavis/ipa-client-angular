@@ -214,17 +214,17 @@
 
 				<!-- send buttons -->
 				<button ng-if="isAddFormComplete() == true && supportCallConfigData.sendEmails"
-								type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Send</button>
+								type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Send Support Call</button>
 				<button ng-if="isAddFormComplete() == false && supportCallConfigData.sendEmails"
 								tooltip-placement="left" uib-tooltip="You must select at least one instructor and preference type" type="button"
-								class="disabled btn btn-info neon-dark-confirm-btn">Send</button>
+								class="disabled btn btn-info neon-dark-confirm-btn">Send Support Call</button>
 
 				<!-- start buttons (no email) -->
 				<button ng-if="isAddFormComplete() == true && !supportCallConfigData.sendEmails"
-								type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Start</button>
+								type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Start Support Call</button>
 				<button ng-if="isAddFormComplete() == false && !supportCallConfigData.sendEmails"
 								tooltip-placement="left" uib-tooltip="You must select at least one instructor and preference type" type="button"
-								class="disabled btn btn-info neon-dark-confirm-btn">Start</button>
+								class="disabled btn btn-info neon-dark-confirm-btn">Start Support Call</button>
 
 			</div>
 			<!-- modal-footer ends -->

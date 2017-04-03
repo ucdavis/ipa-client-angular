@@ -18,6 +18,7 @@
 .neon-dark-confirm-btn.disabled:focus,
 .neon-dark-confirm-btn.disabled:active {
 	background-color: rgb(48, 54, 65);
+	border-color: rgb(48, 54, 65);
 	color: white;
 }
 
