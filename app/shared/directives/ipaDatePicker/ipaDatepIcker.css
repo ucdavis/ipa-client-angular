@@ -1,0 +1,24 @@
+.ipa-date-picker .uib-daypicker .btn {
+	border: none;
+}
+
+.ipa-date-picker .uib-datepicker .uib-title {
+	border: none;
+}
+
+.ipa-date-picker .uib-day {
+	border: none !important;
+}
+
+.ipa-date-picker .uib-datepicker-popup {
+	padding: 2%;
+}
+
+.ipa-date-picker .uib-day button.active {
+	border-radius: 100px;
+	background-color: #1988b6;
+}
+
+.ipa-date-picker .uib-day button.active span {
+	color: white;
+}
