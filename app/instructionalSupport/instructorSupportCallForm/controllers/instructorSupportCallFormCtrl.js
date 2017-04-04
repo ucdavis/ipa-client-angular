@@ -16,6 +16,11 @@ instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '
 			$scope.view = {};
 			$scope.listenersActive = false;
 
+			$rootScope.$on('sharedStateSet', function (event, data) {
+				$scope.sharedState = data;
+				$scope.isInstructor = $scope.sharedState.currentUser.isInstructor($scope.workgroupId);
+			});
+
 			$rootScope.$on('instructionalSupportStudentFormStateChanged', function (event, data) {
 				$scope.view.state = data.state;
 				$scope.listenForSort();
