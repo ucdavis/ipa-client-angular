@@ -214,6 +214,17 @@ h4, .h4 {
 	align-items: center;
 }
 
+.student-support-call-form .student-preference-selector {
+	margin-left: 40px;
+	width: 42%;
+	position: relative;
+	height: 30px;
+	border: 1px solid #ebebeb;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+}
+
 .student-support-call-form .student-course{
 	border-radius: 4px;
 	border: 1px solid #adadad;
@@ -222,4 +233,8 @@ h4, .h4 {
 	justify-content: center;
 	align-items: center;
 	padding: 10px;
+}
+
+.student-support-call-form {
+	color: black;
 }

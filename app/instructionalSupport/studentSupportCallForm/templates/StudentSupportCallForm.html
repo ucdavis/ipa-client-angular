@@ -92,11 +92,11 @@
 										<div class="student-course_details">
 											<div>
 											</div>
-											<p class="student-preference">{{ preference.type}}</p>
+											<p class="student-preference">{{ getRoleDisplayName(preference.type) }}</p>
 											<i class="btn glyphicon glyphicon-remove student-course-remove text-primary"
-												uib-tooltip="Delete Assignment" tooltip-placement="bottom"
+												uib-tooltip="Delete preference" tooltip-placement="bottom"
 												confirm-button="deletePreference(preference)"
-												message="Are you sure you want to delete this Assignment?"
+												message="Are you sure you want to delete this preference?"
 												yes="Confirm" no="Cancel" placement="top"></i>
 										</div>
 									</div>

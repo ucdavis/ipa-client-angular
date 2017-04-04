@@ -107,6 +107,10 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 				instructionalSupportStudentFormActionCreators.updatePreferencesOrder(filteredPreferenceIds, scheduleId, $scope.termCode);
 			};
 
+			$scope.getRoleDisplayName = function (roleString) {
+				return getRoleDisplayName(roleString);
+			};
+
 			$scope.termCode = $scope.termShortCodeToTermCode($scope.termShortCode);
 	}]);
 
