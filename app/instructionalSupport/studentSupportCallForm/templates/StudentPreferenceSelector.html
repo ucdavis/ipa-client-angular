@@ -1,0 +1,30 @@
+<div class="student-preference-selector">
+	<div class="clickable assignment-description" style="height: 20px; width: 100%; text-align: center; color: #303641;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		Add Preference...
+	</div>
+	<ul class="dropdown-menu" style="width: 100%;">
+		<li ng-show="view.state.potentialPreferences.associateInstructors.length > 0"class="dropdown-header" stop-event="click"><b>Associate Instructor Positions</b></li>
+		<li ng-repeat="preference in view.state.potentialPreferences.associateInstructors"class="clickable"
+				ng-click="addPreference(preference)">
+			<a class="small">
+				<span class="course-filter-item">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}}</span>
+			</a>
+		</li>
+
+		<li ng-show="view.state.potentialPreferences.teachingAssistants.length > 0"class="dropdown-header" stop-event="click"><b>Teaching Assistant Positions</b></li>
+		<li ng-repeat="preference in view.state.potentialPreferences.teachingAssistants"class="clickable"
+			ng-click="addPreference(preference)">
+			<a class="small">
+				<span class="course-filter-item">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}}</span>
+			</a>
+		</li>
+
+		<li ng-show="view.state.potentialPreferences.readers.length > 0"class="dropdown-header" stop-event="click"><b>Reader Positions</b></li>
+		<li ng-repeat="preference in view.state.potentialPreferences.readers"class="clickable"
+			ng-click="addPreference(preference)">
+			<a class="small">
+				<span class="course-filter-item">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}}</span>
+			</a>
+		</li>
+	</ul>
+</div>

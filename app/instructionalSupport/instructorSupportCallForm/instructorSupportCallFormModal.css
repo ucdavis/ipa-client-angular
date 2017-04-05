@@ -1,0 +1,27 @@
+.instructor-modal-header_style {
+    background: #303641;
+}
+
+.instructor-modal-header_style h4 {
+    color: white;
+}
+
+.instructor-modal-header_style button {
+    /*assign style to "x" button */
+    color: white;
+    opacity: 1;
+}
+
+.instructor-modal-modal-footer {
+    background-color: rgb(248, 248, 248);
+}
+
+.modal .modal-header .close {
+    background: none;
+    display: inline-block;
+    padding: 0px 5px;
+    line-height: 1;
+    color: white;
+    zoom: 1;
+    opacity: 1 !important;
+}

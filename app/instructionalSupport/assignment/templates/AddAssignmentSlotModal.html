@@ -1,0 +1,49 @@
+<div>
+	<div class="modal-container">
+		<div class="modal--header modal--header-skin">
+			<div class="modal--header-item">
+				Add {{ title }} Slots
+			</div>
+
+			<div ng-click="dismiss()" class="modal--header-item modal--header-cancel-skin">
+				X
+			</div>
+
+		</div>
+		
+		<div class="modal--body modal--body-skin">
+
+			<div class="modal--body-row">
+
+				<div class="modal--body-row-label">
+					<div>
+						Appointment Percentage:
+					</div>
+				</div>
+				<div class="modal--body-row-field">
+					<input type="number" min="1" max="100" class="modal--body-row-field-input-skin" ng-model="formData.appointmentPercentage">
+				</div>
+
+			</div>
+			<div class="modal--body-row">
+
+				<div class="modal--body-row-label">
+					Number of Positions:
+				</div>
+				<div class="modal--body-row-field">
+					<input type="number" min="1" max="10" class="modal--body-row-field-input-skin" ng-model="formData.numberOfAppointments">
+				</div>
+
+			</div>
+		</div>
+
+		<div class="modal--footer modal--footer-skin">
+			<button type="button" style="margin-right: 5px; border: 1px solid gainsboro;" class="btn btn-default" ng-click="dismiss()">
+				Cancel
+			</button>
+			<button type="button" class="btn neon-dark-confirm-btn" ng-click="addAssignmentSlots()">
+				Add
+			</button>
+		</div>
+	</div>
+</div>

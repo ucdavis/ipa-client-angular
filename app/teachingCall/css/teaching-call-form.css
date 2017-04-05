@@ -161,11 +161,6 @@ button.btn.assign-dropdown-btn {
 	align-items: center;
 }
 
-.caret {
-	position: absolute;
-	top: 50%;
-	right: 5%;
-}
 .select2-default {
 	border-color: rgb(235, 235, 235);
 }

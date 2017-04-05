@@ -1,7 +1,9 @@
 <nav></nav>
+<ipa-header page-title="Summary"></ipa-header>
 
 <instructor-summary ng-if="view.mode == 'instructor'"></instructor-summary>
 <workgroup-summary ng-if="view.mode == 'workgroup'"></workgroup-summary>
+<instructional-support-summary ng-if="view.mode == 'instructionalSupport'"></instructional-support-summary>
 
 <p class="text-center" ng-if="view.mode == 'unknown'">
 	Unknown User Role

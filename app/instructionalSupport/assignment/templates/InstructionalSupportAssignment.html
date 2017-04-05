@@ -1,0 +1,114 @@
+<nav year="{{ year }}" term-short-code="{{ termShortCode }}" workgroup-id="{{ workgroupId }}"></nav>
+
+<div></div>
+<ipa-header page-title="Support Staff Assignments"></ipa-header>
+
+<!-- handle lack of active teaching call -->
+<div ng-if="view.state && isAllowed == false">
+		<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+			<p class="lead">You have not been invited to review the {{ sharedState.workgroup.name }} {{ year }}-{{ nextYear }} Support Call</p>
+			<br />
+			<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
+		</div>
+</div>
+
+<div ng-if="view.state && isAllowed == true" class="support-assignments page-container">
+	<div class="main-content">
+			<div class="row">
+					<!-- search bar -->
+					<div class="search-flex">
+							<div class="search-flex-children">
+									<input type="search" class="form-control" placeholder="Search" ng-model="searchQuery" ng-change="filterTable(searchQuery)">
+							</div>
+					</div>
+			</div>
+
+			<!-- search bar ends -->
+			<div class="row">
+				<div class="container-fluid flex-box">
+					<div class="btn-group border-bottom--gray view-switcher" data-toggle="buttons">
+						<label class="btn btn-white btn-sm active" id="courses-pivot" ng-click="togglePivotView('course')">
+							<input type="radio" name="options">
+							<span class="tool-icon glyphicon glyphicon-education"></span> By Course
+						</label>
+						<label class="btn btn-white btn-sm" id="instructors-pivot" ng-click="togglePivotView('supportStaff')">
+							<input type="radio" name="options">
+							<span class="tool-icon glyphicon glyphicon-user"></span> By Support Staff
+						</label>
+					</div>
+					<div class="btn-group border-bottom--gray review-switcher" data-toggle="buttons">
+						<label ng-class="{'invisible' : readOnlyMode }"
+							ng-hide="isInstructorSupportCallReviewOpen()"
+							class="btn btn-white btn-sm" id="instructors-pivot"
+							confirm-button="toggleInstructorSupportCallReview()"
+							message="Are you sure you want to open this schedule for instructor review?"
+							yes="Confirm" no="Cancel" placement="top" btn-class="btn-info">
+							<input type="radio" name="options">
+							Open instructor review
+						</label>
+						<label ng-class="{'invisible' : readOnlyMode }"
+							ng-show="isInstructorSupportCallReviewOpen()"
+							class="btn btn-white btn-sm" id="instructors-pivot"
+							confirm-button="toggleInstructorSupportCallReview()"
+							message="Are you sure you want to close the instructor review of this schedule?"
+							yes="Confirm" no="Cancel" placement="top" btn-class="btn-info">
+							<input type="radio" name="options">
+							Close instructor review
+						</label>
+
+						<label ng-class="{'invisible' : readOnlyMode }"
+							ng-hide="isSupportStaffSupportCallReviewOpen()"
+							class="btn btn-white btn-sm" id="instructors-pivot"
+							confirm-button="toggleSupportStaffSupportCallReview()"
+							message="Are you sure you want to open this schedule for support staff review?"
+							yes="Confirm" no="Cancel" placement="top" btn-class="btn-info">
+							<input type="radio" name="options">
+							Open support staff review
+						</label>
+						<label ng-class="{'invisible' : readOnlyMode }"
+							ng-show="isSupportStaffSupportCallReviewOpen()"
+							class="btn btn-white btn-sm" id="instructors-pivot"
+							confirm-button="toggleSupportStaffSupportCallReview()"
+							message="Are you sure you want to close the support staff review of this schedule?"
+							yes="Confirm" no="Cancel" placement="top" btn-class="btn-info">
+							<input type="radio" name="options">
+							Close support staff review
+						</label>
+
+					</div>
+				</div>
+			</div>
+
+			<course-pivot ng-show="view.state.userInterface.displayCoursePivot"></course-pivot>
+			<support-staff-pivot ng-show="view.state.userInterface.displaySupportStaffPivot"></instructor-pivot>
+
+			<!-- modal-2 -->
+			<div class="modal fade" id="modal-2">
+					<div class="modal-dialog ta-slot--width">
+							<div class="modal-content">
+									<div class="modal-header teaching-call--header_style">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+											<h4 class="modal-title">New Course Slot</h4>
+									</div>
+									<div class="modal-body">
+											<div class="row">
+													<form role="form" class="form-horizontal form-groups-bordered">
+															<div class="form-group">
+																	<label class="col-sm-5 control-label">Add a Course:</label>
+																	<div class="col-sm-6">
+																			<input class="form-control form-control--add-course" type="text" placeholder="Enter Course Name">
+																	</div>
+															</div>
+													</form>
+											</div>
+									</div>
+
+									<div class="modal-footer modal-footer--teaching-call">
+											<button type="button" class="btn btn-info">Create</button>
+									</div>
+							</div>
+					</div>
+			</div>
+			<!-- modal-ends -->
+	</div>
+</div>

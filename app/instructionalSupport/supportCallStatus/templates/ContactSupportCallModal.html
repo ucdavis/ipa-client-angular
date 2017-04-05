@@ -1,0 +1,49 @@
+<div style="display: block; overflow-y: hidden;" id="modal-1" class="modal">
+	<!-- modal page 1 -->
+	<div class="modal-dialog teaching-call--width">
+		<div class="modal-content">
+			<div class="modal-header teaching-call--header_style">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="dismiss()">×</button>
+				<h4 class="modal-title">Contact Instructors</h4>
+			</div>
+			<!-- modal-body -->
+			<div class="modal-body">
+				<div class="row flex-box container-fluid">
+					<!-- faculty member info-->
+					<div class="teaching-call--info_style">
+						<h5 style="margin-top: 0px;">Instructors</h5>
+						<div class="form-control overflow-auto" rows="5" id="comment" style="height: 115px;">
+							<div ng-repeat="participant in supportCallConfigData.selectedParticipants">
+								{{ participant.lastName }}, {{ participant.firstName }}
+							</div>
+						</div>
+					</div>
+					<!-- faculty member info ends-->
+					<!-- empty flex-box -->
+					<div style="flex:0 1 5%;">
+					</div>
+					<!-- empty flex-box ends-->
+					<!-- select dates&terms section-->
+					<div class="teaching-call--info_style container-fluid">
+						<h5 style="margin-top: 0px;">Send Date</h5>
+						<ipa-date-picker>
+						</ipa-date-picker>
+					</div>
+					<!-- select dates&terms section ends-->
+				</div>
+			</div>
+
+			<div class="modal-footer modal-footer--teaching-call">
+				<div class="email-style container-fluid">
+					<h5 class="pull-left">Message</h5>
+					<textarea ng-bind-html="supportCallConfigData.message" class="form-control support-call-message-input" placeholder="" rows="5" id="comment"></textarea>
+				</div>
+				<button ng-if="isFormIncomplete() == false" type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Send</button>
+				<button ng-if="isFormIncomplete() == true" tooltip-placement="left" uib-tooltip="You must select a date and message" type="button" class="disabled btn neon-dark-confirm-btn">Send</button>
+
+			</div>
+			<!-- modal-footer ends -->
+			
+		</div>
+	</div><!-- modal page 1 ends -->
+</div>

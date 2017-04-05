@@ -1,0 +1,78 @@
+<div id="people-view">
+
+	<!-- handle lack of supportStaff -->
+	<div ng-if="view.state && view.state.instructionalSupportStaffs.ids == 0">
+			<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+				<p class="lead">There are no support staff for {{ sharedState.workgroup.name }}.</p>
+			</div>
+	</div>
+
+	<div ng-repeat="supportStaffId in view.state.instructionalSupportStaffs.ids" class="container-fluid border-bottom--gray"
+				ng-init="supportStaff=view.state.instructionalSupportStaffs.list[supportStaffId]">
+			<div class="flex-row">
+					<!-- TA info -->
+					<div class="assignment-title-container">
+							<h4 class="assignment-title-header">{{ supportStaff.lastName }}, {{ supportStaff.firstName }}</h4>
+							<div class="label ng-binding ng-scope info--bg_black">
+								{{ supportStaff.type }}
+							</div>
+							<div>
+									<ul class="ta-info">
+											<li ng-if="supportStaff.supportCallResponse.teachingQualifications.length > 0">
+												<strong>Teaching Experience:</strong>
+											</li>
+											<li>
+												<p>
+													{{ supportStaff.supportCallResponse.teachingQualifications }}
+												</p>
+											</li>
+											<li ng-if="supportStaff.supportCallResponse.generalComments.length > 0">
+												<strong>Comments:</strong>
+											</li>
+											<li>
+												<p>
+													{{ supportStaff.supportCallResponse.generalComments }}
+												</p>
+											</li>
+									</ul>
+							</div>
+					</div>
+					<!-- TA info ends -->
+					<!-- TA course section -->
+					<div class="support-staff-details-layout">
+						<div class="support-staff-details-container">
+								<div class="ta_course-section">
+
+									<!-- Repeat over assignments for this supportStaff -->
+									<div ng-repeat="supportAssignmentId in supportStaff.supportAssignmentIds" class="tile-container"
+											ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[supportAssignmentId]; sectionGroup=view.state.sectionGroups.list[view.state.instructionalSupportAssignments.list[supportAssignmentId].sectionGroupId]">
+										<div class="remove-tile-container">
+										</div>
+										<div class="assignment">
+												<div class="support-student-assignment-detail-container">
+														<div class="support-staff-assignment-detail">{{ sectionGroup.subjectCode}} {{ sectionGroup.courseNumber}} - 001</div>
+														<div class="support-staff-assignment-sub-detail">{{ appointmentTypeToShorthand(supportAssignment.appointmentType) }} ({{ supportAssignment.appointmentPercentage }}%)</div>
+												</div>
+										</div>
+										<div class="remove-tile-container">
+											<i  ng-class="{'invisible' : readOnlyMode }"
+													class=" btn glyphicon glyphicon-remove assignment-remove-button text-primary"
+												uib-tooltip="Unassign" tooltip-placement="bottom"
+												confirm-button="removeStaffFromSlot(supportAssignmentId)"
+												message="Are you sure you want to delete this Assignment?"
+												yes="Confirm" no="Cancel" placement="top"></i>
+										</div>
+									</div>
+
+
+									<course-assignment-selector
+									 ng-class="{'invisible' : readOnlyMode }"
+									 class="add-new-slot">
+									</course-assignment-selector>
+								</div>
+						</div>
+					</div>
+					<!-- TA course section ends-->
+			</div>
+	</div>
+</div>

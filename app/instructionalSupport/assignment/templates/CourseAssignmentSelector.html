@@ -1,0 +1,29 @@
+<div class="course-assignment-selector">
+	<div class="clickable assignment-description" style="height: 20px; width: 100%; text-align: center; color: #303641;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		Assign..
+	</div>
+	<ul class="dropdown-menu" style="width: 100%;">
+		<li ng-show="supportStaff.preferenceIds.length > 0" class="dropdown-header" stop-event="click"><b>Preferences</b></li>
+
+		<!-- preferences tied to this supportStaff -->
+		<li ng-repeat="preferenceId in supportStaff.preferenceIds" class="clickable"
+				ng-init="preference=view.state.preferences.list[preferenceId]; sectionGroup=view.state.sectionGroups.list[view.state.preferences.list[preferenceId].sectionGroupId]">
+			<a class="small">
+				<span class="course-filter-item"><b>{{ preference.priority }}</b> {{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} - {{ sectionGroup.sequencePattern }} ({{ appointmentTypeToShorthand(preference.type) }})</span>
+			</a>
+		</li>
+
+		<li ng-show="supportStaff.preferenceIds.length > 0" role="separator" class="divider"></li>
+
+		<li class="dropdown-header" stop-event="click"><b>Courses</b></li>
+
+		<!-- all unassigned courses -->
+		<li ng-repeat="supportAssignmentId in view.state.instructionalSupportAssignments.ids" class="clickable"
+				ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[supportAssignmentId]; sectionGroup=view.state.sectionGroups.list[view.state.instructionalSupportAssignments.list[supportAssignmentId].sectionGroupId]"
+				ng-click="assignStaffToSlot(supportAssignmentId)">
+			<a class="small">
+				<span class="course-filter-item">{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} - {{ sectionGroup.sequencePattern }} ({{ appointmentTypeToShorthand(supportAssignment.appointmentType) }})</span>
+			</a>
+		</li>
+	</ul>
+</div>

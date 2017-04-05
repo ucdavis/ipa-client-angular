@@ -1,0 +1,25 @@
+<div class="student-preference-selector">
+	<div class="clickable assignment-description" style="height: 20px; width: 100%; text-align: center; color: #303641;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		Add Preference...
+	</div>
+	<ul class="dropdown-menu" style="width: 100%;">
+		<li ng-show="sectionGroup.eligibleSupportStaff.preferred.length > 0"class="dropdown-header" stop-event="click"><b>Preferred</b></li>
+		<li ng-repeat="preference in sectionGroup.eligibleSupportStaff.preferred" class="clickable"
+				ng-init="supportStaff=view.state.supportStaff.list[preference.supportStaffId]"
+				ng-click="addPreference(sectionGroup.id, view.state.supportStaff.list[preference.supportStaffId].id)">
+			<a class="small">
+				<span class="course-filter-item">({{ preference.priority }}) {{ supportStaff.fullName }}</span>
+			</a>
+		</li>
+
+		<li ng-show="sectionGroup.eligibleSupportStaff.other.length > 0"class="dropdown-header" stop-event="click"><b>Other</b></li>
+		<li ng-repeat="supportStaffId in sectionGroup.eligibleSupportStaff.other"class="clickable"
+			ng-init="supportStaff=view.state.supportStaff.list[supportStaffId]"
+			ng-click="addPreference(sectionGroup.id, supportStaffId)">
+			<a class="small">
+				<span class="course-filter-item">{{ supportStaff.fullName }}</span>
+			</a>
+		</li>
+
+	</ul>
+</div>

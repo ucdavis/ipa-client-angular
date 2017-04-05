@@ -1,0 +1,403 @@
+/*ta-call-config css*/
+
+.term-selector {
+    width: 30%;
+}
+
+.config-flex-auto {
+    flex: 1 1 auto;
+}
+
+.preference-selector {
+    margin-bottom: 20px;
+    flex: 0 1 100%;
+}
+
+.email-section {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.message-section {
+    flex: 0 1 100%;
+}
+
+.flex-box_row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-box_column {
+    display: flex;
+    flex-direction: column;
+}
+
+.table_header--gray {
+    color: gray;
+}
+
+.table_header--margin {
+    margin-bottom: 25px;
+}
+
+.check-box-TA-call {
+    font-size: 8pt;
+}
+
+.config-header_style {
+    /*make modal header color black */
+    background: #303641;
+}
+
+.config-textarea_height {
+    height: 174px !important;
+}
+
+.config-header_style h4 {
+    color: white;
+}
+
+.config-header_style button {
+    /*assign style to "x" button */
+    color: white;
+    opacity: 1;
+}
+
+.config-width {
+    width: 750px;
+}
+
+.checkbox-inline input {
+    /* fixed position of the checkbox */
+    top: -3px !important;
+}
+
+
+/* ta-call-config-student-summary-page (used in summary-page only)*/
+
+.config-summary-title {
+    flex: 0 1 100%;
+    align-self: center;
+    margin-bottom: 10px;
+}
+
+.term-quarter {
+    flex: 0 1 100%;
+    margin-bottom: 10px;
+}
+
+.people-list-section {
+    flex: 0 1 100%;
+    margin-bottom: 10px;
+}
+
+.preference-and-due_date {
+    flex: 0 1 100%;
+    margin-bottom: 10px;
+}
+
+.preference-and-due_date .row {
+    margin-bottom: 10px;
+}
+
+.info-collected-section {
+    flex: 0 1 50%;
+    margin-bottom: 25px;
+}
+
+.info-collected-list {
+    display: flex;
+    flex: 0 1 75%;
+    flex-wrap: wrap;
+}
+
+.info-collected {
+    flex: 0 1 40%;
+    margin: 5px;
+    margin-left: 0px;
+}
+
+.info-collected i {
+    /* give the check mark icon a margin */
+    margin-right: 5px;
+}
+
+.email-message {
+    flex: 0 1 100%;
+    margin-bottom: 10px;
+}
+
+.bold-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: black;
+    margin-right: 5px;
+}
+
+.receivers-input-section {
+    height: 120px;
+    overflow-y: auto;
+}
+
+.receivers-input-section .label>input {
+    /* fix checkbox position */
+    position: relative;
+    left: -6px;
+}
+
+.add_people_input {
+    flex: 0 1 200px;
+}
+
+.add_people_btn {
+    flex: 0 1 auto;
+    margin-left: 10px;
+    color: white;
+}
+
+.add_people_btn>a {
+    color: white;
+}
+
+.disabled-tag {
+    background-color: #f0f0f1;
+    border-color: #f0f0f1;
+    cursor: not-allowed;
+}
+
+.unselected-tag {
+    background-color: #f0f0f1;
+    border-color: #ebebeb !important;
+}
+
+
+/* ta-call-config-student-summary-page ends */
+
+
+/* modal overwrite */
+
+.modal .modal-header .close {
+    background: none;
+    display: inline-block;
+    padding: 0px 5px;
+    line-height: 1;
+    color: white;
+    zoom: 1;
+    opacity: 1 !important;
+}
+
+
+/*bootstrap overwrite*/
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.teaching-call--info_flex h5 {
+    margin-top: 0px;
+}
+
+
+/* neon overwrite */
+
+.datepicker-inline {
+    font-size: 8pt !important;
+}
+
+div.datepicker {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.input-spinner {
+    /* give margin-left to Minimum number of preferences input*/
+    margin-left: 20px !important;
+    margin-top: 5px;
+    margin-bottom: 30px;
+}
+
+.uib-daypicker:focus {
+	outline-width: 0;
+}
+
+.support-call-group-active,
+.support-call-group-active:focus,
+.support-call-group-active:hover {
+	background-color: #21a9e1 !important;
+	color: white !important;
+}
+
+.people-summary-container {
+	border: 1px solid #949494;
+	width: 80%;
+	overflow-y: scroll;
+	height: 50px;
+	padding: 5px;
+	border-radius: 4px;
+}
+
+.participant-tile {
+	margin-top: 5px;
+	margin-right: 5px;
+	line-height: 1;
+	font-size: 75%;
+	display: inline-block;
+	padding: 6px 12px;
+	border-radius: 4px;
+}
+.participant-enabled {
+	background-color: white;
+	border: 1px gray solid;
+	color: gray;
+}
+
+.participant-disabled {
+	background-color: rgb(234,234,234);
+	border: 1px gray solid;
+	color: gray;
+}
+/* Ensure this override for the neon theme button styling
+ does not override the uib-datepicker 'selected day' styling */
+.uib-datepicker .btn-default:not(.active):not(.btn-info) {
+	background-color: white;
+}
+
+.bootstrap-tagsinput .tag {
+	margin-top: 5px;
+	margin-left: 10px;
+}
+
+
+/* Imported Styles */
+/*modal css*/
+.flex-box {
+	display: flex;
+}
+
+.btn-group--position{
+	flex:0 1 100%;
+	margin-bottom: 10px;
+}
+
+.teaching-call--header_style {
+	background: #303641;
+}
+
+.teaching-call--header_style h4 {
+	color: white;
+}
+
+.teaching-call--header_style button { /*assign style to "x" button */
+	color: white;
+	opacity: 1;
+}
+
+.teaching-call--width {
+	width: 900px;
+}
+
+.teaching-call--info_style {
+	flex:0 1 45%;
+}
+
+.add-support-call--info_style {
+	flex:0 1 45%;
+	height: 250px;
+}
+
+.modal-footer--teaching-call {
+	background-color: rgb(248, 248, 248);
+}
+
+.checkbox-inline input{
+	top: -2px !important;
+}
+
+.email-style {
+	margin-bottom:30px;
+	text-align: left;
+}
+
+.ta-slot--width {
+	width: 450px;
+}
+
+.ta-application--info_style {
+	flex: 0 1 35%;
+}
+
+/* modal overwrite */
+.modal .modal-header .close {
+	background: none;
+	display: inline-block;
+	padding: 0px 5px;
+	line-height: 1;
+	color: white;
+	zoom: 1;
+	opacity: 1 !important;
+}
+
+/*bootstrap overwrite*/
+.row {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+#modal-1 {
+	height: 900px;
+}
+
+.set-terms-teaching-call-btn {
+	background-color: white;
+	text-align: left;
+	width: 100%;
+}
+
+.set-term-menu .active a,
+.set-term-menu .active a:hover,
+.set-term-menu .active a:focus,
+.set-term-menu.dropdown-menu > li.active > a:focus {
+	background-color: #303641;
+}
+
+.instructor-group-active,
+.instructor-group-active:focus,
+.instructor-group-active:hover {
+	background-color: #303641;
+	color: white;
+}
+
+.set-term-menu.dropdown-menu > li > a:focus {
+	background-color: white;
+}
+
+.instructor-toggle-btn {
+	border-radius: 4px;
+	border-color: rgb(204, 204, 204);
+}
+
+.instructor-toggle-btn:hover {
+	background-color: rgba(245, 245, 246, 0.8);
+}
+
+.instructor-toggle-btn.active,
+.instructor-toggle-btn.active:hover {
+	background-color: rgb(48, 54, 65);
+	color: white;
+}
+
+.instructor-toggle-btn.disabled,
+.instructor-toggle-btn.disabled:hover,
+.instructor-toggle-btn.disabled:focus {
+	background-color: rgba(0, 0, 0, 0);
+	color: #333;
+}
+
+.overflow-auto {
+	overflow-y: auto;
+}
+
+.set-terms-container {
+	width: 100%;
+}

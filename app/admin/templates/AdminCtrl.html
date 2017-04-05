@@ -1,5 +1,9 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 
+<div class="administration-container">
+
+<ipa-header page-title="Administration"></ipa-header>
+
 <div class="main-content" unselect-cell>
 
 	<h3 style="text-align: center;">IPA Administration</h3>
@@ -22,7 +26,7 @@
 						<div class="col-md-2 text-center">
 							<a class="text-danger clickable btn-workgroup"
 								confirm-button="removeWorkgroup(view.state.workgroups.list[workgroupId])"
-								message="Are you sure you want to remove this workgroup"
+								message="Are you sure you want to remove the {{view.state.workgroups.list[workgroupId].name}} workgroup?"
 								yes="Remove" no="Cancel" placement="right"
 								aria-hidden="true">
 								<i class="entypo-cancel-squared"></i><small>Remove</small>

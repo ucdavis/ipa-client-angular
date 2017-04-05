@@ -11,6 +11,38 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 			scope.pageMode = $location.search().mode;
 			scope.userWorkgroups = scope.sharedState.currentUser ? scope.sharedState.currentUser.getWorkgroups() : [];
 
+			scope.isInstructor = scope.sharedState.currentUser.isInstructor(scope.sharedState.workgroup.id);
+			scope.isSupportStaff = scope.sharedState.currentUser.isSupportStaff(scope.sharedState.workgroup.id);
+			scope.isAdmin = scope.sharedState.currentUser.isAdmin();
+			scope.isPlanner = scope.sharedState.currentUser.isPlanner(scope.sharedState.workgroup.id);
+
+			// If a user fills multiple types of roles, the nav should open those summary screens
+			scope.showMultipleSummary = function() {
+				var numberOfRoles = 0;
+				if (scope.isInstructor) { numberOfRoles++;}
+				if (scope.isSupportStaff) { numberOfRoles++;}
+				if (scope.isPlanner) { numberOfRoles++;}
+				if (scope.isAdmin) { numberOfRoles = 3;}
+
+				return (numberOfRoles > 1);
+			};
+
+			// This function is temporary, returns true if the current workgroup is participant in the support call beta
+			scope.isSupportCallVisible = function() {
+				var participatingWorkgroupIds = [];
+
+				// Add 'DSS IT'
+				participatingWorkgroupIds.push("20");
+
+				// Add 'Chemistry'
+				participatingWorkgroupIds.push("67");
+
+				var currentWorkgroupId = scope.sharedState.workgroup.id;
+				var index = participatingWorkgroupIds.indexOf(currentWorkgroupId);
+
+				return (index > -1);
+			};
+
 			// TODO: Shouldn't this be set somewhere to be shared outside of <nav> ? -CT
 			$rootScope.$on('sharedStateSet', function (event, data) {
 				scope.sharedState = data;

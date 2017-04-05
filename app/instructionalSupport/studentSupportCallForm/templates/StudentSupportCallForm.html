@@ -1,0 +1,156 @@
+<nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
+<div></div>
+
+<ipa-header page-title="Support Call"></ipa-header>
+
+<div ng-hide="view.state" style="margin-top:300px;">
+	<spinner></spinner>
+</div>
+
+<div ng-if="view.state" class="page-container student-support-call-form">
+	<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+	<!-- modal-input comments -->
+	<div class="modal fade" id="modal-3">
+		<div class="modal-dialog student-modal-width">
+			<div class="modal-content">
+
+				<div class="modal-header student-modal-header_style">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title">Preference Comments</h4>
+				</div>
+
+				<div class="modal-body">
+					<div class="row">
+						<div class="form-group" class="comments-modal">
+							<div>
+								<textarea class="form-control" id="comment"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-info">Save</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- modal-ends -->
+	<div class="main-content">
+		<div class="row">
+			<div class="container-fluid">
+				<div class="flex-row">
+					<!-- TA Requirements -->
+					<div ng-show="view.state.supportCallResponse.collectEligibilityConfirmation" class="student-requirement">
+						<h4>TA Eligibility Requirements</h4>
+						<div style="margin-top: 34px;">
+							<p>
+								Full-time (12 units) registered graduate student, current cumulative GPA is 3.00 or higher, total appointments for this quarter does not exceed 75%,
+							</p>
+						</div>
+						<div class="checkbox religibility-checkbox">
+							<div role="menuitem" ng-click="toggleEligibilityConfirmed()">
+								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+									ng-class="{ 'checked': view.state.supportCallResponse.eligibilityConfirmed }">
+									<label class="cb-wrapper">
+										<div class="checked"></div>
+									</label>
+									<label>Confirm Eligibility</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- TA Requirements Ends -->
+
+					<div class="empty-flex-box_student-course">
+					</div>
+
+					<div class="student-course-container">
+						<div class="due-day-header">
+							<h4>Due Date: {{ view.state.supportCallResponse.dueDateDescription }} </h4>
+						</div>
+
+						<div style="margin-left: -200px;" ng-if="view.state && view.state.instructionalSupportAssignments.ids.length == 0">
+							<!-- handle lack of active teaching call -->
+							<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+								<p class="lead">There are no courses available for this support call.</p>
+								<br />
+								<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
+							</div>
+						</div>
+
+						<ul id="sortable" class="sortable-student-preferences">
+							<li ng-repeat="preference in view.state.preferences | orderBy: 'priority'" class="student-course-section" id="{{ preference.id }}">
+								<div class="student-course">
+									<div style="position: absolute; left: -30px; top: 22px;"> {{ preference.priority }}</div>
+									<i class="glyphicon glyphicon-option-vertical move-course-icon">
+									</i>
+									<div class="student-course-info">
+										<p class="student-course_title">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern }}</p>
+										<div class="student-course_details">
+											<div>
+											</div>
+											<p class="student-preference">{{ preference.type}}</p>
+											<i class="btn glyphicon glyphicon-remove student-course-remove text-primary"
+												uib-tooltip="Delete Assignment" tooltip-placement="bottom"
+												confirm-button="deletePreference(preference)"
+												message="Are you sure you want to delete this Assignment?"
+												yes="Confirm" no="Cancel" placement="top"></i>
+										</div>
+									</div>
+									</div>
+								<div ng-show="view.state.supportCallResponse.collectPreferenceComments" class="comments-btn">
+									<a href="javascript:;" onclick="jQuery( '#modal-3').modal( 'show'); "><i class="glyphicon glyphicon-edit"></i>
+										<span>Comments...</span>
+									</a>
+								</div>
+							</li>
+						</ul>
+						<student-preference-selector ng-if="view.state && view.state.instructionalSupportAssignments.ids.length > 0">
+						</student-preference-selector>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- input box section -->
+	<div class="main-content input-box-container ">
+		<div class="container-fluid ">
+			<div class="input-box-section ">
+				<div ng-show="view.state.supportCallResponse.collectTeachingQualifications" class="input-box-area ">
+					<h5 class="pull-left ">Teaching Qualification</h5>
+					<textarea class="form-control"
+					ng-model="view.state.supportCallResponse.teachingQualifications"
+					auto-input on-blur="updateSupportCallResponse()"></textarea>
+				</div>
+				<div class="empty-flex-box_input-box ">
+				</div>
+				<div ng-show="view.state.supportCallResponse.collectGeneralComments" class="input-box-area ">
+					<h5 class="pull-left">Comments</h5>
+					<textarea class="form-control"
+					ng-model="view.state.supportCallResponse.generalComments"
+					auto-input on-blur="updateSupportCallResponse()"></textarea>
+				</div>
+			</div>
+			<a>
+				<button ng-if="!view.state.supportCallResponse.submitted" type="button" class="btn btn-info pull-right"
+				 confirm-button="submitPreferences()"
+				 btn-class="btn-primary"
+				 message="Are you sure you want to submit your preferences?"
+				 yes="Confirm" no="Cancel" placement="top">
+					Submit Preferences
+				</button>
+				<button ng-click="pretendToastMessage()"
+					ng-if="view.state.supportCallResponse.submitted"
+					type="button" class="btn btn-info pull-right">
+						Update Preferences
+				</button>
+			</a>
+		</div>
+	</div>
+	<!-- input box section ends -->
+</div>

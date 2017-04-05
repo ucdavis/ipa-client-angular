@@ -30,7 +30,10 @@
 }
 #chat,
 .page-container:not(.sidebar-collapsed) .right-details {
+<<<<<<< HEAD
 	/*width: 20%;*/
+=======
+>>>>>>> upstream/master
 	width: 22%;
 }
 #chat.fixed {

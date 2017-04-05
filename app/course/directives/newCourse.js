@@ -6,7 +6,28 @@ sharedApp.directive("newCourse", this.newCourse = function (courseActionCreators
 		link: function (scope, element, attrs) {
 
 			scope.newCourseIsValid = function () {
-				return scope.view.state.courses.newCourse.title && scope.view.state.courses.newCourse.sequencePattern;
+				if (scope.view.state.courses.newCourse.title
+				&& scope.view.state.courses.newCourse.sequencePattern) {
+
+					var newCourse = scope.view.state.courses.newCourse;
+
+					// Ensure course is unique
+					for (var i = 0; i < scope.view.state.courses.ids.length; i++) {
+						var slotCourseId = scope.view.state.courses.ids[i];
+						var slotCourse = scope.view.state.courses.list[slotCourseId];
+
+						if (slotCourse) {
+							if (newCourse.courseNumber == slotCourse.courseNumber
+									&& newCourse.subjectCode == slotCourse.subjectCode
+									&& newCourse.sequencePattern == slotCourse.sequencePattern) {
+										return false;
+							}
+						}
+					}
+					return true;
+				}
+
+				return false;
 			};
 
 			scope.searchCourses = function (query) {
@@ -22,6 +43,8 @@ sharedApp.directive("newCourse", this.newCourse = function (courseActionCreators
 				scope.view.state.courses.newCourse.subjectCode = $item.subjectCode;
 				scope.view.state.courses.newCourse.courseNumber = $item.courseNumber;
 				scope.view.state.courses.newCourse.effectiveTermCode = $item.effectiveTermCode;
+				scope.view.state.courses.newCourse.unitsHigh = $item.creditHoursHigh;
+				scope.view.state.courses.newCourse.unitsLow = $item.creditHoursLow;
 
 				// Empty the sequencePattern to force checking for conflicts
 				delete scope.view.state.courses.newCourse.sequencePattern;

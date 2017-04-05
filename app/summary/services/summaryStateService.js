@@ -390,6 +390,46 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					return teachingCallReceipt;
 			}
 		},
+		_instructorSupportCallResponseReducers: function (action, supportCallResponses) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					var supportCallResponses = action.payload.instructorSupportCallResponses;
+					supportCallResponses.forEach(function(supportCallResponse) {
+						supportCallResponse.dueDate = millisecondsToFullDate(supportCallResponse.dueDate);
+					});
+
+					return supportCallResponses;
+				default:
+					return supportCallResponses;
+			}
+		},
+		_scheduleReducers: function (action, schedule) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					var schedule = action.payload.schedule;
+					return schedule;
+				default:
+					return schedule;
+			}
+		},
+		_studentSupportCallResponseReducers: function (action, supportCallResponses) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					var supportCallResponses = action.payload.studentSupportCallResponses;
+					supportCallResponses.forEach(function(supportCallResponse) {
+						supportCallResponse.dueDate = millisecondsToFullDate(supportCallResponse.dueDate);
+					});
+					return supportCallResponses;
+				default:
+					return supportCallResponses;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -405,6 +445,10 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 			newState.events = scope._eventReducers(action, scope._state.events);
 			newState.instructorCourses = scope._instructorCourses(action, scope._state.instructorCourses);
 			newState.teachingCallReceipt = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipt);
+			newState.instructorSupportCallResponses = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponses);
+			newState.studentSupportCallResponses = scope._studentSupportCallResponseReducers(action, scope._state.studentSupportCallResponses);
+			newState.schedule = scope._scheduleReducers(action, scope._state.schedule);
+
 			scope._state = newState;
 
 			$rootScope.$emit('summaryStateChanged', scope._state);
@@ -412,3 +456,14 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 		}
 	};
 });
+
+millisecondsToFullDate = function(milliseconds) {
+	var d = new Date(milliseconds);
+	var day = d.getDate();
+	var month = d.getMonth() + 1;
+	var year = d.getFullYear();
+	var formattedDate = year + "-" + month + "-" + day;
+	formattedDate = moment(formattedDate, "YYYY-MM-DD").format('LL');
+
+	return formattedDate;
+};

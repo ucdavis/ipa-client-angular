@@ -1,269 +1,294 @@
 a {
-  color: #337ab7;
+    color: #337ab7;
 }
-h3, .h3 {
-  font-size: 21px;
+
+h3,
+.h3 {
+    font-size: 21px;
 }
-.form-control, .btn {
-	font-size: 12px;
+
+.form-control,
+.btn {
+    font-size: 12px;
 }
+
 .page-container .sidebar-menu {
-  width: 200px;
+    width: 200px;
 }
+
 .pager.year-switcher {
-  border-top: 1px solid rgba(69, 74, 84, 0.7);
-  border-bottom: 1px solid rgba(69, 74, 84, 0.7);
+    border-top: 1px solid rgba(69, 74, 84, 0.7);
+    border-bottom: 1px solid rgba(69, 74, 84, 0.7);
 }
+
 .pager.year-switcher li a {
-  background-color: transparent;
-  color: #aaa;
-  border: none;
-  padding: 5px;
+    background-color: transparent;
+    color: #aaa;
+    border: none;
+    padding: 5px;
 }
+
 .welcome {
-  padding: 10px 20px;
-  color: #aaabae;
+    padding: 10px 20px;
+    color: #aaabae;
 }
+
 .sidebar-collapsed .pager.year-switcher li.previous,
 .sidebar-collapsed .pager.year-switcher li.next,
 .sidebar-collapsed .welcome {
-  display: none;
+    display: none;
 }
 
 .page-container:not(.sidebar-collapsed) .home {
-  display: none;
+    display: none;
 }
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+    display: none !important;
 }
+
 
 /* Overriding neon-core; was messing with the positioning of toastr */
+
 body {
-  -webkit-perspective: none;
-  -moz-perspective: none;
-  perspective: none;
-  font-size: 12px;
+    -webkit-perspective: none;
+    -moz-perspective: none;
+    perspective: none;
+    font-size: 12px;
 }
 
 span.highlighted {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .clickable {
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .hoverable:hover {
-	text-decoration: none;
-	cursor: pointer;
-	filter: alpha(opacity = 60) !important;
-	opacity: .6 !important;
+    text-decoration: none;
+    cursor: pointer;
+    filter: alpha(opacity=60) !important;
+    opacity: .6 !important;
 }
 
+
 /* Availability grid shared directive css */
+
 table.availability-grid {
-	font-size: 0.7em;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	margin-bottom: 5px;
+    font-size: 0.7em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-bottom: 5px;
 }
 
 table.availability-grid tr th {
-	border: none;
-	font-weight: normal;
-	padding: 0 !important;
+    border: none;
+    font-weight: normal;
+    padding: 0 !important;
 }
 
 table.availability-grid tr th.left {
-	text-align: left;
-	width: 2em;
+    text-align: left;
+    width: 2em;
 }
 
 table.availability-grid tr th.hover {
-	color: #BA0C2F;
-	font-weight: bold;
+    color: #BA0C2F;
+    font-weight: bold;
 }
 
 table.availability-grid tr td.unavailable {
-	background-color: rgba(200,200,200,0.8);
+    background-color: rgba(200, 200, 200, 0.8);
 }
 
 table.availability-grid tr td {
-	border-top: 1px solid #ddd !important;
+    border-top: 1px solid #ddd !important;
 }
 
 .legend-square {
-	display: inline-block;
-	width: 1em;
-	height: 1em;
-	margin: 0px 5px;
-	border-width: 1px;
-	border-style: solid;
-	border-color: rgba(0, 0, 0, .2);
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin: 0px 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, .2);
 }
 
 #access-denied {
-	height: 100vh;
-	text-align: center;
+    height: 100vh;
+    text-align: center;
 }
+
 .checkbox label.cb-wrapper {
-	min-height: 18px;
+    min-height: 18px;
 }
 
 .page-container .sidebar-menu #main-menu li a.icon-workgroup-manage {
-	position: absolute;
-	right: 0;
-	z-index: 3;
-	top: 50%;
-	transform: translateY(-50%);
-	padding-left: 10px;
+    position: absolute;
+    right: 0;
+    z-index: 3;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-left: 10px;
 }
 
-.page-container .sidebar-menu #main-menu > li.active > a {
-	background-color: transparent;
+.page-container .sidebar-menu #main-menu>li.active>a {
+    background-color: transparent;
 }
 
 .page-container .sidebar-menu #main-menu li a i.active-workgroup-icon {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-55%);
-	left: 2em;
-	font-size: 12px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-55%);
+    left: 2em;
+    font-size: 12px;
 }
 
 .overlay {
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	z-index: 99999;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
 }
 
 .vertical-center {
-	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-.page-container.sidebar-collapsed .sidebar-menu #main-menu > li > ul li a {
-	padding-left: 40px;
+.page-container.sidebar-collapsed .sidebar-menu #main-menu>li>ul li a {
+    padding-left: 40px;
 }
 
 .availability-day-header {
-	text-align: center;
+    text-align: center;
 }
 
+
 /* ---------------------- DSS Modal -----------------------*/
+
 .dss-modal-overlay {
-	/* A dark translucent div that covers the whole screen */
-	position:absolute;
-	z-index:9999;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	background-color: #000000;
-	opacity: 0.5;
+    /* A dark translucent div that covers the whole screen */
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: 0.5;
 }
 
 .dss-modal-dialog {
-	/* A centered div above the overlay with a box shadow. */
-	z-index:10000;
-	position: absolute;
-	width: 50%; /* Default */
-
-	/* Center the dialog */
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	-webkit-transform: translate(-50%, -50%);
-	-moz-transform: translate(-50%, -50%);
-	box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.15);
+    /* A centered div above the overlay with a box shadow. */
+    z-index: 10000;
+    position: absolute;
+    width: 50%;
+    /* Default */
+    /* Center the dialog */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.15);
 }
 
 .dss-modal-header {
-	padding-left: 10px;
-	height: 50px;
-	background-color: #303641;
-	color: white;
-	font-size: 18px;
-	font-weight: 500;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+    padding-left: 10px;
+    height: 50px;
+    background-color: #303641;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .dss-modal-dialog-content {
-	background-color: white;
-	height: 100%;
+    background-color: white;
+    height: 100%;
 }
 
 .dss-modal-close {
-	padding-right: 20px;
-	cursor: pointer;
-	font-size: 21px;
-	line-height:21px;
-	font-weight: 300;
-	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    padding-right: 20px;
+    cursor: pointer;
+    font-size: 21px;
+    line-height: 21px;
+    font-weight: 300;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
+
 /* ---------------------- IPA Header -----------------------*/
+
 .ipa-header {
-	margin-bottom: 50px;
+    margin-bottom: 10px;
 }
 
 .ipa-header .account-section {
-	display: flex;
-	width: 100%;
-	position: relative;
-	padding: 10px 20px 10px 20px;
-	background-color: white;
-	box-shadow: 0px 1px 2px 0px #F2F2F2;
-	z-index: 99;
-	background-color: #F7F7F7;
-
+    display: flex;
+    width: 100%;
+    position: relative;
+    padding: 10px 20px 10px 20px;
+    background-color: white;
+    box-shadow: 0px 1px 2px 0px #F2F2F2;
+    z-index: 99;
+    background-color: #F7F7F7;
 }
 
 .ipa-header .year-workgroup-section {
-	display: flex;
-	width: 100%;
-	position: relative;
-	padding: 10px 20px 10px 20px;
-	background-color: white;
-	z-index: 99;
-	border-top: 1px solid #E5E5E5;
-	border-bottom: 1px solid #E5E5E5;
+    display: flex;
+    width: 100%;
+    position: relative;
+    padding: 10px 20px 10px 20px;
+    background-color: white;
+    z-index: 99;
+    border-top: 1px solid #E5E5E5;
+    border-bottom: 1px solid #E5E5E5;
 }
 
 .ipa-header h3 {
-	margin-top: 10px;
-	margin-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .ipa-header .header--swtich-container {
-	display: flex;
-	flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 
 .ipa-header .header--year-switch {
-	padding-left: 0;
-	text-align: center;
-	list-style: none;
-	margin: 0px 20px 0px 0px;
-	width: 150px;
-	background-color: white;
-	border: 1px solid #D6D6D6;
-	border-radius: 4px;
+    display: flex;
+    align-items: center;
+    margin: 0px 20px 0px 0px;
+    background-color: white;
+    border: 1px solid #D6D6D6;
+    border-radius: 4px;
+}
+
+.ipa-header .year-display {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .ipa-header .header--year-switch a {
-	color: black !important;
+    color: black !important;
 }
 
 .ipa-header .header--year-switch li a {
@@ -274,43 +299,46 @@ table.availability-grid tr td {
 }
 
 .ipa-header .header--year-switch li a:hover {
-	background-color: white !important;
-	cursor: pointer;
+    background-color: white !important;
+    cursor: pointer;
+}
+
+.ipa-header .header--work-group {
+    margin-right: 20px;
 }
 
 .ipa-header .header--work-group .dropdown-toggle {
-	font-size: 12px;
-	padding: 6px 12px 6px 12px;
+    font-size: 12px;
+    padding: 6px 12px 6px 12px;
 }
 
 .ipa-header .header--work-group .dropdown-menu li i {
-	padding-left: 10px;
-	cursor: pointer;
+    padding-left: 10px;
+    cursor: pointer;
 }
 
 .ipa-header .header--work-group .dropdown-menu li a {
-	display: inline-block;
+    display: inline-block;
 }
 
 .ipa-header .header--work-group .dropdown-menu li a:hover {
-	background-color: lightgray;
+    background-color: lightgray;
 }
 
 .ipa-header .header--work-group .dropdown-menu li:hover {
-	background-color: lightgray;
+    background-color: lightgray;
 }
 
-.ipa-header .header--work-group .dropdown-toggle span{
-	margin-left: 5px;
+.ipa-header .header--work-group .dropdown-toggle span {
+    margin-left: 5px;
 }
-
 
 .ipa-header button {
-	background-color: white;
-	border: 1px solid #D6D6D6;
+    background-color: white;
+    border: 1px solid #D6D6D6;
 }
 
-.ipa-header .btn-group button{
+.ipa-header .btn-group button {
     font-size: 15px;
     padding-top: 4px;
     padding-left: 6px;
@@ -319,56 +347,60 @@ table.availability-grid tr td {
 }
 
 .ipa-header .left-column {
-	flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 
 .ipa-header .right-column {
-	flex: 1 1 auto;
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 .ipa-header .right-column span {
-	font-size: 15px;
-	font-weight: 500;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .ipa-header .account-info {
-	align-self: center;
-	display: flex;
+    align-self: center;
+    display: flex;
 }
 
 .ipa-header .impersonate {
-	margin-left: 20px;
-	align-self: center;
+    margin-left: 20px;
+    align-self: center;
 }
 
 .ipa-header .remove-impersonate-btn {
-	padding: 0px 5px 0px 5px;
-	color: #ee4749;
+    padding: 0px 5px 0px 5px;
+    color: #ee4749;
 }
 
 .ipa-header .impersonate button {
-	font-size: 12px;
-	padding: 6px 12px 6px 12px;
+    font-size: 12px;
+    padding: 6px 12px 6px 12px;
 }
 
 .ipa-header .logout {
-	padding-left: 35px;
-	padding-right: 35px;
-	font-weight: 400 !important;
-	align-self: center;
-	border: 1px solid #d0d0d3;
-	border-radius: 4px;
-	padding: 6px 12px 6px 12px;
-	font-size: 12px !important;
-	margin-left: 20px;
+    padding-left: 35px;
+    padding-right: 35px;
+    font-weight: 400 !important;
+    align-self: center;
+    border: 1px solid #d0d0d3;
+    border-radius: 4px;
+    padding: 6px 12px 6px 12px;
+    font-size: 12px !important;
+    margin-left: 20px;
 }
 
 .ipa-header .logout:hover {
-	background-color: #ee4749;
-	color: white;
-	border: 1px solid #ee4749;
-	cursor: pointer;
+    background-color: #ee4749;
+    color: white;
+    border: 1px solid #ee4749;
+    cursor: pointer;
+}
+
+.ipa-header .invisible {
+    visibility: hidden;
 }

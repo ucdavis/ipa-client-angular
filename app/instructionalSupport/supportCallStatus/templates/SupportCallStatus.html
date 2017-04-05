@@ -1,0 +1,222 @@
+<nav year="{{ year }}" workgroup-id="{{ workgroupId }}" term-short-code="{{termShortCode}}"></nav>
+<div>
+</div>
+
+<ipa-header page-title="Support Calls"></ipa-header>
+
+<div class="teaching-call-status support-call-status"><!-- main content container -->
+
+	<spinner ng-if="!view.state"
+		size="20" style="padding-top: 200px;">
+	</spinner>
+
+	<div ng-if="view.state">
+
+		<!-- Toolbar Buttons -->
+		<div class="teaching-call-status teaching-call-status-buttons">
+			<div style="flex: 20 1 0px; display: flex; justify-content: flex-end;">
+				<div style="padding-right: 5px;">
+					<a ng-if="view.state.eligible.instructors.length > 0" ng-click="openAddInstructorsModal()" class="btn btn-default">
+						<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
+						Add Instructors
+					</a>
+					<span ng-if="view.state.eligible.instructors.length == 0" uib-tooltip="All instructors called">
+						<a class="disabled btn btn-default" style="color: #808080;">
+							<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
+							Add Instructors
+						</a>
+					</span>
+				</div>
+				<div style="padding-right: 5px;">
+					<a ng-if="view.state.eligible.supportStaff.length > 0" ng-click="openAddSupportStaffModal()" class="btn btn-default">
+						<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
+						Add Support Staff
+					</a>
+					<span ng-if="view.state.eligible.supportStaff.length == 0" uib-tooltip="All Support Staff called">
+						<a class="disabled btn btn-default" style="color: #808080;">
+							<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
+							Add Support Staff
+						</a>
+					</span>
+				</div>
+				<div style="padding-right: 5px;">
+					<a ng-if="atLeastOneInstructorSelected()" ng-click="openContactInstructorsModal()" class="btn btn-default">
+						<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
+						Contact Instructors
+					</a>
+					<span ng-if="atLeastOneInstructorSelected() == false" uib-tooltip="Select at least one instructor to contact">
+						<a class="disabled btn btn-default" style="color: #808080;">
+							<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
+							Contact Instructors
+						</a>
+					</span>
+				</div>
+
+				<div>
+					<a ng-if="atLeastOneStudentSelected()" ng-click="openContactStudentsModal()" class="btn btn-default">
+						<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
+						Contact Support Staff
+					</a>
+					<span ng-if="atLeastOneStudentSelected() == false" uib-tooltip="Select at least one instructor to contact">
+						<a class="disabled btn btn-default" style="color: #808080;">
+							<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
+							Contact Support Staff
+						</a>
+					</span>
+				</div>
+			</div>
+
+			<div class="column-hover-ui">
+			</div>
+		</div>
+
+		<!-- Instructors -->
+		<div style="display: flex; padding-left: 15px; padding-right: 15px; width: 100%;">
+			<div class="instructor-section" style="width: 100%;">
+				<!-- table title -->
+				<div style="display: flex;">
+					<div class="table-title">
+						<div style="padding-left: 20px;">Instructors</div>
+					</div>
+					<div class="column-hover-ui">
+					</div>
+				</div>
+
+				<!-- table header -->
+				<div style="display: flex;">
+					<div class="header-cell first-cell cell column-checkbox">
+						<input ng-click="toggleInstructorsSelection()" type="checkbox">
+					</div>
+					<div class="header-left-cell column-name">
+						<div style="padding-left:10px;">Name</div>
+					</div>
+					<div class="header-cell column-submitted">Submitted</div>
+					<div class="header-cell column-last">Last Contacted</div>
+					<div class="header-cell column-next">Next Contact</div>
+					<div class="header-cell column-due">Due Date</div>
+					<div class="column-hover-ui"></div>
+				</div>
+
+				<div class="table-row" style="display: flex;" ng-repeat="instructor in view.state.supportCall.instructors">
+					<div class="column-checkbox cell first-cell">
+						<input type="checkbox" ng-checked="instructor.selected" ng-click="toggleParticipantSelection(instructor)">
+					</div>
+					<div class="column-name left-cell">
+						<div style="padding-left: 10px; display: flex; flex-wrap: wrap;">
+							<span style="flex: 1 0 auto;">
+								{{ instructor.lastName }},
+							</span>
+							<span style="flex: 1 0 auto; padding-right: 10px;">
+								&nbsp;{{ instructor.firstName }}
+								<i class="glyphicon glyphicon-list-alt clickable hovrable support-call-detail-button" style="padding-left:10px;"
+									instructor-support-call-tooltip
+									title="Support Call"
+									allow-submission-after-due-date="{{instructor.allowSubmissionAfterDueDate}}"
+									message="{{instructor.message}}"
+									placement="right">
+							</span>
+						</div>
+					</div>
+					<div class="column-submitted cell">
+						<i class="glyphicon glyphicon-ok" ng-if="instructor.isDone"></i>
+					</div>
+					<div class="column-last cell">
+						{{ instructor.lastContactedAt }}
+					</div>
+					<div class="column-next cell">
+						{{ instructor.nextContactAt }}
+					</div>
+					<div class="column-due cell">{{ instructor.dueDate }}</div>
+					<div class="column-hover-ui">
+						<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
+							class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
+							tooltip-placement="left"
+							uib-tooltip="Remove Instructor"
+							btn-class="teaching-call-status-tooltip"
+							confirm-button="removeInstructor(instructor)"
+							message="Are you sure you want to remove this instructor?
+								This will cancel any pending notifications."
+							yes="Remove" no="Cancel" placement="top">
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Support Staff -->
+		<div style="display: flex; padding-left: 15px; padding-right: 15px; width: 100%;">
+			<div class="instructor-section" style="width: 100%;">
+				<!-- table title -->
+				<div style="display: flex;">
+					<div class="table-title">
+						<div style="padding-left: 20px;">Support Staff</div>
+					</div>
+					<div class="column-hover-ui">
+					</div>
+				</div>
+
+				<!-- table header -->
+				<div style="display: flex;">
+					<div class="header-cell first-cell cell column-checkbox">
+						<input ng-click="toggleSupportStaffSelection()" type="checkbox">
+					</div>
+					<div class="header-left-cell column-name">
+						<div style="padding-left:10px;">Name</div>
+					</div>
+					<div class="header-cell column-submitted">Submitted</div>
+					<div class="header-cell column-last">Last Contacted</div>
+					<div class="header-cell column-next">Next Contact</div>
+					<div class="header-cell column-due">Due Date</div>
+					<div class="column-hover-ui"></div>
+				</div>
+
+				<div class="table-row" style="display: flex;" ng-repeat="supportStaff in view.state.supportCall.supportStaff">
+					<div class="column-checkbox cell first-cell">
+						<input type="checkbox" ng-checked="supportStaff.selected" ng-click="toggleParticipantSelection(supportStaff)">
+					</div>
+					<div class="column-name left-cell">
+						<div  style="padding-left: 10px;">
+							{{ supportStaff.lastName }}, {{ supportStaff.firstName }}
+							<i class="glyphicon glyphicon-list-alt clickable hovrable" style="padding-left:10px;"
+								student-support-call-tooltip
+								title="Support Call"
+								allow-submission-after-due-date="{{supportStaff.allowSubmissionAfterDueDate}}"
+								collect-associate-instructor-preferences="{{supportStaff.collectAssociateInstructorPreferences}}"
+								collect-eligibility-confirmation="{{supportStaff.collectEligibilityConfirmation}}"
+								collect-general-comments="{{supportStaff.collectGeneralComments}}"
+								collect-preference-comments="{{supportStaff.collectPreferenceComments}}"
+								collect-reader-preferences="{{supportStaff.collectReaderPreferences}}"
+								collect-teaching-assistant-preferences="{{supportStaff.collectTeachingAssistantPreferences}}"
+								collect-teaching-qualifications="{{supportStaff.collectTeachingQualifications}}"
+								message="{{supportStaff.message}}"
+								placement="right">
+						</div>
+					</div>
+					<div class="column-submitted cell">
+						<i class="glyphicon glyphicon-ok" ng-if="supportStaff.submitted"></i>
+					</div>
+					<div class="column-last cell">
+						{{ supportStaff.lastContactedAt }}
+					</div>
+					<div class="column-next cell">
+						{{ supportStaff.nextContactAt }}
+					</div>
+					<div class="column-due cell">{{ supportStaff.dueDate }}</div>
+					<div class="column-hover-ui">
+						<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
+							class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
+							tooltip-placement="left"
+							uib-tooltip="Remove Support Staff"
+							confirm-button="removeSupportStaff(supportStaff)"
+							message="Are you sure you want to remove this Support staff?
+								This will cancel any pending notifications."
+							yes="Remove" no="Cancel" placement="top">
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div><!-- view.state check mask -->
+</div>

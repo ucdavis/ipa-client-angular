@@ -1,22 +1,8 @@
-<div class="content-container">
-
-	<div class="instructor-summary-header">
-		<h3>
-			Instructor Summary {{ year.yearToAcademicYear() }}
-		</h3>
-		<p class="text-align--center department-title">{{ sharedState.workgroup.name }}</p>
-	</div>
-
+<div class="instructor-summary-container content-container">
 	<div ng-hide="view.state">
 		<spinner></spinner>
 	</div>
 	<div ng-show="view.state">
-		<div class="teaching-call-status-header">
-			<h5>
-				Teaching Calls {{ year.yearToAcademicYear() }}
-			</h5>
-		</div>
-
 		<!-- teachingCalls table -->
 		<div ng-hide="view.state.teachingCallReceipt" class="empty-message">
 			No Active Teaching Calls
@@ -27,7 +13,7 @@
 				<div class="course-table__header">
 					<div class="course-table__header-detail">
 						<div>
-							Teaching Call
+							Teaching Calls
 						</div>
 					</div>
 				</div>
@@ -63,6 +49,58 @@
 					<i class="glyphicon glyphicon-ok" ng-if="view.state.teachingCallReceipt.isDone"></i>
 				</div>
 			</div>
+		</div>
+
+		<div style="padding-top: 10px;">
+			<div ng-if="view.state.instructorSupportCallResponses.length > 0" class="course-table-row">
+				<!-- table header -->
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Support Calls
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Due Date
+						</div>
+					</div>
+				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Submitted Preferences
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- table header -->
+
+			<!-- instructor support calls -->
+			<div ng-repeat="supportCallResponse in view.state.instructorSupportCallResponses" class="course-table-row">
+				<div class="course-table__row-detail">
+					<div>
+						<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) }}/instructorSupportCallForm">
+							View Support Call Form
+						</a>
+					</div>
+				</div>
+				<div class="course-table__row-detail">
+					{{ supportCallResponse.dueDate }}
+				</div>
+				<div class="course-table__row-detail">
+					<i class="glyphicon glyphicon-ok" ng-if="supportCallResponse.submitted"></i>
+				</div>
+			</div>
+
+		</div>
+
+		<div ng-if="view.state.schedule.instructorSupportCallReviewOpen" style="margin-top: 10px; margin-left: 15px">
+			<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) || '03' }}">
+				Support Call {{ year.yearToAcademicYear() }} is open for review
+			</a>
 		</div>
 
 		<div class="course-status-header">
