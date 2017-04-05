@@ -1,23 +1,12 @@
 <div class="impersonate-modal">
-	<div ng-repeat="userId in state.users.ids | orderBy: 'lastName'"
-			ng-init="user=state.users.list[userId]"
-			ng-click="selectUser(user)"
-			ng-class="{ 'selected-user': user.id == selectedUser.id }">
-			{{ user.name }}
-	</div>
+    <div ng-repeat="userId in state.users.ids | orderBy: 'lastName'" ng-init="user=state.users.list[userId]" ng-click="selectUser(user)" ng-class="{ 'selected-user': user.id == selectedUser.id }">
+        {{ user.name }}
+    </div>
 
-	<button ng-if="!(selectedUser)"
-					class="btn btn-primary disabled"
-					uib-tooltip="Select an instructor to impersonate">
+    <button ng-if="!(selectedUser)" class="btn btn-primary disabled" uib-tooltip="Select an instructor to impersonate">
 		Impersonate
 	</button>
-	<button ng-if="selectedUser"
-					class="btn btn-primary"
-					ng-click="impersonate()">
-<<<<<<< HEAD
-		Impersonate {{ selectedUser.firstName }} {{ selectedUser.lastName }}</button>
-=======
+    <button ng-if="selectedUser" class="btn btn-primary" ng-click="impersonate()">
 		Impersonate {{ selectedUser.firstName }} {{ selectedUser.lastName }}
 	</button>
->>>>>>> upstream/impersonate
 </div>
