@@ -169,3 +169,8 @@ table th {
 .workgroup-container .main-content {
 	display: block;
 }
+
+.impersonate-modal .selected-user {
+	color: red;
+	background-color: red;
+}

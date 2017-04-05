@@ -98,7 +98,10 @@
 							<!-- this is loading gif -->
 							<spinner></spinner>
 						</div>
-						<div class="row" ng-show="view.state.users">
+						<div class="row">
+							<button class="btn btn-primary impersonate-button" ng-click="openImpersonateModal()">
+								Impersonate
+							</button>
 							<!-- this is search bar -->
 							<div class="col-md-4 pull-right" ng-if="hasWriteAccess()">
 								<div class="input-group search-input">
