@@ -18,15 +18,6 @@
     margin-top: 20px;
 }
 
-.move-course-icon {
-    position: absolute;
-    left: -20px;
-    top: 19px;
-    font-size: 12pt;
-    color: #373e4a;
-    cursor: pointer;
-}
-
 .empty-flex-box_student-course {
     flex: 0 1 20%;
 }
@@ -52,42 +43,8 @@
     margin-top: 11px;
 }
 
-.student-course-section {
-    display: flex;
-    margin-bottom: 17px;
-}
-
-.student-course {
-    text-align: left;
-    position: relative;
-    width: 45%;
-    height: 50px;
-    padding: 10px 6px;
-    line-height: .9em;
-    margin-bottom: 0px !important;
-    flex: 0 1 auto;
-}
-
-.student-course-remove {
-    position: absolute;
-    right: 0;
-    top: 10px;
-    color: #000;
-}
-
 .student-course_title {
     margin-bottom: 2px !important;
-}
-
-.student-course_details {
-    padding-top: 3px;
-    font-size: 10px;
-    color: rgba(44, 126, 161, 0.7);
-}
-
-.student-preference {
-    margin-bottom: 2px;
-    font-size: 8pt;
 }
 
 .religibility-checkbox {
@@ -191,8 +148,7 @@ h4, .h4 {
     font-size: 15px;
 }
 
-.sortable-instructor-preferences,
-.sortable-student-preferences {
+.sortable-instructor-preferences {
 	list-style: none;
 	margin-bottom: 0px;
 }
@@ -215,9 +171,8 @@ h4, .h4 {
 }
 
 .student-support-call-form .student-preference-selector {
-	margin-left: 40px;
-	width: 42%;
-	position: relative;
+	margin-left: 63px;
+	width: 38%;
 	height: 30px;
 	border: 1px solid #ebebeb;
 	border-radius: 4px;
@@ -225,16 +180,55 @@ h4, .h4 {
 	align-items: center;
 }
 
-.student-support-call-form .student-course{
-	border-radius: 4px;
-	border: 1px solid #adadad;
+.student-support-call-form {
+	color: black;
+}
+
+.student-support-call-form .student-course-section {
+	display: flex;
+	margin-bottom: 17px;
+}
+
+.student-support-call-form .sortable-student-preferences {
+	list-style: none;
+	margin-bottom: 0px;
+}
+
+.student-support-call-form .move-course-icon {
+	font-size: 12pt;
+	color: #373e4a;
+	cursor: pointer;
+}
+
+.student-support-call-form .student-course {
 	background-color: white;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 10px;
+	text-align: left;
+	position: relative;
+	width: 45%;
+	line-height: .9em;
+	margin-bottom: 0px !important;
+	flex: 0 1 auto;
 }
 
-.student-support-call-form {
-	color: black;
+.student-support-call-form .student-course-remove {
+	color: #000;
+}
+
+.student-support-call-form .student-course-info {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-left: 15px;
+	border-radius: 4px;
+	border: 1px solid #adadad;
+	height: 50px;
+	width: 100%;
+}
+
+.student-support-call-form .student-preference {
+	font-size: 8pt;
+	color: rgba(44, 126, 161, 0.7);
 }
