@@ -22,6 +22,27 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 					return sectionGroups;
 			}
 		},
+		_courseReducers: function (action, course) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					courses = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.courses.forEach( function(course) {
+						// Record to state
+						courses.ids.push(course.id);
+						courses.list[course.id] = course;
+					});
+
+					return courses;
+				default:
+					return courses;
+			}
+		},
 		_miscReducers: function (action, misc) {
 			var scope = this;
 
@@ -117,6 +138,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 
 			newState = {};
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
+			newState.courses = scope._courseReducers(action, scope._state.courses);
 			newState.supportStaff = scope._supportStaffReducers(action, scope._state.supportStaff);
 			newState.misc = scope._miscReducers(action, scope._state.misc);
 			newState.supportCallResponse = scope._supportCallResponseReducers(action, scope._state.supportCallResponse);
@@ -134,7 +156,8 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 																																						angular.copy(scope._state.sectionGroups),
 																																						angular.copy(scope._state.supportStaff),
 																																						angular.copy(scope._state.studentPreferences),
-																																						angular.copy(scope._state.instructorPreferences)
+																																						angular.copy(scope._state.instructorPreferences),
+																																						angular.copy(scope._state.courses)
 																																					);
 
 			$rootScope.$emit('instructionalSupportStudentFormStateChanged', newPageState);
