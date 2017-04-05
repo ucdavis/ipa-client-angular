@@ -7,7 +7,7 @@
 	<spinner></spinner>
 </div>
 
-<div ng-if="view.state" class="page-container student-support-call-form">
+<div ng-if="view.state" class="student-support-call-form">
 	<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
 	<!-- modal-input comments -->
@@ -101,7 +101,7 @@
 											</div>
 										</div>
 										<div>
-											<i class="btn glyphicon glyphicon-remove student-course-remove text-primary"
+											<i class="glyphicon glyphicon-remove student-course-remove"
 												uib-tooltip="Delete preference" tooltip-placement="bottom"
 												confirm-button="deletePreference(preference)"
 												message="Are you sure you want to delete this preference?"
@@ -146,7 +146,7 @@
 				</div>
 			</div>
 			<a>
-				<button ng-if="!view.state.supportCallResponse.submitted" type="button" class="btn btn-info pull-right"
+				<button ng-if="!view.state.supportCallResponse.submitted" type="button" class="btn btn-primary pull-right"
 				 confirm-button="submitPreferences()"
 				 btn-class="btn-primary"
 				 message="Are you sure you want to submit your preferences?"
@@ -155,7 +155,7 @@
 				</button>
 				<button ng-click="pretendToastMessage()"
 					ng-if="view.state.supportCallResponse.submitted"
-					type="button" class="btn btn-info pull-right">
+					type="button" class="btn btn-primary pull-right">
 						Update Preferences
 				</button>
 			</a>
