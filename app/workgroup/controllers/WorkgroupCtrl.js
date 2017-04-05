@@ -5,15 +5,29 @@
  * # WorkgroupCtrl
  * Controller of the ipaClientAngularApp
  */
-workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams', '$location',
-		this.WorkgroupCtrl = function ($scope, $rootScope, $routeParams, $location) {
+workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$uibModal',
+		this.WorkgroupCtrl = function ($scope, $rootScope, $routeParams, $location, $uibModal) {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.view = {};
 
 		$rootScope.$on('workgroupStateChanged', function (event, data) {
 			$scope.view.state = data;
+			console.log($scope.view.state);
 		});
+
+		$scope.openImpersonateModal = function() {
+			modalInstance = $uibModal.open({
+				templateUrl: 'ModalImpersonate.html',
+				controller: ModalImpersonateCtrl,
+				size: 'lg',
+				resolve: {
+					state: function () {
+						return $scope.view.state;
+					}
+				}
+			});
+		};
 
 		$scope.setActiveTab = function (tabName) {
 			$scope.activeWorkgroupTab = tabName;
