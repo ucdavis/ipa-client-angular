@@ -203,13 +203,9 @@ h4, .h4 {
 .student-support-call-form .student-course {
 	background-color: white;
 	display: flex;
-	justify-content: center;
 	align-items: center;
-	text-align: left;
-	position: relative;
 	width: 45%;
 	line-height: .9em;
-	margin-bottom: 0px !important;
 	flex: 0 1 auto;
 }
 
