@@ -3,182 +3,149 @@
 <ipa-header page-title="Teaching Call"></ipa-header>
 
 <div ng-hide="view.state" style="margin-top:300px;">
-	<spinner></spinner>
+    <spinner></spinner>
 </div>
 
 
 <!-- handle lack of active teaching call -->
 <div ng-if="view.state && !view.state.isInstructorInTeachingCall">
-		<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
-			<p class="lead">You are not in a {{ sharedState.workgroup.name }} {{ year }}-{{ nextYear }} Teaching Call</p>
-			<br />
-			<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
-		</div>
+    <div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+        <p class="lead">You are not in a {{ sharedState.workgroup.name }} {{ year }}-{{ nextYear }} Teaching Call</p>
+        <br />
+        <p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
+    </div>
 </div>
 
 <div ng-if="view.state && view.state.isInstructorInTeachingCall" class="teaching-call-form-container">
-	<div class="row provide-preferences-header">
-		<div class="col-md-6">
-			<h5>Please indicate your preferences:</h5>
-		</div>
-		<div class="col-md-6">
-			<div class="pull-right" tooltip-placement="left"
-			uib-tooltip="Clicking the Add button will show you a list of all courses currently in the schedule (Use the comment box below
+
+    <div class="row provide-preferences-header">
+        <div class="col-md-6">
+            <h5>Please indicate your preferences:</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="pull-right" tooltip-placement="left" uib-tooltip="Clicking the Add button will show you a list of all courses currently in the schedule (Use the comment box below
 			to request courses not on the list). Once you've added your preferences you can rank them by dragging and dropping them into the
 			preferred order">
-				<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
-			</div>
-		</div>
-	</div>
+                <i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+            </div>
+        </div>
+    </div>
 
 
-	<div class="preference-container" style="display:flex; margin-left:15px; margin-right:15px;">
-		<div class="unavailability-term-container" style="flex: 1 0 0px;" ng-repeat="term in ::view.state.terms track by $index">
-			<div>
-				<div class="unavailability-term-header" style="text-align: center;">
-					<div>
-						{{term.termDescription}}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="preference-container" style="display:flex; margin-left:15px; margin-right:15px;">
-		<div class="unavailability-term-container" style="flex: 1 1 0px;" ng-repeat="term in ::view.state.terms track by $index">
+    <div class="preference-container" style="display:flex; margin-left:15px; margin-right:15px;">
+        <div class="unavailability-term-container" style="flex: 1 0 0px;" ng-repeat="term in ::view.state.terms track by $index">
+            <div>
+                <div class="unavailability-term-header" style="text-align: center;">
+                    <div>
+                        {{term.termDescription}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="preference-container" style="display:flex; margin-left:15px; margin-right:15px;">
+        <div class="unavailability-term-container" style="flex: 1 1 0px;" ng-repeat="term in ::view.state.terms track by $index">
 
-			<!-- Assignments -->
-			<div class="approved-preference-container">
-				<div class="teaching-call-approved-preference alert-info alert"
-				ng-repeat="assignment in term.assignments">
-					<div style="display: flex; height: 100%: justify-content: center; align-items: center;">
-						<div>
-							{{ assignment.description }}
-						</div>
-					</div>
-				</div>
-			</div>
+            <!-- Assignments -->
+            <div class="approved-preference-container">
+                <div class="teaching-call-approved-preference alert-info alert" ng-repeat="assignment in term.assignments">
+                    <div style="display: flex; height: 100%: justify-content: center; align-items: center;">
+                        <div>
+                            {{ assignment.description }}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-			<!-- Preferences -->
-			<ol sortable drag-end="updateAssignmentsOrder(sortedIds, term)" class="sortable-list teaching-call-form-unapproved-preference-container">
-				<li ng-repeat="preference in term.preferences | orderBy: 'priority' track by preference.id"
-				id="pref-{{ preference.id }}" class="teaching-call-form-unapproved-preference">
-					<div style="flex: 0 0 10px; display: flex; justify-content: center; align-items: center;">
-						<div>
-							{{ generateDisplayRank(preference, term.preferences) }}
-						</div>
-					</div>
+            <!-- Preferences -->
+            <ol sortable drag-end="updateAssignmentsOrder(sortedIds, term)" class="sortable-list teaching-call-form-unapproved-preference-container">
+                <li ng-repeat="preference in term.preferences | orderBy: 'priority' track by preference.id" id="pref-{{ preference.id }}" class="teaching-call-form-unapproved-preference">
+                    <div style="flex: 0 0 10px; display: flex; justify-content: center; align-items: center;">
+                        <div>
+                            {{ generateDisplayRank(preference, term.preferences) }}
+                        </div>
+                    </div>
 
-					<div style="flex: 0 0 auto; display: flex; align-items: center; padding-bottom: 5px;">
-						<i style="flex: 0 0 auto;" class="glyphicon glyphicon-option-vertical preference-sortable-handle"></i>
-					</div>
-					<div class="teaching-call-form-unapproved-preference-panel">
-						<div style="flex 1 0 0px;">
-						</div>
-						<div style="flex 1 0 0px;">
-							{{ preference.description }}
-						</div>
-						<div confirm-button="removePreference(preference)"
-							message="Are you sure you want to delete this preference"
-							yes="Delete" no="Cancel" placement="bottom"
-							confirm-is-shown="status.confirmIsOpen"
-							class="delete-preference-button entypo-cancel sortable-item-button close" style="font-size: 14px; flex 1 0 0px;"
-							aria-hidden="true" style="width: 10%;" uib-tooltip="Remove"
-							tooltip-placement="top" tooltip-append-to-body="true"></div>
-					</div>
-				</li>
-			</ol>
-			<ol class="teaching-call-form-unapproved-preference-container">
-				<li class="scrollable-dropdown-menu search-course-container">
-					<input type="text" ng-model="view.courseSearchQuery[term.termCode]"
-						ng-init="courseSearchPlaceHolder = 'Add Preference'"
-						placeholder="{{ courseSearchPlaceHolder }}"
-						ng-focus="courseSearchPlaceHolder = 'Search Courses'"
-						ng-blur="courseSearchPlaceHolder = 'Add Preference'; view.courseSearchQuery[term.termCode] = undefined;"
-						uib-typeahead="course as (course.description) for course in searchCourses(term, $viewValue)"
-						typeahead-loading="view.loadingCourses[term.termCode]"
-						typeahead-no-results="noResults"
-						typeahead-wait-ms="400"
-						typeahead-min-length="0"
-						typeahead-focus-on-select="false"
-						auto-close="always"
-						typeahead-on-select="addPreference($item, term.termCode, isBuyout, isSabbatical, isInResidence, isCourseRelease)"
-						class="form-control search-course-input">
-					<i ng-show="view.loadingCourses[term]"><spinner size="20"></spinner></i>
-				</li>
-			</ol>
+                    <div style="flex: 0 0 auto; display: flex; align-items: center; padding-bottom: 5px;">
+                        <i style="flex: 0 0 auto;" class="glyphicon glyphicon-option-vertical preference-sortable-handle"></i>
+                    </div>
+                    <div class="teaching-call-form-unapproved-preference-panel">
+                        <div style="flex 1 0 0px;">
+                        </div>
+                        <div style="flex 1 0 0px;">
+                            {{ preference.description }}
+                        </div>
+                        <div confirm-button="removePreference(preference)" message="Are you sure you want to delete this preference" yes="Delete" no="Cancel" placement="bottom" confirm-is-shown="status.confirmIsOpen" class="delete-preference-button entypo-cancel sortable-item-button close"
+                            style="font-size: 14px; flex 1 0 0px;" aria-hidden="true" style="width: 10%;" uib-tooltip="Remove" tooltip-placement="top" tooltip-append-to-body="true"></div>
+                    </div>
+                </li>
+            </ol>
+            <ol class="teaching-call-form-unapproved-preference-container">
+                <li class="scrollable-dropdown-menu search-course-container">
+                    <input type="text" ng-model="view.courseSearchQuery[term.termCode]" ng-init="courseSearchPlaceHolder = 'Add Preference'" placeholder="{{ courseSearchPlaceHolder }}" ng-focus="courseSearchPlaceHolder = 'Search Courses'" ng-blur="courseSearchPlaceHolder = 'Add Preference'; view.courseSearchQuery[term.termCode] = undefined;"
+                        uib-typeahead="course as (course.description) for course in searchCourses(term, $viewValue)" typeahead-loading="view.loadingCourses[term.termCode]" typeahead-no-results="noResults" typeahead-wait-ms="400" typeahead-min-length="0" typeahead-focus-on-select="false"
+                        auto-close="always" typeahead-on-select="addPreference($item, term.termCode, isBuyout, isSabbatical, isInResidence, isCourseRelease)" class="form-control search-course-input">
+                    <i ng-show="view.loadingCourses[term]"><spinner size="20"></spinner></i>
+                </li>
+            </ol>
 
-		</div> <!-- term container -->
-	</div>
+        </div>
+    </div>
 
-	<!-- Select Unavailabilities -->
-	<div ng-show="view.state.showUnavailabilities" class="row provide-unavailabilities-header">
-		<div class="col-md-6">
-			<h5>Please indicate your un-availabilities:</h5>
-		</div>
-		<div class="col-md-6">
-			<div class="pull-right" tooltip-placement="left"
-			uib-tooltip="You can left click and drag to paint unavailability on the grids below.
+    <!-- Select Unavailabilities -->
+    <div ng-show="view.state.showUnavailabilities" class="row provide-unavailabilities-header">
+        <div class="col-md-6">
+            <h5>Please indicate your un-availabilities:</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="pull-right" tooltip-placement="left" uib-tooltip="You can left click and drag to paint unavailability on the grids below.
 			Additionally you can use the copy to all terms button next to the term headers to
 			indicate the same unavailability on all terms.">
-				<i class="glyphicon glyphicon-question-sign  question--position"></i>
-			</div>
-			<small class="legend pull-right" style="text-align: center;">
+                <i class="glyphicon glyphicon-question-sign  question--position"></i>
+            </div>
+            <small class="legend pull-right" style="text-align: center;">
 				<div class="legend-square" style="background-color:#fff"></div>Available
 				<div class="legend-square" style="background-color:#ccc"></div>Unavailable
 			</small>
-		</div>
-	</div>
-	<div ng-show="view.state.showUnavailabilities" class="unavailability-container">
-		<div class="unavailability-term-container" style="flex: 1 1 auto;" ng-repeat="term in ::view.state.terms track by $index">
-			<div>
-				<div class="unavailability-term-header" style="text-align: center;">
-					<div>
-						{{ term.termDescription }}
-					</div>
-					<span style="padding-left: 10px;" class="glyphicon glyphicon-transfer text-primary clickable hovrable" tooltip-placement="bottom" uib-tooltip="Copy to all terms"
-						confirm-button="copyUnavailabilitiesToAllTerms(term.availabilityBlob)"
-						message="Are you sure you want to copy this term availabilities to all other terms?
-							This will overwrite existing availabilities."
-						yes="Confirm" no="Cancel" placement="top"></span>
-				</div>
-				<availability-grid blob="term.availabilityBlob"
-					on-change="saveTeachingCallResponse(term, blob, 3000)">
-				</availability-grid>
-			</div>
-		</div>
-	</div>
-	<!-- Select Unavailabilities ends -->
+        </div>
+    </div>
+    <div ng-show="view.state.showUnavailabilities" class="unavailability-container">
+        <div class="unavailability-term-container" style="flex: 1 1 auto;" ng-repeat="term in ::view.state.terms track by $index">
+            <div>
+                <div class="unavailability-term-header" style="text-align: center;">
+                    <div>
+                        {{ term.termDescription }}
+                    </div>
+                    <span style="padding-left: 10px;" class="glyphicon glyphicon-transfer text-primary clickable hovrable" tooltip-placement="bottom" uib-tooltip="Copy to all terms" confirm-button="copyUnavailabilitiesToAllTerms(term.availabilityBlob)" message="Are you sure you want to copy this term availabilities to all other terms?
+							This will overwrite existing availabilities." yes="Confirm" no="Cancel" placement="top"></span>
+                </div>
+                <availability-grid blob="term.availabilityBlob" on-change="saveTeachingCallResponse(term, blob, 3000)">
+                </availability-grid>
+            </div>
+        </div>
+    </div>
 
-	<!-- Comments -->
-	<div class="row provide-comments-header">
-		<div class="col-md-12">
-			<h5>Additional comments:</h5>
-		</div>
-	</div>
-	<div class="container-fluid margin-bottom-30">
-		<textarea class="form-control" style="height:150px;"
-		ng-model="view.state.comment" auto-input on-blur="updateComment()"
-		placeholder="(Optional) Add any additional comments or requests here." rows="5" id="comment"></textarea>
-	</div>
-		<!-- Comments ends -->
+    <div class="row provide-comments-header">
+        <div class="col-md-12">
+            <h5>Additional comments:</h5>
+        </div>
+    </div>
+    <div class="container-fluid margin-bottom-30">
+        <textarea class="form-control" style="height:150px;" ng-model="view.state.comment" auto-input on-blur="updateComment()" placeholder="(Optional) Add any additional comments or requests here." rows="5" id="comment"></textarea>
+    </div>
 
-	<!-- Submit button -->
-	<div class="row teaching-call-form-submit-container">
-		<div class="container-fluid pull-right">
-			<button ng-if="!view.state.isDone" type="button" class="btn btn-default"
-			 confirm-button="submitTeachingCallForm()"
-			 confirm-is-enabled="!view.state.isDone"
-			 btn-class="btn-primary"
-			 message="Are you sure you want to submit your preferences?"
-			 yes="Confirm" no="Cancel" placement="top">
+    <div class="row teaching-call-form-submit-container">
+        <div class="container-fluid pull-right">
+            <button ng-if="!view.state.isDone" type="button" class="btn btn-default" confirm-button="submitTeachingCallForm()" confirm-is-enabled="!view.state.isDone" btn-class="btn-primary" message="Are you sure you want to submit your preferences?" yes="Confirm"
+                no="Cancel" placement="top">
 				Submit Preferences
 			</button>
 
-			<button ng-if="view.state.isDone"
-				ng-click="submitTeachingCallForm()" type="button" class="btn btn-default">
+            <button ng-if="view.state.isDone" ng-click="submitTeachingCallForm()" type="button" class="btn btn-default">
 				Update Preferences
 			</button>
 
-		</div>
-	</div>
+        </div>
+    </div>
+    -->
 </div>
