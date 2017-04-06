@@ -10,8 +10,7 @@
 				</h5>
 				<div ng-if="sharedState.currentUser.loginId != sharedState.currentUser.realUserLoginId" class="impersonate btn-group" role="group">
 					<button class="impersonate-name btn btn-default" type="button"
-									ng-click="unImpersonate()">
-						<i class="entypo-user"></i>
+									uib-tooltip="Stop Impersonating" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="unImpersonate()">
 						{{ sharedState.currentUser.displayName }}
 						<i class="entypo-cancel-circled remove-impersonate-btn"></i>
 					</button>
