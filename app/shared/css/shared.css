@@ -352,13 +352,13 @@ table.availability-grid tr td {
 }
 
 .ipa-header .remove-impersonate-btn {
-	padding: 0px 5px 0px 5px;
+	padding-right: 5px;
 	color: #ee4749;
 }
 
 .ipa-header .impersonate button {
 	font-size: 12px;
-	padding: 8px 12px 6px 12px;
+	padding: 8px 12px 6px 6px;
 }
 
 .ipa-header .logout {

@@ -9,7 +9,12 @@
 	</div>
 
 	<div class="modal-body">
-		<div class="impersonate-tag" ng-repeat="userId in state.users.ids | orderBy: 'lastName'" ng-init="user=state.users.list[userId]" ng-click="selectUser(user)" ng-class="{ 'selected-user': user.id == selectedUser.id }">
+		<div ng-repeat="userId in state.users.ids | orderBy: 'lastName'"
+				class="impersonate-tag"
+				ng-init="user=state.users.list[userId]"
+				ng-click="selectUser(user)"
+				ng-class="{ 'selected-user': user.id == selectedUser.id }"
+				ng-if="canBeImpersonated(state.users.list[userId])">
 			<i class="entypo-user"></i>
 			{{ user.name }}
 			<span class="email">
