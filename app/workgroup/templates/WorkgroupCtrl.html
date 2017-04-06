@@ -2,7 +2,13 @@
 
 <div class="workgroup-container">
 
-<ipa-header page-title="Workgroup"></ipa-header>
+<ipa-header page-title="Workgroup">
+	<div>
+		<button class="btn btn-default impersonate-button" ng-click="openImpersonateModal()">
+		Impersonate
+		</button>
+	</div>
+</ipa-header>
 
 <div class="main-content">
 	<div class="panel minimal minimal-gray">
@@ -99,9 +105,6 @@
 							<spinner></spinner>
 						</div>
 						<div class="row">
-							<button class="btn btn-primary impersonate-button" ng-click="openImpersonateModal()">
-								Impersonate
-							</button>
 							<!-- this is search bar -->
 							<div class="col-md-4 pull-right" ng-if="hasWriteAccess()">
 								<div class="input-group search-input">
