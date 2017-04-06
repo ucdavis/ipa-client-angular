@@ -197,6 +197,8 @@ table th {
 .impersonate-modal .modal-body {
 	padding-left: 200px;
 	padding-right: 200px;
+	height: 450px;
+	overflow-y: auto;
 }
 
 .impersonate-modal .modal-body i {
