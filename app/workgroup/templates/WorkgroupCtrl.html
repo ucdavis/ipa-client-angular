@@ -3,7 +3,7 @@
 <div class="workgroup-container">
 
 <ipa-header page-title="Workgroup">
-	<div>
+	<div ng-if="activeWorkgroupTab == 'people'">
 		<button class="btn btn-default impersonate-button" ng-click="openImpersonateModal()">
 		Impersonate
 		</button>
