@@ -36,6 +36,8 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 
 				// Add 'Chemistry'
 				participatingWorkgroupIds.push("67");
+				// Add 'Biomedical Engineering'
+				participatingWorkgroupIds.push("15");
 
 				var currentWorkgroupId = scope.sharedState.workgroup.id;
 				var index = participatingWorkgroupIds.indexOf(currentWorkgroupId);
