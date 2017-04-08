@@ -15,8 +15,16 @@ instructionalSupportApp.service('instructorSupportCallFormSelectors', function (
 					preferred
 					other
 */			
-		generateSectionGroups: function (sectionGroups, supportStaff, studentPreferences, instructorPreferences, courses) {
+		generateSectionGroups: function (sectionGroupsDTO, supportStaffDTO, studentPreferencesDTO, instructorPreferencesDTO, coursesDTO) {
+			var sectionGroups = angular.copy(sectionGroupsDTO);
+			var supportStaff = angular.copy(supportStaffDTO);
+			var studentPreferences = angular.copy(studentPreferencesDTO);
+			var instructorPreferences = angular.copy(instructorPreferencesDTO);
+			var courses = angular.copy(coursesDTO);
+
 			var self = this;
+
+			newSectionGroups = [];
 
 			sectionGroups.ids.forEach( function (sectionGroupId) {
 				var sectionGroup = sectionGroups.list[sectionGroupId];
@@ -28,7 +36,11 @@ instructionalSupportApp.service('instructorSupportCallFormSelectors', function (
 
 				// Add support staff data
 				sectionGroup = self.addEligibleSupportStaffToSectionGroup(sectionGroup, supportStaff, studentPreferences);
+
+				newSectionGroups.push(sectionGroup);
 			});
+
+			return newSectionGroups;
 		},
 
 		// Blend the relevant course data into the sectionGroup
@@ -82,10 +94,16 @@ instructionalSupportApp.service('instructorSupportCallFormSelectors', function (
 
 			studentPreferences.ids.forEach( function (preferenceId) {
 				var preference = studentPreferences.list[preferenceId];
+				var slotSupportStaff = supportStaff.list[preference.supportStaffId];
 
 				if (preference.sectionGroupId == sectionGroup.id
 				&& confirmedSupportStaffIds.indexOf(preference.supportStaffId) == -1 ) {
 					confirmedSupportStaffIds.push(preference.supportStaffId);
+
+					preference.firstName = slotSupportStaff.firstName;
+					preference.lastName = slotSupportStaff.lastName;
+					preference.fullName = slotSupportStaff.fullName;
+
 					sectionGroup.eligibleSupportStaff.preferred.push(preference);
 				}
 			});
@@ -99,6 +117,8 @@ instructionalSupportApp.service('instructorSupportCallFormSelectors', function (
 					sectionGroup.eligibleSupportStaff.other.push(staff);
 				}
 			});
+
+			return sectionGroup;
 		}
 
 	};

@@ -160,7 +160,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 																																						angular.copy(scope._state.courses)
 																																					);
 
-			$rootScope.$emit('instructionalSupportStudentFormStateChanged', newPageState);
+			$rootScope.$emit('instructionalSupportInstructorFormStateChanged', newPageState);
 		}
 	};
 });

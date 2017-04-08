@@ -21,8 +21,9 @@ instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '
 				$scope.isInstructor = $scope.sharedState.currentUser.isInstructor($scope.workgroupId);
 			});
 
-			$rootScope.$on('instructionalSupportStudentFormStateChanged', function (event, data) {
-				$scope.view.state = data.state;
+			$rootScope.$on('instructionalSupportInstructorFormStateChanged', function (event, data) {
+				$scope.view.state = data;
+				console.log($scope.view.state);
 				$scope.listenForSort();
 			});
 
