@@ -73,6 +73,20 @@ instructionalSupportApp.service('instructorSupportCallFormSelectors', function (
 
 			instructorPreferences.ids.forEach( function (preferenceId) {
 				var preference = instructorPreferences.list[preferenceId];
+
+				if (preference.sectionGroupId != sectionGroup.id) {
+					return;
+				}
+
+				supportStaff.ids.forEach( function(supportStaffId) {
+					var staff = supportStaff.list[supportStaffId];
+					if (preference.supportStaffId == staff.id) {
+						preference.firstName = staff.firstName;
+						preference.lastName = staff.lastName;
+						preference.fullName = staff.fullName;
+					}
+				});
+
 				sectionGroup.instructorPreferences.push(preference);
 			});
 
