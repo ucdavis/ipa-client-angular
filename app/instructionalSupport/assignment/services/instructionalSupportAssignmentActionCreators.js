@@ -63,7 +63,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 		},
 		assignStaffToSlot: function (supportStaffId, assignmentId) {
 			instructionalSupportAssignmentService.assignStaffToSlot(supportStaffId, assignmentId).then(function (payload) {
-				$rootScope.$emit('toast', { message: "Assigned Instructional Support Staff", type: "SUCCESS" });
+				$rootScope.$emit('toast', { message: "Assigned Support Staff", type: "SUCCESS" });
 				var action = {
 					type: ASSIGN_STAFF_TO_SLOT,
 					payload: payload
