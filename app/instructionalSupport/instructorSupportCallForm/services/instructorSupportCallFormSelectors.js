@@ -15,13 +15,7 @@ instructionalSupportApp.service('instructorSupportCallFormSelectors', function (
 					preferred
 					other
 */			
-		generateSectionGroups: function (sectionGroupsDTO, supportStaffDTO, studentPreferencesDTO, instructorPreferencesDTO, coursesDTO) {
-			var sectionGroups = angular.copy(sectionGroupsDTO);
-			var supportStaff = angular.copy(supportStaffDTO);
-			var studentPreferences = angular.copy(studentPreferencesDTO);
-			var instructorPreferences = angular.copy(instructorPreferencesDTO);
-			var courses = angular.copy(coursesDTO);
-
+		generateSectionGroups: function (sectionGroups, supportStaff, studentPreferences, instructorPreferences, courses) {
 			var self = this;
 
 			newSectionGroups = [];
@@ -44,10 +38,7 @@ instructionalSupportApp.service('instructorSupportCallFormSelectors', function (
 		},
 
 		// Blend the relevant course data into the sectionGroup
-		addCourseDataToSectionGroup: function (sectionGroupDTO, coursesDTO) {
-			var sectionGroup = angular.copy(sectionGroupDTO);
-			var courses = angular.copy(coursesDTO);
-
+		addCourseDataToSectionGroup: function (sectionGroup, courses) {
 			courses.ids.forEach( function (courseId) {
 				var course = courses.list[courseId];
 
@@ -64,11 +55,7 @@ instructionalSupportApp.service('instructorSupportCallFormSelectors', function (
 		},
 
 		// Add de-normalized instructor preferences to the sectionGroup
-		addInstructorPreferencesToSectionGroup: function (sectionGroupDTO, supportStaffDTO, instructorPreferencesDTO) {
-			var sectionGroup = angular.copy(sectionGroupDTO);
-			var supportStaff = angular.copy(supportStaffDTO);
-			var instructorPreferences = angular.copy(instructorPreferencesDTO);
-
+		addInstructorPreferencesToSectionGroup: function (sectionGroup, supportStaff, instructorPreferences) {
 			sectionGroup.instructorPreferences = [];
 
 			instructorPreferences.ids.forEach( function (preferenceId) {

@@ -5,26 +5,25 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'instructionalSupportInstructorFormActionCreators',
-		this.InstructorSupportCallFormCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, instructionalSupportInstructorFormActionCreators) {
+instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '$route', '$rootScope', '$window', '$timeout', '$location', '$routeParams', '$uibModal', 'instructionalSupportInstructorFormActionCreators',
+		this.InstructorSupportCallFormCtrl = function ($scope, $route, $rootScope, $window, $timeout, $location, $routeParams, $uibModal, instructionalSupportInstructorFormActionCreators) {
+			$scope.view = {};
+
 			$window.document.title = "Instructional Support";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.termShortCode = $routeParams.termShortCode;
 
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
-			$scope.view = {};
 			$scope.listenersActive = false;
+
+			$rootScope.$on('instructorFormStateChanged', function (event, data) {
+				$scope.view.state = data;
+			});
 
 			$rootScope.$on('sharedStateSet', function (event, data) {
 				$scope.sharedState = data;
 				$scope.isInstructor = $scope.sharedState.currentUser.isInstructor($scope.workgroupId);
-			});
-
-			$rootScope.$on('instructionalSupportInstructorFormStateChanged', function (event, data) {
-				$scope.view.state = data;
-				console.log($scope.view.state);
-				$scope.listenForSort();
 			});
 
 			$scope.addPreference = function(sectionGroupId, supportStaffId) {

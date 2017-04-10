@@ -1,4 +1,5 @@
-instructionalSupportApp.service('instructionalSupportInstructorFormStateService', function ($rootScope, $log, Course, SectionGroup, Instructor, TeachingCallResponse, Term, instructorSupportCallFormSelectors) {
+instructionalSupportApp.service('instructionalSupportInstructorFormStateService', function (
+	$rootScope, $log, instructorSupportCallFormSelectors) {
 	return {
 		_state: {},
 		_sectionGroupReducers: function (action, sectionGroups) {
@@ -111,6 +112,17 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 					});
 
 					return instructorPreferences;
+				case ADD_INSTRUCTOR_PREFERENCE:
+					var preference = action.payload.newPreference;
+					instructorPreferences.ids.push(preference.id);
+					instructorPreferences.list[preference.id] = preference;
+					return instructorPreferences;
+				case DELETE_INSTRUCTOR_PREFERENCE:
+					var preferenceId = action.payload.preference.id;
+					var index = instructorPreferences.ids.indexOf(preferenceId);
+
+					instructorPreferences.ids.splice(index, 1);
+					return instructorPreferences;
 				default:
 					return instructorPreferences;
 			}
@@ -132,10 +144,6 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 		reduce: function (action) {
 			var scope = this;
 
-			if (!action || !action.type) {
-				return;
-			}
-
 			newState = {};
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.courses = scope._courseReducers(action, scope._state.courses);
@@ -153,14 +161,14 @@ instructionalSupportApp.service('instructionalSupportInstructorFormStateService'
 			newPageState.supportCallResponse = angular.copy(scope._state.supportCallResponse);
 			newPageState.misc = angular.copy(scope._state.misc);
 			newPageState.sectionGroups = instructorSupportCallFormSelectors.generateSectionGroups(
-																																						angular.copy(scope._state.sectionGroups),
-																																						angular.copy(scope._state.supportStaff),
-																																						angular.copy(scope._state.studentPreferences),
-																																						angular.copy(scope._state.instructorPreferences),
-																																						angular.copy(scope._state.courses)
+																																						scope._state.sectionGroups,
+																																						scope._state.supportStaff,
+																																						scope._state.studentPreferences,
+																																						scope._state.instructorPreferences,
+																																						scope._state.courses
 																																					);
 
-			$rootScope.$emit('instructionalSupportInstructorFormStateChanged', newPageState);
+			$rootScope.$emit('instructorFormStateChanged', newPageState);
 		}
 	};
 });
