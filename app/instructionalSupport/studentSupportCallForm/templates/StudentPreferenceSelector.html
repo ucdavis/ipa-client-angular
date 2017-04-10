@@ -7,7 +7,7 @@
 		<li ng-repeat="preference in view.state.potentialPreferences.associateInstructors"class="clickable"
 				ng-click="addPreference(preference)">
 			<a class="small">
-				<span class="course-filter-item">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}}</span>
+				<span class="course-filter-item">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}} - {{ preference.appointmentPercentage }}%</span>
 			</a>
 		</li>
 
@@ -15,7 +15,7 @@
 		<li ng-repeat="preference in view.state.potentialPreferences.teachingAssistants"class="clickable"
 			ng-click="addPreference(preference)">
 			<a class="small">
-				<span class="course-filter-item">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}}</span>
+				<span class="course-filter-item">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}} - {{ preference.appointmentPercentage }}%</span>
 			</a>
 		</li>
 
@@ -23,7 +23,7 @@
 		<li ng-repeat="preference in view.state.potentialPreferences.readers"class="clickable"
 			ng-click="addPreference(preference)">
 			<a class="small">
-				<span class="course-filter-item">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}}</span>
+				<span class="course-filter-item">{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}} - {{ preference.appointmentPercentage }}%</span>
 			</a>
 		</li>
 	</ul>

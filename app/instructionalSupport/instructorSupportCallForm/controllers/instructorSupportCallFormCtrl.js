@@ -85,7 +85,7 @@ instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '
 				});
 
 				var sectionGroupId = listIndentifier.slice(10);
-				var scheduleId = $scope.view.state.userInterface.scheduleId;
+				var scheduleId = $scope.view.state.misc.scheduleId;
 				instructionalSupportInstructorFormActionCreators.updateInstructorPreferencesOrder(filteredPreferenceIds, scheduleId, sectionGroupId);
 			};
 	}]);
