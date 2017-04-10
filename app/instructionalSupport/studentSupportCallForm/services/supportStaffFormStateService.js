@@ -57,6 +57,16 @@ instructionalSupportApp.service('supportStaffFormStateService', function ($rootS
 					});
 
 					return preferences;
+				case UPDATE_PREFERENCES_ORDER:
+					action.payload;
+
+					for (var i = 0; i < action.payload.length; i++) {
+						var preferenceId = action.payload[i];
+						var priority = i + 1;
+						preferences.list[preferenceId].priority = priority;
+					}
+
+					return preferences;
 				case ADD_STUDENT_PREFERENCE:
 					var preference = action.payload;
 					preferences.ids.push(preference.id);
