@@ -38,6 +38,7 @@
 		</div>
 	</div>
 	<!-- modal-ends -->
+
 	<div class="main-content">
 		<div class="row">
 			<div class="container-fluid">
@@ -112,7 +113,7 @@
 									</div>
 								</div>
 								<div ng-show="view.state.supportCallResponse.collectPreferenceComments" class="comments-btn">
-									<a href="javascript:;" onclick="jQuery( '#modal-3').modal( 'show'); "><i class="glyphicon glyphicon-edit"></i>
+									<div ng-click="openPreferenceCommentModal(preference)"><i class="glyphicon glyphicon-edit"></i>
 										<span>Comments...</span>
 									</a>
 								</div>

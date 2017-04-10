@@ -14,7 +14,6 @@ instructionalSupportApp.factory("supportStaffFormService", this.supportStaffForm
 			return deferred.promise;
 		},
 		addStudentPreference: function(preference) {
-
 			var deferred = $q.defer();
 			$http.post(serverRoot + "/api/instructionalSupportStudentFormView/sectionGroups/" + preference.sectionGroupId + "/preferenceType/" + preference.appointmentType, { withCredentials: true })
 			.success(function(assignmentView) {
@@ -27,7 +26,6 @@ instructionalSupportApp.factory("supportStaffFormService", this.supportStaffForm
 			return deferred.promise;
 		},
 		updateSupportCallResponse: function(supportCallResponse) {
-
 			var deferred = $q.defer();
 			$http.put(serverRoot + "/api/instructionalSupportStudentFormView/studentSupportCallResponses/" + supportCallResponse.id, supportCallResponse, { withCredentials: true })
 			.success(function(assignmentView) {
@@ -51,8 +49,19 @@ instructionalSupportApp.factory("supportStaffFormService", this.supportStaffForm
 
 			return deferred.promise;
 		},
-		deleteStudentPreference: function(preferenceId) {
+		updatePreference: function(scheduleId, preference) {
+			var deferred = $q.defer();
+			$http.put(serverRoot + "/api/instructionalSupportStudentFormView/schedules/" + scheduleId + "/preferences/" + preference.id, preference, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
 
+			return deferred.promise;
+		},
+		deleteStudentPreference: function(preferenceId) {
 			var deferred = $q.defer();
 			$http.delete(serverRoot + "/api/instructionalSupportStudentFormView/studentInstructionalSupportPreferences/" + preferenceId, { withCredentials: true })
 			.success(function(payload) {

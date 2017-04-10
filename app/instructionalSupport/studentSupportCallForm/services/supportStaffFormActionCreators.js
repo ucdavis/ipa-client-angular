@@ -69,9 +69,20 @@ instructionalSupportApp.service('supportStaffFormActionCreators', function ($roo
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		updatePreference: function (scheduleId, preference) {
+			supportStaffFormService.updatePreference(scheduleId, preference).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Updated preference comments", type: "SUCCESS" });
+				var action = {
+					type: UPDATE_PREFERENCE,
+					payload: payload
+				};
+				supportStaffFormStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		pretendToastMessage: function () {
 			$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
 		}
-
 	};
 });

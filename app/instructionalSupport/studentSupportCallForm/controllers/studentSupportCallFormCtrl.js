@@ -17,7 +17,6 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 
 			$rootScope.$on('supportStaffFormStateChanged', function (event, data) {
 				$scope.view.state = data;
-				console.log($scope.view.state);
 				$scope.listenForSort();
 			});
 
@@ -54,6 +53,22 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 
 			$scope.pretendToastMessage = function() {
 				supportStaffFormActionCreators.pretendToastMessage();
+			};
+
+			$scope.openPreferenceCommentModal = function(preference) {
+				modalInstance = $uibModal.open({
+					templateUrl: 'ModalPreferenceComment.html',
+					controller: ModalPreferenceCommentCtrl,
+					size: 'lg',
+					resolve: {
+						preference: function () {
+							return preference;
+						},
+						state: function () {
+							return $scope.view.state;
+						}
+					}
+				});
 			};
 
 			$scope.termShortCodeToTermCode = function(termShortCode) {
