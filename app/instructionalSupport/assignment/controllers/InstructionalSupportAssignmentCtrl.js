@@ -228,8 +228,13 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 			$scope.setActiveTab($routeParams.tab || "courses");
 	}]);
 
-InstructionalSupportAssignmentCtrl.getPayload = function (authService, instructionalSupportAssignmentActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		instructionalSupportAssignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode, $route.current.params.tab);
-	});
+InstructionalSupportAssignmentCtrl.getPayload = function (authService, instructionalSupportAssignmentActionCreators, $route, $window) {
+	// Validate params
+	if (!($route.current.params.workgroupId) || !($route.current.params.year)) {
+		$window.location.href = "/summary/";
+	} else {
+		authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+			instructionalSupportAssignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode, $route.current.params.tab);
+		});
+	}
 };
