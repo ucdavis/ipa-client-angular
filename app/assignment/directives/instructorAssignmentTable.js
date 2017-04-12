@@ -185,15 +185,15 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 											var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 											var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 											var displayTitle = "";
-											var plannedSeats = "";
+											var plannedSeatsHtml = "";
 											var unitsLow = "";
 
 											if (sectionGroup) {
 												var course = scope.view.state.courses.list[sectionGroup.courseId];
 												if (course) {
 													displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
-
-													plannedSeats = "<small>Seats: " + sectionGroup.plannedSeats + "</small>";
+													var plannedSeats = sectionGroup.plannedSeats || "0";
+													plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
 													unitsLow = "<small>Units: " + course.unitsLow + "</small>";
 												}
 											} else {
@@ -210,13 +210,13 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 											if (displayTitle.replace(/ /g, '').length == 0) {
 												displayTitle += teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber + "-" + "001";
-												plannedSeats = "<small>Seats: 0</small>";
+												plannedSeatsHtml = "<small>Seats: 0</small>";
 												unitsLow = "<small>Units: 4</small>";
 											}
 											courseHtml += "<div class=\"alert alert-info tile-assignment\">";
 											courseHtml += "<p>" + displayTitle + "</p>";
 											courseHtml += "<div class=\"tile-assignment-details\">";
-											courseHtml += plannedSeats;
+											courseHtml += plannedSeatsHtml;
 											courseHtml += "<br />";
 											courseHtml += unitsLow;
 											courseHtml += "</div>";
