@@ -11,11 +11,18 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 		schedule
 		sectionGroups
 			courseData
-			sectionGroupData
+			assignments
+				supportStaffData
 			aiAssignmentOptions
 				supportStaffPreferences
+					supportStaffData
+					preferenceData
 				instructorPreferences
+					supportStaffData
+					preferenceData
 				other
+					supportStaffData
+					preferenceData
 			readerAssignmentOptions
 				supportStaffPreferences
 				instructorPreferences
@@ -29,113 +36,231 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 			supportAssignments (assignment)
 				courseData
 				sectionGroupData
-			studentPreferences (preference)
+			supportStaffPreferences (preference)
 				courseData
 				sectionGroupData
 */
-		generatePreferences: function (preferences, courses, sectionGroups) {
+		// Creates structured json corresponding to a 'support staff' centric view of the data
+
+		generateSectionGroups: function (supportAssignments, courses, sectionGroups, supportStaffList, supportStaffPreferences, instructorPreferences) {
 			var self = this;
 
-			var newPreferences = [];
+			var newSectionGroups = [];
+			sectionGroups.ids.forEach( function(sectionGroupId) {
+				var sectionGroup = sectionGroups.list[sectionGroupId];
 
-			preferences.ids.forEach( function(preferenceId) {
-				var preference = preferences.list[preferenceId];
+				// Add course data
+				sectionGroup = self.addCourseData(sectionGroup, courses);
 
-				preference = self.addSectionGroupData(preference, sectionGroups);
-				preference = self.addCourseData(preference, courses);
+				// Add assignments
+				sectionGroup.supportAssignments = [];
+				supportAssignments.ids.forEach( function(assignmentId) {
+					var supportAssignment = supportAssignments.list[assignmentId];
 
-				newPreferences.push(preference);
-			});
-
-			return newPreferences;
-		},
-		generatePotentialPreferences: function (supportAssignments, courses, sectionGroups, preferences, supportCallResponse) {
-			var self = this;
-
-			var potentialPreferences = {};
-			potentialPreferences.readers = [];
-			potentialPreferences.associateInstructors = [];
-			potentialPreferences.teachingAssistants = [];
-
-			supportAssignments.ids.forEach( function(supportAssignmentId) {
-				var supportAssignment = supportAssignments.list[supportAssignmentId];
-
-				supportAssignment = self.addSectionGroupData(supportAssignment, sectionGroups);
-				supportAssignment = self.addCourseData(supportAssignment, courses);
-
-				// Ensure assignment is the right type
-				if (self.isAssignmentRelevantToSupportCall(supportAssignment, supportCallResponse) == false) {
-					return;
-				}
-
-				// Ensure assignment does not match an existing preference
-				if (self.isPotentialPreference(supportAssignment, preferences) == false) {
-					return;
-				}
-
-				// Identify relevant potential preferenceGroup
-				var group = null;
-				if (supportAssignment.appointmentType == "reader") {
-					group = potentialPreferences.readers;
-				}
-				if (supportAssignment.appointmentType == "teachingAssistant") {
-					group = potentialPreferences.teachingAssistants;
-				}
-				if (supportAssignment.appointmentType == "associateInstructor") {
-					group = potentialPreferences.associateInstructors;
-				}
-
-				// Ensure assignment does not match an existing potentialPreference
-				for (var i = 0; i < group.length; i++) {
-					var potentialPreference = group[i];
-
-					if (potentialPreference.courseNumber == supportAssignment.courseNumber
-					&& potentialPreference.subjectCode == supportAssignment.subjectCode
-					&& potentialPreference.sequencePattern == supportAssignment.sequencePattern
-					&& potentialPreference.appointmentPercentage == supportAssignment.appointmentPercentage) {
+					// Ensure preference is relevant to supportStaff
+					if (supportAssignment.sectionGroupId != sectionGroup.id) {
 						return;
 					}
-				}
 
-				// Add assignment
-				group.push(supportAssignment);
+					// Add supportStaff data
+					var supportAssignment = self.addSupportStaffData(supportAssignment, supportStaffList);
+
+					sectionGroup.supportAssignments.push(supportAssignment);
+				});
+
+				// Add teachingAssistantAssignmentOptions
+				var processedSupportStaffIds = [];
+				sectionGroup.teachingAssistantAssignmentOptions = {};
+				sectionGroup.teachingAssistantAssignmentOptions.instructorPreferences = [];
+				// Add instructor preferences
+				instructorPreferences.ids.forEach( function(preferenceId) {
+					var preference = instructorPreferences.list[preferenceId];
+
+					if (preference.sectionGroupId != sectionGroup.id) {
+						return;
+					}
+
+					preference = self.addSupportStaffData(preference, supportStaffList);
+					sectionGroup.teachingAssistantAssignmentOptions.instructorPreferences.push(preference);
+					processedSupportStaffIds.push(preference.supportStaffId);
+				});
+
+				// Add SupportStaff preferences
+				sectionGroup.teachingAssistantAssignmentOptions.supportStaffPreferences = [];
+				supportStaffPreferences.ids.forEach( function(preferenceId) {
+					var preference = supportStaffPreferences.list[preferenceId];
+
+					if (preference.sectionGroupId != sectionGroup.id
+							|| preference.type != "teachingAssistant") {
+						return;
+					}
+
+					preference = self.addSupportStaffData(preference, supportStaffList);
+					sectionGroup.teachingAssistantAssignmentOptions.supportStaffPreferences.push(preference);
+					processedSupportStaffIds.push(preference.supportStaffId);
+				});
+
+				// Add Other options
+				sectionGroup.teachingAssistantAssignmentOptions.other = [];
+				supportStaffList.ids.forEach( function(supportStaffId) {
+					var supportStaff = supportStaffList.list[supportStaffId];
+
+					if (processedSupportStaffIds.indexOf(supportStaffId) > -1) {
+						return;
+					}
+
+					supportStaff.supportStaffId = supportStaff.id;
+					sectionGroup.teachingAssistantAssignmentOptions.other.push(supportStaff);
+				});
+
+				// Add associateInstructorAssignmentOptions
+				var processedSupportStaffIds = [];
+
+				// There are no instructor preferences for associateInstructors
+				sectionGroup.associateInstructorAssignmentOptions = {};
+				sectionGroup.associateInstructorAssignmentOptions.instructorPreferences = [];
+
+
+				// Add SupportStaff preferences
+				sectionGroup.associateInstructorAssignmentOptions.supportStaffPreferences = [];
+				supportStaffPreferences.ids.forEach( function(preferenceId) {
+					var preference = supportStaffPreferences.list[preferenceId];
+
+					if (preference.sectionGroupId != sectionGroup.id
+							|| preference.type != "associateInstructor") {
+						return;
+					}
+
+					preference = self.addSupportStaffData(preference, supportStaffList);
+					sectionGroup.associateInstructorAssignmentOptions.supportStaffPreferences.push(preference);
+					processedSupportStaffIds.push(preference.supportStaffId);
+				});
+
+				// Add Other options
+				sectionGroup.associateInstructorAssignmentOptions.other = [];
+				supportStaffList.ids.forEach( function(supportStaffId) {
+					var supportStaff = supportStaffList.list[supportStaffId];
+
+					if (processedSupportStaffIds.indexOf(supportStaffId) > -1) {
+						return;
+					}
+
+					supportStaff.supportStaffId = supportStaff.id;
+					sectionGroup.associateInstructorAssignmentOptions.other.push(supportStaff);
+				});
+
+				// Add readerAssignmentOptions
+				var processedSupportStaffIds = [];
+
+				// There are no instructor preferences for readers
+				sectionGroup.readerAssignmentOptions = {};
+				sectionGroup.readerAssignmentOptions.instructorPreferences = [];
+
+
+				// Add SupportStaff preferences
+				sectionGroup.readerAssignmentOptions.supportStaffPreferences = [];
+				supportStaffPreferences.ids.forEach( function(preferenceId) {
+					var preference = supportStaffPreferences.list[preferenceId];
+
+					if (preference.sectionGroupId != sectionGroup.id
+							|| preference.type != "associateInstructor") {
+						return;
+					}
+
+					preference = self.addSupportStaffData(preference, supportStaffList);
+					sectionGroup.readerAssignmentOptions.supportStaffPreferences.push(preference);
+					processedSupportStaffIds.push(preference.supportStaffId);
+				});
+
+				// Add Other options
+				sectionGroup.readerAssignmentOptions.other = [];
+				supportStaffList.ids.forEach( function(supportStaffId) {
+					var supportStaff = supportStaffList.list[supportStaffId];
+
+					if (processedSupportStaffIds.indexOf(supportStaffId) > -1) {
+						return;
+					}
+
+					supportStaff.supportStaffId = supportStaff.id;
+					sectionGroup.readerAssignmentOptions.other.push(supportStaff);
+				});
+
+				newSectionGroups.push(sectionGroup);
 			});
 
-			return potentialPreferences;
+			return newSectionGroups;
 		},
-		// Determine if a supportAssignment has already been selected as a preference
-		isPotentialPreference: function(supportAssignment, preferences) {
-			for (var i = 0; i < preferences.ids.length; i++) {
-				var preferenceId = preferences.ids[i];
-				var preference = preferences.list[preferenceId];
+		generateSupportStaffList: function (supportAssignments, courses, sectionGroups, supportStaffList, supportStaffSupportCallResponses, supportStaffPreferences) {
+			var self = this;
+			var newSupportStaffList = [];
 
-				if (preference.subjectCode == supportAssignment.subjectCode
-					&& preference.courseNumber == supportAssignment.courseNumber
-					&& preference.type == supportAssignment.appointmentType
-					&& preference.sequencePattern == supportAssignment.sequencePattern) {
+			supportStaffList.ids.forEach( function(supportStaffId) {
+				var supportStaffDTO = supportStaffList.list[supportStaffId];
 
-					return false;
-				}
-			}
+				// Add supportCallResponse
+				supportStaffSupportCallResponses.ids.forEach( function(supportCallResponseId) {
+					var supportCallResponse = supportStaffSupportCallResponses.list[supportCallResponseId];
+					if (supportStaffDTO.id == supportCallResponse.supportStaffId) {
+						supportStaffDTO.supportCallResponse = supportCallResponse;
+					}
+				});
 
-			return true;
+
+				// Add supportAssignments
+				supportStaffDTO.supportAssignments = [];
+				supportAssignments.ids.forEach( function(assignmentId) {
+					var supportAssignment = supportAssignments.list[assignmentId];
+
+					// Ensure preference is relevant to supportStaff
+					if (supportAssignment.supportStaffId != supportStaffDTO.id) {
+						return;
+					}
+
+					// Add sectionGroup and course data
+					var supportAssignment = self.addSectionGroupData(supportAssignment, sectionGroups);
+					var supportAssignment = self.addCourseData(supportAssignment, courses);
+
+					supportStaffDTO.supportAssignments.push(supportAssignment);
+				});
+
+				// Add supportStaffPreferences
+				supportStaffDTO.supportStaffPreferences = [];
+				supportStaffPreferences.ids.forEach( function(preferenceId) {
+					var preference = supportStaffPreferences.list[preferenceId];
+
+					// Ensure preference is relevant to supportStaff
+					if (preference.supportStaffId != supportStaffDTO.id) {
+						return;
+					}
+
+					// Add sectionGroup and course data
+					var preference = self.addSectionGroupData(preference, sectionGroups);
+					var preference = self.addCourseData(preference, courses);
+
+					supportStaffDTO.supportStaffPreferences.push(preference);
+				});
+
+				newSupportStaffList.push(supportStaffDTO);
+			});
+
+			return newSupportStaffList;
 		},
-		// Returns true if assignment type matches a type being collected in the support call
-		isAssignmentRelevantToSupportCall: function(supportAssignment, supportCallResponse) {
-			if (supportCallResponse.collectReaderPreferences && supportAssignment.appointmentType == "reader") {
-				return true;
-			}
-			if (supportCallResponse.collectTeachingAssistantPreferences && supportAssignment.appointmentType == "teachingAssistant") {
-				return true;
-			}
-			if (supportCallResponse.collectAssociateInstructorPreferences && supportAssignment.appointmentType == "associateInstructor") {
-				return true;
-			}
+		generateSupportAssignments: function(supportAssignments, sectionGroups, courses) {
+			var self = this;
+			var newSupportAssignments = [];
+			// TODO: add course data to supportAssignments
+			supportAssignments.ids.forEach( function(supportAssignmentId) {
+				var supportAssignment = supportAssignments.list[supportAssignmentId];
+				supportAssignment = self.addSectionGroupData(supportAssignment, sectionGroups);
+				supportAssignment = self.addCourseData(supportAssignment, courses);
+				newSupportAssignments.push(supportAssignment);
+			});
 
-			return false;
+			return newSupportAssignments;
 		},
+		/* Helper functions */
 		// Blend the relevant course data
-		addCourseData: function (entity, courses) {
+		addCourseData: function(entity, courses) {
 			courses.ids.forEach( function (courseId) {
 				var course = courses.list[courseId];
 
@@ -150,8 +275,8 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 
 			return entity;
 		},
-		// Blend the relevant course data
-		addSectionGroupData: function (entity, sectionGroups) {
+		// Blend the relevant sectionGroup data
+		addSectionGroupData: function(entity, sectionGroups) {
 			sectionGroups.ids.forEach( function (sectionGroupId) {
 				var sectionGroup = sectionGroups.list[sectionGroupId];
 
@@ -162,5 +287,21 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 
 			return entity;
 		},
+		// Blend the relevant supportStaff data
+		addSupportStaffData: function(entity, supportStaffList) {
+			supportStaffList.ids.forEach( function (supportStaffId) {
+				var supportStaff = supportStaffList.list[supportStaffId];
+
+				if (entity.supportStaffId == supportStaff.id) {
+					entity.firstName = supportStaff.firstName;
+					entity.lastName = supportStaff.lastName;
+					entity.loginId = supportStaff.loginId;
+					entity.fullName = supportStaff.fullName;
+					entity.supportStaffid = supportStaff.id;
+				}
+			});
+
+			return entity;
+		}
 	};
 });

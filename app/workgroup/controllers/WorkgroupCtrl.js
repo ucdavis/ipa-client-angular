@@ -13,7 +13,6 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 
 		$rootScope.$on('workgroupStateChanged', function (event, data) {
 			$scope.view.state = data;
-			console.log($scope.view.state);
 		});
 
 		$scope.openImpersonateModal = function() {

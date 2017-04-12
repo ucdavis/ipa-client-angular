@@ -1,4 +1,4 @@
-instructionalSupportApp.service('instructionalSupportAssignmentStateService', function ($rootScope, $log, Course, SectionGroup, Section, Activity, Tag, Location, Instructor, TeachingCallResponse, Term) {
+instructionalSupportApp.service('instructionalSupportAssignmentStateService', function ($rootScope, $log, supportAssignmentSelectors) {
 	return {
 		_state: {},
 		_sectionGroupReducers: function (action, sectionGroups) {
@@ -37,6 +37,26 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					return sectionGroups;
 			}
 		},
+		_courseReducers: function (action, courses) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					courses = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.courses.forEach( function(course) {
+						courses.ids.push(course.id);
+						courses.list[course.id] = course;
+					});
+
+					return courses;
+				default:
+					return courses;
+			}
+		},
 		_supportAssignmentsReducers: function (action, supportAssignments) {
 			var scope = this;
 
@@ -64,8 +84,8 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					return supportAssignments;
 					case ADD_ASSIGNMENT_SLOTS:
 						action.payload.forEach( function (supportAssignment) {
-							supportAssignments.list[instructionalSupportAssignmentData.id] = instructionalSupportAssignmentData;
-							supportAssignments.ids.push(instructionalSupportAssignmentData.id);
+							supportAssignments.list[supportAssignment.id] = supportAssignment;
+							supportAssignments.ids.push(supportAssignment.id);
 						});
 						return supportAssignments;
 					case REMOVE_STAFF_FROM_SLOT:
@@ -134,9 +154,9 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						instructorPreferences.list[preference.id] = preference;
 						instructorPreferences.ids.push(preference.id);
 					});
-					return supportStaffPreferences;
+					return instructorPreferences;
 				default:
-					return supportStaffPreferences;
+					return instructorPreferences;
 			}
 		},
 		_supportStaffSupportCallResponseReducers: function (action, supportStaffSupportCallResponses) {
@@ -233,7 +253,8 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 
 			newState = {};
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
-			newState.instructionalSupportAssignments = scope._supportAssignmentsReducers(action, scope._state.instructionalSupportAssignments);
+			newState.courses = scope._courseReducers(action, scope._state.courses);
+			newState.supportAssignments = scope._supportAssignmentsReducers(action, scope._state.supportAssignments);
 			newState.supportStaffPreferences = scope._supportStaffPreferenceReducers(action, scope._state.supportStaffPreferences);
 			newState.instructorPreferences = scope._instructorPreferenceReducers(action, scope._state.instructorPreferences);
 			newState.supportStaffList = scope._supportStaffListReducers(action, scope._state.supportStaffList);
@@ -249,26 +270,32 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 			newPageState = {};
 			newPageState.schedule = angular.copy(scope._state.schedule);
 			newPageState.userInterface = angular.copy(scope._state.userInterface);
-
-			newPageState.sectionGroups = supportAssignmentSelectors.generateSectionGroups(
-																														scope._state.preferences,
-																														scope._state.courses,
-																														scope._state.sectionGroups
-																													);
-
-			newPageState.supportStaffList = supportAssignmentSelectors.generateSupportStaffList(
-																																			scope._state.supportStaffList,
-																																			scope._state.courses,
+			newPageState.supportAssignments = supportAssignmentSelectors.generateSupportAssignments(
+																																			scope._state.supportAssignments,
 																																			scope._state.sectionGroups,
-																																			scope._state.preferences,
-																																			scope._state.supportCallResponse
+																																			scope._state.courses
 																																		);
 
+			newPageState.supportStaffList = supportAssignmentSelectors.generateSupportStaffList(
+																																			scope._state.supportAssignments,
+																																			scope._state.courses,
+																																			scope._state.sectionGroups,
+																																			scope._state.supportStaffList,
+																																			scope._state.supportStaffSupportCallResponses,
+																																			scope._state.supportStaffPreferences
+																																		);
 
+			newPageState.sectionGroups = supportAssignmentSelectors.generateSectionGroups(
+																																			scope._state.supportAssignments,
+																																			scope._state.courses,
+																																			scope._state.sectionGroups,
+																																			scope._state.supportStaffList,
+																																			scope._state.supportStaffSupportCallResponses,
+																																			scope._state.supportStaffPreferences,
+																																			scope._state.instructorPreferences
+																																		);
 
-			$rootScope.$emit('supportAssignmentStateChanged', {
-				state: scope._state
-			});
+			$rootScope.$emit('supportAssignmentStateChanged', newPageState);
 		}
 	};
 });

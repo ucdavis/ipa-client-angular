@@ -3,26 +3,24 @@
 		Assign..
 	</div>
 	<ul class="dropdown-menu" style="width: 100%;">
-		<li ng-show="supportStaff.preferenceIds.length > 0" class="dropdown-header" stop-event="click"><b>Preferences</b></li>
+		<li ng-show="supportStaff.supportStaffPreferences.length > 0" class="dropdown-header" stop-event="click"><b>Preferences</b></li>
 
 		<!-- preferences tied to this supportStaff -->
-		<li ng-repeat="preferenceId in supportStaff.preferenceIds" class="clickable"
-				ng-init="preference=view.state.preferences.list[preferenceId]; sectionGroup=view.state.sectionGroups.list[view.state.preferences.list[preferenceId].sectionGroupId]">
+		<li ng-repeat="preference in supportStaff.supportStaffPreferences" class="clickable">
 			<a class="small">
-				<span class="course-filter-item"><b>{{ preference.priority }}</b> {{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} - {{ sectionGroup.sequencePattern }} ({{ appointmentTypeToShorthand(preference.type) }})</span>
+				<span class="course-filter-item"><b>{{ preference.priority }}</b> {{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern }} ({{ appointmentTypeToShorthand(preference.type) }})</span>
 			</a>
 		</li>
 
-		<li ng-show="supportStaff.preferenceIds.length > 0" role="separator" class="divider"></li>
+		<li ng-show="supportStaff.supportStaffPreferences.length > 0" role="separator" class="divider"></li>
 
 		<li class="dropdown-header" stop-event="click"><b>Courses</b></li>
 
 		<!-- all unassigned courses -->
-		<li ng-repeat="supportAssignmentId in view.state.instructionalSupportAssignments.ids" class="clickable"
-				ng-init="supportAssignment=view.state.instructionalSupportAssignments.list[supportAssignmentId]; sectionGroup=view.state.sectionGroups.list[view.state.instructionalSupportAssignments.list[supportAssignmentId].sectionGroupId]"
-				ng-click="assignStaffToSlot(supportAssignmentId)">
+		<li ng-repeat="supportAssignment in view.state.supportAssignments" class="clickable"
+				ng-click="assignStaffToSlot(supportAssignment.id)">
 			<a class="small">
-				<span class="course-filter-item">{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} - {{ sectionGroup.sequencePattern }} ({{ appointmentTypeToShorthand(supportAssignment.appointmentType) }})</span>
+				<span class="course-filter-item">{{ supportAssignment.subjectCode }} {{ supportAssignment.courseNumber }} - {{ supportAssignment.sequencePattern }} ({{ appointmentTypeToShorthand(supportAssignment.appointmentType) }})</span>
 			</a>
 		</li>
 	</ul>

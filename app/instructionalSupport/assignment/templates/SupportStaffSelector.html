@@ -4,56 +4,26 @@
 	</div>
 	<ul class="dropdown-menu" style="width: 100%;">
 
-		<!-- Instructor preferences -->
-<!--		<li class="dropdown-header" stop-event="click"><b>Instructor Preferences</b></li>
--->
-		<!-- Student preferences -->
-		<li ng-if="assignmentOptions.studentPreferences.length > 0" class="dropdown-header" stop-event="click"><b>Support Staff Preferences</b></li>
+		<!-- Support Staff preferences -->
+		<li ng-if="assignmentOptions.supportStaffPreferences.length > 0" class="dropdown-header" stop-event="click"><b>Support Staff Preferences</b></li>
 		<li class="clickable"
-			ng-repeat="studentPreference in assignmentOptions.studentPreferences"
-			ng-init="supportStaffStudent=view.state.instructionalSupportStaffs.list[studentPreference.supportStaffId]"
-			ng-click="assignStaffToSlot(supportStaffStudent.id)">
+			ng-repeat="supportStaffPreference in assignmentOptions.supportStaffPreferences"
+			ng-click="assignStaffToSlot(supportStaffPreference.supportStaffId)">
 			<a class="small">
-				<span class="course-filter-item">{{ supportStaffStudent.fullName }} ({{ studentPreference.priority }})</span>
+				<span class="course-filter-item">{{ supportStaffPreference.fullName }} ({{ supportStaffPreference.priority }})</span>
 			</a>
 		</li>
 
-		<!-- phds -->
-		<li ng-if="assignmentOptions.studentPreferences.length > 0" role="separator" class="divider"></li>
-		<li ng-if="assignmentOptions.phdStudentIds.length > 0" class="dropdown-header" stop-event="click"><b>Phd Students</b></li>
+		<!-- Divider -->
+		<li ng-if="assignmentOptions.supportStaffPreferences.length > 0" role="separator" class="divider"></li>
 
-		<li ng-if="assignmentOptions.phdStudentIds.length > 0" class="clickable"
-			ng-repeat="instructionalSupportStaffId in assignmentOptions.phdStudentIds"
-			ng-click="assignStaffToSlot(instructionalSupportStaffId)"
-			ng-init="instructionalSupportStaff=view.state.instructionalSupportStaff.list[instructionalSupportStaffId]">
+		<!-- Other preferences -->
+		<li ng-if="assignmentOptions.other.length > 0" class="dropdown-header" stop-event="click"><b>Other</b></li>
+		<li class="clickable"
+			ng-repeat="supportStaff in assignmentOptions.other"
+			ng-click="assignStaffToSlot(supportStaff.supportStaffId)">
 			<a class="small">
-				<span class="course-filter-item">{{ view.state.instructionalSupportStaffs.list[instructionalSupportStaffId].fullName }}</span>
-			</a>
-		</li>
-
-		<!-- masters -->
-		<li ng-if="assignmentOptions.phdStudentIds.length > 0" role="separator" class="divider"></li>
-		<li ng-if="assignmentOptions.mastersStudentIds.length > 0" class="dropdown-header" stop-event="click"><b>Masters Students</b></li>
-
-		<li ng-if="assignmentOptions.mastersStudentIds.length > 0" class="clickable"
-			ng-repeat="instructionalSupportStaffId in assignmentOptions.mastersStudentIds"
-			ng-click="assignStaffToSlot(instructionalSupportStaffId)"
-			ng-init="instructionalSupportStaff=view.state.instructionalSupportStaff.list[instructionalSupportStaffId]">
-			<a class="small">
-				<span class="course-filter-item">{{ view.state.instructionalSupportStaffs.list[instructionalSupportStaffId].fullName }}</span>
-			</a>
-		</li>
-
-		<!-- instructionalSupport -->
-		<li ng-if="assignmentOptions.mastersStudentIds.length > 0" role="separator" class="divider"></li>
-		<li ng-if="assignmentOptions.instructionalSupportIds.length > 0" class="dropdown-header" stop-event="click"><b>Instructional Support</b></li>
-
-		<li ng-if="assignmentOptions.instructionalSupportIds.length > 0" class="clickable"
-			ng-repeat="instructionalSupportStaffId in assignmentOptions.instructionalSupportIds"
-			ng-click="assignStaffToSlot(instructionalSupportStaffId)"
-			ng-init="instructionalSupportStaff=view.state.instructionalSupportStaff.list[instructionalSupportStaffId]">
-			<a class="small">
-				<span class="course-filter-item">{{ view.state.instructionalSupportStaffs.list[instructionalSupportStaffId].fullName }}</span>
+				<span class="course-filter-item">{{ supportStaff.fullName }}</span>
 			</a>
 		</li>
 

@@ -60,8 +60,7 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 			});
 
 			$rootScope.$on('supportAssignmentStateChanged', function (event, data) {
-				$scope.view.state = data.state;
-
+				$scope.view.state = data;
 				// Resolves occasional discrepancies with view binding, because we're using event listeners
 				$timeout(function() {
 					$scope.$apply();
@@ -176,9 +175,9 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 				instructionalSupportAssignmentActionCreators.deleteAssignment(instructionalSupportAssignment);
 			};
 
-			$scope.removeStaffFromSlot = function (instructionalSupportAssignmentId) {
-				supportStaffId = $scope.view.state.instructionalSupportAssignments.list[instructionalSupportAssignmentId].instructionalSupportStaffId;
-				instructionalSupportAssignmentActionCreators.removeStaffFromSlot(instructionalSupportAssignmentId, supportStaffId);
+			$scope.removeStaffFromSlot = function (supportAssignment) {
+				var supportStaffId = supportAssignment.supportStaffId;
+				instructionalSupportAssignmentActionCreators.removeStaffFromSlot(supportAssignment.id, supportStaffId);
 			};
 
 			$scope.getTermDescription = function(term) {
