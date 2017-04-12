@@ -129,8 +129,13 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 			$scope.termCode = $scope.termShortCodeToTermCode($scope.termShortCode);
 	}]);
 
-StudentSupportCallFormCtrl.getPayload = function (authService, supportStaffFormActionCreators, $route) {
+StudentSupportCallFormCtrl.getPayload = function (authService, supportStaffFormActionCreators, $route, $window) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		supportStaffFormActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode);
+		// validate params
+		if ($route.current.params.year.length != 4 || $route.current.params.termShortCode.length != 2) {
+			$window.location.href = "/summary/" + $route.current.params.workgroupId + "/" + $route.current.params.year + "?mode=instructionalSupport";
+		} else {
+			supportStaffFormActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode);
+		}
 	});
 };
