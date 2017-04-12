@@ -190,11 +190,12 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 											if (sectionGroup) {
 												var course = scope.view.state.courses.list[sectionGroup.courseId];
+												if (course) {
+													displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
 
-												displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
-
-												plannedSeats = "<small>Seats: " + sectionGroup.plannedSeats + "</small>";
-												unitsLow = "<small>Units: " + course.unitsLow + "</small>";
+													plannedSeats = "<small>Seats: " + sectionGroup.plannedSeats + "</small>";
+													unitsLow = "<small>Units: " + course.unitsLow + "</small>";
+												}
 											} else {
 												if (teachingAssignment.buyout) {
 													displayTitle += "BUYOUT";
@@ -291,7 +292,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 												}
 	
 												var course;
-
+												
 												if (teachingAssignment.suggestedSubjectCode && teachingAssignment.suggestedCourseNumber) {
 													course = {};
 													course.subjectCode = teachingAssignment.suggestedSubjectCode;
@@ -300,12 +301,14 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 												} else {
 													if (sectionGroup) {
 														course = scope.view.state.courses.list[sectionGroup.courseId];
-														interestedCourseIds.push(course.id);
+														if (course) {
+															interestedCourseIds.push(course.id);
+														}
 													}
 												}
 
 												// Show option if the TeachingAssignment is not already approved
-												if (teachingAssignment.approved === false) {
+												if (teachingAssignment.approved === false && course) {
 													if (firstInterestedCourseAdded === false) {
 														courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
 														firstInterestedCourseAdded = true;
@@ -314,7 +317,6 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 													courseHtml += "<li><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
-
 													courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
 												}
 											});
