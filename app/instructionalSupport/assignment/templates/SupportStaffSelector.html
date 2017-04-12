@@ -3,6 +3,11 @@
 		Assign {{ instructionalSupportAssignment.appointmentPercentage }}%
 	</div>
 	<ul class="dropdown-menu" style="width: 100%;">
+		<!-- Handle lack of support staff -->
+
+		<li style="text-align: center; color: black;" ng-if="assignmentOptions.supportStaffPreferences.length == 0 && assignmentOptions.instructorPreferences.length == 0 && assignmentOptions.other.length == 0">
+			There are no support staff available.
+		</li>
 
 		<!-- Support Staff preferences -->
 		<li ng-if="assignmentOptions.supportStaffPreferences.length > 0" class="dropdown-header" stop-event="click"><b>Support Staff Preferences</b></li>
