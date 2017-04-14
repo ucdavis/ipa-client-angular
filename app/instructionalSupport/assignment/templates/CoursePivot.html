@@ -1,7 +1,7 @@
 <div id="courses-view">
 
 	<!-- handle lack of sectionGroups -->
-	<div ng-if="view.state && view.state.sectionGroups.ids == 0">
+	<div ng-if="view.state && view.state.sectionGroups.length == 0">
 			<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
 				<p class="lead">There are no scheduled courses for {{ sharedState.workgroup.name }} {{ termShortCode.getTermDisplayName() }} {{ year }}-{{ nextYear }}.</p>
 			</div>
