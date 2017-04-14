@@ -17,7 +17,6 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 			$rootScope.$on('sharedStateSet', function (event, sharedStateData) {
 				$rootScope.$on('supportAssignmentStateChanged', function (event, data) {
 					$scope.sharedState = sharedStateData;
-
 					var isInstructorReviewOpen = $scope.isInstructorSupportCallReviewOpen();
 					var isStudentReviewOpen = $scope.isSupportStaffSupportCallReviewOpen();
 					var userRoles = $scope.sharedState.currentUser.userRoles;
@@ -61,6 +60,8 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 
 			$rootScope.$on('supportAssignmentStateChanged', function (event, data) {
 				$scope.view.state = data;
+				console.log($scope.view.state);
+
 				// Resolves occasional discrepancies with view binding, because we're using event listeners
 				$timeout(function() {
 					$scope.$apply();
@@ -76,6 +77,10 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 			$scope.isInstructorSupportCallReviewOpen = function () {
 				var index = parseInt($scope.termShortCode) - 1;
 
+				if ( !($scope.view.state.schedule.instructorSupportCallReviewOpen)){
+					return false;
+				}
+
 				var value = $scope.view.state.schedule.instructorSupportCallReviewOpen[index];
 				var results = (value == "1");
 
@@ -84,6 +89,10 @@ instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scop
 
 			$scope.isSupportStaffSupportCallReviewOpen = function () {
 				var index = parseInt($scope.termShortCode) - 1;
+
+				if ( !($scope.view.state.schedule.supportStaffSupportCallReviewOpen)){
+					return false;
+				}
 
 				var value = $scope.view.state.schedule.supportStaffSupportCallReviewOpen[index];
 				var results = (value == "1");
