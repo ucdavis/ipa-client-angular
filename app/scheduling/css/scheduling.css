@@ -22,7 +22,6 @@ body {
 	padding: 0;
 }
 .activity-page-header {
-	height: 100px;
 	display: flex;
 	flex-direction: column;
 	border-bottom: 1px solid #ebebeb;
