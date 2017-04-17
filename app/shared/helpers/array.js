@@ -82,3 +82,27 @@ _array_sortByProperty = function (listHash, property) {
 	});
 	return newArray;
 };
+
+// Will test if an object exists in an array by the specified properties
+_array_contains_by_properties = function(array, properties, object) {
+	if ( !(array) || !(properties) || !(object)) {
+		return false;
+	}
+
+	// Loop over the array
+	for (var i = 0; i < array.length; i++) {
+		slotVal = array[i];
+		propertiesMatched = true;
+
+		properties.forEach(function(property) {
+			if (slotVal[property] != object[property]) {
+				propertiesMatched = false;
+			}
+		});
+
+		if (propertiesMatched) {
+			return true;
+		}
+	}
+	return false;
+};
