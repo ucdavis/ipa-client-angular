@@ -101,6 +101,26 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					return supportAssignments;
 			}
 		},
+		_assignedSupportStaffListReducers: function (action, assignedSupportStaffList) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					assignedSupportStaffList = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.assignedSupportStaff.forEach( function(supportStaff) {
+						assignedSupportStaffList.list[supportStaff.id] = supportStaff;
+						assignedSupportStaffList.ids.push(supportStaff.id);
+					});
+
+					return assignedSupportStaffList;
+				default:
+					return assignedSupportStaffList;
+			}
+		},
 		_supportStaffListReducers: function (action, supportStaffList) {
 			var scope = this;
 
@@ -262,6 +282,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 			newState.schedule = scope._scheduleReducers(action, scope._state.schedule);
 			newState.supportStaffSupportCallResponses = scope._supportStaffSupportCallResponseReducers(action, scope._state.supportStaffSupportCallResponses);
 			newState.instructorSupportCallResponses = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponses);
+			newState.assignedSupportStaffList = scope._assignedSupportStaffListReducers(action, scope._state.assignedSupportStaffList);
 
 			scope._state = newState;
 
@@ -281,6 +302,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 																																			scope._state.courses,
 																																			scope._state.sectionGroups,
 																																			scope._state.supportStaffList,
+																																			scope._state.assignedSupportStaffList,
 																																			scope._state.supportStaffSupportCallResponses,
 																																			scope._state.supportStaffPreferences
 																																		);
@@ -290,6 +312,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 																																			scope._state.courses,
 																																			scope._state.sectionGroups,
 																																			scope._state.supportStaffList,
+																																			scope._state.assignedSupportStaffList,
 																																			scope._state.supportStaffSupportCallResponses,
 																																			scope._state.supportStaffPreferences,
 																																			scope._state.instructorPreferences

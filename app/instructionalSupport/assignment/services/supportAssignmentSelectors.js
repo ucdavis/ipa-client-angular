@@ -42,7 +42,7 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 */
 		// Creates structured json corresponding to a 'support staff' centric view of the data
 
-		generateSectionGroups: function (supportAssignments, courses, sectionGroups, supportStaffList, supportStaffPreferences, instructorPreferences) {
+		generateSectionGroups: function (supportAssignments, courses, sectionGroups, supportStaffList, assignedSupportStaffList, supportStaffPreferences, instructorPreferences) {
 			var self = this;
 
 			var newSectionGroups = [];
@@ -190,7 +190,7 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 
 			return newSectionGroups;
 		},
-		generateSupportStaffList: function (supportAssignments, courses, sectionGroups, supportStaffList, supportStaffSupportCallResponses, supportStaffPreferences) {
+		generateSupportStaffList: function (supportAssignments, courses, sectionGroups, supportStaffList, assignedSupportStaffList, supportStaffSupportCallResponses, supportStaffPreferences) {
 			var self = this;
 			var newSupportStaffList = [];
 
