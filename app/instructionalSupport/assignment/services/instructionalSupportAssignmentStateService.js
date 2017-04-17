@@ -291,6 +291,12 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 			newPageState = {};
 			newPageState.schedule = angular.copy(scope._state.schedule);
 			newPageState.userInterface = angular.copy(scope._state.userInterface);
+			newPageState.supportAssignmentsUnique = supportAssignmentSelectors.generateSupportAssignmentsUnique(
+																																			scope._state.supportAssignments,
+																																			scope._state.sectionGroups,
+																																			scope._state.courses
+																																		);
+
 			newPageState.supportAssignments = supportAssignmentSelectors.generateSupportAssignments(
 																																			scope._state.supportAssignments,
 																																			scope._state.sectionGroups,

@@ -307,6 +307,23 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 
 			return newSupportAssignments;
 		},
+		// Support Assignments that only include one instance of a support assignment 'category'
+		// For example, only show one copy of 'ECS 141 - A Series 50% TA Appointment' even though there are 5 identical slots.
+		generateSupportAssignmentsUnique: function(supportAssignments, sectionGroups, courses) {
+			var uniqueSupportAssignments = [];
+			var supportAssignmentDTOs = this.generateSupportAssignments(supportAssignments, sectionGroups, courses);
+
+			supportAssignmentDTOs.forEach( function(assignment) {
+				var properties = ["courseNumber", "subjectCode", "sequencePattern", "appointmentType", "appointmentPercentage"];
+				if(_array_contains_by_properties(uniqueSupportAssignments, properties, assignment)) {
+					return;
+				}
+
+				uniqueSupportAssignments.push(assignment);
+			});
+
+			return uniqueSupportAssignments;
+		},
 		/* Helper functions */
 		// Blend the relevant course data
 		addCourseData: function(entity, courses) {
