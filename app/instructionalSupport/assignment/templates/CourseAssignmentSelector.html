@@ -17,10 +17,10 @@
 		<li class="dropdown-header" stop-event="click"><b>Courses</b></li>
 
 		<!-- all unassigned courses -->
-		<li ng-repeat="supportAssignment in view.state.supportAssignments" class="clickable"
+		<li ng-repeat="supportAssignment in view.state.supportAssignmentsUnique" class="clickable"
 				ng-click="assignStaffToSlot(supportAssignment.id)">
 			<a class="small">
-				<span class="course-filter-item">{{ supportAssignment.subjectCode }} {{ supportAssignment.courseNumber }} - {{ supportAssignment.sequencePattern }} ({{ appointmentTypeToShorthand(supportAssignment.appointmentType) }})</span>
+				<span class="course-filter-item">{{ supportAssignment.subjectCode }} {{ supportAssignment.courseNumber }} - {{ supportAssignment.sequencePattern }} ({{ appointmentTypeToShorthand(supportAssignment.appointmentType) }} {{ supportAssignment.appointmentPercentage}}%)</span>
 			</a>
 		</li>
 	</ul>
