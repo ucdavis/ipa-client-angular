@@ -458,6 +458,9 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 });
 
 millisecondsToFullDate = function(milliseconds) {
+	if ( !(milliseconds) ) {
+		return "";
+	}
 	var d = new Date(milliseconds);
 	var day = d.getDate();
 	var month = d.getMonth() + 1;
