@@ -46,6 +46,7 @@ instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '
 			// Used on 'update preferences' button, since saving is not required again.
 			$scope.pretendToastMessage = function() {
 				instructionalSupportInstructorFormActionCreators.pretendToastMessage();
+				$window.location.href = "/summary/" + $scope.workgroupId + "/" + $scope.year + "?mode=instructor";
 			};
 
 			// Activates sortable lists for each sectionGroup, after a short delay to give the view time to render

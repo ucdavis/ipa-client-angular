@@ -53,6 +53,7 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 
 			$scope.pretendToastMessage = function() {
 				supportStaffFormActionCreators.pretendToastMessage();
+				$window.location.href = "/summary/" + $scope.workgroupId + "/" + $scope.year + "?mode=instructionalSupport";
 			};
 
 			$scope.openPreferenceCommentModal = function(preference) {
