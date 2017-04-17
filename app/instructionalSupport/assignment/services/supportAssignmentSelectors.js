@@ -42,9 +42,34 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 */
 		// Creates structured json corresponding to a 'support staff' centric view of the data
 
-		generateSectionGroups: function (supportAssignments, courses, sectionGroups, supportStaffList, assignedSupportStaffList, supportStaffPreferences, instructorPreferences) {
+		generateSectionGroups: function (supportAssignments, courses, sectionGroups, supportStaffFromRoles, assignedSupportStaffList, supportStaffPreferences, instructorPreferences) {
 			var self = this;
 
+			// Blend the two types of support staff together into a unique listing
+			var supportStaffList = {ids: [], list: {}};
+
+			assignedSupportStaffList.ids.forEach(function(supportStaffId) {
+				if (supportStaffList.ids.indexOf(supportStaffId) > -1) {
+					return;
+				}
+				var supportStaffDTO = assignedSupportStaffList.list[supportStaffId];
+				supportStaffDTO.hasAssignmentOrPreference = true;
+				supportStaffList.ids.push(supportStaffId);
+				supportStaffList.list[supportStaffId] = supportStaffDTO;
+			});
+
+			supportStaffFromRoles.ids.forEach(function(supportStaffId) {
+				if (supportStaffList.ids.indexOf(supportStaffId) > -1) {
+					return;
+				}
+
+				var supportStaffDTO = supportStaffFromRoles.list[supportStaffId];
+				supportStaffDTO.hasAssignmentOrPreference = false;
+				supportStaffList.ids.push(supportStaffId);
+				supportStaffList.list[supportStaffId] = supportStaffDTO;
+			});
+
+			// Build sectionGroup DTOs
 			var newSectionGroups = [];
 			sectionGroups.ids.forEach( function(sectionGroupId) {
 				var sectionGroup = sectionGroups.list[sectionGroupId];
@@ -190,12 +215,36 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 
 			return newSectionGroups;
 		},
-		generateSupportStaffList: function (supportAssignments, courses, sectionGroups, supportStaffList, assignedSupportStaffList, supportStaffSupportCallResponses, supportStaffPreferences) {
+		generateSupportStaffList: function (supportAssignments, courses, sectionGroups, supportStaffFromRoles, assignedSupportStaffList, supportStaffSupportCallResponses, supportStaffPreferences) {
 			var self = this;
 			var newSupportStaffList = [];
 
-			supportStaffList.ids.forEach( function(supportStaffId) {
-				var supportStaffDTO = supportStaffList.list[supportStaffId];
+			// Blend the two types of support staff together into a unique listing
+			var processedSupportStaffIds = [];
+			var supportStaffList = [];
+			assignedSupportStaffList.ids.forEach(function(supportStaffId) {
+				if (processedSupportStaffIds.indexOf(supportStaffId) > -1) {
+					return;
+				}
+				var supportStaffDTO = assignedSupportStaffList.list[supportStaffId];
+				supportStaffDTO.hasAssignment = true;
+				processedSupportStaffIds.push(supportStaffId);
+				supportStaffList.push(supportStaffDTO);
+			});
+
+			supportStaffFromRoles.ids.forEach(function(supportStaffId) {
+				if (processedSupportStaffIds.indexOf(supportStaffId) > -1) {
+					return;
+				}
+
+				var supportStaffDTO = supportStaffFromRoles.list[supportStaffId];
+				supportStaffDTO.hasAssignment = false;
+				processedSupportStaffIds.push(supportStaffId);
+				supportStaffList.push(supportStaffDTO);
+			});
+
+			// Build the supportStaff view DTOs
+			supportStaffList.forEach( function(supportStaffDTO) {
 
 				// Add supportCallResponse
 				supportStaffSupportCallResponses.ids.forEach( function(supportCallResponseId) {
