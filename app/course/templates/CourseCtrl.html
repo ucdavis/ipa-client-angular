@@ -77,6 +77,15 @@
 					<form role="form" class="form-horizontal form-groups-bordered">
 
 						<div class="form-group">
+							<label class="col-sm-4 control-label">Source</label>
+
+							<div class="col-sm-4">
+								<selectize config="{maxItems: 1, valueField: 'name', labelField: 'name', searchField: ['name']}" options="massImportSources"
+									ng-model="view.state.uiState.massImportSource"></selectize>
+							</div>
+						</div>
+
+						<div class="form-group" ng-if="view.state.uiState.massImportSource != 'IPA'">
 							<label class="col-sm-4 control-label">Subject Code</label>
 
 							<div class="col-sm-4">
@@ -105,7 +114,6 @@
 									</label>
 									<label>Include unpublished courses</label>
 								</div>
-							</div>
 						</div>
 
 						<div class="form-group">

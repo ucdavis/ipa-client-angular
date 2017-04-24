@@ -12,6 +12,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 		$scope.view = {};
 		$scope.sequencePatterns = sequencePatterns; // constants.js file
 		$scope.subjectCodes = subjectCodes.map(function (subjectCode) { return { code: subjectCode }; }); // constants.js file
+		$scope.massImportSources = [{name: 'IPA'}, {name: 'Banner'}];
 
 		// Generate a few recent academic years for the mass course import mode
 		var futureYear = new Date().getFullYear() + 2;

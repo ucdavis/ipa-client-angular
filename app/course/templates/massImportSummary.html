@@ -8,7 +8,7 @@
 		<div class="col-sm-12 import-summary text-center" ng-show="view.state.uiState.massImportInProgress">
 			Importing, please wait...
 		</div>
-		<div class="col-sm-12 import-summary text-center" ng-hide="view.state.uiState.massImportInProgress">
+		<div class="col-sm-12 import-summary" ng-hide="view.state.uiState.massImportInProgress">
 			<div ng-hide="view.state.courses.importList">
 				Please search for courses to import
 			</div>
@@ -23,9 +23,27 @@
 						with subject code <strong>{{ view.state.uiState.massImportCode }}</strong><br />
 						offered in <strong>{{ view.state.uiState.massImportYear.yearToAcademicYear() }}</strong>
 						will be imported.
-					</p><p>
+					</p>
+					<p style="margin-bottom: 30px;">
 						Please review the list displayed on the schedule table.
 					</p>
+
+					<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-click="view.state.uiState.massImportTimes = !view.state.uiState.massImportTimes"
+						ng-class="{ 'checked': view.state.uiState.massImportTimes }">
+						<label class="cb-wrapper">
+							<div class="checked"></div>
+						</label>
+						<label>Import Activity Day & Times</label>
+					</div>
+
+					<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-click="view.state.uiState.massImportInstructors = !view.state.uiState.massImportInstructors"
+						ng-class="{ 'checked': view.state.uiState.massImportInstructors }">
+						<label class="cb-wrapper">
+							<div class="checked"></div>
+						</label>
+						<label>Import Instructor Assignments</label>
+					</div>
+					</div>
 					<button class="btn btn-primary" ng-click="importCoursesAndSectionGroups()">Import courses</button>
 				</div>
 			</div>
