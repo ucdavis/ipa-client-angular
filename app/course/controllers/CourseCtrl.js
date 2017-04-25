@@ -181,6 +181,14 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 				$scope.view.state.uiState.massImportPrivate);
 		};
 
+		// Query for courses from IPA to display in the view as options to import
+		$scope.searchCoursesFromIPA = function () {
+			courseActionCreators.searchCoursesFromIPA(
+				$scope.workgroupId,
+				$scope.view.state.uiState.massImportYear,
+				$scope.view.state.uiState.massImportPrivate);
+		};
+
 		$scope.sectionSeatTotal = function (sectionGroup) {
 			return sectionGroup.sectionIds.reduce(function (previousValue, sectionId) {
 				return previousValue + $scope.view.state.sections.list[sectionId].seats;

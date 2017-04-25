@@ -267,10 +267,9 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 		},
 		searchCoursesFromIPA: function (workgroupId, year, includePrivate) {
 			var deferred = $q.defer();
-			if (!course) { return; }
 			var privateParam = includePrivate ? "&private=true" : "";
 
-			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/queryCourses&token=" + dwToken + privateParam)
+			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/queryCourses", includePrivate, { withCredentials: true })
 				.success(function (result) {
 					deferred.resolve(result);
 				})
