@@ -18,8 +18,14 @@ sharedApp.directive("massImportSummary", this.massImportSummary = function (cour
 				});
 
 				scope.view.state.uiState.massImportInProgress = true;
-				courseActionCreators.importCoursesAndSectionGroups(
-					sectionGroupImports, scope.workgroupId, scope.year, selectedCourseIds.length);
+
+				if (scope.view.state.uiState.massImportSource == 'IPA') {
+					courseActionCreators.importCoursesAndSectionGroupsFromIPA(
+						sectionGroupImports, scope.workgroupId, scope.year, selectedCourseIds.length);
+				} else {
+					courseActionCreators.importCoursesAndSectionGroups(
+						sectionGroupImports, scope.workgroupId, scope.year, selectedCourseIds.length);
+				}
 			};
 		}
 	};
