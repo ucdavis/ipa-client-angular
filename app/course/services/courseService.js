@@ -264,6 +264,21 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 				});
 
 			return deferred.promise;
+		},
+		searchCoursesFromIPA: function (workgroupId, year, includePrivate) {
+			var deferred = $q.defer();
+			if (!course) { return; }
+			var privateParam = includePrivate ? "&private=true" : "";
+
+			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/queryCourses&token=" + dwToken + privateParam)
+				.success(function (result) {
+					deferred.resolve(result);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
 		}
 	};
 });

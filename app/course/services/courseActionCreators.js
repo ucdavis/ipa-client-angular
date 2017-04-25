@@ -160,6 +160,25 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		searchCoursesFromIPA: function (workgroupId, year, includePrivate) {
+			var action = {
+				type: BEGIN_SEARCH_IMPORT_COURSES,
+				payload: {}
+			};
+			courseStateService.reduce(action);
+			courseService.searchCoursesFromIPA(workgroupId, year, includePrivate).then(function (sectionGroups) {
+				var action = {
+					type: SEARCH_IMPORT_COURSES,
+					payload: {
+						subjectCode: null,
+						sectionGroups: sectionGroups
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		newCourse: function (index) {
 			var action = {
 				type: NEW_COURSE,
