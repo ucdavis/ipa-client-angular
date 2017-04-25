@@ -187,6 +187,28 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 			}, 0);
 		};
 
+		// Returns true if the form to query courses is valid based on the course source
+		$scope.importQueryFormValid = function() {
+			var subjectCode = $scope.view.state.uiState.massImportCode;
+			var year = $scope.view.state.uiState.massImportYear;
+			var isSourceBanner = ($scope.view.state.uiState.massImportSource == "Banner");
+			var isSourceIPA = ($scope.view.state.uiState.massImportSource == "IPA");
+
+			if (isSourceIPA) {
+				if (year && year.length > 0) {
+					return true;
+				}
+			}
+
+			if (isSourceBanner) {
+				if (year && year.length > 0 && subjectCode && subjectCode.length > 0) {
+					return true;
+				}
+			}
+
+			return false;
+		};
+
 		$scope.unpublishedCoursesToggled = function () {
 			courseActionCreators.setUnpublishedCoursesFilter(
 				$scope.workgroupId,

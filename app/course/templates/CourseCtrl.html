@@ -119,7 +119,7 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-offset-4 col-sm-4">
-									<button class="btn btn-default btn-block" ng-click="searchImportCourses()" ng-disabled="!(view.state.uiState.massImportCode && view.state.uiState.massImportYear)">Search</button>
+									<button class="btn btn-default btn-block" ng-click="searchImportCourses()" ng-disabled="importQueryFormValid() == false">Search</button>
 									<div class="mass-import-loading">
 										<spinner ng-if="view.state.courses.importList === null && view.state.uiState.searchingCourseToImport"
 											size="20"></spinner>
