@@ -59,6 +59,11 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 				case SEARCH_IMPORT_COURSES:
 					var importList = [];
 					action.payload.sectionGroups.forEach(function (sg) {
+
+						if (action.payload.subjectCode && action.payload.subjectCode.length > 0) {
+							sg.subjectCode = action.payload.subjectCode;
+						}
+
 						// Find any duplicate in existing courses
 						var matchingCourse = _.find(courses.list, function (course) {
 							return (course.courseNumber == sg.courseNumber) && (course.sequencePattern == sg.sequencePattern);
@@ -70,7 +75,7 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						// Add only non-duplicates
 						if (matchingCourse === undefined && matchingImportCourse === undefined) {
 							importList.push(new Course({
-								subjectCode: action.payload.subjectCode,
+								subjectCode: sg.subjectCode,
 								courseNumber: sg.courseNumber,
 								title: sg.title,
 								sequencePattern: sg.sequencePattern,

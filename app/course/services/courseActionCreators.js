@@ -225,6 +225,18 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		importCoursesAndSectionGroupsFromIPA: function (sectionGroupImports, workgroupId, year, importedCoursesCount) {
+			courseService.importCoursesAndSectionGroupsFromIPA(sectionGroupImports, workgroupId, year).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS" });
+				var action = {
+					type: IMPORT_COURSES,
+					payload: payload
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		updateCourse: function (course) {
 			courseService.updateCourse(course).then(function (updatedCourse) {
 				$rootScope.$emit('toast', { message: "Updated course " + updatedCourse.title, type: "SUCCESS" });
