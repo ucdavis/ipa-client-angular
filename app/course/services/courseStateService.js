@@ -193,11 +193,12 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						});
 						// Add only non-duplicates
 						if (matchingImportSectionGroup === undefined) {
+
 							sectionGroups.importList.push(new SectionGroup({
-								subjectCode: action.payload.subjectCode,
+								subjectCode: action.payload.subjectCode || sg.subjectCode,
 								courseNumber: sg.courseNumber,
 								sequencePattern: sg.sequencePattern,
-								plannedSeats: sg.seats,
+								plannedSeats: sg.seats || sg.plannedSeats,
 								title: sg.title,
 								termCode: sg.termCode,
 								effectiveTermCode: sg.effectiveTermCode
