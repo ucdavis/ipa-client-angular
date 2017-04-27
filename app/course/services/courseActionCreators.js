@@ -214,6 +214,9 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 
 		},
 		importCoursesAndSectionGroups: function (sectionGroupImports, workgroupId, year, importedCoursesCount, importTimes, importAssignments) {
+			var importTimes = importTimes ? true : false;
+			var importAssignments = importAssignments ? true : false;
+
 			courseService.importCoursesAndSectionGroups(sectionGroupImports, workgroupId, year, importTimes, importAssignments).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS" });
 				var action = {
@@ -226,6 +229,9 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			});
 		},
 		importCoursesAndSectionGroupsFromIPA: function (sectionGroupImports, workgroupId, year, importedCoursesCount, importTimes, importAssignments) {
+			var importTimes = importTimes ? true : false;
+			var importAssignments = importAssignments ? true : false;
+
 			courseService.importCoursesAndSectionGroupsFromIPA(sectionGroupImports, workgroupId, year, importTimes, importAssignments).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS" });
 				var action = {
