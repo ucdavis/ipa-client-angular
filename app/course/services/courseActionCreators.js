@@ -213,8 +213,8 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			});
 
 		},
-		importCoursesAndSectionGroups: function (sectionGroupImports, workgroupId, year, importedCoursesCount) {
-			courseService.importCoursesAndSectionGroups(sectionGroupImports, workgroupId, year).then(function (payload) {
+		importCoursesAndSectionGroups: function (sectionGroupImports, workgroupId, year, importedCoursesCount, importTimes, importAssignments) {
+			courseService.importCoursesAndSectionGroups(sectionGroupImports, workgroupId, year, importTimes, importAssignments).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS" });
 				var action = {
 					type: IMPORT_COURSES,
@@ -225,8 +225,8 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		importCoursesAndSectionGroupsFromIPA: function (sectionGroupImports, workgroupId, year, importedCoursesCount) {
-			courseService.importCoursesAndSectionGroupsFromIPA(sectionGroupImports, workgroupId, year).then(function (payload) {
+		importCoursesAndSectionGroupsFromIPA: function (sectionGroupImports, workgroupId, year, importedCoursesCount, importTimes, importAssignments) {
+			courseService.importCoursesAndSectionGroupsFromIPA(sectionGroupImports, workgroupId, year, importTimes, importAssignments).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS" });
 				var action = {
 					type: IMPORT_COURSES,

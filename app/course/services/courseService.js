@@ -100,10 +100,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 
 			return deferred.promise;
 		},
-		importCoursesAndSectionGroups: function (sectionGroupImports, workgroupId, year) {
+		importCoursesAndSectionGroups: function (sectionGroupImports, workgroupId, year, importTimes, importAssignments) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/sectionGroups", sectionGroupImports, { withCredentials: true })
+			$http.post(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/sectionGroups?importTimes=" + importTimes + "&importAssignments=" + importAssignments, sectionGroupImports, { withCredentials: true })
 				.success(function (payload) {
 					deferred.resolve(payload);
 				})
@@ -113,10 +113,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 
 			return deferred.promise;
 		},
-		importCoursesAndSectionGroupsFromIPA: function (sectionGroupImports, workgroupId, year) {
+		importCoursesAndSectionGroupsFromIPA: function (sectionGroupImports, workgroupId, year, importTimes, importAssignments) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/createCourses", sectionGroupImports, { withCredentials: true })
+			$http.post(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/createCourses?importTimes=" + importTimes + "&importAssignments=" + importAssignments, sectionGroupImports, { withCredentials: true })
 				.success(function (payload) {
 					deferred.resolve(payload);
 				})

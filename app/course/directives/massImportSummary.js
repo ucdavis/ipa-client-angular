@@ -19,12 +19,15 @@ sharedApp.directive("massImportSummary", this.massImportSummary = function (cour
 
 				scope.view.state.uiState.massImportInProgress = true;
 
+				var importTimes = scope.view.state.uiState.massImportTimes;
+				var importAssignments = scope.view.state.uiState.massImportInstructors;
+
 				if (scope.view.state.uiState.massImportSource == 'IPA') {
 					courseActionCreators.importCoursesAndSectionGroupsFromIPA(
-						sectionGroupImports, scope.workgroupId, scope.year, selectedCourseIds.length);
+						sectionGroupImports, scope.workgroupId, scope.year, selectedCourseIds.length, importTimes, importAssignments);
 				} else {
 					courseActionCreators.importCoursesAndSectionGroups(
-						sectionGroupImports, scope.workgroupId, scope.year, selectedCourseIds.length);
+						sectionGroupImports, scope.workgroupId, scope.year, selectedCourseIds.length, importTimes, importAssignments);
 				}
 			};
 		}
