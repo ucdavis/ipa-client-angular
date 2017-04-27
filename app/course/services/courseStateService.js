@@ -76,12 +76,15 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						});
 						// Add only non-duplicates
 						if (matchingCourse === undefined && matchingImportCourse === undefined) {
+
 							importList.push(new Course({
 								subjectCode: sg.subjectCode,
 								courseNumber: sg.courseNumber,
 								title: sg.title,
 								sequencePattern: sg.sequencePattern,
 								effectiveTermCode: sg.effectiveTermCode,
+								unitsLow: sg.creditHoursLow,
+								unitsHigh: sg.creditHoursHigh,
 								import: true
 							}));
 						}
@@ -203,6 +206,8 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 								plannedSeats: sg.seats || sg.plannedSeats || 0,
 								title: sg.title,
 								termCode: sg.termCode,
+								unitsLow: sg.creditHoursLow,
+								unitsHigh: sg.creditHoursHigh,
 								effectiveTermCode: sg.effectiveTermCode
 							}));
 						}
