@@ -66,7 +66,9 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 
 						// Find any duplicate in existing courses
 						var matchingCourse = _.find(courses.list, function (course) {
-							return (course.courseNumber == sg.courseNumber) && (course.sequencePattern == sg.sequencePattern);
+							return (course.courseNumber == sg.courseNumber)
+											&& (course.subjectCode == sg.subjectCode)
+											&& (course.sequencePattern == sg.sequencePattern);
 						});
 						// Find any duplicate in importList
 						var matchingImportCourse = _.find(importList, function (course) {
@@ -188,17 +190,17 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						// Find any duplicate in importList
 						var matchingImportSectionGroup = _.find(sectionGroups.importList, function (sectionGroup) {
 							return (sectionGroup.courseNumber == sg.courseNumber) &&
+								(sectionGroup.subjectCode == sg.subjectCode) &&
 								(sectionGroup.sequencePattern == sg.sequencePattern) &&
 								(sectionGroup.termCode == sg.termCode);
 						});
 						// Add only non-duplicates
 						if (matchingImportSectionGroup === undefined) {
-
 							sectionGroups.importList.push(new SectionGroup({
 								subjectCode: action.payload.subjectCode || sg.subjectCode,
 								courseNumber: sg.courseNumber,
 								sequencePattern: sg.sequencePattern,
-								plannedSeats: sg.seats || sg.plannedSeats,
+								plannedSeats: sg.seats || sg.plannedSeats || 0,
 								title: sg.title,
 								termCode: sg.termCode,
 								effectiveTermCode: sg.effectiveTermCode
