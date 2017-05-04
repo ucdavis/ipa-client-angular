@@ -303,7 +303,8 @@ div.datepicker {
 
 .add-support-call--info_style {
 	flex:0 1 45%;
-	height: 250px;
+	display: flex;
+	flex-flow: column;
 }
 
 .modal-footer--teaching-call {
