@@ -1,0 +1,16 @@
+<div class='ipa-modal'>
+	<div class='dark-overlay' ng-click='close()'>
+	</div>
+
+	<div class='container' ng-style='dialogStyle'>
+		<div class="header">
+			<div>
+				{{ headerText }}
+			</div>
+			<div class='dismiss-ui' ng-click='close()'>
+				×
+			</div>
+		</div>
+		<div class='content' ng-transclude></div>
+	</div>
+</div>
