@@ -195,7 +195,13 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 
 			switch (action.type) {
 				case INIT_STATE:
-					misc = {scheduleId: action.payload.scheduleId};
+					misc = {
+						scheduleId: action.payload.scheduleId,
+						year: action.year,
+						nextYearShort: (parseInt(action.year) + 1).toString().slice(-2),
+						termShortCode: action.termShortCode,
+						workgroupId: action.workgroupId
+					};
 					return misc;
 				default:
 					return misc;
