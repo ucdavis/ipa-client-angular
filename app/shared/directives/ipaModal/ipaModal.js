@@ -1,9 +1,9 @@
 sharedApp.directive('ipaModal', function() {
 	return {
-		restrict: 'E', // Use this via an element selector <dss-modal></dss-modal>
-		templateUrl: 'dssModal.html', // directive html found here:
+		restrict: 'E', // Use this via an element selector <ipa-modal></ipa-modal>
+		templateUrl: 'ipaModal.html', // directive html found here:
 		scope: {
-			closeModal: '&?' // Accepts a method closeModal, ? defines it as optional (even though it is not) to ensure its easily referenceable for validation
+			closeModal: '&?' // Accepts a method closeModal, ? defined as optional (even though it is not) to ensure its easily referenceable for validation
 		},
 		replace: true, // Replace with the template below
 		transclude: true, // we want to insert custom content inside the directive

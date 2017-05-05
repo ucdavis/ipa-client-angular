@@ -1,4 +1,6 @@
-.ipa-modal .dark-overlay {
+
+
+.ipa-modal .ipa-modal-dark-overlay {
 	/* A dark translucent div that covers the whole screen */
 	position:absolute;
 	z-index:9999;
@@ -10,7 +12,7 @@
 	opacity: 0.5;
 }
 
-.ipa-modal .container {
+.ipa-modal .ipa-modal-container {
 	/* A centered div above the overlay with a box shadow. */
 	z-index:10000;
 	position: absolute;
@@ -25,7 +27,7 @@
 	box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.15);
 }
 
-.ipa-modal .header {
+.ipa-modal .ipa-modal-header {
 	padding-left: 10px;
 	height: 50px;
 	background-color: #303641;
@@ -37,12 +39,12 @@
 	align-items: center;
 }
 
-.ipa-modal .content {
+.ipa-modal .ipa-modal-content {
 	background-color: white;
 	height: 100%;
 }
 
-.ipa-modal .dismiss-ui {
+.ipa-modal .ipa-modal-dismiss-ui {
 	padding-right: 20px;
 	cursor: pointer;
 	font-size: 21px;
