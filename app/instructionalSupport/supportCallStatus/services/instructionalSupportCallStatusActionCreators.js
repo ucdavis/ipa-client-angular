@@ -5,7 +5,9 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				var action = {
 					type: INIT_STATE,
 					payload: payload,
-					year: year
+					year: year,
+					workgroupId: workgroupId,
+					termShortCode: termShortCode
 				};
 				supportCallStatusStateService.reduce(action);
 			}, function (err) {

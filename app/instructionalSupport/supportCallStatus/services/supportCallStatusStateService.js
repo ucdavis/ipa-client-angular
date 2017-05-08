@@ -198,10 +198,19 @@ instructionalSupportApp.service('supportCallStatusStateService', function (
 					misc = {
 						scheduleId: action.payload.scheduleId,
 						year: action.year,
+						nextYear: parseInt(action.year) + 1,
 						nextYearShort: (parseInt(action.year) + 1).toString().slice(-2),
 						termShortCode: action.termShortCode,
 						workgroupId: action.workgroupId
 					};
+
+					// Set termCode
+					if (misc.termShortCode < 4) {
+						misc.termCode = misc.nextYear + misc.termShortCode;
+					} else {
+						misc.termCode = misc.year + misc.termShortCode;
+					}
+
 					return misc;
 				default:
 					return misc;
