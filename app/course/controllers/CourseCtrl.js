@@ -14,9 +14,9 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 		$scope.subjectCodes = subjectCodes.map(function (subjectCode) { return { code: subjectCode }; }); // constants.js file
 
 		// Generate a few recent academic years for the mass course import mode
-		var currentYear = new Date().getFullYear();
+		var futureYear = new Date().getFullYear() + 2;
 		var recentYears = [];
-		for (i = currentYear; i > currentYear - 10; i--) {
+		for (i = futureYear; i > futureYear - 12; i--) {
 			recentYears.push({
 				year: i,
 				academicYear: String(i).yearToAcademicYear()
