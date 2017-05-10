@@ -119,6 +119,20 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 					}
 
 					return assignedSupportStaffList;
+				case UPDATE_TABLE_FILTER:
+					var query = action.payload.query;
+
+					// Apply search filters
+					if (query.length > 0) {
+						// Specify the properties that we are interested in searching
+						var searchProperties = ['firstName', 'lastName', 'fullName'];
+
+						_object_search_properties(query, assignedSupportStaffList, searchProperties);
+					} else {
+						assignedSupportStaffList.ids.forEach(function(supportStaffId) {
+							assignedSupportStaffList.list[supportStaffId].isFiltered = false;
+						});
+					}
 				default:
 					return assignedSupportStaffList;
 			}
@@ -138,6 +152,21 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						supportStaffList.ids.push(supportStaff.id);
 					});
 
+					return supportStaffList;
+				case UPDATE_TABLE_FILTER:
+					var query = action.payload.query;
+
+					// Apply search filters
+					if (query.length > 0) {
+						// Specify the properties that we are interested in searching
+						var searchProperties = ['firstName', 'lastName', 'fullName'];
+
+						_object_search_properties(query, supportStaffList, searchProperties);
+					} else {
+						supportStaffList.ids.forEach(function(supportStaffId) {
+							supportStaffList.list[supportStaffId].isFiltered = false;
+						});
+					}
 					return supportStaffList;
 				default:
 					return supportStaffList;

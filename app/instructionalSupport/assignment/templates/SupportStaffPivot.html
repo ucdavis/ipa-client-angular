@@ -6,7 +6,8 @@
 			</div>
 	</div>
 
-	<div ng-repeat="supportStaff in view.state.supportStaffList" class="container-fluid border-bottom--gray">
+	<div ng-repeat="supportStaff in view.state.supportStaffList" class="container-fluid border-bottom--gray"
+				ng-hide="supportStaff.isFiltered">
 			<div class="flex-row">
 					<!-- TA info -->
 					<div class="assignment-title-container">
