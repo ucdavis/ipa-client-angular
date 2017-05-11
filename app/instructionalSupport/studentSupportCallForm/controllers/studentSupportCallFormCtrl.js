@@ -133,16 +133,20 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 			$scope.isFormLocked = function () {
 				// Validate dueDate
 				var dueDate = $scope.view.state.supportCallResponse.dueDate;
-				if (dueDate) {
-					var date = new Date();
-					var currentTime = date.getTime();
+				var submitAfterDueDate = $scope.view.state.supportCallResponse.allowSubmissionAfterDueDate;
 
-					if (currentTime > dueDate) {
-						return true;
+				if (dueDate) {
+					if (submitAfterDueDate == false) {
+						var date = new Date();
+						var currentTime = date.getTime();
+
+						if (currentTime > dueDate) {
+							return true;
+						}
 					}
 				}
 
-				return false
+				return false;
 			};
 
 			$scope.studentSupportCallFormIsValid = function () {
