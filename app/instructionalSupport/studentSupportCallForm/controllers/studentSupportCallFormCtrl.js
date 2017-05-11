@@ -128,6 +128,42 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 			};
 
 			$scope.termCode = $scope.termShortCodeToTermCode($scope.termShortCode);
+	
+			// Form locks when a due date has been set, and has passed
+			$scope.isFormLocked = function () {
+				// Validate dueDate
+				var dueDate = $scope.view.state.supportCallResponse.dueDate;
+				if (dueDate) {
+					var date = new Date();
+					var currentTime = date.getTime();
+
+					if (currentTime > dueDate) {
+						return true;
+					}
+				}
+
+				return false
+			};
+
+			$scope.studentSupportCallFormIsValid = function () {
+				// Validate dueDate
+				if ( $scope.isFormLocked() ) {
+					$scope.validationError = "The due date for this support call has passed.";
+					return false;
+				}
+
+				// Validate min # of preferences
+				var currentNumPreferences = $scope.view.state.preferences.length;
+				var minNumPreferences = $scope.view.state.supportCallResponse.minimumNumberOfPreferences;
+
+				if (currentNumPreferences < minNumPreferences) {
+					$scope.validationError = "You must provide at least " + minNumPreferences + " preferences";
+					return false;
+				}
+
+				$scope.validationError = "";
+				return true;
+			};
 	}]);
 
 StudentSupportCallFormCtrl.getPayload = function (authService, supportStaffFormActionCreators, $route, $window) {
