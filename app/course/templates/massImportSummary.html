@@ -14,8 +14,9 @@
 			</div>
 			<div ng-show="view.state.courses.importList">
 				<div ng-hide="(view.state.courses.importList | filter:{import:true}).length">
-					Please select courses to import
+					No Courses available for import
 				</div>
+
 				<div ng-show="(view.state.courses.importList | filter:{import:true}).length">
 					<p>
 						{{ (view.state.courses.importList | filter:{import:true}).length }}
