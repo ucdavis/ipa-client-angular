@@ -53,11 +53,27 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 						var newValue = activity[syncAction.childProperty];
 
 						if (syncAction.childProperty == "dayIndicator") {
-							oldValue = oldValue.getWeekDays() || 'none';
-							newValue = newValue.getWeekDays() || 'none';
+							if (oldValue) {
+								oldValue = oldValue.getWeekDays() || 'none';
+							} else {
+								oldValue = 'none';
+							}
+							if (newValue) {
+								newValue = newValue.getWeekDays() || 'none';
+							} else {
+								newValue = 'none';
+							}
 						} else if (syncAction.childProperty == "startTime" || syncAction.childProperty == "endTime") {
-							oldValue = oldValue.toStandardTime() || 'none';
-							newValue = newValue.toStandardTime() || 'none';
+							if (oldValue) {
+								oldValue = oldValue.toStandardTime() || 'none';
+							} else {
+								oldValue = 'none';
+							}
+							if (newValue) {
+								newValue = newValue.toStandardTime() || 'none';
+							} else {
+								newValue = 'none';
+							}
 						} else {
 							$log.debug("Unknown child property in a syncAction", syncAction.childProperty);
 						}
