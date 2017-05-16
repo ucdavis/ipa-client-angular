@@ -36,81 +36,83 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 						} else {
 							// DW version does have some changes
 							sectionList[ipaSectionData.id].dwHasChanges = true;
-							sectionChanges.forEach(function (change) {
+							if (sectionChanges) {
+								sectionChanges.forEach(function (change) {
 
-								switch (change.propertyName) {
-									case "instructors":
-										// Code to handle instructors
-										// DW missing instructor: Add a (noRemote) flag to ipaSection.instructors
-										change.changes
-											.filter(function (instructorChange) {
-												return instructorChange.removedValue;
-											}).forEach(function (instructorChange) {
-												var uniqueKey = instructorChange.removedValue.cdoId;
-												var instructor = _.find(sectionList[ipaSectionData.id].instructors, { uniqueKey: uniqueKey });
-												instructor.noRemote = true;
-											});
-										// DW has extra instructors, flag them, then add them to the current section
-										change.changes
-											.filter(function (instructorChange) {
-												return instructorChange.addedValue;
-											}).map(function (instructorChange) {
-												var instructor = _.find(dwSectionData.instructors, { uniqueKey: instructorChange.addedValue.cdoId });
-												instructor.noLocal = true;
-												return instructor;
-											}).forEach(function (instructor) {
-												var instructors = sectionList[ipaSectionData.id].instructors;
-												instructors.push(instructor);
-											});
-										break;
-									case "activities":
-										// Code to handle activities
-										// DW missing activity: Add a (noRemote) flag to corresponding ipa activity
-										change.changes
-											.filter(function (activityChange) {
-												return activityChange.removedValue;
-											}).forEach(function (activityChange) {
-												var uniqueKey = activityChange.removedValue.cdoId;
-												var activities = sectionList[ipaSectionData.id].activities;
-												activities[activityChange.index].noRemote = true;
-											});
-										// DW has extra activities, flag them, then add them to the current section
-										change.changes
-											.filter(function (activityChange) {
-												return activityChange.addedValue;
-											}).map(function (activityChange) {
-												var activity = dwSectionData.activities[activityChange.index];
-												activity.noLocal = true;
-												return activity;
-											}).forEach(function (activity) {
-												var activities = sectionList[ipaSectionData.id].activities;
-												activities.push(activity);
-											});
-										break;
-									case "bannerLocation":
-									case "startTime":
-									case "endTime":
-									case "dayIndicator":
-										activity = _.find(sectionList[ipaSectionData.id].activities, { uniqueKey: change.affectedLocalId });
-										activity.dwChanges = activity.dwChanges || {};
-										activity.dwChanges[change.propertyName] = { isToDo: false };
-										activity.dwChanges[change.propertyName].value = change.right;
-										break;
-									case "crn":
-									case "seats":
-										sectionList[ipaSectionData.id].dwChanges = sectionList[ipaSectionData.id].dwChanges || {};
-										sectionList[ipaSectionData.id].dwChanges[change.propertyName] = { isToDo: false };
-										sectionList[ipaSectionData.id].dwChanges[change.propertyName].value = change.right;
-										break;
-									case undefined:
-										// Skip changes that have no property specified
-										return;
-									default:
-										// Unhandled properties, log them
-										$log.debug("Unhandled diff property", change.propertyName);
-										break;
-								}
-							});
+									switch (change.propertyName) {
+										case "instructors":
+											// Code to handle instructors
+											// DW missing instructor: Add a (noRemote) flag to ipaSection.instructors
+											change.changes
+												.filter(function (instructorChange) {
+													return instructorChange.removedValue;
+												}).forEach(function (instructorChange) {
+													var uniqueKey = instructorChange.removedValue.cdoId;
+													var instructor = _.find(sectionList[ipaSectionData.id].instructors, { uniqueKey: uniqueKey });
+													instructor.noRemote = true;
+												});
+											// DW has extra instructors, flag them, then add them to the current section
+											change.changes
+												.filter(function (instructorChange) {
+													return instructorChange.addedValue;
+												}).map(function (instructorChange) {
+													var instructor = _.find(dwSectionData.instructors, { uniqueKey: instructorChange.addedValue.cdoId });
+													instructor.noLocal = true;
+													return instructor;
+												}).forEach(function (instructor) {
+													var instructors = sectionList[ipaSectionData.id].instructors;
+													instructors.push(instructor);
+												});
+											break;
+										case "activities":
+											// Code to handle activities
+											// DW missing activity: Add a (noRemote) flag to corresponding ipa activity
+											change.changes
+												.filter(function (activityChange) {
+													return activityChange.removedValue;
+												}).forEach(function (activityChange) {
+													var uniqueKey = activityChange.removedValue.cdoId;
+													var activities = sectionList[ipaSectionData.id].activities;
+													activities[activityChange.index].noRemote = true;
+												});
+											// DW has extra activities, flag them, then add them to the current section
+											change.changes
+												.filter(function (activityChange) {
+													return activityChange.addedValue;
+												}).map(function (activityChange) {
+													var activity = dwSectionData.activities[activityChange.index];
+													activity.noLocal = true;
+													return activity;
+												}).forEach(function (activity) {
+													var activities = sectionList[ipaSectionData.id].activities;
+													activities.push(activity);
+												});
+											break;
+										case "bannerLocation":
+										case "startTime":
+										case "endTime":
+										case "dayIndicator":
+											activity = _.find(sectionList[ipaSectionData.id].activities, { uniqueKey: change.affectedLocalId });
+											activity.dwChanges = activity.dwChanges || {};
+											activity.dwChanges[change.propertyName] = { isToDo: false };
+											activity.dwChanges[change.propertyName].value = change.right;
+											break;
+										case "crn":
+										case "seats":
+											sectionList[ipaSectionData.id].dwChanges = sectionList[ipaSectionData.id].dwChanges || {};
+											sectionList[ipaSectionData.id].dwChanges[change.propertyName] = { isToDo: false };
+											sectionList[ipaSectionData.id].dwChanges[change.propertyName].value = change.right;
+											break;
+										case undefined:
+											// Skip changes that have no property specified
+											return;
+										default:
+											// Unhandled properties, log them
+											$log.debug("Unhandled diff property", change.propertyName);
+											break;
+									}
+								});
+							}
 						}
 
 						// Apply syncActions to section properties
