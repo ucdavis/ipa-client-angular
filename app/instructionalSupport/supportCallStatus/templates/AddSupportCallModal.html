@@ -32,7 +32,7 @@
 							</label>
 							<label  
 							ng-if="areAllInstructorsInvited()  && supportCallConfigData.mode == 'instructor'"
-							disabled class="instructor-toggle-btn btn btn-sm"
+							disabled class="instructor-toggle-btn btn btn-sm disabled"
 							uib-tooltip="All Instructors Added"
 							style="width: 50%;" id="courses-pivot">
 								Add Instructors
@@ -48,7 +48,7 @@
 							</label>
 							<label  
 							ng-if="areAllMastersInvited() && supportCallConfigData.mode == 'supportStaff'"
-							disabled class="instructor-toggle-btn btn btn-sm"
+							disabled class="instructor-toggle-btn btn btn-sm disabled"
 							uib-tooltip="All Masters Added"
 							style="width: 33%;" id="courses-pivot">
 								Add Masters
@@ -64,7 +64,7 @@
 							</label>
 							<label  
 							ng-if="areAllPhdsInvited() && supportCallConfigData.mode == 'supportStaff'"
-							disabled class="instructor-toggle-btn btn btn-sm"
+							disabled class="instructor-toggle-btn btn btn-sm disabled"
 							uib-tooltip="All Phd Added"
 							style="width: 33%;" id="courses-pivot">
 								Add PhDs
@@ -80,7 +80,7 @@
 							</label>
 							<label  
 							ng-if="areAllInstructionalSupportInvited() && supportCallConfigData.mode == 'supportStaff'"
-							disabled class="instructor-toggle-btn btn btn-sm"
+							disabled class="instructor-toggle-btn btn btn-sm disabled"
 							uib-tooltip="All Instructional Support Added"
 							style="width: 34%;" id="courses-pivot">
 								Add Instr. Support

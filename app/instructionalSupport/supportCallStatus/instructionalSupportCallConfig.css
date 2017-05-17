@@ -374,7 +374,8 @@ div.datepicker {
 
 .instructor-toggle-btn {
 	border-radius: 4px;
-	border-color: rgb(204, 204, 204);
+	border-color: rgb(107, 107, 107);
+	margin: 0px !important; /* Overriding bootstrap -1px margins on btn btn-group defaults */
 }
 
 .instructor-toggle-btn:hover {
@@ -391,6 +392,7 @@ div.datepicker {
 .instructor-toggle-btn.disabled:hover,
 .instructor-toggle-btn.disabled:focus {
 	background-color: rgba(0, 0, 0, 0);
+	border-color: rgb(226, 226, 226);
 	color: #333;
 }
 
