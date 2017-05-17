@@ -111,10 +111,12 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						list: {}
 					};
 
-					action.payload.assignedSupportStaff.forEach( function(supportStaff) {
-						assignedSupportStaffList.list[supportStaff.id] = supportStaff;
-						assignedSupportStaffList.ids.push(supportStaff.id);
-					});
+					if (action.payload.assignedSupportStaff) {
+						action.payload.assignedSupportStaff.forEach( function(supportStaff) {
+							assignedSupportStaffList.list[supportStaff.id] = supportStaff;
+							assignedSupportStaffList.ids.push(supportStaff.id);
+						});
+					}
 
 					return assignedSupportStaffList;
 				default:

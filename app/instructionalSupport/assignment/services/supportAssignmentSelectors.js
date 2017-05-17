@@ -42,7 +42,7 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 */
 		// Creates structured json corresponding to a 'support staff' centric view of the data
 
-		generateSectionGroups: function (supportAssignments, courses, sectionGroups, supportStaffFromRoles, assignedSupportStaffList, supportStaffPreferences, instructorPreferences) {
+		generateSectionGroups: function (supportAssignments, courses, sectionGroups, supportStaffFromRoles, assignedSupportStaffList, supportStaffSupportCallResponses, supportStaffPreferences, instructorPreferences) {
 			var self = this;
 
 			// Blend the two types of support staff together into a unique listing
