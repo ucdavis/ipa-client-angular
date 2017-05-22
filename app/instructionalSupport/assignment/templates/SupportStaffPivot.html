@@ -17,6 +17,7 @@
 							</div>
 							<div>
 									<ul class="ta-info">
+											<!-- Teaching Qualifications -->
 											<li ng-if="supportStaff.supportCallResponse.teachingQualifications.length > 0">
 												<strong>Teaching Experience:</strong>
 											</li>
@@ -25,12 +26,25 @@
 													{{ supportStaff.supportCallResponse.teachingQualifications }}
 												</p>
 											</li>
+
+											<!-- General Comments -->
 											<li ng-if="supportStaff.supportCallResponse.generalComments.length > 0">
 												<strong>Comments:</strong>
 											</li>
 											<li>
 												<p>
 													{{ supportStaff.supportCallResponse.generalComments }}
+												</p>
+											</li>
+
+											<!-- Preference comments -->
+											<li ng-repeat="preference in supportStaff.supportStaffPreferences"
+													ng-if="preference.comment && preference.comment.length > 0">
+												<div>
+													<strong>{{ preference.subjectCode }} {{ preference.courseNumber }} Comments:</strong>
+												</div>
+												<p>
+													{{ preference.comment }}
 												</p>
 											</li>
 									</ul>
