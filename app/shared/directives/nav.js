@@ -5,7 +5,16 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.sharedState = authService.getSharedState();
+
+			// Get or persist termShortCode
 			scope.termShortCode = attrs.termShortCode;
+
+			if (scope.termShortCode == null || scope.termShortCode.length != 2) {
+				scope.termShortCode = localStorage.getItem('termShortCode');
+			} else {
+				localStorage.setItem('termShortCode', scope.termShortCode);
+			}
+
 			scope.currentBaseHref = $location.absUrl().split('/')[3];
 			scope.currentEndHref = $location.path().split('/').pop();
 			scope.pageMode = $location.search().mode;
