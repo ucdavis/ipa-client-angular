@@ -36,7 +36,9 @@ adminApp.controller('AdminCtrl', ['$scope', '$rootScope', '$routeParams', 'admin
 
 AdminCtrl.getPayload = function (authService, $route, adminActionCreators) {
 	var ignoreFallBackUrl = true;
+	debugger;
 	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year, ignoreFallBackUrl).then(function () {
+		debugger;
 		return adminActionCreators.getInitialState();
 	});
 };

@@ -9,6 +9,7 @@
 workgroupApp.factory("workgroupService", this.workgroupService = function($http, $q) {
 	return {
 		getWorkgroupByCode: function(workgroupId) {
+                        debugger;
 			var deferred = $q.defer();
 
 			$http.get(serverRoot + "/api/workgroupView/" + workgroupId, { withCredentials: true })
