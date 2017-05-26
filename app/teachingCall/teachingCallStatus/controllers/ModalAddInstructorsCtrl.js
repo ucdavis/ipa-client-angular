@@ -193,6 +193,32 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 		return true;
 	};
 
+	$scope.areAllLecturersInvited = function() {
+		if (!$scope.startTeachingCallConfig.invitedInstructors) {
+			return true;
+		}
+
+		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
+			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
+
+			if(slotInstructor.isLecturerInstructor && !slotInstructor.invited) {
+				return false;
+			}
+		}
+
+		return true;
+	};
+
+	$scope.addLecturerInstructors = function () {
+		$scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
+			if(slotInstructor.isLecturerInstructor) {
+				slotInstructor.invited = true;
+			}
+		});
+
+		$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
+	};
+
 	$scope.addFederationInstructors = function () {
 		$scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
 			if(slotInstructor.isFederationInstructor) {
