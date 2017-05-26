@@ -23,7 +23,10 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 
 	$scope.senateGroup = angular.copy(state.eligible.senate);
 	$scope.federationGroup = angular.copy(state.eligible.federation);
+	$scope.lecturerGroup = angular.copy(state.eligible.lecturer);
+
 	$scope.startTeachingCallConfig.invitedInstructors = $scope.senateGroup.concat($scope.federationGroup);
+	$scope.startTeachingCallConfig.invitedInstructors = $scope.startTeachingCallConfig.invitedInstructors.concat($scope.lecturerGroup);
 	$scope.startTeachingCallConfig.invitedInstructors = _array_sortByProperty($scope.startTeachingCallConfig.invitedInstructors, "lastName");
 
 	$scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
@@ -42,6 +45,7 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 
 	$scope.senateInstructors = {};
 	$scope.federationInstructors = {};
+	$scope.lecturerInstructors = {};
 
 	$scope.startTeachingCallConfig.activeTerms = {};
 

@@ -25,6 +25,10 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 							teachingCallReceipt.isFederationInstructor = true;
 						}
 
+						if (action.payload.lecturerInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
+							teachingCallReceipt.isLecturerInstructor = true;
+						}
+
 						// Record to state
 						teachingCallReceipts.ids.push(teachingCallReceipt.id);
 						teachingCallReceipts.list[teachingCallReceipt.id] = teachingCallReceipt;
@@ -49,6 +53,7 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 
 						teachingCallReceipt.isSenateInstructor = false;
 						teachingCallReceipt.isFederationInstructor = false;
+						teachingCallReceipt.isLecturerInstructor = false;
 
 						// Add senate/federation instructor metadata
 						if (instructors.senateInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
@@ -57,6 +62,10 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 
 						if (instructors.federationInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
 							teachingCallReceipt.isFederationInstructor = true;
+						}
+
+						if (action.payload.lecturerInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
+							teachingCallReceipt.isLecturerInstructor = true;
 						}
 
 						// Record to state
@@ -92,6 +101,7 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 
 					instructors.senateInstructorIds = action.payload.senateInstructorIds;
 					instructors.federationInstructorIds = action.payload.federationInstructorIds;
+					instructors.lecturerInstructorIds = action.payload.lecturerInstructorIds;
 
 					var length = action.payload.instructors ? action.payload.instructors.length : 0;
 
@@ -99,6 +109,7 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 						var instructor = action.payload.instructors[i];
 						instructor.isSenateInstructor = false;
 						instructor.isFederationInstructor = false;
+						instructor.isLecturerInstructor = false;
 
 						// Add senate/federation instructor metadata
 						if (action.payload.senateInstructorIds.indexOf(instructor.id) > -1) {
@@ -107,6 +118,10 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 
 						if (action.payload.federationInstructorIds.indexOf(instructor.id) > -1) {
 							instructor.isFederationInstructor = true;
+						}
+
+						if (action.payload.lecturerInstructorIds.indexOf(instructor.id) > -1) {
+							instructor.isLecturerInstructor = true;
 						}
 
 						// Find teachingCallReceiptId if it exists
@@ -154,10 +169,13 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 			newPageState.teachingCall = {};
 			newPageState.eligible = {};
 
-			newPageState.teachingCall.senate = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, true, true, false);
-			newPageState.teachingCall.federation = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, true, false, true);
-			newPageState.eligible.senate = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, false, true, false);
-			newPageState.eligible.federation = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, false, false, true);
+			newPageState.teachingCall.senate = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, true, true, false, false);
+			newPageState.teachingCall.federation = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, true, false, true, false);
+			newPageState.teachingCall.lecturer = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, true, false, false, true);
+
+			newPageState.eligible.senate = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, false, true, false, false);
+			newPageState.eligible.federation = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, false, false, true, false);
+			newPageState.eligible.lecturer = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, false, false, false, true);
 
 			$rootScope.$emit('teachingCallStatusStateChanged', newPageState);
 

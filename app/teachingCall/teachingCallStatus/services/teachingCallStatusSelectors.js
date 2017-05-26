@@ -24,7 +24,7 @@
 teachingCallApp.service('teachingCallStatusSelectors', function () {
 	return {
 
-		generateInstructorGroup: function (instructors, teachingCallReceipts, inTeachingCall, inSenate, inFederation) {
+		generateInstructorGroup: function (instructors, teachingCallReceipts, inTeachingCall, inSenate, inFederation, inLecturer) {
 			generatedInstructors = [];
 			self = this;
 
@@ -35,7 +35,8 @@ teachingCallApp.service('teachingCallStatusSelectors', function () {
 
 				if (inTeachingCall == isInstructorInTeachingCall
 				&& inSenate == instructor.isSenateInstructor
-				&& inFederation == instructor.isFederationInstructor) {
+				&& inFederation == instructor.isFederationInstructor
+				&& inLecturer == instructor.isLecturerInstructor) {
 					var viewInstructor = self.generateInstructor(instructor, teachingCallReceipt);
 					generatedInstructors.push(viewInstructor);
 				}
