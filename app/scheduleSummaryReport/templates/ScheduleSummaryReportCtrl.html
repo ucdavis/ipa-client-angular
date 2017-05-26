@@ -61,7 +61,12 @@
 						<td>
 							<div ng-show="$index==0"
 								class="section-diff-element section-unique-key">
-								<b>{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} {{ sectionGroup.title }}</b>
+								<b>{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }}</b>
+								{{ sectionGroup.title }}
+
+								<span class="planned-seats-label" ng-if="sectionGroup.plannedSeats > 0">
+									({{ sectionGroup.plannedSeats }})
+								</span>
 							</div>
 
 							<!-- Instructors -->

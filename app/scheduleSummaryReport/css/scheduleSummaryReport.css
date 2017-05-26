@@ -327,3 +327,8 @@ span.sis-tool-icon {
 .schedule-summary-report-container .main-content {
 	display: block;
 }
+
+.planned-seats-label {
+	font-weight: normal;
+	color: #b5b5b5;
+}

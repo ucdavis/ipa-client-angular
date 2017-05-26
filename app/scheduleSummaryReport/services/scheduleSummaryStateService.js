@@ -158,6 +158,14 @@ scheduleSummaryReportApp.service('scheduleSummaryReportStateService', function (
 						activities.list[slotActivity.id] = slotActivity;
 					});
 
+					sectionGroups.ids.forEach( function (sectionGroupId) {
+						var sectionGroup = sectionGroups.list[sectionGroupId];
+
+						if (sectionGroup.sections == null && sectionGroup.plannedSeats > 0) {
+							sectionGroup.sections = [];
+							sectionGroup.sections.push({id: 0});
+						}
+					});
 
 					return sectionGroups;
 				default:
