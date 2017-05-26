@@ -26,6 +26,21 @@ adminApp.service('adminStateService', function ($rootScope, Workgroup, $log) {
 					}
 					workgroups.ids = _array_sortIdsByProperty(workgroupList, "name");
 					workgroups.list = workgroupList;
+
+					if (action.payload.lastActiveDates) {
+						action.payload.lastActiveDates.forEach( function(lastActiveDate) {
+							var results = lastActiveDate.split(",");
+							var workgroupId = results[0];
+							var date = results[1].split(" ")[0];
+
+							if (!date || date == "null") {
+								date = "no data available";
+							}
+
+							workgroups.list[workgroupId].lastActiveDate = "last activity: " + date;
+						});
+					}
+
 					return workgroups;
 				case UPDATE_WORKGROUP:
 					workgroups.list[action.payload.workgroup.id] = action.payload.workgroup;

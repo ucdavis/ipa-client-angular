@@ -18,3 +18,7 @@
 .administration-container .main-content {
 	display: block;
 }
+
+.last-active-label {
+	color: #b3b3b3;
+}

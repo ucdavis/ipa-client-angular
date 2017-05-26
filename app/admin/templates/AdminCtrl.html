@@ -13,7 +13,7 @@
 			<ul class="workgroups-input">
 				<li ng-repeat="workgroupId in view.state.workgroups.ids">
 					<div class="row" ng-hide="view.state.workgroups.list[workgroupId].isRemoving">
-						<div class="col-md-8">
+						<div class="col-md-6">
 							<input class="form-control" type="text" name="text"  ng-model="view.state.workgroups.list[workgroupId].name"
 								auto-input on-enter="updateWorkgroup(view.state.workgroups.list[workgroupId])" help-text-placement="top">
 						</div>
@@ -31,6 +31,9 @@
 								aria-hidden="true">
 								<i class="entypo-cancel-squared"></i><small>Remove</small>
 							</a>
+						</div>
+						<div class="col-md-2 text-center last-active-label">
+							{{ view.state.workgroups.list[workgroupId].lastActiveDate}}
 						</div>
 					</div>
 					<spinner ng-show="view.state.workgroups.list[workgroupId].isRemoving" text="Removing {{ view.state.workgroups.list[workgroupId].name }} workgroup"></spinner>
