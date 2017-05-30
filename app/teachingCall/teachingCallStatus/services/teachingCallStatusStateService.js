@@ -64,7 +64,7 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 							teachingCallReceipt.isFederationInstructor = true;
 						}
 
-						if (action.payload.lecturerInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
+						if (instructors.lecturerInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
 							teachingCallReceipt.isLecturerInstructor = true;
 						}
 
