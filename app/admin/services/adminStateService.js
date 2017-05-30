@@ -34,10 +34,12 @@ adminApp.service('adminStateService', function ($rootScope, Workgroup, $log) {
 							var date = results[1].split(" ")[0];
 
 							if (!date || date == "null") {
-								date = "no data available";
+								date = "";
+							} else {
+								date = "Last Active (" + date + ")";
 							}
 
-							workgroups.list[workgroupId].lastActiveDate = "last activity: " + date;
+							workgroups.list[workgroupId].lastActiveDate = date;
 						});
 					}
 
