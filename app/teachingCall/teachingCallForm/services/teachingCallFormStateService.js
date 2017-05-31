@@ -85,6 +85,27 @@ teachingCallApp.service('teachingCallFormStateService', function (
 						termData.preferenceOptions = self.generatePreferenceOptions(action.payload.scheduleId, action.payload.instructorId, termData.termCode, termData.preferences, termData.assignments, pageState.sectionGroups, pageState.coursesIndex);
 					});
 
+					// Set selectedTermCode
+					pageState.selectedTermCode = pageState.terms[0].termCode;
+
+					// Calculate Checklist values
+					this.calculateChecklist(pageState);
+
+					// Calculate termSelection UI
+					pageState.termSelection = [];
+
+					pageState.terms.forEach ( function (term) {
+						newTerm = {};
+						newTerm.description = term.termDescription;
+						newTerm.isSelected = false;
+						newTerm.termCode = term.termCode;
+
+						pageState.termSelection.push(newTerm);
+					});
+
+					pageState.termSelection[0].isSelected = true;
+					pageState.selectedTerm = pageState.termSelection[0].termCode;
+
 					return pageState;
 				case UPDATE_TEACHING_ASSIGNMENT_ORDER:
 					var sortedIds = action.payload.sortedTeachingAssignmentIds;
@@ -106,6 +127,9 @@ teachingCallApp.service('teachingCallFormStateService', function (
 						});
 					});
 
+					// Calculate Checklist values
+					this.calculateChecklist(pageState);
+
 					return pageState;
 				case ADD_PREFERENCE:
 					var termCode = action.payload.termCode;
@@ -125,6 +149,9 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					});
 
 					preferences.push(newPreferenceObject);
+
+					// Calculate Checklist values
+					this.calculateChecklist(pageState);
 
 					return pageState;
 				case REMOVE_PREFERENCE:
@@ -159,6 +186,22 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					preferenceOptions.push(preferenceOfInterest);
 					preferenceOptions = self.sortCourses(preferenceOptions);
 
+					// Calculate Checklist values
+					this.calculateChecklist(pageState);
+
+					return pageState;
+				case CHANGE_TERM:
+					// selectedTermCode
+					pageState.selectedTermCode = action.payload.selectedTermCode;
+
+					pageState.termSelection.forEach( function (term) {
+							if (term.termCode == action.payload.selectedTermCode) {
+								term.isSelected = true;
+							} else {
+								term.isSelected = false;
+							}
+					});
+
 					return pageState;
 				default:
 					return pageState;
@@ -181,7 +224,33 @@ teachingCallApp.service('teachingCallFormStateService', function (
 			$log.debug(scope._state, action.type);
 		},
 
+		// Recalculates UI state for the checklist sidebar
+		calculateChecklist: function (pageState) {
 
+			// Wipe out previous values
+			pageState.checklist = null;
+			pageState.checklist = {
+				preferencesChecked: false,
+				commentsChecked: (pageState.comment && pageState.comment.length > 0) || false,
+				terms: [],
+				submitted: pageState.isDone || false,
+				canSubmit: false
+			};
+
+			pageState.terms.forEach ( function (term) {
+				newTerm = {};
+				newTerm.description = term.termDescription;
+				newTerm.isChecked = false;
+
+				if (term.preferences && term.preferences.length > 0) {
+					newTerm.isChecked = true;
+					pageState.checklist.preferencesChecked = true;
+					pageState.checklist.canSubmit = true;
+				}
+
+				pageState.checklist.terms.push(newTerm);
+			});
+		},
 		// Helper Methods
 		scaffoldTermsFromBlob: function(termsBlob, academicYear) {
 			var self = this;

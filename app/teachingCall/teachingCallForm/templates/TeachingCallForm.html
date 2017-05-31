@@ -7,11 +7,11 @@
 </div>
 
 <div class="container-fluid">
-	<div id="teaching-call-form--container">
+	<div id="teaching-call-form--container" ng-repeat="term in view.state.terms" ng-if="term.termCode == view.state.selectedTermCode">
 		<!-- course preference -->
 		<div id="teaching-call--course-preference" class="row">
 			<div class="col-md-12">
-				<h5 class="inline-block">Choose Your Course Preference</h5>
+				<h5 class="inline-block">Choose Your Course Preference </h5>
 				<div class="pull-right" tooltip-placement="left" uib-tooltip="Clicking the Add button will show you a list of all courses currently in the schedule (Use the comment box below
 				to request courses not on the list). Once you've added your preferences you can rank them by clicking the moving buttons to place the courses into your
 				preferred order"><i class="glyphicon glyphicon-question-sign pull-right question--position"></i></div>
