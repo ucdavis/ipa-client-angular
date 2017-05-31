@@ -912,3 +912,228 @@ li.active-term .dropdown-term-row {
 	border: 1px solid #F2F2F2;
 	padding: 5px;
 }
+
+
+
+/* Teaching-Call-Form
+---------------------
+*/
+
+#teaching-call-form--container {
+	width: calc(100% - 270px);
+}
+
+/* Teaching-Call-Form--course-preference-section
+-----------------------------------
+*/
+
+#teaching-call--course-preference {
+	margin-bottom: 25px;
+}
+
+#teaching-call--course-preference .search-course-input {
+	width: 40%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.select-preference-btn {
+	position: absolute;
+	top: 3px;
+	left: 5px
+}
+
+.select-preference-btn .glyphicon:hover {
+	background-color: lightgray;
+
+}
+
+.select-preference-btn i {
+	display: block;
+	border: 1px solid #ddd;
+	padding: 2px 4px 2px 5px;
+	font-size: 10px;
+	margin-bottom: 2px;
+	border-radius: 3px;
+}
+
+#teaching-call--course-preference table {
+	table-layout: fixed;
+	text-align: center !important;
+}
+
+#teaching-call--course-preference table thead tr th {
+	text-align: center !important;
+}
+
+#teaching-call--course-preference table thead tr th:nth-child(2) {
+	text-align: left !important;
+}
+
+#teaching-call--course-preference table td {
+	position: relative;
+	padding: 13px;
+}
+
+#teaching-call--course-preference table td:nth-child(2) {
+	text-align: left !important;
+}
+
+#teaching-call--course-preference table tr:first-child td .glyphicon-chevron-up {
+	cursor: no-drop;
+	background-color: white;
+}
+
+#teaching-call--course-preference table tr:nth-last-child(2) td .glyphicon-chevron-down {
+	cursor: no-drop;
+	background-color: white;
+}
+
+#teaching-call--course-preference table thead tr th:first-child {
+	width: 15% !important;
+}
+
+#teaching-call--course-preference table thead tr th:last-child {
+	width: 15% !important;
+}
+
+
+/* Teaching-Call-Form--unavability-table
+-----------------------------------
+*/
+
+#teaching-call--check-unavailiability {
+	margin-bottom: 25px;
+}
+
+.unavailiability-table {
+	table-layout: fixed;
+	margin-top: 15px;
+}
+
+.unavailiability-table-header {
+	text-align: center;
+	font-size: 12px !important;
+}
+
+
+table.availability-grid tr th {
+	text-align: center !important;
+	padding: 10px !important;
+}
+
+table.availability-grid tr td {
+	border: 1px solid #ddd !important;
+}
+
+.availability-grid thead tr th:first-child {
+	width: 5% !important;
+	text-align: center !important;
+}
+
+/* Teaching-Call-Form--additional information
+-----------------------------------
+*/
+
+#teaching-call--additional-information {
+	margin-bottom: 25px;
+}
+
+/* Teaching-Call-Form--right-sidebars
+-----------------------------------
+*/
+
+/* progress-sidebar */
+
+.teaching-call--progress-sidebar {
+	width: 230px;
+	position: fixed;
+	top: 350px;
+	right: 35px;
+	padding: 5px 25px 10px 25px;
+	background-color: white;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.teaching-call--progress-sidebar h5 {
+	margin-bottom: 10px;
+}
+
+.teaching-call--progress-sidebar ul {
+	padding-left: 10px;
+	list-style: none;
+}
+
+.teaching-call--progress-sidebar ul li:first-child {
+	margin-left: -20px;
+	font-weight: 500;
+}
+
+.teaching-call--progress-sidebar ul li:last-child {
+	margin-left: -20px;
+	font-weight: 500;
+}
+
+.teaching-call--progress-sidebar ul li {
+	padding: 5px;
+}
+
+.teaching-call--progress-sidebar ul li input {
+	margin-right: 10px;
+}
+
+.teaching-call--progress-sidebar button {
+	width: 100%;
+    margin-top: 10px;
+}
+
+/* academic-sidebar */
+
+.teaching-call--academic-term-sidebar {
+	width: 230px;
+	right: 35px;
+	top: 140px;
+	position: fixed;
+	padding: 5px 25px 5px 25px;
+	background-color: white;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.teaching-call--academic-term-sidebar h5 {
+	margin-bottom: 10px;
+}
+
+.teaching-call--academic-term-sidebar ul {
+	padding-left: 0px;
+	list-style: none;
+}
+
+.teaching-call--academic-term-sidebar ul li {
+	cursor: pointer;
+	padding: 5px;
+}
+
+.current-academic-term {
+	border: 1px solid #00A651;
+	border-radius: 3px;
+	color: #00A651;
+	cursor: pointer;
+}
+
+.unassigned-academic-term {
+	color: #CECECE !important;
+}
+
+.unassigned-academic-term:hover {
+	color: #CECECE;
+}
+
+.teaching-call--academic-term-sidebar ul {
+	margin-top: 15px;
+}
+
+.teaching-call--academic-term-sidebar ul li:hover {
+	color: #00A651;
+	cursor: pointer;
+	padding: 5px;
+}
