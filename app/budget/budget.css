@@ -70,6 +70,7 @@ a {
 
 .description {
     /*border: unset !important;*/
+    padding: 0px !important;
 }
 
 .form-group span {
