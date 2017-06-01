@@ -166,13 +166,11 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 			return true;
 		}
 
-		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
-			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
+		var uninvitedInstructor = $scope.startTeachingCallConfig.invitedInstructors.find( slotInstructor => {
+			return slotInstructor.isLecturerInstructor && !slotInstructor.invited;
+		});
 
-			if(slotInstructor.isSenateInstructor && !slotInstructor.invited) {
-				return false;
-			}
-		}
+		if(uninvitedInstructor) { return false; }
 
 		return true;
 	};
@@ -182,13 +180,11 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 			return true;
 		}
 
-		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
-			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
+		var uninvitedInstructor = $scope.startTeachingCallConfig.invitedInstructors.find( slotInstructor => {
+			return slotInstructor.isFederationInstructor && !slotInstructor.invited;
+		});
 
-			if(slotInstructor.isFederationInstructor && !slotInstructor.invited) {
-				return false;
-			}
-		}
+		if(uninvitedInstructor) { return false; }
 
 		return true;
 	};
@@ -198,13 +194,11 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 			return true;
 		}
 
-		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
-			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
+		var uninvitedInstructor = $scope.startTeachingCallConfig.invitedInstructors.find( slotInstructor => {
+			return slotInstructor.isLecturerInstructor && !slotInstructor.invited;
+		});
 
-			if(slotInstructor.isLecturerInstructor && !slotInstructor.invited) {
-				return false;
-			}
-		}
+		if(uninvitedInstructor) { return false; }
 
 		return true;
 	};
