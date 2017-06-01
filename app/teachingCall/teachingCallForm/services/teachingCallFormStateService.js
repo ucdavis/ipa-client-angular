@@ -88,9 +88,6 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					// Set selectedTermCode
 					pageState.selectedTermCode = pageState.terms[0].termCode;
 
-					// Calculate Checklist values
-					this.calculateChecklist(pageState);
-
 					// Calculate termSelection UI
 					pageState.termSelection = [];
 
@@ -98,6 +95,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 						newTerm = {};
 						newTerm.description = term.termDescription;
 						newTerm.isSelected = false;
+						newTerm.hasPreferences = false;
 						newTerm.termCode = term.termCode;
 
 						pageState.termSelection.push(newTerm);
@@ -105,6 +103,9 @@ teachingCallApp.service('teachingCallFormStateService', function (
 
 					pageState.termSelection[0].isSelected = true;
 					pageState.selectedTerm = pageState.termSelection[0].termCode;
+
+					// Calculate Checklist values
+					this.calculateChecklist(pageState);
 
 					return pageState;
 				case UPDATE_TEACHING_ASSIGNMENT_ORDER:
@@ -246,6 +247,13 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					newTerm.isChecked = true;
 					pageState.checklist.preferencesChecked = true;
 					pageState.checklist.canSubmit = true;
+
+					// Mark term in termSelection UI as having preferences
+					pageState.termSelection.forEach( function (slotTerm) {
+						if (slotTerm.termCode == term.termCode) {
+							slotTerm.hasPreferences = true;
+						}
+					});
 				}
 
 				pageState.checklist.terms.push(newTerm);
