@@ -10,8 +10,16 @@
     text-align: center !important;
 }
 
+
+.instructor-section-container {
+	display: flex;
+	padding-left: 15px;
+	padding-right: 15px;
+	width: 100%;
+}
+
 .instructor-section {
-    margin-bottom: 50px;
+	margin-bottom: 50px;
 }
 
 .instructor-section .panel-title {

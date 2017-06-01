@@ -14,11 +14,11 @@
 					<div class="teaching-call--info_style">
 						<h5 style="margin-top: 0px;">Instructors</h5>
 
-						<div style="padding-left: 0px; width: 100%; padding-bottom: 10px;" class="btn-group">
+						<div class="btn-group instructor-toggle-btn-container">
 							<label  
 							ng-if="areAllSenateInvited() == false"
 							class="instructor-toggle-btn btn btn-sm"
-							style="width: 33%;" id="courses-pivot"
+							id="courses-pivot"
 							ng-click="addSenateInstructors()">
 								Add Senate
 							</label>
@@ -26,13 +26,13 @@
 							ng-if="areAllSenateInvited()"
 							disabled class="instructor-toggle-btn btn btn-sm"
 							uib-tooltip="All Senate Instructors Added"
-							style="width: 33%;" id="courses-pivot">
+							id="courses-pivot">
 								Add Senate
 							</label>
 							<label
 							ng-if="areAllFederationInvited() == false"
 							class="instructor-toggle-btn btn btn-sm"
-							style="width: 33%;" id="courses-pivot"
+							id="courses-pivot"
 							ng-click="addFederationInstructors() == false">
 								Add Federation
 							</label>
@@ -40,13 +40,13 @@
 							ng-if="areAllFederationInvited()"
 							disabled class="instructor-toggle-btn btn btn-sm"
 							uib-tooltip="All Federation Instructors Added"
-							style="width: 33%;" id="courses-pivot">
+							id="courses-pivot">
 								Add Federation
 							</label>
 							<label
 							ng-if="areAllLecturersInvited() == false"
 							class="instructor-toggle-btn btn btn-sm"
-							style="width: 33%;" id="courses-pivot"
+							id="courses-pivot"
 							ng-click="addLecturerInstructors() == false">
 								Add Lecturers
 							</label>
@@ -54,7 +54,7 @@
 							ng-if="areAllLecturersInvited()"
 							disabled class="instructor-toggle-btn btn btn-sm"
 							uib-tooltip="All Lecturer Instructors Added"
-							style="width: 33%;" id="courses-pivot">
+							id="courses-pivot">
 								Add Lecturers
 							</label>
 						</div>
