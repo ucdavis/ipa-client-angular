@@ -109,6 +109,16 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
+		},
+		changeTerm: function (termCode) {
+			var action = {
+				type: CHANGE_TERM,
+				payload: {
+					selectedTermCode: termCode
+				}
+			};
+
+			teachingCallFormStateService.reduce(action);
 		}
 	};
 });

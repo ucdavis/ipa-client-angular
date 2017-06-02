@@ -150,6 +150,9 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				teachingCallFormActionCreators.submitTeachingCall(payload, $scope.workgroupId, $scope.year);
 			};
 
+			$scope.changeTerm = function (termCode) {
+				teachingCallFormActionCreators.changeTerm(termCode);
+			};
 			// Generates a 'display rank' for the subset of preferences that are not approved.
 			// This is needed because approved preferences still have a 'priority' (rank) value, despite not being shown in the list
 			$scope.generateDisplayRank = function (preference, preferences) {

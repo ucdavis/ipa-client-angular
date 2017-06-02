@@ -102,7 +102,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					});
 
 					pageState.termSelection[0].isSelected = true;
-					pageState.selectedTerm = pageState.termSelection[0].termCode;
+					pageState.selectedTermCode = pageState.termSelection[0].termCode;
 
 					// Calculate Checklist values
 					this.calculateChecklist(pageState);
