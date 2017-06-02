@@ -65,141 +65,85 @@
 									<th>
 										7
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 								<tr>
 									<th>
 										8
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 								<tr>
 									<th>
 										9
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 								<tr>
 									<th>
 										10
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 								<tr>
 									<th>
 										11
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 								<tr>
 									<th>
 										12
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 								<tr>
 									<th>
 										1
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 								<tr>
 									<th>
 										2
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 								<tr>
 									<th>
 										3
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 								<tr>
 									<th>
 										5
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 								<tr>
 									<th>
 										6
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 								<tr>
 									<th>
 										7
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 								<tr>
 									<th>
 										8
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 								<tr>
 									<th>
 										9
 									</th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td></td><td></td><td></td><td></td><td></td>
 								</tr>
 							</tbody>
 						</tr>
@@ -210,7 +154,7 @@
 		<!-- additional message -->
 		<div id="teaching-call--additional-information" class="row">
 			<div class="col-md-12">
-				<h5>Additional Message</h5>
+				<h5>Comments</h5>
 				<textarea class="form-control" style="height:150px" ng-model="view.state.activeTeachingCall.teachingCallReceipt.comment" auto-input="" on-blur="updateTeachingCallReceipt()" placeholder="(Optional) Add any additional comments or requests here." rows="5" id="comment"></textarea>
 			</div>
 		</div>
@@ -219,7 +163,8 @@
 			<h5 class="text-center">Select Academic Term</h5>
 			<ul>
 				<li ng-repeat="term in view.state.termSelection"
-						ng-class="{ 'current-academic-term': term.isSelected, 'unassigned-academic-term': term.hasPreferences }">
+						ng-class="{ 'current-academic-term': term.isSelected, 'unassigned-academic-term': term.hasPreferences }"
+						ng-click="changeTerm(term.termCode)">
 					{{ term.description }}
 				</li>
 			</ul>
@@ -230,23 +175,11 @@
 				<li>
 					<input class="list-checkbox" type="checkbox">Preference
 				</li>
-				<li>
-					<input class="list-checkbox" type="checkbox">Summer Session 1
+				<li ng-repeat="term in view.state.checklist.terms">
+					<input class="list-checkbox" type="checkbox">{{ term.description }}
 				</li>
 				<li>
-					<input class="list-checkbox" type="checkbox">Summer Session 2
-				</li>
-				<li>
-					<input class="list-checkbox" type="checkbox">Fall Quarter
-				</li>
-				<li>
-					<input class="list-checkbox" type="checkbox">Winter Quarter
-				</li>
-				<li>
-					<input class="list-checkbox" type="checkbox">Spring Quarter
-				</li>
-				<li>
-					<input class="list-checkbox" type="checkbox">Additional Information
+					<input class="list-checkbox" type="checkbox">Comments
 				</li>
 			</ul>
 			<button type="button" class="btn btn-white">Submit</button>
