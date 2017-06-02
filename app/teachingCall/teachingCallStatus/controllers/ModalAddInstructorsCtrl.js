@@ -166,11 +166,13 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 			return true;
 		}
 
-		var uninvitedInstructor = $scope.startTeachingCallConfig.invitedInstructors.find( slotInstructor => {
-			return slotInstructor.isLecturerInstructor && !slotInstructor.invited;
-		});
+		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
+			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
 
-		if(uninvitedInstructor) { return false; }
+			if (slotInstructor.isSenateInstructor && !slotInstructor.invited) {
+				return false;
+			}
+		}
 
 		return true;
 	};
@@ -180,28 +182,30 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 			return true;
 		}
 
-		var uninvitedInstructor = $scope.startTeachingCallConfig.invitedInstructors.find( slotInstructor => {
-			return slotInstructor.isFederationInstructor && !slotInstructor.invited;
-		});
+		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
+			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
 
-		if(uninvitedInstructor) { return false; }
+			if (slotInstructor.isFederationInstructor && !slotInstructor.invited) {
+				return false;
+			}
+		}
 
-		return true;
-	};
+		return true;	};
 
 	$scope.areAllLecturersInvited = function() {
 		if (!$scope.startTeachingCallConfig.invitedInstructors) {
 			return true;
 		}
 
-		var uninvitedInstructor = $scope.startTeachingCallConfig.invitedInstructors.find( slotInstructor => {
-			return slotInstructor.isLecturerInstructor && !slotInstructor.invited;
-		});
+		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
+			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
 
-		if(uninvitedInstructor) { return false; }
+			if (slotInstructor.isLecturerInstructor && !slotInstructor.invited) {
+				return false;
+			}
+		}
 
-		return true;
-	};
+		return true;	};
 
 	$scope.addLecturerInstructors = function () {
 		$scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
