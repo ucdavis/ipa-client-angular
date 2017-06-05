@@ -4,61 +4,60 @@
 <ipa-header page-title="Support Staff Assignments"></ipa-header>
 
 <!-- handle lack of active teaching call -->
+<script type="text/javascript">
+        jQuery(document).ready(function($) {
+			 $('#cash-in-section').hide();
+            $('#cash-out').on('click', function(e) {
+                console.log('showing courses');
+                $('#cash-out-section').show();
+                $('#cash-in-section').hide();
+            });
+            $('#cash-in').click(function(e) {
+                console.log('showing instructors');
+                $('#cash-out-section').hide();
+                $('#cash-in-section').show();
+            });
+        });
+ </script>
 <div class="main-content">
+	<!-- table-toolbar -->
 	<div class="table-toolbar">
 		<div class="btn-group pull-left add-budget-scenario">
-			<button class="btn btn-default dropdown-toggle" type="button" style="background-color: white !important;border: 1px solid #D6D6D6;border-radius: 4px;">			<span class="tool-icon glyphicon glyphicon-plus"></span>
-<span>Add Budget Scenario</span></button>
+			<button class="btn btn-default dropdown-toggle" onclick="jQuery('#add-scenario').modal('show');" type="button">
+				<span class="tool-icon glyphicon glyphicon-plus"></span>
+				<span>Add Budget Scenario</span>
+			</button>
 		</div>
-		<div class="btn-group">
-			<span class="tool-icon glyphicon glyphicon-plus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-			<ul class="dropdown-menu dropdown-menu-right" multiselect-dropdown items="termDefinitions" active-ids="view.state.userInterface.enabledTerms.ids" toggle-item="termToggled(id)" ></ul>
+		<div class="btn-group toolbar">
+			<span class="tool-icon glyphicon glyphicon-plus" onclick="jQuery('#add-cost').modal('show');"></span>
+			<span class="tool-icon glyphicon glyphicon-pencil" data-toggle="dropdown"></span>
+			<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown"></span>
+			<span class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown"></span>
+			<span class="tool-icon glyphicon glyphicon-print"></span>
+			<span class="tool-icon glyphicon glyphicon-trash"></span>
 		</div>
-		<div class="btn-group">
-			<span class="tool-icon glyphicon glyphicon-pencil" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-			<ul class="dropdown-menu dropdown-menu-right" multiselect-dropdown items="termDefinitions" active-ids="view.state.userInterface.enabledTerms.ids" toggle-item="termToggled(id)" ></ul>
-		</div>
-		<div class="btn-group">
-			<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-			<ul class="dropdown-menu dropdown-menu-right" multiselect-dropdown items="termDefinitions" active-ids="view.state.userInterface.enabledTerms.ids" toggle-item="termToggled(id)" ></ul>
-		</div> <!-- .btn-group -->
-
-		<div class="btn-group">
-			<span data-toggle="tooltip" data-placement="top" data-original-title="Download as Excel" data-container="body" ng-click="download()"
-			class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-			<ul class="dropdown-menu">
-				<li><a href="#" class="small">as Excel</a></li>
-				<li><a href="#" class="small">as CSV</a></li>
-			</ul>
-		</div> <!-- .btn-group -->
-		<div class="btn-group">
-			<span data-toggle="tooltip" data-placement="top" data-original-title="Print" ng-click="print()"
-			class="tool-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print"></span>
-		</div>
-		<div class="btn-group">
-			<span data-toggle="tooltip"
-			class="tool-icon glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></span>
-		</div>
-		<!-- .table-toolbar -->
+		<!-- table-toolbar ends -->
 	</div>
-		<div class="panel panel-primary" data-collapsed="0" style="width:100%;">
-			<!-- panel head -->
+		<!-- teaching-fund-summary panel-->
+		<div class="panel panel-primary teaching-fund-panel" data-collapsed="0">
 			<div class="panel-heading">
 				<div class="panel-title">Teaching Funds Summary</div>
-					<div class="panel-options">
-					</div>
-				</div>
-			<!-- panel body -->
+				<div class="panel-title pull-right">Last Modified: 5/18/17</div>
+			</div>
 			<div class="panel-body flex-row">
-				<div id="chart5" class="col-md-5 budget-pie-chart"><svg height="250" version="1.1" width="291" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; top: -0.116638px;"><desc>Created with Raphaël 2.1.2</desc><defs></defs><path style="opacity: 0;" fill="none" stroke="#707f9b" d="M146.5,201.66666666666669A76.66666666666667,76.66666666666667,0,0,0,208.22300094198323,79.524193987421" stroke-width="2" opacity="0"></path><path style="" fill="#707f9b" stroke="#ffffff" d="M146.5,204.66666666666669A79.66666666666667,79.66666666666667,0,0,0,210.6382488049304,77.74470592605921L235.05908830806288,59.75210441673448A110,110,0,0,1,146.5,235Z" stroke-width="3"></path><path style="opacity: 0;" fill="none" stroke="#455064" d="M208.22300094198323,79.524193987421A76.66666666666667,76.66666666666667,0,0,0,131.29251131350702,49.85673639222232" stroke-width="2" opacity="0"></path><path style="" fill="#455064" stroke="#ffffff" d="M210.6382488049304,77.74470592605921A79.66666666666667,79.66666666666667,0,0,0,130.69743566925294,46.9163478162658L124.68055971068398,17.185752214927675A110,110,0,0,1,235.05908830806288,59.75210441673448Z" stroke-width="3"></path><path style="opacity: 1;" fill="none" stroke="#242d3c" d="M131.29251131350702,49.85673639222232A76.66666666666667,76.66666666666667,0,0,0,146.4759144567186,201.66666288331834" stroke-width="2" opacity="1"></path><path style="" fill="#242d3c" stroke="#ffffff" d="M130.69743566925294,46.9163478162658A79.66666666666667,79.66666666666667,0,0,0,146.47497197893804,204.6666627352743L146.46387168507792,239.99999432497754A115,115,0,0,1,123.68876697026053,12.285104588333482Z" stroke-width="3"></path><text style="text-anchor: middle; font: 800 15px &quot;Arial&quot;;" x="146.5" y="115" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" font-size="15px" font-weight="800" transform="matrix(1.1556,0,0,1.1556,-22.798,-19.2577)" stroke-width="0.8653381458227185"><tspan dy="5.25">Mail-Order Sales</tspan></text><text style="text-anchor: middle; font: 14px &quot;Arial&quot;;" x="146.5" y="135" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" font-size="14px" transform="matrix(1.5972,0,0,1.5972,-87.4931,-75.8472)" stroke-width="0.6260869565217391"><tspan dy="5">43</tspan></text></svg></div>
-					<div class="col-md-7 budget-summary">
-					<blockquote class="blockquote-default">
+				<div id="chart5" class="col-md-5 budget-pie-chart"><svg height="250" version="1.1" width="291" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; top: -0.116638px;"><desc>Created with Raphaël 2.1.2</desc><defs></defs><path style="opacity: 0;" fill="none" stroke="#707f9b" d="M146.5,201.66666666666669A76.66666666666667,76.66666666666667,0,0,0,208.22300094198323,79.524193987421" stroke-width="2" opacity="0"></path><path style="" fill="#707f9b" stroke="#ffffff" d="M146.5,204.66666666666669A79.66666666666667,79.66666666666667,0,0,0,210.6382488049304,77.74470592605921L235.05908830806288,59.75210441673448A110,110,0,0,1,146.5,235Z" stroke-width="3"></path><path style="opacity: 0;" fill="none" stroke="#455064" d="M208.22300094198323,79.524193987421A76.66666666666667,76.66666666666667,0,0,0,131.29251131350702,49.85673639222232" stroke-width="2" opacity="0"></path><path style="" fill="#455064" stroke="#ffffff" d="M210.6382488049304,77.74470592605921A79.66666666666667,79.66666666666667,0,0,0,130.69743566925294,46.9163478162658L124.68055971068398,17.185752214927675A110,110,0,0,1,235.05908830806288,59.75210441673448Z" stroke-width="3"></path><path style="opacity: 1;" fill="none" stroke="#242d3c" d="M131.29251131350702,49.85673639222232A76.66666666666667,76.66666666666667,0,0,0,146.4759144567186,201.66666288331834" stroke-width="2" opacity="1"></path><path style="" fill="#242d3c" stroke="#ffffff" d="M130.69743566925294,46.9163478162658A79.66666666666667,79.66666666666667,0,0,0,146.47497197893804,204.6666627352743L146.46387168507792,239.99999432497754A115,115,0,0,1,123.68876697026053,12.285104588333482Z" stroke-width="3"></path><text style="text-anchor: middle; font: 800 15px &quot;Arial&quot;;" x="146.5" y="115" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" font-size="15px" font-weight="800" transform="matrix(1.1556,0,0,1.1556,-22.798,-19.2577)" stroke-width="0.8653381458227185"><tspan dy="5.25">Mail-Order Sales</tspan></text><text style="text-anchor: middle; font: 14px &quot;Arial&quot;;" x="146.5" y="135" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" font-size="14px" transform="matrix(1.5972,0,0,1.5972,-87.4931,-75.8472)" stroke-width="0.6260869565217391"><tspan dy="5">43</tspan></text></svg>
+				</div>
+				<div class="col-md-7 budget-summary">
 					<table class="table responsive">
 						<thead>
 							<tr>
-								<th>Cash-In</th>
+								<th class="budget-summary-title">Cash In
+									<button id="cash-in" class="btn btn-default" type="button">
+										<span>View</span>
+									</button>
+								</th>
 								<th></th>
-								<th class="pull-right">$1,280,000</th>
+								<th class="sum-total">$1,280,000</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -82,9 +81,13 @@
 					<table class="table responsive">
 						<thead>
 							<tr>
-								<th>Cash-In</th>
+								<th class="budget-summary-title">Cash Out
+									<button id="cash-out" class="btn btn-default" type="button">
+										<span>View</span>
+									</button>
+								</th>
 								<th></th>
-								<th class="pull-right">$1,280,000</th>
+								<th class="sum-total">$1,280,000</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -105,889 +108,1226 @@
 							</tr>
 						</tbody>
 					</table>
-				</blockquote>
-			</div>
-			</div>
-		</div>
-	<!-- instructional panel -->
-	<div class="row">
-		<div class="col-md-12">
-			<div class="panel-group" id="accordion-test">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion-test1" href="#collapseOne" aria-expanded="false" class="collapsed">
-								Cash Out - Instructional <i class="glyphicon glyphicon-triangle-bottom"></i>
-							</a>
-						</h4>
-					</div>
-					<div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-						<div class="panel-body">
-							Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- instructional panel ends -->
-	<div class="row">
-		<div class="col-md-12">
-			<div class="panel-group">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a data-toggle="collapse" href="#collapseTwo" aria-expanded="false" class="collapsed">
-								Cash Out - Line Items<i class="glyphicon glyphicon-triangle-bottom"></i>
-							</a>
-						</h4>
-					</div>
-					<div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-					<div id="table-3_wrapper" class="dataTables_wrapper">
-					<table id="table-2" role="grid" aria-describedby="table-2_info" class="table table-bordered datatable dataTable budget-table" style="border-collapse: collapse;">
+					<table class="table responsive total-balance">
 						<thead>
-							<tr role="row">
-								<th rowspan="1" colspan="1">
-									<div class="checkbox checkbox-replace neon-cb-replacement">
-										<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-									</div>
+							<tr>
+								<th class="budget-summary-title">Balance
 								</th>
-								<th rowspan="1" colspan="1">Type</th>
-								<th rowspan="1" colspan="1">Description</th>
-								<th rowspan="1" colspan="1">Amount</th>
+								<th></th>
+								<th class="sum-total">$115,000</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr role="row" class="bg-gray">
-								<td>
-									<div class="checkbox checkbox-replace neon-cb-replacement">
-										<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-									</div>
-								</td>
-								<td>Cost</td>
-								<td>4% Range Adjustment- Fall</td>
-								<td>$23,368</td>
-							</tr>
-							<tr role="row" class="description-row">
-								<td class="description" colspan="4">
-									<div class="row line-item-container">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Type</label>
-												<span>Other Funds</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Last Edited By</label>
-												<span>John Smith</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Amount</label>
-												<span>$23,368</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Description</label>
-												<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Notes</label>
-												<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr role="row">
-								<td>
-									<div class="checkbox checkbox-replace neon-cb-replacement">
-										<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-									</div>
-								</td>
-								<td>Cost</td>
-								<td>4% Range Adjustment- Fall</td>
-								<td>$23,368</td>
-							</tr>
-							<tr role="row" class="description-row">
-								<td class="description" colspan="4">
-									<div class="row line-item-container">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Type</label>
-												<span>Other Funds</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Last Edited By</label>
-												<span>John Smith</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Amount</label>
-												<span>$23,368</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Description</label>
-												<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Notes</label>
-												<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr role="row" class="bg-gray">
-								<td>
-									<div class="checkbox checkbox-replace neon-cb-replacement">
-										<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-									</div>
-								</td>
-								<td>Cost</td>
-								<td>
-									4% Range Adjustment- Fall
-								</td>
-								<td>$23,368</td>
-							</tr>
-							<tr role="row" class="description-row">
-								<td class="description" colspan="4">
-									<div class="row line-item-container">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Type</label>
-												<span>Other Funds</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Last Edited By</label>
-												<span>John Smith</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Amount</label>
-												<span>$23,368</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Description</label>
-												<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Notes</label>
-												<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr role="row">
-								<td>
-									<div class="checkbox checkbox-replace neon-cb-replacement">
-										<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-									</div>
-								</td>
-								<td>Cost</td>
-								<td>4% Range Adjustment- Fall</td>
-								<td>$23,368</td>
-							</tr>
-							<tr role="row" class="description-row">
-								<td class="description" colspan="4">
-									<div class="row line-item-container">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Type</label>
-												<span>Other Funds</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Last Edited By</label>
-												<span>John Smith</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Amount</label>
-												<span>$23,368</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Description</label>
-												<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Notes</label>
-												<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr role="row" class="bg-gray">
-								<td>
-									<div class="checkbox checkbox-replace neon-cb-replacement">
-										<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-									</div>
-								</td>
-								<td>Cost</td>
-								<td>4% Range Adjustment- Fall</td>
-								<td>$23,368</td>
-							</tr>
-							<tr role="row" class="description-row">
-								<td class="description" colspan="4">
-									<div class="row line-item-container">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Type</label>
-												<span>Other Funds</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Last Edited By</label>
-												<span>John Smith</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Amount</label>
-												<span>$23,368</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Description</label>
-												<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Notes</label>
-												<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr role="row">
-								<td>
-									<div class="checkbox checkbox-replace neon-cb-replacement">
-										<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-									</div>
-								</td>
-								<td>Cost</td>
-								<td>4% Range Adjustment- Fall</td>
-								<td>$43,368</td>
-							</tr>
-							<tr role="row" class="description-row">
-								<td class="description" colspan="4">
-									<div class="row line-item-container">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Type</label>
-												<span>Other Funds</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Last Edited By</label>
-												<span>John Smith</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Amount</label>
-												<span>$23,368</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Description</label>
-												<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Notes</label>
-												<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr role="row" class="bg-gray">
-								<td>
-									<div class="checkbox checkbox-replace neon-cb-replacement">
-										<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-									</div>
-								</td>
-								<td>Cost</td>
-								<td>4% Range Adjustment- Fall</td>
-								<td>$23,368</td>
-							</tr>
-							<tr role="row" class="description-row">
-								<td class="description" colspan="4">
-									<div class="row line-item-container">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Type</label>
-												<span>Other Funds</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Last Edited By</label>
-												<span>John Smith</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Amount</label>
-												<span>$23,368</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Description</label>
-												<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Notes</label>
-												<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr role="row">
-								<td>
-									<div class="checkbox checkbox-replace neon-cb-replacement">
-										<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-									</div>
-								</td>
-								<td>Cost</td>
-								<td>4% Range Adjustment- Fall</td>
-								<td>$23,368</td>
-							</tr>
-							<tr role="row" class="description-row">
-								<td class="description" colspan="4">
-									<div class="row line-item-container">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Type</label>
-												<span>Other Funds</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Last Edited By</label>
-												<span>John Smith</span>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="birthdate">Amount</label>
-												<span>$23,368</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Description</label>
-												<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-									<div class="row line-item-container">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label" for="full_name">Notes</label>
-												<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-							</tbody>
 					</table>
+				</div>
+			</div>
 		</div>
+		<!-- teaching-fund-summary panel ends-->
+
+<!-- cash out section -->
+	<!-- instructional panel -->
+	<div id="cash-out-section">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel-group" id="accordion-test">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion-test1" href="#collapseOne" aria-expanded="false" class="collapsed">
+									Cash Out - Instructional <i class="glyphicon glyphicon-triangle-left"></i>
+								</a>
+							</h4>
+						</div>
+						<div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+							<div class="panel-body">
+								<div class="col-md-12">
+									<table class="table cashout-instructional responsive">
+										<thead>
+											<tr>
+												<th>Off.</th>
+												<th>Enroll / Seats</th>
+												<th>Section</th>
+												<th>TA</th>
+												<th>Reader</th>
+												<th>Cost</th>
+												<th style="width:2%;"></th>
+												<th>Instructor</th>
+												<th>Reg Instr</th>
+												<th>Reason</th>
+												<th>Cost</th>
+												<th>Total Cost</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td colspan="12" class="bg-none text-left">
+													<span>
+														<b>ECN16A Intro to Micro Theory</b>
+														<i class="glyphicon glyphicon-list-alt"></i>
+													</span>
+												</td>
+											</tr>
+											<tr>
+												<td>A01</td>
+												<td>1 / 120</td>
+												<td>3</td>
+												<td>3</td>
+												<td>3</td>
+												<td>$13,358</td>
+												<td></td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="buyout-section">Buyout</td>
+												<td>Arlind</td>
+												<td>$20,000</td>
+											</tr>
+											<tr>
+												<td class="line-item-none">A01</td>
+												<td class="line-item-none">1 / 120</td>
+												<td class="line-item-none"></td>
+												<td class="line-item-none"></td>
+												<td class="line-item-none"></td>
+												<td class="line-item-none"></td>
+												<td></td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="buyout-section">Buyout</td>
+												<td>$6,642</td>
+												<td>$20,000</td>
+											</tr>
+											<tr>
+												<td>A01</td>
+												<td>1 / 120</td>
+												<td>3</td>
+												<td>3</td>
+												<td>3</td>
+												<td>$13,358</td>
+												<td></td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="buyout-section">Buyout</td>
+												<td>$6,642</td>
+												<td>$20,000</td>
+											</tr>
+											<tr>
+												<td colspan="12" class="bg-none text-left">
+													<span>
+														<b>ECN16A Intro to Micro Theory</b>
+														<i class="glyphicon glyphicon-list-alt"></i>
+													</span>
+												</td>
+											</tr>
+											<tr>
+												<td>A01</td>
+												<td>1 / 120</td>
+												<td>3</td>
+												<td>3</td>
+												<td>3</td>
+												<td>$13,358</td>
+												<td></td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="buyout-section">Buyout</td>
+												<td>$6,642</td>
+												<td>$20,000</td>
+											</tr>
+											<tr>
+												<td>A01</td>
+												<td>1 / 120</td>
+												<td>3</td>
+												<td>3</td>
+												<td>3</td>
+												<td>$13,358</td>
+												<td></td>
+												<td class="line-item-none instr-dropdown">
+												</td>
+												<td class="line-item-none instr-dropdown">
+												</td>
+												<td class="line-item-none">Buyout</td>
+												<td class="line-item-none">$6,642</td>
+												<td>$20,000</td>
+											</tr>
+											<tr>
+												<td>A01</td>
+												<td>1 / 120</td>
+												<td>3</td>
+												<td>3</td>
+												<td>3</td>
+												<td>$13,358</td>
+												<td></td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td>Nushi</td>
+												<td>$6,642</td>
+												<td>$20,000</td>
+											</tr>
+											<tr>
+												<td colspan="12" class="bg-none text-left">
+													<span>
+														<b>ECN16A Intro to Micro Theory</b>
+														<i class="glyphicon glyphicon-list-alt"></i>
+													</span>
+												</td>
+											</tr>
+											<tr>
+												<td>A01</td>
+												<td>1 / 120</td>
+												<td>3</td>
+												<td>3</td>
+												<td>3</td>
+												<td>$13,358</td>
+												<td></td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="buyout-section">Buyout</td>
+												<td>$6,642</td>
+												<td>$20,000</td>
+											</tr>
+											<tr>
+												<td>A01</td>
+												<td>1 / 120</td>
+												<td>3</td>
+												<td>3</td>
+												<td>3</td>
+												<td>$13,358</td>
+												<td></td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="buyout-section">Buyout</td>
+												<td>$6,642</td>
+												<td>$20,000</td>
+											</tr>
+											<tr>
+												<td>A01</td>
+												<td>1 / 120</td>
+												<td>3</td>
+												<td>3</td>
+												<td>3</td>
+												<td>$13,358</td>
+												<td></td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Select Instructor
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
+												<td class="buyout-section">Buyout</td>
+												<td>$6,642</td>
+												<td>$20,000</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+		<!-- instructional panel ends -->
 
-	<!-- <div id="table-3_wrapper" class="dataTables_wrapper">
-		<div>Cash-Out Details</div>
-		<table id="table-2" role="grid" aria-describedby="table-2_info" class="table table-bordered datatable dataTable budget-table" style="border-collapse: collapse;">
-			<thead style="border-bottom: 3px solid #ebebeb;">
-				<tr role="row">
-					<th rowspan="1" colspan="1" style="width:3%;background:white;">
-						<div class="checkbox checkbox-replace neon-cb-replacement">
-							<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+		<!-- inline-items table -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel-group">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" href="#collapseTwo" aria-expanded="false" class="collapsed">
+									Cash Out - Line Items<i class="glyphicon glyphicon-triangle-left"></i>
+								</a>
+							</h4>
 						</div>
-					</th>
-					<th rowspan="1" colspan="1" style="background:white;">Type</th>
-					<th rowspan="1" colspan="1" style="width:60%;background:white !important;">Description</th>
-					<th rowspan="1" colspan="1" style="width:10%;background:white;">Amount</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr role="row" class="bg-gray">
-					<td>
-						<div class="checkbox checkbox-replace neon-cb-replacement">
-							<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+						<div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+							<div id="table-3_wrapper" class="dataTables_wrapper">
+								<table id="table-2" role="grid" aria-describedby="table-2_info" class="table table-bordered datatable dataTable budget-table" style="border-collapse: collapse;">
+									<thead>
+										<tr role="row">
+											<th rowspan="1" colspan="1">
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</th>
+											<th rowspan="1" colspan="1">Type</th>
+											<th rowspan="1" colspan="1">Description</th>
+											<th rowspan="1" colspan="1">Amount</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr role="row" class="bg-gray">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Cost</td>
+											<td>4% Range Adjustment- Fall</td>
+											<td>$23,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Cost</td>
+											<td>4% Range Adjustment- Fall</td>
+											<td>$23,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row" class="bg-gray">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Cost</td>
+											<td>
+												4% Range Adjustment- Fall
+											</td>
+											<td>$23,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Cost</td>
+											<td>4% Range Adjustment- Fall</td>
+											<td>$23,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row" class="bg-gray">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Cost</td>
+											<td>4% Range Adjustment- Fall</td>
+											<td>$23,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Cost</td>
+											<td>4% Range Adjustment- Fall</td>
+											<td>$43,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row" class="bg-gray">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Cost</td>
+											<td>4% Range Adjustment- Fall</td>
+											<td>$23,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Cost</td>
+											<td>4% Range Adjustment- Fall</td>
+											<td>$23,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
-					</td>
-					<td>Cost</td>
-					<td>4% Range Adjustment- Fall</td>
-					<td>$23,368</td>
-				</tr>
-				<tr role="row" class="description-row">
-					<td class="description" colspan="4">
-						<div class="row line-item-container">
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Type</label>
-									<span>Other Funds</span>
-								</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- inline-items table ends -->
+	</div>
+	<!-- cash out section ends -->
+
+	<!-- cash in section -->
+	<div id="cash-in-section">
+		<!-- inline-items table -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel-group">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" href="#collapseThree" aria-expanded="false" class="collapsed">
+									Cash In - Line Items<i class="glyphicon glyphicon-triangle-left"></i>
+								</a>
+							</h4>
+						</div>
+						<div id="collapseThree" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+							<div id="table-3_wrapper" class="dataTables_wrapper">
+								<table id="table-2" role="grid" aria-describedby="table-2_info" class="table table-bordered datatable dataTable budget-table" style="border-collapse: collapse;">
+									<thead>
+										<tr role="row">
+											<th rowspan="1" colspan="1">
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</th>
+											<th rowspan="1" colspan="1">Type</th>
+											<th rowspan="1" colspan="1">Description</th>
+											<th rowspan="1" colspan="1">Amount</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr role="row" class="bg-gray">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Fund</td>
+											<td>4% Range Adjustment- Fall</td>
+											<td>$23,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Fund</td>
+											<td>4% Range Adjustment- Fall</td>
+											<td>$23,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row" class="bg-gray">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Fund</td>
+											<td>
+												4% Range Adjustment- Fall
+											</td>
+											<td>$23,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Fund</td>
+											<td>4% Range Adjustment- Fall</td>
+											<td>$23,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row" class="bg-gray">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Fund</td>
+											<td>4% Range Adjustment- Fall</td>
+											<td>$23,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Fund</td>
+											<td>4% Range Adjustment- Fall</td>
+											<td>$43,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row" class="bg-gray">
+											<td>
+												<div class="checkbox checkbox-replace neon-cb-replacement">
+													<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
+												</div>
+											</td>
+											<td>Fund</td>
+											<td>4% Range Adjustment- Fall</td>
+											<td>$23,368<i class="glyphicon glyphicon-triangle-left"></i></td>
+										</tr>
+										<tr role="row" class="description-row">
+											<td class="description" colspan="4">
+												<div class="row line-item-container">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Type</label>
+															<span>Other Funds</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Last Edited By</label>
+															<span>John Smith</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label" for="birthdate">Amount</label>
+															<span>$23,368</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Description</label>
+															<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+												<div class="row line-item-container">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="control-label" for="full_name">Notes</label>
+															<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Last Edited By</label>
-									<span>John Smith</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Amount</label>
-									<span>$23,368</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- inline-items table -->
+	</div>
+	<!-- cash in section ends -->
+</div>
+
+<!-- modal add budget scenario -->
+<div class="budget-view modal fade" id="add-scenario">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">Basic Modal</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<form role="form" class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-6 control-label">Create New Budget Scenario From:</label>
+							<div class="col-sm-5">
+								<div class="input-group">
+									<button class="btn btn-scenario-dropdown dropdown-toggle" type="button" data-toggle="dropdown">
+										Select Budget Scenario
+										<span class="caret"></span>
+									</button>
 								</div>
 							</div>
 						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Description</label>
-									<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+						<div class="form-group">
+							<label class="col-sm-6 control-label">New Budget Scenario Name:</label>
+							<div class="col-sm-5">
+								<div class="input-group">
+									<input class="form-control" type="text">
 								</div>
 							</div>
 						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Notes</label>
-									<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-submit">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- add ta-reader cost -->
+<div class="budget-view modal fade" id="add-cost">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">Basic Modal</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<form role="form" class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">TA Cost:</label>
+							<div class="col-sm-5">
+								<div class="input-group">
+									<input class="form-control" type="text">
 								</div>
 							</div>
 						</div>
-					</td>
-				</tr>
-				<tr role="row">
-					<td>
-						<div class="checkbox checkbox-replace neon-cb-replacement">
-							<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-						</div>
-					</td>
-					<td>Cost</td>
-					<td>4% Range Adjustment- Fall</td>
-					<td>$23,368</td>
-				</tr>
-				<tr role="row" class="description-row">
-					<td class="description" colspan="4">
-						<div class="row line-item-container">
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Type</label>
-									<span>Other Funds</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Last Edited By</label>
-									<span>John Smith</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Amount</label>
-									<span>$23,368</span>
+						<div class="form-group">
+							<label class="col-sm-5 control-label">Reader Cost:</label>
+							<div class="col-sm-5">
+								<div class="input-group">
+									<input class="form-control" type="text">
 								</div>
 							</div>
 						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Description</label>
-									<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Notes</label>
-									<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr role="row" class="bg-gray">
-					<td>
-						<div class="checkbox checkbox-replace neon-cb-replacement">
-							<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-						</div>
-					</td>
-					<td>Cost</td>
-					<td>
-						4% Range Adjustment- Fall
-					</td>
-					<td>$23,368</td>
-				</tr>
-    			<tr role="row" class="description-row">
-					<td class="description" colspan="4" style="padding:0px;
-						<div class="row line-item-container">
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Type</label>
-									<span>Other Funds</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Last Edited By</label>
-									<span>John Smith</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Amount</label>
-									<span>$23,368</span>
-								</div>
-							</div>
-						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Description</label>
-									<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Notes</label>
-									<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr role="row">
-					<td>
-						<div class="checkbox checkbox-replace neon-cb-replacement">
-							<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-						</div>
-					</td>
-					<td>Cost</td>
-					<td>4% Range Adjustment- Fall</td>
-					<td>$23,368</td>
-				</tr>
-				<tr role="row" class="description-row">
-					<td class="description" colspan="4">
-						<div class="row line-item-container">
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Type</label>
-									<span>Other Funds</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Last Edited By</label>
-									<span>John Smith</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Amount</label>
-									<span>$23,368</span>
-								</div>
-							</div>
-						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Description</label>
-									<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Notes</label>
-									<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr role="row" class="bg-gray">
-					<td>
-						<div class="checkbox checkbox-replace neon-cb-replacement">
-							<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-						</div>
-					</td>
-					<td>Cost</td>
-					<td>4% Range Adjustment- Fall</td>
-					<td>$23,368</td>
-				</tr>
-				<tr role="row" class="description-row">
-					<td class="description" colspan="4">
-						<div class="row line-item-container">
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Type</label>
-									<span>Other Funds</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Last Edited By</label>
-									<span>John Smith</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Amount</label>
-									<span>$23,368</span>
-								</div>
-							</div>
-						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Description</label>
-									<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Notes</label>
-									<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr role="row">
-					<td>
-						<div class="checkbox checkbox-replace neon-cb-replacement">
-							<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-						</div>
-					</td>
-					<td>Cost</td>
-					<td>4% Range Adjustment- Fall</td>
-					<td>$43,368</td>
-				</tr>
-				<tr role="row" class="description-row">
-					<td class="description" colspan="4">
-						<div class="row line-item-container">
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Type</label>
-									<span>Other Funds</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Last Edited By</label>
-									<span>John Smith</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Amount</label>
-									<span>$23,368</span>
-								</div>
-							</div>
-						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Description</label>
-									<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Notes</label>
-									<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr role="row" class="bg-gray">
-					<td>
-						<div class="checkbox checkbox-replace neon-cb-replacement">
-							<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-						</div>
-					</td>
-					<td>Cost</td>
-					<td>4% Range Adjustment- Fall</td>
-					<td>$23,368</td>
-				</tr>
-				<tr role="row" class="description-row">
-					<td class="description" colspan="4">
-						<div class="row line-item-container">
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Type</label>
-									<span>Other Funds</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Last Edited By</label>
-									<span>John Smith</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Amount</label>
-									<span>$23,368</span>
-								</div>
-							</div>
-						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Description</label>
-									<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Notes</label>
-									<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr role="row">
-					<td>
-						<div class="checkbox checkbox-replace neon-cb-replacement">
-							<label class="cb-wrapper"><input id="chk-1" type="checkbox"><div class="checked"></div></label>
-						</div>
-					</td>
-					<td>Cost</td>
-					<td>4% Range Adjustment- Fall</td>
-					<td>$23,368</td>
-				</tr>
-				<tr role="row" class="description-row">
-					<td class="description" colspan="4">
-						<div class="row line-item-container">
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Type</label>
-									<span>Other Funds</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Last Edited By</label>
-									<span>John Smith</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="birthdate">Amount</label>
-									<span>$23,368</span>
-								</div>
-							</div>
-						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Description</label>
-									<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-						<div class="row line-item-container">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="full_name">Notes</label>
-									<span class="span-full-width">Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				</tbody>
-		</table>
-		</div> -->
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-submit">Submit</button>
+			</div>
+		</div>
+	</div>
 </div>

@@ -30,5 +30,18 @@ $(function() {
     });
 
 
+            $('#courses-pivot').on('click', function(e) {
+                console.log('showing courses');
+                $('#courses-table').show();
+                $('#instructors-table').hide();
+            });
+            $('#instructors-pivot').click(function(e) {
+                console.log('showing instructors');
+                $('#courses-table').hide();
+                $('#instructors-table').show();
+            });
+
+
+
 });
 
