@@ -347,6 +347,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					var sectionGroup = sectionGroups[slotAssignment.sectionGroupId];
 					var course = courses[sectionGroup.courseId];
 
+					newPreference.plannedSeats = sectionGroup.plannedSeats;
 					newPreference.sectionGroupId = sectionGroup.id;
 					newPreference.courseId = course.id;
 					newPreference.subjectCode = course.subjectCode;
