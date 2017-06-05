@@ -243,7 +243,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 				newTerm.description = term.termDescription;
 				newTerm.isChecked = false;
 
-				if (term.preferences && term.preferences.length > 0) {
+				if ( (term.preferences && term.preferences.length > 0) || (term.assignments && term.assignments.length > 0) ) {
 					newTerm.isChecked = true;
 					pageState.checklist.preferencesChecked = true;
 					pageState.checklist.canSubmit = true;
@@ -326,7 +326,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 				// Ensure the assignment is not approved, from the instructor and the term of interest
 				if (termCode != slotAssignment.termCode 
 				|| instructorId != slotAssignment.instructorId
-				|| slotAssignment.fromInstructor == false) {
+				|| slotAssignment.approved != approved) {
 					return;
 				}
 

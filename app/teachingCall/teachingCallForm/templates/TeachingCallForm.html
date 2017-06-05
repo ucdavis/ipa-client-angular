@@ -8,7 +8,7 @@
 
 <div class="container-fluid teaching-call-form">
 	<div id="teaching-call-form--container" ng-repeat="term in view.state.terms" ng-if="term.termCode == view.state.selectedTermCode">
-		<!-- course preference -->
+		<!-- course preferences -->
 		<div id="teaching-call--course-preference" class="row">
 			<div class="col-md-12">
 				<h5 class="inline-block">Please indicate your preferences: </h5>
@@ -26,6 +26,14 @@
 					</thead>
 						
 					<tbody>
+						<tr ng-repeat="preference in term.assignments | orderBy: 'description'" class="assigned-preference">
+							<td>
+							</td>
+							<td>
+								{{ preference.description }}
+							</td>
+							<td>{{ preference.plannedSeats }}</td>
+						</tr>
 						<tr ng-repeat="preference in term.preferences | orderBy: 'priority'">
 							<td>
 								<div class="select-preference-btn">
@@ -119,23 +127,23 @@
 			<h5 class="text-center">TeachingCall Checkbox</h5>
 			<ul>
 				<li>
-					<i ng-if="view.state.checklist.preferencesChecked" class="glyphicon glyphicon-ok text-success checklist-item"></i>
-					<i ng-if="view.state.checklist.preferencesChecked == false" class="glyphicon glyphicon-unchecked checklist-item"></i>
-					<span style="margin-left: 5px;">
+					<i ng-if="view.state.checklist.preferencesChecked" class="glyphicon glyphicon-ok text-success checklist-item" tooltip-placement="left" uib-tooltip="Preferences received."></i>
+					<i ng-if="view.state.checklist.preferencesChecked == false" class="glyphicon glyphicon-unchecked text-warn checklist-item" tooltip-placement="left" uib-tooltip="No preferences indicated on form."></i>
+					<span class="checklist-label">
 						Preferences
 					</span>
 				</li>
 				<li ng-repeat="term in view.state.checklist.terms">
-					<i ng-if="term.isChecked" class="glyphicon glyphicon-ok text-success checklist-item"></i>
-					<i ng-if="term.isChecked == false" class="glyphicon glyphicon-unchecked checklist-item"></i>
-					<span style="margin-left: 5px;">
+					<i ng-if="term.isChecked" class="glyphicon glyphicon-ok text-success checklist-item" tooltip-placement="left" uib-tooltip="Preferences received."></i>
+					<i ng-if="term.isChecked == false" class="glyphicon glyphicon-unchecked checklist-item" tooltip-placement="left" uib-tooltip="No preferences set for this term."></i>
+					<span class="checklist-label">
 						{{ term.description }}
 					</span>
 				</li>
 				<li>
-					<i ng-if="view.state.checklist.commentsChecked" class="glyphicon glyphicon-ok text-success checklist-item"></i>
-					<i ng-if="view.state.checklist.commentsChecked == false" class="glyphicon glyphicon-unchecked checklist-item"></i>
-					<span style="margin-left: 5px;">
+					<i ng-if="view.state.checklist.commentsChecked" class="glyphicon glyphicon-ok text-success checklist-item" tooltip-placement="left" uib-tooltip="Comments received."></i>
+					<i ng-if="view.state.checklist.commentsChecked == false" class="glyphicon glyphicon-unchecked checklist-item" tooltip-placement="left" uib-tooltip="No comments made."></i>
+					<span class="checklist-label">
 						Comments
 					</span>
 				</li>
@@ -149,7 +157,7 @@
 								Submit Preferences
 			</button>
 
-			<button ng-if="view.state.isDone" ng-click="submitTeachingCallForm()" type="button" class="btn btn-white">Update</button>
+			<button ng-if="view.state.isDone" ng-click="submitTeachingCallForm()" type="button" class="btn btn-white">Update Preferences</button>
 
 		</aside>
 	</div>

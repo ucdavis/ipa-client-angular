@@ -1151,3 +1151,12 @@ table.availability-grid tr td {
 .teaching-call-form .checklist-item {
 	cursor: default;
 }
+
+.teaching-call-form .checklist-label {
+	margin-left: 5px;
+}
+
+.teaching-call-form .assigned-preference {
+	background-color: #d9edf7;
+	color: #31708f;
+}
