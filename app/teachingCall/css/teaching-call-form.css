@@ -1147,3 +1147,7 @@ table.availability-grid tr td {
 .teaching-call-form-comments {
 	height: 150px;
 }
+
+.teaching-call-form .checklist-item {
+	cursor: default;
+}

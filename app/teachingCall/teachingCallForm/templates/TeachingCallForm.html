@@ -6,15 +6,16 @@
 	<spinner></spinner>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid teaching-call-form">
 	<div id="teaching-call-form--container" ng-repeat="term in view.state.terms" ng-if="term.termCode == view.state.selectedTermCode">
 		<!-- course preference -->
 		<div id="teaching-call--course-preference" class="row">
 			<div class="col-md-12">
-				<h5 class="inline-block">Choose Your Course Preference </h5>
+				<h5 class="inline-block">Please indicate your preferences: </h5>
 				<div class="pull-right" tooltip-placement="left" uib-tooltip="Clicking the Add button will show you a list of all courses currently in the schedule (Use the comment box below
-				to request courses not on the list). Once you've added your preferences you can rank them by clicking the moving buttons to place the courses into your
-				preferred order"><i class="glyphicon glyphicon-question-sign pull-right question--position"></i></div>
+				to request courses not on the list). Preferences can be ranked by clicking the up and down arrows to the left of your preferences.">
+					<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
+				</div>
 				<table class="table table-bordered ">
 					<thead>
 						<tr>
@@ -79,9 +80,8 @@
 		<!-- check-unavailiability table -->
 		<div id="teaching-call--check-unavailiability" class="row">
 			<div class="col-md-12">
-				<h5 class="inline-block">Please indicate your un-availabilities</h5>
-				<div class="pull-right" tooltip-placement="left" uib-tooltip="You can left click and drag to paint unavailability on the grids below.
-					Additionally you can use the copy to all terms button next to the term headers to indicate the same unavailability on all terms.">
+				<h5 class="inline-block">Please indicate your un-availabilities:</h5>
+				<div class="pull-right" tooltip-placement="left" uib-tooltip="You can left click and drag to paint unavailability on the grids below.">
 					<i class="glyphicon glyphicon-question-sign  question--position"></i>
 				</div>
 				<small class="legend pull-right" style="text-align: center;">
@@ -119,13 +119,25 @@
 			<h5 class="text-center">TeachingCall Checkbox</h5>
 			<ul>
 				<li>
-					<input class="list-checkbox" type="checkbox">Preference
+					<i ng-if="view.state.checklist.preferencesChecked" class="glyphicon glyphicon-ok text-success checklist-item"></i>
+					<i ng-if="view.state.checklist.preferencesChecked == false" class="glyphicon glyphicon-unchecked checklist-item"></i>
+					<span style="margin-left: 5px;">
+						Preferences
+					</span>
 				</li>
 				<li ng-repeat="term in view.state.checklist.terms">
-					<input class="list-checkbox" type="checkbox">{{ term.description }}
+					<i ng-if="term.isChecked" class="glyphicon glyphicon-ok text-success checklist-item"></i>
+					<i ng-if="term.isChecked == false" class="glyphicon glyphicon-unchecked checklist-item"></i>
+					<span style="margin-left: 5px;">
+						{{ term.description }}
+					</span>
 				</li>
 				<li>
-					<input class="list-checkbox" type="checkbox">Comments
+					<i ng-if="view.state.checklist.commentsChecked" class="glyphicon glyphicon-ok text-success checklist-item"></i>
+					<i ng-if="view.state.checklist.commentsChecked == false" class="glyphicon glyphicon-unchecked checklist-item"></i>
+					<span style="margin-left: 5px;">
+						Comments
+					</span>
 				</li>
 			</ul>
 			<button ng-if="!view.state.isDone" type="button" class="btn btn-white"
