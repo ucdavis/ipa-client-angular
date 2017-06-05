@@ -25,20 +25,57 @@
 					</thead>
 						
 					<tbody>
-						<tr ng-repeat="preference in term.preferences">
+						<tr ng-repeat="preference in term.preferences | orderBy: 'priority'">
 							<td>
 								<div class="select-preference-btn">
-									<i class="glyphicon glyphicon-chevron-up"></i>
-									<i class="glyphicon glyphicon-chevron-down"></i>
+									<i ng-if="$first == false" ng-click="raisePriority(preference, term.preferences, term.termCode)" class="glyphicon glyphicon-chevron-up"></i>
+									<i ng-if="$first == true" class="glyphicon glyphicon-chevron-up"></i>
+
+									<i ng-if="$last == false" ng-click="lowerPriority(preference, term.preferences, term.termCode)" class="glyphicon glyphicon-chevron-down"></i>
+									<i ng-if="$last == true" class="glyphicon glyphicon-chevron-down"></i>
 								</div>
-								<span>{{ preference.priority }}</span></td>
-							<td>{{ preference.description }}</td>
+								<span>{{ generateDisplayRank(preference, term.preferences) }}</span></td>
+							<td>
+								{{ preference.description }}
+								<div confirm-button="removePreference(preference)"
+									message="Are you sure you want to delete this preference"
+									yes="Delete" no="Cancel" placement="bottom"
+									confirm-is-shown="status.confirmIsOpen"
+									class="delete-preference-button entypo-cancel sortable-item-button close" style="font-size: 14px; flex 1 0 0px;"
+									aria-hidden="true" style="width: 10%;" uib-tooltip="Remove"
+									tooltip-placement="top" tooltip-append-to-body="true">
+								</div>
+							</td>
 							<td>[[200]]</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+									<div class="scrollable-dropdown-menu search-course-container">
+										<input type="text" ng-model="view.courseSearchQuery[term.termCode]"
+											ng-init="courseSearchPlaceHolder = 'Add Preference'"
+											placeholder="{{ courseSearchPlaceHolder }}"
+											ng-focus="courseSearchPlaceHolder = 'Search Courses'"
+											ng-blur="courseSearchPlaceHolder = 'Add Preference'; view.courseSearchQuery[term.termCode] = undefined;"
+											uib-typeahead="course as (course.description) for course in searchCourses(term, $viewValue)"
+											typeahead-loading="view.loadingCourses[term.termCode]"
+											typeahead-no-results="noResults"
+											typeahead-wait-ms="400"
+											typeahead-min-length="0"
+											typeahead-focus-on-select="false"
+											auto-close="always"
+											typeahead-on-select="addPreference($item, term.termCode, isBuyout, isSabbatical, isInResidence, isCourseRelease)"
+											class="form-control search-course-input">
+										<i ng-show="view.loadingCourses[term]"><spinner size="20"></spinner></i>
+									</div>
+							</td>
+							<td></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
+
 		<!-- check-unavailiability table -->
 		<div id="teaching-call--check-unavailiability" class="row">
 			<div class="col-md-12">
@@ -51,7 +88,12 @@
 					<div class="legend-square" style="background-color:#fff"></div>Available
 					<div class="legend-square" style="background-color:#ccc"></div>Unavailable
 				</small>
-				<table class="table availability-grid unavailiability-table">
+
+				<availability-grid blob="term.availabilityBlob"
+					on-change="saveTeachingCallResponse(term, blob, 3000)">
+				</availability-grid>
+
+				<!-- <table class="table availability-grid unavailiability-table">
 					<thead>
 						<tr>
 							<th></th>
@@ -148,14 +190,17 @@
 							</tbody>
 						</tr>
 					</thead>
-				</table>
+				</table> -->
 			</div>
 		</div>
 		<!-- additional message -->
 		<div id="teaching-call--additional-information" class="row">
 			<div class="col-md-12">
 				<h5>Comments</h5>
-				<textarea class="form-control" style="height:150px" ng-model="view.state.activeTeachingCall.teachingCallReceipt.comment" auto-input="" on-blur="updateTeachingCallReceipt()" placeholder="(Optional) Add any additional comments or requests here." rows="5" id="comment"></textarea>
+				<textarea class="form-control teaching-call-form-comments" 
+				ng-model="view.state.comment" auto-input on-blur="updateComment()"
+				placeholder="(Optional) Add any additional comments or requests here."
+				rows="5" id="comment"></textarea>
 			</div>
 		</div>
 		<!-- right sidebars -->
@@ -182,7 +227,17 @@
 					<input class="list-checkbox" type="checkbox">Comments
 				</li>
 			</ul>
-			<button type="button" class="btn btn-white">Submit</button>
+			<button ng-if="!view.state.isDone" type="button" class="btn btn-white"
+							confirm-button="submitTeachingCallForm()"
+							confirm-is-enabled="!view.state.isDone"
+							btn-class="btn-primary"
+							message="Are you sure you want to submit your preferences?"
+							yes="Confirm" no="Cancel" placement="top">
+								Submit Preferences
+			</button>
+
+			<button ng-if="view.state.isDone" ng-click="submitTeachingCallForm()" type="button" class="btn btn-white">Update</button>
+
 		</aside>
 	</div>
 </div>

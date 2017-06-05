@@ -865,7 +865,6 @@ li.active-term .dropdown-term-row {
 }
 .search-course-container {
 	display: flex;
-	padding-left: 12px;
 	margin-top: 10px;
 	margin-bottom: 10px;
 	align-items: center;
@@ -880,6 +879,10 @@ li.active-term .dropdown-term-row {
 	position: absolute;
 	right: 7px;
 	bottom: 7px;
+}
+
+.search-course-container .dropdown-menu {
+	width: 38%;
 }
 
 #modal-1 {
@@ -933,7 +936,6 @@ li.active-term .dropdown-term-row {
 
 #teaching-call--course-preference .search-course-input {
 	width: 40%;
-	margin-left: auto;
 	margin-right: auto;
 }
 
@@ -1136,4 +1138,12 @@ table.availability-grid tr td {
 	color: #00A651;
 	cursor: pointer;
 	padding: 5px;
+}
+
+.availability-grid td {
+	width: 15%;
+}
+
+.teaching-call-form-comments {
+	height: 150px;
 }

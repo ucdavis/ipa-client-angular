@@ -326,7 +326,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 				// Ensure the assignment is not approved, from the instructor and the term of interest
 				if (termCode != slotAssignment.termCode 
 				|| instructorId != slotAssignment.instructorId
-				|| slotAssignment.approved != approved) {
+				|| slotAssignment.fromInstructor == false) {
 					return;
 				}
 
