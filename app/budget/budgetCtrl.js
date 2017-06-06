@@ -28,6 +28,9 @@ $(function() {
 	$('.form-group').find("span").bind('dblclick',function(){
 		$(this).attr('contentEditable',true);
     });
+	$('.testAb').find("span").bind('dblclick',function(){
+		$(this).attr('contentEditable',true);
+    });
 
 
             $('#courses-pivot').on('click', function(e) {

@@ -102,7 +102,6 @@
 }
 
 .description {
-    /*border: unset !important;*/
     padding: 0px !important;
 }
 
@@ -110,6 +109,7 @@
     display: block;
     max-width: 70%;
     overflow-x: hidden;
+    text-decoration: underline;
 }
 
 .form-group .span-full-width {
@@ -121,6 +121,10 @@
     max-width: 100%;
 }
 
+.testAb span {
+    text-decoration: underline;
+}
+
 [contenteditable]:focus {
     outline: 1px solid #E5E5E5 !important;
     background-color: #F9F9F9;
@@ -128,6 +132,7 @@
 
 [contenteditable] {
     border: 1px solid white;
+    text-decoration: underline;
 }
 
 [contenteditable]:hover {
@@ -194,6 +199,13 @@
 
 /* cash out - instructional */
 
+.cashout-instructional .course-title {
+    display: inline-block;
+    font-weight: bold;
+    margin: 0;
+    line-height: unset;
+}
+
 .cashout-instructional thead tr th {
     font-weight: bold;
     padding-bottom: 20px !important;
@@ -224,7 +236,7 @@
     background-color: white !important;
 }
 
-.cashout-instructional .bg-none {
+.cashout-instructional .course-title-row {
     background-color: white !important;
     border-bottom: 10px solid white;
  }
@@ -233,16 +245,14 @@
      background-color: #F5F5F5 !important;
  }
 
- .cashout-instructional .bg-none span {
-     display: inline-block;
- }
 
- .cashout-instructional .bg-none span i {
+ .cashout-instructional .course-title-row i {
      padding-left: 5px;
      cursor: pointer;
+     float: unset;
  }
 
- .cashout-instructional .bg-none span i:hover {
+ .cashout-instructional .course-title-row i:hover {
      color: lightslategray;
  }
 
