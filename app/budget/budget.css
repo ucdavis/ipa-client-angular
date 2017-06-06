@@ -242,6 +242,10 @@
      cursor: pointer;
  }
 
+ .cashout-instructional .bg-none span i:hover {
+     color: lightslategray;
+ }
+
 .btn-instr {
     width: 100% !important;
     background: #fff;
@@ -302,7 +306,24 @@
 }
 
 
+.notes-modal .course-notes {
+    height:450px;
+    overflow-y: auto;
+    margin: 0px !important;
+}
+
+.notes-modal .editor-name {
+    font-size: 12px !important;
+    padding: 10px 15px;
+    line-height: 1.66;
+    float: right;
+}
+
 /* overwrite */
+
+.dataTables_wrapper {
+    border: unset !important;
+}
 
 form .input-group input {
     border-radius: 4px !important;
