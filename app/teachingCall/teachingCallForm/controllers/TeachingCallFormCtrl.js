@@ -100,17 +100,16 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				var sortedPreferences = _array_sortByProperty(preferences, "priority");
 
 				// Construct preferenceId array
-				for (var i = 0; i < sortedPreferences.length; i++) {
-					var slotPreference = sortedPreferences[i];
+				sortedPreferences.forEach (function (slotPreference) {
 					sortedTeachingPreferenceIds.push(slotPreference.id);
 
 					if (slotPreference.id == preference.id) {
 						indexToSwap = i;
 					}
-				}
+				});
 
-				var temp = sortedTeachingPreferenceIds[indexToSwap-1];
-				sortedTeachingPreferenceIds[indexToSwap-1] = sortedTeachingPreferenceIds[indexToSwap];
+				var temp = sortedTeachingPreferenceIds[indexToSwap - 1];
+				sortedTeachingPreferenceIds[indexToSwap - 1] = sortedTeachingPreferenceIds[indexToSwap];
 				sortedTeachingPreferenceIds[indexToSwap] = temp;
 
 				$scope.updateAssignmentsOrder(sortedTeachingPreferenceIds, termCode);
@@ -124,17 +123,16 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				var sortedPreferences = _array_sortByProperty(preferences, "priority");
 
 				// Construct preferenceId array
-				for (var i = 0; i < sortedPreferences.length; i++) {
-					var slotPreference = sortedPreferences[i];
+				sortedPreferences.forEach (function (slotPreference) {
 					sortedTeachingPreferenceIds.push(slotPreference.id);
 
 					if (slotPreference.id == preference.id) {
 						indexToSwap = i;
 					}
-				}
+				});
 
-				var temp = sortedTeachingPreferenceIds[indexToSwap+1];
-				sortedTeachingPreferenceIds[indexToSwap+1] = sortedTeachingPreferenceIds[indexToSwap];
+				var temp = sortedTeachingPreferenceIds[indexToSwap + 1];
+				sortedTeachingPreferenceIds[indexToSwap + 1] = sortedTeachingPreferenceIds[indexToSwap];
 				sortedTeachingPreferenceIds[indexToSwap] = temp;
 
 				$scope.updateAssignmentsOrder(sortedTeachingPreferenceIds, termCode);
