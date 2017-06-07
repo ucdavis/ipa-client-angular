@@ -116,19 +116,11 @@
 				</ul>
 			</li>
 
-			<li ng-class="{ 'active': currentBaseHref == 'scheduling', 'opened': expanded == 'scheduling' || (!expanded && currentBaseHref == 'scheduling') }"
-				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
-				<a class="clickable" ng-click="toggleMenuItem('scheduling')">
-					<i class="entypo-calendar"></i>
+			<li ng-class="{ 'active': currentBaseHref == 'scheduling' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
+				<a ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}">
+					<i class="entypo-book"></i>
 					<span class="title">Scheduling</span>
 				</a>
-				<ul ng-class="{ 'visible': expanded == 'scheduling' || (!expanded && currentBaseHref == 'scheduling') }">
-					<li ng-repeat="term in getYearTerms() track by term.id" ng-class="{ 'active': currentBaseHref == 'scheduling' && termShortCode == term.shortCode }">
-						<a ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ term.shortCode }}">
-						{{ term.description }}
-					</a>
-					</li>
-				</ul>
 			</li>
 
 			<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport', 'opened': expanded == 'support' || (!expanded && currentBaseHref == 'instructionalSupport') }" 
