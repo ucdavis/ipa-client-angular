@@ -4,6 +4,15 @@
     border: 1px solid #D6D6D6;
 }
 
+
+.glyphicon-triangle-left {
+    transition: 0.1s linear;
+}
+.glyphicon-triangle-left-spin {
+    transform: rotate(-90deg);
+
+}
+
 .panel-group i {
     float: right;
     display: inline-block;
@@ -283,6 +292,9 @@
     line-height: 2.2;
 }
 
+.budget-table tr {
+    cursor: pointer;
+}
 
 /* modal */
 
@@ -416,24 +428,3 @@ form .form-group {
 .table > thead > tr > th {
     border-bottom:unset;
 }
-
-
-
-
-
-
-
-/* animation */
-@keyframes arrowspin {
-    from {background-color: red;}
-    to {background-color: yellow;}
-}
-
-.glyphicon-triangle-left {
-    transition: 0.1s linear;
-}
-.glyphicon-triangle-left-spin {
-    transform: rotate(-90deg)
-
-}
-
