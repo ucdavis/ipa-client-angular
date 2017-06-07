@@ -1,17 +1,17 @@
 {
 	"env": {
-    "es6": true,
+	"es6": true,
 		//enable nodejs environment
 		"node": true,
 		//enable browser environment
 		"browser": true
 	},
-  "parserOptions": {
-    "ecmaVersion": 6,
-  },
-  "ecmaFeatures": {
-    "arrowFunctions":true
-  },
+	"parserOptions": {
+		"ecmaVersion": 6,
+	},
+	"ecmaFeatures": {
+		"arrowFunctions":true
+	},
 	"rules": {
 		// Possible Errors
 		"no-debugger": 1, // warn about the use of debugger
