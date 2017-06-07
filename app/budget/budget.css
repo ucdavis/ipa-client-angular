@@ -316,6 +316,50 @@
 }
 
 
+.ta-reader-cost span {
+    text-decoration: unset !important;
+}
+
+.ta-reader-cost form {
+    width: 100%;
+    max-width: 300px;
+    margin: 30px auto;
+}
+.ta-reader-cost form input {
+    font-size: 14px;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-left: 0;
+    width: 100%;
+    color: #666;
+    border-radius: 0px 4px 4px 0px;
+}
+.ta-reader-cost form input:focus {
+    outline: 0;
+}
+
+.ta-reader-cost .flex {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.ta-reader-cost .flex .currency {
+    font-size: 14px;
+    padding: 0 10px 0 10px;
+    color: #999;
+    border: 1px solid #ccc;
+    border-right: 0;
+    line-height: 2.5;
+    border-radius: 4px 0 0 4px;
+    background: white;
+}
+
+.ta-reader-cost .amount-input {
+    border-radius: 0px 4px 4px 0px !important;
+    padding-right: 10px;
+    text-align: right;
+}
+
 .notes-modal .course-notes {
     height:450px;
     overflow-y: auto;
@@ -372,3 +416,24 @@ form .form-group {
 .table > thead > tr > th {
     border-bottom:unset;
 }
+
+
+
+
+
+
+
+/* animation */
+@keyframes arrowspin {
+    from {background-color: red;}
+    to {background-color: yellow;}
+}
+
+.glyphicon-triangle-left {
+    transition: 0.1s linear;
+}
+.glyphicon-triangle-left-spin {
+    transform: rotate(-90deg)
+
+}
+

@@ -144,7 +144,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#accordion-test1" href="#collapseOne" aria-expanded="false" class="collapsed">
+								<a data-toggle="collapse" data-parent="#accordion-test1" href="#collapseOne" aria-expanded="false" id="instructional-panel" class="collapsed">
 									Cash Out - Instructional <i class="glyphicon glyphicon-triangle-left"></i>
 								</a>
 							</h4>
@@ -200,7 +200,13 @@
 														</button>
 													</div>
 												</td>
-												<td class="buyout-section">Buyout</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Buyout
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
 												<td>$6,642</td>
 												<td>$20,000</td>
 											</tr>
@@ -226,7 +232,13 @@
 														</button>
 													</div>
 												</td>
-												<td class="buyout-section">Buyout</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Buyout
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
 												<td>$6,642</td>
 												<td>$20,000</td>
 											</tr>
@@ -252,7 +264,13 @@
 														</button>
 													</div>
 												</td>
-												<td class="buyout-section">Buyout</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Buyout
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
 												<td>$6,642</td>
 												<td>$20,000</td>
 											</tr>
@@ -286,7 +304,13 @@
 														</button>
 													</div>
 												</td>
-												<td class="buyout-section">Buyout</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Buyout
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
 												<td>$6,642</td>
 												<td>$20,000</td>
 											</tr>
@@ -302,7 +326,7 @@
 												</td>
 												<td class="line-item-none instr-dropdown">
 												</td>
-												<td class="line-item-none">Buyout</td>
+												<td class="line-item-none"></td>
 												<td class="line-item-none">$6,642</td>
 												<td>$20,000</td>
 											</tr>
@@ -328,7 +352,13 @@
 														</button>
 													</div>
 												</td>
-												<td>Nushi</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Buyout
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
 												<td>$6,642</td>
 												<td>$20,000</td>
 											</tr>
@@ -362,7 +392,13 @@
 														</button>
 													</div>
 												</td>
-												<td class="buyout-section">Buyout</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Buyout
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
 												<td>$6,642</td>
 												<td>$20,000</td>
 											</tr>
@@ -388,7 +424,13 @@
 														</button>
 													</div>
 												</td>
-												<td class="buyout-section">Buyout</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Buyout
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
 												<td>$6,642</td>
 												<td>$20,000</td>
 											</tr>
@@ -414,7 +456,13 @@
 														</button>
 													</div>
 												</td>
-												<td class="buyout-section">Buyout</td>
+												<td class="instr-dropdown">
+													<div class="dropdown">
+														<button class="btn btn-instr dropdown-toggle" type="button" data-toggle="dropdown">Buyout
+															<span class="caret"></span>
+														</button>
+													</div>
+												</td>
 												<td>$6,642</td>
 												<td>$20,000</td>
 											</tr>
@@ -436,7 +484,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
-								<a data-toggle="collapse" href="#collapseTwo" aria-expanded="false" class="collapsed">
+								<a data-toggle="collapse" href="#collapseTwo" aria-expanded="false" id="line-item-panel" class="collapsed">
 									Cash Out - Line Items<i class="glyphicon glyphicon-triangle-left"></i>
 								</a>
 							</h4>
@@ -1307,21 +1355,24 @@
 	</div>
 </div>
 <!-- add ta-reader cost -->
-<div class="budget-view modal fade" id="add-cost">
+<div class="budget-view ta-reader-cost modal fade" id="add-cost">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<h4 class="modal-title">TA &amp Reader Cost</h4>
 			</div>
-			<div class="modal-body">
+			<div id="cost-input-form" class="modal-body">
 				<div class="row">
 					<form role="form" class="form-horizontal">
 						<div class="form-group">
 							<label class="col-sm-5 control-label">TA Cost:</label>
 							<div class="col-sm-5">
 								<div class="input-group">
-									<input class="form-control" type="text">
+									<div class="flex">
+										<span class="currency">$</span>
+										<input class="amount-input" name="amount" maxlength="15" type="text">
+									</div>
 								</div>
 							</div>
 						</div>
@@ -1329,7 +1380,10 @@
 							<label class="col-sm-5 control-label">Reader Cost:</label>
 							<div class="col-sm-5">
 								<div class="input-group">
-									<input class="form-control" type="text">
+									<div class="flex">
+										<span class="currency">$</span>
+										<input class="amount-input" name="amount" maxlength="15" type="text">
+									</div>
 								</div>
 							</div>
 						</div>
