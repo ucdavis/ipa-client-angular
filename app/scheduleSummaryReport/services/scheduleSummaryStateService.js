@@ -43,6 +43,15 @@ scheduleSummaryReportApp.service('scheduleSummaryReportStateService', function (
 						slotSectionGroup.title = slotCourse.title;
 						slotSectionGroup.sequencePattern = slotCourse.sequencePattern;
 
+						// Set units value
+						if (slotCourse.unitsLow && slotCourse.unitsLow > 0) {
+							slotSectionGroup.units = slotCourse.unitsLow;
+						} else if (slotCourse.unitsHigh && slotCourse.unitsHigh > 0) {
+							slotSectionGroup.units = slotCourse.unitsHigh;
+						} else {
+							slotSectionGroup.units = 0;
+						}
+
 						sectionGroups.ids.push(slotSectionGroup.id);
 						sectionGroups.list[slotSectionGroup.id] = slotSectionGroup;
 					});

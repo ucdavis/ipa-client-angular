@@ -36,6 +36,7 @@
 					<th>Title</th>
 					<th>Section</th>
 					<th>CRN</th>
+					<th>Enrollment</th>
 					<th>Seats</th>
 					<th>Activity</th>
 					<th>Days</th>
@@ -70,14 +71,18 @@
 							</div>
 
 							<!-- Instructors -->
-							<div ng-show="$index==0"
-								class="section-group-instructors">
-								<div ng-repeat="instructor in sectionGroup.instructors track by $index"
-									class="section-diff-element section-instructors"
-									ng-click="setActiveChangeAction($event, instructor, $index)">
-									<span class="diff-content">
-										{{ instructor.fullName }}
-									</span>
+							<div ng-show="$index==0" class="course-details">
+								<div class="units-details">
+									Units: {{ sectionGroup.units }}
+								</div>
+								<div class="instructor-details">
+									<div ng-repeat="instructor in sectionGroup.instructors track by $index"
+										class="section-diff-element section-instructors"
+										ng-click="setActiveChangeAction($event, instructor, $index)">
+										<span class="diff-content">
+											{{ instructor.fullName }}
+										</span>
+									</div>
 								</div>
 							</div>
 						</td>
