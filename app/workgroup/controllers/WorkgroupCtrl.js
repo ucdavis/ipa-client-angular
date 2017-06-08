@@ -48,7 +48,7 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 			$scope.activeWorkgroupTab = $routeParams.tab;
 		} else {
 			// Otherwise redirect to the default view
-			$scope.setActiveTab('tags');
+			$scope.setActiveTab('people');
 		}
 	}]);
 
