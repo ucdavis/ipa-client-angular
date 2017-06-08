@@ -100,7 +100,7 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				var sortedPreferences = _array_sortByProperty(preferences, "priority");
 
 				// Construct preferenceId array
-				sortedPreferences.forEach (function (slotPreference) {
+				sortedPreferences.forEach (function (slotPreference, i) {
 					sortedTeachingPreferenceIds.push(slotPreference.id);
 
 					if (slotPreference.id == preference.id) {
@@ -123,7 +123,7 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				var sortedPreferences = _array_sortByProperty(preferences, "priority");
 
 				// Construct preferenceId array
-				sortedPreferences.forEach (function (slotPreference) {
+				sortedPreferences.forEach (function (slotPreference, i) {
 					sortedTeachingPreferenceIds.push(slotPreference.id);
 
 					if (slotPreference.id == preference.id) {
@@ -140,18 +140,6 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 
 			$scope.updateAssignmentsOrder = function(sortedTeachingPreferenceIds, termCode) {
 				teachingCallFormActionCreators.updateAssignmentsOrder(sortedTeachingPreferenceIds, $scope.view.state.scheduleId, termCode);
-			};
-
-			$scope.copyUnavailabilitiesToAllTerms = function(blob) {
-				//Cancel all pending timeouts
-				for (var termCode in $scope.timeout) {
-					$timeout.cancel($scope.timeout[termCode]);
-				}
-
-				angular.forEach($scope.view.state.terms, function(termContainer) {
-					termContainer.availabilityBlob = blob;
-					$scope.saveTeachingCallResponse(termContainer, blob, 0);
-				});
 			};
 
 			$scope.saveTeachingCallResponse = function(termContainer, newBlob, delay) {
@@ -196,6 +184,10 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				teachingCallFormActionCreators.submitTeachingCall(payload, $scope.workgroupId, $scope.year);
 			};
 
+			$scope.pretendSubmitForm = function() {
+				teachingCallFormActionCreators.pretendSubmitForm();
+			};
+
 			$scope.changeTerm = function (termCode) {
 				teachingCallFormActionCreators.changeTerm(termCode);
 			};
@@ -216,10 +208,6 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 			};
 
 			$scope.timeout = {};
-			setTimeout(function() {
-				$( ".sortable-list" ).sortable();
-			}, 1000);
-
 	}]);
 
 TeachingCallFormCtrl.validate = function (authService, teachingCallFormActionCreators, $route) {

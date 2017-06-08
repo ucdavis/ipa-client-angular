@@ -1110,34 +1110,29 @@ table.availability-grid tr td {
 	list-style: none;
 }
 
-.teaching-call--academic-term-sidebar ul li {
-	cursor: pointer;
+.teaching-call-form .current-academic-term,
+.teaching-call-form .current-academic-term:hover {
+	border: 1px solid rgb(48, 54, 65);
+	border-radius: 3px;
+	background-color: rgb(48, 54, 65);
+	color: white;
+	cursor: default;
 	padding: 5px;
 }
 
-.current-academic-term {
-	border: 1px solid #00A651;
-	border-radius: 3px;
-	color: #00A651;
+.academic-term {
 	cursor: pointer;
+	padding: 6px;
 }
 
-.unassigned-academic-term {
-	color: #CECECE !important;
-}
-
-.unassigned-academic-term:hover {
-	color: #CECECE;
+.academic-term:hover {
+	padding: 5px;
+	border: 1px solid rgb(48, 54, 65);
+	border-radius: 3px;
 }
 
 .teaching-call--academic-term-sidebar ul {
 	margin-top: 15px;
-}
-
-.teaching-call--academic-term-sidebar ul li:hover {
-	color: #00A651;
-	cursor: pointer;
-	padding: 5px;
 }
 
 .availability-grid td {
@@ -1159,4 +1154,22 @@ table.availability-grid tr td {
 .teaching-call-form .assigned-preference {
 	background-color: #d9edf7;
 	color: #31708f;
+}
+
+.teaching-call-form .sub-header-container {
+	display: flex;
+	justify-content: space-between;
+}
+
+.teaching-call-form .available-color {
+	background-color:#fff;
+}
+
+
+.teaching-call-form .unavailability-color {
+	background-color:#ccc;
+}
+
+.teaching-call-form {
+	padding-bottom: 100px;
 }

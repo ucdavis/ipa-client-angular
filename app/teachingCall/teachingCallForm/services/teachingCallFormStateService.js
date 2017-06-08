@@ -107,6 +107,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					// Calculate Checklist values
 					this.calculateChecklist(pageState);
 
+					pageState.formHasChanges = false;
 					return pageState;
 				case UPDATE_TEACHING_ASSIGNMENT_ORDER:
 					var sortedIds = action.payload.sortedTeachingAssignmentIds;
@@ -131,6 +132,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					// Calculate Checklist values
 					this.calculateChecklist(pageState);
 
+					pageState.formHasChanges = true;
 					return pageState;
 				case ADD_PREFERENCE:
 					var termCode = action.payload.termCode;
@@ -154,6 +156,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					// Calculate Checklist values
 					this.calculateChecklist(pageState);
 
+					pageState.formHasChanges = true;
 					return pageState;
 				case REMOVE_PREFERENCE:
 					var termCode = action.payload.termCode;
@@ -190,6 +193,16 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					// Calculate Checklist values
 					this.calculateChecklist(pageState);
 
+					pageState.formHasChanges = true;
+					return pageState;
+				case ADD_TEACHING_CALL_RESPONSE:
+					pageState.formHasChanges = true;
+					return pageState;
+				case UPDATE_TEACHING_CALL_RESPONSE:
+					pageState.formHasChanges = true;
+					return pageState;
+				case UPDATE_TEACHING_CALL_RECEIPT:
+					pageState.formHasChanges = true;
 					return pageState;
 				case CHANGE_TERM:
 					// selectedTermCode
@@ -203,6 +216,9 @@ teachingCallApp.service('teachingCallFormStateService', function (
 							}
 					});
 
+					return pageState;
+				case PRETEND_SUBMIT_FORM:
+					pageState.formHasChanges = false;
 					return pageState;
 				default:
 					return pageState;

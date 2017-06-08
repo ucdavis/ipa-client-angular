@@ -59,7 +59,7 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 		submitTeachingCall: function (teachingCallReceipt, workgroupId, year) {
 			teachingCallFormService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
 				var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor";
-				$window.location.href = instructorSummaryUrl;
+				$rootScope.$emit('toast', { message: "Preferences saved.", type: "SUCCESS" });
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
@@ -67,6 +67,7 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 		createAvailability: function (teachingCallResponse) {
 			teachingCallFormService.createAvailability(teachingCallResponse).then(function (teachingCallResponse) {
 				$rootScope.$emit('toast', { message: "Updated availablities", type: "SUCCESS" });
+
 				var action = {
 					type: ADD_TEACHING_CALL_RESPONSE,
 					payload: {
@@ -118,6 +119,14 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 				}
 			};
 
+			teachingCallFormStateService.reduce(action);
+		},
+		pretendSubmitForm: function () {
+			var action = {
+				type: PRETEND_SUBMIT_FORM,
+				payload: {}
+			};
+			$rootScope.$emit('toast', { message: "Preferences saved.", type: "SUCCESS" });
 			teachingCallFormStateService.reduce(action);
 		}
 	};
