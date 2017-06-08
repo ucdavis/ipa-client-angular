@@ -10,7 +10,7 @@ adminApp.factory("adminService", this.adminService = function($http, $q) {
 	return {
 		getAdminView: function() {
 			var deferred = $q.defer();
-
+			debugger;
 			$http.get(serverRoot + "/api/adminView", { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
