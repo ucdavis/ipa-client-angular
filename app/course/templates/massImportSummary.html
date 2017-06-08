@@ -46,7 +46,10 @@
 						<label>Import Instructor Assignments</label>
 					</div>
 					</div>
-					<button class="btn btn-primary" ng-click="importCoursesAndSectionGroups()">Import courses</button>
+					<div class="mass-import-button-container">
+						<button class="btn btn-default cancel" ng-click="endImportMode()">Cancel</button>
+						<button class="btn btn-primary" ng-click="importCoursesAndSectionGroups()">Import courses</button>
+					</div>
 				</div>
 			</div>
 		</div>

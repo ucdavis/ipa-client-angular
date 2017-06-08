@@ -143,12 +143,12 @@
 
 </div>
 
-<div class="fixed right-details hidden-print">
+	<div class="fixed right-details hidden-print">
 
-	<new-course ng-if="view.selectedEntity && view.selectedEntityType == 'newCourse'"></new-course>
-	<course-details ng-if="view.selectedEntity && view.selectedEntityType == 'course'"></course-details>
-	<section-group-details ng-if="view.selectedEntity && view.selectedEntityType == 'sectionGroup'"></section-group-details>
-	<mass-import-summary ng-if="view.state.uiState.massImportMode"></mass-import-summary>
-</div>
+		<new-course ng-if="view.selectedEntity && view.selectedEntityType == 'newCourse'"></new-course>
+		<course-details ng-if="view.selectedEntity && view.selectedEntityType == 'course'"></course-details>
+		<section-group-details ng-if="view.selectedEntity && view.selectedEntityType == 'sectionGroup'"></section-group-details>
+		<mass-import-summary ng-if="view.state.uiState.massImportMode"></mass-import-summary>
+	</div>
 </div>
 </div>

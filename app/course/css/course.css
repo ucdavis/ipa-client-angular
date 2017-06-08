@@ -747,3 +747,12 @@ td.import-course.course-cell {
 .new-course-typeahead-status ul.dropdown-menu {
 	display: block;
 }
+
+.course-view-container .mass-import-button-container {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.course-view-container .mass-import-button-container .cancel {
+	margin-right: 5px;
+}
