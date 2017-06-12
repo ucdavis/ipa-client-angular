@@ -91,7 +91,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					// Calculate termSelection UI
 					pageState.termSelection = [];
 
-					pageState.terms.forEach( (term) => {
+					pageState.terms.forEach( function(term) {
 						newTerm = {};
 						newTerm.description = term.termDescription;
 						newTerm.isSelected = false;
