@@ -23,19 +23,38 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 						var dwSectionData = action.payload.sectionDiffs[i].dwSection;
 						var sectionChanges = action.payload.sectionDiffs[i].changes;
 						var syncActions = action.payload.sectionDiffs[i].syncActions;
-						sectionList[ipaSectionData.id] = new Section(ipaSectionData);
+
+						var sectionKey = null;
+						// Calculate unique key of subj-course-seq, example : 'art-001-A01'
+						if (ipaSectionData) {
+							sectionKey = ipaSectionData.uniqueKey;
+							sectionList[sectionKey] = new Section(ipaSectionData);
+						} else if (dwSectionData) {
+							sectionKey = dwSectionData.uniqueKey;
+							sectionList[sectionKey] = new Section(dwSectionData);
+						} else {
+							continue;
+						}
+
+						sections.ids.push(sectionKey);
+
+						var slotSection = sectionList[sectionKey];
 
 						// translate DiffView changes list into stateService language
-						if (sectionChanges === null) {
+						if (ipaSectionData != null && dwSectionData == null && sectionChanges == null) {
 							// DW version does not exist
-							sectionList[ipaSectionData.id].dwHasChanges = true;
-							sectionList[ipaSectionData.id].noRemote = true;
+							slotSection.dwHasChanges = true;
+							slotSection.noRemote = true;
+						} else if (ipaSectionData == null && dwSectionData != null && sectionChanges == null) {
+							// IPA version does not exist
+							slotSection.dwHasChanges = true;
+							slotSection.noIpaVersion = true;
 						} else if (sectionChanges.length === 0) {
 							// DW version matches IPA!
-							sectionList[ipaSectionData.id].dwHasChanges = false;
+							slotSection.dwHasChanges = false;
 						} else {
 							// DW version does have some changes
-							sectionList[ipaSectionData.id].dwHasChanges = true;
+							slotSection.dwHasChanges = true;
 							if (sectionChanges) {
 								sectionChanges.forEach(function (change) {
 
@@ -48,7 +67,7 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 													return instructorChange.removedValue;
 												}).forEach(function (instructorChange) {
 													var uniqueKey = instructorChange.removedValue.cdoId;
-													var instructor = _.find(sectionList[ipaSectionData.id].instructors, { uniqueKey: uniqueKey });
+													var instructor = _.find(slotSection.instructors, { uniqueKey: uniqueKey });
 													instructor.noRemote = true;
 												});
 											// DW has extra instructors, flag them, then add them to the current section
@@ -60,7 +79,7 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 													instructor.noLocal = true;
 													return instructor;
 												}).forEach(function (instructor) {
-													var instructors = sectionList[ipaSectionData.id].instructors;
+													var instructors = slotSection.instructors;
 													instructors.push(instructor);
 												});
 											break;
@@ -72,7 +91,7 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 													return activityChange.removedValue;
 												}).forEach(function (activityChange) {
 													var uniqueKey = activityChange.removedValue.cdoId;
-													var activities = sectionList[ipaSectionData.id].activities;
+													var activities = slotSection.activities;
 													activities[activityChange.index].noRemote = true;
 												});
 											// DW has extra activities, flag them, then add them to the current section
@@ -84,7 +103,7 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 													activity.noLocal = true;
 													return activity;
 												}).forEach(function (activity) {
-													var activities = sectionList[ipaSectionData.id].activities;
+													var activities = slotSection.activities;
 													activities.push(activity);
 												});
 											break;
@@ -92,16 +111,16 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 										case "startTime":
 										case "endTime":
 										case "dayIndicator":
-											activity = _.find(sectionList[ipaSectionData.id].activities, { uniqueKey: change.affectedLocalId });
+											activity = _.find(slotSection.activities, { uniqueKey: change.affectedLocalId });
 											activity.dwChanges = activity.dwChanges || {};
 											activity.dwChanges[change.propertyName] = { isToDo: false };
 											activity.dwChanges[change.propertyName].value = change.right;
 											break;
 										case "crn":
 										case "seats":
-											sectionList[ipaSectionData.id].dwChanges = sectionList[ipaSectionData.id].dwChanges || {};
-											sectionList[ipaSectionData.id].dwChanges[change.propertyName] = { isToDo: false };
-											sectionList[ipaSectionData.id].dwChanges[change.propertyName].value = change.right;
+											slotSection.dwChanges = slotSection.dwChanges || {};
+											slotSection.dwChanges[change.propertyName] = { isToDo: false };
+											slotSection.dwChanges[change.propertyName].value = change.right;
 											break;
 										case undefined:
 											// Skip changes that have no property specified
@@ -117,17 +136,19 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 
 						// Apply syncActions to section properties
 						for (var s = 0; s < syncActions.length; s++) {
-							sectionList[ipaSectionData.id] = this._togglePropertyToDo(sectionList[ipaSectionData.id], syncActions[s]);
+							slotSection = this._togglePropertyToDo(slotSection, syncActions[s]);
 						}
 					}
-					sections.ids = _array_sortIdsByProperty(sectionList, ["subjectCode", "courseNumber", "sequenceNumber"]);
+
+					sections.ids.sort();
 
 					// Flag the first section in a sectionGroup as a groupHead
 					var uniqSectionGroupKeys = [];
 					sections.ids.forEach(function (id) {
+
 						var sequencePattern = isNumber(sectionList[id].sequenceNumber) ?
 							sectionList[id].sequenceNumber : sectionList[id].sequenceNumber.charAt(0);
-						var uniqueKey = sectionList[id].subjectCode + '-' + sectionList[id].courseNumber + '-' + sequencePattern;
+						var uniqueKey = sectionList[id].uniqueKey;
 						if (uniqSectionGroupKeys.indexOf(uniqueKey) < 0) {
 							uniqSectionGroupKeys.push(uniqueKey);
 							sectionList[id].groupHead = true;

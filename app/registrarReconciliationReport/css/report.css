@@ -294,3 +294,9 @@ span.sis-tool-icon {
 .report-container .main-content {
 	display: block;
 }
+
+.no-ipa-version {
+	color: #fff;
+	background-color: yellow;
+	border-color: yellow;
+}
