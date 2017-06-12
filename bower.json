@@ -32,6 +32,7 @@
   },
   "resolutions": {
     "jquery": "2.2.4",
-    "angular": "1.5.8"
+    "angular": "1.5.8",
+    "fullcalendar": "2.3.1"
   }
 }
