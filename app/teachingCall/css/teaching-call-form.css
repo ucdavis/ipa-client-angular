@@ -848,13 +848,17 @@ li.active-term .dropdown-term-row {
 	outline-width: 0;
 }
 
+.scrollable-dropdown-menu {
+	width: 40%;
+}
+
 .scrollable-dropdown-menu .dropdown-menu {
 	max-height: 400px;
 	overflow-y: auto;
 }
 
 .search-course-input {
-	width: 132px;
+	width: 100%;
 	flex: 0 0 auto;
 	text-align: center;
 }
@@ -865,8 +869,6 @@ li.active-term .dropdown-term-row {
 }
 .search-course-container {
 	display: flex;
-	margin-top: 10px;
-	margin-bottom: 10px;
 	align-items: center;
 	justify-content: center;
 }
@@ -882,7 +884,7 @@ li.active-term .dropdown-term-row {
 }
 
 .search-course-container .dropdown-menu {
-	width: 38%;
+	width: 26%;
 }
 
 #modal-1 {
@@ -938,12 +940,10 @@ li.active-term .dropdown-term-row {
 }
 
 #teaching-call--course-preference .search-course-input {
-	width: 40%;
 	margin-right: auto;
 }
 
 .select-preference-btn {
-	position: absolute;
 	top: 3px;
 	left: 5px
 }
@@ -982,16 +982,6 @@ li.active-term .dropdown-term-row {
 
 #teaching-call--course-preference table td:nth-child(2) {
 	text-align: left !important;
-}
-
-#teaching-call--course-preference table tr:first-child td .glyphicon-chevron-up {
-	cursor: no-drop;
-	background-color: white;
-}
-
-#teaching-call--course-preference table tr:nth-last-child(2) td .glyphicon-chevron-down {
-	cursor: no-drop;
-	background-color: white;
 }
 
 #teaching-call--course-preference table thead tr th:first-child {
@@ -1175,4 +1165,113 @@ table.availability-grid tr td {
 
 .teaching-call-form {
 	padding-bottom: 100px;
+}
+
+.teaching-call-form .preference-cell {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.teaching-call-form .cell {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.teaching-call-form .preference-table {
+	width: 100%;
+	padding-bottom: 30px;
+}
+
+.teaching-call-form .preference-table .header-row {
+	background-color: #f5f5f6;
+	color: #a6a7aa;
+	display: flex;
+}
+
+.teaching-call-form .preference-table .header-cell-skinny {
+	flex: 1 0 0px;
+	padding: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.teaching-call-form .preference-table .header-cell-fat {
+	flex: 5 0 0px;
+	padding: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.teaching-call-form .preference-table .assignment-row {
+	background-color: #d9edf7;
+	color: #31708f;
+	display: flex;
+}
+
+.teaching-call-form .preference-table .assignment-row .preference-cell {
+
+}
+
+.teaching-call-form .preference-table .preference-row {
+	display: flex;
+
+}
+
+.teaching-call-form .preference-table .priority-cell {
+	flex: 1 0 0px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.teaching-call-form .preference-table .priority-cell .priority-child {
+	flex: 1 1 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.teaching-call-form .priority-child.select-preference-btn {
+	flex-direction: column;
+}
+
+.teaching-call-form .preference-table .glyphicon-chevron-up,
+.teaching-call-form .preference-table .glyphicon-chevron-down  {
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
+.teaching-call-form .preference-table .disable-chevron {
+	cursor: no-drop;
+	background-color: white;
+}
+
+.teaching-call-form .preference-table .seats-cell {
+	flex: 1 0 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.teaching-call-form .preference-table .preference-cell {
+	flex: 5 0 0px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.teaching-call-form .outline {
+	border: 1px solid #ebebeb;
+	margin-top: -1px;
+	margin-right: -1px;
+	padding: 10px;
+}
+
+/* Make outline invisible, match background color */
+.teaching-call-form .assignment-row .outline {
+	border: 1px solid #d9edf7;
 }
