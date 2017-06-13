@@ -108,6 +108,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					this.calculateChecklist(pageState);
 
 					pageState.formHasChanges = false;
+					pageState.formJustSubmitted = false;
 					return pageState;
 				case UPDATE_TEACHING_ASSIGNMENT_ORDER:
 					var sortedIds = action.payload.sortedTeachingAssignmentIds;
@@ -219,6 +220,7 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					return pageState;
 				case PRETEND_SUBMIT_FORM:
 					pageState.formHasChanges = false;
+					pageState.formJustSubmitted = true;
 					return pageState;
 				default:
 					return pageState;

@@ -159,7 +159,7 @@
 		</div>
 		<!-- right sidebars -->
 		<aside class="teaching-call--academic-term-sidebar">
-			<h5 class="text-center">Select Academic Term</h5>
+			<h5 class="text-center">Academic Term</h5>
 			<ul>
 				<li ng-repeat="term in view.state.termSelection"
 						ng-class="term.isSelected ? 'current-academic-term' : 'academic-term'"
@@ -169,7 +169,7 @@
 			</ul>
 		</aside>
 		<aside class="teaching-call--progress-sidebar">
-			<h5 class="text-center">Checklist</h5>
+			<h5 class="text-center">Review</h5>
 			<ul>
 				<li>
 					<i ng-if="view.state.checklist.preferencesChecked" class="glyphicon glyphicon-ok text-success checklist-item" tooltip-placement="left" uib-tooltip="Preferences received."></i>
@@ -213,10 +213,13 @@
 
 			<!-- pretend submit button -->
 			<button ng-if="view.state.isDone && view.state.formHasChanges == true"
-							ng-click="pretendSubmitForm()" type="button" class="btn btn-white">
+							ng-click="pretendSubmitForm()" type="button" class="btn btn-primary">
 				Submit
 			</button>
 
+			<div class="submit-success-label" ng-if="view.state.formJustSubmitted">
+				Your preferences have been saved, you may close the window
+			</div>
 		</aside>
 	</div>
 </div>
