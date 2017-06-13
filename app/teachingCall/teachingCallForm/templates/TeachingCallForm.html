@@ -34,7 +34,7 @@
 							<td>
 							</td>
 							<td>
-								{{ preference.description }}
+								{{ preference.description }} {{ preference.title }}
 							</td>
 							<td>{{ preference.plannedSeats }}</td>
 						</tr>
@@ -49,7 +49,7 @@
 								</div>
 								<span>{{ generateDisplayRank(preference, term.preferences) }}</span></td>
 							<td>
-								{{ preference.description }}
+								{{ preference.description }} {{ preference.title }}
 								<div confirm-button="removePreference(preference)"
 									message="Are you sure you want to delete this preference"
 									yes="Delete" no="Cancel" placement="bottom"
