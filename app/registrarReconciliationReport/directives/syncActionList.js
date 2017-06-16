@@ -19,6 +19,17 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 				reportActionCreators.deleteBannerToDoItem(item);
 			};
 
+			scope.findSectionUniqueKeyById = function (id, sections) {
+				for (var i = 0; i < sections.ids.length; i++) {
+					var sectionUniqueKey = sections.ids[i];
+					var section = sections.list[sectionUniqueKey];
+					if (section.id == id) {
+						return sectionUniqueKey;
+					}
+				}
+
+				return null;
+			};
 			scope.download = function () {
 				var blob = new Blob([
 					scope.view.listItems.map(function (li) {
@@ -33,13 +44,14 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 			};
 
 			$rootScope.$on('reportStateChanged', function (event, data) {
-
 				// Empty the current list to rescan/rebuild
 				scope.view.listItems.length = 0;
 
 				data.state.syncActions.ids.forEach(function (id) {
 					var syncAction = data.state.syncActions.list[id];
-					var section = data.state.sections.list[syncAction.sectionId];
+					var sectionUniqueKey = scope.findSectionUniqueKeyById(syncAction.sectionId, data.state.sections);
+					var section = data.state.sections.list[sectionUniqueKey];
+
 					if (!section) {
 						return;
 					}
