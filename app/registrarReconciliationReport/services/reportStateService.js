@@ -160,7 +160,7 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 					sections.list = sectionList;
 					return sections;
 				case UPDATE_SECTION:
-					section = sections.list[action.payload.section.id];
+					section = sections.list[action.payload.uniqueKey];
 					// Apply the changes on the section
 					section[action.payload.property] = action.payload.section[action.payload.property];
 					// Delete the applied change from the dwChanges object

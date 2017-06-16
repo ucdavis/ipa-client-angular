@@ -15,7 +15,7 @@ registrarReconciliationReportApp.directive("seatsDiff", this.seatsDiff = functio
 					id: scope.section.id,
 					seats: seats
 				};
-				reportActionCreators.updateSection(section, 'seats');
+				reportActionCreators.updateSection(section, 'seats', scope.section.uniqueKey);
 			};
 		}
 	};

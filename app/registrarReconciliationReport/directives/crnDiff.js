@@ -12,10 +12,10 @@ registrarReconciliationReportApp.directive("crnDiff", this.crnDiff = function (r
 
 			scope.updateCrn = function (sectionId, crn) {
 				var section = {
-					id: sectionId,
+					id: scope.section.id,
 					crn: crn
 				};
-				reportActionCreators.updateSection(section, 'crn');
+				reportActionCreators.updateSection(section, 'crn', scope.section.uniqueKey);
 			};
 		}
 	};

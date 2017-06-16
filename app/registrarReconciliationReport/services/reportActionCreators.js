@@ -29,14 +29,15 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 		 * @param section
 		 * @param property
 		 */
-		updateSection: function (section, property) {
+		updateSection: function (section, property, uniqueKey) {
 			reportService.updateSection(section).then(function (updatedSection) {
 				$rootScope.$emit('toast', { message: "Updated section " + updatedSection.sequenceNumber + " " + property, type: "SUCCESS" });
 				var action = {
 					type: UPDATE_SECTION,
 					payload: {
 						section: updatedSection,
-						property: property
+						property: property,
+						uniqueKey: uniqueKey
 					}
 				};
 				reportStateService.reduce(action);
