@@ -36,7 +36,9 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 							continue;
 						}
 
-						sections.ids.push(sectionKey);
+						if (sections.ids.indexOf(sectionKey) == -1) {
+							sections.ids.push(sectionKey);
+						}
 
 						var slotSection = sectionList[sectionKey];
 
@@ -48,7 +50,7 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 						} else if (ipaSectionData == null && dwSectionData != null && sectionChanges == null) {
 							// IPA version does not exist
 							slotSection.dwHasChanges = true;
-							slotSection.noIpaVersion = true;
+							slotSection.noLocal = true;
 						} else if (sectionChanges.length === 0) {
 							// DW version matches IPA!
 							slotSection.dwHasChanges = false;

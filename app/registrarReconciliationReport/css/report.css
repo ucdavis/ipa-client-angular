@@ -29,7 +29,6 @@ table.section-diff-table > tbody > tr.section-diff-row:last-child > td {
 }
 
 table.section-diff-table > tbody > tr.section-diff-row > td {
-	color: #777;
 	line-height: 1.2em;
 	border-right: 1px solid #ddd;
 }
@@ -91,6 +90,7 @@ tr.section-activity-diff-row.no-changes * {
 }
 
 /* Special styles for changes that affect entire row */
+tr.no-local td,
 tr.no-remote td,
 table.section-diff-table > tbody > tr.section-diff-row.no-remote > td,
 table.section-diff-table > tbody > tr.activity-diff-row.no-remote > td
@@ -296,7 +296,13 @@ span.sis-tool-icon {
 }
 
 .no-ipa-version {
-	color: #fff;
-	background-color: yellow;
-	border-color: yellow;
+	color: white;
+	background-color: rgba(139, 0, 0, 0.5);
+	border-color: darkred;
+}
+
+.no-ipa-version:hover {
+	color: white;
+	background-color: rgba(139, 0, 0, 0.5);
+	border-color: darkred;
 }

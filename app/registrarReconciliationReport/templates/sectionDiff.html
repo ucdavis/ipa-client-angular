@@ -1,6 +1,6 @@
 <tr class="section-diff-row" ng-class="{
 	'no-changes': !section.dwHasChanges,
-	'no-ipa-version': section.noIpaVersion,
+	'no-local has-changes': section.noLocal && !section.isToDo,
 	'no-remote has-changes': section.noRemote && !section.isToDo,
 	'head-section': section.groupHead }" ng-click="setActiveChangeAction($event, section, $index)">
 
@@ -22,7 +22,7 @@
 			is-active="view.hasAccess"></change-action>
 
 		<!-- Action when section does not exist in Banner -->
-		<change-action ng-if="section.noIpaVersion" ng-show="view.activeChangeAction == section.uniqueKey + $index"
+		<change-action ng-if="section.noLocal" ng-show="view.activeChangeAction == section.uniqueKey + $index"
 			title="Section {{ section.sequenceNumber }} does not exist in IPA" sis-value-message="Add to IPA"
 			ipa-value-message="Mark to remove from Banner" apply-sis="createSection(section)" apply-ipa="toggleBannerToDoItem()"
 			is-active="view.hasAccess"></change-action>

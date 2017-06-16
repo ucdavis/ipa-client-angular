@@ -40,6 +40,10 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 				data.state.syncActions.ids.forEach(function (id) {
 					var syncAction = data.state.syncActions.list[id];
 					var section = data.state.sections.list[syncAction.sectionId];
+					if (!section) {
+						return;
+					}
+
 					var activity;
 
 					if (syncAction.sectionProperty && syncAction.childUniqueKey && syncAction.childProperty) {
@@ -133,6 +137,7 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 							$log.debug("Unknown section property in a syncAction", syncAction.sectionProperty);
 						}
 					} else if (syncAction.sectionProperty) {
+
 						// Section property as todo (example: update seats)
 						if (!(section.dwChanges && section.dwChanges[syncAction.sectionProperty])) {
 							$log.debug("Section with uniqueKey " + section.uniqueKey + " property (" + syncAction.sectionProperty + ") no longer differs");
