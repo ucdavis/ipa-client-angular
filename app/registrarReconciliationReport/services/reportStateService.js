@@ -222,16 +222,16 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 
 					return sections;
 				case CREATE_ACTIVITY:
-					section = sections.list[action.payload.section.id];
+					section = sections.list[action.payload.section.uniqueKey];
 					// Set the id of the persisted activity
 					section.activities[action.payload.activityIndex].id = action.payload.activity.id;
 					// Remove the noLocal flag
 					delete section.activities[action.payload.activityIndex].noLocal;
 					return sections;
 				case DELETE_SECTION:
-					var idIndex = sections.ids.indexOf(action.payload.section.id);
+					var idIndex = sections.ids.indexOf(action.payload.section.uniqueKey);
 					sections.ids.splice(idIndex, 1);
-					delete sections.list[action.payload.section.id];
+					delete sections.list[action.payload.section.uniqueKey];
 					return sections;
 				case CREATE_SYNC_ACTION:
 					section = sections.list[action.payload.syncAction.sectionId];
