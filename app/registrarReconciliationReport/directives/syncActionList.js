@@ -30,6 +30,7 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 
 				return null;
 			};
+
 			scope.download = function () {
 				var blob = new Blob([
 					scope.view.listItems.map(function (li) {
@@ -51,7 +52,7 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 					var syncAction = data.state.syncActions.list[id];
 					var sectionUniqueKey = scope.findSectionUniqueKeyById(syncAction.sectionId, data.state.sections);
 					var section = data.state.sections.list[sectionUniqueKey];
-
+					syncAction.sectionUniqueKey = sectionUniqueKey;
 					if (!section) {
 						return;
 					}

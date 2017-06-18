@@ -11,7 +11,7 @@ registrarReconciliationReportApp.directive("sectionDiff", this.sectionDiff = fun
 			scope.section = scope.view.state.sections.list[scope.sectionId];
 
 			scope.toggleBannerToDoItem = function (property, childUniqueKey, childProperty) {
-				reportActionCreators.createBannerToDoItem(scope.section.id, property, childUniqueKey, childProperty);
+				reportActionCreators.createBannerToDoItem(scope.section.id, property, childUniqueKey, childProperty, scope.section.uniqueKey);
 			};
 
 			scope.setActiveChangeAction = function (event, object, index, property) {

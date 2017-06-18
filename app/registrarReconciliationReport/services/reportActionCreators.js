@@ -184,19 +184,21 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 		 * @param childUniqueKey: can be an activity or an instructor uniqueKey
 		 * @param childProperty: for activities this can be dayIndicator, startTime, endTime, location. null value applies the to-do to the whole activity
 		 */
-		createBannerToDoItem: function (sectionId, sectionProperty, childUniqueKey, childProperty) {
+		createBannerToDoItem: function (sectionId, sectionProperty, childUniqueKey, childProperty, sectionUniqueKey) {
 			var newSyncAction = {
 				sectionId: sectionId,
 				sectionProperty: sectionProperty,
 				childUniqueKey: childUniqueKey,
 				childProperty: childProperty
 			};
+
 			reportService.createSyncAction(newSyncAction).then(function (syncAction) {
 				$rootScope.$emit('toast', { message: "Created to-do item", type: "SUCCESS" });
 				var action = {
 					type: CREATE_SYNC_ACTION,
 					payload: {
-						syncAction: syncAction
+						syncAction: syncAction,
+						sectionUniqueKey: sectionUniqueKey
 					}
 				};
 				reportStateService.reduce(action);

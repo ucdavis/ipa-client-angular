@@ -234,13 +234,13 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 					delete sections.list[action.payload.section.uniqueKey];
 					return sections;
 				case CREATE_SYNC_ACTION:
-					section = sections.list[action.payload.syncAction.sectionId];
+					section = sections.list[action.payload.sectionUniqueKey];
 					if (!section) { return sections; }
 
 					section = this._togglePropertyToDo(section, action.payload.syncAction);
 					return sections;
 				case DELETE_SYNC_ACTION:
-					section = sections.list[action.payload.syncAction.sectionId];
+					section = sections.list[action.payload.syncAction.sectionUniqueKey];
 					if (!section) { return sections; }
 
 					section = this._togglePropertyToDo(section, action.payload.syncAction, true);
