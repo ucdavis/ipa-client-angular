@@ -114,6 +114,22 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+
+		createSection: function (section) {
+			reportService.createSection(section).then(function (newSection) {
+				$rootScope.$emit('toast', { message: "Created Section", type: "SUCCESS" });
+				var action = {
+					type: CREATE_SECTION,
+					payload: {
+						section: section
+					}
+				};
+				reportStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+
 		/**
 		 * Assigns instructor to the section's sectionGroup
 		 *
@@ -184,12 +200,13 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 		 * @param childUniqueKey: can be an activity or an instructor uniqueKey
 		 * @param childProperty: for activities this can be dayIndicator, startTime, endTime, location. null value applies the to-do to the whole activity
 		 */
-		createBannerToDoItem: function (sectionId, sectionProperty, childUniqueKey, childProperty, sectionUniqueKey) {
+		createBannerToDoItem: function (sectionId, sectionProperty, childUniqueKey, childProperty, sectionUniqueKey, sectionGroupId) {
 			var newSyncAction = {
 				sectionId: sectionId,
 				sectionProperty: sectionProperty,
 				childUniqueKey: childUniqueKey,
-				childProperty: childProperty
+				childProperty: childProperty,
+				sectionGroupId: sectionGroupId
 			};
 
 			reportService.createSyncAction(newSyncAction).then(function (syncAction) {

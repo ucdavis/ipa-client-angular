@@ -21,7 +21,7 @@
 			ipa-value-message="Mark to add in Banner" apply-sis="deleteSection(section)" apply-ipa="toggleBannerToDoItem()"
 			is-active="view.hasAccess"></change-action>
 
-		<!-- Action when section does not exist in Banner -->
+		<!-- Action when section does not exist in IPA -->
 		<change-action ng-if="section.noLocal" ng-show="view.activeChangeAction == section.uniqueKey + $index"
 			title="Section {{ section.sequenceNumber }} does not exist in IPA" sis-value-message="Add to IPA"
 			ipa-value-message="Mark to remove from Banner" apply-sis="createSection(section)" apply-ipa="toggleBannerToDoItem()"

@@ -47,6 +47,19 @@ registrarReconciliationReportApp.factory("reportService", this.reportService = f
 
 			return deferred.promise;
 		},
+		createSection: function (section) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/reportView/sectionGroups/" + section.sectionGroupId + "/sections/" + section.sequenceNumber, section, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
+		},
 		updateActivity: function (activity) {
 			var deferred = $q.defer();
 

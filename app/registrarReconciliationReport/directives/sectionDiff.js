@@ -11,7 +11,16 @@ registrarReconciliationReportApp.directive("sectionDiff", this.sectionDiff = fun
 			scope.section = scope.view.state.sections.list[scope.sectionId];
 
 			scope.toggleBannerToDoItem = function (property, childUniqueKey, childProperty) {
-				reportActionCreators.createBannerToDoItem(scope.section.id, property, childUniqueKey, childProperty, scope.section.uniqueKey);
+				// The action is to remove a section, not create
+				if (scope.section.id == 0 && scope.section.noLocal == true) {
+					property = "deleteSection-" + scope.section.uniqueKey;
+				}
+
+				reportActionCreators.createBannerToDoItem(scope.section.id, property, childUniqueKey, childProperty, scope.section.uniqueKey, scope.section.sectionGroupId);
+			};
+
+			scope.createSection = function (section) {
+				reportActionCreators.createSection(section);
 			};
 
 			scope.setActiveChangeAction = function (event, object, index, property) {

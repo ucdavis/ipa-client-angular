@@ -50,12 +50,16 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 
 				data.state.syncActions.ids.forEach(function (id) {
 					var syncAction = data.state.syncActions.list[id];
-					var sectionUniqueKey = scope.findSectionUniqueKeyById(syncAction.sectionId, data.state.sections);
+					var sectionUniqueKey = null;
+
+					if (syncAction.sectionId == 0) {
+						sectionUniqueKey = syncAction.sectionProperty.substring(14);
+					} else {
+						sectionUniqueKey = scope.findSectionUniqueKeyById(syncAction.sectionId, data.state.sections);
+					}
+
 					var section = data.state.sections.list[sectionUniqueKey];
 					syncAction.sectionUniqueKey = sectionUniqueKey;
-					if (!section) {
-						return;
-					}
 
 					var activity;
 
@@ -149,8 +153,7 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 						} else {
 							$log.debug("Unknown section property in a syncAction", syncAction.sectionProperty);
 						}
-					} else if (syncAction.sectionProperty) {
-
+					} else if (syncAction.sectionProperty && syncAction.sectionProperty.substring(0,13) != "deleteSection") {
 						// Section property as todo (example: update seats)
 						if (!(section.dwChanges && section.dwChanges[syncAction.sectionProperty])) {
 							$log.debug("Section with uniqueKey " + section.uniqueKey + " property (" + syncAction.sectionProperty + ") no longer differs");
@@ -164,17 +167,27 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 						scope.view.listItems.push(syncAction);
 					} else {
 						// The section itself is a todo
-						var activities = section.activities.length ? ", and the following meeting(s):<ul>" : "";
-						section.activities.forEach(function (activity) {
-							var activityDetails = getActivityDetails(activity);
-							activities += "<li>" + activity.typeCode.getActivityCodeDescription() + activityDetails + "</li>";
-						});
-						activities += "</ul>";
-						var instructors = section.instructors.length ? "(" + section.instructors.map(function (i) { return i.firstName + " " + i.lastName; }).join(", ") + ")" : "";
-						syncAction.description = "Create " + section.subjectCode + " " + section.courseNumber + " section " +
-							section.sequenceNumber + " with " + section.seats + " seats " + instructors + activities;
 
-						scope.view.listItems.push(syncAction);
+						if (syncAction.sectionProperty && syncAction.sectionProperty.substring(0,13) == "deleteSection") {
+							// The todo is to remove the section from Banner
+							syncAction.description = "Remove " + section.subjectCode + " " + section.courseNumber + " section " +
+								section.sequenceNumber;
+
+								scope.view.listItems.push(syncAction);
+						} else {
+							// The todo is to add the section to Banner
+							var activities = section.activities.length ? ", and the following meeting(s):<ul>" : "";
+							section.activities.forEach(function (activity) {
+								var activityDetails = getActivityDetails(activity);
+								activities += "<li>" + activity.typeCode.getActivityCodeDescription() + activityDetails + "</li>";
+							});
+							activities += "</ul>";
+							var instructors = section.instructors.length ? "(" + section.instructors.map(function (i) { return i.firstName + " " + i.lastName; }).join(", ") + ")" : "";
+							syncAction.description = "Create " + section.subjectCode + " " + section.courseNumber + " section " +
+								section.sequenceNumber + " with " + section.seats + " seats " + instructors + activities;
+
+							scope.view.listItems.push(syncAction);
+						}
 					}
 
 				});

@@ -137,6 +137,7 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 						}
 
 						// Apply syncActions to section properties
+
 						for (var s = 0; s < syncActions.length; s++) {
 							slotSection = this._togglePropertyToDo(slotSection, syncActions[s]);
 						}
@@ -348,7 +349,7 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 				if (child) {
 					child.isToDo = isDelete ? false : true;
 				}
-			} else if (syncAction.sectionProperty) {
+			} else if (syncAction.sectionProperty && syncAction.sectionProperty.substring(0,13) != "deleteSection") {
 				// Flag section property as todo (example: update seats)
 				if (section.dwChanges && section.dwChanges[syncAction.sectionProperty]) {
 					section.dwChanges[syncAction.sectionProperty].isToDo = isDelete ? false : true;
