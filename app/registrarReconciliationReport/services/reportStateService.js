@@ -234,6 +234,8 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 					sections.ids.splice(idIndex, 1);
 					delete sections.list[action.payload.section.uniqueKey];
 					return sections;
+				case CREATE_SECTION:
+					return sections;
 				case CREATE_SYNC_ACTION:
 					section = sections.list[action.payload.sectionUniqueKey];
 					if (!section) { return sections; }

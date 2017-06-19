@@ -116,8 +116,17 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 		},
 
 		createSection: function (section) {
+			// Make start/end times IPA friendly format
+			if (section.activities) {
+				section.activities.forEach( function(activity) {
+					activity.startTime = moment(activity.startTime, "HHmm").format("HH:mm:ss");
+					activity.endTime = moment(activity.endTime, "HHmm").format("HH:mm:ss");
+				});
+			}
+
 			reportService.createSection(section).then(function (newSection) {
 				$rootScope.$emit('toast', { message: "Created Section", type: "SUCCESS" });
+
 				var action = {
 					type: CREATE_SECTION,
 					payload: {
