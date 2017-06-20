@@ -124,13 +124,14 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 				});
 			}
 
-			reportService.createSection(section).then(function (newSection) {
+			reportService.createSection(section).then(function (sectionDiff) {
 				$rootScope.$emit('toast', { message: "Created Section", type: "SUCCESS" });
 
+				sectionDiff.changes = [];
 				var action = {
 					type: CREATE_SECTION,
 					payload: {
-						section: section
+						sectionDiff: sectionDiff
 					}
 				};
 				reportStateService.reduce(action);

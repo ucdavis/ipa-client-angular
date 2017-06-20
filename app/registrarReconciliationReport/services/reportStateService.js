@@ -235,6 +235,19 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 					delete sections.list[action.payload.section.uniqueKey];
 					return sections;
 				case CREATE_SECTION:
+					var ipaSectionData = action.payload.sectionDiff.ipaSection;
+					var dwSectionData = action.payload.sectionDiff.dwSection;
+					var sectionChanges = action.payload.sectionDiff.changes;
+					var syncActions = action.payload.sectionDiff.syncActions;
+
+					var sectionKey = ipaSectionData.uniqueKey;
+					var slotSection = sections.list[sectionKey];
+					slotSection.dwHasChanges = false;
+					slotSection.noLocal = false;
+					slotSection.noRemote = false;
+
+					sections.ids.sort();
+
 					return sections;
 				case CREATE_SYNC_ACTION:
 					section = sections.list[action.payload.sectionUniqueKey];
@@ -271,6 +284,15 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 					}
 					syncActions.ids = _array_sortIdsByProperty(syncActionList, "sectionId");
 					syncActions.list = syncActionList;
+					return syncActions;
+				case CREATE_SECTION:
+					var sectionDiffData = action.payload.sectionDiff;
+					syncActionLength = sectionDiffData.syncActions.length;
+					for (var j = 0; j < syncActionLength; j++) {
+						var syncActionData = sectionDiffData.syncActions[j];
+						syncActions.list[syncActionData.id] = new SyncAction(syncActionData);
+					}
+
 					return syncActions;
 				case CREATE_SYNC_ACTION:
 					syncActions.list[action.payload.syncAction.id] = action.payload.syncAction;
