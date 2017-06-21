@@ -31,6 +31,15 @@ angular.module('sharedApp')
 					}
 				}, function (error) {
 					var message;
+
+					var jwt = localStorage.getItem('JWT');
+					var loginId = null;
+
+					var currentUser = localStorage.getItem('currentUser');
+					if (currentUser) {
+						loginId = JSON.parse(currentUser).loginId;
+					}
+
 					if (error.status == 400) {
 						// Token is invalid. Grab a new token
 						localStorage.removeItem('JWT');
@@ -43,12 +52,12 @@ angular.module('sharedApp')
 					} else if (error.status == -1) {
 						message = "Request was aborted or server was not found. Check that the backend is running.";
 						$log.error(message);
-						self.redirectToErrorPage(error, message);
+						self.redirectToErrorPage(error, message, loginId, jwt);
 					} else {
 						message = "Unknown error occurred while authenticating. Details:";
 						$log.error(message);
 						$log.error(error);
-						self.redirectToErrorPage(error, message);
+						self.redirectToErrorPage(error, message, loginId, jwt);
 					}
 
 					deferred.reject();
@@ -273,12 +282,14 @@ angular.module('sharedApp')
 			 * @param  {[type]} message [description]
 			 * @return {[type]}         [description]
 			 */
-			redirectToErrorPage: function (error, message) {
+			redirectToErrorPage: function (error, message, loginId, jwt) {
 				var stack = "method: " + error.config.method + ", url: " + error.config.url + ", status code: " + error.status;
 
 				var errorForm = "<form id=\"unknownErrorForm\" method=\"POST\" action=\"/unknown-error.html\" style=\"display: none;\">";
 				errorForm += "<input type=\"text\" name=\"message\" value=\"" + message + "\" />";
 				errorForm += "<input type=\"text\" name=\"stack\" value=\"" + stack + "\" />";
+				errorForm += "<input type=\"text\" name=\"loginId\" value=\"" + loginId + "\" />";
+				errorForm += "<input type=\"text\" name=\"jwt\" value=\"" + jwt + "\" />";
 				errorForm += "<input type=\"text\" name=\"url\" value=\"" + error.config.url + "\" />";
 				errorForm += "</form>";
 
