@@ -5,35 +5,44 @@
 
 <!-- handle lack of active teaching call -->
 <script type="text/javascript">
-        jQuery(document).ready(function($) {
-			 $('#cash-in-section').hide();
-            $('#cash-out').on('click', function(e) {
-                console.log('showing courses');
-                $('#cash-out-section').show();
-                $('#cash-in-section').hide();
-            });
-            $('#cash-in').click(function(e) {
-                console.log('showing instructors');
-                $('#cash-out-section').hide();
-                $('#cash-in-section').show();
-            });
-			$('#addNotes').click(function(){
-			var $this = $(this);
-			$this.toggleClass('add-notes');
-			if($this.hasClass('add-notes')){
-				$this.text('Submit');
-			} else {
-				$this.text('Add New Notes');
-			}
-       		$('.notes-area').toggle();
-    		});
-        });
- </script>
-<div class="main-content">
+jQuery(document).ready(function($) {
+	$('#cash-in-section').hide();
+	$('#cash-out').on('click', function(e) {
+		console.log('showing courses');
+		$('#cash-out-section').show();
+		$('#cash-in-section').hide();
+	});
+	$('#cash-in').click(function(e) {
+		console.log('showing instructors');
+		$('#cash-out-section').hide();
+		$('#cash-in-section').show();
+	});
+	$('#addNotes').click(function(){
+		var $this = $(this);
+		$this.toggleClass('add-notes');
+		if($this.hasClass('add-notes')){
+			$this.text('Submit');
+		} else {
+			$this.text('Add New Notes');
+		}
+		$('.notes-area').toggle();
+	});
+});
+</script>
+<div class="budget-view">
+
+	<!-- Modals -->
+	<ipa-modal
+		ng-if="view.state.openAddBudgetScenario"
+		close-modal="closeBudgetScenarioModal()"
+		header-text="Add New Budget Scenario">
+			<add-budget-scenario></add-budget-scenario>
+	</ipa-modal>
+
 	<!-- table-toolbar -->
 	<div class="table-toolbar">
 		<div class="btn-group pull-left add-budget-scenario">
-			<button class="btn btn-default dropdown-toggle" onclick="jQuery('#add-scenario').modal('show');" type="button">
+			<button class="btn btn-default dropdown-toggle" ng-click="openBudgetScenarioModal()" type="button">
 				<span class="tool-icon glyphicon glyphicon-plus"></span>
 				<span>Add Budget Scenario</span>
 			</button>
@@ -48,56 +57,16 @@
 		</div>
 		<!-- table-toolbar ends -->
 	</div>
-
+	
 	<budget-summary></budget-summary>
-
+	
 	<course-costs></course-costs>
-
+	
 	<cash-out></cash-out>
-
+	
 	<cash-in></cash-in>
 </div>
 
-<!-- modal add budget scenario -->
-<div class="budget-view modal fade" id="add-scenario">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title">Add New Budget Scenario</h4>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-					<form role="form" class="form-horizontal">
-						<div class="form-group">
-							<label class="col-sm-6 control-label">Create New Budget Scenario From:</label>
-							<div class="col-sm-5">
-								<div class="input-group">
-									<button class="btn btn-scenario-dropdown dropdown-toggle" type="button" data-toggle="dropdown">
-										Select Budget Scenario
-										<span class="caret"></span>
-									</button>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-6 control-label">New Budget Scenario Name:</label>
-							<div class="col-sm-5">
-								<div class="input-group">
-									<input class="form-control" type="text">
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-submit">Submit</button>
-			</div>
-		</div>
-	</div>
-</div>
 <!-- add ta-reader cost -->
 <div class="budget-view ta-reader-cost modal fade" id="add-cost">
 	<div class="modal-dialog">
@@ -204,13 +173,13 @@
 					</div>
 					<div class="col-md-12 notes-area" style="display:none;">
 						<textarea class="form-control" data-uk-markdownarea="" data-gramm="true" data-txt_gramm_id="17d9dd80-c399-1af4-2de2-dfd1d22c504c" style="background: transparent none repeat scroll 0% 0% !important; z-index: auto; position: relative; line-height: 17.15px; font-size: 12px; transition: none 0s ease 0s ; height:100px;">Type Something...
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" id="addNotes" class="btn btn-submit">Add New Notes</button>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" id="addNotes" class="btn btn-submit">Add New Notes</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
