@@ -276,7 +276,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				$el = $(e.target);
 
 				// Disable scrolling on number inputs as it might increase accidental changes
-				if ($el.hasClass('planned-seats')) {
+				if ($el.hasClass('planned-seats') && $el.is(":focus") ) {
 					e.preventDefault();
 				}
 			});
