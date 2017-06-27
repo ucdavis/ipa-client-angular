@@ -28,21 +28,29 @@
 
 				<div class="btn-group" uib-tooltip="Filters">
 					<span class="tool-icon glyphicon glyphicon-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-					<ul class="dropdown-menu">
-						<li ng-repeat="tagId in view.state.tags.ids track by $index" class="clickable" ng-click="tagToggled(tagId)"
-							stop-event="click">
-							<a class="small">
-								<input type="checkbox" ng-checked="view.state.filters.enabledTagIds.indexOf(tagId) >= 0" />
-								<span class="course-filter-item">{{ view.state.tags.list[tagId].name }}</span>
-							</a>
+					<ul class="dropdown-menu filter-container">
+						<li ng-repeat="tagId in view.state.tags.ids track by $index" class="clickable filter-item" ng-click="tagToggled(tagId)" stop-event="click">
+							<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+								ng-class="{ 'checked': view.state.filters.enabledTagIds.indexOf(tagId) >= 0 }">
+								<label class="cb-wrapper">
+									<div class="checked"></div>
+								</label>
+								<label class="filter-item-text">{{ view.state.tags.list[tagId].name }}</label>
+							</div>
 						</li>
+
 						<li role="separator" class="divider"></li>
-						<li class="clickable" ng-click="unpublishedCoursesToggled()">
-							<a class="small">
-								<input type="checkbox" ng-checked="view.state.filters.enableUnpublishedCourses" />
-								<span class="course-filter-item">Unpublished Courses</span>
-							</a>
+						<li class="clickable filter-item" ng-click="unpublishedCoursesToggled()" stop-event="click">
+							<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+								ng-class="{ 'checked': view.state.filters.enableUnpublishedCourses }">
+								<label class="cb-wrapper">
+									<div class="checked"></div>
+								</label>
+								<label class="filter-item-text">Unpublished Courses</label>
+							</div>
 						</li>
+
+
 					</ul>
 				</div>
 				<!-- .btn-group -->
@@ -143,12 +151,12 @@
 
 </div>
 
-	<div class="fixed right-details hidden-print">
+<div class="fixed right-details hidden-print">
 
-		<new-course ng-if="view.selectedEntity && view.selectedEntityType == 'newCourse'"></new-course>
-		<course-details ng-if="view.selectedEntity && view.selectedEntityType == 'course'"></course-details>
-		<section-group-details ng-if="view.selectedEntity && view.selectedEntityType == 'sectionGroup'"></section-group-details>
-		<mass-import-summary ng-if="view.state.uiState.massImportMode"></mass-import-summary>
-	</div>
+	<new-course ng-if="view.selectedEntity && view.selectedEntityType == 'newCourse'"></new-course>
+	<course-details ng-if="view.selectedEntity && view.selectedEntityType == 'course'"></course-details>
+	<section-group-details ng-if="view.selectedEntity && view.selectedEntityType == 'sectionGroup'"></section-group-details>
+	<mass-import-summary ng-if="view.state.uiState.massImportMode"></mass-import-summary>
+</div>
 </div>
 </div>

@@ -748,11 +748,19 @@ td.import-course.course-cell {
 	display: block;
 }
 
-.course-view-container .mass-import-button-container {
-	display: flex;
-	justify-content: flex-end;
+.course-view-container .filter-container {
+	padding-top: 15px;
+	width: 180px;
+}
+.course-view-container .filter-item {
+	padding-left: 10px;
 }
 
-.course-view-container .mass-import-button-container .cancel {
-	margin-right: 5px;
+.course-view-container .filter-item:hover {
+	background-color: #f5f5f5;
+}
+
+.course-view-container .filter-item-text {
+	color: rgb(153, 153, 153);
+	font-size: 12px;
 }
