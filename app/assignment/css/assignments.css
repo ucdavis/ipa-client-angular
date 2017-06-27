@@ -931,3 +931,18 @@ li.active-term .dropdown-term-row {
 .assignments-container .main-content {
 	display: block;
 }
+
+.assignments-container .filter-container {
+	padding-top: 15px;
+}
+.assignments-container .filter-item {
+	padding-left: 10px;
+}
+
+.assignments-container .filter-item:hover {
+	background-color: #f5f5f5;
+}
+
+.assignments-container .filter-item-text {
+	color: rgb(153, 153, 153);
+}
