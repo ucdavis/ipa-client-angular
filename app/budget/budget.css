@@ -421,15 +421,13 @@ form .form-group {
 .neon-dark-confirm-btn,
 .neon-dark-confirm-btn:focus,
 .neon-dark-confirm-btn:active,
-.neon-dark-confirm-btn,
-.confirmbutton-yes {
+.neon-dark-confirm-btn {
 	background-color: rgb(48, 54, 65);
 	border-color: rgb(48, 54, 65);
 	color: white;
 }
 
-.neon-dark-confirm-btn:hover,
-.confirmbutton-yes:hover {
+.neon-dark-confirm-btn:hover {
 	background-color: rgb(18, 24, 35); /* Darker Version for hover */
 	color: white;
 }
@@ -440,4 +438,16 @@ form .form-group {
 .neon-dark-confirm-btn.disabled:active {
 	background-color: rgb(48, 54, 65);
 	color: white;
+}
+
+.budget-scenario-dropdown .budget-scenario-row {
+	cursor: pointer;
+}
+
+.budget-scenario-dropdown .delete-budget-scenario-button {
+	display: none;
+}
+
+.budget-scenario-dropdown .budget-scenario-row:hover .delete-budget-scenario-button {
+	display: block;
 }

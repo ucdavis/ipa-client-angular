@@ -1,0 +1,12 @@
+.budget-scenario-dropdown .budget-scenario-row {
+	cursor: pointer;
+}
+
+.budget-scenario-dropdown:hover .budget-scenario-row {
+	cursor: pointer;
+	display: block;
+}
+
+.budget-scenario-dropdown .delete-budget-scenario-button {
+	display: none;
+}

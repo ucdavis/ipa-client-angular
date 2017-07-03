@@ -1,4 +1,4 @@
-<div class="ipa-term-selector-dropdown header--work-group btn-group" role="group" aria-label="...">
+<div class="budget-scenario-dropdown header--work-group btn-group" role="group" aria-label="...">
 	<button class="btn btn-default dropdown-toggle"
 					type="button" id="dropdownMenu1" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="true">
@@ -11,9 +11,19 @@
 	</button>
 
 	<ul class="dropdown-menu" style="width: 250px;" aria-labelledby="dropdownMenu1">
-		<li ng-repeat="budgetScenario in view.state.budgetScenarios" style="cursor: pointer;">
-			<a ng-click="selectBudgetScenario()">
-				{{ budgetScenario.name }}
+		<li ng-repeat="budgetScenario in view.state.budgetScenarios" class="budget-scenario-row">
+			<a ng-click="selectBudgetScenario()" style="display: flex; justify-content: space-between;">
+				<span>
+					{{ budgetScenario.name }}
+				</span>
+				<span style="padding-right: 10px;"
+							class="glyphicon glyphicon-trash delete-budget-scenario-button"
+							uib-tooltip="Delete scenario" tooltip-placement="bottom"
+							confirm-button="deleteBudgetScenario(budgetScenario)"
+							btn-class="btn-danger"
+							message="Are you sure you want to delete this budget scenario?"
+							yes="Confirm" no="Cancel" placement="top">
+				</span>
 			</a>
 		</li>
 		<li ng-click="openBudgetScenarioModal()" style="cursor: pointer;">
