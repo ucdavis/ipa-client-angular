@@ -15,3 +15,4 @@ budgetApp.config(function ($routeProvider) {
 });
 
 var INIT_STATE = "INIT_STATE";
+var CREATE_BUDGET_SCENARIO = "CREATE_BUDGET_SCENARIO";

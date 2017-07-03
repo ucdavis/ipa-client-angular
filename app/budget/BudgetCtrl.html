@@ -36,7 +36,7 @@ jQuery(document).ready(function($) {
 		ng-if="view.state.openAddBudgetScenario"
 		close-modal="closeBudgetScenarioModal()"
 		header-text="Add New Budget Scenario">
-			<add-budget-scenario></add-budget-scenario>
+			<add-budget-scenario budget-id="{{view.state.budget.id}}"></add-budget-scenario>
 	</ipa-modal>
 
 	<!-- table-toolbar -->

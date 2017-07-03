@@ -4,7 +4,6 @@ sharedApp.directive('budgetScenarioDropdown', function($window, $location, $rout
 		templateUrl: 'budgetScenarioDropdown.html', // directive html found here:
 		replace: true, // Replace with the template
 		link: function (scope, element, attrs) {
-
 		} // End Link
 	};
 });
