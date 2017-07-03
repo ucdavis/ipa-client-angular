@@ -16,7 +16,7 @@ budgetApp.factory("budgetService", this.budgetService = function($http, $q, $win
 		createBudgetScenario: function(newBudgetScenario, budgetId) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/budgetView/budgetScenarios/budgets/" + budgetId, newBudgetScenario, { withCredentials: true })
+			$http.post(serverRoot + "/api/budgetView/budgets/" + budgetId + "/budgetScenarios", newBudgetScenario, { withCredentials: true })
 			.success(function(results) {
 				deferred.resolve(results);
 			})
