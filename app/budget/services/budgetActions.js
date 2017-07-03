@@ -1,9 +1,9 @@
-budgetApp.service('budgetActions', function ($rootScope, $window, budgetService) {
+budgetApp.service('budgetActions', function ($rootScope, $window, budgetService, budgetReducers) {
 	return {
 		getInitialState: function (workgroupId, year) {
 			budgetService.getInitialState(workgroupId, year).then(function (results) {
 				var action = {
-					type: INIT_ASSIGNMENT_VIEW,
+					type: INIT_STATE,
 					payload: results,
 					year: year,
 					workgroupId: workgroupId
