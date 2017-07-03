@@ -9,7 +9,7 @@ budgetApp.directive("addBudgetScenario", this.addBudgetScenario = function ($roo
 		scope: false,
 		link: function (scope, element, attrs) {
 			scope.newBudgetScenario = {};
-			scope.newBudgetScenario.name = "taco";
+			scope.newBudgetScenario.name = "";
 			scope.newBudgetScenario.budgetScenarioId = 0;
 			scope.budgetId = attrs.budgetId;
 

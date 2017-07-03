@@ -7,7 +7,7 @@
 					<button class="btn btn-scenario-dropdown dropdown-toggle"
 									type="button" data-toggle="dropdown"
 									style="display: flex; justify-content: center; align-items: center;">
-						<span style="padding-right: 5px;">
+						<span style="padding-right: 5px; text-decoration: none;">
 							{{ view.state.activeScenario.name }}
 						</span>
 						<span class="caret"></span>
@@ -16,9 +16,10 @@
 					<ul class="dropdown-menu" style="width: 250px;" aria-labelledby="dropdownMenu1">
 						<li ng-repeat="budgetScenario in view.state.budgetScenarios" style="cursor: pointer;">
 							<a ng-click="newBudgetScenario.budgetScenarioId = budgetScenario.id">
-								Scenario: {{ budgetScenario.name }}
+								{{ budgetScenario.name }}
 							</a>
 						</li>
+						<li role="presentation" class="divider courses-separator"></li>
 						<li ng-click="newBudgetScenario.budgetScenarioId = 0" style="cursor: pointer;">
 							<a ng-click="selectBudgetScenario()">
 								Schedule data
@@ -34,15 +35,17 @@
 			<label class="col-sm-6 control-label">Name:</label>
 			<div class="col-sm-5">
 				<div class="input-group">
-					<input class="form-control" type="text" ng-model="newBudgetScenario.name">
+					<input  class="form-control" type="text"
+									ng-model="newBudgetScenario.name"
+									placeholder="Budget scenario name">
 				</div>
 			</div>
 		</div>
 
-		<div style="display: flex; justify-content: flex-end; padding-bottom: 10px;">
-			<button ng-click="cancel()"
-							type="button" style="margin-right: 10px;"
-							class="btn neon-dark-confirm-btn ng-scope">
+		<div class="add-budget-scenario-footer">
+			<button ng-click="closeBudgetScenarioModal()"
+							type="button" style="margin-right: 5px;"
+							class="btn btn-default ng-scope">
 				Cancel
 			</button>
 			<button ng-click="submitBudgetScenarioForm()"

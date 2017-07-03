@@ -20,19 +20,22 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					type: CREATE_BUDGET_SCENARIO,
 					payload: results
 				};
-
+				$rootScope.$emit('toast', { message: "Created budget scenario", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
 		deleteBudgetScenario: function (budgetScenarioId) {
-			budgetService.deleteBudgetScenario(budgetScenarioId).then(function (results) {
+			budgetService.deleteBudgetScenario(budgetScenarioId).then(function (budgetScenarioId) {
 				var action = {
 					type: DELETE_BUDGET_SCENARIO,
-					payload: results
+					payload: {
+						budgetScenarioId: budgetScenarioId
+					}
 				};
 
+				$rootScope.$emit('toast', { message: "Deleted budget scenario", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
