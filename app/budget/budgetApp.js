@@ -5,6 +5,9 @@ budgetApp.config(function ($routeProvider) {
 		.when("/:workgroupId/:year", {
 			templateUrl: "BudgetCtrl.html",
 			controller: "BudgetCtrl",
+			resolve: {
+				validate: BudgetCtrl.getPayload
+			}
 		})
 		.otherwise({
 			redirectTo: "/"

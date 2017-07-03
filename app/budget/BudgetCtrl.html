@@ -42,11 +42,9 @@ jQuery(document).ready(function($) {
 	<!-- table-toolbar -->
 	<div class="table-toolbar">
 		<div class="btn-group pull-left add-budget-scenario">
-			<button class="btn btn-default dropdown-toggle" ng-click="openBudgetScenarioModal()" type="button">
-				<span class="tool-icon glyphicon glyphicon-plus"></span>
-				<span>Add Budget Scenario</span>
-			</button>
+			<budget-scenario-dropdown></budget-scenario-dropdown>
 		</div>
+
 		<div class="btn-group toolbar">
 			<span class="tool-icon glyphicon glyphicon-plus" onclick="jQuery('#add-cost').modal('show');"></span>
 			<span class="tool-icon glyphicon glyphicon-pencil" data-toggle="dropdown"></span>
