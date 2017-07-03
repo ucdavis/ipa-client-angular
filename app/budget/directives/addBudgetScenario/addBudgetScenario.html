@@ -8,14 +8,14 @@
 									type="button" data-toggle="dropdown"
 									style="display: flex; justify-content: center; align-items: center;">
 						<span style="padding-right: 5px; text-decoration: none;">
-							{{ view.state.activeScenario.name }}
+							{{ newBudgetScenario.description }}
 						</span>
 						<span class="caret"></span>
 					</button>
 
 					<ul class="dropdown-menu" style="width: 250px;" aria-labelledby="dropdownMenu1">
 						<li ng-repeat="budgetScenario in view.state.budgetScenarios" style="cursor: pointer;">
-							<a ng-click="newBudgetScenario.budgetScenarioId = budgetScenario.id">
+							<a ng-click="selectBudgetScenario(budgetScenario)">
 								{{ budgetScenario.name }}
 							</a>
 						</li>
