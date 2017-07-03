@@ -1,0 +1,25 @@
+<div class="ipa-term-selector-dropdown header--work-group btn-group" role="group" aria-label="...">
+	<button class="btn btn-default dropdown-toggle"
+					type="button" id="dropdownMenu1" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="true">
+
+		<span>
+			{{ view.state.activeScenario.name }}
+			<span class="caret"></span>
+		</span>
+
+	</button>
+
+	<ul class="dropdown-menu" style="width: 250px;" aria-labelledby="dropdownMenu1">
+		<li ng-repeat="budgetScenario in view.state.budgetScenarios" style="cursor: pointer;">
+			<a ng-click="selectBudgetScenario()">
+				{{ budgetScenario.name }}
+			</a>
+		</li>
+		<li ng-click="openBudgetScenarioModal()" style="cursor: pointer;">
+			<span class="tool-icon glyphicon glyphicon-plus"></span>
+			Create Budget Scenario
+		</li>
+	</ul>
+
+</div>
