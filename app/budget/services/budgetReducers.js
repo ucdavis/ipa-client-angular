@@ -40,6 +40,25 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return budget;
 			}
 		},
+		uiReducers: function (action, ui) {
+			switch (action.type) {
+				case INIT_STATE:
+					ui = {
+						isLineItemOpen: false,
+						isCourseCostOpen: false
+					};
+
+					return ui;
+				case TOGGLE_LINE_ITEM_SECTION:
+					ui.isLineItemOpen = !(ui.isLineItemOpen);
+					return ui;
+				case TOGGLE_COURSE_COST_SECTION:
+					ui.isCourseCostOpen = !(ui.isCourseCostOpen);
+					return ui;
+				default:
+					return ui;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -48,6 +67,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.budgetScenarios = scope.budgetScenarioReducers(action, scope._state.budgetScenarios);
 			newState.lineItems = action.payload.lineItems;
 			newState.sectionGroupCosts = action.payload.sectionGroupCosts;
+			newState.ui = scope.uiReducers(action, scope._state.ui);
 
 			scope._state = newState;
 
@@ -57,6 +77,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.activeScenario = budgetSelectors.generateActiveScenario(newState.budgetScenarios);
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
 			newPageState.budget = newState.budget;
+			newPageState.ui = newState.ui;
 
 			$rootScope.$emit('budgetStateChanged', newPageState);
 			console.log(newPageState);

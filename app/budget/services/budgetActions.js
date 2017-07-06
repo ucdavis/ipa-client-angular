@@ -40,6 +40,14 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
+		},
+		toggleLineItemSection: function () {
+			var action = {
+				type: TOGGLE_LINE_ITEM_SECTION,
+				payload: {}
+			};
+
+			budgetReducers.reduce(action);
 		}
 	};
 });
