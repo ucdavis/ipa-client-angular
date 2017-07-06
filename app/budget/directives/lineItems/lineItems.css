@@ -1,3 +1,8 @@
+.line-items-section {
+	border: 1px solid rgb(235, 235, 235);
+	border-radius: 4px;
+}
+
 .line-items-section .expand-ui {
 	display: flex;
 	justify-content: space-between;
@@ -12,8 +17,6 @@
 	padding-right: 15px;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	border: 1px solid rgb(235, 235, 235);
-	border-radius: 4px;
 }
 
 .line-items-section .expand-ui-triangle {

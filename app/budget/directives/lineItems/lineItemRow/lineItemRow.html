@@ -1,72 +1,40 @@
-<div>
-	<!-- row header -->
-	<div>
-		<div>
-			Checkbox
+<div style="border-top: 1px solid rgb(235, 235, 235);">
+	<div style="display: flex; width: 100%;">
+		<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgb(235, 235, 235); padding: 10px;">
+
+			<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+				ng-class="{ 'checked': state.ui.taco }">
+				<label class="cb-wrapper">
+					<div class="checked"></div>
+				</label>
+			</div>
+
 		</div>
 
-		<div>
-			Type
+		<div style="flex: 10 0 0px; display: flex; align-items: center; border-right: 1px solid rgb(235, 235, 235); padding: 10px;">
+			{{ lineItem.lineItemCategoryId }}
 		</div>
 
-		<div>
-			Description
+		<div style="flex: 15 0 0px; display: flex; align-items: center; border-right: 1px solid rgb(235, 235, 235); padding: 10px;">
+			{{ lineItem.description }}
 		</div>
 
-		<div>
-			Amount
+		<div style="flex: 10 0 0px; display: flex; align-items: center; padding: 10px;">
+			<div>
+				{{ lineItem.amount }}
+			</div>
+			<div class="expand-ui-container" ng-click="toggleLineItem(lineItem)">
+				<div class="expand-ui">
+					<i ng-show="lineItem.isDetailViewOpen == false" class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>
+					<i ng-show="lineItem.isDetailViewOpen" class="glyphicon glyphicon-triangle-bottom expand-ui-triangle"></i>
+				</div>
+			</div>
 		</div>
 	</div>
 
-	<!-- row accordion -->
-	<div class="line-item-accordion">
-		<div>
-			<div>
-				Type
-			</div>
-			<div>
-				Last Edited By
-			</div>
-			<div>
-				Amount
-			</div>
-		</div>
+	<!-- Line item detail -->
+	<div ng-show="lineItem.isDetailViewOpen">
+		Line item details in here
+	</div>
 
-		<div>
-			<div>
-				Other Funds
-			</div>
-			<div>
-				John Smith
-			</div>
-			<div>
-				$23,000
-			</div>
-		</div>
-
-		<div>
-			<div>
-				Description
-			</div>
-		</div>
-
-		<div>
-			<div>
-				I am a great description.
-			</div>
-		</div>
-
-		<div>
-			<div>
-				Notes
-			</div>
-		</div>
-
-		<div>
-			<div>
-				I am a great description.
-			</div>
-		</div>
-
-	</div><!-- line-item-accordion -->
 </div>
