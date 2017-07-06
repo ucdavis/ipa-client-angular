@@ -31,6 +31,23 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return budgetScenarios;
 			}
 		},
+		lineItemReducers: function (action, lineItems) {
+			switch (action.type) {
+				case INIT_STATE:
+					lineItems = {
+						ids: [],
+						list: {}
+					};
+					action.payload.lineItems.forEach( function( lineItem) {
+						lineItems.ids.push(lineItem.id);
+						lineItems.list[lineItem.id] = lineItem;
+					});
+
+					return lineItems;
+				default:
+					return lineItems;
+			}
+		},
 		scheduleBudgetReducers: function (action, budget) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -45,15 +62,24 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case INIT_STATE:
 					ui = {
 						isLineItemOpen: false,
-						isCourseCostOpen: false
+						isCourseCostOpen: false,
+						openLineItems: []
 					};
-
 					return ui;
 				case TOGGLE_LINE_ITEM_SECTION:
 					ui.isLineItemOpen = !(ui.isLineItemOpen);
 					return ui;
 				case TOGGLE_COURSE_COST_SECTION:
 					ui.isCourseCostOpen = !(ui.isCourseCostOpen);
+					return ui;
+				case TOGGLE_LINE_ITEM:
+					var lineItemId = action.payload.lineItemId;
+					var index = ui.openLineItems.indexOf(lineItemId);
+					if (index == -1) {
+						ui.openLineItems.push(lineItemId);
+					} else {
+						ui.openLineItems.splice(index, 1);
+					}
 					return ui;
 				default:
 					return ui;
@@ -65,7 +91,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState = {};
 			newState.budget = scope.scheduleBudgetReducers(action, scope._state.budget);
 			newState.budgetScenarios = scope.budgetScenarioReducers(action, scope._state.budgetScenarios);
-			newState.lineItems = action.payload.lineItems;
+			newState.lineItems = scope.lineItemReducers(action, scope._state.lineItems);
 			newState.sectionGroupCosts = action.payload.sectionGroupCosts;
 			newState.ui = scope.uiReducers(action, scope._state.ui);
 
@@ -74,7 +100,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			// Build new 'page state'
 			// This is the 'view friendly' version of the store
 			newPageState = {};
-			newPageState.activeScenario = budgetSelectors.generateActiveScenario(newState.budgetScenarios);
+			newPageState.activeBudgetScenario = budgetSelectors.generateActiveScenario(newState.budgetScenarios, newState.lineItems, newState.ui);
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
 			newPageState.budget = newState.budget;
 			newPageState.ui = newState.ui;

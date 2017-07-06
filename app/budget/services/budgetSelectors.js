@@ -3,6 +3,7 @@
 */
 budgetApp.service('budgetSelectors', function () {
 	return {
+		// Generate list of budget scenarios to display in the dropdown selector
 		generateBudgetScenarios: function (budgetScenarios) {
 			
 			budgetScenarioList = [];
@@ -13,12 +14,35 @@ budgetApp.service('budgetSelectors', function () {
 
 			return budgetScenarioList;
 		},
-		generateActiveScenario: function (budgetScenarios) {
+		// This object will be the 'meat' of the main view.
+		generateActiveScenario: function (budgetScenarios, lineItems, ui) {
+
+			var activeBudgetScenario = null;
+			// TODO: Make active budget scenario a localStorage value, and affected by UI dropdown
 			if (budgetScenarios.ids && budgetScenarios.ids.length != 0) {
-				return budgetScenarios.list[budgetScenarios.ids[0]];
+				activeBudgetScenario = budgetScenarios.list[budgetScenarios.ids[0]];
 			}
 
-			return null;
+			// Set main view UI states
+			activeBudgetScenario.isLineItemOpen = ui.isLineItemOpen;
+			activeBudgetScenario.isCourseCostOpen = ui.isCourseCostOpen;
+
+			// Add lineItems
+			activeBudgetScenario.lineItems = [];
+
+			lineItems.ids.forEach( function (lineItemId) {
+				var lineItem = lineItems.list[lineItemId];
+
+				// Setting UI state for line item detail view
+				lineItem.isDetailViewOpen = false;
+
+				activeBudgetScenario.lineItems.push(lineItem);
+				if (ui.openLineItems.indexOf(lineItem.id) > -1) {
+					lineItem.isDetailViewOpen = true;
+				}
+			});
+
+			return activeBudgetScenario;
 		}
 	};
 });

@@ -48,6 +48,14 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			};
 
 			budgetReducers.reduce(action);
+		},
+		toggleLineItem: function(lineItem) {
+			var action = {
+				type: TOGGLE_LINE_ITEM,
+				payload: {lineItemId: lineItem.id}
+			};
+
+			budgetReducers.reduce(action);
 		}
 	};
 });
