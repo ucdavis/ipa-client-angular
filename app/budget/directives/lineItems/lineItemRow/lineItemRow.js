@@ -6,7 +6,7 @@ budgetApp.directive("lineItemRow", this.lineItemRow = function ($rootScope) {
 		restrict: 'E',
 		templateUrl: 'lineItemRow.html',
 		replace: true,
-		scope: false,
+		scope: {},
 		link: function (scope, element, attrs) {
 
 		} // end link

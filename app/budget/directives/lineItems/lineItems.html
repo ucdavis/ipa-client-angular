@@ -1,8 +1,17 @@
-<div class="line-items-section">
-	<div class="expand-ui-container">
-		<div class="expand-ui">
-			<div>Line Items</div>
-			<i class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>
+<div>
+	<div class="line-items-section" ng-click="toggleLineItemSection()">
+		<div class="expand-ui-container">
+			<div class="expand-ui">
+				<div>Line Items</div>
+				<i ng-show="state.ui.isLineItemOpen == false" class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>
+				<i ng-show="state.ui.isLineItemOpen" class="glyphicon glyphicon-triangle-bottom expand-ui-triangle"></i>
+			</div>
 		</div>
+	</div>
+
+	<div ng-show="state.ui.isLineItemOpen">
+		<line-item></line-item>
+		<line-item></line-item>
+		<line-item></line-item>
 	</div>
 </div>
