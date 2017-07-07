@@ -14,6 +14,16 @@ budgetApp.service('budgetSelectors', function () {
 
 			return budgetScenarioList;
 		},
+		generateLineItemCategories: function (lineItemCategories) {
+			
+			lineItemCategoryList = [];
+
+			lineItemCategories.ids.forEach( function (lineItemCategoryId) {
+				lineItemCategoryList.push(lineItemCategories.list[lineItemCategoryId]);
+			});
+
+			return lineItemCategoryList;
+		},
 		// This object will be the 'meat' of the main view.
 		generateActiveScenario: function (budgetScenarios, lineItems, ui, lineItemCategories) {
 

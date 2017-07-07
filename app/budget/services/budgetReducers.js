@@ -126,6 +126,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
 			newPageState.budget = newState.budget;
 			newPageState.ui = newState.ui;
+			newPageState.lineItemCategories = budgetSelectors.generateLineItemCategories(newState.lineItemCategories);
 
 			$rootScope.$emit('budgetStateChanged', newPageState);
 			console.log(newPageState);
