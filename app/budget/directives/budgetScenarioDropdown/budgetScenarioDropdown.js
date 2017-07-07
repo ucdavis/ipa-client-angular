@@ -7,7 +7,7 @@ sharedApp.directive('budgetScenarioDropdown', function($window, $location, $rout
 
 			scope.deleteBudgetScenario = function (budgetScenario) {
 				budgetActions.deleteBudgetScenario(budgetScenario.id);
-			}
+			};
 		} // End Link
 	};
 });

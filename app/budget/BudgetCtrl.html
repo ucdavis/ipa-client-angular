@@ -39,20 +39,20 @@ jQuery(document).ready(function($) {
 			<add-budget-scenario budget-id="{{view.state.budget.id}}"></add-budget-scenario>
 	</ipa-modal>
 
+	<ipa-modal
+		ng-if="view.state.openAddLineItem"
+		close-modal="closeLineItemModal()"
+		header-text="Add New Line Item">
+			<add-line-item state="view.state"></add-line-item>
+	</ipa-modal>
+
 	<!-- table-toolbar -->
 	<div class="table-toolbar">
 		<div class="btn-group pull-left add-budget-scenario">
 			<budget-scenario-dropdown></budget-scenario-dropdown>
 		</div>
 
-		<div class="btn-group toolbar">
-			<span class="tool-icon glyphicon glyphicon-plus" onclick="jQuery('#add-cost').modal('show');"></span>
-			<span class="tool-icon glyphicon glyphicon-pencil" data-toggle="dropdown"></span>
-			<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown"></span>
-			<span class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown"></span>
-			<span class="tool-icon glyphicon glyphicon-print"></span>
-			<span class="tool-icon glyphicon glyphicon-trash"></span>
-		</div>
+		<budget-scenario-toolbar></budget-scenario-toolbar>
 		<!-- table-toolbar ends -->
 	</div>
 	
@@ -174,7 +174,7 @@ jQuery(document).ready(function($) {
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeLineItemModal()">Close</button>
 					<button type="button" id="addNotes" class="btn btn-submit">Add New Notes</button>
 				</div>
 			</div>

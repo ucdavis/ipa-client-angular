@@ -16,6 +16,13 @@ budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$locatio
 			$scope.view.state = data;
 		});
 
+		$scope.openLineItemModal = function() {
+			$scope.view.state.openAddLineItem = true;
+		};
+		$scope.closeLineItemModal = function() {
+			$scope.view.state.openAddLineItem = false;
+		};
+
 		$scope.openBudgetScenarioModal = function() {
 			$scope.view.state.openAddBudgetScenario = true;
 		};

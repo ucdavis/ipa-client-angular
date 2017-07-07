@@ -1,0 +1,58 @@
+<div>
+	<form role="form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-6 control-label">Create From:</label>
+			<div class="col-sm-5">
+				<div class="input-group" style="width:50%;">
+					<button class="btn btn-scenario-dropdown dropdown-toggle"
+									type="button" data-toggle="dropdown"
+									style="display: flex; justify-content: center; align-items: center;">
+						<span style="padding-right: 5px; text-decoration: none;">
+							{{ newBudgetScenario.description }}
+						</span>
+						<span class="caret"></span>
+					</button>
+
+					<ul class="dropdown-menu" style="width: 250px;" aria-labelledby="dropdownMenu1">
+						<li ng-repeat="budgetScenario in view.state.budgetScenarios" style="cursor: pointer;">
+							<a ng-click="selectBudgetScenario(budgetScenario)">
+								{{ budgetScenario.name }}
+							</a>
+						</li>
+						<li role="presentation" class="divider courses-separator"></li>
+						<li ng-click="newBudgetScenario.budgetScenarioId = 0" style="cursor: pointer;">
+							<a ng-click="selectBudgetScenario()">
+								Schedule data
+							</a>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-6 control-label">Name:</label>
+			<div class="col-sm-5">
+				<div class="input-group">
+					<input  class="form-control" type="text"
+									ng-model="newBudgetScenario.name"
+									placeholder="Budget scenario name">
+				</div>
+			</div>
+		</div>
+
+		<div class="add-budget-scenario-footer">
+			<button ng-click="closeBudgetScenarioModal()"
+							type="button" style="margin-right: 5px;"
+							class="btn btn-default ng-scope">
+				Cancel
+			</button>
+			<button ng-click="submitBudgetScenarioForm()"
+							type="button" style="margin-right: 10px;"
+							class="btn neon-dark-confirm-btn ng-scope">
+				Submit
+			</button>
+		</div>
+	</form>
+</div>
