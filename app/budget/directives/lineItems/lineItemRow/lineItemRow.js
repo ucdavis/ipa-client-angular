@@ -13,6 +13,10 @@ budgetApp.directive("lineItemRow", this.lineItemRow = function ($rootScope, budg
 			scope.toggleLineItem = function(lineItem) {
 				budgetActions.toggleLineItem(lineItem);
 			};
+
+			scope.deleteLineItem = function(lineItem) {
+				budgetActions.deleteLineItem(lineItem);
+			}
 		} // end link
 	};
 });

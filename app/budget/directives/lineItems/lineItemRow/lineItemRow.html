@@ -1,4 +1,4 @@
-<div style="border-top: 1px solid rgb(235, 235, 235);">
+<div class="line-item-row-container" style="border-top: 1px solid rgb(235, 235, 235);">
 	<div style="display: flex; width: 100%;"  ng-click="toggleLineItem(lineItem)">
 		<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgb(235, 235, 235); padding: 10px;">
 
@@ -19,9 +19,9 @@
 			{{ lineItem.description }}
 		</div>
 
-		<div style="flex: 10 0 0px; display: flex; align-items: center; padding: 10px;">
+		<div style="flex: 10 0 0px; display: flex; align-items: center; padding: 10px; justify-content: space-between;">
 			<div>
-				{{ lineItem.amount }}
+				${{ lineItem.amount }}
 			</div>
 			<div class="expand-ui-container">
 				<div class="expand-ui">
@@ -46,9 +46,18 @@
 					Last Edited By
 				</div>
 			</div>
-			<div style="flex: 5 0 0px; border-top: 1px solid rgb(235, 235, 235);">
+			<div style="flex: 5 0 0px; border-top: 1px solid rgb(235, 235, 235); display: flex; justify-content: space-between;">
 				<div style="padding: 20px; padding-bottom: 10px; font-weight: bold;">
 					Amount
+				</div>
+
+				<div style="padding: 20px;"
+							class="glyphicon glyphicon-trash delete-line-item-button"
+							uib-tooltip="Delete line item" tooltip-placement="left"
+							confirm-button="deleteLineItem(lineItem)"
+							btn-class="btn-danger"
+							message="Are you sure you want to delete this line item?"
+							yes="Confirm" no="Cancel" placement="top">
 				</div>
 			</div>
 		</div>

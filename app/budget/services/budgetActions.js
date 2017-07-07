@@ -41,6 +41,21 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		deleteLineItem: function(lineItem) {
+			budgetService.deleteLineItem(lineItem).then(function (lineItemId) {
+				var action = {
+					type: DELETE_LINE_ITEM,
+					payload: {
+						lineItemId: lineItemId
+					}
+				};
+
+				$rootScope.$emit('toast', { message: "Deleted line item", type: "SUCCESS" });
+				budgetReducers.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		toggleLineItemSection: function () {
 			var action = {
 				type: TOGGLE_LINE_ITEM_SECTION,
