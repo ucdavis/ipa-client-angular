@@ -1,5 +1,5 @@
 <div style="border-top: 1px solid rgb(235, 235, 235);">
-	<div style="display: flex; width: 100%;">
+	<div style="display: flex; width: 100%;"  ng-click="toggleLineItem(lineItem)">
 		<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgb(235, 235, 235); padding: 10px;">
 
 			<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
@@ -23,7 +23,7 @@
 			<div>
 				{{ lineItem.amount }}
 			</div>
-			<div class="expand-ui-container" ng-click="toggleLineItem(lineItem)">
+			<div class="expand-ui-container">
 				<div class="expand-ui">
 					<i ng-show="lineItem.isDetailViewOpen == false" class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>
 					<i ng-show="lineItem.isDetailViewOpen" class="glyphicon glyphicon-triangle-bottom expand-ui-triangle"></i>
@@ -34,7 +34,56 @@
 
 	<!-- Line item detail -->
 	<div ng-show="lineItem.isDetailViewOpen">
-		Line item details in here
+
+		<div style="display: flex;">
+			<div style="flex: 5 0 0px; border-top: 1px solid rgb(235, 235, 235);">
+				<div style="padding: 20px; padding-bottom: 0px; font-weight: bold;">
+					Type
+				</div>
+			</div>
+			<div style="flex: 7 0 0px; border-top: 1px solid rgb(235, 235, 235);">
+				<div style="padding: 20px; padding-bottom: 0px; font-weight: bold;">
+					Last Edited By
+				</div>
+			</div>
+			<div style="flex: 5 0 0px; border-top: 1px solid rgb(235, 235, 235);">
+				<div style="padding: 20px; padding-bottom: 10px; font-weight: bold;">
+					Amount
+				</div>
+			</div>
+		</div>
+
+		<div style="display: flex;">
+			<div style="flex: 5 0 0px;">
+				<div style="padding-left: 20px;">
+					{{ lineItem.lineItemCategoryDescription }}
+				</div>
+			</div>
+			<div style="flex: 7 0 0px;">
+				<div style="padding-left: 20px;">
+					Shang Lu
+				</div>
+			</div>
+			<div style="flex: 5 0 0px;">
+				<div style="padding-left: 20px;">
+					${{ lineItem.amount }}
+				</div>
+			</div>
+		</div>
+
+		<div style="padding-left: 20px; padding-bottom: 10px; padding-top: 20px; font-weight: bold;">
+			Description
+		</div>
+		<div style="padding-left: 20px;">
+			{{ lineItem.description }}
+		</div>
+
+		<div style="padding-left: 20px; padding-bottom: 10px; padding-top: 20px; font-weight: bold;">
+			Notes
+		</div>
+		<div style="padding-left: 20px; padding-bottom: 20px;">
+			{{ lineItem.notes }}
+		</div>
 	</div>
 
 </div>
