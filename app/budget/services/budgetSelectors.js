@@ -15,7 +15,7 @@ budgetApp.service('budgetSelectors', function () {
 			return budgetScenarioList;
 		},
 		// This object will be the 'meat' of the main view.
-		generateActiveScenario: function (budgetScenarios, lineItems, ui) {
+		generateActiveScenario: function (budgetScenarios, lineItems, ui, lineItemCategories) {
 
 			var activeBudgetScenario = null;
 			// TODO: Make active budget scenario a localStorage value, and affected by UI dropdown
@@ -32,6 +32,10 @@ budgetApp.service('budgetSelectors', function () {
 
 			lineItems.ids.forEach( function (lineItemId) {
 				var lineItem = lineItems.list[lineItemId];
+
+				// Add lineItemCategory description
+				var lineItemCategoryDescription = lineItemCategories.list[lineItem.lineItemCategoryId].description;
+				lineItem.lineItemCategoryDescription = lineItemCategoryDescription;
 
 				// Setting UI state for line item detail view
 				lineItem.isDetailViewOpen = false;

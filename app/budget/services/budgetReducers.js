@@ -57,6 +57,23 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return budget;
 			}
 		},
+		lineItemCategoryReducers: function (action, lineItemCategories) {
+			switch (action.type) {
+				case INIT_STATE:
+					lineItemCategories = {
+						ids: [],
+						list: []
+					};
+
+					action.payload.lineItemCategories.forEach( function(lineItemCategory) {
+						lineItemCategories.ids.push(lineItemCategory.id);
+						lineItemCategories.list[lineItemCategory.id] = lineItemCategory;
+					});
+					return lineItemCategories;
+				default:
+					return lineItemCategories;
+			}
+		},
 		uiReducers: function (action, ui) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -92,15 +109,15 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.budget = scope.scheduleBudgetReducers(action, scope._state.budget);
 			newState.budgetScenarios = scope.budgetScenarioReducers(action, scope._state.budgetScenarios);
 			newState.lineItems = scope.lineItemReducers(action, scope._state.lineItems);
+			newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
 			newState.sectionGroupCosts = action.payload.sectionGroupCosts;
 			newState.ui = scope.uiReducers(action, scope._state.ui);
-
 			scope._state = newState;
 
 			// Build new 'page state'
 			// This is the 'view friendly' version of the store
 			newPageState = {};
-			newPageState.activeBudgetScenario = budgetSelectors.generateActiveScenario(newState.budgetScenarios, newState.lineItems, newState.ui);
+			newPageState.activeBudgetScenario = budgetSelectors.generateActiveScenario(newState.budgetScenarios, newState.lineItems, newState.ui, newState.lineItemCategories);
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
 			newPageState.budget = newState.budget;
 			newPageState.ui = newState.ui;
