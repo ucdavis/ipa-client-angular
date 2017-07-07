@@ -123,6 +123,13 @@
 				</a>
 			</li>
 
+			<li ng-class="{ 'active': currentBaseHref == 'budget' }" ng-if="userHasRoles(['academicPlanner','reviewer']) && isBudgetVisible()">
+				<a ng-href="/budget/{{ workgroupId }}/{{ year }}">
+					<i class="entypo-book"></i>
+					<span class="title">Budget</span>
+				</a>
+			</li>
+
 			<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport', 'opened': expanded == 'support' || (!expanded && currentBaseHref == 'instructionalSupport') }" 
 				ng-if="userHasRoles(['academicPlanner','reviewer']) && isSupportCallVisible()" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('support')">

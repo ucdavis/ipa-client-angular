@@ -55,6 +55,19 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 				return (index > -1);
 			};
 
+			// This function is temporary, returns true if the current workgroup is participant in the budget
+			scope.isBudgetVisible = function() {
+				var participatingWorkgroupIds = [];
+
+				// Add 'DSS IT'
+				participatingWorkgroupIds.push("20");
+
+				var currentWorkgroupId = scope.sharedState.workgroup.id;
+				var index = participatingWorkgroupIds.indexOf(currentWorkgroupId);
+
+				return (index > -1);
+			};
+
 			// TODO: Shouldn't this be set somewhere to be shared outside of <nav> ? -CT
 			$rootScope.$on('sharedStateSet', function (event, data) {
 				scope.sharedState = data;
