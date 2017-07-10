@@ -13,10 +13,10 @@ budgetApp.factory("budgetService", this.budgetService = function($http, $q, $win
 
 			return deferred.promise;
 		},
-		createBudgetScenario: function(newBudgetScenario, budgetId) {
+		createBudgetScenario: function(newBudgetScenario, budgetId, scenarioId) {
 			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/budgetView/budgets/" + budgetId + "/budgetScenarios", newBudgetScenario, { withCredentials: true })
+			$http.post(serverRoot + "/api/budgetView/budgets/" + budgetId + "/budgetScenarios?scenarioId=" + scenarioId, newBudgetScenario, { withCredentials: true })
 			.success(function(results) {
 				deferred.resolve(results);
 			})

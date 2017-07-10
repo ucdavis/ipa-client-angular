@@ -25,7 +25,7 @@ budgetApp.directive("addBudgetScenario", this.addBudgetScenario = function ($roo
 				}
 			};
 			scope.submitBudgetScenarioForm = function () {
-				budgetActions.createBudgetScenario(scope.newBudgetScenario, scope.budgetId);
+				budgetActions.createBudgetScenario(scope.newBudgetScenario, scope.budgetId, scope.newBudgetScenario.budgetScenarioId);
 			};
 		} // end link
 	};

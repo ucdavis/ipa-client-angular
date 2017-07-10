@@ -14,8 +14,10 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		createBudgetScenario: function (newBudgetScenario, budgetId) {
-			budgetService.createBudgetScenario(newBudgetScenario, budgetId).then(function (results) {
+		createBudgetScenario: function (newBudgetScenario, budgetId, scenarioId) {
+			if (scenarioId == null) { scenarioId = 0;}
+
+			budgetService.createBudgetScenario(newBudgetScenario, budgetId, scenarioId).then(function (results) {
 				var action = {
 					type: CREATE_BUDGET_SCENARIO,
 					payload: results
