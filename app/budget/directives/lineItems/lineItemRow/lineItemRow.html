@@ -73,9 +73,24 @@
 					Shang Lu
 				</div>
 			</div>
+
 			<div style="flex: 5 0 0px;">
 				<div style="padding-left: 20px;">
-					${{ lineItem.amount }}
+					<div>
+						<div  ng-if="lineItem.displayAmountInput == false"
+									ng-click="displayProperty(lineItem.id, 'amount')"
+									style="text-decoration: underline;">
+							${{ lineItem.amount }}
+						</div>
+						<div ng-if="lineItem.displayAmountInput == true">
+							<input  class="form-control" type="text"
+											ng-model="lineItem.amount"
+											auto-input
+											on-enter="updateLineItem(lineItem, 'amount')"
+											on-blur="updateLineItem(lineItem, 'amount')"
+											style="width: 20%;">
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -84,14 +99,40 @@
 			Description
 		</div>
 		<div style="padding-left: 20px;">
-			{{ lineItem.description }}
+			<div  ng-if="lineItem.displayDescriptionInput == false"
+						ng-click="displayProperty(lineItem.id, 'description')"
+						style="text-decoration: underline;">
+				{{ lineItem.description }}
+			</div>
+			<div ng-if="lineItem.displayDescriptionInput == true">
+				<input  class="form-control" type="text"
+								ng-model="lineItem.description"
+								auto-input
+								on-enter="updateLineItem(lineItem, 'description')"
+								on-blur="updateLineItem(lineItem, 'description')"
+								style="width: 20%;">
+			</div>
 		</div>
 
 		<div style="padding-left: 20px; padding-bottom: 10px; padding-top: 20px; font-weight: bold;">
 			Notes
 		</div>
-		<div style="padding-left: 20px; padding-bottom: 20px;">
-			{{ lineItem.notes }}
+		<div style="padding-left: 20px;">
+			<div>
+				<div  ng-if="lineItem.displayNotesInput == false"
+							ng-click="displayProperty(lineItem.id, 'notes')"
+							style="text-decoration: underline;">
+					{{ lineItem.notes }}
+				</div>
+				<div ng-if="lineItem.displayNotesInput == true">
+					<input  class="form-control" type="text"
+									ng-model="lineItem.notes"
+									auto-input
+									on-enter="updateLineItem(lineItem, 'notes')"
+									on-blur="updateLineItem(lineItem, 'notes')"
+									style="width: 20%;">
+				</div>
+			</div>
 		</div>
 	</div>
 

@@ -1,6 +1,3 @@
-/**
- * Provides the main course table in the Courses View
- */
 budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope) {
 	return {
 		restrict: 'E',
