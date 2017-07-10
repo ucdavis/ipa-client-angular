@@ -52,9 +52,15 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 					var syncAction = data.state.syncActions.list[id];
 					var sectionUniqueKey = null;
 
-					if (syncAction.sectionId == 0) {
-						sectionUniqueKey = syncAction.sectionProperty.substring(14);
-					} else {
+					// SectionProperty will come in the form of 'action-sectionGroupKey', example: 'deleteSection-ART-041-A03'
+					// We need to deserialize the two parts
+					if (syncAction.sectionProperty) {
+						var splitSectionKey = syncAction.sectionProperty.split('-');
+						var syncActionDescription = splitSectionKey[1];
+						var sectionUniqueKey = splitSectionKey[1] + "-" + splitSectionKey[2] + "-" + splitSectionKey[3];
+					}
+
+					if (syncAction.sectionId != 0) {
 						sectionUniqueKey = scope.findSectionUniqueKeyById(syncAction.sectionId, data.state.sections);
 					}
 
@@ -153,7 +159,7 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 						} else {
 							$log.debug("Unknown section property in a syncAction", syncAction.sectionProperty);
 						}
-					} else if (syncAction.sectionProperty && syncAction.sectionProperty.substring(0,13) != "deleteSection") {
+					} else if (syncAction.sectionProperty && syncActionDescription != "deleteSection") {
 						// Section property as todo (example: update seats)
 						if (!(section.dwChanges && section.dwChanges[syncAction.sectionProperty])) {
 							$log.debug("Section with uniqueKey " + section.uniqueKey + " property (" + syncAction.sectionProperty + ") no longer differs");
@@ -167,8 +173,7 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 						scope.view.listItems.push(syncAction);
 					} else {
 						// The section itself is a todo
-
-						if (syncAction.sectionProperty && syncAction.sectionProperty.substring(0,13) == "deleteSection") {
+						if (syncAction.sectionProperty && syncActionDescription == "deleteSection") {
 							// The todo is to remove the section from Banner
 							syncAction.description = "Remove " + section.subjectCode + " " + section.courseNumber + " section " +
 								section.sequenceNumber;
