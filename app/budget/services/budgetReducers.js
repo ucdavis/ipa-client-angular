@@ -43,6 +43,12 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						lineItems.list[lineItem.id] = lineItem;
 					});
 					return lineItems;
+
+				case CREATE_LINE_ITEM:
+					var newLineItem = action.payload;
+					lineItems.ids.push(newLineItem.id);
+					lineItems.list[newLineItem.id] = newLineItem;
+					return lineItems;
 				case DELETE_LINE_ITEM:
 					var lineItemId = action.payload.lineItemId;
 					var index = lineItems.ids.indexOf(lineItemId);

@@ -17,6 +17,7 @@ budgetApp.config(function ($routeProvider) {
 var INIT_STATE = "INIT_STATE";
 var CREATE_BUDGET_SCENARIO = "CREATE_BUDGET_SCENARIO";
 var DELETE_BUDGET_SCENARIO = "DELETE_BUDGET_SCENARIO";
+var CREATE_LINE_ITEM = "CREATE_LINE_ITEM";
 var DELETE_LINE_ITEM = "DELETE_LINE_ITEM";
 
 /* UI manipulation actions */
