@@ -49,6 +49,10 @@ budgetApp.service('budgetSelectors', function () {
 
 				// Setting UI state for line item detail view
 				lineItem.isDetailViewOpen = false;
+				lineItem.displayTypeInput = ui.lineItemDetails[lineItem.id].displayTypeInput;
+				lineItem.displayAmountInput = ui.lineItemDetails[lineItem.id].displayAmountInput;
+				lineItem.displayNotesInput = ui.lineItemDetails[lineItem.id].displayNotesInput;
+				lineItem.displayDescriptionInput = ui.lineItemDetails[lineItem.id].displayDescriptionInput;
 
 				activeBudgetScenario.lineItems.push(lineItem);
 				if (ui.openLineItems.indexOf(lineItem.id) > -1) {

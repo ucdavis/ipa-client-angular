@@ -55,6 +55,18 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		updateLineItem: function (lineItem) {
+			budgetService.updateLineItem(lineItem, lineItem.budgetScenarioId).then(function (results) {
+				var action = {
+					type: UPDATE_LINE_ITEM,
+					payload: results
+				};
+				$rootScope.$emit('toast', { message: "Saved line item", type: "SUCCESS" });
+				budgetReducers.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		deleteLineItem: function(lineItem) {
 			budgetService.deleteLineItem(lineItem).then(function (lineItemId) {
 				var action = {
@@ -82,6 +94,17 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			var action = {
 				type: TOGGLE_LINE_ITEM,
 				payload: {lineItemId: lineItem.id}
+			};
+
+			budgetReducers.reduce(action);
+		},
+		toggleLineItemDetail: function(lineItemId, property) {
+			var action = {
+				type: TOGGLE_LINE_ITEM_DETAIL,
+				payload: {
+					lineItemId: lineItemId,
+					property: property
+				}
 			};
 
 			budgetReducers.reduce(action);

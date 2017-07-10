@@ -49,6 +49,10 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					lineItems.ids.push(newLineItem.id);
 					lineItems.list[newLineItem.id] = newLineItem;
 					return lineItems;
+				case UPDATE_LINE_ITEM:
+					var updatedLineItem = action.payload;
+					lineItems.list[updatedLineItem.id] = updatedLineItem;
+					return lineItems;
 				case DELETE_LINE_ITEM:
 					var lineItemId = action.payload.lineItemId;
 					var index = lineItems.ids.indexOf(lineItemId);
@@ -91,8 +95,20 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					ui = {
 						isLineItemOpen: false,
 						isCourseCostOpen: false,
-						openLineItems: []
+						openLineItems: [],
+						lineItemDetails: {}
 					};
+
+					// Set initial lineItemDetail UI states
+					action.payload.lineItems.forEach(function(lineItem) {
+							ui.lineItemDetails[lineItem.id] = {
+								displayDescriptionInput: false,
+								displayAmountInput: false,
+								displayTypeInput: false,
+								displayNotesInput: false
+							};
+					});
+
 					return ui;
 				case TOGGLE_LINE_ITEM_SECTION:
 					ui.isLineItemOpen = !(ui.isLineItemOpen);
@@ -107,6 +123,25 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						ui.openLineItems.push(lineItemId);
 					} else {
 						ui.openLineItems.splice(index, 1);
+					}
+					return ui;
+				case TOGGLE_LINE_ITEM_DETAIL:
+					var lineItemId = action.payload.lineItemId;
+
+					// Toggle appropriate property
+					switch (action.payload.property) {
+						case "description":
+							ui.lineItemDetails[lineItemId].displayDescriptionInput = !ui.lineItemDetails[lineItemId].displayDescriptionInput;
+							return ui;
+						case "amount":
+							ui.lineItemDetails[lineItemId].displayAmountInput = !ui.lineItemDetails[lineItemId].displayAmountInput;
+							return ui;
+						case "notes":
+							ui.lineItemDetails[lineItemId].displayNotesInput = !ui.lineItemDetails[lineItemId].displayNotesInput;
+							return ui;
+						case "type":
+							ui.lineItemDetails[lineItemId].displayTypeInput = !ui.lineItemDetails[lineItemId].displayTypeInput;
+							return ui;
 					}
 					return ui;
 				default:
