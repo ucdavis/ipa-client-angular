@@ -33,7 +33,7 @@ budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$locatio
 
 BudgetCtrl.getPayload = function (authService, $route, $window, budgetActions) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		budgetActions.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+		budgetActions.getInitialState($route.current.params.workgroupId, $route.current.params.year, localStorage.getItem('activeBudgetScenarioId'));
 	});
 
 };

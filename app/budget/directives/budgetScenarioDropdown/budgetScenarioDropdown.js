@@ -8,6 +8,10 @@ sharedApp.directive('budgetScenarioDropdown', function($window, $location, $rout
 			scope.deleteBudgetScenario = function (budgetScenario) {
 				budgetActions.deleteBudgetScenario(budgetScenario.id);
 			};
+
+			scope.selectBudgetScenario = function (budgetScenario) {
+				budgetActions.selectBudgetScenario(budgetScenario.id);
+			};
 		} // End Link
 	};
 });

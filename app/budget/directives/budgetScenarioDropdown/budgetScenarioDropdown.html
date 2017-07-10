@@ -4,7 +4,7 @@
 					aria-haspopup="true" aria-expanded="true">
 
 		<span>
-			{{ view.state.activeScenario.name }}
+			{{ view.state.activeBudgetScenario.name }}
 			<span class="caret"></span>
 		</span>
 
@@ -12,7 +12,7 @@
 
 	<ul class="dropdown-menu" style="width: 250px;" aria-labelledby="dropdownMenu1">
 		<li ng-repeat="budgetScenario in view.state.budgetScenarios" class="budget-scenario-row">
-			<a ng-click="selectBudgetScenario()" style="display: flex; justify-content: space-between;">
+			<a ng-click="selectBudgetScenario(budgetScenario)" style="display: flex; justify-content: space-between;">
 				<span>
 					{{ budgetScenario.name }}
 				</span>

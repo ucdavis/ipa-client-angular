@@ -1,12 +1,22 @@
 budgetApp.service('budgetActions', function ($rootScope, $window, budgetService, budgetReducers) {
 	return {
-		getInitialState: function (workgroupId, year) {
+		getInitialState: function (workgroupId, year, activeBudgetScenarioId) {
 			budgetService.getInitialState(workgroupId, year).then(function (results) {
+
+				// Set a default active budget scenario if one was not set in local storage
+				if (!activeBudgetScenarioId) {
+					if (results.budgetScenarios && results.budgetScenarios.length > 0) {
+						activeBudgetScenarioId = results.budgetScenarios[0].id;
+						localStorage.setItem('activeBudgetScenarioId', activeBudgetScenarioId);
+					}
+				}
+
 				var action = {
 					type: INIT_STATE,
 					payload: results,
 					year: year,
-					workgroupId: workgroupId
+					workgroupId: workgroupId,
+					activeBudgetScenarioId: activeBudgetScenarioId
 				};
 
 				budgetReducers.reduce(action);
@@ -108,6 +118,18 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			};
 
 			budgetReducers.reduce(action);
-		}
+		},
+		selectBudgetScenario: function(budgetScenarioId) {
+			localStorage.setItem('activeBudgetScenarioId', budgetScenarioId);
+
+			var action = {
+				type: SELECT_BUDGET_SCENARIO,
+				payload: {
+					budgetScenarioId: budgetScenarioId
+				}
+			};
+
+			budgetReducers.reduce(action);
+		},
 	};
 });

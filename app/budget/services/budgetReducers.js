@@ -96,7 +96,10 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						isLineItemOpen: false,
 						isCourseCostOpen: false,
 						openLineItems: [],
-						lineItemDetails: {}
+						lineItemDetails: {},
+						activeBudgetScenarioId: action.activeBudgetScenarioId,
+						workgroupId: action.workgroupId,
+						year: action.year
 					};
 
 					// Set initial lineItemDetail UI states
@@ -109,6 +112,9 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 							};
 					});
 
+					return ui;
+				case SELECT_BUDGET_SCENARIO:
+					ui.activeBudgetScenarioId = action.payload.budgetScenarioId;
 					return ui;
 				case TOGGLE_LINE_ITEM_SECTION:
 					ui.isLineItemOpen = !(ui.isLineItemOpen);
@@ -163,7 +169,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			// Build new 'page state'
 			// This is the 'view friendly' version of the store
 			newPageState = {};
-			newPageState.activeBudgetScenario = budgetSelectors.generateActiveScenario(newState.budgetScenarios, newState.lineItems, newState.ui, newState.lineItemCategories);
+			newPageState.activeBudgetScenario = budgetSelectors.generateActiveBudgetScenario(newState.budgetScenarios, newState.lineItems, newState.ui, newState.lineItemCategories);
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
 			newPageState.budget = newState.budget;
 			newPageState.ui = newState.ui;

@@ -25,13 +25,8 @@ budgetApp.service('budgetSelectors', function () {
 			return lineItemCategoryList;
 		},
 		// This object will be the 'meat' of the main view.
-		generateActiveScenario: function (budgetScenarios, lineItems, ui, lineItemCategories) {
-
-			var activeBudgetScenario = null;
-			// TODO: Make active budget scenario a localStorage value, and affected by UI dropdown
-			if (budgetScenarios.ids && budgetScenarios.ids.length != 0) {
-				activeBudgetScenario = budgetScenarios.list[budgetScenarios.ids[0]];
-			}
+		generateActiveBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories) {
+			var activeBudgetScenario = budgetScenarios.list[ui.activeBudgetScenarioId];
 
 			// Set main view UI states
 			activeBudgetScenario.isLineItemOpen = ui.isLineItemOpen;
