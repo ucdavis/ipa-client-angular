@@ -108,6 +108,14 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			budgetReducers.reduce(action);
 		},
+		toggleCourseCostsSection: function() {
+			var action = {
+				type: TOGGLE_COURSE_COST_SECTION,
+				payload: {}
+			};
+
+			budgetReducers.reduce(action);
+		},
 		toggleLineItemDetail: function(lineItemId, property) {
 			var action = {
 				type: TOGGLE_LINE_ITEM_DETAIL,
