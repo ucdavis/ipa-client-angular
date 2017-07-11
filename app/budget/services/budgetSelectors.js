@@ -28,6 +28,9 @@ budgetApp.service('budgetSelectors', function () {
 		generateActiveBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories) {
 			var activeBudgetScenario = budgetScenarios.list[ui.activeBudgetScenarioId];
 
+			if (activeBudgetScenario == null) {
+				return null;
+			}
 			// Set main view UI states
 			activeBudgetScenario.isLineItemOpen = ui.isLineItemOpen;
 			activeBudgetScenario.isCourseCostOpen = ui.isCourseCostOpen;
@@ -43,7 +46,7 @@ budgetApp.service('budgetSelectors', function () {
 				lineItem.lineItemCategoryDescription = lineItemCategoryDescription;
 
 				// Setting UI state for line item detail view
-				lineItem.isDetailViewOpen = false;
+				lineItem.isDetailViewOpen = ui.lineItemDetails[lineItem.id].isDetailViewOpen;
 				lineItem.displayTypeInput = ui.lineItemDetails[lineItem.id].displayTypeInput;
 				lineItem.displayAmountInput = ui.lineItemDetails[lineItem.id].displayAmountInput;
 				lineItem.displayNotesInput = ui.lineItemDetails[lineItem.id].displayNotesInput;

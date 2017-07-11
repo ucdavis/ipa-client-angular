@@ -113,6 +113,15 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					});
 
 					return ui;
+				case CREATE_LINE_ITEM:
+					var lineItem = action.payload;
+					ui.lineItemDetails[lineItem.id] = {
+						displayDescriptionInput: false,
+						displayAmountInput: false,
+						displayTypeInput: false,
+						displayNotesInput: false
+					}
+					return ui;
 				case SELECT_BUDGET_SCENARIO:
 					ui.activeBudgetScenarioId = action.payload.budgetScenarioId;
 					return ui;
