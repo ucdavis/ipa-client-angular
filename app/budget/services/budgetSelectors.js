@@ -24,13 +24,22 @@ budgetApp.service('budgetSelectors', function () {
 
 			return lineItemCategoryList;
 		},
-		// This object will be the 'meat' of the main view.
 		generateActiveBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories) {
 			var activeBudgetScenario = budgetScenarios.list[ui.activeBudgetScenarioId];
 
+			// ActiveBudgetScenarioId refers to a scenario that no longer exists
+			// We will attempt to automatically select another scenario to be 'active'
 			if (activeBudgetScenario == null) {
-				return null;
+				if (budgetScenarios.ids.length > 0) {
+					// Pick the first available
+					var budgetScenarioId = budgetScenarios.ids[0];
+					activeBudgetScenario = budgetScenarios.list[budgetScenarioId];
+				} else {
+					// There are no scenarios, so there cannot be an active scenario
+					return null;
+				}
 			}
+
 			// Set main view UI states
 			activeBudgetScenario.isLineItemOpen = ui.isLineItemOpen;
 			activeBudgetScenario.isCourseCostOpen = ui.isCourseCostOpen;

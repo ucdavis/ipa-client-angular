@@ -14,6 +14,13 @@ budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$locatio
 
 		$rootScope.$on('budgetStateChanged', function (event, data) {
 			$scope.view.state = data;
+
+			// Set the current active budget scenario id
+			if ($scope.view.state.activeBudgetScenario) {
+				localStorage.setItem('activeBudgetScenarioId', $scope.view.state.activeBudgetScenario.id);
+			} else {
+				localStorage.removeItem('activeBudgetScenarioId');
+			}
 		});
 
 		$scope.openLineItemModal = function() {
