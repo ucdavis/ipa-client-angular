@@ -89,6 +89,57 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return lineItemCategories;
 			}
 		},
+		sectionGroupCostReducers: function (action, sectionGroupCosts) {
+			switch (action.type) {
+				case INIT_STATE:
+					sectionGroupCosts = {
+						ids: [],
+						list: []
+					};
+
+					action.payload.sectionGroupCosts.forEach( function(sectionGroupCost) {
+						sectionGroupCosts.ids.push(sectionGroupCost.id);
+						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
+					});
+					return sectionGroupCosts;
+				default:
+					return sectionGroupCosts;
+			}
+		},
+		sectionGroupReducers: function (action, sectionGroups) {
+			switch (action.type) {
+				case INIT_STATE:
+					sectionGroups = {
+						ids: [],
+						list: []
+					};
+
+					action.payload.sectionGroupCosts.forEach( function(sectionGroup) {
+						sectionGroups.ids.push(sectionGroup.id);
+						sectionGroups.list[sectionGroup.id] = sectionGroup;
+					});
+					return sectionGroups;
+				default:
+					return sectionGroups;
+			}
+		},
+		sectionReducers: function (action, sections) {
+			switch (action.type) {
+				case INIT_STATE:
+					sections = {
+						ids: [],
+						list: []
+					};
+
+					action.payload.sections.forEach( function(section) {
+						sections.ids.push(section.id);
+						sections.list[section.id] = section;
+					});
+					return sections;
+				default:
+					return sections;
+			}
+		},
 		uiReducers: function (action, ui) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -98,6 +149,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						openLineItems: [],
 						lineItemDetails: {},
 						activeBudgetScenarioId: action.activeBudgetScenarioId,
+						selectedTermCode: null,
 						workgroupId: action.workgroupId,
 						year: action.year
 					};
@@ -111,6 +163,15 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 								displayNotesInput: false
 							};
 					});
+
+					// Set default initial selectedTerm
+					if (action.payload.sectionGroupCosts.length > 0) {
+						ui.selectedTermCode = action.payload.sectionGroupCosts[0].termCode;
+					}
+
+					return ui;
+				case SELECT_TERM:
+					ui.selectedTermCode = action.payload.termCode;
 					return ui;
 				case CREATE_LINE_ITEM:
 					var lineItem = action.payload;
@@ -170,14 +231,18 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.budgetScenarios = scope.budgetScenarioReducers(action, scope._state.budgetScenarios);
 			newState.lineItems = scope.lineItemReducers(action, scope._state.lineItems);
 			newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
-			newState.sectionGroupCosts = action.payload.sectionGroupCosts;
+			newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
+			newState.sectionGroups = scope.sectionGroupReducers(action, scope._state.sectionGroups);
+			newState.sections = scope.sectionReducers(action, scope._state.sections);
+
 			newState.ui = scope.uiReducers(action, scope._state.ui);
 			scope._state = newState;
 
 			// Build new 'page state'
 			// This is the 'view friendly' version of the store
 			newPageState = {};
-			newPageState.activeBudgetScenario = budgetSelectors.generateActiveBudgetScenario(newState.budgetScenarios, newState.lineItems, newState.ui, newState.lineItemCategories);
+			newPageState.activeBudgetScenario = budgetSelectors.generateActiveBudgetScenario(newState.budgetScenarios,
+				newState.lineItems, newState.ui, newState.lineItemCategories, newState.sectionGroupCosts, newState.sectionGroups, newState.sections);
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
 			newPageState.budget = newState.budget;
 			newPageState.ui = newState.ui;

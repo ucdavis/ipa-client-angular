@@ -24,7 +24,7 @@ budgetApp.service('budgetSelectors', function () {
 
 			return lineItemCategoryList;
 		},
-		generateActiveBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories) {
+		generateActiveBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories, sectionGroupCosts, sectionGroups, sections, courses) {
 			var activeBudgetScenario = budgetScenarios.list[ui.activeBudgetScenarioId];
 
 			// ActiveBudgetScenarioId refers to a scenario that no longer exists
@@ -67,6 +67,22 @@ budgetApp.service('budgetSelectors', function () {
 				}
 			});
 
+			// Add sectionGroupCosts (grouped by termCode)
+			activeBudgetScenario.terms = {};
+			activeBudgetScenario.termCodes = [];
+
+			sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
+				var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+				var termCode = sectionGroupCost.termCode;
+
+				// Set initial array if this is the first sectionGroupCost found in term
+				if (activeBudgetScenario.terms[termCode] == null) {
+					activeBudgetScenario.terms[termCode] = [];
+					activeBudgetScenario.termCodes.push(termCode);
+				}
+
+				activeBudgetScenario.terms[termCode].push(sectionGroupCost);
+			});
 			return activeBudgetScenario;
 		}
 	};

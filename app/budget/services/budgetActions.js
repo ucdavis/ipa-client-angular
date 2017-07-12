@@ -139,5 +139,13 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			budgetReducers.reduce(action);
 		},
+		selectTerm: function(termCode) {
+			var action = {
+				type: SELECT_TERM,
+				payload: {
+					termCode: termCode
+				}
+			};
+		}
 	};
 });
