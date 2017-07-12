@@ -1,7 +1,7 @@
-budgetApp.directive("courseCostsRow", this.courseCostsRow = function ($rootScope, budgetActions) {
+budgetApp.directive("supportCostRow", this.supportCostRow = function ($rootScope, budgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'courseCostsRow.html',
+		templateUrl: 'supportCostRow.html',
 		replace: true,
 		scope: {
 			activeBudgetScenario: '<'

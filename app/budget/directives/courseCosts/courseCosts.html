@@ -9,11 +9,15 @@
 	</div>
 
 	<div ng-show="activeBudgetScenario.isCourseCostOpen">
-		<!-- line items header -->
+		<div>
+			Term Selector here
+		</div>
+
+		<!-- Course Costs Header -->
 		<div style="display: flex; width: 100%;">
 
 			<!-- Support Staff Header -->
-			<div style="display: flex; flex: 1 0 0px; background-color: #F1F8FA;;">
+			<div style="display: flex; flex: 5 0 0px;">
 				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
 					Off.
 				</div>
@@ -23,24 +27,32 @@
 				</div>
 
 				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
-					Section
+					Sections
 				</div>
 
 				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
-					TA
+					TAs
 				</div>
 
 				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
-					Reader
+					TA Cost
 				</div>
 
 				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
-					Cost
+					Readers
+				</div>
+
+				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
+					Reader Cost
+				</div>
+
+				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
+					Support Cost
 				</div>
 			</div>
 
 			<!-- Instructors Header -->
-			<div style="display: flex; flex: 1 0 0px; background-color: #FAF1F1;">
+			<div style="display: flex; flex: 5 0 0px;">
 				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
 					Instructor
 				</div>
@@ -51,7 +63,7 @@
 					Reason
 				</div>
 				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
-					Cost
+					Instructor Cost
 				</div>
 			</div>
 
@@ -60,9 +72,16 @@
 				Total Cost
 			</div>
 		</div>
-
-		<div ng-repeat="lineItem in activeBudgetScenario.lineItems">
-			<line-item-row line-item="lineItem"></line-item-row>
+		<div style="display: flex;">
+			<div style="flex: 5 0 0px; padding: 10px;">
+				<support-cost-row></support-cost-row>
+			</div>
+			<div style="flex: 5 0 0px; padding: 10px;">
+				<instructor-cost-row></instructor-cost-row>
+			</div>
+			<div style="flex: 1 0 0px;">
+				total cost here
+			</div>
 		</div>
 
 	</div>
