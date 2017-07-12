@@ -6,7 +6,9 @@ budgetApp.directive("addBudgetScenario", this.addBudgetScenario = function ($roo
 		restrict: 'E',
 		templateUrl: 'addBudgetScenario.html',
 		replace: true,
-		scope: false,
+		scope: {
+			state: '<'
+		},
 		link: function (scope, element, attrs) {
 			scope.newBudgetScenario = {};
 			scope.newBudgetScenario.name = "";
@@ -25,7 +27,7 @@ budgetApp.directive("addBudgetScenario", this.addBudgetScenario = function ($roo
 				}
 			};
 			scope.submitBudgetScenarioForm = function () {
-				budgetActions.createBudgetScenario(scope.newBudgetScenario, scope.budgetId, scope.newBudgetScenario.budgetScenarioId);
+				budgetActions.createBudgetScenario(scope.newBudgetScenario, scope.state.budget.id, scope.newBudgetScenario.budgetScenarioId);
 			};
 		} // end link
 	};
