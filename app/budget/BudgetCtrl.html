@@ -33,17 +33,15 @@ jQuery(document).ready(function($) {
 
 	<!-- Modals -->
 	<ipa-modal
-		ng-if="view.state.openAddBudgetScenario"
-		close-modal="closeBudgetScenarioModal()"
+		is-visible="view.state.openAddBudgetScenario"
 		header-text="Add New Budget Scenario">
-			<add-budget-scenario budget-id="{{view.state.budget.id}}"></add-budget-scenario>
+			<add-budget-scenario ng-if="view.state.openAddBudgetScenario" state="view.state"></add-budget-scenario>
 	</ipa-modal>
 
 	<ipa-modal
-		ng-if="view.state.openAddLineItem"
-		close-modal="closeLineItemModal()"
+		is-visible="view.state.openAddLineItem"
 		header-text="Add New Line Item">
-			<add-line-item state="view.state"></add-line-item>
+			<add-line-item ng-if="view.state.openAddLineItem" state="view.state"></add-line-item>
 	</ipa-modal>
 
 	<!-- table-toolbar -->
