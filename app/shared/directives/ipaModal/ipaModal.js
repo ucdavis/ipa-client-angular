@@ -3,11 +3,12 @@ sharedApp.directive('ipaModal', function() {
 		restrict: 'E', // Use this via an element selector <ipa-modal></ipa-modal>
 		templateUrl: 'ipaModal.html', // directive html found here:
 		scope: {
-			closeModal: '&?' // Accepts a method closeModal, ? defined as optional (even though it is not) to ensure its easily referenceable for validation
+			isVisible: '='
 		},
 		replace: true, // Replace with the template below
 		transclude: true, // we want to insert custom content inside the directive
 		link: function(scope, element, attrs, iAttr) {
+/*
 			// [VALIDATE: Passed Methods]
 			scope.isCloseModalSupplied = (angular.isUndefined(scope.closeModal) === false);
 
@@ -16,7 +17,7 @@ sharedApp.directive('ipaModal', function() {
 					message:	"dssModal: Required method closeModal was not passed in."
 				};
 			}
-
+*/
 			// [VALIDATE: Attributes]
 			scope.dialogStyle = {};
 			scope.headerText = "";
@@ -31,14 +32,25 @@ sharedApp.directive('ipaModal', function() {
 				scope.headerText = attrs.headerText;
 			}
 
-			// [DISABLE PAGE SCROLLING]
-			$('body').css('overflow-y','hidden');
+			scope.$watch('isVisible',function() {
+				// Watches for changes to isVisible to turn page scrolling on/off
+				if(scope.isVisible == true) {
+					scope.open();
+				} else if (scope.isVisible == false) {
+					scope.close();
+				}
+			});
 
 			// [METHODS]
 			scope.close = function() {
 				// Re-enable page scrolling
 				$('body').css('overflow-y','visible');
-				scope.closeModal();
+				scope.isVisible = false;
+			};
+
+			scope.open = function() {
+				// Disables page scrolling while modal is up
+				$('body').css('overflow-y','hidden');
 			};
 		}
 	};
