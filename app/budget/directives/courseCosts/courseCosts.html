@@ -74,15 +74,25 @@
 				Total Cost
 			</div>
 		</div>
-		<div style="display: flex;">
-			<div style="flex: 5 0 0px; padding: 10px;">
-				<support-cost-row></support-cost-row>
+
+		<div ng-repeat="course in selectedBudgetScenario.courses">
+			<div>
+				{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
 			</div>
-			<div style="flex: 5 0 0px; padding: 10px;">
-				<instructor-cost-row></instructor-cost-row>
-			</div>
-			<div style="flex: 1 0 0px;">
-				total cost here
+			<div style="display: flex;" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+
+				<div style="flex: 5 0 0px; padding: 10px;">
+					<support-cost-row section-group-cost="sectionGroupCost"></support-cost-row>
+				</div>
+
+				<div style="flex: 5 0 0px; padding: 10px;">
+					<instructor-cost-row section-group-cost="sectionGroupCost"></instructor-cost-row>
+				</div>
+
+				<div style="flex: 1 0 0px;">
+					[[COST]]
+				</div>
+
 			</div>
 		</div>
 

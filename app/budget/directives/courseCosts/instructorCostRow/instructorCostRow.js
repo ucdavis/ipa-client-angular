@@ -4,7 +4,7 @@ budgetApp.directive("instructorCostRow", this.instructorCostRow = function ($roo
 		templateUrl: 'instructorCostRow.html',
 		replace: true,
 		scope: {
-			selectedBudgetScenario: '<'
+			sectionGroupCost: '<'
 		},
 		link: function (scope, element, attrs) {
 

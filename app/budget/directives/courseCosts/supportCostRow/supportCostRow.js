@@ -4,7 +4,7 @@ budgetApp.directive("supportCostRow", this.supportCostRow = function ($rootScope
 		templateUrl: 'supportCostRow.html',
 		replace: true,
 		scope: {
-			selectedBudgetScenario: '<'
+			sectionGroupCost: '<'
 		},
 		link: function (scope, element, attrs) {
 
