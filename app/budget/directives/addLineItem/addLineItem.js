@@ -18,9 +18,9 @@ budgetApp.directive("addLineItem", this.addLineItem = function ($rootScope, budg
 				scope.newLineItem.categoryDescription = category.description;
 			};
 			scope.submitLineItemForm = function () {
-				scope.newLineItem.budgetScenarioId = scope.state.activeBudgetScenario.id;
+				scope.newLineItem.budgetScenarioId = scope.state.selectedBudgetScenario.id;
 
-				budgetActions.createLineItem(scope.newLineItem, scope.state.activeBudgetScenario.id);
+				budgetActions.createLineItem(scope.newLineItem, scope.state.selectedBudgetScenario.id);
 			};
 		} // end link
 	};

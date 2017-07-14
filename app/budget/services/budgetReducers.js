@@ -148,8 +148,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						isCourseCostOpen: false,
 						openLineItems: [],
 						lineItemDetails: {},
-						activeBudgetScenarioId: action.activeBudgetScenarioId,
-						selectedTermCode: null,
+						selectedBudgetScenarioId: action.selectedBudgetScenarioId,
+						selectedTerm: action.selectedTerm,
 						workgroupId: action.workgroupId,
 						year: action.year
 					};
@@ -165,13 +165,13 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					});
 
 					// Set default initial selectedTerm
-					if (action.payload.sectionGroupCosts.length > 0) {
-						ui.selectedTermCode = action.payload.sectionGroupCosts[0].termCode;
+					if (ui.selectedTerm == null && action.payload.sectionGroupCosts.length > 0) {
+						ui.selectedTerm = action.payload.sectionGroupCosts[0].termCode.slice(-2);
 					}
 
 					return ui;
 				case SELECT_TERM:
-					ui.selectedTermCode = action.payload.termCode;
+					ui.selectedTerm = action.payload.term;
 					return ui;
 				case CREATE_LINE_ITEM:
 					var lineItem = action.payload;
@@ -183,7 +183,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					};
 					return ui;
 				case SELECT_BUDGET_SCENARIO:
-					ui.activeBudgetScenarioId = action.payload.budgetScenarioId;
+					ui.selectedBudgetScenarioId = action.payload.budgetScenarioId;
 					return ui;
 				case TOGGLE_LINE_ITEM_SECTION:
 					ui.isLineItemOpen = !(ui.isLineItemOpen);
@@ -241,8 +241,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			// Build new 'page state'
 			// This is the 'view friendly' version of the store
 			newPageState = {};
-			newPageState.activeBudgetScenario = budgetSelectors.generateActiveBudgetScenario(newState.budgetScenarios,
-				newState.lineItems, newState.ui, newState.lineItemCategories, newState.sectionGroupCosts, newState.sectionGroups, newState.sections);
+			newPageState.selectedBudgetScenario = budgetSelectors.generateSelectedBudgetScenario(newState.budgetScenarios,
+			newState.lineItems, newState.ui, newState.lineItemCategories, newState.sectionGroupCosts, newState.sectionGroups, newState.sections);
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
 			newPageState.budget = newState.budget;
 			newPageState.ui = newState.ui;

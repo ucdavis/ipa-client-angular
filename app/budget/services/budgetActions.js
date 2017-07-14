@@ -1,13 +1,13 @@
 budgetApp.service('budgetActions', function ($rootScope, $window, budgetService, budgetReducers) {
 	return {
-		getInitialState: function (workgroupId, year, activeBudgetScenarioId) {
+		getInitialState: function (workgroupId, year, selectedBudgetScenarioId, selectedTerm) {
 			budgetService.getInitialState(workgroupId, year).then(function (results) {
 
 				// Set a default active budget scenario if one was not set in local storage
-				if (!activeBudgetScenarioId) {
+				if (!selectedBudgetScenarioId) {
 					if (results.budgetScenarios && results.budgetScenarios.length > 0) {
-						activeBudgetScenarioId = results.budgetScenarios[0].id;
-						localStorage.setItem('activeBudgetScenarioId', activeBudgetScenarioId);
+						selectedBudgetScenarioId = results.budgetScenarios[0].id;
+						localStorage.setItem('selectedBudgetScenarioId', selectedBudgetScenarioId);
 					}
 				}
 
@@ -16,7 +16,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					payload: results,
 					year: year,
 					workgroupId: workgroupId,
-					activeBudgetScenarioId: activeBudgetScenarioId
+					selectedBudgetScenarioId: selectedBudgetScenarioId,
+					selectedTerm: selectedTerm
 				};
 
 				budgetReducers.reduce(action);
@@ -128,7 +129,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			budgetReducers.reduce(action);
 		},
 		selectBudgetScenario: function(budgetScenarioId) {
-			localStorage.setItem('activeBudgetScenarioId', budgetScenarioId);
+			localStorage.setItem('selectedBudgetScenarioId', budgetScenarioId);
 
 			var action = {
 				type: SELECT_BUDGET_SCENARIO,
@@ -139,13 +140,15 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			budgetReducers.reduce(action);
 		},
-		selectTerm: function(termCode) {
+		selectTerm: function(term) {
 			var action = {
 				type: SELECT_TERM,
 				payload: {
-					termCode: termCode
+					term: term
 				}
 			};
+
+			budgetReducers.reduce(action);
 		}
 	};
 });

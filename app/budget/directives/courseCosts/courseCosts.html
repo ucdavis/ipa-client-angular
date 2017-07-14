@@ -3,15 +3,17 @@
 	<div class="expand-ui-container" ng-click="toggleCourseCostsSection()">
 		<div class="expand-ui">
 			<div>Course Costs</div>
-			<i ng-show="activeBudgetScenario.isCourseCostOpen == false" class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>
-			<i ng-show="activeBudgetScenario.isCourseCostOpen" class="glyphicon glyphicon-triangle-bottom expand-ui-triangle"></i>
+			<i ng-show="selectedBudgetScenario.isCourseCostOpen == false" class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>
+			<i ng-show="selectedBudgetScenario.isCourseCostOpen" class="glyphicon glyphicon-triangle-bottom expand-ui-triangle"></i>
 		</div>
 	</div>
 
-	<div ng-show="activeBudgetScenario.isCourseCostOpen">
-		<div>
-			Term Selector here
-		</div>
+	<div ng-show="selectedBudgetScenario.isCourseCostOpen">
+		<term-selector
+			selected-term="selectedBudgetScenario.selectedTerm"
+			terms="selectedBudgetScenario.terms"
+			term-descriptions="selectedBudgetScenario.termDescriptions">
+		</term-selector>
 
 		<!-- Course Costs Header -->
 		<div style="display: flex; width: 100%;">

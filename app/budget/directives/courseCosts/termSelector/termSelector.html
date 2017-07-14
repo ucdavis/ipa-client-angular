@@ -1,0 +1,12 @@
+<div>
+	<div ng-repeat="term in terms">
+		<div ng-if="term == selectedTerm" style="border: 1px solid red;">
+			{{ termDescriptions[term] }}
+		</div>
+		<div ng-if="term != selectedTerm" style="border: 1px solid black;" ng-click="selectTerm(term)">
+			{{ termDescriptions[term] }}
+		</div>
+
+	</div>
+
+</div>

@@ -4,7 +4,7 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 		templateUrl: 'courseCosts.html',
 		replace: true,
 		scope: {
-			activeBudgetScenario: '<'
+			selectedBudgetScenario: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.toggleCourseCostsSection = function() {

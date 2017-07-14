@@ -3,19 +3,19 @@
 	<div class="expand-ui-container" ng-click="toggleLineItemSection()">
 		<div class="expand-ui">
 			<div>Line Items</div>
-			<i ng-show="activeBudgetScenario.isLineItemOpen == false" class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>
-			<i ng-show="activeBudgetScenario.isLineItemOpen" class="glyphicon glyphicon-triangle-bottom expand-ui-triangle"></i>
+			<i ng-show="selectedBudgetScenario.isLineItemOpen == false" class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>
+			<i ng-show="selectedBudgetScenario.isLineItemOpen" class="glyphicon glyphicon-triangle-bottom expand-ui-triangle"></i>
 		</div>
 	</div>
 
-	<div ng-show="activeBudgetScenario.isLineItemOpen">
+	<div ng-show="selectedBudgetScenario.isLineItemOpen">
 		<!-- line items header -->
 		<div style="border-top: 1px solid rgb(235, 235, 235);">
 			<div style="display: flex; width: 100%;">
 				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgb(235, 235, 235); padding: 10px;">
 
 					<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-						ng-class="{ 'checked': activeBudgetScenario.taco }">
+						ng-class="{ 'checked': selectedBudgetScenario.taco }">
 						<label class="cb-wrapper">
 							<div class="checked"></div>
 						</label>
@@ -37,7 +37,7 @@
 			</div>
 		</div>
 
-		<div ng-repeat="lineItem in activeBudgetScenario.lineItems">
+		<div ng-repeat="lineItem in selectedBudgetScenario.lineItems">
 			<line-item-row line-item="lineItem"></line-item-row>
 		</div>
 

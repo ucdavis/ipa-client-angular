@@ -24,16 +24,16 @@ budgetApp.service('budgetSelectors', function () {
 
 			return lineItemCategoryList;
 		},
-		generateActiveBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories, sectionGroupCosts, sectionGroups, sections, courses) {
-			var activeBudgetScenario = budgetScenarios.list[ui.activeBudgetScenarioId];
+		generateSelectedBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories, sectionGroupCosts, sectionGroups, sections, courses) {
+			var selectedBudgetScenario = budgetScenarios.list[ui.selectedBudgetScenarioId];
 
-			// ActiveBudgetScenarioId refers to a scenario that no longer exists
+			// selectedBudgetScenarioId refers to a scenario that no longer exists
 			// We will attempt to automatically select another scenario to be 'active'
-			if (activeBudgetScenario == null) {
+			if (selectedBudgetScenario == null) {
 				if (budgetScenarios.ids.length > 0) {
 					// Pick the first available
 					var budgetScenarioId = budgetScenarios.ids[0];
-					activeBudgetScenario = budgetScenarios.list[budgetScenarioId];
+					selectedBudgetScenario = budgetScenarios.list[budgetScenarioId];
 				} else {
 					// There are no scenarios, so there cannot be an active scenario
 					return null;
@@ -41,11 +41,11 @@ budgetApp.service('budgetSelectors', function () {
 			}
 
 			// Set main view UI states
-			activeBudgetScenario.isLineItemOpen = ui.isLineItemOpen;
-			activeBudgetScenario.isCourseCostOpen = ui.isCourseCostOpen;
+			selectedBudgetScenario.isLineItemOpen = ui.isLineItemOpen;
+			selectedBudgetScenario.isCourseCostOpen = ui.isCourseCostOpen;
 
 			// Add lineItems
-			activeBudgetScenario.lineItems = [];
+			selectedBudgetScenario.lineItems = [];
 
 			lineItems.ids.forEach( function (lineItemId) {
 				var lineItem = lineItems.list[lineItemId];
@@ -61,29 +61,44 @@ budgetApp.service('budgetSelectors', function () {
 				lineItem.displayNotesInput = ui.lineItemDetails[lineItem.id].displayNotesInput;
 				lineItem.displayDescriptionInput = ui.lineItemDetails[lineItem.id].displayDescriptionInput;
 
-				activeBudgetScenario.lineItems.push(lineItem);
+				selectedBudgetScenario.lineItems.push(lineItem);
 				if (ui.openLineItems.indexOf(lineItem.id) > -1) {
 					lineItem.isDetailViewOpen = true;
 				}
 			});
 
-			// Add sectionGroupCosts (grouped by termCode)
-			activeBudgetScenario.terms = {};
-			activeBudgetScenario.termCodes = [];
+			// Add sectionGroupCosts (for selected termCode)
+			selectedBudgetScenario.selectedTerm = ui.selectedTerm;
+			selectedBudgetScenario.sectionGroupCosts = [];
+			selectedBudgetScenario.terms = [];
+			selectedBudgetScenario.termDescriptions = {
+				'05': 'Summer Session 1',
+				'06': 'Summer Special Session',
+				'07': 'Summer Session 2',
+				'08': 'Summer Quarter',
+				'09': 'Fall Semester',
+				'10': 'Fall Quarter',
+				'01': 'Winter Quarter',
+				'02': 'Spring Semester',
+				'03': 'Spring Quarter'
+			};
 
 			sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
 				var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 				var termCode = sectionGroupCost.termCode;
+				var term = termCode.slice(-2);
 
-				// Set initial array if this is the first sectionGroupCost found in term
-				if (activeBudgetScenario.terms[termCode] == null) {
-					activeBudgetScenario.terms[termCode] = [];
-					activeBudgetScenario.termCodes.push(termCode);
+
+				if (selectedBudgetScenario.terms.indexOf(term) == -1) {
+					selectedBudgetScenario.terms.push(term);
 				}
 
-				activeBudgetScenario.terms[termCode].push(sectionGroupCost);
+				if (term == selectedBudgetScenario.selectedTerm) {
+					selectedBudgetScenario.sectionGroupCosts.push(sectionGroupCost);
+				}
 			});
-			return activeBudgetScenario;
+
+			return selectedBudgetScenario;
 		}
 	};
 });

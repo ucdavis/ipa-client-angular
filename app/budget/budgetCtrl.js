@@ -16,11 +16,19 @@ budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$locatio
 			$scope.view.state = data;
 
 			// Set the current active budget scenario id
-			if ($scope.view.state.activeBudgetScenario) {
-				localStorage.setItem('activeBudgetScenarioId', $scope.view.state.activeBudgetScenario.id);
+			if ($scope.view.state.selectedBudgetScenario) {
+				localStorage.setItem('selectedBudgetScenarioId', $scope.view.state.selectedBudgetScenario.id);
 			} else {
-				localStorage.removeItem('activeBudgetScenarioId');
+				localStorage.removeItem('selectedBudgetScenarioId');
 			}
+			// Set the current selected term
+			if ($scope.view.state.selectedBudgetScenario) {
+				localStorage.setItem('selectedTerm', $scope.view.state.selectedBudgetScenario.selectedTerm);
+			} else {
+				localStorage.removeItem('selectedTerm');
+			}
+
+
 		});
 
 		$scope.openLineItemModal = function() {
@@ -34,7 +42,10 @@ budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$locatio
 
 BudgetCtrl.getPayload = function (authService, $route, $window, budgetActions) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		budgetActions.getInitialState($route.current.params.workgroupId, $route.current.params.year, localStorage.getItem('activeBudgetScenarioId'));
+		budgetActions.getInitialState($route.current.params.workgroupId,
+																	$route.current.params.year,
+																	localStorage.getItem('selectedBudgetScenarioId'),
+																	localStorage.getItem('selectedTerm'));
 	});
 
 };
