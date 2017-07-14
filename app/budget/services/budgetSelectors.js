@@ -69,7 +69,9 @@ budgetApp.service('budgetSelectors', function () {
 
 			// Add sectionGroupCosts (for selected termCode)
 			selectedBudgetScenario.selectedTerm = ui.selectedTerm;
-			selectedBudgetScenario.sectionGroupCosts = [];
+			selectedBudgetScenario.courses = []; // Will hold sectionGroupCosts, grouped by subj/course number
+			var addedCoursesHash = {}; // Will hold the index of a given course in courses, based on subj/course number key
+
 			selectedBudgetScenario.terms = [];
 			selectedBudgetScenario.termDescriptions = {
 				'05': 'Summer Session 1',
@@ -94,7 +96,34 @@ budgetApp.service('budgetSelectors', function () {
 				}
 
 				if (term == selectedBudgetScenario.selectedTerm) {
-					selectedBudgetScenario.sectionGroupCosts.push(sectionGroupCost);
+					// Ensure the sectionGroupCost is for the relevant term
+
+					// Determine if a course for this sectionGroup has been made
+					// Course will hold all sectionGroups with the same subj/course number
+					var sectionGroupKey = sectionGroupCost.subjectCode + sectionGroupCost.courseNumber;
+					var newCourseIndex = null;
+
+					if (addedCoursesHash[sectionGroupKey] == null) {
+
+						// Add the course 
+						var newcourse = {
+							sectionGroupCosts: [],
+							subjectCode: sectionGroupCost.subjectCode,
+							courseNumber: sectionGroupCost.courseNumber,
+							title: sectionGroupCost.title
+						};
+
+						selectedBudgetScenario.courses.push(newcourse);
+
+						// Store the new course index in the hash
+						newCourseIndex = selectedBudgetScenario.courses.length - 1;
+						addedCoursesHash[sectionGroupKey] = newCourseIndex;
+					} else {
+						newCourseIndex = addedCoursesHash[sectionGroupKey];
+					}
+
+					// Now the proper course has been identified (or created), add the sectionGroup
+					selectedBudgetScenario.courses[newCourseIndex].sectionGroupCosts.push(sectionGroupCost);
 				}
 			});
 
