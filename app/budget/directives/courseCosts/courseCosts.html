@@ -19,7 +19,7 @@
 		<div style="display: flex; width: 100%;">
 
 			<!-- Support Staff Header -->
-			<div style="display: flex; flex: 5 0 0px;">
+			<div style="display: flex; flex: 5 0 0px; padding: 15px;">
 				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
 					Off.
 				</div>
@@ -54,7 +54,7 @@
 			</div>
 
 			<!-- Instructors Header -->
-			<div style="display: flex; flex: 5 0 0px;">
+			<div style="display: flex; flex: 5 0 0px; padding: 15px;">
 				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
 					Instructor
 				</div>
@@ -70,26 +70,26 @@
 			</div>
 
 			<!-- Summary Column -->
-			<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
+			<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center; padding: 15px;">
 				Total Cost
 			</div>
 		</div>
 
 		<div ng-repeat="course in selectedBudgetScenario.courses">
-			<div>
+			<div style="padding: 15px;">
 				{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
 			</div>
 			<div style="display: flex;" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
 
-				<div style="flex: 5 0 0px; padding: 10px;">
+				<div style="flex: 5 0 0px; padding: 15px;">
 					<support-cost-row section-group-cost="sectionGroupCost"></support-cost-row>
 				</div>
 
-				<div style="flex: 5 0 0px; padding: 10px;">
+				<div style="flex: 5 0 0px; padding: 15px;">
 					<instructor-cost-row section-group-cost="sectionGroupCost"></instructor-cost-row>
 				</div>
 
-				<div style="flex: 1 0 0px;">
+				<div style="flex: 1 0 0px; padding: 15px; display: flex; justify-content: center;">
 					[[COST]]
 				</div>
 
