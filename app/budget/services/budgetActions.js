@@ -93,6 +93,20 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		updateBudget: function (budget) {
+			budgetService.updateBudget(budget).then(function (budget) {
+				var action = {
+					type: UPDATE_BUDGET,
+					payload: {
+						budget: budget
+					}
+				};
+				$rootScope.$emit('toast', { message: "Updated costs", type: "SUCCESS" });
+				budgetReducers.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		toggleLineItemSection: function () {
 			var action = {
 				type: TOGGLE_LINE_ITEM_SECTION,

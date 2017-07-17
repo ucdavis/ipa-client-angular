@@ -77,6 +77,19 @@ budgetApp.factory("budgetService", this.budgetService = function($http, $q, $win
 			});
 
 			return deferred.promise;
+		},
+		updateBudget: function(budget) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/budgetView/budgets/" + budget.id, budget, { withCredentials: true })
+			.success(function(results) {
+				deferred.resolve(results);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
 		}
 	};
 });

@@ -1,0 +1,53 @@
+<div class="support-costs">
+	<form role="form" class="form-horizontal">
+
+		<div class="form-group">
+			<label class="col-sm-6 control-label">TA Cost</label>
+			<div class="col-sm-5">
+				<div class="input-group" style="width: 100%;">
+					<input
+						class="form-control" type="text"
+						ng-model="newBudget.taCost"
+						placeholder="Enter amount">
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-6 control-label">Reader Cost</label>
+			<div class="col-sm-5">
+				<div class="input-group" style="width: 100%;">
+					<input
+						class="form-control" type="text"
+						ng-model="newBudget.readerCost"
+						placeholder="Enter amount">
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-6 control-label">Lecturer Cost</label>
+			<div class="col-sm-5">
+				<div class="input-group" style="width: 100%;">
+					<input
+						class="form-control" type="text"
+						ng-model="newBudget.lecturerCost"
+						placeholder="Enter amount">
+				</div>
+			</div>
+		</div>
+
+		<div class="add-budget-scenario-footer">
+			<button ng-click="closeSupportCosts()"
+							type="button" style="margin-right: 5px;"
+							class="btn btn-default ng-scope">
+				Cancel
+			</button>
+			<button ng-click="saveBudget()"
+							type="button" style="margin-right: 10px;"
+							class="btn neon-dark-confirm-btn ng-scope">
+				Save
+			</button>
+		</div>
+	</form>
+</div>

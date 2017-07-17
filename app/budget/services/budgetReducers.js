@@ -68,6 +68,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case INIT_STATE:
 					budget = action.payload.budget;
 					return budget;
+				case UPDATE_BUDGET:
+					budget = action.payload.budget;
 				default:
 					return budget;
 			}
