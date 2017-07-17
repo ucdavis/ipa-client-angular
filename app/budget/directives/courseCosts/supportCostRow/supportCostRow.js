@@ -7,6 +7,14 @@ budgetApp.directive("supportCostRow", this.supportCostRow = function ($rootScope
 			sectionGroupCost: '<'
 		},
 		link: function (scope, element, attrs) {
+			scope.updateSectionGroupCost = function(sectionGroupCost, propertyName) {
+				budgetActions.toggleSectionGroupCostDetail(sectionGroupCost.id, propertyName);
+				budgetActions.updateSectionGroupCost(sectionGroupCost);
+			};
+
+			scope.displayProperty = function(sectionGroupCost, propertyName) {
+				budgetActions.toggleSectionGroupCostDetail(sectionGroupCost.id, propertyName);
+			};
 
 		} // end link
 	};

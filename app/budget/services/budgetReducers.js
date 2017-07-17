@@ -150,6 +150,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						isCourseCostOpen: false,
 						openLineItems: [],
 						lineItemDetails: {},
+						sectionGroupCostDetails: {},
 						selectedBudgetScenarioId: action.selectedBudgetScenarioId,
 						selectedTerm: action.selectedTerm,
 						workgroupId: action.workgroupId,
@@ -163,6 +164,16 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 								displayAmountInput: false,
 								displayTypeInput: false,
 								displayNotesInput: false
+							};
+					});
+
+					// Set initial sectionGroupCostDetail UI states
+					action.payload.sectionGroupCosts.forEach(function(sectionGroupCost) {
+							ui.sectionGroupCostDetails[sectionGroupCost.id] = {
+								displaySectionCountInput: false,
+								displayTaCountInput: false,
+								displayReaderCountInput: false,
+								displayEnrollmentInput: false
 							};
 					});
 
@@ -200,6 +211,25 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						ui.openLineItems.push(lineItemId);
 					} else {
 						ui.openLineItems.splice(index, 1);
+					}
+					return ui;
+				case TOGGLE_SECTION_GROUP_COST_DETAIL:
+					var sectionGroupCostId = action.payload.sectionGroupCostId;
+
+					// Toggle appropriate property
+					switch (action.payload.property) {
+						case "sectionCount":
+							ui.sectionGroupCostDetails[sectionGroupCostId].displaySectionCountInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displaySectionCountInput;
+							return ui;
+						case "taCount":
+							ui.sectionGroupCostDetails[sectionGroupCostId].displayTaCountInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayTaCountInput;
+							return ui;
+						case "readerCount":
+							ui.sectionGroupCostDetails[sectionGroupCostId].displayReaderCountInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayReaderCountInput;
+							return ui;
+						case "enrollment":
+							ui.sectionGroupCostDetails[sectionGroupCostId].displayEnrollmentInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayEnrollmentInput;
+							return ui;
 					}
 					return ui;
 				case TOGGLE_LINE_ITEM_DETAIL:

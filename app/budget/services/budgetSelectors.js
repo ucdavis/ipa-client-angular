@@ -122,6 +122,12 @@ budgetApp.service('budgetSelectors', function () {
 						newCourseIndex = addedCoursesHash[sectionGroupKey];
 					}
 
+					// Setting UI states for sectionGroupCost
+					sectionGroupCost.displaySectionCountInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displaySectionCountInput;
+					sectionGroupCost.displayTaCountInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayTaCountInput;
+					sectionGroupCost.displayReaderCountInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayReaderCountInput;
+					sectionGroupCost.displayEnrollmentInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayEnrollmentInput;
+
 					// Now the proper course has been identified (or created), add the sectionGroup
 					selectedBudgetScenario.courses[newCourseIndex].sectionGroupCosts.push(sectionGroupCost);
 				}

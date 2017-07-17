@@ -3,19 +3,75 @@
 		{{ sectionGroupCost.sequencePattern }}
 	</div>
 	<div class="cell">
-		{{ sectionGroupCost.enrollment }}
+		<div
+			ng-if="sectionGroupCost.displayEnrollmentInput != true"
+			ng-click="displayProperty(sectionGroupCost, 'enrollment')"
+			style="text-decoration: underline;">
+			{{ sectionGroupCost.enrollment }}
+		</div>
+		<div ng-if="sectionGroupCost.displayEnrollmentInput == true">
+			<input
+				class="inline-edit"
+				type="number"
+				ng-model="sectionGroupCost.enrollment"
+				auto-input
+				on-enter="updateSectionGroupCost(sectionGroupCost, 'enrollment')"
+				on-blur="updateSectionGroupCost(sectionGroupCost, 'enrollment')">
+		</div>
 	</div>
 	<div class="cell">
-		{{ sectionGroupCost.sectionCount }}
+		<div
+			ng-if="sectionGroupCost.displaySectionCountInput != true"
+			ng-click="displayProperty(sectionGroupCost, 'sectionCount')"
+			style="text-decoration: underline;">
+			{{ sectionGroupCost.sectionCount }}
+		</div>
+		<div ng-if="sectionGroupCost.displaySectionCountInput == true">
+			<input
+				class="inline-edit"
+				type="number"
+				ng-model="sectionGroupCost.sectionCount"
+				auto-input
+				on-enter="updateSectionGroupCost(sectionGroupCost, 'sectionCount')"
+				on-blur="updateSectionGroupCost(sectionGroupCost, 'sectionCount')">
+		</div>
 	</div>
 	<div class="cell">
-		{{ sectionGroupCost.taCount }}
+		<div
+			ng-if="sectionGroupCost.displayTaCountInput != true"
+			ng-click="displayProperty(sectionGroupCost, 'taCount')"
+			style="text-decoration: underline;">
+			{{ sectionGroupCost.taCount }}
+		</div>
+		<div ng-if="sectionGroupCost.displayTaCountInput == true">
+			<input
+				class="inline-edit"
+				type="number"
+				ng-model="sectionGroupCost.taCount"
+				auto-input
+				on-enter="updateSectionGroupCost(sectionGroupCost, 'taCount')"
+				on-blur="updateSectionGroupCost(sectionGroupCost, 'taCount')">
+		</div>
 	</div>
 	<div class="cell">
 		[[COST]]
 	</div>
 	<div class="cell">
-		{{ sectionGroupCost.readerCount }}
+		<div
+			ng-if="sectionGroupCost.displayReaderCountInput != true"
+			ng-click="displayProperty(sectionGroupCost, 'readerCount')"
+			style="text-decoration: underline;">
+			{{ sectionGroupCost.readerCount }}
+		</div>
+		<div ng-if="sectionGroupCost.displayReaderCountInput == true">
+			<input
+				class="inline-edit"
+				type="number"
+				ng-model="sectionGroupCost.readerCount"
+				auto-input
+				on-enter="updateSectionGroupCost(sectionGroupCost, 'readerCount')"
+				on-blur="updateSectionGroupCost(sectionGroupCost, 'readerCount')">
+		</div>
 	</div>
 	<div class="cell">
 		[[COST]]

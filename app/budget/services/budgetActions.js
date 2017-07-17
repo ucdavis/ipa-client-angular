@@ -93,6 +93,18 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		updateSectionGroupCost: function (sectionGroupCost) {
+			budgetService.updateSectionGroupCost(sectionGroupCost).then(function (results) {
+				var action = {
+					type: UPDATE_SECTION_GROUP_COST,
+					payload: results
+				};
+				$rootScope.$emit('toast', { message: "Saved line item", type: "SUCCESS" });
+				budgetReducers.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		updateBudget: function (budget) {
 			budgetService.updateBudget(budget).then(function (budget) {
 				var action = {
@@ -136,6 +148,17 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				type: TOGGLE_LINE_ITEM_DETAIL,
 				payload: {
 					lineItemId: lineItemId,
+					property: property
+				}
+			};
+
+			budgetReducers.reduce(action);
+		},
+		toggleSectionGroupCostDetail: function(sectionGroupCostId, property) {
+			var action = {
+				type: TOGGLE_SECTION_GROUP_COST_DETAIL,
+				payload: {
+					sectionGroupCostId: sectionGroupCostId,
 					property: property
 				}
 			};

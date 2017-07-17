@@ -1,10 +1,20 @@
 .support-cost-row {
-	background-color: #F1F8FA;
 	display: flex;
+}
+
+.support-cost-row,
+.support-cost-row input { /* Override default user agent styling */
+	background-color: #F1F8FA;
 }
 
 .support-cost-row .cell {
 	flex: 1 0 0px;
 	display: flex;
 	justify-content: center;
+}
+
+.support-cost-row .inline-edit {
+	border: none;
+	padding: 0;
+	width: 100%;
 }
