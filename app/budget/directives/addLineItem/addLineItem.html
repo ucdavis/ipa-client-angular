@@ -1,20 +1,20 @@
-<div>
+<div class="add-line-item">
 	<form role="form" class="form-horizontal">
 		<div class="form-group">
-			<label class="col-sm-6 control-label">Category:</label>
+			<label class="col-sm-6 control-label">Category</label>
 			<div class="col-sm-5">
-				<div class="input-group" style="width:100%;">
-					<button class="btn btn-scenario-dropdown dropdown-toggle"
+				<div class="input-group" class="category-selection-container">
+					<button class="btn btn-category-dropdown dropdown-toggle"
 									type="button" data-toggle="dropdown"
-									style="display: flex; justify-content: center; align-items: center;">
-						<span style="padding-right: 5px; text-decoration: none;">
+									class="btn-category-dropdown">
+						<span class="btn-category-dropdown-label">
 							{{ newLineItem.categoryDescription }}
 						</span>
-						<span style="margin-left: 10px;" class="caret"></span>
+						<span class="caret"></span>
 					</button>
 
-					<ul class="dropdown-menu" style="width: 325px;" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="category in state.lineItemCategories" style="cursor: pointer;">
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li ng-repeat="category in state.lineItemCategories" class="category-item">
 							<a ng-click="selectLineItemCategory(category)">
 								{{ category.description }}
 							</a>
@@ -23,12 +23,12 @@
 
 				</div>
 			</div>
-		</div>
+		</div><!-- end form group -->
 
 		<div class="form-group">
-			<label class="col-sm-6 control-label">Amount:</label>
+			<label class="col-sm-6 control-label">Amount</label>
 			<div class="col-sm-5">
-				<div class="input-group" style="width: 100%;">
+				<div class="input-group form-input" >
 					<input  class="form-control" type="text"
 									ng-model="newLineItem.amount"
 									placeholder="amount">
@@ -37,9 +37,9 @@
 		</div>
 
 		<div class="form-group">
-			<label class="col-sm-6 control-label">Description:</label>
+			<label class="col-sm-6 control-label">Description</label>
 			<div class="col-sm-5">
-				<div class="input-group" style="width: 100%;">
+				<div class="input-group form-input">
 					<input  class="form-control" type="text"
 									ng-model="newLineItem.description"
 									placeholder="Description">
@@ -48,9 +48,9 @@
 		</div>
 
 		<div class="form-group">
-			<label class="col-sm-6 control-label">Notes:</label>
+			<label class="col-sm-6 control-label">Notes</label>
 			<div class="col-sm-5">
-				<div class="input-group" style="width: 100%;">
+				<div class="input-group form-input">
 					<input  class="form-control" type="text"
 									ng-model="newLineItem.notes"
 									placeholder="Notes">
@@ -58,15 +58,15 @@
 			</div>
 		</div>
 
-		<div class="add-budget-scenario-footer">
+		<div class="add-line-item-footer">
 			<button ng-click="closeLineItemModal()"
-							type="button" style="margin-right: 5px;"
-							class="btn btn-default ng-scope">
+							type="button"
+							class="btn btn-default modal-button">
 				Cancel
 			</button>
 			<button ng-click="submitLineItemForm()"
-							type="button" style="margin-right: 10px;"
-							class="btn neon-dark-confirm-btn ng-scope">
+							type="button"
+							class="btn neon-dark-confirm-btn modal-button">
 				Submit
 			</button>
 		</div>

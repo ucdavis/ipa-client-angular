@@ -1,3 +1,116 @@
-.delete-line-item-button:hover {
+.line-item-row {
+	border-top: 1px solid rgb(235, 235, 235);
+}
+
+.line-item-row .delete-line-item-button {
+	padding: 20px;
+}
+
+.line-item-row .delete-line-item-button:hover {
 	cursor: pointer;
+}
+
+.line-item-row .initial-row-container {
+	display: flex;
+	width: 100%;
+}
+
+.line-item-row .checkbox-container {
+	flex: 1 0 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-right: 1px solid rgb(235, 235, 235);
+	padding: 10px;
+}
+
+.line-item-row .category-display {
+	flex: 10 0 0px;
+	display: flex;
+	align-items: center;
+	border-right: 1px solid rgb(235, 235, 235);
+	padding: 10px;
+}
+
+.line-item-row .description-display {
+	flex: 15 0 0px;
+	display: flex;
+	align-items: center;
+	border-right: 1px solid rgb(235, 235, 235);
+	padding: 10px;
+}
+
+.line-item-row .amount-display {
+	flex: 10 0 0px;
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	justify-content: space-between;
+}
+
+.line-item-row .row-container {
+	display: flex;
+}
+
+.line-item-row .type-header-container {
+	flex: 5 0 0px;
+	border-top: 1px solid rgb(235, 235, 235);
+}
+
+.line-item-row .type-header-label {
+	padding: 20px;
+	padding-bottom: 0px;
+	font-weight: bold;
+}
+
+.line-item-row .edited-header-container {
+	flex: 7 0 0px;
+	border-top: 1px solid rgb(235, 235, 235);
+}
+
+.line-item-row .edited-header-label {
+	padding: 20px;
+	padding-bottom: 0px;
+	font-weight: bold;
+}
+
+.line-item-row .amount-header-container {
+	flex: 5 0 0px;
+	border-top: 1px solid rgb(235, 235, 235);
+	display: flex;
+	justify-content: space-between;
+}
+
+.line-item-row .amount-header-label {
+	padding: 20px;
+	padding-bottom: 10px;
+	font-weight: bold;
+}
+
+.line-item-row .category-detail-container {
+	flex: 5 0 0px;
+}
+
+.line-item-row .category-detail-label {
+	padding-left: 20px;
+}
+
+.line-item-row .edited-detail-container {
+	flex: 7 0 0px;
+}
+
+.line-item-row .edited-detail-label {
+	padding-left: 20px;
+}
+
+.line-item-row .amount-detail-container {
+	flex: 5 0 0px;
+}
+
+.line-item-row .amount-detail-content {
+	padding-left: 20px;
+}
+
+.line-item-row .detail-view {
+	padding-bottom: 20px;
 }

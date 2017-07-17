@@ -1,0 +1,10 @@
+.instructor-cost-row {
+	background-color: #FAF1F1;
+	display: flex;
+}
+
+.instructor-cost-row .cell {
+	flex: 1 0 0px;
+	display: flex;
+	justify-content: center;
+}

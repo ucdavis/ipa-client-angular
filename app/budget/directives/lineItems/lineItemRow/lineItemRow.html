@@ -1,58 +1,55 @@
-<div class="line-item-row-container" style="border-top: 1px solid rgb(235, 235, 235);">
-	<div style="display: flex; width: 100%;"  ng-click="toggleLineItem(lineItem)">
-		<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgb(235, 235, 235); padding: 10px;">
-
+<div class="line-item-row">
+	<div class="initial-row-container" ng-click="toggleLineItem(lineItem)">
+		<div class="checkbox-container">
 			<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
 				ng-class="{ 'checked': state.ui.taco }">
 				<label class="cb-wrapper">
 					<div class="checked"></div>
 				</label>
 			</div>
-
 		</div>
 
-		<div style="flex: 10 0 0px; display: flex; align-items: center; border-right: 1px solid rgb(235, 235, 235); padding: 10px;">
+		<div class="category-display">
 			{{ lineItem.lineItemCategoryDescription }}
 		</div>
 
-		<div style="flex: 15 0 0px; display: flex; align-items: center; border-right: 1px solid rgb(235, 235, 235); padding: 10px;">
+		<div class="description-display">
 			{{ lineItem.description }}
 		</div>
 
-		<div style="flex: 10 0 0px; display: flex; align-items: center; padding: 10px; justify-content: space-between;">
+		<div class="amount-display">
 			<div>
 				${{ lineItem.amount }}
 			</div>
 			<div class="expand-ui-container">
 				<div class="expand-ui">
-					<i ng-show="lineItem.isDetailViewOpen == false" class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>
-					<i ng-show="lineItem.isDetailViewOpen" class="glyphicon glyphicon-triangle-bottom expand-ui-triangle"></i>
+					<i ng-show="lineItem.isDetailViewOpen != true" class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>
+					<i ng-show="lineItem.isDetailViewOpen == true" class="glyphicon glyphicon-triangle-bottom expand-ui-triangle"></i>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- Line item detail -->
-	<div ng-show="lineItem.isDetailViewOpen">
+	<!-- Line item expanded detail -->
+	<div class="detail-view" ng-show="lineItem.isDetailViewOpen">
 
-		<div style="display: flex;">
-			<div style="flex: 5 0 0px; border-top: 1px solid rgb(235, 235, 235);">
-				<div style="padding: 20px; padding-bottom: 0px; font-weight: bold;">
+		<div class="row-container">
+			<div class="type-header-container">
+				<div class="type-header-label">
 					Type
 				</div>
 			</div>
-			<div style="flex: 7 0 0px; border-top: 1px solid rgb(235, 235, 235);">
-				<div style="padding: 20px; padding-bottom: 0px; font-weight: bold;">
+			<div class="edited-header-container">
+				<div class="edited-header-label">
 					Last Edited By
 				</div>
 			</div>
-			<div style="flex: 5 0 0px; border-top: 1px solid rgb(235, 235, 235); display: flex; justify-content: space-between;">
-				<div style="padding: 20px; padding-bottom: 10px; font-weight: bold;">
+			<div class="amount-header-container">
+				<div class="amount-header-label">
 					Amount
 				</div>
 
-				<div style="padding: 20px;"
-							class="glyphicon glyphicon-trash delete-line-item-button"
+				<div class="glyphicon glyphicon-trash delete-line-item-button"
 							uib-tooltip="Delete line item" tooltip-placement="left"
 							confirm-button="deleteLineItem(lineItem)"
 							btn-class="btn-danger"
@@ -62,34 +59,32 @@
 			</div>
 		</div>
 
-		<div style="display: flex;">
-			<div style="flex: 5 0 0px;">
-				<div style="padding-left: 20px;">
+		<div class="row-container">
+			<div class="category-detail-container">
+				<div class="category-detail-label">
 					{{ lineItem.lineItemCategoryDescription }}
 				</div>
 			</div>
-			<div style="flex: 7 0 0px;">
-				<div style="padding-left: 20px;">
-					Shang Lu
+			<div class="edited-detail-container">
+				<div class="edited-detail-label">
+					[[EDITED BY]]
 				</div>
 			</div>
 
-			<div style="flex: 5 0 0px;">
-				<div style="padding-left: 20px;">
-					<div>
-						<div  ng-if="lineItem.displayAmountInput == false"
-									ng-click="displayProperty(lineItem.id, 'amount')"
-									style="text-decoration: underline;">
-							${{ lineItem.amount }}
-						</div>
-						<div ng-if="lineItem.displayAmountInput == true">
-							<input  class="form-control" type="text"
-											ng-model="lineItem.amount"
-											auto-input
-											on-enter="updateLineItem(lineItem, 'amount')"
-											on-blur="updateLineItem(lineItem, 'amount')"
-											style="width: 20%;">
-						</div>
+			<div class="amount-detail-container">
+				<div class="amount-detail-content">
+					<div  ng-if="lineItem.displayAmountInput == false"
+								ng-click="displayProperty(lineItem.id, 'amount')"
+								style="text-decoration: underline;">
+						${{ lineItem.amount }}
+					</div>
+					<div ng-if="lineItem.displayAmountInput == true">
+						<input  class="form-control" type="text"
+										ng-model="lineItem.amount"
+										auto-input
+										on-enter="updateLineItem(lineItem, 'amount')"
+										on-blur="updateLineItem(lineItem, 'amount')"
+										style="width: 20%;">
 					</div>
 				</div>
 			</div>
@@ -135,5 +130,4 @@
 			</div>
 		</div>
 	</div>
-
 </div>

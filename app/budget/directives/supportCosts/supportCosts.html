@@ -4,7 +4,7 @@
 		<div class="form-group">
 			<label class="col-sm-6 control-label">TA Cost</label>
 			<div class="col-sm-5">
-				<div class="input-group" style="width: 100%;">
+				<div class="input-group form-input">
 					<input
 						class="form-control" type="text"
 						ng-model="newBudget.taCost"
@@ -16,7 +16,7 @@
 		<div class="form-group">
 			<label class="col-sm-6 control-label">Reader Cost</label>
 			<div class="col-sm-5">
-				<div class="input-group" style="width: 100%;">
+				<div class="input-group form-input">
 					<input
 						class="form-control" type="text"
 						ng-model="newBudget.readerCost"
@@ -28,7 +28,7 @@
 		<div class="form-group">
 			<label class="col-sm-6 control-label">Lecturer Cost</label>
 			<div class="col-sm-5">
-				<div class="input-group" style="width: 100%;">
+				<div class="input-group form-input">
 					<input
 						class="form-control" type="text"
 						ng-model="newBudget.lecturerCost"
@@ -37,15 +37,15 @@
 			</div>
 		</div>
 
-		<div class="add-budget-scenario-footer">
+		<div class="support-costs-footer">
 			<button ng-click="closeSupportCosts()"
-							type="button" style="margin-right: 5px;"
-							class="btn btn-default ng-scope">
+							type="button"
+							class="btn btn-default modal-button">
 				Cancel
 			</button>
 			<button ng-click="saveBudget()"
-							type="button" style="margin-right: 10px;"
-							class="btn neon-dark-confirm-btn ng-scope">
+							type="button"
+							class="btn neon-dark-confirm-btn modal-button">
 				Save
 			</button>
 		</div>

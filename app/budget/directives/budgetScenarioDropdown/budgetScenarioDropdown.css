@@ -9,4 +9,14 @@
 
 .budget-scenario-dropdown .delete-budget-scenario-button {
 	display: none;
+	padding-right: 10px;
+}
+
+.budget-scenario-dropdown .dropdown-container {
+	width: 250px;
+}
+
+.budget-scenario-dropdown .budget-scenario-item {
+	display: flex;
+	justify-content: space-between;
 }
