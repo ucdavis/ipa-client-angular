@@ -73,18 +73,21 @@
 
 			<div class="amount-detail-container">
 				<div class="amount-detail-content">
-					<div  ng-if="lineItem.displayAmountInput == false"
-								ng-click="displayProperty(lineItem.id, 'amount')"
-								style="text-decoration: underline;">
+					<div
+						ng-if="lineItem.displayAmountInput == false"
+						ng-click="displayProperty(lineItem.id, 'amount')"
+						style="text-decoration: underline;">
 						${{ lineItem.amount }}
 					</div>
 					<div ng-if="lineItem.displayAmountInput == true">
-						<input  class="form-control" type="text"
-										ng-model="lineItem.amount"
-										auto-input
-										on-enter="updateLineItem(lineItem, 'amount')"
-										on-blur="updateLineItem(lineItem, 'amount')"
-										style="width: 20%;">
+						$<input
+							class="inline-edit"
+							type="text"
+							ng-model="lineItem.amount"
+							auto-input
+							on-enter="updateLineItem(lineItem, 'amount')"
+							on-blur="updateLineItem(lineItem, 'amount')"
+							style="width: 20%;">
 					</div>
 				</div>
 			</div>
@@ -100,12 +103,14 @@
 				{{ lineItem.description }}
 			</div>
 			<div ng-if="lineItem.displayDescriptionInput == true">
-				<input  class="form-control" type="text"
-								ng-model="lineItem.description"
-								auto-input
-								on-enter="updateLineItem(lineItem, 'description')"
-								on-blur="updateLineItem(lineItem, 'description')"
-								style="width: 20%;">
+				<input
+					class="inline-edit"
+					type="text"
+					ng-model="lineItem.description"
+					auto-input
+					on-enter="updateLineItem(lineItem, 'description')"
+					on-blur="updateLineItem(lineItem, 'description')"
+					style="width: 20%;">
 			</div>
 		</div>
 
@@ -120,12 +125,14 @@
 					{{ lineItem.notes }}
 				</div>
 				<div ng-if="lineItem.displayNotesInput == true">
-					<input  class="form-control" type="text"
-									ng-model="lineItem.notes"
-									auto-input
-									on-enter="updateLineItem(lineItem, 'notes')"
-									on-blur="updateLineItem(lineItem, 'notes')"
-									style="width: 20%;">
+					<input
+						class="inline-edit"
+						type="text"
+						ng-model="lineItem.notes"
+						auto-input
+						on-enter="updateLineItem(lineItem, 'notes')"
+						on-blur="updateLineItem(lineItem, 'notes')"
+						style="width: 20%;">
 				</div>
 			</div>
 		</div>

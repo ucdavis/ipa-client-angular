@@ -48,6 +48,11 @@
 	justify-content: space-between;
 }
 
+.line-item-row .inline-edit {
+	border: none;
+	padding: 0;
+}
+
 .line-item-row .row-container {
 	display: flex;
 }
@@ -93,6 +98,7 @@
 
 .line-item-row .category-detail-label {
 	padding-left: 20px;
+	text-decoration: underline;
 }
 
 .line-item-row .edited-detail-container {
