@@ -44,6 +44,12 @@ jQuery(document).ready(function($) {
 			<add-line-item ng-if="view.state.openAddLineItem" state="view.state"></add-line-item>
 	</ipa-modal>
 
+	<ipa-modal
+		is-visible="view.state.openSupportCosts"
+		header-text="Add Support Costs">
+			<support-costs ng-if="view.state.openSupportCosts" state="view.state" budget="view.state.budget"></support-costs>
+	</ipa-modal>
+
 	<!-- table-toolbar -->
 	<div class="table-toolbar">
 		<div class="btn-group pull-left add-budget-scenario">

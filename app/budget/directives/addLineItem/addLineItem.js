@@ -1,6 +1,3 @@
-/**
- * Provides the main course table in the Courses View
- */
 budgetApp.directive("addLineItem", this.addLineItem = function ($rootScope, budgetActions) {
 	return {
 		restrict: 'E',

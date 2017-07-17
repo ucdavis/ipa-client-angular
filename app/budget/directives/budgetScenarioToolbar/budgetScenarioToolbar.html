@@ -1,6 +1,16 @@
-<div class="btn-group toolbar">
-	<span class="tool-icon glyphicon glyphicon-plus" uib-tooltip="Add line item" ng-click="openLineItemModal()"></span>
-	<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown"></span>
+<div class="budget-scenario-toolbar btn-group toolbar">
+
+	<span 
+		class="tool-icon glyphicon glyphicon-plus dropdown-toggle"
+		ng-click="openLineItemModal()"
+		uib-tooltip="Add line item">
+	</span>
+	<span 
+		class="tool-icon glyphicon glyphicon-education dropdown-toggle"
+		ng-click="openSupportCostModal()"
+		uib-tooltip="Set support costs">
+	</span>
+
 	<span class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown"></span>
 	<span class="tool-icon glyphicon glyphicon-print"></span>
 </div>
