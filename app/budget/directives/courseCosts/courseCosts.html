@@ -15,85 +15,83 @@
 			term-descriptions="selectedBudgetScenario.termDescriptions">
 		</term-selector>
 
-		<!-- Course Costs Header -->
-		<div style="display: flex; width: 100%;">
+		<div class="course-costs-header">
 
-			<!-- Support Staff Header -->
-			<div style="display: flex; flex: 5 0 0px; padding: 15px;">
-				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
+			<div class="support-cost-header">
+				<div class="cell">
 					Off.
 				</div>
 
-				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
+				<div class="cell">
 					Enrollment
 				</div>
 
-				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
+				<div class="cell">
 					Sections
 				</div>
 
-				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
+				<div class="cell">
 					TAs
 				</div>
 
-				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
+				<div class="cell">
 					TA Cost
 				</div>
 
-				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
+				<div class="cell">
 					Readers
 				</div>
 
-				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
-					<div style="flex: 0 1 0px;">
+				<div class="cell">
+					<div class="cell-content">
 						Reader Cost
 					</div>
 				</div>
 
-				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
-					<div style="flex: 0 1 0px;">
+				<div class="cell">
+					<div class="cell-content">
 						Support Cost
 					</div>
 				</div>
 			</div>
 
 			<!-- Instructors Header -->
-			<div style="display: flex; flex: 5 0 0px; padding: 15px;">
-				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
+			<div class="instructors-header">
+				<div class="cell">
 					Instructor
 				</div>
-				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
+				<div class="cell">
 					Reg. Instructor
 				</div>
-				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
+				<div class="cell">
 					Reason
 				</div>
-				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center;">
+				<div class="cell">
 					Instructor Cost
 				</div>
 			</div>
 
 			<!-- Summary Column -->
-			<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center; padding: 15px;">
+			<div class="cell">
 				Total Cost
 			</div>
 		</div>
 
 		<div ng-repeat="course in selectedBudgetScenario.courses">
-			<div style="padding: 15px;">
+			<div class="course-title">
 				{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
 			</div>
-			<div style="display: flex;" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+			<div class="section-group-row" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
 
-				<div style="flex: 5 0 0px; padding: 15px;">
+				<div class="support-cost">
 					<support-cost-row section-group-cost="sectionGroupCost"></support-cost-row>
 				</div>
 
-				<div style="flex: 5 0 0px; padding: 15px;">
+				<div class="instructor-cost">
 					<instructor-cost-row section-group-cost="sectionGroupCost"></instructor-cost-row>
 				</div>
 
-				<div style="flex: 1 0 0px; padding: 15px; display: flex; justify-content: center;">
+				<div class="cell">
 					[[COST]]
 				</div>
 

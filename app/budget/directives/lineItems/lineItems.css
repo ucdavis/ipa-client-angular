@@ -22,3 +22,44 @@
 .line-items-section .expand-ui-triangle {
 	font-size: 10px;
 }
+
+.line-items-section .type-header {
+	flex: 10 0 0px;
+	display: flex;
+	align-items: center;
+	border-right: 1px solid rgb(235, 235, 235);
+	padding: 10px;
+}
+
+.line-items-section .description-header {
+	flex: 15 0 0px;
+	display: flex;
+	align-items: center;
+	border-right: 1px solid rgb(235, 235, 235);
+	padding: 10px;
+}
+
+.line-items-section .amount-header {
+	flex: 10 0 0px;
+	display: flex;
+	align-items: center;
+	padding: 10px;
+}
+
+.line-items-section .checkbox-container {
+	flex: 1 0 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-right: 1px solid rgb(235, 235, 235);
+	padding: 10px;
+}
+
+.line-items-section .header-content {
+	display: flex;
+	width: 100%;
+}
+
+.line-items-section .header-container {
+	border-top: 1px solid rgb(235, 235, 235);
+}

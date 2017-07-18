@@ -1,51 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Instructional Support" />
+		<meta name="author" content="" />
 
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="Instructional Support" />
-	<meta name="author" content="" />
+		<link rel="icon" href="/images/favicon.ico">
 
-	<link rel="icon" href="/images/favicon.ico">
+		<title>IPA Budget</title>
 
-	<title></title>
+		<link rel="stylesheet" href="/css/entypo.css">
+		<link rel="stylesheet" href="/css/lib.css">
+		<link rel="stylesheet" href="/css/neon-core.css">
+		<link rel="stylesheet" href="/css/neon-theme.css">
+		<link rel="stylesheet" href="/css/neon-forms.css">
+		<link rel="stylesheet" href="/css/shared.css">
+		<link rel="stylesheet" href="/css/budget.css">
+		<link rel="stylesheet" href="/css/lineItems.css">
+		<link rel="stylesheet" href="/css/lineItemRow.css">
+		<link rel="stylesheet" href="/css/courseCosts.css">
+		<link rel="stylesheet" href="/css/termSelector.css">
+		<link rel="stylesheet" href="/css/budgetScenarioToolbar.css">
+		<link rel="stylesheet" href="/css/budgetScenarioDropdown.css">
+		<link rel="stylesheet" href="/css/addBudgetScenario.css">
+		<link rel="stylesheet" href="/css/addLineItem.css">
+		<link rel="stylesheet" href="/css/supportCosts.css">
+		<link rel="stylesheet" href="/css/instructorCostRow.css">
+		<link rel="stylesheet" href="/css/supportCostRow.css">
+	</head>
 
-	<link rel="stylesheet" href="/css/entypo.css">
-	<link rel="stylesheet" href="/css/lib.css">
-	<link rel="stylesheet" href="/css/neon-core.css">
-	<link rel="stylesheet" href="/css/neon-theme.css">
-	<link rel="stylesheet" href="/css/neon-forms.css">
-	<link rel="stylesheet" href="/css/shared.css">
-	<link rel="stylesheet" href="/css/budget.css">
-	<link rel="stylesheet" href="/css/lineItems.css">
-	<link rel="stylesheet" href="/css/lineItemRow.css">
-	<link rel="stylesheet" href="/css/courseCosts.css">
-	<link rel="stylesheet" href="/css/termSelector.css">
-	<link rel="stylesheet" href="/css/budgetScenarioToolbar.css">
-	<link rel="stylesheet" href="/css/budgetScenarioDropdown.css">
-	<link rel="stylesheet" href="/css/addBudgetScenario.css">
-	<link rel="stylesheet" href="/css/addLineItem.css">
-	<link rel="stylesheet" href="/css/supportCosts.css">
-	<link rel="stylesheet" href="/css/instructorCostRow.css">
-	<link rel="stylesheet" href="/css/supportCostRow.css">
-
-	<script src="/js/lib.js"></script>
-
-</head>
-<body class="page-body ng-cloak" ng-app="budgetApp" ng-cloak ng-controller="SharedCtrl">
+	<body class="page-body ng-cloak" ng-app="budgetApp" ng-cloak ng-controller="SharedCtrl">
 		<base href="/budget/">
 
-	<div ng-if="loadingView" class="overlay">
-		<spinner class="vertical-center"></spinner>
-	</div>
-
-	<div class="page-container" collapsable-sidebar-container ng-view>
-			<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+		<div ng-if="loadingView" class="overlay">
+			<spinner class="vertical-center"></spinner>
 		</div>
 
+		<div class="page-container" collapsable-sidebar-container ng-view>
+			<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+		</div>
 
 		<div id="toast-container" class="toast-top-right" ng-if="$root.toast.message.length > 0">
 			<div class="toast toast-error" style="display: block;">
@@ -54,11 +50,8 @@
 			</div>
 		</div>
 
-		<!-- Bottom scripts (common) -->
+		<script src="/js/lib.js"></script>
 		<script src="/js/select2.min.js"></script>
-
-		<!-- JavaScripts initializations and stuff -->
-
 		<script src="/js/sharedApp.js"></script>
 		<script src="/js/sharedConfig.js"></script>
 		<script src="/js/clientConfig.js"></script>

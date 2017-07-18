@@ -10,28 +10,26 @@
 
 	<div ng-show="selectedBudgetScenario.isLineItemOpen">
 		<!-- line items header -->
-		<div style="border-top: 1px solid rgb(235, 235, 235);">
-			<div style="display: flex; width: 100%;">
-				<div style="flex: 1 0 0px; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgb(235, 235, 235); padding: 10px;">
-
+		<div class="header-container">
+			<div class="header-content">
+				<div class="checkbox-container">
 					<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
 						ng-class="{ 'checked': selectedBudgetScenario.taco }">
 						<label class="cb-wrapper">
 							<div class="checked"></div>
 						</label>
 					</div>
-
 				</div>
 
-				<div style="flex: 10 0 0px; display: flex; align-items: center; border-right: 1px solid rgb(235, 235, 235); padding: 10px;">
+				<div class="type-header">
 					Type
 				</div>
 
-				<div style="flex: 15 0 0px; display: flex; align-items: center; border-right: 1px solid rgb(235, 235, 235); padding: 10px;">
+				<div class="description-header">
 					Description
 				</div>
 
-				<div style="flex: 10 0 0px; display: flex; align-items: center; padding: 10px;">
+				<div class="amount-header">
 					Amount
 				</div>
 			</div>

@@ -22,3 +22,41 @@
 .course-costs-section .expand-ui-triangle {
 	font-size: 10px;
 }
+
+.course-costs-section .course-costs-header {
+	display: flex;
+	width: 100%;
+}
+
+.course-costs-section .support-cost-header,
+.course-costs-section .instructors-header
+ {
+	display: flex;
+	flex: 5 0 0px;
+	padding: 15px;
+}
+
+.course-costs-section .cell {
+	flex: 1 0 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.course-costs-section .cell-content {
+	flex: 0 1 0px;
+}
+
+.course-costs-section .course-title {
+	padding: 15px;
+}
+
+.course-costs-section .section-group-row {
+	display: flex;
+}
+
+.course-costs-section .support-cost,
+.course-costs-section .instructor-cost {
+	flex: 5 0 0px;
+	padding: 15px;
+}

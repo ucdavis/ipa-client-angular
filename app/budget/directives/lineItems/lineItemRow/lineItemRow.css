@@ -96,11 +96,13 @@
 	flex: 5 0 0px;
 }
 
-.line-item-row .category-detail-label {
+.line-item-row .category-detail-content {
 	padding-left: 20px;
-	text-decoration: underline;
 }
 
+.line-item-row .category-detail-label {
+	text-decoration: underline;
+}
 .line-item-row .edited-detail-container {
 	flex: 7 0 0px;
 }

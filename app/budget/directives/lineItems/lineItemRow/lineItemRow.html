@@ -61,8 +61,15 @@
 
 		<div class="row-container">
 			<div class="category-detail-container">
-				<div class="category-detail-label">
-					{{ lineItem.lineItemCategoryDescription }}
+				<div class="category-detail-content">
+					<div class="category-detail-label"
+						ng-if="lineItem.displayTypeInput != true"
+						ng-click="displayProperty(lineItem.id, 'type')">
+						{{ lineItem.lineItemCategoryDescription }}
+					</div>
+					<div ng-if="lineItem.displayTypeInput == true">
+						{{ lineItem.lineItemCategoryDescription }}
+					</div>
 				</div>
 			</div>
 			<div class="edited-detail-container">
