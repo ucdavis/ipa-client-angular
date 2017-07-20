@@ -273,8 +273,14 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			// Build new 'page state'
 			// This is the 'view friendly' version of the store
 			newPageState = {};
-			newPageState.selectedBudgetScenario = budgetSelectors.generateSelectedBudgetScenario(newState.budgetScenarios,
-			newState.lineItems, newState.ui, newState.lineItemCategories, newState.sectionGroupCosts, newState.sectionGroups, newState.sections);
+			newPageState.selectedBudgetScenario = budgetSelectors.generateSelectedBudgetScenario(
+				newState.budgetScenarios,
+				newState.lineItems,
+				newState.ui,
+				newState.lineItemCategories,
+				newState.sectionGroupCosts,
+				newState.sectionGroups,
+				newState.sections);
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
 			newPageState.budget = newState.budget;
 			newPageState.ui = newState.ui;

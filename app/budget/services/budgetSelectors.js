@@ -50,6 +50,11 @@ budgetApp.service('budgetSelectors', function () {
 			lineItems.ids.forEach( function (lineItemId) {
 				var lineItem = lineItems.list[lineItemId];
 
+				// Ensure lineItem belongs to selected budget scenario
+				if (lineItem.budgetScenarioId != selectedBudgetScenario.id) {
+					return;
+				}
+
 				// Add lineItemCategory description
 				var lineItemCategoryDescription = lineItemCategories.list[lineItem.lineItemCategoryId].description;
 				lineItem.lineItemCategoryDescription = lineItemCategoryDescription;
@@ -87,6 +92,12 @@ budgetApp.service('budgetSelectors', function () {
 
 			sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
 				var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+
+				// Ensure sectionGroupCost belongs to selected budget scenario
+				if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) {
+					return;
+				}
+
 				var termCode = sectionGroupCost.termCode;
 				var term = termCode.slice(-2);
 
