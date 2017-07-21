@@ -131,7 +131,7 @@
 			</li>
 
 			<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport', 'opened': expanded == 'support' || (!expanded && currentBaseHref == 'instructionalSupport') }" 
-				ng-if="userHasRoles(['academicPlanner','reviewer']) && isSupportCallVisible()" class="has-sub root-level">
+				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('support')">
 					<i class="entypo-users"></i>
 					<span class="title">Support</span>

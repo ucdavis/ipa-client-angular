@@ -36,25 +36,6 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 				return (numberOfRoles > 1);
 			};
 
-			// This function is temporary, returns true if the current workgroup is participant in the support call beta
-			scope.isSupportCallVisible = function() {
-				var participatingWorkgroupIds = [];
-
-				// Add 'DSS IT'
-				participatingWorkgroupIds.push("20");
-				// Add 'Chemistry'
-				participatingWorkgroupIds.push("67");
-				// Add 'Biomedical Engineering'
-				participatingWorkgroupIds.push("15");
-				// Add 'Physics'
-				participatingWorkgroupIds.push("14");
-
-				var currentWorkgroupId = scope.sharedState.workgroup.id;
-				var index = participatingWorkgroupIds.indexOf(currentWorkgroupId);
-
-				return (index > -1);
-			};
-
 			// This function is temporary, returns true if the current workgroup is participant in the budget
 			scope.isBudgetVisible = function() {
 				var participatingWorkgroupIds = [];
