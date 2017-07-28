@@ -1,9 +1,48 @@
 <div class="instructor-cost-row">
-	<div class="cell">
-		[[inst]]
+	<div class="cell instructor-container">
+		<!-- copy pasta -->
+		<div class="instructor-dropdown-container">
+			<div class="dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<div class="dropdown-label">
+					{{ sectionGroupCost.instructor.fullName || "Set inst" }}
+				</div>
+				<div class="caret-container">
+					<div class="caret"></div>
+				</div>
+			</div>
+
+			<ul class="dropdown-menu">
+				<li style="text-align: center; color: black;">
+					There are no instructors available.
+				</li>
+
+				<!-- Support Staff preferences -->
+				<li class="dropdown-header" stop-event="click"><b>Instructors</b></li>
+				<li class="clickable"
+					ng-repeat="instructor in instructors"
+					ng-click="assignInstructor(instructor)">
+					<a class="small">
+						<span class="course-filter-item">{{ instructor.fullName }}</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="remove-instructor-ui">
+			<i 
+				class="glyphicon glyphicon-remove assignment-remove-button"
+				uib-tooltip="Delete assignment" tooltip-placement="bottom"
+				confirm-button="removeInstructor(sectionGroupCost.instructor)"
+				btn-class="btn-danger"
+				message="Are you sure you want to remove this instructor?"
+				yes="Confirm" no="Cancel" placement="top">
+			</i>
+		</div>
+		<!-- end copy pasta -->
+
 	</div>
 	<div class="cell">
-		[[reg inst]]
+		{{ sectionGroupCost.originalInstructor.fullName }}
 	</div>
 	<div class="cell">
 		[[reason]]

@@ -108,6 +108,44 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return sectionGroupCosts;
 			}
 		},
+		instructorReducers: function (action, instructors) {
+			switch (action.type) {
+				case INIT_STATE:
+					instructors = {
+						ids: [],
+						list: []
+					};
+
+					action.payload.instructors.forEach( function(instructor) {
+						instructors.ids.push(instructor.id);
+						instructors.list[instructor.id] = instructor;
+					});
+					return instructors;
+				default:
+					return instructors;
+			}
+		},
+		instructorCostReducers: function (action, instructorCosts) {
+			switch (action.type) {
+				case INIT_STATE:
+					instructorCosts = {
+						ids: [],
+						list: []
+					};
+
+					action.payload.instructorCosts.forEach( function(instructorCost) {
+						instructorCosts.ids.push(instructorCost.id);
+						instructorCosts.list[instructorCost.id] = instructorCost;
+					});
+					return instructorCosts;
+				case UPDATE_INSTRUCTOR_COST:
+					var instructorCost = action.payload.instructorCost;
+					instructorCosts.list[instructorCost.id] = instructorCost;
+					return instructorCosts;
+				default:
+					return instructorCosts;
+			}
+		},
 		sectionGroupReducers: function (action, sectionGroups) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -146,6 +184,9 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			switch (action.type) {
 				case INIT_STATE:
 					ui = {
+						isAddBudgetScenarioModalOpen: false,
+						isAddLineItemModalOpen: false,
+						isSupportCostModalOpen: false,
 						isLineItemOpen: false,
 						isCourseCostOpen: false,
 						openLineItems: [],
@@ -185,6 +226,15 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return ui;
 				case SELECT_TERM:
 					ui.selectedTerm = action.payload.term;
+					return ui;
+				case TOGGLE_SUPPORT_COST_MODAL:
+					ui.isSupportCostModalOpen = ! ui.isSupportCostModalOpen;
+					return ui;
+				case TOGGLE_ADD_LINE_ITEM_MODAL:
+					ui.isAddLineItemModalOpen = ! ui.isAddLineItemModalOpen;
+					return ui;
+				case TOGGLE_ADD_BUDGET_SCENARIO_MODAL:
+					ui.isAddBudgetScenarioModalOpen = ! ui.isAddBudgetScenarioModalOpen;
 					return ui;
 				case CREATE_LINE_ITEM:
 					var lineItem = action.payload;
@@ -266,7 +316,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
 			newState.sectionGroups = scope.sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.sections = scope.sectionReducers(action, scope._state.sections);
-
+			newState.instructors = scope.instructorReducers(action, scope._state.instructors);
+			newState.instructorCosts = scope.instructorCostReducers(action, scope._state.instructorCosts);
 			newState.ui = scope.uiReducers(action, scope._state.ui);
 			scope._state = newState;
 
@@ -280,11 +331,14 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				newState.lineItemCategories,
 				newState.sectionGroupCosts,
 				newState.sectionGroups,
-				newState.sections);
+				newState.sections,
+				newState.instructors);
+
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
 			newPageState.budget = newState.budget;
 			newPageState.ui = newState.ui;
 			newPageState.lineItemCategories = budgetSelectors.generateLineItemCategories(newState.lineItemCategories);
+			newPageState.instructors = budgetSelectors.generateInstructors(newState.instructors, newState.instructorCosts);
 
 			$rootScope.$emit('budgetStateChanged', newPageState);
 			console.log(newPageState);

@@ -8,3 +8,60 @@
 	display: flex;
 	justify-content: center;
 }
+
+.instructor-cost-row .instructor-dropdown-container {
+	position: relative;
+}
+
+.instructor-cost-row .dropdown-button {
+	width: 100%;
+	color: #303641;
+	display: flex;
+}
+
+.instructor-cost-row .dropdown-label {
+	width: 100%;
+	text-align: center;
+}
+.instructor-cost-row .instructor-container:hover .dropdown-label {
+	padding-left: 2px;
+}
+
+.instructor-cost-row .instructor-container:hover .dropdown-button {
+	cursor: pointer;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin: -1px;
+	background-color: white;
+}
+
+.instructor-cost-row .instructor-dropdown-container .caret-container {
+	visibility: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.instructor-cost-row .caret {
+	margin: 2px;
+}
+
+.instructor-cost-row .instructor-container:hover .caret-container {
+	visibility: visible;
+}
+
+.instructor-cost-row .instructor-dropdown-container {
+	flex: 4 0 0px;
+}
+
+.instructor-cost-row .remove-instructor-ui {
+	visibility: hidden;
+	display: flex;
+	flex: 1 0 0px;
+	justify-content: center;
+	align-items: center;
+}
+
+.instructor-cost-row .instructor-container:hover .remove-instructor-ui {
+	visibility: visible;
+}

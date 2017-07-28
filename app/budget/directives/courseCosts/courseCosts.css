@@ -55,8 +55,17 @@
 	display: flex;
 }
 
+.course-costs-section .support-cost {
+	background-color: #F1F8FA;
+}
+
+.course-costs-section .instructor-cost {
+	background-color: #FAF1F1;
+}
+
 .course-costs-section .support-cost,
 .course-costs-section .instructor-cost {
 	flex: 5 0 0px;
-	padding: 15px;
+	padding: 5px;
+	margin: 15px;
 }

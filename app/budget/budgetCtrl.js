@@ -1,5 +1,5 @@
-budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', '$timeout',
-	this.BudgetCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $timeout) {
+budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$timeout', 'budgetActions',
+	this.BudgetCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $timeout, budgetActions) {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 
@@ -27,7 +27,8 @@ budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$locatio
 		};
 
 		$scope.openSupportCostModal = function() {
-			$scope.view.state.openSupportCosts = true;
+			budgetActions.toggleSupportCostModal();
+//			$scope.view.state.openSupportCosts = true;
 		};
 
 		$scope.openBudgetScenarioModal = function() {

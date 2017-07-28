@@ -54,6 +54,19 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		updateInstructorCost: function (instructorCost) {
+			budgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
+				var action = {
+					type: UPDATE_INSTRUCTOR_COST,
+					payload: {
+						instructorCost: newInstructorCost
+					}
+				};
+				budgetReducers.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		createLineItem: function (newLineItem, budgetScenarioId) {
 			budgetService.createLineItem(newLineItem, budgetScenarioId).then(function (results) {
 				var action = {
@@ -118,6 +131,30 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
+		},
+		toggleAddLineItemModal: function() {
+			var action = {
+				type: TOGGLE_ADD_LINE_ITEM_MODAL,
+				payload: {}
+			};
+
+			budgetReducers.reduce(action);
+		},
+		toggleAddBudgetScenarioModal: function() {
+			var action = {
+				type: TOGGLE_ADD_BUDGET_SCENARIO_MODAL,
+				payload: {}
+			};
+
+			budgetReducers.reduce(action);
+		},
+		toggleSupportCostModal: function() {
+			var action = {
+				type: TOGGLE_SUPPORT_COST_MODAL,
+				payload: {}
+			};
+
+			budgetReducers.reduce(action);
 		},
 		toggleLineItemSection: function () {
 			var action = {

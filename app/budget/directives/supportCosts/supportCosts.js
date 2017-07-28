@@ -14,8 +14,14 @@ budgetApp.directive("supportCosts", this.supportCosts = function ($rootScope, bu
 			scope.newBudget.readerCost = angular.copy(scope.budget.readerCost);
 			scope.newBudget.lecturerCost = angular.copy(scope.budget.lecturerCost);
 
+			scope.newInstructors = angular.copy(scope.state.instructors);
+
 			scope.saveBudget = function () {
 				budgetActions.updateBudget(scope.newBudget);
+			};
+
+			scope.updateInstructorCost = function (newInstructor) {
+				budgetActions.updateInstructorCost(newInstructor);
 			};
 		} // end link
 	};

@@ -1,5 +1,6 @@
 .support-cost-row {
 	display: flex;
+	height: 100%;
 }
 
 .support-cost-row,

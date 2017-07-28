@@ -1,53 +1,90 @@
 <div class="support-costs">
-	<form role="form" class="form-horizontal">
+	<div style="display: flex; padding-left: 3%; padding-top: 3%;">
+		<!-- left side -->
+		<div style="flex: 1 0 0px;">
 
-		<div class="form-group">
-			<label class="col-sm-6 control-label">TA Cost</label>
-			<div class="col-sm-5">
-				<div class="input-group form-input">
-					<input
-						class="form-control" type="text"
-						ng-model="newBudget.taCost"
-						placeholder="Enter amount">
+			<div class="instructor-box">
+				<div ng-repeat="instructor in newInstructors | orderBy: 'lastName'"
+						style="display: flex;">
+
+					<div style="flex: 1 0 0px; display: flex;">
+						<div style="padding: 10px; display: flex; align-items: center; justify-content: center;">
+							{{ instructor.fullName }}
+						</div>
+					</div>
+
+					<div style="flex: 1 0 0px; display: flex;">
+						<div style="padding: 10px; display: flex; align-items: center; justify-content: center;">
+							<input
+								type="text"
+								ng-model="instructor.cost"
+								auto-input
+								on-blur="updateInstructorCost(instructor)"
+								style="width: 100%;">
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="form-group">
-			<label class="col-sm-6 control-label">Reader Cost</label>
-			<div class="col-sm-5">
-				<div class="input-group form-input">
-					<input
-						class="form-control" type="text"
-						ng-model="newBudget.readerCost"
-						placeholder="Enter amount">
+		<!-- right side -->
+		<div style="flex: 1 0 0px;">
+			<div style="display: flex;">
+				<div class="lecturer-cost-label">
+					lecturer cost
+				</div>
+				<div class="lecturer-cost-input">
+					<div style="padding: 10px; width: 80%;">
+						<input
+							style="width: 100%;"
+							type="number"
+							ng-model="newBudget.lecturerCost"
+							placeholder="Enter amount">
+					</div>
 				</div>
 			</div>
-		</div>
-
-		<div class="form-group">
-			<label class="col-sm-6 control-label">Lecturer Cost</label>
-			<div class="col-sm-5">
-				<div class="input-group form-input">
-					<input
-						class="form-control" type="text"
-						ng-model="newBudget.lecturerCost"
-						placeholder="Enter amount">
+			<div style="display: flex;">
+				<div class="lecturer-cost-label">
+					TA cost
+				</div>
+				<div class="lecturer-cost-input">
+					<div style="padding: 10px; width: 80%;">
+						<input
+							style="width: 100%;"
+							type="number"
+							ng-model="newBudget.taCost"
+							placeholder="Enter amount">
+					</div>
 				</div>
 			</div>
-		</div>
+			<div style="display: flex;">
+				<div class="lecturer-cost-label">
+					reader cost
+				</div>
+				<div class="lecturer-cost-input">
+					<div style="padding: 10px; width: 80%;">
+						<input
+							style="width: 100%;"
+							type="number"
+							ng-model="newBudget.readerCost"
+							placeholder="Enter amount">
+					</div>
+				</div>
+			</div>
+		</div><!-- end right side -->
+	</div> <!-- end main-content -->
 
-		<div class="support-costs-footer">
-			<button ng-click="closeSupportCosts()"
-							type="button"
-							class="btn btn-default modal-button">
-				Cancel
-			</button>
-			<button ng-click="saveBudget()"
-							type="button"
-							class="btn neon-dark-confirm-btn modal-button">
-				Save
-			</button>
-		</div>
-	</form>
+	<!-- footer -->
+	<div class="support-costs-footer">
+		<button ng-click="closeSupportCosts()"
+						type="button"
+						class="btn btn-default modal-button">
+			Cancel
+		</button>
+		<button ng-click="saveBudget()"
+						type="button"
+						class="btn neon-dark-confirm-btn modal-button">
+			Save
+		</button>
+	</div> <!-- end footer -->
 </div>

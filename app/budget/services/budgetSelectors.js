@@ -5,7 +5,6 @@ budgetApp.service('budgetSelectors', function () {
 	return {
 		// Generate list of budget scenarios to display in the dropdown selector
 		generateBudgetScenarios: function (budgetScenarios) {
-			
 			budgetScenarioList = [];
 
 			budgetScenarios.ids.forEach( function (budgetScenarioId) {
@@ -14,8 +13,24 @@ budgetApp.service('budgetSelectors', function () {
 
 			return budgetScenarioList;
 		},
+		generateInstructors: function (instructors, instructorCosts) {
+			instructorList = [];
+
+			instructorCosts.ids.forEach( function (instructorCostId) {
+				var instructorCost = instructorCosts.list[instructorCostId];
+				var instructor = instructors.list[instructorCost.instructorId];
+				instructorCost.firstName = instructor.firstName;
+				instructorCost.lastName = instructor.lastName;
+				instructorCost.fullName = instructor.fullName;
+				instructorCost.emailAddress = instructor.emailAddress;
+				instructorCost.loginId = instructor.loginId;
+
+				instructorList.push(instructorCost);
+			});
+
+			return instructorList;
+		},
 		generateLineItemCategories: function (lineItemCategories) {
-			
 			lineItemCategoryList = [];
 
 			lineItemCategories.ids.forEach( function (lineItemCategoryId) {
@@ -24,7 +39,7 @@ budgetApp.service('budgetSelectors', function () {
 
 			return lineItemCategoryList;
 		},
-		generateSelectedBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories, sectionGroupCosts, sectionGroups, sections, courses) {
+		generateSelectedBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories, sectionGroupCosts, sectionGroups, sections, instructors) {
 			var selectedBudgetScenario = budgetScenarios.list[ui.selectedBudgetScenarioId];
 
 			// selectedBudgetScenarioId refers to a scenario that no longer exists
@@ -139,7 +154,19 @@ budgetApp.service('budgetSelectors', function () {
 					sectionGroupCost.displayReaderCountInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayReaderCountInput;
 					sectionGroupCost.displayEnrollmentInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayEnrollmentInput;
 
-					// Now the proper course has been identified (or created), add the sectionGroup
+					// add sectionGroupCost instructor metaData
+					var instructor = instructors.list[sectionGroupCost.instructorId];
+					if (instructor != null) {
+						sectionGroupCost.instructor = instructor;
+					}
+
+					sectionGroupCost.originalInstructor = {};
+					var originalInstructor = instructors.list[sectionGroupCost.originalInstructorId];
+					if (originalInstructor != null) {
+						sectionGroupCost.originalInstructor = originalInstructor;
+					}
+
+					// Add the sectionGroup to the course
 					selectedBudgetScenario.courses[newCourseIndex].sectionGroupCosts.push(sectionGroupCost);
 				}
 			});

@@ -18,9 +18,9 @@
 	</ipa-modal>
 
 	<ipa-modal
-		is-visible="view.state.openSupportCosts"
+		is-visible="view.state.ui.isSupportCostModalOpen"
 		header-text="Add Support Costs">
-			<support-costs ng-if="view.state.openSupportCosts" state="view.state" budget="view.state.budget"></support-costs>
+			<support-costs ng-if="view.state.ui.isSupportCostModalOpen" state="view.state" budget="view.state.budget"></support-costs>
 	</ipa-modal>
 
 	<div class="table-toolbar">
@@ -34,7 +34,7 @@
 	
 	<budget-summary></budget-summary>
 
-	<course-costs selected-budget-scenario="view.state.selectedBudgetScenario"></course-costs>
+	<course-costs selected-budget-scenario="view.state.selectedBudgetScenario" instructors="view.state.instructors"></course-costs>
 
 	<line-items selected-budget-scenario="view.state.selectedBudgetScenario"></line-items>
 
