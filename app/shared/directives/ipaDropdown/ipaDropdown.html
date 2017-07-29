@@ -1,0 +1,44 @@
+<div class="ipa-dropdown">
+	<div class="expand-button expand-button-skin"
+			ng-click="toggleDropdown()"
+			ng-class="{ 'selected': expanded == true }">
+
+			<div>
+				{{ buttonText }}
+			</div>
+			<div>
+				<span class="caret"></span>
+			</div>
+	</div>
+
+	<div ng-if="expanded" class="dropdown-container" ng-style="attrStyles.dropdownWidth">
+		<div class="dropdown-mask" ng-click="closeDropdown()">
+		</div>
+
+		<div class="dropdown">
+			<div class="header-row">
+				<div>
+					{{ headerText }}
+				</div>
+				<div class="close-ui" ng-click="closeDropdown()">
+					<svg height="16" role="img" version="1.1" viewBox="0 0 12 16" width="12">
+						<path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"></path>
+					</svg>
+				</div>
+			</div>
+
+			<div class="search-row" ng-if="searchable">
+				search goes here
+			</div>
+
+			<div class="items">
+				<div
+				class="item"
+				ng-repeat="item in items"
+				ng-click="selectItem(item)">
+					{{ item.description }}
+				</div>
+			</div>
+		</div> <!-- dropdown -->
+	</div> <!-- dropdown container -->
+</div>
