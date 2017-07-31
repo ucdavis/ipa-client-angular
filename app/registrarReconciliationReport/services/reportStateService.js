@@ -172,7 +172,7 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 					}
 					return sections;
 				case ASSIGN_INSTRUCTOR:
-					section = sections.list[action.payload.section.id];
+					section = sections.list[action.payload.section.uniqueKey];
 					var instructorIndex = section.instructors.indexOf(action.payload.instructor);
 
 					// Remove the noLocal flag from the assigned instructor
@@ -180,7 +180,7 @@ registrarReconciliationReportApp.service('reportStateService', function ($rootSc
 
 					return sections;
 				case UNASSIGN_INSTRUCTOR:
-					section = sections.list[action.payload.section.id];
+					section = sections.list[action.payload.section.uniqueKey];
 					var instructorIndex = section.instructors.indexOf(action.payload.instructor);
 					section.instructors.splice(instructorIndex, 1);
 					return sections;
