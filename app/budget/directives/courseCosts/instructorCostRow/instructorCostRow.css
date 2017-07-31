@@ -1,4 +1,5 @@
 .instructor-cost-row {
+	height: 42px;
 	background-color: #FAF1F1;
 	display: flex;
 }
@@ -35,23 +36,13 @@
 	background-color: white;
 }
 
-.instructor-cost-row .instructor-dropdown-container .caret-container {
-	visibility: hidden;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 .instructor-cost-row .caret {
 	margin: 2px;
 }
 
-.instructor-cost-row .instructor-container:hover .caret-container {
-	visibility: visible;
-}
-
 .instructor-cost-row .instructor-dropdown-container {
 	flex: 4 0 0px;
+	display: none;
 }
 
 .instructor-cost-row .remove-instructor-ui {
@@ -64,4 +55,17 @@
 
 .instructor-cost-row .instructor-container:hover .remove-instructor-ui {
 	visibility: visible;
+}
+
+.instructor-cost-row .instructor-container:hover .instructor-dropdown-container {
+	display: flex;
+}
+
+.instructor-cost-row .instructor-container:hover .instructor-ui-label {
+	display: none;
+}
+
+.instructor-cost-row .instructor-ui-label {
+	padding-left: 8px;
+	padding-right: 18px;
 }

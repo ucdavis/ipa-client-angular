@@ -1,53 +1,87 @@
 <div class="instructor-cost-row">
 	<div class="cell instructor-container">
-		<!-- copy pasta -->
+		<div class="instructor-ui-label">
+			{{ instructorButtonText }}
+		</div>
 		<div class="instructor-dropdown-container">
-			<div class="dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<div class="dropdown-label">
-					{{ sectionGroupCost.instructor.fullName || "Set inst" }}
-				</div>
-				<div class="caret-container">
-					<div class="caret"></div>
-				</div>
-			</div>
-
-			<ul class="dropdown-menu">
-				<li style="text-align: center; color: black;">
-					There are no instructors available.
-				</li>
-
-				<!-- Support Staff preferences -->
-				<li class="dropdown-header" stop-event="click"><b>Instructors</b></li>
-				<li class="clickable"
-					ng-repeat="instructor in instructors"
-					ng-click="assignInstructor(instructor)">
-					<a class="small">
-						<span class="course-filter-item">{{ instructor.fullName }}</span>
-					</a>
-				</li>
-			</ul>
+			<ipa-dropdown
+				expanded="sectionGroupCost.expanded"
+				header-text="'Select an instructor'"
+				button-text="instructorButtonText"
+				items="instructors"
+				select-item="setInstructor(item)">
+			</ipa-dropdown>
 		</div>
 
 		<div class="remove-instructor-ui">
 			<i 
 				class="glyphicon glyphicon-remove assignment-remove-button"
 				uib-tooltip="Delete assignment" tooltip-placement="bottom"
-				confirm-button="removeInstructor(sectionGroupCost.instructor)"
+				confirm-button="removeInstructor(instructor)"
 				btn-class="btn-danger"
 				message="Are you sure you want to remove this instructor?"
 				yes="Confirm" no="Cancel" placement="top">
 			</i>
 		</div>
-		<!-- end copy pasta -->
+	</div>
 
+	<div class="cell instructor-container">
+		<div class="instructor-ui-label">
+			{{ sectionGroupCost.originalInstructor.fullName }}
+		</div>
+		<div class="instructor-dropdown-container">
+			<ipa-dropdown
+				expanded="sectionGroupCost.expanded"
+				header-text="'Select an instructor'"
+				button-text="originalInstructorButtonText"
+				items="instructors"
+				select-item="setOriginalInstructor(item)">
+			</ipa-dropdown>
+		</div>
+
+		<div class="remove-instructor-ui">
+			<i 
+				class="glyphicon glyphicon-remove assignment-remove-button"
+				uib-tooltip="Delete assignment" tooltip-placement="bottom"
+				confirm-button="removeOriginalInstructor()"
+				btn-class="btn-danger"
+				message="Are you sure you want to remove this instructor?"
+				yes="Confirm" no="Cancel" placement="top">
+			</i>
+		</div>
 	</div>
+
 	<div class="cell">
-		{{ sectionGroupCost.originalInstructor.fullName }}
-	</div>
+		<div
+			ng-if="sectionGroupCost.displayReasonInput != true"
+			ng-click="displayProperty(sectionGroupCost, 'reason')"
+			style="text-decoration: underline;">
+			{{ sectionGroupCost.reason || "&nbsp;&nbsp;&nbsp;" }}
+		</div>
+		<div ng-if="sectionGroupCost.displayReasonInput == true">
+			<input
+				class="inline-edit"
+				type="text"
+				ng-model="sectionGroupCost.reason"
+				auto-input
+				on-enter="updateSectionGroupCost(sectionGroupCost, 'reason')"
+				on-blur="updateSectionGroupCost(sectionGroupCost, 'reason')">
+		</div>	</div>
 	<div class="cell">
-		[[reason]]
-	</div>
-	<div class="cell">
-		[[COST]]
+		<div
+			ng-if="sectionGroupCost.displayInstructorCostInput != true"
+			ng-click="displayProperty(sectionGroupCost, 'instructorCost')"
+			style="text-decoration: underline;">
+			{{ sectionGroupCost.instructorCost }}
+		</div>
+		<div ng-if="sectionGroupCost.displayInstructorCostInput == true">
+			<input
+				class="inline-edit"
+				type="number"
+				ng-model="sectionGroupCost.instructorCost"
+				auto-input
+				on-enter="updateSectionGroupCost(sectionGroupCost, 'instructorCost')"
+				on-blur="updateSectionGroupCost(sectionGroupCost, 'instructorCost')">
+		</div>
 	</div>
 </div>

@@ -107,10 +107,12 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		updateSectionGroupCost: function (sectionGroupCost) {
-			budgetService.updateSectionGroupCost(sectionGroupCost).then(function (results) {
+			budgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
 				var action = {
 					type: UPDATE_SECTION_GROUP_COST,
-					payload: results
+					payload: {
+						sectionGroupCost: newSectionGroupCost
+					}
 				};
 				$rootScope.$emit('toast', { message: "Saved line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);

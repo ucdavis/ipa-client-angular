@@ -104,6 +104,10 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
 					});
 					return sectionGroupCosts;
+				case UPDATE_SECTION_GROUP_COST:
+					var sectionGroupCost = action.payload.sectionGroupCost;
+					sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
+					return sectionGroupCosts;
 				default:
 					return sectionGroupCosts;
 			}
@@ -214,7 +218,9 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 								displaySectionCountInput: false,
 								displayTaCountInput: false,
 								displayReaderCountInput: false,
-								displayEnrollmentInput: false
+								displayEnrollmentInput: false,
+								displayInstructorCostInput: false,
+								displayReasonInput: false,
 							};
 					});
 
@@ -279,6 +285,12 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 							return ui;
 						case "enrollment":
 							ui.sectionGroupCostDetails[sectionGroupCostId].displayEnrollmentInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayEnrollmentInput;
+							return ui;
+						case "instructorCost":
+							ui.sectionGroupCostDetails[sectionGroupCostId].displayInstructorCostInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayInstructorCostInput;
+							return ui;
+						case "reason":
+							ui.sectionGroupCostDetails[sectionGroupCostId].displayReasonInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayReasonInput;
 							return ui;
 					}
 					return ui;

@@ -24,6 +24,9 @@ budgetApp.service('budgetSelectors', function () {
 				instructorCost.fullName = instructor.fullName;
 				instructorCost.emailAddress = instructor.emailAddress;
 				instructorCost.loginId = instructor.loginId;
+				instructorCost.description = instructor.fullName;
+				instructorCost.instructorCostId = instructorCost.id;
+				instructorCost.id = instructor.id;
 
 				instructorList.push(instructorCost);
 			});
@@ -153,6 +156,8 @@ budgetApp.service('budgetSelectors', function () {
 					sectionGroupCost.displayTaCountInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayTaCountInput;
 					sectionGroupCost.displayReaderCountInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayReaderCountInput;
 					sectionGroupCost.displayEnrollmentInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayEnrollmentInput;
+					sectionGroupCost.displayInstructorCostInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayInstructorCostInput;
+					sectionGroupCost.displayReasonInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayReasonInput;
 
 					// add sectionGroupCost instructor metaData
 					var instructor = instructors.list[sectionGroupCost.instructorId];
@@ -160,7 +165,6 @@ budgetApp.service('budgetSelectors', function () {
 						sectionGroupCost.instructor = instructor;
 					}
 
-					sectionGroupCost.originalInstructor = {};
 					var originalInstructor = instructors.list[sectionGroupCost.originalInstructorId];
 					if (originalInstructor != null) {
 						sectionGroupCost.originalInstructor = originalInstructor;

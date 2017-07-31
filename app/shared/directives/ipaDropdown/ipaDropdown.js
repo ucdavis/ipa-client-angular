@@ -17,7 +17,7 @@ sharedApp.directive('ipaDropdown', function() {
 				header-text="headerText"
 				button-text="buttonText"
 				items="view.state.people"
-				select-item="testSelect()">
+				select-item="testSelect(item)">
 			</ipa-dropdown>
 			*/
 
@@ -54,6 +54,10 @@ sharedApp.directive('ipaDropdown', function() {
 
 			scope.closeDropdown = function() {
 				scope.expanded = false;
+			};
+
+			scope.selectDropdownItem = function(item) {
+				scope.selectItem({item: item});
 			};
 		}
 	};

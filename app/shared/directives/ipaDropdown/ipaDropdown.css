@@ -5,6 +5,8 @@
 .ipa-dropdown .expand-button {
 	display: inline-flex;
 	font-size: 12px;
+	color: #24292e;
+	font-weight: 500;
 	padding: 3px 6px 3px 6px;
 	user-select: none;
 }
@@ -23,7 +25,6 @@
 }
 
 .ipa-dropdown .expand-button-skin {
-	color: #24292e;
 	background-color: #eff3f6;
 	background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
 	border: 1px solid rgba(27,31,35,0.2);
