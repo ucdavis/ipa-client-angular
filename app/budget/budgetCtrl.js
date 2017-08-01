@@ -27,8 +27,7 @@ budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$locatio
 		};
 
 		$scope.openSupportCostModal = function() {
-			budgetActions.toggleSupportCostModal();
-//			$scope.view.state.openSupportCosts = true;
+			$scope.view.state.openSupportCosts = true;
 		};
 
 		$scope.openBudgetScenarioModal = function() {
@@ -44,5 +43,4 @@ BudgetCtrl.getPayload = function (authService, $route, $window, budgetActions) {
 			localStorage.getItem('selectedBudgetScenarioId'),
 			localStorage.getItem('selectedTerm'));
 	});
-
 };
