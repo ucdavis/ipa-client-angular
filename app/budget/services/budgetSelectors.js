@@ -42,7 +42,7 @@ budgetApp.service('budgetSelectors', function () {
 
 			return lineItemCategoryList;
 		},
-		generateSelectedBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories, sectionGroupCosts, sectionGroups, sections, instructors, budget) {
+		generateSelectedBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories, sectionGroupCosts, sectionGroups, sections, instructors, budget, instructorCosts) {
 			var selectedBudgetScenario = budgetScenarios.list[ui.selectedBudgetScenarioId];
 
 			// selectedBudgetScenarioId refers to a scenario that no longer exists
@@ -178,9 +178,37 @@ budgetApp.service('budgetSelectors', function () {
 					var readerCost = sectionGroupCost.readerCount * budget.readerCost;
 					sectionGroupCost.readerCost = parseFloat(readerCost).toFixed(2);
 
-					// Set totalSupportCosts
-					var supportCostSubTotal = sectionGroupCost.readerCost + sectionGroupCost.taCost;
+					// Set supportCostSubTotal
+					var supportCostSubTotal = readerCost + taCost;
 					sectionGroupCost.supportCostSubTotal = parseFloat(supportCostSubTotal).toFixed(2);
+
+					// Set instructorCostSubTotal
+					var instructorCostSubTotal = 0;
+
+					// Use budget specific cost if instructor is a lecturer
+					var instructor = instructors.list[sectionGroupCost.instructorId];
+
+					if (instructor) {
+						var instructorCost = instructorCosts.list[instructor.instructorCostId];
+					}
+
+					if (instructorCost && instructorCost.lecturer) {
+						instructorCostSubTotal = budget.lecturerCost;
+					}
+
+					// Use instructor specific override for instructor cost
+					if (sectionGroupCost.instructorId != null && instructorCost && instructorCost.cost) {
+						instructorCostSubTotal = instructorCost.cost;
+					}
+
+					// Use sectionGroupCost override for instructor cost
+					if (sectionGroupCost.instructorCost != null) {
+						instructorCostSubTotal = sectionGroupCost.instructorCost;
+					}
+
+					// Set totalCost
+					var totalCost = supportCostSubTotal + instructorCostSubTotal;
+					sectionGroupCost.totalCost = parseFloat(totalCost).toFixed(2);
 
 					// Add the sectionGroup to the course
 					selectedBudgetScenario.courses[newCourseIndex].sectionGroupCosts.push(sectionGroupCost);

@@ -120,7 +120,18 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						list: []
 					};
 
+					// Create hash for quick lookup
+					var instructorCostsByInstructorId = {};
+					action.payload.instructorCosts.forEach( function(instructorCost) {
+						instructorCostsByInstructorId[instructorCost.instructorId] = instructorCost;
+					});
+
 					action.payload.instructors.forEach( function(instructor) {
+						var instructorCost = instructorCostsByInstructorId[instructor.id];
+						if (instructorCost) {
+							instructor.instructorCostId = instructorCost.id;
+						}
+
 						instructors.ids.push(instructor.id);
 						instructors.list[instructor.id] = instructor;
 					});
@@ -345,7 +356,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				newState.sectionGroups,
 				newState.sections,
 				newState.instructors,
-				newState.budget);
+				newState.budget,
+				newState.instructorCosts);
 
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
 			newPageState.budget = newState.budget;
