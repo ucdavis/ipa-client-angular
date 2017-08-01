@@ -33,10 +33,12 @@ sharedApp.directive('ipaModal', function() {
 			}
 
 			scope.$watch('isVisible',function() {
+				console.log("isVisible modified");
 				// Watches for changes to isVisible to turn page scrolling on/off
 				if(scope.isVisible == true) {
 					scope.open();
-				} else if (scope.isVisible == false) {
+				} else {
+					console.log("triggering close");
 					scope.close();
 				}
 			});
