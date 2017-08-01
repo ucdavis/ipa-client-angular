@@ -42,7 +42,7 @@ budgetApp.service('budgetSelectors', function () {
 
 			return lineItemCategoryList;
 		},
-		generateSelectedBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories, sectionGroupCosts, sectionGroups, sections, instructors) {
+		generateSelectedBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories, sectionGroupCosts, sectionGroups, sections, instructors, budget) {
 			var selectedBudgetScenario = budgetScenarios.list[ui.selectedBudgetScenarioId];
 
 			// selectedBudgetScenarioId refers to a scenario that no longer exists
@@ -169,6 +169,18 @@ budgetApp.service('budgetSelectors', function () {
 					if (originalInstructor != null) {
 						sectionGroupCost.originalInstructor = originalInstructor;
 					}
+
+					// Set taCost
+					var taCost = sectionGroupCost.taCount * budget.taCost;
+					sectionGroupCost.taCost = parseFloat(taCost).toFixed(2);
+
+					// Set readerCost
+					var readerCost = sectionGroupCost.readerCount * budget.readerCost;
+					sectionGroupCost.readerCost = parseFloat(readerCost).toFixed(2);
+
+					// Set totalSupportCosts
+					var supportCostSubTotal = sectionGroupCost.readerCost + sectionGroupCost.taCost;
+					sectionGroupCost.supportCostSubTotal = parseFloat(supportCostSubTotal).toFixed(2);
 
 					// Add the sectionGroup to the course
 					selectedBudgetScenario.courses[newCourseIndex].sectionGroupCosts.push(sectionGroupCost);

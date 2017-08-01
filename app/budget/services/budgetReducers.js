@@ -344,7 +344,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				newState.sectionGroupCosts,
 				newState.sectionGroups,
 				newState.sections,
-				newState.instructors);
+				newState.instructors,
+				newState.budget);
 
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
 			newPageState.budget = newState.budget;
