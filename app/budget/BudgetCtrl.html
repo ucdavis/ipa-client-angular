@@ -3,38 +3,42 @@
 <ipa-header page-title="Support Staff Assignments"></ipa-header>
 
 <div class="budget-view">
+	<spinner ng-if="!view.state"
+		size="20" style="padding-top: 200px;">
+	</spinner>
 
-	<!-- Modals -->
-	<ipa-modal
-		is-visible="view.state.openAddBudgetScenario"
-		header-text="Add New Budget Scenario">
-			<add-budget-scenario ng-if="view.state.openAddBudgetScenario" state="view.state"></add-budget-scenario>
-	</ipa-modal>
+	<div ng-if="view.state">
+		<!-- Modals -->
+		<ipa-modal
+			is-visible="view.state.openAddBudgetScenario"
+			header-text="Add New Budget Scenario">
+				<add-budget-scenario ng-if="view.state.openAddBudgetScenario" state="view.state"></add-budget-scenario>
+		</ipa-modal>
 
-	<ipa-modal
-		is-visible="view.state.openAddLineItem"
-		header-text="Add New Line Item">
-			<add-line-item ng-if="view.state.openAddLineItem" state="view.state"></add-line-item>
-	</ipa-modal>
+		<ipa-modal
+			is-visible="view.state.openAddLineItem"
+			header-text="Add New Line Item">
+				<add-line-item ng-if="view.state.openAddLineItem" state="view.state"></add-line-item>
+		</ipa-modal>
 
-	<ipa-modal
-		is-visible="view.state.ui.isSupportCostModalOpen"
-		header-text="Add Support Costs">
-			<support-costs ng-if="view.state.ui.isSupportCostModalOpen" state="view.state" budget="view.state.budget"></support-costs>
-	</ipa-modal>
+		<ipa-modal
+			is-visible="view.state.ui.isSupportCostModalOpen"
+			header-text="Add Support Costs">
+				<support-costs ng-if="view.state.ui.isSupportCostModalOpen" state="view.state" budget="view.state.budget"></support-costs>
+		</ipa-modal>
 
-	<div class="table-toolbar">
-		<div class="btn-group pull-left add-budget-scenario">
-			<budget-scenario-dropdown></budget-scenario-dropdown>
+		<div class="table-toolbar">
+			<div class="btn-group pull-left add-budget-scenario">
+				<budget-scenario-dropdown></budget-scenario-dropdown>
+			</div>
+
+			<budget-scenario-toolbar></budget-scenario-toolbar>
 		</div>
+		
+		<budget-summary></budget-summary>
 
-		<budget-scenario-toolbar></budget-scenario-toolbar>
+		<course-costs selected-budget-scenario="view.state.selectedBudgetScenario" instructors="view.state.instructors"></course-costs>
+
+		<line-items selected-budget-scenario="view.state.selectedBudgetScenario"></line-items>
 	</div>
-	
-	<budget-summary></budget-summary>
-
-	<course-costs selected-budget-scenario="view.state.selectedBudgetScenario" instructors="view.state.instructors"></course-costs>
-
-	<line-items selected-budget-scenario="view.state.selectedBudgetScenario"></line-items>
-
 </div>
