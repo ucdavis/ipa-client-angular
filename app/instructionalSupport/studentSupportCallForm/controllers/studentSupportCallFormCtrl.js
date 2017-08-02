@@ -131,6 +131,9 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 	
 			// Form locks when a due date has been set, and has passed
 			$scope.isFormLocked = function () {
+				if (!$scope.view.state.supportCallResponse) {
+					return false;
+				}
 				// Validate dueDate
 				var dueDate = $scope.view.state.supportCallResponse.dueDate;
 				var submitAfterDueDate = $scope.view.state.supportCallResponse.allowSubmissionAfterDueDate;
@@ -158,7 +161,11 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 
 				// Validate min # of preferences
 				var currentNumPreferences = $scope.view.state.preferences.length;
-				var minNumPreferences = $scope.view.state.supportCallResponse.minimumNumberOfPreferences;
+				var minNumPreferences = 0;
+
+				if ($scope.view.state.supportCallResponse) {
+					minNumPreferences = $scope.view.state.supportCallResponse.minimumNumberOfPreferences;
+				}
 
 				if (currentNumPreferences < minNumPreferences) {
 					$scope.validationError = "You must provide at least " + minNumPreferences + " preferences";

@@ -106,6 +106,10 @@ instructionalSupportApp.service('supportStaffFormSelectors', function () {
 		},
 		// Returns true if assignment type matches a type being collected in the support call
 		isAssignmentRelevantToSupportCall: function(supportAssignment, supportCallResponse) {
+			if (!supportCallResponse) {
+				return null;
+			}
+
 			if (supportCallResponse.collectReaderPreferences && supportAssignment.appointmentType == "reader") {
 				return true;
 			}

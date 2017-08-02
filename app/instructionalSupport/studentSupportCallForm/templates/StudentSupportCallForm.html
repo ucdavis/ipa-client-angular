@@ -7,7 +7,16 @@
 	<spinner></spinner>
 </div>
 
-<div ng-if="view.state" class="student-support-call-form">
+<!-- handle lack of access -->
+<div ng-if="view.state && !view.state.supportCallResponse">
+	<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+		<p class="lead">You have not been invited to a support call in this term.</p>
+		<br />
+		<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
+	</div>
+</div>
+
+<div ng-if="view.state && view.state.supportCallResponse" class="student-support-call-form">
 	<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
 	<!-- modal-input comments -->

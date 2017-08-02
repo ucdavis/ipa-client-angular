@@ -122,6 +122,9 @@ instructionalSupportApp.service('supportStaffFormStateService', function ($rootS
 			switch (action.type) {
 				case INIT_STATE:
 					supportCallResponse = action.payload.studentSupportCallResponse;
+					if (!supportCallResponse) {
+						return null;
+					}
 					supportCallResponse.dueDateDescription = millisecondsToFullDate(supportCallResponse.dueDate);
 					return supportCallResponse;
 				case UPDATE_SUPPORT_CALL_RESPONSE:
