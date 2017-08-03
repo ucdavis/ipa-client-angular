@@ -68,6 +68,9 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		createLineItem: function (newLineItem, budgetScenarioId) {
+			// Ensure amount is properly formatted as a float
+			newLineItem.amount = parseFloat(newLineItem.amount);
+
 			budgetService.createLineItem(newLineItem, budgetScenarioId).then(function (results) {
 				var action = {
 					type: CREATE_LINE_ITEM,
@@ -80,6 +83,9 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		updateLineItem: function (lineItem) {
+			// Ensure amount is properly formatted as a float
+			lineItem.amount = parseFloat(lineItem.amount);
+
 			budgetService.updateLineItem(lineItem, lineItem.budgetScenarioId).then(function (results) {
 				var action = {
 					type: UPDATE_LINE_ITEM,
