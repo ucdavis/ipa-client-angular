@@ -55,6 +55,11 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		updateInstructorCost: function (instructorCost) {
+			// InstructorCosts in the front end are blended instructor + instructorCosts
+			instructorCost.id = instructorCost.instructorCostId;
+			// Ensure cost is passed as a number
+			instructorCost.cost = parseFloat(instructorCost.cost);
+
 			budgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
 				var action = {
 					type: UPDATE_INSTRUCTOR_COST,
