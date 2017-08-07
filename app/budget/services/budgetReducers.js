@@ -199,6 +199,9 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			switch (action.type) {
 				case INIT_STATE:
 					ui = {
+						courseCommentsModal: {
+							isOpen: false
+						},
 						isAddBudgetScenarioModalOpen: false,
 						isAddLineItemModalOpen: false,
 						isSupportCostModalOpen: false,
@@ -246,6 +249,14 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return ui;
 				case TOGGLE_SUPPORT_COST_MODAL:
 					ui.isSupportCostModalOpen = ! ui.isSupportCostModalOpen;
+					return ui;
+				case OPEN_ADD_COURSE_COMMENT_MODAL:
+					ui.courseCommentsModal.isOpen = true;
+					ui.courseCommentsModal.course = action.payload.course;
+					return ui;
+				case CLOSE_ADD_COURSE_COMMENT_MODAL:
+					ui.courseCommentsModal.isOpen = false;
+					ui.courseCommentsModal.course = null;
 					return ui;
 				case TOGGLE_ADD_LINE_ITEM_MODAL:
 					ui.isAddLineItemModalOpen = ! ui.isAddLineItemModalOpen;

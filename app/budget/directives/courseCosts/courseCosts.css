@@ -49,6 +49,7 @@
 
 .course-costs-section .course-title {
 	padding: 15px;
+	display: flex;
 }
 
 .course-costs-section .section-group-row {
@@ -68,4 +69,9 @@
 	flex: 5 0 0px;
 	padding: 5px;
 	margin: 15px;
+}
+
+.course-costs-section .comment-ui {
+	padding-left: 1%;
+	cursor: pointer;
 }

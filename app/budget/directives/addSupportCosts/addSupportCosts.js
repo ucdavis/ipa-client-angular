@@ -1,7 +1,7 @@
-budgetApp.directive("supportCosts", this.supportCosts = function ($rootScope, budgetActions) {
+budgetApp.directive("addSupportCosts", this.addSupportCosts = function ($rootScope, budgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'supportCosts.html',
+		templateUrl: 'addSupportCosts.html',
 		replace: true,
 		scope: {
 			state: '<',

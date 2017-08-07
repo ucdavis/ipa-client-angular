@@ -161,6 +161,24 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			budgetReducers.reduce(action);
 		},
+		openAddCourseCommentsModal: function(course) {
+			var action = {
+				type: OPEN_ADD_COURSE_COMMENT_MODAL,
+				payload: {
+					course: course
+				}
+			};
+
+			budgetReducers.reduce(action);
+		},
+		closeAddCourseCommentsModal: function() {
+			var action = {
+				type: OPEN_ADD_COURSE_COMMENT_MODAL,
+				payload: {}
+			};
+
+			budgetReducers.reduce(action);
+		},
 		toggleSupportCostModal: function() {
 			var action = {
 				type: TOGGLE_SUPPORT_COST_MODAL,

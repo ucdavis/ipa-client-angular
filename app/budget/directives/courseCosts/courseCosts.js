@@ -11,6 +11,10 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 			scope.toggleCourseCostsSection = function() {
 				budgetActions.toggleCourseCostsSection();
 			};
+
+			scope.openCourseComments = function(course) {
+				budgetActions.openAddCourseCommentsModal(course);
+			};
 		} // end link
 	};
 });

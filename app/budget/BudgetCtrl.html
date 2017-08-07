@@ -10,6 +10,11 @@
 	<div ng-if="view.state">
 		<!-- Modals -->
 		<ipa-modal
+			is-visible="view.state.openCourseCommentsModal"
+			header-text="Course Comments">
+				<add-course-comments ng-if="view.state.openCourseCommentsModal" course="course"></add-course-comments>
+		</ipa-modal>
+		<ipa-modal
 			is-visible="view.state.openAddBudgetScenario"
 			header-text="Add New Budget Scenario">
 				<add-budget-scenario ng-if="view.state.openAddBudgetScenario" state="view.state"></add-budget-scenario>
@@ -24,7 +29,7 @@
 		<ipa-modal
 			is-visible="view.state.openSupportCosts"
 			header-text="Add Support Costs">
-				<support-costs ng-if="view.state.openSupportCosts" state="view.state" budget="view.state.budget"></support-costs>
+				<add-support-costs ng-if="view.state.openSupportCosts" state="view.state" budget="view.state.budget"></add-support-costs>
 		</ipa-modal>
 
 		<div class="table-toolbar">

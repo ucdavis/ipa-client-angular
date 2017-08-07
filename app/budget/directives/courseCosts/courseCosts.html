@@ -79,7 +79,13 @@
 
 		<div ng-repeat="course in selectedBudgetScenario.courses">
 			<div class="course-title">
-				{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
+				<div>
+					{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
+				</div>
+				<div class="comment-ui">
+					<span class="glyphicon glyphicon-list-alt"
+								ng-click="openCourseComments(course)"></span>
+				</div>
 			</div>
 			<div class="section-group-row" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
 
