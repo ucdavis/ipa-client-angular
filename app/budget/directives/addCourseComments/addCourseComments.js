@@ -4,7 +4,7 @@ budgetApp.directive("addCourseComments", this.addCourseComments = function ($roo
 		templateUrl: 'addCourseComments.html',
 		replace: true,
 		scope: {
-			course: '<'
+			sectionGroupCost: '<'
 		},
 		link: function (scope, element, attrs) {
 		} // end link
