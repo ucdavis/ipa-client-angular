@@ -21,13 +21,14 @@ sharedApp.directive('ipaModal', function() {
 			// [VALIDATE: Attributes]
 			scope.dialogStyle = {};
 			scope.headerText = "";
-
+/*
 			if (attrs.width) {
 				scope.dialogStyle.width = attrs.width;
 			}
 			if (attrs.height) {
 				scope.dialogStyle.height = attrs.height;
 			}
+*/
 			if (attrs.headerText) {
 				scope.headerText = attrs.headerText;
 			}
@@ -36,7 +37,7 @@ sharedApp.directive('ipaModal', function() {
 				// Watches for changes to isVisible to turn page scrolling on/off
 				if(scope.isVisible == true) {
 					scope.open();
-				} else {
+				} else if (scope.isVisible == false) {
 					scope.close();
 				}
 			});
@@ -49,6 +50,7 @@ sharedApp.directive('ipaModal', function() {
 			};
 
 			scope.open = function() {
+				scope.isVisible = true;
 				// Disables page scrolling while modal is up
 				$('body').css('overflow-y','hidden');
 			};

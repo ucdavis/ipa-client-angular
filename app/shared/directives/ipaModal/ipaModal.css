@@ -2,7 +2,7 @@
 
 .ipa-modal .ipa-modal-dark-overlay {
 	/* A dark translucent div that covers the whole screen */
-	position:absolute;
+	position:fixed;
 	z-index:9999;
 	top:0;
 	left:0;
@@ -15,7 +15,7 @@
 .ipa-modal .ipa-modal-container {
 	/* A centered div above the overlay with a box shadow. */
 	z-index:10000;
-	position: absolute;
+	position: fixed;
 	width: 50%; /* Default */
 
 	/* Center the dialog */
