@@ -137,14 +137,14 @@
 					<span class="title">Support</span>
 				</a>
 				<ul ng-class="{ 'visible': expanded == 'support' || (!expanded && currentBaseHref == 'instructionalSupport') }">
-					<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport' && currentEndHref == 'supportCallStatus'}">
-						<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}/supportCallStatus">
-							Support Calls
-						</a>
-					</li>
 					<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport' && currentEndHref.length == 2}">
 						<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}">
 							Support Assignments
+						</a>
+					</li>
+					<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport' && currentEndHref == 'supportCallStatus'}">
+						<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}/supportCallStatus">
+							Support Calls
 						</a>
 					</li>
 				</ul>
