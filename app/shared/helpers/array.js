@@ -57,15 +57,23 @@ _array_sortIdsByProperty = function (listHash, properties) {
 	}).map(function (id) { return parseInt(id); });
 };
 
-_array_sortByProperty = function (listHash, property) {
+_array_sortByProperty = function (listHash, properties) {
 	var keys = Object.keys(listHash);
 	var sortedKeys = keys.sort(function (a, b) {
 		var valA, valB;
-		// Construct the comparator value by concatinating property values if the properties were passed as an array
 
+		if (properties.constructor === Array) {
+			valA = "";
+			valB = "";
+			for (var i in properties) {
+				valA += listHash[a][properties[i]];
+				valB += listHash[b][properties[i]];
+			}
+		} else {
 			// This will accept a single property in the form of a string
-		valA = listHash[a][property];
-		valB = listHash[b][property];
+			valA = listHash[a][properties];
+			valB = listHash[b][properties];
+		}
 
 		// If the properties are strings, ignore the case
 		if (typeof valA == "string") { valA = valA.toUpperCase(); }

@@ -213,7 +213,9 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 				newSectionGroups.push(sectionGroup);
 			});
 
-			return newSectionGroups;
+			var sortedSectionGroups = _array_sortByProperty(newSectionGroups, ["subjectCode", "courseNumber"]);
+
+			return sortedSectionGroups;
 		},
 		generateSupportStaffList: function (supportAssignments, courses, sectionGroups, supportStaffFromRoles, assignedSupportStaffList, supportStaffSupportCallResponses, supportStaffPreferences) {
 			var self = this;
