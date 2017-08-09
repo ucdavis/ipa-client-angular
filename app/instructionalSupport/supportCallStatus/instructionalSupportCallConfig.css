@@ -404,3 +404,18 @@ div.datepicker {
 .set-terms-container {
 	width: 100%;
 }
+.min-preferences-container {
+	display: flex;
+	padding-bottom: 10px;
+}
+
+.min-preferences-input {
+	width: 40px;
+	padding: 3px;
+}
+
+.min-preferences-label {
+	padding-left: 10px;
+	display: flex;
+	align-items: center;
+}

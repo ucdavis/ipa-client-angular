@@ -117,6 +117,12 @@
 										</div>
 								</li>
 
+								<li class="min-preferences-container" role="menuitem"
+										ng-if="supportCallConfigData.mode == 'supportStaff'">
+									<input class="min-preferences-input" ng-model="supportCallConfigData.minimumNumberOfPreferences">
+									<div class="min-preferences-label">Minimum number of preferences</div>
+								</li>
+
 								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectGeneralComments()">
 										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
 											ng-class="{ 'checked': supportCallConfigData.collectGeneralComments }">
@@ -187,7 +193,6 @@
 										</div>
 								</li>
 							</ul>
-							{{}}
 						</div>
 					</div>
 					<!-- select date section ends-->
