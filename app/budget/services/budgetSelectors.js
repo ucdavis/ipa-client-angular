@@ -42,7 +42,7 @@ budgetApp.service('budgetSelectors', function () {
 
 			return lineItemCategoryList;
 		},
-		generateSelectedBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories, sectionGroupCosts, sectionGroupCostComments, sectionGroups, sections, instructors, budget, instructorCosts) {
+		generateSelectedBudgetScenario: function (budgetScenarios, lineItems, lineItemComments, ui, lineItemCategories, sectionGroupCosts, sectionGroupCostComments, sectionGroups, sections, instructors, budget, instructorCosts) {
 			var selectedBudgetScenario = budgetScenarios.list[ui.selectedBudgetScenarioId];
 
 			// selectedBudgetScenarioId refers to a scenario that no longer exists
@@ -72,6 +72,17 @@ budgetApp.service('budgetSelectors', function () {
 				if (lineItem.budgetScenarioId != selectedBudgetScenario.id) {
 					return;
 				}
+
+				// Set lineItemComments
+				lineItem.comments = [];
+
+				lineItemComments.ids.forEach(function(commentId) {
+					var comment = lineItemComments.list[commentId];
+
+					if (comment.lineItemId == lineItem.id) {
+						lineItem.comments.push(comment);
+					}
+				});
 
 				// Add lineItemCategory description
 				var lineItemCategoryDescription = lineItemCategories.list[lineItem.lineItemCategoryId].description;

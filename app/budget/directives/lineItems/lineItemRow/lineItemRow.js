@@ -23,6 +23,10 @@ budgetApp.directive("lineItemRow", this.lineItemRow = function ($rootScope, budg
 			scope.displayProperty = function(lineItemId, propertyName) {
 				budgetActions.toggleLineItemDetail(lineItemId, propertyName);
 			};
+
+			scope.openAddLineItemCommentsModal = function(lineItem) {
+				budgetActions.openAddLineItemCommentsModal(lineItem);
+			};
 		} // end link
 	};
 });

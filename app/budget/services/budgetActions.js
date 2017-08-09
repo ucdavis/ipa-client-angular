@@ -158,7 +158,26 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 						sectionGroupCostComment: newSectionGroupCostComment
 					}
 				};
-				$rootScope.$emit('toast', { message: "Added comment", type: "SUCCESS" });
+				$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
+				budgetReducers.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		createLineItemComment: function (comment, lineItem, currentUserLoginId) {
+			var lineItemComment = {};
+			lineItemComment.comment = comment;
+			lineItemComment.loginId = currentUserLoginId;
+			lineItemComment.lineItemId = parseInt(lineItem.id);
+
+			budgetService.createLineItemComment(lineItemComment).then(function (newLineItemComment) {
+				var action = {
+					type: CREATE_LINE_ITEM_COMMENT,
+					payload: {
+						lineItemComment: newLineItemComment
+					}
+				};
+				$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
@@ -185,6 +204,16 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				type: OPEN_ADD_COURSE_COMMENT_MODAL,
 				payload: {
 					course: course
+				}
+			};
+
+			budgetReducers.reduce(action);
+		},
+		openAddLineItemCommentsModal: function(lineItem) {
+			var action = {
+				type: OPEN_ADD_LINE_ITEM_COMMENT_MODAL,
+				payload: {
+					lineItem: lineItem
 				}
 			};
 

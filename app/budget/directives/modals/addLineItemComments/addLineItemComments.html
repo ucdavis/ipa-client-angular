@@ -1,6 +1,6 @@
-<div class="add-course-comments">
+<div class="add-line-item-comments">
 
-	<div ng-repeat="comment in sectionGroupCost.comments" class="comment-container">
+	<div ng-repeat="comment in lineItem.comments" class="comment-container">
 		<div class="comment-header">
 			Posted By: {{ comment.authorName }} (2 weeks ago)
 		</div>
@@ -24,7 +24,5 @@
 							tooltip-placement="left" type="button"
 							class="disabled btn btn-info neon-dark-confirm-btn">Comment</button>
 		</div>
-	</div>
-
-
+	</div> <!-- input container -->
 </div>

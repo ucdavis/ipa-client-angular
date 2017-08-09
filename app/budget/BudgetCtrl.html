@@ -30,7 +30,21 @@
 		<ipa-modal
 			is-visible="view.state.ui.courseCommentsModal.isOpen"
 			header-text="Course Comments">
-			<add-course-comments ng-if="view.state.ui.courseCommentsModal.isOpen" section-group-cost="view.state.ui.courseCommentsModal.sectionGroupCost" current-user-login-id="currentUser.loginId"></add-course-comments>
+				<add-course-comments
+					ng-if="view.state.ui.courseCommentsModal.isOpen"
+					section-group-cost="view.state.ui.courseCommentsModal.sectionGroupCost"
+					current-user-login-id="currentUser.loginId">
+				</add-course-comments>
+		</ipa-modal>
+
+		<ipa-modal
+			is-visible="view.state.ui.lineItemCommentsModal.isOpen"
+			header-text="Line Item Comments">
+				<add-line-item-comments
+					ng-if="view.state.ui.lineItemCommentsModal.isOpen"
+					line-item="view.state.ui.lineItemCommentsModal.lineItem"
+					current-user-login-id="currentUser.loginId">
+				</add-line-item-comments>
 		</ipa-modal>
 
 		<div class="table-toolbar">

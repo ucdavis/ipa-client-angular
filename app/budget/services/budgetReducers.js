@@ -217,11 +217,36 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return sectionGroupCostComments;
 			}
 		},
+		lineItemCommentReducers: function (action, lineItemComments) {
+			switch (action.type) {
+				case INIT_STATE:
+					lineItemComments = {
+						ids: [],
+						list: []
+					};
+
+					action.payload.lineItemComments.forEach( function(lineItemComment) {
+						lineItemComments.ids.push(lineItemComment.id);
+						lineItemComments.list[lineItemComment.id] = lineItemComment;
+					});
+					return lineItemComments;
+				case CREATE_LINE_ITEM_COMMENT:
+					var comment = action.payload.lineItemComment;
+					lineItemComments.ids.push(comment.id);
+					lineItemComments.list[comment.id] = comment;
+					return lineItemComments;
+				default:
+					return lineItemComments;
+			}
+		},
 		uiReducers: function (action, ui) {
 			switch (action.type) {
 				case INIT_STATE:
 					ui = {
 						courseCommentsModal: {
+							isOpen: false
+						},
+						lineItemCommentsModal: {
 							isOpen: false
 						},
 						isAddBudgetScenarioModalOpen: false,
@@ -275,6 +300,10 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case OPEN_ADD_COURSE_COMMENT_MODAL:
 					ui.courseCommentsModal.isOpen = true;
 					ui.courseCommentsModal.sectionGroupCost = action.payload.course.sectionGroupCosts[0];
+					return ui;
+				case OPEN_ADD_LINE_ITEM_COMMENT_MODAL:
+					ui.lineItemCommentsModal.isOpen = true;
+					ui.lineItemCommentsModal.lineItem = action.payload.lineItem;
 					return ui;
 				case CLOSE_ADD_COURSE_COMMENT_MODAL:
 					ui.courseCommentsModal.isOpen = false;
@@ -368,6 +397,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.budget = scope.scheduleBudgetReducers(action, scope._state.budget);
 			newState.budgetScenarios = scope.budgetScenarioReducers(action, scope._state.budgetScenarios);
 			newState.lineItems = scope.lineItemReducers(action, scope._state.lineItems);
+			newState.lineItemComments = scope.lineItemCommentReducers(action, scope._state.lineItemComments);
 			newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
 			newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
 			newState.sectionGroupCostComments = scope.sectionGroupCostCommentReducers(action, scope._state.sectionGroupCostComments);
@@ -384,6 +414,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.selectedBudgetScenario = budgetSelectors.generateSelectedBudgetScenario(
 				newState.budgetScenarios,
 				newState.lineItems,
+				newState.lineItemComments,
 				newState.ui,
 				newState.lineItemCategories,
 				newState.sectionGroupCosts,
