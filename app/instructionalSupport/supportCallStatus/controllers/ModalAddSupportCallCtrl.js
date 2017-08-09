@@ -16,7 +16,7 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 		$scope.supportCallConfigData.termCode = $scope.year + $scope.termShortCode;
 	}
 
-	$scope.supportCallConfigData.minimumNumberOfPreferences = 15;
+	$scope.supportCallConfigData.minimumNumberOfPreferences = 0;
 
 	// Indicates which button started this support call: 'student' or 'instructor'
 	$scope.supportCallConfigData.mode = supportCallMode;
