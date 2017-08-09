@@ -8,19 +8,12 @@ sharedApp.directive('ipaModal', function() {
 		replace: true, // Replace with the template below
 		transclude: true, // we want to insert custom content inside the directive
 		link: function(scope, element, attrs, iAttr) {
-/*
-			// [VALIDATE: Passed Methods]
-			scope.isCloseModalSupplied = (angular.isUndefined(scope.closeModal) === false);
-
-			if (scope.isCloseModalSupplied == false) {
-				throw {
-					message:	"dssModal: Required method closeModal was not passed in."
-				};
-			}
-*/
 			// [VALIDATE: Attributes]
 			scope.dialogStyle = {};
 			scope.headerText = "";
+
+			// Stores a copy of the last state, useful in handling unexpected termination of modal
+			scope.previousIsVisible;
 /*
 			if (attrs.width) {
 				scope.dialogStyle.width = attrs.width;
@@ -34,12 +27,17 @@ sharedApp.directive('ipaModal', function() {
 			}
 
 			scope.$watch('isVisible',function() {
+				if (scope.isVisible == scope.previousIsVisible) {
+					return;
+				}
 				// Watches for changes to isVisible to turn page scrolling on/off
 				if(scope.isVisible == true) {
 					scope.open();
-				} else if (scope.isVisible == false) {
+				} else if (!scope.isVisible) {
 					scope.close();
 				}
+
+				scope.previousIsVisible = angular.copy(scope.isVisible);
 			});
 
 			// [METHODS]
