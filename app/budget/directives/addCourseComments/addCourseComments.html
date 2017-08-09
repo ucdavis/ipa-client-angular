@@ -1,49 +1,28 @@
 <div class="add-course-comments">
 
-	<div class="comment-container">
+	<div ng-repeat="comment in sectionGroupCost.comments" class="comment-container">
 		<div class="comment-header">
-			Posted By: Shang Lu (2 weeks ago)
+			Posted By: {{ comment.authorName }} (2 weeks ago)
 		</div>
 		<div class="comment-body">
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-			Other Funds 6% dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-			Cash-Out
-			 ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velitesse cillum dolore eu
-			 fugiat nulla pariatur
-		</div>
-	</div>
-	<div class="comment-container">
-		<div class="comment-header">
-			Posted By: Shang Lu (2 weeks ago)
-		</div>
-		<div class="comment-body">
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-			Other Funds 6% dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-			Cash-Out
-			 ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velitesse cillum dolore eu
-			 fugiat nulla pariatur
-		</div>
-	</div>
-	<div class="comment-container">
-		<div class="comment-header">
-			Posted By: Shang Lu (2 weeks ago)
-		</div>
-		<div class="comment-body">
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-			Other Funds 6% dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-			Cash-Out
-			 ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velitesse cillum dolore eu
-			 fugiat nulla pariatur
+			{{ comment.comment }}
 		</div>
 	</div>
 
 	<div class="input-container">
 		<div style="padding: 2%;">
-			<textarea class="comment-textarea"></textarea>
+			<textarea
+				class="comment-textarea"
+				ng-model="newComment"
+				placeholder="Add a comment">
+			</textarea>
 		</div>
 		<div class="input-footer">
-			<button>Cancel</button>
-			<button>Add</button>
+			<button ng-if="isFormValid() == true"
+							type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Comment</button>
+			<button ng-if="isFormValid() == false"
+							tooltip-placement="left" type="button"
+							class="disabled btn btn-info neon-dark-confirm-btn">Comment</button>
 		</div>
 	</div>
 

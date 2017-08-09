@@ -1,9 +1,11 @@
-budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$timeout', 'budgetActions',
-	this.BudgetCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $timeout, budgetActions) {
+budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$timeout', 'budgetActions', 'authService',
+	this.BudgetCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $timeout, budgetActions, authService) {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 
 		$scope.view = {};
+
+		$scope.currentUser = authService.getCurrentUser();
 
 		$rootScope.$on('budgetStateChanged', function (event, data) {
 			$scope.view.state = data;

@@ -30,7 +30,7 @@
 		<ipa-modal
 			is-visible="view.state.ui.courseCommentsModal.isOpen"
 			header-text="Course Comments">
-			<add-course-comments ng-if="view.state.ui.courseCommentsModal.isOpen" section-group-cost="view.state.ui.courseCommentsModal.sectionGroupCost"></add-course-comments>
+			<add-course-comments ng-if="view.state.ui.courseCommentsModal.isOpen" section-group-cost="view.state.ui.courseCommentsModal.sectionGroupCost" current-user-login-id="currentUser.loginId"></add-course-comments>
 		</ipa-modal>
 
 		<div class="table-toolbar">
@@ -40,7 +40,7 @@
 
 			<budget-scenario-toolbar></budget-scenario-toolbar>
 		</div>
-		
+
 		<budget-summary></budget-summary>
 
 		<course-costs selected-budget-scenario="view.state.selectedBudgetScenario" instructors="view.state.instructors"></course-costs>

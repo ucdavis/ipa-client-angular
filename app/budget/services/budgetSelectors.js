@@ -42,7 +42,7 @@ budgetApp.service('budgetSelectors', function () {
 
 			return lineItemCategoryList;
 		},
-		generateSelectedBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories, sectionGroupCosts, sectionGroups, sections, instructors, budget, instructorCosts) {
+		generateSelectedBudgetScenario: function (budgetScenarios, lineItems, ui, lineItemCategories, sectionGroupCosts, sectionGroupCostComments, sectionGroups, sections, instructors, budget, instructorCosts) {
 			var selectedBudgetScenario = budgetScenarios.list[ui.selectedBudgetScenarioId];
 
 			// selectedBudgetScenarioId refers to a scenario that no longer exists
@@ -209,6 +209,17 @@ budgetApp.service('budgetSelectors', function () {
 					// Set totalCost
 					var totalCost = supportCostSubTotal + instructorCostSubTotal;
 					sectionGroupCost.totalCost = parseFloat(totalCost).toFixed(2);
+
+					// Set sectionGroupCostComments
+					sectionGroupCost.comments = [];
+
+					sectionGroupCostComments.ids.forEach(function(commentId) {
+						var comment = sectionGroupCostComments.list[commentId];
+
+						if (comment.sectionGroupCostId == sectionGroupCost.id) {
+							sectionGroupCost.comments.push(comment);
+						}
+					});
 
 					// Add the sectionGroup to the course
 					selectedBudgetScenario.courses[newCourseIndex].sectionGroupCosts.push(sectionGroupCost);

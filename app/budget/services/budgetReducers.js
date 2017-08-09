@@ -195,6 +195,28 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return sections;
 			}
 		},
+		sectionGroupCostCommentReducers: function (action, sectionGroupCostComments) {
+			switch (action.type) {
+				case INIT_STATE:
+					sectionGroupCostComments = {
+						ids: [],
+						list: []
+					};
+
+					action.payload.sectionGroupCostComments.forEach( function(sectionGroupCostComment) {
+						sectionGroupCostComments.ids.push(sectionGroupCostComment.id);
+						sectionGroupCostComments.list[sectionGroupCostComment.id] = sectionGroupCostComment;
+					});
+					return sectionGroupCostComments;
+				case CREATE_SECTION_GROUP_COST_COMMENT:
+					var comment = action.payload.sectionGroupCostComment;
+					sectionGroupCostComments.ids.push(comment.id);
+					sectionGroupCostComments.list[comment.id] = comment;
+					return sectionGroupCostComments;
+				default:
+					return sectionGroupCostComments;
+			}
+		},
 		uiReducers: function (action, ui) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -348,6 +370,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.lineItems = scope.lineItemReducers(action, scope._state.lineItems);
 			newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
 			newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
+			newState.sectionGroupCostComments = scope.sectionGroupCostCommentReducers(action, scope._state.sectionGroupCostComments);
 			newState.sectionGroups = scope.sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.sections = scope.sectionReducers(action, scope._state.sections);
 			newState.instructors = scope.instructorReducers(action, scope._state.instructors);
@@ -364,6 +387,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				newState.ui,
 				newState.lineItemCategories,
 				newState.sectionGroupCosts,
+				newState.sectionGroupCostComments,
 				newState.sectionGroups,
 				newState.sections,
 				newState.instructors,

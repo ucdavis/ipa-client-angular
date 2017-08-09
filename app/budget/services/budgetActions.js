@@ -145,6 +145,25 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		createSectionGroupCostComment: function (comment, sectionGroupCost, currentUserLoginId) {
+			var sectionGroupCostComment = {};
+			sectionGroupCostComment.comment = comment;
+			sectionGroupCostComment.loginId = currentUserLoginId;
+			sectionGroupCostComment.sectionGroupCostId = parseInt(sectionGroupCost.id);
+
+			budgetService.createSectionGroupCostComment(sectionGroupCostComment).then(function (newSectionGroupCostComment) {
+				var action = {
+					type: CREATE_SECTION_GROUP_COST_COMMENT,
+					payload: {
+						sectionGroupCostComment: newSectionGroupCostComment
+					}
+				};
+				$rootScope.$emit('toast', { message: "Added comment", type: "SUCCESS" });
+				budgetReducers.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		toggleAddLineItemModal: function() {
 			var action = {
 				type: TOGGLE_ADD_LINE_ITEM_MODAL,

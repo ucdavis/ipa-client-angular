@@ -26,6 +26,19 @@ budgetApp.factory("budgetService", this.budgetService = function($http, $q, $win
 
 			return deferred.promise;
 		},
+		createSectionGroupCostComment: function(sectionGroupCostComment) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/budgetView/sectionGroupCosts/" + sectionGroupCostComment.sectionGroupCostId + "/sectionGroupCostComments", sectionGroupCostComment, { withCredentials: true })
+			.success(function(results) {
+				deferred.resolve(results);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		deleteBudgetScenario: function(budgetScenarioId) {
 			var deferred = $q.defer();
 
