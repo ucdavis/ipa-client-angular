@@ -27,6 +27,13 @@ budgetApp.directive("lineItemRow", this.lineItemRow = function ($rootScope, budg
 			scope.openAddLineItemCommentsModal = function(lineItem) {
 				budgetActions.openAddLineItemCommentsModal(lineItem);
 			};
+			scope.dateToCalendar = function(date) {
+				return dateToCalendar(date);
+			};
+
+			scope.dateToRelative = function(date) {
+				return dateToRelative(date);
+			};
 		} // end link
 	};
 });

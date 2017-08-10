@@ -105,10 +105,18 @@
 }
 .line-item-row .edited-detail-container {
 	flex: 7 0 0px;
+	position: relative;
+	display: flex;
+}
+
+.line-item-row .edited-by {
+	padding-left: 20px;
 }
 
 .line-item-row .edited-detail-label {
-	padding-left: 20px;
+	padding-left: 5px;
+	display: inline-block;
+	color: #a0a0a0;
 }
 
 .line-item-row .amount-detail-container {

@@ -72,8 +72,11 @@
 				</div>
 			</div>
 			<div class="edited-detail-container">
-				<div class="edited-detail-label">
-					[[EDITED BY]]
+				<div class="edited-by">
+					{{ lineItem.lastModifiedBy }}
+				</div>
+				<div class="edited-detail-label" uib-tooltip="{{ dateToCalendar(lineItem.lastModifiedOn) }}">
+					({{ dateToRelative(lineItem.lastModifiedOn) }})
 				</div>
 			</div>
 

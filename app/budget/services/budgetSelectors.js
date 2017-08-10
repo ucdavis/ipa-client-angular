@@ -99,6 +99,16 @@ budgetApp.service('budgetSelectors', function () {
 				if (ui.openLineItems.indexOf(lineItem.id) > -1) {
 					lineItem.isDetailViewOpen = true;
 				}
+
+				// Set last modified by
+				// Expected formats are 'system' or 'user:bobsmith'
+				// Will convert 'user:bobsmith' to 'bobsmith'
+				if (lineItem.lastModifiedBy) {
+					var split = lineItem.lastModifiedBy.split(":");
+					if (split.length > 0 && split[0] == "user") {
+						lineItem.lastModifiedBy = split[1];
+					}
+				}
 			});
 
 			// Add sectionGroupCosts (for selected termCode)
