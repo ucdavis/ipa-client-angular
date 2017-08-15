@@ -84,6 +84,10 @@ budgetApp.service('budgetSelectors', function () {
 					}
 				});
 
+				// Sort sectionGroupCostComments
+				var reverseOrder = true;
+				lineItem.comments =_array_sortByProperty(lineItem.comments, "lastModifiedOn", reverseOrder);
+
 				// Add lineItemCategory description
 				var lineItemCategoryDescription = lineItemCategories.list[lineItem.lineItemCategoryId].description;
 				lineItem.lineItemCategoryDescription = lineItemCategoryDescription;
@@ -241,6 +245,10 @@ budgetApp.service('budgetSelectors', function () {
 							sectionGroupCost.comments.push(comment);
 						}
 					});
+
+					// Sort sectionGroupCostComments
+					var reverseOrder = true;
+					sectionGroupCost.comments =_array_sortByProperty(sectionGroupCost.comments, "lastModifiedOn", reverseOrder);
 
 					// Add the sectionGroup to the course
 					selectedBudgetScenario.courses[newCourseIndex].sectionGroupCosts.push(sectionGroupCost);
