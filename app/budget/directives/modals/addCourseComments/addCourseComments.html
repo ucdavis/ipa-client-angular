@@ -1,14 +1,4 @@
 <div class="add-course-comments">
-
-	<div ng-repeat="comment in sectionGroupCost.comments" class="comment-container">
-		<div class="comment-header">
-			Posted By: {{ comment.authorName }} (2 weeks ago)
-		</div>
-		<div class="comment-body">
-			{{ comment.comment }}
-		</div>
-	</div>
-
 	<div class="input-container">
 		<div style="padding: 2%;">
 			<textarea
@@ -25,4 +15,13 @@
 							class="disabled btn btn-info neon-dark-confirm-btn">Comment</button>
 		</div>
 	</div> <!-- input container -->
+
+	<div ng-repeat="comment in sectionGroupCost.comments" class="comment-container">
+		<div class="comment-header">
+			Posted By: {{ comment.authorName }} (2 weeks ago)
+		</div>
+		<div class="comment-body">
+			{{ comment.comment }}
+		</div>
+	</div>
 </div>
