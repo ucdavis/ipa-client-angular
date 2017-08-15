@@ -57,7 +57,7 @@ _array_sortIdsByProperty = function (listHash, properties) {
 	}).map(function (id) { return parseInt(id); });
 };
 
-_array_sortByProperty = function (listHash, properties) {
+_array_sortByProperty = function (listHash, property, reverseOrder) {
 	var keys = Object.keys(listHash);
 	var sortedKeys = keys.sort(function (a, b) {
 		var valA, valB;
@@ -79,8 +79,13 @@ _array_sortByProperty = function (listHash, properties) {
 		if (typeof valA == "string") { valA = valA.toUpperCase(); }
 		if (typeof valB == "string") { valB = valB.toUpperCase(); }
 
-		if (valA < valB) { return -1; }
-		if (valA > valB) { return 1; }
+		if (reverseOrder) {
+			if (valA < valB) { return 1; }
+			if (valA > valB) { return -1; }
+		} else {
+			if (valA < valB) { return -1; }
+			if (valA > valB) { return 1; }
+		}
 		return 0;
 	});
 	var newArray = [];
