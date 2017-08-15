@@ -1,0 +1,16 @@
+.no-mobile-support {
+	display: none;
+	text-align: center;
+	height: 100%;
+	background-color: white;
+}
+
+@media only screen and (max-width: 768px) {
+	.page-container {
+		display: none;
+	}
+
+	.no-mobile-support {
+		display: block;
+	}
+}
