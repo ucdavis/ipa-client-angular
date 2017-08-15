@@ -42,7 +42,21 @@ budgetApp.service('budgetSelectors', function () {
 
 			return lineItemCategoryList;
 		},
-		generateSelectedBudgetScenario: function (budgetScenarios, lineItems, lineItemComments, ui, lineItemCategories, sectionGroupCosts, sectionGroupCostComments, sectionGroups, sections, instructors, budget, instructorCosts) {
+		generateSelectedBudgetScenario: function (
+			budgetScenarios,
+			lineItems,
+			lineItemComments,
+			ui,
+			lineItemCategories,
+			sectionGroupCosts,
+			sectionGroupCostComments,
+			instructors,
+			budget,
+			instructorCosts,
+			sectionGroups,
+			sections,
+			courses
+		) {
 			var selectedBudgetScenario = budgetScenarios.list[ui.selectedBudgetScenarioId];
 
 			// selectedBudgetScenarioId refers to a scenario that no longer exists
