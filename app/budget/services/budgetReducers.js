@@ -17,7 +17,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					});
 					return budgetScenarios;
 				case CREATE_BUDGET_SCENARIO:
-					var newBudgetScenario = action.payload;
+					var newBudgetScenario = action.payload.budgetScenario;
 					budgetScenarios.ids.push(newBudgetScenario.id);
 					budgetScenarios.list[newBudgetScenario.id] = newBudgetScenario;
 					return budgetScenarios;
@@ -43,7 +43,12 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						lineItems.list[lineItem.id] = lineItem;
 					});
 					return lineItems;
-
+				case CREATE_BUDGET_SCENARIO:
+					action.payload.lineItems.forEach( function( lineItem) {
+						lineItems.ids.push(lineItem.id);
+						lineItems.list[lineItem.id] = lineItem;
+					});
+					return lineItems;
 				case CREATE_LINE_ITEM:
 					var newLineItem = action.payload;
 					lineItems.ids.push(newLineItem.id);
@@ -99,6 +104,12 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						list: []
 					};
 
+					action.payload.sectionGroupCosts.forEach( function(sectionGroupCost) {
+						sectionGroupCosts.ids.push(sectionGroupCost.id);
+						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
+					});
+					return sectionGroupCosts;
+				case CREATE_BUDGET_SCENARIO:
 					action.payload.sectionGroupCosts.forEach( function(sectionGroupCost) {
 						sectionGroupCosts.ids.push(sectionGroupCost.id);
 						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
@@ -208,6 +219,12 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						sectionGroupCostComments.list[sectionGroupCostComment.id] = sectionGroupCostComment;
 					});
 					return sectionGroupCostComments;
+				case CREATE_BUDGET_SCENARIO:
+					action.payload.sectionGroupCostComments.forEach( function(sectionGroupCostComment) {
+						sectionGroupCostComments.ids.push(sectionGroupCostComment.id);
+						sectionGroupCostComments.list[sectionGroupCostComment.id] = sectionGroupCostComment;
+					});
+					return sectionGroupCostComments;
 				case CREATE_SECTION_GROUP_COST_COMMENT:
 					var comment = action.payload.sectionGroupCostComment;
 					sectionGroupCostComments.ids.push(comment.id);
@@ -225,6 +242,12 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						list: []
 					};
 
+					action.payload.lineItemComments.forEach( function(lineItemComment) {
+						lineItemComments.ids.push(lineItemComment.id);
+						lineItemComments.list[lineItemComment.id] = lineItemComment;
+					});
+					return lineItemComments;
+				case CREATE_BUDGET_SCENARIO:
 					action.payload.lineItemComments.forEach( function(lineItemComment) {
 						lineItemComments.ids.push(lineItemComment.id);
 						lineItemComments.list[lineItemComment.id] = lineItemComment;
