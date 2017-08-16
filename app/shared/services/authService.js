@@ -50,10 +50,14 @@ angular.module('sharedApp')
 						localStorage.clear();
 						$window.location.href = "/access-denied.html";
 					} else if (error.status == -1) {
+						// Request was aborted (e.g. user hit reload while it took too long) or server not found
+						$rootScope.$emit('toast', { message: "Something went wrong. Please reload the page.", type: "ERROR", timeOut: 60000 });
 						message = "Request was aborted or server was not found. Check that the backend is running.";
 						$log.error(message);
-						self.redirectToErrorPage(error, message, loginId, jwt);
 					} else {
+						// Backend exceptions generate HTTP 500, which would fall here and redirect to form.
+						// If the user fills out the form, we can tie their user story to our backend
+						// exception e-mails.
 						message = "Unknown error occurred while authenticating. Details:";
 						$log.error(message);
 						$log.error(error);
