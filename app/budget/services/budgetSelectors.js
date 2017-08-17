@@ -55,7 +55,8 @@ budgetApp.service('budgetSelectors', function () {
 			instructorCosts,
 			sectionGroups,
 			sections,
-			courses
+			courses,
+			scheduleSectionGroups
 		) {
 			var selectedBudgetScenario = budgetScenarios.list[ui.selectedBudgetScenarioId];
 
@@ -263,6 +264,20 @@ budgetApp.service('budgetSelectors', function () {
 					// Sort sectionGroupCostComments
 					var reverseOrder = true;
 					sectionGroupCost.comments =_array_sortByProperty(sectionGroupCost.comments, "lastModifiedOn", reverseOrder);
+
+					// Add schedule data
+					var uniqueKey = sectionGroupCost.subjectCode
+					+ "-" + sectionGroupCost.courseNumber
+					+ "-" + sectionGroupCost.sequencePattern
+					+ "-" + sectionGroupCost.termCode;
+
+					var scheduledSectionGroup = scheduleSectionGroups.uniqueKeys[uniqueKey];
+					sectionGroupCost.liveData = {};
+
+					if (scheduledSectionGroup) {
+						sectionGroupCost.liveData.sectionCount = scheduledSectionGroup.sectionCount;
+						sectionGroupCost.liveData.totalSeats = scheduledSectionGroup.totalSeats;
+					}
 
 					// Add the sectionGroup to the course
 					selectedBudgetScenario.courses[newCourseIndex].sectionGroupCosts.push(sectionGroupCost);
