@@ -172,44 +172,18 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return instructorCosts;
 			}
 		},
-		sectionGroupReducers: function (action, sectionGroups) {
+		scheduleSectionGroupReducers: function (action, scheduleSectionGroups) {
 			switch (action.type) {
 				case INIT_STATE:
+					courses = {
+						ids: [],
+						list: []
+					};
 					sectionGroups = {
 						ids: [],
 						list: []
 					};
-
-					action.payload.sectionGroupCosts.forEach( function(sectionGroup) {
-						sectionGroups.ids.push(sectionGroup.id);
-						sectionGroups.list[sectionGroup.id] = sectionGroup;
-					});
-					return sectionGroups;
-				default:
-					return sectionGroups;
-			}
-		},
-		sectionReducers: function (action, sections) {
-			switch (action.type) {
-				case INIT_STATE:
 					sections = {
-						ids: [],
-						list: []
-					};
-
-					action.payload.sections.forEach( function(section) {
-						sections.ids.push(section.id);
-						sections.list[section.id] = section;
-					});
-					return sections;
-				default:
-					return sections;
-			}
-		},
-		courseReducers: function (action, courses) {
-			switch (action.type) {
-				case INIT_STATE:
-					courses = {
 						ids: [],
 						list: []
 					};
@@ -218,9 +192,53 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						courses.ids.push(course.id);
 						courses.list[course.id] = course;
 					});
-					return courses;
+					action.payload.sectionGroups.forEach( function(sectionGroup) {
+						sectionGroups.ids.push(sectionGroup.id);
+						sectionGroups.list[sectionGroup.id] = sectionGroup;
+					});
+					action.payload.sections.forEach( function(section) {
+						sections.ids.push(section.id);
+						sections.list[section.id] = section;
+					});
+
+					scheduleSectionGroups = {
+						uniqueKeys: [],
+						list: []
+					};
+
+					courses;
+					sectionGroups;
+					sections;
+
+					sectionGroups.ids.forEach(function(sectionGroupId) {
+						var sectionGroup = sectionGroups.list[sectionGroupId];
+						var course = courses.list[sectionGroup.courseId];
+						var uniqueKey = course.subjectCode + "-" + course.courseNumber + "-" + course.sequencePattern + "-" + sectionGroup.termCode;
+
+						var sectionCount = 0;
+						var totalSeats = 0;
+
+						// calculate sectionCount and totalSeats
+						sections.ids.forEach(function(sectionId) {
+							var section = sections.list[sectionId];
+
+							if (section.sectionGroupId == sectionGroup.id) {
+								sectionCount++;
+								totalSeats += section.seats;
+							}
+						});
+						sectionGroup.uniqueKey = uniqueKey;
+						sectionGroup.sectionCount = sectionCount;
+						sectionGroup.totalSeats = totalSeats;
+
+						// Add to payload
+						scheduleSectionGroups.uniqueKeys.push(uniqueKey);
+						scheduleSectionGroups.list[uniqueKey] = sectionGroup;
+					});
+
+					return scheduleSectionGroups;
 				default:
-					return courses;
+					return scheduleSectionGroups;
 			}
 		},
 		sectionGroupCostCommentReducers: function (action, sectionGroupCostComments) {
@@ -441,9 +459,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
 			newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
 			newState.sectionGroupCostComments = scope.sectionGroupCostCommentReducers(action, scope._state.sectionGroupCostComments);
-			newState.sectionGroups = scope.sectionGroupReducers(action, scope._state.sectionGroups);
-			newState.sections = scope.sectionReducers(action, scope._state.sections);
-			newState.courses = scope.courseReducers(action, scope._state.courses);
+			newState.scheduleSectionGroups = scope.scheduleSectionGroupReducers(action, scope._state.scheduleSectionGroups);
 			newState.instructors = scope.instructorReducers(action, scope._state.instructors);
 			newState.instructorCosts = scope.instructorCostReducers(action, scope._state.instructorCosts);
 			newState.ui = scope.uiReducers(action, scope._state.ui);
@@ -466,7 +482,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				newState.instructorCosts,
 				newState.sectionGroups,
 				newState.sections,
-				newState.courses
+				newState.courses,
+				newState.scheduleSectionGroups
 			);
 
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
