@@ -16,9 +16,43 @@
 </head>
 
 <body style="background-color: rgb(238, 238, 238);">
-	<div class="jumbotron" style="text-align: center; height: 100%;">
-		<h1>Uh oh.</h1>
-		<p class="lead">We encountered an error we were not prepared for.</p>
+	<div class="jumbotron" style="text-align: center; height: 100%; width: 60%; margin: auto auto; min-width: 350px; max-width: 650px;">
+	
+		<?php
+			if( $_POST['feedback_form'] == 1 ) {
+		?>
+			<h4>Instructional Planning and Administration</h4>
+			<h1>Thank you.</h1>
+			<p class="lead">Our engineers will receive your feedback in a few moments and fix the issue as soon as we can.</p>
+		<?php
+			} else {
+		?>
+			<h4>Instructional Planning and Administration</h4>
+			<h1>Uh oh.</h1>
+			<p class="lead">IPA encountered an error we were not prepared for.</p>
+			<p class="lead">Could you help us fix this by filling out the form below?</p>
+		
+			<form method="POST" style="text-align: left; margin-top: 2em;">
+				<div class="form-group">
+					 <label for="exampleInputEmail1">What were you trying to do that led you to this error?</label>
+					 <textarea name="trying_to" class="form-control" id="exampleInputEmail1"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">How often does this happen?</label>
+					<textarea name="how_often" class="form-control" id="exampleInputPassword1"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">(Optional) What's your e-mail address in case we have follow-up questions?</label>
+					<input type="text" name="optional_who_are_you" class="form-control" id="exampleInputPassword1" />
+				</div>
+				<input type="hidden" name="feedback_form" value="1">
+				<center>
+					<button type="submit" style="margin-top: 1em;" class="btn btn-primary btn-lg">Send Feedback</button>
+				</center>
+			</form>
+		<?php
+			}
+		?>
 
 		<?php
 			$body = "Date: " . date(DATE_RFC2822) . "\r\n\r\nRequest headers:\r\n\r\n";
@@ -35,15 +69,23 @@
 				$body .= "\tParam: $param_name; Value: $param_val\n";
 			}
 
+			$body .= "\r\nAdditional info:\r\n\r\n";			
+			
+			$body .= "\tIP Address: " . $_SERVER['REMOTE_ADDR'] . "\n";
+
 			$headers = 'From: no-reply@ipa.ucdavis.edu' . "\r\n" .
     				'Reply-To: no-reply@ipa.ucdavis.edu' . "\r\n" .
     				'X-Mailer: PHP/' . phpversion();
 
-			if(mail ( "dssit-devs-exceptions@ucdavis.edu", "IPA Uh Oh Page Request", $body, $headers ) == false) {
+			if($_POST['feedback_form'] == 1) {
+				$subject = "IPA Frontend Exception User Feedback";
+			} else {
+				$subject = "IPA Frontend Exception Automated Report";
+			}
+			
+			if(mail ( "dssit-devs-exceptions@ucdavis.edu", $subject, $body, $headers ) == false) {
 				/* Nothing we can do. */
 			}
 		?>
-
-		<p class="lead"><br />Please <a href="https://it.dss.ucdavis.edu/">report this to IT</a>.</p>
 	</div>
 </body>
