@@ -20,6 +20,16 @@
 		</div>
 	</div>
 	<div class="cell">
+		<div style="position: relative;">
+			<i 
+				class="entypo-bell section-group-warning"
+				ng-class="{'show-warning': sectionGroupCost.warnings.sectionCount }"
+				tooltip-append-to-body="true"
+				uib-tooltip="{{sectionGroupCost.warnings.sectionCount}}"
+				tooltip-placement="bottom">
+			</i>
+		</div>
+
 		<div
 			ng-if="sectionGroupCost.displaySectionCountInput != true"
 			ng-click="displayProperty(sectionGroupCost, 'sectionCount')"

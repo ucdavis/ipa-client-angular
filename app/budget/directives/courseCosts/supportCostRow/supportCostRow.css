@@ -19,3 +19,12 @@
 	padding: 0;
 	width: 100%;
 }
+
+.support-cost-row .section-group-warning {
+	color: #ce4844;
+	visibility: hidden;
+}
+
+.support-cost-row .show-warning {
+	visibility: visible;
+}

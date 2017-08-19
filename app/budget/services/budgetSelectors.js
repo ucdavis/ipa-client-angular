@@ -271,12 +271,26 @@ budgetApp.service('budgetSelectors', function () {
 					+ "-" + sectionGroupCost.sequencePattern
 					+ "-" + sectionGroupCost.termCode;
 
-					var scheduledSectionGroup = scheduleSectionGroups.uniqueKeys[uniqueKey];
+					var scheduledSectionGroup = scheduleSectionGroups.list[uniqueKey];
 					sectionGroupCost.liveData = {};
 
 					if (scheduledSectionGroup) {
 						sectionGroupCost.liveData.sectionCount = scheduledSectionGroup.sectionCount;
 						sectionGroupCost.liveData.totalSeats = scheduledSectionGroup.totalSeats;
+					}
+
+					// Generate warnings
+					sectionGroupCost.warnings = {
+						sectionCount: null,
+						totalSeats: null
+					};
+
+					if (sectionGroupCost.liveData.sectionCount != sectionGroupCost.sectionCount) {
+						sectionGroupCost.warnings.sectionCount = "The current schedule has " + sectionGroupCost.liveData.sectionCount + " sections";
+					}
+
+					if (sectionGroupCost.liveData.totalSeats != sectionGroupCost.totalSeats) {
+						sectionGroupCost.warnings.totalSeats = "The current schedule has " + sectionGroupCost.liveData.totalSeats + " total seats";
 					}
 
 					// Add the sectionGroup to the course
