@@ -289,7 +289,7 @@ budgetApp.service('budgetSelectors', function () {
 						sectionGroupCost.warnings.sectionCount = "The current schedule has " + sectionGroupCost.liveData.sectionCount + " sections";
 					}
 
-					if (sectionGroupCost.liveData.totalSeats != sectionGroupCost.totalSeats) {
+					if (sectionGroupCost.liveData.totalSeats != sectionGroupCost.enrollment) {
 						sectionGroupCost.warnings.totalSeats = "The current schedule has " + sectionGroupCost.liveData.totalSeats + " total seats";
 					}
 

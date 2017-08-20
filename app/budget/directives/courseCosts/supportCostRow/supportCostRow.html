@@ -3,6 +3,15 @@
 		{{ sectionGroupCost.sequencePattern }}
 	</div>
 	<div class="cell">
+		<div style="position: relative;">
+			<i
+				class="entypo-bell section-group-warning"
+				ng-class="{'show-warning': sectionGroupCost.warnings.totalSeats }"
+				tooltip-append-to-body="true"
+				uib-tooltip="{{ sectionGroupCost.warnings.totalSeats }}"
+				tooltip-placement="bottom">
+			</i>
+		</div>
 		<div
 			ng-if="sectionGroupCost.displayEnrollmentInput != true"
 			ng-click="displayProperty(sectionGroupCost, 'enrollment')"
@@ -21,11 +30,11 @@
 	</div>
 	<div class="cell">
 		<div style="position: relative;">
-			<i 
+			<i
 				class="entypo-bell section-group-warning"
 				ng-class="{'show-warning': sectionGroupCost.warnings.sectionCount }"
 				tooltip-append-to-body="true"
-				uib-tooltip="{{sectionGroupCost.warnings.sectionCount}}"
+				uib-tooltip="{{ sectionGroupCost.warnings.sectionCount }}"
 				tooltip-placement="bottom">
 			</i>
 		</div>
