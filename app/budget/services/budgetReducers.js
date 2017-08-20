@@ -227,16 +227,17 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						var course = courses.list[sectionGroup.courseId];
 						var uniqueKey = course.subjectCode + "-" + course.courseNumber + "-" + course.sequencePattern + "-" + sectionGroup.termCode;
 
-						var sectionCount = 0;
-						var totalSeats = 0;
-
+						sectionGroup.sectionCount = 0;
+						sectionGroup.totalSeats = 0;
+						sectionGroup.readerCount = 0;
+						sectionGroup.taCount = 0;
 						// calculate sectionCount and totalSeats
 						sections.ids.forEach(function(sectionId) {
 							var section = sections.list[sectionId];
 
 							if (section.sectionGroupId == sectionGroup.id) {
-								sectionCount++;
-								totalSeats += section.seats;
+								sectionGroup.sectionCount++;
+								sectionGroup.totalSeats += section.seats;
 							}
 						});
 
@@ -260,8 +261,6 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 
 						// Add to payload
 						sectionGroup.uniqueKey = uniqueKey;
-						sectionGroup.sectionCount = sectionCount;
-						sectionGroup.totalSeats = totalSeats;
 
 						scheduleSectionGroups.uniqueKeys.push(uniqueKey);
 						scheduleSectionGroups.list[uniqueKey] = sectionGroup;

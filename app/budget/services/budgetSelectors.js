@@ -274,9 +274,12 @@ budgetApp.service('budgetSelectors', function () {
 					var scheduledSectionGroup = scheduleSectionGroups.list[uniqueKey];
 					sectionGroupCost.liveData = {};
 
+
 					if (scheduledSectionGroup) {
 						sectionGroupCost.liveData.sectionCount = scheduledSectionGroup.sectionCount;
 						sectionGroupCost.liveData.totalSeats = scheduledSectionGroup.totalSeats;
+						sectionGroupCost.liveData.taCount = scheduledSectionGroup.taCount;
+						sectionGroupCost.liveData.readerCount = scheduledSectionGroup.readerCount;
 					}
 
 					// Generate warnings
@@ -291,6 +294,14 @@ budgetApp.service('budgetSelectors', function () {
 
 					if (sectionGroupCost.liveData.totalSeats != sectionGroupCost.enrollment) {
 						sectionGroupCost.warnings.totalSeats = "The current schedule has " + sectionGroupCost.liveData.totalSeats + " total seats";
+					}
+
+					if (sectionGroupCost.liveData.taCount != sectionGroupCost.taCount) {
+						sectionGroupCost.warnings.taCount = "The current schedule has " + sectionGroupCost.liveData.taCount + " TAs";
+					}
+
+					if (sectionGroupCost.liveData.readerCount != sectionGroupCost.readerCount) {
+						sectionGroupCost.warnings.readerCount = "The current schedule has " + sectionGroupCost.liveData.readerCount + " readers";
 					}
 
 					// Add the sectionGroup to the course

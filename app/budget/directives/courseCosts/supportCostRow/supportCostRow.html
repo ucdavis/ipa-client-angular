@@ -56,6 +56,16 @@
 		</div>
 	</div>
 	<div class="cell">
+		<div style="position: relative;">
+			<i
+				class="entypo-bell section-group-warning"
+				ng-class="{'show-warning': sectionGroupCost.warnings.taCount }"
+				tooltip-append-to-body="true"
+				uib-tooltip="{{ sectionGroupCost.warnings.taCount }}"
+				tooltip-placement="bottom">
+			</i>
+		</div>
+
 		<div
 			ng-if="sectionGroupCost.displayTaCountInput != true"
 			ng-click="displayProperty(sectionGroupCost, 'taCount')"
@@ -76,6 +86,15 @@
 		${{ sectionGroupCost.taCost }}
 	</div>
 	<div class="cell">
+		<div style="position: relative;">
+			<i
+				class="entypo-bell section-group-warning"
+				ng-class="{'show-warning': sectionGroupCost.warnings.readerCount }"
+				tooltip-append-to-body="true"
+				uib-tooltip="{{ sectionGroupCost.warnings.readerCount }}"
+				tooltip-placement="bottom">
+			</i>
+		</div>
 		<div
 			ng-if="sectionGroupCost.displayReaderCountInput != true"
 			ng-click="displayProperty(sectionGroupCost, 'readerCount')"
