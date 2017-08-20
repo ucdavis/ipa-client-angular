@@ -187,6 +187,14 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						ids: [],
 						list: []
 					};
+					teachingAssignments = {
+						ids: [],
+						list: []
+					};
+					supportAssignments = {
+						ids: [],
+						list: []
+					};
 
 					action.payload.courses.forEach( function(course) {
 						courses.ids.push(course.id);
@@ -200,15 +208,19 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						sections.ids.push(section.id);
 						sections.list[section.id] = section;
 					});
+					action.payload.teachingAssignments.forEach( function(teachingAssignment) {
+						teachingAssignments.ids.push(teachingAssignment.id);
+						teachingAssignments.list[teachingAssignment.id] = teachingAssignment;
+					});
+					action.payload.supportAssignments.forEach( function(supportAssignment) {
+						supportAssignments.ids.push(supportAssignment.id);
+						supportAssignments.list[supportAssignment.id] = supportAssignment;
+					});
 
 					scheduleSectionGroups = {
 						uniqueKeys: [],
 						list: []
 					};
-
-					courses;
-					sectionGroups;
-					sections;
 
 					sectionGroups.ids.forEach(function(sectionGroupId) {
 						var sectionGroup = sectionGroups.list[sectionGroupId];
@@ -227,11 +239,30 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 								totalSeats += section.seats;
 							}
 						});
+
+						// Calculate TA/reader count
+						supportAssignments.ids.forEach(function(supportAssignmentId) {
+							var supportAssignment = supportAssignments.list[supportAssignmentId];
+
+							if (supportAssignment.sectionGroupId == sectionGroup.id) {
+								// Ensure supportAssignment is relevant to this sectionGroup
+								if (supportAssignment.appointmentType == "teachingAssistant") {
+									// Add to ta count
+									sectionGroup.taCount += supportAssignment.appointmentPercentage / 50;
+								} else if (supportAssignment.appointmentType == "reader") {
+									// Add to reader count
+									sectionGroup.readerCount += supportAssignment.appointmentPercentage / 50;
+								}
+							}
+						});
+
+						// TODO: Calculate instructor data
+
+						// Add to payload
 						sectionGroup.uniqueKey = uniqueKey;
 						sectionGroup.sectionCount = sectionCount;
 						sectionGroup.totalSeats = totalSeats;
 
-						// Add to payload
 						scheduleSectionGroups.uniqueKeys.push(uniqueKey);
 						scheduleSectionGroups.list[uniqueKey] = sectionGroup;
 					});
