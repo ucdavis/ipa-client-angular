@@ -246,6 +246,10 @@ budgetApp.service('budgetSelectors', function () {
 						instructorCostSubTotal = sectionGroupCost.instructorCost;
 					}
 
+					// Set 'actual instructor cost'
+					// When sectionGroup.instructorCost is overridden, we will display this value
+					sectionGroupCost.actualInstructorCost = instructorCostSubTotal;
+
 					// Set totalCost
 					var totalCost = supportCostSubTotal + instructorCostSubTotal;
 					sectionGroupCost.totalCost = parseFloat(totalCost).toFixed(2);
@@ -308,6 +312,72 @@ budgetApp.service('budgetSelectors', function () {
 					selectedBudgetScenario.courses[newCourseIndex].sectionGroupCosts.push(sectionGroupCost);
 				}
 			});
+
+			// Calculate summary data
+			selectedBudgetScenario.summary = {
+				totalBalance: 0,
+				lastModifiedOn: null,
+				lineItems: {},
+				courseCosts: {}
+			};
+
+			// Dynamically generate lineItem data to ensure adding/removing lineItems in the future will not affect calculations
+			selectedBudgetScenario.summary.lineItems = [];
+			selectedBudgetScenario.summary.lineItemIndexHash = {};
+
+			lineItemCategories.ids.forEach(function(lineItemCategoryId, index) {
+				var lineItemCategory = lineItemCategories.list[lineItemCategoryId];
+
+				var newSummaryLineItemCategory = {
+					raw: 0,
+					percentage: 0,
+					description: lineItemCategory.description
+				};
+
+				selectedBudgetScenario.summary.lineItems.push(newSummaryLineItemCategory);
+
+				// Create hash to look up the index by id
+				selectedBudgetScenario.summary.lineItemIndexHash[lineItemCategory.id] = index;
+			});
+
+			selectedBudgetScenario.summary.courseCosts = {
+				taCosts: {
+					raw: 0,
+					percentage: 0
+				},
+				readerCosts: {
+					raw: 0,
+					percentage: 0
+				},
+				instructorCosts: {
+					raw: 0,
+					percentage: 0
+				},
+				total: 0
+			};
+
+			// Calculate raw course costs
+			selectedBudgetScenario.courses.forEach(function(course) {
+				course.sectionGroupCosts.forEach(function(sectionGroupCost) {
+					selectedBudgetScenario.summary.courseCosts.taCosts.raw += sectionGroupCost.taCost;
+					selectedBudgetScenario.summary.courseCosts.readerCosts.raw += sectionGroupCost.readerCost;
+					selectedBudgetScenario.summary.courseCosts.instructorCosts.raw += sectionGroupCost.actualInstructorCost;
+					selectedBudgetScenario.summary.courseCosts.total += sectionGroupCost.totalCost;
+				});
+			});
+
+			// TODO: Calculate course cost percentages
+
+			// Calculate raw line items
+			selectedBudgetScenario.lineItems.forEach(function(lineItem) {
+				var index = selectedBudgetScenario.summary.lineItemIndexHash[lineItem.lineItemCategoryId];
+				var lineItemCategorySummary = selectedBudgetScenario.summary.lineItems[index];
+
+				lineItemCategorySummary;
+				lineItemCategorySummary.raw += lineItem.amount;
+			});
+
+			// TODO: Calculate line item percentages
 
 			return selectedBudgetScenario;
 		}
