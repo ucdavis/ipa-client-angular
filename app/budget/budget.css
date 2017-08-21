@@ -455,3 +455,7 @@ form .form-group {
 	background-color: #f5f5f5;
 	cursor: pointer;
 }
+
+.budget-view .course-costs-container {
+	margin-bottom: 30px;
+}

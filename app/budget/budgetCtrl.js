@@ -24,10 +24,6 @@ budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$locatio
 			}
 		});
 
-		$scope.openLineItemModal = function() {
-			$scope.view.state.openAddLineItem = true;
-		};
-
 		$scope.openSupportCostModal = function() {
 			$scope.view.state.openSupportCosts = true;
 		};

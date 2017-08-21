@@ -16,9 +16,9 @@
 		</ipa-modal>
 
 		<ipa-modal
-			is-visible="view.state.openAddLineItem"
+			is-visible="view.state.ui.isAddLineItemModalOpen"
 			header-text="Add New Line Item">
-				<add-line-item ng-if="view.state.openAddLineItem" state="view.state"></add-line-item>
+				<add-line-item ng-if="view.state.ui.isAddLineItemModalOpen" state="view.state"></add-line-item>
 		</ipa-modal>
 
 		<ipa-modal
@@ -57,7 +57,7 @@
 
 		<budget-summary summary="view.state.selectedBudgetScenario.summary"></budget-summary>
 
-		<course-costs selected-budget-scenario="view.state.selectedBudgetScenario" instructors="view.state.instructors"></course-costs>
+		<course-costs class="course-costs-container" selected-budget-scenario="view.state.selectedBudgetScenario" instructors="view.state.instructors"></course-costs>
 
 		<line-items selected-budget-scenario="view.state.selectedBudgetScenario"></line-items>
 	</div>

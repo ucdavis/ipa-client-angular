@@ -1,4 +1,4 @@
-.line-items-section {
+.line-items-section-content {
 	border: 1px solid rgb(235, 235, 235);
 	border-radius: 4px;
 }
@@ -63,4 +63,18 @@
 
 .line-items-section .header-container {
 	border-top: 1px solid rgb(235, 235, 235);
+}
+
+.line-items-section .toolbar {
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+	position: relative;
+	padding-bottom: 10px;
+}
+
+.line-items-section .toolbar-item {
+	cursor: pointer;
+	height: 18px;
+	margin-right: 12px;
 }

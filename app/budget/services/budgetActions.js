@@ -73,6 +73,10 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		createLineItem: function (newLineItem, budgetScenarioId) {
+
+			// Close modal
+			this.toggleAddLineItemModal();
+
 			// Ensure amount is properly formatted as a float
 			newLineItem.amount = parseFloat(newLineItem.amount);
 
