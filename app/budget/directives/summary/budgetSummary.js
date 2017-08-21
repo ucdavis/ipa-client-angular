@@ -3,7 +3,9 @@ budgetApp.directive("budgetSummary", this.budgetSummary = function ($rootScope) 
 		restrict: 'E',
 		templateUrl: 'budgetSummary.html',
 		replace: true,
-		scope: false,
+		scope: {
+			summary: '<'
+		},
 		link: function (scope, element, attrs) {
 
 		} // end link
