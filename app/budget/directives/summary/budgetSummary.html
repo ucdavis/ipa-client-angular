@@ -18,24 +18,24 @@
 							</button>
 						</th>
 						<th></th>
-						<th class="sum-total">${{ summary.courseCosts.total }}</th>
+						<th class="sum-total">{{ summary.courseCosts.total }}</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td>TA Costs</td>
 						<td>{{ summary.courseCosts.taCosts.percentage }}%</td>
-						<td class="text-right">${{ summary.courseCosts.taCosts.raw }}</td>
+						<td class="text-right">{{ summary.courseCosts.taCosts.display }}</td>
 					</tr>
 					<tr>
 						<td>Reader Costs</td>
 						<td>{{ summary.courseCosts.readerCosts.percentage }}%</td>
-						<td class="text-right">${{ summary.courseCosts.readerCosts.raw }}</td>
+						<td class="text-right">{{ summary.courseCosts.readerCosts.display }}</td>
 					</tr>
 					<tr>
 						<td>Instructor Costs</td>
 						<td>{{ summary.courseCosts.instructorCosts.percentage }}%</td>
-						<td class="text-right">${{ summary.courseCosts.instructorCosts.raw }}</td>
+						<td class="text-right">{{ summary.courseCosts.instructorCosts.display }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -48,14 +48,14 @@
 							</button>
 						</th>
 						<th></th>
-						<th class="sum-total">${{ summary.lineItems.total }}</th>
+						<th class="sum-total">{{ summary.lineItems.total }}</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="lineItemCategory in summary.lineItems.categories">
 						<td>{{ lineItemCategory.description }}</td>
 						<td>{{ lineItemCategory.percentage }}%</td>
-						<td class="text-right">${{ lineItemCategory.raw }}</td>
+						<td class="text-right">{{ lineItemCategory.display }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -65,7 +65,7 @@
 						<th class="budget-summary-title">Balance
 						</th>
 						<th></th>
-						<th class="sum-total">${{ summary.totalBalance }}</th>
+						<th class="sum-total">{{ summary.totalBalance }}</th>
 					</tr>
 				</thead>
 			</table>

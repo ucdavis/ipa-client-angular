@@ -333,6 +333,7 @@ budgetApp.service('budgetSelectors', function () {
 				var newSummaryLineItemCategory = {
 					raw: 0,
 					percentage: 0,
+					display: "$0.00",
 					description: lineItemCategory.description
 				};
 
@@ -358,12 +359,15 @@ budgetApp.service('budgetSelectors', function () {
 				total: 0
 			};
 
-			// Calculate raw course costs
+			// Calculate raw/display course costs
 			selectedBudgetScenario.courses.forEach(function(course) {
 				course.sectionGroupCosts.forEach(function(sectionGroupCost) {
 					selectedBudgetScenario.summary.courseCosts.taCosts.raw += parseFloat(sectionGroupCost.taCost);
+					selectedBudgetScenario.summary.courseCosts.taCosts.display = toCurrency(selectedBudgetScenario.summary.courseCosts.taCosts.raw);
 					selectedBudgetScenario.summary.courseCosts.readerCosts.raw += parseFloat(sectionGroupCost.readerCost);
+					selectedBudgetScenario.summary.courseCosts.readerCosts.display = toCurrency(selectedBudgetScenario.summary.courseCosts.readerCosts.raw);
 					selectedBudgetScenario.summary.courseCosts.instructorCosts.raw += parseFloat(sectionGroupCost.actualInstructorCost);
+					selectedBudgetScenario.summary.courseCosts.instructorCosts.display = toCurrency(selectedBudgetScenario.summary.courseCosts.instructorCosts.raw);
 					selectedBudgetScenario.summary.courseCosts.total += parseFloat(sectionGroupCost.totalCost);
 				});
 			});
@@ -387,6 +391,7 @@ budgetApp.service('budgetSelectors', function () {
 				var index = selectedBudgetScenario.summary.lineItemIndexHash[lineItem.lineItemCategoryId];
 				var lineItemCategorySummary = selectedBudgetScenario.summary.lineItems.categories[index];
 				lineItemCategorySummary.raw += parseFloat(lineItem.amount);
+				lineItemCategorySummary.display = toCurrency(lineItemCategorySummary.raw);
 				selectedBudgetScenario.summary.lineItems.total += parseFloat(lineItem.amount);
 			});
 
@@ -405,6 +410,10 @@ budgetApp.service('budgetSelectors', function () {
 			// Calcaulate total
 			var totalBalance = selectedBudgetScenario.summary.lineItems.total - selectedBudgetScenario.summary.courseCosts.total;
 			selectedBudgetScenario.summary.totalBalance = totalBalance;
+
+			// All calculations are now complete, prepare totals for display
+			selectedBudgetScenario.summary.lineItems.total = toCurrency(selectedBudgetScenario.summary.lineItems.total);
+			selectedBudgetScenario.summary.courseCosts.total = toCurrency(selectedBudgetScenario.summary.courseCosts.total);
 
 			return selectedBudgetScenario;
 		}
