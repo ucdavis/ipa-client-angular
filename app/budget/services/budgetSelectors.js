@@ -403,7 +403,7 @@ budgetApp.service('budgetSelectors', function () {
 			});
 
 			// Calcaulate total
-			var totalBalance = selectedBudgetScenario.summary.lineItems.total + selectedBudgetScenario.summary.courseCosts.total;
+			var totalBalance = selectedBudgetScenario.summary.lineItems.total - selectedBudgetScenario.summary.courseCosts.total;
 			selectedBudgetScenario.summary.totalBalance = totalBalance;
 
 			return selectedBudgetScenario;
