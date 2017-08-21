@@ -72,7 +72,7 @@
 			ng-if="sectionGroupCost.displayInstructorCostInput != true"
 			ng-click="displayProperty(sectionGroupCost, 'instructorCost')"
 			style="text-decoration: underline;">
-			{{ sectionGroupCost.instructorCost || "&nbsp;&nbsp;&nbsp;" }}
+			{{ sectionGroupCost.actualInstructorCost }}
 		</div>
 		<div ng-if="sectionGroupCost.displayInstructorCostInput == true">
 			<input
