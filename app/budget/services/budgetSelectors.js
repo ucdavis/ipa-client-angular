@@ -322,7 +322,9 @@ budgetApp.service('budgetSelectors', function () {
 			};
 
 			// Dynamically generate lineItem data to ensure adding/removing lineItems in the future will not affect calculations
-			selectedBudgetScenario.summary.lineItems = [];
+			selectedBudgetScenario.summary.lineItems = {};
+			selectedBudgetScenario.summary.lineItems.categories = [];
+			selectedBudgetScenario.summary.lineItems.total = 0;
 			selectedBudgetScenario.summary.lineItemIndexHash = {};
 
 			lineItemCategories.ids.forEach(function(lineItemCategoryId, index) {
@@ -334,7 +336,7 @@ budgetApp.service('budgetSelectors', function () {
 					description: lineItemCategory.description
 				};
 
-				selectedBudgetScenario.summary.lineItems.push(newSummaryLineItemCategory);
+				selectedBudgetScenario.summary.lineItems.categories.push(newSummaryLineItemCategory);
 
 				// Create hash to look up the index by id
 				selectedBudgetScenario.summary.lineItemIndexHash[lineItemCategory.id] = index;
@@ -359,25 +361,50 @@ budgetApp.service('budgetSelectors', function () {
 			// Calculate raw course costs
 			selectedBudgetScenario.courses.forEach(function(course) {
 				course.sectionGroupCosts.forEach(function(sectionGroupCost) {
-					selectedBudgetScenario.summary.courseCosts.taCosts.raw += sectionGroupCost.taCost;
-					selectedBudgetScenario.summary.courseCosts.readerCosts.raw += sectionGroupCost.readerCost;
-					selectedBudgetScenario.summary.courseCosts.instructorCosts.raw += sectionGroupCost.actualInstructorCost;
-					selectedBudgetScenario.summary.courseCosts.total += sectionGroupCost.totalCost;
+					selectedBudgetScenario.summary.courseCosts.taCosts.raw += parseFloat(sectionGroupCost.taCost);
+					selectedBudgetScenario.summary.courseCosts.readerCosts.raw += parseFloat(sectionGroupCost.readerCost);
+					selectedBudgetScenario.summary.courseCosts.instructorCosts.raw += parseFloat(sectionGroupCost.actualInstructorCost);
+					selectedBudgetScenario.summary.courseCosts.total += parseFloat(sectionGroupCost.totalCost);
 				});
 			});
 
-			// TODO: Calculate course cost percentages
+			// Calculate course cost percentages
+			if (selectedBudgetScenario.summary.courseCosts.taCosts.raw != 0) {
+				var percentage = 100 * selectedBudgetScenario.summary.courseCosts.taCosts.raw / selectedBudgetScenario.summary.courseCosts.total;
+				selectedBudgetScenario.summary.courseCosts.taCosts.percentage = Math.round(percentage);
+			}
+			if (selectedBudgetScenario.summary.courseCosts.readerCosts.raw != 0) {
+				var percentage = 100 * selectedBudgetScenario.summary.courseCosts.readerCosts.raw / selectedBudgetScenario.summary.courseCosts.total;
+				selectedBudgetScenario.summary.courseCosts.readerCosts.percentage = Math.round(percentage);
+			}
+			if (selectedBudgetScenario.summary.courseCosts.instructorCosts.raw != 0) {
+				var percentage = 100 * selectedBudgetScenario.summary.courseCosts.instructorCosts.raw / selectedBudgetScenario.summary.courseCosts.total;
+				selectedBudgetScenario.summary.courseCosts.instructorCosts.percentage = Math.round(percentage);
+			}
 
 			// Calculate raw line items
 			selectedBudgetScenario.lineItems.forEach(function(lineItem) {
 				var index = selectedBudgetScenario.summary.lineItemIndexHash[lineItem.lineItemCategoryId];
-				var lineItemCategorySummary = selectedBudgetScenario.summary.lineItems[index];
-
-				lineItemCategorySummary;
-				lineItemCategorySummary.raw += lineItem.amount;
+				var lineItemCategorySummary = selectedBudgetScenario.summary.lineItems.categories[index];
+				lineItemCategorySummary.raw += parseFloat(lineItem.amount);
+				selectedBudgetScenario.summary.lineItems.total += parseFloat(lineItem.amount);
 			});
 
-			// TODO: Calculate line item percentages
+			// Hash no longer needed
+			delete selectedBudgetScenario.summary.lineItemIndexHash;
+
+			// Calculate line item percentages
+			selectedBudgetScenario.summary.lineItems.categories.forEach(function(lineItemCategory) {
+				if (lineItemCategory.raw != 0) {
+					var percentage = 100 * lineItemCategory.raw / selectedBudgetScenario.summary.lineItems.total;
+
+					lineItemCategory.percentage = Math.round(percentage);
+				}
+			});
+
+			// Calcaulate total
+			var totalBalance = selectedBudgetScenario.summary.lineItems.total + selectedBudgetScenario.summary.courseCosts.total;
+			selectedBudgetScenario.summary.totalBalance = totalBalance;
 
 			return selectedBudgetScenario;
 		}
