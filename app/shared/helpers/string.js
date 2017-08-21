@@ -181,3 +181,16 @@ function getRoleDisplayName(roleString) {
 	var lowercase = roleString.replace( /([A-Z])/g, " $1" );
 	return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);
 }
+
+function toCurrency(number) {
+	if (!number) {
+		return "$0.00";
+	}
+
+	var currency = (number).toLocaleString('en-US', {
+		style: 'currency',
+		currency: 'USD',
+	});
+
+	return currency;
+}
