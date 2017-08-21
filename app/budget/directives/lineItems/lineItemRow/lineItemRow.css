@@ -13,6 +13,7 @@
 .line-item-row .initial-row-container {
 	display: flex;
 	width: 100%;
+	cursor: pointer;
 }
 
 .line-item-row .checkbox-container {
@@ -133,4 +134,9 @@
 
 .line-item-row .notes-comment {
 	resize: none;
+}
+
+.line-item-row .inline-edit-ui {
+	text-decoration: underline;
+	cursor: pointer;
 }
