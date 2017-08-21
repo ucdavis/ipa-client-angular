@@ -141,8 +141,8 @@
 					{{ lineItem.notes }}
 				</div>
 				<div ng-if="lineItem.displayNotesInput == true">
-					<input
-						class="inline-edit"
+					<textarea
+						class="inline-edit notes-comment"
 						type="text"
 						ng-model="lineItem.notes"
 						auto-input

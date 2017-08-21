@@ -130,3 +130,7 @@
 .line-item-row .detail-view {
 	padding-bottom: 20px;
 }
+
+.line-item-row .notes-comment {
+	resize: none;
+}
