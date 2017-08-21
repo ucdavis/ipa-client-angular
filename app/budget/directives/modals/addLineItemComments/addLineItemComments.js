@@ -18,6 +18,14 @@ budgetApp.directive("addLineItemComments", this.addLineItemComments = function (
 				return false;
 			};
 
+			scope.dateToCalendar = function(date) {
+				return dateToCalendar(date);
+			};
+
+			scope.dateToRelative = function(date) {
+				return dateToRelative(date);
+			};
+
 			scope.submit = function() {
 				budgetActions.createLineItemComment(scope.newComment, scope.lineItem, scope.currentUserLoginId);
 				scope.newComment = "";

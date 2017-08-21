@@ -18,7 +18,10 @@
 
 	<div ng-repeat="comment in sectionGroupCost.comments" class="comment-container">
 		<div class="comment-header">
-			Posted By: {{ comment.authorName }} (2 weeks ago)
+			Posted By: {{ comment.authorName }}
+			<span uib-tooltip="{{ dateToCalendar(comment.lastModifiedOn) }}">
+				({{ dateToRelative(comment.lastModifiedOn) }})
+			</span>
 		</div>
 		<div class="comment-body">
 			{{ comment.comment }}
