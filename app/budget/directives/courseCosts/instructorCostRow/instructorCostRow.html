@@ -55,7 +55,7 @@
 		<div
 			ng-if="sectionGroupCost.displayReasonInput != true"
 			ng-click="displayProperty(sectionGroupCost, 'reason')"
-			style="text-decoration: underline;">
+			class="inline-edit-ui">
 			{{ sectionGroupCost.reason || "&nbsp;&nbsp;&nbsp;" }}
 		</div>
 		<div ng-if="sectionGroupCost.displayReasonInput == true">
@@ -71,7 +71,7 @@
 		<div
 			ng-if="sectionGroupCost.displayInstructorCostInput != true"
 			ng-click="displayProperty(sectionGroupCost, 'instructorCost')"
-			style="text-decoration: underline;">
+			class="inline-edit-ui">
 			{{ sectionGroupCost.actualInstructorCost }}
 		</div>
 		<div ng-if="sectionGroupCost.displayInstructorCostInput == true">

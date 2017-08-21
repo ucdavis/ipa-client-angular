@@ -69,3 +69,8 @@
 	padding-left: 8px;
 	padding-right: 18px;
 }
+
+.instructor-cost-row .inline-edit-ui {
+	text-decoration: underline;
+	cursor: pointer;
+}

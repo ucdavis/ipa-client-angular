@@ -28,3 +28,8 @@
 .support-cost-row .show-warning {
 	visibility: visible;
 }
+
+.support-cost-row .inline-edit-ui {
+	text-decoration: underline;
+	cursor: pointer;
+}
