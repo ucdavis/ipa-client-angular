@@ -54,7 +54,9 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
-		updateInstructorCost: function (instructorCost) {
+		updateInstructorCost: function (instructorCostDto) {
+			var instructorCost = Object.assign({}, instructorCostDto);
+
 			// InstructorCosts in the front end are blended instructor + instructorCosts
 			instructorCost.id = instructorCost.instructorCostId;
 			// Ensure cost is passed as a number
@@ -136,6 +138,9 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		updateBudget: function (budget) {
+			// Update UI
+			this.toggleSupportCostModal();
+
 			budgetService.updateBudget(budget).then(function (budget) {
 				var action = {
 					type: UPDATE_BUDGET,

@@ -22,9 +22,9 @@
 		</ipa-modal>
 
 		<ipa-modal
-			is-visible="view.state.openSupportCosts"
+			is-visible="view.state.ui.isSupportCostModalOpen"
 			header-text="Add Support Costs">
-				<add-support-costs ng-if="view.state.openSupportCosts" state="view.state" budget="view.state.budget"></add-support-costs>
+				<add-support-costs ng-if="view.state.ui.isSupportCostModalOpen" state="view.state" budget="view.state.budget"></add-support-costs>
 		</ipa-modal>
 
 		<ipa-modal

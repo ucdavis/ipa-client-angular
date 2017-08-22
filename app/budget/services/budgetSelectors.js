@@ -19,16 +19,23 @@ budgetApp.service('budgetSelectors', function () {
 			instructorCosts.ids.forEach( function (instructorCostId) {
 				var instructorCost = instructorCosts.list[instructorCostId];
 				var instructor = instructors.list[instructorCost.instructorId];
-				instructorCost.firstName = instructor.firstName;
-				instructorCost.lastName = instructor.lastName;
-				instructorCost.fullName = instructor.fullName;
-				instructorCost.emailAddress = instructor.emailAddress;
-				instructorCost.loginId = instructor.loginId;
-				instructorCost.description = instructor.fullName;
-				instructorCost.instructorCostId = instructorCost.id;
-				instructorCost.id = instructor.id;
 
-				instructorList.push(instructorCost);
+				var newInstructor = {};
+
+				newInstructor.firstName = instructor.firstName;
+				newInstructor.lastName = instructor.lastName;
+				newInstructor.fullName = instructor.fullName;
+				newInstructor.emailAddress = instructor.emailAddress;
+				newInstructor.loginId = instructor.loginId;
+				newInstructor.description = instructor.fullName;
+				newInstructor.id = instructor.id;
+
+				newInstructor.instructorCostId = instructorCost.id;
+				newInstructor.cost = instructorCost.cost;
+				newInstructor.lecturer = instructorCost.lecturer;
+				newInstructor.instructorId = instructor.id;
+
+				instructorList.push(newInstructor);
 			});
 
 			return instructorList;
