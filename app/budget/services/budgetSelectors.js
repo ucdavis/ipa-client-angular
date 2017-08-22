@@ -416,7 +416,7 @@ budgetApp.service('budgetSelectors', function () {
 
 			// Calcaulate total
 			var totalBalance = selectedBudgetScenario.summary.lineItems.total - selectedBudgetScenario.summary.courseCosts.total;
-			selectedBudgetScenario.summary.totalBalance = totalBalance;
+			selectedBudgetScenario.summary.totalBalance = toCurrency(totalBalance);
 
 			// All calculations are now complete, prepare totals for display
 			selectedBudgetScenario.summary.lineItems.total = toCurrency(selectedBudgetScenario.summary.lineItems.total);
