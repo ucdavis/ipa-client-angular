@@ -26,7 +26,7 @@ sharedApp.directive('ipaDropdown', function() {
 
 			if (scope.isSelectItemSupplied == false) {
 				throw {
-					message:	"ipaDropdown: Required method selectItem was not supplied."
+					message: "ipaDropdown: Required method selectItem was not supplied."
 				};
 			}
 

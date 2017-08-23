@@ -40,3 +40,62 @@
 	height: 90%;
 	overflow-y: scroll;
 }
+
+.support-costs .instructor-item {
+	display: flex;
+}
+
+.support-costs .instructor-label-container {
+	flex: 1 0 0px;
+	display: flex;
+}
+
+.support-costs .instructor-label {
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.support-costs .instructor-container {
+	flex: 1 0 0px;
+}
+
+.support-costs .main-content {
+	display: flex;
+	padding-left: 3%;
+	padding-top: 3%;
+}
+
+.support-costs .instructor-cost-container {
+	flex: 1 0 0px;
+	display: flex;
+}
+
+.support-costs .instructor-cost {
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.support-costs .instructor-cost-input {
+	width: 100%;
+}
+
+.support-costs .default-costs-container {
+	flex: 1 0 0px;
+}
+
+.support-costs .lecturer-cost-container {
+	display: flex;
+}
+
+.support-costs .lecturer-cost-input-container {
+	padding: 10px;
+	width: 80%;
+}
+
+.support-costs .lecturer-cost-input-field {
+	width: 100%;
+}

@@ -44,3 +44,7 @@
 	background-color: #f7f7f7;
 	padding: 1%;
 }
+
+.add-course-comments .comment-input-container {
+	padding: 2%;
+}

@@ -90,24 +90,23 @@
 					</div>
 					<div ng-if="lineItem.displayAmountInput == true">
 						$<input
-							class="inline-edit"
+							class="inline-edit amount-input"
 							type="text"
 							ng-model="lineItem.amount"
 							auto-input
 							on-enter="updateLineItem(lineItem, 'amount')"
-							on-blur="updateLineItem(lineItem, 'amount')"
-							style="width: 20%;">
+							on-blur="updateLineItem(lineItem, 'amount')">
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div style="padding-left: 20px; padding-bottom: 10px; padding-top: 20px; font-weight: bold;">
+		<div class="description-header">
 			Description
 		</div>
-		<div style="display: flex; position: relative; padding-left: 20px;">
+		<div class="description-content">
 			<div>
-				<div  ng-if="lineItem.displayDescriptionInput == false"
+				<div ng-if="lineItem.displayDescriptionInput == false"
 							ng-click="displayProperty(lineItem.id, 'description')"
 							class="inline-edit-ui">
 					{{ lineItem.description }}
@@ -122,19 +121,19 @@
 						on-blur="updateLineItem(lineItem, 'description')">
 				</div>
 			</div>
-			<div style="padding-left: 5px; cursor: pointer;" uib-tooltip="View Comments">
+			<div class="comments-content" uib-tooltip="View Comments">
 				<div class="glyphicon glyphicon-list-alt"
 						ng-click="openAddLineItemCommentsModal(lineItem)">
 				</div>
 			</div>
 		</div>
 
-		<div style="padding-left: 20px; padding-bottom: 10px; padding-top: 20px; font-weight: bold;">
+		<div class="notes-header">
 			Notes
 		</div>
-		<div style="padding-left: 20px;">
+		<div class="notes-content">
 			<div>
-				<div  ng-if="lineItem.displayNotesInput == false"
+				<div ng-if="lineItem.displayNotesInput == false"
 							ng-click="displayProperty(lineItem.id, 'notes')"
 							class="inline-edit-ui">
 					{{ lineItem.notes }}
@@ -146,8 +145,7 @@
 						ng-model="lineItem.notes"
 						auto-input
 						on-enter="updateLineItem(lineItem, 'notes')"
-						on-blur="updateLineItem(lineItem, 'notes')"
-						style="width: 20%;">
+						on-blur="updateLineItem(lineItem, 'notes')">
 				</div>
 			</div>
 		</div>

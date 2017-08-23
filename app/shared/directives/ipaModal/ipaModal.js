@@ -8,20 +8,13 @@ sharedApp.directive('ipaModal', function() {
 		replace: true, // Replace with the template below
 		transclude: true, // we want to insert custom content inside the directive
 		link: function(scope, element, attrs, iAttr) {
-			// [VALIDATE: Attributes]
+			// Validate Attributes
 			scope.dialogStyle = {};
 			scope.headerText = "";
 
 			// Stores a copy of the last state, useful in handling unexpected termination of modal
 			scope.previousIsVisible;
-/*
-			if (attrs.width) {
-				scope.dialogStyle.width = attrs.width;
-			}
-			if (attrs.height) {
-				scope.dialogStyle.height = attrs.height;
-			}
-*/
+
 			if (attrs.headerText) {
 				scope.headerText = attrs.headerText;
 			}
@@ -40,7 +33,7 @@ sharedApp.directive('ipaModal', function() {
 				scope.previousIsVisible = angular.copy(scope.isVisible);
 			});
 
-			// [METHODS]
+			// Methods
 			scope.close = function() {
 				// Re-enable page scrolling
 				$('body').css('overflow-y','visible');

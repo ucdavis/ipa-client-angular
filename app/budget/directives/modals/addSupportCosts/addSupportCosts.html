@@ -1,26 +1,25 @@
 <div class="support-costs">
-	<div style="display: flex; padding-left: 3%; padding-top: 3%;">
+	<div class="main-content">
 		<!-- left side -->
-		<div style="flex: 1 0 0px;">
+		<div class="instructor-container">
 
 			<div class="instructor-box">
-				<div ng-repeat="instructor in newInstructors | orderBy: 'lastName'"
-						style="display: flex;">
+				<div ng-repeat="instructor in newInstructors | orderBy: 'lastName'" class="instructor-item">
 
-					<div style="flex: 1 0 0px; display: flex;">
-						<div style="padding: 10px; display: flex; align-items: center; justify-content: center;">
+					<div class="instructor-label-container">
+						<div class="instructor-label">
 							{{ instructor.fullName }}
 						</div>
 					</div>
 
-					<div style="flex: 1 0 0px; display: flex;">
-						<div style="padding: 10px; display: flex; align-items: center; justify-content: center;">
+					<div class="instructor-cost-container">
+						<div class="instructor-cost">
 							<input
 								type="text"
 								ng-model="instructor.cost"
 								auto-input
 								on-blur="updateInstructorCost(instructor)"
-								style="width: 100%;">
+								class="instructor-cost-input">
 						</div>
 					</div>
 				</div>
@@ -28,43 +27,43 @@
 		</div>
 
 		<!-- right side -->
-		<div style="flex: 1 0 0px;">
-			<div style="display: flex;">
+		<div class="default-costs-container">
+			<div class="lecturer-cost-container">
 				<div class="lecturer-cost-label">
 					lecturer cost
 				</div>
 				<div class="lecturer-cost-input">
-					<div style="padding: 10px; width: 80%;">
+					<div class="lecturer-cost-input-container">
 						<input
-							style="width: 100%;"
+							class="lecturer-cost-input-field"
 							type="number"
 							ng-model="newBudget.lecturerCost"
 							placeholder="Enter amount">
 					</div>
 				</div>
 			</div>
-			<div style="display: flex;">
+			<div class="lecturer-cost-container">
 				<div class="lecturer-cost-label">
 					TA cost
 				</div>
 				<div class="lecturer-cost-input">
-					<div style="padding: 10px; width: 80%;">
+					<div class="lecturer-cost-input-container">
 						<input
-							style="width: 100%;"
+							class="lecturer-cost-input-field"
 							type="number"
 							ng-model="newBudget.taCost"
 							placeholder="Enter amount">
 					</div>
 				</div>
 			</div>
-			<div style="display: flex;">
+			<div class="lecturer-cost-container">
 				<div class="lecturer-cost-label">
 					reader cost
 				</div>
 				<div class="lecturer-cost-input">
-					<div style="padding: 10px; width: 80%;">
+					<div class="lecturer-cost-input-container">
 						<input
-							style="width: 100%;"
+							class="lecturer-cost-input-field"
 							type="number"
 							ng-model="newBudget.readerCost"
 							placeholder="Enter amount">

@@ -249,9 +249,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 								// Ensure supportAssignment is relevant to this sectionGroup
 								if (supportAssignment.appointmentType == "teachingAssistant") {
 									// Add to ta count
+									// A 50% appointment is equal 1 full TA in budgetary considerations
 									sectionGroup.taCount += supportAssignment.appointmentPercentage / 50;
 								} else if (supportAssignment.appointmentType == "reader") {
 									// Add to reader count
+									// A 50% appointment is equal 1 full TA in budgetary considerations
 									sectionGroup.readerCount += supportAssignment.appointmentPercentage / 50;
 								}
 							}
