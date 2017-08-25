@@ -93,8 +93,15 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 						supportAssignments.list[supportAssignment.id] = supportAssignment;
 
 						return supportAssignments;
-					case ASSIGN_STAFF_TO_SLOT:
 					case ASSIGN_STAFF_TO_SECTION_GROUP_SLOT:
+						var supportAssignment = action.payload;
+						var index = supportAssignments.ids.indexOf(supportAssignment.id);
+						if (index == -1) {
+							supportAssignments.ids.push(supportAssignment.id);
+						}
+						supportAssignments.list[supportAssignment.id] = supportAssignment;
+						return supportAssignments;
+					case ASSIGN_STAFF_TO_SLOT:
 						var supportAssignment = action.payload;
 						supportAssignments.list[supportAssignment.id] = supportAssignment;
 						return supportAssignments;
