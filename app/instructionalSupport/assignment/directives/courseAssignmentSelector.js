@@ -12,6 +12,9 @@ instructionalSupportApp.directive("courseAssignmentSelector", this.courseAssignm
 				instructionalSupportAssignmentActionCreators.assignStaffToSlot(scope.supportStaff.id ,supportAssignmentId);
 			};
 
+			scope.assignStaffToSectionGroupSlot = function (sectionGroupId, type) {
+				instructionalSupportAssignmentActionCreators.assignStaffToSectionGroupSlot(scope.supportStaff.id, sectionGroupId, type);
+			};
 		} // end link
 	};
 });

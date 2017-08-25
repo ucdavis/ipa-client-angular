@@ -73,6 +73,20 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+
+		assignStaffToSectionGroupSlot: function (supportStaffId, sectionGroupId, type) {
+			instructionalSupportAssignmentService.assignStaffToSectionGroupSlot(supportStaffId, sectionGroupId, type).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Assigned Support Staff", type: "SUCCESS" });
+				var action = {
+					type: ASSIGN_STAFF_TO_SECTION_GROUP_SLOT,
+					payload: payload
+				};
+				instructionalSupportAssignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+
 		removeStaffFromSlot: function (assignmentId, supportStaffId) {
 			instructionalSupportAssignmentService.removeStaffFromSlot(assignmentId).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Unassigned Instructional Support Staff", type: "SUCCESS" });

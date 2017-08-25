@@ -94,6 +94,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 
 						return supportAssignments;
 					case ASSIGN_STAFF_TO_SLOT:
+					case ASSIGN_STAFF_TO_SECTION_GROUP_SLOT:
 						var supportAssignment = action.payload;
 						supportAssignments.list[supportAssignment.id] = supportAssignment;
 						return supportAssignments;

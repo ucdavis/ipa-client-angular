@@ -6,7 +6,8 @@
 		<li ng-show="supportStaff.supportStaffPreferences.length > 0" class="dropdown-header" stop-event="click"><b>Preferences</b></li>
 
 		<!-- preferences tied to this supportStaff -->
-		<li ng-repeat="preference in supportStaff.supportStaffPreferences" class="clickable">
+		<li ng-repeat="preference in supportStaff.supportStaffPreferences" class="clickable"
+				ng-click="assignStaffToSectionGroupSlot(preference.sectionGroupId, preference.type)">
 			<a class="small">
 				<span class="course-filter-item"><b>{{ preference.priority }}</b> {{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern }} ({{ appointmentTypeToShorthand(preference.type) }})</span>
 			</a>
