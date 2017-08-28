@@ -57,7 +57,7 @@ _array_sortIdsByProperty = function (listHash, properties) {
 	}).map(function (id) { return parseInt(id); });
 };
 
-_array_sortByProperty = function (listHash, property, reverseOrder) {
+_array_sortByProperty = function (listHash, properties, reverseOrder) {
 	var keys = Object.keys(listHash);
 	var sortedKeys = keys.sort(function (a, b) {
 		var valA, valB;
