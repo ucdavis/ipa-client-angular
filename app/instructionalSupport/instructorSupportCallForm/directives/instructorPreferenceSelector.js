@@ -8,7 +8,7 @@ instructionalSupportApp.directive("instructorPreferenceSelector", this.instructo
 		replace: true,
 		scope: false,
 		link: function (scope, element, attrs) {
-
-		} // end link
+			// do nothing
+		}
 	};
 });

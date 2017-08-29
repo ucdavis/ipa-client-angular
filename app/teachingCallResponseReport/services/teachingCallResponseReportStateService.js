@@ -330,4 +330,4 @@ timeSuffix = function(time) {
 	}
 
 	return "pm";
-}
+};

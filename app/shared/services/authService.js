@@ -88,7 +88,7 @@ angular.module('sharedApp')
 
 					$window.location.href = "/summary";
 				}, function (error) {
-
+					// FIXME: Shouuldn't we do something here?
 				});
 
 				return deferred.promise;
@@ -109,7 +109,7 @@ angular.module('sharedApp')
 
 					$window.location.href = "/summary";
 				}, function (error) {
-
+					// FIXME: Shouldn't we do something here?
 				});
 
 				return deferred.promise;

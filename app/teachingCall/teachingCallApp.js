@@ -15,7 +15,7 @@ teachingCallApp.config(function ($routeProvider) {
 		resolve: {
 			validate: TeachingCallStatusCtrl.validate
 		}
-	})
+	});
 });
 
 var INIT_STATE = "INIT_STATE";

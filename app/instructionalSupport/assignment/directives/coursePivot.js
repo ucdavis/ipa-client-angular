@@ -8,7 +8,7 @@ instructionalSupportApp.directive("coursePivot", this.coursePivot = function ($r
 		replace: true,
 		scope: false,
 		link: function (scope, element, attrs) {
-
-		} // end link
+			// do nothing
+		}
 	};
 });

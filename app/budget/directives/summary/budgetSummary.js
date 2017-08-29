@@ -7,7 +7,7 @@ budgetApp.directive("budgetSummary", this.budgetSummary = function ($rootScope) 
 			summary: '<'
 		},
 		link: function (scope, element, attrs) {
-
-		} // end link
+			// do nothing
+		}
 	};
 });

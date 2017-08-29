@@ -5,7 +5,7 @@ sharedApp.directive('noMobileSupport', function($window, $location, $routeParams
 		replace: true, // Replace with the template below
 		scope: {},
 		link: function (scope, element, attrs) {
-
-		} // End Link
+			// do nothing
+		}
 	};
 });

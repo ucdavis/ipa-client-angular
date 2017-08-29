@@ -8,7 +8,7 @@ instructionalSupportApp.directive("studentPreferenceSelector", this.studentPrefe
 		replace: true,
 		scope: false,
 		link: function (scope, element, attrs) {
-
-		} // end link
+			// do nothing
+		}
 	};
 });
