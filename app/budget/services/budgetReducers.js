@@ -415,6 +415,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					};
 					return ui;
 				case SELECT_BUDGET_SCENARIO:
+					// Reset main UI
+					ui.isLineItemOpen = false;
+					ui.isCourseCostOpen = false;
+					ui.openLineItems = [];
+
 					ui.selectedBudgetScenarioId = action.payload.budgetScenarioId;
 					return ui;
 				case TOGGLE_LINE_ITEM_SECTION:
