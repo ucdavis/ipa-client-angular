@@ -1,0 +1,37 @@
+.release-notes h4 {
+	font-size: 1.75em;
+	line-height: 0.8em;
+}
+.release-notes i {
+	font-size: 200%;
+	float: left;
+	margin-right: 0.5em;
+}
+.release-notes ul {
+	list-style: none;
+}
+.release-notes li p {
+	font-size: 1.25em;
+	margin-bottom: 0;
+}
+
+.release-notes-row {
+	display: flex;
+	flex-flow: row nowrap;
+	margin-bottom: 3em;
+}
+
+.section-header {
+	flex: 1 1;
+}
+.section-items {
+	flex: 3 1;
+}
+
+ul.section-items li {
+	padding: 0.5em;
+}
+
+ul.section-items li:nth-child(2n+1) {
+	background-color: rgba(223, 236, 250, 0.41);
+}

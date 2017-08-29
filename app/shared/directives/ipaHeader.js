@@ -6,6 +6,8 @@ sharedApp.directive('ipaHeader', function($window, $location, $rootScope, authSe
 		transclude: true,
 		link: function (scope, element, attrs) {
 			scope.pageTitle = attrs.pageTitle;
+			scope.greetings = ["Hello", "Greetings", "Howdy", "Hi", "Welcome"];
+			scope.greeting = scope.greetings[Math.floor(Math.random() * scope.greetings.length)];
 
 			scope.impersonate = function(loginId) {
 				authService.impersonate(loginId);

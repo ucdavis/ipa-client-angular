@@ -393,7 +393,7 @@ module.exports = function (grunt) {
 									'summary.css', 'timeline.css', 'teaching-call-form.css',
 									'teaching-call-modal.css', 'teaching-call-status.css', 'teaching-call.css',
 									'teachingCallResponseReport.css', 'workgroup.css', 'instructionalSupportCallConfig.css',
-									'instructionalSupportCallStatus.css',
+									'instructionalSupportCallStatus.css', 'workgroupSummary.css',
 									'adminApp.js', 'assignmentApp.js', 'budgetApp.js', 'courseApp.js', 'registrarReconciliationReportApp.js',
 									'scheduleSummaryReportApp.js', 'schedulingApp.js', 'sharedApp.js', 'summaryApp.js',
 									'teachingCallApp.js', 'teachingCallResponseReportApp.js', 'workgroupApp.js',

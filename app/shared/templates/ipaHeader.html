@@ -5,7 +5,7 @@
 		</div>
 		<div class="right-column">
 			<div class="account-info">
-				<h5>Howdy, {{ sharedState.currentUser.realUserDisplayName }}
+				<h5>{{ greeting }}, {{ sharedState.currentUser.realUserDisplayName }}
 				<i ng-if="sharedState.currentUser.loginId != sharedState.currentUser.realUserLoginId" class="entypo-right"></i>
 				</h5>
 				<div ng-if="sharedState.currentUser.loginId != sharedState.currentUser.realUserLoginId" class="impersonate btn-group" role="group">
