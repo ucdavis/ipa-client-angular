@@ -386,10 +386,13 @@ teachingCallApp.service('teachingCallFormStateService', function (
 				}
 
 				// If this is a Non-course preference
-				else if (slotAssignment.inResidence || slotAssignment.sabbatical || slotAssignment.courseRelease || slotAssignment.buyout) {
+				else if (slotAssignment.inResidence || slotAssignment.workLifeBalance || slotAssignment.sabbatical || slotAssignment.courseRelease || slotAssignment.buyout) {
 					if (slotAssignment.inResidence) {
 						newPreference.description = "In Residence";
 						newPreference.inResidence = true;
+					} else if (slotAssignment.workLifeBalance) {
+						newPreference.description = "Work Life Balance";
+						newPreference.workLifeBalance = true;
 					} else if (slotAssignment.sabbatical) {
 						newPreference.description = "Sabbatical";
 						newPreference.sabbatical = true;
@@ -526,7 +529,13 @@ teachingCallApp.service('teachingCallFormStateService', function (
 				instructorId: instructorId,
 				termCode: termCode
 			});
-
+			preferenceOptions.push({
+				workLifeBalance: true,
+				description: "Work Life Balance",
+				scheduleId: scheduleId,
+				instructorId: instructorId,
+				termCode: termCode
+			});
 			allCourses.forEach( function (course) {
 				// Skip courses that are already an assignment or preference
 				if (courseIdentifiersToFilter.indexOf(course.uniqueIdentifier) > -1) {
