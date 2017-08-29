@@ -350,6 +350,10 @@ budgetApp.service('budgetSelectors', function () {
 				selectedBudgetScenario.summary.lineItemIndexHash[lineItemCategory.id] = index;
 			});
 
+			// Sort courses
+			selectedBudgetScenario.courses =_array_sortByProperty(selectedBudgetScenario.courses, ["subjectCode", "courseNumber"]);
+
+			// Calculate raw/display course costs
 			selectedBudgetScenario.summary.courseCosts = {
 				taCosts: {
 					raw: 0,
@@ -366,7 +370,6 @@ budgetApp.service('budgetSelectors', function () {
 				total: 0
 			};
 
-			// Calculate raw/display course costs
 			selectedBudgetScenario.courses.forEach(function(course) {
 				course.sectionGroupCosts.forEach(function(sectionGroupCost) {
 					selectedBudgetScenario.summary.courseCosts.taCosts.raw += parseFloat(sectionGroupCost.taCost);
