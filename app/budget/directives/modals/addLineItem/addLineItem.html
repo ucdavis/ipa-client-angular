@@ -64,10 +64,16 @@
 							class="btn btn-default modal-button">
 				Cancel
 			</button>
-			<button ng-click="submitLineItemForm()"
-							type="button"
-							class="btn neon-dark-confirm-btn modal-button">
-				Submit
+			<button ng-if="isFormValid() == true"
+							type="button" class="btn neon-dark-confirm-btn"
+							ng-click="submitLineItemForm()">
+							Create
+			</button>
+			<button ng-if="isFormValid() == false"
+							type="button" class="disabled btn btn-info neon-dark-confirm-btn"
+							tooltip-placement="left"
+							uib-tooltip="{{formValidationErrorMessage}}">
+							Create
 			</button>
 		</div>
 	</form>
