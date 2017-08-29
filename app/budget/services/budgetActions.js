@@ -131,7 +131,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 						sectionGroupCost: newSectionGroupCost
 					}
 				};
-				$rootScope.$emit('toast', { message: "Saved line item", type: "SUCCESS" });
+				$rootScope.$emit('toast', { message: "Updated course", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });

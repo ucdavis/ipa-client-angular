@@ -396,6 +396,8 @@ budgetApp.service('budgetSelectors', function () {
 				selectedBudgetScenario.summary.courseCosts.instructorCosts.percentage = Math.round(percentage);
 			}
 
+			// Store all line item costs for graph calculations
+			var rawLineItemCosts = 0;
 			// Calculate raw line items
 			selectedBudgetScenario.lineItems.forEach(function(lineItem) {
 				var index = selectedBudgetScenario.summary.lineItemIndexHash[lineItem.lineItemCategoryId];
@@ -403,6 +405,11 @@ budgetApp.service('budgetSelectors', function () {
 				lineItemCategorySummary.raw += parseFloat(lineItem.amount);
 				lineItemCategorySummary.display = toCurrency(lineItemCategorySummary.raw);
 				selectedBudgetScenario.summary.lineItems.total += parseFloat(lineItem.amount);
+
+				// Calculate line item costs
+				if (lineItem.amount < 0) {
+					rawLineItemCosts += parseFloat(Math.abs(lineItem.amount));
+				}
 			});
 
 			// Hash no longer needed
@@ -417,7 +424,32 @@ budgetApp.service('budgetSelectors', function () {
 				}
 			});
 
-			// Calcaulate total
+			// Calculate Costs data for graph
+			selectedBudgetScenario.summary.costs = [];
+			var costsRawTotal = selectedBudgetScenario.summary.courseCosts.instructorCosts.raw
+			+ selectedBudgetScenario.summary.courseCosts.taCosts.raw
+			+ selectedBudgetScenario.summary.courseCosts.readerCosts.raw
+			+ rawLineItemCosts;
+
+			selectedBudgetScenario.summary.costs.push({
+				description: "Instructor Costs",
+				value: (selectedBudgetScenario.summary.courseCosts.instructorCosts.raw / costsRawTotal * 100).toFixed(2)
+			});
+			selectedBudgetScenario.summary.costs.push({
+				description: "Reader Costs",
+				value: (selectedBudgetScenario.summary.courseCosts.readerCosts.raw / costsRawTotal * 100).toFixed(2)
+			});
+			selectedBudgetScenario.summary.costs.push({
+				description: "Teaching Assistant Costs",
+				value: (selectedBudgetScenario.summary.courseCosts.taCosts.raw / costsRawTotal * 100).toFixed(2)
+			});
+			selectedBudgetScenario.summary.costs.push({
+				description: "Line Item Costs",
+				value: (rawLineItemCosts / costsRawTotal * 100).toFixed(2)
+			});
+			selectedBudgetScenario.summary.costsTotal = toCurrency(costsRawTotal);
+
+			// Calculate total
 			var totalBalance = selectedBudgetScenario.summary.lineItems.total - selectedBudgetScenario.summary.courseCosts.total;
 			selectedBudgetScenario.summary.totalBalance = toCurrency(totalBalance);
 
