@@ -1,90 +1,89 @@
 <div class="content-container">
 	<div class="main-content">
 		<div class="left-container padded-container">
-			<h2>Planning At A Glance</h2>
+			<h2>What's New in IPA</h2>
 			<br />
 
-			<div ng-hide="view.state" class="col-sm-5" style="padding-top: 2em;">
-				<spinner></spinner>
-			</div>
-			<ul class="cbp_tmtimeline" ng-show="view.state">
-				<li>
-					<time class="cbp_tmtime" datetime="2015-11-04T18:30"><span class="hidden">04/11/2015</span> <span class="large">Now</span></time>
-
-					<div class="cbp_tmicon">
-						<i class="entypo-info"></i>
+			<div class="release-notes">
+				<div class="release-notes-row">
+					<div class="section-header">
+						<i class="entypo-star"></i>
+						<h4>New</h4>
 					</div>
 
-					<div class="cbp_tmlabel empty">
-					</div>
-				</li>
-
-				<li ng-repeat="event in view.state.events.list">
-
-					<time class="cbp_tmtime"><span>{{event.date}}</span><span>{{event.time}}</span></time>
-
-					<!-- Show proper icon -->
-					<div class="cbp_tmicon bg-success" ng-show="event.type == 'school'">
-						<i class="entypo-graduation-cap"></i>
-					</div>
-
-					<div class="cbp_tmicon bg-secondary" ng-show="event.type == 'notice'">
-						<i class="entypo-bell"></i>
-					</div>
-
-					<div class="cbp_tmicon bg-secondary" ng-show="event.type == 'teaching_call'">
-						<i class="entypo-users"></i>
-					</div>
-
-					<div class="cbp_tmlabel">
-						<h2>{{event.title}}</h2>
-						<p ng-show="events.caption != ''">{{event.caption}}
-							<p>
-								<p ng-show="event.link != ''">
-									<a ng-show="event.type == 'teaching_call'" href="{{event.link}}">Click here to view the teaching call status</a>
-									<p>
-					</div>
-
-				</li>
-
-				<li ng-hide="view.state.events.ids.length">
-
-					<div class="cbp_tmicon bg-secondary">
-						<i class="entypo-block"></i>
-					</div>
-
-					<div class="cbp_tmlabel">
-						<p>No Upcoming Events</p>
-					</div>
-
-				</li>
-
-				<li>
-					<div class="cbp_tmicon">
-						<i class="entypo-infinity"></i>
-					</div>
-					<div class="cbp_tmlabel empty">
-					</div>
-				</li>
-			</ul>
-		</div>
-
-		<div class="right-container right-info padded-container">
-			<h3>Notices</h3>
-			<ul class="notifications-menu">
-				<li class="top">
-					<p class="small">
-						You have no notices.
-					</p>
-				</li>
-
-				<li style="height: 300px;">
-					<ul class="dropdown-menu-list scroller" tabindex="5001" style="overflow: hidden; outline: none;">
-
+					<ul class="section-items">
+						<li>
+							<p>Work-life balance is an option in the Teaching Call form and Assign Instructors page</p>
+						</li>
+						<li>
+							<p>A warning is shown when smartphones and tablets attempt to load IPA</p>
+						</li>
 					</ul>
-				</li>
+				</div>
 
-			</ul>
+				<div class="release-notes-row">
+					<div class="section-header">
+						<i class="entypo-check"></i>
+						<h4>Fixed</h4>
+					</div>
+
+					<ul class="section-items">
+						<li>
+							<p>Support Staff tab preference assignment functionality restored</p>
+						</li>
+					</ul>
+				</div>	
+			</div> <!-- .release_notes -->
+
+			<br><br><br>
+
+			<h2>Coming Soon</h2>
+			<br />
+
+			<div class="release-notes">
+				<div class="release-notes-row">
+					<div class="section-header">
+						<i class="entypo-star"></i>
+						<h4>Feature</h4>
+					</div>
+
+					<ul class="section-items">
+						<li>
+							<p>Ability to mark 'The Staff' and 'AI Placeholder' when assigning instructors</p>
+						</li>		
+						<li>
+							<p>New pre-set (standard) time options in the Scheduling View: 50-minute and 3-hour once-a-week options</p>
+						</li>
+						<li>
+							<p>Activity time editor will include blank fields to easily clear out existing selections</p>
+						</li>
+						<li>
+							<p>Auto-logout time will be increased from one to four hours</p>
+						</li>	
+					</ul>
+				</div>
+
+				<div class="release-notes-row">
+					<div class="section-header">
+						<i class="entypo-check"></i>
+						<h4>Bug Fix</h4>
+					</div>
+
+					<ul class="section-items">
+						<li>
+							<p>Duplicate, non-clickable activities sometimes appear in the Scheduling View</p>
+						</li>
+						<li>
+							<p>Activity calendar room filter will stop showing related activities not found in the filtered rooms</p>
+						</li>
+						<li>
+							<p>Miscellaneous small bugs in the Support Call module</p>
+						</li>
+					</ul>
+				</div>	
+			</div> <!-- .release_notes -->
+
+
 		</div>
 	</div>
 </div>
