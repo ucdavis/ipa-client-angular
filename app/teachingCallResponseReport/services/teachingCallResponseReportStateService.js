@@ -97,6 +97,8 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 									description = "Buyout";
 								} else if (teachingAssignment.inResidence) {
 									description = "In Residence";
+								} else if (teachingAssignment.workLifeBalance) {
+									description = "Work Life Balance";
 								} else if (teachingAssignment.sabbatical) {
 									description = "Sabbatical";
 								} else {

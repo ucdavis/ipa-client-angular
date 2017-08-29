@@ -29,6 +29,7 @@ sharedApp.directive("termPreferences", this.termPreferences = function($uibModal
 				else if (preference.buyout) { return 'Buyout'; }
 				else if (preference.sabbatical) { return 'Sabbatical'; }
 				else if (preference.inResidence) { return 'In Residence'; }
+				else if (preference.workLifeBalance) { return 'Work Life Balance'; }
 				else if (preference.courseRelease) { return 'Course Release'; }
 				else {
 					return preference.subjectCode + ' ' + preference.courseNumber;
