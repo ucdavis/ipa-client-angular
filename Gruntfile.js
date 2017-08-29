@@ -468,7 +468,10 @@ module.exports = function (grunt) {
 		eslint: {
 			src: [
 				'<%= folders.webapp.root %>/**/*.js',
-			]
+			],
+			options: {
+				maxWarnings: 0
+			}
 		}
 
 	});
