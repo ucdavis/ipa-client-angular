@@ -58,7 +58,53 @@ budgetApp.directive("doughnutChart", this.doughnutChart = function ($rootScope, 
 			// Mount chart
 			var element = angular.element($document[0].querySelector('#chart-area'));
 			var ctx = element[0].getContext("2d");
-			var myDoughnutChart = new Chart(ctx, config);
+			scope.myDoughnutChart = new Chart(ctx, config);
+
+			// Handle updates
+			function addData(chart, data) {
+				scope.params.forEach((slotParam) => {
+					chart.data.datasets[0].data.push(slotParam.value);
+				});
+
+				chart.update();
+			}
+
+			function removeData(chart) {
+				chart.data.datasets[0].data = [];
+				chart.update();
+			}
+
+			function paramsMatched(params, oldParams) {
+				var allMatched = true;
+
+				params.forEach(function(slotParam, index) {
+					if (params[index].value != oldParams[index].value) {
+						allMatched = false;
+					}
+				});
+
+				return allMatched;
+			}
+
+			scope.$watch('params',function() {
+				if (!scope.params) {
+					return;
+				}
+
+				if (!scope.oldParams) {
+					scope.oldParams = scope.params;
+					return;
+				}
+
+				if (paramsMatched(scope.params, scope.oldParams)) {
+					return;
+				}
+
+				scope.oldParams = scope.params;
+
+				removeData(scope.myDoughnutChart);
+				addData(scope.myDoughnutChart, scope.params);
+			});
 		} // end link
 	};
 });
