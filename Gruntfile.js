@@ -488,7 +488,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("gruntify-eslint");
 	grunt.loadNpmTasks('grunt-cache-breaker');
 
-	grunt.registerTask('build', ['clean', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsProdSnippets',
+	grunt.registerTask('build', ['clean', 'eslint', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsProdSnippets',
 		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsBudget', 'concat:jsInstructionalSupport', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsTeachingCall',
 		'concat:jsRegistrarReconciliationReport', 'concat:jsScheduleSummaryReport', 'concat:jsTeachingCallResponseReport', 'concat:cssLib', 'concat:cssShared', 'uglify:dist', 'cssmin', 'cachebreaker']);
 
