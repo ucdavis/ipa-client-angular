@@ -294,6 +294,8 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 				newSupportStaffList.push(supportStaffDTO);
 			});
 
+			newSupportStaffList = _array_sortByProperty(newSupportStaffList, "lastName");
+
 			return newSupportStaffList;
 		},
 		generateSupportAssignments: function(supportAssignments, sectionGroups, courses) {
