@@ -34,6 +34,9 @@ instructionalSupportApp.service('instructorSupportCallFormSelectors', function (
 				newSectionGroups.push(sectionGroup);
 			});
 
+			// Sort
+			newSectionGroups = _array_sortByProperty(newSectionGroups, ["subjectCode", "courseNumber"]);
+
 			return newSectionGroups;
 		},
 
