@@ -42,7 +42,7 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 */
 		// Creates structured json corresponding to a 'support staff' centric view of the data
 
-		generateSectionGroups: function (supportAssignments, courses, sectionGroups, supportStaffFromRoles, assignedSupportStaffList, supportStaffSupportCallResponses, supportStaffPreferences, instructorPreferences) {
+		generateSectionGroups: function (supportAssignments, courses, sectionGroups, supportStaffFromRoles, assignedSupportStaffList, supportStaffSupportCallResponses, supportStaffPreferences, instructorPreferences, instructorSupportCallResponses) {
 			var self = this;
 
 			// Blend the two types of support staff together into a unique listing
@@ -208,6 +208,20 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 
 					supportStaff.supportStaffId = supportStaff.id;
 					sectionGroup.readerAssignmentOptions.other.push(supportStaff);
+				});
+
+				// Add instructor preference comment to sectionGroup by following the relationship
+				// sectionGroups -> instructorPreferences -> instructorSupportCallResponses
+				instructorPreferences.ids.forEach(function(preferenceId) {
+					var preference = instructorPreferences.list[preferenceId];
+					if (preference.sectionGroupId == sectionGroup.id) {
+						instructorSupportCallResponses.ids.forEach(function(responseId) {
+							var response = instructorSupportCallResponses.list[responseId];
+							if (response.instructorId == preference.instructorId) {
+								sectionGroup.instructorPreferenceComment = response.generalComments;
+							}
+						});
+					}
 				});
 
 				newSectionGroups.push(sectionGroup);

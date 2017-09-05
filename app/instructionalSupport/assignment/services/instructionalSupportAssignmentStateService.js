@@ -360,7 +360,8 @@ instructionalSupportApp.service('instructionalSupportAssignmentStateService', fu
 																																			scope._state.assignedSupportStaffList,
 																																			scope._state.supportStaffSupportCallResponses,
 																																			scope._state.supportStaffPreferences,
-																																			scope._state.instructorPreferences
+																																			scope._state.instructorPreferences,
+																																			scope._state.instructorSupportCallResponses
 																																		);
 
 			$rootScope.$emit('supportAssignmentStateChanged', newPageState);

@@ -10,6 +10,19 @@
 		</li>
 
 		<!-- Support Staff preferences -->
+		<li ng-if="assignmentOptions.instructorPreferences.length > 0" class="dropdown-header" stop-event="click"><b>Instructor Preferences</b></li>
+		<li class="clickable"
+			ng-repeat="instructorPreference in assignmentOptions.instructorPreferences"
+			ng-click="assignStaffToSlot(instructorPreference.supportStaffId)">
+			<a class="small">
+				<span class="course-filter-item">{{ instructorPreference.fullName }} ({{ instructorPreference.priority }})</span>
+			</a>
+		</li>
+
+		<!-- Divider -->
+		<li ng-if="assignmentOptions.instructorPreferences.length > 0" role="separator" class="divider"></li>
+
+		<!-- Support Staff preferences -->
 		<li ng-if="assignmentOptions.supportStaffPreferences.length > 0" class="dropdown-header" stop-event="click"><b>Support Staff Preferences</b></li>
 		<li class="clickable"
 			ng-repeat="supportStaffPreference in assignmentOptions.supportStaffPreferences"
