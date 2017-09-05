@@ -71,13 +71,18 @@ instructionalSupportApp.service('supportStaffFormStateService', function ($rootS
 					var preference = action.payload;
 					preferences.ids.push(preference.id);
 					preferences.list[preference.id] = preference;
-
 					return preferences;
 				case DELETE_STUDENT_PREFERENCE:
 					var preference = action.payload;
 					var index = preferences.ids.indexOf(preference.id);
 					preferences.ids.splice(index, 1);
-
+					var priority = preference.priority;
+					preferences.ids.forEach(function(slotPreferenceId) {
+						var slotPreference = preferences.list[slotPreferenceId];
+						if (slotPreference.priority > priority) {
+							slotPreference.priority--;
+						}
+					});
 					return preferences;
 				default:
 					return preferences;
