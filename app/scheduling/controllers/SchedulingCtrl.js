@@ -170,6 +170,17 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			return term ? term.isLocked() || !(hasAuthorizedRole) : true;
 		};
 
+		$scope.activityMatchesFilters = function (activityId) {
+			// When filter is off, all activities match
+			if ($scope.view.state.filters.enabledLocationIds.length === 0) {
+				return true;
+			}
+
+			var locationId = $scope.view.state.activities.list[activityId].locationId;
+
+			return ($scope.view.state.filters.enabledLocationIds.indexOf(locationId) >= 0);
+		};
+
 		$scope.matchesFilters = function (sectionGroup) {
 			var satisfiesTagFilters = (
 				$scope.view.state.filters.enabledTagIds.length === 0 ||
@@ -190,6 +201,7 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		};
 
 		var matchesLocationFilters = function (sectionGroup) {
+			// debugger;
 			var sectionGroupLocationIds = $scope.view.state.activities.ids
 				.filter(function (activityId) {
 					return $scope.view.state.activities.list[activityId].sectionGroupId == sectionGroup.id;
