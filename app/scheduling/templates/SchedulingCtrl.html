@@ -195,7 +195,8 @@
 							<!-- List of shared activities -->
 							<ul ng-repeat="sharedActivityId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sharedActivityIds track by $index"
 								class="activity-group" ng-init="sharedActivity = view.state.activities.list[sharedActivityId];">
-								<li class="activity-item clickable" ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
+								<li ng-show="activityMatchesFilters(sharedActivityId)" 
+									class="activity-item clickable" ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
 									ng-click="setSelectedActivity(sharedActivityId)">
 									<span>{{ sharedActivity.getCodeDescription() }}</span>
 									<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove shared {{ sharedActivity.getCodeDescription() }}"
@@ -203,7 +204,7 @@
 										yes="Delete" no="Cancel" placement="right"></i>
 								</li>
 
-								<!-- muted version when activity doesn't match filter -->
+								<!-- muted version when shared activity doesn't match filter -->
 								<li ng-show="activityMatchesFilters(sharedActivityId) == false"
 								class="activity-item muted-activity"
 										uib-tooltip="Activity does not match filters"
@@ -211,6 +212,7 @@
 									<span>{{ sharedActivity.getCodeDescription() }}</span>
 								</li>
 							</ul>
+
 							<div ng-if="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length > 0 && !isLocked()"
 								class="add-activity-btn clickable hoverable" uib-popover-template="'addSharedActivityList.html'"
 								popover-placement="bottom-left" popover-append-to-body="true" popover-class="add-activity-popover"
@@ -219,11 +221,14 @@
 							</div>
 							<!-- List of sections if the sectionGroup is a series -->
 							<ul ng-if="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">
-								<li class="section-item" ng-repeat="sectionId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds"
-									ng-init="section = view.state.sections.list[sectionId];">
+								<li class="section-item"
+										ng-repeat="sectionId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds"
+										ng-init="section = view.state.sections.list[sectionId];">
 									<div class="section-pattern">Section {{ section.sequenceNumber }}</div>
 									<ul class="activity-group" ng-repeat="activityId in section.activityIds track by $index" ng-init="activity = view.state.activities.list[activityId];">
-										<li class="activity-item clickable" ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }"
+										<li ng-show="activityMatchesFilters(activityId)"
+												class="activity-item clickable"
+												ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }"
 											ng-click="setSelectedActivity(activityId)">
 											<span>{{ activity.getCodeDescription() }}</span>
 											<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove {{ activity.getCodeDescription() }}"
@@ -231,6 +236,14 @@
 												yes="Delete" no="Cancel" placement="right"></i>
 											<i class="glyphicon glyphicon-warning-sign pull-right text-warning" uib-tooltip="Activity no longer matches standard pattern"
 												ng-show="activityId == view.state.uiState.selectedActivityId && view.state.uiState.selectedActivity.hasWarning"></i>
+										</li>
+
+										<!-- muted version when activity doesn't match filter -->
+										<li ng-show="activityMatchesFilters(activityId) == false"
+										class="activity-item muted-activity"
+												uib-tooltip="Activity does not match filters"
+												tooltip-append-to-body="true">
+											<span>{{ activity.getCodeDescription() }}</span>
 										</li>
 									</ul>
 									<div class="add-activity-btn clickable hoverable" ng-if="!isLocked()" uib-popover-template="'addActivityList.html'"
