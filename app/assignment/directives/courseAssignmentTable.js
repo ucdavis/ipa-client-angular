@@ -116,6 +116,35 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 										courseHtml += plannedSeats + "</span>";
 										courseHtml += "</div>";
 
+										// Loop over supportAssignments
+										scope.view.state.supportAssignments.ids.forEach(function (supportAssignmentId) {
+											var supportAssignment = scope.view.state.supportAssignments.list[supportAssignmentId];
+
+											if (supportAssignment.appointmentType != "associateInstructor") {
+												return;
+											}
+											if (!supportAssignment || supportAssignment.supportStaffId > 0) {
+												return;
+											}
+
+											if (supportAssignment.sectionGroupId != sectionGroupId) {
+												return;
+											}
+
+											courseHtml += "<div class=\"alert alert-info tile-assignment\">";
+											courseHtml += "AI Placeholder";
+
+											var popoverTemplate = "Are you sure you want to delete this placeholder? <br /><br />" +
+												"<div class='text-center'><button class='btn btn-red' data-event-type='deletePlaceholderAI' data-support-assignment-id='" + supportAssignment.id + "'>Delete</button>" +
+												"<button class='btn btn-white' data-event-type='dismissDeleteSupportAssignmentPop'>Cancel</button></div>";
+
+											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
+											courseHtml += " data-support-assignment-id=\"" + supportAssignment.id + "\" data-event-type=\"deleteSupportAssignmentPop\" " +
+												"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
+											courseHtml += "</div>"; // Ending Teaching assignment div
+
+										});
+
 										// Loop over teachingAssignments that are approved
 										$.each(sectionGroup.teachingAssignmentIds, function (i, teachingAssignmentId) {
 											var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];

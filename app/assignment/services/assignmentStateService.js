@@ -623,7 +623,6 @@ assignmentApp.service('assignmentStateService', function (
 
 			$log.debug("Assignment state updated:");
 			$log.debug(scope._state, action.type);
-			console.log(scope._state);
 		}
 	};
 });
