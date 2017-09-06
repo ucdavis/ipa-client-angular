@@ -147,6 +147,13 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 											courseHtml += "<div>Assign..</div><div class=\"caret\"></div></button>";
 											courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right assign-instructor-dropdown scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
 
+											courseHtml += "<li><a";
+											courseHtml += ' data-is-placeholder-ai="true"';
+											courseHtml += ' data-section-group-id="' + sectionGroup.id + '"';
+											courseHtml += ' href="#">AI Placeholder</a></li>';
+
+											courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
+
 											var interestedInstructorIds = [];
 											var firstInstructorAdded = false;
 											var numberOfInstructorsAdded = 0;
@@ -243,8 +250,13 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 					var sectionGroupId = $el.data('section-group-id');
 					var instructorId = $el.data('instructor-id');
 					teachingAssignmentId = $el.data('teaching-assignment-id');
-					// Approving an existing teachingAssignment
-					if (teachingAssignmentId) {
+					var isAssignPlaceholderAI = $el.data('is-placeholder-ai');
+
+					// Create a support assignment for an AI
+					if (isAssignPlaceholderAI) {
+						assignmentActionCreators.createPlaceholderAI(sectionGroupId);
+					} else if (teachingAssignmentId) {
+						// Approving an existing teachingAssignment
 						teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 						assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
 					} else { // Creating a new teachingAssignment, and then approving it

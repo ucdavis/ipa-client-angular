@@ -213,6 +213,29 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			});
 
 		},
+		createPlaceholderAI: function (sectionGroupId) {
+			var self = this;
+
+			var supportAssignment = {
+				appointmentType: "associateInstructor",
+				appointmentPercentage: 50,
+				sectionGroupId: sectionGroupId
+			};
+			
+			assignmentService.createPlaceholderAI(sectionGroupId, supportAssignment).then(function (supportAssignment) {
+				$rootScope.$emit('toast', { message: "Created AI Placeholder", type: "SUCCESS" });
+					var action = {
+						type: CREATE_PLACEHOLDER_AI,
+						payload: {
+							supportAssignment: supportAssignment
+						}
+					};
+					assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+
+		},
 		unapproveInstructorAssignment: function (originalTeachingAssignment) {
 			originalTeachingAssignment.approved = false;
 			assignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {

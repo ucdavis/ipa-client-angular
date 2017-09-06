@@ -35,6 +35,19 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
+		createPlaceholderAI: function (sectionGroupId, supportAssignment) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/instructionalSupportView/sectionGroups/" + sectionGroupId + "/instructionalSupportAssignments/1", supportAssignment, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		createTeachingCall: function (workgroupId, year, teachingCallConfig) {
 			var deferred = $q.defer();
 
