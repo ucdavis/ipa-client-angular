@@ -194,15 +194,20 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 
 				if (sectionGroup.sharedActivityIds) {
 					sectionGroup.sharedActivityIds.forEach(function (sharedActivityId) {
-						calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[sharedActivityId], title));
+						if (activityMatchesLocationFilters(sharedActivityId)) {
+							calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[sharedActivityId], title));
+						}
 					});
 				}
+
 				if (sectionGroup.sectionIds) {
 					sectionGroup.sectionIds.forEach(function (sectionId) {
 						var section = scope.view.state.sections.list[sectionId];
 						if (section.activityIds) {
 							section.activityIds.forEach(function (activityId) {
-								calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[activityId], title));
+								if (activityMatchesLocationFilters(activityId)) {
+									calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[activityId], title));
+								}
 							});
 						}
 					});
@@ -252,6 +257,15 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				return calendarActivities;
 			};
 
+			var activityMatchesLocationFilters = function(activityId) {
+				if (scope.view.state.filters.enabledLocationIds.length === 0) {
+					return true;
+				}
+
+				var locationId = scope.view.state.activities.list[activityId].locationId;
+
+				return (scope.view.state.filters.enabledLocationIds.indexOf(locationId) >= 0);
+			};
 
 			$rootScope.$on("schedulingStateChanged", function (event, data) {
 				scope.view.state = data.state;
