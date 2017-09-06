@@ -347,6 +347,22 @@ assignmentApp.service('assignmentStateService', function (
 					return instructorMasterList;
 			}
 		},
+		_supportAssignmentReducers: function (action, supportAssignments) {
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					supportAssignments = {
+						ids: [],
+						list: []
+					};
+					action.payload.supportAssignments.forEach(function (supportAssignment) {
+						supportAssignments.ids.push(supportAssignment.id);
+						supportAssignments.list[supportAssignment.id] = supportAssignment;
+					});
+					return supportAssignments;
+				default:
+					return supportAssignments;
+			}
+		},
 		_scheduleTermStateReducers: function (action, scheduleTermStates) {
 			var scope = this;
 
@@ -599,6 +615,7 @@ assignmentApp.service('assignmentStateService', function (
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
 			newState.tags = scope._tagReducers(action, scope._state.tags);
 			newState.filters = scope._filterReducers(action, scope._state.filters);
+			newState.supportAssignments = scope._supportAssignmentReducers(action, scope._state.supportAssignments);
 
 			scope._state = newState;
 
@@ -606,6 +623,7 @@ assignmentApp.service('assignmentStateService', function (
 
 			$log.debug("Assignment state updated:");
 			$log.debug(scope._state, action.type);
+			console.log(scope._state);
 		}
 	};
 });
