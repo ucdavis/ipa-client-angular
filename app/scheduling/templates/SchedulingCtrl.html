@@ -202,6 +202,14 @@
 										tooltip-append-to-body="true" confirm-button="removeActivity(sharedActivity)" message="Are you sure you want to remove this {{ sharedActivity.getCodeDescription() }}"
 										yes="Delete" no="Cancel" placement="right"></i>
 								</li>
+
+								<!-- muted version when activity doesn't match filter -->
+								<li ng-show="activityMatchesFilters(sharedActivityId) == false"
+								class="activity-item muted-activity"
+										uib-tooltip="Activity does not match filters"
+										tooltip-append-to-body="true">
+									<span>{{ sharedActivity.getCodeDescription() }}</span>
+								</li>
 							</ul>
 							<div ng-if="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length > 0 && !isLocked()"
 								class="add-activity-btn clickable hoverable" uib-popover-template="'addSharedActivityList.html'"
