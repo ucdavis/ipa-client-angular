@@ -201,7 +201,6 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		};
 
 		var matchesLocationFilters = function (sectionGroup) {
-			// debugger;
 			var sectionGroupLocationIds = $scope.view.state.activities.ids
 				.filter(function (activityId) {
 					return $scope.view.state.activities.list[activityId].sectionGroupId == sectionGroup.id;
