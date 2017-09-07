@@ -359,6 +359,19 @@ assignmentApp.service('assignmentStateService', function (
 						supportAssignments.list[supportAssignment.id] = supportAssignment;
 					});
 					return supportAssignments;
+				case CREATE_PLACEHOLDER_AI:
+					action.payload.supportAssignment.forEach(function(supportAssignment) {
+						supportAssignments.ids.push(supportAssignment.id);
+						supportAssignments.list[supportAssignment.id] = supportAssignment;
+					});
+					return supportAssignments;
+				case REMOVE_PLACEHOLDER_AI:
+					var supportAssignmentId = action.payload;
+					var index = supportAssignments.ids.indexOf(supportAssignmentId);
+					if (index > -1) {
+						supportAssignments.ids.splice(index, 1);
+					}
+					return supportAssignments;
 				default:
 					return supportAssignments;
 			}

@@ -42,6 +42,17 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			};
 			assignmentStateService.reduce(action);
 		},
+		removePlaceholderAI: function (supportAssignmentId) {
+			assignmentService.removePlaceholderAI(supportAssignmentId).then(function (payload) {
+				var action = {
+					type: REMOVE_PLACEHOLDER_AI,
+					payload: payload
+				};
+				assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		updateTagFilters: function (tagIds) {
 			var action = {
 				type: UPDATE_TAG_FILTERS,

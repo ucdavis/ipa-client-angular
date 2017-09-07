@@ -135,7 +135,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 											courseHtml += "AI Placeholder";
 
 											var popoverTemplate = "Are you sure you want to delete this placeholder? <br /><br />" +
-												"<div class='text-center'><button class='btn btn-red' data-event-type='deletePlaceholderAI' data-support-assignment-id='" + supportAssignment.id + "'>Delete</button>" +
+												"<div class='text-center'><button class='btn btn-red' data-event-type='deleteSupportAssignment' data-support-assignment-id='" + supportAssignment.id + "'>Delete</button>" +
 												"<button class='btn btn-white' data-event-type='dismissDeleteSupportAssignmentPop'>Cancel</button></div>";
 
 											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
@@ -321,6 +321,23 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 					$el.closest("div.popover").popover('hide');
 				}
 
+				// Open AI placeholder deletion confirmation popover
+				else if ($el.data('event-type') == 'deleteSupportAssignmentPop') {
+					// Delete course confirmation
+					$el.popover('show');
+				}
+
+				// User has confirmed deletion of the supportAssignment
+				else if ($el.data('event-type') == 'deleteSupportAssignment') {
+					supportAssignmentId = $el.data('support-assignment-id');
+					assignmentActionCreators.removePlaceholderAI(supportAssignmentId);
+				}
+
+				// Close supportAssignment deletion confirmation popover
+				else if ($el.data('event-type') == 'dismissDeleteSupportAssignmentPop') {
+					// Dismiss the delete course dialog
+					$el.closest("div.popover").popover('hide');
+				}
 			}); // end UI event handler
 		} // end link
 	};

@@ -87,6 +87,19 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
+		removePlaceholderAI: function (supportAssignmentId) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/instructionalSupportView/instructionalSupportAssignments/" + supportAssignmentId, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		deleteTeachingCall: function (teachingCall) {
 			var deferred = $q.defer();
 
