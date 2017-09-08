@@ -86,7 +86,12 @@ angular.module('sharedApp')
 					$http.defaults.headers.common.Authorization = 'Bearer ' + token;
 					localStorage.setItem('JWT', token);
 
-					$window.location.href = "/summary";
+					// Pull out the workgroupId and year from the existing url to create a new summary url
+					var explodedUrl = $window.location.href.split('/');
+					var workgroupIndex = explodedUrl.indexOf("workgroups");
+					var workgroupId = explodedUrl[workgroupIndex + 1];
+					var year = explodedUrl[workgroupIndex + 2];
+					$window.location.href = "/summary/" + workgroupId + "/" + year;
 				}, function (error) {
 					// FIXME: Shouuldn't we do something here?
 				});
