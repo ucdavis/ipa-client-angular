@@ -603,6 +603,7 @@ margin-left: 6px;
 .assignment-remove-button {
 	color: rgba(220,220,220, .5);
 	padding: 4px;
+	cursor: pointer;
 }
 
 .assignment-remove-button:hover {
