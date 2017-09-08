@@ -331,12 +331,12 @@ table.availability-grid tr td {
 }
 
 .ipa-header .global-ui {
-	flex: 0 0 50%;
+	flex: 1 0 33%;
 	display: flex;
 }
 
 .ipa-header .page-specific-ui {
-	flex: 0 0 50%;
+	flex: 0 0 33%;
 	display: flex;
 	justify-content: flex-end;
 }
