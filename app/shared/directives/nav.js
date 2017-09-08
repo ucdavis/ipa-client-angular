@@ -42,6 +42,8 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 
 				// Add 'DSS IT'
 				participatingWorkgroupIds.push("20");
+				// Add 'Paranormal studies' mock workgroup for IPA presentation
+				participatingWorkgroupIds.push("77");
 
 				var currentWorkgroupId = scope.sharedState.workgroup.id;
 				var index = participatingWorkgroupIds.indexOf(currentWorkgroupId);
