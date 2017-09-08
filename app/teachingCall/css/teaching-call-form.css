@@ -861,11 +861,13 @@ li.active-term .dropdown-term-row {
 	width: 100%;
 	flex: 0 0 auto;
 	text-align: center;
+	cursor: pointer;
 }
 
 .search-course-input:focus {
 	border-color: #337ab7;
 	text-align: left;
+	cursor: text;
 }
 .search-course-container {
 	display: flex;
