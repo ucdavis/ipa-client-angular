@@ -17,15 +17,17 @@ sharedApp.directive('ipaHeader', function($window, $location, $rootScope, authSe
 				authService.unimpersonate();
 			};
 
-			// Will generate a url for the current location, but substitube the passed in workgroupId where relevant
+			// Will navigate to the summary page of the specified workgroup, on the same year
 			scope.changeWorkgroup = function(originalWorkgroupId, newWorkgroupId) {
 				var originalWorkgroupId = originalWorkgroupId.toString();
 				var newWorkgroupId = newWorkgroupId.toString();
 
-				var url = $location.absUrl();
-				url = url.replace(originalWorkgroupId, newWorkgroupId);
+				var explodedUrl = $location.absUrl().split('/');
+				var workgroupIndex = explodedUrl.indexOf(originalWorkgroupId);
+				var year = explodedUrl[workgroupIndex + 1].split('?')[0];
+				var url = "/summary/" + newWorkgroupId + "/" + year;
 
-				return url;
+				$window.location.href = url;
 			};
 
 			scope.loadWorkgroupPage = function(workgroupId) {

@@ -91,6 +91,7 @@ angular.module('sharedApp')
 					var workgroupIndex = explodedUrl.indexOf("workgroups");
 					var workgroupId = explodedUrl[workgroupIndex + 1];
 					var year = explodedUrl[workgroupIndex + 2];
+
 					$window.location.href = "/summary/" + workgroupId + "/" + year;
 				}, function (error) {
 					// FIXME: Shouuldn't we do something here?

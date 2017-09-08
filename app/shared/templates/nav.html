@@ -59,22 +59,28 @@
 					</li>
 				</ul>
 			</li>
-			<!-- handle UI for users with either academicPlanner or instructor, but not both -->
-			<li ng-if="userHasRoles(['academicPlanner','reviewer']) && !userHasRoles(['senateInstructor','federationInstructor'])"
+			<!-- handle UI for users with a sing role, but not multiple -->
+			<li ng-if="showMultipleSummary() == false && isPlanner"
 				ng-class="{ 'active': currentBaseHref == 'summary' && pageMode == 'workgroup' }">
 				<a class="clickable" ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=workgroup">
 					<i class="entypo-home"></i>
 					<span class="title">Summary</span>
 				</a>
 			</li>
-			<li ng-if="!(userHasRoles(['academicPlanner','reviewer'], sharedState.workgroup.id)) && userHasRoles(['senateInstructor','federationInstructor'], sharedState.workgroup.id)"
+			<li ng-if="showMultipleSummary() == false && isInstructor"
 				ng-class="{ 'active': currentBaseHref == 'summary' && pageMode == 'instructor' }">
 				<a class="clickable" ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=instructor">
 					<i class="entypo-home"></i>
 					<span class="title">Summary</span>
 				</a>
 			</li>
-
+			<li ng-if="showMultipleSummary() == false && isSupportStaff"
+				ng-class="{ 'active': currentBaseHref == 'summary' && pageMode == 'instructor' }">
+				<a class="clickable" ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=instructionalSupport">
+					<i class="entypo-home"></i>
+					<span class="title">Summary</span>
+				</a>
+			</li>
 			<li ng-if="sharedState.currentUser.isAdmin()" ng-class="{ 'active': currentBaseHref == 'admin' }">
 				<a ng-href="/admin/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-cog"></i>
