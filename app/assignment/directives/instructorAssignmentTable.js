@@ -425,12 +425,6 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 						// If they don't have any teachingCallResponses, there won't be any unavailabilities to show
 						courseHtml += "<div class=\"description-cell__avail-btn-container\">";
-
-
-						courseHtml += "<div data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"No unavailabilities\" data-container=\"body\">";
-						courseHtml += "<i class=\" disabled-calendar glyphicon glyphicon-calendar hidden-print\"></i>";
-						courseHtml += "</div>";
-
 						courseHtml += "</div>";
 						courseHtml += "</div>";
 						courseHtml += "</div>"; // end description-cell
