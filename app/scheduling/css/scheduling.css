@@ -409,3 +409,8 @@ i.selected-section-group-remove {
 	background-color: rgba(214, 214, 214, 0.65) !important;
 	color: #ababab;
 }
+
+.instructor-label {
+	padding: 3px;
+	margin-left: 3px;
+}

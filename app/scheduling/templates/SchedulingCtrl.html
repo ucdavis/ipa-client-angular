@@ -158,6 +158,13 @@
 									</div>
 								</div>
 
+								<div ng-if="view.state.sectionGroups.list[sectionGroupId].showTheStaff">
+									instructor:
+									<div class="label label-default instructor-label">
+										The Staff
+									</div>
+								</div>
+
 								<div ng-if="view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].tagIds.length">
 									Tags:
 									<div class="label" style="padding: 3px; margin-left: 3px;"
