@@ -174,7 +174,8 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 														courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
 														courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 
-														courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
+														courseHtml += " href=\"#\">" + instructor.fullName + " (" + teachingAssignment.priority + ")" + "</a></li>";
+
 														numberOfInstructorsAdded++;
 													}
 												});
