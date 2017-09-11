@@ -181,6 +181,27 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 											courseHtml += ' data-section-group-id="' + sectionGroup.id + '"';
 											courseHtml += ' href="#">AI Placeholder</a></li>';
 
+											// Display 'The Staff' as an option when no assignments have been made
+											var showStaffOption = true;
+
+											if (sectionGroup.showTheStaff == true) {
+												showStaffOption = false;
+											}
+
+											sectionGroup.teachingAssignmentIds.forEach(function(assignmentId) {
+												var assignment = scope.view.state.teachingAssignments.list[assignmentId];
+												if (assignment.approved) {
+													showStaffOption = false;
+												}
+											});
+
+											if (showStaffOption) {
+												courseHtml += "<li><a";
+												courseHtml += ' data-is-placeholder-staff="true"';
+												courseHtml += ' data-section-group-id="' + sectionGroup.id + '"';
+												courseHtml += ' href="#">The Staff</a></li>';
+											}
+
 											courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
 
 											var interestedInstructorIds = [];
@@ -280,9 +301,13 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 					var instructorId = $el.data('instructor-id');
 					teachingAssignmentId = $el.data('teaching-assignment-id');
 					var isAssignPlaceholderAI = $el.data('is-placeholder-ai');
+					var isAssignPlaceholderStaff = $el.data('is-placeholder-staff');
 
+					// Create a 'The Staff' placeholder
+					if (isAssignPlaceholderStaff) {
+						assignmentActionCreators.createPlaceholderStaff(sectionGroupId);
 					// Create a support assignment for an AI
-					if (isAssignPlaceholderAI) {
+					} else if (isAssignPlaceholderAI) {
 						assignmentActionCreators.createPlaceholderAI(sectionGroupId);
 					} else if (teachingAssignmentId) {
 						// Approving an existing teachingAssignment
