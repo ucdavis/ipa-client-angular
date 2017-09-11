@@ -330,6 +330,12 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 						// Approving an existing teachingAssignment
 						teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 						assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
+
+						// Remove The Staff if necessary
+						var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
+						if (sectionGroup) {
+							sectionGroup.showTheStaff = false;
+						}
 					} else { // Creating a new teachingAssignment, and then approving it
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 						teachingAssignment = {
@@ -339,6 +345,12 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 							priority: 1,
 							approved: true
 						};
+
+						// Remove The Staff if necessary
+						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+						if (sectionGroup) {
+							sectionGroup.showTheStaff = false;
+						}
 
 						assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment, scope.view.state.userInterface.scheduleId);
 					}
