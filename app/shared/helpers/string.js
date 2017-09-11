@@ -152,6 +152,10 @@ String.prototype.getActivityCodeDescription = function () {
 
 // Turns 0101010 into MWF
 String.prototype.getWeekDays = function () {
+	if (!this || this.length == 0) {
+		return "";
+	}
+
 	var days = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
 	var dayArr = this.split('');
 

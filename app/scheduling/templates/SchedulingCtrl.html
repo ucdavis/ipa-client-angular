@@ -330,9 +330,10 @@
 												</select>
 											</div>
 											<div class="control-group col-sm-3" style="padding: 0px 0px 0px 5px;">
-												<select size="4" class="form-control standard-time" ng-options="dayIndicator as dayIndicator.getWeekDays()
+												<select size="4" class="form-control standard-time" ng-options="dayIndicator as getWeekDays(dayIndicator)
 												for dayIndicator in standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].dayIndicators"
-													ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].dayIndicator">
+													ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].dayIndicator"
+													ng-click="setDayPattern(dayIndicator)">
 												</select>
 											</div>
 											<div class="control-group col-sm-5" style="padding: 0px 0px 0px 5px;">

@@ -26,8 +26,9 @@ angular.module('activity', [])
 			getStandardTimes: function () {
 				return {
 					50: {
-						dayIndicators: ['0101000', '0010100', '0101010', '0111100', '0111010', '0111110', '0100000', '0010000', '0001000', '0000100', '0000010'],
+						dayIndicators: [null, '0101000', '0010100', '0101010', '0111100', '0111010', '0111110', '0100000', '0010000', '0001000', '0000100', '0000010'],
 						times: [
+							{ start: null, end: null },
 							{ start: '08:00:00', end: '08:50:00' },
 							{ start: '09:00:00', end: '09:50:00' },
 							{ start: '10:00:00', end: '10:50:00' },
@@ -45,8 +46,9 @@ angular.module('activity', [])
 						]
 					},
 					80: {
-						dayIndicators: ['0010100'],
+						dayIndicators: [null, '0010100'],
 						times: [
+							{ start: null, end: null },
 							{ start: '07:30:00', end: '08:50:00' },
 							{ start: '09:00:00', end: '10:20:00' },
 							{ start: '10:30:00', end: '11:50:00' },
@@ -60,8 +62,9 @@ angular.module('activity', [])
 						]
 					},
 					110: {
-						dayIndicators: ['0101000', '0010100'],
+						dayIndicators: [null, '0101000', '0010100'],
 						times: [
+							{ start: null, end: null },
 							{ start: '08:00:00', end: '09:50:00' },
 							{ start: '10:00:00', end: '11:50:00' },
 							{ start: '12:10:00', end: '14:00:00' },
@@ -72,8 +75,9 @@ angular.module('activity', [])
 						]
 					},
 					170: {
-						dayIndicators: ['0100000', '0010000', '0001000', '0000100', '0000010'],
+						dayIndicators: [null, '0100000', '0010000', '0001000', '0000100', '0000010'],
 						times: [
+							{ start: null, end: null },
 							{ start: '08:00:00', end: '10:50:00' },
 							{ start: '09:00:00', end: '11:50:00' },
 							{ start: '10:00:00', end: '12:50:00' },

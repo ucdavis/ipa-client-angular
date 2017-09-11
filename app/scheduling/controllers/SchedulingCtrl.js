@@ -24,6 +24,14 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			'P', '7', 'Z'
 		];
 
+		$scope.getWeekDays = function(dayIndicator) {
+			if (!dayIndicator) {
+				return "";
+			}
+
+			return dayIndicator.getWeekDays();
+		};
+
 		$scope.standardPatterns = Activity.prototype.getStandardTimes();
 
 		$rootScope.$on('schedulingStateChanged', function (event, data) {
@@ -58,6 +66,10 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		};
 
 		$scope.getMeridianTime = function (time) {
+			if (!time) {
+				return "";
+			}
+
 			time = Activity.prototype.getMeridianTime(time);
 			return ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ' ' + time.meridian;
 		};
@@ -136,6 +148,16 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			}
 
 			if (activity.dayIndicator) {
+				schedulingActionCreators.updateActivity(activity);
+			}
+		};
+
+		$scope.setDayPattern = function(dayPattern) {
+			if (!dayPattern) {
+				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+				activity.endTime = null;
+				activity.startTime = null;
+
 				schedulingActionCreators.updateActivity(activity);
 			}
 		};
