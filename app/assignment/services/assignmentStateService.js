@@ -531,6 +531,28 @@ assignmentApp.service('assignmentStateService', function (
 					return filters;
 			}
 		},
+		_theStaffReducers: function(action, theStaff) {
+			switch (action.type) {
+
+				case INIT_ASSIGNMENT_VIEW:
+					var theStaff = {};
+					theStaff.termCodes = {};
+
+					action.payload.sectionGroups.forEach(function(sectionGroup) {
+						if (sectionGroup.showTheStaff) {
+							// Scaffold assignments array if this is the first in the termCode
+							if (!theStaff.termCodes[sectionGroup.termCode]) {
+								theStaff.termCodes[sectionGroup.termCode] = [];
+							}
+
+							theStaff.termCodes[sectionGroup.termCode].push(sectionGroup.id);
+						}
+					});
+					return theStaff;
+				default:
+					return theStaff;
+			}
+		},
 		_userInterfaceReducers: function (action, userInterface) {
 			var scope = this;
 			var i;
@@ -629,11 +651,12 @@ assignmentApp.service('assignmentStateService', function (
 			newState.tags = scope._tagReducers(action, scope._state.tags);
 			newState.filters = scope._filterReducers(action, scope._state.filters);
 			newState.supportAssignments = scope._supportAssignmentReducers(action, scope._state.supportAssignments);
+			newState.theStaff = scope._theStaffReducers(action, scope._state.theStaff);
 
 			scope._state = newState;
 
 			$rootScope.$emit('assignmentStateChanged', scope._state);
-
+			console.log(scope._state);
 			$log.debug("Assignment state updated:");
 			$log.debug(scope._state, action.type);
 		}
