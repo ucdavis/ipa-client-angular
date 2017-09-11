@@ -48,12 +48,13 @@ budgetApp.directive("doughnutChart", this.doughnutChart = function ($rootScope, 
 				}
 			};
 
-			scope.params.forEach(function(slotParam) {
-				config.data.datasets[0].data.push(slotParam.value);
-				config.data.labels.push(slotParam.description);
-			});
+			if (scope.params) {
+				scope.params.forEach(function(slotParam) {
+					config.data.datasets[0].data.push(slotParam.value);
+					config.data.labels.push(slotParam.description);
+				});
+			}
 			// End config
-
 
 			// Mount chart
 			var element = angular.element($document[0].querySelector('#chart-area'));
