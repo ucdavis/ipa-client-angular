@@ -62,7 +62,7 @@ budgetApp.directive("doughnutChart", this.doughnutChart = function ($rootScope, 
 
 			// Handle updates
 			function addData(chart, data) {
-				scope.params.forEach((slotParam) => {
+				scope.params.forEach(function(slotParam) {
 					chart.data.datasets[0].data.push(slotParam.value);
 				});
 
