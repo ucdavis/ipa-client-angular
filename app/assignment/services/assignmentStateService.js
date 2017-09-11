@@ -549,6 +549,17 @@ assignmentApp.service('assignmentStateService', function (
 						}
 					});
 					return theStaff;
+				case CREATE_PLACEHOLDER_STAFF:
+					var termCode = action.payload.sectionGroup.termCode;
+					var sectionGroupId = action.payload.sectionGroup.id;
+					theStaff.termCodes[termCode].push(sectionGroupId);
+					return theStaff;
+				case REMOVE_PLACEHOLDER_STAFF:
+					var termCode = action.payload.sectionGroup.termCode;
+					var sectionGroupId = action.payload.sectionGroup.id;
+					var index = theStaff.termCodes[termCode].indexOf(sectionGroupId);
+					theStaff.termCodes[termCode].splice(index, 1);
+					return theStaff;
 				default:
 					return theStaff;
 			}
