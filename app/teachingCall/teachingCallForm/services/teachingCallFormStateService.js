@@ -39,6 +39,8 @@ teachingCallApp.service('teachingCallFormStateService', function (
 						pageState.dueDate = teachingCallReceipt.dueDate;
 						pageState.comment = teachingCallReceipt.comment;
 						pageState.teachingCallReceiptId = teachingCallReceipt.id;
+						pageState.teachingCallReceipt = teachingCallReceipt;
+
 						termsBlob = teachingCallReceipt.termsBlob;
 					}
 
