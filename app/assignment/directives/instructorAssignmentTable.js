@@ -459,11 +459,11 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 									courseHtml += "</div>";
 
 									var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
-										"<div class='text-center'><button class='btn btn-red' data-event-type='deleteAssignment' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
-										"<button class='btn btn-white' data-event-type='dismissDeleteAssignmentPop'>Cancel</button></div>";
+										"<div class='text-center'><button class='btn btn-red' data-event-type='removeTheStaff' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
+										"<button class='btn btn-white' data-event-type='dismissRemoveTheStaffPop'>Cancel</button></div>";
 
 									courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
-									courseHtml += " data-section-group-id=\"" + sectionGroup.id + "\" data-event-type=\"deleteAssignmentPop\" " +
+									courseHtml += " data-section-group-id=\"" + sectionGroup.id + "\" data-event-type=\"removeTheStaffPop\" " +
 										"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
 
 									courseHtml += "</div>";
@@ -539,6 +539,25 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 				// Close Assignment deletion confirmation popover
 				else if ($el.data('event-type') == 'dismissDeleteAssignmentPop') {
+					// Dismiss the delete course dialog
+					$el.closest("div.popover").popover('hide');
+				}
+
+				// Open The Staff deletion confirmation popover
+				else if ($el.data('event-type') == 'removeTheStaffPop') {
+					// Delete course confirmation
+					$el.popover('show');
+				}
+
+				// User has confirmed deletion of the assignment
+				else if ($el.data('event-type') == 'removeTheStaff') {
+					sectionGroupId = $el.data('section-group-id');
+					sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+					assignmentActionCreators.removePlaceholderStaff(sectionGroup);
+				}
+
+				// Close Assignment deletion confirmation popover
+				else if ($el.data('event-type') == 'dismissRemoveTheStaffPop') {
 					// Dismiss the delete course dialog
 					$el.closest("div.popover").popover('hide');
 				}
