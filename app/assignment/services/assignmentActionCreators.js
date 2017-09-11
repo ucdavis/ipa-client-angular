@@ -247,6 +247,38 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			});
 
 		},
+		createPlaceholderStaff: function (sectionGroup) {
+			var self = this;
+
+			assignmentService.createPlaceholderStaff(sectionGroup).then(function (sectionGroup) {
+				$rootScope.$emit('toast', { message: "Assigned The Staff", type: "SUCCESS" });
+					var action = {
+						type: CREATE_PLACEHOLDER_STAFF,
+						payload: {
+							sectionGroup: sectionGroup
+						}
+					};
+					assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		removePlaceholderStaff: function (sectionGroup) {
+			var self = this;
+
+			assignmentService.removePlaceholderStaff(sectionGroup).then(function (sectionGroup) {
+				$rootScope.$emit('toast', { message: "Removed The Staff", type: "SUCCESS" });
+					var action = {
+						type: REMOVE_PLACEHOLDER_STAFF,
+						payload: {
+							sectionGroup: sectionGroup
+						}
+					};
+					assignmentStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		unapproveInstructorAssignment: function (originalTeachingAssignment) {
 			originalTeachingAssignment.approved = false;
 			assignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {

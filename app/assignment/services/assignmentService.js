@@ -48,6 +48,19 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
+		createPlaceholderStaff: function (sectionGroup) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		createTeachingCall: function (workgroupId, year, teachingCallConfig) {
 			var deferred = $q.defer();
 
@@ -91,6 +104,20 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 			var deferred = $q.defer();
 
 			$http.delete(serverRoot + "/api/instructionalSupportView/instructionalSupportAssignments/" + supportAssignmentId, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		
+		removePlaceholderStaff: function (sectionGroup) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})

@@ -145,6 +145,21 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 
 										});
 
+										// Display The Staff placeholder
+										if (sectionGroup.showTheStaff == true) {
+											courseHtml += "<div class=\"alert alert-info tile-assignment\">";
+											courseHtml += "The Staff";
+
+											var popoverTemplate = "Are you sure you want to remove The Staff? <br /><br />" +
+												"<div class='text-center'><button class='btn btn-red' data-event-type='deleteTheStaff' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
+												"<button class='btn btn-white' data-event-type='dismissDeleteTheStaffPop'>Cancel</button></div>";
+
+											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
+											courseHtml += " data-section-group-id=\"" + sectionGroup.id + "\" data-event-type=\"deleteTheStaffPop\" " +
+												"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
+											courseHtml += "</div>"; // Ending Teaching assignment div
+
+										}
 										// Loop over teachingAssignments that are approved
 										$.each(sectionGroup.teachingAssignmentIds, function (i, teachingAssignmentId) {
 											var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
@@ -305,7 +320,9 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 
 					// Create a 'The Staff' placeholder
 					if (isAssignPlaceholderStaff) {
-						assignmentActionCreators.createPlaceholderStaff(sectionGroupId);
+						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+						sectionGroup.showTheStaff = true;
+						assignmentActionCreators.createPlaceholderStaff(sectionGroup);
 					// Create a support assignment for an AI
 					} else if (isAssignPlaceholderAI) {
 						assignmentActionCreators.createPlaceholderAI(sectionGroupId);
@@ -360,6 +377,26 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 
 				// Close supportAssignment deletion confirmation popover
 				else if ($el.data('event-type') == 'dismissDeleteSupportAssignmentPop') {
+					// Dismiss the delete course dialog
+					$el.closest("div.popover").popover('hide');
+				}
+
+				// Open The Staff deletion confirmation popover
+				else if ($el.data('event-type') == 'deleteTheStaffPop') {
+					// Delete course confirmation
+					$el.popover('show');
+				}
+
+				// User has confirmed deletion of The Staff
+				else if ($el.data('event-type') == 'deleteTheStaff') {
+					sectionGroupId = $el.data('section-group-id');
+					sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+					sectionGroup.showTheStaff = false;
+					assignmentActionCreators.removePlaceholderStaff(sectionGroup);
+				}
+
+				// Close The Staff deletion confirmation popover
+				else if ($el.data('event-type') == 'dismissDeleteTheStaffPop') {
 					// Dismiss the delete course dialog
 					$el.closest("div.popover").popover('hide');
 				}
