@@ -341,12 +341,6 @@ table.availability-grid tr td {
 	justify-content: flex-end;
 }
 
-.ipa-header .page-specific-ui {
-	flex: 0 0 50%;
-	display: flex;
-	justify-content: flex-end;
-}
-
 .ipa-header .page-specific-ui > div:not(:last-child) {
 	margin-right: 20px;
 }
