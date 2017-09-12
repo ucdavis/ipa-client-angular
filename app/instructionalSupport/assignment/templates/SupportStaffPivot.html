@@ -38,7 +38,7 @@
 											</li>
 
 											<!-- Preference comments -->
-											<li ng-repeat="preference in supportStaff.supportStaffPreferences | orderBy: 'priority'"
+											<li ng-class="{ 'invisible': readOnlyMode }" ng-repeat="preference in supportStaff.supportStaffPreferences | orderBy: 'priority'"
 													ng-if="preference.comment && preference.comment.length > 0">
 												<div>
 													({{ preference.priority }}) <strong>{{ preference.subjectCode }} {{ preference.courseNumber }} Comments:</strong>
@@ -75,6 +75,28 @@
 												yes="Confirm" no="Cancel" placement="top"></i>
 										</div>
 									</div>
+
+
+
+									<!-- Repeat over preferences for this supportStaff -->
+									<div ng-class="{ 'invisible': !readOnlyMode }" ng-repeat="supportPreference in supportStaff.supportStaffPreferences | orderBy: 'priority'" class="tile-container">
+										<div class="remove-tile-container">
+										</div>
+										<div class="read-only-preference">
+												<div class="support-student-assignment-detail-container">
+														<div class="support-staff-assignment-detail">({{ supportPreference.priority }}) {{ supportPreference.subjectCode}} {{ supportPreference.courseNumber}} - {{ supportPreference.sequencePattern }} {{ appointmentTypeToShorthand(supportPreference.type) }}</div>
+												</div>
+												<div class="support-student-assignment-detail-container">
+													<div ng-if="supportPreference.comment.length > 0" class="support-staff-assignment-sub-detail">Comments: {{ supportPreference.comment }}</div>
+												</div>
+										</div>
+										<div class="remove-tile-container">
+										</div>
+									</div>
+
+
+
+
 
 
 									<course-assignment-selector
