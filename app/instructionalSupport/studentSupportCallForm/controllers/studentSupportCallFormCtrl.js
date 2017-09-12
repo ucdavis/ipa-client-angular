@@ -172,6 +172,17 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 					return false;
 				}
 
+				if ($scope.view.state.supportCallResponse.requirePreferenceComments == true) {
+					for (var i = 0; i < $scope.view.state.preferences.length; i++) {
+						var preference = $scope.view.state.preferences[i];
+
+						if (preference.comment.length == 0) {
+							$scope.validationError = "You must provide a comment for each preference";
+							return false;
+						}
+					}
+				}
+
 				$scope.validationError = "";
 				return true;
 			};
