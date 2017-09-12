@@ -94,7 +94,17 @@ instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSuppo
 	$scope.toggleCollectPreferenceComments = function () {
 		if ($scope.supportCallConfigData.collectPreferenceComments) {
 			$scope.supportCallConfigData.collectPreferenceComments = false;
+			$scope.supportCallConfigData.requirePreferenceComments = false;
 		} else {
+			$scope.supportCallConfigData.collectPreferenceComments = true;
+		}
+	};
+
+	$scope.toggleRequirePreferenceComments = function () {
+		if ($scope.supportCallConfigData.requirePreferenceComments) {
+			$scope.supportCallConfigData.requirePreferenceComments = false;
+		} else {
+			$scope.supportCallConfigData.requirePreferenceComments = true;
 			$scope.supportCallConfigData.collectPreferenceComments = true;
 		}
 	};
