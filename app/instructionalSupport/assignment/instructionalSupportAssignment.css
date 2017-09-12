@@ -661,6 +661,17 @@ margin-left: 6px;
 	visibility: hidden;
 }
 
+.read-only-preference {
+	display: flex;
+	flex-flow: column;
+	flex: 4 1 0px;
+	border: 1px solid #949494;
+	border-radius: 4px;
+	color: #949494;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+}
 .preference-percentage,
 .preference-priority {
 	color: #8a8989;
