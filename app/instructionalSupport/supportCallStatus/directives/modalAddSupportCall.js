@@ -87,6 +87,15 @@ sharedApp.directive("modalAddSupportCall", this.modalAddSupportCall = function (
 				}
 			};
 
+			scope.toggleRequirePreferenceComments = function () {
+				if (scope.supportCallConfigData.requirePreferenceComments) {
+					scope.supportCallConfigData.requirePreferenceComments = false;
+				} else {
+					scope.supportCallConfigData.requirePreferenceComments = true;
+					scope.supportCallConfigData.collectPreferenceComments = true;
+				}
+			};
+
 			scope.toggleCollectEligibilityConfirmation = function () {
 				if (scope.supportCallConfigData.collectEligibilityConfirmation) {
 					scope.supportCallConfigData.collectEligibilityConfirmation = false;

@@ -153,6 +153,16 @@
 										</div>
 								</li>
 
+								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleRequirePreferenceComments()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.requirePreferenceComments }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Require general comments</label>
+										</div>
+								</li>
+
 								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectEligibilityConfirmation()">
 										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
 											ng-class="{ 'checked': supportCallConfigData.collectEligibilityConfirmation }">
