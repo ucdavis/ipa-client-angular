@@ -131,6 +131,10 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		$scope.saveActivity = function () {
 			var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
 
+			if (activity.frequency < 1) {
+				activity.frequency = 1;
+			}
+
 			if (activity.dayIndicator) {
 				schedulingActionCreators.updateActivity(activity);
 			}

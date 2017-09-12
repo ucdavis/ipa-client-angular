@@ -355,7 +355,7 @@
 												</label>
 												<div class="col-sm-5" style="padding-left: 0;">
 													<div class="input-group input-group-sm">
-														<input auto-input type="number" class="form-control" on-enter="saveActivity()" on-blur="saveActivity()"
+														<input auto-input type="number" min="1" class="form-control" on-enter="saveActivity()" on-blur="saveActivity()"
 															help-text-placement="top" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].frequency"
 														/>
 														<span class="input-group-addon">weeks</span>
