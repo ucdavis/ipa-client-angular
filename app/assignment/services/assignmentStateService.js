@@ -310,8 +310,12 @@ assignmentApp.service('assignmentStateService', function (
 				case REMOVE_TEACHING_ASSIGNMENT:
 					teachingAssignment = action.payload.teachingAssignment;
 					instructor = instructors.list[teachingAssignment.instructorId];
-					termCode = teachingAssignment.termCode;
 
+					if (!instructor) {
+						return instructors;
+					}
+
+					termCode = teachingAssignment.termCode;
 					index = instructor.teachingAssignmentTermCodeIds[termCode].indexOf(teachingAssignment.id);
 
 					if (index > -1) {
