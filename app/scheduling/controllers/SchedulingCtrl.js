@@ -135,8 +135,8 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		$scope.setActivityStandardTime = function (time) {
 			var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
 			activity.frequency = 1;
-			activity.startTime = time.start;
-			activity.endTime = time.end;
+			activity.startTime = time ? time.start : null;
+			activity.endTime = time ? time.end : null;
 			$scope.saveActivity();
 		};
 

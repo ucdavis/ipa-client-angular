@@ -321,32 +321,11 @@
 											<input type="radio" name="buildingRadios" ng-value="true" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">Standard times
 										</label>
 									</div>
-									<!-- Standard times -->
-									<div ng-show="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">
-										<fieldset>
-											<div class="col-sm-4" style="padding: 0px;">
-												<select size="4" class="form-control standard-time" ng-options="duration as (duration + ' min') for (duration,pattern) in standardPatterns"
-													ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration">
-												</select>
-											</div>
-											<div class="control-group col-sm-3" style="padding: 0px 0px 0px 5px;">
-												<select size="4" class="form-control standard-time" ng-options="dayIndicator as getWeekDays(dayIndicator)
-												for dayIndicator in standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].dayIndicators"
-													ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].dayIndicator"
-													ng-click="setDayPattern(dayIndicator)">
-												</select>
-											</div>
-											<div class="control-group col-sm-5" style="padding: 0px 0px 0px 5px;">
-												<select size="4" class="form-control standard-time">
-													<option ng-repeat="time in standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].times"
-													ng-selected="time.start === view.state.activities.list[view.state.uiState.selectedActivityId].startTime && time.end === view.state.activities.list[view.state.uiState.selectedActivityId].endTime"
-													ng-click="setActivityStandardTime(time)">
-														{{ getMeridianTime(time.start) }} - {{ getMeridianTime(time.end) }}
-													</option>
-												</select>
-											</div>
-										</fieldset>
-									</div>
+									<!-- Standard Times selector -->
+									<time-pattern-selector
+										ng-if="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes"
+										activity="view.state.activities.list[view.state.uiState.selectedActivityId]">
+									</time-pattern-selector>
 
 									<div class="radio">
 										<label>
