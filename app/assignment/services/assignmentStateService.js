@@ -552,6 +552,9 @@ assignmentApp.service('assignmentStateService', function (
 				case CREATE_PLACEHOLDER_STAFF:
 					var termCode = action.payload.sectionGroup.termCode;
 					var sectionGroupId = action.payload.sectionGroup.id;
+					if (!theStaff.termCodes[termCode]) {
+						theStaff.termCodes[termCode] = [];
+					}
 					theStaff.termCodes[parseInt(termCode)].push(sectionGroupId);
 					return theStaff;
 				case REMOVE_PLACEHOLDER_STAFF:
