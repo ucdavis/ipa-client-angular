@@ -67,7 +67,7 @@ sharedApp
 			});
 
 			// Configure Idle settings
-			IdleProvider.idle(28 * 60); // 28 minutes: After this amount of time passes without the user performing an action the user is considered idle
+			IdleProvider.idle(240 * 60); // 28 minutes: After this amount of time passes without the user performing an action the user is considered idle
 			IdleProvider.timeout(2 * 60); // 2 minute: The amount of time the user has to respond before they have been considered timed out
 		}])
 
