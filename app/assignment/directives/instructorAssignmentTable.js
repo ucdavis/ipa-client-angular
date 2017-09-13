@@ -553,6 +553,8 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				else if ($el.data('event-type') == 'removeTheStaff') {
 					sectionGroupId = $el.data('section-group-id');
 					sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+
+					sectionGroup.showTheStaff = false;
 					assignmentActionCreators.removePlaceholderStaff(sectionGroup);
 				}
 
