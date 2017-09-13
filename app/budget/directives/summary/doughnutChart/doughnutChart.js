@@ -67,6 +67,8 @@ budgetApp.directive("doughnutChart", this.doughnutChart = function ($rootScope, 
 					chart.data.datasets[0].data.push(slotParam.value);
 				});
 
+				chart.options.title.text = scope.titleText;
+
 				chart.update();
 			}
 
@@ -77,6 +79,10 @@ budgetApp.directive("doughnutChart", this.doughnutChart = function ($rootScope, 
 
 			function paramsMatched(params, oldParams) {
 				var allMatched = true;
+
+				if (scope.oldTitleText != scope.titleText) {
+					allMatched = false;
+				}
 
 				params.forEach(function(slotParam, index) {
 					if (params[index].value != oldParams[index].value) {
@@ -94,6 +100,7 @@ budgetApp.directive("doughnutChart", this.doughnutChart = function ($rootScope, 
 
 				if (!scope.oldParams) {
 					scope.oldParams = scope.params;
+					scope.oldTitleText = scope.titleText;
 					return;
 				}
 

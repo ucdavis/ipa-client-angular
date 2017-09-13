@@ -448,7 +448,7 @@ budgetApp.service('budgetSelectors', function () {
 				value: (rawLineItemCosts / costsRawTotal * 100).toFixed(2)
 			});
 			selectedBudgetScenario.summary.costsTotal = toCurrency(costsRawTotal);
-
+			selectedBudgetScenario.summary.graphTitleText = "Total Costs (" + selectedBudgetScenario.summary.costsTotal + ")";
 			// Calculate total
 			var totalBalance = selectedBudgetScenario.summary.lineItems.total - selectedBudgetScenario.summary.courseCosts.total;
 			selectedBudgetScenario.summary.totalBalance = toCurrency(totalBalance);
