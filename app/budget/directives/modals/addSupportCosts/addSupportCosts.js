@@ -5,7 +5,8 @@ budgetApp.directive("addSupportCosts", this.addSupportCosts = function ($rootSco
 		replace: true,
 		scope: {
 			state: '<',
-			budget: '<'
+			budget: '<',
+			isVisible: '='
 		},
 		link: function (scope, element, attrs) {
 			scope.newBudget = {};
@@ -22,6 +23,10 @@ budgetApp.directive("addSupportCosts", this.addSupportCosts = function ($rootSco
 
 			scope.updateInstructorCost = function (newInstructor) {
 				budgetActions.updateInstructorCost(newInstructor);
+			};
+
+			scope.close = function() {
+				scope.isVisible = false;
 			};
 		} // end link
 	};

@@ -4,7 +4,8 @@ budgetApp.directive("addBudgetScenario", this.addBudgetScenario = function ($roo
 		templateUrl: 'addBudgetScenario.html',
 		replace: true,
 		scope: {
-			state: '<'
+			state: '<',
+			isVisible: '='
 		},
 		link: function (scope, element, attrs) {
 			scope.newBudgetScenario = {};
@@ -25,6 +26,10 @@ budgetApp.directive("addBudgetScenario", this.addBudgetScenario = function ($roo
 			};
 			scope.submitBudgetScenarioForm = function () {
 				budgetActions.createBudgetScenario(scope.newBudgetScenario, scope.state.budget.id, scope.newBudgetScenario.budgetScenarioId);
+			};
+
+			scope.close = function() {
+				scope.isVisible = false;
 			};
 		} // end link
 	};

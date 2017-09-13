@@ -4,7 +4,8 @@ budgetApp.directive("addLineItem", this.addLineItem = function ($rootScope, budg
 		templateUrl: 'addLineItem.html',
 		replace: true,
 		scope: {
-			state: '<'
+			state: '<',
+			isVisible: '='
 		},
 		link: function (scope, element, attrs) {
 			scope.newLineItem = {};
@@ -41,6 +42,10 @@ budgetApp.directive("addLineItem", this.addLineItem = function ($rootScope, budg
 			scope.submitLineItemForm = function () {
 				scope.newLineItem.budgetScenarioId = scope.state.selectedBudgetScenario.id;
 				budgetActions.createLineItem(scope.newLineItem, scope.state.selectedBudgetScenario.id);
+			};
+
+			scope.close = function() {
+				scope.isVisible = false;
 			};
 		} // end link
 	};
