@@ -171,9 +171,12 @@
 									</li>
 									<li ng-if="hasWriteAccess()">
 										<!-- add button -->
-										<div class="form-horizontal">
+										<div class="add-location-container">
 											<input class="form-control" type="text" name="text" size="30" placeholder="Add New Location" ng-model="view.state.locations.newLocation.description">
-											<button type="button" class="btn btn-blue" ng-click="addLocation()" ng-disabled="!view.state.locations.newLocation.description">Add</button>
+											<button ng-if="isLocationFormValid()" ng-click="addLocation()" type="button" class="btn btn-blue">Add</button>
+											<div ng-if="isLocationFormValid() == false" uib-tooltip="{{locationValidationError}}">
+												<button type="button" class="add-location-disabled btn btn-blue disabled">Add</button>
+											</div>
 										</div>
 									</li>
 								</ul>

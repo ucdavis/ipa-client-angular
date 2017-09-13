@@ -227,3 +227,11 @@ table th {
 	margin-right: 85px;
 	float:right;
 }
+
+.add-location-container {
+	display: flex;
+}
+
+.add-location-disabled {
+	height: 100%;
+}
