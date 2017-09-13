@@ -140,8 +140,10 @@ budgetApp.service('budgetSelectors', function () {
 			// Add sectionGroupCosts (for selected termCode)
 			selectedBudgetScenario.selectedTerm = ui.selectedTerm;
 			selectedBudgetScenario.courses = []; // Will hold sectionGroupCosts, grouped by subj/course number
-			var addedCoursesHash = {}; // Will hold the index of a given course in courses, based on subj/course number key
+			selectedBudgetScenario.allCourses = []; // Will hold sectionGroupCosts, grouped by subj/course number
 
+			var addedAllCoursesHash = {}; // Will hold the index of a given course in courses, based on subj/course number key
+			var addedCoursesHash = {};
 			selectedBudgetScenario.terms = [];
 			selectedBudgetScenario.termDescriptions = {
 				'05': 'Summer Session 1',
@@ -171,25 +173,162 @@ budgetApp.service('budgetSelectors', function () {
 					selectedBudgetScenario.terms.push(term);
 				}
 
+				// Determine if a course for this sectionGroup has been made
+				// Course will hold all sectionGroups with the same subj/course number
+				var sectionGroupKey = sectionGroupCost.subjectCode + sectionGroupCost.courseNumber;
+				var newAllCourseIndex = null;
+
+				if (addedAllCoursesHash[sectionGroupKey] == null) {
+
+					// Add the course
+					var newCourse = {
+						sectionGroupCosts: [],
+						subjectCode: sectionGroupCost.subjectCode,
+						courseNumber: sectionGroupCost.courseNumber,
+						title: sectionGroupCost.title
+					};
+
+					selectedBudgetScenario.allCourses.push(newCourse);
+
+					// Store the new course index in the hash
+					newAllCourseIndex = selectedBudgetScenario.allCourses.length - 1;
+					addedAllCoursesHash[sectionGroupKey] = newAllCourseIndex;
+				} else {
+					newAllCourseIndex = addedAllCoursesHash[sectionGroupKey];
+					newCourse = selectedBudgetScenario.allCourses[newAllCourseIndex];
+				}
+
+				// Setting UI states for sectionGroupCost
+				sectionGroupCost.displaySectionCountInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displaySectionCountInput;
+				sectionGroupCost.displayTaCountInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayTaCountInput;
+				sectionGroupCost.displayReaderCountInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayReaderCountInput;
+				sectionGroupCost.displayEnrollmentInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayEnrollmentInput;
+				sectionGroupCost.displayInstructorCostInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayInstructorCostInput;
+				sectionGroupCost.displayReasonInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayReasonInput;
+
+				// add sectionGroupCost instructor metaData
+				var instructor = instructors.list[sectionGroupCost.instructorId];
+				if (instructor != null) {
+					sectionGroupCost.instructor = instructor;
+				}
+
+				var originalInstructor = instructors.list[sectionGroupCost.originalInstructorId];
+				if (originalInstructor != null) {
+					sectionGroupCost.originalInstructor = originalInstructor;
+				}
+
+				// Set taCost
+				var taCost = sectionGroupCost.taCount * budget.taCost;
+				sectionGroupCost.taCost = parseFloat(taCost).toFixed(2);
+
+				// Set readerCost
+				var readerCost = sectionGroupCost.readerCount * budget.readerCost;
+				sectionGroupCost.readerCost = parseFloat(readerCost).toFixed(2);
+
+				// Set supportCostSubTotal
+				var supportCostSubTotal = readerCost + taCost;
+				sectionGroupCost.supportCostSubTotal = parseFloat(supportCostSubTotal).toFixed(2);
+
+				// Set instructorCostSubTotal
+				var instructorCostSubTotal = 0;
+
+				// Use budget specific cost if instructor is a lecturer
+				var instructor = instructors.list[sectionGroupCost.instructorId];
+
+				if (instructor) {
+					var instructorCost = instructorCosts.list[instructor.instructorCostId];
+				}
+
+				if (instructorCost && instructorCost.lecturer) {
+					instructorCostSubTotal = budget.lecturerCost;
+				}
+
+				// Use instructor specific override for instructor cost
+				if (sectionGroupCost.instructorId != null && instructorCost && instructorCost.cost) {
+					instructorCostSubTotal = instructorCost.cost;
+				}
+
+				// Use sectionGroupCost override for instructor cost
+				if (sectionGroupCost.instructorCost != null) {
+					instructorCostSubTotal = sectionGroupCost.instructorCost;
+				}
+
+				// Set 'actual instructor cost'
+				// When sectionGroup.instructorCost is overridden, we will display this value
+				sectionGroupCost.actualInstructorCost = instructorCostSubTotal;
+
+				// Set totalCost
+				var totalCost = supportCostSubTotal + instructorCostSubTotal;
+				sectionGroupCost.totalCost = parseFloat(totalCost).toFixed(2);
+
+				// Set sectionGroupCostComments
+				sectionGroupCost.comments = [];
+
+				sectionGroupCostComments.ids.forEach(function(commentId) {
+					var comment = sectionGroupCostComments.list[commentId];
+
+					if (comment.sectionGroupCostId == sectionGroupCost.id) {
+						sectionGroupCost.comments.push(comment);
+					}
+				});
+
+				// Sort sectionGroupCostComments
+				var reverseOrder = true;
+				sectionGroupCost.comments =_array_sortByProperty(sectionGroupCost.comments, "lastModifiedOn", reverseOrder);
+
+				// Add schedule data
+				var uniqueKey = sectionGroupCost.subjectCode
+				+ "-" + sectionGroupCost.courseNumber
+				+ "-" + sectionGroupCost.sequencePattern
+				+ "-" + sectionGroupCost.termCode;
+
+				var scheduledSectionGroup = scheduleSectionGroups.list[uniqueKey];
+				sectionGroupCost.liveData = {};
+
+
+				if (scheduledSectionGroup) {
+					sectionGroupCost.liveData.sectionCount = scheduledSectionGroup.sectionCount;
+					sectionGroupCost.liveData.totalSeats = scheduledSectionGroup.totalSeats;
+					sectionGroupCost.liveData.taCount = scheduledSectionGroup.taCount;
+					sectionGroupCost.liveData.readerCount = scheduledSectionGroup.readerCount;
+				}
+
+				// Generate warnings
+				sectionGroupCost.warnings = {
+					sectionCount: null,
+					totalSeats: null
+				};
+
+				if (sectionGroupCost.liveData.sectionCount != sectionGroupCost.sectionCount) {
+					sectionGroupCost.warnings.sectionCount = "The current schedule has " + sectionGroupCost.liveData.sectionCount + " sections";
+				}
+
+				if (sectionGroupCost.liveData.totalSeats != sectionGroupCost.enrollment) {
+					sectionGroupCost.warnings.totalSeats = "The current schedule has " + sectionGroupCost.liveData.totalSeats + " total seats";
+				}
+
+				if (sectionGroupCost.liveData.taCount != sectionGroupCost.taCount) {
+					sectionGroupCost.warnings.taCount = "The current schedule has " + sectionGroupCost.liveData.taCount + " TAs";
+				}
+
+				if (sectionGroupCost.liveData.readerCount != sectionGroupCost.readerCount) {
+					sectionGroupCost.warnings.readerCount = "The current schedule has " + sectionGroupCost.liveData.readerCount + " readers";
+				}
+
+				// Add the sectionGroup to the course
+				selectedBudgetScenario.allCourses[newAllCourseIndex].sectionGroupCosts.push(sectionGroupCost);
+
+				// Optionally add sectionGroupCost (and course) to term scoped list
 				if (term == selectedBudgetScenario.selectedTerm) {
-					// Ensure the sectionGroupCost is for the relevant term
-
-					// Determine if a course for this sectionGroup has been made
-					// Course will hold all sectionGroups with the same subj/course number
-					var sectionGroupKey = sectionGroupCost.subjectCode + sectionGroupCost.courseNumber;
-					var newCourseIndex = null;
-
 					if (addedCoursesHash[sectionGroupKey] == null) {
-
-						// Add the course 
-						var newcourse = {
+						var newCourse = {
 							sectionGroupCosts: [],
 							subjectCode: sectionGroupCost.subjectCode,
 							courseNumber: sectionGroupCost.courseNumber,
 							title: sectionGroupCost.title
 						};
 
-						selectedBudgetScenario.courses.push(newcourse);
+						selectedBudgetScenario.courses.push(newCourse);
 
 						// Store the new course index in the hash
 						newCourseIndex = selectedBudgetScenario.courses.length - 1;
@@ -198,124 +337,6 @@ budgetApp.service('budgetSelectors', function () {
 						newCourseIndex = addedCoursesHash[sectionGroupKey];
 					}
 
-					// Setting UI states for sectionGroupCost
-					sectionGroupCost.displaySectionCountInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displaySectionCountInput;
-					sectionGroupCost.displayTaCountInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayTaCountInput;
-					sectionGroupCost.displayReaderCountInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayReaderCountInput;
-					sectionGroupCost.displayEnrollmentInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayEnrollmentInput;
-					sectionGroupCost.displayInstructorCostInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayInstructorCostInput;
-					sectionGroupCost.displayReasonInput = ui.sectionGroupCostDetails[sectionGroupCost.id].displayReasonInput;
-
-					// add sectionGroupCost instructor metaData
-					var instructor = instructors.list[sectionGroupCost.instructorId];
-					if (instructor != null) {
-						sectionGroupCost.instructor = instructor;
-					}
-
-					var originalInstructor = instructors.list[sectionGroupCost.originalInstructorId];
-					if (originalInstructor != null) {
-						sectionGroupCost.originalInstructor = originalInstructor;
-					}
-
-					// Set taCost
-					var taCost = sectionGroupCost.taCount * budget.taCost;
-					sectionGroupCost.taCost = parseFloat(taCost).toFixed(2);
-
-					// Set readerCost
-					var readerCost = sectionGroupCost.readerCount * budget.readerCost;
-					sectionGroupCost.readerCost = parseFloat(readerCost).toFixed(2);
-
-					// Set supportCostSubTotal
-					var supportCostSubTotal = readerCost + taCost;
-					sectionGroupCost.supportCostSubTotal = parseFloat(supportCostSubTotal).toFixed(2);
-
-					// Set instructorCostSubTotal
-					var instructorCostSubTotal = 0;
-
-					// Use budget specific cost if instructor is a lecturer
-					var instructor = instructors.list[sectionGroupCost.instructorId];
-
-					if (instructor) {
-						var instructorCost = instructorCosts.list[instructor.instructorCostId];
-					}
-
-					if (instructorCost && instructorCost.lecturer) {
-						instructorCostSubTotal = budget.lecturerCost;
-					}
-
-					// Use instructor specific override for instructor cost
-					if (sectionGroupCost.instructorId != null && instructorCost && instructorCost.cost) {
-						instructorCostSubTotal = instructorCost.cost;
-					}
-
-					// Use sectionGroupCost override for instructor cost
-					if (sectionGroupCost.instructorCost != null) {
-						instructorCostSubTotal = sectionGroupCost.instructorCost;
-					}
-
-					// Set 'actual instructor cost'
-					// When sectionGroup.instructorCost is overridden, we will display this value
-					sectionGroupCost.actualInstructorCost = instructorCostSubTotal;
-
-					// Set totalCost
-					var totalCost = supportCostSubTotal + instructorCostSubTotal;
-					sectionGroupCost.totalCost = parseFloat(totalCost).toFixed(2);
-
-					// Set sectionGroupCostComments
-					sectionGroupCost.comments = [];
-
-					sectionGroupCostComments.ids.forEach(function(commentId) {
-						var comment = sectionGroupCostComments.list[commentId];
-
-						if (comment.sectionGroupCostId == sectionGroupCost.id) {
-							sectionGroupCost.comments.push(comment);
-						}
-					});
-
-					// Sort sectionGroupCostComments
-					var reverseOrder = true;
-					sectionGroupCost.comments =_array_sortByProperty(sectionGroupCost.comments, "lastModifiedOn", reverseOrder);
-
-					// Add schedule data
-					var uniqueKey = sectionGroupCost.subjectCode
-					+ "-" + sectionGroupCost.courseNumber
-					+ "-" + sectionGroupCost.sequencePattern
-					+ "-" + sectionGroupCost.termCode;
-
-					var scheduledSectionGroup = scheduleSectionGroups.list[uniqueKey];
-					sectionGroupCost.liveData = {};
-
-
-					if (scheduledSectionGroup) {
-						sectionGroupCost.liveData.sectionCount = scheduledSectionGroup.sectionCount;
-						sectionGroupCost.liveData.totalSeats = scheduledSectionGroup.totalSeats;
-						sectionGroupCost.liveData.taCount = scheduledSectionGroup.taCount;
-						sectionGroupCost.liveData.readerCount = scheduledSectionGroup.readerCount;
-					}
-
-					// Generate warnings
-					sectionGroupCost.warnings = {
-						sectionCount: null,
-						totalSeats: null
-					};
-
-					if (sectionGroupCost.liveData.sectionCount != sectionGroupCost.sectionCount) {
-						sectionGroupCost.warnings.sectionCount = "The current schedule has " + sectionGroupCost.liveData.sectionCount + " sections";
-					}
-
-					if (sectionGroupCost.liveData.totalSeats != sectionGroupCost.enrollment) {
-						sectionGroupCost.warnings.totalSeats = "The current schedule has " + sectionGroupCost.liveData.totalSeats + " total seats";
-					}
-
-					if (sectionGroupCost.liveData.taCount != sectionGroupCost.taCount) {
-						sectionGroupCost.warnings.taCount = "The current schedule has " + sectionGroupCost.liveData.taCount + " TAs";
-					}
-
-					if (sectionGroupCost.liveData.readerCount != sectionGroupCost.readerCount) {
-						sectionGroupCost.warnings.readerCount = "The current schedule has " + sectionGroupCost.liveData.readerCount + " readers";
-					}
-
-					// Add the sectionGroup to the course
 					selectedBudgetScenario.courses[newCourseIndex].sectionGroupCosts.push(sectionGroupCost);
 				}
 			});
@@ -370,7 +391,7 @@ budgetApp.service('budgetSelectors', function () {
 				total: 0
 			};
 
-			selectedBudgetScenario.courses.forEach(function(course) {
+			selectedBudgetScenario.allCourses.forEach(function(course) {
 				course.sectionGroupCosts.forEach(function(sectionGroupCost) {
 					selectedBudgetScenario.summary.courseCosts.taCosts.raw += parseFloat(sectionGroupCost.taCost);
 					selectedBudgetScenario.summary.courseCosts.taCosts.display = toCurrency(selectedBudgetScenario.summary.courseCosts.taCosts.raw);
