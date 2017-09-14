@@ -6,15 +6,15 @@ var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 			if ($rootScope.slowResTime) { $timeout.cancel($rootScope.slowResTime); }
 			if ($rootScope.timeOutTimer) { $timeout.cancel($rootScope.timeOutTimer); }
 
-			var slowResDelay = 5000; // 5 seconds
-			var timeOutDelay = 30000; // 30 seconds
+			var slowResDelay = 8000; // 8 seconds
+			var timeOutDelay = 45000; // 45 seconds
 
 			$rootScope.slowResTime = $timeout(function () {
 				$rootScope.$emit('toast', { message: "Server appears to be slow. Please standby...", type: "WARNING" });
 			}, slowResDelay);
 
 			$rootScope.timeOutTimer = $timeout(function () {
-				$rootScope.$emit('toast', { message: "Server apears to have failed. Please try again.", type: "ERROR", options: { timeOut: 0, closeButton: true } });
+				$rootScope.$emit('toast', { message: "Server appears to have failed. Please try again.", type: "ERROR", options: { timeOut: 0, closeButton: true } });
 			}, timeOutDelay);
 
 			return config;
