@@ -48,3 +48,7 @@
 .add-course-comments .comment-input-container {
 	padding: 2%;
 }
+
+.add-course-comments .comment-date {
+	color: #b7b7b7;
+}

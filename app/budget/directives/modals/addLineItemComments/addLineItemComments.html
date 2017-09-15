@@ -18,8 +18,8 @@
 
 	<div ng-repeat="comment in lineItem.comments" class="comment-container">
 		<div class="comment-header">
-			Posted By: {{ comment.authorName }}
-			<span uib-tooltip="{{ dateToCalendar(comment.lastModifiedOn) }}">
+			{{ comment.authorName }}&nbsp;
+			<span class="comment-date" uib-tooltip="{{ dateToCalendar(comment.lastModifiedOn) }}">
 				({{ dateToRelative(comment.lastModifiedOn) }})
 			</span>
 		</div>
