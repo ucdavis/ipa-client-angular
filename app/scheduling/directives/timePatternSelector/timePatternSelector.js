@@ -22,24 +22,48 @@ sharedApp.directive('timePatternSelector', function($window, $location, $routePa
 				scope.timeOfferings = scope.standardPatterns[scope.selectedDuration].times;
 			}
 
-			scope.clearTimeAndDay = function() {
-				scope.activity.dayIndicator = "0000000";
-				scope.activity.startTime = null;
-				scope.activity.endTime = null;
+			scope.clearAll = function() {
 				scope.selectedDuration = null;
+
+				scope.setTimeToBlank();
+				scope.setDaysToBlank();
+
 				scope.timeOfferings = [];
 				scope.dayOfferings = [];
+
 				schedulingActionCreators.updateActivity(scope.activity);
+			};
+
+			scope.clearTimeAndDay = function() {
+				scope.setTimeToBlank();
+				scope.setDaysToBlank();
+				schedulingActionCreators.updateActivity(scope.activity);
+			};
+
+			scope.clearTime = function() {
+				scope.setTimeToBlank();
+				schedulingActionCreators.updateActivity(scope.activity);
+			};
+
+			scope.setDaysToBlank = function() {
+				scope.activity.dayIndicator = "0000000";
+				scope.selectedDayPattern = null;
+			};
+
+			scope.setTimeToBlank = function() {
+				scope.activity.startTime = null;
+				scope.activity.endTime = null;
+				scope.selectedStartTime = null;
+				scope.selectedEndTime = null;
+
+				scope.activity.dayIndicator = null;
 			};
 
 			scope.selectDuration = function(duration) {
 				scope.selectedDuration = duration;
 				scope.activity.selectedDuration = duration;
 
-				scope.activity.startTime = null;
-				scope.activity.endTime = null;
-				scope.selectedStartTime = null;
-				scope.selectedEndTime = null;
+				scope.clearTimeAndDay();
 
 				scope.dayOfferings = scope.standardPatterns[duration].dayIndicators;
 				scope.timeOfferings = scope.standardPatterns[duration].times;

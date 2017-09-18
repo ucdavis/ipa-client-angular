@@ -2,7 +2,7 @@
 
 	<div class="minutes-column">
 		<div class="column-content">
-			<div class="option-row" ng-click="clearTimeAndDay()">&nbsp;</div>
+			<div class="option-row" ng-click="clearAll()">&nbsp;</div>
 			<div ng-click="selectDuration(50)" ng-class="{ 'selected-row' : selectedDuration == 50, 'option-row' : selectedDuration != 50 }">50 min</div>
 			<div ng-click="selectDuration(80)" ng-class="{ 'selected-row' : selectedDuration == 80, 'option-row' : selectedDuration != 80 }">80 min</div>
 			<div ng-click="selectDuration(110)" ng-class="{ 'selected-row' : selectedDuration == 110, 'option-row' : selectedDuration != 110 }">110 min</div>
@@ -22,7 +22,7 @@
 
 	<div class="hours-column">
 		<div class="column-content">
-			<div class="option-row" ng-click="clearTimeAndDay()">&nbsp;</div>
+			<div class="option-row" ng-click="clearTime()">&nbsp;</div>
 			<div ng-click="selectTime(time)" ng-repeat="time in timeOfferings"
 					ng-class="{ 'selected-row' : selectedStartTime == time.start && selectedEndTime == time.end, 'option-row' : selectedStartTime != time.start || selectedEndTime != time.end }">
 				{{ getMeridianTime(time.start) }}-{{ getMeridianTime(time.end) }}
