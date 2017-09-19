@@ -124,13 +124,13 @@
 								<div ng-show="view.state.supportCallResponse.collectPreferenceComments" class="comments-btn">
 									<div ng-if="preference.comment.length == 0 && view.state.supportCallResponse.requirePreferenceComments == true" uib-tooltip="Preference comment is required">
 										<div ng-click="openPreferenceCommentModal(preference)"><i class="glyphicon glyphicon-edit preference-comments-ui"
-											ng-class="{'preference-comment-submitted' : preference.comment.length > 0, 'preference-comment-required' : preference.comment.length == 0 && view.state.supportCallResponse.requirePreferenceComments == true }"></i>
+											ng-class="{'preference-comment-submitted' : preference.comment.length > 0 }"></i>
 												<span>Comments...</span>
 										</div>
 									</div>
 									<div ng-if="preference.comment.length != 0 || view.state.supportCallResponse.requirePreferenceComments != true">
 										<div ng-click="openPreferenceCommentModal(preference)"><i class="glyphicon glyphicon-edit preference-comments-ui"
-											ng-class="{'preference-comment-submitted' : preference.comment.length > 0, 'preference-comment-required' : preference.comment.length == 0 && view.state.supportCallResponse.requirePreferenceComments == true }"></i>
+											ng-class="{'preference-comment-submitted' : preference.comment.length > 0 }"></i>
 											<span>Comments...</span>
 										</div>
 									</div>
