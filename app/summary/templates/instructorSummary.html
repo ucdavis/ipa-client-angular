@@ -75,6 +75,13 @@
 						</div>
 					</div>
 				</div>
+				<div class="course-table__header">
+					<div class="course-table__header-detail">
+						<div>
+							Term
+						</div>
+					</div>
+				</div>
 			</div>
 			<!-- table header -->
 
@@ -92,6 +99,9 @@
 				</div>
 				<div class="course-table__row-detail">
 					<i class="glyphicon glyphicon-ok" ng-if="supportCallResponse.submitted"></i>
+				</div>
+				<div class="course-table__row-detail">
+					{{ supportCallResponse.termCode.getTermCodeDisplayName(true) }}
 				</div>
 			</div>
 
