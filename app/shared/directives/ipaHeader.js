@@ -1,4 +1,4 @@
-sharedApp.directive('ipaHeader', function($window, $location, $rootScope, authService) {
+sharedApp.directive('ipaHeader', function($window, $location, $rootScope, authService, $routeParams) {
 	return {
 		restrict: 'E', // Use this via an element selector <dss-modal></dss-modal>
 		templateUrl: 'ipaHeader.html', // directive html found here:
@@ -21,10 +21,7 @@ sharedApp.directive('ipaHeader', function($window, $location, $rootScope, authSe
 			scope.changeWorkgroup = function(originalWorkgroupId, newWorkgroupId) {
 				var originalWorkgroupId = originalWorkgroupId.toString();
 				var newWorkgroupId = newWorkgroupId.toString();
-
-				var explodedUrl = $location.absUrl().split('/');
-				var workgroupIndex = explodedUrl.indexOf(originalWorkgroupId);
-				var year = explodedUrl[workgroupIndex + 1].split('?')[0];
+				var year = $routeParams.year;
 				var url = "/summary/" + newWorkgroupId + "/" + year;
 
 				$window.location.href = url;
