@@ -55,8 +55,6 @@ sharedApp.directive('timePatternSelector', function($window, $location, $routePa
 				scope.activity.endTime = null;
 				scope.selectedStartTime = null;
 				scope.selectedEndTime = null;
-
-				scope.activity.dayIndicator = null;
 			};
 
 			scope.selectDuration = function(duration) {
