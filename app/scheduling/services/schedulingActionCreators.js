@@ -173,7 +173,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 						section: section
 					}
 				};
-				courseStateService.reduce(action);
+				schedulingStateService.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
