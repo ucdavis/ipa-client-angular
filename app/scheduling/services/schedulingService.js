@@ -73,6 +73,19 @@ schedulingApp.factory("schedulingService", this.schedulingService = function ($h
 
 			return deferred.promise;
 		},
+		getActivities: function (section) {
+			var deferred = $q.defer();
+
+			$http.get(serverRoot + "/api/schedulingView/sections/" + section.id + "/activities", { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
+		},
 		getCourseActivityTypes: function (course) {
 			var deferred = $q.defer();
 
