@@ -189,8 +189,8 @@
 							}} - {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
 						</p>
 						<p ng-hide="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length"
-							class="text-center text-muted">
-							No Sections
+							class="text-center">
+							<button class="btn neon-dark-confirm-btn create-section-btn" ng-click="createSection(view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId])">Create Section</button>
 						</p>
 						<div ng-show="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length">
 							<!-- All Sections header (or the first section if sequence pattern is numeric) -->

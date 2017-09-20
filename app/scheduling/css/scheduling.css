@@ -418,3 +418,29 @@ i.selected-section-group-remove {
 	padding: 3px;
 	margin-left: 3px;
 }
+
+.create-section-btn {
+	padding-left: 10px;
+}
+
+.neon-dark-confirm-btn,
+.neon-dark-confirm-btn:focus,
+.neon-dark-confirm-btn:active,
+.neon-dark-confirm-btn {
+	background-color: rgb(48, 54, 65);
+	border-color: rgb(48, 54, 65);
+	color: white;
+}
+
+.neon-dark-confirm-btn:hover {
+	background-color: rgb(18, 24, 35); /* Darker Version for hover */
+	color: white;
+}
+
+.neon-dark-confirm-btn.disabled,
+.neon-dark-confirm-btn.disabled:hover,
+.neon-dark-confirm-btn.disabled:focus,
+.neon-dark-confirm-btn.disabled:active {
+	background-color: rgb(48, 54, 65);
+	color: white;
+}
