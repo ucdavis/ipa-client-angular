@@ -168,6 +168,11 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 
 					sections.list = sectionsList;
 					return sections;
+				case CREATE_SECTION:
+					var section = action.payload.section;
+					sections.ids.push(section.id);
+					sections.list[section.id] = section;
+					return sections;
 				case REMOVE_ACTIVITY:
 					var section = sections.list[action.payload.activity.sectionId];
 					if (section === undefined) { return sections; }
