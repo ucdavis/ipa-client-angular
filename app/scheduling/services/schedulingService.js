@@ -85,6 +85,20 @@ schedulingApp.factory("schedulingService", this.schedulingService = function ($h
 				});
 
 			return deferred.promise;
+		},
+		createSection: function (section) {
+			var deferred = $q.defer();
+			if (!section) { return; }
+
+			$http.post(serverRoot + "/api/courseView/sectionGroups/" + section.sectionGroupId + "/sections", section, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
 		}
 	};
 });

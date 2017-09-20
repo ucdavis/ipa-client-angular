@@ -162,6 +162,21 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				}
 			};
 			schedulingStateService.reduce(action);
+		},
+		createSection: function (section) {
+
+			schedulingService.createSection(section).then(function (section) {
+				$rootScope.$emit('toast', { message: "Created section " + section.sequenceNumber, type: "SUCCESS" });
+				var action = {
+					type: CREATE_SECTION,
+					payload: {
+						section: section
+					}
+				};
+				courseStateService.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
 		}
 	};
 });
