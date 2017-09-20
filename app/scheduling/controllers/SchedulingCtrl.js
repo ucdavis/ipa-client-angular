@@ -187,6 +187,18 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			schedulingActionCreators.toggleCheckAll(sectionGroupIdsToCheck);
 		};
 
+		$scope.createSection = function (sectionGroup) {
+			var course = $scope.view.state.courses.list[sectionGroup.courseId];
+
+			var section = {
+				sectionGroupId: sectionGroup.id,
+				sequenceNumber: firstSequencePattern(course),
+				seats: 0
+			};
+
+			schedulingActionCreators.createSection(section);
+		};
+
 		$scope.isLocked = function () {
 			if (!$scope.view.state) { return true; }
 			var term = $scope.view.state.uiState.term;
