@@ -164,13 +164,30 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 			schedulingStateService.reduce(action);
 		},
 		createSection: function (section) {
-
+			var self = this;
 			schedulingService.createSection(section).then(function (section) {
 				$rootScope.$emit('toast', { message: "Created section " + section.sequenceNumber, type: "SUCCESS" });
 				var action = {
 					type: CREATE_SECTION,
 					payload: {
 						section: section
+					}
+				};
+				schedulingStateService.reduce(action);
+
+				// Server potentially created new activities as well
+				self.getActivities(section);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
+		getActivities: function (section) {
+			schedulingService.getActivities(section).then(function (activities) {
+				var action = {
+					type: GET_ACTIVITIES,
+					payload: {
+						section: section,
+						activities: activities
 					}
 				};
 				schedulingStateService.reduce(action);

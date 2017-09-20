@@ -141,6 +141,21 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 				case CREATE_SHARED_ACTIVITY:
 					sectionGroups.list[action.payload.sectionGroup.id].sharedActivityIds.push(action.payload.activity.id);
 					return sectionGroups;
+				case CREATE_SECTION:
+					var section = action.payload.section;
+					var sectionGroup = sectionGroups.list[section.sectionGroupId];
+					sectionGroup.sectionIds.push(section.id);
+					return sectionGroups;
+				case GET_ACTIVITIES:
+					var activities = action.payload.activities;
+					var section = action.payload.section;
+					var sectionGroup = sectionGroups.list[section.sectionGroupId];
+					activities.forEach(function(activity) {
+						if (activity.sectionGroupId == sectionGroup.id) {
+							sectionGroup.sharedActivityIds.push(activity.id);
+						}
+					});
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}
@@ -170,6 +185,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					return sections;
 				case CREATE_SECTION:
 					var section = action.payload.section;
+					section.activityIds = [];
 					sections.ids.push(section.id);
 					sections.list[section.id] = section;
 					return sections;
@@ -181,6 +197,17 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					if (activityIndex >= 0) {
 						section.activityIds.splice(activityIndex, 1);
 					}
+					return sections;
+				case GET_ACTIVITIES:
+					var activities = action.payload.activities;
+					var sectionId = action.payload.section.id;
+					var section = sections.list[sectionId];
+
+					activities.forEach(function(activity) {
+						if (activity.sectionId == sectionId) {
+							section.activityIds.push(activity.id);
+						}
+					});
 					return sections;
 				case CREATE_ACTIVITY:
 					sections.list[action.payload.activity.sectionId].activityIds.push(action.payload.activity.id);
@@ -263,6 +290,15 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					activities.list[action.payload.activity.id] = new Activity(action.payload.activity);
 					activities.list[action.payload.activity.id].courseId = action.payload.sectionGroup.courseId;
 					activities.ids.push(action.payload.activity.id);
+					return activities;
+				case GET_ACTIVITIES:
+					var section = action.payload.section;
+					var activitiesPayload = action.payload.activities;
+
+					activitiesPayload.forEach(function(activity) {
+						activities.ids.push(activity.id);
+						activities.list[activity.id] = new Activity(activity);
+					});
 					return activities;
 				default:
 					return activities;
