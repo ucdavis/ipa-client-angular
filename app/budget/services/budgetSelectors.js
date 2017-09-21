@@ -63,7 +63,8 @@ budgetApp.service('budgetSelectors', function () {
 			sectionGroups,
 			sections,
 			courses,
-			scheduleSectionGroups
+			scheduleSectionGroups,
+			users
 		) {
 			var selectedBudgetScenario = budgetScenarios.list[ui.selectedBudgetScenarioId];
 
@@ -126,13 +127,20 @@ budgetApp.service('budgetSelectors', function () {
 					lineItem.isDetailViewOpen = true;
 				}
 
-				// Set last modified by
+				// Set 'lastModifiedBy'
 				// Expected formats are 'system' or 'user:bobsmith'
-				// Will convert 'user:bobsmith' to 'bobsmith'
+				// Will convert 'user:bobsmith' to 'Smith, Bob'
 				if (lineItem.lastModifiedBy) {
 					var split = lineItem.lastModifiedBy.split(":");
 					if (split.length > 0 && split[0] == "user") {
-						lineItem.lastModifiedBy = split[1];
+						var loginId = split[1];
+
+						users.ids.forEach(function(userId) {
+							var user = users.list[userId];
+							if (user.loginId == loginId) {
+								lineItem.lastModifiedBy = user.name;
+							}
+						});
 					}
 				}
 			});

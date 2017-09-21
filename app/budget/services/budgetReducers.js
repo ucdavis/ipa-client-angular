@@ -172,6 +172,23 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return instructorCosts;
 			}
 		},
+		userReducers: function (action, users) {
+			switch (action.type) {
+				case INIT_STATE:
+					users = {
+						ids: [],
+						list: []
+					};
+
+					action.payload.users.forEach( function(user) {
+						users.ids.push(user.id);
+						users.list[user.id] = user;
+					});
+					return users;
+				default:
+					return users;
+			}
+		},
 		scheduleSectionGroupReducers: function (action, scheduleSectionGroups) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -500,6 +517,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.instructors = scope.instructorReducers(action, scope._state.instructors);
 			newState.instructorCosts = scope.instructorCostReducers(action, scope._state.instructorCosts);
 			newState.ui = scope.uiReducers(action, scope._state.ui);
+			newState.users = scope.userReducers(action, scope._state.users);
 
 			scope._state = newState;
 
@@ -520,7 +538,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				newState.sectionGroups,
 				newState.sections,
 				newState.courses,
-				newState.scheduleSectionGroups
+				newState.scheduleSectionGroups,
+				newState.users
 			);
 
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
