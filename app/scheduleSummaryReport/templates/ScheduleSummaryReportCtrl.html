@@ -88,14 +88,14 @@
 						</td>
 
 						<!-- Sequence Number -->
-						<td>
+						<td class="data-cell">
 							<div class="section-diff-element section-unique-key">
 								{{ section.sequenceNumber }}
 							</div>
 						</td>
 
 						<!-- CRN -->
-						<td>
+						<td class="data-cell">
 							<div ng-if="section.crn">
 								{{ section.crn }}
 							</div>
@@ -105,14 +105,14 @@
 						</td>
 
 						<!-- Seats -->
-						<td>
+						<td class="data-cell">
 							<div>
 								{{ section.seats }}
 							</div>
 						</td>
 
 						<!-- Activities -->
-						<td colspan="5" style="padding: 8px;">
+						<td colspan="5" style="padding: 8px;" class="data-cell">
 							<div ng-repeat="activity in section.activities track by $index"
 									class="section-activity-diff-row">
 
