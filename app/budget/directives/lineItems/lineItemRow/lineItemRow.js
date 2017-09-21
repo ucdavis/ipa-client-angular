@@ -35,6 +35,10 @@ budgetApp.directive("lineItemRow", this.lineItemRow = function ($rootScope, budg
 			scope.dateToRelative = function(date) {
 				return dateToRelative(date);
 			};
+
+			scope.selectLineItem = function(lineItem) {
+				// Empty intentionally
+			};
 		} // end link
 	};
 });
