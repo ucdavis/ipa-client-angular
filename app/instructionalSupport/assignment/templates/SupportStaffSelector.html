@@ -28,7 +28,7 @@
 			ng-repeat="supportStaffPreference in assignmentOptions.supportStaffPreferences"
 			ng-click="assignStaffToSlot(supportStaffPreference.supportStaffId)">
 			<a class="small">
-				<span class="course-filter-item">{{ supportStaffPreference.fullName }} ({{ supportStaffPreference.priority }})</span>
+				<span class="course-filter-item">{{ supportStaffPreference.fullName }} <span class="preference-priority">({{ supportStaffPreference.priority }})</span> <span class="preference-percentage" ng-if="supportStaffPreference.appointmentPercentage">{{ supportStaffPreference.appointmentPercentage }}%</span></span>
 			</a>
 		</li>
 

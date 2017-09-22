@@ -660,3 +660,8 @@ margin-left: 6px;
 .invisible {
 	visibility: hidden;
 }
+
+.preference-percentage,
+.preference-priority {
+	color: #8a8989;
+}
