@@ -15,7 +15,7 @@ instructionalSupportApp.factory("supportStaffFormService", this.supportStaffForm
 		},
 		addStudentPreference: function(preference) {
 			var deferred = $q.defer();
-			$http.post(serverRoot + "/api/instructionalSupportStudentFormView/sectionGroups/" + preference.sectionGroupId + "/preferenceType/" + preference.appointmentType, { withCredentials: true })
+			$http.post(serverRoot + "/api/instructionalSupportStudentFormView/sectionGroups/" + preference.sectionGroupId + "/preferenceType/" + preference.appointmentType + "/percentage/" + preference.appointmentPercentage, { withCredentials: true })
 			.success(function(assignmentView) {
 				deferred.resolve(assignmentView);
 			})
