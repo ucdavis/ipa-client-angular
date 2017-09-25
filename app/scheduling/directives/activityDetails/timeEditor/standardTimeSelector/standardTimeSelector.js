@@ -7,22 +7,35 @@ sharedApp.directive('standardTimeSelector', function($window, $location, $routeP
 			activity: '='
 		},
 		link: function (scope, element, attrs) {
-			console.log(scope.activity);
-			console.log("taco");
 
-			scope.standardPatterns = Activity.prototype.getStandardTimes();
-			scope.timeOfferings = [];
-			scope.dayOfferings = [];
+			scope.initializeSelector = function() {
+				scope.standardPatterns = Activity.prototype.getStandardTimes();
+				scope.selectedDuration = scope.activity.selectedDuration;
 
-			scope.selectedDuration = scope.activity.selectedDuration;
-			scope.selectedDayPattern = scope.activity.dayIndicator;
-			scope.selectedStartTime = scope.activity.startTime;
-			scope.selectedEndTime = scope.activity.endTime;
+				if (scope.selectedDuration
+				&& scope.selectedDuration > 0
+				&& !scope.standardPatterns[scope.selectedDuration]) {
+					return;
+				}
 
-			if (scope.selectedDuration && scope.selectedDuration > 0) {
-				scope.dayOfferings = scope.standardPatterns[scope.selectedDuration].dayIndicators;
-				scope.timeOfferings = scope.standardPatterns[scope.selectedDuration].times;
-			}
+				scope.timeOfferings = [];
+				scope.dayOfferings = [];
+
+				scope.selectedDayPattern = scope.activity.dayIndicator;
+				scope.selectedStartTime = scope.activity.startTime;
+				scope.selectedEndTime = scope.activity.endTime;
+
+				if (scope.selectedDuration && scope.selectedDuration > 0) {
+					scope.dayOfferings = scope.standardPatterns[scope.selectedDuration].dayIndicators;
+					scope.timeOfferings = scope.standardPatterns[scope.selectedDuration].times;
+				}
+			};
+
+			scope.initializeSelector();
+
+			$rootScope.$on('schedulingStateChanged', function (event, data) {
+				scope.initializeSelector();
+			});
 
 			scope.clearAll = function() {
 				scope.selectedDuration = null;
