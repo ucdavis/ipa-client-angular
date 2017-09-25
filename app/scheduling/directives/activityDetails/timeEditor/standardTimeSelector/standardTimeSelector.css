@@ -1,9 +1,9 @@
-.time-pattern-selector {
+.standard-time-selector {
 	display: flex;
 	height: 95px;
 }
 
-.time-pattern-selector .minutes-column {
+.standard-time-selector .minutes-column {
 	flex: 1 0 0px;
 	display: flex;
 	flex-flow: column;
@@ -11,7 +11,7 @@
 	border-radius: 4px;
 }
 
-.time-pattern-selector .days-column {
+.standard-time-selector .days-column {
 	flex: 1 0 0px;
 	display: flex;
 	flex-flow: column;
@@ -21,7 +21,7 @@
 	overflow-x:hidden;
 }
 
-.time-pattern-selector .hours-column {
+.standard-time-selector .hours-column {
 	flex: 2 0 0px;
 	display: flex;
 	flex-flow: column;
@@ -31,7 +31,7 @@
 	overflow-x:hidden;
 }
 
-.time-pattern-selector .option-row {
+.standard-time-selector .option-row {
 	color: #333;
 	border-bottom: 1px solid #EEEEEE;
 	cursor: pointer;
@@ -39,11 +39,11 @@
 	padding-right: 5px;
 }
 
-.time-pattern-selector .option-row:hover {
+.standard-time-selector .option-row:hover {
 	background: #EFEFEF;
 }
 
-.time-pattern-selector .selected-row {
+.standard-time-selector .selected-row {
 	background: #6AA4C1;
 	color: white;
 	border-bottom: 1px solid #EEEEEE;

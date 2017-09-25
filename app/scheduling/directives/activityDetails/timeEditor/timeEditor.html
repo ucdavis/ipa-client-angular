@@ -1,0 +1,16 @@
+<div>
+	<strong>Time</strong>
+	<hr style="margin: 0 0 5px 0;" />
+	<div class="form-group">
+		<div class="col-sm-12">
+			<standard-time-selector
+				ng-if="view.state.activities.list[view.state.uiState.selectedActivityId]"
+				activity="view.state.activities.list[view.state.uiState.selectedActivityId]">
+			</standard-time-selector>
+
+			<freeform-time-selector
+				ng-if="view.state.activities.list[view.state.uiState.selectedActivityId]">
+			</freeform-time-selector>
+		</div>
+	</div>
+</div>

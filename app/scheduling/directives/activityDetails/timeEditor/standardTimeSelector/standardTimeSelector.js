@@ -1,13 +1,15 @@
-sharedApp.directive('timePatternSelector', function($window, $location, $routeParams, $rootScope, schedulingActionCreators, Activity) {
+sharedApp.directive('standardTimeSelector', function($window, $location, $routeParams, $rootScope, schedulingActionCreators, Activity) {
 	return {
 		restrict: 'E', // Use this via an element selector <time-pattern-selector></time-pattern-selector>
-		templateUrl: 'timePatternSelector.html', // directive html found here:
+		templateUrl: 'standardTimeSelector.html', // directive html found here:
 		replace: true, // Replace with the template
 		scope: {
-			activity: '<'
+			activity: '='
 		},
 		link: function (scope, element, attrs) {
-			scope.activity;
+			console.log(scope.activity);
+			console.log("taco");
+
 			scope.standardPatterns = Activity.prototype.getStandardTimes();
 			scope.timeOfferings = [];
 			scope.dayOfferings = [];
