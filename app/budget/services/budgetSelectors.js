@@ -138,7 +138,7 @@ budgetApp.service('budgetSelectors', function () {
 						users.ids.forEach(function(userId) {
 							var user = users.list[userId];
 							if (user.loginId == loginId) {
-								lineItem.lastModifiedBy = user.name;
+								lineItem.lastModifiedBy = user.firstName + " " + user.lastName;
 							}
 						});
 					}
