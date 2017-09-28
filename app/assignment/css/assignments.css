@@ -946,3 +946,7 @@ li.active-term .dropdown-term-row {
 .assignments-container .filter-item-text {
 	color: rgb(153, 153, 153);
 }
+
+.assignments-container .course-list-row {
+	page-break-inside: avoid;
+}
