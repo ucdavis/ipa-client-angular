@@ -388,13 +388,16 @@ teachingCallApp.service('teachingCallFormStateService', function (
 				}
 
 				// If this is a Non-course preference
-				else if (slotAssignment.inResidence || slotAssignment.workLifeBalance || slotAssignment.sabbatical || slotAssignment.courseRelease || slotAssignment.buyout) {
+				else if (slotAssignment.inResidence || slotAssignment.workLifeBalance || slotAssignment.leaveOfAbsence || slotAssignment.sabbatical || slotAssignment.courseRelease || slotAssignment.buyout) {
 					if (slotAssignment.inResidence) {
 						newPreference.description = "In Residence";
 						newPreference.inResidence = true;
 					} else if (slotAssignment.workLifeBalance) {
 						newPreference.description = "Work Life Balance";
 						newPreference.workLifeBalance = true;
+					} else if (slotAssignment.leaveOfAbsence) {
+						newPreference.description = "Leave of Absence";
+						newPreference.leaveOfAbsence = true;
 					} else if (slotAssignment.sabbatical) {
 						newPreference.description = "Sabbatical";
 						newPreference.sabbatical = true;
@@ -534,6 +537,13 @@ teachingCallApp.service('teachingCallFormStateService', function (
 			preferenceOptions.push({
 				workLifeBalance: true,
 				description: "Work Life Balance",
+				scheduleId: scheduleId,
+				instructorId: instructorId,
+				termCode: termCode
+			});
+			preferenceOptions.push({
+				leaveOfAbsence: true,
+				description: "Leave of Absence",
 				scheduleId: scheduleId,
 				instructorId: instructorId,
 				termCode: termCode
