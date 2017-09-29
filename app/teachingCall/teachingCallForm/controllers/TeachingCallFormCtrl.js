@@ -67,7 +67,7 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 				return courses;
 			};
 
-			$scope.addPreference = function(preference, term, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isCourseRelease) {
+			$scope.addPreference = function(preference, term, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isCourseRelease) {
 				// Reset add preference UI state
 				var elements = $('.search-course-input');
 				elements[0].focus();
