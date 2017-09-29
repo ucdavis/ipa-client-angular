@@ -58,6 +58,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				|| teachingAssignment.sabbatical == true
 				|| teachingAssignment.courseRelease == true
 				|| teachingAssignment.workLifeBalance == true
+				|| teachingAssignment.leaveOfAbsence == true
 				|| teachingAssignment.inResidence == true) {
 					return true;
 				}
@@ -206,6 +207,8 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 													displayTitle += "IN RESIDENCE";
 												} else if (teachingAssignment.workLifeBalance) {
 													displayTitle += "WORK LIFE BALANCE";
+												} else if (teachingAssignment.leaveOfAbsence) {
+													displayTitle += "LEAVE OF ABSENCE";
 												} else if (teachingAssignment.sabbatical) {
 													displayTitle += "SABBATICAL";
 												}
@@ -252,7 +255,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 										// Track courses that were already present in 'interested', and should be filtered from 'other'
 										var interestedCourseIds = [];
 										var firstInterestedCourseAdded = false;
-										var nonCoursePreferences = {buyout: false, sabbatical: false, inResidence: false, workLifeBalance: false, courseRelease: false};
+										var nonCoursePreferences = {buyout: false, sabbatical: false, inResidence: false, workLifeBalance: false, leaveOfAbsence: false, courseRelease: false};
 
 										// If the instructor has teachingAssignments in this term, show them first
 										if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
@@ -262,7 +265,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 												var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
 												// This teachingAssignment is a buyout/sabb/release
-												if (teachingAssignment.approved == false && (teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.workLifeBalance || teachingAssignment.sabbatical)) {
+												if (teachingAssignment.approved == false && (teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.workLifeBalance || teachingAssignment.leaveOfAbsence || teachingAssignment.sabbatical)) {
 													if (teachingAssignment.buyout) {
 														preferenceDisplayText = "Buyout";
 														nonCoursePreferences.buyout = true;
@@ -275,6 +278,9 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 													} else if (teachingAssignment.workLifeBalance) {
 														preferenceDisplayText = "Work Life Balance";
 														nonCoursePreferences.workLifeBalance = true;
+													} else if (teachingAssignment.leaveOfAbsence) {
+														preferenceDisplayText = "Leave of Absence";
+														nonCoursePreferences.leaveOfAbsence = true;
 													} else if (teachingAssignment.sabbatical) {
 														preferenceDisplayText = "Sabbatical";
 														nonCoursePreferences.sabbatical = true;
@@ -360,6 +366,13 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 											courseHtml += " data-term-code=\"" + termCode + "\"";
 											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
 											courseHtml += " href=\"#\">Work Life Balance</a></li>";
+										}
+										if (nonCoursePreferences.leaveOfAbsence == false) {
+											courseHtml += "<li><a";
+											courseHtml += " data-is-leave-of-absence=\"true\"";
+											courseHtml += " data-term-code=\"" + termCode + "\"";
+											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+											courseHtml += " href=\"#\">Leave of Absence</a></li>";
 										}
 										if (nonCoursePreferences.courseRelease == false) {
 											courseHtml += "<li><a";
@@ -495,6 +508,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 					var isSabbatical = $el.data('is-sabbatical');
 					var isInResidence = $el.data('is-in-residence');
 					var isWorkLifeBalance = $el.data('is-work-life-balance');
+					var isLeaveOfAbsence = $el.data('is-leave-of-absence');
 					var isBuyout = $el.data('is-buyout');
 					var termCode = $el.data('term-code');
 
@@ -518,6 +532,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 							courseRelease: isCourseRelease,
 							inResidence: isInResidence,
 							workLifeBalance: isWorkLifeBalance,
+							leaveOfAbsence: isLeaveOfAbsence,
 							sabbatical: isSabbatical
 						};
 
