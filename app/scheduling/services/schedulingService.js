@@ -112,6 +112,20 @@ schedulingApp.factory("schedulingService", this.schedulingService = function ($h
 				});
 
 			return deferred.promise;
+		},
+		deleteSection: function (section) {
+			var deferred = $q.defer();
+			if (!section) { return; }
+
+			$http.delete(serverRoot + "/api/courseView/sections/" + section.id, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
 		}
 	};
 });

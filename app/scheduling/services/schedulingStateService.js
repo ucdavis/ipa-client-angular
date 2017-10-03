@@ -146,6 +146,14 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					var sectionGroup = sectionGroups.list[section.sectionGroupId];
 					sectionGroup.sectionIds.push(section.id);
 					return sectionGroups;
+				case DELETE_SECTION:
+					var section = action.payload.section;
+					var sectionGroup = sectionGroups.list[section.sectionGroupId];
+					var index = sectionGroup.sectionIds.indexOf(section.id);
+					if (index > -1) {
+						sectionGroup.sectionIds.splice(index, 1);
+					}
+					return sectionGroups;
 				case GET_ACTIVITIES:
 					var activities = action.payload.activities;
 					var section = action.payload.section;
@@ -188,6 +196,14 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					section.activityIds = [];
 					sections.ids.push(section.id);
 					sections.list[section.id] = section;
+					return sections;
+				case DELETE_SECTION:
+					var section = action.payload.section;
+					var index = sections.ids.indexOf(section.id);
+					if (index > -1) {
+						sections.ids.splice(section.id, 1);
+					}
+					sections.list[section.id] = null;
 					return sections;
 				case REMOVE_ACTIVITY:
 					var section = sections.list[action.payload.activity.sectionId];

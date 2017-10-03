@@ -181,6 +181,24 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		removeSection: function (section) {
+			var self = this;
+			schedulingService.deleteSection(section).then(function (section) {
+				$rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
+				var action = {
+					type: DELETE_SECTION,
+					payload: {
+						section: section
+					}
+				};
+				schedulingStateService.reduce(action);
+
+				// Server potentially created new activities as well
+				self.getActivities(section);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		getActivities: function (section) {
 			schedulingService.getActivities(section).then(function (activities) {
 				var action = {
