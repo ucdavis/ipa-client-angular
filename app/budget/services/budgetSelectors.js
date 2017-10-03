@@ -440,6 +440,8 @@ budgetApp.service('budgetSelectors', function () {
 				lineItemCategorySummary.display = toCurrency(lineItemCategorySummary.raw);
 				selectedBudgetScenario.summary.lineItems.total += parseFloat(lineItem.amount);
 
+				lineItem.isSelected = ui.selectedLineItems.indexOf(lineItem.id) > -1;
+
 				// Calculate line item costs
 				if (lineItem.amount < 0) {
 					rawLineItemCosts += parseFloat(Math.abs(lineItem.amount));
