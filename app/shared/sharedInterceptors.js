@@ -6,7 +6,7 @@ var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 			if ($rootScope.slowResTime) { $timeout.cancel($rootScope.slowResTime); }
 			if ($rootScope.timeOutTimer) { $timeout.cancel($rootScope.timeOutTimer); }
 
-			var slowResDelay = 8000; // 8 seconds
+			var slowResDelay = 15000; // 8 seconds
 			var timeOutDelay = 45000; // 45 seconds
 
 			$rootScope.slowResTime = $timeout(function () {
