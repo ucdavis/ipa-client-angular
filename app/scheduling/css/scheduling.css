@@ -443,3 +443,15 @@ i.selected-section-group-remove {
 	background-color: rgb(48, 54, 65);
 	color: white;
 }
+
+.delete-section-ui {
+	flex: 3 1 auto;
+}
+
+.section-label {
+	flex: 1 1 auto;
+}
+
+.section-in-series {
+	display: flex;
+}

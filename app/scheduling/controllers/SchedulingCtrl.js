@@ -166,6 +166,10 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			schedulingActionCreators.removeActivity(activity);
 		};
 
+		$scope.removeSection = function (section) {
+			schedulingActionCreators.removeSection(section);
+		};
+
 		$scope.createSharedActivity = function (activityCode, sectionGroup) {
 			schedulingActionCreators.createSharedActivity(activityCode, sectionGroup);
 			$scope.view.addSharedActivityPopoverIsOpen[sectionGroup.id] = false;
