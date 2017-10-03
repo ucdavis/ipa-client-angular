@@ -4,6 +4,28 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 		template: '<div id="calendar"></div>',
 		replace: true,
 		link: function (scope, element, attrs) {
+			scope.isResizeListenerActive = false;
+
+			scope.listenForResize = function() {
+				if (scope.isResizeListenerActive) {
+					return;
+				}
+
+				scope.isResizeListenerActive = true;
+
+				setTimeout(function() {
+					$(window).resize(function() {
+						$('#calendar').fullCalendar('option', 'height', get_calendar_height());
+						$('.section-group-container').height(get_calendar_height());
+					});
+
+					$('#calendar').fullCalendar({
+						height: get_calendar_height()
+					});
+				}, 500);
+			};
+
+			scope.listenForResize();
 			scope.view = {};
 			// color for calnder
 			// Default color: Other (checked) courses
@@ -34,7 +56,7 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 					allDaySlot: false,
 					allDayDefault: false,
 					aspectRatio: parentAspectRatio,
-					height: "auto",
+					height: get_calendar_height(),
 					minTime: '07:00',
 					maxTime: '22:00',
 					header: false,
@@ -283,3 +305,11 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 		}
 	};
 });
+
+function get_calendar_height() {
+	if ($(window).height() < 485) {
+		return $(window).height();
+	}
+
+	return $(window).height() - 178;
+}

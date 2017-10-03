@@ -71,12 +71,13 @@ body {
 	line-height: normal;
 }
 .section-group-container {
-	height: calc(100vh - 50px);
+	height: calc(100vh - 178px);
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	position: relative;
 }
+
 .section-group-list {
 	position: relative;
 	flex: 0 0 40%;
