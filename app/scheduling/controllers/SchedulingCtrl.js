@@ -191,12 +191,22 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			schedulingActionCreators.toggleCheckAll(sectionGroupIdsToCheck);
 		};
 
-		$scope.createSection = function (sectionGroup) {
+		$scope.calculateNextSequenceNumber = function(sectionGroup) {
 			var course = $scope.view.state.courses.list[sectionGroup.courseId];
+			var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroup.id];
+			var sections = [];
 
+			sectionGroup.sectionIds.forEach(function(sectionId) {
+				sections.push($scope.view.state.sections.list[sectionId]);
+			});
+
+			return nextSequenceNumber(course, sectionGroup, sections);
+		};
+
+		$scope.createSection = function (sectionGroup) {
 			var section = {
 				sectionGroupId: sectionGroup.id,
-				sequenceNumber: firstSequencePattern(course),
+				sequenceNumber: $scope.calculateNextSequenceNumber(sectionGroup),
 				seats: 0
 			};
 
