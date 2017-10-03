@@ -26,6 +26,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		createBudgetScenario: function (newBudgetScenario, budgetId, scenarioId) {
+			var self = this;
 			if (scenarioId == null) { scenarioId = 0;}
 
 			budgetService.createBudgetScenario(newBudgetScenario, budgetId, scenarioId).then(function (results) {
@@ -35,6 +36,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 				$rootScope.$emit('toast', { message: "Created budget scenario", type: "SUCCESS" });
 				budgetReducers.reduce(action);
+				self.selectBudgetScenario(results.budgetScenario.id);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});

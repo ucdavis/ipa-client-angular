@@ -398,6 +398,30 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					}
 
 					return ui;
+				case CREATE_BUDGET_SCENARIO:
+					// Set initial lineItemDetail UI states
+					action.payload.lineItems.forEach(function(lineItem) {
+							ui.lineItemDetails[lineItem.id] = {
+								displayDescriptionInput: false,
+								displayAmountInput: false,
+								displayTypeInput: false,
+								displayNotesInput: false
+							};
+					});
+
+					// Set initial sectionGroupCostDetail UI states
+					action.payload.sectionGroupCosts.forEach(function(sectionGroupCost) {
+							ui.sectionGroupCostDetails[sectionGroupCost.id] = {
+								displaySectionCountInput: false,
+								displayTaCountInput: false,
+								displayReaderCountInput: false,
+								displayEnrollmentInput: false,
+								displayInstructorCostInput: false,
+								displayReasonInput: false,
+							};
+					});
+
+					return ui;
 				case SELECT_TERM:
 					ui.selectedTerm = action.payload.term;
 					return ui;
