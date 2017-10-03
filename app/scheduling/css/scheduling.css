@@ -450,9 +450,10 @@ i.selected-section-group-remove {
 }
 
 .section-label {
-	flex: 1 1 auto;
+	flex: 0 0 auto;
 }
 
+.section-is-numeric,
 .section-in-series {
 	display: flex;
 }

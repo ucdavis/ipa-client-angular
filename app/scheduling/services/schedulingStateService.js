@@ -159,7 +159,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					var section = action.payload.section;
 					var sectionGroup = sectionGroups.list[section.sectionGroupId];
 					activities.forEach(function(activity) {
-						if (activity.sectionGroupId == sectionGroup.id) {
+						if (activity.sectionGroupId == sectionGroup.id && sectionGroup.sharedActivityIds.indexOf(activity.id) == -1) {
 							sectionGroup.sharedActivityIds.push(activity.id);
 						}
 					});
@@ -300,6 +300,13 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					var activityIndex = activities.ids.indexOf(action.payload.activity.id);
 					activities.ids.splice(activityIndex, 1);
 					delete activities.list[action.payload.activity.id];
+					return activities;
+				case DELETE_SECTION:
+					action.payload.section.activityIds.forEach(function(activityId) {
+						var activityIndex = activities.ids.indexOf(activityId);
+						activities.ids.splice(activityIndex, 1);
+						delete activities.list[activityId];
+					});
 					return activities;
 				case CREATE_SHARED_ACTIVITY:
 				case CREATE_ACTIVITY:

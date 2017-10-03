@@ -195,8 +195,16 @@
 						<div ng-show="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds.length">
 							<!-- All Sections header (or the first section if sequence pattern is numeric) -->
 							<div class="section-pattern" ng-show="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">All Sections</div>
-							<div class="section-pattern" ng-hide="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">
-								Section {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
+							<div class="section-pattern section-is-numeric" ng-hide="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">
+								<div class="section-label">
+									Section {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
+								</div>
+								<div class="delete-section-ui"
+									ng-init="sectionId = view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds[0]">
+									<i class="entypo-minus-squared delete-section-ui clickable" uib-tooltip="Remove section {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}"
+										tooltip-append-to-body="true" confirm-button="removeSection(view.state.sections.list[view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds[0]])" message="Are you sure you want to remove section {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}"
+										yes="Delete" no="Cancel" placement="right"></i>
+								</div>
 							</div>
 							<!-- List of shared activities -->
 							<ul ng-repeat="sharedActivityId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sharedActivityIds track by $index"
@@ -230,7 +238,16 @@
 								<li class="section-item"
 										ng-repeat="sectionId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds"
 										ng-init="section = view.state.sections.list[sectionId];">
-									<div class="section-pattern">Section {{ section.sequenceNumber }}</div>
+									<div class="section-pattern section-in-series">
+										<div class="section-label">
+											Section {{ view.state.sections.list[sectionId].sequenceNumber }}
+										</div>
+										<div class="delete-section-ui">
+											<i class="entypo-minus-squared delete-section-ui clickable" uib-tooltip="Remove section {{ section.sequenceNumber }}"
+												tooltip-append-to-body="true" confirm-button="removeSection(view.state.sections.list[sectionId])" message="Are you sure you want to remove section {{ view.state.sections.list[sectionId].sequenceNumber }}"
+												yes="Delete" no="Cancel" placement="right"></i>
+										</div>
+									</div>
 									<ul class="activity-group" ng-repeat="activityId in section.activityIds track by $index" ng-init="activity = view.state.activities.list[activityId];">
 										<li ng-show="activityMatchesFilters(activityId)"
 												class="activity-item clickable"

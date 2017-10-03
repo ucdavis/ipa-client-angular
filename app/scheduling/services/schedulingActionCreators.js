@@ -183,7 +183,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 		},
 		removeSection: function (section) {
 			var self = this;
-			schedulingService.deleteSection(section).then(function (section) {
+			schedulingService.deleteSection(section).then(function (results) {
 				$rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
 				var action = {
 					type: DELETE_SECTION,
@@ -192,9 +192,6 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 					}
 				};
 				schedulingStateService.reduce(action);
-
-				// Server potentially created new activities as well
-				self.getActivities(section);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
