@@ -59,11 +59,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					lineItems.list[updatedLineItem.id] = updatedLineItem;
 					return lineItems;
 				case DELETE_LINE_ITEMS:
-					action.payload.lineItems.forEach(function(lineItem) {
-						var index = lineItems.ids.indexOf(lineItem.id);
+					action.payload.lineItemIds.forEach(function(lineItemId) {
+						var index = lineItems.ids.indexOf(lineItemId);
 						if (index > -1) {
 							lineItems.ids.splice(index, 1);
-							delete lineItems.list[lineItem.id];
+							delete lineItems.list[lineItemId];
 						}
 					});
 					return lineItems;
@@ -458,8 +458,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					ui.areAllLineItemsSelected = false;
 					return ui;
 				case DELETE_LINE_ITEMS:
-					action.payload.lineItems.forEach(function(lineItem) {
-						var index = ui.selectedLineItems.indexOf(lineItem.id);
+					action.payload.lineItemIds.forEach(function(lineItemId) {
+						var index = ui.selectedLineItems.indexOf(lineItemId);
 						if (index > -1) {
 							ui.selectedLineItems.splice(index, 1);
 						}
