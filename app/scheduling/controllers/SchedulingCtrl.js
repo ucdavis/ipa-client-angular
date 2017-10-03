@@ -192,6 +192,10 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		};
 
 		$scope.calculateNextSequenceNumber = function(sectionGroup) {
+			if (!sectionGroup) {
+				return null;
+			}
+
 			var course = $scope.view.state.courses.list[sectionGroup.courseId];
 			var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroup.id];
 			var sections = [];
