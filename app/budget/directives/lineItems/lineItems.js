@@ -24,6 +24,10 @@ budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetAc
 					budgetActions.selectAllLineItems(scope.selectedBudgetScenario.lineItems);
 				}
 			};
+
+			scope.deleteLineItems = function() {
+				budgetActions.deleteLineItems(scope.selectedBudgetScenario, scope.ui.selectedLineItems);
+			};
 		} // end link
 	};
 });

@@ -336,13 +336,13 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				payload: {}
 			});
 		},
-		deleteLineItems: function(lineItems) {
-			budgetService.deleteLineItems(lineItems).then(function (results) {
+		deleteLineItems: function(budgetScenario, lineItemIds) {
+			budgetService.deleteLineItems(budgetScenario, lineItemIds).then(function (results) {
 				$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
 				budgetReducers.reduce({
 					type: DELETE_LINE_ITEMS,
 					payload: {
-						lineItems: lineItems
+						lineItemIds: lineItemIds
 					}
 				});
 			}, function (err) {
