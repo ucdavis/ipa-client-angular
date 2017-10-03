@@ -4,7 +4,8 @@ budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetAc
 		templateUrl: 'lineItems.html',
 		replace: true,
 		scope: {
-			selectedBudgetScenario: '<'
+			selectedBudgetScenario: '<',
+			ui: '<'
 			// '<' This is proper one way binding, as opposed to string interpoation or passing value as a function that can be called
 		},
 		link: function (scope, element, attrs) {
@@ -14,6 +15,14 @@ budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetAc
 
 			scope.openAddLineItemModal = function() {
 				budgetActions.toggleAddLineItemModal();
+			};
+
+			scope.selectAllLineItems = function(areAllLineItemsSelected) {
+				if (areAllLineItemsSelected) {
+					budgetActions.deselectAllLineItems();
+				} else {
+					budgetActions.selectAllLineItems(scope.selectedBudgetScenario.lineItems);
+				}
 			};
 		} // end link
 	};

@@ -58,6 +58,15 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					var updatedLineItem = action.payload;
 					lineItems.list[updatedLineItem.id] = updatedLineItem;
 					return lineItems;
+				case DELETE_LINE_ITEMS:
+					action.payload.lineItems.forEach(function(lineItem) {
+						var index = lineItems.ids.indexOf(lineItem.id);
+						if (index > -1) {
+							lineItems.ids.splice(index, 1);
+							delete lineItems.list[lineItem.id];
+						}
+					});
+					return lineItems;
 				case DELETE_LINE_ITEM:
 					var lineItemId = action.payload.lineItemId;
 					var index = lineItems.ids.indexOf(lineItemId);
@@ -362,6 +371,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						isLineItemOpen: false,
 						isCourseCostOpen: false,
 						openLineItems: [],
+						selectedLineItems: [],
 						lineItemDetails: {},
 						sectionGroupCostDetails: {},
 						selectedBudgetScenarioId: action.selectedBudgetScenarioId,
@@ -424,6 +434,36 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return ui;
 				case SELECT_TERM:
 					ui.selectedTerm = action.payload.term;
+					return ui;
+				case TOGGLE_SELECT_LINE_ITEM:
+					var lineItemId = action.payload.lineItem.id;
+					var index = ui.selectedLineItems.indexOf(lineItemId);
+					if (index == -1) {
+						ui.selectedLineItems.push(lineItemId);
+					} else {
+						ui.selectedLineItems.splice(index, 1);
+						ui.areAllLineItemsSelected = false;
+					}
+					return ui;
+				case SELECT_ALL_LINE_ITEMS:
+					action.payload.lineItems.forEach(function(lineItem) {
+						if (ui.selectedLineItems.indexOf(lineItem.id) == -1) {
+							ui.selectedLineItems.push(lineItem.id);
+						}
+					});
+					ui.areAllLineItemsSelected = true;
+					return ui;
+				case DESELECT_ALL_LINE_ITEMS:
+					ui.selectedLineItems = [];
+					ui.areAllLineItemsSelected = false;
+					return ui;
+				case DELETE_LINE_ITEMS:
+					action.payload.lineItems.forEach(function(lineItem) {
+						var index = ui.selectedLineItems.indexOf(lineItem.id);
+						if (index > -1) {
+							ui.selectedLineItems.splice(index, 1);
+						}
+					});
 					return ui;
 				case TOGGLE_SUPPORT_COST_MODAL:
 					ui.isSupportCostModalOpen = ! ui.isSupportCostModalOpen;

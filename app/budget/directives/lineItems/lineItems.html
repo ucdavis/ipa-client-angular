@@ -26,7 +26,7 @@
 				<div class="header-content">
 					<div class="checkbox-container">
 						<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-							ng-class="{ 'checked': selectedBudgetScenario.taco }">
+							ng-class="{ 'checked': ui.areAllLineItemsSelected }" ng-click="selectAllLineItems(ui.areAllLineItemsSelected)" stop-event="click">
 							<label class="cb-wrapper">
 								<div class="checked"></div>
 							</label>

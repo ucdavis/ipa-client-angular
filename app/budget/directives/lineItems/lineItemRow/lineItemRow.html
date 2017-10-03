@@ -1,8 +1,8 @@
 <div class="line-item-row">
-	<div class="initial-row-container" ng-click="toggleLineItem(lineItem)">
+	<div class="initial-row-container" ng-click="toggleLineItem(lineItem)" stop-event="click">
 		<div class="checkbox-container">
 			<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-				ng-class="{ 'checked': state.ui.taco }"
+				ng-class="{ 'checked': lineItem.isSelected }"
 				ng-click="selectLineItem(lineItem)" stop-event="click">
 				<label class="cb-wrapper">
 					<div class="checked"></div>

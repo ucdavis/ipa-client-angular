@@ -313,6 +313,41 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			};
 
 			budgetReducers.reduce(action);
-		}
+		},
+		toggleSelectLineItem: function(lineItem) {
+			budgetReducers.reduce({
+				type: TOGGLE_SELECT_LINE_ITEM,
+				payload: {
+					lineItem: lineItem
+				}
+			});
+		},
+		selectAllLineItems: function(lineItems) {
+			budgetReducers.reduce({
+				type: SELECT_ALL_LINE_ITEMS,
+				payload: {
+					lineItems: lineItems
+				}
+			});
+		},
+		deselectAllLineItems: function() {
+			budgetReducers.reduce({
+				type: DESELECT_ALL_LINE_ITEMS,
+				payload: {}
+			});
+		},
+		deleteLineItems: function(lineItems) {
+			budgetService.deleteLineItems(lineItems).then(function (results) {
+				$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
+				budgetReducers.reduce({
+					type: DELETE_LINE_ITEMS,
+					payload: {
+						lineItems: lineItems
+					}
+				});
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 	};
 });

@@ -37,7 +37,7 @@ budgetApp.directive("lineItemRow", this.lineItemRow = function ($rootScope, budg
 			};
 
 			scope.selectLineItem = function(lineItem) {
-				// Empty intentionally
+				budgetActions.toggleSelectLineItem(lineItem);
 			};
 		} // end link
 	};
