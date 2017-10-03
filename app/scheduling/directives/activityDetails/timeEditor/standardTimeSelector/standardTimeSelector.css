@@ -1,0 +1,52 @@
+.standard-time-selector {
+	display: flex;
+	height: 95px;
+}
+
+.standard-time-selector .minutes-column {
+	flex: 1 0 0px;
+	display: flex;
+	flex-flow: column;
+	border: 1px solid #dedede;
+	border-radius: 4px;
+}
+
+.standard-time-selector .days-column {
+	flex: 1 0 0px;
+	display: flex;
+	flex-flow: column;
+	border: 1px solid #dedede;
+	border-radius: 4px;
+	overflow-y: scroll;
+	overflow-x:hidden;
+}
+
+.standard-time-selector .hours-column {
+	flex: 2 0 0px;
+	display: flex;
+	flex-flow: column;
+	border: 1px solid #dedede;
+	border-radius: 4px;
+	overflow-y: scroll;
+	overflow-x:hidden;
+}
+
+.standard-time-selector .option-row {
+	color: #333;
+	border-bottom: 1px solid #EEEEEE;
+	cursor: pointer;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.standard-time-selector .option-row:hover {
+	background: #EFEFEF;
+}
+
+.standard-time-selector .selected-row {
+	background: #6AA4C1;
+	color: white;
+	border-bottom: 1px solid #EEEEEE;
+	padding-left: 5px;
+	padding-right: 5px;
+}

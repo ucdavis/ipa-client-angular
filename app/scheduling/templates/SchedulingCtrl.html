@@ -2,9 +2,8 @@
 
 <ipa-header page-title="Scheduling"></ipa-header>
 
-<div class="wrap">
-	<div class="main-content">
-
+<div>
+	<div>
 		<div class="activity-page-header">
 			<div class="activity-filters">
 				<div class="activity-filter-menu">
@@ -263,141 +262,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="activity-details" ng-class="{ 'collapsed': !view.state.uiState.selectedActivityId && !isLocked() }"
-					ng-if="!isLocked()">
-					<div ng-show="view.state.uiState.selectedActivityId">
-						<p class="activity-details-header">
-							{{ view.state.activities.list[view.state.uiState.selectedActivityId].getCodeDescription() }}
-							<a ng-click="closeActivityDetails()" class="close"><i class="entypo-cancel"></i></a>
-						</p>
-						<form class="form-horizontal">
-							<strong>Location</strong>
-							<hr style="margin: 0 0 5px 0;" />
-							<div class="form-group">
-								<div class="col-sm-12 text-center">
-									<uib-tabset active="view.state.activities.list[view.state.uiState.selectedActivityId].locationType" justified="true">
-										<uib-tab index="'registrar'" heading="Registrar Provided" classes="location-tab" ng-click="setLocation(0)">
-
-											{{ view.state.activities.list[view.state.uiState.selectedActivityId].bannerLocation || 'Not yet set in
-											Banner' }}
-
-										</uib-tab>
-										<uib-tab index="'custom'" heading="Custom" classes="location-tab">
-
-											<!-- Show the locations dropdown only if the current workgroup has at least a location set -->
-											<div ng-if="view.state.locations.ids.length > 0">
-
-												<div class="btn-group btn-group-justified">
-													<div class="btn-group" uib-dropdown>
-														<button type="button" class="btn btn-default dropdown-location" uib-dropdown-toggle>
-															{{ view.state.locations.list[view.state.activities.list[view.state.uiState.selectedActivityId].locationId].description || "Select Custom Location"}}
-															<span class="caret pull-right"></span>
-														</button>
-														<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-															<li class="clickable" ng-repeat="locationId in view.state.locations.ids track by locationId" ng-class="{ 'active': view.state.activities.list[view.state.uiState.selectedActivityId].locationId == locationId }">
-																<a ng-bind="view.state.locations.list[locationId].description" ng-click="setLocation(locationId)"></a>
-															</li>
-														</ul>
-													</div>
-												</div>
-
-											</div>
-
-											<!-- IF the workgroup does not have any custom locations -->
-											<div ng-if="view.state.locations.ids.length === 0">
-												<small>No custom locations are available, <br />please add some in the workgroup configuration</small>
-											</div>
-
-										</uib-tab>
-									</uib-tabset>
-								</div>
-							</div>
-							<strong>Time</strong>
-							<hr style="margin: 0 0 5px 0;" />
-							<div class="form-group">
-								<div class="col-sm-12">
-									<div class="radio">
-										<label>
-											<input type="radio" name="buildingRadios" ng-value="true" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">Standard times
-										</label>
-									</div>
-									<!-- Standard times -->
-									<div ng-show="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">
-										<fieldset>
-											<div class="col-sm-4" style="padding: 0px;">
-												<select size="4" class="form-control standard-time" ng-options="duration as (duration + ' min') for (duration,pattern) in standardPatterns"
-													ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration">
-												</select>
-											</div>
-											<div class="control-group col-sm-3" style="padding: 0px 0px 0px 5px;">
-												<select size="4" class="form-control standard-time" ng-options="dayIndicator as dayIndicator.getWeekDays()
-												for dayIndicator in standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].dayIndicators"
-													ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].dayIndicator">
-												</select>
-											</div>
-											<div class="control-group col-sm-5" style="padding: 0px 0px 0px 5px;">
-												<select size="4" class="form-control standard-time">
-													<option ng-repeat="time in standardPatterns[view.state.activities.list[view.state.uiState.selectedActivityId].selectedDuration].times"
-													ng-selected="time.start === view.state.activities.list[view.state.uiState.selectedActivityId].startTime && time.end === view.state.activities.list[view.state.uiState.selectedActivityId].endTime"
-													ng-click="setActivityStandardTime(time)">
-														{{ getMeridianTime(time.start) }} - {{ getMeridianTime(time.end) }}
-													</option>
-												</select>
-											</div>
-										</fieldset>
-									</div>
-
-									<div class="radio">
-										<label>
-											<input type="radio" name="buildingRadios" ng-value="false" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">Non-standard times
-										</label>
-									</div>
-
-									<!-- Non-standard times -->
-									<div ng-hide="view.state.activities.list[view.state.uiState.selectedActivityId].isStandardTimes">
-										<div class="form-group">
-											<div class="input-group">
-												<label class="col-sm-6 control-label" style="padding-right: 0;">
-													Repeats every: &nbsp;
-												</label>
-												<div class="col-sm-5" style="padding-left: 0;">
-													<div class="input-group input-group-sm">
-														<input auto-input type="number" min="1" class="form-control" on-enter="saveActivity()" on-blur="saveActivity()"
-															help-text-placement="top" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].frequency"
-														/>
-														<span class="input-group-addon">weeks</span>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="form-group">
-											<div class="col-sm-offset-1 col-sm-10">
-												<div class="btn-group btn-group-justified btn-group-xs">
-													<div class="btn-group ng-scope" ng-repeat="day in days track by $index">
-														<button ng-click="toggleActivityDay($index)" ng-class="{'active': view.state.activities.list[view.state.uiState.selectedActivityId].dayIndicator[$index] === '1'}"
-															type="button" class="btn btn-default ng-binding">{{day}}</button>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="form-group">
-											<div class="col-sm-offset-1 col-sm-5 text-center">
-												<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].startTime" minute-step="5"
-													on-change-delay="500" on-change="saveActivity()"></time-input>
-											</div>
-											<div class="col-sm-5 text-center">
-												<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].endTime" minute-step="5"
-													on-change-delay="500" on-change="saveActivity()"></time-input>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						</form>
-
-					</div>
-				</div>
+				<activity-details></activity-details>
 			</div>
 			<div class="activity-calendar">
 				<div ng-hide="view.state.sectionGroups.ids" class="loading-center">

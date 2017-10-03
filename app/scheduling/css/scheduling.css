@@ -71,7 +71,7 @@ body {
 	line-height: normal;
 }
 .section-group-container {
-	height: calc(100vh - 100px);
+	height: calc(100vh - 50px);
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -79,7 +79,7 @@ body {
 }
 .section-group-list {
 	position: relative;
-	flex: 1 0 40%;
+	flex: 0 0 40%;
 	padding: 0px;
 	overflow-y: auto;
 	background: -moz-linear-gradient(left, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 10px, rgba(0, 0, 0, 0) 100%);
@@ -128,6 +128,7 @@ body {
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0d000000', endColorstr='#00000000', GradientType=1);
 	/* IE6-9 */
 }
+
 .activity-container {
 	flex: 1 0 25%;
 	display: flex;
@@ -141,7 +142,9 @@ body {
 	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0d000000', endColorstr='#00000000', GradientType=1);
 	/* IE6-9 */
+	overflow-y: scroll;
 }
+
 .activity-container.collapsed {
 	flex: 1 0 0;
 	width: 0;
