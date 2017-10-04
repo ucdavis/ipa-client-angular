@@ -78,3 +78,8 @@
 	height: 18px;
 	margin-right: 12px;
 }
+
+.checkbox-replace.color-primary .cb-wrapper,
+.radio-replace.color-primary .cb-wrapper {
+	border-color: #d2d2d2;
+}
