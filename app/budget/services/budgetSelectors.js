@@ -229,14 +229,16 @@ budgetApp.service('budgetSelectors', function () {
 				// Set taCost
 				var taCost = sectionGroupCost.taCount * budget.taCost;
 				sectionGroupCost.taCost = parseFloat(taCost).toFixed(2);
-
+				sectionGroupCost.taCostDisplay = toCurrency(sectionGroupCost.taCost);
 				// Set readerCost
 				var readerCost = sectionGroupCost.readerCount * budget.readerCost;
 				sectionGroupCost.readerCost = parseFloat(readerCost).toFixed(2);
+				sectionGroupCost.readerCostDisplay = toCurrency(sectionGroupCost.readerCost);
 
 				// Set supportCostSubTotal
 				var supportCostSubTotal = readerCost + taCost;
 				sectionGroupCost.supportCostSubTotal = parseFloat(supportCostSubTotal).toFixed(2);
+				sectionGroupCost.supportCostSubTotalDisplay = toCurrency(sectionGroupCost.supportCostSubTotal);
 
 				// Set instructorCostSubTotal
 				var instructorCostSubTotal = 0;
