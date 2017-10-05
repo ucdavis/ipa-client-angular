@@ -191,7 +191,7 @@ function toCurrency(number) {
 		return "$0.00";
 	}
 
-	var currency = (number).toLocaleString('en-US', {
+	var currency = (parseFloat(number)).toLocaleString('en-US', {
 		style: 'currency',
 		currency: 'USD',
 	});
