@@ -20,7 +20,7 @@
 
 		<div class="amount-display">
 			<div>
-				${{ lineItem.amount }}
+				{{ lineItem.amountDisplay }}
 			</div>
 			<div class="expand-ui-container">
 				<div class="expand-ui">
@@ -87,7 +87,7 @@
 						ng-if="lineItem.displayAmountInput == false"
 						ng-click="displayProperty(lineItem.id, 'amount')"
 						class="inline-edit-ui">
-						${{ lineItem.amount }}
+						{{ lineItem.amountDisplay }}
 					</div>
 					<div ng-if="lineItem.displayAmountInput == true">
 						$<input

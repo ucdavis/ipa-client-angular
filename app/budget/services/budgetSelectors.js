@@ -266,11 +266,12 @@ budgetApp.service('budgetSelectors', function () {
 				// Set 'actual instructor cost'
 				// When sectionGroup.instructorCost is overridden, we will display this value
 				sectionGroupCost.actualInstructorCost = instructorCostSubTotal;
+				sectionGroupCost.actualInstructorCostDisplay = toCurrency(sectionGroupCost.actualInstructorCost);
 
 				// Set totalCost
 				var totalCost = supportCostSubTotal + instructorCostSubTotal;
 				sectionGroupCost.totalCost = parseFloat(totalCost).toFixed(2);
-
+				sectionGroupCost.totalCostDisplay = toCurrency(sectionGroupCost.totalCost);
 				// Set sectionGroupCostComments
 				sectionGroupCost.comments = [];
 
@@ -441,6 +442,8 @@ budgetApp.service('budgetSelectors', function () {
 				if (lineItem.amount < 0) {
 					rawLineItemCosts += parseFloat(Math.abs(lineItem.amount));
 				}
+
+				lineItem.amountDisplay = toCurrency(lineItem.amount);
 			});
 
 			// Hash no longer needed
