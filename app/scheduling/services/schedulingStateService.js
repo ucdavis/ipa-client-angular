@@ -149,6 +149,11 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 				case DELETE_SECTION:
 					var section = action.payload.section;
 					var sectionGroup = sectionGroups.list[section.sectionGroupId];
+
+					if (isNumber(action.payload.section.sequenceNumber)) {
+						sectionGroup.sharedActivityIds = [];
+					}
+
 					var index = sectionGroup.sectionIds.indexOf(section.id);
 					if (index > -1) {
 						sectionGroup.sectionIds.splice(index, 1);
@@ -307,6 +312,24 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 						activities.ids.splice(activityIndex, 1);
 						delete activities.list[activityId];
 					});
+
+					// Delete shared activities if we are deleting a numeric section
+					if (isNumber(action.payload.section.sequenceNumber)) {
+						var activitiesToDelete = [];
+
+						activities.ids.forEach(function(activityId) {
+							var activity = activities.list[activityId];
+							if (activity.sectionGroupId == action.payload.section.sectionGroupId) {
+								delete activities.list[activityId];
+								activitiesToDelete.push(activityId);
+							}
+						});
+
+						activitiesToDelete.forEach(function(activityId) {
+							var index = activities.ids.indexOf(activityId);
+							activities.ids.splice(index, 1);
+						});
+					}
 					return activities;
 				case CREATE_SHARED_ACTIVITY:
 				case CREATE_ACTIVITY:
