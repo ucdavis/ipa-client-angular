@@ -77,7 +77,7 @@
 			</div>
 		</div>
 
-		<div ng-repeat="course in selectedBudgetScenario.courses">
+		<div ng-repeat="course in selectedBudgetScenario.courses track by course.uniqueKey">
 			<div class="course-title">
 				<div>
 					{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}

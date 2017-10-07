@@ -193,7 +193,8 @@ budgetApp.service('budgetSelectors', function () {
 						sectionGroupCosts: [],
 						subjectCode: sectionGroupCost.subjectCode,
 						courseNumber: sectionGroupCost.courseNumber,
-						title: sectionGroupCost.title
+						title: sectionGroupCost.title,
+						uniqueKey: sectionGroupCost.subjectCode + sectionGroupCost.courseNumber
 					};
 
 					selectedBudgetScenario.allCourses.push(newCourse);
@@ -333,7 +334,8 @@ budgetApp.service('budgetSelectors', function () {
 							sectionGroupCosts: [],
 							subjectCode: sectionGroupCost.subjectCode,
 							courseNumber: sectionGroupCost.courseNumber,
-							title: sectionGroupCost.title
+							title: sectionGroupCost.title,
+							uniqueKey: sectionGroupCost.subjectCode + sectionGroupCost.courseNumber
 						};
 
 						selectedBudgetScenario.courses.push(newCourse);
