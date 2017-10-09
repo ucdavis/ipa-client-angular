@@ -27,11 +27,11 @@
 	<div class="form-group">
 		<div class="col-sm-offset-1 col-sm-5 text-center">
 			<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].startTime" minute-step="5"
-				on-change-delay="500" on-change="saveActivity()"></time-input>
+				on-change-delay="500" on-change="saveActivity()" ceiling="view.state.activities.list[view.state.uiState.selectedActivityId].endTime"></time-input>
 		</div>
 		<div class="col-sm-5 text-center">
 			<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].endTime" minute-step="5"
-				on-change-delay="500" on-change="saveActivity()"></time-input>
+				on-change-delay="500" on-change="saveActivity()" floor="view.state.activities.list[view.state.uiState.selectedActivityId].startTime"></time-input>
 		</div>
 	</div>
 </div>
