@@ -97,7 +97,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 
 				// Render the header
 				// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
-				var header = "<thead><tr><th class=\"\">Course</th>";
+				var header = "<thead><tr><th>" + getCheckbox() + "</th><th class=\"\">Course</th>";
 
 				// Filter scope.termDefinitions to only those terms which are enabled by the filter.
 				// Store this in termsToRender.
@@ -284,12 +284,25 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 	};
 });
 
+getCheckbox = function() {
+	return '<div class="checkbox-container">' +
+			'<div class="checkbox checkbox-replace color-primary neon-cb-replacement">' +
+				'<label class="cb-wrapper">' +
+					'<div class="checked"></div>' +
+				'</label>' +
+			'</div>' +
+		'</div>';
+};
+
 var getImportCourseRow = function (course, termsToRender, state) {
 	var rowClass = course.import ? "selected-import-course" : "";
 	var checkboxClass = course.import ? "fa-check-square-o" : "fa-square-o";
 	var row = "<tr class=\"odd gradeX clickable " + rowClass + "\" data-course-subject-code=\"" + course.subjectCode + "\"" +
-		"data-course-number=\"" + course.courseNumber + "\" data-course-sequence-pattern=\"" + course.sequencePattern + "\" >" +
-		"<td class=\"import-course course-cell\">" +
+		"data-course-number=\"" + course.courseNumber + "\" data-course-sequence-pattern=\"" + course.sequencePattern + "\" >";
+
+		row += "<td>" + getCheckbox() + "</td>";
+
+		row += "<td class=\"import-course course-cell\">" +
 		"<div class=\"import-course-check\"><i class=\"fa " + checkboxClass + "\"></i></div>" +
 		"<div class=\"import-course-description\"><strong>" +
 		course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern +
@@ -319,6 +332,8 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 		rowClass += " selected-tr";
 	}
 	var row = "<tr class=\"" + rowClass + "\" data-course-id=\"" + courseId + "\" >";
+
+	row += "<td>" + getCheckbox() + "</td>";
 
 	if (courseId === 0) {
 		var numOfColumns = termsToRender.length + 1;

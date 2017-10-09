@@ -423,8 +423,8 @@ table.courses-table > tbody > tr > td,
 table.courses-table > thead > tr > th {
 	vertical-align: middle;
 }
-table.courses-table > thead > tr > th:not(:first-child),
-table.courses-table > tbody > tr > td:not(:first-child) {
+table.courses-table > thead > tr > th:not(:nth-child(2)),
+table.courses-table > tbody > tr > td:not(:nth-child(2)) {
 	text-align: center;
 }
 .text-warning {
@@ -763,4 +763,16 @@ td.import-course.course-cell {
 .course-view-container .filter-item-text {
 	color: rgb(153, 153, 153);
 	font-size: 12px;
+}
+
+.course-view-container .checkbox-container {
+	flex: 1 0 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 5px;
+}
+
+.course-view-container .checkbox-replace.color-primary .cb-wrapper {
+	border: 1px solid #b5b5b5;
 }
