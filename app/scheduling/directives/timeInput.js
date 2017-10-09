@@ -14,10 +14,74 @@ schedulingApp.directive("timeInput", this.timeInput = function ($timeout) {
 			time: '=',
 			minuteStep: '@',
 			onChangeDelay: '@',
-			onChange: '&'
+			onChange: '&',
+			floor: '=',
+			ceiling: '='
 		},
 		link: function (scope, element, attrs) {
 			var linkMinuteHour = (attrs.linkMinuteHour === 'true');
+			scope.canDecrementHours = true;
+			scope.canDecrementMinutes = true;
+			scope.canIncrementHours = true;
+			scope.canIncrementMinutes = true;
+
+			scope.updateUI = function() {
+				scope.canDecrementHours = true;
+				scope.canDecrementMinutes = true;
+				scope.canIncrementHours = true;
+				scope.canIncrementMinutes = true;
+
+				var selectedTime = moment(scope.time, "HH:mm:ss");
+				selectedMinutes = selectedTime.minutes();
+				selectedHours = selectedTime.hours();
+
+				if (selectedMinutes == "55") {
+					scope.canIncrementMinutes = false;
+				}
+
+				if (selectedMinutes == "00") {
+					scope.canDecrementMinutes = false;
+				}
+
+				if (scope.floor) {
+					var floorTime = moment(scope.floor, "HH:mm:ss");
+					floorTime = floorTime.add(5, "minutes");
+
+					floorMinutes = floorTime.minutes();
+					floorHours = floorTime.hours();
+
+
+					if (floorHours == selectedHours && floorMinutes == selectedMinutes) {
+						scope.canDecrementMinutes = false;
+					}
+
+					if (floorHours == selectedHours) {
+						scope.canDecrementHours = false;
+					}
+
+					if (selectedMinutes < floorMinutes && ((floorHours+1) == selectedHours)) {
+						scope.canDecrementHours = false;
+					}
+				}
+
+				if (scope.ceiling) {
+					var ceilingTime = moment(scope.ceiling, "HH:mm:ss");
+					ceilingTime = ceilingTime.subtract(5, "minutes");
+
+					ceilingMinutes = ceilingTime.minutes();
+					ceilingHours = ceilingTime.hours();
+
+					if (ceilingHours == selectedHours && ceilingMinutes == selectedMinutes) {
+						scope.canIncrementMinutes = false;
+					}
+
+					if ( ceilingHours == selectedHours) {
+						scope.canIncrementHours = false;
+					}
+				}
+			};
+
+			scope.updateUI();
 
 			scope.getMeridianTime = function () {
 				if (!scope.time) {
@@ -154,6 +218,8 @@ schedulingApp.directive("timeInput", this.timeInput = function ($timeout) {
 				scope.timer = $timeout(function () {
 					scope.onChange();
 				}, parseInt(scope.onChangeDelay));
+
+				scope.updateUI();
 			};
 		}
 	};
