@@ -1,0 +1,9 @@
+<div class="table-sorter">
+	<span ng-if="isActive == false">
+		<i ng-click="sortByProperty()" class="glyphicon glyphicon-sort"></i>
+	</span>
+	<span ng-if="isActive">
+		<i ng-if="sortDescending" click="sortDescending()" class="glyphicon glyphicon-sort-by-attributes"></i>
+		<i ng-if="sortDescending == false" click="sortAscending()" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
+	</span>
+</div>

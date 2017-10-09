@@ -34,24 +34,29 @@
 					</div>
 
 					<div class="type-header">
-						Type
+						<div>Type</div>
+						<table-sorter property="type" is-active="" descending=""></table-sorter>
 					</div>
 					<div class="description-header">
-						Description
+						<div>Description</div>
+						<table-sorter property="type" is-active="" descending=""></table-sorter>
 					</div>
 					<div class="amount-header">
 						Amount
+						<table-sorter property="type" is-active="" descending=""></table-sorter>
 					</div>
 					<div class="updated-header">
 						Last Updated
+						<table-sorter property="type" is-active="" descending=""></table-sorter>
 					</div>
 					<div class="added-header">
 						Added
+						<table-sorter property="type" is-active="" descending=""></table-sorter>
 					</div>
 				</div>
 			</div>
 
-			<div ng-repeat="lineItem in selectedBudgetScenario.lineItems">
+			<div ng-repeat="lineItem in selectedBudgetScenario.lineItems.list">
 				<line-item-row line-item="lineItem"></line-item-row>
 			</div>
 
