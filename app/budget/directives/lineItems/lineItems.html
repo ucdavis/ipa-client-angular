@@ -20,7 +20,7 @@
 			</div>
 		</div>
 
-		<div ng-show="selectedBudgetScenario.isLineItemOpen">
+		<div ng-if="selectedBudgetScenario.isLineItemOpen">
 			<!-- line items header -->
 			<div class="header-container">
 				<div class="header-content">
@@ -36,13 +36,17 @@
 					<div class="type-header">
 						Type
 					</div>
-
 					<div class="description-header">
 						Description
 					</div>
-
 					<div class="amount-header">
 						Amount
+					</div>
+					<div class="updated-header">
+						Last Updated
+					</div>
+					<div class="added-header">
+						Added
 					</div>
 				</div>
 			</div>

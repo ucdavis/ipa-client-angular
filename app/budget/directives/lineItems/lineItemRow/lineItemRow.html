@@ -22,6 +22,18 @@
 			<div>
 				${{ lineItem.amount }}
 			</div>
+		</div>
+
+		<div class="updated-display">
+			<div>
+				{{ formatUpdatedAt(lineItem.lastModifiedOn) }}
+			</div>
+		</div>
+
+		<div class="added-display">
+			<div>
+				{{ formatCreatedAt(lineItem.createdAt) }}
+			</div>
 			<div class="expand-ui-container">
 				<div class="expand-ui">
 					<i ng-show="lineItem.isDetailViewOpen != true" class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>

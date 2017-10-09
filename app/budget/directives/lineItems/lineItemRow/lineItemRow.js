@@ -39,6 +39,18 @@ budgetApp.directive("lineItemRow", this.lineItemRow = function ($rootScope, budg
 			scope.selectLineItem = function(lineItem) {
 				// Empty intentionally
 			};
+
+			scope.sortLineItems = function (propertyName) {
+				// empty
+			};
+
+			scope.formatUpdatedAt = function (date) {
+				return moment(date).format("MMM Do YYYY");
+			};
+
+			scope.formatCreatedAt = function (date) {
+				return moment(date).format("MMM Do YYYY");
+			};
 		} // end link
 	};
 });

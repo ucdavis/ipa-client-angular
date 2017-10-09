@@ -45,6 +45,22 @@
 	flex: 10 0 0px;
 	display: flex;
 	align-items: center;
+	border-right: 1px solid rgb(235, 235, 235);
+	padding: 10px;
+}
+
+.line-item-row .updated-display {
+	flex: 10 0 0px;
+	display: flex;
+	align-items: center;
+	border-right: 1px solid rgb(235, 235, 235);
+	padding: 10px;
+}
+
+.line-item-row .added-display {
+	flex: 10 0 0px;
+	display: flex;
+	align-items: center;
 	padding: 10px;
 	justify-content: space-between;
 }

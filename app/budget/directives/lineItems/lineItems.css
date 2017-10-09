@@ -44,6 +44,22 @@
 	flex: 10 0 0px;
 	display: flex;
 	align-items: center;
+	border-right: 1px solid rgb(235, 235, 235);
+	padding: 10px;
+}
+
+.line-items-section .updated-header {
+	flex: 10 0 0px;
+	display: flex;
+	align-items: center;
+	border-right: 1px solid rgb(235, 235, 235);
+	padding: 10px;
+}
+
+.line-items-section .added-header {
+	flex: 10 0 0px;
+	display: flex;
+	align-items: center;
 	padding: 10px;
 }
 
