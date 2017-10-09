@@ -64,6 +64,9 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					lineItems.ids.splice(index, 1);
 					delete lineItems.list[lineItemId];
 					return lineItems;
+				case SORT_LINE_ITEMS:
+					lineItems.ids = _array_sortIdsByProperty(lineItems.list, ["id"]);
+					return lineItems;
 				default:
 					return lineItems;
 			}
@@ -367,7 +370,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						selectedBudgetScenarioId: action.selectedBudgetScenarioId,
 						selectedTerm: action.selectedTerm,
 						workgroupId: action.workgroupId,
-						year: action.year
+						year: action.year,
+						lineItemSort: {
+							descending: true,
+							property: "title"
+						}
 					};
 
 					// Set initial lineItemDetail UI states

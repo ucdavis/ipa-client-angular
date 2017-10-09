@@ -313,6 +313,15 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			};
 
 			budgetReducers.reduce(action);
+		},
+		sortLineItems: function(property, isDescending) {
+			budgetReducers.reduce({
+				type: SORT_LINE_ITEMS,
+				payload: {
+					descending: descending,
+					property: property
+				}
+			});
 		}
 	};
 });

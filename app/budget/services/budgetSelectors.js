@@ -86,7 +86,12 @@ budgetApp.service('budgetSelectors', function () {
 			selectedBudgetScenario.isCourseCostOpen = ui.isCourseCostOpen;
 
 			// Add lineItems
-			selectedBudgetScenario.lineItems = [];
+			selectedBudgetScenario.lineItems = {};
+			selectedBudgetScenario.lineItems.list = [];
+			selectedBudgetScenario.lineItems.sort = {
+				descending: ui.lineItemSort.descending,
+				property: ui.lineItemSort.property
+			};
 
 			lineItems.ids.forEach( function (lineItemId) {
 				var lineItem = lineItems.list[lineItemId];
@@ -122,7 +127,7 @@ budgetApp.service('budgetSelectors', function () {
 				lineItem.displayNotesInput = ui.lineItemDetails[lineItem.id].displayNotesInput;
 				lineItem.displayDescriptionInput = ui.lineItemDetails[lineItem.id].displayDescriptionInput;
 
-				selectedBudgetScenario.lineItems.push(lineItem);
+				selectedBudgetScenario.lineItems.list.push(lineItem);
 				if (ui.openLineItems.indexOf(lineItem.id) > -1) {
 					lineItem.isDetailViewOpen = true;
 				}
@@ -430,7 +435,7 @@ budgetApp.service('budgetSelectors', function () {
 			// Store all line item costs for graph calculations
 			var rawLineItemCosts = 0;
 			// Calculate raw line items
-			selectedBudgetScenario.lineItems.forEach(function(lineItem) {
+			selectedBudgetScenario.lineItems.list.forEach(function(lineItem) {
 				var index = selectedBudgetScenario.summary.lineItemIndexHash[lineItem.lineItemCategoryId];
 				var lineItemCategorySummary = selectedBudgetScenario.summary.lineItems.categories[index];
 				lineItemCategorySummary.raw += parseFloat(lineItem.amount);
