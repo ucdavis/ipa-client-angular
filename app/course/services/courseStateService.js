@@ -460,6 +460,7 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					} else {
 						uiState.selectedCourseRowIds.push(courseId);
 					}
+
 					return uiState;
 				case SELECT_ALL_COURSE_ROWS:
 					var courses = action.payload.courseIds;

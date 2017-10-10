@@ -776,3 +776,7 @@ td.import-course.course-cell {
 .course-view-container .checkbox-replace.color-primary .cb-wrapper {
 	border: 1px solid #b5b5b5;
 }
+
+.course-view-container .locked-courses-table .checkbox-cell {
+	display: none;
+}

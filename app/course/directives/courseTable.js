@@ -30,7 +30,10 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				UPDATE_TAG_FILTERS,
 				TOGGLE_UNPUBLISHED_COURSES,
 				REMOVE_SECTION_GROUP,
-				ADD_SECTION_GROUP
+				ADD_SECTION_GROUP,
+				TOGGLE_SELECT_COURSE_ROW,
+				SELECT_ALL_COURSE_ROWS,
+				DESELECT_ALL_COURSE_ROWS
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
@@ -97,7 +100,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 
 				// Render the header
 				// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
-				var header = "<thead><tr><th>" + getCheckbox(0, "selectAllCourses") + "</th><th class=\"\">Course</th>";
+				var header = '<thead><tr><th class="checkbox-cell">' + getCheckbox(0, "selectAllCourses") + "</th><th class=\"\">Course</th>";
 
 				// Filter scope.termDefinitions to only those terms which are enabled by the filter.
 				// Store this in termsToRender.
@@ -290,10 +293,12 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 });
 
 getCheckbox = function(courseId, type, isChecked) {
+	var checkedClass = (isChecked == true) ? " checked" : "";
+
 	return '' +
-	'<div class="checkbox-container">' +
-			'<div class="checkbox checkbox-replace color-primary neon-cb-replacement">' +
-				'<label class="cb-wrapper">' +
+	'<div class="checkbox-container" data-event-type="' + type + '" data-course-id="' + courseId + '">' +
+			'<div class="checkbox checkbox-replace color-primary neon-cb-replacement' + checkedClass + '" data-event-type="' + type + '" data-course-id="' + courseId + '">' +
+				'<label class="cb-wrapper" data-event-type="' + type + '" data-course-id="' + courseId + '">' +
 					'<div class="checked" data-event-type="' + type + '" data-course-id="' + courseId + '"></div>' +
 				'</label>' +
 			'</div>' +
@@ -315,7 +320,7 @@ var getImportCourseRow = function (course, termsToRender, state) {
 		"data-course-number=\"" + course.courseNumber + "\" data-course-sequence-pattern=\"" + course.sequencePattern + "\" >";
 
 		var isChecked = false;
-		row += "<td>" + getCheckbox(0, "", false) + "</td>";
+		row += '<td class="checkbox-cell">' + getCheckbox(0, "", false) + "</td>";
 
 		row += "<td class=\"import-course course-cell\">" +
 		"<div class=\"import-course-check\"><i class=\"fa " + checkboxClass + "\"></i></div>" +
@@ -348,8 +353,9 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 	}
 	var row = "<tr class=\"" + rowClass + "\" data-course-id=\"" + courseId + "\" >";
 
-	var isChecked = state.uiState.selectedCourseRowIds.indexOf(courseId);
-	row += "<td>" + getCheckbox(courseId, "selectCourseRow", isChecked) + "</td>";
+	var isChecked = (state.uiState.selectedCourseRowIds.indexOf(courseId) > -1);
+
+	row += '<td class="checkbox-cell">' + getCheckbox(courseId, "selectCourseRow", isChecked) + "</td>";
 
 	if (courseId === 0) {
 		var numOfColumns = termsToRender.length + 1;
