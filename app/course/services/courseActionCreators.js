@@ -377,6 +377,28 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
-		}
+		},
+		toggleSelectCourse: function(courseId) {
+			courseStateService.reduce({
+				type: TOGGLE_SELECT_COURSE_ROW,
+				payload: {
+					courseId: courseId
+				}
+			});
+		},
+		selectAllCourseRows: function(courseIds) {
+			courseStateService.reduce({
+				type: SELECT_ALL_COURSE_ROWS,
+				payload: {
+					courseIds: courseIds
+				}
+			});
+		},
+		deselectAllCourseRows: function() {
+			courseStateService.reduce({
+				type: DESELECT_ALL_COURSE_ROWS,
+				payload: {}
+			});
+		},
 	};
 });

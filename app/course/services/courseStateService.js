@@ -393,7 +393,8 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						massImportYear: null,
 						massImportPrivate: false,
 						massImportInProgress: false,
-						searchingCourseToImport: false
+						searchingCourseToImport: false,
+						selectedCourseRowIds: []
 					};
 
 					// lock the table if all terms are locked
@@ -449,6 +450,28 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					if (uiState.selectedCourseId == action.payload.course.id) {
 						uiState.selectedCourseId = null;
 					}
+					return uiState;
+				case TOGGLE_SELECT_COURSE_ROW:
+					var courseId = action.payload.courseId;
+					var index = uiState.selectedCourseRowIds.indexOf(courseId);
+
+					if (index > -1) {
+						uiState.selectedCourseRowIds.splice(index, 1);
+					} else {
+						uiState.selectedCourseRowIds.push(courseId);
+					}
+					return uiState;
+				case SELECT_ALL_COURSE_ROWS:
+					var courses = action.payload.courseIds;
+					courseIds.forEach(function(courseId) {
+						var index = uiState.selectedCourseRowIds.indexOf(courseId);
+						if (index == -1) {
+							uiState.selectedCourseRowIds.push(courseId);
+						}
+					});
+					return uiState;
+				case DESELECT_ALL_COURSE_ROWS:
+					uiState.selectedCourseRowIds = [];
 					return uiState;
 				default:
 					return uiState;
