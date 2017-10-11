@@ -1,0 +1,20 @@
+<div class="delete-course-modal">
+	<form role="form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-6 control-label">Are you sure you want to delete {{ state.uiState.selectedCourseRowIds.length }} courses?</label>
+		</div>
+
+		<div class="delete-course-modal-footer">
+			<button ng-click="close()"
+							type="button"
+							class="btn btn-default modal-button">
+				Cancel
+			</button>
+			<button ng-click="confirmDeleteCourses()"
+							type="button"
+							class="btn neon-dark-confirm-btn modal-button">
+				Submit
+			</button>
+		</div>
+	</form>
+</div>
