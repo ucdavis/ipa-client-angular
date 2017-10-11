@@ -23,6 +23,11 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 				academicYear: String(i).yearToAcademicYear()
 			});
 		}
+
+		$scope.openCourseDeletionModal = function() {
+			courseActionCreators.openCourseDeletionModal();
+		};
+
 		$scope.recentAcademicYears = recentYears;
 
 		$scope.tagsSelectConfig = {

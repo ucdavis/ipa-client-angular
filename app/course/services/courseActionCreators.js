@@ -141,6 +141,24 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		deleteMultipleCourses: function (courseIds, workgroupId, year) {
+			var self = this;
+			courseService.deleteMultipleCourses(courseIds, workgroupId, year).then(function () {
+				$rootScope.$emit('toast', { message: "Deleted courses.", type: "SUCCESS" });
+				var action = {
+					type: DELETE_MULTIPLE_COURSES,
+					payload: {
+						courseIds: courseIds
+					}
+				};
+				courseStateService.reduce(action);
+
+				self.closeCourseDeletionModal();
+				self.deselectAllCourseRows();
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+			});
+		},
 		searchImportCourses: function (subjectCode, year, includePrivate) {
 			var action = {
 				type: BEGIN_SEARCH_IMPORT_COURSES,
@@ -400,5 +418,17 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				payload: {}
 			});
 		},
+		openCourseDeletionModal: function() {
+			courseStateService.reduce({
+				type: OPEN_COURSE_DELETION_MODAL,
+				payload: {}
+			});
+		},
+		closeCourseDeletionModal: function() {
+			courseStateService.reduce({
+				type: CLOSE_COURSE_DELETION_MODAL,
+				payload: {}
+			});
+		}
 	};
 });

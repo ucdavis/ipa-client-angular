@@ -122,6 +122,13 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					courses.list[action.payload.course.id] = new Course(action.payload.course);
 					courses.ids.splice(newCourseIndex, 0, action.payload.course.id);
 					return courses;
+				case DELETE_MULTIPLE_COURSES:
+					action.payload.courseIds.forEach(function(courseId) {
+						var courseIndex = courses.ids.indexOf(courseId);
+						courses.ids.splice(courseIndex, 1);
+						delete courses.list[courseId];
+					});
+						return courses;
 				case REMOVE_COURSE:
 					var courseIndex = courses.ids.indexOf(action.payload.course.id);
 					courses.ids.splice(courseIndex, 1);
@@ -394,7 +401,8 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						massImportPrivate: false,
 						massImportInProgress: false,
 						searchingCourseToImport: false,
-						selectedCourseRowIds: []
+						selectedCourseRowIds: [],
+						isCourseDeleteModalOpen: false
 					};
 
 					// lock the table if all terms are locked
@@ -463,7 +471,7 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 
 					return uiState;
 				case SELECT_ALL_COURSE_ROWS:
-					var courses = action.payload.courseIds;
+					var courseIds = action.payload.courseIds;
 					courseIds.forEach(function(courseId) {
 						var index = uiState.selectedCourseRowIds.indexOf(courseId);
 						if (index == -1) {
@@ -473,6 +481,12 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					return uiState;
 				case DESELECT_ALL_COURSE_ROWS:
 					uiState.selectedCourseRowIds = [];
+					return uiState;
+				case OPEN_COURSE_DELETION_MODAL:
+					uiState.isCourseDeleteModalOpen = true;
+					return uiState;
+				case CLOSE_COURSE_DELETION_MODAL:
+					uiState.isCourseDeleteModalOpen = false;
 					return uiState;
 				default:
 					return uiState;

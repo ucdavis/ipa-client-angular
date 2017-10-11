@@ -154,6 +154,19 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 
 			return deferred.promise;
 		},
+		deleteMultipleCourses: function (courseIds, workgroupId, year) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/courseView/schedules/" + workgroupId + "/" + year + "/courses", courseIds, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
+		},
 		searchCourses: function (query) {
 			var deferred = $q.defer();
 
