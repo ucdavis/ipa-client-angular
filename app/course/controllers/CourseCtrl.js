@@ -38,7 +38,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 				});
 			} else {
 				validTagIds.forEach(function(tagId) {
-					$scope.view.tagOccurences[tagId] = {count: 0};
+					$scope.view.tagOccurences[tagId].count = 0;
 				});
 			}
 
@@ -65,27 +65,27 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 
 			if (tag.presence == "all") {
 				if (tag.userChoice == "none") {
-					tag.userChoice == "remove";
+					tag.userChoice = "remove";
 				} else {
-					tag.userChoice == "none";
+					tag.userChoice = "none";
 				}
 			}
 
 			if (tag.presence == "none") {
 				if (tag.userChoice == "none") {
-					tag.userChoice == "add";
+					tag.userChoice = "add";
 				} else {
-					tag.userChoice == "none";
+					tag.userChoice = "none";
 				}
 			}
 
 			if (tag.presence == "some") {
 				if (tag.userChoice == "none") {
-					tag.userChoice == "add";
+					tag.userChoice = "add";
 				} else if (tag.userChoice == "add") {
-					tag.userChoice == "remove";
+					tag.userChoice = "remove";
 				} else {
-					tag.userChoice == "none";
+					tag.userChoice = "none";
 				}
 			}
 
