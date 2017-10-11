@@ -19,6 +19,9 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
 			});
 		},
+		submitAssignTagTooltip: function (userActions, tagIds, courseIds) {
+			// TODO: Build a DTO and send it to the backend
+		},
 		setActiveCell: function (courseId, termCode) {
 			var action = {
 				type: CELL_SELECTED,

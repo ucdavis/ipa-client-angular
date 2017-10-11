@@ -126,3 +126,30 @@
 .assign-tag-tooltip .items {
 	padding: 10px;
 }
+
+.assign-tag-tooltip .assign-tag-footer {
+	border-top: 1px solid #b3b3b3;
+}
+
+.assign-tag-tooltip .btn-default {
+	background-color: white;
+	margin-right: 10px;
+}
+
+.assign-tag-tooltip .neon-dark-confirm-btn,
+.assign-tag-tooltip .neon-dark-confirm-btn:focus,
+.assign-tag-tooltip .neon-dark-confirm-btn:active,
+.assign-tag-tooltip .neon-dark-confirm-btn {
+	background-color: rgb(48, 54, 65);
+	border-color: rgb(48, 54, 65);
+	color: white;
+}
+
+.assign-tag-tooltip .neon-dark-confirm-btn:hover {
+	background-color: rgb(18, 24, 35); /* Darker Version for hover */
+	color: white;
+}
+
+.assign-tag-tooltip .assign-tag-btn {
+	margin: 5px;
+}

@@ -139,6 +139,13 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 			}
 		};
 
+		$scope.submitAssignTagTooltip = function() {
+			courseActionCreators.submitAssignTagTooltip(
+				$scope.view.tagOccurences,
+				$scope.view.state.tags.availableIds,
+				$scope.view.state.uiState.selectedCourseRowIds);
+		};
+
 		$scope.openCourseDeletionModal = function() {
 			courseActionCreators.openCourseDeletionModal();
 		};
