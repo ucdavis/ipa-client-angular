@@ -89,7 +89,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 								// Display tags
 								$.each(course.tagIds, function (i, tagId) {
 									var tag = scope.view.state.tags.list[tagId];
-									courseHtml += "<div class=\"label course-tag\">" + tag.name + "</div>";
+									courseHtml += '<div class="label course-tag" style="background-color:' + tag.color + '">' + tag.name + "</div>";
 								});
 
 								courseHtml += "</div>"; // End tags
