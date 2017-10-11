@@ -25,7 +25,23 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 		}
 
 		$scope.toggleAssignTagsDropdown = function() {
-			$scope.view.isAssignTagsDropdownOpen = !$scope.view.isAssignTagsDropdownOpen;
+			if ($scope.view.isAssignTagsDropdownOpen) {
+				$scope.closeAssignTagsDropdown();
+			} else {
+				$scope.view.isAssignTagsDropdownOpen = true;
+			}
+		};
+
+		$scope.closeAssignTagsDropdown = function() {
+			$scope.view.isAssignTagsDropdownOpen = false;
+			$scope.clearTagUserChoices();
+		};
+
+		$scope.clearTagUserChoices = function() {
+			$scope.view.state.tags.availableIds.forEach(function(tagId) {
+				$scope.view.tagOccurences[tagId].userChoice = "none";
+				$scope.view.tagOccurences[tagId].icon = $scope.view.tagOccurences[tagId].presence;
+			});
 		};
 
 		$scope.calculateTagStates = function() {

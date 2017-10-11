@@ -7,7 +7,7 @@ courseApp.directive("assignTagTooltip", this.assignTagTooltip = function ($rootS
 			isVisible: '='
 		},
 		link: function(scope, element, attrs) {
-
+			// Empty intentionally
 		}
 	};
 });
