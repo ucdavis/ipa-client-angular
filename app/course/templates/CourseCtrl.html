@@ -27,6 +27,23 @@
 				</span>
 
 				<div ng-if="view.state.uiState.selectedCourseRowIds.length == 0" class="btn-group" disabled
+							uib-tooltip="You must select at least one course to assign tags too">
+					<span class="tool-icon delete-disabled glyphicon glyphicon-tags"></span>
+				</div>
+
+				<div ng-show="view.state.uiState.selectedCourseRowIds.length > 0" class="btn-group assign-tag-tooltip"
+					uib-tooltip="Assign tags">
+					<span class="tool-icon glyphicon glyphicon-tags"
+						ng-click="toggleAssignTagsDropdown()">
+					</span>
+
+						<assign-tag-tooltip 
+							is-visible="view.isAssignTagsDropdownOpen">
+						</assign-tag-tooltip>
+					</span>
+				</div>
+
+				<div ng-if="view.state.uiState.selectedCourseRowIds.length == 0" class="btn-group" disabled
 							uib-tooltip="You must select at least one course to delete">
 					<span class="tool-icon delete-disabled glyphicon glyphicon-trash"></span>
 				</div>
