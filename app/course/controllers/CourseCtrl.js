@@ -60,6 +60,8 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 
 			selectedCourseRowIds.forEach(function(courseId) {
 				var course = $scope.view.state.courses.list[courseId];
+				if (!course) { return;}
+
 				course.tagIds.forEach(function(tagId) {
 					// Ignore archived tags
 					if (validTagIds.indexOf(tagId) == -1) {
