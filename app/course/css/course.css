@@ -780,3 +780,7 @@ td.import-course.course-cell {
 .course-view-container .locked-courses-table .checkbox-cell {
 	display: none;
 }
+
+.course-view-container .delete-disabled {
+	opacity: .4;
+}

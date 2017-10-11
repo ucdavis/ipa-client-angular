@@ -100,7 +100,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 
 				// Render the header
 				// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
-				var header = '<thead><tr><th class="checkbox-cell">' + getCheckbox(0, "selectAllCourses") + "</th><th class=\"\">Course</th>";
+				var isChecked = (data.state.uiState.selectedCourseRowIds.length == data.state.courses.ids.length);
+				var header = '<thead><tr><th class="checkbox-cell">' + getCheckbox(0, "selectAllCourseRows", isChecked) + "</th><th class=\"\">Course</th>";
 
 				// Filter scope.termDefinitions to only those terms which are enabled by the filter.
 				// Store this in termsToRender.
@@ -243,8 +244,22 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				} else if ($el.data('event-type') == 'selectCourseRow') {
 					var courseId = $el.data('course-id');
 					courseActionCreators.toggleSelectCourse(courseId);
-				} else if ($el.data('event-type') == 'selectAllCourseRow') {
-					courseActionCreators.selectAllCourseRows(scope.view.state.courses.ids);
+					$timeout(function () {
+						scope.$apply();
+					});
+				} else if ($el.data('event-type') == 'selectAllCourseRows') {
+					var isChecked = $el.data('is-checked');
+					if (isChecked) {
+						courseActionCreators.deselectAllCourseRows();
+						$timeout(function () {
+							scope.$apply();
+						});
+					} else {
+						courseActionCreators.selectAllCourseRows(scope.view.state.courses.ids);
+						$timeout(function () {
+							scope.$apply();
+						});
+					}
 				} else if ($el.is('td:not(.new-course-td):not(.import-course), td:not(.new-course-td):not(.import-course) *')) {
 					// Select a cell/row
 					courseId = $el.closest("tr").data('course-id');
@@ -296,10 +311,10 @@ getCheckbox = function(courseId, type, isChecked) {
 	var checkedClass = (isChecked == true) ? " checked" : "";
 
 	return '' +
-	'<div class="checkbox-container" data-event-type="' + type + '" data-course-id="' + courseId + '">' +
-			'<div class="checkbox checkbox-replace color-primary neon-cb-replacement' + checkedClass + '" data-event-type="' + type + '" data-course-id="' + courseId + '">' +
-				'<label class="cb-wrapper" data-event-type="' + type + '" data-course-id="' + courseId + '">' +
-					'<div class="checked" data-event-type="' + type + '" data-course-id="' + courseId + '"></div>' +
+	'<div class="checkbox-container" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
+			'<div class="checkbox checkbox-replace color-primary neon-cb-replacement' + checkedClass + '" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
+				'<label class="cb-wrapper" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
+					'<div class="checked" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '"></div>' +
 				'</label>' +
 			'</div>' +
 		'</div>';
