@@ -76,6 +76,9 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 						$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]').addClass("selected-td");
 					}
 
+					courseActionCreators.deselectAllCourseRows();
+					courseActionCreators.toggleSelectCourse(data.state.uiState.selectedCourseId);
+
 					return;
 				}
 
@@ -382,7 +385,7 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 		// First column
 		row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
 		if (course.tagIds.length) {
-			row += "<div class=\"hidden-print\">Tags:";
+			row += "<div class=\"hidden-print\">";
 			$.each(course.tagIds, function (i, tagId) {
 				var tag = state.tags.list[tagId];
 				var bgColor = tag.color ? tag.color : "#333";

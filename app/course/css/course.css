@@ -760,8 +760,9 @@ td.import-course.course-cell {
 	display: none;
 }
 
-.course-view-container .delete-disabled {
+.course-view-container .tool-icon.delete-disabled {
 	opacity: .4;
+	cursor: default;
 }
 
 .course-view-container .table-toolbar {
@@ -791,4 +792,6 @@ td.import-course.course-cell {
 .course-view-container .tool-icon {
 	margin: 0 5px 0px 5px;
 	padding: 0px;
+	cursor:pointer;
 }
+

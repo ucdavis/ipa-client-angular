@@ -2,10 +2,10 @@
 	<form role="form" class="form-horizontal">
 		<div class="delete-course-warning">
 			<div>
-				Are you sure you want to delete {{ state.uiState.selectedCourseRowIds.length }} course<span ng-if="state.uiState.selectedCourseRowIds.length > 1">s</span>?
+				Are you sure you want to <b>delete {{ state.uiState.selectedCourseRowIds.length }} course<span ng-if="state.uiState.selectedCourseRowIds.length > 1">s</span></b>?
 			</div>
-			<div class="sub-detail">
-				This will also delete the sections, activities, preferences and assignments that belong to these courses.
+			<div>
+				This will also <b>delete the sections, activities, preferences and assignments</b> that belong to these courses.
 			</div>
 		</div>
 
@@ -18,7 +18,7 @@
 			<button ng-click="confirmDeleteCourses()"
 							type="button"
 							class="btn btn-danger modal-button">
-				Delete
+				Delete {{ state.uiState.selectedCourseRowIds.length }} course<span ng-if="state.uiState.selectedCourseRowIds.length > 1">s</span>
 			</button>
 		</div>
 	</form>
