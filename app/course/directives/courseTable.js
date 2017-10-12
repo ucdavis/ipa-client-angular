@@ -1,7 +1,7 @@
 /**
  * Provides the main course table in the Courses View
  */
-courseApp.directive("courseTable", this.courseTable = function ($rootScope, $timeout, courseActionCreators) {
+courseApp.directive("courseTable", this.courseTable = function ($rootScope, $timeout, courseActionCreators, $compile) {
 	return {
 		restrict: 'A',
 		template: '<thead><tr><th>&nbsp;</th></tr></thead><tbody><tr><td>' +
@@ -30,7 +30,10 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				UPDATE_TAG_FILTERS,
 				TOGGLE_UNPUBLISHED_COURSES,
 				REMOVE_SECTION_GROUP,
-				ADD_SECTION_GROUP
+				ADD_SECTION_GROUP,
+				TOGGLE_SELECT_COURSE_ROW,
+				SELECT_ALL_COURSE_ROWS,
+				DESELECT_ALL_COURSE_ROWS
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
@@ -73,6 +76,9 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 						$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]').addClass("selected-td");
 					}
 
+					courseActionCreators.deselectAllCourseRows();
+					courseActionCreators.toggleSelectCourse(data.state.uiState.selectedCourseId);
+
 					return;
 				}
 
@@ -97,7 +103,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 
 				// Render the header
 				// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
-				var header = "<thead><tr><th class=\"\">Course</th>";
+				var isChecked = (data.state.uiState.selectedCourseRowIds.length == data.state.courses.ids.length);
+				var header = '<thead><tr><th class="checkbox-cell">' + getCheckbox(0, "selectAllCourseRows", isChecked) + "</th><th class=\"\">Course</th>";
 
 				// Filter scope.termDefinitions to only those terms which are enabled by the filter.
 				// Store this in termsToRender.
@@ -237,6 +244,25 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					$timeout(function () {
 						scope.$apply();
 					});
+				} else if ($el.data('event-type') == 'selectCourseRow') {
+					var courseId = $el.data('course-id');
+					courseActionCreators.toggleSelectCourse(courseId);
+					$timeout(function () {
+						scope.$apply();
+					});
+				} else if ($el.data('event-type') == 'selectAllCourseRows') {
+					var isChecked = $el.data('is-checked');
+					if (isChecked) {
+						courseActionCreators.deselectAllCourseRows();
+						$timeout(function () {
+							scope.$apply();
+						});
+					} else {
+						courseActionCreators.selectAllCourseRows(scope.view.state.courses.ids);
+						$timeout(function () {
+							scope.$apply();
+						});
+					}
 				} else if ($el.is('td:not(.new-course-td):not(.import-course), td:not(.new-course-td):not(.import-course) *')) {
 					// Select a cell/row
 					courseId = $el.closest("tr").data('course-id');
@@ -284,12 +310,37 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 	};
 });
 
+getCheckbox = function(courseId, type, isChecked) {
+	var checkedClass = (isChecked == true) ? " checked" : "";
+
+	return '' +
+	'<div class="checkbox-container" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
+			'<div class="checkbox checkbox-replace color-primary neon-cb-replacement' + checkedClass + '" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
+				'<label class="cb-wrapper" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
+					'<div class="checked" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '"></div>' +
+				'</label>' +
+			'</div>' +
+		'</div>';
+};
+
+selectAll = function() {
+	console.log("select all courses");
+};
+
+selectCourse = function() {
+	console.log("selected course");
+};
+
 var getImportCourseRow = function (course, termsToRender, state) {
 	var rowClass = course.import ? "selected-import-course" : "";
 	var checkboxClass = course.import ? "fa-check-square-o" : "fa-square-o";
 	var row = "<tr class=\"odd gradeX clickable " + rowClass + "\" data-course-subject-code=\"" + course.subjectCode + "\"" +
-		"data-course-number=\"" + course.courseNumber + "\" data-course-sequence-pattern=\"" + course.sequencePattern + "\" >" +
-		"<td class=\"import-course course-cell\">" +
+		"data-course-number=\"" + course.courseNumber + "\" data-course-sequence-pattern=\"" + course.sequencePattern + "\" >";
+
+		var isChecked = false;
+		row += '<td class="checkbox-cell">' + getCheckbox(0, "", false) + "</td>";
+
+		row += "<td class=\"import-course course-cell\">" +
 		"<div class=\"import-course-check\"><i class=\"fa " + checkboxClass + "\"></i></div>" +
 		"<div class=\"import-course-description\"><strong>" +
 		course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern +
@@ -320,6 +371,10 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 	}
 	var row = "<tr class=\"" + rowClass + "\" data-course-id=\"" + courseId + "\" >";
 
+	var isChecked = (state.uiState.selectedCourseRowIds.indexOf(courseId) > -1);
+
+	row += '<td class="checkbox-cell">' + getCheckbox(courseId, "selectCourseRow", isChecked) + "</td>";
+
 	if (courseId === 0) {
 		var numOfColumns = termsToRender.length + 1;
 		row += "<td class=\"new-course-td\" colspan=\"" + numOfColumns + "\">Adding a new course</td><td class=\"ui-overlay\"></td>";
@@ -330,7 +385,7 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 		// First column
 		row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
 		if (course.tagIds.length) {
-			row += "<div class=\"hidden-print\">Tags:";
+			row += "<div class=\"hidden-print\">";
 			$.each(course.tagIds, function (i, tagId) {
 				var tag = state.tags.list[tagId];
 				var bgColor = tag.color ? tag.color : "#333";

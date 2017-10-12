@@ -1,0 +1,23 @@
+.delete-course-modal .delete-course-modal-footer {
+	padding: 10px;
+	display: flex;
+	justify-content: flex-end;
+	padding-bottom: 15px;
+	padding-top: 15px;
+	background-color: rgb(248, 248, 248);
+}
+
+.delete-course-modal .delete-course-warning {
+	padding: 20px;
+}
+
+.delete-course-modal .sub-detail {
+	font-weight: bold;
+	font-size: 14px;
+	padding-top: 15px;
+}
+
+.delete-course-modal .btn-default {
+	background-color: white;
+	margin-right: 10px;
+}

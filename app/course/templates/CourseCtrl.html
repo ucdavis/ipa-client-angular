@@ -2,7 +2,13 @@
 
 <div class="course-view-container">
 	<ipa-header page-title="Courses"></ipa-header>
-	
+
+	<ipa-modal
+		is-visible="view.state.uiState.isCourseDeleteModalOpen"
+		header-text="Delete Courses">
+			<delete-course-modal ng-if="view.state.uiState.isCourseDeleteModalOpen" state="view.state" is-visible="view.state.uiState.isCourseDeleteModalOpen"></delete-course-modal>
+	</ipa-modal>
+
 	<div class="container-fluid">
 	 <div class="col-md-9" unselect-cell>
 		<div class="row" style="margin-bottom: 2em;">
@@ -17,7 +23,37 @@
 		<div class="col-sm-12">
 			<div class="table-toolbar">
 				<span class="tool-icon glyphicon glyphicon-plus" uib-tooltip="Add multiple courses" ng-if="!view.state.uiState.tableLocked"
-					ng-click="beginImportMode()"></span>
+					ng-click="beginImportMode()">
+				</span>
+
+<!--
+				<div ng-if="view.state.uiState.selectedCourseRowIds.length == 0" class="btn-group" disabled
+							uib-tooltip="You must select at least one course to assign tags too">
+					<span class="tool-icon delete-disabled glyphicon glyphicon-tags"></span>
+				</div>
+
+				<div ng-show="view.state.uiState.selectedCourseRowIds.length > 0" class="btn-group assign-tag-tooltip"
+					uib-tooltip="Assign tags">
+					<span class="tool-icon glyphicon glyphicon-tags"
+						ng-click="toggleAssignTagsDropdown()">
+					</span>
+
+						<assign-tag-tooltip 
+							is-visible="view.isAssignTagsDropdownOpen">
+						</assign-tag-tooltip>
+					</span>
+				</div>
+-->
+				<div ng-if="view.state.uiState.selectedCourseRowIds.length == 0" class="btn-group" disabled
+							uib-tooltip="You must select at least one course to delete">
+					<span class="tool-icon delete-disabled glyphicon glyphicon-trash"></span>
+				</div>
+
+				<div ng-if="view.state.uiState.selectedCourseRowIds.length > 0" class="btn-group"
+					uib-tooltip="Delete selected courses"
+					ng-click="openCourseDeletionModal()">
+					<span class="tool-icon glyphicon glyphicon-trash"></span>
+				</div>
 
 				<div class="btn-group" uib-tooltip="Toggle terms">
 					<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>

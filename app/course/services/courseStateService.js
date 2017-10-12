@@ -122,6 +122,13 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					courses.list[action.payload.course.id] = new Course(action.payload.course);
 					courses.ids.splice(newCourseIndex, 0, action.payload.course.id);
 					return courses;
+				case DELETE_MULTIPLE_COURSES:
+					action.payload.courseIds.forEach(function(courseId) {
+						var courseIndex = courses.ids.indexOf(courseId);
+						courses.ids.splice(courseIndex, 1);
+						delete courses.list[courseId];
+					});
+						return courses;
 				case REMOVE_COURSE:
 					var courseIndex = courses.ids.indexOf(action.payload.course.id);
 					courses.ids.splice(courseIndex, 1);
@@ -393,7 +400,9 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						massImportYear: null,
 						massImportPrivate: false,
 						massImportInProgress: false,
-						searchingCourseToImport: false
+						searchingCourseToImport: false,
+						selectedCourseRowIds: [],
+						isCourseDeleteModalOpen: false
 					};
 
 					// lock the table if all terms are locked
@@ -449,6 +458,35 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					if (uiState.selectedCourseId == action.payload.course.id) {
 						uiState.selectedCourseId = null;
 					}
+					return uiState;
+				case TOGGLE_SELECT_COURSE_ROW:
+					var courseId = action.payload.courseId;
+					var index = uiState.selectedCourseRowIds.indexOf(courseId);
+
+					if (index > -1) {
+						uiState.selectedCourseRowIds.splice(index, 1);
+					} else {
+						uiState.selectedCourseRowIds.push(courseId);
+					}
+
+					return uiState;
+				case SELECT_ALL_COURSE_ROWS:
+					var courseIds = action.payload.courseIds;
+					courseIds.forEach(function(courseId) {
+						var index = uiState.selectedCourseRowIds.indexOf(courseId);
+						if (index == -1) {
+							uiState.selectedCourseRowIds.push(courseId);
+						}
+					});
+					return uiState;
+				case DESELECT_ALL_COURSE_ROWS:
+					uiState.selectedCourseRowIds = [];
+					return uiState;
+				case OPEN_COURSE_DELETION_MODAL:
+					uiState.isCourseDeleteModalOpen = true;
+					return uiState;
+				case CLOSE_COURSE_DELETION_MODAL:
+					uiState.isCourseDeleteModalOpen = false;
 					return uiState;
 				default:
 					return uiState;

@@ -9,7 +9,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 		this.CourseCtrl = function ($scope, $rootScope, $routeParams, $timeout, courseActionCreators, courseService, Term) {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
-		$scope.view = {};
+		$scope.view = { isAssignTagsDropdownOpen: false };
 		$scope.sequencePatterns = sequencePatterns; // constants.js file
 		$scope.subjectCodes = subjectCodes.map(function (subjectCode) { return { code: subjectCode }; }); // constants.js file
 		$scope.massImportSources = [{name: 'IPA'}, {name: 'Banner'}];
@@ -23,6 +23,135 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 				academicYear: String(i).yearToAcademicYear()
 			});
 		}
+
+		$scope.toggleAssignTagsDropdown = function() {
+			if ($scope.view.isAssignTagsDropdownOpen) {
+				$scope.closeAssignTagsDropdown();
+			} else {
+				$scope.view.isAssignTagsDropdownOpen = true;
+			}
+		};
+
+		$scope.closeAssignTagsDropdown = function() {
+			$scope.view.isAssignTagsDropdownOpen = false;
+			$scope.clearTagUserChoices();
+		};
+
+		$scope.clearTagUserChoices = function() {
+			$scope.view.state.tags.availableIds.forEach(function(tagId) {
+				$scope.view.tagOccurences[tagId].userChoice = "none";
+				$scope.view.tagOccurences[tagId].icon = $scope.view.tagOccurences[tagId].presence;
+			});
+		};
+
+		$scope.calculateTagStates = function() {
+			var validTagIds = $scope.view.state.tags.availableIds;
+			var selectedCourseRowIds = $scope.view.state.uiState.selectedCourseRowIds;
+			if (!$scope.view.tagOccurences) {
+				$scope.view.tagOccurences = {};
+				validTagIds.forEach(function(tagId) {
+					$scope.view.tagOccurences[tagId] = {count: 0, presence: "none", userChoice: "none", icon: ""};
+				});
+			} else {
+				validTagIds.forEach(function(tagId) {
+					$scope.view.tagOccurences[tagId].count = 0;
+				});
+			}
+
+			selectedCourseRowIds.forEach(function(courseId) {
+				var course = $scope.view.state.courses.list[courseId];
+				if (!course) { return;}
+
+				course.tagIds.forEach(function(tagId) {
+					// Ignore archived tags
+					if (validTagIds.indexOf(tagId) == -1) {
+						return;
+					}
+
+					$scope.view.tagOccurences[tagId].count = $scope.view.tagOccurences[tagId].count + 1;
+				});
+			});
+
+			validTagIds.forEach(function(tagId) {
+				$scope.view.tagOccurences[tagId].presence = $scope.calculateTagPresence(tagId);
+				$scope.view.tagOccurences[tagId].icon = $scope.calculateTagIcon(tagId);
+			});
+		};
+
+		$scope.toggleTagState = function(tagId) {
+			var tag = $scope.view.tagOccurences[tagId];
+
+			if (tag.presence == "all") {
+				if (tag.userChoice == "none") {
+					tag.userChoice = "remove";
+				} else {
+					tag.userChoice = "none";
+				}
+			}
+
+			if (tag.presence == "none") {
+				if (tag.userChoice == "none") {
+					tag.userChoice = "add";
+				} else {
+					tag.userChoice = "none";
+				}
+			}
+
+			if (tag.presence == "some") {
+				if (tag.userChoice == "none") {
+					tag.userChoice = "add";
+				} else if (tag.userChoice == "add") {
+					tag.userChoice = "remove";
+				} else {
+					tag.userChoice = "none";
+				}
+			}
+
+			tag.icon = $scope.calculateTagIcon(tagId);
+		};
+
+		$scope.calculateTagPresence = function(tagId) {
+			var numberOfCourses = $scope.view.state.uiState.selectedCourseRowIds.length;
+			var count = $scope.view.tagOccurences[tagId].count;
+
+			if (count == numberOfCourses) {
+				return "all";
+			}
+
+			if (count == 0) {
+				return "none";
+			}
+
+			return "some";
+		};
+
+		$scope.calculateTagIcon = function(tagId) {
+			var tag = $scope.view.tagOccurences[tagId];
+
+			if (tag.userChoice == "none") {
+				return tag.presence;
+			}
+
+			if (tag.userChoice == "add") {
+				return "all";
+			}
+
+			if (tag.userChoice == "remove") {
+				return "none";
+			}
+		};
+
+		$scope.submitAssignTagTooltip = function() {
+			courseActionCreators.submitAssignTagTooltip(
+				$scope.view.tagOccurences,
+				$scope.view.state.tags.availableIds,
+				$scope.view.state.uiState.selectedCourseRowIds);
+		};
+
+		$scope.openCourseDeletionModal = function() {
+			courseActionCreators.openCourseDeletionModal();
+		};
+
 		$scope.recentAcademicYears = recentYears;
 
 		$scope.tagsSelectConfig = {
@@ -87,6 +216,7 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 
 			$scope.view.state.uiState.tableLocked = $scope.view.state.uiState.tableLocked || !(hasAuthorizedRole);
 
+			$scope.calculateTagStates();
 		});
 
 		$scope.download = function () {
