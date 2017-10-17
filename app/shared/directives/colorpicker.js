@@ -28,10 +28,8 @@ sharedApp.directive("colorpicker", this.colorpicker = function ($timeout) {
 				})
 				.on('hidePicker.colorpicker', function (e) {
 					var newColor = e.color.toHex();
-					if (scope.color != newColor) {
-						applyNewColor(newColor);
-						applyChange();
-					}
+					applyNewColor(newColor);
+					applyChange();
 				});
 
 			var applyNewColor = function (newColor) {
