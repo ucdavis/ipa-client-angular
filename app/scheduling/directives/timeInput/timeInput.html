@@ -1,12 +1,12 @@
-<table style="margin: auto;">
+<table class="time-input">
 	<tbody>
 		<tr class="text-center">
 			<td ng-if="canIncrementHours"><a ng-click="incrementHours()" class="btn btn-link btn-sm btn-sm-padding"><span class="glyphicon glyphicon-chevron-up"></span></a></td>
-			<td ng-if="canIncrementHours == false"><a class="btn btn-link btn-sm btn-sm-padding"><span class="glyphicon glyphicon-chevron-up"></span></a></td>
+			<td ng-if="canIncrementHours == false"><a class="btn btn-link btn-sm btn-sm-padding"><span class="glyphicon glyphicon-chevron-up disabled-chevron"></span></a></td>
 
 			<td>&nbsp;</td>
 			<td ng-if="canIncrementMinutes"><a ng-click="incrementMinutes()" class="btn btn-link btn-sm btn-sm-padding"><span class="glyphicon glyphicon-chevron-up"></span></a></td>
-			<td ng-if="canIncrementMinutes == false"><a class="btn btn-link btn-sm btn-sm-padding"><span class="glyphicon glyphicon-chevron-up"></span></a></td>
+			<td ng-if="canIncrementMinutes == false"><a class="btn btn-link btn-sm btn-sm-padding"><span class="glyphicon glyphicon-chevron-up disabled-chevron"></span></a></td>
 			<td></td>
 		</tr>
 		<tr>
@@ -21,10 +21,10 @@
 		</tr>
 		<tr class="text-center">
 			<td ng-if="canDecrementHours"><a ng-click="decrementHours()" class="btn btn-link btn-sm btn-sm-padding"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
-			<td ng-if="canDecrementHours == false"><a class="btn btn-link btn-sm btn-sm-padding"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
+			<td ng-if="canDecrementHours == false"><a class="btn btn-link btn-sm btn-sm-padding"><span class="glyphicon glyphicon-chevron-down disabled-chevron"></span></a></td>
 			<td>&nbsp;</td>
 			<td ng-if="canDecrementMinutes"><a ng-click="decrementMinutes()" class="btn btn-link btn-sm btn-sm-padding"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
-			<td ng-if="canDecrementMinutes == false"><a class="btn btn-link btn-sm btn-sm-padding"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
+			<td ng-if="canDecrementMinutes == false"><a class="btn btn-link btn-sm btn-sm-padding"><span class="glyphicon glyphicon-chevron-down disabled-chevron"></span></a></td>
 			<td></td>
 		</tr>
 	</tbody>

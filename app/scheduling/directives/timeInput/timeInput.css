@@ -1,0 +1,12 @@
+.time-input {
+	margin: auto;
+}
+
+.time-input .disabled-chevron {
+	color: #828282;
+	cursor: default;
+}
+
+.time-input .disabled-chevron:hover {
+	color: #828282;
+}
