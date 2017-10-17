@@ -12,10 +12,11 @@
 		</div>
 
 		<div class="items">
-			<div ng-repeat="tagId in view.state.tags.availableIds"
-					ng-init="tag=view.state.tags.list[tagId]"
-					class="tag-list">
-			<span ng-click="toggleTagState(tag.id)" class="tag-icon-container">
+			<div
+				ng-repeat="tagId in view.state.tags.availableIds"
+				ng-init="tag=view.state.tags.list[tagId]"
+				class="tag-list">
+			<span ng-click="applyUserChoiceToTag(tag.id)" class="tag-icon-container">
 				<i ng-if="view.tagOccurences[tagId].icon == 'all'" class="glyphicon glyphicon-ok tag-icon"></i>
 				<i ng-if="view.tagOccurences[tagId].icon == 'some'" class="glyphicon glyphicon-minus tag-icon"></i>
 			</span>
@@ -24,10 +25,11 @@
 
 		</div>
 		<div class="assign-tag-footer">
-			<button ng-click="confirmDeleteCourses()"
-							type="button"
-							class="btn neon-dark-confirm-btn assign-tag-btn">
-				Assign
+			<button 
+				ng-click="confirmDeleteCourses()"
+				type="button"
+				class="btn neon-dark-confirm-btn assign-tag-btn">
+					Assign
 			</button>
 		</div>
 	</div>

@@ -47,8 +47,10 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 		$scope.calculateTagStates = function() {
 			var validTagIds = $scope.view.state.tags.availableIds;
 			var selectedCourseRowIds = $scope.view.state.uiState.selectedCourseRowIds;
+
 			if (!$scope.view.tagOccurences) {
 				$scope.view.tagOccurences = {};
+
 				validTagIds.forEach(function(tagId) {
 					$scope.view.tagOccurences[tagId] = {count: 0, presence: "none", userChoice: "none", icon: ""};
 				});
@@ -78,8 +80,13 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 			});
 		};
 
-		$scope.toggleTagState = function(tagId) {
+		// Each tag can be marked by the user to be applied in different ways to all courses, or to have no change.
+		// This method will rotate a tags 'userChoice' through those options, and recalculate the icon to display, each time it is triggered.
+		$scope.applyUserChoiceToTag = function(tagId) {
+			if (!(tagId)) { return null; }
+
 			var tag = $scope.view.tagOccurences[tagId];
+			if (!(tag)) { return null; }
 
 			if (tag.presence == "all") {
 				if (tag.userChoice == "none") {
@@ -87,17 +94,13 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 				} else {
 					tag.userChoice = "none";
 				}
-			}
-
-			if (tag.presence == "none") {
+			} else if (tag.presence == "none") {
 				if (tag.userChoice == "none") {
 					tag.userChoice = "add";
 				} else {
 					tag.userChoice = "none";
 				}
-			}
-
-			if (tag.presence == "some") {
+			} else if (tag.presence == "some") {
 				if (tag.userChoice == "none") {
 					tag.userChoice = "add";
 				} else if (tag.userChoice == "add") {
@@ -110,7 +113,10 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 			tag.icon = $scope.calculateTagIcon(tagId);
 		};
 
+		// Will calculate whether this tag is currently 'present' on all, some or none of the selected courses.
 		$scope.calculateTagPresence = function(tagId) {
+			if (!(tagId)) { return null; }
+
 			var numberOfCourses = $scope.view.state.uiState.selectedCourseRowIds.length;
 			var count = $scope.view.tagOccurences[tagId].count;
 
@@ -126,6 +132,8 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 		};
 
 		$scope.calculateTagIcon = function(tagId) {
+			if (!(tagId)) { return null; }
+
 			var tag = $scope.view.tagOccurences[tagId];
 
 			if (tag.userChoice == "none") {

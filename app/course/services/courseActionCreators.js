@@ -159,7 +159,7 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				self.closeCourseDeletionModal();
 				self.deselectAllCourseRows();
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Unable to delete multiple courses. Please try again.", type: "ERROR" });
 			});
 		},
 		searchImportCourses: function (subjectCode, year, includePrivate) {
