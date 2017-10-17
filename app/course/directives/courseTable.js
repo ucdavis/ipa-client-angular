@@ -101,11 +101,6 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					element.removeClass("grayed-out-courses-table");
 				}
 
-				// Render the header
-				// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
-				var isChecked = (data.state.uiState.selectedCourseRowIds.length == data.state.courses.ids.length);
-				var header = '<thead><tr><th class="checkbox-cell">' + getCheckbox(0, "selectAllCourseRows", isChecked) + "</th><th class=\"\">Course</th>";
-
 				// Filter scope.termDefinitions to only those terms which are enabled by the filter.
 				// Store this in termsToRender.
 				var termsToRender = [];
@@ -115,20 +110,11 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					}
 				});
 
-				$.each(termsToRender, function (i, termToRender) {
-					// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
-					var term = data.state.terms.list[termToRender.code];
-					var lockedIcon = "";
-					if (term && term.isLocked()) {
-						lockedIcon = "<i class=\"fa fa-lock term-lock\"></i>";
-					}
-
-					header += "<th class=\"\">" + termToRender.description + lockedIcon + "</th>";
-				});
-
-				header += "<th class=\"ui-overlay\"></th></tr></thead>";
-
+				// Add header
+				var header = generateHeader(data, termsToRender);
 				element.append(header);
+
+				var rowsAfterHeader = 0;
 
 				// Render the body
 				var body = "<tbody></tbody>";
@@ -147,10 +133,23 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 						} else {
 							body += getCourseRow(rowIdx, course.id, termsToRender, data.state);
 						}
+
+						rowsAfterHeader++;
+
+						if (rowsAfterHeader >= 10) {
+							body += generateHeader(data, termsToRender);
+							rowsAfterHeader = 0;
+						}
 					});
 				} else if (data.state.courses.ids.length) {
 					$.each(data.state.courses.ids, function (rowIdx, courseId) {
 						body += getCourseRow(rowIdx, courseId, termsToRender, data.state);
+						rowsAfterHeader++;
+
+						if (rowsAfterHeader >= 20) {
+							body += generateHeader(data, termsToRender);
+							rowsAfterHeader = 0;
+						}
 					});
 				} else {
 					var numberOfColumns = data.state.filters.enabledTerms.length + 1;
@@ -321,6 +320,28 @@ getCheckbox = function(courseId, type, isChecked) {
 				'</label>' +
 			'</div>' +
 		'</div>';
+};
+
+// Render the header
+// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
+generateHeader = function(data, termsToRender) {
+	var isChecked = (data.state.uiState.selectedCourseRowIds.length == data.state.courses.ids.length);
+	var header = '<thead><tr><th class="checkbox-cell">' + getCheckbox(0, "selectAllCourseRows", isChecked) + "</th><th class=\"\">Course</th>";
+
+	$.each(termsToRender, function (i, termToRender) {
+		// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
+		var term = data.state.terms.list[termToRender.code];
+		var lockedIcon = "";
+		if (term && term.isLocked()) {
+			lockedIcon = "<i class=\"fa fa-lock term-lock\"></i>";
+		}
+
+		header += "<th class=\"\">" + termToRender.description + lockedIcon + "</th>";
+	});
+
+	header += "<th class=\"ui-overlay\"></th></tr></thead>";
+
+	return header;
 };
 
 selectAll = function() {
