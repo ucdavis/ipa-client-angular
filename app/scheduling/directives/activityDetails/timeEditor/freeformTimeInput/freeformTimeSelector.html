@@ -7,7 +7,7 @@
 			<div class="col-sm-5" style="padding-left: 0;">
 				<div class="input-group input-group-sm">
 					<input auto-input type="number" class="form-control" on-enter="saveActivity()" on-blur="saveActivity()"
-						help-text-placement="top" ng-model="view.state.activities.list[view.state.uiState.selectedActivityId].frequency"
+						help-text-placement="top" ng-model="activity.frequency"
 					/>
 					<span class="input-group-addon">weeks</span>
 				</div>
@@ -18,7 +18,7 @@
 		<div class="col-sm-offset-1 col-sm-10">
 			<div class="btn-group btn-group-justified btn-group-xs">
 				<div class="btn-group ng-scope" ng-repeat="day in days track by $index">
-					<button ng-click="toggleActivityDay($index)" ng-class="{'active': view.state.activities.list[view.state.uiState.selectedActivityId].dayIndicator[$index] === '1'}"
+					<button ng-click="toggleActivityDay($index)" ng-class="{'active': activity.dayIndicator[$index] === '1'}"
 						type="button" class="btn btn-default ng-binding">{{day}}</button>
 				</div>
 			</div>
@@ -26,12 +26,12 @@
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-1 col-sm-5 text-center">
-			<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].startTime" minute-step="5"
-				on-change-delay="500" on-change="saveActivity()" ceiling="view.state.activities.list[view.state.uiState.selectedActivityId].endTime"></time-input>
+			<time-input time="activity.startTime" minute-step="5"
+				on-change-delay="500" on-change="saveActivity()" ceiling="activity.endTime"></time-input>
 		</div>
 		<div class="col-sm-5 text-center">
-			<time-input time="view.state.activities.list[view.state.uiState.selectedActivityId].endTime" minute-step="5"
-				on-change-delay="500" on-change="saveActivity()" floor="view.state.activities.list[view.state.uiState.selectedActivityId].startTime"></time-input>
+			<time-input time="activity.endTime" minute-step="5"
+				on-change-delay="500" on-change="saveActivity()" floor="activity.startTime"></time-input>
 		</div>
 	</div>
 </div>
