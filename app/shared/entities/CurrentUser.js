@@ -66,7 +66,7 @@ angular.module('currentUser', ['userRole'])
 			},
 
 			isInstructor: function (workgroupId) {
-				var roleNames = ["federationInstructor", "senateInstructor"];
+				var roleNames = ["federationInstructor", "senateInstructor", "lecturer"];
 				return this.hasRoles(roleNames, workgroupId);
 			},
 
