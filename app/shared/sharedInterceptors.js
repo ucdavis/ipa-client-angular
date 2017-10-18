@@ -14,7 +14,7 @@ var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 			}, slowResDelay);
 
 			$rootScope.timeOutTimer = $timeout(function () {
-				$rootScope.$emit('toast', { message: "Server appears to have failed. Please try again.", type: "ERROR", options: { timeOut: 0, closeButton: true } });
+				$rootScope.$emit('toast', { message: "Server appears to have failed.", type: "ERROR", options: { timeOut: 0, closeButton: true } });
 			}, timeOutDelay);
 
 			return config;
@@ -54,7 +54,7 @@ var tokenValidatorInterceptor = function ($q, $injector, $rootScope) {
 				var authService = $injector.get('authService');
 				authService.validate().then(function () {
 					// $rootScope.toast.message = "This is inconcieveable";
-					$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Unable to validate authentication.", type: "ERROR" });
 				});
 			}
 

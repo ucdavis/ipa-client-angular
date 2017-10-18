@@ -16,7 +16,7 @@ adminApp.service('adminActionCreators', function (adminStateService, adminServic
 				};
 				adminStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not load admin view.", type: "ERROR" });
 			});
 		},
 		updateWorkgroup: function (workgroup) {
@@ -30,7 +30,7 @@ adminApp.service('adminActionCreators', function (adminStateService, adminServic
 				};
 				adminStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update workgroup.", type: "ERROR" });
 			});
 		},
 		removeWorkgroup: function (workgroup) {
@@ -44,7 +44,7 @@ adminApp.service('adminActionCreators', function (adminStateService, adminServic
 				};
 				adminStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not remove workgroup.", type: "ERROR" });
 			});
 		},
 		addWorkgroup: function (workgroup) {
@@ -58,7 +58,7 @@ adminApp.service('adminActionCreators', function (adminStateService, adminServic
 				};
 				adminStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not add workgroup.", type: "ERROR" });
 			});
 		}
 	};

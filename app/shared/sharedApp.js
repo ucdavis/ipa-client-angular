@@ -115,6 +115,8 @@ sharedApp
 						toastr.success(title, message, options);
 						break;
 					case "ERROR":
+						options.timeOut = 0; // do not auto-hide error messages
+						options.closeButton = true;
 						toastr.error(title, message, options);
 						break;
 					case "WARNING":

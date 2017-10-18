@@ -22,7 +22,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				budgetReducers.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
 			});
 		},
 		createBudgetScenario: function (newBudgetScenario, budgetId, scenarioId) {
@@ -38,7 +38,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				budgetReducers.reduce(action);
 				self.selectBudgetScenario(results.budgetScenario.id);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not create budget scenario.", type: "ERROR" });
 			});
 		},
 		deleteBudgetScenario: function (budgetScenarioId) {
@@ -53,7 +53,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Deleted budget scenario", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not delete budget scenario.", type: "ERROR" });
 			});
 		},
 		updateInstructorCost: function (instructorCostDto) {
@@ -73,7 +73,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 				budgetReducers.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
 			});
 		},
 		createLineItem: function (newLineItem, budgetScenarioId) {
@@ -92,7 +92,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Created line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not create line item.", type: "ERROR" });
 			});
 		},
 		updateLineItem: function (lineItem) {
@@ -107,7 +107,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Saved line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not save line item.", type: "ERROR" });
 			});
 		},
 		deleteLineItem: function(lineItem) {
@@ -122,7 +122,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Deleted line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not delete line item.", type: "ERROR" });
 			});
 		},
 		updateSectionGroupCost: function (sectionGroupCost) {
@@ -136,7 +136,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Updated course", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
 			});
 		},
 		updateBudget: function (budget) {
@@ -153,7 +153,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Updated costs", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update costs.", type: "ERROR" });
 			});
 		},
 		createSectionGroupCostComment: function (comment, sectionGroupCost, currentUserLoginId) {
@@ -172,7 +172,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 			});
 		},
 		createLineItemComment: function (comment, lineItem, currentUserLoginId) {
@@ -191,7 +191,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 			});
 		},
 		toggleAddLineItemModal: function() {
@@ -346,7 +346,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					}
 				});
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 			});
 		},
 	};

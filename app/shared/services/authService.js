@@ -51,7 +51,7 @@ angular.module('sharedApp')
 						$window.location.href = "/access-denied.html";
 					} else if (error.status == -1) {
 						// Request was aborted (e.g. user hit reload while it took too long) or server not found
-						$rootScope.$emit('toast', { message: "Something went wrong. Please reload the page.", type: "ERROR", timeOut: 60000 });
+						$rootScope.$emit('toast', { message: "Could not authenticate due to server error. Try reloading the page.", type: "ERROR", timeOut: 60000 });
 						message = "Request was aborted or server was not found. Check that the backend is running.";
 						$log.error(message);
 					} else {

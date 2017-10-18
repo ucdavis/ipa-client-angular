@@ -9,7 +9,7 @@ teachingCallResponseReportApp.service('teachingCallResponseReportActionCreators'
 				};
 				teachingCallResponseReportStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not load teaching call response report initial state.", type: "ERROR" });
 			});
 		}
 	};

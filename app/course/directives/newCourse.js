@@ -34,7 +34,7 @@ sharedApp.directive("newCourse", this.newCourse = function (courseActionCreators
 				return courseService.searchCourses(query).then(function (courseSearchResults) {
 					return courseSearchResults.slice(0, 20);
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not search courses.", type: "ERROR" });
 				});
 			};
 

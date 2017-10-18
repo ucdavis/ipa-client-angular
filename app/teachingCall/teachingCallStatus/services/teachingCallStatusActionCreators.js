@@ -10,7 +10,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				};
 				teachingCallStatusStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not load initial teaching call status state.", type: "ERROR" });
 			});
 		},
 		contactInstructors: function (workgroupId, year, teachingCallConfig, selectedInstructors) {
@@ -32,7 +32,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				};
 				teachingCallStatusStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not set next email contact.", type: "ERROR" });
 			});
 		},
 		addInstructorsToTeachingCall: function (workgroupId, year, teachingCallConfig) {
@@ -63,7 +63,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				};
 				teachingCallStatusStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not add instructors to teaching call.", type: "ERROR" });
 			});
 		},
 		removeInstructorFromTeachingCall: function (workgroupId, year, instructor) {
@@ -78,7 +78,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				};
 				teachingCallStatusStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not remove instructor from teaching call.", type: "ERROR" });
 			});
 		}
 	};

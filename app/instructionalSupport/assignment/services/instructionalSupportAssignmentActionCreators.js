@@ -10,7 +10,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				};
 				instructionalSupportAssignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not get instructional support assignment initial state.", type: "ERROR" });
 			});
 		},
 		addAssignmentSlots: function (appointmentType, appointmentPercentage, numberOfAppointments, sectionGroupId) {
@@ -22,7 +22,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				};
 				instructionalSupportAssignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not add assignment slot.", type: "ERROR" });
 			});
 		},
 		toggleSupportStaffSupportCallReview: function (scheduleId, termShortCode) {
@@ -34,7 +34,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				};
 				instructionalSupportAssignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not toggle support staff call review.", type: "ERROR" });
 			});
 		},
 		toggleInstructorSupportCallReview: function (scheduleId, termShortCode) {
@@ -46,7 +46,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				};
 				instructionalSupportAssignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update instructor support call review.", type: "ERROR" });
 			});
 		},
 		deleteAssignment: function (instructionalSupportAssignment) {
@@ -58,7 +58,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				};
 				instructionalSupportAssignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not remove assignment.", type: "ERROR" });
 			});
 		},
 		assignStaffToSlot: function (supportStaffId, assignmentId) {
@@ -70,7 +70,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				};
 				instructionalSupportAssignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not assign support staff.", type: "ERROR" });
 			});
 		},
 
@@ -83,7 +83,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				};
 				instructionalSupportAssignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not assign support staff.", type: "ERROR" });
 			});
 		},
 
@@ -97,7 +97,7 @@ instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', 
 				};
 				instructionalSupportAssignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not unassign support staff.", type: "ERROR" });
 			});
 		},
 		togglePivotView: function (viewName) {

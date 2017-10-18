@@ -11,7 +11,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				};
 				supportCallStatusStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not set support call status initial state.", type: "ERROR" });
 			});
 		},
 		addSupportStaffSupportCall: function (scheduleId, supportCallData) {
@@ -37,7 +37,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				};
 				supportCallStatusStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not add students to support call.", type: "ERROR" });
 			});
 		},
 		addInstructorsSupportCall: function (scheduleId, supportCallData) {
@@ -63,7 +63,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				};
 				supportCallStatusStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not add instructors to support call.", type: "ERROR" });
 			});
 		},
 		contactInstructorsSupportCall: function (scheduleId, supportCallData) {
@@ -86,7 +86,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				};
 				supportCallStatusStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not schedule instructor contact.", type: "ERROR" });
 			});
 		},
 		contactSupportStaffSupportCall: function (scheduleId, supportCallData) {
@@ -109,7 +109,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				};
 				supportCallStatusStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not schedule student contact.", type: "ERROR" });
 			});
 		},
 		removeInstructorFromSupportCall: function (instructor, scheduleId, termCode) {
@@ -124,7 +124,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				};
 				supportCallStatusStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not remove instructor from support call.", type: "ERROR" });
 			});
 		},
 		removeSupportStaffFromSupportCall: function (supportStaff, scheduleId, termCode) {
@@ -139,7 +139,7 @@ instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', 
 				};
 				supportCallStatusStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not remove student from support call.", type: "ERROR" });
 			});
 		}
 	};

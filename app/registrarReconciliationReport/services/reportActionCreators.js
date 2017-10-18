@@ -18,7 +18,7 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 				};
 				reportStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not load report initial state.", type: "ERROR" });
 			});
 		},
 		/**
@@ -42,7 +42,7 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 				};
 				reportStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update section.", type: "ERROR" });
 			});
 		},
 		/**
@@ -65,7 +65,7 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 				};
 				reportStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
 			});
 		},
 		/**
@@ -84,7 +84,7 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 				};
 				reportStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not delete activity.", type: "ERROR" });
 			});
 		},
 		/**
@@ -111,7 +111,7 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 				};
 				reportStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not create activity.", type: "ERROR" });
 			});
 		},
 
@@ -136,7 +136,7 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 				};
 				reportStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not create section.", type: "ERROR" });
 			});
 		},
 
@@ -158,7 +158,7 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 				};
 				reportStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not assign instructor.", type: "ERROR" });
 			});
 		},
 		/**
@@ -179,7 +179,7 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 				};
 				reportStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not unassign instructor.", type: "ERROR" });
 			});
 		},
 		/**
@@ -198,7 +198,7 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 				};
 				reportStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not delete section.", type: "ERROR" });
 			});
 		},
 		/**
@@ -230,7 +230,7 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 				};
 				reportStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not create to-do item.", type: "ERROR" });
 			});
 		},
 		/**
@@ -252,7 +252,7 @@ registrarReconciliationReportApp.service('reportActionCreators', function (repor
 				};
 				reportStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not delete to-do item.", type: "ERROR" });
 			});
 		}
 	};

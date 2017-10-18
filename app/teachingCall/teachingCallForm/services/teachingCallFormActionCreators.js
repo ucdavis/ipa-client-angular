@@ -10,7 +10,7 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 				};
 				teachingCallFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not get teaching call form initial state.", type: "ERROR" });
 			});
 		},
 		updateAssignmentsOrder: function (sortedTeachingAssignmentIds, scheduleId, termCode) {
@@ -25,7 +25,7 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 				};
 				teachingCallFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update order of assignments.", type: "ERROR" });
 			});
 		},
 		updateTeachingCallResponse: function (teachingCallResponse) {
@@ -39,7 +39,7 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 				};
 				teachingCallFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update availabilities.", type: "ERROR" });
 			});
 		},
 		updateTeachingCallReceipt: function (teachingCallReceipt) {
@@ -53,7 +53,7 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 				};
 				teachingCallFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 			});
 		},
 		submitTeachingCall: function (teachingCallReceipt, workgroupId, year) {
@@ -61,7 +61,7 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 				var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor";
 				$rootScope.$emit('toast', { message: "Preferences saved.", type: "SUCCESS" });
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not save preferences.", type: "ERROR" });
 			});
 		},
 		createAvailability: function (teachingCallResponse) {
@@ -76,7 +76,7 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 				};
 				teachingCallFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update availabilities.", type: "ERROR" });
 			});
 		},
 		addPreference: function (teachingAssignment, termCode) {
@@ -91,7 +91,7 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 				};
 				teachingCallFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not add preference.", type: "ERROR" });
 			});
 		},
 		removePreference: function (teachingAssignment) {
@@ -108,7 +108,7 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 
 				teachingCallFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not remove preference.", type: "ERROR" });
 			});
 		},
 		changeTerm: function (termCode) {

@@ -18,7 +18,7 @@ summaryApp.service('summaryActionCreators', function (summaryStateService, summa
 				};
 				summaryStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not load summary initial state.", type: "ERROR" });
 			});
 		}
 	};

@@ -43,7 +43,7 @@ workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$t
 				return workgroupService.searchUsers($scope.workgroupId, query).then(function (userSearchResults) {
 					return userSearchResults;
 				}, function (err) {
-					$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+					$rootScope.$emit('toast', {message: "Could not search users.", type: "ERROR"});
 				});
 			};
 

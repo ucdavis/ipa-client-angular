@@ -9,7 +9,7 @@ instructionalSupportApp.service('supportStaffFormActionCreators', function ($roo
 				};
 				supportStaffFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not load support staff form initial state.", type: "ERROR" });
 			});
 		},
 		addStudentPreference: function (preference) {
@@ -21,7 +21,7 @@ instructionalSupportApp.service('supportStaffFormActionCreators', function ($roo
 				};
 				supportStaffFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not add preference.", type: "ERROR" });
 			});
 		},
 		updateSupportCallResponse: function (supportCallResponse) {
@@ -33,7 +33,7 @@ instructionalSupportApp.service('supportStaffFormActionCreators', function ($roo
 				};
 				supportStaffFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 			});
 		},
 		deleteStudentPreference: function (preference) {
@@ -45,7 +45,7 @@ instructionalSupportApp.service('supportStaffFormActionCreators', function ($roo
 				};
 				supportStaffFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not remove preference.", type: "ERROR" });
 			});
 		},
 		submitPreferences: function (supportCallResponse, workgroupId, year) {
@@ -54,7 +54,7 @@ instructionalSupportApp.service('supportStaffFormActionCreators', function ($roo
 				var studentSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructionalSupport";
 				$window.location.href = studentSummaryUrl;
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 			});
 		},
 		updatePreferencesOrder: function (preferenceIds, scheduleId, termCode) {
@@ -66,7 +66,7 @@ instructionalSupportApp.service('supportStaffFormActionCreators', function ($roo
 				};
 				supportStaffFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update preference order.", type: "ERROR" });
 			});
 		},
 		updatePreference: function (scheduleId, preference) {
@@ -78,7 +78,7 @@ instructionalSupportApp.service('supportStaffFormActionCreators', function ($roo
 				};
 				supportStaffFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update preference comments.", type: "ERROR" });
 			});
 		},
 		pretendToastMessage: function () {

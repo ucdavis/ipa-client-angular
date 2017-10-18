@@ -16,7 +16,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not load schedule initial state.", type: "ERROR" });
 			});
 		},
 		updateActivity: function (activity) {
@@ -30,7 +30,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
 			});
 		},
 		removeActivity: function (activity) {
@@ -44,7 +44,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not remove activity.", type: "ERROR" });
 			});
 		},
 		createSharedActivity: function (activityCode, sectionGroup) {
@@ -59,7 +59,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not create shared activity.", type: "ERROR" });
 			});
 		},
 		createActivity: function (activityCode, sectionId, sectionGroup) {
@@ -74,7 +74,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not create activity.", type: "ERROR" });
 			});
 		},
 		setSelectedSectionGroup: function (sectionGroup) {
@@ -124,7 +124,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not get course activity types.", type: "ERROR" });
 			});
 		},
 		toggleDay: function (dayIndex) {
@@ -178,7 +178,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				// Server potentially created new activities as well
 				self.getActivities(section);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not create section activities.", type: "ERROR" });
 			});
 		},
 		removeSection: function (section) {
@@ -193,7 +193,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not delete section.", type: "ERROR" });
 			});
 		},
 		getActivities: function (section) {
@@ -207,7 +207,7 @@ schedulingApp.service('schedulingActionCreators', function (schedulingStateServi
 				};
 				schedulingStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not get activities.", type: "ERROR" });
 			});
 		}
 	};

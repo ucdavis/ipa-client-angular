@@ -15,7 +15,7 @@ scheduleSummaryReportApp.service('scheduleSummaryReportActionCreators', function
 				};
 				scheduleSummaryReportStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not load schedule summary report initial state.", type: "ERROR" });
 			});
 		}
 	};

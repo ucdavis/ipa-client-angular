@@ -18,7 +18,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not load assignment view.", type: "ERROR" });
 			});
 		},
 		getInitialTeachingCallState: function (workgroupId, year) {
@@ -30,7 +30,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not load teaching call state.", type: "ERROR" });
 			});
 		},
 		initializeActiveTeachingCall: function (activeTeachingCall) {
@@ -50,7 +50,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not remove placeholder AI.", type: "ERROR" });
 			});
 		},
 		updateTagFilters: function (tagIds) {
@@ -73,7 +73,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update assignment order.", type: "ERROR" });
 			});
 		},
 		addScheduleInstructorNote: function (instructorId, year, workgroupId, comment, assignmentsCompleted) {
@@ -87,7 +87,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not add instructor comment.", type: "ERROR" });
 			});
 		},
 		updateScheduleInstructorNote: function (scheduleInstructorNote) {
@@ -101,7 +101,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update instructor comment.", type: "ERROR" });
 			});
 		},
 		markInstructorComplete: function (scheduleInstructorNote) {
@@ -115,7 +115,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not mark instructor complete.", type: "ERROR" });
 			});
 		},
 		markInstructorIncomplete: function (scheduleInstructorNote) {
@@ -129,7 +129,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not mark instructor incomplete.", type: "ERROR" });
 			});
 		},
 		updateTeachingCallResponse: function (teachingCallResponse) {
@@ -143,7 +143,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update availabilities.", type: "ERROR" });
 			});
 		},
 		updateTeachingCallReceipt: function (teachingCallReceipt) {
@@ -157,7 +157,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 			});
 		},
 		addInstructorAssignment: function (instructorId, year, workgroupId, comment) {
@@ -175,7 +175,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not add instructor comment.", type: "ERROR" });
 			});
 		},
 		removeInstructorAssignment: function (teachingAssignment) {
@@ -189,7 +189,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
 			});
 		},
 		addAndApproveInstructorAssignment: function (teachingAssignment, scheduleId) {
@@ -203,7 +203,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
 			});
 		},
 		approveInstructorAssignment: function (teachingAssignment, workgroupId, year) {
@@ -220,7 +220,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 					};
 					assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
 			});
 
 		},
@@ -234,7 +234,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			};
 			
 			assignmentService.createPlaceholderAI(sectionGroupId, supportAssignment).then(function (supportAssignment) {
-				$rootScope.$emit('toast', { message: "Created AI Placeholder", type: "SUCCESS" });
+				$rootScope.$emit('toast', { message: "Created AI placeholder", type: "SUCCESS" });
 					var action = {
 						type: CREATE_PLACEHOLDER_AI,
 						payload: {
@@ -243,7 +243,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 					};
 					assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not create AI placeholder.", type: "ERROR" });
 			});
 
 		},
@@ -260,7 +260,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 					};
 					assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not assign The Staff.", type: "ERROR" });
 			});
 		},
 		removePlaceholderStaff: function (sectionGroup) {
@@ -276,7 +276,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 					};
 					assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not remove The Staff.", type: "ERROR" });
 			});
 		},
 		unapproveInstructorAssignment: function (originalTeachingAssignment) {
@@ -304,7 +304,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 					assignmentStateService.reduce(action);
 				}
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
 			});
 		},
 		addTeachingCallResponse: function (teachingCallResponse) {
@@ -318,7 +318,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				};
 				assignmentStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update availabilities.", type: "ERROR" });
 			});
 		},
 		showCourses: function () {

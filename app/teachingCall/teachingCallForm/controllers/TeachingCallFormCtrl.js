@@ -36,7 +36,7 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 						courses = $scope.sortCourses(courses);
 						return courses;
 					}, function (err) {
-						$rootScope.$emit('toast', {message: "Something went wrong. Please try again.", type: "ERROR"});
+						$rootScope.$emit('toast', {message: "Could not search courses.", type: "ERROR"});
 					});
 				}
 

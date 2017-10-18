@@ -9,7 +9,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormActionCreator
 				};
 				instructionalSupportInstructorFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not load instructional support initial state.", type: "ERROR" });
 			});
 		},
 		addInstructorPreference: function (sectionGroupId, supportStaffId) {
@@ -23,7 +23,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormActionCreator
 				};
 				instructionalSupportInstructorFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not add instructor preference.", type: "ERROR" });
 			});
 		},
 		updateSupportCallResponse: function (supportCallResponse) {
@@ -35,7 +35,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormActionCreator
 				};
 				instructionalSupportInstructorFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update preference.", type: "ERROR" });
 			});
 		},
 		deleteInstructorPreference: function (preference, studentPreferences) {
@@ -50,7 +50,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormActionCreator
 				};
 				instructionalSupportInstructorFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not remove preference.", type: "ERROR" });
 			});
 		},
 		submitInstructorPreferences: function (supportCallResponse, workgroupId, year) {
@@ -60,7 +60,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormActionCreator
 				var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor";
 				$window.location.href = instructorSummaryUrl;
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update preference.", type: "ERROR" });
 			});
 		},
 		updateInstructorPreferencesOrder: function (preferenceIds, scheduleId, sectionGroupId) {
@@ -72,7 +72,7 @@ instructionalSupportApp.service('instructionalSupportInstructorFormActionCreator
 				};
 				instructionalSupportInstructorFormStateService.reduce(action);
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Something went wrong. Please try again.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not update preference order.", type: "ERROR" });
 			});
 		},
 		pretendToastMessage: function () {
