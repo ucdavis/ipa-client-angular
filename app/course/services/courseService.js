@@ -167,6 +167,19 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 
 			return deferred.promise;
 		},
+		submitMassAssignTags: function (massAssignTags, workgroupId, year) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/massAddTags", massAssignTags, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
+		},
 		searchCourses: function (query) {
 			var deferred = $q.defer();
 
