@@ -156,6 +156,8 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 				$scope.view.state.uiState.selectedCourseRowIds,
 				$scope.workgroupId,
 				$scope.year);
+
+				$scope.closeAssignTagsDropdown();
 		};
 
 		$scope.openCourseDeletionModal = function() {
