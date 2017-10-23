@@ -137,6 +137,28 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 				case UPDATE_COURSE:
 					courses.list[action.payload.course.id] = new Course(action.payload.course);
 					return courses;
+				case MASS_ASSIGN_TAGS:
+					var courseIds = action.massAssignTags.courseIds;
+					var tagIdsToAdd = action.massAssignTags.tagIdsToAdd;
+					var tagIdsToRemove = action.massAssignTags.tagIdsToRemove;
+
+					courseIds.forEach( function(courseId) {
+						var course = courses.list[courseId];
+
+						tagIdsToAdd.forEach( function(tagId) {
+							if (course.tagIds.indexOf(tagId) == -1) {
+								course.tagIds.push(tagId);
+							}
+						});
+						tagIdsToRemove.forEach( function(tagId) {
+							var index = course.tagIds.indexOf(tagId);
+							if (index > -1) {
+								course.tagIds = course.tagIds.splice(index, 1);
+							}
+						});
+					});
+
+					return courses;
 				case UPDATE_TABLE_FILTER:
 					var query = action.payload.query;
 
