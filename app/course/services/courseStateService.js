@@ -153,7 +153,7 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						tagIdsToRemove.forEach( function(tagId) {
 							var index = course.tagIds.indexOf(tagId);
 							if (index > -1) {
-								course.tagIds = course.tagIds.splice(index, 1);
+								course.tagIds.splice(index, 1);
 							}
 						});
 					});
