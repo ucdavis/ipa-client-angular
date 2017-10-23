@@ -141,8 +141,6 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 
 				header += "<th class=\"ui-overlay\"></th></tr></thead>";
 
-				element.append(header);
-
 				// Render the body
 				var body = "<tbody></tbody>";
 
@@ -171,7 +169,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				}
 
 				body += getTotalsRow(termsToRender, data.state);
-				element.append(body);
+				element.append(header + body);
 
 				$('delete-course').popover();
 
@@ -377,7 +375,6 @@ var getImportCourseRow = function (course, termsToRender, state) {
 
 // Renders a course row for all courses except when in mass import mode,
 // when the "proposed rows" will be rendered by getImportCourseRow.
-// ~240ms
 var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 	var rowClass = "odd gradeX";
 
