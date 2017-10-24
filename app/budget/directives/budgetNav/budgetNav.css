@@ -10,3 +10,7 @@
 .side-bar {
 	display: flex;
 }
+
+.selected-route {
+	background-color: red;
+}

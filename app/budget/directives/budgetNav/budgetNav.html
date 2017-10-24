@@ -1,15 +1,15 @@
 <div class="budget-nav">
 	<div class="nav-items">
-		<div class="btn" ng-click="setRoute('courseCosts')">
+		<div class="btn" ng-click="setRoute('courseCosts')" ng-class="{ 'selected-route': selectedRoute == 'courseCosts' }">
 			Course Costs
 		</div>
-		<div class="btn" ng-click="setRoute('instructorCosts')">
+		<div class="btn" ng-click="setRoute('instructorCosts')" ng-class="{ 'selected-route': selectedRoute == 'instructorCosts' }">
 			Instructor Costs
 		</div>
-		<div class="btn" ng-click="setRoute('lineItems')">
+		<div class="btn" ng-click="setRoute('lineItems')" ng-class="{ 'selected-route': selectedRoute == 'lineItems' }">
 			Line Items
 		</div>
-		<div class="btn" ng-click="setRoute('summary')">
+		<div class="btn" ng-click="setRoute('summary')" ng-class="{ 'selected-route': selectedRoute == 'summary' }">
 			Summary
 		</div>
 	</div>

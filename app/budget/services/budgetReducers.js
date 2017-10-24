@@ -365,6 +365,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						lineItemCommentsModal: {
 							isOpen: false
 						},
+						selectedRoute: "summary",
 						isAddBudgetScenarioModalOpen: false,
 						isAddLineItemModalOpen: false,
 						isSupportCostModalOpen: false,
@@ -434,6 +435,9 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return ui;
 				case SELECT_TERM:
 					ui.selectedTerm = action.payload.term;
+					return ui;
+				case SET_ROUTE:
+					ui.selectedRoute = action.payload.selectedRoute;
 					return ui;
 				case TOGGLE_SELECT_LINE_ITEM:
 					var lineItemId = action.payload.lineItem.id;

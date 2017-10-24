@@ -194,6 +194,14 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 			});
 		},
+		setRoute: function(selectedRoute) {
+			budgetReducers.reduce({
+				type: SET_ROUTE,
+				payload: {
+					selectedRoute: selectedRoute
+				}
+			});
+		},
 		toggleAddLineItemModal: function() {
 			var action = {
 				type: TOGGLE_ADD_LINE_ITEM_MODAL,

@@ -8,8 +8,8 @@ budgetApp.directive("budgetNav", this.budgetNav = function ($rootScope, budgetAc
 			selectedRoute: '<'
 		},
 		link: function(scope, element, attrs) {
-			scope.setRoute = function(routeToken) {
-				budgetActions.setRoute(routeToken);
+			scope.setRoute = function(selectedRoute) {
+				budgetActions.setRoute(selectedRoute);
 			};
 		}
 	};
