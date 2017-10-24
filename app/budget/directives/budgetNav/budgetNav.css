@@ -1,0 +1,12 @@
+.budget-nav {
+	display: flex;
+	justify-content: space-between;
+}
+
+.nav-items {
+	display: flex;
+}
+
+.side-bar {
+	display: flex;
+}
