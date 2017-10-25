@@ -1,3 +1,51 @@
 <div class="instructor-costs">
-	instructor costs
+	<term-selector
+		selected-term="selectedBudgetScenario.selectedTerm"
+		terms="selectedBudgetScenario.terms"
+		term-descriptions="selectedBudgetScenario.termDescriptions">
+	</term-selector>
+
+	<!-- Header -->
+	<div class="course-costs-header">
+		<div class="instructors-header">
+			<div class="cell">
+				Instructor
+			</div>
+			<div class="cell">
+				Reg. Instructor
+			</div>
+			<div class="cell">
+				Reason
+			</div>
+			<div class="cell">
+				Instructor Cost
+			</div>
+		</div>
+
+		<div class="cell">
+			Total Cost
+		</div>
+	</div>
+
+	<!-- Courses -->
+	<div ng-repeat="course in selectedBudgetScenario.courses track by course.uniqueKey">
+		<div class="course-title">
+			<div>
+				{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
+			</div>
+			<div class="comment-ui">
+				<span class="glyphicon glyphicon-list-alt"
+							ng-click="openCourseComments(course)"></span>
+			</div>
+		</div>
+		<div class="section-group-row" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+			<div class="instructor-cost">
+				<instructor-cost-row section-group-cost="sectionGroupCost" instructors="instructors"></instructor-cost-row>
+			</div>
+
+			<div class="cell">
+				{{ sectionGroupCost.totalCostDisplay }}
+			</div>
+		</div>
+	</div>
 </div>

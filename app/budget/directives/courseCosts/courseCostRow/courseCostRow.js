@@ -1,7 +1,7 @@
-budgetApp.directive("supportCostRow", this.supportCostRow = function ($rootScope, budgetActions) {
+budgetApp.directive("courseCostRow", this.courseCostRow = function ($rootScope, budgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'supportCostRow.html',
+		templateUrl: 'courseCostRow.html',
 		replace: true,
 		scope: {
 			sectionGroupCost: '<'

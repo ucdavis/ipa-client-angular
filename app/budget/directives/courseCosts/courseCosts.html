@@ -1,108 +1,74 @@
-<div class="course-costs-section">
-	<!-- line items section UI -->
-	<div class="expand-ui-container" ng-click="toggleCourseCostsSection()">
-		<div class="expand-ui">
-			<div>Course Costs</div>
-			<i ng-if="selectedBudgetScenario.isCourseCostOpen == false" class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>
-			<i ng-if="selectedBudgetScenario.isCourseCostOpen" class="glyphicon glyphicon-triangle-bottom expand-ui-triangle"></i>
+<div class="course-costs">
+	<term-selector
+		selected-term="selectedBudgetScenario.selectedTerm"
+		terms="selectedBudgetScenario.terms"
+		term-descriptions="selectedBudgetScenario.termDescriptions">
+	</term-selector>
+
+	<!-- Header -->
+	<div class="course-costs-header">
+		<div class="support-cost-header">
+			<div class="cell">
+				Off.
+			</div>
+
+			<div class="cell">
+				Enrollment
+			</div>
+
+			<div class="cell">
+				Sections
+			</div>
+
+			<div class="cell">
+				TAs
+			</div>
+
+			<div class="cell">
+				TA Cost
+			</div>
+
+			<div class="cell">
+				Readers
+			</div>
+
+			<div class="cell">
+				<div class="cell-content">
+					Reader Cost
+				</div>
+			</div>
+
+			<div class="cell">
+				<div class="cell-content">
+					Support Cost
+				</div>
+			</div>
+		</div>
+
+		<div class="cell">
+			Total Cost
 		</div>
 	</div>
 
-	<div ng-if="selectedBudgetScenario.isCourseCostOpen">
-		<term-selector
-			selected-term="selectedBudgetScenario.selectedTerm"
-			terms="selectedBudgetScenario.terms"
-			term-descriptions="selectedBudgetScenario.termDescriptions">
-		</term-selector>
-
-		<div class="course-costs-header">
-
-			<div class="support-cost-header">
-				<div class="cell">
-					Off.
-				</div>
-
-				<div class="cell">
-					Enrollment
-				</div>
-
-				<div class="cell">
-					Sections
-				</div>
-
-				<div class="cell">
-					TAs
-				</div>
-
-				<div class="cell">
-					TA Cost
-				</div>
-
-				<div class="cell">
-					Readers
-				</div>
-
-				<div class="cell">
-					<div class="cell-content">
-						Reader Cost
-					</div>
-				</div>
-
-				<div class="cell">
-					<div class="cell-content">
-						Support Cost
-					</div>
-				</div>
+	<!-- Courses -->
+	<div ng-repeat="course in selectedBudgetScenario.courses track by course.uniqueKey">
+		<div class="course-title">
+			<div>
+				{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
+			</div>
+			<div class="comment-ui">
+				<span class="glyphicon glyphicon-list-alt"
+							ng-click="openCourseComments(course)"></span>
+			</div>
+		</div>
+		<div class="section-group-row" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+			<div class="support-cost">
+				<course-cost-row section-group-cost="sectionGroupCost"></course-cost-row>
 			</div>
 
-			<!-- Instructors Header -->
-			<div class="instructors-header">
-				<div class="cell">
-					Instructor
-				</div>
-				<div class="cell">
-					Reg. Instructor
-				</div>
-				<div class="cell">
-					Reason
-				</div>
-				<div class="cell">
-					Instructor Cost
-				</div>
-			</div>
-
-			<!-- Summary Column -->
 			<div class="cell">
-				Total Cost
+				{{ sectionGroupCost.totalCostDisplay }}
 			</div>
 		</div>
-
-		<div ng-repeat="course in selectedBudgetScenario.courses track by course.uniqueKey">
-			<div class="course-title">
-				<div>
-					{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
-				</div>
-				<div class="comment-ui">
-					<span class="glyphicon glyphicon-list-alt"
-								ng-click="openCourseComments(course)"></span>
-				</div>
-			</div>
-			<div class="section-group-row" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
-
-				<div class="support-cost">
-					<support-cost-row section-group-cost="sectionGroupCost"></support-cost-row>
-				</div>
-
-				<div class="instructor-cost">
-					<instructor-cost-row section-group-cost="sectionGroupCost" instructors="instructors"></instructor-cost-row>
-				</div>
-
-				<div class="cell">
-					{{ sectionGroupCost.totalCostDisplay }}
-				</div>
-
-			</div>
-		</div>
-
 	</div>
 </div>
