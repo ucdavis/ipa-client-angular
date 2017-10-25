@@ -1,4 +1,4 @@
-<div class="support-cost-row">
+<div class="course-cost-row">
 	<div class="cell">
 		{{ sectionGroupCost.sequencePattern }}
 	</div>
@@ -12,13 +12,7 @@
 				tooltip-placement="bottom">
 			</i>
 		</div>
-		<div
-			ng-if="sectionGroupCost.displayEnrollmentInput != true"
-			ng-click="displayProperty(sectionGroupCost, 'enrollment')"
-			class="inline-edit-ui">
-			{{ sectionGroupCost.enrollment }}
-		</div>
-		<div ng-if="sectionGroupCost.displayEnrollmentInput == true">
+		<div>
 			<input
 				class="inline-edit"
 				type="number"
@@ -38,14 +32,7 @@
 				tooltip-placement="bottom">
 			</i>
 		</div>
-
-		<div
-			ng-if="sectionGroupCost.displaySectionCountInput != true"
-			ng-click="displayProperty(sectionGroupCost, 'sectionCount')"
-			class="inline-edit-ui">
-			{{ sectionGroupCost.sectionCount }}
-		</div>
-		<div ng-if="sectionGroupCost.displaySectionCountInput == true">
+		<div>
 			<input
 				class="inline-edit"
 				type="number"
@@ -66,13 +53,7 @@
 			</i>
 		</div>
 
-		<div
-			ng-if="sectionGroupCost.displayTaCountInput != true"
-			ng-click="displayProperty(sectionGroupCost, 'taCount')"
-			class="inline-edit-ui">
-			{{ sectionGroupCost.taCount }}
-		</div>
-		<div ng-if="sectionGroupCost.displayTaCountInput == true">
+		<div>
 			<input
 				class="inline-edit"
 				type="number"
@@ -95,13 +76,7 @@
 				tooltip-placement="bottom">
 			</i>
 		</div>
-		<div
-			ng-if="sectionGroupCost.displayReaderCountInput != true"
-			ng-click="displayProperty(sectionGroupCost, 'readerCount')"
-			class="inline-edit-ui">
-			{{ sectionGroupCost.readerCount }}
-		</div>
-		<div ng-if="sectionGroupCost.displayReaderCountInput == true">
+		<div>
 			<input
 				class="inline-edit"
 				type="number"
