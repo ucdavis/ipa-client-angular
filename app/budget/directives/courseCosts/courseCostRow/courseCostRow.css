@@ -1,35 +1,29 @@
-.support-cost-row {
+.course-cost-row {
 	display: flex;
 	height: 100%;
 }
 
-.support-cost-row,
-.support-cost-row input { /* Override default user agent styling */
+.course-cost-row,
+.course-cost-row input { /* Override default user agent styling */
 	background-color: #F1F8FA;
 }
 
-.support-cost-row .cell {
+.course-cost-row .cell {
 	flex: 1 0 0px;
 	display: flex;
 	justify-content: center;
 }
 
-.support-cost-row .inline-edit {
-	border: none;
-	padding: 0;
-	width: 100%;
-}
-
-.support-cost-row .section-group-warning {
+.course-cost-row .section-group-warning {
 	color: #ce4844;
 	visibility: hidden;
 }
 
-.support-cost-row .show-warning {
+.course-cost-row .show-warning {
 	visibility: visible;
 }
 
-.support-cost-row .inline-edit-ui {
+.course-cost-row .inline-edit-ui {
 	text-decoration: underline;
 	cursor: pointer;
 }
