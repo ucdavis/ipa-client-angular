@@ -1,0 +1,35 @@
+.term-selector {
+	display: flex;
+	padding: 15px;
+}
+
+.term-selector .term-button {
+	padding: 10px;
+	border: 1px solid #d6d6d8;
+	border-right: none;
+}
+
+.term-selector .term-button:hover {
+	background-color: #d6d6d8;
+	cursor: pointer;
+}
+
+.term-selector .term-button.selected,
+.term-selector .term-button.selected:hover {
+	color: white;
+	background-color: #303641;
+	border: 1px solid #303641;
+	border-right: none;
+	cursor: default;
+}
+
+.term-selector .term-button.first {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+.term-selector .term-button.last {
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-right: 1px solid #d6d6d8;
+}
