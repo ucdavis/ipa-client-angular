@@ -63,10 +63,26 @@
 		</budget-nav>
 
 		<div class="page-content">
-			<budget-summary ng-if="view.state.ui.selectedRoute == 'summary'" summary="view.state.selectedBudgetScenario.summary"></budget-summary>
-			<course-costs ng-if="view.state.ui.selectedRoute == 'courseCosts'" class="course-costs-container" selected-budget-scenario="view.state.selectedBudgetScenario" instructors="view.state.instructors"></course-costs>
-			<line-items ng-if="view.state.ui.selectedRoute == 'lineItems'" selected-budget-scenario="view.state.selectedBudgetScenario" ui="view.state.ui"></line-items>
-			<instructor-costs ng-if="view.state.ui.selectedRoute == 'instructorCosts'"></instructor-costs>
+			<budget-summary
+				ng-if="view.state.ui.selectedRoute == 'summary'"
+				summary="view.state.selectedBudgetScenario.summary">
+			</budget-summary>
+			<course-costs
+				ng-if="view.state.ui.selectedRoute == 'courseCosts'"
+				class="course-costs-container"
+				selected-budget-scenario="view.state.selectedBudgetScenario"
+				instructors="view.state.instructors">
+			</course-costs>
+			<line-items
+				ng-if="view.state.ui.selectedRoute == 'lineItems'"
+				selected-budget-scenario="view.state.selectedBudgetScenario"
+				ui="view.state.ui">
+			</line-items>
+			<instructor-costs
+				ng-if="view.state.ui.selectedRoute == 'instructorCosts'"
+				selected-budget-scenario="view.state.selectedBudgetScenario"
+				instructors="view.state.instructors">
+			</instructor-costs>
 		</div>
 
 	</div>

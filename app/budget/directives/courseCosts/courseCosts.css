@@ -37,7 +37,7 @@
 	padding: 15px;
 }
 
-.course-costs-section .cell {
+.course-costs .cell {
 	flex: 1 0 0px;
 	display: flex;
 	align-items: center;
