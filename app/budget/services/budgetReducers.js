@@ -484,8 +484,13 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					ui.courseCommentsModal.isOpen = false;
 					ui.courseCommentsModal.course = null;
 					return ui;
-				case TOGGLE_ADD_LINE_ITEM_MODAL:
-					ui.isAddLineItemModalOpen = ! ui.isAddLineItemModalOpen;
+				case OPEN_ADD_LINE_ITEM_MODAL:
+					ui.isAddLineItemModalOpen = true;
+					ui.lineItemToEdit = action.payload.lineItemToEdit;
+					return ui;
+				case CLOSE_ADD_LINE_ITEM_MODAL:
+					ui.isAddLineItemModalOpen = false;
+					ui.lineItemToEdit = null;
 					return ui;
 				case TOGGLE_ADD_BUDGET_SCENARIO_MODAL:
 					ui.isAddBudgetScenarioModalOpen = ! ui.isAddBudgetScenarioModalOpen;

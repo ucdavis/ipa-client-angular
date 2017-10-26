@@ -5,10 +5,16 @@ budgetApp.directive("addLineItem", this.addLineItem = function ($rootScope, budg
 		replace: true,
 		scope: {
 			state: '<',
-			isVisible: '='
+			isVisible: '=',
+			lineItemToEdit: '<?'
 		},
 		link: function (scope, element, attrs) {
 			scope.newLineItem = {};
+
+			if (scope.lineItemToEdit) {
+				scope.newLineItem = angular.copy(scope.lineItemToEdit);
+			}
+
 			scope.newLineItem.categoryDescription = "Select a category";
 
 			// Validates the form and builds a custom message for the user
@@ -41,7 +47,11 @@ budgetApp.directive("addLineItem", this.addLineItem = function ($rootScope, budg
 
 			scope.submitLineItemForm = function () {
 				scope.newLineItem.budgetScenarioId = scope.state.selectedBudgetScenario.id;
-				budgetActions.createLineItem(scope.newLineItem, scope.state.selectedBudgetScenario.id);
+				if (scope.lineItemToEdit) {
+					budgetActions.updateLineItem(scope.newLineItem, scope.state.selectedBudgetScenario.id);
+				} else {
+					budgetActions.createLineItem(scope.newLineItem, scope.state.selectedBudgetScenario.id);
+				}
 			};
 
 			scope.close = function() {

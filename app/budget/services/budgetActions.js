@@ -77,10 +77,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		createLineItem: function (newLineItem, budgetScenarioId) {
-
-			// Close modal
-			this.toggleAddLineItemModal();
-
+			var self = this;
 			// Ensure amount is properly formatted as a float
 			newLineItem.amount = parseFloat(newLineItem.amount);
 
@@ -91,8 +88,30 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 				$rootScope.$emit('toast', { message: "Created line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);
+
+				// Close modal
+				self.closeAddLineItemModal();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not create line item.", type: "ERROR" });
+			});
+		},
+		editLineItem: function (updatedLineItem, budgetScenarioId) {
+			var self = this;
+			// Ensure amount is properly formatted as a float
+			updatedLineItem.amount = parseFloat(updatedLineItem.amount);
+
+			budgetService.updateLineItem(updatedLineItem, budgetScenarioId).then(function (results) {
+				var action = {
+					type: UPDATE_LINE_ITEM,
+					payload: results
+				};
+				$rootScope.$emit('toast', { message: "Updated line item", type: "SUCCESS" });
+				budgetReducers.reduce(action);
+
+				// Close modal
+				self.closeAddLineItemModal();
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update line item.", type: "ERROR" });
 			});
 		},
 		updateLineItem: function (lineItem) {
@@ -202,10 +221,20 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				}
 			});
 		},
-		toggleAddLineItemModal: function() {
+		closeAddLineItemModal: function() {
 			var action = {
-				type: TOGGLE_ADD_LINE_ITEM_MODAL,
+				type: CLOSE_ADD_LINE_ITEM_MODAL,
 				payload: {}
+			};
+
+			budgetReducers.reduce(action);
+		},
+		openAddLineItemModal: function(lineItemToEdit) {
+			var action = {
+				type: OPEN_ADD_LINE_ITEM_MODAL,
+				payload: {
+					lineItemToEdit: lineItemToEdit
+				}
 			};
 
 			budgetReducers.reduce(action);

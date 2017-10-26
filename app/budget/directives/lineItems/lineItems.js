@@ -14,7 +14,7 @@ budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetAc
 			};
 
 			scope.openAddLineItemModal = function() {
-				budgetActions.toggleAddLineItemModal();
+				budgetActions.openAddLineItemModal();
 			};
 
 			scope.selectAllLineItems = function(areAllLineItemsSelected) {
