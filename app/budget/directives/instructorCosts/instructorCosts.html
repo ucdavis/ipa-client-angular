@@ -20,6 +20,9 @@
 			<div class="cell">
 				Instructor Cost
 			</div>
+			<div class="cell">
+				Comment
+			</div>
 		</div>
 
 		<div class="cell">
@@ -33,14 +36,14 @@
 			<div>
 				{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
 			</div>
-			<div class="comment-ui">
-				<span class="glyphicon glyphicon-list-alt"
-							ng-click="openCourseComments(course)"></span>
-			</div>
 		</div>
 		<div class="section-group-row" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
 			<div class="instructor-cost">
-				<instructor-cost-row section-group-cost="sectionGroupCost" instructors="instructors"></instructor-cost-row>
+				<instructor-cost-row
+					section-group-cost="sectionGroupCost"
+					instructors="instructors"
+					course="course">
+				</instructor-cost-row>
 			</div>
 
 			<div class="cell">

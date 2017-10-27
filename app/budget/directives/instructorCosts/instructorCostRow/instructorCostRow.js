@@ -5,7 +5,8 @@ budgetApp.directive("instructorCostRow", this.instructorCostRow = function ($roo
 		replace: true,
 		scope: {
 			sectionGroupCost: '<',
-			instructors: '<'
+			instructors: '<',
+			course: '<'
 		},
 		link: function (scope, element, attrs) {
 			if (scope.sectionGroupCost && scope.sectionGroupCost.instructor) {
@@ -51,6 +52,10 @@ budgetApp.directive("instructorCostRow", this.instructorCostRow = function ($roo
 				budgetActions.toggleSectionGroupCostDetail(scope.sectionGroupCost.id, 'originalInstructor');
 				scope.sectionGroupCost.originalInstructorId = null;
 				budgetActions.updateSectionGroupCost(scope.sectionGroupCost);
+			};
+
+			scope.openCourseComments = function(course) {
+				budgetActions.openAddCourseCommentsModal(course);
 			};
 		} // end link
 	};
