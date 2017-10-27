@@ -512,65 +512,6 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 
 					ui.selectedBudgetScenarioId = action.payload.budgetScenarioId;
 					return ui;
-				case TOGGLE_LINE_ITEM_SECTION:
-					ui.isLineItemOpen = !(ui.isLineItemOpen);
-					return ui;
-				case TOGGLE_COURSE_COST_SECTION:
-					ui.isCourseCostOpen = !(ui.isCourseCostOpen);
-					return ui;
-				case TOGGLE_LINE_ITEM:
-					var lineItemId = action.payload.lineItemId;
-					var index = ui.openLineItems.indexOf(lineItemId);
-					if (index == -1) {
-						ui.openLineItems.push(lineItemId);
-					} else {
-						ui.openLineItems.splice(index, 1);
-					}
-					return ui;
-				case TOGGLE_SECTION_GROUP_COST_DETAIL:
-					var sectionGroupCostId = action.payload.sectionGroupCostId;
-
-					// Toggle appropriate property
-					switch (action.payload.property) {
-						case "sectionCount":
-							ui.sectionGroupCostDetails[sectionGroupCostId].displaySectionCountInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displaySectionCountInput;
-							return ui;
-						case "taCount":
-							ui.sectionGroupCostDetails[sectionGroupCostId].displayTaCountInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayTaCountInput;
-							return ui;
-						case "readerCount":
-							ui.sectionGroupCostDetails[sectionGroupCostId].displayReaderCountInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayReaderCountInput;
-							return ui;
-						case "enrollment":
-							ui.sectionGroupCostDetails[sectionGroupCostId].displayEnrollmentInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayEnrollmentInput;
-							return ui;
-						case "instructorCost":
-							ui.sectionGroupCostDetails[sectionGroupCostId].displayInstructorCostInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayInstructorCostInput;
-							return ui;
-						case "reason":
-							ui.sectionGroupCostDetails[sectionGroupCostId].displayReasonInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayReasonInput;
-							return ui;
-					}
-					return ui;
-				case TOGGLE_LINE_ITEM_DETAIL:
-					var lineItemId = action.payload.lineItemId;
-
-					// Toggle appropriate property
-					switch (action.payload.property) {
-						case "description":
-							ui.lineItemDetails[lineItemId].displayDescriptionInput = !ui.lineItemDetails[lineItemId].displayDescriptionInput;
-							return ui;
-						case "amount":
-							ui.lineItemDetails[lineItemId].displayAmountInput = !ui.lineItemDetails[lineItemId].displayAmountInput;
-							return ui;
-						case "notes":
-							ui.lineItemDetails[lineItemId].displayNotesInput = !ui.lineItemDetails[lineItemId].displayNotesInput;
-							return ui;
-						case "type":
-							ui.lineItemDetails[lineItemId].displayTypeInput = !ui.lineItemDetails[lineItemId].displayTypeInput;
-							return ui;
-					}
-					return ui;
 				default:
 					return ui;
 			}

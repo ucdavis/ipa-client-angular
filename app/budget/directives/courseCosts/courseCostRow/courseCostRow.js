@@ -8,13 +8,8 @@ budgetApp.directive("courseCostRow", this.courseCostRow = function ($rootScope, 
 			course: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.updateSectionGroupCost = function(sectionGroupCost, propertyName) {
-				budgetActions.toggleSectionGroupCostDetail(sectionGroupCost.id, propertyName);
+			scope.updateSectionGroupCost = function(sectionGroupCost) {
 				budgetActions.updateSectionGroupCost(sectionGroupCost);
-			};
-
-			scope.displayProperty = function(sectionGroupCost, propertyName) {
-				budgetActions.toggleSectionGroupCostDetail(sectionGroupCost.id, propertyName);
 			};
 
 			scope.openCourseComments = function(course) {

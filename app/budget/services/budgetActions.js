@@ -2,7 +2,6 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 	return {
 		getInitialState: function (workgroupId, year, selectedBudgetScenarioId, selectedTerm) {
 			budgetService.getInitialState(workgroupId, year).then(function (results) {
-
 				// Set a default active budget scenario if one was not set in local storage
 				if (!selectedBudgetScenarioId) {
 					if (results.budgetScenarios && results.budgetScenarios.length > 0) {
@@ -279,52 +278,6 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			var action = {
 				type: TOGGLE_SUPPORT_COST_MODAL,
 				payload: {}
-			};
-
-			budgetReducers.reduce(action);
-		},
-		toggleLineItemSection: function () {
-			var action = {
-				type: TOGGLE_LINE_ITEM_SECTION,
-				payload: {}
-			};
-
-			budgetReducers.reduce(action);
-		},
-		toggleLineItem: function(lineItem) {
-			var action = {
-				type: TOGGLE_LINE_ITEM,
-				payload: {lineItemId: lineItem.id}
-			};
-
-			budgetReducers.reduce(action);
-		},
-		toggleCourseCostsSection: function() {
-			var action = {
-				type: TOGGLE_COURSE_COST_SECTION,
-				payload: {}
-			};
-
-			budgetReducers.reduce(action);
-		},
-		toggleLineItemDetail: function(lineItemId, property) {
-			var action = {
-				type: TOGGLE_LINE_ITEM_DETAIL,
-				payload: {
-					lineItemId: lineItemId,
-					property: property
-				}
-			};
-
-			budgetReducers.reduce(action);
-		},
-		toggleSectionGroupCostDetail: function(sectionGroupCostId, property) {
-			var action = {
-				type: TOGGLE_SECTION_GROUP_COST_DETAIL,
-				payload: {
-					sectionGroupCostId: sectionGroupCostId,
-					property: property
-				}
 			};
 
 			budgetReducers.reduce(action);
