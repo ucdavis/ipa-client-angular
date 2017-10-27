@@ -63,13 +63,23 @@
 		</div>	</div>
 	<div class="cell">
 		<div>
-			<input
-				class="inline-edit"
-				type="number"
-				ng-model="sectionGroupCost.instructorCost"
-				auto-input
-				on-enter="updateSectionGroupCost(sectionGroupCost, 'instructorCost')"
-				on-blur="updateSectionGroupCost(sectionGroupCost, 'instructorCost')">
+			<div>
+				<input
+					class="inline-edit"
+					type="number"
+					ng-model="sectionGroupCost.instructorCost"
+					auto-input
+					on-enter="updateSectionGroupCost(sectionGroupCost, 'instructorCost')"
+					on-blur="updateSectionGroupCost(sectionGroupCost, 'instructorCost')">
+			</div>
+			<div>
+				<ipa-button
+					button-text="''"
+					color="'light'"
+					icon-class="'entypo entypo-ccw'"
+					on-click="removeInstructorCost(sectionGroupCost)">
+				</ipa-button>
+			</div>
 		</div>
 	</div>
 	<div class="cell">

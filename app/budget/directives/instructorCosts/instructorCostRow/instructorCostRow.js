@@ -26,7 +26,11 @@ budgetApp.directive("instructorCostRow", this.instructorCostRow = function ($roo
 			};
 
 			scope.updateSectionGroupCost = function(sectionGroupCost, propertyName) {
-				budgetActions.toggleSectionGroupCostDetail(sectionGroupCost.id, propertyName);
+				budgetActions.updateSectionGroupCost(sectionGroupCost);
+			};
+
+			scope.removeInstructorCost = function(sectionGroupCost) {
+				sectionGroupCost.instructorCost = null;
 				budgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 
