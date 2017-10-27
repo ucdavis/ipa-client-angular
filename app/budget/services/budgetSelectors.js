@@ -245,6 +245,7 @@ budgetApp.service('budgetSelectors', function () {
 
 				// Use budget specific cost if instructor is a lecturer
 				var instructor = instructors.list[sectionGroupCost.instructorId];
+				sectionGroupCost.instructorCostOverrides = {};
 
 				if (instructor) {
 					var instructorCost = instructorCosts.list[instructor.instructorCostId];
@@ -252,16 +253,19 @@ budgetApp.service('budgetSelectors', function () {
 
 				if (instructorCost && instructorCost.lecturer) {
 					instructorCostSubTotal = budget.lecturerCost;
+					sectionGroupCost.instructorCostOverrides.lecturerCost = budget.lecturerCost;
 				}
 
 				// Use instructor specific override for instructor cost
 				if (sectionGroupCost.instructorId != null && instructorCost && instructorCost.cost) {
 					instructorCostSubTotal = instructorCost.cost;
+					sectionGroupCost.instructorCostOverrides.instructorCost = instructorCost.cost;
 				}
 
 				// Use sectionGroupCost override for instructor cost
 				if (sectionGroupCost.instructorCost != null) {
 					instructorCostSubTotal = sectionGroupCost.instructorCost;
+					sectionGroupCost.instructorCostOverrides.sectionGroupCost = sectionGroupCost.instructorCost;
 				}
 
 				// Set 'actual instructor cost'

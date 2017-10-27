@@ -62,25 +62,8 @@
 				on-blur="updateSectionGroupCost(sectionGroupCost, 'reason')">
 		</div>	</div>
 	<div class="cell">
-		<div>
-			<div>
-				<input
-					class="inline-edit"
-					type="number"
-					ng-model="sectionGroupCost.instructorCost"
-					auto-input
-					on-enter="updateSectionGroupCost(sectionGroupCost, 'instructorCost')"
-					on-blur="updateSectionGroupCost(sectionGroupCost, 'instructorCost')">
-			</div>
-			<div>
-				<ipa-button
-					button-text="''"
-					color="'light'"
-					icon-class="'entypo entypo-ccw'"
-					on-click="removeInstructorCost(sectionGroupCost)">
-				</ipa-button>
-			</div>
-		</div>
+		<instructor-cost-input
+		section-group-cost="sectionGroupCost"></instructor-cost-input>
 	</div>
 	<div class="cell">
 		<div>
