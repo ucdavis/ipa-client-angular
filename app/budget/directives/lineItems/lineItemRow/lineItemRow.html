@@ -19,9 +19,12 @@
 		</div>
 		<div class="comment-display">
 			<div class="comments-content" uib-tooltip="View Comments">
-				<div class="glyphicon glyphicon-list-alt"
-						ng-click="openAddLineItemCommentsModal(lineItem)">
-				</div>
+				<ipa-button
+					button-text="'See Comments'"
+					color="'light'"
+					icon-class="'entypo entypo-chat'"
+					on-click="openAddLineItemCommentsModal(lineItem)">
+				</ipa-button>
 			</div>
 		</div>
 		<div class="amount-display">
