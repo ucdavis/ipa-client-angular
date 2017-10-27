@@ -36,10 +36,6 @@
 	background-color: white;
 }
 
-.instructor-cost-row .caret {
-	margin: 2px;
-}
-
 .instructor-cost-row .instructor-dropdown-container {
 	flex: 4 0 0px;
 }
@@ -54,9 +50,4 @@
 
 .instructor-cost-row .instructor-container:hover .remove-instructor-ui {
 	visibility: visible;
-}
-
-.instructor-cost-row .inline-edit-ui {
-	text-decoration: underline;
-	cursor: pointer;
 }

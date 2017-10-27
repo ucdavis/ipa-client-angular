@@ -14,7 +14,6 @@
 		</div>
 		<div>
 			<input
-				class="inline-edit"
 				type="number"
 				ng-model="sectionGroupCost.enrollment"
 				auto-input
@@ -34,7 +33,6 @@
 		</div>
 		<div>
 			<input
-				class="inline-edit"
 				type="number"
 				ng-model="sectionGroupCost.sectionCount"
 				auto-input
@@ -55,7 +53,6 @@
 
 		<div>
 			<input
-				class="inline-edit"
 				type="number"
 				ng-model="sectionGroupCost.taCount"
 				auto-input
@@ -78,7 +75,6 @@
 		</div>
 		<div>
 			<input
-				class="inline-edit"
 				type="number"
 				ng-model="sectionGroupCost.readerCount"
 				auto-input
@@ -91,5 +87,15 @@
 	</div>
 	<div class="cell">
 		{{ sectionGroupCost.supportCostSubTotalDisplay }}
+	</div>
+	<div class="cell">
+		<div class="comments-content" uib-tooltip="View Comments">
+			<ipa-button
+				button-text="'See Comments'"
+				color="'light'"
+				icon-class="'entypo entypo-chat'"
+				on-click="openCourseComments(course)">
+			</ipa-button>
+		</div>
 	</div>
 </div>

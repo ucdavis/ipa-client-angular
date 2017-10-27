@@ -3,8 +3,7 @@
 	height: 100%;
 }
 
-.course-cost-row,
-.course-cost-row input { /* Override default user agent styling */
+.course-cost-row { /* Override default user agent styling */
 	background-color: #F1F8FA;
 }
 
@@ -21,9 +20,4 @@
 
 .course-cost-row .show-warning {
 	visibility: visible;
-}
-
-.course-cost-row .inline-edit-ui {
-	text-decoration: underline;
-	cursor: pointer;
 }

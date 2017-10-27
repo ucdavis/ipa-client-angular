@@ -4,7 +4,8 @@ budgetApp.directive("courseCostRow", this.courseCostRow = function ($rootScope, 
 		templateUrl: 'courseCostRow.html',
 		replace: true,
 		scope: {
-			sectionGroupCost: '<'
+			sectionGroupCost: '<',
+			course: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.updateSectionGroupCost = function(sectionGroupCost, propertyName) {
@@ -16,6 +17,9 @@ budgetApp.directive("courseCostRow", this.courseCostRow = function ($rootScope, 
 				budgetActions.toggleSectionGroupCostDetail(sectionGroupCost.id, propertyName);
 			};
 
+			scope.openCourseComments = function(course) {
+				budgetActions.openAddCourseCommentsModal(course);
+			};
 		} // end link
 	};
 });
