@@ -17,10 +17,19 @@
 		<div class="description-display">
 			{{ lineItem.description }}
 		</div>
-
+		<div class="comment-display">
+			<div class="comments-content" uib-tooltip="View Comments">
+				<div class="glyphicon glyphicon-list-alt"
+						ng-click="openAddLineItemCommentsModal(lineItem)">
+				</div>
+			</div>
+		</div>
 		<div class="amount-display">
 			<div>
 				{{ lineItem.amountDisplay }}
+			</div>
+			<div>
+				<line-item-dropdown line-item="lineItem"></line-item-dropdown>
 			</div>
 		</div>
 	</div>
