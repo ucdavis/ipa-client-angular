@@ -67,7 +67,8 @@
 		<div class="page-content">
 			<budget-summary
 				ng-if="view.state.ui.selectedRoute == 'summary'"
-				summary="view.state.selectedBudgetScenario.summary">
+				summary="view.state.selectedBudgetScenario.summary"
+				budget="view.state.budget">
 			</budget-summary>
 			<course-costs
 				ng-if="view.state.ui.selectedRoute == 'courseCosts'"

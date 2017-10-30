@@ -1,4 +1,4 @@
-<div class="panel panel-primary teaching-fund-panel" data-collapsed="0">
+<div class="budget-summary panel panel-primary teaching-fund-panel" data-collapsed="0">
 	<div class="panel-heading">
 		<div class="panel-title">Summary</div>
 		<div class="panel-title pull-right">Last Modified: 5/18/17</div>
@@ -13,6 +13,7 @@
 						<th class="budget-summary-title">
 							Course Costs
 						</th>
+						<th class="cost-column"></th>
 						<th></th>
 						<th class="sum-total">{{ summary.courseCosts.total }}</th>
 					</tr>
@@ -20,16 +21,53 @@
 				<tbody>
 					<tr>
 						<td>TA Costs</td>
+						<td>
+							<ipa-currency-input></ipa-currency-input>
+						</td>
 						<td>{{ summary.courseCosts.taCosts.percentage }}%</td>
 						<td class="text-right">{{ summary.courseCosts.taCosts.display }}</td>
 					</tr>
 					<tr>
 						<td>Reader Costs</td>
+						<td class="cost-column">
+							<ipa-currency-input></ipa-currency-input>
+						</td>
 						<td>{{ summary.courseCosts.readerCosts.percentage }}%</td>
 						<td class="text-right">{{ summary.courseCosts.readerCosts.display }}</td>
 					</tr>
 					<tr>
 						<td>Instructor Costs</td>
+						<td class="cost-column">
+							<ipa-currency-input></ipa-currency-input>
+						</td>
+						<td>{{ summary.courseCosts.instructorCosts.percentage }}%</td>
+						<td class="text-right">{{ summary.courseCosts.instructorCosts.display }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="table responsive">
+				<thead>
+					<tr>
+						<th class="budget-summary-title">
+							Intructor Costs
+						</th>
+						<th class="cost-column"></th>
+						<th></th>
+						<th class="sum-total">{{ summary.courseCosts.total }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Lecturer Costs</td>
+						<td class="cost-column">
+							<ipa-currency-input></ipa-currency-input>
+						</td>
+						<td>{{ summary.courseCosts.lecturerCosts.percentage }}%</td>
+						<td class="text-right">{{ summary.courseCosts.lecturerCosts.display }}</td>
+					</tr>
+					<tr>
+						<td>Instructor Costs</td>
+						<td class="cost-column"></td>
 						<td>{{ summary.courseCosts.instructorCosts.percentage }}%</td>
 						<td class="text-right">{{ summary.courseCosts.instructorCosts.display }}</td>
 					</tr>
@@ -41,6 +79,7 @@
 						<th class="budget-summary-title">
 							Line Items
 						</th>
+						<th class="cost-column"></th>
 						<th></th>
 						<th class="sum-total">{{ summary.lineItems.total }}</th>
 					</tr>
@@ -48,6 +87,7 @@
 				<tbody>
 					<tr ng-repeat="lineItemCategory in summary.lineItems.categories">
 						<td>{{ lineItemCategory.description }}</td>
+						<td></td>
 						<td>{{ lineItemCategory.percentage }}%</td>
 						<td class="text-right">{{ lineItemCategory.display }}</td>
 					</tr>

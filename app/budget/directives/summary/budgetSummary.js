@@ -4,10 +4,12 @@ budgetApp.directive("budgetSummary", this.budgetSummary = function ($rootScope) 
 		templateUrl: 'budgetSummary.html',
 		replace: true,
 		scope: {
-			summary: '<'
+			summary: '<',
+			budget: '<'
 		},
 		link: function (scope, element, attrs) {
-			// Intentionally empty 
-		} // end link
+			scope.saveBudget = function () {
+				budgetActions.updateBudget(scope.budget);
+			};		} // end link
 	};
 });
