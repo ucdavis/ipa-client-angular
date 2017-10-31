@@ -12,16 +12,16 @@
 		</div>
 
 		<div class="items">
-			<div
+			<div ng-click="applyUserChoiceToTag(tag.id)"
 				ng-repeat="tagId in view.state.tags.availableIds"
 				ng-init="tag=view.state.tags.list[tagId]"
 				class="tag-list">
-			<span ng-click="applyUserChoiceToTag(tag.id)" class="tag-icon-container">
-				<i ng-if="view.tagOccurences[tagId].icon == 'all'" class="glyphicon glyphicon-ok tag-icon"></i>
-				<i ng-if="view.tagOccurences[tagId].icon == 'some'" class="glyphicon glyphicon-minus tag-icon"></i>
-			</span>
+				<span class="tag-icon-container">
+					<i ng-if="view.tagOccurences[tagId].icon == 'all'" class="glyphicon glyphicon-ok tag-icon"></i>
+					<i ng-if="view.tagOccurences[tagId].icon == 'some'" class="glyphicon glyphicon-minus tag-icon"></i>
+				</span>
 				<div>{{ tag.name }}</div>
-		</div>
+			</div>
 
 		</div>
 		<div class="assign-tag-footer">
