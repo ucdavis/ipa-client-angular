@@ -117,7 +117,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 
 				// Render the header
 				// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
-				var isChecked = (data.state.uiState.selectedCourseRowIds.length == data.state.courses.ids.length);
+				var isChecked = (data.state.courses.ids != 0 && data.state.uiState.selectedCourseRowIds.length == data.state.courses.ids.length);
 				var header = '<thead><tr><th class="checkbox-cell">' + getCheckbox(0, "selectAllCourseRows", isChecked) + "</th><th class=\"\">Course</th>";
 
 				// Filter scope.termDefinitions to only those terms which are enabled by the filter.
