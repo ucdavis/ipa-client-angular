@@ -165,7 +165,10 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 						body += getCourseRow(rowIdx, courseId, termsToRender, data.state);
 					});
 				} else {
-					var numberOfColumns = data.state.filters.enabledTerms.length + 1;
+					// One for checkbox, and one for course title
+					var miscColumns = 2;
+
+					var numberOfColumns = data.state.filters.enabledTerms.length + miscColumns;
 					body += "<tr><td class=\"text-center text-muted\" colspan=\"" + numberOfColumns + "\">No Courses</td></tr>";
 				}
 
