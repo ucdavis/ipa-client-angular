@@ -56,31 +56,6 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 
 			};
 
-			$scope.sortCourses = function(courses) {
-					courses.sort(function (a, b) {
-						// Use subject codes to sort if they don't match
-						if (a.subjectCode > b.subjectCode) {
-							return 1;
-						}
-
-						if (a.subjectCode < b.subjectCode) {
-							return -1;
-						}
-
-						// Subject codes must have matched, use course numbers to sort instead
-						if (a.courseNumber > b.courseNumber) {
-							return 1;
-						}
-
-						if (a.courseNumber < b.courseNumber) {
-							return -1;
-						}
-
-						return -1;
-					});
-				return courses;
-			};
-
 			$scope.addPreference = function(preference, term, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isCourseRelease) {
 				// Reset add preference UI state
 				var elements = $('.search-course-input');
