@@ -23,9 +23,8 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 					// This typehead library works better with a promise,
 					// so in this case the controller bypasses the normal state managaement data flow
 					return teachingCallFormService.searchCourses(query).then(function (courseSearchResults) {
-						var courses = courseSearchResults.slice(0, 20);
 
-						courses.forEach(function (course) {
+						courseSearchResults.forEach(function (course) {
 							course.isSuggested = true;
 							course.description = course.subjectCode + " " + course.courseNumber;
 							course.scheduleId = $scope.view.state.scheduleId;
@@ -33,8 +32,23 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 							course.termCode = termContainer.termCode;
 						});
 
-						courses = $scope.sortCourses(courses);
-						return courses;
+						var options = {
+							shouldSort: true,
+							threshold: 0.8,
+							location: 0,
+							distance: 100,
+							maxPatternLength: 32,
+							minMatchCharLength: 1,
+							includeScore: false,
+							keys: [
+								"description"
+							]
+						};
+
+						var fuse = new Fuse(courseSearchResults, options);
+						var results = fuse.search(query);
+
+						return results;
 					}, function (err) {
 						$rootScope.$emit('toast', {message: "Could not search courses.", type: "ERROR"});
 					});
