@@ -1,8 +1,5 @@
 <div class="instructor-cost-row">
 	<div class="cell instructor-container">
-		<div class="instructor-ui-label">
-			{{ instructorButtonText }}
-		</div>
 		<div class="instructor-dropdown-container">
 			<ipa-dropdown
 				expanded="sectionGroupCost.expanded"
@@ -26,9 +23,6 @@
 	</div>
 
 	<div class="cell instructor-container">
-		<div class="instructor-ui-label">
-			{{ sectionGroupCost.originalInstructor.fullName }}
-		</div>
 		<div class="instructor-dropdown-container">
 			<ipa-dropdown
 				expanded="sectionGroupCost.expanded"
@@ -64,24 +58,21 @@
 				type="text"
 				ng-model="sectionGroupCost.reason"
 				auto-input
-				on-enter="updateSectionGroupCost(sectionGroupCost, 'reason')"
-				on-blur="updateSectionGroupCost(sectionGroupCost, 'reason')">
+				on-enter="updateSectionGroupCost(sectionGroupCost)"
+				on-blur="updateSectionGroupCost(sectionGroupCost)">
 		</div>	</div>
 	<div class="cell">
-		<div
-			ng-if="sectionGroupCost.displayInstructorCostInput != true"
-			ng-click="displayProperty(sectionGroupCost, 'instructorCost')"
-			class="inline-edit-ui">
-			{{ sectionGroupCost.actualInstructorCostDisplay }}
-		</div>
-		<div ng-if="sectionGroupCost.displayInstructorCostInput == true">
-			<input
-				class="inline-edit"
-				type="number"
-				ng-model="sectionGroupCost.instructorCost"
-				auto-input
-				on-enter="updateSectionGroupCost(sectionGroupCost, 'instructorCost')"
-				on-blur="updateSectionGroupCost(sectionGroupCost, 'instructorCost')">
+		<instructor-cost-input
+		section-group-cost="sectionGroupCost"></instructor-cost-input>
+	</div>
+	<div class="cell">
+		<div>
+			<ipa-button
+				button-text="'See Comments'"
+				color="'light'"
+				icon-class="'entypo entypo-chat'"
+				on-click="openCourseComments(course)">
+			</ipa-button>
 		</div>
 	</div>
 </div>

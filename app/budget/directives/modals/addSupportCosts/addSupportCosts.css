@@ -16,24 +16,6 @@
 	background-color: rgb(248, 248, 248);
 }
 
-.support-costs .form-input {
-	width: 100%;
-}
-
-.support-costs .lecturer-cost-label {
-	flex: 1 0 0px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.support-costs .lecturer-cost-input {
-	flex: 1 0 0px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
 .support-costs .instructor-box {
 	border: 1px solid #ccc;
 	border-radius: 5px;
@@ -80,22 +62,5 @@
 }
 
 .support-costs .instructor-cost-input {
-	width: 100%;
-}
-
-.support-costs .default-costs-container {
-	flex: 1 0 0px;
-}
-
-.support-costs .lecturer-cost-container {
-	display: flex;
-}
-
-.support-costs .lecturer-cost-input-container {
-	padding: 10px;
-	width: 80%;
-}
-
-.support-costs .lecturer-cost-input-field {
 	width: 100%;
 }

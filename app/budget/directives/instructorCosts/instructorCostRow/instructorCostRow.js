@@ -5,7 +5,8 @@ budgetApp.directive("instructorCostRow", this.instructorCostRow = function ($roo
 		replace: true,
 		scope: {
 			sectionGroupCost: '<',
-			instructors: '<'
+			instructors: '<',
+			course: '<'
 		},
 		link: function (scope, element, attrs) {
 			if (scope.sectionGroupCost && scope.sectionGroupCost.instructor) {
@@ -20,37 +21,32 @@ budgetApp.directive("instructorCostRow", this.instructorCostRow = function ($roo
 				scope.originalInstructorButtonText = "Assign instructor";
 			}
 
-			scope.displayProperty = function(sectionGroupCost, propertyName) {
-				budgetActions.toggleSectionGroupCostDetail(sectionGroupCost.id, propertyName);
-			};
-
-			scope.updateSectionGroupCost = function(sectionGroupCost, propertyName) {
-				budgetActions.toggleSectionGroupCostDetail(sectionGroupCost.id, propertyName);
+			scope.updateSectionGroupCost = function(sectionGroupCost) {
 				budgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 
 			scope.setInstructor = function(instructor) {
-				budgetActions.toggleSectionGroupCostDetail(scope.sectionGroupCost.id, 'instructor');
 				scope.sectionGroupCost.instructorId = instructor.id;
 				budgetActions.updateSectionGroupCost(scope.sectionGroupCost);
 			};
 
 			scope.removeInstructor = function(instructor) {
-				budgetActions.toggleSectionGroupCostDetail(scope.sectionGroupCost.id, 'instructor');
 				scope.sectionGroupCost.instructorId = null;
 				budgetActions.updateSectionGroupCost(scope.sectionGroupCost);
 			};
 
 			scope.setOriginalInstructor = function(originalInstructor) {
-				budgetActions.toggleSectionGroupCostDetail(scope.sectionGroupCost.id, 'originalInstructor');
 				scope.sectionGroupCost.originalInstructorId = originalInstructor.id;
 				budgetActions.updateSectionGroupCost(scope.sectionGroupCost);
 			};
 
 			scope.removeOriginalInstructor = function(originalInstructor) {
-				budgetActions.toggleSectionGroupCostDetail(scope.sectionGroupCost.id, 'originalInstructor');
 				scope.sectionGroupCost.originalInstructorId = null;
 				budgetActions.updateSectionGroupCost(scope.sectionGroupCost);
+			};
+
+			scope.openCourseComments = function(course) {
+				budgetActions.openAddCourseCommentsModal(course);
 			};
 		} // end link
 	};

@@ -1,0 +1,23 @@
+.course-cost-row {
+	display: flex;
+	height: 100%;
+}
+
+.course-cost-row { /* Override default user agent styling */
+	background-color: #F1F8FA;
+}
+
+.course-cost-row .cell {
+	flex: 1 0 0px;
+	display: flex;
+	justify-content: center;
+}
+
+.course-cost-row .section-group-warning {
+	color: #ce4844;
+	visibility: hidden;
+}
+
+.course-cost-row .show-warning {
+	visibility: visible;
+}

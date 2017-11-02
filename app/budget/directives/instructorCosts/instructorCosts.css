@@ -1,9 +1,9 @@
-.course-costs {
+.instructor-costs {
 	border: 1px solid rgb(235, 235, 235);
 	border-radius: 4px;
 }
 
-.course-costs .expand-ui {
+.instructor-costs .expand-ui {
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
@@ -12,7 +12,7 @@
 	font-weight: bold;
 }
 
-.course-costs .expand-ui-container {
+.instructor-costs .expand-ui-container {
 	padding-left: 15px;
 	padding-right: 15px;
 	padding-top: 10px;
@@ -20,59 +20,59 @@
 	cursor: pointer;
 }
 
-.course-costs .expand-ui-triangle {
+.instructor-costs .expand-ui-triangle {
 	font-size: 10px;
 }
 
-.course-costs .course-costs-header {
+.instructor-costs .course-costs-header {
 	display: flex;
 	width: 100%;
 }
 
-.course-costs .support-cost-header,
-.course-costs .instructors-header
+.instructor-costs .support-cost-header,
+.instructor-costs .instructors-header
  {
 	display: flex;
 	flex: 5 0 0px;
 	padding: 15px;
 }
 
-.course-costs .cell {
+.instructor-costs .cell {
 	flex: 1 0 0px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.course-costs .cell-content {
+.instructor-costs .cell-content {
 	flex: 0 1 0px;
 }
 
-.course-costs .course-title {
+.instructor-costs .course-title {
 	padding: 15px;
 	display: flex;
 }
 
-.course-costs .section-group-row {
+.instructor-costs .section-group-row {
 	display: flex;
 }
 
-.course-costs .support-cost {
+.instructor-costs .support-cost {
 	background-color: #F1F8FA;
 }
 
-.course-costs .instructor-cost {
+.instructor-costs .instructor-cost {
 	background-color: #FAF1F1;
 }
 
-.course-costs .support-cost,
-.course-costs .instructor-cost {
+.instructor-costs .support-cost,
+.instructor-costs .instructor-cost {
 	flex: 5 0 0px;
 	padding: 5px;
 	margin: 15px;
 }
 
-.course-costs .comment-ui {
+.instructor-costs .comment-ui {
 	padding-left: 1%;
 	cursor: pointer;
 }
