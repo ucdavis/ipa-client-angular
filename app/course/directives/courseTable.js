@@ -36,7 +36,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				ADD_SECTION_GROUP,
 				TOGGLE_SELECT_COURSE_ROW,
 				SELECT_ALL_COURSE_ROWS,
-				DESELECT_ALL_COURSE_ROWS
+				DESELECT_ALL_COURSE_ROWS,
+				MASS_ASSIGN_TAGS
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
