@@ -48,7 +48,15 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 
 				// Is there a space?
 				if (optimizedQuery.indexOf(' ') == -1) {
-					return query;
+					// Does it have 6 chars?
+					if (optimizedQuery.length == 6){
+						// Does it follow the pattern 'ecs030'
+						var subjectCode = optimizedQuery.slice(0,3);
+						var courseNumber = optimizedQuery.slice(3);
+						if (isNumber(courseNumber)) {
+							return subjectCode + " " + courseNumber;
+						}
+					}
 				}
 
 				// Were there more than two chunks?
