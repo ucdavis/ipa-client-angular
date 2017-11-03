@@ -149,11 +149,15 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 			}
 		};
 
-		$scope.submitAssignTagTooltip = function() {
-			courseActionCreators.submitAssignTagTooltip(
+		$scope.submitMassAssignTags = function() {
+			courseActionCreators.submitMassAssignTags(
 				$scope.view.tagOccurences,
 				$scope.view.state.tags.availableIds,
-				$scope.view.state.uiState.selectedCourseRowIds);
+				$scope.view.state.uiState.selectedCourseRowIds,
+				$scope.workgroupId,
+				$scope.year);
+
+				$scope.closeAssignTagsDropdown();
 		};
 
 		$scope.openCourseDeletionModal = function() {

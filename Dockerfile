@@ -1,8 +1,4 @@
-FROM httpd:2.4
+FROM nginx:1.12
 MAINTAINER Christopher Thielen
 
-COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
-COPY ./dist/ /usr/local/apache2/htdocs/
-
-EXPOSE 80
-EXPOSE 443
+COPY dist /usr/share/nginx/html
