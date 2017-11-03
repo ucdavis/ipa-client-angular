@@ -42,7 +42,10 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 			};
 
 			// Will improve query formatting when possible to improve search score
-			// For example if it receives 'ECS 10' it will format it as 'ECS 010'
+			// For example if it receives:
+			// 'ECS 10' becomes 'ECS 010'
+			// 'ECS010' becomes 'ecs 010'
+			// 'ECS 1' becomes 'ecs 001'
 			$scope.optimizeQueryFormat = function(query) {
 				var optimizedQuery = angular.copy(query);
 
