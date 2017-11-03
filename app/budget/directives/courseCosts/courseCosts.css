@@ -1,5 +1,5 @@
 .course-costs {
-	border: 1px solid rgb(235, 235, 235);
+	border: 1px solid #ebebeb;
 	border-radius: 4px;
 }
 
@@ -34,7 +34,8 @@
  {
 	display: flex;
 	flex: 5 0 0px;
-	padding: 15px;
+	padding: 19px;
+	border-bottom: 1px solid #ebebeb;
 }
 
 .course-costs .cell {
@@ -42,6 +43,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	/*background-color: #F9F9F9;*/
 }
 
 .course-costs .cell-content {
@@ -49,7 +51,7 @@
 }
 
 .course-costs .course-title {
-	padding: 15px;
+	padding: 10px;
 	display: flex;
 }
 
@@ -58,18 +60,18 @@
 }
 
 .course-costs .support-cost {
-	background-color: #F1F8FA;
+	background-color: #F9F9F9;
 }
 
 .course-costs .instructor-cost {
-	background-color: #FAF1F1;
+	background-color: #F9F9F9;
 }
 
 .course-costs .support-cost,
 .course-costs .instructor-cost {
 	flex: 5 0 0px;
 	padding: 5px;
-	margin: 15px;
+	margin: 5px 0px 5px 15px;
 }
 
 .course-costs .comment-ui {
