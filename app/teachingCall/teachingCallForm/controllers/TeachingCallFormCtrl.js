@@ -13,6 +13,12 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 			$scope.viewState = {};
 
 			$scope.searchCourses = function (termContainer, query) {
+				termContainer.preferenceOptions.forEach(function(course) {
+					if (course.subjectCode) {
+						course.description = course.subjectCode + " " + course.courseNumber + " " + course.title;
+					}
+				});
+
 				// Display courses already on the schedule
 				if (!query || query.length == 0) {
 					return termContainer.preferenceOptions;
