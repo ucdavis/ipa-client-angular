@@ -323,7 +323,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 
 			scope.manuallyDeselectAllCourseRows = function() {
 				$(".courses-table .checkbox-replace").removeClass("checked");
-				$('div[data-is-checked=true]').data('is-checked', false);
+				$('div[data-is-checked]').data('is-checked', false);
 			};
 
 			scope.manuallyToggleSelectedCourse = function(courseId) {
@@ -332,7 +332,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 
 			scope.manuallySelectAllCourseRows = function() {
 				$(".courses-table .checkbox-replace").addClass("checked");
-				$('div[data-is-checked=false]').data('is-checked', true);
+				$('div[data-is-checked]').data('is-checked', true);
 			};
 		}
 	};
