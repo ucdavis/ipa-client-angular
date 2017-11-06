@@ -274,6 +274,25 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 
 		$scope.updateSection = function (section) {
 			courseActionCreators.updateSection(section);
+
+			if (isNumber(section.sequenceNumber) == false) {
+				return;
+			}
+
+			var sectionGroup = $scope.view.state.sectionGroups.list[section.sectionGroupId];
+
+			if (sectionGroup.plannedSeats) {
+				return;
+			}
+
+			sectionGroup.plannedSeats = section.seats;
+			courseActionCreators.updateSectionGroup(sectionGroup);
+
+			$scope.manuallyUpdatePlannedSeats(sectionGroup);
+		};
+
+		$scope.manuallyUpdatePlannedSeats = function(sectionGroup) {
+			$('[data-course-id="' + sectionGroup.courseId + '"] [data-term-code="' + sectionGroup.termCode + '"] input').val(sectionGroup.plannedSeats);
 		};
 
 		$scope.deleteSection = function (section) {
