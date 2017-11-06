@@ -332,7 +332,7 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 		},
 		getSectionsBySectionGroup: function (sectionGroup) {
 			courseStateService.reduce({
-				type: BEGIN_SECTIONS_IMPORT,
+				type: BEGIN_FETCH_SECTIONS,
 				payload: {}
 			});
 			courseService.getSectionsBySectionGroupId(sectionGroup.id).then(function (sections) {
@@ -415,7 +415,7 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 		},
 		getCourseCensus: function (course) {
 			courseStateService.reduce({
-				type: BEGIN_CENSUS_IMPORT,
+				type: BEGIN_FETCH_CENSUS,
 				payload: {}
 			});
 
