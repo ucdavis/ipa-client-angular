@@ -40,9 +40,9 @@
 						<!-- TODO: Get enrollment live from DW? -->
 						<!--<td>{{ section.enrollment }}</td>-->
 						<td>
-							<input auto-input ng-if="!isLocked()" type="number" min="0" class="form-control section-seats-edit text-center"
+							<input auto-input type="number" min="0" class="form-control section-seats-edit text-center"
 								on-enter="updateSection(view.state.sections.list[sectionId])" on-blur="updateSection(view.state.sections.list[sectionId])"
-								help-text-placement="left" ng-model="view.state.sections.list[sectionId].seats" />
+								help-text-placement="left" ng-model="view.state.sections.list[sectionId].seats" abs-value="true"/>
 
 							<span ng-if="isLocked()" ng-bind="view.state.sections.list[sectionId].seats"></span>
 						</td>

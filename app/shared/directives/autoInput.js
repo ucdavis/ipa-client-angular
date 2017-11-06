@@ -11,6 +11,7 @@ sharedApp.directive("autoInput", this.autoInput = function ($rootScope) {
 			onEscape: '&',
 			onBlur: '&',
 			onReset: '&',
+			absValue: '=',
 			onChange: '&',
 			clearOnInit: '@',
 			helpTextPlacement: '@'
@@ -28,6 +29,8 @@ sharedApp.directive("autoInput", this.autoInput = function ($rootScope) {
 		link: function (scope, element, attrs, ngModelCtrl) {
 			var ENTER = 13;
 			var ESCAPE = 27;
+			var NEGATIVE = 189;
+
 			scope.originalModel = scope.ngModel;
 			scope.toolTipShown = false;
 
@@ -48,6 +51,11 @@ sharedApp.directive("autoInput", this.autoInput = function ($rootScope) {
 						scope.$apply(function () {
 							scope.onEscape();
 						});
+					} else if (event.which === NEGATIVE) {
+						if (typeof attrs.absValue === 'undefined') { return; }
+						scope.$apply(function () {
+							event.preventDefault();
+						});
 					}
 					else if (!element.hasClass('ng-dirty')) {
 						element.addClass('ng-dirty');
@@ -66,6 +74,11 @@ sharedApp.directive("autoInput", this.autoInput = function ($rootScope) {
 			};
 
 			scope.$watch('ngModel', function (newVal, oldVal) {
+				if (newVal == undefined && attrs.absValue) {
+					scope.ngModel = oldVal;
+					return;
+				}
+
 				if (typeof newVal === 'undefined' || newVal === scope.originalModel) { return; }
 				if (typeof attrs.onChange !== 'undefined' && element.hasClass('ng-dirty')) { scope.onChange({ previousValue: oldVal, currentValue: newVal }); }
 
