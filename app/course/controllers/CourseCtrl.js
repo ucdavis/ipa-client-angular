@@ -209,15 +209,14 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 				$scope.view.selectedEntity = $scope.view.state.sectionGroups.selectedSectionGroup || $scope.view.state.sectionGroups.newSectionGroup;
 
 				// Initialize sectionGroup sections if not done already
-				if ($scope.view.selectedEntity && $scope.view.selectedEntity.id && $scope.view.selectedEntity.sectionIds === undefined) {
+				if ($scope.view.selectedEntity && $scope.view.selectedEntity.id && $scope.view.selectedEntity.sectionIds === undefined && $scope.view.state.uiState.sectionsImportInProgress == false) {
 					courseActionCreators.getSectionsBySectionGroup($scope.view.selectedEntity);
 				}
 
 				// Initialize course census if not done already
-				if (course.census === undefined) {
+				if (course.census === undefined && $scope.view.state.uiState.censusImportInProgress == false) {
 					courseActionCreators.getCourseCensus(course);
 				}
-
 			} else {
 				delete $scope.view.selectedEntity;
 			}
