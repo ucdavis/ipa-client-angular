@@ -121,10 +121,29 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				if (scope.view.state.uiState.checkedSectionGroupIds.length > 0) {
 					scope.view.state.uiState.checkedSectionGroupIds.forEach(function (sgId) {
 						if (sgId !== scope.view.state.uiState.selectedSectionGroupId) {
+							var sectionGroup = scope.view.state.sectionGroups.list[sgId];
+							var course = scope.view.state.courses.list[sectionGroup.courseId];
 							var unstyledEvents = sectionGroupToActivityEvents(scope.view.state.sectionGroups.list[sgId]);
-							calendarActivities = calendarActivities.concat(
-								styleCalendarEvents(unstyledEvents)
-							);
+
+							// Determine tag color
+							var tagColor = null;
+
+							if (course.tagIds.length > 0) {
+								var tag = scope.view.state.tags.list[course.tagIds[0]];
+								if (tag.color) {
+									tagColor = tag.color;
+								}
+							}
+
+							if (tagColor) {
+								calendarActivities = calendarActivities.concat(
+									styleCalendarEvents(unstyledEvents, tagColor, tagColor, "white")
+								);
+							} else {
+								calendarActivities = calendarActivities.concat(
+									styleCalendarEvents(unstyledEvents)
+								);
+							}
 						}
 					});
 				}
