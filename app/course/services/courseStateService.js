@@ -422,8 +422,8 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						massImportYear: null,
 						massImportPrivate: false,
 						massImportInProgress: false,
-						censusImportInProgress: false,
-						sectionsImportInProgress: false,
+						censusFetchInProgress: false,
+						sectionsFetchInProgress: false,
 						searchingCourseToImport: false,
 						selectedCourseRowIds: [],
 						isCourseDeleteModalOpen: false
@@ -435,17 +435,17 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						.every(function (term) { return term.isLocked(); });
 
 					return uiState;
-				case BEGIN_SECTIONS_IMPORT:
-					uiState.sectionsImportInProgress = true;
+				case BEGIN_FETCH_SECTIONS:
+					uiState.sectionsFetchInProgress = true;
 					return uiState;
 				case FETCH_SECTIONS:
-					uiState.sectionsImportInProgress = false;
+					uiState.sectionsFetchInProgress = false;
 					return uiState;
-				case BEGIN_CENSUS_IMPORT:
-					uiState.censusImportInProgress = true;
+				case BEGIN_FETCH_CENSUS:
+					uiState.censusFetchInProgress = true;
 					return uiState;
 				case GET_COURSE_CENSUS:
-					uiState.censusImportInProgress = false;
+					uiState.censusFetchInProgress = false;
 					return uiState;
 				case NEW_COURSE:
 					uiState.tableLocked = true;
