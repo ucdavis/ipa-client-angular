@@ -349,6 +349,50 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 							}
 						});
 
+						// Filling in hash data for supportAssignments and supportStaff
+						var supportAssignments = {
+							list: {},
+							ids: []
+						};
+
+						action.payload.supportAssignments.forEach(function(supportAssignment) {
+							supportAssignments.list[supportAssignment.id] = supportAssignment;
+							supportAssignments.ids.push(supportAssignment.id);
+						});
+
+						var supportStaffList = {
+							list: {},
+							ids: []
+						};
+
+						action.payload.supportStaffList.forEach(function(staff) {
+							supportStaffList.list[staff.id] = staff;
+							supportStaffList.ids.push(staff.id);
+						});
+
+						// Add TA data to sectionGroups
+						slotSectionGroup.teachingAssistants = [];
+
+						action.payload.supportAssignments.forEach(function(supportAssignment) {
+							if (supportAssignment.appointmentType == "teachingAssistant" && supportAssignment.sectionGroupId == sectionGroup.id) {
+
+								var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
+
+								slotSectionGroup.teachingAssistants.push({
+									id: supportStaff.id,
+									supportStaffId: supportStaff.id,
+									supportAssignmentId: supportAssignment.id,
+									sectionGroupId: sectionGroup.id,
+									firstName: supportStaff.firstName,
+									lastName: supportStaff.lastName,
+									fullName: supportStaff.fullName,
+									loginId: supportStaff.loginId,
+									percentageAppointment: supportAssignment.percentageAppointment,
+									appointmentType: supportAssignment.appointmentType
+								});
+							}
+						});
+
 						instructorCoursesByTermCode[termCode].push(slotSectionGroup);
 					});
 
@@ -416,6 +460,41 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					return schedule;
 			}
 		},
+		_supportStaffListReducers: function (action, supportStaffList) {
+			switch (action.type) {
+				case INIT_STATE:
+					supportStaffList = {
+						list: {},
+						ids: []
+					};
+
+					action.payload.supportStaffList.forEach(function(staff) {
+						supportStaffList.list[staff.id] = staff;
+						supportStaffList.ids.push(staff.id);
+					});
+
+					return supportStaffList;
+				default:
+					return supportStaffList;
+			}
+		},
+		_supportAssignmentReducers: function (action, supportAssignments) {
+			switch (action.type) {
+				case INIT_STATE:
+					supportAssignments = {
+						list: {},
+						ids: []
+					};
+
+					action.payload.supportAssignments.forEach(function(supportAssignment) {
+						supportAssignments.list[supportAssignment.id] = supportAssignment;
+						supportAssignments.ids.push(supportAssignment.id);
+					});
+					return supportAssignments;
+				default:
+					return supportAssignments;
+			}
+		},
 		_studentSupportCallResponseReducers: function (action, supportCallResponses) {
 			var scope = this;
 
@@ -448,6 +527,8 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 			newState.instructorSupportCallResponses = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponses);
 			newState.studentSupportCallResponses = scope._studentSupportCallResponseReducers(action, scope._state.studentSupportCallResponses);
 			newState.schedule = scope._scheduleReducers(action, scope._state.schedule);
+			newState.supportStaffList = scope._supportStaffListReducers(action, scope._state.supportStaffList);
+			newState.supportAssignments = scope._supportAssignmentReducers(action, scope._state.supportAssignments);
 
 			scope._state = newState;
 
