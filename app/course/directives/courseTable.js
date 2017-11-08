@@ -322,15 +322,21 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				}
 			});
 
+			// For performance reasons, the 'DESELECT_ALL_COURSE_ROWS' action does not trigger the courses table to re-render from scratch
+			// Instead, this method manually modifies the table while the state is updated independently
 			scope.manuallyDeselectAllCourseRows = function() {
 				$(".courses-table .checkbox-replace").removeClass("checked");
 				$('div[data-is-checked]').data('is-checked', false);
 			};
 
+			// For performance reasons, the 'TOGGLE_SELECT_COURSE_ROW' action does not trigger the courses table to re-render from scratch
+			// Instead, this method manually modifies the table while the state is updated independently
 			scope.manuallyToggleSelectedCourse = function(courseId) {
 				$('.courses-table .checkbox-container*[data-course-id="' + courseId + '"] .checkbox-replace').first().toggleClass("checked");
 			};
 
+			// For performance reasons, the 'SELECT_ALL_COURSE_ROWS' action does not trigger the courses table to re-render from scratch
+			// Instead, this method manually modifies the table while the state is updated independently
 			scope.manuallySelectAllCourseRows = function() {
 				$(".courses-table .checkbox-replace").addClass("checked");
 				$('div[data-is-checked]').data('is-checked', true);
