@@ -34,7 +34,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				TOGGLE_UNPUBLISHED_COURSES,
 				REMOVE_SECTION_GROUP,
 				ADD_SECTION_GROUP,
-				DELETE_MULTIPLE_COURSES
+				DELETE_MULTIPLE_COURSES,
+				MASS_ASSIGN_TAGS
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
