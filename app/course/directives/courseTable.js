@@ -34,10 +34,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				TOGGLE_UNPUBLISHED_COURSES,
 				REMOVE_SECTION_GROUP,
 				ADD_SECTION_GROUP,
-				TOGGLE_SELECT_COURSE_ROW,
-				SELECT_ALL_COURSE_ROWS,
-				DESELECT_ALL_COURSE_ROWS,
-				MASS_ASSIGN_TAGS
+				DELETE_MULTIPLE_COURSES
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
@@ -88,10 +85,10 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 						$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]').addClass("selected-td");
 					}
 
+					scope.manuallyDeselectAllCourseRows();
+					scope.manuallyToggleSelectedCourse(data.state.uiState.selectedCourseId);
 					courseActionCreators.deselectAllCourseRows();
 					courseActionCreators.toggleSelectCourse(data.state.uiState.selectedCourseId);
-
-					$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"] input').focus();
 
 					return;
 				}
@@ -276,18 +273,24 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					});
 				} else if ($el.data('event-type') == 'selectCourseRow') {
 					var courseId = $el.data('course-id');
+					scope.manuallyToggleSelectedCourse(courseId);
 					courseActionCreators.toggleSelectCourse(courseId);
+
 					$timeout(function () {
 						scope.$apply();
 					});
 				} else if ($el.data('event-type') == 'selectAllCourseRows') {
 					var isChecked = $el.data('is-checked');
+
 					if (isChecked) {
+						scope.manuallyDeselectAllCourseRows();
+
 						courseActionCreators.deselectAllCourseRows();
 						$timeout(function () {
 							scope.$apply();
 						});
 					} else {
+						scope.manuallySelectAllCourseRows();
 						courseActionCreators.selectAllCourseRows(scope.view.state.courses.ids);
 						$timeout(function () {
 							scope.$apply();
@@ -336,6 +339,26 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					e.preventDefault();
 				}
 			});
+
+			// For performance reasons, the 'DESELECT_ALL_COURSE_ROWS' action does not trigger the courses table to re-render from scratch
+			// Instead, this method manually modifies the table while the state is updated independently
+			scope.manuallyDeselectAllCourseRows = function() {
+				$(".courses-table .checkbox-replace").removeClass("checked");
+				$('div[data-is-checked]').data('is-checked', false);
+			};
+
+			// For performance reasons, the 'TOGGLE_SELECT_COURSE_ROW' action does not trigger the courses table to re-render from scratch
+			// Instead, this method manually modifies the table while the state is updated independently
+			scope.manuallyToggleSelectedCourse = function(courseId) {
+				$('.courses-table .checkbox-container*[data-course-id="' + courseId + '"] .checkbox-replace').first().toggleClass("checked");
+			};
+
+			// For performance reasons, the 'SELECT_ALL_COURSE_ROWS' action does not trigger the courses table to re-render from scratch
+			// Instead, this method manually modifies the table while the state is updated independently
+			scope.manuallySelectAllCourseRows = function() {
+				$(".courses-table .checkbox-replace").addClass("checked");
+				$('div[data-is-checked]').data('is-checked', true);
+			};
 		}
 	};
 });
