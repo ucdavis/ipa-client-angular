@@ -371,26 +371,22 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 						});
 
 						// Add TA data to sectionGroups
-						slotSectionGroup.teachingAssistants = [];
-
-						action.payload.supportAssignments.forEach(function(supportAssignment) {
-							if (supportAssignment.appointmentType == "teachingAssistant" && supportAssignment.sectionGroupId == sectionGroup.id) {
-
-								var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
-
-								slotSectionGroup.teachingAssistants.push({
-									id: supportStaff.id,
-									supportStaffId: supportStaff.id,
-									supportAssignmentId: supportAssignment.id,
-									sectionGroupId: sectionGroup.id,
-									firstName: supportStaff.firstName,
-									lastName: supportStaff.lastName,
-									fullName: supportStaff.fullName,
-									loginId: supportStaff.loginId,
-									percentageAppointment: supportAssignment.percentageAppointment,
-									appointmentType: supportAssignment.appointmentType
-								});
-							}
+						slotSectionGroup.teachingAssistants = action.payload.supportAssignments.filter(function(supportAssignment) {
+							return supportAssignment.appointmentType == "teachingAssistant" && supportAssignment.sectionGroupId == sectionGroup.id;
+						}).map(function(supportAssignment) {
+							var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
+							return {
+								id: supportStaff.id,
+								supportStaffId: supportStaff.id,
+								supportAssignmentId: supportAssignment.id,
+								sectionGroupId: sectionGroup.id,
+								firstName: supportStaff.firstName,
+								lastName: supportStaff.lastName,
+								fullName: supportStaff.fullName,
+								loginId: supportStaff.loginId,
+								percentageAppointment: supportAssignment.percentageAppointment,
+								appointmentType: supportAssignment.appointmentType
+							};
 						});
 
 						instructorCoursesByTermCode[termCode].push(slotSectionGroup);
