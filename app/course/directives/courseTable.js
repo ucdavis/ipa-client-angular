@@ -114,7 +114,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 
 				// Render the header
 				// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
-				var isChecked = (data.state.uiState.selectedCourseRowIds.length == data.state.courses.ids.length);
+				var isChecked = (data.state.courses.ids != 0 && data.state.uiState.selectedCourseRowIds.length == data.state.courses.ids.length);
 				var header = '<thead><tr><th class="checkbox-cell">' + getCheckbox(0, "selectAllCourseRows", isChecked) + "</th><th class=\"\">Course</th>";
 
 				// Filter scope.termDefinitions to only those terms which are enabled by the filter.
@@ -158,11 +158,29 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 						}
 					});
 				} else if (data.state.courses.ids.length) {
+					var allContentFilteredOut = true;
+
 					$.each(data.state.courses.ids, function (rowIdx, courseId) {
-						body += getCourseRow(rowIdx, courseId, termsToRender, data.state);
+						var row = getCourseRow(rowIdx, courseId, termsToRender, data.state);
+
+						if (row) {
+							allContentFilteredOut = false;
+						}
+
+						body += row;
 					});
+
+					if (allContentFilteredOut) {
+						// One for checkbox, and one for course title
+						var miscColumns = 2;
+						var numberOfColumns = data.state.filters.enabledTerms.length + miscColumns;
+
+						body += "<tr><td class=\"text-center text-muted\" colspan=\"" + numberOfColumns + "\">All courses filtered out</td></tr>";
+					}
 				} else {
-					var numberOfColumns = data.state.filters.enabledTerms.length + 1;
+					// One for checkbox, and one for course title
+					var miscColumns = 2;
+					var numberOfColumns = data.state.filters.enabledTerms.length + miscColumns;
 					body += "<tr><td class=\"text-center text-muted\" colspan=\"" + numberOfColumns + "\">No Courses</td></tr>";
 				}
 
