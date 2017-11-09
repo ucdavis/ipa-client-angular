@@ -275,20 +275,17 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 		$scope.updateSection = function (section) {
 			courseActionCreators.updateSection(section);
 
-			if (isNumber(section.sequenceNumber) == false) {
-				return;
-			}
-
 			var sectionGroup = $scope.view.state.sectionGroups.list[section.sectionGroupId];
 
-			if (sectionGroup.plannedSeats) {
-				return;
+			// Will update the sectionGroup plannedSeats using section seats
+			// If the section is numeric based (example: 'PSC 040 - 001') and
+			// the sectionGroup doesn't already have a value for plannedSeats
+			if (isNumber(section.sequenceNumber) == true && !(sectionGroup.plannedSeats)) {
+				sectionGroup.plannedSeats = section.seats;
+				courseActionCreators.updateSectionGroup(sectionGroup);
+
+				$scope.manuallyUpdatePlannedSeats(sectionGroup);
 			}
-
-			sectionGroup.plannedSeats = section.seats;
-			courseActionCreators.updateSectionGroup(sectionGroup);
-
-			$scope.manuallyUpdatePlannedSeats(sectionGroup);
 		};
 
 		$scope.manuallyUpdatePlannedSeats = function(sectionGroup) {
