@@ -13,58 +13,88 @@ teachingCallApp.controller('TeachingCallFormCtrl', ['$scope', '$rootScope', '$wi
 			$scope.viewState = {};
 
 			$scope.searchCourses = function (termContainer, query) {
+				termContainer.preferenceOptions.forEach(function(course) {
+					if (course.subjectCode) {
+						course.description = course.subjectCode + " " + course.courseNumber + " " + course.title;
+					}
+				});
+
 				// Display courses already on the schedule
 				if (!query || query.length == 0) {
 					return termContainer.preferenceOptions;
 				}
 
-				// Display courses from DW (may include courses already added to the schedule)
+				var optimizedQuery = $scope.optimizeQueryFormat(query);
+
 				if (query.length >= 3) {
-					// This typehead library works better with a promise,
-					// so in this case the controller bypasses the normal state managaement data flow
-					return teachingCallFormService.searchCourses(query).then(function (courseSearchResults) {
-						var courses = courseSearchResults.slice(0, 20);
+					var options = {
+						shouldSort: true,
+						threshold: 0.8,
+						location: 0,
+						distance: 100,
+						maxPatternLength: 32,
+						minMatchCharLength: 1,
+						includeScore: false,
+						keys: [
+							"description"
+						]
+					};
 
-						courses.forEach(function (course) {
-							course.isSuggested = true;
-							course.description = course.subjectCode + " " + course.courseNumber;
-							course.scheduleId = $scope.view.state.scheduleId;
-							course.instructorId = $scope.view.state.instructorId;
-							course.termCode = termContainer.termCode;
-						});
+					var fuse = new Fuse(termContainer.preferenceOptions, options);
+					var results = fuse.search(optimizedQuery);
 
-						courses = $scope.sortCourses(courses);
-						return courses;
-					}, function (err) {
-						$rootScope.$emit('toast', {message: "Could not search courses.", type: "ERROR"});
-					});
+					return results;
 				}
-
 			};
 
-			$scope.sortCourses = function(courses) {
-					courses.sort(function (a, b) {
-						// Use subject codes to sort if they don't match
-						if (a.subjectCode > b.subjectCode) {
-							return 1;
-						}
+			// Will improve query formatting when possible to improve search score
+			// For example if it receives:
+			// 'ECS 10' becomes 'ECS 010'
+			// 'ECS010' becomes 'ecs 010'
+			// 'ECS 1' becomes 'ecs 001'
+			$scope.optimizeQueryFormat = function(query) {
+				var optimizedQuery = angular.copy(query);
 
-						if (a.subjectCode < b.subjectCode) {
-							return -1;
+				// Is there a space?
+				if (optimizedQuery.indexOf(' ') == -1) {
+					// Does it have 6 chars?
+					if (optimizedQuery.length == 6) {
+						// Does it follow the pattern 'ecs030'
+						var subjectCode = optimizedQuery.slice(0,3);
+						var courseNumber = optimizedQuery.slice(3);
+						if (isNumber(courseNumber)) {
+							return subjectCode + " " + courseNumber;
 						}
+					}
+				}
 
-						// Subject codes must have matched, use course numbers to sort instead
-						if (a.courseNumber > b.courseNumber) {
-							return 1;
-						}
+				// Were there more than two chunks?
+				var optimizedQuery = optimizedQuery.split(' ');
+				if (optimizedQuery.length > 2) {
+					return query;
+				}
 
-						if (a.courseNumber < b.courseNumber) {
-							return -1;
-						}
+				// Is the second chunk numeric?
+				var subjectCode = optimizedQuery[0];
+				var courseNumber = optimizedQuery[1];
 
-						return -1;
-					});
-				return courses;
+				if (isNumber(courseNumber) == false) {
+					return query;
+				}
+
+				// Is the second chunk 1 or 2 chars?
+				if (courseNumber.length > 2) {
+					return query;
+				}
+
+				// Fill in the chunk with zeros
+				if (courseNumber.length == 1) {
+					courseNumber = "00" + courseNumber;
+				} else {
+					courseNumber = "0" + courseNumber;
+				}
+
+				return subjectCode + " " + courseNumber;
 			};
 
 			$scope.addPreference = function(preference, term, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isCourseRelease) {

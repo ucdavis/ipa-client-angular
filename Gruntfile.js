@@ -322,6 +322,7 @@ module.exports = function (grunt) {
 				src: [
 					'clientConfig.js',
 					'bower_components/bootstrap/dist/js/*',
+					'node_modules/fuse.js/dist/fuse.min.js',
 					'vendor/js/*'
 				],
 				dest: '<%= folders.webapp.build %>/js/'
