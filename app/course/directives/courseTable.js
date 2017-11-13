@@ -470,6 +470,17 @@ var savePlannedSeats = function ($el, scope, courseActionCreators) {
 		// Save existing sectionGroup
 		sectionGroup.plannedSeats = plannedSeats;
 		courseActionCreators.updateSectionGroup(sectionGroup);
+
+		// If sequence is numeric sync the seats on the section to the new sectionGroup value
+		scope.view.state.sections.ids.forEach(function(sectionId) {
+			var section = scope.view.state.sections.list[sectionId];
+
+			if (section.sectionGroupId == sectionGroup.id && isNumber(section.sequenceNumber)) {
+				section.seats = sectionGroup.plannedSeats;
+				courseActionCreators.updateSection(section);
+			}
+		});
+
 	} else if (plannedSeats) {
 		// Create a new sectionGroup
 		sectionGroup = {
