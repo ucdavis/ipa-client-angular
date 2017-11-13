@@ -490,10 +490,19 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					uiState.massImportPrivate = false;
 					return uiState;
 				case REMOVE_COURSE:
+					var courseId = action.payload.course.id;
 					// Remove the details pane if it was showing the deleted course
-					if (uiState.selectedCourseId == action.payload.course.id) {
+					if (uiState.selectedCourseId == courseId) {
 						uiState.selectedCourseId = null;
 					}
+
+					// Ensure deleted course is not selected
+					var index = uiState.selectedCourseRowIds.indexOf(courseId);
+
+					if (index > -1) {
+						uiState.selectedCourseRowIds.splice(index, 1);
+					}
+
 					return uiState;
 				case TOGGLE_SELECT_COURSE_ROW:
 					var courseId = action.payload.courseId;
