@@ -1,4 +1,27 @@
 .instructor-header {
-	margin-top: 10px;
-	margin-left: 15px;
+	/*margin-top: 10px;
+	margin-left: 15px;*/
+}
+
+.instructor-header .notification-section button {
+	background-color: white;
+    border: 1px solid #D6D6D6;
+	font-size: 11px;
+}
+
+.instructor-header .notification-section {
+	display: flex;
+	justify-content: space-between;
+}
+
+
+.instructor-header .notification-box {
+	padding: 15px 20px 15px 20px;
+    border: 1px solid #21A9E1;
+    border-radius: 3px;
+	font-weight: 500;
+}
+
+.instructor-header .notification-box span i {
+	color: #21A9E1;
 }

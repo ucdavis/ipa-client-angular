@@ -1,17 +1,12 @@
 <div class="instructor-summary content-container">
-	<div class="notification-section">
-		<div class="notification-box">
-			<span>Please refer to this icon <i class="entypo-attention"></i> to review all necessary Information.</span>
-		</div>
-		<div class="notification-box">
-			<span>Please refer to this icon <i class="entypo-attention"></i> to review all necessary Information.</span>
-		</div>
-	</div>
 	<div ng-hide="view.state">
 		<spinner></spinner>
 	</div>
 	<div ng-show="view.state">
 		<instructor-header></instructor-header>
+		<div class="section-header-bar">
+			<h5>Teaching Call for Review</h5>
+		</div>
 		<teaching-calls></teaching-calls>
 		<support-calls></support-calls>
 
@@ -20,5 +15,4 @@
 		</scheduled-courses>
 
 	</div>
-
 </div>

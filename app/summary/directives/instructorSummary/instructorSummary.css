@@ -1,15 +1,5 @@
 .instructor-summary {
-	padding: 30px 20px 0px 20px !important;
-}
-
-.instructor-summary .notification-section {
-	display: flex;
-	justify-content: space-between;
-}
-
-.instructor-summary .empty-message {
-	color: #777;
-	text-indent: 2em;
+	padding: 20px 20px 0px 20px !important;
 }
 
 .instructor-summary .content-container {
@@ -17,13 +7,19 @@
 	padding-right: 10%;
 }
 
-.instructor-summary .notification-box {
-	padding: 15px 20px 15px 20px;
-    border: 1px solid #21A9E1;
-    border-radius: 3px;
-	font-weight: 500;
+.instructor-summary .empty-message {
+	color: #777;
+	text-indent: 2em;
 }
 
-.instructor-summary .notification-box span i {
-	color: #21A9E1;
+.instructor-summary .section-header-bar {
+	padding: 15px 15px 15px 15px;
+	background-color: #F8F8F8;
+    border: 1px solid #CCCCCC;
+    margin-top: 25px;
+    border-radius: 3px;
+}
+
+.instructor-summary .section-header-bar h5 {
+	margin: 0 !important;
 }
