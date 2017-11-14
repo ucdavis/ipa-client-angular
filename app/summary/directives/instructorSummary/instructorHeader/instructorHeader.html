@@ -1,5 +1,7 @@
-<div ng-if="view.state.schedule.instructorSupportCallReviewOpen" style="margin-top: 10px; margin-left: 15px">
-	<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) || '03' }}">
-		Support Call {{ year.yearToAcademicYear() }} is open for review
-	</a>
+<div class="instructor-header">
+	<div ng-if="view.state.schedule.instructorSupportCallReviewOpen">
+		<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) || '03' }}">
+			Support Call {{ year.yearToAcademicYear() }} is open for review
+		</a>
+	</div>
 </div>

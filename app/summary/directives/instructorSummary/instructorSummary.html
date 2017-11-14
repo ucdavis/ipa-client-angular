@@ -15,14 +15,6 @@
 		<teaching-calls></teaching-calls>
 		<support-calls></support-calls>
 
-		<h5>
-			Scheduled Courses {{ year.yearToAcademicYear() }}
-		</h5>
-
-		<div ng-if="view.state.instructorCourses && view.state.instructorCourses.terms.length === 0" class="empty-message">
-			No Scheduled Courses
-		</div>
-
 		<scheduled-courses
 			ng-if="view.state.instructorCourses.terms.length > 0">
 		</scheduled-courses>
