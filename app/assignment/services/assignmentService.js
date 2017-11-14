@@ -21,10 +21,10 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
-		download: function (workgroupId, year) {
+		download: function (workgroupId, year, pivot) {
 			var deferred = $q.defer();
 
-			$http.get(serverRoot + "/api/assignmentView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
+			$http.get(serverRoot + "/api/assignmentView/workgroups/" + workgroupId + "/years/" + year + "/" + pivot + "/generateExcel", { withCredentials: true })
 			.success(function(payload) {
 				$window.location.href = payload.redirect;
 				deferred.resolve(payload);
