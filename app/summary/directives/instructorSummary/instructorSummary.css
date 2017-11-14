@@ -17,3 +17,7 @@
     border: 1px solid #21A9E1;
     border-radius: 3px;
 }
+
+.instructor-summary .notification-box span i {
+	color: #21A9E1;
+}
