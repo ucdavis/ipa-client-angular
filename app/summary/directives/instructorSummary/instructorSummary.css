@@ -1,5 +1,10 @@
 .instructor-summary {
-	padding-top: 30px;
+	padding: 30px 20px 0px 20px !important;
+}
+
+.instructor-summary .notification-section {
+	display: flex;
+	justify-content: space-between;
 }
 
 .instructor-summary .empty-message {
@@ -16,6 +21,7 @@
 	padding: 15px 20px 15px 20px;
     border: 1px solid #21A9E1;
     border-radius: 3px;
+	font-weight: 500;
 }
 
 .instructor-summary .notification-box span i {
