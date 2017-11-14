@@ -1,29 +1,22 @@
-<div class="instructor-summary-container content-container">
+<div class="instructor-summary content-container">
 	<div ng-hide="view.state">
 		<spinner></spinner>
 	</div>
 	<div ng-show="view.state">
-
+		<instructor-header></instructor-header>
 		<teaching-calls></teaching-calls>
-
 		<support-calls></support-calls>
-
-		<div ng-if="view.state.schedule.instructorSupportCallReviewOpen" style="margin-top: 10px; margin-left: 15px">
-			<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) || '03' }}">
-				Support Call {{ year.yearToAcademicYear() }} is open for review
-			</a>
-		</div>
 
 		<h5>
 			Scheduled Courses {{ year.yearToAcademicYear() }}
 		</h5>
 
-		<div ng-show="view.state.instructorCourses && view.state.instructorCourses.terms.length === 0" class="empty-message">
+		<div ng-if="view.state.instructorCourses && view.state.instructorCourses.terms.length === 0" class="empty-message">
 			No Scheduled Courses
 		</div>
 
 		<scheduled-courses
-			ng-show="view.state.instructorCourses && view.state.instructorCourses.terms.length > 0">
+			ng-if="view.state.instructorCourses.terms.length > 0">
 		</scheduled-courses>
 
 	</div>

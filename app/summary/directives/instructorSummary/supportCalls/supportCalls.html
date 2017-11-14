@@ -1,4 +1,11 @@
 <div class="support-calls">
+
+	<div class="term-nav">
+		<div ng-click="selectTerm(term)" ng-repeat="term in view.state.ui.allTerms">
+			{{ getTermDisplayName(term) }}
+		</div>
+	</div>
+
 	<div ng-if="view.state.instructorSupportCallResponses.length > 0" class="course-table-row">
 		<!-- table header -->
 		<div class="course-table__header">
