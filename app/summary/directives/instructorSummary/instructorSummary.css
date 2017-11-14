@@ -11,3 +11,9 @@
 	padding-left: 10%;
 	padding-right: 10%;
 }
+
+.instructor-summary .notification-box {
+	padding: 15px 20px 15px 20px;
+    border: 1px solid #21A9E1;
+    border-radius: 3px;
+}
