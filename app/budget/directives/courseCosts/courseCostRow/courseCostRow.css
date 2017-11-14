@@ -49,8 +49,9 @@ text-align: center;
 }
 
 .Rtable--3cols > .Rtable-cell {
-    width: 11.11%;
+    width: 10%;
 }
+
 
 
 .Rtable-cell {
@@ -59,9 +60,13 @@ text-align: center;
     -ms-flex-positive: 1;
     flex-grow: 1;
     width: 100%;
-    padding: 0.8em 1.2em;
+    /*padding: 5px 10px;*/
     overflow: hidden;
     list-style: none;
     border: solid 3px white;
     background: rgba(112, 128, 144, 0.2);
+}
+
+.table-header {
+ background-color: white;
 }

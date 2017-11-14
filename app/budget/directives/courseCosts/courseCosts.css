@@ -78,3 +78,45 @@
 	padding-left: 1%;
 	cursor: pointer;
 }
+
+
+
+
+
+
+/* budget_view_css_test */
+
+.Rtable {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin: 0 0 3em 0;
+    padding: 0;
+}
+
+.Rtable-3cols > .Rtable-cell {
+    width: 10%;
+}
+
+.Rtable-cell {
+	font-size: 12px;
+    box-sizing: border-box;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    width: 100%;
+    /*padding: 5px 10px !important;*/
+    overflow: hidden;
+    list-style: none;
+    border: solid 3px white;
+    background: rgba(112, 128, 144, 0.2);
+	text-align: center;
+}
+
+.Rtable-cell h6 {
+	font-weight: unset;
+	margin-top: 19px !important;
+	margin-bottom: 19px !important;
+}
