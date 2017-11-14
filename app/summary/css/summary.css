@@ -3,19 +3,6 @@
 	display: flex;
 	height: 100%;
 }
-.left-container {
-	flex: 3 1 75%;
-}
-.right-container {
-	flex: 1 1 25%;
-}
-
-.right-info {
-	height: 100%;
-}
-.padded-container {
-  padding: 30px;
-}
 
 .course-table-row {
 	display:flex;
@@ -53,45 +40,100 @@
 	padding-bottom: 10px;
 }
 
-.course-table__row-detail-middle {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex: 3 0 0px;
-	border-right: 1px solid;
-	border-color: rgb(235, 235, 235);
-	padding-top: 5px;
-	flex-direction: column;
-	padding-top: 10px;
-	padding-bottom: 10px;
-}
-
-.course-table__row-detail-location {
-	font-weight: bold;
-}
-
-.meeting-inner {
-	display: flex;
-	width: 100%;
-	align-items: center;
-	justify-content: space-around;
-}
-
 .content-container {
 	padding-left: 10%;
 	padding-right: 10%;
 }
 
-.meeting-days {
-	color: rgb(166, 167, 170);
-}
-
-.empty-message {
-  color: #777;
-  text-indent: 2em;
-}
-
-.teaching-assistant-container {
+.flex {
 	display: flex;
-	flex-flow: column;
+}
+
+.flex-auto {
+	flex: auto;
+	margin: 2px;
+	padding: 2px;
+	overflow: hidden;
+}
+
+.flex-table-content {
+	flex: 10 0 0px;
+}
+
+.flex-ui-overlay {
+	flex: 1 0 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+}
+
+.support-call-row:hover .flex-ui-overlay {
+	visibility: visible;
+}
+
+.delete-support-call-button {
+	color: rgba(180, 20, 20, 0.8);
+	font-size: 24px;
+	padding: 0px;
+}
+
+.table {
+	margin-top: 20px;
+}
+
+.table-content {
+	flex: 1 1 0%;
+	color: black;
+	align-self: center;
+	margin: 2px;
+	padding: 2px;
+	overflow: hidden;
+}
+
+.table-header {
+	font-weight: bold;
+}
+
+.table-body {
+	background: #fff;
+}
+
+.student-summary-header {
+	text-align: center;
+	padding-bottom: 5px;
+	padding-bottom: 25px;
+}
+
+.container-box {
+	text-align: center;
+	border-radius: 3px;
+	border: 1px solid lightgray;
+	border-left: 4px solid black;
+	padding: 15px 0px 15px 0px;
+	text-align: center;
+}
+
+.container-box-title {
+	text-align: center;
+}
+
+.survey-number {
+	color: #4686A5;
+}
+
+.people-info-icon {
+	color: #4686A5;
+}
+
+.term-header {
+	font-size: 16px;
+	font-weight: 500;
+	margin-top:40px;
+	margin-bottom: 20px;
+	margin-left: -20px;
+}
+
+.instructional-support-summary {
+	padding-top: 30px;
 }
