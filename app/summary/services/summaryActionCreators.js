@@ -20,6 +20,14 @@ summaryApp.service('summaryActionCreators', function (summaryStateService, summa
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load summary initial state.", type: "ERROR" });
 			});
+		},
+		selectTerm: function(term) {
+			summaryStateService.reduce({
+				type: SELECT_TERM,
+				payload: {
+					selectedTerm: term
+				}
+			});
 		}
 	};
 });

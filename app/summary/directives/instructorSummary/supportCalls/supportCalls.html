@@ -1,0 +1,62 @@
+<div class="support-calls">
+
+	<div class="term-nav">
+		<div ng-click="selectTerm(term)" ng-repeat="term in view.state.ui.allTerms">
+			{{ getTermDisplayName(term) }}
+		</div>
+	</div>
+
+	<div ng-if="view.state.instructorSupportCallResponses.length > 0" class="course-table-row">
+		<!-- table header -->
+		<div class="course-table__header">
+			<div class="course-table__header-detail">
+				<div>
+					Support Calls
+				</div>
+			</div>
+		</div>
+		<div class="course-table__header">
+			<div class="course-table__header-detail">
+				<div>
+					Due Date
+				</div>
+			</div>
+		</div>
+		<div class="course-table__header">
+			<div class="course-table__header-detail">
+				<div>
+					Submitted Preferences
+				</div>
+			</div>
+		</div>
+		<div class="course-table__header">
+			<div class="course-table__header-detail">
+				<div>
+					Term
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- table header -->
+
+	<!-- instructor support calls -->
+	<div ng-repeat="supportCallResponse in view.state.instructorSupportCallResponses" class="course-table-row">
+		<div class="course-table__row-detail">
+			<div>
+				<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) }}/instructorSupportCallForm">
+					View Support Call Form
+				</a>
+			</div>
+		</div>
+		<div class="course-table__row-detail">
+			{{ supportCallResponse.dueDate }}
+		</div>
+		<div class="course-table__row-detail">
+			<i class="glyphicon glyphicon-ok" ng-if="supportCallResponse.submitted"></i>
+		</div>
+		<div class="course-table__row-detail">
+			{{ supportCallResponse.termCode.getTermCodeDisplayName(true) }}
+		</div>
+	</div>
+
+</div>

@@ -6,8 +6,8 @@
  * Controller of the summaryApp
  */
 
-summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$location', 'authService',
-		this.SummaryCtrl = function ($scope, $routeParams, $rootScope, $location, authService) {
+summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$location', 'authService', 'summaryActionCreators',
+		this.SummaryCtrl = function ($scope, $routeParams, $rootScope, $location, authService, summaryActionCreators) {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.view = {};
@@ -46,6 +46,14 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 				$scope.setActiveMode("unknown");
 			}
 		}
+
+		$scope.getTermDisplayName = function (term) {
+			return term.getTermDisplayName(term);
+		};
+
+		$scope.selectTerm = function (term) {
+			summaryActionCreators.selectTerm(term);
+		};
 
 		$rootScope.$on('summaryStateChanged', function (event, data) {
 			$scope.view.state = data;

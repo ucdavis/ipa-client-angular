@@ -505,6 +505,29 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					return supportCallResponses;
 			}
 		},
+		_uiReducers: function (action, ui) {
+			switch (action.type) {
+				case INIT_STATE:
+					var selectedSupportCallTerm = null;
+					var allTerms = [];
+
+					if (action.payload.instructorSupportCallResponses && action.payload.instructorSupportCallResponses.length > 0) {
+						allTerms = action.payload.instructorSupportCallResponses.map(function(response) { return response.termCode.slice(-2); });
+						selectedSupportCallTerm = allTerms[0];
+					}
+
+					ui = {
+						selectedSupportCallTerm: selectedSupportCallTerm,
+						allTerms: allTerms
+					};
+					return ui;
+				case SELECT_TERM:
+					ui.selectedSupportCallTerm = action.payload.selectedTerm;
+					return ui;
+				default:
+					return ui;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -525,6 +548,7 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 			newState.schedule = scope._scheduleReducers(action, scope._state.schedule);
 			newState.supportStaffList = scope._supportStaffListReducers(action, scope._state.supportStaffList);
 			newState.supportAssignments = scope._supportAssignmentReducers(action, scope._state.supportAssignments);
+			newState.ui = scope._uiReducers(action, scope._state.ui);
 
 			scope._state = newState;
 
