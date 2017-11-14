@@ -1,0 +1,48 @@
+<div>
+	<div ng-hide="view.state.teachingCallReceipt" class="empty-message">
+		No Active Teaching Calls
+	</div>
+	<div ng-show="view.state.teachingCallReceipt">
+		<div class="course-table-row">
+			<!-- table header -->
+			<div class="course-table__header">
+				<div class="course-table__header-detail">
+					<div>
+						Teaching Calls
+					</div>
+				</div>
+			</div>
+			<div class="course-table__header">
+				<div class="course-table__header-detail">
+					<div>
+						Due Date
+					</div>
+				</div>
+			</div>
+			<div class="course-table__header">
+				<div class="course-table__header-detail">
+					<div>
+						Submitted Preferences
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- table header -->
+
+		<div class="course-table-row">
+			<div class="course-table__row-detail">
+				<div>
+					<a ng-href="{{ urlRoot }}/teachingCalls/{{ workgroupId }}/{{ year }}/teachingCall">
+						View Teaching Call Form
+					</a>
+				</div>
+			</div>
+			<div class="course-table__row-detail">
+				{{ view.state.teachingCallReceipt.dueDateDescription }}
+			</div>
+			<div class="course-table__row-detail">
+				<i class="glyphicon glyphicon-ok" ng-if="view.state.teachingCallReceipt.isDone"></i>
+			</div>
+		</div>
+	</div>
+</div>

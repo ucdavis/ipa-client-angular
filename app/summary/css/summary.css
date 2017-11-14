@@ -242,10 +242,6 @@
   text-indent: 2em;
 }
 
-.instructor-summary-container {
-	padding-top: 30px;
-}
-
 .teaching-assistant-container {
 	display: flex;
 	flex-flow: column;
