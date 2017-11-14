@@ -331,6 +331,10 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			});
 		},
 		getSectionsBySectionGroup: function (sectionGroup) {
+			courseStateService.reduce({
+				type: BEGIN_FETCH_SECTIONS,
+				payload: {}
+			});
 			courseService.getSectionsBySectionGroupId(sectionGroup.id).then(function (sections) {
 				var action = {
 					type: FETCH_SECTIONS,
@@ -410,6 +414,11 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			courseStateService.reduce(action);
 		},
 		getCourseCensus: function (course) {
+			courseStateService.reduce({
+				type: BEGIN_FETCH_CENSUS,
+				payload: {}
+			});
+
 			courseService.getCourseCensus(course).then(function (census) {
 				var action = {
 					type: GET_COURSE_CENSUS,

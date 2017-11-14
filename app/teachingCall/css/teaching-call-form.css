@@ -728,14 +728,14 @@ ol.sortable-list>li .term-preference-dropdown {
 .neon-dark-confirm-btn:focus,
 .neon-dark-confirm-btn:active,
 .neon-dark-confirm-btn,
-.confirmbutton-yes {
+:not(.btn-danger).confirmbutton-yes {
 	background-color: rgb(48, 54, 65);
 	border-color: rgb(48, 54, 65);
 	color: white;
 }
 
 .neon-dark-confirm-btn:hover,
-.confirmbutton-yes:hover {
+:not(.btn-danger).confirmbutton-yes:hover {
 	background-color: rgb(18, 24, 35); /* Darker Version for hover */
 	color: white;
 }

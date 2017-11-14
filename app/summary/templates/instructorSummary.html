@@ -194,7 +194,14 @@
 					</div>
 				</div>
 				<div class="course-table__row-detail">
-					None Assigned
+					<div class="teaching-assistant-container">
+						<div ng-if="course.teachingAssistants.length > 0" ng-repeat="teachingAssistant in course.teachingAssistants">
+							{{ teachingAssistant.lastName }}, {{ teachingAssistant.firstName }}
+						</div>
+						<div ng-if="course.teachingAssistants.length == 0" ng-repeat="teachingAssistant in course.teachingAssistants">
+							No TA information
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
