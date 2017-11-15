@@ -1,0 +1,32 @@
+.course-table__row-detail-middle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 3 0 0px;
+	border-right: 1px solid;
+	border-color: rgb(235, 235, 235);
+	padding-top: 5px;
+	flex-direction: column;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.course-table__row-detail-location {
+	font-weight: bold;
+}
+
+.meeting-inner {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.meeting-days {
+	color: rgb(166, 167, 170);
+}
+
+.teaching-assistant-container {
+	display: flex;
+	flex-flow: column;
+}

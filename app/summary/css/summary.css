@@ -1,157 +1,7 @@
 .page-container .main-content {
-  padding: 0;
-  display: flex;
-  height: 100%;
-}
-.left-container {
-  flex: 3 1 75%;
-}
-.right-container {
-  flex: 1 1 25%;
-}
-.notifications-menu {
-  background-color: #fff;
-  -webkit-border-radius: 0 0 3px 3px;
-  -webkit-background-clip: padding-box;
-  -moz-border-radius: 0 0 3px 3px;
-  -moz-background-clip: padding;
-  border-radius: 0 0 3px 3px;
-  background-clip: padding-box;
-  -webkit-box-shadow: 0px 0px 10px 2px rgba(184,184,184,1);
-  -moz-box-shadow: 0px 0px 10px 2px rgba(184,184,184,1);
-  box-shadow: 0px 0px 10px 2px rgba(184,184,184,1);
-  border: 1px solid #f8f8f8;
-  list-style: none;
-  padding: 0;
-  margin: 3em 0 0 0;
-}
-.notifications-menu > li {
-  display: block;
-  border-bottom: 1px solid #ededed;
-  margin: 0;
-  padding: 0;
-  font-size: 12px;
-}
-.notifications-menu li,
-.notifications-menu a,
-.notifications-menu p {
-  color: #888888;
-}
-.notifications-menu > li .scroller {
-  max-height: 290px;
-  overflow: auto;
-}
-.notifications-menu > li > ul {
-  position: relative;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.notifications-menu > li > ul > li {
-  font-size: 12px;
-  border-bottom: 1px solid #ededed;
-  background: #fff;
-}
-.notifications-menu > li > ul > li > a,
-.notifications-menu > li > ul > li > p {
-  display: block;
-  position: relative;
-  margin: 0;
-  padding: 10px 20px;
-  -webkit-transition: all 300ms ease-in-out;
-  -moz-transition: all 300ms ease-in-out;
-  -o-transition: all 300ms ease-in-out;
-  transition: all 300ms ease-in-out;
-}
-.notifications-menu > li > ul > li > a > i,
-.notifications-menu > li > ul > li > p > i {
-  background: #454a54;
-  display: block;
-  float: left;
-  text-align: center;
-  padding: 5px;
-  line-height: 14px;
-  color: #fff;
-  width: 28px;
-  height: 24px;
-  -webkit-border-radius: 3px;
-  -webkit-background-clip: padding-box;
-  -moz-border-radius: 3px;
-  -moz-background-clip: padding;
-  border-radius: 3px;
-  background-clip: padding-box;
-}
-.notifications-menu > li > ul > li .line {
-  display: block;
-}
-.notifications-menu > li > ul > li .line + .line,
-.notifications-menu > li > ul > li .line + .line + .line,
-.notifications-menu > li > ul > li .line + .line + .line + .line {
-  margin-top: 5px;
-}
-.notifications-menu > li.top > p {
-  background-color: #fff;
-}
-.notifications-menu > li > p {
-  background-color: #FFF;
-}
-.notifications-menu > li > a,
-.notifications-menu > li > p {
-  margin: 0;
-  padding: 12px 20px;
-}
-.notifications-menu > li.external {
-  background-color: #FFF;
-  border-bottom: 0;
-  padding: 10px 0;
-}
-.notifications-menu > li.external a {
-  color: #337ab7;
-  -webkit-transition: all 300ms ease-in-out;
-  -moz-transition: all 300ms ease-in-out;
-  -o-transition: all 300ms ease-in-out;
-  transition: all 300ms ease-in-out;
-}
-.notifications-menu > li > a {
-  display: block;
-  padding: 3px 20px;
-  clear: both;
-  font-weight: normal;
-  line-height: 1.42857143;
-  color: #7d8086;
-  white-space: nowrap;
-}
-.notifications-menu > li > ul > li.notification-warning > i,
-.notifications-menu > li > ul > li.notification-warning > a > i {
-  background-color: #f7d227;
-  color: #fff;
-}
-.notifications-menu > li > ul > li.notification-danger > i,
-.notifications-menu > li > ul > li.notification-danger > a > i {
-  background-color: #cc2424;
-  color: #fff;
-}
-.right-info {
-  height: 100%;
-}
-.padded-container {
-  padding: 30px;
-}
-
-
-/* Instructor View */
-.instructor-summary-header {
-	text-align: center;
-}
-
-.course-status-header, .teaching-call-status-header {
-	color: #babbbe;
-  margin: 2em 0;
-}
-
-.course-status-sub-header {
-	padding-left: 1%;
-	margin-top: 50px;
+	padding: 0;
+	display: flex;
+	height: 100%;
 }
 
 .course-table-row {
@@ -177,16 +27,6 @@
 	color: rgb(166, 167, 170);
 }
 
-.course-table__header-middle {
-	border-right: 1px solid;
-	border-color: rgb(235, 235, 235);
-	flex: 3 0 0px;
-	background-color: rgb(245, 245, 246);
-	height: 30px;
-	text-align: center;
-	padding-top: 5px;
-}
-
 .course-table__row-detail {
 	display: flex;
 	align-items: center;
@@ -200,53 +40,100 @@
 	padding-bottom: 10px;
 }
 
-.course-table__row-detail-middle {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex: 3 0 0px;
-	border-right: 1px solid;
-	border-color: rgb(235, 235, 235);
-	padding-top: 5px;
-	flex-direction: column;
-	padding-top: 10px;
-	padding-bottom: 10px;
-}
-
-.course-table__row-detail-header {
-
-}
-
-.course-table__row-detail-location {
-	font-weight: bold;
-}
-
-.meeting-inner {
-	display: flex;
-	width: 100%;
-	align-items: center;
-	justify-content: space-around;
-}
-
 .content-container {
 	padding-left: 10%;
 	padding-right: 10%;
 }
 
-.meeting-days {
-	color: rgb(166, 167, 170);
-}
-
-.empty-message {
-  color: #777;
-  text-indent: 2em;
-}
-
-.instructor-summary-container {
-	padding-top: 30px;
-}
-
-.teaching-assistant-container {
+.flex {
 	display: flex;
-	flex-flow: column;
+}
+
+.flex-auto {
+	flex: auto;
+	margin: 2px;
+	padding: 2px;
+	overflow: hidden;
+}
+
+.flex-table-content {
+	flex: 10 0 0px;
+}
+
+.flex-ui-overlay {
+	flex: 1 0 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+}
+
+.support-call-row:hover .flex-ui-overlay {
+	visibility: visible;
+}
+
+.delete-support-call-button {
+	color: rgba(180, 20, 20, 0.8);
+	font-size: 24px;
+	padding: 0px;
+}
+
+.table {
+	margin-top: 20px;
+}
+
+.table-content {
+	flex: 1 1 0%;
+	color: black;
+	align-self: center;
+	margin: 2px;
+	padding: 2px;
+	overflow: hidden;
+}
+
+.table-header {
+	font-weight: bold;
+}
+
+.table-body {
+	background: #fff;
+}
+
+.student-summary-header {
+	text-align: center;
+	padding-bottom: 5px;
+	padding-bottom: 25px;
+}
+
+.container-box {
+	text-align: center;
+	border-radius: 3px;
+	border: 1px solid lightgray;
+	border-left: 4px solid black;
+	padding: 15px 0px 15px 0px;
+	text-align: center;
+}
+
+.container-box-title {
+	text-align: center;
+}
+
+.survey-number {
+	color: #4686A5;
+}
+
+.people-info-icon {
+	color: #4686A5;
+}
+
+.term-header {
+	font-size: 16px;
+	font-weight: 500;
+	margin-top:40px;
+	margin-bottom: 20px;
+	margin-left: -20px;
+}
+
+.instructional-support-summary {
+	padding-top: 30px;
 }

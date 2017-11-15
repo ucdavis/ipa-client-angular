@@ -1,0 +1,16 @@
+<div class="instructor-summary content-container">
+	<div ng-hide="view.state">
+		<spinner></spinner>
+	</div>
+	<div ng-show="view.state">
+		<instructor-header></instructor-header>
+		<teaching-calls></teaching-calls>
+		<support-calls></support-calls>
+
+		<scheduled-courses
+			ng-if="view.state.instructorCourses.terms.length > 0">
+		</scheduled-courses>
+
+	</div>
+
+</div>

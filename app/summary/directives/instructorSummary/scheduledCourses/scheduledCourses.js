@@ -1,7 +1,7 @@
-summaryApp.directive("instructorSummary", this.instructorSummary = function () {
+summaryApp.directive("scheduledCourses", this.scheduledCourses = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'instructorSummary.html',
+		templateUrl: 'scheduledCourses.html',
 		replace: true,
 		link: function (scope, element, attrs) {
 			// Will translate a dayIndicator like '0010100' into 'TR'
@@ -21,7 +21,6 @@ summaryApp.directive("instructorSummary", this.instructorSummary = function () {
 
 				return dayCodes;
 			};
-
 		}
 	};
 });
