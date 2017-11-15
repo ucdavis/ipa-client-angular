@@ -4,12 +4,51 @@
 	</div>
 	<div ng-show="view.state">
 		<instructor-header></instructor-header>
+		<div class="section-header-bar">
+			<h5>Teaching Call for Review</h5>
+		</div>
 		<teaching-calls></teaching-calls>
+		<div class="section-header-bar">
+			<h5>Teaching Call for Review</h5>
+		</div>
 		<support-calls></support-calls>
-
-		<scheduled-courses
+		<div class="section-header-bar">
+			<h5>Scheduled Course 2017 - 2018</h5>
+		</div>
+		<!-- <scheduled-courses
 			ng-if="view.state.instructorCourses.terms.length > 0">
-		</scheduled-courses>
+		</scheduled-courses>-->
+
+		<!-- table -->
+<div class="summary-table Rtable--5cols">
+	<div class="summary-table__header">
+		<div class="summary-table__header-cell"><h6>Course</h6></div>
+		<div class="summary-table__header-cell"><h6>Activity</h6></div>
+		<div class="summary-table__header-cell"><h6>Time</h6></div>
+		<div class="summary-table__header-cell"><h6>Location</h6></div>
+		<div class="summary-table__header-cell"><h6>Teaching Assistant(s)</h6></div>
+	</div>
+	<div class="summary-table__term">
+		<div class="summary-table__term-cell">Fall Quarter 2017
+			<div class="summary-table__term-cell--green">Current Quarter</div>
+		</div>
+	</div>
+	<div class="summary-table__course">
+		<div class="summary-table__course-cell">ECS 020 Discrete Math for CS</div>
+		<div class="summary-table__course-cell">Lecture</div>
+		<div class="summary-table__course-cell">WF: 1:00 PM - 2:50 PM</div>
+		<div class="summary-table__course-cell">Wellman 002</div>
+		<div class="summary-table__course-cell">Not Assigned</div>
+	</div>
+	<div class="summary-table__course">
+		<div class="summary-table__course-cell">ECS 020 Discrete Math for CS</div>
+		<div class="summary-table__course-cell">Lecture</div>
+		<div class="summary-table__course-cell">WF: 1:00 PM - 2:50 PM</div>
+		<div class="summary-table__course-cell">Wellman 002</div>
+		<div class="summary-table__course-cell">Not Assigned</div>
+	</div>
+</div>
+		<!-- test ends -->
 
 	</div>
 
