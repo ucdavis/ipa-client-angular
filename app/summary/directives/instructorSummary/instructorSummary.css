@@ -1,5 +1,10 @@
 .instructor-summary {
-	padding-top: 30px;
+	padding: 20px 20px 0px 20px !important;
+}
+
+.instructor-summary .content-container {
+	padding-left: 10%;
+	padding-right: 10%;
 }
 
 .instructor-summary .empty-message {
@@ -7,7 +12,14 @@
 	text-indent: 2em;
 }
 
-.instructor-summary .content-container {
-	padding-left: 10%;
-	padding-right: 10%;
+.instructor-summary .section-header-bar {
+	padding: 15px 15px 15px 15px;
+	background-color: #F8F8F8;
+    border: 1px solid #CCCCCC;
+    margin-top: 25px;
+    border-radius: 3px;
+}
+
+.instructor-summary .section-header-bar h5 {
+	margin: 0 !important;
 }
