@@ -28,6 +28,10 @@
 
 /*table structure */
 
+.summary-table h6 {
+	margin:5px 0px 5px 0px;
+}
+
 .summary-table {
   display: flex;
   flex-wrap: wrap;
@@ -60,7 +64,7 @@
 }
 
 .summary-table .summary-table__term {
-	margin-left: 15px;
+	padding-left: 15px;
 	flex: 0 0 100%;
 }
 
