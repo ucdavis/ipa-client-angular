@@ -1,0 +1,38 @@
+.budget-nav {
+	display: flex;
+	justify-content: space-between;
+	background-color: #F8F8F8;
+	border: 1px solid #CCCCCC;
+	margin-bottom: 25px;
+	border-radius: 3px;
+}
+
+.nav-items {
+	display: flex;
+}
+
+.nav-items .btn {
+	font-weight: bold;
+	padding: 18px 25px 18px 25px;
+	border-right: 1px solid #CCCCCC;
+	border-radius: 0px;
+}
+
+.nav-items .btn:hover {
+	background-color: #EDEDED;
+}
+
+.side-bar {
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	padding: 0px 20px 0px 20px;
+	margin: 11px 0px 11px 0px;
+	border-left: 1px solid #CCCCCC;
+}
+
+.selected-route {
+	background-color: #DCDCDC;
+	border-right: 1px solid #CCCCCC;
+	border-radius: 0px;
+}

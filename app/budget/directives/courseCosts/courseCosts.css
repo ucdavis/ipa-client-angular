@@ -1,9 +1,9 @@
-.course-costs-section {
-	border: 1px solid rgb(235, 235, 235);
+.course-costs {
+	border: 1px solid #ebebeb;
 	border-radius: 4px;
 }
 
-.course-costs-section .expand-ui {
+.course-costs .expand-ui {
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
@@ -12,7 +12,7 @@
 	font-weight: bold;
 }
 
-.course-costs-section .expand-ui-container {
+.course-costs .expand-ui-container {
 	padding-left: 15px;
 	padding-right: 15px;
 	padding-top: 10px;
@@ -20,59 +20,61 @@
 	cursor: pointer;
 }
 
-.course-costs-section .expand-ui-triangle {
+.course-costs .expand-ui-triangle {
 	font-size: 10px;
 }
 
-.course-costs-section .course-costs-header {
+.course-costs .course-costs-header {
 	display: flex;
 	width: 100%;
 }
 
-.course-costs-section .support-cost-header,
-.course-costs-section .instructors-header
+.course-costs .support-cost-header,
+.course-costs .instructors-header
  {
 	display: flex;
 	flex: 5 0 0px;
-	padding: 15px;
+	padding: 19px;
+	border-bottom: 1px solid #ebebeb;
 }
 
-.course-costs-section .cell {
+.course-costs .cell {
 	flex: 1 0 0px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	/*background-color: #F9F9F9;*/
 }
 
-.course-costs-section .cell-content {
+.course-costs .cell-content {
 	flex: 0 1 0px;
 }
 
-.course-costs-section .course-title {
-	padding: 15px;
+.course-costs .course-title {
+	padding: 10px;
 	display: flex;
 }
 
-.course-costs-section .section-group-row {
+.course-costs .section-group-row {
 	display: flex;
 }
 
-.course-costs-section .support-cost {
-	background-color: #F1F8FA;
+.course-costs .support-cost {
+	background-color: #F9F9F9;
 }
 
-.course-costs-section .instructor-cost {
-	background-color: #FAF1F1;
+.course-costs .instructor-cost {
+	background-color: #F9F9F9;
 }
 
-.course-costs-section .support-cost,
-.course-costs-section .instructor-cost {
+.course-costs .support-cost,
+.course-costs .instructor-cost {
 	flex: 5 0 0px;
 	padding: 5px;
-	margin: 15px;
+	margin: 5px 0px 5px 15px;
 }
 
-.course-costs-section .comment-ui {
+.course-costs .comment-ui {
 	padding-left: 1%;
 	cursor: pointer;
 }

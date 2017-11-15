@@ -1,49 +1,32 @@
-<div class="course-costs">
-	<!-- <term-selector
+<div class="instructor-costs">
+	<term-selector
 		selected-term="selectedBudgetScenario.selectedTerm"
 		terms="selectedBudgetScenario.terms"
 		term-descriptions="selectedBudgetScenario.termDescriptions">
-	</term-selector>-->
+	</term-selector>
 
 	<!-- Header -->
 	<div class="course-costs-header">
-		<div class="support-cost-header">
+		<div class="instructors-header">
 			<div class="cell">
-				Enrollment
+				Instructor
 			</div>
-
 			<div class="cell">
-				Section
+				Reg. Instructor
 			</div>
-
 			<div class="cell">
-				TAs
+				Reason
 			</div>
-
 			<div class="cell">
-				TA Cost
+				Instructor Cost
 			</div>
-
-			<div class="cell">
-				Reader
-			</div>
-
-			<div class="cell">
-				Reader Cost
-			</div>
-
-			<div class="cell">
-				Support Cost
-			</div>
-
 			<div class="cell">
 				Comment
 			</div>
-			
-			<div class="cell">
-				Total Cost
-			</div>
+		</div>
 
+		<div class="cell">
+			Total Cost
 		</div>
 	</div>
 
@@ -55,11 +38,12 @@
 			</div>
 		</div>
 		<div class="section-group-row" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
-			<div class="support-cost">
-				<course-cost-row
+			<div class="instructor-cost">
+				<instructor-cost-row
 					section-group-cost="sectionGroupCost"
+					instructors="instructors"
 					course="course">
-				</course-cost-row>
+				</instructor-cost-row>
 			</div>
 
 			<div class="cell">

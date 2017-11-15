@@ -69,7 +69,7 @@
 }
 
 .budget-summary .budget-summary-title {
-	width: 55%;
+	width: 35%;
 }
 
 .budget-summary .sum-total {
@@ -157,11 +157,6 @@
 
 .budget-summary table {
 	font-size: 12px;
-}
-
-.budget-summary table tr th:nth-child(2) {
-	width:5%;
-	
 }
 
 .budget-table {

@@ -1,0 +1,17 @@
+.line-item-dropdown .option-row {
+	cursor: pointer;
+}
+
+.line-item-dropdown:hover .option-row {
+	cursor: pointer;
+	display: block;
+}
+
+.line-item-dropdown .dropdown-container {
+	width: 250px;
+}
+
+.line-item-dropdown .item {
+	display: flex;
+	justify-content: space-between;
+}

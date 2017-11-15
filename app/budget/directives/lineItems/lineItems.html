@@ -1,66 +1,34 @@
 <div class="line-items-section">
-	<!-- line items toolbar -->
-	<div class="btn-group toolbar">
-		<span
-			class="toolbar-item glyphicon glyphicon-trash"
-			tooltip-append-to-body="true"
-			tooltip-placement="left"
-			uib-tooltip="Delete line items"
-			confirm-button="deleteLineItems()"
-			message="Are you sure you want to remove the selected line items?"
-			yes="Remove" no="Cancel" placement="left"
-			aria-hidden="true">
-		</span>
-		<span
-			class="toolbar-item glyphicon glyphicon-plus"
-			ng-click="openAddLineItemModal()"
-			tooltip-append-to-body="true"
-			tooltip-placement="left"
-			uib-tooltip="Add line item">
-		</span>
-	</div>
-
+	<!-- Header -->
 	<div class="line-items-section-content">
-		<!-- line items section UI -->
-		<div class="expand-ui-container" ng-click="toggleLineItemSection()">
-			<div class="expand-ui">
-				<div>Line Items</div>
-				<i ng-show="selectedBudgetScenario.isLineItemOpen == false" class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>
-				<i ng-show="selectedBudgetScenario.isLineItemOpen" class="glyphicon glyphicon-triangle-bottom expand-ui-triangle"></i>
+		<div class="header-container">
+			<div class="header-content">
+				<div class="checkbox-container">
+					<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+						ng-class="{ 'checked': ui.areAllLineItemsSelected }" ng-click="selectAllLineItems(ui.areAllLineItemsSelected)" stop-event="click">
+						<label class="cb-wrapper">
+							<div class="checked"></div>
+						</label>
+					</div>
+				</div>
+				<div class="type-header">
+					Type
+				</div>
+				<div class="description-header">
+					Description
+				</div>
+				<div class="comment-header">
+					Comments
+				</div>
+				<div class="amount-header">
+					Amount
+				</div>
 			</div>
 		</div>
 
-		<div ng-show="selectedBudgetScenario.isLineItemOpen">
-			<!-- line items header -->
-			<div class="header-container">
-				<div class="header-content">
-					<div class="checkbox-container">
-						<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-							ng-class="{ 'checked': ui.areAllLineItemsSelected }" ng-click="selectAllLineItems(ui.areAllLineItemsSelected)" stop-event="click">
-							<label class="cb-wrapper">
-								<div class="checked"></div>
-							</label>
-						</div>
-					</div>
-
-					<div class="type-header">
-						Type
-					</div>
-
-					<div class="description-header">
-						Description
-					</div>
-
-					<div class="amount-header">
-						Amount
-					</div>
-				</div>
-			</div>
-
-			<div ng-repeat="lineItem in selectedBudgetScenario.lineItems">
-				<line-item-row line-item="lineItem"></line-item-row>
-			</div>
-
+		<!-- Line items -->
+		<div ng-repeat="lineItem in selectedBudgetScenario.lineItems">
+			<line-item-row line-item="lineItem"></line-item-row>
 		</div>
 	</div>
 </div>

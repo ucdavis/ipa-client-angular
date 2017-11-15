@@ -1,4 +1,4 @@
-<div class="support-cost-row">
+<div class="course-cost-row">
 	<div class="cell">
 		{{ sectionGroupCost.sequencePattern }}
 	</div>
@@ -12,20 +12,12 @@
 				tooltip-placement="bottom">
 			</i>
 		</div>
-		<div
-			ng-if="sectionGroupCost.displayEnrollmentInput != true"
-			ng-click="displayProperty(sectionGroupCost, 'enrollment')"
-			class="inline-edit-ui">
-			{{ sectionGroupCost.enrollment }}
-		</div>
-		<div ng-if="sectionGroupCost.displayEnrollmentInput == true">
+		<div>
 			<input
-				class="inline-edit"
-				type="number"
 				ng-model="sectionGroupCost.enrollment"
 				auto-input
-				on-enter="updateSectionGroupCost(sectionGroupCost, 'enrollment')"
-				on-blur="updateSectionGroupCost(sectionGroupCost, 'enrollment')">
+				on-enter="updateSectionGroupCost(sectionGroupCost)"
+				on-blur="updateSectionGroupCost(sectionGroupCost)">
 		</div>
 	</div>
 	<div class="cell">
@@ -38,21 +30,12 @@
 				tooltip-placement="bottom">
 			</i>
 		</div>
-
-		<div
-			ng-if="sectionGroupCost.displaySectionCountInput != true"
-			ng-click="displayProperty(sectionGroupCost, 'sectionCount')"
-			class="inline-edit-ui">
-			{{ sectionGroupCost.sectionCount }}
-		</div>
-		<div ng-if="sectionGroupCost.displaySectionCountInput == true">
+		<div>
 			<input
-				class="inline-edit"
-				type="number"
 				ng-model="sectionGroupCost.sectionCount"
 				auto-input
-				on-enter="updateSectionGroupCost(sectionGroupCost, 'sectionCount')"
-				on-blur="updateSectionGroupCost(sectionGroupCost, 'sectionCount')">
+				on-enter="updateSectionGroupCost(sectionGroupCost)"
+				on-blur="updateSectionGroupCost(sectionGroupCost)">
 		</div>
 	</div>
 	<div class="cell">
@@ -66,20 +49,12 @@
 			</i>
 		</div>
 
-		<div
-			ng-if="sectionGroupCost.displayTaCountInput != true"
-			ng-click="displayProperty(sectionGroupCost, 'taCount')"
-			class="inline-edit-ui">
-			{{ sectionGroupCost.taCount }}
-		</div>
-		<div ng-if="sectionGroupCost.displayTaCountInput == true">
+		<div>
 			<input
-				class="inline-edit"
-				type="number"
 				ng-model="sectionGroupCost.taCount"
 				auto-input
-				on-enter="updateSectionGroupCost(sectionGroupCost, 'taCount')"
-				on-blur="updateSectionGroupCost(sectionGroupCost, 'taCount')">
+				on-enter="updateSectionGroupCost(sectionGroupCost)"
+				on-blur="updateSectionGroupCost(sectionGroupCost)">
 		</div>
 	</div>
 	<div class="cell">
@@ -95,20 +70,12 @@
 				tooltip-placement="bottom">
 			</i>
 		</div>
-		<div
-			ng-if="sectionGroupCost.displayReaderCountInput != true"
-			ng-click="displayProperty(sectionGroupCost, 'readerCount')"
-			class="inline-edit-ui">
-			{{ sectionGroupCost.readerCount }}
-		</div>
-		<div ng-if="sectionGroupCost.displayReaderCountInput == true">
+		<div>
 			<input
-				class="inline-edit"
-				type="number"
 				ng-model="sectionGroupCost.readerCount"
 				auto-input
-				on-enter="updateSectionGroupCost(sectionGroupCost, 'readerCount')"
-				on-blur="updateSectionGroupCost(sectionGroupCost, 'readerCount')">
+				on-enter="updateSectionGroupCost(sectionGroupCost)"
+				on-blur="updateSectionGroupCost(sectionGroupCost)">
 		</div>
 	</div>
 	<div class="cell">
@@ -116,5 +83,15 @@
 	</div>
 	<div class="cell">
 		{{ sectionGroupCost.supportCostSubTotalDisplay }}
+	</div>
+	<div class="cell">
+		<div class="comments-content" uib-tooltip="View Comments">
+			<ipa-button
+				button-text="'See Comments'"
+				color="'light'"
+				icon-class="'entypo entypo-chat'"
+				on-click="openCourseComments(course)">
+			</ipa-button>
+		</div>
 	</div>
 </div>

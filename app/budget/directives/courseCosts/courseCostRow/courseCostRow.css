@@ -1,0 +1,67 @@
+.course-cost-row {
+	display: flex;
+	height: 100%;
+}
+
+.course-cost-row { /* Override default user agent styling */
+	background-color: #F9F9F9;
+}
+
+.course-cost-row .cell {
+	flex: 1 0 0px;
+	display: flex;
+	justify-content: center;
+}
+
+.course-cost-row .section-group-warning {
+	color: #ce4844;
+	visibility: hidden;
+}
+
+.course-cost-row .show-warning {
+	visibility: visible;
+}
+
+.course-cost-row input {
+	/* bound copy: */
+background: #FFFFFF;
+border: 1px solid #CCCCCC;
+box-shadow: inset 0 1px 2px 0 rgba(131,131,131,0.30);
+width: 50%;
+padding: 5px;
+border-radius: 3px;
+text-align: center;
+}
+
+
+
+
+/* test */
+
+.Rtable {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin: 0 0 3em 0;
+    padding: 0;
+}
+
+.Rtable--3cols > .Rtable-cell {
+    width: 11.11%;
+}
+
+
+.Rtable-cell {
+    box-sizing: border-box;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    width: 100%;
+    padding: 0.8em 1.2em;
+    overflow: hidden;
+    list-style: none;
+    border: solid 3px white;
+    background: rgba(112, 128, 144, 0.2);
+}
