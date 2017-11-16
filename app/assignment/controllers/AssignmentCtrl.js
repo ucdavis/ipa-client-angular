@@ -208,7 +208,10 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 			};
 
 			$scope.download = function () {
-				assignmentService.download($scope.workgroupId, $scope.year);
+				var isCoursePivot = $scope.view.state.userInterface.showCourses;
+				var pivot = isCoursePivot ? "course" : "instructor";
+
+				assignmentService.download($scope.workgroupId, $scope.year, pivot);
 			};
 
 			$scope.setActiveTab = function (tabName) {
