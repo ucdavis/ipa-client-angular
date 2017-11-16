@@ -2,3 +2,39 @@
 	color: #777;
 	text-indent: 2em;
 }
+
+.teaching-calls__header-bar {
+	padding: 5px 15px 5px 15px;
+	background-color: #F8F8F8;
+    border: 1px solid #CCCCCC;
+    margin-top: 25px;
+    border-radius: 3px;
+}
+
+
+.teaching-calls-table {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 15px 0px 15px 0px;
+	padding: 0px 0px 15px 0px;
+	border: 1px solid #ebebeb;
+	border-radius: 3px;
+  }
+
+
+.teaching-calls__row {
+	display: flex;
+	flex: 1 1 100%;
+	flex-grow: 1;
+	padding: 0px 15px 0px 15px;
+	overflow: hidden
+}
+
+.teaching-calls__header-cell {
+	flex: 1;
+	font-weight: 500;
+	padding: 10px;
+	text-align: center;
+	overflow: hidden;
+	background-color: white;
+}

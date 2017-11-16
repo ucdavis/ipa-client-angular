@@ -1,16 +1,19 @@
-.instructor-header button {
-	background-color: white;
-    border: 1px solid #D6D6D6;
-	font-size: 11px;
-}
+/* ----------BLOCK ------------*/
 
 .instructor-header {
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 15px;
 }
 
+/* ----------ELEMENTS ------------*/
 
-.instructor-header .instructor-header__info {
+.instructor-header__button {
+	background-color: white;
+    border: 1px solid #D6D6D6;
+}
+
+.instructor-header__info {
 	padding: 15px 20px 15px 20px;
     border: 1px solid #21A9E1;
     border-radius: 3px;
