@@ -38,7 +38,7 @@
 									<i ng-hide="view.state.users.searchQuery || view.loadingPeople" class="entypo-search"></i>
 									<i ng-show="view.state.users.searchQuery && !view.loadingPeople" class="entypo-cancel" ng-click="clearUserSearch()"></i>
 									<span class="input-group-btn">
-										<button ng-disabled="!view.state.users.newUser.name"
+										<button ng-disabled="!view.state.users.newUser.name || view.state.ui.addUserInProgress"
 											class="btn-add-person btn btn-primary"
 											ng-click="addUserToWorkgroup()">
 											Add Person
