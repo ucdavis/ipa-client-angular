@@ -146,6 +146,11 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 			var scope = this;
 			var role = new Role({ name: "presence" });
 
+			workgroupStateService.reduce({
+				type: BEGIN_ADD_USER,
+				payload: {}
+			});
+
 			workgroupService.createUser(workgroupId, dwUser).then(function (newUser) {
 				$rootScope.$emit('toast', { message: "Added user " + newUser.firstName + " " + newUser.lastName, type: "SUCCESS" });
 				var action = {

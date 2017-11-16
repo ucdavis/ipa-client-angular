@@ -172,6 +172,25 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					return roles;
 			}
 		},
+		_uiReducers: function (action, ui) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_WORKGROUP:
+					ui = {
+						addUserInProgress: false
+					};
+					return ui;
+				case BEGIN_ADD_USER:
+					ui.addUserInProgress = true;
+					return ui;
+				case ADD_USER:
+					ui.addUserInProgress = false;
+					return ui;
+				default:
+					return ui;
+			}
+		},
 		reduce: function (action) {
 			var scope = this;
 
@@ -184,6 +203,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 			newState.locations = scope._locationReducers(action, scope._state.locations);
 			newState.users = scope._userReducers(action, scope._state.users);
 			newState.roles = scope._roleReducers(action, scope._state.roles);
+			newState.ui = scope._uiReducers(action, scope._state.ui);
 
 			scope._state = newState;
 			$rootScope.$emit('workgroupStateChanged', scope._state);
