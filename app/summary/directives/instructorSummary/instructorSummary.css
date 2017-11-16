@@ -114,14 +114,13 @@
   text-align: center;
 }
 
-.summary-table .summary-table__course-cell h6 {
-	font-weight: unset;
-	margin-top: 19px !important;
-	margin-bottom: 19px !important;
+.summary-table .summary-table__course .summary-table__course-cell--left {
+	justify-content: flex-start !important;
 }
 
-.summary-table  .schedule-course-table__cell--lecture {
-	font-weight: bold;
+.summary-table .summary-table__course--lecture {
+	margin-top: 8px !important;
+	font-weight: bold !important;
 }
 
 /* Table column sizing
@@ -140,5 +139,11 @@
 }
 .Rtable--6cols > .schedule-course-table__cell {
   width: 16.6%;
+}
+
+.summary-table .summary-table__course-cell h6 {
+	font-weight: unset;
+	margin-top: 19px !important;
+	margin-bottom: 19px !important;
 }
 
