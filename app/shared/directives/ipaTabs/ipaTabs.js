@@ -17,10 +17,21 @@ sharedApp.directive("ipaTabs", this.ipaTabs = function () {
 		replace: true,
 		scope: {
 			tabNames: '<',
-			selectedTab: '<'
+			activeTab: '<',
+			selectTab: '&'
 		},
+		transclude: true,
 		link: function (scope, element, attrs) {
-			// Left blank on purpose
+			// Validate passed methods
+			if (angular.isUndefined(scope.selectTab)) {
+				throw {
+					message: "ipaTabs: Required method selectTab was not provided."
+				};
+			}
+
+			scope.triggerSelection = function(tab) {
+				scope.selectTab()(tab);
+			};
 		}
 	};
 });
