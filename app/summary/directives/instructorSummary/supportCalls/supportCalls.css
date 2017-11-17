@@ -1,3 +1,64 @@
-.support-calls {
-	padding-top: 10px;
+.support-calls__header-bar {
+	padding: 5px 15px 5px 15px;
+	background-color: #F8F8F8;
+    border: 1px solid #CCCCCC;
+    margin-top: 25px;
+    border-radius: 3px;
+}
+
+.support-calls-table__row {
+	display: flex;
+	flex: 1 1 100%;
+	flex-grow: 1;
+	padding: 0px 15px 0px 15px;
+	overflow: hidden;
+	align-items: center;
+}
+
+.support-calls-table__header-cell {
+	flex: 1;
+	font-weight: 500;
+	padding: 15px 10px 15px 10px;
+	text-align: center;
+	overflow: hidden;
+	background-color: white;
+}
+
+.support-calls-table__header-cell--left {
+	text-align: left;
+}
+
+.support-calls-table__row--border {
+	border: 1px solid #ebebeb;
+}
+
+.support-calls-table__row--border-buttom {
+	border-bottom: none !important;
+}
+
+.support-calls-table__row--radius {
+	border-radius: 0px 0px 3px 3px;
+}
+
+.support-calls-table__tab {
+	margin-bottom: -1px !important;
+}
+
+
+.support-calls-table__cell {
+	flex: 1;
+	padding: 10px;
+	text-align: center;
+	background-color: white;
+	border-bottom: none !important;
+	overflow: hidden;
+}
+
+.support-calls-table__cell--left {
+	text-align: left;
+}
+
+.support-calls-table__button {
+		background-color: white;
+		border: 1px solid #D6D6D6;
 }
