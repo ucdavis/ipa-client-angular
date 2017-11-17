@@ -36,7 +36,7 @@
 .teaching-calls-table__header-cell {
 	flex: 1;
 	font-weight: 500;
-	padding: 10px;
+	padding: 15px 10px 15px 10px;
 	text-align: center;
 	overflow: hidden;
 	background-color: white;
