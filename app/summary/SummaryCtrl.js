@@ -51,6 +51,14 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 			return term.getTermDisplayName(term);
 		};
 
+		$scope.selectTab = function(tab) {
+			$scope.view.state.ui.allTerms.forEach(function(term) {
+				if (term.getTermDisplayName() == tab) {
+					$scope.selectTerm(term);
+				}
+			});
+		};
+
 		$scope.selectTerm = function (term) {
 			summaryActionCreators.selectTerm(term);
 		};
