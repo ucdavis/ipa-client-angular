@@ -4,7 +4,7 @@
 	padding: 20px 20px 0px 20px !important;
 }
 
-.summary-table {
+.instructor-summary-table {
   display: flex;
   flex-wrap: wrap;
   margin: 15px 0px 15px 0px;
@@ -28,7 +28,7 @@
 	text-indent: 2em;
 }
 
-.summary-table__row {
+.instructor-summary-table__row {
 	display: flex;
 	flex: 1 1 100%;
 	flex-grow: 1;
@@ -36,16 +36,16 @@
 	overflow: hidden;
 }
 
-.summary-table__header-cell {
+.instructor-summary-table__header-cell {
 	flex: 1;
 	font-weight: 500;
-	padding: 10px;
+	padding: 15px 10px 15px 10px;
 	text-align: center;
 	overflow: hidden;
 	background-color: white;
 }
 
-.summary-table__term {
+.instructor-summary-table__term {
 	display: flex;
 	flex: 1 1 100%;
 	flex-grow: 1;
@@ -53,7 +53,7 @@
 	padding: 20px 15px 10px 15px;
 }
 
-.summary-table__cell {
+.instructor-summary-table__cell {
 	flex: 1;
 	padding: 10px;
 	text-align: center;
@@ -62,7 +62,7 @@
 	overflow: hidden;
 }
 
-.summary-table__green-label {
+.instructor-summary-table__green-label {
 	font-size: 10px;
 	line-height: 0.5;
 	color: #fff;
@@ -74,21 +74,21 @@
 }
 
 /* ---------- MODIFIERS ------------*/
-.summary-table__row--border {
+.instructor-summary-table__row--border {
 	border-bottom: 1px solid #ebebeb;
 }
 
-.summary-table__row--emphasis {
+.instructor-summary-table__row--emphasis {
 	margin-top: 10px !important;
 	font-weight: bold !important;
 	text-align: left;
 }
 
-.summary-table__cell--gray {
+.instructor-summary-table__cell--gray {
 	color: #A6A6A6;
 }
 
-.summary-table__term-cell {
+.instructor-summary-table__term-cell {
 	font-weight: bold;
 	text-align: left !important;
 	background-color: white;
