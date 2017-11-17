@@ -1,0 +1,16 @@
+.ipa-tabs {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.ipa-tabs__tab {
+	border-bottom: 1px solid #ddd;
+	margin-bottom: -1px;
+	flex: 0 0 auto;
+}
+
+.ipa-tabs__tab--selected {
+	border: 1px solid #ddd;
+	border-bottom-color: transparent;
+}
