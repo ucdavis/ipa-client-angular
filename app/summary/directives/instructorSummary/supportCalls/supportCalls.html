@@ -1,157 +1,44 @@
 <div class="support-calls">
-	<div class="support-calls__header-bar">
-			<h5>Support Call for Review</h5>
-	</div>
-	<div class="support-calls-table">
-		<div class="support-call-nav">
-			<ul class="support-calls-table__tab nav nav-tabs bordered">
-				<li class="active">
-					<a href="#fall" data-toggle="tab" aria-expanded="true">
-						<span class="visible-xs"><i class="entypo-home"></i></span>
-						<span class="hidden-xs">Fall Quarter</span>
-					</a>
-				</li>
-				<li class="">
-					<a href="#winter" data-toggle="tab" aria-expanded="false">
-						<span class="visible-xs">
-							<i class="entypo-user"></i>
-						</span>
-						<span class="hidden-xs">Winter Quarter</span>
-					</a>
-				</li>
-				<li class="">
-					<a href="#spring" data-toggle="tab" aria-expanded="false">
-				<span class="visible-xs">
-					<i class="entypo-mail"></i>
-				</span>
-				<span class="hidden-xs">Spring Quarter</span>
-					</a>
-				</li>
-			</ul>
-			<div class="support-calls-table__row support-calls-table__row--border support-calls-table__row--border-buttom">
-				<div class="support-calls-table__header-cell support-calls-table__header-cell--left">Support Call</div>
-				<div class="support-calls-table__header-cell support-calls-table__header-cell--left">Descrption</div>
-				<div class="support-calls-table__header-cell">Due Date</div>
-				<div class="support-calls-table__header-cell">Submitted Preference</div>
-			</div>
+	<ipa-tabs
+		tab-names="view.state.ui.allTermNames"
+		active-tab="view.state.ui.selectedSupportCallTermDisplay"
+		select-tab="selectTab">
+		<!-- header -->
+		<div class="support-calls-table__row support-calls-table__row--border support-calls-table__row--border-buttom">
+			<div class="support-calls-table__header-cell support-calls-table__header-cell--left">Support Call</div>
+			<div class="support-calls-table__header-cell support-calls-table__header-cell--left">Description</div>
+			<div class="support-calls-table__header-cell">Due Date</div>
+			<div class="support-calls-table__header-cell">Submitted Preference</div>
 		</div>
-		<div class="tab-content">
-			<div class="tab-pane active" id="fall">
-				<div class="support-calls-table__row support-calls-table__row--border support-calls-table__row--radius">
-					<div class="support-calls-table__cell support-calls-table__cell--left">
-						<button class="btn btn-default support-calls-table__button">
-								View Support Call Form
-						</button>
+		<!-- content -->
+		<div ng-repeat="term in view.state.ui.allTerms">
+			<div ng-if="term == view.state.ui.selectedSupportCallTerm">
+				<div
+					ng-if="view.state.instructorSupportCallResponses.byTerm[term]"
+					ng-init="supportCallResponse=view.state.instructorSupportCallResponses.byTerm[term]">
+					<div class="support-calls-table__row support-calls-table__row--border support-calls-table__row--radius">
+						<div class="support-calls-table__cell support-calls-table__cell--left">
+							<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) }}/instructorSupportCallForm">
+								<button class="btn btn-default support-calls-table__button">
+									View Support Call Form
+								</button>
+							</a>
+						</div>
+						<div class="support-calls-table__cell support-calls-table__cell--left">
+							{{ supportCallResponse.message }}
+						</div>
+						<div class="support-calls-table__cell">
+							{{ supportCallResponse.dueDate }}
+						</div>
+						<div class="support-calls-table__cell">
+							<i class="glyphicon glyphicon-ok" ng-if="supportCallResponse.submitted"></i>
+						</div>
 					</div>
-					<div class="support-calls-table__cell support-calls-table__cell--left">
-						I AM MR. FALL
-					</div>
-					<div class="support-calls-table__cell">WF: 1:00 PM - 2:50 PM</div>
-					<div class="support-calls-table__cell">N/A</div>
 				</div>
 			</div>
-		<div class="tab-pane" id="winter">
-			<div class="support-calls-table__row support-calls-table__row--border support-calls-table__row--radius">
-				<div class="support-calls-table__cell support-calls-table__cell--left">
-					<button class="btn btn-default support-calls-table__button">
-						View Support Call Form
-					</button>
-				</div>
-				<div class="support-calls-table__cell support-calls-table__cell--left">
-					I AM MR. WINTER
-				</div>
-				<div class="support-calls-table__cell">WF: 1:00 PM - 2:50 PM</div>
-				<div class="support-calls-table__cell">N/A</div>
+			<div ng-if="!(view.state.instructorSupportCallResponses.byTerm[term])" class="course-table-row">
+				There are no support calls.
 			</div>
 		</div>
-		<div class="tab-pane" id="spring">
-			<div class="support-calls-table__row support-calls-table__row--border support-calls-table__row--radius">
-				<div class="support-calls-table__cell support-calls-table__cell--left">
-					<button class="btn btn-default support-calls-table__button">
-						View Support Call Form
-					</button>
-				</div>
-				<div class="support-calls-table__cell support-calls-table__cell--left">
-					I AM MR. SPRING
-				</div>
-				<div class="support-calls-table__cell">WF: 1:00 PM - 2:50 PM</div>
-				<div class="support-calls-table__cell">N/A</div>
-			</div>
-		</div>
-		</div>
-
-
-
-
-
-
-
-			<!--
-	<div class="term-nav">
-		<div
-		ng-repeat="term in view.state.ui.allTerms"
-		ng-click="selectTerm(term)"
-		ng-class="{'selected': term == view.state.ui.selectedSupportCallTerm}">
-			{{ getTermDisplayName(term) }}
-		</div>
-	</div>
-
-	<div ng-if="view.state.instructorSupportCallResponses.length > 0" class="course-table-row">
-		<div class="course-table__header">
-			<div class="course-table__header-detail">
-				<div>
-					Support Calls
-				</div>
-			</div>
-		</div>
-		<div class="course-table__header">
-			<div class="course-table__header-detail">
-				<div>
-					Due Date
-				</div>
-			</div>
-		</div>
-		<div class="course-table__header">
-			<div class="course-table__header-detail">
-				<div>
-					Submitted Preferences
-				</div>
-			</div>
-		</div>
-		<div class="course-table__header">
-			<div class="course-table__header-detail">
-				<div>
-					Term
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div 
-	ng-if="view.state.instructorSupportCallResponses.length > 0"
-	ng-repeat="supportCallResponse in view.state.instructorSupportCallResponses"
-	class="course-table-row">
-		<div class="course-table__row-detail">
-			<div>
-				<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) }}/instructorSupportCallForm">
-					View Support Call Form
-				</a>
-			</div>
-		</div>
-		<div class="course-table__row-detail">
-			{{ supportCallResponse.dueDate }}
-		</div>
-		<div class="course-table__row-detail">
-			<i class="glyphicon glyphicon-ok" ng-if="supportCallResponse.submitted"></i>
-		</div>
-		<div class="course-table__row-detail">
-			{{ supportCallResponse.termCode.getTermCodeDisplayName(true) }}
-		</div>
-	</div>
-
-	<div ng-if="view.state.instructorSupportCallResponses.length == 0" class="course-table-row">
-		There are no support calls.
-	</div>
-
--->
+	</ipa-tabs>
 </div>
