@@ -431,13 +431,18 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 			}
 		},
 		_instructorSupportCallResponseReducers: function (action, supportCallResponses) {
-			var scope = this;
-
 			switch (action.type) {
 				case INIT_STATE:
-					var supportCallResponses = action.payload.instructorSupportCallResponses;
-					supportCallResponses.forEach(function(supportCallResponse) {
-						supportCallResponse.dueDate = millisecondsToFullDate(supportCallResponse.dueDate);
+					var supportCallResponses = {
+						ids: [],
+						list: [],
+						byTerm: {}
+					};
+
+					action.payload.instructorSupportCallResponses.forEach(function(response) {
+						supportCallResponses.ids.push(response.id);
+						supportCallResponses.list[response.id] = response;
+						supportCallResponses.byTerm[response.termCode.slice(-2)] = response;
 					});
 
 					return supportCallResponses;
@@ -516,13 +521,20 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 						selectedSupportCallTerm = allTerms[0];
 					}
 
+					var allTermNames = allTerms.map(function(term) { return term.getTermDisplayName(); });
+					var selectedSupportCallTermDisplay = selectedSupportCallTerm.getTermDisplayName();
+
 					ui = {
 						selectedSupportCallTerm: selectedSupportCallTerm,
-						allTerms: allTerms
+						selectedSupportCallTermDisplay: selectedSupportCallTermDisplay,
+						allTerms: allTerms,
+						allTermNames: allTermNames
 					};
 					return ui;
 				case SELECT_TERM:
 					ui.selectedSupportCallTerm = action.payload.selectedTerm;
+					ui.selectedSupportCallTermDisplay = action.payload.selectedTerm.getTermDisplayName();
+
 					return ui;
 				default:
 					return ui;
