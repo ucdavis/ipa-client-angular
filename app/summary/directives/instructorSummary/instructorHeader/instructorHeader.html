@@ -1,7 +1,14 @@
 <div class="instructor-header">
-	<div ng-if="view.state.schedule.instructorSupportCallReviewOpen">
-		<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) || '03' }}">
-			Support Call {{ year.yearToAcademicYear() }} is open for review
-		</a>
+	<div class="instructor-header__info">
+		<span class="instructor-header__reminder">Please refer to this icon <i class="entypo-attention instructor-header__icon"></i> to review all necessary Information.</span>
+	</div>
+	<div class="instructor-header__review">
+		<span class="instructor-header__summary">TA schedule and course schedule are open for review</span>
+		<button
+		ng-if="view.state.schedule.instructorSupportCallReviewOpen"
+		ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) || '03' }}"
+		class="btn btn-default instructor-header__button">View TA Schedule
+		</button>
+		<!-- <button class="btn btn-default">View Course Schedule</button> do it later-->
 	</div>
 </div>
