@@ -16,25 +16,50 @@
 	display: flex;
 	flex-wrap: wrap;
 	margin: 15px 0px 15px 0px;
-	padding: 0px 0px 15px 0px;
 	border: 1px solid #ebebeb;
 	border-radius: 3px;
   }
 
+.teaching-calls-table__row--border {
+	border-bottom: 1px solid #ebebeb;
+}
 
-.teaching-calls__row {
+.teaching-calls-table__row {
 	display: flex;
 	flex: 1 1 100%;
 	flex-grow: 1;
 	padding: 0px 15px 0px 15px;
-	overflow: hidden
+	overflow: hidden;
+	align-items: center;
 }
 
-.teaching-calls__header-cell {
+.teaching-calls-table__header-cell {
 	flex: 1;
 	font-weight: 500;
 	padding: 10px;
 	text-align: center;
 	overflow: hidden;
 	background-color: white;
+}
+
+.teaching-calls-table__header-cell--left {
+	text-align: left;
+}
+
+.teaching-calls-table__cell {
+	flex: 1;
+	padding: 10px;
+	text-align: center;
+	background-color: white;
+	border-bottom: none !important;
+	overflow: hidden;
+}
+
+.teaching-calls-table__cell--left {
+	text-align: left;
+}
+
+.teaching-calls-table__button {
+		background-color: white;
+		border: 1px solid #D6D6D6;
 }
