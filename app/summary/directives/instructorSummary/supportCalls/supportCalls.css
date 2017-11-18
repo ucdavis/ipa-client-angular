@@ -1,9 +1,10 @@
 .support-calls__header-bar {
 	padding: 5px 15px 5px 15px;
 	background-color: #F8F8F8;
-    border: 1px solid #CCCCCC;
-    margin-top: 25px;
-    border-radius: 3px;
+	border: 1px solid #CCCCCC;
+	margin-top: 25px;
+	margin-bottom: 15px;
+	border-radius: 3px;
 }
 
 .support-calls-table__row {
@@ -29,11 +30,7 @@
 }
 
 .support-calls-table__row--border {
-	border: 1px solid #ebebeb;
-}
-
-.support-calls-table__row--border-buttom {
-	border-bottom: none !important;
+	border-top: 1px solid #ebebeb;
 }
 
 .support-calls-table__row--radius {
@@ -43,7 +40,6 @@
 .support-calls-table__tab {
 	margin-bottom: -1px !important;
 }
-
 
 .support-calls-table__cell {
 	flex: 1;
@@ -59,6 +55,6 @@
 }
 
 .support-calls-table__button {
-		background-color: white;
-		border: 1px solid #D6D6D6;
+	background-color: white;
+	border: 1px solid #D6D6D6;
 }

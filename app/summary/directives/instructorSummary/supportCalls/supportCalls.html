@@ -1,16 +1,18 @@
 <div class="support-calls">
+	<div class="support-calls__header-bar">
+		<h5>Support Calls for Review</h5>
+	</div>
 	<ipa-tabs
 		tab-names="view.state.ui.allTermNames"
 		active-tab="view.state.ui.selectedSupportCallTermDisplay"
 		select-tab="selectTab">
-		<!-- header -->
+
 		<div class="support-calls-table__row support-calls-table__row--border support-calls-table__row--border-buttom">
 			<div class="support-calls-table__header-cell support-calls-table__header-cell--left">Support Call</div>
-			<div class="support-calls-table__header-cell support-calls-table__header-cell--left">Description</div>
 			<div class="support-calls-table__header-cell">Due Date</div>
-			<div class="support-calls-table__header-cell">Submitted Preference</div>
+			<div class="support-calls-table__header-cell">Submitted Preferences</div>
 		</div>
-		<!-- content -->
+
 		<div ng-repeat="term in view.state.ui.allTerms">
 			<div ng-if="term == view.state.ui.selectedSupportCallTerm">
 				<div
@@ -23,9 +25,6 @@
 									View Support Call Form
 								</button>
 							</a>
-						</div>
-						<div class="support-calls-table__cell support-calls-table__cell--left">
-							{{ supportCallResponse.message }}
 						</div>
 						<div class="support-calls-table__cell">
 							{{ supportCallResponse.dueDate }}
