@@ -435,7 +435,7 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					}
 
 					var allTermNames = allTerms.map(function(term) { return term.getTermDisplayName(); });
-					var selectedSupportCallTermDisplay = selectedSupportCallTerm.getTermDisplayName();
+					var selectedSupportCallTermDisplay = selectedSupportCallTerm ? selectedSupportCallTerm.getTermDisplayName() : "";
 
 					ui = {
 						selectedSupportCallTerm: selectedSupportCallTerm,

@@ -1,4 +1,4 @@
-.teaching-calls .empty-message {
+.teaching-calls__empty-message {
 	color: #777;
 	text-indent: 2em;
 }
@@ -6,9 +6,9 @@
 .teaching-calls__header-bar {
 	padding: 5px 15px 5px 15px;
 	background-color: #F8F8F8;
-    border: 1px solid #CCCCCC;
-    margin-top: 25px;
-    border-radius: 3px;
+	border: 1px solid #CCCCCC;
+	margin-top: 25px;
+	border-radius: 3px;
 }
 
 
@@ -18,7 +18,7 @@
 	margin: 15px 0px 15px 0px;
 	border: 1px solid #ebebeb;
 	border-radius: 3px;
-  }
+}
 
 .teaching-calls-table__row--border {
 	border-bottom: 1px solid #ebebeb;
@@ -60,6 +60,6 @@
 }
 
 .teaching-calls-table__button {
-		background-color: white;
-		border: 1px solid #D6D6D6;
+	background-color: white;
+	border: 1px solid #D6D6D6;
 }

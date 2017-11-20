@@ -3,6 +3,7 @@
 		<h5>Support Calls for Review</h5>
 	</div>
 	<ipa-tabs
+		ng-if="view.state.ui.allTerms.length > 0"
 		tab-names="view.state.ui.allTermNames"
 		active-tab="view.state.ui.selectedSupportCallTermDisplay"
 		select-tab="selectTab">
@@ -35,9 +36,10 @@
 					</div>
 				</div>
 			</div>
-			<div ng-if="!(view.state.instructorSupportCallResponses.byTerm[term])" class="course-table-row">
-				There are no support calls.
-			</div>
 		</div>
 	</ipa-tabs>
+
+	<div ng-if="view.state.ui.allTerms.length == 0" class="support-calls__empty-message">
+		No active support calls.
+	</div>
 </div>
