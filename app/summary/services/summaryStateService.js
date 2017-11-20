@@ -314,117 +314,6 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					return events;
 			}
 		},
-		_instructorCourses: function (action, instructorCourses) {
-			var scope = this;
-			var data = action.payload;
-
-			switch (action.type) {
-				case INIT_STATE:
-					var instructorCoursesByTermCode = {};
-
-					terms = [];
-
-					data.sectionGroups.forEach(function (sectionGroup) {
-						if (!sectionGroup) {
-							return;
-						}
-
-						var termCode = sectionGroup.termCode;
-
-						// If this is the first sectionGroup of a termCode
-						if (terms.indexOf(termCode) == -1) {
-							terms.push(termCode);
-							instructorCoursesByTermCode[termCode] = [];
-						}
-
-						var slotSectionGroup = {};
-
-						slotSectionGroup.title = "";
-
-						data.courses.forEach(function (course) {
-							if (sectionGroup.courseId == course.id) {
-								slotSectionGroup.title = course.title;
-								slotSectionGroup.subjectCode = course.subjectCode;
-								slotSectionGroup.courseNumber = course.courseNumber;
-							}
-						});
-
-						slotSectionGroup.meetings = [];
-
-						// Look for meeting data from shared activities
-						data.activities.forEach(function (activity) {
-							activity = new Activity(activity);
-
-							if (activity.sectionGroupId == sectionGroup.id) {
-								var slotMeeting = {};
-
-								slotMeeting.startTime = activity.startTime;
-								slotMeeting.endTime = activity.endTime;
-								if (!activity.locationDescription) {
-									slotMeeting.location = "To Be Announced";
-								} else {
-									slotMeeting.location = activity.locationDescription;
-								}
-								slotMeeting.activityType = activity.getCodeDescription();
-								slotMeeting.dayIndicator = activity.dayIndicator;
-								slotMeeting.id = activity.id;
-
-								slotSectionGroup.meetings.push(slotMeeting);
-							}
-						});
-
-						// Filling in hash data for supportAssignments and supportStaff
-						var supportAssignments = {
-							list: {},
-							ids: []
-						};
-
-						action.payload.supportAssignments.forEach(function(supportAssignment) {
-							supportAssignments.list[supportAssignment.id] = supportAssignment;
-							supportAssignments.ids.push(supportAssignment.id);
-						});
-
-						var supportStaffList = {
-							list: {},
-							ids: []
-						};
-
-						action.payload.supportStaffList.forEach(function(staff) {
-							supportStaffList.list[staff.id] = staff;
-							supportStaffList.ids.push(staff.id);
-						});
-
-						// Add TA data to sectionGroups
-						slotSectionGroup.teachingAssistants = action.payload.supportAssignments.filter(function(supportAssignment) {
-							return supportAssignment.appointmentType == "teachingAssistant" && supportAssignment.sectionGroupId == sectionGroup.id;
-						}).map(function(supportAssignment) {
-							var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
-							return {
-								id: supportStaff.id,
-								supportStaffId: supportStaff.id,
-								supportAssignmentId: supportAssignment.id,
-								sectionGroupId: sectionGroup.id,
-								firstName: supportStaff.firstName,
-								lastName: supportStaff.lastName,
-								fullName: supportStaff.fullName,
-								loginId: supportStaff.loginId,
-								appointmentPercentage: supportAssignment.appointmentPercentage,
-								appointmentType: supportAssignment.appointmentType
-							};
-						});
-
-						instructorCoursesByTermCode[termCode].push(slotSectionGroup);
-					});
-
-					instructorCourses = {};
-					instructorCourses.terms = terms;
-					instructorCourses.list = instructorCoursesByTermCode;
-
-					return instructorCourses;
-				default:
-					return instructorCourses;
-			}
-		},
 		_teachingCallReceiptReducers: function (action, teachingCallReceipt) {
 			var scope = this;
 			var data = action.payload;
@@ -577,7 +466,6 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
 			newState.activities = scope._activityReducers(action, scope._state.activities);
 			newState.events = scope._eventReducers(action, scope._state.events);
-			newState.instructorCourses = scope._instructorCourses(action, scope._state.instructorCourses);
 			newState.teachingCallReceipt = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipt);
 			newState.instructorSupportCallResponses = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponses);
 			newState.studentSupportCallResponses = scope._studentSupportCallResponseReducers(action, scope._state.studentSupportCallResponses);
