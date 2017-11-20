@@ -1,0 +1,35 @@
+.ipa-tabs__content {
+	border-radius: 3px 3px 0 0;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+
+.ipa-tabs__header {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	border-bottom: 1px solid #ddd;
+	margin-bottom: -1px;
+}
+
+.ipa-tabs__tab {
+	border: 1px solid transparent;
+	margin-bottom: -1px;
+	flex: 0 0 auto;
+	padding: 10px 15px;
+	color: #337ab7;
+	margin-right: 2px;
+}
+
+.ipa-tabs__tab:not(.ipa-tabs__tab--active):hover {
+	background-color: #eee;
+	cursor: pointer;
+}
+
+.ipa-tabs__tab--active {
+	border-radius: 3px 3px 0 0;
+	border: 1px solid #ddd;
+	border-bottom-color: white;
+	color: #555;
+}

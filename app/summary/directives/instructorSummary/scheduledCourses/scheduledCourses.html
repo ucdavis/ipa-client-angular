@@ -1,65 +1,38 @@
 <div class="scheduled-courses">
-	<h5>
-		Scheduled Courses {{ year.yearToAcademicYear() }}
-	</h5>
+	<div class="scheduled-courses__header-bar">
+		<h5>Scheduled Courses {{ year.yearToAcademicYear() }}</h5>
+	</div>
 
-	<div ng-if="view.state.instructorCourses && view.state.instructorCourses.terms.length > 0" class="empty-message">
-		<div ng-repeat="term in view.state.instructorCourses.terms">
-			<div class="course-status-sub-header">
-				<h5>{{ term.getTermCodeDisplayName() }}</h5>
-			</div>
-			<div class="course-table-row">
-				<div class="course-table__header">
-					<div class="course-table__header-detail">
-						<div>
-							Course
-						</div>
-					</div>
-				</div>
-				<div class="course-table__header">
-					<div class="course-table__header-detail">
-						<div>
-							Location
-						</div>
-					</div>
-				</div>
-				<div class="course-table__header">
-					<div class="course-table__header-detail">
-						<div>
-							Time
-						</div>
-					</div>
-				</div>
-				<div class="course-table__header">
-					<div class="course-table__header-detail">
-						<div>
-							Activity
-						</div>
-					</div>
-				</div>
-				<div class="course-table__header">
-					<div class="course-table__header-detail">
-						<div>
-							Teaching Assistant(s)
-						</div>
-					</div>
+	<div
+	class="scheduled-courses-table"
+	ng-if="view.state.scheduledCourses.terms.length > 0">
+		<div class="scheduled-courses-table__row scheduled-courses-table__row--border">
+			<div class="scheduled-courses-table__header-cell">Course</div>
+			<div class="scheduled-courses-table__header-cell">Activity</div>
+			<div class="scheduled-courses-table__header-cell">Time</div>
+			<div class="scheduled-courses-table__header-cell">Location</div>
+			<div class="scheduled-courses-table__header-cell">Teaching Assistant(s)</div>
+		</div>
+
+		<div class="scheduled-courses-table__content" ng-repeat="term in view.state.scheduledCourses.terms">
+			<div class="scheduled-courses-table_row">
+				<div class="scheduled-courses-table__term">{{ term.getTermCodeDisplayName() }}
+					<div class="scheduled-courses-table__green-label">Current Quarter</div>
 				</div>
 			</div>
 
-			<div class="course-table-row" ng-repeat="course in view.state.instructorCourses.list[term]">
-				<div class="course-table__row-detail">
-					<div class="course-table__row-detail-header">
-						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
-					</div>
-				</div>
-				<div class="course-table__row-detail-middle">
-					<div class="meeting-inner" ng-repeat="meeting in course.meetings">
-						<div class="course-table__row-detail-location" style="flex: 1 1 0px; display: flex; justify-content: center;">
-							<div>
-								{{ meeting.location }}
-							</div>
+			<div ng-repeat="course in view.state.scheduledCourses.list[term]">
+				<div ng-repeat="meeting in course.meetings">
+					<div
+					class="scheduled-courses-table__row"
+					ng-class="{'scheduled-courses-table__row--emphasis': meeting.activityType == 'Lecture'}">
+						<div class="scheduled-courses-table__cell">
+							{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
 						</div>
-						<div style="flex: 1 1 0px; display: flex; justify-content: left; padding-left: 50px;">
+						<div class="scheduled-courses-table__cell">
+							{{ meeting.activityType }}
+						</div>
+						<div class="scheduled-courses-table__cell">
 							<span class="meeting-days">
 								{{ dayIndicatorToDayCodes(meeting.dayIndicator) }}&nbsp;
 							</span>
@@ -67,18 +40,18 @@
 								{{ meeting.startTime.toStandardTime() }}-{{ meeting.endTime.toStandardTime() }}
 							</span>
 						</div>
-						<div style="flex: 1 1 0px; display: flex; justify-content: center;">
-							{{ meeting.activityType }}
+						<div class="scheduled-courses-table__cell">
+							{{ meeting.location }}
 						</div>
-					</div>
-				</div>
-				<div class="course-table__row-detail">
-					<div class="teaching-assistant-container">
-						<div ng-if="course.teachingAssistants.length > 0" ng-repeat="teachingAssistant in course.teachingAssistants">
-							{{ teachingAssistant.lastName }}, {{ teachingAssistant.firstName }}
-						</div>
-						<div ng-if="course.teachingAssistants.length == 0" ng-repeat="teachingAssistant in course.teachingAssistants">
-							No TA information
+						<div class="scheduled-courses-table__cell scheduled-courses-table__cell--gray">
+							<div ng-if="meeting.activityType == 'Lecture'">
+								<div ng-if="course.teachingAssistants.length > 0" ng-repeat="teachingAssistant in course.teachingAssistants">
+									{{ teachingAssistant.lastName }}, {{ teachingAssistant.firstName }}
+								</div>
+								<div ng-if="course.teachingAssistants.length == 0" ng-repeat="teachingAssistant in course.teachingAssistants">
+									No TA information
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -86,7 +59,7 @@
 		</div>
 	</div>
 
-	<div ng-if="view.state.instructorCourses && view.state.instructorCourses.terms.length === 0" class="empty-message">
+	<div ng-if="view.state.scheduledCourses && view.state.scheduledCourses.terms.length === 0" class="scheduled-courses__empty-message">
 		No Scheduled Courses
 	</div>
 </div>
