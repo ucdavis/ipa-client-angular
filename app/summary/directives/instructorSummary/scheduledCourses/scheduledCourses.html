@@ -1,9 +1,11 @@
 <div class="scheduled-courses">
-	<div class="instructor-summary__header-bar">
+	<div class="scheduled-courses__header-bar">
 		<h5>Scheduled Courses {{ year.yearToAcademicYear() }}</h5>
 	</div>
 
-	<div class="scheduled-courses-table">
+	<div
+	class="scheduled-courses-table"
+	ng-if="view.state.scheduledCourses.terms.length > 0">
 		<div class="scheduled-courses-table__row scheduled-courses-table__row--border">
 			<div class="scheduled-courses-table__header-cell">Course</div>
 			<div class="scheduled-courses-table__header-cell">Activity</div>
@@ -12,14 +14,14 @@
 			<div class="scheduled-courses-table__header-cell">Teaching Assistant(s)</div>
 		</div>
 
-		<div class="scheduled-courses-table__content" ng-repeat="term in view.state.instructorCourses.terms">
+		<div class="scheduled-courses-table__content" ng-repeat="term in view.state.scheduledCourses.terms">
 			<div class="scheduled-courses-table_row">
 				<div class="scheduled-courses-table__term">{{ term.getTermCodeDisplayName() }}
 					<div class="scheduled-courses-table__green-label">Current Quarter</div>
 				</div>
 			</div>
 
-			<div ng-repeat="course in view.state.instructorCourses.list[term]">
+			<div ng-repeat="course in view.state.scheduledCourses.list[term]">
 				<div ng-repeat="meeting in course.meetings">
 					<div
 					class="scheduled-courses-table__row"
@@ -57,7 +59,7 @@
 		</div>
 	</div>
 
-	<div ng-if="view.state.instructorCourses && view.state.instructorCourses.terms.length === 0" class="empty-message">
+	<div ng-if="view.state.scheduledCourses && view.state.scheduledCourses.terms.length === 0" class="scheduled-courses__empty-message">
 		No Scheduled Courses
 	</div>
 </div>
