@@ -41,17 +41,41 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 						ids: [],
 						list: {}
 					};
-					var sectionGroupsList = {};
-					var length = action.payload.sectionGroups ? action.payload.sectionGroups.length : 0;
-					for (var i = 0; i < length; i++) {
-						var sectionGroupData = action.payload.sectionGroups[i];
 
-						if (sectionGroupData) {
-							sectionGroupsList[sectionGroupData.id] = new SectionGroup(sectionGroupData);
-							sectionGroups.ids.push(sectionGroupData.id);
-						}
-					}
-					sectionGroups.list = sectionGroupsList;
+					var supportStaffList = {
+						list: {},
+						ids: []
+					};
+
+					action.payload.supportStaffList.forEach(function(staff) {
+						supportStaffList.list[staff.id] = staff;
+						supportStaffList.ids.push(staff.id);
+					});
+
+					action.payload.sectionGroups.forEach(function(sectionGroup) {
+						if (!sectionGroup) { return;}
+						sectionGroups.list[sectionGroup.id] = new SectionGroup(sectionGroup);
+						sectionGroups.ids.push(sectionGroup.id);
+
+						sectionGroups.list[sectionGroup.id].teachingAssistants = action.payload.supportAssignments.filter(function(supportAssignment) {
+							return supportAssignment.appointmentType == "teachingAssistant" && supportAssignment.sectionGroupId == sectionGroup.id;
+						}).map(function(supportAssignment) {
+							var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
+							return {
+								id: supportStaff.id,
+								supportStaffId: supportStaff.id,
+								supportAssignmentId: supportAssignment.id,
+								sectionGroupId: sectionGroup.id,
+								firstName: supportStaff.firstName,
+								lastName: supportStaff.lastName,
+								fullName: supportStaff.fullName,
+								loginId: supportStaff.loginId,
+								appointmentPercentage: supportAssignment.appointmentPercentage,
+								appointmentType: supportAssignment.appointmentType
+							};
+						});
+					});
+
 					return sectionGroups;
 				default:
 					return sectionGroups;
@@ -384,7 +408,7 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 								lastName: supportStaff.lastName,
 								fullName: supportStaff.fullName,
 								loginId: supportStaff.loginId,
-								percentageAppointment: supportAssignment.percentageAppointment,
+								appointmentPercentage: supportAssignment.appointmentPercentage,
 								appointmentType: supportAssignment.appointmentType
 							};
 						});
