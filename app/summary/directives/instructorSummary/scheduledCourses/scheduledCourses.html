@@ -17,7 +17,7 @@
 		<div class="scheduled-courses-table__content" ng-repeat="term in view.state.scheduledCourses.terms">
 			<div class="scheduled-courses-table_row">
 				<div class="scheduled-courses-table__term">{{ term.getTermCodeDisplayName() }}
-					<div class="scheduled-courses-table__green-label">Current Quarter</div>
+					<div ng-if="isCurrentTerm(term)" class="scheduled-courses-table__green-label">Current Quarter</div>
 				</div>
 			</div>
 

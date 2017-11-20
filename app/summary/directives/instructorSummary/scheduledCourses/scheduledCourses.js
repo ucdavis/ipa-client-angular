@@ -4,12 +4,17 @@ summaryApp.directive("scheduledCourses", this.scheduledCourses = function ($root
 		templateUrl: 'scheduledCourses.html',
 		replace: true,
 		link: function (scope, element, attrs) {
+			scope.view = {};
+
 			$rootScope.$on('summaryStateChanged', function (event, data) {
 				scope.mapDataToState(data);
 			});
 
-			scope.isCurrentTerm = function (term) {
-				return isCurrentTerm(startTerm, endTerm);
+			scope.isCurrentTerm = function (termCode) {
+				if (scope.view.state.terms) {
+					var term = scope.view.state.terms.list[termCode];
+					return isCurrentTerm(term.startDate, term.endDate);
+				}
 			};
 
 			// Will translate a dayIndicator like '0010100' into 'TR'
