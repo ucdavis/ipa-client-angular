@@ -8,6 +8,10 @@ summaryApp.directive("scheduledCourses", this.scheduledCourses = function ($root
 				scope.mapDataToState(data);
 			});
 
+			scope.isCurrentTerm = function (term) {
+				return isCurrentTerm(startTerm, endTerm);
+			};
+
 			// Will translate a dayIndicator like '0010100' into 'TR'
 			scope.dayIndicatorToDayCodes = function (dayIndicator) {
 				dayCodes = "";
