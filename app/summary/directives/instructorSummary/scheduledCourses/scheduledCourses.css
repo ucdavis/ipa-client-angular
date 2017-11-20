@@ -36,25 +36,25 @@
 }
 
 .scheduled-courses-table {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 15px 0px 15px 0px;
-  padding: 0px 0px 15px 0px;
-  border: 1px solid #ebebeb;
-  border-radius: 3px;
+	display: flex;
+	flex-wrap: wrap;
+	margin: 15px 0px 15px 0px;
+	padding: 0px 0px 15px 0px;
+	border: 1px solid #ebebeb;
+	border-radius: 3px;
 }
 
 /* ----------ELEMENTS ------------*/
 
-.instructor-summary__header-bar {
+.scheduled-courses__header-bar {
 	padding: 5px 15px 5px 15px;
 	background-color: #F8F8F8;
-    border: 1px solid #CCCCCC;
-    margin-top: 25px;
-    border-radius: 3px;
+	border: 1px solid #CCCCCC;
+	margin-top: 25px;
+	border-radius: 3px;
 }
 
-.instructor-summary__empty-message {
+.scheduled-courses__empty-message {
 	color: #777;
 	text-indent: 2em;
 }
@@ -123,6 +123,6 @@
 	font-weight: bold;
 	text-align: left !important;
 	background-color: white;
-    box-sizing: border-box;
-    overflow: hidden;
+	box-sizing: border-box;
+	overflow: hidden;
 }
