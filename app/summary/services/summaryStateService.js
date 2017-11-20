@@ -423,6 +423,23 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					return supportCallResponses;
 			}
 		},
+		_termReducers: function (action, terms) {
+			switch (action.type) {
+				case INIT_STATE:
+					var terms = {
+						ids: [],
+						list: {}
+					};
+					action.payload.terms.forEach(function(term) {
+						terms.list[term.termCode] = term;
+						terms.ids.push(term.termCode);
+					});
+
+					return terms;
+				default:
+					return terms;
+			}
+		},
 		_uiReducers: function (action, ui) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -473,6 +490,7 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 			newState.supportStaffList = scope._supportStaffListReducers(action, scope._state.supportStaffList);
 			newState.supportAssignments = scope._supportAssignmentReducers(action, scope._state.supportAssignments);
 			newState.ui = scope._uiReducers(action, scope._state.ui);
+			newState.terms = scope._termReducers(action, scope._state.terms);
 
 			scope._state = newState;
 
