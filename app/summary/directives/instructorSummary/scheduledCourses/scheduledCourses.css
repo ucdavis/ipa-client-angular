@@ -81,11 +81,13 @@
 }
 
 .scheduled-courses-table__term {
+	font-weight: bold;
+    font-size: 14px;
 	display: flex;
 	flex: 1 1 100%;
 	flex-grow: 1;
 	overflow: hidden;
-	padding: 20px 15px 10px 15px;
+	padding: 20px 15px 20px 15px;
 }
 
 .scheduled-courses-table__cell {
@@ -115,7 +117,7 @@
 
 .scheduled-courses-table__row--emphasis {
 	margin-top: 10px !important;
-	font-weight: bold !important;
+	font-weight: 500 !important;
 	text-align: left;
 }
 
