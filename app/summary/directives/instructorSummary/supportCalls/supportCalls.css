@@ -67,3 +67,7 @@
 	background-color: white;
 	border: 1px solid #D6D6D6;
 }
+
+.support-calls-table__cell--gray {
+	color: #A6A6A6;
+}

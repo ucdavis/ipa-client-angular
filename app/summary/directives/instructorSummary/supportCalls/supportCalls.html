@@ -28,7 +28,14 @@
 							</a>
 						</div>
 						<div class="support-calls-table__cell">
-							{{ supportCallResponse.dueDate }}
+							<div ng-if="view.state.teachingCallReceipt.dueDateDescription">
+								{{ supportCallResponse.dueDate }}
+							</div>
+							<div
+							class="support-calls-table__cell support-calls-table__cell--gray"
+							ng-if="!(supportCallResponse.dueDate)">
+								No due date set
+							</div>
 						</div>
 						<div class="support-calls-table__cell">
 							<i class="glyphicon glyphicon-ok" ng-if="supportCallResponse.submitted"></i>

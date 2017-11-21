@@ -18,7 +18,14 @@
 					</a>
 				</div>
 				<div class="teaching-calls-table__cell">
-					{{ view.state.teachingCallReceipt.dueDateDescription }}
+					<div ng-if="view.state.teachingCallReceipt.dueDateDescription">
+						{{ view.state.teachingCallReceipt.dueDateDescription }}
+					</div>
+					<div
+					class="teaching-calls-table__cell teaching-calls-table__cell--gray"
+					ng-if="!(view.state.teachingCallReceipt.dueDateDescription)">
+						No due date set
+					</div>
 				</div>
 				<div class="teaching-calls-table__cell">
 					<i class="glyphicon glyphicon-ok" ng-if="view.state.teachingCallReceipt.isDone"></i>
