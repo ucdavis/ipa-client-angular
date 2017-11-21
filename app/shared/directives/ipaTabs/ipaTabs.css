@@ -20,6 +20,7 @@
 	padding: 10px 15px;
 	color: #337ab7;
 	margin-right: 2px;
+	cursor: default;
 }
 
 .ipa-tabs__tab:not(.ipa-tabs__tab--active):hover {
