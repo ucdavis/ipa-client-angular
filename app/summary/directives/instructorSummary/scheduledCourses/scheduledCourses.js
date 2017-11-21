@@ -4,8 +4,6 @@ summaryApp.directive("scheduledCourses", this.scheduledCourses = function ($root
 		templateUrl: 'scheduledCourses.html',
 		replace: true,
 		link: function (scope, element, attrs) {
-			scope.view = {};
-
 			$rootScope.$on('summaryStateChanged', function (event, data) {
 				scope.mapDataToState(data);
 			});
@@ -35,8 +33,6 @@ summaryApp.directive("scheduledCourses", this.scheduledCourses = function ($root
 			};
 
 			scope.mapDataToState = function(data) {
-				scope.view.state = data;
-
 				var scheduledCourses = {
 					terms: [],
 					list: {}
@@ -192,6 +188,10 @@ summaryApp.directive("scheduledCourses", this.scheduledCourses = function ($root
 
 				return false;
 			};
+
+			if (scope.view.state) {
+				scope.mapDataToState(scope.view.state);
+			}
 		}
 	};
 });
