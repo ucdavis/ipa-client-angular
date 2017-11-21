@@ -11,6 +11,7 @@
 .instructor-header__button {
 	background-color: white;
 	border: 1px solid #D6D6D6;
+	margin-bottom: 5px;
 }
 
 .instructor-header__info {

@@ -1,10 +1,44 @@
-summaryApp.directive("instructorHeader", this.instructorHeader = function () {
+summaryApp.directive("instructorHeader", this.instructorHeader = function ($routeParams, $rootScope) {
 	return {
 		restrict: 'E',
 		templateUrl: 'instructorHeader.html',
 		replace: true,
+		scope: {},
 		link: function (scope, element, attrs) {
-			// Do nothing
+			scope.workgroupId = $routeParams.workgroupId;
+			scope.year = $routeParams.year;
+
+			scope.localState = {};
+
+			$rootScope.$on('summaryStateChanged', function (event, data) {
+				scope.mapDataToState(data);
+			});
+
+			scope.mapDataToState = function(data) {
+				scope.localState.supportReviewTerms = scope.openReviewBlobToTerms(data.schedule.instructorSupportCallReviewOpen);
+			};
+
+			scope.getTermDisplayName = function(term) {
+				return term.getTermDisplayName();
+			};
+
+			scope.openReviewBlobToTerms = function(openReviewBlob) {
+				var terms = [];
+
+				for (var i = 0; i < openReviewBlob.length; i++) {
+					if (openReviewBlob[i] == "1") {
+						var term = String(i + 1);
+
+						if (term.length == 1) {
+							term = "0" + term;
+						}
+
+						terms.push(term);
+					}
+				}
+
+				return terms;
+			};
 		}
 	};
 });
