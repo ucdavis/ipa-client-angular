@@ -18,6 +18,7 @@ summaryApp.directive("instructorHeader", this.instructorHeader = function ($rout
 
 			scope.mapDataToState = function(data) {
 				scope.localState.supportReviewTerms = scope.openReviewBlobToTerms(data.schedule.instructorSupportCallReviewOpen);
+				scope.localState.atLeastOneAlert = (data.ui.alert.teachingCall || data.ui.alert.supportCalls);
 			};
 
 			scope.getTermDisplayName = function(term) {
