@@ -55,13 +55,15 @@ summaryApp.directive("scheduledCourses", this.scheduledCourses = function ($root
 
 			scope.generateScheduledCourse = function(sectionGroup, data) {
 				var meetings = scope.generateMeetingsInSectionGroup(sectionGroup, data.sections, data.activities);
+				var course = data.courses.list[sectionGroup.courseId];
 
 				var scheduledCourse = {
-					subjectCode: data.courses.list[sectionGroup.courseId].subjectCode,
-					courseNumber: data.courses.list[sectionGroup.courseId].courseNumber,
-					title: data.courses.list[sectionGroup.courseId].title,
+					subjectCode: course.subjectCode,
+					courseNumber: course.courseNumber,
+					title: course.title,
 					meetings: meetings,
-					teachingAssistants: sectionGroup.teachingAssistants
+					teachingAssistants: sectionGroup.teachingAssistants,
+					sequencePattern: course.sequencePattern
 				};
 
 				return scheduledCourse;

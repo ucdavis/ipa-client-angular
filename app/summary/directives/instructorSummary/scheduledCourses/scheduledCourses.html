@@ -27,7 +27,7 @@
 					class="scheduled-courses-table__row"
 					ng-class="{'scheduled-courses-table__row--emphasis': meeting.activityType == 'Lecture'}">
 						<div class="scheduled-courses-table__cell">
-							{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
+							{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }} - {{ course.sequencePattern }}
 						</div>
 						<div class="scheduled-courses-table__cell">
 							{{ meeting.activityType }}
