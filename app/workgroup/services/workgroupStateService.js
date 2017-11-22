@@ -106,7 +106,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					users.ids = _array_sortIdsByProperty(usersList, "name");
 					users.list = usersList;
 					return users;
-				case ADD_USER:
+				case ADD_USER_COMPLETED:
 					userIndex = users.ids.indexOf(action.payload.user.id);
 					if (userIndex >= 0) { return users; }
 
@@ -178,14 +178,14 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 			switch (action.type) {
 				case INIT_WORKGROUP:
 					ui = {
-						addUserInProgress: false
+						addUserPending: false
 					};
 					return ui;
-				case BEGIN_ADD_USER:
-					ui.addUserInProgress = true;
+				case ADD_USER_PENDING:
+					ui.addUserPending = true;
 					return ui;
-				case ADD_USER:
-					ui.addUserInProgress = false;
+				case ADD_USER_COMPLETED:
+					ui.addUserPending = false;
 					return ui;
 				default:
 					return ui;
