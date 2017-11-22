@@ -1,6 +1,7 @@
 <div class="teaching-calls">
 	<div class="teaching-calls__header-bar">
 		<h5>Teaching Call for Review</h5>
+		<i ng-if="view.state.ui.alert.teachingCall" class="entypo-attention instructor-summary__corner-alert"></i>
 	</div>
 
 	<div ng-if="view.state.teachingCallReceipt">
@@ -14,7 +15,10 @@
 			<div class="teaching-calls-table__row">
 				<div class="teaching-calls-table__cell teaching-calls-table__cell--left">
 					<a ng-href="{{ urlRoot }}/teachingCalls/{{ workgroupId }}/{{ year }}/teachingCall">
-						<button class="btn btn-default teaching-calls-table__button">View Teaching Call Form</button>
+						<button class="btn btn-default teaching-calls-table__button">
+							View Teaching Call Form
+							<i ng-if="view.state.teachingCallReceipt.isDone == false" class="entypo-attention instructor-summary__corner-alert"></i>
+						</button>
 					</a>
 				</div>
 				<div class="teaching-calls-table__cell">

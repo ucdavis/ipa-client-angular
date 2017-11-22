@@ -1,6 +1,7 @@
 <div class="support-calls">
 	<div class="support-calls__header-bar">
 		<h5>Support Calls for Review</h5>
+		<i ng-if="view.state.ui.alert.supportCalls" class="entypo-attention instructor-summary__corner-alert"></i>
 	</div>
 	<ipa-tabs
 		ng-if="view.state.ui.allTerms.length > 0"
@@ -23,12 +24,13 @@
 						<div class="support-calls-table__cell support-calls-table__cell--left">
 							<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) }}/instructorSupportCallForm">
 								<button class="btn btn-default support-calls-table__button">
+									<i ng-if="!(supportCallResponse.submitted)" class="entypo-attention instructor-summary__corner-alert"></i>
 									View Support Call Form
 								</button>
 							</a>
 						</div>
 						<div class="support-calls-table__cell">
-							<div ng-if="view.state.teachingCallReceipt.dueDateDescription">
+							<div ng-if="supportCallResponse.dueDate">
 								{{ supportCallResponse.dueDate }}
 							</div>
 							<div
