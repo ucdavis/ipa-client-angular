@@ -34,11 +34,11 @@
 									<ul class="typeahead-status dropdown-menu" ng-show="view.noResults">
 										<li><a>No results</a></li>
 									</ul>
-									<i ng-show="view.loadingPeople"><spinner size="20"></spinner></i>
+									<i ng-show="view.loadingPeople || view.state.ui.addUserPending"><spinner size="20"></spinner></i>
 									<i ng-hide="view.state.users.searchQuery || view.loadingPeople" class="entypo-search"></i>
-									<i ng-show="view.state.users.searchQuery && !view.loadingPeople" class="entypo-cancel" ng-click="clearUserSearch()"></i>
+									<i ng-show="view.state.users.searchQuery && !view.loadingPeople && !view.state.ui.addUserPending" class="entypo-cancel" ng-click="clearUserSearch()"></i>
 									<span class="input-group-btn">
-										<button ng-disabled="!view.state.users.newUser.name"
+										<button ng-disabled="!view.state.users.newUser.name || view.state.ui.addUserPending"
 											class="btn-add-person btn btn-primary"
 											ng-click="addUserToWorkgroup()">
 											Add Person
