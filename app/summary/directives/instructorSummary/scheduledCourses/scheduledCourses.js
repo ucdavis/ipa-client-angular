@@ -71,6 +71,7 @@ summaryApp.directive("scheduledCourses", this.scheduledCourses = function ($root
 
 			// Will generate a list of shared meetings followed by distinct meetings.
 			scope.generateMeetingsInSectionGroup = function(sectionGroup, sections, activities) {
+				lectureMeetings = [];
 				sharedMeetings = [];
 				distinctMeetings = [];
 
@@ -95,14 +96,25 @@ summaryApp.directive("scheduledCourses", this.scheduledCourses = function ($root
 
 					// If activity is the first instance of the shared activity
 					if (scope.isFirstInstanceOfSharedActivity(activity, sharedActivities)) {
-						sharedMeetings.push(meeting);
+						if (meeting.activityType == "Lecture") {
+							lectureMeetings.push(meeting);
+						} else {
+							sharedMeetings.push(meeting);
+						}
 					// If activity is not shared
-				} else if (scope.isSharedActivity(activity, sharedActivities) == false) {
-						distinctMeetings.push(meeting);
+					} else if (scope.isSharedActivity(activity, sharedActivities) == false) {
+						if (meeting.activityType == "Lecture") {
+							lectureMeetings.push(meeting);
+						} else {
+							distinctMeetings.push(meeting);
+						}
 					}
 				});
 
-				return sharedMeetings.concat(distinctMeetings);
+				var meetings = lectureMeetings.concat(sharedMeetings);
+				meetings = meetings.concat(distinctMeetings);
+
+				return meetings;
 			};
 
 			// Return true if activity matches the first instance in one of the shared activity arrays in sharedActivities
@@ -154,6 +166,8 @@ summaryApp.directive("scheduledCourses", this.scheduledCourses = function ($root
 					var start = activity.startTime;
 					var end = activity.endTime;
 					var uniqueKey = type + "," + location + "," + days + "," + start + "," + end;
+
+					if (!days && !start & !end) { return; }
 
 					if ( !(matchingActivityHash[uniqueKey])) {
 						matchingActivityHash[uniqueKey] = [];
