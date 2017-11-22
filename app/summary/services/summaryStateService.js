@@ -454,17 +454,35 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					var allTermNames = allTerms.map(function(term) { return term.getTermDisplayName(); });
 					var selectedSupportCallTermDisplay = selectedSupportCallTerm ? selectedSupportCallTerm.getTermDisplayName() : "";
 
-					ui = {
+					var ui = {
 						selectedSupportCallTerm: selectedSupportCallTerm,
 						selectedSupportCallTermDisplay: selectedSupportCallTermDisplay,
 						allTerms: allTerms,
-						allTermNames: allTermNames
+						allTermNames: allTermNames,
+						alert: {
+							teachingCall: false,
+							supportCalls: false
+						}
 					};
+					// Determine instructor summary sections needing attention
+					var teachingCallReceipt = null;
+					// Find teachingCall for current workgroup/year
+					action.payload.teachingCallReceipts.forEach(function(slotReceipt) {
+						if (slotReceipt.workgroupId == action.workgroupId
+						&& slotReceipt.academicYear == action.year) {
+							ui.alert.teachingCall = (slotReceipt.isDone == false);
+						}
+					});
+					// Check if all supportCalls have been submitted
+					action.payload.instructorSupportCallResponses.forEach(function(slotResponse) {
+						if (slotResponse.submitted == false) {
+							ui.alert.supportCalls = true;
+						}
+					});
 					return ui;
 				case SELECT_TERM:
 					ui.selectedSupportCallTerm = action.payload.selectedTerm;
 					ui.selectedSupportCallTermDisplay = action.payload.selectedTerm.getTermDisplayName();
-
 					return ui;
 				default:
 					return ui;
