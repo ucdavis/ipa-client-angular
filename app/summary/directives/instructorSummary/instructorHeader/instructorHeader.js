@@ -3,7 +3,9 @@ summaryApp.directive("instructorHeader", this.instructorHeader = function ($rout
 		restrict: 'E',
 		templateUrl: 'instructorHeader.html',
 		replace: true,
-		scope: {},
+		scope: {
+			state: '<'
+		},
 		link: function (scope, element, attrs) {
 			scope.workgroupId = $routeParams.workgroupId;
 			scope.year = $routeParams.year;
@@ -39,6 +41,10 @@ summaryApp.directive("instructorHeader", this.instructorHeader = function ($rout
 
 				return terms;
 			};
+
+			if (scope.state) {
+				scope.mapDataToState(scope.state);
+			}
 		}
 	};
 });
