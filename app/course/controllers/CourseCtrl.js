@@ -273,6 +273,21 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 
 		$scope.updateSection = function (section) {
 			courseActionCreators.updateSection(section);
+
+			var sectionGroup = $scope.view.state.sectionGroups.list[section.sectionGroupId];
+
+			// Will update the sectionGroup plannedSeats using section seats
+			// If the section is numeric based (example: 'PSC 040 - 001')
+			if (isNumber(section.sequenceNumber) == true) {
+				sectionGroup.plannedSeats = section.seats;
+				courseActionCreators.updateSectionGroup(sectionGroup);
+
+				$scope.manuallyUpdatePlannedSeats(sectionGroup);
+			}
+		};
+
+		$scope.manuallyUpdatePlannedSeats = function(sectionGroup) {
+			$('[data-course-id="' + sectionGroup.courseId + '"] [data-term-code="' + sectionGroup.termCode + '"] input').val(sectionGroup.plannedSeats);
 		};
 
 		$scope.deleteSection = function (section) {
