@@ -1,3 +1,7 @@
+.workgroup-summary {
+	padding-left: 4%;
+}
+
 .workgroup-summary .left-container {
 	flex: 3 1 75%;
 }
