@@ -1,0 +1,28 @@
+<div class="student-form-review">
+	<div class="due-day-header">
+		<h4>Due Date: {{ view.state.supportCallResponse.dueDateDescription }} </h4>
+	</div>
+
+	<a style="display: flex; justify-content: flex-end;">
+		<button ng-if="!view.state.supportCallResponse.submitted  && studentSupportCallFormIsValid() == true" type="button" class="btn btn-primary"
+		 confirm-button="submitPreferences()"
+		 btn-class="btn-primary"
+		 message="Are you sure you want to submit your preferences?"
+		 yes="Confirm" no="Cancel" placement="top">
+			Submit Preferences
+		</button>
+
+		<div ng-if="!view.state.supportCallResponse.submitted && studentSupportCallFormIsValid() == false" uib-tooltip="{{validationError}}">
+			<button type="button" class="btn btn-primary disabled">
+				Submit Preferences
+			</button>
+		</div>
+
+		<button ng-click="pretendToastMessage()"
+			ng-if="view.state.supportCallResponse.submitted"
+			type="button" class="btn btn-primary">
+				Update Preferences
+		</button>
+	</a>
+
+</div>
