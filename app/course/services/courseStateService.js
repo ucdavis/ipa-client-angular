@@ -263,7 +263,12 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 					sectionGroups.list[action.payload.sectionGroup.id].plannedSeats = action.payload.sectionGroup.plannedSeats;
 					return sectionGroups;
 				case FETCH_SECTIONS:
-					sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections
+					var sectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
+					if (!sectionGroup) {
+						return sectionGroups;
+					}
+
+					sectionGroup.sectionIds = action.payload.sections
 						.sort(function (sectionA, sectionB) {
 							if (sectionA.sequenceNumber < sectionB.sequenceNumber) { return -1; }
 							if (sectionA.sequenceNumber > sectionB.sequenceNumber) { return 1; }
