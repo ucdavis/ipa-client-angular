@@ -1,0 +1,64 @@
+<div class="student-preferences">
+	<div class="student-course-container">
+
+
+		<div style="margin-left: -200px;" ng-if="view.state && view.state.supportAssignments.ids.length == 0">
+			<!-- handle lack of active teaching call -->
+			<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+				<p class="lead">There are no courses available for this support call.</p>
+				<br />
+				<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
+			</div>
+		</div>
+
+		<!-- preferences -->
+		<ul id="sortable" class="sortable-student-preferences">
+			<li ng-repeat="preference in view.state.preferences | orderBy: 'priority'" class="student-course-section" id="{{ preference.id }}">
+				<div class="student-course">
+					<div>
+						{{ preference.priority }}
+					</div>
+
+					<i class="glyphicon glyphicon-option-vertical move-course-icon">
+					</i>
+
+					<div class="student-course-info">
+						<div>
+							<div class="student-course_title">
+								{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern }}
+							</div>
+							<div class="student-preference">
+								{{ getRoleDisplayName(preference.type) }}
+							</div>
+						</div>
+						<div>
+							<i ng-if="isFormLocked() == false" class="glyphicon glyphicon-remove student-course-remove"
+								uib-tooltip="Delete preference" tooltip-placement="bottom"
+								confirm-button="deletePreference(preference)"
+								message="Are you sure you want to delete this preference?"
+								yes="Confirm" no="Cancel" placement="top">
+							</i>
+						</div>
+					</div>
+				</div>
+				<div ng-show="view.state.supportCallResponse.collectPreferenceComments" class="comments-btn">
+					<div ng-if="preference.comment.length == 0 && view.state.supportCallResponse.requirePreferenceComments == true" uib-tooltip="Preference comment is required">
+						<div ng-click="openPreferenceCommentModal(preference)"><i class="glyphicon glyphicon-edit preference-comments-ui"
+							ng-class="{'preference-comment-submitted' : preference.comment.length > 0 }"></i>
+								<span>Comments...</span>
+						</div>
+					</div>
+					<div ng-if="preference.comment.length != 0 || view.state.supportCallResponse.requirePreferenceComments != true">
+						<div ng-click="openPreferenceCommentModal(preference)"><i class="glyphicon glyphicon-edit preference-comments-ui"
+							ng-class="{'preference-comment-submitted' : preference.comment.length > 0 }"></i>
+							<span>Comments...</span>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<student-preference-selector ng-if="view.state">
+		</student-preference-selector>
+
+	</div>
+</div>
