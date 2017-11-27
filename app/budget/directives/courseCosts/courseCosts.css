@@ -1,5 +1,5 @@
 .course-costs {
-	border: 1px solid rgb(235, 235, 235);
+	border: 1px solid #ebebeb;
 	border-radius: 4px;
 }
 
@@ -34,7 +34,8 @@
  {
 	display: flex;
 	flex: 5 0 0px;
-	padding: 15px;
+	padding: 19px;
+	border-bottom: 1px solid #ebebeb;
 }
 
 .course-costs .cell {
@@ -42,6 +43,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	/*background-color: #F9F9F9;*/
 }
 
 .course-costs .cell-content {
@@ -49,7 +51,7 @@
 }
 
 .course-costs .course-title {
-	padding: 15px;
+	padding: 10px;
 	display: flex;
 }
 
@@ -58,21 +60,89 @@
 }
 
 .course-costs .support-cost {
-	background-color: #F1F8FA;
+	background-color: #F9F9F9;
 }
 
 .course-costs .instructor-cost {
-	background-color: #FAF1F1;
+	background-color: #F9F9F9;
 }
 
 .course-costs .support-cost,
 .course-costs .instructor-cost {
 	flex: 5 0 0px;
 	padding: 5px;
-	margin: 15px;
+	margin: 5px 0px 5px 15px;
 }
 
 .course-costs .comment-ui {
 	padding-left: 1%;
 	cursor: pointer;
+}
+
+
+
+
+
+
+/* budget_view_css_test */
+
+.Rtable {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin: 0 0 3em 0;
+    padding: 0;
+}
+
+.Rtable-3cols > .Rtable-cell {
+    width: 10%;
+}
+
+.Rtable-cell {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+    box-sizing: border-box;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    width: 100%;
+    /*padding: 5px 10px !important;*/
+    overflow: hidden;
+    list-style: none;
+    /*border: solid 3px white;*/
+    background: #F9F9F9;
+	text-align: center;
+}
+
+.Rtable-cell h6 {
+	font-weight: unset;
+	margin-top: 19px !important;
+	margin-bottom: 19px !important;
+}
+
+.Rtable-cell input {
+	background: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: inset 0 1px 2px 0 rgba(131,131,131,0.30);
+    width: 35%;
+    padding: 4px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.Rtable-cell-course_title {
+	width: 100%;
+	font-size: 12px;
+	text-align: left !important;
+	padding: 15px 10px 15px 10px;
+	background-color: white;
+    box-sizing: border-box;
+    flex-grow: 1;
+    overflow: hidden;
+    list-style: none;
+	text-align: center;
 }

@@ -1,23 +1,19 @@
 <div class="course-costs">
-	<term-selector
+	<!-- <term-selector
 		selected-term="selectedBudgetScenario.selectedTerm"
 		terms="selectedBudgetScenario.terms"
 		term-descriptions="selectedBudgetScenario.termDescriptions">
-	</term-selector>
+	</term-selector>-->
 
-	<!-- Header -->
+	<!-- Header 
 	<div class="course-costs-header">
 		<div class="support-cost-header">
-			<div class="cell">
-				Off.
-			</div>
-
 			<div class="cell">
 				Enrollment
 			</div>
 
 			<div class="cell">
-				Sections
+				Section
 			</div>
 
 			<div class="cell">
@@ -29,34 +25,29 @@
 			</div>
 
 			<div class="cell">
-				Readers
+				Reader
 			</div>
 
 			<div class="cell">
-				<div class="cell-content">
-					Reader Cost
-				</div>
+				Reader Cost
 			</div>
 
 			<div class="cell">
-				<div class="cell-content">
-					Support Cost
-				</div>
+				Support Cost
 			</div>
-			
-			<div class="cell">
-				<div class="cell-content">
-					Comment
-				</div>
-			</div>
-		</div>
 
-		<div class="cell">
-			Total Cost
+			<div class="cell">
+				Comment
+			</div>
+
+			<div class="cell">
+				Total Cost
+			</div>
+
 		</div>
 	</div>
-
-	<!-- Courses -->
+ -->
+	<!-- Courses
 	<div ng-repeat="course in selectedBudgetScenario.courses track by course.uniqueKey">
 		<div class="course-title">
 			<div>
@@ -76,4 +67,48 @@
 			</div>
 		</div>
 	</div>
+ -->
+
+	<!-- test -->
+	<div class="Rtable Rtable--3cols">
+
+  <div style="order:1;" class="Rtable-cell table-header"><h6>Enrollment</h6></div>
+<div style="order:1;" class="Rtable-cell table-header"><h6>Section</h6></div>
+<div style="order:1;" class="Rtable-cell table-header"><h6>TA</h6></div>
+<div style="order:1;" class="Rtable-cell table-header"><h6>TA Cost</h6></div>
+<div style="order:1;" class="Rtable-cell table-header"><h6>Reader</h6></div>
+<div style="order:1;" class="Rtable-cell table-header"><h6>Reader Cost</h6></div>
+<div style="order:1;" class="Rtable-cell table-header"><h6>Support Cost</h6></div>
+<div style="order:1;" class="Rtable-cell table-header"><h6>Comment</h6></div>
+<div style="order:1;" class="Rtable-cell table-header"><h6>Total Cost</h6></div>
+  <div style="order:2;" class="Rtable-cell-course_title">ECS 101 Intro to software Programming</div>
+<div style="order:3;" class="Rtable-cell">001</div>
+
+  <div style="order:3;" class="Rtable-cell"><input></div>
+  <div style="order:3;" class="Rtable-cell"><input></div>
+
+  <div style="order:3;" class="Rtable-cell"><input></div>
+  <div style="order:3;" class="Rtable-cell">$0.00</div>
+  <div style="order:3;" class="Rtable-cell"><input></div>
+  <div style="order:3;" class="Rtable-cell">$0.00</div>
+
+  <div style="order:3;" class="Rtable-cell"><button class="btn btn-default"><span>Comment</span></button></div>
+  <div style="order:3;" class="Rtable-cell">$0.00</div>
+    <div style="order:4;" class="Rtable-cell-course_title">ECS 101 Intro to software Programming</div>
+<div style="order:5;" class="Rtable-cell">001</div>
+
+  <div style="order:5;" class="Rtable-cell"><input></div>
+  <div style="order:5;" class="Rtable-cell"><input></div>
+
+  <div style="order:5;" class="Rtable-cell"><input></div>
+  <div style="order:5;" class="Rtable-cell">$0.00</div>
+  <div style="order:5;" class="Rtable-cell"><input></div>
+  <div style="order:5;" class="Rtable-cell">$0.00</div>
+
+  <div style="order:5;" class="Rtable-cell"><button class="btn btn-default"><span>Comment</span></button></div>
+  <div style="order:5;" class="Rtable-cell">$0.00</div>
+
+
+</div>
+	<!-- test -->
 </div>

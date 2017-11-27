@@ -202,6 +202,15 @@ teachingCallApp.service('teachingCallFormStateService', function (
 					pageState.formHasChanges = true;
 					return pageState;
 				case UPDATE_TEACHING_CALL_RESPONSE:
+					var availabilityBlob = action.payload.teachingCallResponse.availabilityBlob;
+					var termCode = action.payload.teachingCallResponse.termCode;
+
+					pageState.terms.forEach(function(term) {
+						if (term.termCode == termCode) {
+							term.availabilityBlob = availabilityBlob;
+						}
+					});
+
 					pageState.formHasChanges = true;
 					return pageState;
 				case UPDATE_TEACHING_CALL_RECEIPT:

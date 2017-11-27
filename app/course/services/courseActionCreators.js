@@ -19,8 +19,32 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 				$rootScope.$emit('toast', { message: "Could not load initial course state.", type: "ERROR" });
 			});
 		},
-		submitAssignTagTooltip: function (userActions, tagIds, courseIds) {
-			// TODO: Build a DTO and send it to the backend
+		submitMassAssignTags: function (userActions, tagIds, courseIds, workgroupId, year) {
+			massAssignTags = {
+				tagIdsToAdd: [],
+				tagIdsToRemove: [],
+				courseIds: courseIds
+			};
+
+			tagIds.forEach(function(tagId) {
+				if (userActions[tagId].userChoice == "add") {
+					massAssignTags.tagIdsToAdd.push(tagId);
+				}
+				if (userActions[tagId].userChoice == "remove") {
+					massAssignTags.tagIdsToRemove.push(tagId);
+				}
+			});
+
+			courseService.submitMassAssignTags(massAssignTags, workgroupId, year).then(function (payload) {
+				var action = {
+					type: MASS_ASSIGN_TAGS,
+					massAssignTags: massAssignTags
+				};
+				courseStateService.reduce(action);
+				$rootScope.$emit('toast', { message: "Updated tags.", type: "SUCCESS" });
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update tags.", type: "ERROR" });
+			});
 		},
 		setActiveCell: function (courseId, termCode) {
 			var action = {
@@ -307,6 +331,10 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			});
 		},
 		getSectionsBySectionGroup: function (sectionGroup) {
+			courseStateService.reduce({
+				type: BEGIN_FETCH_SECTIONS,
+				payload: {}
+			});
 			courseService.getSectionsBySectionGroupId(sectionGroup.id).then(function (sections) {
 				var action = {
 					type: FETCH_SECTIONS,
@@ -386,6 +414,11 @@ courseApp.service('courseActionCreators', function (courseStateService, courseSe
 			courseStateService.reduce(action);
 		},
 		getCourseCensus: function (course) {
+			courseStateService.reduce({
+				type: BEGIN_FETCH_CENSUS,
+				payload: {}
+			});
+
 			courseService.getCourseCensus(course).then(function (census) {
 				var action = {
 					type: GET_COURSE_CENSUS,

@@ -34,9 +34,8 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				TOGGLE_UNPUBLISHED_COURSES,
 				REMOVE_SECTION_GROUP,
 				ADD_SECTION_GROUP,
-				TOGGLE_SELECT_COURSE_ROW,
-				SELECT_ALL_COURSE_ROWS,
-				DESELECT_ALL_COURSE_ROWS
+				DELETE_MULTIPLE_COURSES,
+				MASS_ASSIGN_TAGS
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
@@ -87,10 +86,10 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 						$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]').addClass("selected-td");
 					}
 
+					scope.manuallyDeselectAllCourseRows();
+					scope.manuallyToggleSelectedCourse(data.state.uiState.selectedCourseId);
 					courseActionCreators.deselectAllCourseRows();
 					courseActionCreators.toggleSelectCourse(data.state.uiState.selectedCourseId);
-
-					$('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"] input').focus();
 
 					return;
 				}
@@ -116,7 +115,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 
 				// Render the header
 				// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
-				var isChecked = (data.state.uiState.selectedCourseRowIds.length == data.state.courses.ids.length);
+				var isChecked = (data.state.courses.ids != 0 && data.state.uiState.selectedCourseRowIds.length == data.state.courses.ids.length);
 				var header = '<thead><tr><th class="checkbox-cell">' + getCheckbox(0, "selectAllCourseRows", isChecked) + "</th><th class=\"\">Course</th>";
 
 				// Filter scope.termDefinitions to only those terms which are enabled by the filter.
@@ -141,8 +140,6 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 
 				header += "<th class=\"ui-overlay\"></th></tr></thead>";
 
-				element.append(header);
-
 				// Render the body
 				var body = "<tbody></tbody>";
 
@@ -162,16 +159,34 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 						}
 					});
 				} else if (data.state.courses.ids.length) {
+					var allContentFilteredOut = true;
+
 					$.each(data.state.courses.ids, function (rowIdx, courseId) {
-						body += getCourseRow(rowIdx, courseId, termsToRender, data.state);
+						var row = getCourseRow(rowIdx, courseId, termsToRender, data.state);
+
+						if (row) {
+							allContentFilteredOut = false;
+						}
+
+						body += row;
 					});
+
+					if (allContentFilteredOut) {
+						// One for checkbox, and one for course title
+						var miscColumns = 2;
+						var numberOfColumns = data.state.filters.enabledTerms.length + miscColumns;
+
+						body += "<tr><td class=\"text-center text-muted\" colspan=\"" + numberOfColumns + "\">All courses filtered out</td></tr>";
+					}
 				} else {
-					var numberOfColumns = data.state.filters.enabledTerms.length + 1;
+					// One for checkbox, and one for course title
+					var miscColumns = 2;
+					var numberOfColumns = data.state.filters.enabledTerms.length + miscColumns;
 					body += "<tr><td class=\"text-center text-muted\" colspan=\"" + numberOfColumns + "\">No Courses</td></tr>";
 				}
 
 				body += getTotalsRow(termsToRender, data.state);
-				element.append(body);
+				element.append(header + body);
 
 				$('delete-course').popover();
 
@@ -259,18 +274,24 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					});
 				} else if ($el.data('event-type') == 'selectCourseRow') {
 					var courseId = $el.data('course-id');
+					scope.manuallyToggleSelectedCourse(courseId);
 					courseActionCreators.toggleSelectCourse(courseId);
+
 					$timeout(function () {
 						scope.$apply();
 					});
 				} else if ($el.data('event-type') == 'selectAllCourseRows') {
 					var isChecked = $el.data('is-checked');
+
 					if (isChecked) {
+						scope.manuallyDeselectAllCourseRows();
+
 						courseActionCreators.deselectAllCourseRows();
 						$timeout(function () {
 							scope.$apply();
 						});
 					} else {
+						scope.manuallySelectAllCourseRows();
 						courseActionCreators.selectAllCourseRows(scope.view.state.courses.ids);
 						$timeout(function () {
 							scope.$apply();
@@ -319,6 +340,26 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 					e.preventDefault();
 				}
 			});
+
+			// For performance reasons, the 'DESELECT_ALL_COURSE_ROWS' action does not trigger the courses table to re-render from scratch
+			// Instead, this method manually modifies the table while the state is updated independently
+			scope.manuallyDeselectAllCourseRows = function() {
+				$(".courses-table .checkbox-replace").removeClass("checked");
+				$('div[data-is-checked]').data('is-checked', false);
+			};
+
+			// For performance reasons, the 'TOGGLE_SELECT_COURSE_ROW' action does not trigger the courses table to re-render from scratch
+			// Instead, this method manually modifies the table while the state is updated independently
+			scope.manuallyToggleSelectedCourse = function(courseId) {
+				$('.courses-table .checkbox-container*[data-course-id="' + courseId + '"] .checkbox-replace').first().toggleClass("checked");
+			};
+
+			// For performance reasons, the 'SELECT_ALL_COURSE_ROWS' action does not trigger the courses table to re-render from scratch
+			// Instead, this method manually modifies the table while the state is updated independently
+			scope.manuallySelectAllCourseRows = function() {
+				$(".courses-table .checkbox-replace").addClass("checked");
+				$('div[data-is-checked]').data('is-checked', true);
+			};
 		}
 	};
 });
@@ -379,6 +420,7 @@ var getImportCourseRow = function (course, termsToRender, state) {
 // when the "proposed rows" will be rendered by getImportCourseRow.
 var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 	var rowClass = "odd gradeX";
+
 	if (state.uiState.selectedCourseId == courseId) {
 		rowClass += " selected-tr";
 	}
@@ -408,10 +450,12 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 		}
 		row += "</td>";
 
+		var courseSgs = _.filter(state.sectionGroups.list, function (sg) { return sg.courseId == courseId; });
+
 		// Term column(s)
 		$.each(termsToRender, function (i, termToRender) {
 			var termCode = termToRender.code;
-			var sectionGroup = _.find(state.sectionGroups.list, function (sg) { return (sg.termCode == termCode) && (sg.courseId == courseId); });
+			var sectionGroup = _.find(courseSgs, function (sg) { return sg.termCode == termCode; });
 			var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
 			var plannedSeats = (sectionGroup && sectionGroup.plannedSeats) ? sectionGroup.plannedSeats : "";
 
@@ -447,6 +491,7 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 	}
 
 	row += "</tr>";
+
 	return row;
 };
 
@@ -478,19 +523,23 @@ var savePlannedSeats = function ($el, scope, courseActionCreators) {
 	}
 };
 
+/* Generates the final row of the table, containing seat totals */
+/* 248ms-258ms */
 var getTotalsRow = function (termsToRender, state) {
-	var row = "<tr class=\"term-totals\"><td>Totals</td>";
-	var coursesArray = state.courses.ids.map(function (id) { return state.courses.list[id]; });
+	var row = "<tr class=\"term-totals\"><td><!-- checkbox --></td><td>Totals</td>";
+
+	var termCount = {};
+
+	_.each(state.sectionGroups.list, function(sg) {
+		if(termCount[sg.termCode] === undefined) {
+			termCount[sg.termCode] = sg.plannedSeats;
+		} else {
+			termCount[sg.termCode] += sg.plannedSeats;
+		}
+	});
 
 	termsToRender.forEach(function (term) {
-		var termTotal = state.courses.ids.reduce(function (total, courseId) {
-			var sectionGroup = _.find(state.sectionGroups.list, function (sg) { return (sg.termCode == term.code) && (sg.courseId == courseId); });
-			var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
-			var plannedSeats = sectionGroup ? sectionGroup.plannedSeats : 0;
-
-			return total + plannedSeats;
-		}, 0);
-		row += "<td>" + termTotal + "</td>";
+		row += "<td>" + termCount[term.code] + "</td>";
 	});
 
 	row += "</tr>";

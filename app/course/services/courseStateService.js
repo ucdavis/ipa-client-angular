@@ -137,6 +137,28 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 				case UPDATE_COURSE:
 					courses.list[action.payload.course.id] = new Course(action.payload.course);
 					return courses;
+				case MASS_ASSIGN_TAGS:
+					var courseIds = action.massAssignTags.courseIds;
+					var tagIdsToAdd = action.massAssignTags.tagIdsToAdd;
+					var tagIdsToRemove = action.massAssignTags.tagIdsToRemove;
+
+					courseIds.forEach( function(courseId) {
+						var course = courses.list[courseId];
+
+						tagIdsToAdd.forEach( function(tagId) {
+							if (course.tagIds.indexOf(tagId) == -1) {
+								course.tagIds.push(tagId);
+							}
+						});
+						tagIdsToRemove.forEach( function(tagId) {
+							var index = course.tagIds.indexOf(tagId);
+							if (index > -1) {
+								course.tagIds.splice(index, 1);
+							}
+						});
+					});
+
+					return courses;
 				case UPDATE_TABLE_FILTER:
 					var query = action.payload.query;
 
@@ -400,6 +422,8 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						massImportYear: null,
 						massImportPrivate: false,
 						massImportInProgress: false,
+						censusFetchInProgress: false,
+						sectionsFetchInProgress: false,
 						searchingCourseToImport: false,
 						selectedCourseRowIds: [],
 						isCourseDeleteModalOpen: false
@@ -410,6 +434,18 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						.map(function (term) { return new Term(term); })
 						.every(function (term) { return term.isLocked(); });
 
+					return uiState;
+				case BEGIN_FETCH_SECTIONS:
+					uiState.sectionsFetchInProgress = true;
+					return uiState;
+				case FETCH_SECTIONS:
+					uiState.sectionsFetchInProgress = false;
+					return uiState;
+				case BEGIN_FETCH_CENSUS:
+					uiState.censusFetchInProgress = true;
+					return uiState;
+				case GET_COURSE_CENSUS:
+					uiState.censusFetchInProgress = false;
 					return uiState;
 				case NEW_COURSE:
 					uiState.tableLocked = true;

@@ -7,6 +7,9 @@
  */
 workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$uibModal',
 		this.WorkgroupCtrl = function ($scope, $rootScope, $routeParams, $location, $uibModal) {
+
+		$scope.ROWS_PER_HEADER = 20;
+
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.view = {};

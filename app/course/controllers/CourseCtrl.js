@@ -149,11 +149,15 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 			}
 		};
 
-		$scope.submitAssignTagTooltip = function() {
-			courseActionCreators.submitAssignTagTooltip(
+		$scope.submitMassAssignTags = function() {
+			courseActionCreators.submitMassAssignTags(
 				$scope.view.tagOccurences,
 				$scope.view.state.tags.availableIds,
-				$scope.view.state.uiState.selectedCourseRowIds);
+				$scope.view.state.uiState.selectedCourseRowIds,
+				$scope.workgroupId,
+				$scope.year);
+
+				$scope.closeAssignTagsDropdown();
 		};
 
 		$scope.openCourseDeletionModal = function() {
@@ -205,15 +209,14 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 				$scope.view.selectedEntity = $scope.view.state.sectionGroups.selectedSectionGroup || $scope.view.state.sectionGroups.newSectionGroup;
 
 				// Initialize sectionGroup sections if not done already
-				if ($scope.view.selectedEntity && $scope.view.selectedEntity.id && $scope.view.selectedEntity.sectionIds === undefined) {
+				if ($scope.view.selectedEntity && $scope.view.selectedEntity.id && $scope.view.selectedEntity.sectionIds === undefined && $scope.view.state.uiState.sectionsFetchInProgress == false) {
 					courseActionCreators.getSectionsBySectionGroup($scope.view.selectedEntity);
 				}
 
 				// Initialize course census if not done already
-				if (course.census === undefined) {
+				if (course.census === undefined && $scope.view.state.uiState.censusFetchInProgress == false) {
 					courseActionCreators.getCourseCensus(course);
 				}
-
 			} else {
 				delete $scope.view.selectedEntity;
 			}

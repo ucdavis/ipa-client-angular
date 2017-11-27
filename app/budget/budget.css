@@ -13,8 +13,7 @@
 	transition: 0.1s linear;
 }
 .glyphicon-triangle-left-spin {
-	transform: rotate(-90deg);
-	
+	transform: rotate(-90deg);	
 }
 
 .panel-group i {
