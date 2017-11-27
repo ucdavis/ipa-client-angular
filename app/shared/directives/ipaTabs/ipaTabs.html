@@ -1,0 +1,12 @@
+<div class="ipa-tabs">
+	<div class="ipa-tabs__header">
+		<div
+			ng-repeat="tab in tabNames track by $index"
+			class="ipa-tabs__tab"
+			ng-click="triggerSelection(tab)"
+			ng-class="{ 'ipa-tabs__tab--active': tab == activeTab }">
+			{{ tab }}
+		</div>
+	</div>
+	<div class="ipa-tabs__content" ng-transclude></div>
+</div>

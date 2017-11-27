@@ -1,0 +1,10 @@
+.instructor-summary {
+	padding: 20px 4% 20px 4%;
+}
+
+.instructor-summary__corner-alert {
+	position: absolute;
+	right: -10px;
+	top: -10px;
+	color: #21A9E1;
+}

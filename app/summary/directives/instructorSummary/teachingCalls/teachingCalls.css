@@ -1,0 +1,74 @@
+.teaching-calls__empty-message {
+	color: #777;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 25px 0px 25px 0px;
+	margin-top: 20px;
+	text-align: center;
+}
+
+.teaching-calls__header-bar {
+	padding: 5px 15px 5px 15px;
+	background-color: #F8F8F8;
+	border: 1px solid #CCCCCC;
+	margin-top: 25px;
+	border-radius: 3px;
+	position: relative;
+}
+
+.teaching-calls-table {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 15px 0px 15px 0px;
+	border: 1px solid #ebebeb;
+	border-radius: 3px;
+}
+
+.teaching-calls-table__row--border {
+	border-bottom: 1px solid #ebebeb;
+}
+
+.teaching-calls-table__row {
+	display: flex;
+	flex: 1 1 100%;
+	flex-grow: 1;
+	padding: 0px 15px 0px 15px;
+	overflow: hidden;
+	align-items: center;
+}
+
+.teaching-calls-table__header-cell {
+	flex: 1;
+	font-weight: 500;
+	padding: 15px 10px 15px 10px;
+	text-align: center;
+	overflow: hidden;
+	background-color: white;
+}
+
+.teaching-calls-table__header-cell--left {
+	text-align: left;
+}
+
+.teaching-calls-table__cell {
+	flex: 1;
+	padding: 15px 10px 15px 10px;
+	text-align: center;
+	background-color: white;
+	border-bottom: none !important;
+	overflow: hidden;
+}
+
+.teaching-calls-table__cell--left {
+	text-align: left;
+}
+
+.teaching-calls-table__cell--gray {
+	color: #A6A6A6;
+}
+
+.teaching-calls-table__button {
+	background-color: white;
+	border: 1px solid #D6D6D6;
+	position: relative;
+}

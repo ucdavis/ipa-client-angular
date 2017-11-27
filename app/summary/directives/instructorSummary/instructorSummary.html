@@ -1,0 +1,14 @@
+<div class="instructor-summary">
+	<div ng-hide="view.state">
+		<spinner></spinner>
+	</div>
+	<div ng-show="view.state">
+		<instructor-header state="view.state"></instructor-header>
+		<teaching-calls ng-if="view.state.ui.alert.teachingCall"></teaching-calls>
+		<support-calls ng-if="view.state.ui.alert.supportCalls"></support-calls>
+		<scheduled-courses></scheduled-courses>
+		<teaching-calls ng-if="view.state.ui.alert.teachingCall == false"></teaching-calls>
+		<support-calls ng-if="view.state.ui.alert.supportCalls == false"></support-calls>
+
+	</div>
+</div>

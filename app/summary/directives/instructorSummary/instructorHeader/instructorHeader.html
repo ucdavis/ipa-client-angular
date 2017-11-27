@@ -1,0 +1,16 @@
+<div class="instructor-header">
+	<div>
+		<div ng-if="localState.atLeastOneAlert" class="instructor-header__info">
+			<span class="instructor-header__reminder">Please refer to this icon <i class="entypo-attention instructor-header__icon"></i> to review all necessary Information.</span>
+		</div>
+	</div>
+	<div class="instructor-header__review">
+		<div ng-repeat="term in localState.supportReviewTerms">
+			<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ term }}">
+				<button
+					class="btn btn-default instructor-header__button">Review {{ getTermDisplayName(term) }} TA Assignments
+				</button>
+			</a>
+		</div>
+	</div>
+</div>

@@ -23,3 +23,4 @@ summaryApp.config(function ($routeProvider) {
 });
 
 var INIT_STATE = "INIT_STATE";
+var SELECT_TERM = "SELECT_TERM";
