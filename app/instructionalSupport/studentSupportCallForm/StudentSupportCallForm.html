@@ -20,9 +20,9 @@
 	<div ng-if="view.state && view.state.supportCallResponse">
 		<!-- Modals -->
 		<ipa-modal
-			is-visible="view.state.openAddBudgetScenario"
+			is-visible="view.state.isPreferenceCommentModalOpen"
 			header-text="Add Preference Comment">
-				<add-budget-scenario ng-if="view.state.openAddBudgetScenario" state="view.state" is-visible="view.state.openAddBudgetScenario"></add-budget-scenario>
+				<modal-proference-comments ng-if="view.state.openAddBudgetScenario" state="view.state"></add-budget-scenario>
 		</ipa-modal>
 
 		<!-- Page modules -->

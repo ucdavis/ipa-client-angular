@@ -5,19 +5,17 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'supportStaffFormActionCreators',
-		this.StudentSupportCallFormCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, supportStaffFormActionCreators) {
+instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'studentActions',
+		this.StudentSupportCallFormCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, studentActions) {
 			$window.document.title = "Instructional Support";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
 			$scope.termShortCode = $routeParams.termShortCode;
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
-			$scope.listenersActive = false;
 
-			$rootScope.$on('supportStaffFormStateChanged', function (event, data) {
+			$rootScope.$on('studentStateChanged', function (event, data) {
 				$scope.view.state = data;
-				$scope.listenForSort();
 			});
 
 			$scope.toggleEligibilityConfirmed = function() {
@@ -27,32 +25,32 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 					$scope.view.state.supportCallResponse.eligibilityConfirmed = true;
 				}
 
-				supportStaffFormActionCreators.updateSupportCallResponse($scope.view.state.supportCallResponse);
+				studentActions.updateSupportCallResponse($scope.view.state.supportCallResponse);
 			};
 
 			$scope.addPreference = function(preference) {
-				supportStaffFormActionCreators.addStudentPreference(preference);
+				studentActions.addStudentPreference(preference);
 			};
 
 			$scope.deletePreference = function(preference) {
-				supportStaffFormActionCreators.deleteStudentPreference(preference);
+				studentActions.deleteStudentPreference(preference);
 			};
 
 			$scope.updateSupportCallResponse = function() {
-				supportStaffFormActionCreators.updateSupportCallResponse($scope.view.state.supportCallResponse);
+				studentActions.updateSupportCallResponse($scope.view.state.supportCallResponse);
 			};
 
 			$scope.submitPreferences = function() {
 				$scope.view.state.supportCallResponse.submitted = true;
-				supportStaffFormActionCreators.submitPreferences($scope.view.state.supportCallResponse, $scope.workgroupId, $scope.year);
+				studentActions.submitPreferences($scope.view.state.supportCallResponse, $scope.workgroupId, $scope.year);
 			};
 
 			$scope.updatePreferencesOrder = function(preferenceIds) {
-				supportStaffFormActionCreators.updatePreferencesOrder(preferenceIds, $scope.view.state.userInterface.scheduleId, $scope.termCode);
+				studentActions.updatePreferencesOrder(preferenceIds, $scope.view.state.userInterface.scheduleId, $scope.termCode);
 			};
 
 			$scope.pretendToastMessage = function() {
-				supportStaffFormActionCreators.pretendToastMessage();
+				studentActions.pretendToastMessage();
 				$window.location.href = "/summary/" + $scope.workgroupId + "/" + $scope.year + "?mode=instructionalSupport";
 			};
 
@@ -85,31 +83,6 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 				return termCode;
 			};
 
-			// Activates sortable lists for each sectionGroup, after a short delay to give the view time to render
-			$scope.listenForSort = function() {
-				if ($scope.listenersActive) {
-					return;
-				}
-				$scope.listenersActive = true;
-
-				setTimeout(function() {
-					var listenerIds = [];
-					var listener = "#sortable";
-					listenerIds.push(listener);
-
-					listenerIds.forEach( function(listenerId) {
-						$(listenerId).sortable({
-							placeholder: "sortable-student-preference-placeholder",
-							update: function( event, ui ) {
-								var preferenceIds = $( listenerId ).sortable( "toArray" );
-								$scope.updatePreferencesOrder(preferenceIds, listenerId);
-							},
-							axis: "y"
-						});
-					});
-				}, 500);
-			};
-
 			$scope.updatePreferencesOrder = function(preferenceIds, listIndentifier) {
 				var filteredPreferenceIds = [];
 
@@ -120,7 +93,7 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 				});
 
 				var scheduleId = $scope.view.state.misc.scheduleId;
-				supportStaffFormActionCreators.updatePreferencesOrder(filteredPreferenceIds, scheduleId, $scope.termCode);
+				studentActions.updatePreferencesOrder(filteredPreferenceIds, scheduleId, $scope.termCode);
 			};
 
 			$scope.getRoleDisplayName = function (roleString) {
@@ -188,13 +161,13 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 			};
 	}]);
 
-StudentSupportCallFormCtrl.getPayload = function (authService, supportStaffFormActionCreators, $route, $window) {
+StudentSupportCallFormCtrl.getPayload = function (authService, studentActions, $route, $window) {
 	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
 		// validate params
 		if ($route.current.params.year.length != 4 || $route.current.params.termShortCode.length != 2) {
 			$window.location.href = "/summary/" + $route.current.params.workgroupId + "/" + $route.current.params.year + "?mode=instructionalSupport";
 		} else {
-			supportStaffFormActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode);
+			studentActions.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode);
 		}
 	});
 };
