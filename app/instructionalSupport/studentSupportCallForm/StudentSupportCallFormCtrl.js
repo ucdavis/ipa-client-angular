@@ -12,21 +12,12 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 			$scope.year = $routeParams.year;
 			$scope.termShortCode = $routeParams.termShortCode;
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
+
 			$scope.view = {};
 
 			$rootScope.$on('studentStateChanged', function (event, data) {
 				$scope.view.state = data;
 			});
-
-			$scope.toggleEligibilityConfirmed = function() {
-				if ($scope.view.state.supportCallResponse.eligibilityConfirmed) {
-					$scope.view.state.supportCallResponse.eligibilityConfirmed = false;
-				} else {
-					$scope.view.state.supportCallResponse.eligibilityConfirmed = true;
-				}
-
-				studentActions.updateSupportCallResponse($scope.view.state.supportCallResponse);
-			};
 
 			$scope.addPreference = function(preference) {
 				studentActions.addStudentPreference(preference);
