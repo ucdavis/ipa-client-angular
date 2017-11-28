@@ -1,4 +1,4 @@
-instructionalSupportApp.service('supportStaffFormActionCreators', function ($rootScope, $window, studentService, studentReducers) {
+instructionalSupportApp.service('studentActions', function ($rootScope, $window, studentService, studentReducers) {
 	return {
 		getInitialState: function (workgroupId, year, termShortCode) {
 			studentService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
