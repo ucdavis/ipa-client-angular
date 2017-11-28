@@ -101,33 +101,10 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 			};
 
 			$scope.termCode = $scope.termShortCodeToTermCode($scope.termShortCode);
-	
-			// Form locks when a due date has been set, and has passed
-			$scope.isFormLocked = function () {
-				if (!$scope.view.state.supportCallResponse) {
-					return false;
-				}
-				// Validate dueDate
-				var dueDate = $scope.view.state.supportCallResponse.dueDate;
-				var submitAfterDueDate = $scope.view.state.supportCallResponse.allowSubmissionAfterDueDate;
-
-				if (dueDate) {
-					if (submitAfterDueDate == false) {
-						var date = new Date();
-						var currentTime = date.getTime();
-
-						if (currentTime > dueDate) {
-							return true;
-						}
-					}
-				}
-
-				return false;
-			};
 
 			$scope.studentSupportCallFormIsValid = function () {
 				// Validate dueDate
-				if ( $scope.isFormLocked() ) {
+				if ($scope.view.state.ui.isFormLocked) {
 					$scope.validationError = "The due date for this support call has passed.";
 					return false;
 				}
