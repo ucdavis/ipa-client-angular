@@ -1,34 +1,12 @@
-window.instructionalSupportApp = angular.module("instructionalSupportApp", ["sharedApp", "ngRoute"]);
+window.supportCallApp = angular.module("supportCallApp", ["sharedApp", "ngRoute"]);
 
-instructionalSupportApp.config(function ($routeProvider) {
+supportCallApp.config(function ($routeProvider) {
 	return $routeProvider
-		.when("/", {
-			templateUrl: "InstructionalSupportAssignment.html",
-			controller: "InstructionalSupportAssignmentCtrl",
+		.when("/:workgroupId/:year/:termShortCode/supportCallStatus", {
+			templateUrl: "SupportCallStatus.html",
+			controller: "InstructionalSupportCallStatusCtrl",
 			resolve: {
-				payload: InstructionalSupportAssignmentCtrl.getPayload
-			}
-		})
-		.when("/:workgroupId/:year/:termShortCode", {
-			templateUrl: "InstructionalSupportAssignment.html",
-			controller: "InstructionalSupportAssignmentCtrl",
-			reloadOnSearch: false,
-			resolve: {
-				payload: InstructionalSupportAssignmentCtrl.getPayload
-			}
-		})
-		.when("/:workgroupId/:year/:termShortCode/instructorSupportCallForm", {
-			templateUrl: "InstructorSupportCallForm.html",
-			controller: "InstructorSupportCallFormCtrl",
-			resolve: {
-				payload: InstructorSupportCallFormCtrl.getPayload
-			}
-		})
-		.when("/:workgroupId/:year/:termShortCode/studentSupportCallForm", {
-			templateUrl: "StudentSupportCallForm.html",
-			controller: "StudentSupportCallFormCtrl",
-			resolve: {
-				payload: StudentSupportCallFormCtrl.getPayload
+				validate: InstructionalSupportCallStatusCtrl.getPayload
 			}
 		})
 		.otherwise({
@@ -62,7 +40,3 @@ var UPDATE_INSTRUCTOR_SUPPORT_CALL_REVIEW = "UPDATE_INSTRUCTOR_SUPPORT_CALL_REVI
 var UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW = "UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW";
 var UPDATE_PREFERENCE = "UPDATE_PREFERENCE";
 var ASSIGN_STAFF_TO_SECTION_GROUP_SLOT = "ASSIGN_STAFF_TO_SECTION_GROUP_SLOT";
-
-// Student Support Call Form
-var OPEN_PREFERENCE_COMMENT_MODAL = "OPEN_PREFERENCE_COMMENT_MODAL";
-var CLOSE_PREFERENCE_COMMENT_MODAL = "CLOSE_PREFERENCE_COMMENT_MODAL";

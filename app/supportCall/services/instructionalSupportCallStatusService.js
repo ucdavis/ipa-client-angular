@@ -1,4 +1,4 @@
-instructionalSupportApp.factory("instructionalSupportCallStatusService", this.instructionalSupportAssignmentService = function($http, $q, $window) {
+supportCallApp.factory("instructionalSupportCallStatusService", this.instructionalSupportAssignmentService = function($http, $q, $window) {
 	return {
 		getInitialState: function(workgroupId, year, termShortCode) {
 			var deferred = $q.defer();

@@ -1,4 +1,4 @@
-instructionalSupportApp.controller('ModalAddSupportCallCtrl', this.ModalAddSupportCallCtrl = function(
+supportCallApp.controller('ModalAddSupportCallCtrl', this.ModalAddSupportCallCtrl = function(
 	$scope, $rootScope, $uibModalInstance, instructionalSupportCallStatusActionCreators,
 	supportCallMode, scheduleId, state, year, nextYear, termShortCode) {
 
