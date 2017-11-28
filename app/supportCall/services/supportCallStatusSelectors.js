@@ -1,7 +1,7 @@
 /*
 	Selectors are pure javascript functions that translate the normalized state into nested objects for the view
 */
-instructionalSupportApp.service('supportCallStatusSelectors', function () {
+supportCallApp.service('supportCallStatusSelectors', function () {
 	return {
 
 		// Will combine metadata of instructors and supportCallResponses,

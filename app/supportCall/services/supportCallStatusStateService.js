@@ -1,4 +1,4 @@
-instructionalSupportApp.service('supportCallStatusStateService', function (
+supportCallApp.service('supportCallStatusStateService', function (
 	$rootScope, $log, supportCallStatusSelectors) {
 	return {
 		_state: {},

@@ -1,4 +1,4 @@
-instructionalSupportApp.service('instructionalSupportCallStatusActionCreators', function ($rootScope, $window, instructionalSupportCallStatusService, supportCallStatusStateService) {
+supportCallApp.service('instructionalSupportCallStatusActionCreators', function ($rootScope, $window, instructionalSupportCallStatusService, supportCallStatusStateService) {
 	return {
 		getInitialState: function (workgroupId, year, termShortCode) {
 			instructionalSupportCallStatusService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
