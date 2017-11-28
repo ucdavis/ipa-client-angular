@@ -104,9 +104,21 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 			switch (action.type) {
 				case INIT_STATE:
 					ui = {
-						isPreferenceCommentModalOpen: false
+						isPreferenceCommentModalOpen: false,
+						isFormLocked: false
 					};
-
+					// Determine if form should be locked (due date is enforced and has passed)
+					if (action.payload.supportCallResponse) {
+						var dueDate = action.payload.supportCallResponse.dueDate;
+						var dueDateEnforced = action.payload.supportCallResponse.allowSubmissionAfterDueDate == false;
+						if (dueDate && dueDateEnforced) {
+							var currentTime = new Date().getTime();
+							if (currentTime > dueDate) {
+								ui.isFormLocked = true;
+							}
+						}
+					}
+					return ui;
 				case OPEN_PREFERENCE_COMMENT_MODAL:
 					ui.isPreferenceCommentModalOpen = true;
 					return ui;

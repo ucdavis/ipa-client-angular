@@ -32,7 +32,7 @@
 							</div>
 						</div>
 						<div>
-							<i ng-if="isFormLocked() == false" class="glyphicon glyphicon-remove student-course-remove"
+							<i ng-if="view.state.ui.isFormLocked == false" class="glyphicon glyphicon-remove student-course-remove"
 								uib-tooltip="Delete preference" tooltip-placement="bottom"
 								confirm-button="deletePreference(preference)"
 								message="Are you sure you want to delete this preference?"
