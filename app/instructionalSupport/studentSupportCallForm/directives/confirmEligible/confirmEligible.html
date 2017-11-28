@@ -1,6 +1,6 @@
-<div ng-show="view.state.supportCallResponse.collectEligibilityConfirmation" class="student-requirement">
+<div class="student-requirement" ng-show="props.supportCallResponse.collectEligibilityConfirmation">
 	<h4>TA Eligibility Requirements</h4>
-	<div style="margin-top: 34px;">
+	<div>
 		<p>
 			Full-time (12 units) registered graduate student, current cumulative GPA is 3.00 or higher, total appointments for this quarter does not exceed 75%,
 		</p>
@@ -8,7 +8,7 @@
 	<div class="checkbox religibility-checkbox">
 		<div role="menuitem" ng-click="toggleEligibilityConfirmed()">
 			<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-				ng-class="{ 'checked': view.state.supportCallResponse.eligibilityConfirmed }">
+				ng-class="{ 'checked': props.supportCallResponse.eligibilityConfirmed }">
 				<label class="cb-wrapper">
 					<div class="checked"></div>
 				</label>

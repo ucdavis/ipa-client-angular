@@ -1,4 +1,4 @@
-summaryApp.directive("studentPreferences", this.studentPreferences = function () {
+instructionalSupportApp.directive("studentPreferences", this.studentPreferences = function () {
 	return {
 		restrict: 'E',
 		templateUrl: 'studentPreferences.html',

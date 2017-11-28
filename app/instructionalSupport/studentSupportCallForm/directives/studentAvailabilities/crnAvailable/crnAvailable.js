@@ -1,4 +1,4 @@
-summaryApp.directive("crnAvailable", this.crnAvailable = function () {
+instructionalSupportApp.directive("crnAvailable", this.crnAvailable = function () {
 	return {
 		restrict: 'E',
 		templateUrl: 'crnAvailable.html',

@@ -1,4 +1,4 @@
-summaryApp.directive("studentAvailabilities", this.studentAvailabilities = function () {
+instructionalSupportApp.directive("studentAvailabilities", this.studentAvailabilities = function () {
 	return {
 		restrict: 'E',
 		templateUrl: 'studentAvailabilities.html',

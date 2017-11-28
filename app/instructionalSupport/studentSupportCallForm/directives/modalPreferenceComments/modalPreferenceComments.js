@@ -1,4 +1,4 @@
-summaryApp.directive("confirmEligible", this.confirmEligible = function () {
+instructionalSupportApp.directive("confirmEligible", this.confirmEligible = function () {
 	return {
 		restrict: 'E',
 		templateUrl: 'confirmEligible.html',

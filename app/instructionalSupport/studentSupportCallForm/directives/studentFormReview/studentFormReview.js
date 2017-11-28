@@ -1,4 +1,4 @@
-summaryApp.directive("studentFormReview", this.studentFormReview = function () {
+instructionalSupportApp.directive("studentFormReview", this.studentFormReview = function () {
 	return {
 		restrict: 'E',
 		templateUrl: 'studentFormReview.html',

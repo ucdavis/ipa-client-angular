@@ -1,4 +1,4 @@
-summaryApp.directive("studentComments", this.studentComments = function () {
+instructionalSupportApp.directive("studentComments", this.studentComments = function () {
 	return {
 		restrict: 'E',
 		templateUrl: 'studentComments.html',
