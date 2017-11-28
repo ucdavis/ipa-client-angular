@@ -1,4 +1,4 @@
-summaryApp.directive("gridAvailable", this.gridAvailable = function () {
+instructionalSupportApp.directive("gridAvailable", this.gridAvailable = function () {
 	return {
 		restrict: 'E',
 		templateUrl: 'gridAvailable.html',
