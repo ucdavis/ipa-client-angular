@@ -188,7 +188,7 @@ instructionalSupportApp.service('supportAssignmentSelectors', function () {
 					var preference = supportStaffPreferences.list[preferenceId];
 
 					if (preference.sectionGroupId != sectionGroup.id
-							|| preference.type != "associateInstructor") {
+							|| preference.type != "reader") {
 						return;
 					}
 
