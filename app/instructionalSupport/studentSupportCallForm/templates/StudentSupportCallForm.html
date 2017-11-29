@@ -79,7 +79,7 @@
 
 					<div class="student-course-container">
 						<div class="due-day-header">
-							<h4>Due Date: {{ view.state.supportCallResponse.dueDateDescription }} </h4>
+							<h4 ng-if="view.state.supportCallResponse.dueDate">Due Date: {{ view.state.supportCallResponse.dueDateDescription }} </h4>
 						</div>
 
 						<div style="margin-left: -200px;" ng-if="view.state && view.state.supportAssignments.ids.length == 0">
