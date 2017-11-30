@@ -1,0 +1,29 @@
+.student-support-call-form {
+	padding: 10px 20px 10px 20px;
+}
+
+.student-support-call-form__loading-spinner {
+	padding-top: 200px;
+}
+
+.student-support-call-form__no-access {
+	text-align: center;
+	height: 100%;
+	background-color: white;
+}
+
+.student-support-call-form__main {
+	flex: 3 0 0px;
+}
+
+.student-support-call-form__sidebar {
+	flex: 1 0 0px;
+}
+
+.student-support-call-form__container {
+	width: 100%;
+}
+
+.student-support-call-form__page {
+	display: flex;
+}

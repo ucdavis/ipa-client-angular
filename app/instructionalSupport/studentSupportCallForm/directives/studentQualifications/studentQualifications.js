@@ -1,7 +1,7 @@
-instructionalSupportApp.directive("studentComments", this.studentComments = function () {
+instructionalSupportApp.directive("studentQualifications", this.studentQualifications = function (studentActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'studentComments.html',
+		templateUrl: 'studentQualifications.html',
 		replace: true,
 		scope: {
 			supportCallResponse: '<'
