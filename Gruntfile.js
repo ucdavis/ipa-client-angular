@@ -139,8 +139,7 @@ module.exports = function (grunt) {
 			jsProdSnippets: {
 				src: [
 					'vendor/js/userEcho.js',
-					'vendor/js/googleAnalytics.js',
-					'vendor/js/konami.js'
+					'vendor/js/googleAnalytics.js'
 				],
 				dest: '<%= folders.webapp.build %>/js/snippets.js'
 			},
