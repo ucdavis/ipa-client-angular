@@ -92,9 +92,10 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 		_miscReducers: function (action, misc) {
 			switch (action.type) {
 				case INIT_STATE:
-					misc = {};
-					misc.scheduleId = action.payload.scheduleId;
-					misc.supportStaffId = action.payload.supportStaffId;
+					misc = {
+						scheduleId: action.payload.scheduleId,
+						supportStaffId: action.payload.supportStaffId
+					};
 					return misc;
 				default:
 					return misc;

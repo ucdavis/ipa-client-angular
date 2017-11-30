@@ -15,3 +15,7 @@
 	border: 1px solid #ebebeb;
 	border-radius: 3px;
 }
+
+.student-comments__text:focus {
+	outline: none;
+}
