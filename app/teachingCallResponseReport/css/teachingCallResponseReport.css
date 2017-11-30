@@ -47,10 +47,6 @@
 	display: flex;
 }
 
-.comment-label-container {
-	
-}
-
 .comment-cell {
 	color: #888888;
 	flex: 8 0 0px;
@@ -83,4 +79,42 @@
 
 .teaching-call-response-report-container .main-content {
 	display: block;
+}
+
+.table-toolbar {
+  width: 100%;
+  text-align: right;
+  padding-bottom: 5px;
+	margin: 0px;
+  border-radius: 3px;
+}
+.tool-icon {
+  margin: 0 0.5em;
+  padding: 0.5em;
+}
+.tool-icon:hover {
+  cursor: pointer;
+  background: #ebebeb;
+  border-radius: 3px;
+}
+
+/* .btn-group vertical-align pushes the icons with dropdown menus out of veritcal
+   alignment with the icons without a dropdown menu */
+.table-toolbar>.btn-group {
+  vertical-align: initial;
+}
+
+.table-toolbar .dropdown-menu {
+	min-width: 200px;
+}
+
+.table-toolbar .tool-icon {
+  margin: 0 0.5em;
+  padding: 0.5em;
+}
+
+.table-toolbar .tool-icon:hover {
+  cursor: pointer;
+  background: #ebebeb;
+  border-radius: 3px;
 }

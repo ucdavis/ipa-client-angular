@@ -4,15 +4,13 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 		_instructorReducers: function (action, instructors) {
 			switch (action.type) {
 				case INIT_STATE:
-
 					// Root state object
 					instructors = action.payload.instructors;
 
-					// Get availability blobs and put on instructor in an associative array by termcode
+					// Get availability blobs and put on instructor in an associative array by termCode
 					teachingCallResponses = action.payload.teachingCallResponses;
 
 					teachingCallResponses.forEach( function(teachingCallResponse) {
-
 						instructors.forEach( function(instructor) {
 							if (instructor.id == teachingCallResponse.instructorId) {
 								if (!instructor.availabilityByTermCode) {
@@ -121,8 +119,6 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 
 							// Do we already have that course listed for this term?
 							var alreadyExists = false;
-
-
 
 							for (var i = 0; i < preferences.length; i++) {
 								var preference = preferences[i];
@@ -235,41 +231,42 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 		}
 	};
 });
+
+/**
+ * @param  {array} blob A 75 length array representing unavailabilities
+ */
 availabilityBlobToDescriptions = function(blob) {
 	var hoursArray = blob.split(',');
+
+	console.log('hoursArray');
+	console.dir(hoursArray);
 
 	if (hoursArray.length != 75) {
 		return null;
 	}
 
-	var mondayArray = hoursArray.slice(0,14);
-	var tuesdayArray = hoursArray.slice(15,29);
-	var wednesdayArray = hoursArray.slice(30,44);
-	var thursdayArray = hoursArray.slice(45,59);
-	var fridayArray = hoursArray.slice(60,74);
-
 	var descriptions = [];
-	var mondayDescriptions = dayArrayToDescriptions(mondayArray, "M");
+	var mondayDescriptions = dayArrayToDescriptions(hoursArray.slice(0,14), "M");
 	if (mondayDescriptions.times.length > 0) {
 		var descriptions = descriptions.concat(mondayDescriptions);
 	}
 
-	var tuesdayDescriptions = dayArrayToDescriptions(tuesdayArray, "T");
+	var tuesdayDescriptions = dayArrayToDescriptions(hoursArray.slice(15,29), "T");
 	if (tuesdayDescriptions.times.length > 0) {
 		var descriptions = descriptions.concat(tuesdayDescriptions);
 	}
 
-	var wednesdayDescriptions = dayArrayToDescriptions(wednesdayArray, "W");
+	var wednesdayDescriptions = dayArrayToDescriptions(hoursArray.slice(30,44), "W");
 	if (wednesdayDescriptions.times.length > 0) {
 		var descriptions = descriptions.concat(wednesdayDescriptions);
 	}
 
-	var thursdayDescriptions = dayArrayToDescriptions(thursdayArray, "R");
+	var thursdayDescriptions = dayArrayToDescriptions(hoursArray.slice(45,59), "R");
 	if (thursdayDescriptions.times.length > 0) {
 		var descriptions = descriptions.concat(thursdayDescriptions);
 	}
 
-	var fridayDescriptions = dayArrayToDescriptions(fridayArray, "F");
+	var fridayDescriptions = dayArrayToDescriptions(hoursArray.slice(60,74), "F");
 	if (fridayDescriptions.times.length > 0) {
 		var descriptions = descriptions.concat(fridayDescriptions);
 	}
@@ -278,15 +275,16 @@ availabilityBlobToDescriptions = function(blob) {
 };
 
 dayArrayToDescriptions = function(dayArray, dayCode) {
-	var descriptions = {};
-	descriptions.day = dayCode;
-	descriptions.times = "";
+	var descriptions = {
+		day: dayCode,
+		times: ""
+	};
 
 	var startHour = 7;
 
 	var startTimeBlock = null;
 	var endTimeBlock = null;
-	var firstTimeBlock = true;
+	var blocks = [];
 
 	dayArray.forEach( function(hourFlag, i) {
 		if (hourFlag == "1") {
@@ -296,40 +294,24 @@ dayArrayToDescriptions = function(dayArray, dayCode) {
 			} else {
 				endTimeBlock++;
 			}
-		}
-
-		if (hourFlag == "0" && startTimeBlock != null) {
-			var startTimeAdjusted = startTimeBlock;
-			var endTimeAdjusted = endTimeBlock;
-
-			if (startTimeBlock > 12) {
-				startTimeAdjusted -= 12;
-			}
-			if (endTimeBlock > 12) {
-				endTimeAdjusted -= 12;
-			}
-
-			var startTime = startTimeAdjusted + timeSuffix(startTimeBlock);
-			var endTime = endTimeAdjusted + timeSuffix(endTimeBlock);
-
-			if (firstTimeBlock == false) {
-				descriptions.times += ", ";
-			}
-			firstTimeBlock = false;
-
-			description = startTime + "-" + endTime;
-			descriptions.times += description;
+		} else if (hourFlag == "0" && startTimeBlock != null) {
+			blocks.push(blockDescription(startTimeBlock, endTimeBlock));
 			startTimeBlock = null;
 		}
 	});
 
+	if (startTimeBlock != null) {
+		blocks.push(blockDescription(startTimeBlock, endTimeBlock));
+	}
+
+	descriptions.times = blocks.join(", ");
+
 	return descriptions;
 };
 
-timeSuffix = function(time) {
-	if (time < 12) {
-		return "am";
-	}
+blockDescription = function(startTime, endTime) {
+	var start = (startTime > 12 ? (startTime - 12) + "pm" : startTime + "am" );
+	var end = (endTime > 12 ? (endTime - 12) + "pm" : endTime + "am" );
 
-	return "pm";
+	return start + "-" + end;
 };
