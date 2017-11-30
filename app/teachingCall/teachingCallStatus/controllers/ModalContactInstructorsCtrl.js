@@ -109,49 +109,12 @@ teachingCallApp.controller('ModalContactInstructorsCtrl', this.ModalContactInstr
 		$scope.startTeachingCallConfig.activeTerms[term] = !$scope.startTeachingCallConfig.activeTerms[term];
 	};
 
-	$scope.activeTermsDescription = function () {
-		var description = "";
-
-		for (var i = 0; i < $scope.allTerms.length; i++) {
-			if ($scope.startTeachingCallConfig.activeTerms && $scope.startTeachingCallConfig.activeTerms[$scope.allTerms[i]]) {
-				if (description.length > 0) {
-					description += ", ";
-				}
-				description += $scope.getTermName($scope.allTerms[i]);
-			}
-		}
-
-		return description;
-	};
-
 	$scope.toggleSenateInstructors = function () {
 		$scope.startTeachingCallConfig.sentToSenate = !$scope.startTeachingCallConfig.sentToSenate;
 	};
 
 	$scope.toggleFederationInstructors = function () {
 		$scope.startTeachingCallConfig.sentToFederation = !$scope.startTeachingCallConfig.sentToFederation;
-	};
-
-	$scope.getTermName = function(term) {
-		var endingYear = "";
-		if (term.length == 6) {
-			endingYear = term.substring(0,4);
-			term = term.slice(-2);
-		}
-
-		termNames = {
-			'05': 'Summer Session 1',
-			'06': 'Summer Special Session',
-			'07': 'Summer Session 2',
-			'08': 'Summer Quarter',
-			'09': 'Fall Semester',
-			'10': 'Fall Quarter',
-			'01': 'Winter Quarter',
-			'02': 'Spring Semester',
-			'03': 'Spring Quarter'
-		};
-
-		return termNames[term] + " " + endingYear;
 	};
 
 	// Datepicker config

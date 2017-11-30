@@ -188,7 +188,6 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 
 				var termDisplayNames = {};
 
-
 				modalInstance = $uibModal.open({
 					templateUrl: 'ModalUnavailability.html',
 					controller: ModalUnavailabilityCtrl,

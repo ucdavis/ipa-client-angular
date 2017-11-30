@@ -1,4 +1,13 @@
-teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCtrl = function($scope, $rootScope, $uibModalInstance, scheduleYear, workgroupId, state) {
+/**
+ * @ngdoc function
+ * @name ipaClientAngularApp.controller:ModalAddInstructorsCtrl
+ * @description
+ * # ModalAddInstructorsCtrl
+ * Controller of the ipaClientAngularApp
+ */
+teachingCallApp.controller('ModalAddInstructorsCtrl', ['$scope', '$rootScope', '$uibModalInstance', 'scheduleYear', 'workgroupId', 'state', 'termService',
+	this.ModalAddInstructorsCtrl = function($scope, $rootScope, $uibModalInstance, scheduleYear, workgroupId, state, termService) {
+	
 	$scope.startTeachingCallConfig = {};
 	$scope.startTeachingCallConfig.dueDate = "";
 	$scope.startTeachingCallConfig.showUnavailabilities = true;
@@ -136,21 +145,6 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 		$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
 	};
 
-	$scope.activeTermsDescription = function () {
-		var description = "";
-
-		for (var i = 0; i < $scope.allTerms.length; i++) {
-			if ($scope.startTeachingCallConfig.activeTerms && $scope.startTeachingCallConfig.activeTerms[$scope.allTerms[i]]) {
-				if (description.length > 0) {
-					description += ", ";
-				}
-				description += $scope.getTermName($scope.allTerms[i]);
-			}
-		}
-
-		return description;
-	};
-
 	$scope.addSenateInstructors = function () {
 		$scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
 			if(slotInstructor.isSenateInstructor) {
@@ -237,25 +231,7 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 	};
 
 	$scope.getTermName = function(term) {
-		var endingYear = "";
-		if (term.length == 6) {
-			endingYear = term.substring(0,4);
-			term = term.slice(-2);
-		}
-
-		termNames = {
-			'05': 'Summer Session 1',
-			'06': 'Summer Special Session',
-			'07': 'Summer Session 2',
-			'08': 'Summer Quarter',
-			'09': 'Fall Semester',
-			'10': 'Fall Quarter',
-			'01': 'Winter Quarter',
-			'02': 'Spring Semester',
-			'03': 'Spring Quarter'
-		};
-
-		return termNames[term] + " " + endingYear;
+		return termService.getTermName(term);
 	};
 
 	// Datepicker config
@@ -290,56 +266,5 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', this.ModalAddInstructorsCt
 		$uibModalInstance.close($scope.startTeachingCallConfig);
 	};
 
-	$scope.termDescriptions = function () {
-		$scope.startTeachingCallConfig.activeTerms;
-		// Convert termsBlob to terms
-		var allTerms = ['01', '02', '03', '04', '05', '06', '07', '08', '09','10'];
-		var relevantTerms = [];
-
-		allTerms.forEach( function(term) {
-			$scope.startTeachingCallConfig;
-			if ($scope.startTeachingCallConfig.activeTerms && $scope.startTeachingCallConfig.activeTerms[term]) {
-				relevantTerms.push(term);
-			}
-		});
-
-		// sort terms Chronologically
-		var chronologicallyOrderedTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
-		var sortedTerms = [];
-		chronologicallyOrderedTerms.forEach( function(term) {
-			if (relevantTerms.indexOf(term) > -1) {
-				sortedTerms.push(term);
-			}
-		});
-		// Convert termCodes to term descriptions
-		allTermDescriptions = {
-			'05': 'Summer Session 1',
-			'06': 'Summer Special Session',
-			'07': 'Summer Session 2',
-			'08': 'Summer Quarter',
-			'09': 'Fall Semester',
-			'10': 'Fall Quarter',
-			'01': 'Winter Quarter',
-			'02': 'Spring Semester',
-			'03': 'Spring Quarter'
-		};
-
-		// Comma Separated term descriptions
-		termDescriptions = "";
-		firstTerm = true;
-		sortedTerms.forEach(function(term) {
-
-			if (firstTerm) {
-				termDescriptions += allTermDescriptions[term];
-				firstTerm = false;
-			} else {
-				termDescriptions += ", ";
-				termDescriptions += allTermDescriptions[term];
-			}
-		});
-
-		return termDescriptions;
-	};
-
 	$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
-});
+}]);

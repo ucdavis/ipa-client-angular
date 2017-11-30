@@ -68,28 +68,6 @@ scheduleSummaryReportApp.controller('ScheduleSummaryReportCtrl', ['$scope', '$ro
 			$scope.fullTerms.push(fullTerm);
 		}
 
-		$scope.getTermName = function(term) {
-			var endingYear = "";
-			if (term && term.length == 6) {
-				endingYear = term.substring(0,4);
-				term = term.slice(-2);
-			}
-
-			termNames = {
-				'05': 'Summer Session 1',
-				'06': 'Summer Special Session',
-				'07': 'Summer Session 2',
-				'08': 'Summer Quarter',
-				'09': 'Fall Semester',
-				'10': 'Fall Quarter',
-				'01': 'Winter Quarter',
-				'02': 'Spring Semester',
-				'03': 'Spring Quarter'
-			};
-
-			return termNames[term] + " " + endingYear;
-		};
-
 	}
 ]);
 
