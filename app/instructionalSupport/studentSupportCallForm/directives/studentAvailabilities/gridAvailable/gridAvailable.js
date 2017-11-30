@@ -8,15 +8,16 @@ instructionalSupportApp.directive("gridAvailable", this.gridAvailable = function
 		},
 		link: function (scope, element, attrs) {
 			scope.props = {};
-			scope.mapStateToProps(scope.state);
 
-			$rootScope.$on('supportStaffFormStateChanged', function (event, data) {
-				scope.mapStateToProps(data);
+			scope.$watch('state',function() {
+				scope.mapStateToProps(scope.state);
 			});
 
 			scope.mapStateToProps = function(state) {
-				return state;
+				scope.props.state = state;
 			};
+
+			scope.mapStateToProps(scope.state);
 		}
 	};
 });

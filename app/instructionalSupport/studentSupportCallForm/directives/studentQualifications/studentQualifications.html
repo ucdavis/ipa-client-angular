@@ -1,0 +1,8 @@
+<div class="student-qualifications" ng-if="supportCallResponse.collectTeachingQualifications">
+	<h5>Teaching Qualification</h5>
+	<textarea
+		class="student-qualifications__text"
+		ng-model="supportCallResponse.teachingQualifications"
+		auto-input on-change="updateSupportCallResponse()" on-change-delay="500">
+	</textarea>
+</div>

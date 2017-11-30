@@ -1,4 +1,4 @@
-<div class="student-requirement" ng-show="props.supportCallResponse.collectEligibilityConfirmation">
+<div class="confirm-eligible" ng-if="supportCallResponse.collectEligibilityConfirmation">
 	<h4>TA Eligibility Requirements</h4>
 	<div>
 		<p>
@@ -8,7 +8,7 @@
 	<div class="checkbox religibility-checkbox">
 		<div role="menuitem" ng-click="toggleEligibilityConfirmed()">
 			<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-				ng-class="{ 'checked': props.supportCallResponse.eligibilityConfirmed }">
+				ng-class="{ 'checked': supportCallResponse.eligibilityConfirmed }">
 				<label class="cb-wrapper">
 					<div class="checked"></div>
 				</label>

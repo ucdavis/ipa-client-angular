@@ -147,6 +147,8 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 			}
 		},
 		reduce: function (action) {
+			var scope = this;
+
 			newState = {};
 			newState.courses = scope._courseReducers(action, scope._state.courses);
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
