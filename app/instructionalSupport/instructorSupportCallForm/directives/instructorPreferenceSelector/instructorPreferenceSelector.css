@@ -1,0 +1,10 @@
+.instructor-preference-selector {
+	margin-left: 20px;
+	width: 200px;
+	position: relative;
+	height: 30px;
+	border: 1px solid #ebebeb;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+}

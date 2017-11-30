@@ -1,4 +1,4 @@
-instructionalSupportApp.directive("studentPreferenceSelector", this.studentPreferenceSelector = function ($rootScope, instructionalSupportAssignmentActionCreators) {
+instructionalSupportApp.directive("studentPreferenceSelector", this.studentPreferenceSelector = function ($rootScope) {
 	return {
 		restrict: 'E',
 		templateUrl: 'studentPreferenceSelector.html',

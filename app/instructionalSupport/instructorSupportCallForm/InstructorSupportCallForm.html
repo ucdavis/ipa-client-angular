@@ -34,7 +34,7 @@
 			<h5>Please indicate your preferences:</h5>
 		</div>
 		<div class="col-md-6">
-			<div class="pull-right" tooltip-placement="left"
+			<div class="pull-right instructor-support-call-form__preference-hint" tooltip-placement="left"
 			uib-tooltip="Clicking the Add button will show you a list of all courses currently in the schedule (Use the comment box below
 			to request courses not on the list). Once you've added your preferences you can rank them by dragging and dropping them into the
 			preferred order">
@@ -95,9 +95,9 @@
 	<!-- Comments and submission area -->
 	<div class="input-box-container">
 		<div class="instructor-comment-container">
-			<div class="input-box-area">
+			<div class="instructor-comment__area">
 				<h5>Comments:</h5>
-				<textarea class="form-control"
+				<textarea class="instructor-comment__text"
 				ng-model="view.state.supportCallResponse.generalComments"
 				auto-input on-blur="updateSupportCallResponse()"></textarea>
 			</div>
