@@ -67,7 +67,7 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 							// Find the relevant instructor
 							var instructor = null;
 
-							for (var j=0; j < instructors.length; j++) {
+							for (var j = 0; j < instructors.length; j++) {
 								var slotInstructor = instructors[j];
 
 								if (teachingAssignment.instructorId == slotInstructor.id) {
@@ -131,14 +131,14 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 							}
 
 							if (alreadyExists == false) {
-								var newPreference = {};
-								newPreference.courseId = course.id;
-								newPreference.subjectCode = course.subjectCode;
-								newPreference.courseNumber = course.courseNumber;
-								newPreference.effectiveTermCode = course.effectiveTermCode;
-								newPreference.description = course.subjectCode + " " + course.courseNumber;
-								newPreference.order = teachingAssignment.priority;
-								preferences.push(newPreference);
+								preferences.push({
+									courseId: course.id,
+									subjectCode: course.subjectCode,
+									courseNumber: course.courseNumber,
+									effectiveTermCode: course.effectiveTermCode,
+									description: course.subjectCode + " " + course.courseNumber,
+									order: teachingAssignment.priority
+								});
 							}
 						}
 					});
@@ -151,7 +151,6 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 		_termCodeReducers: function (action, termCodes) {
 			switch (action.type) {
 				case INIT_STATE:
-
 					var collapsedTermsBlob = "0000000000";
 
 					// Collapse the teachingCall termsBlobs into one
@@ -164,7 +163,7 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 							var blobFlag = teachingCallReceipt.termsBlob[i];
 							if (blobFlag == "1") {
 								// Change the relevant flag to 1
-								collapsedTermsBlob = setCharAt(collapsedTermsBlob,i,"1");
+								collapsedTermsBlob = setCharAt(collapsedTermsBlob, i, "1");
 							}
 						}
 					});
@@ -216,18 +215,15 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 				return;
 			}
 
-			newState = {};
-			newState.instructors = scope._instructorReducers(action, scope._state.instructors);
-			newState.termCodes = scope._termCodeReducers(action, scope._state.termCodes);
+			scope._state = {
+				instructors: scope._instructorReducers(action, scope._state.instructors),
+				termCodes: scope._termCodeReducers(action, scope._state.termCodes)
+			};
 
-			scope._state = newState;
 			$rootScope.$emit('reportStateChanged', {
 				state: scope._state,
 				action: action
 			});
-
-			$log.debug("Report state updated:");
-			$log.debug(scope._state, action.type);
 		}
 	};
 });
@@ -238,43 +234,21 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 availabilityBlobToDescriptions = function(blob) {
 	var hoursArray = blob.split(',');
 
-	console.log('hoursArray');
-	console.dir(hoursArray);
-
 	if (hoursArray.length != 75) {
 		return null;
 	}
 
 	var descriptions = [];
-	var mondayDescriptions = dayArrayToDescriptions(hoursArray.slice(0,14), "M");
-	if (mondayDescriptions.times.length > 0) {
-		var descriptions = descriptions.concat(mondayDescriptions);
-	}
-
-	var tuesdayDescriptions = dayArrayToDescriptions(hoursArray.slice(15,29), "T");
-	if (tuesdayDescriptions.times.length > 0) {
-		var descriptions = descriptions.concat(tuesdayDescriptions);
-	}
-
-	var wednesdayDescriptions = dayArrayToDescriptions(hoursArray.slice(30,44), "W");
-	if (wednesdayDescriptions.times.length > 0) {
-		var descriptions = descriptions.concat(wednesdayDescriptions);
-	}
-
-	var thursdayDescriptions = dayArrayToDescriptions(hoursArray.slice(45,59), "R");
-	if (thursdayDescriptions.times.length > 0) {
-		var descriptions = descriptions.concat(thursdayDescriptions);
-	}
-
-	var fridayDescriptions = dayArrayToDescriptions(hoursArray.slice(60,74), "F");
-	if (fridayDescriptions.times.length > 0) {
-		var descriptions = descriptions.concat(fridayDescriptions);
-	}
+	descriptions.push(describeDayArray(hoursArray.slice(0,14), "M"));
+	descriptions.push(describeDayArray(hoursArray.slice(15,29), "T"));
+	descriptions.push(describeDayArray(hoursArray.slice(30,44), "W"));
+	descriptions.push(describeDayArray(hoursArray.slice(45,59), "R"));
+	descriptions.push(describeDayArray(hoursArray.slice(60,74), "F"));
 
 	return descriptions;
 };
 
-dayArrayToDescriptions = function(dayArray, dayCode) {
+describeDayArray = function(dayArray, dayCode) {
 	var descriptions = {
 		day: dayCode,
 		times: ""

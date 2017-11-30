@@ -1,100 +1,98 @@
 <nav year="{{ year }}" term-short-code="{{ termShortCode }}" workgroup-id="{{ workgroupId }}"></nav>
 
 <div class="teaching-call-response-report-container">
+	<ipa-header page-title="Teaching Call Response Report"></ipa-header>
 
-<ipa-header page-title="Teaching Call Response Report"></ipa-header>
-
-<!-- handle lack of teaching call data-->
-<div ng-if="view.state && view.state.termCodes.length == 0">
-		<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
-			<p class="lead">No Teaching Call Responses found for {{sharedState.workgroup.name}} {{ year.yearToAcademicYear() }}</p>
-		</div>
-</div>
-
-<div ng-if="view.state && view.state.termCodes.length > 0" class="main-content">
-	<!-- Toolbar -->
-	<div class="row hidden-print">
-		<div class="table-toolbar">
-			<div class="btn-group">
-				<span data-toggle="tooltip" data-placement="top" data-original-title="Download as Excel" data-container="body" ng-click="download()" class="tool-icon glyphicon glyphicon-download-alt" aria-haspopup="true" aria-expanded="false">
-				</span>
-				<ul class="dropdown-menu">
-					<li>
-						<a href="#" class="small">as Excel</a>
-					</li>
-					<li><a href="#" class="small">as CSV</a></li>
-				</ul
-			></div>
-			<span data-toggle="tooltip" data-placement="top" data-original-title="Print" ng-click="print()" class="tool-icon glyphicon glyphicon-print"></span>
-		</div>
+	<!-- handle lack of teaching call data-->
+	<div ng-if="view.state && view.state.termCodes.length == 0">
+			<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+				<p class="lead">No Teaching Call Responses found for {{sharedState.workgroup.name}} {{ year.yearToAcademicYear() }}</p>
+			</div>
 	</div>
 
-	<div style="margin-top: 10px; margin-bottom: 20px; width: 100%; display: flex; justify-content: flex-end;">
-		<div style="font-size: 10px; color: #888; width: 30%;">
-			Please note that this report will only include preferences created by the Instructor.
-			To see preferences and assignments created by the Academic Planner please see the Assignments view.
-		</div>
-	</div>
-
-	<!-- table header -->
-	<div class="table-header">
-		<div class="instructor-header">
-			Instructors
-		</div>
-		<div class="term-cell-container">
-			<div ng-repeat="termCode in view.state.termCodes" class="term-header">
-				{{ getTermName(termCode) }}
+	<div ng-if="view.state && view.state.termCodes.length > 0" class="main-content">
+		<!-- Toolbar -->
+		<div class="row hidden-print">
+			<div class="table-toolbar">
+				<div class="btn-group">
+					<span data-toggle="tooltip" data-placement="top" data-original-title="Download as Excel" data-container="body" ng-click="download()" class="tool-icon glyphicon glyphicon-download-alt" aria-haspopup="true" aria-expanded="false">
+					</span>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="#" class="small">as Excel</a>
+						</li>
+						<li><a href="#" class="small">as CSV</a></li>
+					</ul
+				></div>
+				<span data-toggle="tooltip" data-placement="top" data-original-title="Print" ng-click="print()" class="tool-icon glyphicon glyphicon-print"></span>
 			</div>
 		</div>
-	</div>
 
-	<div class="dividing-bar-darker">
-	</div>
-
-	<!-- table body (row pairs) -->
-	<div ng-repeat="instructor in view.state.instructors | orderBy: 'lastName'">
-		<!-- instructor row -->
-		<div class="instructor-row">
-			<div class="instructor-cell">
-				{{ instructor.lastName }}, {{ instructor.firstName }}
-				<i ng-if="instructor.submitted" class="green glyphicon glyphicon-ok"
-				uib-tooltip="Submitted Preferences" tooltip-placement="top" tooltip-append-to-body="true"></i>
+		<div style="margin-top: 10px; margin-bottom: 20px; width: 100%; display: flex; justify-content: flex-end;">
+			<div style="font-size: 10px; color: #888; width: 30%;">
+				Please note that this report will only include preferences created by the Instructor.
+				To see preferences and assignments created by the Academic Planner please see the Assignments view.
 			</div>
-			
+		</div>
+
+		<!-- table header -->
+		<div class="table-header">
+			<div class="instructor-header">
+				Instructors
+			</div>
 			<div class="term-cell-container">
-				<div ng-repeat="termCode in view.state.termCodes" class="term-cell">
-					<div ng-repeat="preference in instructor.preferencesByTermCode[termCode]">
-						({{ $index + 1 }}) {{ preference.description }}
+				<div ng-repeat="termCode in view.state.termCodes" class="term-header">
+					{{ getTermName(termCode) }}
+				</div>
+			</div>
+		</div>
+
+		<div class="dividing-bar-darker"></div>
+
+		<!-- table body (row pairs) -->
+		<div ng-repeat="instructor in view.state.instructors | orderBy: 'lastName'">
+			<!-- instructor row -->
+			<div class="instructor-row">
+				<div class="instructor-cell">
+					{{ instructor.lastName }}, {{ instructor.firstName }}
+					<i ng-if="instructor.submitted" class="green glyphicon glyphicon-ok"
+					uib-tooltip="Submitted Preferences" tooltip-placement="top" tooltip-append-to-body="true"></i>
+				</div>
+				
+				<div class="term-cell-container">
+					<div ng-repeat="termCode in view.state.termCodes" class="term-cell">
+						<div ng-repeat="preference in instructor.preferencesByTermCode[termCode]">
+							({{ $index + 1 }}) {{ preference.description }}
+						</div>
+
+						<div ng-if="instructor.availabilityByTermCode[termCode].length > 0" style="margin-top: 15px;">
+							Availability:
+						</div>
+
+						<div ng-if="availability.times.length > 0" ng-repeat="availability in instructor.availabilityByTermCode[termCode]">
+							<b>{{ availability.day }}</b> {{ availability.times }}
+						</div>
 					</div>
 
-					<div ng-if="instructor.availabilityByTermCode[termCode].length > 0" style="margin-top: 15px;">
-						Availability:
-					</div>
-
-					<div ng-if="availability.times.length > 0" ng-repeat="availability in instructor.availabilityByTermCode[termCode]">
-						<b>{{ availability.day }}</b> {{ availability.times }}
-					</div>
 				</div>
 
 			</div>
 
-		</div>
-
-		<!-- comment row -->
-		<div ng-if="instructor.comment.length > 0" class="comment-row">
-			<div class="comment-label">
-				<div class="comment-label-content">
-					Comments:
+			<!-- comment row -->
+			<div ng-if="instructor.comment.length > 0" class="comment-row">
+				<div class="comment-label">
+					<div class="comment-label-content">
+						Comments:
+					</div>
+				</div>
+				<div class="comment-cell">
+					{{ instructor.comment }}
 				</div>
 			</div>
-			<div class="comment-cell">
-				{{ instructor.comment }}
+
+			<div ng-if="$last == false" class="dividing-bar">
 			</div>
-		</div>
 
-		<div ng-if="$last == false" class="dividing-bar">
 		</div>
-
 	</div>
-</div>
 </div>
