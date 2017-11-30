@@ -1,4 +1,4 @@
-instructionalSupportApp.service('instructionalSupportAssignmentStateService', function ($rootScope, $log, supportAssignmentSelectors) {
+supportAssignmentApp.service('instructionalSupportAssignmentStateService', function ($rootScope, $log, supportAssignmentSelectors) {
 	return {
 		_state: {},
 		_sectionGroupReducers: function (action, sectionGroups) {

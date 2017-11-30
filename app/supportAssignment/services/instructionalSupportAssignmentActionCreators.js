@@ -1,4 +1,4 @@
-instructionalSupportApp.service('instructionalSupportAssignmentActionCreators', function ($rootScope, $window, instructionalSupportAssignmentService, instructionalSupportAssignmentStateService) {
+supportAssignmentApp.service('instructionalSupportAssignmentActionCreators', function ($rootScope, $window, instructionalSupportAssignmentService, instructionalSupportAssignmentStateService) {
 	return {
 		getInitialState: function (workgroupId, year, termShortCode, tab) {
 			instructionalSupportAssignmentService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
