@@ -1,4 +1,4 @@
-instructionalSupportApp.controller('ModalAddAssignmentSlotCtrl', this.ModalAddAssignmentSlotCtrl = function($scope, $rootScope, $uibModalInstance, instructionalSupportAssignmentActionCreators, sectionGroupId, appointmentType) {
+supportAssignmentApp.controller('ModalAddAssignmentSlotCtrl', this.ModalAddAssignmentSlotCtrl = function($scope, $rootScope, $uibModalInstance, instructionalSupportAssignmentActionCreators, sectionGroupId, appointmentType) {
 	$scope.title = generateTitle($scope.appointmentType);
 	$scope.formData = {appointmentPercentage: 50, numberOfAppointments: 1};
 

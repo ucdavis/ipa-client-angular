@@ -1,12 +1,20 @@
-window.supportCallApp = angular.module("supportCallApp", ["sharedApp", "ngRoute"]);
+window.supportAssignmentApp = angular.module("supportAssignmentApp", ["sharedApp", "ngRoute"]);
 
-supportCallApp.config(function ($routeProvider) {
+supportAssignmentApp.config(function ($routeProvider) {
 	return $routeProvider
-		.when("/:workgroupId/:year/:termShortCode", {
-			templateUrl: "SupportCallStatus.html",
-			controller: "InstructionalSupportCallStatusCtrl",
+		.when("/", {
+			templateUrl: "InstructionalSupportAssignment.html",
+			controller: "InstructionalSupportAssignmentCtrl",
 			resolve: {
-				validate: InstructionalSupportCallStatusCtrl.getPayload
+				payload: InstructionalSupportAssignmentCtrl.getPayload
+			}
+		})
+		.when("/:workgroupId/:year/:termShortCode", {
+			templateUrl: "InstructionalSupportAssignment.html",
+			controller: "InstructionalSupportAssignmentCtrl",
+			reloadOnSearch: false,
+			resolve: {
+				payload: InstructionalSupportAssignmentCtrl.getPayload
 			}
 		})
 		.otherwise({

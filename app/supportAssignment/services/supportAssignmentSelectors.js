@@ -1,7 +1,7 @@
 /*
 	Selectors are pure javascript functions that translate the normalized state into nested objects for the view
 */
-instructionalSupportApp.service('supportAssignmentSelectors', function () {
+supportAssignmentApp.service('supportAssignmentSelectors', function () {
 	return {
 /*
 	Page State Schema:

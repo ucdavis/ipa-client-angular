@@ -5,7 +5,7 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-instructionalSupportApp.controller('InstructionalSupportAssignmentCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'instructionalSupportAssignmentActionCreators', '$timeout',
+supportAssignmentApp.controller('InstructionalSupportAssignmentCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'instructionalSupportAssignmentActionCreators', '$timeout',
 		this.InstructionalSupportAssignmentCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, instructionalSupportAssignmentActionCreators, $timeout) {
 			$window.document.title = "Instructional Support";
 			$scope.workgroupId = $routeParams.workgroupId;
