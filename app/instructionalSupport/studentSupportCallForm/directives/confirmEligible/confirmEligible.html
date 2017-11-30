@@ -1,13 +1,20 @@
-<div class="confirm-eligible" ng-if="supportCallResponse.collectEligibilityConfirmation">
-	<h4>TA Eligibility Requirements</h4>
-	<div>
-		<p>
-			Full-time (12 units) registered graduate student, current cumulative GPA is 3.00 or higher, total appointments for this quarter does not exceed 75%,
-		</p>
+<div class="confirm-eligible" ng-show="supportCallResponse.collectEligibilityConfirmation">
+	<div class="confirm-eligible__icon">
+		<i class="entypo-attention"></i>
 	</div>
-	<div class="checkbox religibility-checkbox">
-		<div role="menuitem" ng-click="toggleEligibilityConfirmed()">
-			<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+
+	<div class="confirm-eligible__main">
+		<div class="confirm-eligible__header">
+			TA ELIGIBILITY REQUIREMENTS
+		</div>
+		<div>
+			Full-time (12 units) registered graduate student, current cumulative GPA is 3.00 or higher, total appointments for this quarter does not exceed 75%
+		</div>
+	</div>
+
+	<div class="confirm-eligible__checkbox">
+		<div class="checkbox" ng-click="toggleEligibilityConfirmed()">
+			<div class="checkbox-replace color-primary neon-cb-replacement confirm-eligible__checkbox-input"
 				ng-class="{ 'checked': supportCallResponse.eligibilityConfirmed }">
 				<label class="cb-wrapper">
 					<div class="checked"></div>
