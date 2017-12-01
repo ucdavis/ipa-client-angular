@@ -12,15 +12,14 @@
 		</div>
 	</div>
 
+
 	<div class="confirm-eligible__checkbox">
-		<div class="checkbox" ng-click="toggleEligibilityConfirmed()">
-			<div class="checkbox-replace color-primary neon-cb-replacement confirm-eligible__checkbox-input"
-				ng-class="{ 'checked': supportCallResponse.eligibilityConfirmed }">
-				<label class="cb-wrapper">
-					<div class="checked"></div>
-				</label>
-				<label>Confirm Eligibility</label>
-			</div>
+		<ipa-checkbox
+			is-checked="supportCallResponse.eligibilityConfirmed"
+			click-action="toggleEligibilityConfirmed()">
+		</ipa-checkbox>
+		<div class="confirm-eligible__label">
+			Confirm Eligibility
 		</div>
 	</div>
 </div>
