@@ -1,3 +1,4 @@
+/* Main report table */
 table {
 	border: 1px solid #ebebeb;
 	width: 100%;
@@ -21,29 +22,12 @@ table tbody tr {
 	border-bottom: 1px solid #ebebeb;
 }
 
-.comment-row {
-	margin-top: 10px;
-	display:flex;
-	width: 100%;
-}
-
-.comment-label {
-	flex: 2 0 0px;
-	display: flex;
-}
-
 .comment-cell {
 	color: #888888;
-	flex: 8 0 0px;
-	display: flex;
 }
 
 .green {
 	color: green;
-}
-
-.report-page-title {
-  text-align: center;
 }
 
 .teaching-call-response-report-container {
@@ -55,6 +39,8 @@ table tbody tr {
 .teaching-call-response-report-container .main-content {
 	display: block;
 }
+
+/* Toolbar styles */
 
 .table-toolbar {
   width: 100%;

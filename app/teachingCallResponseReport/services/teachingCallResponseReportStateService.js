@@ -121,17 +121,10 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 								var course = courses.list[courseId];
 
 								// Do we already have that course listed for this term?
-								var alreadyExists = false;
-
-								for (var i = 0; i < preferences.length; i++) {
-									var preference = preferences[i];
-									if (preference.effectiveTermCode == course.effectiveTermCode
-											&& preference.subjectCode == course.subjectCode
-											&& preference.courseNumber == course.courseNumber) {
-										alreadyExists = true;
-										break;
-									}
-								}
+								var alreadyExists = (preferences.find( (preference) => {
+									return preference.effectiveTermCode == course.effectiveTermCode
+									&& preference.subjectCode == course.subjectCode
+									&& preference.courseNumber == course.courseNumber; }) !== undefined);
 
 								if (alreadyExists == false) {
 									preferences.push({
@@ -275,6 +268,11 @@ describeDayArray = function(dayArray, dayCode) {
 
 	if (startTimeBlock != null) {
 		blocks.push(blockDescription(startTimeBlock, endTimeBlock));
+	}
+
+	if(blocks.length == 0) {
+		// No availabilities were indicated
+		blocks.push("Not available");
 	}
 
 	descriptions.times = blocks.join(", ");

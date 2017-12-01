@@ -44,32 +44,29 @@
 					<th ng-repeat="termCode in view.state.termCodes">
 						{{ getTermName(termCode) }}
 					</th>
-					<th>Comments</th>
+					<th style="width: 33%;">Comments</th>
 				</tr>
 			</thead>
 			<tbody>
 				<!-- table body (row pairs) -->
 				<tr ng-repeat-start="instructor in view.state.instructors | orderBy: 'lastName'" style="border-bottom: none;">
-					<td style="font-weight: bold; font-size: 14px; overflow: hidden; padding: 20px 15px 20px 15px;">
+					<td rowspan="2" style="font-weight: bold; font-size: 14px; overflow: hidden; padding: 20px 15px 20px 15px;">
 						{{ instructor.lastName }}, {{ instructor.firstName }}
 						<i ng-if="instructor.submitted" class="green glyphicon glyphicon-ok"
 						uib-tooltip="Submitted Preferences" tooltip-placement="top" tooltip-append-to-body="true"></i>
 					</td>
 
-					<td ng-repeat="termCode in view.state.termCodes" style="padding: 20px 15px 20px 15px;">
-						<div ng-repeat="preference in instructor.preferencesByTermCode[termCode]">
-							({{ $index + 1 }}) {{ preference.description }}
+					<td ng-repeat="termCode in view.state.termCodes">
+						<div style="padding: 20px 15px 20px 15px;" ng-if="instructor.preferencesByTermCode[termCode].length > 0">
+							<div ng-repeat="preference in instructor.preferencesByTermCode[termCode]">
+								{{ $index + 1 }}. {{ preference.description }}
+							</div>
 						</div>
 					</td>
 
 					<!-- comment row -->
-					<td>
-						<div ng-if="instructor.comment.length > 0" class="comment-row">
-							<div class="comment-label">
-								<div class="comment-label-content">
-									Comments:
-								</div>
-							</div>
+					<td rowspan="2">
+						<div ng-if="instructor.comment.length > 0"  style="padding: 20px 15px 20px 15px;">
 							<div class="comment-cell">
 								{{ instructor.comment }}
 							</div>
@@ -77,15 +74,13 @@
 					</td>
 				</tr>
 				<tr ng-repeat-end>
-					<td></td>
 					<td ng-repeat="termCode in view.state.termCodes">
-						<div ng-if="instructor.availabilityByTermCode[termCode].length > 0" style="padding: 0px 15px 20px 15px;">
+						<div ng-if="instructor.availabilityByTermCode[termCode].length > 0" style="padding: 20px 15px 20px 15px;">
 							<div ng-repeat="availability in instructor.availabilityByTermCode[termCode]">
 								<b>{{ availability.day }}</b> {{ availability.times }}
 							</div>
 						</div>
 					</td>
-					<td></td>
 				</tr>
 			</tbody>
 		</table>
