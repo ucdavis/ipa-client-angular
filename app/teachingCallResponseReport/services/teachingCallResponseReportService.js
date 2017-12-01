@@ -24,7 +24,7 @@ teachingCallResponseReportApp.factory("teachingCallResponseReportService", this.
 		download: function (workgroupId, year) {
 			var deferred = $q.defer();
 
-			$http.get(serverRoot + "/api/teachingCallResponseReportView/workgroups/" + workgroupId + "/years/" + year + "/downloadExcel", { withCredentials: true })
+			$http.get(serverRoot + "/api/teachingCallResponseReportView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
 			.success(function(payload) {
 				$window.location.href = payload.redirect;
 				deferred.resolve(payload);
