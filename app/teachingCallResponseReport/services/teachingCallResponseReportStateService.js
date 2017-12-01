@@ -88,7 +88,7 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 							var preferences = instructor.preferencesByTermCode[teachingAssignment.termCode];
 							var description = "Unknown";
 
-							// Is this a non-sectionGroup based preference?
+							// Is this a non-sectionGroup based preference, e.g. buyout, sabbatical, etc.?
 							if (teachingAssignment.sectionGroupId == 0) {
 								if (teachingAssignment.courseRelease) {
 									description = "Course Release";
@@ -109,42 +109,36 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 									description = teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber;
 								}
 
-								var newPreference = {};
-								newPreference.courseId = null;
-								newPreference.description = description;
-								newPreference.order = teachingAssignment.priority;
-								preferences.push(newPreference);
-
-								return;
-							}
-
-							// Which course is this preference ultimately associated to
-							var sectionGroupId = teachingAssignment.sectionGroupId;
-							var courseId = sectionGroups.list[sectionGroupId].courseId;
-							var course = courses.list[courseId];
-
-							// Do we already have that course listed for this term?
-							var alreadyExists = false;
-
-							for (var i = 0; i < preferences.length; i++) {
-								var preference = preferences[i];
-								if (preference.effectiveTermCode == course.effectiveTermCode
-										&& preference.subjectCode == course.subjectCode
-										&& preference.courseNumber == course.courseNumber) {
-									alreadyExists = true;
-									break;
-								}
-							}
-
-							if (alreadyExists == false) {
 								preferences.push({
-									courseId: course.id,
-									subjectCode: course.subjectCode,
-									courseNumber: course.courseNumber,
-									effectiveTermCode: course.effectiveTermCode,
-									description: course.subjectCode + " " + course.courseNumber,
+									courseId: null,
+									description: description,
 									order: teachingAssignment.priority
 								});
+							} else {
+								// Which course is this preference ultimately associated to
+								var sectionGroupId = teachingAssignment.sectionGroupId;
+								var courseId = sectionGroups.list[sectionGroupId].courseId;
+								var course = courses.list[courseId];
+
+								// Do we already have that course listed for this term?
+								var alreadyExists = false;
+
+								for (var i = 0; i < preferences.length; i++) {
+									var preference = preferences[i];
+									if (preference.effectiveTermCode == course.effectiveTermCode
+											&& preference.subjectCode == course.subjectCode
+											&& preference.courseNumber == course.courseNumber) {
+										alreadyExists = true;
+										break;
+									}
+								}
+
+								if (alreadyExists == false) {
+									preferences.push({
+										description: course.subjectCode + " " + course.courseNumber + ": " + course.title,
+										order: teachingAssignment.priority
+									});
+								}
 							}
 						}
 					});
@@ -163,7 +157,6 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 					teachingCallReceipts = action.payload.teachingCallReceipts;
 
 					teachingCallReceipts.forEach( function(teachingCallReceipt) {
-
 						// Loop through blobFlags in teachingCalls termBlob
 						for (var i = 0; i < teachingCallReceipt.termsBlob.length; i++) {
 							var blobFlag = teachingCallReceipt.termsBlob[i];
