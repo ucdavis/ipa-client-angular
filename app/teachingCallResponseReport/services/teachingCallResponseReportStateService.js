@@ -86,6 +86,7 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 							}
 
 							var preferences = instructor.preferencesByTermCode[teachingAssignment.termCode];
+							var description = "Unknown";
 
 							// Is this a non-sectionGroup based preference?
 							if (teachingAssignment.sectionGroupId == 0) {
@@ -99,6 +100,11 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 									description = "Work Life Balance";
 								} else if (teachingAssignment.sabbatical) {
 									description = "Sabbatical";
+								} else if (teachingAssignment.leaveOfAbsence) {
+									description = "Leave of Absence";
+								} else if (teachingAssignment.suggestedSubjectCode == null || teachingAssignment.suggestedCourseNumber == null) {
+									console.error("Unhandled teachingAssignment type.");
+									console.dir(teachingAssignment);
 								} else {
 									description = teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber;
 								}
