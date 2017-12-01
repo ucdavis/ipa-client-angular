@@ -12,7 +12,7 @@
 }
 
 .confirm-eligible__main {
-	flex: 30 0 0px;
+	flex: 25 0 0px;
 	display: flex;
 	flex-flow:column;
 	align-items: flex-start;
@@ -29,6 +29,6 @@
 	justify-content: center;
 }
 
-.confirm-eligible__checkbox-input {
-	height: 18px;
+.confirm-eligible__label {
+	padding-left: 5px;	
 }
