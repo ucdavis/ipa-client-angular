@@ -1,0 +1,27 @@
+.ipa-checkbox {
+	height: 18px;
+	width: 18px;
+	border: 1px solid #303641;
+	border-radius: 3px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: 250ms all cubic-bezier(0.455, 0.030, 0.515, 0.955);
+	cursor: pointer;
+}
+
+.ipa-checkbox__inner {
+	height: 12px;
+	width: 12px;
+	transition: 250ms all cubic-bezier(0.455, 0.030, 0.515, 0.955);
+}
+
+.ipa-checkbox__inner--checked {
+	border: 1px solid #303641;
+	border-radius: 2px;
+	background-color: #303641;
+}
+
+.ipa-checkbox:hover {
+	box-shadow: rgba(48, 54, 65, 0.1) 0px 0px 0px 2px;
+}
