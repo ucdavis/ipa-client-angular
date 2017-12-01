@@ -1,0 +1,12 @@
+.ipa-section-header {
+	padding: 13px 15px 13px 15px;
+	background-color: #F8F8F8;
+	border: 1px solid #CCCCCC;
+	margin-top: 25px;
+	border-radius: 3px;
+}
+
+.ipa-section-header__text {
+	font-size: 14px;
+	font-weight: 500;
+}
