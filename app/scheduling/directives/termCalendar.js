@@ -104,6 +104,43 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				});
 			};
 
+			// supply a color and amount to shift it by
+			// example to lighten: lightenOrDarkenColor("#F06D06", 20);
+			// example to darken: lightenOrDarkenColor("#F06D06", -20);
+			var lightenOrDarkenColor = function(col, amt) {
+				var usePound = false;
+
+				if (col[0] == "#") {
+					col = col.slice(1);
+					usePound = true;
+				}
+
+				var num = parseInt(col,16);
+				var r = (num >> 16) + amt;
+
+				if (r > 255) {
+					r = 255;
+				} else if (r < 0) {
+					r = 0;
+				}
+
+				var b = ((num >> 8) & 0x00FF) + amt;
+
+				if (b > 255) {
+					b = 255;
+				} else if (b < 0) { b = 0; }
+
+				var g = (num & 0x0000FF) + amt;
+
+				if (g > 255) {
+					g = 255;
+				} else if (g < 0) {
+					g = 0;
+				}
+
+				return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
+			};
+
 			var getActivities = function () {
 				// Each of these If blocks will add to a 'events array'
 				// The event making function will color them appropriately
@@ -111,9 +148,16 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 
 				// Add Selected sectionGroup activities
 				if (scope.view.state.uiState.selectedSectionGroupId) {
-					var unstyledEvents = sectionGroupToActivityEvents(scope.view.state.sectionGroups.list[scope.view.state.uiState.selectedSectionGroupId]);
+					var sectionGroup = scope.view.state.sectionGroups.list[scope.view.state.uiState.selectedSectionGroupId];
+					var unstyledEvents = sectionGroupToActivityEvents(sectionGroup);
+					var tagColor = calculateTagColor(sectionGroup);
+
+					var textColor = tagColor ? "#FFFFFF" : activeEventTextColor;
+					var borderColor = tagColor ? tagColor : activeEventBorderColor;
+					var backgroundColor = tagColor ? tagColor : activeEventBackgroundColor;
+
 					calendarActivities = calendarActivities.concat(
-						styleCalendarEvents(unstyledEvents, activeEventBackgroundColor, activeEventBorderColor, activeEventTextColor)
+						styleCalendarEvents(unstyledEvents, backgroundColor, borderColor, textColor, tagColor)
 					);
 				}
 
@@ -125,15 +169,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 							var course = scope.view.state.courses.list[sectionGroup.courseId];
 							var unstyledEvents = sectionGroupToActivityEvents(scope.view.state.sectionGroups.list[sgId]);
 
-							// Determine tag color
-							var tagColor = null;
 
-							if (course.tagIds.length > 0) {
-								var tag = scope.view.state.tags.list[course.tagIds[0]];
-								if (tag.color) {
-									tagColor = tag.color;
-								}
-							}
+							var tagColor = calculateTagColor(sectionGroup);
 
 							if (tagColor) {
 								calendarActivities = calendarActivities.concat(
@@ -149,6 +186,20 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				}
 
 				return calendarActivities;
+			};
+
+			var calculateTagColor = function (sectionGroup) {
+				var tagColor = null;
+				var course = scope.view.state.courses.list[sectionGroup.courseId];
+
+				if (course.tagIds.length > 0) {
+					var tag = scope.view.state.tags.list[course.tagIds[0]];
+					if (tag.color) {
+						tagColor = tag.color;
+					}
+				}
+
+				return tagColor;
 			};
 
 			var activityToEvents = function (activity, courseTitle) {
@@ -272,11 +323,24 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				return calendarActivities;
 			};
 
-			var styleCalendarEvents = function (calendarActivities, backgroundColor, borderColor, textColor) {
+			var styleCalendarEvents = function (calendarActivities, backgroundColor, borderColor, textColor, tagColor) {
 				calendarActivities.forEach(function (event) {
-					event.color = (scope.view.state.uiState.selectedActivityId === event.activityId) ? highlightedEventBackgroundColor : backgroundColor;
-					event.borderColor = (scope.view.state.uiState.selectedActivityId === event.activityId) ? highlightedEventBorderColor : borderColor;
-					event.textColor = (scope.view.state.uiState.selectedActivityId === event.activityId) ? highlightedEventTextColor : textColor;
+					console.log(scope.view.state.uiState.selectedActivityId);
+					if (scope.view.state.uiState.selectedActivityId === event.activityId) {
+						if (tagColor) {
+							event.color = lightenOrDarkenColor(tagColor, -80);
+							event.borderColor = lightenOrDarkenColor(tagColor, -80);
+							event.textColor = textColor;
+						} else {
+							event.color = highlightedEventBackgroundColor;
+							event.borderColor = highlightedEventBorderColor;
+							event.textColor = highlightedEventTextColor;
+						}
+					} else {
+						event.color = angular.copy(backgroundColor);
+						event.borderColor = angular.copy(borderColor);
+						event.textColor = angular.copy(textColor);
+					}
 				});
 				return calendarActivities;
 			};
