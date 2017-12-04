@@ -4,15 +4,13 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 		_instructorReducers: function (action, instructors) {
 			switch (action.type) {
 				case INIT_STATE:
-
 					// Root state object
 					instructors = action.payload.instructors;
 
-					// Get availability blobs and put on instructor in an associative array by termcode
+					// Get availability blobs and put on instructor in an associative array by termCode
 					teachingCallResponses = action.payload.teachingCallResponses;
 
 					teachingCallResponses.forEach( function(teachingCallResponse) {
-
 						instructors.forEach( function(instructor) {
 							if (instructor.id == teachingCallResponse.instructorId) {
 								if (!instructor.availabilityByTermCode) {
@@ -69,7 +67,7 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 							// Find the relevant instructor
 							var instructor = null;
 
-							for (var j=0; j < instructors.length; j++) {
+							for (var j = 0; j < instructors.length; j++) {
 								var slotInstructor = instructors[j];
 
 								if (teachingAssignment.instructorId == slotInstructor.id) {
@@ -88,8 +86,9 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 							}
 
 							var preferences = instructor.preferencesByTermCode[teachingAssignment.termCode];
+							var description = "Unknown";
 
-							// Is this a non-sectionGroup based preference?
+							// Is this a non-sectionGroup based preference, e.g. buyout, sabbatical, etc.?
 							if (teachingAssignment.sectionGroupId == 0) {
 								if (teachingAssignment.courseRelease) {
 									description = "Course Release";
@@ -101,48 +100,38 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 									description = "Work Life Balance";
 								} else if (teachingAssignment.sabbatical) {
 									description = "Sabbatical";
+								} else if (teachingAssignment.leaveOfAbsence) {
+									description = "Leave of Absence";
+								} else if (teachingAssignment.suggestedSubjectCode == null || teachingAssignment.suggestedCourseNumber == null) {
+									console.error("Unhandled teachingAssignment type.");
+									console.dir(teachingAssignment);
 								} else {
 									description = teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber;
 								}
 
-								var newPreference = {};
-								newPreference.courseId = null;
-								newPreference.description = description;
-								newPreference.order = teachingAssignment.priority;
-								preferences.push(newPreference);
+								preferences.push({
+									courseId: null,
+									description: description,
+									order: teachingAssignment.priority
+								});
+							} else {
+								// Which course is this preference ultimately associated to
+								var sectionGroupId = teachingAssignment.sectionGroupId;
+								var courseId = sectionGroups.list[sectionGroupId].courseId;
+								var course = courses.list[courseId];
 
-								return;
-							}
+								// Do we already have that course listed for this term?
+								var alreadyExists = (preferences.find( (preference) => {
+									return preference.effectiveTermCode == course.effectiveTermCode
+									&& preference.subjectCode == course.subjectCode
+									&& preference.courseNumber == course.courseNumber; }) !== undefined);
 
-							// Which course is this preference ultimately associated to
-							var sectionGroupId = teachingAssignment.sectionGroupId;
-							var courseId = sectionGroups.list[sectionGroupId].courseId;
-							var course = courses.list[courseId];
-
-							// Do we already have that course listed for this term?
-							var alreadyExists = false;
-
-
-
-							for (var i = 0; i < preferences.length; i++) {
-								var preference = preferences[i];
-								if (preference.effectiveTermCode == course.effectiveTermCode
-										&& preference.subjectCode == course.subjectCode
-										&& preference.courseNumber == course.courseNumber) {
-									alreadyExists = true;
-									break;
+								if (alreadyExists == false) {
+									preferences.push({
+										description: course.subjectCode + " " + course.courseNumber + ": " + course.title,
+										order: teachingAssignment.priority
+									});
 								}
-							}
-
-							if (alreadyExists == false) {
-								var newPreference = {};
-								newPreference.courseId = course.id;
-								newPreference.subjectCode = course.subjectCode;
-								newPreference.courseNumber = course.courseNumber;
-								newPreference.effectiveTermCode = course.effectiveTermCode;
-								newPreference.description = course.subjectCode + " " + course.courseNumber;
-								newPreference.order = teachingAssignment.priority;
-								preferences.push(newPreference);
 							}
 						}
 					});
@@ -155,20 +144,18 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 		_termCodeReducers: function (action, termCodes) {
 			switch (action.type) {
 				case INIT_STATE:
-
 					var collapsedTermsBlob = "0000000000";
 
 					// Collapse the teachingCall termsBlobs into one
 					teachingCallReceipts = action.payload.teachingCallReceipts;
 
 					teachingCallReceipts.forEach( function(teachingCallReceipt) {
-
 						// Loop through blobFlags in teachingCalls termBlob
 						for (var i = 0; i < teachingCallReceipt.termsBlob.length; i++) {
 							var blobFlag = teachingCallReceipt.termsBlob[i];
 							if (blobFlag == "1") {
 								// Change the relevant flag to 1
-								collapsedTermsBlob = setCharAt(collapsedTermsBlob,i,"1");
+								collapsedTermsBlob = setCharAt(collapsedTermsBlob, i, "1");
 							}
 						}
 					});
@@ -220,21 +207,22 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 				return;
 			}
 
-			newState = {};
-			newState.instructors = scope._instructorReducers(action, scope._state.instructors);
-			newState.termCodes = scope._termCodeReducers(action, scope._state.termCodes);
+			scope._state = {
+				instructors: scope._instructorReducers(action, scope._state.instructors),
+				termCodes: scope._termCodeReducers(action, scope._state.termCodes)
+			};
 
-			scope._state = newState;
 			$rootScope.$emit('reportStateChanged', {
 				state: scope._state,
 				action: action
 			});
-
-			$log.debug("Report state updated:");
-			$log.debug(scope._state, action.type);
 		}
 	};
 });
+
+/**
+ * @param  {array} blob A 75 length array representing unavailabilities
+ */
 availabilityBlobToDescriptions = function(blob) {
 	var hoursArray = blob.split(',');
 
@@ -242,51 +230,27 @@ availabilityBlobToDescriptions = function(blob) {
 		return null;
 	}
 
-	var mondayArray = hoursArray.slice(0,14);
-	var tuesdayArray = hoursArray.slice(15,29);
-	var wednesdayArray = hoursArray.slice(30,44);
-	var thursdayArray = hoursArray.slice(45,59);
-	var fridayArray = hoursArray.slice(60,74);
-
 	var descriptions = [];
-	var mondayDescriptions = dayArrayToDescriptions(mondayArray, "M");
-	if (mondayDescriptions.times.length > 0) {
-		var descriptions = descriptions.concat(mondayDescriptions);
-	}
-
-	var tuesdayDescriptions = dayArrayToDescriptions(tuesdayArray, "T");
-	if (tuesdayDescriptions.times.length > 0) {
-		var descriptions = descriptions.concat(tuesdayDescriptions);
-	}
-
-	var wednesdayDescriptions = dayArrayToDescriptions(wednesdayArray, "W");
-	if (wednesdayDescriptions.times.length > 0) {
-		var descriptions = descriptions.concat(wednesdayDescriptions);
-	}
-
-	var thursdayDescriptions = dayArrayToDescriptions(thursdayArray, "R");
-	if (thursdayDescriptions.times.length > 0) {
-		var descriptions = descriptions.concat(thursdayDescriptions);
-	}
-
-	var fridayDescriptions = dayArrayToDescriptions(fridayArray, "F");
-	if (fridayDescriptions.times.length > 0) {
-		var descriptions = descriptions.concat(fridayDescriptions);
-	}
+	descriptions.push(describeDayArray(hoursArray.slice(0,14), "M"));
+	descriptions.push(describeDayArray(hoursArray.slice(15,29), "T"));
+	descriptions.push(describeDayArray(hoursArray.slice(30,44), "W"));
+	descriptions.push(describeDayArray(hoursArray.slice(45,59), "R"));
+	descriptions.push(describeDayArray(hoursArray.slice(60,74), "F"));
 
 	return descriptions;
 };
 
-dayArrayToDescriptions = function(dayArray, dayCode) {
-	var descriptions = {};
-	descriptions.day = dayCode;
-	descriptions.times = "";
+describeDayArray = function(dayArray, dayCode) {
+	var descriptions = {
+		day: dayCode,
+		times: ""
+	};
 
 	var startHour = 7;
 
 	var startTimeBlock = null;
 	var endTimeBlock = null;
-	var firstTimeBlock = true;
+	var blocks = [];
 
 	dayArray.forEach( function(hourFlag, i) {
 		if (hourFlag == "1") {
@@ -296,40 +260,29 @@ dayArrayToDescriptions = function(dayArray, dayCode) {
 			} else {
 				endTimeBlock++;
 			}
-		}
-
-		if (hourFlag == "0" && startTimeBlock != null) {
-			var startTimeAdjusted = startTimeBlock;
-			var endTimeAdjusted = endTimeBlock;
-
-			if (startTimeBlock > 12) {
-				startTimeAdjusted -= 12;
-			}
-			if (endTimeBlock > 12) {
-				endTimeAdjusted -= 12;
-			}
-
-			var startTime = startTimeAdjusted + timeSuffix(startTimeBlock);
-			var endTime = endTimeAdjusted + timeSuffix(endTimeBlock);
-
-			if (firstTimeBlock == false) {
-				descriptions.times += ", ";
-			}
-			firstTimeBlock = false;
-
-			description = startTime + "-" + endTime;
-			descriptions.times += description;
+		} else if (hourFlag == "0" && startTimeBlock != null) {
+			blocks.push(blockDescription(startTimeBlock, endTimeBlock));
 			startTimeBlock = null;
 		}
 	});
 
+	if (startTimeBlock != null) {
+		blocks.push(blockDescription(startTimeBlock, endTimeBlock));
+	}
+
+	if(blocks.length == 0) {
+		// No availabilities were indicated
+		blocks.push("Not available");
+	}
+
+	descriptions.times = blocks.join(", ");
+
 	return descriptions;
 };
 
-timeSuffix = function(time) {
-	if (time < 12) {
-		return "am";
-	}
+blockDescription = function(startTime, endTime) {
+	var start = (startTime > 12 ? (startTime - 12) + "pm" : startTime + "am" );
+	var end = (endTime > 12 ? (endTime - 12) + "pm" : endTime + "am" );
 
-	return "pm";
+	return start + "-" + end;
 };

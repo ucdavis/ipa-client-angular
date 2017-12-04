@@ -1,78 +1,33 @@
-.table-header {
-	display: flex;
+/* Main report table */
+table {
+	border: 1px solid #ebebeb;
 	width: 100%;
-	font-size:14px;
-	text-align: center;
 }
 
-.instructor-row {
-	margin-top: 10px;
-	display: flex;
-	width: 100%;
-	text-align: center;
+table thead {
+	border-bottom: 1px solid #ebebeb;
 }
 
-.instructor-header {
-	flex: 1 0 0px;
+table th {
+	font-weight: 500;
+	padding: 15px 10px 15px 10px;
 	text-align: left;
 }
 
-.term-header {
-	flex: 2 0 0px;
+table tbody {
+	vertical-align: top;
 }
 
-.term-cell {
-	flex: 2 0 0px;
-}
-
-.term-cell-container {
-	flex: 8 0 0px;
-	display: flex;
-}
-
-.instructor-cell {
-	font-weight: bold;
-	text-align: left;
-	flex: 1 1 0px;
-}
-
-.comment-row {
-	margin-top: 10px;
-	display:flex;
-	width: 100%;
-}
-
-.comment-label {
-	flex: 2 0 0px;
-	display: flex;
-}
-
-.comment-label-container {
-	
+table tbody tr {
+	border-bottom: 1px solid #ebebeb;
 }
 
 .comment-cell {
 	color: #888888;
-	flex: 8 0 0px;
-	display: flex;
 }
 
 .green {
 	color: green;
-}
-
-.report-page-title {
-  text-align: center;
-}
-
-.dividing-bar {
-	margin-top:10px;
-	border-bottom: 1px solid #ddd;
-}
-
-.dividing-bar-darker {
-	margin-top:10px;
-	border-bottom: 1px solid #848484;
 }
 
 .teaching-call-response-report-container {
@@ -83,4 +38,44 @@
 
 .teaching-call-response-report-container .main-content {
 	display: block;
+}
+
+/* Toolbar styles */
+
+.table-toolbar {
+  width: 100%;
+  text-align: right;
+  padding-bottom: 5px;
+	margin: 0px;
+  border-radius: 3px;
+}
+.tool-icon {
+  margin: 0 0.5em;
+  padding: 0.5em;
+}
+.tool-icon:hover {
+  cursor: pointer;
+  background: #ebebeb;
+  border-radius: 3px;
+}
+
+/* .btn-group vertical-align pushes the icons with dropdown menus out of veritcal
+   alignment with the icons without a dropdown menu */
+.table-toolbar>.btn-group {
+  vertical-align: initial;
+}
+
+.table-toolbar .dropdown-menu {
+	min-width: 200px;
+}
+
+.table-toolbar .tool-icon {
+  margin: 0 0.5em;
+  padding: 0.5em;
+}
+
+.table-toolbar .tool-icon:hover {
+  cursor: pointer;
+  background: #ebebeb;
+  border-radius: 3px;
 }
