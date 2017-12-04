@@ -1,0 +1,12 @@
+<div
+class="ipa-button"
+ng-class="{ 'skin-light' : color == 'light', 'skin-dark' : color == 'dark', 'skin-danger' : color == 'danger' }"
+ng-click="onClick()">
+	<div class="icon-container">
+		<div ng-class="iconClass">
+		</div>
+	</div>
+	<div class="button-text-container">
+		{{ buttonText }}
+	</div>
+</div>
