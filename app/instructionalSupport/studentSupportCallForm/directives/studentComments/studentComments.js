@@ -1,4 +1,4 @@
-instructionalSupportApp.directive("studentComments", this.studentComments = function () {
+instructionalSupportApp.directive("studentComments", this.studentComments = function (studentActions) {
 	return {
 		restrict: 'E',
 		templateUrl: 'studentComments.html',
@@ -7,8 +7,8 @@ instructionalSupportApp.directive("studentComments", this.studentComments = func
 			supportCallResponse: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.updateSupportCallResponse = function() {
-				studentActions.updateSupportCallResponse($scope.props.state.supportCallResponse);
+			scope.updateStudentComments = function() {
+				studentActions.updateStudentComments(scope.supportCallResponse);
 			};
 		}
 	};

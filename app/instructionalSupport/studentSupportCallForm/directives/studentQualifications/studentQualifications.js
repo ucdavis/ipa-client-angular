@@ -7,8 +7,8 @@ instructionalSupportApp.directive("studentQualifications", this.studentQualifica
 			supportCallResponse: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.updateSupportCallResponse = function() {
-				studentActions.updateSupportCallResponse($scope.props.state.supportCallResponse);
+			scope.updateStudentQualifications = function() {
+				studentActions.updateStudentQualifications(scope.supportCallResponse);
 			};
 		}
 	};

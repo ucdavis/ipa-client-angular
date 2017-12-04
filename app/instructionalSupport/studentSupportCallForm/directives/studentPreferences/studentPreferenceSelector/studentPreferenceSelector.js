@@ -3,7 +3,6 @@ instructionalSupportApp.directive("studentPreferenceSelector", this.studentPrefe
 		restrict: 'E',
 		templateUrl: 'studentPreferenceSelector.html',
 		replace: true,
-		scope: false,
 		link: function (scope, element, attrs) {
 			// do nothing
 		}
