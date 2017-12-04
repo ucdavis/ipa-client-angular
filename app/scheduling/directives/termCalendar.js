@@ -48,6 +48,9 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			var unavailabilityEventBorderColor = "#C6D2D6";
 			var unavailabilityEventTextColor = "#555555";
 
+			var tagEventTextColor = "#FFFFFF";
+			var selectedActivityTaggedColorShift = -80;
+
 			var refreshCalendar = function () {
 				var parentAspectRatio = element.parent().width() / element.parent().height();
 				element.fullCalendar('destroy');
@@ -104,9 +107,9 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				});
 			};
 
-			// supply a color and amount to shift it by
-			// example to lighten: lightenOrDarkenColor("#F06D06", 20);
-			// example to darken: lightenOrDarkenColor("#F06D06", -20);
+			// Supply a color and amount to shift the color (out of 255)
+			// Example to lighten: lightenOrDarkenColor("#F06D06", 20);
+			// Example to darken: lightenOrDarkenColor("#F06D06", -20);
 			var lightenOrDarkenColor = function(col, amt) {
 				var usePound = false;
 
@@ -152,7 +155,7 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 					var unstyledEvents = sectionGroupToActivityEvents(sectionGroup);
 					var tagColor = calculateTagColor(sectionGroup);
 
-					var textColor = tagColor ? "#FFFFFF" : activeEventTextColor;
+					var textColor = tagColor ? tagEventTextColor : activeEventTextColor;
 					var borderColor = tagColor ? tagColor : activeEventBorderColor;
 					var backgroundColor = tagColor ? tagColor : activeEventBackgroundColor;
 
@@ -188,6 +191,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				return calendarActivities;
 			};
 
+			// If a tag exists, identifies the color of the first one found.
+			// Otherwise, returns null
 			var calculateTagColor = function (sectionGroup) {
 				var tagColor = null;
 				var course = scope.view.state.courses.list[sectionGroup.courseId];
@@ -323,13 +328,14 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				return calendarActivities;
 			};
 
+			// Generate a styled calendar event (text/background/border colors)
+			// Considers the selectedActivity in the UI, and supplied tag colors
 			var styleCalendarEvents = function (calendarActivities, backgroundColor, borderColor, textColor, tagColor) {
 				calendarActivities.forEach(function (event) {
-					console.log(scope.view.state.uiState.selectedActivityId);
 					if (scope.view.state.uiState.selectedActivityId === event.activityId) {
 						if (tagColor) {
-							event.color = lightenOrDarkenColor(tagColor, -80);
-							event.borderColor = lightenOrDarkenColor(tagColor, -80);
+							event.color = lightenOrDarkenColor(tagColor, selectedActivityTaggedColorShift);
+							event.borderColor = lightenOrDarkenColor(tagColor, selectedActivityTaggedColorShift);
 							event.textColor = textColor;
 						} else {
 							event.color = highlightedEventBackgroundColor;
