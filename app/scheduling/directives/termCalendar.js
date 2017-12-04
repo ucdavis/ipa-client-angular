@@ -171,8 +171,6 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 							var sectionGroup = scope.view.state.sectionGroups.list[sgId];
 							var course = scope.view.state.courses.list[sectionGroup.courseId];
 							var unstyledEvents = sectionGroupToActivityEvents(scope.view.state.sectionGroups.list[sgId]);
-
-
 							var tagColor = scope.view.state.courses.list[sectionGroup.courseId].tagColor;
 
 							if (tagColor) {
@@ -192,7 +190,6 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			};
 
 			var activityToEvents = function (activity, courseTitle) {
-
 				var calendarActivities = [];
 
 				if (activity.startTime && activity.endTime && activity.dayIndicator) {
@@ -374,7 +371,6 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			$.extend(neonCalendar, {
 				isPresent: neonCalendar.$container.length > 0
 			});
-
 		}
 	};
 });
