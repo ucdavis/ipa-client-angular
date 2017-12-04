@@ -645,6 +645,10 @@ margin-left: 6px;
 
 .support-staff-assignment-sub-detail {
 	font-weight: normal;
+}
+
+.support-staff-assignment__review-comment {
+	font-weight: normal;
 	width: 100%;
 }
 
