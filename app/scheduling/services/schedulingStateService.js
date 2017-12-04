@@ -16,16 +16,26 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 				case INIT_STATE:
 					courses = {
 						newCourse: null,
-						ids: []
+						ids: [],
+						list: {}
 					};
-					var coursesList = {};
-					var length = action.payload.courses ? action.payload.courses.length : 0;
-					for (var i = 0; i < length; i++) {
-						var courseData = action.payload.courses[i];
-						coursesList[courseData.id] = new Course(courseData);
-					}
-					courses.ids = _array_sortIdsByProperty(coursesList, ["subjectCode", "courseNumber", "sequencePattern"]);
-					courses.list = coursesList;
+					action.payload.courses.forEach(function(courseData) {
+						courses.list[courseData.id] = new Course(courseData);
+						if (courseData.tagIds.length > 0) {
+							for (var i = 0; i < action.payload.tags.length; i++) {
+								var slotTag = action.payload.tags[i];
+								if (courseData.tagIds[0] == slotTag.id) {
+									var tag = slotTag;
+									break;
+								}
+							}
+
+							if (tag) {
+								courses.list[courseData.id].tagColor = tag.color;
+							}
+						}
+					});
+					courses.ids = _array_sortIdsByProperty(courses.list, ["subjectCode", "courseNumber", "sequencePattern"]);
 					return courses;
 				case UPDATE_TAG_FILTERS:
 					// Set the course.matchesTagFilters flag to true if any tag matches the filters
