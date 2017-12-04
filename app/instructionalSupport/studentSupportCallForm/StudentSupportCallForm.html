@@ -11,7 +11,7 @@
 	</spinner>
 
 	<!-- handle lack of access -->
-	<div ng-if="view.state && !view.state.supportCallResponse">
+	<div ng-show="view.state && !view.state.supportCallResponse">
 		<div class="jumbotron student-support-call-form__no-access">
 			<p class="lead">You have not been invited to a support call in this term.</p>
 			<br />
@@ -19,7 +19,7 @@
 		</div>
 	</div>
 
-	<div ng-if="view.state && view.state.supportCallResponse" class="student-support-call-form__container">
+	<div ng-show="view.state && view.state.supportCallResponse" class="student-support-call-form__container">
 		<!-- Modals -->
 		<ipa-modal
 			is-visible="view.state.isPreferenceCommentModalOpen"

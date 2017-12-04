@@ -24,6 +24,30 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 				$rootScope.$emit('toast', { message: "Could not add preference.", type: "ERROR" });
 			});
 		},
+		updateStudentComments: function(supportCallResponse) {
+			studentService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Updated comments.", type: "SUCCESS" });
+				var action = {
+					type: UPDATE_SUPPORT_CALL_RESPONSE,
+					payload: payload
+				};
+				studentReducers.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update comments.", type: "ERROR" });
+			});
+		},
+		updateStudentQualifications: function(supportCallResponse) {
+			studentService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Updated qualifications.", type: "SUCCESS" });
+				var action = {
+					type: UPDATE_SUPPORT_CALL_RESPONSE,
+					payload: payload
+				};
+				studentReducers.reduce(action);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update qualifications.", type: "ERROR" });
+			});
+		},
 		updateSupportCallResponse: function (supportCallResponse) {
 			studentService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });

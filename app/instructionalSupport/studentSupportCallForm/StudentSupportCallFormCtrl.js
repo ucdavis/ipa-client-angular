@@ -19,18 +19,6 @@ instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$ro
 				$scope.view.state = data;
 			});
 
-			$scope.addPreference = function(preference) {
-				studentActions.addStudentPreference(preference);
-			};
-
-			$scope.deletePreference = function(preference) {
-				studentActions.deleteStudentPreference(preference);
-			};
-
-			$scope.updateSupportCallResponse = function() {
-				studentActions.updateSupportCallResponse($scope.view.state.supportCallResponse);
-			};
-
 			$scope.submitPreferences = function() {
 				$scope.view.state.supportCallResponse.submitted = true;
 				studentActions.submitPreferences($scope.view.state.supportCallResponse, $scope.workgroupId, $scope.year);

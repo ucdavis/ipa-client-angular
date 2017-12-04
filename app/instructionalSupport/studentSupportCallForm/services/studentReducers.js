@@ -22,7 +22,7 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 				case INIT_STATE:
 					courses = {
 						ids: [],
-						list: []
+						list: {}
 					};
 					action.payload.courses.forEach( function(course) {
 						courses.ids.push(course.id);
@@ -38,7 +38,7 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 				case INIT_STATE:
 					preferences = {
 						ids: [],
-						list: []
+						list: {}
 					};
 					action.payload.studentSupportPreferences.forEach( function(preference) {
 						preferences.ids.push(preference.id);
@@ -78,7 +78,7 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 				case INIT_STATE:
 					supportAssignments = {
 						ids: [],
-						list: []
+						list: {}
 					};
 					action.payload.supportAssignments.forEach( function(supportAssignment) {
 						supportAssignments.ids.push(supportAssignment.id);
