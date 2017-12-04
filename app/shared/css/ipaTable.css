@@ -15,7 +15,6 @@
 	flex: 1 1 0px;
 	display: flex;
 	align-items: center;
-	justify-content: center;
 }
 
 
@@ -35,7 +34,6 @@
 	flex: 1 1 0px;
 	display: flex;
 	align-items: center;
-	justify-content: center;
 }
 
 .ipa-table__body-cell--first {

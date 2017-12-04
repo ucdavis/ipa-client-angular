@@ -2,6 +2,11 @@
 	text-align: center;
 	height: 100%;
 	background-color: white;
+	height: 30px;
+}
+
+.student-preference-table__selector-container {
+	width: 50%;
 }
 
 .ipa-table__body-cell--small {
@@ -14,4 +19,12 @@
 
 .ipa-table__body-cell--large {
 	flex-grow: 3
+}
+
+.ipa-table__body-cell--centered {
+	justify-content: center;
+}
+
+.ipa-table__body-row--borderless {
+	border: none;
 }

@@ -1,0 +1,15 @@
+.student-preference-selector {
+	height: 30px;
+	border: 1px solid #ebebeb;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	position: relative;
+	width: 100%;
+	text-align: center;
+	color: #303641;
+}
+
+.student-preference-selector__toggle-button {
+	width: 100%;
+}
