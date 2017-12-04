@@ -153,7 +153,7 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				if (scope.view.state.uiState.selectedSectionGroupId) {
 					var sectionGroup = scope.view.state.sectionGroups.list[scope.view.state.uiState.selectedSectionGroupId];
 					var unstyledEvents = sectionGroupToActivityEvents(sectionGroup);
-					var tagColor = calculateTagColor(sectionGroup);
+					var tagColor = scope.view.state.courses.list[sectionGroup.courseId].tagColor;
 
 					var textColor = tagColor ? tagEventTextColor : activeEventTextColor;
 					var borderColor = tagColor ? tagColor : activeEventBorderColor;
@@ -173,7 +173,7 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 							var unstyledEvents = sectionGroupToActivityEvents(scope.view.state.sectionGroups.list[sgId]);
 
 
-							var tagColor = calculateTagColor(sectionGroup);
+							var tagColor = scope.view.state.courses.list[sectionGroup.courseId].tagColor;
 
 							if (tagColor) {
 								calendarActivities = calendarActivities.concat(
@@ -189,22 +189,6 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				}
 
 				return calendarActivities;
-			};
-
-			// If a tag exists, identifies the color of the first one found.
-			// Otherwise, returns null
-			var calculateTagColor = function (sectionGroup) {
-				var tagColor = null;
-				var course = scope.view.state.courses.list[sectionGroup.courseId];
-
-				if (course.tagIds.length > 0) {
-					var tag = scope.view.state.tags.list[course.tagIds[0]];
-					if (tag.color) {
-						tagColor = tag.color;
-					}
-				}
-
-				return tagColor;
 			};
 
 			var activityToEvents = function (activity, courseTitle) {
