@@ -102,11 +102,12 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 									description = "Sabbatical";
 								} else if (teachingAssignment.leaveOfAbsence) {
 									description = "Leave of Absence";
-								} else if (teachingAssignment.suggestedSubjectCode == null || teachingAssignment.suggestedCourseNumber == null) {
+								} else if (teachingAssignment.suggestedSubjectCode != null && teachingAssignment.suggestedCourseNumber != null) {
+									description = teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber;
+								} else {
 									console.error("Unhandled teachingAssignment type.");
 									console.dir(teachingAssignment);
-								} else {
-									description = teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber;
+									description = "Unknown";
 								}
 
 								preferences.push({
@@ -121,15 +122,20 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 								var course = courses.list[courseId];
 
 								// Do we already have that course listed for this term?
-								var alreadyExists = (preferences.find( function (preference) {
+								var alreadyExists = preferences.find( function (preference) {
 									return preference.effectiveTermCode == course.effectiveTermCode
 									&& preference.subjectCode == course.subjectCode
-									&& preference.courseNumber == course.courseNumber; }) !== undefined);
+									&& preference.courseNumber == course.courseNumber; });
+
+								alreadyExists = (alreadyExists !== undefined);
 
 								if (alreadyExists == false) {
 									preferences.push({
 										description: course.subjectCode + " " + course.courseNumber + ": " + course.title,
-										order: teachingAssignment.priority
+										order: teachingAssignment.priority,
+										effectiveTermCode: course.effectiveTermCode,
+										subjectCode: course.subjectCode,
+										courseNumber: course.courseNumber
 									});
 								}
 							}
