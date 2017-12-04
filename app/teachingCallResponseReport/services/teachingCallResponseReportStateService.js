@@ -121,7 +121,7 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 								var course = courses.list[courseId];
 
 								// Do we already have that course listed for this term?
-								var alreadyExists = (preferences.find( (preference) => {
+								var alreadyExists = (preferences.find( function (preference) {
 									return preference.effectiveTermCode == course.effectiveTermCode
 									&& preference.subjectCode == course.subjectCode
 									&& preference.courseNumber == course.courseNumber; }) !== undefined);
