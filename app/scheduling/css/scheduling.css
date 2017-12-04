@@ -457,3 +457,7 @@ i.selected-section-group-remove {
 .section-in-series {
 	display: flex;
 }
+
+.filter-course--tag {
+	color: white;
+}
