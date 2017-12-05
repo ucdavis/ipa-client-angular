@@ -41,3 +41,8 @@
 .student-preference-table__priority-label {
 	flex: 2 1 0px;
 }
+
+.student-preference-table__trash {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
