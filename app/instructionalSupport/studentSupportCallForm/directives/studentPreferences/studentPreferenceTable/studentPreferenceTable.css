@@ -35,7 +35,7 @@
 	flex-flow:column;
 	align-items: center;
 	justify-content: space-around;
-	height: 90%;
+	height: 75%;
 }
 
 .student-preference-table__priority-label {
