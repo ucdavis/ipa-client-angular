@@ -21,6 +21,7 @@ sharedApp.directive("ipaButton", this.ipaButton = function () {
 			hoverText: '<?',
 			color: '<?',
 			iconClass: '<?',
+			buttonClass: '<?'
 		},
 		link: function(scope, element, attrs) {
 			// Intentionally empty
