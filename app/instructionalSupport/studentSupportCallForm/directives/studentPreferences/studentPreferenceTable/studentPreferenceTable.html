@@ -28,11 +28,13 @@
 						<div class="student-preference-table__priority-ui">
 							<priority-button
 								icon-class="'glyphicon glyphicon-chevron-up'"
-								on-click="raiseStudentPreferencePriority(preference)">
+								on-click="updatePreferencesOrder(preference, -1)"
+								is-disabled="$first">
 							</priority-button>
 							<priority-button
 								icon-class="'glyphicon glyphicon-chevron-down'"
-								on-click="lowerStudentPreferencePriority(preference)">
+								on-click="updatePreferencesOrder(preference, 1)"
+								is-disabled="$last">
 							</priority-button>
 						</div>
 						<div class="student-preference-table__priority-label">
