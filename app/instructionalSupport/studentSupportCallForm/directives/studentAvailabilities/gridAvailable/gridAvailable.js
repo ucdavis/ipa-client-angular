@@ -1,23 +1,21 @@
-instructionalSupportApp.directive("gridAvailable", this.gridAvailable = function () {
+instructionalSupportApp.directive("gridAvailable", this.gridAvailable = function (studentActions, $timeout) {
 	return {
 		restrict: 'E',
 		templateUrl: 'gridAvailable.html',
 		replace: true,
-		scope: {
-			state: '<'
-		},
 		link: function (scope, element, attrs) {
-			scope.props = {};
 
-			scope.$watch('state',function() {
-				scope.mapStateToProps(scope.state);
-			});
+			scope.saveSupportCallResponse = function(newBlob, delay) {
+				scope.state.supportCallResponse.availabilityBlob = newBlob;
 
-			scope.mapStateToProps = function(state) {
-				scope.props.state = state;
+				// Report changes back to server after some delay
+				$timeout.cancel(scope.timeout);
+				scope.timeout = $timeout(function() {
+					studentActions.updateAvailability(scope.state.supportCallResponse);
+				}, delay);
 			};
 
-			scope.mapStateToProps(scope.state);
+			scope.timeout = {};
 		}
 	};
 });

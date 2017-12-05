@@ -1,0 +1,27 @@
+.student-availabilities__header-container {
+	display: flex;
+	justify-content: space-between;
+}
+
+.student-availabilities__header {
+	flex: 1 1 0px;
+}
+
+.student-availabilities__legend {
+	flex: 1 1 0px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.student-availabilities__unavailable-color {
+	background-color: #ccc;
+}
+
+.student-availabilities__available-color {
+	background-color: white;
+}
+
+.student-availabilities__question {
+	padding-left: 5px;
+}
