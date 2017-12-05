@@ -15,7 +15,8 @@ sharedApp.directive("priorityButton", this.ipaButton = function () {
 		replace: true,
 		scope: {
 			onClick: '&?',
-			iconClass: '<?'
+			iconClass: '<?',
+			isDisabled: '<?'
 		},
 		link: function(scope, element, attrs) {
 			// Intentionally empty

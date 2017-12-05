@@ -1,6 +1,14 @@
-<div class="priority-button" ng-click="onClick()">
-	<div class="priority-button__icon-container icon-container">
-		<div ng-class="iconClass">
+<div class="priority-button" ng-class="{'priority-button--disabled': isDisabled }">
+	<div ng-show="!(isDisabled)" ng-click="onClick()">
+		<div class="priority-button__icon-container icon-container">
+			<div ng-class="iconClass">
+			</div>
+		</div>
+	</div>
+	<div ng-show="(isDisabled)">
+		<div class="priority-button__icon-container icon-container">
+			<div ng-class="iconClass">
+			</div>
 		</div>
 	</div>
 </div>
