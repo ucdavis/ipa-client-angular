@@ -8,15 +8,17 @@
 
 **/
 
-sharedApp.directive("priorityButton", this.ipaButton = function () {
+sharedApp.directive("ipaIconButton", this.ipaIconButton = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'priorityButton.html',
+		templateUrl: 'ipaIconButton.html',
 		replace: true,
 		scope: {
 			onClick: '&?',
 			iconClass: '<?',
-			isDisabled: '<?'
+			isDisabled: '<?',
+			tooltipMessage: '<?',
+			confirmMessage: '<?'
 		},
 		link: function(scope, element, attrs) {
 			// Intentionally empty

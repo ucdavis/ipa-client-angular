@@ -1,0 +1,33 @@
+<div
+class="ipa-icon-button"
+uib-tooltip="{{tooltipMessage}}"
+tooltip-placement="bottom"
+ng-class="{'ipa-icon-button--disabled': isDisabled }">
+
+	<div ng-show="!(isDisabled)">
+		<div
+		ng-show="confirmMessage && confirmMessage.length > 0"
+		class="ipa-icon-button__icon-container"
+		confirm-button="onClick()"
+		message="{{confirmMessage}}"
+		yes="Confirm" no="Cancel" placement="top">
+			<div ng-class="iconClass">
+			</div>
+		</div>
+
+		<div
+		ng-show="!confirmMessage || confirmMessage.length == 0"
+		class="ipa-icon-button__icon-container"
+		ng-click="onClick()">
+			<div ng-class="iconClass">
+			</div>
+		</div>
+	</div>
+
+	<div ng-show="(isDisabled)">
+		<div class="ipa-icon-button__icon-container">
+			<div ng-class="iconClass">
+			</div>
+		</div>
+	</div>
+</div>
