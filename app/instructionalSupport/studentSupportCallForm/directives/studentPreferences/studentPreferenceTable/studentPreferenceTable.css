@@ -28,3 +28,16 @@
 .ipa-table__body-row--borderless {
 	border: none;
 }
+
+.student-preference-table__priority-ui {
+	flex: 2 1 0px;
+	display: flex;
+	flex-flow:column;
+	align-items: center;
+	justify-content: space-around;
+	height: 90%;
+}
+
+.student-preference-table__priority-label {
+	flex: 2 1 0px;
+}

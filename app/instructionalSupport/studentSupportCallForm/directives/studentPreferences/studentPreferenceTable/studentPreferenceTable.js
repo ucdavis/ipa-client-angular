@@ -7,6 +7,14 @@ instructionalSupportApp.directive("studentPreferenceTable", this.studentPreferen
 			scope.deletePreference = function(preference) {
 				studentActions.deleteStudentPreference(preference);
 			};
+
+			scope.lowerStudentPreferencePriority = function(preference) {
+
+			};
+
+			scope.raiseStudentPreferencePriority = function(preference) {
+
+			};
 		}
 	};
 });
