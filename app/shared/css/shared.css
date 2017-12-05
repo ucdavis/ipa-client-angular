@@ -78,7 +78,8 @@ table.availability-grid {
 table.availability-grid tr th {
 	border: none;
 	font-weight: normal;
-	padding: 0 !important;
+	padding: 10px;
+	text-align: center;
 }
 
 table.availability-grid tr th.left {
@@ -88,7 +89,6 @@ table.availability-grid tr th.left {
 
 table.availability-grid tr th.hover {
 	color: #BA0C2F;
-	font-weight: bold;
 }
 
 table.availability-grid tr td.unavailable {
@@ -96,7 +96,7 @@ table.availability-grid tr td.unavailable {
 }
 
 table.availability-grid tr td {
-	border-top: 1px solid #ddd !important;
+	border: 1px solid #ddd;
 }
 
 .legend-square {

@@ -137,11 +137,20 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 					if (!supportCallResponse) {
 						return null;
 					}
-					supportCallResponse.dueDateDescription = millisecondsToDate(supportCallResponse.dueDate);
+					if (!supportCallResponse.availabilityBlob) {
+						supportCallResponse.availabilityBlob =
+								"1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,"
+							+ "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,"
+							+ "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,"
+							+ "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,"
+							+ "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
+					}
+
+					supportCallResponse.dueDateDescription = supportCallResponse.dueDate ? millisecondsToDate(supportCallResponse.dueDate) : "";
 					return supportCallResponse;
 				case UPDATE_SUPPORT_CALL_RESPONSE:
 					supportCallResponse = action.payload;
-					supportCallResponse.dueDateDescription = millisecondsToDate(supportCallResponse.dueDate);
+					supportCallResponse.dueDateDescription = supportCallResponse.dueDate ? millisecondsToDate(supportCallResponse.dueDate) : "";
 					return supportCallResponse;
 				default:
 					return supportCallResponse;
