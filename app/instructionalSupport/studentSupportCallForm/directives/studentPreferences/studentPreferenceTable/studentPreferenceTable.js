@@ -8,12 +8,25 @@ instructionalSupportApp.directive("studentPreferenceTable", this.studentPreferen
 				studentActions.deleteStudentPreference(preference);
 			};
 
-			scope.lowerStudentPreferencePriority = function(preference) {
+			// Will reorder the preferenceIds
+			// Negative changeValue will raise the priority, positive changeValue will lower priority
+			scope.updatePreferencesOrder = function(preference, changeValue) {
+				var preferenceIds = _array_sortByProperty(scope.state.preferences, "priority");
+				preferenceIds = preferenceIds.map(function(preference) { return preference.id; });
 
+				var index = preferenceIds.indexOf(preference.id);
+				preferenceIds = scope.swapPositions(preferenceIds, index, index + changeValue);
+				var termCode = scope.state.supportCallResponse.termCode;
+
+				studentActions.updatePreferencesOrder(preferenceIds, scope.state.misc.scheduleId, termCode);
 			};
 
-			scope.raiseStudentPreferencePriority = function(preference) {
+			scope.swapPositions = function (array, indexA, indexB) {
+				var valA = array[indexA];
+				array[indexA] = array[indexB];
+				array[indexB] = valA;
 
+				return array;
 			};
 		}
 	};
