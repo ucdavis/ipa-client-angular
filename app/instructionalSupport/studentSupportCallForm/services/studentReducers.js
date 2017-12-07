@@ -17,6 +17,42 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 					return sectionGroups;
 			}
 		},
+		_sectionReducers: function (action, sections) {
+			switch (action.type) {
+				case INIT_STATE:
+					sections = {
+						ids: [],
+						list: {},
+						crn: {}
+					};
+					action.payload.sections.forEach( function(section) {
+						sections.ids.push(section.id);
+						sections.list[section.id] = section;
+						if (section.crn && section.crn.length > 0) {
+							sections.crn[section.crn] = section;
+						}
+					});
+					return sections;
+				default:
+					return sections;
+			}
+		},
+		_activityReducers: function (action, activities) {
+			switch (action.type) {
+				case INIT_STATE:
+					activities = {
+						ids: [],
+						list: {}
+					};
+					action.payload.activities.forEach( function(activity) {
+						activities.ids.push(activity.id);
+						activities.list[activity.id] = activity;
+					});
+					return activities;
+				default:
+					return activities;
+			}
+		},
 		_courseReducers: function (action, courses) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -167,6 +203,8 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 			newState.preferences = scope._preferenceReducers(action, scope._state.preferences);
 			newState.supportCallResponse = scope._supportCallResponseReducers(action, scope._state.supportCallResponse);
 			newState.ui = scope._uiReducers(action, scope._state.ui);
+			newState.sections = scope._sectionReducers(action, scope._state.sections);
+			newState.activities = scope._activityReducers(action, scope._state.activities);
 
 			scope._state = newState;
 

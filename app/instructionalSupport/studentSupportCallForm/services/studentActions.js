@@ -130,6 +130,57 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 			studentReducers.reduce({
 				type: CLOSE_PREFERENCE_COMMENT_MODAL
 			});
+		},
+		addCrnToAvailability: function(crn, appliedCrns, supportCallResponse) {
+			debugger;
+		},
+		removeCrnFromAvailability: function(crn, timeSlots, supportCallResponse) {
+			debugger;
+		},
+		calculateTimesForCrn: function(crn, courses, sectionGroups, sections, activities) {
+			var section = null;
+
+			for (var i = 0; i < sections.ids.length; i++) {
+				var slotSection = sections.list[sections.ids[i]];
+
+				if (section.crn == crn) {
+					section = angular.copy(slotSection);
+					break;
+				}
+			}
+
+			// No crn matched section
+			if (section == null) {
+				studentReducers.reduce({
+					type: CALCULATE_TIMESLOTS_FOR_CRN,
+					crn: crn
+				});
+				return;
+			}
+
+			// Calculate timeSlots from section - activities
+			var timeSlots = activities.ids.filter(function(activityId) {
+				activities.list[activityId].sectionId == section.id;
+			}).map(function(activityId) {
+				var activity = activities.list[activityId];
+				debugger;
+			});
+			debugger;
+			//TODO: Calculate timeSlots from sectionGroup - activities
+
+
+			//TODO: combine timeslots
+
+			// Calculate description
+			var course = courses.list[sectionGroups.list[section.sectionGroupId].courseId];
+			var description = course.subjectCode + " " + course.courseNumber + " " + section.sequenceNumber;
+
+			studentReducers.reduce({
+				type: CALCULATE_TIMESLOTS_FOR_CRN,
+				crn: crn,
+				timeslots: timeSlots,
+				description: description
+			});
 		}
 	};
 });

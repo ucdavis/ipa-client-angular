@@ -1,13 +1,49 @@
 <div
 class="ipa-button"
-ng-class="buttonClass"
-ng-class="{ 'skin-light' : color == 'light', 'skin-dark' : color == 'dark', 'skin-danger' : color == 'danger' }"
-ng-click="onClick()">
-	<div class="icon-container">
+uib-tooltip="{{tooltipMessage}}"
+tooltip-placement="bottom"
+ng-class="{'ipa-button--disabled': isDisabled }">
+
+	<div ng-show="!(isDisabled)">
+		<!-- with confirmation -->
+		<div
+		ng-show="confirmMessage && confirmMessage.length > 0"
+		class="ipa-button__icon-container"
+		ng-class="{'ipa-button__icon-container--slim': size == 'slim'}"
+		confirm-button="onClick()"
+		message="{{confirmMessage}}"
+		yes="Confirm" no="Cancel" placement="top">
+			<div class="ipa-button__text" ng-show="text">
+				{{ text }}
+			</div>
+			<div ng-class="iconClass">
+			</div>
+		</div>
+
+		<!-- without confirmation -->
+		<div
+		ng-show="!confirmMessage || confirmMessage.length == 0"
+		class="ipa-button__icon-container"
+		ng-class="{'ipa-button__icon-container--slim': size == 'slim'}"
+		ng-click="onClick()">
+		<div class="ipa-button__text" ng-show="text">
+			{{ text }}
+		</div>
 		<div ng-class="iconClass">
+			</div>
 		</div>
 	</div>
-	<div class="button-text-container">
-		{{ buttonText }}
+
+	<!-- disabled state -->
+	<div ng-show="(isDisabled)">
+		<div
+		class="ipa-button__icon-container"
+		ng-class="{'ipa-button__icon-container--slim': size == 'slim'}">
+			<div class="ipa-button__text" ng-show="text">
+				{{ text }}
+			</div>
+			<div ng-class="iconClass">
+			</div>
+		</div>
 	</div>
 </div>
