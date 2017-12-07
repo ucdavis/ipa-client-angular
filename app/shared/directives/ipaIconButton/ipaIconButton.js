@@ -18,7 +18,9 @@ sharedApp.directive("ipaIconButton", this.ipaIconButton = function () {
 			iconClass: '<?',
 			isDisabled: '<?',
 			tooltipMessage: '<?',
-			confirmMessage: '<?'
+			confirmMessage: '<?',
+			buttonText: '<?',
+			size: '<?'
 		},
 		link: function(scope, element, attrs) {
 			// Intentionally empty
