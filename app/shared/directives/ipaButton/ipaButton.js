@@ -1,6 +1,6 @@
 /** Example Usage:
 <ipa-button
-	button-text="'waffle'"
+	text="'waffle'"
 	color="'light'"
 	icon-class="'glyphicon glyphicon-envelope'"
 	on-click="testComment()">
@@ -14,14 +14,13 @@ sharedApp.directive("ipaButton", this.ipaButton = function () {
 		templateUrl: 'ipaButton.html',
 		replace: true,
 		scope: {
-			buttonText: '<?',
 			onClick: '&?',
-			argument: '<?',
-			isDisabled: '<?',
-			hoverText: '<?',
-			color: '<?',
 			iconClass: '<?',
-			buttonClass: '<?'
+			isDisabled: '<?',
+			tooltipMessage: '<?',
+			confirmMessage: '<?',
+			text: '<?',
+			size: '<?'
 		},
 		link: function(scope, element, attrs) {
 			// Intentionally empty

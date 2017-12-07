@@ -18,7 +18,10 @@
 	</div>
 
 	<div ng-show="state.supportCallResponse.collectAvailabilityByGrid">
-		<grid-available></grid-available>
+		<grid-available
+		read-only="false"
+		support-call-response="state.supportCallResponse">
+		</grid-available>
 	</div>
 	<div ng-show="state.supportCallResponse.collectAvailabilityByCrn">
 		<crn-available></crn-available>
