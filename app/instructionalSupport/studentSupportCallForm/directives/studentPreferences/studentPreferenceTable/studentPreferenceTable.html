@@ -29,12 +29,14 @@
 							<ipa-icon-button
 								icon-class="'glyphicon glyphicon-chevron-up'"
 								on-click="updatePreferencesOrder(preference, -1)"
-								is-disabled="$first">
+								is-disabled="$first"
+								size="'slim'">
 							</ipa-icon-button>
 							<ipa-icon-button
 								icon-class="'glyphicon glyphicon-chevron-down'"
 								on-click="updatePreferencesOrder(preference, 1)"
-								is-disabled="$last">
+								is-disabled="$last"
+								size="'slim'">
 							</ipa-icon-button>
 						</div>
 						<div class="student-preference-table__priority-label">
@@ -47,9 +49,10 @@
 						{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern }}
 					</div>
 					<div class="ipa-table__body-cell ipa-table__body-cell--medium">
-						<button class="btn btn-default" ng-click="openPreferenceCommentModal(preference)">
-							Add preference comments
-						</button>
+						<ipa-icon-button
+							on-click="openPreferenceCommentModal(preference)"
+							button-text="'Add Comments'">
+						</ipa-icon-button>
 					</div>
 					<div class="ipa-table__body-cell ipa-table__body-cell--small">
 						<ipa-icon-button
