@@ -1,3 +1,34 @@
 <div class="crn-available">
-	crn
+	<div class="crn-available__header">
+		<div class="crn-available__header-ui">
+			<div class="crn-available__courses">
+				<div ng-repeat="supportCallCrn in supportCallCrns">
+					<ipa-pill
+					text="supportCallCrn.description">
+					</ipa-pill>
+				</div>
+			</div>
+			<div class="crn-available__input-container">
+				<ipa-input></ipa-input>
+			</div>
+			<div class="crn-available__add-crn">
+				<ipa-button
+				text="'Add CRN'"
+				on-click="calculateTimesForCrn()">
+				<ipa-button>
+			</div>
+		</div>
+		<div class="crn-available__feedback">
+			examples:
+			'no courses found'.
+			'no day/times for course found'
+			'PSC 001 - A02'
+		</div>
+	</div>
+	<div class="crn-available__grid-container">
+		<grid-available
+		read-only="true"
+		support-call-response="state.supportCallResponse">
+		</grid-available>
+	</div>
 </div>
