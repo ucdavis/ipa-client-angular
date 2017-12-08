@@ -125,6 +125,22 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 					return supportAssignments;
 			}
 		},
+		_studentSupportCallCrnReducers: function (action, studentSupportCallCrns) {
+			switch (action.type) {
+				case INIT_STATE:
+					studentSupportCallCrns = {
+						ids: [],
+						list: {}
+					};
+					action.payload.studentSupportCallCrns.forEach( function(studentSupportCallCrn) {
+						studentSupportCallCrns.ids.push(studentSupportCallCrn.id);
+						studentSupportCallCrns.list[studentSupportCallCrn.id] = studentSupportCallCrn;
+					});
+					return studentSupportCallCrns;
+				default:
+					return studentSupportCallCrns;
+			}
+		},
 		_miscReducers: function (action, misc) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -142,7 +158,10 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 				case INIT_STATE:
 					ui = {
 						isPreferenceCommentModalOpen: false,
-						isFormLocked: false
+						isFormLocked: false,
+						searchCrn: null,
+						crnAvailabilities: {},
+						crnSearchFeedback: null
 					};
 					// Determine if form should be locked (due date is enforced and has passed)
 					if (action.payload.supportCallResponse) {
@@ -205,12 +224,18 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 			newState.ui = scope._uiReducers(action, scope._state.ui);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
 			newState.activities = scope._activityReducers(action, scope._state.activities);
+			newState.studentSupportCallCrns = scope._studentSupportCallCrnReducers(action, scope._state.studentSupportCallCrns);
 
 			scope._state = newState;
 
 			// Build new 'page state'
 			// This is the 'view friendly' version of the store
 			newPageState = {};
+			newPageState.courses = angular.copy(scope._state.courses);
+			newPageState.sectionGroups = angular.copy(scope._state.sectionGroups);
+			newPageState.sections = angular.copy(scope._state.sections);
+			newPageState.activities = angular.copy(scope._state.activities);
+
 			newPageState.supportCallResponse = angular.copy(scope._state.supportCallResponse);
 			newPageState.misc = angular.copy(scope._state.misc);
 			newPageState.supportAssignments = angular.copy(scope._state.supportAssignments);
