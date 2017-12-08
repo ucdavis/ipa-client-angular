@@ -9,20 +9,17 @@
 				</div>
 			</div>
 			<div class="crn-available__input-container">
-				<ipa-input></ipa-input>
+				<ipa-input value="state.ui.searchCrn"></ipa-input>
 			</div>
 			<div class="crn-available__add-crn">
 				<ipa-button
 				text="'Add CRN'"
-				on-click="calculateTimesForCrn()">
+				on-click="calculateTimesForCrn(state.ui.searchCrn)">
 				<ipa-button>
 			</div>
 		</div>
 		<div class="crn-available__feedback">
-			examples:
-			'no courses found'.
-			'no day/times for course found'
-			'PSC 001 - A02'
+			{{ state.ui.crnSearchFeedback }}
 		</div>
 	</div>
 	<div class="crn-available__grid-container">
