@@ -1,0 +1,35 @@
+.crn-available__header {
+	display: flex;
+	flex-flow: column;
+	border-top: 1px solid #ebebeb;
+	border-left: 1px solid #ebebeb;
+	border-right: 1px solid #ebebeb;
+	padding: 10px;
+}
+
+.crn-available__header-ui {
+	flex: 0 0 50%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.crn-available__feedback {
+	flex: 0 0 50%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	min-height: 17px;
+}
+
+.crn-available__input-container {
+	flex: 0 0 auto;
+}
+.crn-available__add-crn {
+	margin-left: 10px;
+	flex: 0 0 auto;
+}
+
+.crn-available__courses {
+	flex: 0 0 auto;
+}
