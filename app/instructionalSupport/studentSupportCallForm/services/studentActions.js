@@ -132,10 +132,10 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 			});
 		},
 		addCrnToAvailability: function(crn, appliedCrns, supportCallResponse) {
-			debugger;
+			// TODO
 		},
 		removeCrnFromAvailability: function(crn, timeSlots, supportCallResponse) {
-			debugger;
+			// TODO
 		},
 		calculateTimesForCrn: function(crn, courses, sectionGroups, sections, activities) {
 			var section = null;
@@ -143,7 +143,7 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 			for (var i = 0; i < sections.ids.length; i++) {
 				var slotSection = sections.list[sections.ids[i]];
 
-				if (section.crn == crn) {
+				if (slotSection.crn == crn) {
 					section = angular.copy(slotSection);
 					break;
 				}
@@ -153,7 +153,9 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 			if (section == null) {
 				studentReducers.reduce({
 					type: CALCULATE_TIMESLOTS_FOR_CRN,
-					crn: crn
+					crn: crn,
+					crnSearchFeedback: "No course found",
+					scheduledTimes: []
 				});
 				return;
 			}
@@ -163,23 +165,24 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 				activities.list[activityId].sectionId == section.id;
 			}).map(function(activityId) {
 				var activity = activities.list[activityId];
-				debugger;
+				//TODO: convert times/days to availability blob
 			});
-			debugger;
+
 			//TODO: Calculate timeSlots from sectionGroup - activities
 
 
 			//TODO: combine timeslots
 
+			//TODO: if timeSlots is empty, display 'course suchandsuch has no times available'
 			// Calculate description
 			var course = courses.list[sectionGroups.list[section.sectionGroupId].courseId];
-			var description = course.subjectCode + " " + course.courseNumber + " " + section.sequenceNumber;
+			var crnSearchFeedback = course.subjectCode + " " + course.courseNumber + " " + section.sequenceNumber;
 
 			studentReducers.reduce({
 				type: CALCULATE_TIMESLOTS_FOR_CRN,
 				crn: crn,
-				timeslots: timeSlots,
-				description: description
+				crnSearchFeedback: crnSearchFeedback,
+				scheduledTimes: scheduledTimes
 			});
 		}
 	};
