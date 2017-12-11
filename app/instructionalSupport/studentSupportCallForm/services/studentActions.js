@@ -1,25 +1,33 @@
 instructionalSupportApp.service('studentActions', function ($rootScope, $window, studentService, studentReducers) {
 	return {
 		getInitialState: function (workgroupId, year, termShortCode) {
+			var self = this;
 			studentService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
 				var action = {
 					type: INIT_STATE,
 					payload: payload,
-					year: year
+					year: year,
+					workgroupId: workgroupId,
+					termShortCode: termShortCode
 				};
 				studentReducers.reduce(action);
+				self.calculateFormValid();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load support staff form initial state.", type: "ERROR" });
 			});
 		},
 		addStudentPreference: function (preference) {
+			var self = this;
 			studentService.addStudentPreference(preference).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
 				var action = {
 					type: ADD_STUDENT_PREFERENCE,
-					payload: payload
+					payload: payload,
+					preferences: studentReducers._state.preferences,
+					supportCallResponse: studentReducers._state.supportCallResponse
 				};
 				studentReducers.reduce(action);
+				self.calculateFormValid();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not add preference.", type: "ERROR" });
 			});
@@ -62,6 +70,7 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 			});
 		},
 		updateSupportCallResponse: function (supportCallResponse) {
+			var self = this;
 			studentService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
 				var action = {
@@ -69,18 +78,23 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 					payload: payload
 				};
 				studentReducers.reduce(action);
+				self.calculateFormValid();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 			});
 		},
 		deleteStudentPreference: function (preference) {
+			var self = this;
 			studentService.deleteStudentPreference(preference.id).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Removed Preference", type: "SUCCESS" });
 				var action = {
 					type: DELETE_STUDENT_PREFERENCE,
-					payload: preference
+					payload: preference,
+					preferences: studentReducers._state.preferences,
+					supportCallResponse: studentReducers._state.supportCallResponse
 				};
 				studentReducers.reduce(action);
+				self.calculateFormValid();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not remove preference.", type: "ERROR" });
 			});
@@ -107,19 +121,33 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 			});
 		},
 		updatePreference: function (scheduleId, preference) {
+			var self = this;
 			studentService.updatePreference(scheduleId, preference).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Updated preference comments", type: "SUCCESS" });
+
+				var preferenceCommentsComplete = studentReducers._state.preferences.ids
+				.map(function(preference) {
+					preference.comment || "";
+				}).
+				every(function(comment) {
+					comment.length > 0;
+				});
+
 				var action = {
 					type: UPDATE_PREFERENCE,
-					payload: payload
+					payload: payload,
+					preferenceCommentsComplete: preferenceCommentsComplete
 				};
 				studentReducers.reduce(action);
+				self.calculateFormValid();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update preference comments.", type: "ERROR" });
 			});
 		},
 		pretendToastMessage: function () {
 			$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
+			var studentSummaryUrl = "/summary/" + studentReducers._state.misc.workgroupId + "/" + studentReducers._state.misc.year + "?mode=instructionalSupport";
+			$window.location.href = studentSummaryUrl;
 		},
 		openPreferenceCommentsModal: function() {
 			studentReducers.reduce({
@@ -136,6 +164,42 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 		},
 		removeCrnFromAvailability: function(crn, timeSlots, supportCallResponse) {
 			// TODO
+		},
+		calculateFormValid : function() {
+			var review = studentReducers._state.ui.review;
+			var validationErrorMessage = "";
+
+			var isFormValid = !(
+				review.requirePreferenceAmount.required && review.requirePreferenceAmount.complete == false
+				|| review.requireEligible.required && review.requireEligible.complete == false
+				|| review.requirePreferenceComments.required && review.requirePreferenceComments.complete == false);
+				if (review.requirePreferenceAmount.required && review.requirePreferenceAmount.complete == false) {
+					validationErrorMessage += "You must provide at least " + studentReducers._state.supportCallResponse.minimumNumberOfPreferences + " preferences";
+				}
+
+			if (review.requireEligible.required && review.requireEligible.complete == false) {
+				if (validationErrorMessage.length > 0) {
+					validationErrorMessage += ", ";
+				}
+
+				validationErrorMessage += "you must confirm your eligibility";
+			}
+
+			if (review.requirePreferenceComments.required && review.requirePreferenceComments.complete == false) {
+				if (validationErrorMessage.length > 0) {
+					validationErrorMessage += ", and ";
+				}
+
+				validationErrorMessage += "you must provide comments for your preferences";
+			}
+
+			studentReducers.reduce({
+				type: CALCULATE_FORM_VALID,
+				payload: {
+					isFormValid: isFormValid,
+					validationErrorMessage: validationErrorMessage
+				}
+			});
 		},
 		calculateTimesForCrn: function(crn, courses, sectionGroups, sections, activities) {
 			var section = null;
