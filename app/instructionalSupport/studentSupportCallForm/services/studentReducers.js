@@ -146,7 +146,10 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 				case INIT_STATE:
 					misc = {
 						scheduleId: action.payload.scheduleId,
-						supportStaffId: action.payload.supportStaffId
+						supportStaffId: action.payload.supportStaffId,
+						workgroupId: action.workgroupId,
+						year: action.year,
+						termShortCode: action.termShortCode
 					};
 					return misc;
 				default:
@@ -161,8 +164,25 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 						isFormLocked: false,
 						searchCrn: null,
 						crnAvailabilities: {},
-						crnSearchFeedback: null
+						crnSearchFeedback: null,
+						review: {
+							isFormValid: true,
+							validationErrorMessage: null,
+							requirePreferenceAmount: {
+								required: action.payload.studentSupportCallResponse.minimumNumberOfPreferences > 0,
+								complete: action.payload.studentSupportPreferences.length >= action.payload.studentSupportCallResponse.minimumNumberOfPreferences
+							},
+							requireEligible: {
+								required: action.payload.studentSupportCallResponse.collectEligibilityConfirmation,
+								complete: action.payload.studentSupportCallResponse.eligibilityConfirmed
+							},
+							requirePreferenceComments: {
+								required: action.payload.studentSupportCallResponse.requirePreferenceComments,
+								complete: action.payload.studentSupportPreferences.every(function(preference) { preference.comment && preference.comment.length > 0; })
+							}
+						}
 					};
+
 					// Determine if form should be locked (due date is enforced and has passed)
 					if (action.payload.supportCallResponse) {
 						var dueDate = action.payload.supportCallResponse.dueDate;
@@ -175,11 +195,25 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 						}
 					}
 					return ui;
+				case CALCULATE_FORM_VALID:
+					ui.review.isFormValid = action.payload.isFormValid;
+					ui.review.validationErrorMessage = action.payload.validationErrorMessage;
+					return ui;
 				case OPEN_PREFERENCE_COMMENT_MODAL:
 					ui.isPreferenceCommentModalOpen = true;
 					return ui;
 				case CLOSE_PREFERENCE_COMMENT_MODAL:
 					ui.isPreferenceCommentModalOpen = false;
+					return ui;
+				case ADD_STUDENT_PREFERENCE:
+				case DELETE_STUDENT_PREFERENCE:
+					ui.review.requirePreferenceAmount.complete = action.preferences.ids.length >= action.supportCallResponse.minimumNumberOfPreferences;
+					return ui;
+				case UPDATE_PREFERENCE:
+					ui.review.requirePreferenceComments = action.preferenceCommentsComplete;
+					return ui;
+				case UPDATE_SUPPORT_CALL_RESPONSE:
+					ui.review.requireEligible.complete = action.payload.eligibilityConfirmed;
 					return ui;
 				default:
 					return ui;
@@ -231,6 +265,7 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 			// Build new 'page state'
 			// This is the 'view friendly' version of the store
 			newPageState = {};
+			newPageState.ui = angular.copy(scope._state.ui);
 			newPageState.courses = angular.copy(scope._state.courses);
 			newPageState.sectionGroups = angular.copy(scope._state.sectionGroups);
 			newPageState.sections = angular.copy(scope._state.sections);
