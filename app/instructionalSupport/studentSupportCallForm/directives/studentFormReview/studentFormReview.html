@@ -1,28 +1,72 @@
 <div class="student-form-review ipa-tile">
-	<div class="due-day-header">
-		<h4>Due Date: {{ view.state.supportCallResponse.dueDateDescription }} </h4>
+	<div class="student-form-review__header">
+		Review
 	</div>
 
-	<a style="display: flex; justify-content: flex-end;">
-		<button ng-if="!view.state.supportCallResponse.submitted  && studentSupportCallFormIsValid() == true" type="button" class="btn btn-primary"
-		 confirm-button="submitPreferences()"
-		 btn-class="btn-primary"
-		 message="Are you sure you want to submit your preferences?"
-		 yes="Confirm" no="Cancel" placement="top">
-			Submit Preferences
-		</button>
-
-		<div ng-if="!view.state.supportCallResponse.submitted && studentSupportCallFormIsValid() == false" uib-tooltip="{{validationError}}">
-			<button type="button" class="btn btn-primary disabled">
-				Submit Preferences
-			</button>
+	<div class="student-form-review__row" ng-if="state.ui.review.requirePreferenceAmount.required">
+		<div class="student-form-review__icon" ng-if="state.ui.review.requirePreferenceAmount.complete">
+			<i class="student-form-review__check glyphicon glyphicon-ok"></i>
 		</div>
+		<div class="student-form-review__icon"  ng-if="state.ui.review.requirePreferenceAmount.complete == false">
+			<i class="glyphicon glyphicon-unchecked"></i>
+		</div>
+		<div>
+			At least {{ state.supportCallResponse.minimumNumberOfPreferences }} preferences required
+		</div>
+	</div>
 
-		<button ng-click="pretendToastMessage()"
-			ng-if="view.state.supportCallResponse.submitted"
-			type="button" class="btn btn-primary">
-				Update Preferences
-		</button>
-	</a>
+	<div class="student-form-review__row" ng-if="state.ui.review.requireEligible.required">
+		<div class="student-form-review__icon"  ng-if="state.ui.review.requireEligible.complete">
+			<i class="student-form-review__check glyphicon glyphicon-ok"></i>
+		</div>
+		<div class="student-form-review__icon"  ng-if="state.ui.review.requireEligible.complete == false">
+			<i class="glyphicon glyphicon-unchecked"></i>
+		</div>
+		<div>
+			Confirm Eligibility
+		</div>
+	</div>
 
+	<div class="student-form-review__row" ng-if="state.ui.review.requirePreferenceComments.required">
+		<div class="student-form-review__icon"  ng-if="state.ui.review.requirePreferenceComments.complete">
+			<i class="student-form-review__check glyphicon glyphicon-ok"></i>
+		</div>
+		<div class="student-form-review__icon"  ng-if="state.ui.review.requirePreferenceComments.complete == false">
+			<i class="glyphicon glyphicon-unchecked"></i>
+		</div>
+		<div>
+			Preference Comments
+		</div>
+	</div>
+
+	<div>
+		<div
+		ng-if="state.supportCallResponse.submitted == false"
+		class="student-form-review__submit">
+			<ipa-button
+				text="'Submit'"
+				on-click="submitStudentPreferences()"
+				is-disabled="state.ui.review.isFormValid == false"
+				tooltip-message="state.ui.review.validationErrorMessage"
+				is-wide="true">
+			</ipa-button>
+		</div>
+		<div
+		ng-if="state.supportCallResponse.submitted"
+		class="student-form-review__submit">
+			<ipa-button
+				text="'Update'"
+				on-click="pretendToastMessage()"
+				is-disabled="state.ui.review.isFormValid == false"
+				tooltip-message="state.ui.review.validationErrorMessage"
+				is-wide="true">
+			</ipa-button>
+		</div>
+	</div>
+
+	<div
+	class="student-form-review__footer"
+	ng-if="state.supportCallResponse.dueDate">
+		Due Date: {{ state.supportCallResponse.dueDateDescription }}
+	</div>
 </div>
