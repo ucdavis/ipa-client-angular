@@ -5,8 +5,8 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-supportAssignmentApp.controller('InstructionalSupportAssignmentCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'instructionalSupportAssignmentActionCreators', '$timeout',
-		this.InstructionalSupportAssignmentCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, instructionalSupportAssignmentActionCreators, $timeout) {
+supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'instructionalSupportAssignmentActionCreators', '$timeout',
+		this.SupportAssignmentCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, instructionalSupportAssignmentActionCreators, $timeout) {
 			$window.document.title = "Instructional Support";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
@@ -201,7 +201,7 @@ supportAssignmentApp.controller('InstructionalSupportAssignmentCtrl', ['$scope',
 			$scope.setActiveTab($routeParams.tab || "courses");
 	}]);
 
-InstructionalSupportAssignmentCtrl.getPayload = function (authService, instructionalSupportAssignmentActionCreators, $route, $window) {
+SupportAssignmentCtrl.getPayload = function (authService, instructionalSupportAssignmentActionCreators, $route, $window) {
 	// Validate params
 	if (!($route.current.params.workgroupId) || !($route.current.params.year)) {
 		$window.location.href = "/summary/";
