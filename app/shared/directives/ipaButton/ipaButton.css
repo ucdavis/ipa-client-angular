@@ -28,6 +28,7 @@
 
 .ipa-button--disabled {
 	cursor: default;
+	background-color: #f0f1f1;
 }
 
 .ipa-button:hover:not(.ipa-button--disabled) {
@@ -41,4 +42,20 @@
 	padding-bottom: 0px;
 	padding-right: 5px;
 	padding-left: 5px;
+}
+
+.ipa-button__icon-container--wide {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.ipa-button--wide {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.ipa-button__container--wide {
+	width: 100%;
 }

@@ -2,14 +2,13 @@
 class="ipa-button"
 uib-tooltip="{{tooltipMessage}}"
 tooltip-placement="bottom"
-ng-class="{'ipa-button--disabled': isDisabled }">
-
-	<div ng-show="!(isDisabled)">
+ng-class="{buttonClass, 'ipa-button--disabled': isDisabled , 'ipa-button--wide': isWide }">
+	<div class="ipa-button__container" ng-class="{'ipa-button__container--wide': isWide }" ng-show="!(isDisabled)">
 		<!-- with confirmation -->
 		<div
 		ng-show="confirmMessage && confirmMessage.length > 0"
 		class="ipa-button__icon-container"
-		ng-class="{'ipa-button__icon-container--slim': size == 'slim'}"
+		ng-class="{'ipa-button__icon-container--slim': size == 'slim', 'ipa-button__icon-container--wide': isWide }"
 		confirm-button="onClick()"
 		message="{{confirmMessage}}"
 		yes="Confirm" no="Cancel" placement="top">
@@ -24,7 +23,7 @@ ng-class="{'ipa-button--disabled': isDisabled }">
 		<div
 		ng-show="!confirmMessage || confirmMessage.length == 0"
 		class="ipa-button__icon-container"
-		ng-class="{'ipa-button__icon-container--slim': size == 'slim'}"
+		ng-class="{'ipa-button__icon-container--slim': size == 'slim', 'ipa-button__icon-container--wide': isWide }"
 		ng-click="onClick()">
 		<div class="ipa-button__text" ng-show="text">
 			{{ text }}
@@ -35,10 +34,10 @@ ng-class="{'ipa-button--disabled': isDisabled }">
 	</div>
 
 	<!-- disabled state -->
-	<div ng-show="(isDisabled)">
+	<div class="ipa-button__container" ng-class="{'ipa-button__container--wide': isWide }" ng-show="(isDisabled)">
 		<div
 		class="ipa-button__icon-container"
-		ng-class="{'ipa-button__icon-container--slim': size == 'slim'}">
+		ng-class="{'ipa-button__icon-container--slim': size == 'slim', 'ipa-button__icon-container--wide': isWide }">
 			<div class="ipa-button__text" ng-show="text">
 				{{ text }}
 			</div>
