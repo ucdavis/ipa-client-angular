@@ -1,11 +1,12 @@
 sharedApp.directive("ipaSectionHeader", this.ipaSectionHeader = function() {
 	return {
-		restrict: 'E', // Use this via an element selector <ipa-modal></ipa-modal>
-		templateUrl: 'ipaSectionHeader.html', // directive html found here:
+		restrict: 'E',
+		templateUrl: 'ipaSectionHeader.html',
 		scope: {
 			headerText: '<'
 		},
 		replace: true, // Replace with the template below
+		transclude: true,
 		link: function(scope, element, attrs) {
 			/* Example Usage:
 			<ipa-section-header
