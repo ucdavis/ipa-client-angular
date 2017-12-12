@@ -274,32 +274,21 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log) {
 					return schedule;
 			}
 		},
-		_userInterfaceReducers: function (action, userInterface) {
+		_uiReducers: function (action, ui) {
 			var scope = this;
 
 			switch (action.type) {
 				case INIT_STATE:
-					userInterface = {};
+					ui = {
+						viewPivot: "course",
+						viewType: "reader"
+					};
 
-					userInterface.displayCoursePivot = true;
-					userInterface.displaySupportStaffPivot = false;
-
-					return userInterface;
+					return ui;
 				case TOGGLE_ASSIGNMENT_PIVOT_VIEW:
-					userInterface.displayCoursePivot = false;
-					userInterface.displaySupportStaffPivot = false;
-
-					switch(action.payload.viewName) {
-						case "course":
-							userInterface.displayCoursePivot = true;
-							return userInterface;
-						case "supportStaff":
-						default:
-							userInterface.displaySupportStaffPivot = true;
-							return userInterface;
-					}
+					ui.viewPivot = action.payload.viewName;
 				default:
-					return userInterface;
+					return ui;
 			}
 		},
 
@@ -317,7 +306,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log) {
 			newState.supportStaffPreferences = scope._supportStaffPreferenceReducers(action, scope._state.supportStaffPreferences);
 			newState.instructorPreferences = scope._instructorPreferenceReducers(action, scope._state.instructorPreferences);
 			newState.supportStaffList = scope._supportStaffListReducers(action, scope._state.supportStaffList);
-			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
+			newState.ui = scope._uiReducers(action, scope._state.ui);
 			newState.schedule = scope._scheduleReducers(action, scope._state.schedule);
 			newState.supportStaffSupportCallResponses = scope._supportStaffSupportCallResponseReducers(action, scope._state.supportStaffSupportCallResponses);
 			newState.instructorSupportCallResponses = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponses);
@@ -329,7 +318,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log) {
 			// This is the 'view friendly' version of the store
 			newPageState = {};
 			newPageState.schedule = angular.copy(scope._state.schedule);
-			newPageState.userInterface = angular.copy(scope._state.userInterface);
+			newPageState.userInterface = angular.copy(scope._state.ui);
 			newPageState.supportAssignmentsUnique = supportAssignmentSelectors.generateSupportAssignmentsUnique(
 																																			scope._state.supportAssignments,
 																																			scope._state.sectionGroups,
