@@ -5,14 +5,6 @@ supportAssignmentApp.config(function ($routeProvider) {
 	.when("/:workgroupId/:year/:termShortCode", {
 		templateUrl: "SupportAssignmentCtrl.html",
 		controller: "SupportAssignmentCtrl",
-		reloadOnSearch: false,
-		resolve: {
-			payload: SupportAssignmentCtrl.getPayload
-		}
-	})
-	.when("/", {
-		templateUrl: "SupportAssignmentCtrl.html",
-		controller: "SupportAssignmentCtrl",
 		resolve: {
 			payload: SupportAssignmentCtrl.getPayload
 		}
