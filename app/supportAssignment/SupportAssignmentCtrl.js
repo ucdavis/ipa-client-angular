@@ -5,8 +5,8 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'instructionalSupportAssignmentActionCreators', '$timeout',
-		this.SupportAssignmentCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, instructionalSupportAssignmentActionCreators, $timeout) {
+supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'supportActions', '$timeout',
+		this.SupportAssignmentCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, supportActions, $timeout) {
 			$window.document.title = "Instructional Support";
 			$scope.workgroupId = $routeParams.workgroupId;
 			$scope.year = $routeParams.year;
@@ -101,7 +101,7 @@ supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope'
 			};
 
 			$scope.startFilter = function (query) {
-				instructionalSupportAssignmentActionCreators.updateTableFilter(query);
+				supportActions.updateTableFilter(query);
 			};
 
 			$scope.setActiveTab = function (tabName) {
@@ -175,25 +175,25 @@ supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope'
 			};
 
 			$scope.togglePivotView = function (viewName) {
-				instructionalSupportAssignmentActionCreators.togglePivotView(viewName);
+				supportActions.togglePivotView(viewName);
 			};
 
 			// Will delete an empty assignment
 			$scope.deleteAssignment = function (instructionalSupportAssignment) {
-				instructionalSupportAssignmentActionCreators.deleteAssignment(instructionalSupportAssignment);
+				supportActions.deleteAssignment(instructionalSupportAssignment);
 			};
 
 			$scope.removeStaffFromSlot = function (supportAssignment) {
 				var supportStaffId = supportAssignment.supportStaffId;
-				instructionalSupportAssignmentActionCreators.removeStaffFromSlot(supportAssignment.id, supportStaffId);
+				supportActions.removeStaffFromSlot(supportAssignment.id, supportStaffId);
 			};
 
 			$scope.toggleSupportStaffSupportCallReview = function() {
-				instructionalSupportAssignmentActionCreators.toggleSupportStaffSupportCallReview($scope.view.state.schedule.id, $scope.termShortCode);
+				supportActions.toggleSupportStaffSupportCallReview($scope.view.state.schedule.id, $scope.termShortCode);
 			};
 
 			$scope.toggleInstructorSupportCallReview = function() {
-				instructionalSupportAssignmentActionCreators.toggleInstructorSupportCallReview($scope.view.state.schedule.id, $scope.termShortCode);
+				supportActions.toggleInstructorSupportCallReview($scope.view.state.schedule.id, $scope.termShortCode);
 			};
 
 			// Set the active tab according to the URL
@@ -201,13 +201,13 @@ supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope'
 			$scope.setActiveTab($routeParams.tab || "courses");
 	}]);
 
-SupportAssignmentCtrl.getPayload = function (authService, instructionalSupportAssignmentActionCreators, $route, $window) {
+SupportAssignmentCtrl.getPayload = function (authService, supportActions, $route, $window) {
 	// Validate params
 	if (!($route.current.params.workgroupId) || !($route.current.params.year)) {
 		$window.location.href = "/summary/";
 	} else {
 		authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-			instructionalSupportAssignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode, $route.current.params.tab);
+			supportActions.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode, $route.current.params.tab);
 		});
 	}
 };
