@@ -13,18 +13,6 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				$rootScope.$emit('toast', { message: "Could not get instructional support assignment initial state.", type: "ERROR" });
 			});
 		},
-		addAssignmentSlots: function (appointmentType, appointmentPercentage, numberOfAppointments, sectionGroupId) {
-			supportService.addAssignmentSlots(appointmentType, appointmentPercentage, numberOfAppointments, sectionGroupId).then(function (payload) {
-				$rootScope.$emit('toast', { message: "Added Assignment", type: "SUCCESS" });
-				var action = {
-					type: ADD_ASSIGNMENT_SLOTS,
-					payload: payload
-				};
-				supportReducer.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not add assignment slot.", type: "ERROR" });
-			});
-		},
 		toggleSupportStaffSupportCallReview: function (scheduleId, termShortCode) {
 			supportService.toggleSupportStaffSupportCallReview(scheduleId, termShortCode).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Updated support staff support call review", type: "SUCCESS" });
@@ -61,51 +49,37 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				$rootScope.$emit('toast', { message: "Could not remove assignment.", type: "ERROR" });
 			});
 		},
-		assignStaffToSlot: function (supportStaffId, assignmentId) {
-			supportService.assignStaffToSlot(supportStaffId, assignmentId).then(function (payload) {
-				$rootScope.$emit('toast', { message: "Assigned Support Staff", type: "SUCCESS" });
-				var action = {
-					type: ASSIGN_STAFF_TO_SLOT,
-					payload: payload
-				};
-				supportReducer.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not assign support staff.", type: "ERROR" });
+		setPivotStaff: function (viewName) {
+			supportReducer.reduce({
+				type: SET_PIVOT_STAFF,
+				payload: {
+					viewName: viewName
+				}
 			});
 		},
-
-		assignStaffToSectionGroupSlot: function (supportStaffId, sectionGroupId, type) {
-			supportService.assignStaffToSectionGroupSlot(supportStaffId, sectionGroupId, type).then(function (payload) {
-				$rootScope.$emit('toast', { message: "Assigned Support Staff", type: "SUCCESS" });
-				var action = {
-					type: ASSIGN_STAFF_TO_SECTION_GROUP_SLOT,
-					payload: payload
-				};
-				supportReducer.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not assign support staff.", type: "ERROR" });
+		setPivotCourse: function (viewName) {
+			supportReducer.reduce({
+				type: SET_PIVOT_COURSE,
+				payload: {
+					viewName: viewName
+				}
 			});
 		},
-
-		removeStaffFromSlot: function (assignmentId, supportStaffId) {
-			supportService.removeStaffFromSlot(assignmentId).then(function (payload) {
-				$rootScope.$emit('toast', { message: "Unassigned Instructional Support Staff", type: "SUCCESS" });
-				var action = {
-					type: REMOVE_STAFF_FROM_SLOT,
-					payload: payload,
-					supportStaffId: supportStaffId
-				};
-				supportReducer.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not unassign support staff.", type: "ERROR" });
+		setViewReader: function () {
+			supportReducer.reduce({
+				type: SET_VIEW_READER,
+				payload: {
+					viewType: "reader"
+				}
 			});
 		},
-		togglePivotView: function (viewName) {
-			var action = {
-				type: TOGGLE_ASSIGNMENT_PIVOT_VIEW,
-				payload: {viewName: viewName}
-			};
-			supportReducer.reduce(action);
+		setViewTA: function () {
+			supportReducer.reduce({
+				type: SET_VIEW_TA,
+				payload: {
+					viewType: "ta"
+				}
+			});
 		},
 		updateTableFilter: function (query) {
 			var action = {
