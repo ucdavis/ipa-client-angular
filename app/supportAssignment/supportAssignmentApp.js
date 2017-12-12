@@ -2,24 +2,24 @@ window.supportAssignmentApp = angular.module("supportAssignmentApp", ["sharedApp
 
 supportAssignmentApp.config(function ($routeProvider) {
 	return $routeProvider
-		.when("/", {
-			templateUrl: "SupportAssignmentCtrl.html",
-			controller: "SupportAssignmentCtrl",
-			resolve: {
-				payload: InstructionalSupportAssignmentCtrl.getPayload
-			}
-		})
-		.when("/:workgroupId/:year/:termShortCode", {
-			templateUrl: "SupportAssignmentCtrl.html",
-			controller: "SupportAssignmentCtrl",
-			reloadOnSearch: false,
-			resolve: {
-				payload: InstructionalSupportAssignmentCtrl.getPayload
-			}
-		})
-		.otherwise({
-			redirectTo: "/"
-		});
+	.when("/:workgroupId/:year/:termShortCode", {
+		templateUrl: "SupportAssignmentCtrl.html",
+		controller: "SupportAssignmentCtrl",
+		reloadOnSearch: false,
+		resolve: {
+			payload: SupportAssignmentCtrl.getPayload
+		}
+	})
+	.when("/", {
+		templateUrl: "SupportAssignmentCtrl.html",
+		controller: "SupportAssignmentCtrl",
+		resolve: {
+			payload: SupportAssignmentCtrl.getPayload
+		}
+	})
+	.otherwise({
+		redirectTo: "/"
+	});
 });
 // UI ACTIONS
 var SET_PIVOT_COURSE = "SET_PIVOT_COURSE";
