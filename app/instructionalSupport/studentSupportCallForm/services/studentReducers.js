@@ -125,22 +125,6 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 					return supportAssignments;
 			}
 		},
-		_studentSupportCallCrnReducers: function (action, studentSupportCallCrns) {
-			switch (action.type) {
-				case INIT_STATE:
-					studentSupportCallCrns = {
-						ids: [],
-						list: {}
-					};
-					action.payload.studentSupportCallCrns.forEach( function(studentSupportCallCrn) {
-						studentSupportCallCrns.ids.push(studentSupportCallCrn.id);
-						studentSupportCallCrns.list[studentSupportCallCrn.id] = studentSupportCallCrn;
-					});
-					return studentSupportCallCrns;
-				default:
-					return studentSupportCallCrns;
-			}
-		},
 		_miscReducers: function (action, misc) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -258,7 +242,6 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 			newState.ui = scope._uiReducers(action, scope._state.ui);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
 			newState.activities = scope._activityReducers(action, scope._state.activities);
-			newState.studentSupportCallCrns = scope._studentSupportCallCrnReducers(action, scope._state.studentSupportCallCrns);
 
 			scope._state = newState;
 
