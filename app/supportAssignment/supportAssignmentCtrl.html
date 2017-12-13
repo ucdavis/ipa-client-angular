@@ -20,10 +20,13 @@
 
 <!-- regular display -->
 <div ng-if="view.state && isAllowed == true" class="support-assignments">
-	<div class="support-assignments__search">
-		<input type="search" class="form-control" placeholder="Search" ng-model="searchQuery" ng-change="filterTable(searchQuery)">
-	</div>
+	<support-assignment-search></support-assignment-search>
 
-	<support-assignment-header></support-assignment-header>
+	<review-tools support-review="supportReview"></review-tools>
+
+	<ipa-section-header header-text="'Support Assignments'">
+		<support-assignment-toolbar></support-assignment-toolbar>
+	</ipa-section-header>
+
 	<support-assignment-table></support-assignment-table>
 </div>
