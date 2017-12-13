@@ -1,0 +1,11 @@
+.support-assignment-search {
+	margin-bottom: 40px;
+	margin-top: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.support-assignment-search__input {
+	width:40%;
+}
