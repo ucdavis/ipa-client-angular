@@ -1,4 +1,4 @@
-supportAssignmentApp.service('supportReducer', function ($rootScope, $log) {
+supportAssignmentApp.service('supportReducer', function ($rootScope, $log, supportSelectors) {
 	return {
 		_state: {},
 		_sectionGroupReducers: function (action, sectionGroups) {
@@ -319,19 +319,19 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log) {
 			newPageState = {};
 			newPageState.schedule = angular.copy(scope._state.schedule);
 			newPageState.userInterface = angular.copy(scope._state.ui);
-			newPageState.supportAssignmentsUnique = supportAssignmentSelectors.generateSupportAssignmentsUnique(
+			newPageState.supportAssignmentsUnique = supportSelectors.generateSupportAssignmentsUnique(
 																																			scope._state.supportAssignments,
 																																			scope._state.sectionGroups,
 																																			scope._state.courses
 																																		);
 
-			newPageState.supportAssignments = supportAssignmentSelectors.generateSupportAssignments(
+			newPageState.supportAssignments = supportSelectors.generateSupportAssignments(
 																																			scope._state.supportAssignments,
 																																			scope._state.sectionGroups,
 																																			scope._state.courses
 																																		);
 
-			newPageState.supportStaffList = supportAssignmentSelectors.generateSupportStaffList(
+			newPageState.supportStaffList = supportSelectors.generateSupportStaffList(
 																																			scope._state.supportAssignments,
 																																			scope._state.courses,
 																																			scope._state.sectionGroups,
@@ -341,7 +341,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log) {
 																																			scope._state.supportStaffPreferences
 																																		);
 
-			newPageState.sectionGroups = supportAssignmentSelectors.generateSectionGroups(
+			newPageState.sectionGroups = supportSelectors.generateSectionGroups(
 																																			scope._state.supportAssignments,
 																																			scope._state.courses,
 																																			scope._state.sectionGroups,

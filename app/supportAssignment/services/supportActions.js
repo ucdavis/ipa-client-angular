@@ -8,7 +8,7 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 					year: year,
 					tab: tab
 				};
-				instructionalSupportAssignmentStateService.reduce(action);
+				supportReducer.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not get instructional support assignment initial state.", type: "ERROR" });
 			});
