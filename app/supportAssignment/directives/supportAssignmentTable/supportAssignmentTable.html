@@ -1,9 +1,8 @@
 <div class="support-assignment-table">
 	<ipa-tabs
-		ng-if="view.state.ui.allTerms.length > 0"
-		tab-names="view.state.ui.allTermNames"
-		active-tab="view.state.ui.selectedSupportCallTermDisplay"
-		select-tab="selectTab">
+		tab-names="tabNames"
+		active-tab="state.ui.tabPivot"
+		select-tab="setViewPivot">
 		table content goes here
 	</ipa-tabs>
 

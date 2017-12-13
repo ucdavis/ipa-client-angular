@@ -82,29 +82,6 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 					}
 
 					return supportAssignments;
-					case ADD_ASSIGNMENT_SLOTS:
-						action.payload.forEach( function (supportAssignment) {
-							supportAssignments.list[supportAssignment.id] = supportAssignment;
-							supportAssignments.ids.push(supportAssignment.id);
-						});
-						return supportAssignments;
-					case REMOVE_STAFF_FROM_SLOT:
-						var supportAssignment = action.payload;
-						supportAssignments.list[supportAssignment.id] = supportAssignment;
-
-						return supportAssignments;
-					case ASSIGN_STAFF_TO_SECTION_GROUP_SLOT:
-						var supportAssignment = action.payload;
-						var index = supportAssignments.ids.indexOf(supportAssignment.id);
-						if (index == -1) {
-							supportAssignments.ids.push(supportAssignment.id);
-						}
-						supportAssignments.list[supportAssignment.id] = supportAssignment;
-						return supportAssignments;
-					case ASSIGN_STAFF_TO_SLOT:
-						var supportAssignment = action.payload;
-						supportAssignments.list[supportAssignment.id] = supportAssignment;
-						return supportAssignments;
 				default:
 					return supportAssignments;
 			}
@@ -280,13 +257,13 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 			switch (action.type) {
 				case INIT_STATE:
 					ui = {
-						viewPivot: "course",
+						tabPivot: "By Course",
 						viewType: "reader"
 					};
 
 					return ui;
-				case TOGGLE_ASSIGNMENT_PIVOT_VIEW:
-					ui.viewPivot = action.payload.viewName;
+				case SET_VIEW_PIVOT:
+					ui.tabPivot = action.payload.tabName;
 				default:
 					return ui;
 			}
@@ -294,10 +271,6 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 
 		reduce: function (action) {
 			var scope = this;
-
-			if (!action || !action.type) {
-				return;
-			}
 
 			newState = {};
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
@@ -318,7 +291,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 			// This is the 'view friendly' version of the store
 			newPageState = {};
 			newPageState.schedule = angular.copy(scope._state.schedule);
-			newPageState.userInterface = angular.copy(scope._state.ui);
+			newPageState.ui = angular.copy(scope._state.ui);
 			newPageState.supportAssignmentsUnique = supportSelectors.generateSupportAssignmentsUnique(
 																																			scope._state.supportAssignments,
 																																			scope._state.sectionGroups,

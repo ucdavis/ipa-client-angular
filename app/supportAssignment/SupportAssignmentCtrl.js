@@ -174,10 +174,6 @@ supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope'
 				return false;
 			};
 
-			$scope.togglePivotView = function (viewName) {
-				supportActions.togglePivotView(viewName);
-			};
-
 			// Will delete an empty assignment
 			$scope.deleteAssignment = function (instructionalSupportAssignment) {
 				supportActions.deleteAssignment(instructionalSupportAssignment);
