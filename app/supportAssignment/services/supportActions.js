@@ -49,19 +49,11 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				$rootScope.$emit('toast', { message: "Could not remove assignment.", type: "ERROR" });
 			});
 		},
-		setPivotStaff: function (viewName) {
+		setViewPivot: function (tabName) {
 			supportReducer.reduce({
-				type: SET_PIVOT_STAFF,
+				type: SET_VIEW_PIVOT,
 				payload: {
-					viewName: viewName
-				}
-			});
-		},
-		setPivotCourse: function (viewName) {
-			supportReducer.reduce({
-				type: SET_PIVOT_COURSE,
-				payload: {
-					viewName: viewName
+					tabName: tabName
 				}
 			});
 		},

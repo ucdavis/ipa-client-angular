@@ -1,3 +1,7 @@
 .support-assignments {
 	padding: 10px 20px 10px 20px;
 }
+
+.support-assignments__table-container {
+	margin-top: 15px;
+}
