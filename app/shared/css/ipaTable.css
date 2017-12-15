@@ -40,3 +40,15 @@
 .ipa-table__body-cell--first {
 	background-color: #F8F8F8;
 }
+
+.ipa-table__body-cell--small {
+	flex-grow: 1;
+}
+
+.ipa-table__body-cell--medium {
+	flex-grow: 2;
+}
+
+.ipa-table__body-cell--large {
+	flex-grow: 3
+}
