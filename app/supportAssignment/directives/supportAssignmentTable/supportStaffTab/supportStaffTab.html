@@ -1,0 +1,47 @@
+<div class="support-staff-tab" ng-show="state.ui.tabPivot == 'By Support Staff'">
+	<div class="ipa-table">
+		<div class="ipa-table__header">
+			<div class="ipa-table__header-cell ipa-table__body-cell--small">
+				Priority
+			</div>
+			<div class="ipa-table__header-cell ipa-table__body-cell--small">
+			</div>
+			<div class="ipa-table__header-cell ipa-table__body-cell--large">
+				Course
+			</div>
+			<div class="ipa-table__header-cell ipa-table__body-cell--medium">
+				Comments
+			</div>
+			<div class="ipa-table__header-cell ipa-table__body-cell--small">
+			</div>
+		</div>
+		<div class="ipa-table__body">
+			<div class="ipa-table__body-row" ng-repeat="sectionGroup in state.sectionGroups">
+				<ipa-tabs-vertical
+				tab-names="tabNames"
+				active-tab="selectedTab"
+				select-tab="setViewPivot">
+					<div class="ipa-table__body-cell ipa-table__body-cell--first ipa-table__body-cell--small">
+						{{sectionGroup.subjectCode}} {{sectionGroup.courseNumber}} {{sectionGroup.title}}
+					</div>
+					<div class="ipa-table__body-cell ipa-table__body-cell--small">
+					</div>
+					<div class="ipa-table__body-cell ipa-table__body-cell--large">
+						stuff 2
+					</div>
+					<div class="ipa-table__body-cell ipa-table__body-cell--medium">
+						comments
+					</div>
+					<div class="ipa-table__body-cell ipa-table__body-cell--small">
+						<ipa-button
+							icon-class="'glyphicon glyphicon-trash student-preference-table__trash'"
+							on-click="deletePreference(preference)"
+							tooltip-message="'Delete preference'"
+							confirm-message="'Are you sure you want to delete this preference?'">
+						</ipa-button>
+					</div>
+				</ipa-tabs-vertical>
+			</div>
+		</div>
+	</div>
+</div>
