@@ -9,18 +9,6 @@
 	width: 50%;
 }
 
-.ipa-table__body-cell--small {
-	flex-grow: 1;
-}
-
-.ipa-table__body-cell--medium {
-	flex-grow: 2;
-}
-
-.ipa-table__body-cell--large {
-	flex-grow: 3
-}
-
 .ipa-table__body-cell--centered {
 	justify-content: center;
 }
