@@ -7,7 +7,7 @@
 .ipa-tabs-vertical__content {
 	border-radius: 3px 3px 0 0;
 	border-left: 1px solid #ddd;
-	border-right: 1px solid #ddd;
+	border-top: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
 	flex: 1 1 auto;
 }
@@ -18,10 +18,15 @@
 }
 
 .ipa-tabs-vertical__tab {
-	border: 1px solid transparent;
-	margin-left: -1px;
+	width: 100px;
+	max-width: 100px;
+	padding: 5px 5px;
+	border: 1px solid #ccc;
+	border-radius: 0px 3px 3px 0px;
+	border-left: 1px solid transparent;
 	flex: 0 0 auto;
-	color: #337ab7;
+	color: #555;
+	margin-bottom: 2px;
 	cursor: default;
 	background-color: #f9f9f9;
 }
@@ -32,8 +37,11 @@
 }
 
 .ipa-tabs-vertical__tab--active {
-	border-radius: 3px 3px 0 0;
-	border: 1px solid #ccc;
-	color: #555;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-left: 7px;
+	margin-left: -1px;
+	border-left: white;
 	background-color: #fff;
 }
