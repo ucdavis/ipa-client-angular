@@ -1,6 +1,7 @@
 .ipa-tabs-vertical {
 	display: flex;
 	justify-content: flex-end;
+	width: 100%;
 }
 
 .ipa-tabs-vertical__content {
@@ -26,7 +27,7 @@
 }
 
 .ipa-tabs-vertical__tab:not(.ipa-tabs__tab--active):hover {
-	background-color: #eee;
+	background-color: #a1a4a9;
 	cursor: pointer;
 }
 
