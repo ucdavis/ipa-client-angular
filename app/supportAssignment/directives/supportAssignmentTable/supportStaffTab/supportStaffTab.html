@@ -1,6 +1,5 @@
 <div class="support-staff-tab" ng-show="state.ui.tabPivot == 'By Support Staff'">
-	<div class="ipa-table">
-
+	<div>
 		<div class="ipa-table__header">
 			<div class="ipa-table__header-cell ipa-table__body-cell--small">
 				Staff
@@ -10,12 +9,13 @@
 			</div>
 		</div>
 
-		<div class="support-staff-tab__row" ng-repeat="supportStaff in state.supportStaffList">
+		<div class="support-staff-tab__row-container" ng-repeat="supportStaff in state.supportStaffList">
 			<ipa-tabs-vertical
 			tab-names="tabNames"
 			active-tab="selectedTab"
 			select-tab="setViewPivot">
-
+			<!--
+			<div class="support-staff-tab__row">
 				<div class="ipa-table__body-cell ipa-table__body-cell--first ipa-table__body-cell--small">
 					<staff-header support-staff="supportStaff"></staff-header>
 				</div>
@@ -23,7 +23,8 @@
 					<staff-comments support-staff="supportStaff"></staff-comments>
 					<staff-preferences state="state"></staff-preferences>
 				</div>
-
+			</div>
+		-->
 			</ipa-tabs-vertical>
 		</div>
 
