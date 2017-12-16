@@ -1,3 +1,9 @@
-.support-staff-tab__row {
+.support-staff-tab__row-container {
 	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.support-staff-tab__row {
+	display: flex;
 }
