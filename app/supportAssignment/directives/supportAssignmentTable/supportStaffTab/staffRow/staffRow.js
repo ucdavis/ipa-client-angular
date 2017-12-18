@@ -8,7 +8,7 @@ supportAssignmentApp.directive("staffRow", this.staffRow = function ($rootScope,
 			supportStaff: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.tabNames = ['Comments', 'Assignments'];
+			scope.tabNames = ['Assignments', 'Comments'];
 
 			scope.setSupportStaffTab = function (tabName) {
 				supportActions.setSupportStaffTab(tabName, scope.supportStaff.id);
