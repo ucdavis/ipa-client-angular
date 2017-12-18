@@ -1,3 +1,31 @@
 <div class="staff-comments">
-comments go here
+	<div ng-if="supportStaff.supportCallResponse.teachingQualifications.length > 0">
+		<div class="staff-comments__header">
+			Teaching Qualifications
+		</div>
+		<div>
+			{{ supportStaff.supportCallResponse.teachingQualifications }}
+		</div>
+	</div>
+	<div ng-if="supportStaff.supportCallResponse.generalComments.length > 0">
+		<div class="staff-comments__header">
+			Comments
+		</div>
+		<div>
+			{{ supportStaff.supportCallResponse.generalComments }}
+		</div>
+	</div>
+	<div ng-if="supportStaff.supportStaffPreferences.length > 0">
+		Preference Comments:
+		<div
+		ng-repeat="preference in supportStaff.supportStaffPreferences | orderBy: 'priority'"
+		ng-if="preference.comment && preference.comment.length > 0">
+			<div class="staff-comments__header">
+				({{ preference.priority }}) <strong>{{ preference.subjectCode }} {{ preference.courseNumber }} Comments:</strong>
+			</div>
+			<div>
+				{{ preference.comment }}
+			</div>
+		</div>
+	</div>
 </div>

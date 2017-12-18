@@ -1,0 +1,7 @@
+.staff-row__content {
+	display: flex;
+}
+
+.staff-row__cell {
+	flex: 1 1 0px;
+}

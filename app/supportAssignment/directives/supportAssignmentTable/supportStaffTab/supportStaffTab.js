@@ -7,12 +7,7 @@ supportAssignmentApp.directive("supportStaffTab", this.supportStaffTab = functio
 			state: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.tabNames = ['Comments', 'Assignments'];
-			scope.selectedTab = "Comments";
-
-			scope.setViewPivot = function (tabName) {
-				scope.selectedTab = tabName;
-			};
+			// Intentionally blank
 		}
 	};
 });

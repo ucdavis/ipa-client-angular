@@ -258,12 +258,27 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 				case INIT_STATE:
 					ui = {
 						tabPivot: "By Course",
-						viewType: "reader"
+						viewType: "Teaching Assistant",
+						supportStaffTabs: {}
 					};
 
+					action.payload.supportStaffList.forEach(function(supportStaff) {
+						ui.supportStaffTabs[supportStaff.id] = "Assignments";
+					});
+					action.payload.assignedSupportStaff.forEach(function(supportStaff) {
+						ui.supportStaffTabs[supportStaff.id] = "Assignments";
+					});
+
+					return ui;
+				case SET_SUPPORT_STAFF_TAB:
+					ui.supportStaffTabs[action.payload.supportStaffId] = action.payload.tabName;
 					return ui;
 				case SET_VIEW_PIVOT:
 					ui.tabPivot = action.payload.tabName;
+					return ui;
+				case SET_VIEW_TYPE:
+					ui.viewType = action.payload.viewType;
+					return ui;
 				default:
 					return ui;
 			}
