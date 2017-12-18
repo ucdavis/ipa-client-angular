@@ -4,10 +4,15 @@ supportAssignmentApp.directive("staffRow", this.staffRow = function ($rootScope,
 		templateUrl: 'staffRow.html',
 		replace: true,
 		scope: {
-			state: '<'
+			state: '<',
+			supportStaff: '<'
 		},
 		link: function (scope, element, attrs) {
-			// Intentionally empty
+			scope.tabNames = ['Comments', 'Assignments'];
+
+			scope.setSupportStaffTab = function (tabName) {
+				supportActions.setSupportStaffTab(tabName, scope.supportStaff.id);
+			};
 		}
 	};
 });

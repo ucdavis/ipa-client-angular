@@ -49,6 +49,7 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				$rootScope.$emit('toast', { message: "Could not remove assignment.", type: "ERROR" });
 			});
 		},
+		// Example 'Comments', 'Teaching Assignments'
 		setViewPivot: function (tabName) {
 			supportReducer.reduce({
 				type: SET_VIEW_PIVOT,
@@ -57,19 +58,21 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				}
 			});
 		},
-		setViewReader: function () {
+		// Example 'Reader', 'Teaching Assistants'
+		setViewType: function (viewType) {
 			supportReducer.reduce({
-				type: SET_VIEW_READER,
+				type: SET_VIEW_TYPE,
 				payload: {
-					viewType: "reader"
+					viewType: viewType
 				}
 			});
 		},
-		setViewTA: function () {
+		setSupportStaffTab: function(tabName, supportStaffId) {
 			supportReducer.reduce({
-				type: SET_VIEW_TA,
+				type: SET_SUPPORT_STAFF_TAB,
 				payload: {
-					viewType: "ta"
+					tabName: tabName,
+					supportStaffId: supportStaffId
 				}
 			});
 		},
