@@ -50,5 +50,9 @@
 }
 
 .ipa-table__body-cell--large {
-	flex-grow: 3
+	flex-grow: 3;
+}
+
+.ipa-table__body-cell--extra-large {
+	flex-grow: 5;
 }
