@@ -1,3 +1,25 @@
 <div class="staff-header">
-{{ supportStaff.lastName }}, {{ supportStaff.firstName }}
+	<div class="staff-header__name">
+		{{ supportStaff.lastName }}, {{ supportStaff.firstName }}
+	</div>
+	<div class="staff-header__details">
+		<div class="staff-header__input">
+			<ipa-input>
+			</ipa-input>
+		</div>
+		<div class="staff-header__info">
+			<i class="glyphicon glyphicon-question-sign"
+			tooltip-placement="left"
+			uib-tooltip="You can left click and drag to paint unavailability on the grids below.">
+			</i>
+		</div>
+		<div class="staff-header__availability">
+			<ipa-button
+				on-click="openAvailabilityModal()"
+				icon-class="'glyphicon glyphicon-calendar'"
+				is-disabled="supportStaff.supportCallResponse.availabilityBlob == false || supportStaff.supportCallResponse.availabilityBlob.length == 0"
+				tooltip-message="'Show Availability'">
+			</ipa-button>
+		</div>
+	</div>
 </div>
