@@ -12,6 +12,10 @@
 	display: flex;
 }
 
-.course-header__input {
+.course-header__input-container {
 	flex: 1 0 0px;
+}
+
+.course-header__input {
+	
 }

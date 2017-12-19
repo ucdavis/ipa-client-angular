@@ -10,17 +10,19 @@
 			units
 		</div>
 	</div>
-	<div ng-show="viewType == 'Teaching Assistant'" class="course-header__input">
-		<ipa-input
-		value="sectionGroup.teachingAssistantAppointments"
-		on-update="updateTeachingAssistantAppointments(sectionGroup.teachingAssistantAppointments)">
-		</ipa-input>
+	<div ng-show="viewType == 'Teaching Assistant'" class="course-header__input-container">
+		<input class="course-header__input"
+		type="number"
+		ng-model="sectionGroup.teachingAssistantAppointments"
+		auto-input on-blur="updateTeachingAssistantAppointments(sectionGroup)">
+		</input>
 	</div>
 	<div ng-show="viewType == 'Reader'" class="course-header__input">
-		<ipa-input
-		value="sectionGroup.readerAppointments"
-		on-update="updateReaderAppointments(sectionGroup.readerAppointments)">
-		</ipa-input>
+		Number of readers
+		<input class="course-header__input"
+		type="number"
+		ng-model="sectionGroup.readerAppointments"
+		auto-input on-blur="updateReaderAppointments(sectionGroup)">
+		</input>
 	</div>
-
 </div>
