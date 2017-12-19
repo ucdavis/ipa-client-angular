@@ -163,6 +163,26 @@
 										</div>
 								</li>
 
+								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectAvailabilityByGrid()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectAvailabilityByGrid }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect availability</label>
+										</div>
+								</li>
+
+								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectAvailabilityByCrn()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectAvailabilityByCrn }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect availability (via crn)</label>
+										</div>
+								</li>
+
 								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectEligibilityConfirmation()">
 										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
 											ng-class="{ 'checked': supportCallConfigData.collectEligibilityConfirmation }">
