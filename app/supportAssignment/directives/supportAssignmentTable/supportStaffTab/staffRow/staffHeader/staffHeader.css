@@ -1,7 +1,4 @@
 .staff-header {
-	min-height: 100px;
-	height: -moz-available;
-	height: -webkit-fill-available;
 	padding: 20px;
 }
 

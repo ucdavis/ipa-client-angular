@@ -1,0 +1,26 @@
+<div class="course-header">
+	<div class="course-header__name">
+		{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} {{ sectionGroup.title }}
+	</div>
+	<div class="course-header__details">
+		<div>
+			seats
+		</div>
+		<div>
+			units
+		</div>
+	</div>
+	<div ng-show="viewType == 'Teaching Assistant'" class="course-header__input">
+		<ipa-input
+		value="sectionGroup.teachingAssistantAppointments"
+		on-update="updateTeachingAssistantAppointments(sectionGroup.teachingAssistantAppointments)">
+		</ipa-input>
+	</div>
+	<div ng-show="viewType == 'Reader'" class="course-header__input">
+		<ipa-input
+		value="sectionGroup.readerAppointments"
+		on-update="updateReaderAppointments(sectionGroup.readerAppointments)">
+		</ipa-input>
+	</div>
+
+</div>
