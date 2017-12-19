@@ -213,8 +213,6 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 			newPageState.ui = angular.copy(scope._state.ui);
 			newPageState.courses = angular.copy(scope._state.courses);
 			newPageState.sectionGroups = angular.copy(scope._state.sectionGroups);
-			newPageState.sections = angular.copy(scope._state.sections);
-			newPageState.activities = angular.copy(scope._state.activities);
 
 			newPageState.supportCallResponse = angular.copy(scope._state.supportCallResponse);
 			newPageState.misc = angular.copy(scope._state.misc);
