@@ -17,6 +17,11 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 					});
 
 					return sectionGroups;
+				case UPDATE_SECTIONGROUP:
+					sectionGroup = action.payload.sectionGroup;
+					sectionGroups.list[sectionGroup.id].readerAppointments = sectionGroup.readerAppointments;
+					sectionGroups.list[sectionGroup.id].teachingAssistantAppointments = sectionGroup.teachingAssistantAppointments;
+					return sectionGroups;
 				case UPDATE_TABLE_FILTER:
 					var query = action.payload.query;
 
