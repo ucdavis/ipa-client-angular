@@ -6,3 +6,8 @@
 .support-assignments__table-container {
 	margin-top: 15px;
 }
+
+.support-assignments__header-cell {
+	background-color: #F8F8F8;
+	width: 250px;
+}
