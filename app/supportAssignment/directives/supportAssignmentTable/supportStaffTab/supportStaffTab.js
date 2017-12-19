@@ -7,7 +7,11 @@ supportAssignmentApp.directive("supportStaffTab", this.supportStaffTab = functio
 			state: '<'
 		},
 		link: function (scope, element, attrs) {
-			// Intentionally blank
+			scope.radioNames = ["Teaching Assistants", "Readers"];
+
+			scope.setViewType = function(type) {
+				supportActions.setViewType(type);
+			};
 		}
 	};
 });

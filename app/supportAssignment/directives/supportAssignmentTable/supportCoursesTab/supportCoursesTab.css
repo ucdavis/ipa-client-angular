@@ -6,3 +6,7 @@
 	border-radius: 3px 3px 0 0;
 	border: 1px solid #ddd;
 }
+
+.support-courses-tab__right-header {
+	justify-content: space-between;
+}
