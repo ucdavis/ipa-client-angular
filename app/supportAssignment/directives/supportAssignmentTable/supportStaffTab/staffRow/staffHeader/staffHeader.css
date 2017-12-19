@@ -17,7 +17,7 @@
 }
 
 .staff-header__info {
-	flex: 2 0 0px;
+	flex: 1 0 0px;
 	font-size: 15px;
 	display: flex;
 	justify-content: center;
@@ -25,5 +25,5 @@
 }
 
 .staff-header__availability {
-	flex: 1 0 0px;
+	flex: 2 0 0px;
 }

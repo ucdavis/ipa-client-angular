@@ -4,7 +4,8 @@ supportAssignmentApp.directive("courseHeader", this.courseHeader = function ($ro
 		templateUrl: 'courseHeader.html',
 		replace: true,
 		scope: {
-			sectionGroup: '<'
+			sectionGroup: '<',
+			viewType: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.updateTeachingAssistantAppointments = function(sectionGroup) {

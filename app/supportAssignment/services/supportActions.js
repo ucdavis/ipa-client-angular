@@ -54,7 +54,9 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				$rootScope.$emit('toast', { message: "Updated Readers", type: "SUCCESS" });
 				supportReducer.reduce({
 					type: UPDATE_SECTIONGROUP,
-					sectionGroup: sectionGroup
+					payload: {
+						sectionGroup: sectionGroup
+					}
 				});
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update readers.", type: "ERROR" });
@@ -65,7 +67,9 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				$rootScope.$emit('toast', { message: "Updated Teaching Assistants", type: "SUCCESS" });
 				supportReducer.reduce({
 					type: UPDATE_SECTIONGROUP,
-					sectionGroup: sectionGroup
+					payload: {
+						sectionGroup: sectionGroup
+					}
 				});
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update teaching assistants.", type: "ERROR" });
