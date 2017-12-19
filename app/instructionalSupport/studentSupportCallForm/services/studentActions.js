@@ -57,7 +57,6 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 			});
 		},
 		updateAvailability: function(supportCallResponse) {
-			console.log("update avail");
 			studentService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Updated availability.", type: "SUCCESS" });
 				var action = {
