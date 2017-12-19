@@ -3,3 +3,7 @@
 	margin-left: 10px;
 	margin-right: 10px;
 }
+
+.support-staff-tab__right-header {
+	justify-content: space-between;
+}

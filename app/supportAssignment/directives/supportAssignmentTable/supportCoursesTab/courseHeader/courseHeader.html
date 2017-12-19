@@ -1,16 +1,17 @@
 <div class="course-header">
 	<div class="course-header__name">
-		{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} {{ sectionGroup.title }}
+		{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} {{ sectionGroup.sequencePattern }} {{ sectionGroup.title }}
 	</div>
 	<div class="course-header__details">
 		<div>
-			seats
+			Seats: {{ sectionGroup.plannedSeats }}
 		</div>
 		<div>
-			units
+			Units: {{sectionGroup.units}}
 		</div>
 	</div>
 	<div ng-show="viewType == 'Teaching Assistant'" class="course-header__input-container">
+		Number of TAs
 		<input class="course-header__input"
 		type="number"
 		ng-model="sectionGroup.teachingAssistantAppointments"

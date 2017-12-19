@@ -3,10 +3,16 @@
 		<div class="ipa-table__header-cell ipa-table__body-cell--small">
 			Course
 		</div>
-		<div class="ipa-table__header-cell ipa-table__body-cell--extra-large">
-			Assign
+		<div class="ipa-table__header-cell ipa-table__body-cell--extra-large support-courses-tab__right-header">
+			<div>
+				Assign
+			</div>
+			<div>
+				<ipa-radio on-select="setViewType" radio-names="radioNames" active-radio="state.ui.viewType"></ipa-radio>
+			</div>
 		</div>
 	</div>
+
 	<div class="support-courses-tab__row" ng-repeat="sectionGroup in state.sectionGroups">
 		<div class="support-assignments__header-cell">
 			<course-header view-type="state.ui.viewType" section-group="sectionGroup"></course-header>

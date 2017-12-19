@@ -263,7 +263,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 				case INIT_STATE:
 					ui = {
 						tabPivot: "By Course",
-						viewType: "Teaching Assistant",
+						viewType: "Teaching Assistants",
 						supportStaffTabs: {}
 					};
 
