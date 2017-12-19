@@ -32,7 +32,7 @@
 }
 
 .ipa-tabs-vertical__tab:not(.ipa-tabs__tab--active):hover {
-	background-color: #a1a4a9;
+	background-color: #d6d6d6;
 	cursor: pointer;
 }
 
