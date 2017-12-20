@@ -8,7 +8,7 @@ instructionalSupportApp.directive("crnAvailable", this.crnAvailable = function (
 		},
 		link: function (scope, element, attrs) {
 			scope.calculateTimesForCrn = function(crn) {
-				studentActions.calculateTimesForCrn(crn, scope.state.courses, scope.state.sectionGroups, scope.state.sections, scope.state.activities);
+				studentActions.fetchTimesByCrn(crn);
 			};
 			// Intentionally empty
 		}
