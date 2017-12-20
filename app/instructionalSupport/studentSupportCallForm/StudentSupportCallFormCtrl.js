@@ -17,6 +17,7 @@ this.StudentSupportCallFormCtrl = function ($scope, $rootScope, $window, $locati
 
 	$rootScope.$on('studentStateChanged', function (event, data) {
 		$scope.view.state = data;
+		console.log(data);
 	});
 
 	$scope.updatePreferencesOrder = function(preferenceIds) {

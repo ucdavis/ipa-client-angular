@@ -17,7 +17,7 @@
 					Course
 				</div>
 				<div class="ipa-table__header-cell ipa-table__body-cell--medium">
-					Comments
+					<div ng-show="state.supportCallResponse.collectPreferenceComments">Comments</div>
 				</div>
 				<div class="ipa-table__header-cell ipa-table__body-cell--small">
 				</div>
@@ -49,10 +49,12 @@
 						{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern }}
 					</div>
 					<div class="ipa-table__body-cell ipa-table__body-cell--medium">
-						<ipa-button
-							on-click="openPreferenceCommentsModal(preference)"
-							text="'Add Comments'">
-						</ipa-button>
+						<div ng-show="state.supportCallResponse.collectPreferenceComments">
+							<ipa-button
+								on-click="openPreferenceCommentsModal(preference)"
+								text="'Add Comments'">
+							</ipa-button>
+						</div>
 					</div>
 					<div class="ipa-table__body-cell ipa-table__body-cell--small">
 						<ipa-button
