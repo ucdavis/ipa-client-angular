@@ -52,6 +52,10 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 						preferences.list[preferenceId].priority = priority;
 					}
 					return preferences;
+				case UPDATE_PREFERENCE:
+					var preference = action.payload;
+					preferences.list[preference.id] = preference;
+					return preferences;
 				case ADD_STUDENT_PREFERENCE:
 					var preference = action.payload;
 					preferences.ids.push(preference.id);
@@ -149,16 +153,18 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 					return ui;
 				case OPEN_PREFERENCE_COMMENT_MODAL:
 					ui.isPreferenceCommentModalOpen = true;
+					ui.modalPreference = action.payload.preference;
 					return ui;
 				case CLOSE_PREFERENCE_COMMENT_MODAL:
 					ui.isPreferenceCommentModalOpen = false;
+					ui.modalPreference = null;
 					return ui;
 				case ADD_STUDENT_PREFERENCE:
 				case DELETE_STUDENT_PREFERENCE:
 					ui.review.requirePreferenceAmount.complete = action.preferences.ids.length >= action.supportCallResponse.minimumNumberOfPreferences;
 					return ui;
 				case UPDATE_PREFERENCE:
-					ui.review.requirePreferenceComments = action.preferenceCommentsComplete;
+					ui.review.requirePreferenceComments.complete = action.preferenceCommentsComplete;
 					return ui;
 				case UPDATE_SUPPORT_CALL_RESPONSE:
 					ui.review.requireEligible.complete = action.payload.eligibilityConfirmed;

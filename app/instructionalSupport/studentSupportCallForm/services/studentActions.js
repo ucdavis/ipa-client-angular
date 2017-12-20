@@ -119,6 +119,10 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 				$rootScope.$emit('toast', { message: "Could not update preference order.", type: "ERROR" });
 			});
 		},
+		updatePreferenceComment: function (scheduleId, preference) {
+			this.updatePreference(scheduleId, preference);
+			this.closePreferenceCommentsModal();
+		},
 		updatePreference: function (scheduleId, preference) {
 			var self = this;
 			studentService.updatePreference(scheduleId, preference).then(function (payload) {
@@ -129,7 +133,7 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 					preference.comment || "";
 				}).
 				every(function(comment) {
-					comment.length > 0;
+					comment && comment.length > 0;
 				});
 
 				var action = {
@@ -148,9 +152,12 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 			var studentSummaryUrl = "/summary/" + studentReducers._state.misc.workgroupId + "/" + studentReducers._state.misc.year + "?mode=instructionalSupport";
 			$window.location.href = studentSummaryUrl;
 		},
-		openPreferenceCommentsModal: function() {
+		openPreferenceCommentsModal: function(preference) {
 			studentReducers.reduce({
-				type: OPEN_PREFERENCE_COMMENT_MODAL
+				type: OPEN_PREFERENCE_COMMENT_MODAL,
+				payload: {
+					preference: preference
+				}
 			});
 		},
 		closePreferenceCommentsModal: function() {

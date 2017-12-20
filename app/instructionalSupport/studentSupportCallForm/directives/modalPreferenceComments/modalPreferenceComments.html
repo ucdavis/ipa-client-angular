@@ -1,21 +1,26 @@
-<div style="display: block; overflow-y: hidden;" id="modal-1" class="modal">
-	<!-- modal page 1 -->
-	<div class="modal-dialog teaching-call--width">
-		<div class="modal-content">
-			<div class="modal-header teaching-call--header_style">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="dismiss()">×</button>
-				<h4 class="modal-title">Comments</h4>
+<div class="delete-course-modal">
+		<div class="modal-preferenc-comments__body">
+			<div class="modal-preference-comments__label">
+				{{ preference.subjectCode }} {{ preference.courseNumber }} Comment:
 			</div>
-
-			<div class="modal-footer modal-footer--teaching-call">
-				<div class="email-style container-fluid">
-					<h5 class="pull-left">{{ preference.subjectCode }} {{ preference.courseNumber }} Comments</h5>
-					<textarea ng-model="preference.comment" class="form-control support-call-message-input" rows="5" id="comment"></textarea>
-				</div>
-				<button type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Save</button>
-			</div>
-			<!-- modal-footer ends -->
-			
+			<textarea
+			class="modal-preference-comments__input"
+			ng-model="preference.comment">
+			</textarea>
 		</div>
-	</div><!-- modal page 1 ends -->
+
+		<div class="modal-preference-comments__footer">
+			<button
+			ng-click="close()"
+			type="button"
+			class="modal-preference-comments__cancel-button">
+				Cancel
+			</button>
+			<button
+			ng-click="submitForm()"
+			type="button"
+			class="modal-preference-comments__confirm-button">
+				Save
+			</button>
+		</div>
 </div>
