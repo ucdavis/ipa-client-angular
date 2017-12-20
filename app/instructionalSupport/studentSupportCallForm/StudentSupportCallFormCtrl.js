@@ -28,22 +28,6 @@ this.StudentSupportCallFormCtrl = function ($scope, $rootScope, $window, $locati
 		$window.location.href = "/summary/" + $scope.workgroupId + "/" + $scope.year + "?mode=instructionalSupport";
 	};
 
-	$scope.openPreferenceCommentModal = function(preference) {
-		modalInstance = $uibModal.open({
-			templateUrl: 'ModalPreferenceComment.html',
-			controller: ModalPreferenceCommentCtrl,
-			size: 'lg',
-			resolve: {
-				preference: function () {
-					return preference;
-				},
-				state: function () {
-					return $scope.view.state;
-				}
-			}
-		});
-	};
-
 	$scope.termShortCodeToTermCode = function(termShortCode) {
 		// Already a termCode
 		if (termShortCode.length == 6) {

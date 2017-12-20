@@ -8,6 +8,10 @@ instructionalSupportApp.directive("studentPreferenceTable", this.studentPreferen
 				studentActions.deleteStudentPreference(preference);
 			};
 
+			scope.openPreferenceCommentsModal = function(preference) {
+				studentActions.openPreferenceCommentsModal(preference);
+			};
+
 			// Will reorder the preferenceIds
 			// Negative changeValue will raise the priority, positive changeValue will lower priority
 			scope.updatePreferencesOrder = function(preference, changeValue) {

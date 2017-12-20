@@ -19,14 +19,17 @@
 		</div>
 	</div>
 
-	<div ng-show="view.state && view.state.supportCallResponse" class="student-support-call-form__container">
+	<div ng-if="view.state">
 		<!-- Modals -->
+		[{{view.state.ui.isPreferenceCommentModalOpen}}]
 		<ipa-modal
-			is-visible="view.state.isPreferenceCommentModalOpen"
+			is-visible="view.state.ui.isPreferenceCommentModalOpen"
 			header-text="Add Preference Comment">
-				<modal-proference-comments ng-if="view.state.openAddBudgetScenario" state="view.state"></modal-proference-comments>
+				<modal-preference-comments ng-if="view.state.ui.isPreferenceCommentModalOpen" state="view.state"></modal-preference-comments>
 		</ipa-modal>
+	</div>
 
+	<div ng-show="view.state && view.state.supportCallResponse" class="student-support-call-form__container">
 		<div class="student-support-call-form__page">
 			<div class="student-support-call-form__main">
 				<confirm-eligible support-call-response="view.state.supportCallResponse"></confirm-eligible>
