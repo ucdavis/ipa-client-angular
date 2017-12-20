@@ -1,0 +1,15 @@
+.assign-support-staff {
+	width: 80%;
+	border: 1px solid #ddd;
+	padding: 10px 15px;
+	font-weight: bold;
+	color: #555;
+	margin-bottom: 20px;
+	display: flex;
+	background-color: #F8F8F8;
+}
+
+.support-assignment-row__text {
+	display: flex;
+	align-items: center;
+}
