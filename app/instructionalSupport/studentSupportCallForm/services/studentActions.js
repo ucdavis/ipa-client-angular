@@ -165,12 +165,6 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 				type: CLOSE_PREFERENCE_COMMENT_MODAL
 			});
 		},
-		addCrnToAvailability: function(crn, appliedCrns, supportCallResponse) {
-			// TODO
-		},
-		removeCrnFromAvailability: function(crn, timeSlots, supportCallResponse) {
-			// TODO
-		},
 		calculateFormValid : function() {
 			var review = studentReducers._state.ui.review;
 			var validationErrorMessage = "";
@@ -207,53 +201,124 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 				}
 			});
 		},
-		calculateTimesForCrn: function(crn, courses, sectionGroups, sections, activities) {
-			var section = null;
+		fetchTimesByCrn: function(crn) {
+			var self = this;
 
-			for (var i = 0; i < sections.ids.length; i++) {
-				var slotSection = sections.list[sections.ids[i]];
+			studentReducers.reduce({
+				type: BEGIN_FETCH_ACTIVITIES_BY_CRN
+			});
 
-				if (slotSection.crn == crn) {
-					section = angular.copy(slotSection);
-					break;
-				}
-			}
-
-			// No crn matched section
-			if (section == null) {
+			studentService.getDwActivitiesByCrn(crn, studentReducers._state.misc.termCode).then(function (payload) {
+				studentReducers.reduce({
+					type: COMPLETE_FETCH_ACTIVITIES_BY_CRN
+				});
+				self.generateTimesForCrn(payload, crn);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not fetch activities by crn.", type: "ERROR" });
+			});
+		},
+		generateTimesForCrn: function(activities, crn) {
+			var self = this;
+			if (activities.length) {
 				studentReducers.reduce({
 					type: CALCULATE_TIMESLOTS_FOR_CRN,
 					crn: crn,
 					crnSearchFeedback: "No course found",
 					scheduledTimes: []
 				});
+
 				return;
 			}
 
-			// Calculate timeSlots from section - activities
-			var timeSlots = activities.ids.filter(function(activityId) {
-				activities.list[activityId].sectionId == section.id;
-			}).map(function(activityId) {
-				var activity = activities.list[activityId];
-				//TODO: convert times/days to availability blob
+			var availabilityBlob = "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
+			var crnSearchFeedback = "";
+
+			activities.forEach(function(activity) {
+				var activityTimes = self.calculateTimes(activity);
+				crnSearchFeedback += activityTimes.description + " ";
+				availabilityBlob = combineBlobs(availabilityBlob, activityTimes.blob);
 			});
-
-			//TODO: Calculate timeSlots from sectionGroup - activities
-
-
-			//TODO: combine timeslots
-
-			//TODO: if timeSlots is empty, display 'course suchandsuch has no times available'
-			// Calculate description
-			var course = courses.list[sectionGroups.list[section.sectionGroupId].courseId];
-			var crnSearchFeedback = course.subjectCode + " " + course.courseNumber + " " + section.sequenceNumber;
 
 			studentReducers.reduce({
 				type: CALCULATE_TIMESLOTS_FOR_CRN,
 				crn: crn,
 				crnSearchFeedback: crnSearchFeedback,
-				scheduledTimes: scheduledTimes
+				availabilityBlob: availabilityBlob
 			});
+		},
+		calculateTimes: function(activity) {
+			var activityTimes = {
+				blob: "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1",
+				description: ""
+			};
+
+			var startHour = activity.ssrmeet_begin_time.substring(0,2);
+			var startHourIndex = startHour - 7; // 7am should correspond to 0 index.
+			var endHour = activity.ssrmeet_end_time.substring(0,2);
+			var endHourIndex = endHour - 7; // 7am should correspond to 0 index.
+
+			if (activity.ssrmeet_mon_day) {
+				activityTimes.description += "M";
+
+				var dayOffset = 0; // Monday starts at 0 in the blob
+				for (var i = startHourIndex; i <= endHourIndex; i++) {
+					var blobIndex = (i * 2) + dayOffset;
+					activityTimes.blob = setCharAt(activityTimes.blob, blobIndex, "0");
+				}
+			}
+			if (activity.ssrmeet_tue_day) {
+				activityTimes.description += "T";
+
+				var dayOffset = 30; // Tuesday starts at 30 in the blob
+				for (var i = startHourIndex; i <= endHourIndex; i++) {
+					var blobIndex = (i * 2) + dayOffset;
+					activityTimes.blob = setCharAt(activityTimes.blob, blobIndex, "0");
+				}
+			}
+			if (activity.ssrmeet_wed_day) {
+				activityTimes.description += "W";
+
+				var dayOffset = 60; // Wednesday starts at 60 in the blob
+				for (var i = startHourIndex; i <= endHourIndex; i++) {
+					var blobIndex = (i * 2) + dayOffset;
+					activityTimes.blob = setCharAt(activityTimes.blob, blobIndex, "0");
+				}
+			}
+			if (activity.ssrmeet_thu_day) {
+				activityTimes.description += "R";
+
+				var dayOffset = 90; // Thursday starts at 90 in the blob
+				for (var i = startHourIndex; i <= endHourIndex; i++) {
+					var blobIndex = (i * 2) + dayOffset;
+					activityTimes.blob = setCharAt(activityTimes.blob, blobIndex, "0");
+				}
+			}
+			if (activity.ssrmeet_fri_day) {
+				activityTimes.description += "F";
+				var dayOffset = 120; // Friday starts at 120 in the blob
+				for (var i = startHourIndex; i <= endHourIndex; i++) {
+					var blobIndex = (i * 2) + dayOffset;
+					activityTimes.blob = setCharAt(activityTimes.blob, blobIndex, "0");
+				}
+			}
+
+			activityTimes.description += " " + activity.ssrmeet_begin_time + "-" + activity.ssrmeet_end_time;
+
+			return activityTimes;
+		},
+		setCharAt: function(str, index, chr) {
+			if (index > str.length-1) { return str;}
+
+			return str.substr(0,index) + chr + str.substr(index + 1);
+		},
+		combineBlobs: function (blobOne, blobTwo) {
+			for( var i = 0; i < blobTwo.length; i+2) {
+				if (blobTwo[i] == "0") {
+					blobOne = setCharAt(str, i, "0");
+				}
+			}
+
+			return blobOne;
 		}
 	};
 });

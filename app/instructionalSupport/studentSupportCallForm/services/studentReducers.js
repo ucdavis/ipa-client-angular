@@ -101,7 +101,8 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 						supportStaffId: action.payload.supportStaffId,
 						workgroupId: action.workgroupId,
 						year: action.year,
-						termShortCode: action.termShortCode
+						termShortCode: action.termShortCode,
+						termCode: action.year + action.termShortCode
 					};
 					return misc;
 				default:
@@ -115,8 +116,8 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 						isPreferenceCommentModalOpen: false,
 						isFormLocked: false,
 						searchCrn: null,
-						crnAvailabilities: {},
 						crnSearchFeedback: null,
+						crnSearchAvailability: null,
 						review: {
 							isFormValid: true,
 							validationErrorMessage: null,
