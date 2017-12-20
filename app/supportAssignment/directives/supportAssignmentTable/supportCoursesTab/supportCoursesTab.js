@@ -12,6 +12,10 @@ supportAssignmentApp.directive("supportCoursesTab", this.supportCoursesTab = fun
 			scope.setViewType = function(type) {
 				supportActions.setViewType(type);
 			};
+
+			scope.assignStaffToSectionGroup = function(supportStaff, sectionGroup) {
+				studentActions.assignStaffToSectionGroup(sectionGroup, staff);
+			};
 		}
 	};
 });

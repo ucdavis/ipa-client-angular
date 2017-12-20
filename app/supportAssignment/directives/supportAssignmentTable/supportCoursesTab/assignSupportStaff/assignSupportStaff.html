@@ -1,8 +1,48 @@
 <div class="assign-support-staff">
-	<div class="support-assignment-row__icon">
-		<i class="btn glyphicon glyphicon-plus"></i>
+	<div class="assign-support-staff__container" ng-click="toggleDropdown()">
+		<div>
+			<i class="btn glyphicon glyphicon-plus"></i>
+		</div>
+		<div class="assign-support-staff__text">
+			Assign
+		</div>
 	</div>
-	<div class="assign-support-staff__text">
-		Assign
+	<div ng-if="expanded" class="assign-support-staff__dropdown-container">
+		<div class="assign-support-staff__dropdown-mask" ng-click="closeDropdown()">
+		</div>
+
+		<div class="assign-support-staff__dropdown">
+			<div class="assign-support-staff__dropdown-group-name">
+				Instructor Preferences
+			</div>
+			<div
+			class="assign-support-staff__dropdown-item"
+			ng-repeat="supportStaff in assignmentOptions.instructorPreferences"
+			ng-click="triggerSelection(supportStaff)">
+				{{ supportStaff.fullName }}
+			</div>
+
+			<div class="assign-support-staff__dropdown-group-name">
+				Student Preferences
+			</div>
+
+			<div
+			class="assign-support-staff__dropdown-item"
+			ng-repeat="supportStaff in assignmentOptions.supportStaffPreferences"
+			ng-click="triggerSelection(supportStaff)">
+				{{ supportStaff.fullName }}
+			</div>
+
+			<div class="assign-support-staff__dropdown-group-name">
+				Other
+			</div>
+
+			<div
+			class="assign-support-staff__dropdown-item"
+			ng-repeat="supportStaff in assignmentOptions.other"
+			ng-click="triggerSelection(supportStaff)">
+				{{ supportStaff.fullName }}
+			</div>
+		</div>
 	</div>
 </div>
