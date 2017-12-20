@@ -42,6 +42,26 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 					return sectionGroups;
 			}
 		},
+		_sectionReducers: function (action, sections) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					sections = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.sections.forEach( function(section) {
+						sections.ids.push(section.id);
+						sections.list[section.id] = section;
+					});
+
+					return sections;
+				default:
+					return sections;
+			}
+		},
 		_courseReducers: function (action, courses) {
 			var scope = this;
 
@@ -304,6 +324,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 			newState.supportStaffSupportCallResponses = scope._supportStaffSupportCallResponseReducers(action, scope._state.supportStaffSupportCallResponses);
 			newState.instructorSupportCallResponses = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponses);
 			newState.assignedSupportStaffList = scope._assignedSupportStaffListReducers(action, scope._state.assignedSupportStaffList);
+			newState.sections = scope._sectionReducers(action, scope._state.sections);
 
 			scope._state = newState;
 
@@ -343,7 +364,8 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 																																			scope._state.supportStaffSupportCallResponses,
 																																			scope._state.supportStaffPreferences,
 																																			scope._state.instructorPreferences,
-																																			scope._state.instructorSupportCallResponses
+																																			scope._state.instructorSupportCallResponses,
+																																			scope._state.sections
 																																		);
 
 			$rootScope.$emit('supportAssignmentStateChanged', newPageState);
