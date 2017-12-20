@@ -1,6 +1,6 @@
 sharedApp.directive('ipaDropdown', function() {
 	return {
-		restrict: 'E', // Use this via an element selector <ipa-modal></ipa-modal>
+		restrict: 'E',
 		templateUrl: 'ipaDropdown.html', // directive html found here:
 		scope: {
 			items: '<', // Each item is expected to have an id, description (display value), and selected (bool flag).
