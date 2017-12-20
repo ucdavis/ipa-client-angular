@@ -4,7 +4,8 @@ supportAssignmentApp.directive("assignSupportStaff", this.assignSupportStaff = f
 		templateUrl: 'assignSupportStaff.html',
 		replace: true,
 		scope: {
-			state: '<'
+			state: '<',
+			assignmentOptions: '<'
 		},
 		link: function (scope, element, attrs) {
 			// Intentionally blank

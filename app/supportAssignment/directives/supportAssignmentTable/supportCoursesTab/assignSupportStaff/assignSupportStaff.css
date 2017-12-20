@@ -7,9 +7,47 @@
 	margin-bottom: 20px;
 	display: flex;
 	background-color: #F8F8F8;
+	cursor: pointer;
 }
 
-.support-assignment-row__text {
+.assign-support-staff__text {
 	display: flex;
 	align-items: center;
+}
+
+.assign-support-staff__dropdown-container {
+	position: absolute;
+}
+
+.assign-support-staff__dropdown {
+	z-index: 30;
+	background-color: white;
+	margin-top: 4px;
+	border: 1px solid rgba(27,31,35,0.15);
+	border-radius: 3px;
+	box-shadow: 0 3px 12px rgba(27,31,35,0.15);
+}
+
+.assign-support-staff__dropdown-item {
+	background-color: #fff;
+	padding-left: 30px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	padding-right: 8px;
+	border-bottom: 1px solid #eaecef;
+	cursor: pointer;
+}
+
+.assign-support-staff__dropdown-item:hover {
+	background-color: #f4f4f4;
+}
+
+.assign-support-staff__dropdown-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 20;
+	display: block;
+	width: 100vw;
+	height: 100vh;
 }
