@@ -42,7 +42,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 */
 		// Creates structured json corresponding to a 'support staff' centric view of the data
 
-		generateSectionGroups: function (supportAssignments, courses, sectionGroups, supportStaffFromRoles, assignedSupportStaffList, supportStaffSupportCallResponses, supportStaffPreferences, instructorPreferences, instructorSupportCallResponses) {
+		generateSectionGroups: function (supportAssignments, courses, sectionGroups, supportStaffFromRoles, assignedSupportStaffList, supportStaffSupportCallResponses, supportStaffPreferences, instructorPreferences, instructorSupportCallResponses, sections) {
 			var self = this;
 
 			// Blend the two types of support staff together into a unique listing
@@ -224,12 +224,31 @@ supportAssignmentApp.service('supportSelectors', function () {
 					}
 				});
 
+				self.generateSections(sectionGroup, sections, supportAssignments);
+
 				newSectionGroups.push(sectionGroup);
 			});
 
 			var sortedSectionGroups = _array_sortByProperty(newSectionGroups, ["subjectCode", "courseNumber"]);
 
 			return sortedSectionGroups;
+		},
+		generateSections: function(sectionGroup, sections, supportAssignments) {
+			var generatedSections = [];
+			sections.ids.forEach(function(sectionId) {
+				var section = sections.list[sectionId];
+				if (section.sectionGroupId != sectionGroup.id) {
+					return;
+				}
+
+				section.readerAssignmentOptions = sectionGroup.readerAssignmentOptions;
+				section.teachingAssistantAssignmentOptions = sectionGroup.teachingAssistantAssignmentOptions;
+
+				// Add assignments to section
+				generatedSections.push(section);
+			});
+
+			return generatedSections;
 		},
 		generateSupportStaffList: function (supportAssignments, courses, sectionGroups, supportStaffFromRoles, assignedSupportStaffList, supportStaffSupportCallResponses, supportStaffPreferences) {
 			var self = this;
