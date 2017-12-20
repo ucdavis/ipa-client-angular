@@ -10,4 +10,9 @@
 .support-assignments__header-cell {
 	background-color: #F8F8F8;
 	width: 250px;
+	border-right: 1px solid #ddd;
+}
+
+.support-assignments__header-cell--section {
+	background-color: #FFF;
 }

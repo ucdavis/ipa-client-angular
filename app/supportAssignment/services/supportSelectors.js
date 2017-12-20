@@ -79,16 +79,23 @@ supportAssignmentApp.service('supportSelectors', function () {
 
 				// Add assignments
 				sectionGroup.supportAssignments = [];
+
 				supportAssignments.ids.forEach( function(assignmentId) {
 					var supportAssignment = supportAssignments.list[assignmentId];
 
-					// Ensure preference is relevant to supportStaff
+					// Ensure preference is relevant to sectionGroup
 					if (supportAssignment.sectionGroupId != sectionGroup.id) {
 						return;
 					}
 
 					// Add supportStaff data
 					var supportAssignment = self.addSupportStaffData(supportAssignment, supportStaffList);
+
+					if (supportAssignment.appointmentType == "teachingAssistant") {
+						supportAssignment.viewType = "Teaching Assistants";
+					} else if (supportAssignment.appointmentType == "reader") {
+						supportAssignment.viewType = "Readers";
+					}
 
 					sectionGroup.supportAssignments.push(supportAssignment);
 				});

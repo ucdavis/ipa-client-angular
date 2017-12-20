@@ -10,3 +10,19 @@
 .support-courses-tab__right-header {
 	justify-content: space-between;
 }
+
+.support-courses-tab__section-header {
+	padding: 20px;
+	font-weight: bold;
+	color: #555;
+}
+
+.support-courses-tab__assignment-container {
+	flex-flow: column;
+	width: 100%;
+	padding: 20px;
+}
+
+.support-courses-tab__assignment {
+	width: 100%;
+}
