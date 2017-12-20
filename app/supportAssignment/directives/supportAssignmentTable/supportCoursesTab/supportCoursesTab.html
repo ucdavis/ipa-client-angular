@@ -13,12 +13,31 @@
 		</div>
 	</div>
 
-	<div class="support-courses-tab__row" ng-repeat="sectionGroup in state.sectionGroups">
-		<div class="support-assignments__header-cell">
-			<course-header view-type="state.ui.viewType" section-group="sectionGroup"></course-header>
+	<div ng-repeat="sectionGroup in state.sectionGroups">
+		<div class="support-courses-tab__row">
+			<div class="support-assignments__header-cell">
+				<course-header view-type="state.ui.viewType" section-group="sectionGroup"></course-header>
+			</div>
+			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large support-courses-tab__assignment-container">
+				<div
+				class="support-courses-tab__assignment"
+				ng-repeat="supportAssignment in sectionGroup.supportAssignments"
+				ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
+					<support-assignment-row
+					name="supportAssignment.fullName">
+					</support-assignment-row>
+				</div>
+			</div>
 		</div>
-		<div class="ipa-table__body-cell ipa-table__body-cell--extra-large">
-			preferences
+		<div class="support-courses-tab__row">
+			<div class="support-assignments__header-cell support-assignments__header-cell--section">
+				<div class="support-courses-tab__section-header">
+					A01
+				</div>
+			</div>
+			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large">
+				section preferences
+			</div>
 		</div>
 	</div>
 </div>
