@@ -1,6 +1,6 @@
 sharedApp.directive("ipaCheckbox", this.ipaCheckbox = function() {
 	return {
-		restrict: 'E', // Use this via an element selector <ipa-modal></ipa-modal>
+		restrict: 'E',
 		templateUrl: 'ipaCheckbox.html', // directive html found here:
 		scope: {
 			isChecked: '=',
