@@ -25,4 +25,6 @@
 
 .support-courses-tab__assignment {
 	width: 100%;
+	display: flex;
+	justify-content: center;
 }

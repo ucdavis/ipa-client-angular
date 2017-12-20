@@ -10,6 +10,11 @@
 
 .course-header__details {
 	display: flex;
+	margin-bottom: 10px;
+}
+
+.course-header__details-label {
+	padding-right: 10px;
 }
 
 .course-header__input-container {
@@ -17,5 +22,13 @@
 }
 
 .course-header__input {
-	
+	border: 1px solid #d9d9d9;
+	border-top-color: #c0c0c0;
+	background-color: white;
+	border-radius: 3px;
+	box-sizing: border-box;
+	height: 31px;
+	width: 20%;
+	padding: 5px;
+	margin-left: 10px;
 }

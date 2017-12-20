@@ -3,23 +3,23 @@
 		{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} {{ sectionGroup.sequencePattern }} {{ sectionGroup.title }}
 	</div>
 	<div class="course-header__details">
-		<div>
+		<div class="course-header__details-label">
 			Seats: {{ sectionGroup.plannedSeats }}
 		</div>
-		<div>
+		<div class="course-header__details-label">
 			Units: {{sectionGroup.units}}
 		</div>
 	</div>
 	<div ng-show="viewType == 'Teaching Assistants'" class="course-header__input-container">
-		Number of TAs
+		TAs
 		<input class="course-header__input"
 		type="number"
 		ng-model="sectionGroup.teachingAssistantAppointments"
 		auto-input on-blur="updateTeachingAssistantAppointments(sectionGroup)">
 		</input>
 	</div>
-	<div ng-show="viewType == 'Readers'" class="course-header__input">
-		Number of readers
+	<div ng-show="viewType == 'Readers'" class="course-header__input-container">
+		Readers
 		<input class="course-header__input"
 		type="number"
 		ng-model="sectionGroup.readerAppointments"
