@@ -1,13 +1,18 @@
 .assign-support-staff {
 	width: 80%;
 	border: 1px solid #ddd;
-	padding: 10px 15px;
 	font-weight: bold;
 	color: #555;
 	margin-bottom: 20px;
-	display: flex;
 	background-color: #F8F8F8;
 	cursor: pointer;
+	position: relative;
+}
+
+.assign-support-staff__container {
+	width: 100%;
+	padding: 10px 15px;
+	display: flex;
 }
 
 .assign-support-staff__text {
@@ -17,15 +22,22 @@
 
 .assign-support-staff__dropdown-container {
 	position: absolute;
+	width: 100%;
 }
 
 .assign-support-staff__dropdown {
+	position: relative;
+	width: 100%;
 	z-index: 30;
 	background-color: white;
 	margin-top: 4px;
 	border: 1px solid rgba(27,31,35,0.15);
 	border-radius: 3px;
 	box-shadow: 0 3px 12px rgba(27,31,35,0.15);
+}
+
+.assign-support-staff:hover {
+	border-color: #bab9b9
 }
 
 .assign-support-staff__dropdown-item {
@@ -36,6 +48,7 @@
 	padding-right: 8px;
 	border-bottom: 1px solid #eaecef;
 	cursor: pointer;
+	font-weight: normal;
 }
 
 .assign-support-staff__dropdown-item:hover {
@@ -50,4 +63,10 @@
 	display: block;
 	width: 100vw;
 	height: 100vh;
+}
+
+.assign-support-staff__dropdown-group-name {
+	color: #8d8b8b;
+	padding-left: 15px;
+	padding-top: 15px;
 }
