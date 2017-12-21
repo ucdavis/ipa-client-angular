@@ -13,10 +13,9 @@ supportAssignmentApp.factory("supportService", this.supportService = function($h
 
 			return deferred.promise;
 		},
-		deleteAssignment: function(instructionalSupportAssignment) {
-
+		deleteAssignment: function(supportAssignment) {
 			var deferred = $q.defer();
-			$http.delete(serverRoot + "/api/instructionalSupportView/instructionalSupportAssignments/" + instructionalSupportAssignment.id, { withCredentials: true })
+			$http.delete(serverRoot + "/api/instructionalSupportView/instructionalSupportAssignments/" + supportAssignment.id, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
@@ -26,9 +25,21 @@ supportAssignmentApp.factory("supportService", this.supportService = function($h
 
 			return deferred.promise;
 		},
-		updateSectionGroup: function(sectionGroup) {
+		assignStaffToSectionGroup: function(sectionGroup, supportStaffId, type) {
 			var deferred = $q.defer();
-			$http.put(serverRoot + "/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup, { withCredentials: true })
+			$http.post(serverRoot + "/api/instructionalSupportView/sectionGroups/" + sectionGroup.id + "/assignmentType/" + type + "/supportStaff/" + supportStaffId, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		assignStaffToSection: function(supportStaff, section, type) {
+			var deferred = $q.defer();
+			$http.post(serverRoot + "/api/instructionalSupportView/sections/" + section.id + "/assignmentType/" + type + "/supportStaff/" + supportStaff.id, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
@@ -61,7 +72,6 @@ supportAssignmentApp.factory("supportService", this.supportService = function($h
 			});
 
 			return deferred.promise;
-		},
-
+		}
 	};
 });

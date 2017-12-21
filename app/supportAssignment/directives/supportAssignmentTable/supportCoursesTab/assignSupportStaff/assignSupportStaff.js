@@ -19,8 +19,8 @@ supportAssignmentApp.directive("assignSupportStaff", this.assignSupportStaff = f
 				scope.expanded = !scope.expanded;
 			};
 
-			scope.triggerSelection = function(supportStaff) {
-				scope.onSelect()(supportStaff, scope.sectionGroup);
+			scope.triggerSelection = function(preference) {
+				scope.onSelect()(preference, scope.sectionGroup);
 			};
 		}
 	};

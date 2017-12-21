@@ -37,12 +37,38 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				$rootScope.$emit('toast', { message: "Could not update instructor support call review.", type: "ERROR" });
 			});
 		},
-		deleteAssignment: function (instructionalSupportAssignment) {
-			supportService.deleteAssignment(instructionalSupportAssignment).then(function (payload) {
+		assignStaffToSectionGroup: function (sectionGroup, supportStaffId, type) {
+			supportService.assignStaffToSectionGroup(sectionGroup, supportStaffId, type).then(function (supportAssignment) {
+				$rootScope.$emit('toast', { message: "Assigned staff", type: "SUCCESS" });
+				supportReducer.reduce({
+					type: ASSIGN_STAFF_TO_SECTION_GROUP,
+					payload: {
+						supportAssignment: supportAssignment
+					}
+				});
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not assign staff.", type: "ERROR" });
+			});
+		},
+		assignStaffToSection: function (sectionGroup, supportStaff, type) {
+			supportService.assignStaffToSection(sectionGroup, supportStaff, type).then(function (supportAssignment) {
+				$rootScope.$emit('toast', { message: "Assigned staff", type: "SUCCESS" });
+				supportReducer.reduce({
+					type: ASSIGN_STAFF_TO_SECTION,
+					payload: {
+						supportAssignment: supportAssignment
+					}
+				});
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not assign staff.", type: "ERROR" });
+			});
+		},
+		deleteAssignment: function (supportAssignment) {
+			supportService.deleteAssignment(supportAssignment).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Removed Assignment", type: "SUCCESS" });
 				var action = {
 					type: DELETE_ASSIGNMENT,
-					payload: instructionalSupportAssignment
+					payload: supportAssignment
 				};
 				supportReducer.reduce(action);
 			}, function (err) {
