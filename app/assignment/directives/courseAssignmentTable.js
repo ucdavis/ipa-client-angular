@@ -12,17 +12,11 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 		link: function (scope, element, attrs) {
 			scope.view = {};
 
-			scope.isTermLocked = function (termCode) {
-				var termState = scope.view.state.scheduleTermStates.list[termCode];
+			scope.userCanEdit = function () {
 				var hasAuthorizedRole = scope.sharedState.currentUser.isAdmin() ||
 					scope.sharedState.currentUser.hasRole('academicPlanner', scope.sharedState.workgroup.id);
 
-				if (termState) {
-					// Return true if the term is locked or if the user has no write access
-					return termState.isLocked || !(hasAuthorizedRole);
-				} else {
-					return false;
-				}
+					return hasAuthorizedRole;
 			};
 
 			// Build a string of html to display a column header (course, terms, etc.)
@@ -170,7 +164,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 												courseHtml += "<div class=\"alert alert-info tile-assignment\">";
 												courseHtml += instructor.fullName;
 
-												if (scope.isTermLocked(sectionGroup.termCode) === false) {
+												if (scope.userCanEdit()) {
 													var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
 														"<div class='text-center'><button class='btn btn-red' data-event-type='deleteAssignment' data-teaching-assignment-id='" + teachingAssignment.id + "'>Delete</button>" +
 														"<button class='btn btn-white' data-event-type='dismissDeleteAssignmentPop'>Cancel</button></div>";
@@ -183,7 +177,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 											}
 										});
 
-										if (scope.isTermLocked(sectionGroup.termCode) === false) {
+										if (scope.userCanEdit()) {
 
 											// Add an assign button to add more instructors
 											courseHtml += "<div class=\"dropdown assign-dropdown hidden-print\">";
@@ -273,7 +267,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 												courseHtml += '<li style="padding-left: 20px; cursor: default;">No unused instructors</li>';
 											}
 											courseHtml += "</ul></div>";
-										} // End scope.isTermLocked check
+										} // End scope.userCanEdit check
 
 									} else {
 										courseHtml += "Not Offered";
