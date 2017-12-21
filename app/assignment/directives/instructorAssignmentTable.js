@@ -21,17 +21,11 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				return true;
 			};
 
-			scope.isTermLocked = function (termCode) {
-				var termState = scope.view.state.scheduleTermStates.list[termCode];
+			scope.userCanEdit = function () {
 				var hasAuthorizedRole = scope.sharedState.currentUser.isAdmin() ||
 					scope.sharedState.currentUser.hasRole('academicPlanner', scope.sharedState.workgroup.id);
 
-				if (termState) {
-					// Return true if the term is locked or if the user has no write access
-					return termState.isLocked || !(hasAuthorizedRole);
-				} else {
-					return false;
-				}
+					return hasAuthorizedRole;
 			};
 
 			// 
@@ -227,7 +221,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 											courseHtml += unitsLow;
 											courseHtml += "</div>";
 
-											if (scope.isTermLocked(teachingAssignment.termCode) === false) {
+											if (scope.userCanEdit()) {
 												var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
 													"<div class='text-center'><button class='btn btn-red' data-event-type='deleteAssignment' data-teaching-assignment-id='" + teachingAssignment.id + "'>Delete</button>" +
 													"<button class='btn btn-white' data-event-type='dismissDeleteAssignmentPop'>Cancel</button></div>";
@@ -245,7 +239,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 										}
 									});
 
-									if (scope.isTermLocked(termCode) === false) {
+									if (scope.userCanEdit()) {
 										// Add an assign button to add more instructors
 										courseHtml += "<div class=\"dropdown assign-dropdown hidden-print\">";
 										courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
@@ -400,7 +394,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 										});
 
 										courseHtml += "</ul></div>"; // End dropdown assign list
-									} // end isTermLocked
+									} // end userCanEdit
 									courseHtml += "</div>"; // Ending term-cell div
 								});
 								courseHtml += "</div>"; // Ending course-row div
