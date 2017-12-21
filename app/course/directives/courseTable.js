@@ -128,14 +128,7 @@ courseApp.directive("courseTable", this.courseTable = function ($rootScope, $tim
 				});
 
 				$.each(termsToRender, function (i, termToRender) {
-					// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
-					var term = data.state.terms.list[termToRender.code];
-					var lockedIcon = "";
-					if (term && term.isLocked()) {
-						lockedIcon = "<i class=\"fa fa-lock term-lock\"></i>";
-					}
-
-					header += "<th class=\"\">" + termToRender.description + lockedIcon + "</th>";
+					header += "<th class=\"\">" + termToRender.description + "</th>";
 				});
 
 				header += "<th class=\"ui-overlay\"></th></tr></thead>";
@@ -464,11 +457,10 @@ var getCourseRow = function (rowIdx, courseId, termsToRender, state) {
 
 			// Determine if the term is readonly
 			var term = state.terms.list[termCode];
-			var termIsLocked = term ? term.isLocked() : true;
 			var cellClass = sectionGroupId ? "sg-cell is-offered" : "sg-cell";
 
 			row += "<td data-term-code=\"" + termCode + "\" class=\"" + cellClass + "\"><div>";
-			if (termIsLocked || state.uiState.tableLocked) {
+			if (state.uiState.tableLocked) {
 				row += plannedSeats;
 			} else {
 				if (requiresAttention) {

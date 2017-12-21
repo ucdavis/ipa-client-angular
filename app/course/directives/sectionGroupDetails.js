@@ -5,9 +5,7 @@ sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function (
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.isLocked = function () {
-				var termCode = scope.view.selectedEntity.termCode;
-				var term = scope.view.state.terms.list[termCode];
-				return term ? term.isLocked() || scope.view.state.uiState.tableLocked : true;
+				return scope.view.state.uiState.tableLocked;
 			};
 
 			scope.addSection = function (seats) {

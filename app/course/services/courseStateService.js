@@ -429,11 +429,7 @@ courseApp.service('courseStateService', function ($rootScope, $log, Course, Term
 						isCourseDeleteModalOpen: false
 					};
 
-					// lock the table if all terms are locked
-					uiState.tableLocked = action.payload.terms
-						.map(function (term) { return new Term(term); })
-						.every(function (term) { return term.isLocked(); });
-
+					uiState.tableLocked = false;
 					return uiState;
 				case BEGIN_FETCH_SECTIONS:
 					uiState.sectionsFetchInProgress = true;
