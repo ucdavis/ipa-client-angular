@@ -24,7 +24,9 @@
 				ng-repeat="supportAssignment in sectionGroup.supportAssignments"
 				ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
 					<support-assignment-row
-					name="supportAssignment.fullName">
+					name="supportAssignment.fullName"
+					on-delete="deleteAssignment"
+					support-assignment="supportAssignment">
 					</support-assignment-row>
 				</div>
 				<div class="support-courses-tab__assignment">

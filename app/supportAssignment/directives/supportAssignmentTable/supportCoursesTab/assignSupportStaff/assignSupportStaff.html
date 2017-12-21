@@ -17,9 +17,9 @@
 			</div>
 			<div
 			class="assign-support-staff__dropdown-item"
-			ng-repeat="supportStaff in assignmentOptions.instructorPreferences"
-			ng-click="triggerSelection(supportStaff)">
-				{{ supportStaff.fullName }}
+			ng-repeat="preference in assignmentOptions.instructorPreferences"
+			ng-click="triggerSelection(preference)">
+				{{ preference.fullName }}
 			</div>
 
 			<div class="assign-support-staff__dropdown-group-name">
@@ -28,9 +28,9 @@
 
 			<div
 			class="assign-support-staff__dropdown-item"
-			ng-repeat="supportStaff in assignmentOptions.supportStaffPreferences"
-			ng-click="triggerSelection(supportStaff)">
-				{{ supportStaff.fullName }}
+			ng-repeat="preference in assignmentOptions.supportStaffPreferences"
+			ng-click="triggerSelection(preference)">
+				{{ preference.fullName }}
 			</div>
 
 			<div class="assign-support-staff__dropdown-group-name">
@@ -39,9 +39,9 @@
 
 			<div
 			class="assign-support-staff__dropdown-item"
-			ng-repeat="supportStaff in assignmentOptions.other"
+			ng-repeat="preference in assignmentOptions.other"
 			ng-click="triggerSelection(supportStaff)">
-				{{ supportStaff.fullName }}
+				{{ preference.fullName }}
 			</div>
 		</div>
 	</div>

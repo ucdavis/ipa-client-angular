@@ -4,10 +4,14 @@ supportAssignmentApp.directive("supportAssignmentRow", this.supportAssignmentRow
 		templateUrl: 'supportAssignmentRow.html',
 		replace: true,
 		scope: {
-			name: '<'
+			name: '<',
+			onDelete: "&",
+			supportAssignment: '<'
 		},
 		link: function (scope, element, attrs) {
-			// Intentionally empty
+			scope.deleteAssignment = function() {
+				scope.onDelete()(scope.supportAssignment);
+			};
 		}
 	};
 });

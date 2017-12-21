@@ -13,8 +13,13 @@ supportAssignmentApp.directive("supportCoursesTab", this.supportCoursesTab = fun
 				supportActions.setViewType(type);
 			};
 
-			scope.assignStaffToSectionGroup = function(supportStaff, sectionGroup) {
-				studentActions.assignStaffToSectionGroup(sectionGroup, staff);
+			scope.deleteAssignment = function(supportAssignment) {
+				supportActions.deleteAssignment(supportAssignment);
+			};
+
+			scope.assignStaffToSectionGroup = function(preference, sectionGroup) {
+				var type = scope.state.ui.viewType == "Readers" ? "reader" : "teachingAssistant";
+				supportActions.assignStaffToSectionGroup(sectionGroup, preference.supportStaffId, type);
 			};
 		}
 	};
