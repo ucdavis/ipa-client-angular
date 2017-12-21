@@ -217,13 +217,14 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			schedulingActionCreators.createSection(section);
 		};
 
+		// Return true if the user does not have write access
 		$scope.isLocked = function () {
+			// Keep UI locked while state is still loading
 			if (!$scope.view.state) { return true; }
-			var term = $scope.view.state.uiState.term;
+
 			var hasAuthorizedRole = $scope.sharedState.currentUser.isAdmin() ||
 				$scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id);
-			// Return true if the term is locked or the user has not write access
-			return term ? term.isLocked() || !(hasAuthorizedRole) : true;
+			return !(hasAuthorizedRole);
 		};
 
 		$scope.activityMatchesFilters = function (activityId) {
