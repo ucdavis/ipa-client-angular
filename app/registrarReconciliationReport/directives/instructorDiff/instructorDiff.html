@@ -2,17 +2,17 @@
 	'has-changes' : (instructor.noRemote || instructor.noLocal) && !instructor.isToDo,
 	'no-remote' : instructor.noRemote && !instructor.isToDo,
 	'no-local': instructor.noLocal && !instructor.isToDo }" class="section-diff-element section-instructors"
-	ng-click="setActiveChangeAction($event, instructor, $index)">
+	ng-click="setActiveChangeAction($event, instructor, uniqueIndex)">
 	<span class="diff-content">
 		{{ instructor | lastSpaceInitial }}
 	</span>
 
-	<change-action ng-if="instructor.noRemote" ng-show="view.activeChangeAction == instructor.uniqueKey + $index"
+	<change-action ng-if="instructor.noRemote" ng-show="view.activeChangeAction == instructor.uniqueKey + uniqueIndex"
 		title="Banner does not have this instructor" sis-value-message="Un-assign in IPA (All sections)" ipa-value-message="Mark to assign in Banner"
 		apply-sis="unAssignInstructor(section, instructor)" apply-ipa="toggleBannerToDoItem('instructors', instructor.uniqueKey)"
 		is-active="view.hasAccess"></change-action>
 
-	<change-action ng-if="instructor.noLocal" ng-show="view.activeChangeAction == instructor.uniqueKey + $index"
+	<change-action ng-if="instructor.noLocal" ng-show="view.activeChangeAction == instructor.uniqueKey + uniqueIndex"
 		title="IPA does not have this instructor" sis-value-message="Assign in IPA (All sections)" ipa-value-message="Mark to un-assign in Banner"
 		apply-sis="assignInstructor(section, instructor)" apply-ipa="toggleBannerToDoItem('instructors', instructor.uniqueKey)"
 		is-active="view.hasAccess"></change-action>
