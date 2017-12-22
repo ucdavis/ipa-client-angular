@@ -8,6 +8,7 @@ registrarReconciliationReportApp.directive("instructorDiff", this.instructorDiff
 		templateUrl: 'instructorDiff.html',
 		replace: true,
 		link: function (scope, element, attrs) {
+			scope.uniqueIndex = attrs.uniqueIndex;
 			scope.assignInstructor = function () {
 				reportActionCreators.assignInstructor(scope.section, scope.instructor);
 			};

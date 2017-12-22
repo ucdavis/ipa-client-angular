@@ -11,8 +11,11 @@
 		</div>
 
 		<!-- Instructors -->
-		<div class="section-group-instructors" ng-if="section.groupHead">
-			<instructor-diff ng-repeat="instructor in section.instructors track by $index"></instructor-diff>
+		<div class="section-group-instructors" ng-show="section.groupHead">
+			<instructor-diff
+			ng-repeat="instructor in section.instructors track by $index"
+			unique-index="{{ section.subjectCode + '-'+ section.courseNumber + '-' + section.sequenceNumber + '-' + instructor.uniqueKey }}">
+			</instructor-diff>
 		</div>
 
 		<!-- Action when section does not exist in Banner -->
