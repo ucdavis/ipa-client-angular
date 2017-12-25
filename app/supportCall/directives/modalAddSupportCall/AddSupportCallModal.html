@@ -163,24 +163,37 @@
 										</div>
 								</li>
 
-								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectAvailabilityByGrid()">
-										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-											ng-class="{ 'checked': supportCallConfigData.collectAvailabilityByGrid }">
-											<label class="cb-wrapper">
-												<div class="checked"></div>
-											</label>
-											<label>Collect availability</label>
-										</div>
+								<li class="modal-add-support-call__checkbox-row" ng-if="supportCallConfigData.mode == 'supportStaff'">
+									<div class="modal-add-support-call__checkbox">
+										<ipa-checkbox
+											is-checked="supportCallConfigData.collectAvailabilityByGrid"
+											click-action="toggleCollectAvailabilityByGrid()">
+										</ipa-checkbox>
+									</div>
+									<div class="modal-add-support-call__checkbox-label"
+										ng-click="toggleCollectAvailabilityByGrid()">
+											Collect availability
+									</div>
 								</li>
 
-								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectAvailabilityByCrn()">
-										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-											ng-class="{ 'checked': supportCallConfigData.collectAvailabilityByCrn }">
-											<label class="cb-wrapper">
-												<div class="checked"></div>
-											</label>
-											<label>Collect availability (via crn)</label>
-										</div>
+								<li class="modal-add-support-call__checkbox-row" ng-if="supportCallConfigData.mode == 'supportStaff'">
+									<div class="modal-add-support-call__checkbox">
+										<ipa-checkbox
+											is-checked="supportCallConfigData.collectAvailabilityByCrn"
+											click-action="toggleCollectAvailabilityByCrn()"
+											is-disabled="!(supportCallConfigData.collectAvailabilityByGrid)">
+										</ipa-checkbox>
+									</div>
+									<div class="modal-add-support-call__checkbox-label"
+										ng-show="supportCallConfigData.collectAvailabilityByGrid"
+										ng-click="toggleCollectAvailabilityByCrn()">
+											Collect availability (via CRN)
+									</div>
+									<div class="modal-add-support-call__checkbox-label modal-add-support-call__checkbox-label--disabled"
+										ng-show="!(supportCallConfigData.collectAvailabilityByGrid)">
+											Collect availability (via CRN)
+									</div>
+
 								</li>
 
 								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectEligibilityConfirmation()">
@@ -191,6 +204,9 @@
 											</label>
 											<label>Collect eligibility confirmations</label>
 										</div>
+								</li>
+
+								<li class="modal-add-support-call__item-divider" ng-if="supportCallConfigData.mode == 'supportStaff'">
 								</li>
 
 								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectTeachingAssistantPreferences()">
@@ -238,7 +254,7 @@
 									<label class="cb-wrapper">
 										<div class="checked"></div>
 									</label>
-									<label>Send Emails</label>
+									<label>Send E-mail</label>
 								</div>
 						</div>
 					</div>

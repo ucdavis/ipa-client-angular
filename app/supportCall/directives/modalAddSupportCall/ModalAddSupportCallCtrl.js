@@ -112,19 +112,14 @@ supportCallApp.controller('ModalAddSupportCallCtrl', this.ModalAddSupportCallCtr
 	$scope.toggleCollectAvailabilityByGrid = function () {
 		if ($scope.supportCallConfigData.collectAvailabilityByGrid) {
 			$scope.supportCallConfigData.collectAvailabilityByGrid = false;
+			$scope.supportCallConfigData.collectAvailabilityByCrn = false;
 		} else {
 			$scope.supportCallConfigData.collectAvailabilityByGrid = true;
-			$scope.supportCallConfigData.collectAvailabilityByCrn = false;
 		}
 	};
 
 	$scope.toggleCollectAvailabilityByCrn = function () {
-		if ($scope.supportCallConfigData.collectAvailabilityByCrn) {
-			$scope.supportCallConfigData.collectAvailabilityByCrn = false;
-		} else {
-			$scope.supportCallConfigData.collectAvailabilityByCrn = true;
-			$scope.supportCallConfigData.collectAvailabilityByGrid = false;
-		}
+		$scope.supportCallConfigData.collectAvailabilityByCrn = !$scope.supportCallConfigData.collectAvailabilityByCrn;
 	};
 
 	$scope.toggleCollectEligibilityConfirmation = function () {
