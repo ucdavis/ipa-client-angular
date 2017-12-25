@@ -17,7 +17,7 @@
 		</div>
 	</div>
 
-	<div ng-show="state.supportCallResponse.collectAvailabilityByGrid">
+	<div ng-show="state.supportCallResponse.collectAvailabilityByGrid && !(state.supportCallResponse.collectAvailabilityByCrn)">
 		<grid-available
 		read-only="false"
 		support-call-response="state.supportCallResponse">
