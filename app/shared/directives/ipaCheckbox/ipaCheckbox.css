@@ -1,4 +1,4 @@
-.ipa-checkbox {
+.ipa-checkbox-container {
 	height: 18px;
 	width: 18px;
 	border: 1px solid #303641;
@@ -22,6 +22,13 @@
 	background-color: #303641;
 }
 
-.ipa-checkbox:hover {
+.ipa-checkbox-container:hover:not(.ipa-checkbox-container--disabled) {
 	box-shadow: rgba(48, 54, 65, 0.1) 0px 0px 0px 2px;
+}
+
+.ipa-checkbox-container--disabled {
+	border: 1px solid #ccc;
+	cursor: default;
+	background-color: white;
+	opacity: .5;
 }
