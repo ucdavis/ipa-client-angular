@@ -182,7 +182,7 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 					validationErrorMessage += ", ";
 				}
 
-				validationErrorMessage += "you must confirm your eligibility";
+				validationErrorMessage += "You must confirm your eligibility";
 			}
 
 			if (review.requirePreferenceComments.required && review.requirePreferenceComments.complete == false) {
@@ -190,7 +190,7 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 					validationErrorMessage += ", and ";
 				}
 
-				validationErrorMessage += "you must provide comments for your preferences";
+				validationErrorMessage += "You must provide comments for your preferences";
 			}
 
 			studentReducers.reduce({
