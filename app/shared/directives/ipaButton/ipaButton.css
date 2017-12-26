@@ -12,7 +12,7 @@
 	width: fit-content;
 }
 
-.ipa-button__icon-container {
+.ipa-button__content {
 	padding-right: 10px;
 	padding-left: 10px;
 	padding-top: 7px;
@@ -22,8 +22,8 @@
 	justify-content: center;
 }
 
-.ipa-button__text {
-	padding-left: 5px;
+.ipa-button__spacer {
+	margin-left: 5px;
 }
 
 .ipa-button--disabled {
@@ -37,14 +37,14 @@
 	border-color: rgba(27,31,35,0.35);
 }
 
-.ipa-button__icon-container--slim {
+.ipa-button__content--slim {
 	padding-top: 0px;
 	padding-bottom: 0px;
 	padding-right: 5px;
 	padding-left: 5px;
 }
 
-.ipa-button__icon-container--wide {
+.ipa-button__content--wide {
 	width: 100%;
 	display: flex;
 	justify-content: center;
