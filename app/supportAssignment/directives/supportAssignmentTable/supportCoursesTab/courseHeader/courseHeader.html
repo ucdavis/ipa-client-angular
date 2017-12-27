@@ -2,28 +2,51 @@
 	<div class="course-header__name">
 		{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} {{ sectionGroup.sequencePattern }} {{ sectionGroup.title }}
 	</div>
-	<div class="course-header__details">
-		<div class="course-header__details-label">
-			Seats: {{ sectionGroup.plannedSeats }}
-		</div>
-		<div class="course-header__details-label">
-			Units: {{sectionGroup.units}}
-		</div>
-	</div>
-	<div ng-show="viewType == 'Teaching Assistants'" class="course-header__input-container">
-		TAs
-		<input class="course-header__input"
-		type="number"
-		ng-model="sectionGroup.teachingAssistantAppointments"
-		auto-input on-blur="updateTeachingAssistantAppointments(sectionGroup)">
-		</input>
-	</div>
-	<div ng-show="viewType == 'Readers'" class="course-header__input-container">
-		Readers
-		<input class="course-header__input"
-		type="number"
-		ng-model="sectionGroup.readerAppointments"
-		auto-input on-blur="updateReaderAppointments(sectionGroup)">
-		</input>
-	</div>
+
+	<table>
+		<tbody>
+			<tr>
+				<td class="course-header__cell">
+					<div ng-show="viewType == 'Teaching Assistants'">
+						TAs
+					</div>
+					<div ng-show="viewType == 'Readers'">
+						Readers
+					</div>
+				</td>
+				<td class="course-header__cell">
+					<div ng-show="viewType == 'Teaching Assistants'">
+						<input class="course-header__input"
+						type="number"
+						ng-model="sectionGroup.teachingAssistantAppointments"
+						auto-input on-blur="updateTeachingAssistantAppointments(sectionGroup)">
+						</input>
+					</div>
+					<div ng-show="viewType == 'Readers'">
+						<input class="course-header__input"
+						type="number"
+						ng-model="sectionGroup.readerAppointments"
+						auto-input on-blur="updateReaderAppointments(sectionGroup)">
+						</input>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="course-header__cell">
+					Seats
+				</td>
+				<td class="course-header__cell course-header__cell--push-right">
+					{{ sectionGroup.plannedSeats }}
+				</td>
+			</tr>
+			<tr>
+				<td class="course-header__cell">
+					Units
+				</td>
+				<td class="course-header__cell course-header__cell--push-right">
+					{{ sectionGroup.units }}
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
