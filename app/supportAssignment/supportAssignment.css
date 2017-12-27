@@ -16,3 +16,8 @@
 .support-assignments__header-cell--section {
 	background-color: #FFF;
 }
+
+.support-assignments__header {
+	display: flex;
+	justify-content: space-between;
+}

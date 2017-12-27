@@ -20,9 +20,10 @@
 
 <!-- regular display -->
 <div ng-if="view.state && isAllowed == true" class="support-assignments">
-	<support-assignment-search></support-assignment-search>
-
-	<review-tools support-review="supportReview"></review-tools>
+	<div class="support-assignments__header">
+		<support-assignment-search></support-assignment-search>
+		<review-tools support-review="supportReview"></review-tools>
+	</div>
 
 	<ipa-section-header header-text="'Support Assignments'">
 		<support-assignment-toolbar></support-assignment-toolbar>
