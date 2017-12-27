@@ -5,10 +5,10 @@
 }
 
 .ipa-tabs-vertical__content {
-	border-radius: 3px 3px 0 0;
-	border-left: 1px solid #ddd;
-	border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
+	border-radius: 3px 0px 0 0;
+	border-left: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 	flex: 1 1 auto;
 }
 
