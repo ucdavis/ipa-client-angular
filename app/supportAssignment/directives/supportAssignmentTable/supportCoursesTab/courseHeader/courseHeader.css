@@ -8,17 +8,9 @@
 	margin-bottom: 15px;
 }
 
-.course-header__details {
-	display: flex;
-	margin-bottom: 10px;
-}
-
-.course-header__details-label {
-	padding-right: 10px;
-}
-
-.course-header__input-container {
-	flex: 1 0 0px;
+.course-header__cell {
+	padding: 5px;
+	height: 31px;
 }
 
 .course-header__input {
@@ -28,7 +20,10 @@
 	border-radius: 3px;
 	box-sizing: border-box;
 	height: 31px;
-	width: 20%;
+	width: 30%;
 	padding: 5px;
-	margin-left: 10px;
+}
+
+.course-header__cell--push-right {
+	padding-left: 10px;
 }
