@@ -145,42 +145,6 @@ supportAssignmentApp.service('supportSelectors', function () {
 					sectionGroup.teachingAssistantAssignmentOptions.other.push(supportStaff);
 				});
 
-				// Add associateInstructorAssignmentOptions
-				var processedSupportStaffIds = [];
-
-				// There are no instructor preferences for associateInstructors
-				sectionGroup.associateInstructorAssignmentOptions = {};
-				sectionGroup.associateInstructorAssignmentOptions.instructorPreferences = [];
-
-
-				// Add SupportStaff preferences
-				sectionGroup.associateInstructorAssignmentOptions.supportStaffPreferences = [];
-				supportStaffPreferences.ids.forEach( function(preferenceId) {
-					var preference = supportStaffPreferences.list[preferenceId];
-
-					if (preference.sectionGroupId != sectionGroup.id
-							|| preference.type != "associateInstructor") {
-						return;
-					}
-
-					preference = self.addSupportStaffData(preference, supportStaffList);
-					sectionGroup.associateInstructorAssignmentOptions.supportStaffPreferences.push(preference);
-					processedSupportStaffIds.push(preference.supportStaffId);
-				});
-
-				// Add Other options
-				sectionGroup.associateInstructorAssignmentOptions.other = [];
-				supportStaffList.ids.forEach( function(supportStaffId) {
-					var supportStaff = supportStaffList.list[supportStaffId];
-
-					if (processedSupportStaffIds.indexOf(supportStaffId) > -1) {
-						return;
-					}
-
-					supportStaff.supportStaffId = supportStaff.id;
-					sectionGroup.associateInstructorAssignmentOptions.other.push(supportStaff);
-				});
-
 				// Add readerAssignmentOptions
 				var processedSupportStaffIds = [];
 
