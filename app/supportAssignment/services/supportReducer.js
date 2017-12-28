@@ -99,6 +99,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 
 					return supportAssignments;
 				case ASSIGN_STAFF_TO_SECTION_GROUP:
+				case ASSIGN_STAFF_TO_SECTION:
 					var supportAssignment = action.payload.supportAssignment;
 					supportAssignments.ids.push(supportAssignment.id);
 					supportAssignments.list[supportAssignment.id] = supportAssignment;
