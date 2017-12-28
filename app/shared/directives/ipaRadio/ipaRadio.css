@@ -12,7 +12,10 @@
 	border: 1px solid #ddd;
 	color: #555;
 	background-color: #FFF;
-	padding: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .ipa-radio__option--active {
