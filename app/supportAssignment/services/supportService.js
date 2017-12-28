@@ -72,6 +72,20 @@ supportAssignmentApp.factory("supportService", this.supportService = function($h
 			});
 
 			return deferred.promise;
-		}
+		},
+		updateSectionGroup: function (sectionGroup) {
+			var deferred = $q.defer();
+			if (!sectionGroup) { return; }
+
+			$http.put(serverRoot + "/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
+		},
 	};
 });
