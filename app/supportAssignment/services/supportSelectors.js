@@ -42,7 +42,16 @@ supportAssignmentApp.service('supportSelectors', function () {
 */
 		// Creates structured json corresponding to a 'support staff' centric view of the data
 
-		generateSectionGroups: function (supportAssignments, courses, sectionGroups, supportStaffFromRoles, assignedSupportStaffList, supportStaffSupportCallResponses, supportStaffPreferences, instructorPreferences, instructorSupportCallResponses, sections) {
+		generateSectionGroups: function (
+			supportAssignments,
+			courses,
+			sectionGroups,
+			supportStaffFromRoles,
+			assignedSupportStaffList,
+			supportStaffSupportCallResponses,
+			supportStaffPreferences, instructorPreferences,
+			instructorSupportCallResponses,
+			sections) {
 			var self = this;
 
 			// Blend the two types of support staff together into a unique listing
@@ -221,7 +230,15 @@ supportAssignmentApp.service('supportSelectors', function () {
 
 			return generatedSections;
 		},
-		generateSupportStaffList: function (supportAssignments, courses, sectionGroups, supportStaffFromRoles, assignedSupportStaffList, supportStaffSupportCallResponses, supportStaffPreferences) {
+		generateSupportStaffList: function (
+			supportAssignments,
+			courses,
+			sectionGroups,
+			supportStaffFromRoles,
+			assignedSupportStaffList,
+			supportStaffSupportCallResponses,
+			supportStaffPreferences,
+			supportAppointments) {
 			var self = this;
 			var newSupportStaffList = [];
 
@@ -290,10 +307,22 @@ supportAssignmentApp.service('supportSelectors', function () {
 
 					// Add sectionGroup and course data
 					var preference = self.addSectionGroupData(preference, sectionGroups);
-					var preference = self.addCourseData(preference, courses);
+					preference = self.addCourseData(preference, courses);
 
 					supportStaffDTO.supportStaffPreferences.push(preference);
 				});
+
+				// Add supportAppointment data
+				supportStaffDTO.appointment = {};
+
+				for (var i = 0; i < supportAppointments.ids.length; i++) {
+					var supportAppointment = supportAppointments.list[supportAppointments.ids[i]];
+
+					if (supportAppointment.supportStaffId == supportStaffDTO.id) {
+						supportStaffDTO.appointment = supportAppointment;
+						break;
+					}
+				}
 
 				newSupportStaffList.push(supportStaffDTO);
 			});
