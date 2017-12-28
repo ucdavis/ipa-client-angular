@@ -62,6 +62,26 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 					return sections;
 			}
 		},
+		_supportAppointmentReducers: function (action, supportAppointments) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					supportAppointments = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.supportAppointments.forEach( function(supportAppointment) {
+						supportAppointments.ids.push(supportAppointment.id);
+						supportAppointments.list[supportAppointment.id] = supportAppointment;
+					});
+
+					return supportAppointments;
+				default:
+					return supportAppointments;
+			}
+		},
 		_courseReducers: function (action, courses) {
 			var scope = this;
 
@@ -322,6 +342,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 			newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 			newState.courses = scope._courseReducers(action, scope._state.courses);
 			newState.supportAssignments = scope._supportAssignmentsReducers(action, scope._state.supportAssignments);
+			newState.supportAppointments = scope._supportAppointmentReducers(action, scope._state.supportAppointments);
 			newState.supportStaffPreferences = scope._supportStaffPreferenceReducers(action, scope._state.supportStaffPreferences);
 			newState.instructorPreferences = scope._instructorPreferenceReducers(action, scope._state.instructorPreferences);
 			newState.supportStaffList = scope._supportStaffListReducers(action, scope._state.supportStaffList);
@@ -358,7 +379,8 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 																																			scope._state.supportStaffList,
 																																			scope._state.assignedSupportStaffList,
 																																			scope._state.supportStaffSupportCallResponses,
-																																			scope._state.supportStaffPreferences
+																																			scope._state.supportStaffPreferences,
+																																			scope._state.supportAppointments
 																																		);
 
 			newPageState.sectionGroups = supportSelectors.generateSectionGroups(
