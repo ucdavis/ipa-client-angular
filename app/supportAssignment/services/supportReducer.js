@@ -380,7 +380,8 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 																																			scope._state.assignedSupportStaffList,
 																																			scope._state.supportStaffSupportCallResponses,
 																																			scope._state.supportStaffPreferences,
-																																			scope._state.supportAppointments
+																																			scope._state.supportAppointments,
+																																			scope._state.ui
 																																		);
 
 			newPageState.sectionGroups = supportSelectors.generateSectionGroups(
