@@ -16,6 +16,11 @@
 	flex: 1 0 0px;
 }
 
+.staff-header__input-container {
+	flex: 1 0 0px;
+	display: flex;
+}
+
 .staff-header__info {
 	flex: 1 0 0px;
 	font-size: 15px;
