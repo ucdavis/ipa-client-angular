@@ -238,7 +238,8 @@ supportAssignmentApp.service('supportSelectors', function () {
 			assignedSupportStaffList,
 			supportStaffSupportCallResponses,
 			supportStaffPreferences,
-			supportAppointments) {
+			supportAppointments,
+			ui) {
 			var self = this;
 			var newSupportStaffList = [];
 
@@ -319,7 +320,13 @@ supportAssignmentApp.service('supportSelectors', function () {
 					var supportAppointment = supportAppointments.list[supportAppointments.ids[i]];
 
 					if (supportAppointment.supportStaffId == supportStaffDTO.id) {
-						supportStaffDTO.appointment = supportAppointment;
+						if (supportAppointment.type == "teachingAssistant" && ui.viewType == "Teaching Assistants"
+						|| supportAppointment.type == "reader" && ui.viewType == "Readers") {
+							supportStaffDTO.appointment = supportAppointment;
+						} else {
+							supportStaffDTO.appointment = {};
+						}
+
 						break;
 					}
 				}
