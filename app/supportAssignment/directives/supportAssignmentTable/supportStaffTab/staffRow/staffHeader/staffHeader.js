@@ -4,7 +4,8 @@ supportAssignmentApp.directive("staffHeader", this.staffHeader = function ($root
 		templateUrl: 'staffHeader.html',
 		replace: true,
 		scope: {
-			supportStaff: '<'
+			supportStaff: '<',
+			viewType: '<'
 		},
 		link: function (scope, element, attrs) {
 			// Intentionally empty
