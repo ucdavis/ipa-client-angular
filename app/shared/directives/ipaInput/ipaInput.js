@@ -8,7 +8,14 @@ sharedApp.directive("ipaInput", this.ipaInput = function () {
 			value: '='
 		},
 		link: function(scope, element, attrs) {
-			// Intentionally empty
+			element.unbind("keydown keyup");
+
+			element.bind("keydown keyup", function (event) {
+				if (angular.isUndefined(scope.onUpdate)) { return; }
+
+				clearTimeout(scope.timeout);
+				scope.timeout = setTimeout(scope.onUpdate, 500, null, true);
+			});
 		}
 	};
 });
