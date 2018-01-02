@@ -12,4 +12,5 @@
 .support-assignment-row__text {
 	display: flex;
 	align-items: center;
+	cursor: default;
 }

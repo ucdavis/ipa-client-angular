@@ -49,7 +49,8 @@ supportAssignmentApp.service('supportSelectors', function () {
 			supportStaffFromRoles,
 			assignedSupportStaffList,
 			supportStaffSupportCallResponses,
-			supportStaffPreferences, instructorPreferences,
+			supportStaffPreferences,
+			instructorPreferences,
 			instructorSupportCallResponses,
 			sections) {
 			var self = this;
@@ -122,6 +123,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 					}
 
 					preference = self.addSupportStaffData(preference, supportStaffList);
+
 					sectionGroup.teachingAssistantAssignmentOptions.instructorPreferences.push(preference);
 					processedSupportStaffIds.push(preference.supportStaffId);
 				});
@@ -204,7 +206,8 @@ supportAssignmentApp.service('supportSelectors', function () {
 					}
 				});
 
-				self.generateSections(sectionGroup, sections, supportAssignments);
+				var generatedSections = self.generateSections(sectionGroup, sections, supportAssignments, supportStaffList);
+				sectionGroup.sections = _array_sortByProperty(generatedSections, ["sequenceNumber"]);
 
 				newSectionGroups.push(sectionGroup);
 			});
@@ -213,18 +216,46 @@ supportAssignmentApp.service('supportSelectors', function () {
 
 			return sortedSectionGroups;
 		},
-		generateSections: function(sectionGroup, sections, supportAssignments) {
+		generateSections: function(sectionGroup, sections, supportAssignments, supportStaffList) {
+			var self = this;
 			var generatedSections = [];
+
 			sections.ids.forEach(function(sectionId) {
 				var section = sections.list[sectionId];
 				if (section.sectionGroupId != sectionGroup.id) {
 					return;
 				}
 
+				// Add assignments to section
 				section.readerAssignmentOptions = sectionGroup.readerAssignmentOptions;
 				section.teachingAssistantAssignmentOptions = sectionGroup.teachingAssistantAssignmentOptions;
 
-				// Add assignments to section
+				if (!supportAssignments.bySectionIds[sectionId]) {
+					supportAssignments.bySectionIds[sectionId] = [];
+				}
+
+				section.supportAssignments = [];
+
+				supportAssignments.bySectionIds[sectionId].forEach( function(assignmentId) {
+					var supportAssignment = supportAssignments.list[assignmentId];
+
+					// Ensure preference is relevant to sectionGroup
+					if (supportAssignment.sectionId != section.id) {
+						return;
+					}
+
+					// Add supportStaff data
+					supportAssignment = self.addSupportStaffData(supportAssignment, supportStaffList);
+
+					if (supportAssignment.appointmentType == "teachingAssistant") {
+						supportAssignment.viewType = "Teaching Assistants";
+					} else if (supportAssignment.appointmentType == "reader") {
+						supportAssignment.viewType = "Readers";
+					}
+
+					section.supportAssignments.push(supportAssignment);
+				});
+
 				generatedSections.push(section);
 			});
 
@@ -269,7 +300,6 @@ supportAssignmentApp.service('supportSelectors', function () {
 
 			// Build the supportStaff view DTOs
 			supportStaffList.forEach( function(supportStaffDTO) {
-
 				// Add supportCallResponse
 				supportStaffSupportCallResponses.ids.forEach( function(supportCallResponseId) {
 					var supportCallResponse = supportStaffSupportCallResponses.list[supportCallResponseId];
@@ -277,7 +307,6 @@ supportAssignmentApp.service('supportSelectors', function () {
 						supportStaffDTO.supportCallResponse = supportCallResponse;
 					}
 				});
-
 
 				// Add supportAssignments
 				supportStaffDTO.supportAssignments = [];

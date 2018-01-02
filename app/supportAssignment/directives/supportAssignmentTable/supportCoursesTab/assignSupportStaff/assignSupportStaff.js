@@ -6,7 +6,8 @@ supportAssignmentApp.directive("assignSupportStaff", this.assignSupportStaff = f
 		scope: {
 			assignmentOptions: '<',
 			onSelect: '&',
-			sectionGroup: '<'
+			sectionGroup: '<?',
+			section: '<?'
 		},
 		link: function (scope, element, attrs) {
 			scope.expanded = false;
@@ -20,7 +21,7 @@ supportAssignmentApp.directive("assignSupportStaff", this.assignSupportStaff = f
 			};
 
 			scope.triggerSelection = function(preference) {
-				scope.onSelect()(preference, scope.sectionGroup);
+				scope.onSelect()(preference.supportStaffId, scope.sectionGroup || scope.section);
 				scope.closeDropdown();
 			};
 		}

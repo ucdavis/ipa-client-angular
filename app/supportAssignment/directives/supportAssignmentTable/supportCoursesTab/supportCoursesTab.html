@@ -34,20 +34,26 @@
 				</div>
 			</div>
 		</div>
-		<div class="support-courses-tab__row">
+		<div class="support-courses-tab__row" ng-repeat="section in sectionGroup.sections">
 			<div class="support-assignments__header-cell support-assignments__header-cell--section">
 				<div class="support-courses-tab__section-header">
-					A01
+					{{ section.sequenceNumber }}
 				</div>
 			</div>
+
 			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large support-courses-tab__assignment-container">
-				<div class="support-courses-tab__assignment">
+				<div
+				class="support-courses-tab__assignment"
+				ng-repeat="supportAssignment in section.supportAssignments"
+				ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
 					<support-assignment-row
-					name="'Christopher Thielen'">
+					name="supportAssignment.fullName"
+					on-delete="deleteAssignment"
+					support-assignment="supportAssignment">
 					</support-assignment-row>
 				</div>
 				<div class="support-courses-tab__assignment">
-					<assign-support-staff on-select="assignStaffToSection"></assign-support-staff>
+					<assign-support-staff section="section" on-select="assignStaffToSection" assignment-options="section.teachingAssistantAssignmentOptions"></assign-support-staff>
 				</div>
 			</div>
 		</div>
