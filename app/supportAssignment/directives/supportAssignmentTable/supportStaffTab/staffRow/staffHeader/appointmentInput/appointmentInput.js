@@ -8,8 +8,8 @@ supportAssignmentApp.directive("appointmentInput", this.appointmentInput = funct
 			viewType: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.updateAppointment = function () {
-				// TODO: trigger appropriate update action
+			scope.updateSupportAppointment = function () {
+				supportActions.updateSupportAppointment(scope.supportStaff.appointment);
 			};
 		}
 	};

@@ -1,6 +1,7 @@
 supportAssignmentApp.service('supportActions', function ($rootScope, $window, supportService, supportReducer) {
 	return {
 		getInitialState: function (workgroupId, year, termShortCode, tab) {
+			var self = this;
 			supportService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
 				var action = {
 					type: INIT_STATE,
@@ -50,8 +51,8 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				$rootScope.$emit('toast', { message: "Could not assign staff.", type: "ERROR" });
 			});
 		},
-		assignStaffToSection: function (sectionGroup, supportStaff, type) {
-			supportService.assignStaffToSection(sectionGroup, supportStaff, type).then(function (supportAssignment) {
+		assignStaffToSection: function (section, supportStaff, type) {
+			supportService.assignStaffToSection(section, supportStaff, type).then(function (supportAssignment) {
 				$rootScope.$emit('toast', { message: "Assigned staff", type: "SUCCESS" });
 				supportReducer.reduce({
 					type: ASSIGN_STAFF_TO_SECTION,
@@ -68,7 +69,9 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				$rootScope.$emit('toast', { message: "Removed Assignment", type: "SUCCESS" });
 				var action = {
 					type: DELETE_ASSIGNMENT,
-					payload: supportAssignment
+					payload: supportAssignment,
+					sectionId: supportAssignment.sectionId,
+					sectionGroupId: supportAssignment.sectionGroupId
 				};
 				supportReducer.reduce(action);
 			}, function (err) {
@@ -95,6 +98,19 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 					type: UPDATE_SECTIONGROUP,
 					payload: {
 						sectionGroup: sectionGroup
+					}
+				});
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update teaching assistants.", type: "ERROR" });
+			});
+		},
+		updateSupportAppointment: function (supportAppointment) {
+			supportService.updateSupportAppointments(supportAppointment).then(function(payload) {
+				$rootScope.$emit('toast', { message: "Updated Appointment", type: "SUCCESS" });
+				supportReducer.reduce({
+					type: UPDATE_SUPPORT_APPOINTMENT,
+					payload: {
+						supportAppointment: supportAppointment
 					}
 				});
 			}, function (err) {

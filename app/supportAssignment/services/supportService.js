@@ -37,9 +37,9 @@ supportAssignmentApp.factory("supportService", this.supportService = function($h
 
 			return deferred.promise;
 		},
-		assignStaffToSection: function(supportStaff, section, type) {
+		assignStaffToSection: function(sectionId, supportStaffId, type) {
 			var deferred = $q.defer();
-			$http.post(serverRoot + "/api/instructionalSupportView/sections/" + section.id + "/assignmentType/" + type + "/supportStaff/" + supportStaff.id, { withCredentials: true })
+			$http.post(serverRoot + "/api/instructionalSupportView/sections/" + sectionId + "/assignmentType/" + type + "/supportStaff/" + supportStaffId, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})

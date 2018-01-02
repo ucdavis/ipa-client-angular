@@ -17,9 +17,14 @@ supportAssignmentApp.directive("supportCoursesTab", this.supportCoursesTab = fun
 				supportActions.deleteAssignment(supportAssignment);
 			};
 
-			scope.assignStaffToSectionGroup = function(preference, sectionGroup) {
+			scope.assignStaffToSectionGroup = function(supportStaffId, sectionGroup) {
 				var type = scope.state.ui.viewType == "Readers" ? "reader" : "teachingAssistant";
-				supportActions.assignStaffToSectionGroup(sectionGroup, preference.supportStaffId, type);
+				supportActions.assignStaffToSectionGroup(sectionGroup, supportStaffId, type);
+			};
+
+			scope.assignStaffToSection = function(supportStaffId, section) {
+				var type = scope.state.ui.viewType == "Readers" ? "reader" : "teachingAssistant";
+				supportActions.assignStaffToSection(section.id, supportStaffId, type);
 			};
 		}
 	};

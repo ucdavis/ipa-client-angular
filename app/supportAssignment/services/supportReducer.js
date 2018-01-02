@@ -109,29 +109,60 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 				case INIT_STATE:
 					supportAssignments = {
 						ids: [],
-						list: {}
+						list: {},
+						bySectionGroupIds: {},
+						bySectionIds: {}
 					};
 
-					action.payload.supportAssignments.forEach( function(assignment) {
-						supportAssignments.ids.push(assignment.id);
-						supportAssignments.list[assignment.id] = assignment;
+					action.payload.supportAssignments.forEach( function(supportAssignment) {
+						supportAssignments.ids.push(supportAssignment.id);
+						supportAssignments.list[supportAssignment.id] = supportAssignment;
+
+						if (supportAssignment.sectionGroupId) {
+							supportAssignments.bySectionGroupIds[supportAssignment.sectionGroupId] = supportAssignments.bySectionGroupIds[supportAssignment.sectionGroupId] || [];
+							supportAssignments.bySectionGroupIds[supportAssignment.sectionGroupId].push(supportAssignment.id);
+						}
+
+						if (supportAssignment.sectionId) {
+							supportAssignments.bySectionIds[supportAssignment.sectionId] = supportAssignments.bySectionIds[supportAssignment.sectionId] || [];
+							supportAssignments.bySectionIds[supportAssignment.sectionId].push(supportAssignment.id);
+						}
 					});
 
 					return supportAssignments;
 				case ASSIGN_STAFF_TO_SECTION_GROUP:
+					var supportAssignment = action.payload.supportAssignment;
+					supportAssignments.ids.push(supportAssignment.id);
+					supportAssignments.list[supportAssignment.id] = supportAssignment;
+					supportAssignments.bySectionGroupIds[supportAssignment.sectionGroupId] = supportAssignments.bySectionGroupIds[supportAssignment.sectionGroupId] || [];
+					supportAssignments.bySectionGroupIds[supportAssignment.sectionGroupId].push(supportAssignment.id);
+					return supportAssignments;
 				case ASSIGN_STAFF_TO_SECTION:
 					var supportAssignment = action.payload.supportAssignment;
 					supportAssignments.ids.push(supportAssignment.id);
 					supportAssignments.list[supportAssignment.id] = supportAssignment;
+					supportAssignments.bySectionIds[supportAssignment.sectionId] = supportAssignments.bySectionIds[supportAssignment.sectionId] || [];
+					supportAssignments.bySectionIds[supportAssignment.sectionId].push(supportAssignment.id);
 					return supportAssignments;
 				case DELETE_ASSIGNMENT:
 					var index = supportAssignments.ids.indexOf(action.payload.id);
+					var sectionId = action.payload.sectionId ? action.payload.sectionId : null;
+					var sectionGroupId = action.payload.sectionGroupId ? action.payload.sectionGroupId : null;
 
 					if (index > -1) {
 						supportAssignments.ids.splice(index, 1);
 						supportAssignments.list[index] = null;
 					}
 
+					if (sectionId) {
+						var index = supportAssignments.bySectionIds[sectionId].indexOf(action.payload.id);
+						supportAssignments.bySectionIds[sectionId].splice(index, 1);
+					}
+
+					if (sectionGroupId) {
+						var index = supportAssignments.bySectionGroupIds[sectionGroupId].indexOf(action.payload.id);
+						supportAssignments.bySectionGroupIds[sectionGroupId].splice(index, 1);
+					}
 					return supportAssignments;
 				default:
 					return supportAssignments;
