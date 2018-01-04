@@ -39,7 +39,7 @@ sharedApp.directive('ipaModal', function() {
 				// Re-enable page scrolling
 				$('body').css('overflow-y','visible');
 
-				if (scope.isVisible && angular.isUndefined(scope.onUpdate) == false) {
+				if (scope.isVisible && angular.isUndefined(scope.onClose) == false) {
 					scope.onClose()();
 				}
 
