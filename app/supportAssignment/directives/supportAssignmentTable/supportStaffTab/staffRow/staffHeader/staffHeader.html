@@ -26,12 +26,22 @@
 		</div>
 
 		<div class="staff-header__availability">
-			<ipa-button
-				on-click="openAvailabilityModal(supportStaff)"
-				icon-class="'glyphicon glyphicon-calendar'"
-				is-disabled="supportStaff.supportCallResponse.availabilityBlob == false || supportStaff.supportCallResponse.availabilityBlob.length == 0"
-				tooltip-message="'Show Availability'">
-			</ipa-button>
+			<div ng-show="!supportStaff.supportCallResponse.availabilityBlob || supportStaff.supportCallResponse.availabilityBlob.length == 0">
+				<ipa-button
+					on-click="openAvailabilityModal(supportStaff)"
+					icon-class="'glyphicon glyphicon-calendar'"
+					is-disabled="true"
+					tooltip-message="'No availability submitted'">
+				</ipa-button>
+			</div>
+			<div ng-show="supportStaff.supportCallResponse.availabilityBlob">
+				<ipa-button
+					on-click="openAvailabilityModal(supportStaff)"
+					icon-class="'glyphicon glyphicon-calendar'"
+					tooltip-message="'Show Availability'">
+				</ipa-button>
+			</div>
+
 		</div>
 	</div>
 </div>
