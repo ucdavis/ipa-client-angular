@@ -2,7 +2,7 @@
 class="ipa-button"
 uib-tooltip="{{tooltipMessage}}"
 tooltip-placement="bottom"
-ng-class="{buttonClass, 'ipa-button--disabled': isDisabled , 'ipa-button--wide': isWide }">
+ng-class="{buttonClass, 'ipa-button--disabled': isDisabled , 'ipa-button--wide': isWide, 'ipa-button--dark-skin': skin == 'dark', 'ipa-button--light-skin': skin == 'light' || !skin }">
 	<div class="ipa-button__container" ng-class="{'ipa-button__container--wide': isWide }" ng-show="!(isDisabled)">
 		<!-- with confirmation -->
 		<div

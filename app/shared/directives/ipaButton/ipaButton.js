@@ -14,15 +14,16 @@ sharedApp.directive("ipaButton", this.ipaButton = function () {
 		templateUrl: 'ipaButton.html',
 		replace: true,
 		scope: {
-			onClick: '&?',
-			iconClass: '<?',
-			isDisabled: '<?',
+			onClick: '&?', // On click action
+			iconClass: '<?', // Provide classes for an icon, example: 'glyphicon glyphicon-trashcan'
+			isDisabled: '<?', // Boolean: activates disabled styles and deactivates click action
 			tooltipMessage: '<?',
-			confirmMessage: '<?',
-			text: '<?',
+			confirmMessage: '<?', // Uses a confirm tooltip with the supplied message. Will also wrap the action into the confirm
+			text: '<?', // Displayed on body of button
 			size: '<?',
-			isWide: '<?',
-			buttonClass: '<?'
+			isWide: '<?', // Boolean: makes button attempt to take 100% width, default is to only take as much width as needed
+			buttonClass: '<?', // Provide additional classes for context specific styling
+			skin: '<?' // Default: 'light', planned skins are dark/light/red
 		},
 		link: function(scope, element, attrs) {
 			// Intentionally empty
