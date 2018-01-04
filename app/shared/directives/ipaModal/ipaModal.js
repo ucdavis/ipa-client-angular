@@ -4,13 +4,14 @@ sharedApp.directive('ipaModal', function() {
 		templateUrl: 'ipaModal.html', // directive html found here:
 		scope: {
 			isVisible: '=',
-			onClose: '&?'
+			onClose: '&?',
+			styles: '<'
 		},
 		replace: true, // Replace with the template below
 		transclude: true, // we want to insert custom content inside the directive
 		link: function(scope, element, attrs, iAttr) {
 			// Validate Attributes
-			scope.dialogStyle = {};
+			scope.styles = scope.styles || {};
 			scope.headerText = "";
 
 			// Stores a copy of the last state, useful in handling unexpected termination of modal
