@@ -3,7 +3,8 @@ sharedApp.directive('ipaModal', function() {
 		restrict: 'E', // Use this via an element selector <ipa-modal></ipa-modal>
 		templateUrl: 'ipaModal.html', // directive html found here:
 		scope: {
-			isVisible: '='
+			isVisible: '=',
+			onClose: '&?'
 		},
 		replace: true, // Replace with the template below
 		transclude: true, // we want to insert custom content inside the directive
@@ -37,6 +38,11 @@ sharedApp.directive('ipaModal', function() {
 			scope.close = function() {
 				// Re-enable page scrolling
 				$('body').css('overflow-y','visible');
+
+				if (scope.isVisible && angular.isUndefined(scope.onUpdate) == false) {
+					scope.onClose()();
+				}
+
 				scope.isVisible = false;
 			};
 
