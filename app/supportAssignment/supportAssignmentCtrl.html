@@ -20,6 +20,18 @@
 
 <!-- regular display -->
 <div ng-if="view.state && isAllowed == true" class="support-assignments">
+	<!-- Modals -->
+	<ipa-modal
+	is-visible="view.state.ui.availabilityModal.isOpen"
+	header-text="Availability"
+	on-close="closeAvailabilityModal">
+		<view-availability-modal
+		ng-if="view.state.ui.availabilityModal.isOpen"
+		is-visible="view.state.ui.availabilityModal.isOpen"
+		state="view.state">
+		</modal-preference-comments>
+	</ipa-modal>
+
 	<div class="support-assignments__header">
 		<support-assignment-search></support-assignment-search>
 		<review-tools support-review="supportReview"></review-tools>

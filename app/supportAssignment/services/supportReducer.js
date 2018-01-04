@@ -341,7 +341,11 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 					ui = {
 						tabPivot: "By Course",
 						viewType: "Teaching Assistants",
-						supportStaffTabs: {}
+						supportStaffTabs: {},
+						availabilityModal: {
+							isOpen: false,
+							data: null
+						}
 					};
 
 					action.payload.supportStaffList.forEach(function(supportStaff) {
@@ -351,6 +355,14 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 						ui.supportStaffTabs[supportStaff.id] = "Assignments";
 					});
 
+					return ui;
+				case OPEN_AVAILABILITY_MODAL:
+					ui.availabilityModal.isOpen = true;
+					ui.availabilityModal.data = action.payload.supportStaff;
+					return ui;
+				case CLOSE_AVAILABILITY_MODAL:
+					ui.availabilityModal.isOpen = false;
+					ui.availabilityModal.data = null;
 					return ui;
 				case SET_SUPPORT_STAFF_TAB:
 					ui.supportStaffTabs[action.payload.supportStaffId] = action.payload.tabName;

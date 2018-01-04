@@ -14,6 +14,10 @@ supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope'
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
+			$scope.closeAvailabilityModal = function() {
+				supportActions.closeAvailabilityModal();
+			};
+
 			$rootScope.$on('sharedStateSet', function (event, sharedStateData) {
 				$rootScope.$on('supportAssignmentStateChanged', function (event, data) {
 					$scope.sharedState = sharedStateData;
@@ -127,22 +131,6 @@ supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope'
 				}
 
 				return "";
-			};
-
-			$scope.openAddAppointmentSlotModal = function(sectionGroupId, appointmentType) {
-				modalInstance = $uibModal.open({
-					templateUrl: 'AddAssignmentSlotModal.html',
-					controller: ModalAddAssignmentSlotCtrl,
-					size: 'xs',
-					resolve: {
-						appointmentType: function () {
-							return appointmentType;
-						},
-						sectionGroupId: function () {
-							return sectionGroupId;
-						}
-					}
-				});
 			};
 
 			$scope.isTeachingAssistant = function (instructionalSupportAssignment) {

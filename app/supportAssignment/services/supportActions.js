@@ -154,6 +154,20 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				}
 			};
 			supportReducer.reduce(action);
+		},
+		openAvailabilityModal: function(supportStaff) {
+			supportReducer.reduce({
+				type: OPEN_AVAILABILITY_MODAL,
+				payload: {
+					supportStaff: supportStaff
+				}
+			});
+		},
+		closeAvailabilityModal: function(supportStaff) {
+			supportReducer.reduce({
+				type: CLOSE_AVAILABILITY_MODAL,
+				payload: {}
+			});
 		}
 	};
 });
