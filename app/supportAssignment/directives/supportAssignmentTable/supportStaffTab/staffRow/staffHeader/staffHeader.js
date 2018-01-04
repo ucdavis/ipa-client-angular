@@ -8,7 +8,9 @@ supportAssignmentApp.directive("staffHeader", this.staffHeader = function ($root
 			viewType: '<'
 		},
 		link: function (scope, element, attrs) {
-			// Intentionally empty
+			scope.openAvailabilityModal = function(supportStaff) {
+				supportActions.openAvailabilityModal(supportStaff);
+			};
 		}
 	};
 });
