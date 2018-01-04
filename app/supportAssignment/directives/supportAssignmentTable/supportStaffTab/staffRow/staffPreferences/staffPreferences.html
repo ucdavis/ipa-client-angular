@@ -1,16 +1,11 @@
 <div class="staff-preferences ipa-table__body-cell--small">
-	<div class="staff-preferences__assignment" ng-repeat="supportAssignment in supportStaff.supportAssignments">
-		<div class="staff-preferences__title">
-			{{ supportAssignment.subjectCode }} {{ supportAssignment.courseNumber }} - {{ supportAssignment.sequenceNumber }} {{ supportAssignment.appointmentType }}
-			{{ supportAssignment.title }}
-		</div>
-		<div class="staff-preferences__delete">
-			<ipa-button
-				icon-class="'glyphicon glyphicon-trash student-preference-table__trash'"
-				on-click="deletePreference(preference)"
-				tooltip-message="'Delete preference'"
-				confirm-message="'Are you sure you want to delete this preference?'">
-			</ipa-button>
-		</div>
+	<div class="staff-preferences__assignment"
+	ng-repeat="supportAssignment in supportStaff.supportAssignments"
+	ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
+		<support-assignment-row
+		name="supportAssignment.description"
+		on-delete="deleteAssignment"
+		support-assignment="supportAssignment">
+		</support-assignment-row>
 	</div>
 </div>

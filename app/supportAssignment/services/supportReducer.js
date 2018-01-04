@@ -407,6 +407,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 																																			scope._state.supportAssignments,
 																																			scope._state.courses,
 																																			scope._state.sectionGroups,
+																																			scope._state.sections,
 																																			scope._state.supportStaffList,
 																																			scope._state.assignedSupportStaffList,
 																																			scope._state.supportStaffSupportCallResponses,
