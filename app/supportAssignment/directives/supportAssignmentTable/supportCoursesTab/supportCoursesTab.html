@@ -30,7 +30,12 @@
 					</support-assignment-row>
 				</div>
 				<div class="support-courses-tab__assignment">
-					<assign-support-staff section-group="sectionGroup" on-select="assignStaffToSectionGroup" assignment-options="sectionGroup.teachingAssistantAssignmentOptions"></assign-support-staff>
+					<assign-support-staff
+					view-type="state.ui.viewType"
+					section-group="sectionGroup"
+					on-select="assignStaffToSectionGroup"
+					assignment-options="sectionGroup.teachingAssistantAssignmentOptions">
+					</assign-support-staff>
 				</div>
 			</div>
 		</div>
@@ -53,7 +58,12 @@
 					</support-assignment-row>
 				</div>
 				<div class="support-courses-tab__assignment">
-					<assign-support-staff section="section" on-select="assignStaffToSection" assignment-options="section.teachingAssistantAssignmentOptions"></assign-support-staff>
+					<assign-support-staff
+					view-type="state.ui.viewType"
+					section="section"
+					on-select="assignStaffToSection"
+					assignment-options="section.teachingAssistantAssignmentOptions">
+					</assign-support-staff>
 				</div>
 			</div>
 		</div>

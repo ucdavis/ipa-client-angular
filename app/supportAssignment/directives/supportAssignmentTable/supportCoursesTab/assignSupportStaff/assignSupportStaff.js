@@ -7,7 +7,8 @@ supportAssignmentApp.directive("assignSupportStaff", this.assignSupportStaff = f
 			assignmentOptions: '<',
 			onSelect: '&',
 			sectionGroup: '<?',
-			section: '<?'
+			section: '<?',
+			viewType: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.expanded = false;
