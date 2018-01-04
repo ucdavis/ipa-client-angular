@@ -4,7 +4,8 @@ supportAssignmentApp.directive("staffPreferences", this.staffPreferences = funct
 		templateUrl: 'staffPreferences.html',
 		replace: true,
 		scope: {
-			state: '<'
+			state: '<',
+			supportStaff: '<'
 		},
 		link: function (scope, element, attrs) {
 			// Intentionally empty
