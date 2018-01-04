@@ -1,9 +1,12 @@
 <div class="view-availability-modal">
-		<div class="modal-preferenc-comments__body">
-			Avail goes here
+		<div class="view-availability-modal__body">
+			<availability-grid
+			blob="supportStaff.supportCallResponse.availabilityBlob"
+			read-only="true">
+			</availability-grid>
 		</div>
 
-		<div class="modal-preference-comments__footer">
+		<div class="view-availability-modal__footer">
 			<ipa-button
 				text="'Close'"
 				on-click="close()">

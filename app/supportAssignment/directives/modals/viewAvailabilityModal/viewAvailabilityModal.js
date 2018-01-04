@@ -4,12 +4,10 @@ supportAssignmentApp.directive("viewAvailabilityModal", this.viewAvailabilityMod
 		templateUrl: 'viewAvailabilityModal.html',
 		replace: true,
 		scope: {
-			state: '<',
+			supportStaff: '<',
 			isVisible: '='
 		},
 		link: function (scope, element, attrs) {
-			scope.preference = scope.state.ui.modalPreference;
-
 			scope.close = function() {
 				supportActions.closeAvailabilityModal();
 				scope.isVisible = false;
