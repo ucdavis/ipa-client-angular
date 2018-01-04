@@ -14,6 +14,10 @@ supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope'
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
+			$scope.availabilityModalStyles = {
+				width: "70%"
+			};
+
 			$scope.closeAvailabilityModal = function() {
 				supportActions.closeAvailabilityModal();
 			};
