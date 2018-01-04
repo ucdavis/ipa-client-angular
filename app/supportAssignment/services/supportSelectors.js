@@ -265,6 +265,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 			supportAssignments,
 			courses,
 			sectionGroups,
+			sections,
 			supportStaffFromRoles,
 			assignedSupportStaffList,
 			supportStaffSupportCallResponses,
@@ -279,7 +280,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 			// Build the supportStaff view DTOs
 			supportStaffList.forEach( function(supportStaffDTO) {
 				supportStaffDTO.supportCallResponse = self.findSupportCallResponse(supportStaffSupportCallResponses, supportStaffDTO.id);
-				supportStaffDTO.supportAssignments = self.generateSupportAssignmentsForSupportStaff(supportStaffDTO.id, supportAssignments, sectionGroups, courses);
+				supportStaffDTO.supportAssignments = self.generateSupportAssignmentsForSupportStaff(supportStaffDTO.id, supportAssignments, sectionGroups, courses, sections);
 				supportStaffDTO.supportStaffPreferences = self.generateSupportStaffPreferences(supportStaffDTO.id, supportStaffPreferences, sectionGroups, courses);
 				supportStaffDTO.appointment = self.findSupportAppointment(supportStaffDTO.id, supportAppointments, ui.viewType);
 
@@ -309,18 +310,19 @@ supportAssignmentApp.service('supportSelectors', function () {
 			return appointment;
 		},
 		generateSupportStaffPreferences: function (supportStaffId, supportStaffPreferences, sectionGroups, courses) {
+			var self = this;
 			var newPreferences = [];
 
 			supportStaffPreferences.ids.forEach( function(preferenceId) {
 				var preference = supportStaffPreferences.list[preferenceId];
 
 				// Ensure preference is relevant to supportStaff
-				if (preference.supportStaffId != supportStaffDTO.id) {
+				if (preference.supportStaffId != supportStaffId) {
 					return;
 				}
 
 				// Add sectionGroup and course data
-				var preference = self.addSectionGroupData(preference, sectionGroups);
+				var preference = self.getCourseId(preference, sectionGroups);
 				preference = self.addCourseData(preference, courses);
 
 				newPreferences.push(preference);
@@ -328,7 +330,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 
 			return newPreferences;
 		},
-		generateSupportAssignmentsForSupportStaff: function(supportStaffId, supportAssignments, sectionGroups, courses) {
+		generateSupportAssignmentsForSupportStaff: function(supportStaffId, supportAssignments, sectionGroups, courses, sections) {
 			var self = this;
 			var generatedSupportAssignments = [];
 			supportAssignments.ids.forEach( function(assignmentId) {
@@ -340,8 +342,10 @@ supportAssignmentApp.service('supportSelectors', function () {
 				}
 
 				// Add sectionGroup and course data
-				var supportAssignment = self.addSectionGroupData(supportAssignment, sectionGroups);
+				var supportAssignment = self.getCourseId(supportAssignment, sectionGroups, sections);
 				var supportAssignment = self.addCourseData(supportAssignment, courses);
+
+				supportAssignment.description = supportAssignment.subjectCode + " " + supportAssignment.courseNumber + " " + supportAssignment.sequenceNumber + " " + supportAssignment.title;
 
 				generatedSupportAssignments.push(supportAssignment);
 			});
@@ -353,7 +357,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 
 			supportCallResponses.ids.forEach( function(supportCallResponseId) {
 				var slotSupportCallResponse = supportCallResponses.list[supportCallResponseId];
-				if (supportStaffDTO.id == slotSupportCallResponse.supportStaffId) {
+				if (supportStaffId == slotSupportCallResponse.supportStaffId) {
 					supportCallResponse = slotSupportCallResponse;
 				}
 			});
@@ -390,10 +394,10 @@ supportAssignmentApp.service('supportSelectors', function () {
 		generateSupportAssignments: function(supportAssignments, sectionGroups, courses) {
 			var self = this;
 			var newSupportAssignments = [];
-			// TODO: add course data to supportAssignments
+
 			supportAssignments.ids.forEach( function(supportAssignmentId) {
 				var supportAssignment = supportAssignments.list[supportAssignmentId];
-				supportAssignment = self.addSectionGroupData(supportAssignment, sectionGroups);
+				supportAssignment = self.getCourseId(supportAssignment, sectionGroups);
 				supportAssignment = self.addCourseData(supportAssignment, courses);
 				newSupportAssignments.push(supportAssignment);
 			});
@@ -434,15 +438,31 @@ supportAssignmentApp.service('supportSelectors', function () {
 
 			return entity;
 		},
-		// Blend the relevant sectionGroup data
-		addSectionGroupData: function(entity, sectionGroups) {
-			sectionGroups.ids.forEach( function (sectionGroupId) {
-				var sectionGroup = sectionGroups.list[sectionGroupId];
+		// Add the connected courseId
+		getCourseId: function(entity, sectionGroups, sections) {
+			var derivedSectionGroupId = null;
 
-				if (entity.sectionGroupId == sectionGroup.id) {
-					entity.courseId = sectionGroup.courseId;
+			if (entity.sectionId > 0 && sections) {
+				for (var i = 0; i < sections.ids.length; i++) {
+					var section = sections.list[sections.ids[i]];
+					if (entity.sectionId == section.id) {
+						derivedSectionGroupId = section.sectionGroupId;
+						break;
+					}
 				}
-			});
+			}
+
+			var sectionGroupId = derivedSectionGroupId || entity.sectionGroupId;
+
+			if (sectionGroupId > 0) {
+				for (var i = 0; i < sectionGroups.ids.length; i++) {
+					var sectionGroup = sectionGroups.list[sectionGroups.ids[i]];
+					if (sectionGroupId == sectionGroup.id) {
+						entity.courseId = sectionGroup.courseId;
+						break;
+					}
+				}
+			}
 
 			return entity;
 		},

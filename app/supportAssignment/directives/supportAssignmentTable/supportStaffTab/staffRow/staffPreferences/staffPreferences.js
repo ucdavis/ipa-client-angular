@@ -8,7 +8,9 @@ supportAssignmentApp.directive("staffPreferences", this.staffPreferences = funct
 			supportStaff: '<'
 		},
 		link: function (scope, element, attrs) {
-			// Intentionally empty
+			scope.deleteAssignment = function(supportAssignment) {
+				supportActions.deleteAssignment(supportAssignment);
+			};
 		}
 	};
 });
