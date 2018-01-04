@@ -324,10 +324,10 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 					schedule = action.payload.schedule;
 					return schedule;
 				case UPDATE_INSTRUCTOR_SUPPORT_CALL_REVIEW:
-					schedule = action.payload;
+					schedule = action.payload.schedule;
 					return schedule;
 				case UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW:
-					schedule = action.payload;
+					schedule = action.payload.schedule;
 					return schedule;
 				default:
 					return schedule;
@@ -345,6 +345,17 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 						availabilityModal: {
 							isOpen: false,
 							data: null
+						},
+						shortTermCode: action.shortTermCode,
+						review: {
+							instructor: {
+								isOpen: (action.payload.schedule.instructorSupportCallReviewOpen[parseInt(action.shortTermCode) - 1] == "1"),
+								data: action.payload.schedule.instructorSupportCallReviewOpen
+							},
+							supportStaff: {
+								isOpen: (action.payload.schedule.supportStaffSupportCallReviewOpen[parseInt(action.shortTermCode) - 1] == "1"),
+								data: action.payload.schedule.supportStaffSupportCallReviewOpen
+							}
 						}
 					};
 
@@ -372,6 +383,19 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 					return ui;
 				case SET_VIEW_TYPE:
 					ui.viewType = action.payload.viewType;
+					return ui;
+				case UPDATE_INSTRUCTOR_SUPPORT_CALL_REVIEW:
+				case UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW:
+					ui.review = {
+						instructor: {
+							isOpen: (action.payload.schedule.instructorSupportCallReviewOpen[parseInt(action.payload.shortTermCode) - 1] == "1"),
+							data: action.payload.schedule.instructorSupportCallReviewOpen
+						},
+						supportStaff: {
+							isOpen: (action.payload.schedule.supportStaffSupportCallReviewOpen[parseInt(action.payload.shortTermCode) - 1] == "1"),
+							data: action.payload.schedule.supportStaffSupportCallReviewOpen
+						}
+					};
 					return ui;
 				default:
 					return ui;
