@@ -291,6 +291,8 @@ supportAssignmentApp.service('supportSelectors', function () {
 
 			return newSupportStaffList;
 		},
+		// Return the appointment for the specified supportStaff if it matches the current page view.
+		// Otherwise return an empty object.
 		findSupportAppointment: function (supportStaffId, supportAppointments, viewType) {
 			var appointment = {};
 
@@ -300,7 +302,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 				if (supportAppointment.supportStaffId == supportStaffId) {
 					if (supportAppointment.type == "teachingAssistant" && viewType == "Teaching Assistants"
 					|| supportAppointment.type == "reader" && viewType == "Readers") {
-						supportAppointment = supportAppointment;
+						appointment = supportAppointment;
 					}
 
 					break;

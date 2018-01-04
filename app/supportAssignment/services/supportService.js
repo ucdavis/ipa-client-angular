@@ -73,6 +73,18 @@ supportAssignmentApp.factory("supportService", this.supportService = function($h
 
 			return deferred.promise;
 		},
+		updateSupportAppointment: function (supportAppointment, scheduleId) {
+			var deferred = $q.defer();
+			$http.put(serverRoot + "/api/instructionalSupportView/schedules/" + scheduleId, supportAppointment, { withCredentials: true })
+				.success(function (payload) {
+					deferred.resolve(payload);
+				})
+				.error(function () {
+					deferred.reject();
+				});
+
+			return deferred.promise;
+		},
 		updateSectionGroup: function (sectionGroup) {
 			var deferred = $q.defer();
 			if (!sectionGroup) { return; }
@@ -86,6 +98,6 @@ supportAssignmentApp.factory("supportService", this.supportService = function($h
 				});
 
 			return deferred.promise;
-		},
+		}
 	};
 });
