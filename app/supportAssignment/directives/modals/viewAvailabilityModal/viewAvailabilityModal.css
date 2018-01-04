@@ -1,5 +1,7 @@
 .view-availability-modal__body {
 	padding: 10px;
+	padding-left:10%;
+	padding-right: 10%;
 }
 
 .view-availability-modal__footer {
