@@ -3,11 +3,8 @@
 }
 
 .staff-preferences__assignment {
-	border: 1px solid #ddd;
-	padding: 10px;
-	margin-bottom: 10px;
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 }
 
 .staff-preferences__title {

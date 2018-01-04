@@ -28,3 +28,10 @@
 	display: flex;
 	justify-content: center;
 }
+
+.support-courses-tab__header-small {
+	width: 250px;
+	display: flex;
+	align-items: center;
+	padding-left: 20px;
+}

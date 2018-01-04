@@ -7,3 +7,10 @@
 .support-staff-tab__right-header {
 	justify-content: space-between;
 }
+
+.support-staff-tab__header-small {
+	width: 250px;
+	display: flex;
+	align-items: center;
+	padding-left: 20px;
+}
