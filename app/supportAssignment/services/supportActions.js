@@ -1,39 +1,43 @@
 supportAssignmentApp.service('supportActions', function ($rootScope, $window, supportService, supportReducer) {
 	return {
-		getInitialState: function (workgroupId, year, termShortCode, tab) {
+		getInitialState: function (workgroupId, year, shortTermCode, tab) {
 			var self = this;
-			supportService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
-				var action = {
+			supportService.getInitialState(workgroupId, year, shortTermCode).then(function (payload) {
+				supportReducer.reduce({
 					type: INIT_STATE,
 					payload: payload,
 					year: year,
-					tab: tab
-				};
-				supportReducer.reduce(action);
+					tab: tab,
+					shortTermCode: shortTermCode
+				});
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not get instructional support assignment initial state.", type: "ERROR" });
 			});
 		},
-		toggleSupportStaffSupportCallReview: function (scheduleId, termShortCode) {
-			supportService.toggleSupportStaffSupportCallReview(scheduleId, termShortCode).then(function (payload) {
-				$rootScope.$emit('toast', { message: "Updated support staff support call review", type: "SUCCESS" });
-				var action = {
+		toggleStudentSupportCallReview: function () {
+			supportService.toggleSupportStaffSupportCallReview(supportReducer._state.schedule.id, supportReducer._state.ui.shortTermCode).then(function (schedule) {
+				$rootScope.$emit('toast', { message: "Updated student support call review", type: "SUCCESS" });
+				supportReducer.reduce({
 					type: UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW,
-					payload: payload
-				};
-				supportReducer.reduce(action);
+					payload: {
+						schedule: schedule,
+						shortTermCode: supportReducer._state.ui.shortTermCode
+					}
+				});
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not toggle support staff call review.", type: "ERROR" });
 			});
 		},
 		toggleInstructorSupportCallReview: function (scheduleId, termShortCode) {
-			supportService.toggleInstructorSupportCallReview(scheduleId, termShortCode).then(function (payload) {
+			supportService.toggleInstructorSupportCallReview(supportReducer._state.schedule.id, supportReducer._state.ui.shortTermCode).then(function (schedule) {
 				$rootScope.$emit('toast', { message: "Updated instructor support call review", type: "SUCCESS" });
-				var action = {
+				supportReducer.reduce({
 					type: UPDATE_INSTRUCTOR_SUPPORT_CALL_REVIEW,
-					payload: payload
-				};
-				supportReducer.reduce(action);
+					payload: {
+						schedule: schedule,
+						shortTermCode: supportReducer._state.ui.shortTermCode
+					}
+				});
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update instructor support call review.", type: "ERROR" });
 			});
@@ -67,13 +71,12 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 		deleteAssignment: function (supportAssignment) {
 			supportService.deleteAssignment(supportAssignment).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Removed Assignment", type: "SUCCESS" });
-				var action = {
+				supportReducer.reduce({
 					type: DELETE_ASSIGNMENT,
 					payload: supportAssignment,
 					sectionId: supportAssignment.sectionId,
 					sectionGroupId: supportAssignment.sectionGroupId
-				};
-				supportReducer.reduce(action);
+				});
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not remove assignment.", type: "ERROR" });
 			});

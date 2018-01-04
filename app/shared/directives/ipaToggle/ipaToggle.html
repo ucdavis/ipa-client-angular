@@ -1,0 +1,10 @@
+<div class="ipa-toggle"
+ng-click="onClick()"
+ng-class="{ 'ipa-toggle--active': isActive }">
+	<div class="ipa-toggle__text" ng-show="isActive">
+		{{ activeText }}
+	</div>
+	<div class="ipa-toggle__text" ng-show="!(isActive)">
+		{{ inactiveText }}
+	</div>
+</div>

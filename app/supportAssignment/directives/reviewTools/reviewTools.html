@@ -1,15 +1,18 @@
 <div class="review-tools">
 	<div class="review-tools__button">
-		<ipa-button
-			text="'Open Student Review'"
+		<ipa-toggle
+			is-active="supportReview.supportStaff.isOpen"
+			active-text="'Close Student Review'"
+			inactive-text="'Open Student Review'"
 			on-click="toggleStudentSupportCallReview()">
-		</ipa-button>
+		</ipa-toggle>
 	</div>
-
 	<div class="review-tools__button">
-		<ipa-button
-			text="'Open Instructor Review'"
+		<ipa-toggle
+			is-active="supportReview.instructor.isOpen"
+			active-text="'Close Instructor Review'"
+			inactive-text="'Open Instructor Review'"
 			on-click="toggleInstructorSupportCallReview()">
-		</ipa-button>
+		</ipa-toggle>
 	</div>
 </div>

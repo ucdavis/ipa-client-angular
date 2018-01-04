@@ -172,14 +172,6 @@ supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope'
 				supportActions.removeStaffFromSlot(supportAssignment.id, supportStaffId);
 			};
 
-			$scope.toggleSupportStaffSupportCallReview = function() {
-				supportActions.toggleSupportStaffSupportCallReview($scope.view.state.schedule.id, $scope.termShortCode);
-			};
-
-			$scope.toggleInstructorSupportCallReview = function() {
-				supportActions.toggleInstructorSupportCallReview($scope.view.state.schedule.id, $scope.termShortCode);
-			};
-
 			// Set the active tab according to the URL
 			// Otherwise redirect to the default view
 			$scope.setActiveTab($routeParams.tab || "courses");

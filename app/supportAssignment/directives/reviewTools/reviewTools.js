@@ -7,12 +7,12 @@ supportAssignmentApp.directive("reviewTools", this.reviewTools = function ($root
 			supportReview: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.toggleInstructorSupportReview = function() {
-				supportActions.toggleInstructorSupportReview();
+			scope.toggleInstructorSupportCallReview = function() {
+				supportActions.toggleInstructorSupportCallReview();
 			};
 
-			scope.toggleStudentSupportReview = function() {
-				supportActions.toggleStudentSupportReview();
+			scope.toggleStudentSupportCallReview = function() {
+				supportActions.toggleStudentSupportCallReview();
 			};
 		}
 	};

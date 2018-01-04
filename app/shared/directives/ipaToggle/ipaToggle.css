@@ -1,0 +1,28 @@
+.ipa-toggle {
+	display: flex;
+	border: 1px solid #ddd;
+	color: #555;
+	background-color: #FFF;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.ipa-toggle--active {
+	border: 1px solid #313742;
+	background-color: #313742;
+	color: #FFF;
+}
+
+.ipa-toggle.ipa-toggle--active:hover {
+	background-color: black;
+	cursor: pointer;
+	color: #FFF;
+}
+
+.ipa-toggle:not(.ipa-toggle--active):hover {
+	background-color: #d6d6d6;
+	cursor: pointer;
+	color: #555;
+}
