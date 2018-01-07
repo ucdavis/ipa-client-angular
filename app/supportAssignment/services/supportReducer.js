@@ -36,7 +36,12 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 							sectionGroups.list[sectionGroupId].isFiltered = false;
 						});
 					}
-
+					return sectionGroups;
+				case CALCULATE_SECTION_GROUP_SCHEDULING:
+					sectionGroups.ids.forEach(function(sectionGroupId) {
+						var sectionGroup = sectionGroups.list[sectionGroupId];
+						sectionGroup.scheduledBlob = action.payload.sectionGroupBlobs[sectionGroupId];
+					});
 					return sectionGroups;
 				default:
 					return sectionGroups;
@@ -58,8 +63,44 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 					});
 
 					return sections;
+				case CALCULATE_SECTION_SCHEDULING:
+					sections.ids.forEach(function(sectionId) {
+						var section = sections.list[sectionId];
+						section.scheduledBlob = action.payload.sectionBlobs[sectionId];
+					});
+					return sections;
 				default:
 					return sections;
+			}
+		},
+		_activityReducers: function (action, activities) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_STATE:
+					activities = {
+						ids: [],
+						list: {},
+						bySectionIds: {},
+						bySectionGroupIds: {}
+					};
+
+					action.payload.activities.forEach( function(activity) {
+						activities.ids.push(activity.id);
+						activities.list[activity.id] = activity;
+
+						if (activity.sectionId > 0) {
+							activities.bySectionIds[activity.sectionId] = activities.bySectionIds[activity.sectionId] || [];
+							activities.bySectionIds[activity.sectionId].push(activity.id);
+						} else if (activity.sectionGroupId > 0) {
+							activities.bySectionGroupIds[activity.sectionGroupId] = activities.bySectionGroupIds[activity.sectionGroupId] || [];
+							activities.bySectionGroupIds[activity.sectionGroupId].push(activity.id);
+						}
+					});
+
+					return activities;
+				default:
+					return activities;
 			}
 		},
 		_supportAppointmentReducers: function (action, supportAppointments) {
@@ -419,6 +460,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 			newState.instructorSupportCallResponses = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponses);
 			newState.assignedSupportStaffList = scope._assignedSupportStaffListReducers(action, scope._state.assignedSupportStaffList);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
+			newState.activities = scope._activityReducers(action, scope._state.activities);
 
 			scope._state = newState;
 
