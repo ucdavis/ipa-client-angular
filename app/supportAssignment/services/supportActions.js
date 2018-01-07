@@ -2,6 +2,7 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 	return {
 		getInitialState: function (workgroupId, year, shortTermCode, tab) {
 			var self = this;
+
 			supportService.getInitialState(workgroupId, year, shortTermCode).then(function (payload) {
 				supportReducer.reduce({
 					type: INIT_STATE,
@@ -10,6 +11,8 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 					tab: tab,
 					shortTermCode: shortTermCode
 				});
+
+				self.performInitCalculations();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not get instructional support assignment initial state.", type: "ERROR" });
 			});
@@ -171,6 +174,132 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				type: CLOSE_AVAILABILITY_MODAL,
 				payload: {}
 			});
+		},
+		performInitCalculations: function() {
+			this.calculateSectionGroupScheduling();
+			this.calculateSectionScheduling();
+		},
+		// Calculate the activity blobs for every sectionGroup
+		calculateSectionGroupScheduling: function() {
+			var self = this;
+			var sectionGroupBlobs = {};
+
+			supportReducer._state.sectionGroups.ids.forEach(function(sectionGroupId) {
+				var sectionGroup = supportReducer._state.sectionGroups.list[sectionGroupId];
+				sectionGroupBlobs[sectionGroup.id] = self.sectionGroupIdToBlob(sectionGroup.id);
+			});
+
+			supportReducer.reduce({
+				type: CALCULATE_SECTION_GROUP_SCHEDULING,
+				payload: {
+					sectionGroupBlobs: sectionGroupBlobs
+				}
+			});
+		},
+		// Calculate the activity blobs for every section
+		calculateSectionScheduling: function() {
+			var self = this;
+			var sectionBlobs = {};
+
+			supportReducer._state.sections.ids.forEach(function(sectionId) {
+				var section = supportReducer._state.sections.list[sectionId];
+				sectionBlobs[section.id] = self.sectionToBlob(section);
+			});
+
+			supportReducer.reduce({
+				type: CALCULATE_SECTION_SCHEDULING,
+				payload: {
+					sectionBlobs: sectionBlobs
+				}
+			});
+		},
+		// Calculate the combined activities of all activities in this sectionGroup
+		sectionGroupIdToBlob: function (sectionGroupId) {
+			var self = this;
+			var scheduledBlob = this.getDefaultBlob();
+
+			var activities = supportReducer._state.activities.bySectionGroupIds[sectionGroupId];
+
+			if (!activities || activities.length == 0) {
+				return scheduledBlob;
+			}
+
+			activities.forEach(function(activityId) {
+				var activity = supportReducer._state.activities.list[activityId];
+				var activityBlob = self.activityToBlob(activity);
+				scheduledBlob = self.combineBlobs(scheduledBlob, activityBlob);
+			});
+
+			return scheduledBlob;
+		},
+		// Calculate the combined activities of all activities in this section,
+		// and shared activities in the parent sectionGroup
+		sectionToBlob: function(section) {
+			var self = this;
+			var sectionBlob = this.getDefaultBlob();
+
+			var activities = supportReducer._state.activities.bySectionIds[section.id];
+
+			if (!activities || activities.length == 0) {
+				return sectionBlob;
+			}
+
+			activities.forEach(function(activityId) {
+				var activity = supportReducer._state.activities.list[activityId];
+				var activityBlob = self.activityToBlob(activity);
+
+				sectionBlob = self.combineBlobs(sectionBlob, activityBlob);
+			});
+
+			var sectionGroupBlob = this.sectionGroupIdToBlob(section.sectionGroupId);
+			this.combineBlobs(sectionBlob, sectionGroupBlob);
+
+			return sectionBlob;
+		},
+		activityToBlob: function(activity) {
+			// Set to a default of all '1's, which would indicate nothing scheduled
+			var activityBlob = "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
+
+			// Activity has no time set
+			if (!(activity.startTime) || !(activity.endTime)) {
+				return activityBlob;
+			}
+
+			// activity.startTime is expected in the format "15:00:00"
+			var startHour = activity.startTime.substring(0,2);
+			var startHourIndex = startHour - 7; // 7am should correspond to 0 index.
+			var endHour = activity.endTime.substring(0,2);
+			var endHourIndex = endHour - 7; // 7am should correspond to 0 index.
+
+			for (var i = 0; i < activity.dayIndicator.length; i++) {
+				if (activity.dayIndicator[i] == "1") {
+					var dayOffset = 30 * i;
+
+					for (var j = startHourIndex; j <= endHourIndex; j++) {
+						var blobIndex = (j * 2) + dayOffset;
+						activityBlob = setCharAt(activityBlob, blobIndex, "0");
+					}
+				}
+			}
+
+			return activityBlob;
+		},
+		getDefaultBlob: function() {
+			return "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
+		},
+		setCharAt: function(str, index, chr) {
+			if (index > str.length-1) { return str;}
+
+			return str.substr(0,index) + chr + str.substr(index + 1);
+		},
+		combineBlobs: function (blobOne, blobTwo) {
+			for( var i = 0; i < blobTwo.length; i = i + 2) {
+				if (blobTwo[i] == "0") {
+					blobOne = setCharAt(blobOne, i, "0");
+				}
+			}
+
+			return blobOne;
 		}
 	};
 });
