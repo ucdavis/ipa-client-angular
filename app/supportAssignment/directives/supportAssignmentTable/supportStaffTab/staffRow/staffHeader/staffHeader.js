@@ -5,7 +5,8 @@ supportAssignmentApp.directive("staffHeader", this.staffHeader = function ($root
 		replace: true,
 		scope: {
 			supportStaff: '<',
-			viewType: '<'
+			viewType: '<',
+			readOnly: '<?'
 		},
 		link: function (scope, element, attrs) {
 			scope.openAvailabilityModal = function(supportStaff) {

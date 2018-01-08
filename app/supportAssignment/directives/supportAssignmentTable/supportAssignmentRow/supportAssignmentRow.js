@@ -6,7 +6,8 @@ supportAssignmentApp.directive("supportAssignmentRow", this.supportAssignmentRow
 		scope: {
 			name: '<',
 			onDelete: "&",
-			supportAssignment: '<'
+			supportAssignment: '<',
+			readOnly: '<?'
 		},
 		link: function (scope, element, attrs) {
 			scope.deleteAssignment = function() {

@@ -5,7 +5,11 @@
 	select-tab="setSupportStaffTab">
 		<div class="staff-row__content">
 			<div class="support-assignments__header-cell">
-				<staff-header view-type="state.ui.viewType" support-staff="supportStaff"></staff-header>
+				<staff-header
+				view-type="state.ui.viewType"
+				read-only="state.ui.readOnlyMode"
+				support-staff="supportStaff">
+				</staff-header>
 			</div>
 			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large">
 				<staff-comments ng-if="state.ui.supportStaffTabs[supportStaff.id] == 'Comments'" support-staff="supportStaff"></staff-comments>
