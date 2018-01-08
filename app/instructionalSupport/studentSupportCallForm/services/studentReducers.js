@@ -112,6 +112,11 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 		_uiReducers: function (action, ui) {
 			switch (action.type) {
 				case INIT_STATE:
+				var preferenceCommentsComplete = true;
+				action.payload.studentSupportPreferences.forEach(function(preference) {
+					if (!preference.comment || preference.comment.length == 0) {preferenceCommentsComplete = false;}
+				});
+
 					ui = {
 						isPreferenceCommentModalOpen: false,
 						isFormLocked: false,
@@ -131,10 +136,11 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 							},
 							requirePreferenceComments: {
 								required: action.payload.studentSupportCallResponse.requirePreferenceComments,
-								complete: action.payload.studentSupportPreferences.every(function(preference) { preference.comment && preference.comment.length > 0; })
+								complete: preferenceCommentsComplete
 							}
 						}
 					};
+
 
 					// Determine if form should be locked (due date is enforced and has passed)
 					if (action.payload.supportCallResponse) {
