@@ -1,4 +1,4 @@
-.assign-support-staff {
+.assign-course {
 	width: 80%;
 	border: 1px solid #ddd;
 	font-weight: bold;
@@ -9,23 +9,23 @@
 	position: relative;
 }
 
-.assign-support-staff__container {
+.assign-course__container {
 	width: 100%;
 	padding: 10px 15px;
 	display: flex;
 }
 
-.assign-support-staff__text {
+.assign-course__text {
 	display: flex;
 	align-items: center;
 }
 
-.assign-support-staff__dropdown-container {
+.assign-course__dropdown-container {
 	position: absolute;
 	width: 100%;
 }
 
-.assign-support-staff__dropdown {
+.assign-course__dropdown {
 	position: relative;
 	width: 100%;
 	z-index: 30;
@@ -38,11 +38,11 @@
 	overflow-y: scroll;
 }
 
-.assign-support-staff:hover {
+.assign-course:hover {
 	border-color: #bab9b9
 }
 
-.assign-support-staff__dropdown-item {
+.assign-course__dropdown-item {
 	background-color: #fff;
 	padding-left: 30px;
 	padding-top: 8px;
@@ -53,11 +53,11 @@
 	font-weight: normal;
 }
 
-.assign-support-staff__dropdown-item:hover {
+.assign-course__dropdown-item:hover {
 	background-color: #f4f4f4;
 }
 
-.assign-support-staff__dropdown-mask {
+.assign-course__dropdown-mask {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -67,7 +67,7 @@
 	height: 100vh;
 }
 
-.assign-support-staff__dropdown-group-name {
+.assign-course__dropdown-group-name {
 	color: #8d8b8b;
 	padding-left: 15px;
 	padding-top: 15px;

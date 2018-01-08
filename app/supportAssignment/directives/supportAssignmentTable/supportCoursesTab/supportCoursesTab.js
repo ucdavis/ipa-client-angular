@@ -19,7 +19,7 @@ supportAssignmentApp.directive("supportCoursesTab", this.supportCoursesTab = fun
 
 			scope.assignStaffToSectionGroup = function(supportStaffId, sectionGroup) {
 				var type = scope.state.ui.viewType == "Readers" ? "reader" : "teachingAssistant";
-				supportActions.assignStaffToSectionGroup(sectionGroup, supportStaffId, type);
+				supportActions.assignStaffToSectionGroup(sectionGroup.id, supportStaffId, type);
 			};
 
 			scope.assignStaffToSection = function(supportStaffId, section) {
