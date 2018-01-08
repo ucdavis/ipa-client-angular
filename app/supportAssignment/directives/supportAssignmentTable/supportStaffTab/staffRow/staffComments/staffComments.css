@@ -1,6 +1,7 @@
 .staff-comments {
 	widtH: 100%;
 	padding: 20px;
+	padding-left: 100px;
 	color: #555;
 }
 
@@ -8,4 +9,8 @@
 	font-weight: bold;
 	padding-top: 20px;
 	padding-bottom: 10px;
+}
+
+.staff-comments__no-comments {
+	color: #a3a3a3;
 }

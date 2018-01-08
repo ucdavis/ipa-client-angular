@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<div ng-if="supportStaff.supportStaffPreferences.length > 0">
-		Preference Comments:
+		Preference Comments
 		<div
 		ng-repeat="preference in supportStaff.supportStaffPreferences | orderBy: 'priority'"
 		ng-if="preference.comment && preference.comment.length > 0">
@@ -27,5 +27,8 @@
 				{{ preference.comment }}
 			</div>
 		</div>
+	</div>
+	<div class="staff-comments__no-comments" ng-if="!supportStaff.supportCallResponse.teachingQualifications && !supportStaff.supportCallResponse.generalComments && supportStaff.supportStaffPreferences.length == 0">
+		No comments
 	</div>
 </div>
