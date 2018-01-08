@@ -486,6 +486,7 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				return {
 					sortKey: course.subjectCode + course.courseNumber + section.sequenceNumber,
 					type: type,
+					priority: priority,
 					description: course.subjectCode + " " + course.courseNumber + " " + section.sequenceNumber + " " + course.title,
 					sectionId: sectionId,
 					hasSchedulingConflict: (section.supportStaffConflicts.indexOf(supportStaffId) > -1)
@@ -497,6 +498,7 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 			return {
 				sortKey: course.subjectCode + course.courseNumber + course.sequencePattern,
 				type: type,
+				priority: priority,
 				description: course.subjectCode + " " + course.courseNumber + " " + course.sequencePattern + " " + course.title,
 				sectionGroupId: sectionGroupId,
 				hasSchedulingConflict: (sectionGroup.supportStaffConflicts.indexOf(supportStaffId) > -1)
