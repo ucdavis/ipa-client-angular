@@ -64,7 +64,7 @@ supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope'
 						}
 					}
 
-					if ($scope.view.state.ui.readOnlyMode == false) {
+					if ($scope.readOnlyMode == true && $scope.isAllowed == false && $scope.view.state.ui.readOnlyMode == false) {
 						supportActions.setReadOnlyMode();
 					}
 				});
