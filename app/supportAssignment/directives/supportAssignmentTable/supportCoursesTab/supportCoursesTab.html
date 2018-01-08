@@ -41,7 +41,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="support-courses-tab__row" ng-repeat="section in sectionGroup.sections">
+		<div class="support-courses-tab__row"
+		ng-repeat="section in sectionGroup.sections"
+		ng-show="isNumber(section.sequenceNumber) == false">
 			<div class="support-assignments__header-cell support-assignments__header-cell--section">
 				<div class="support-courses-tab__section-header">
 					{{ section.sequenceNumber }}

@@ -26,6 +26,10 @@ supportAssignmentApp.directive("supportCoursesTab", this.supportCoursesTab = fun
 				var type = scope.state.ui.viewType == "Readers" ? "reader" : "teachingAssistant";
 				supportActions.assignStaffToSection(section.id, supportStaffId, type);
 			};
+
+			scope.isNumber = function(number) {
+				return isNumber(number);
+			};
 		}
 	};
 });
