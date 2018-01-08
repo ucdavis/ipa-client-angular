@@ -347,35 +347,6 @@ assignmentApp.service('assignmentStateService', function (
 					return instructorMasterList;
 			}
 		},
-		_supportAssignmentReducers: function (action, supportAssignments) {
-			switch (action.type) {
-				case INIT_ASSIGNMENT_VIEW:
-					supportAssignments = {
-						ids: [],
-						list: []
-					};
-					action.payload.supportAssignments.forEach(function (supportAssignment) {
-						supportAssignments.ids.push(supportAssignment.id);
-						supportAssignments.list[supportAssignment.id] = supportAssignment;
-					});
-					return supportAssignments;
-				case CREATE_PLACEHOLDER_AI:
-					action.payload.supportAssignment.forEach(function(supportAssignment) {
-						supportAssignments.ids.push(supportAssignment.id);
-						supportAssignments.list[supportAssignment.id] = supportAssignment;
-					});
-					return supportAssignments;
-				case REMOVE_PLACEHOLDER_AI:
-					var supportAssignmentId = action.payload;
-					var index = supportAssignments.ids.indexOf(supportAssignmentId);
-					if (index > -1) {
-						supportAssignments.ids.splice(index, 1);
-					}
-					return supportAssignments;
-				default:
-					return supportAssignments;
-			}
-		},
 		_scheduleTermStateReducers: function (action, scheduleTermStates) {
 			var scope = this;
 
@@ -662,7 +633,6 @@ assignmentApp.service('assignmentStateService', function (
 			newState.userInterface = scope._userInterfaceReducers(action, scope._state.userInterface);
 			newState.tags = scope._tagReducers(action, scope._state.tags);
 			newState.filters = scope._filterReducers(action, scope._state.filters);
-			newState.supportAssignments = scope._supportAssignmentReducers(action, scope._state.supportAssignments);
 			newState.theStaff = scope._theStaffReducers(action, scope._state.theStaff);
 
 			scope._state = newState;

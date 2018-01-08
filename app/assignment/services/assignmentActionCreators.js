@@ -42,8 +42,8 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			};
 			assignmentStateService.reduce(action);
 		},
-		removePlaceholderAI: function (supportAssignmentId) {
-			assignmentService.removePlaceholderAI(supportAssignmentId).then(function (payload) {
+		removePlaceholderAI: function (sectionGroup) {
+			assignmentService.updateSectionGroup(sectionGroup).then(function (payload) {
 				var action = {
 					type: REMOVE_PLACEHOLDER_AI,
 					payload: payload
@@ -224,21 +224,13 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			});
 
 		},
-		createPlaceholderAI: function (sectionGroupId) {
-			var self = this;
-
-			var supportAssignment = {
-				appointmentType: "associateInstructor",
-				appointmentPercentage: 50,
-				sectionGroupId: sectionGroupId
-			};
-			
-			assignmentService.createPlaceholderAI(sectionGroupId, supportAssignment).then(function (supportAssignment) {
+		createPlaceholderAI: function (sectionGroup) {
+			assignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
 				$rootScope.$emit('toast', { message: "Created AI placeholder", type: "SUCCESS" });
 					var action = {
 						type: CREATE_PLACEHOLDER_AI,
 						payload: {
-							supportAssignment: supportAssignment
+							sectionGroup: sectionGroup
 						}
 					};
 					assignmentStateService.reduce(action);
@@ -248,9 +240,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 
 		},
 		createPlaceholderStaff: function (sectionGroup) {
-			var self = this;
-
-			assignmentService.createPlaceholderStaff(sectionGroup).then(function (sectionGroup) {
+			assignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
 				$rootScope.$emit('toast', { message: "Assigned The Staff", type: "SUCCESS" });
 					var action = {
 						type: CREATE_PLACEHOLDER_STAFF,
@@ -264,9 +254,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			});
 		},
 		removePlaceholderStaff: function (sectionGroup) {
-			var self = this;
-
-			assignmentService.removePlaceholderStaff(sectionGroup).then(function (sectionGroup) {
+			assignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
 				$rootScope.$emit('toast', { message: "Removed The Staff", type: "SUCCESS" });
 					var action = {
 						type: REMOVE_PLACEHOLDER_STAFF,
