@@ -116,34 +116,20 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 										courseHtml += plannedSeats + "</span>";
 										courseHtml += "</div>";
 
-										// Loop over supportAssignments
-										scope.view.state.supportAssignments.ids.forEach(function (supportAssignmentId) {
-											var supportAssignment = scope.view.state.supportAssignments.list[supportAssignmentId];
-
-											if (supportAssignment.appointmentType != "associateInstructor") {
-												return;
-											}
-											if (!supportAssignment || supportAssignment.supportStaffId > 0) {
-												return;
-											}
-
-											if (supportAssignment.sectionGroupId != sectionGroupId) {
-												return;
-											}
-
+										// Display placeholder AI
+										if (sectionGroup.showPlaceholderAI == true) {
 											courseHtml += "<div class=\"alert alert-info tile-assignment\">";
 											courseHtml += "AI Placeholder";
 
-											var popoverTemplate = "Are you sure you want to delete this placeholder? <br /><br />" +
-												"<div class='text-center'><button class='btn btn-red' data-event-type='deleteSupportAssignment' data-support-assignment-id='" + supportAssignment.id + "'>Delete</button>" +
-												"<button class='btn btn-white' data-event-type='dismissDeleteSupportAssignmentPop'>Cancel</button></div>";
+											var popoverTemplate = "Are you sure you want to remove AI Placeholder? <br /><br />" +
+												"<div class='text-center'><button class='btn btn-red' data-event-type='deletePlaceholderAI' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
+												"<button class='btn btn-white' data-event-type='dismissDeletePlaceholderAIPop'>Cancel</button></div>";
 
 											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
-											courseHtml += " data-support-assignment-id=\"" + supportAssignment.id + "\" data-event-type=\"deleteSupportAssignmentPop\" " +
+											courseHtml += " data-section-group-id=\"" + sectionGroup.id + "\" data-event-type=\"deletePlaceholderAIPop\" " +
 												"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
-											courseHtml += "</div>"; // Ending Teaching assignment div
-
-										});
+											courseHtml += "</div>";
+										}
 
 										// Display The Staff placeholder
 										if (sectionGroup.showTheStaff == true) {
@@ -158,8 +144,8 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 											courseHtml += " data-section-group-id=\"" + sectionGroup.id + "\" data-event-type=\"deleteTheStaffPop\" " +
 												"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
 											courseHtml += "</div>"; // Ending Teaching assignment div
-
 										}
+
 										// Loop over teachingAssignments that are approved
 										$.each(sectionGroup.teachingAssignmentIds, function (i, teachingAssignmentId) {
 											var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
@@ -191,10 +177,12 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 											courseHtml += "<div>Assign..</div><div class=\"caret\"></div></button>";
 											courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right assign-instructor-dropdown scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
 
-											courseHtml += "<li><a";
-											courseHtml += ' data-is-placeholder-ai="true"';
-											courseHtml += ' data-section-group-id="' + sectionGroup.id + '"';
-											courseHtml += ' href="#">AI Placeholder</a></li>';
+											if (sectionGroup.showPlaceholderAI == false) {
+												courseHtml += "<li><a";
+												courseHtml += ' data-is-placeholder-ai="true"';
+												courseHtml += ' data-section-group-id="' + sectionGroup.id + '"';
+												courseHtml += ' href="#">AI Placeholder</a></li>';
+											}
 
 											// Display 'The Staff' as an option when no assignments have been made
 											var showStaffOption = true;
@@ -325,7 +313,9 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 						assignmentActionCreators.createPlaceholderStaff(sectionGroup);
 					// Create a support assignment for an AI
 					} else if (isAssignPlaceholderAI) {
-						assignmentActionCreators.createPlaceholderAI(sectionGroupId);
+						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+						sectionGroup.showPlaceholderAI = true;
+						assignmentActionCreators.createPlaceholderAI(sectionGroup);
 					} else if (teachingAssignmentId) {
 						// Approving an existing teachingAssignment
 						teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
@@ -375,30 +365,17 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 					$el.closest("div.popover").popover('hide');
 				}
 
-				// Open AI placeholder deletion confirmation popover
-				else if ($el.data('event-type') == 'deleteSupportAssignmentPop') {
-					// Delete course confirmation
-					$el.popover('show');
-				}
-
-				// User has confirmed deletion of the supportAssignment
-				else if ($el.data('event-type') == 'deleteSupportAssignment') {
-					supportAssignmentId = $el.data('support-assignment-id');
-					assignmentActionCreators.removePlaceholderAI(supportAssignmentId);
-				}
-
-				// Close supportAssignment deletion confirmation popover
-				else if ($el.data('event-type') == 'dismissDeleteSupportAssignmentPop') {
-					// Dismiss the delete course dialog
-					$el.closest("div.popover").popover('hide');
-				}
-
 				// Open The Staff deletion confirmation popover
 				else if ($el.data('event-type') == 'deleteTheStaffPop') {
 					// Delete course confirmation
 					$el.popover('show');
 				}
 
+				// Open Placeholder AI deletion confirmation popover
+				else if ($el.data('event-type') == 'deletePlaceholderAIPop') {
+					// Delete course confirmation
+					$el.popover('show');
+				}
 				// User has confirmed deletion of The Staff
 				else if ($el.data('event-type') == 'deleteTheStaff') {
 					sectionGroupId = $el.data('section-group-id');
@@ -406,9 +383,20 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 					sectionGroup.showTheStaff = false;
 					assignmentActionCreators.removePlaceholderStaff(sectionGroup);
 				}
-
+				// User has confirmed deletion of Placeholder AI
+				else if ($el.data('event-type') == 'deletePlaceholderAI') {
+					sectionGroupId = $el.data('section-group-id');
+					sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+					sectionGroup.showPlaceholderAI = false;
+					assignmentActionCreators.removePlaceholderAI(sectionGroup);
+				}
 				// Close The Staff deletion confirmation popover
 				else if ($el.data('event-type') == 'dismissDeleteTheStaffPop') {
+					// Dismiss the delete course dialog
+					$el.closest("div.popover").popover('hide');
+				}
+				// Close Placeholder AI deletion confirmation popover
+				else if ($el.data('event-type') == 'dismissDeletePlaceholderAIPop') {
 					// Dismiss the delete course dialog
 					$el.closest("div.popover").popover('hide');
 				}
