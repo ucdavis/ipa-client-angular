@@ -4,8 +4,9 @@ instructionalSupportApp.directive("studentPreferenceSelector", this.studentPrefe
 		templateUrl: 'studentPreferenceSelector.html',
 		replace: true,
 		link: function (scope, element, attrs) {
-			scope.addPreference = function(preference) {
-				studentActions.addStudentPreference(preference);
-			};		}
+			scope.addPreference = function(preference, type) {
+				studentActions.addStudentPreference(preference.id, type);
+			};
+		}
 	};
 });
