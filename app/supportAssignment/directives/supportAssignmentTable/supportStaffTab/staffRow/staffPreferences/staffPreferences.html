@@ -8,4 +8,17 @@
 		support-assignment="supportAssignment">
 		</support-assignment-row>
 	</div>
+
+	<div class="staff-preferences__assignment">
+		<assign-course ng-show="state.ui.viewType == 'Readers'"
+		support-staff="supportStaff"
+		assignment-options="supportStaff.assignmentOptions.reader"
+		view-type="state.ui.viewType">
+		</assign-course>
+		<assign-course ng-show="state.ui.viewType == 'Teaching Assistants'"
+		support-staff="supportStaff"
+		assignment-options="supportStaff.assignmentOptions.ta"
+		view-type="state.ui.viewType">
+		</assign-course>
+	</div>
 </div>

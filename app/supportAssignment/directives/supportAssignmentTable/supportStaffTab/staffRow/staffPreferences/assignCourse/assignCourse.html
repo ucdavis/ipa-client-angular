@@ -1,0 +1,48 @@
+<div class="assign-course">
+	<div class="assign-course__container" ng-click="toggleDropdown()">
+		<div>
+			<i class="btn glyphicon glyphicon-plus"></i>
+		</div>
+		<div class="assign-course__text">
+			Assign {{ viewType }}
+		</div>
+	</div>
+	<div ng-if="expanded" class="assign-course__dropdown-container">
+		<div class="assign-course__dropdown-mask" ng-click="closeDropdown()">
+		</div>
+
+		<div class="assign-course__dropdown">
+			<div class="assign-course__dropdown-group-name"
+			ng-show="assignmentOptions.instructorPreferences && assignmentOptions.instructorPreferences.length > 0">
+				Instructor Preferences
+			</div>
+			<div class="assign-course__dropdown-item"
+			ng-show="assignmentOptions.instructorPreferences && assignmentOptions.instructorPreferences.length > 0"
+			ng-repeat="assignmentOption in assignmentOptions.instructorPreferences"
+			ng-click="assignToSupportStaff(assignmentOption)">
+				{{ assignmentOption.description }}
+			</div>
+
+			<div class="assign-course__dropdown-group-name"
+			ng-show="assignmentOptions.preferences && assignmentOptions.preferences.length > 0">
+				Student Preferences
+			</div>
+
+			<div class="assign-course__dropdown-item"
+			ng-repeat="assignmentOption in assignmentOptions.preferences"
+			ng-click="assignToSupportStaff(assignmentOption)">
+				{{ assignmentOption.description }}
+			</div>
+
+			<div class="assign-course__dropdown-group-name">
+				Other
+			</div>
+
+			<div class="assign-course__dropdown-item"
+			ng-repeat="assignmentOption in assignmentOptions.other"
+			ng-click="assignToSupportStaff(assignmentOption)">
+				{{ assignmentOption.description }}
+			</div>
+		</div>
+	</div>
+</div>
