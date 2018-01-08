@@ -112,8 +112,10 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 		},
 		updateSupportAppointment: function (supportAppointment) {
 			supportAppointment.percentage = parseFloat(supportAppointment.percentage);
+			supportAppointment.scheduleId = supportReducer._state.schedule.id;
+			supportAppointment.termCode = supportReducer._state.ui.termCode;
 
-			supportService.updateSupportAppointment(supportAppointment, supportReducer._state.schedule.id).then(function(payload) {
+			supportService.updateSupportAppointment(supportAppointment).then(function(payload) {
 				$rootScope.$emit('toast', { message: "Updated Appointment", type: "SUCCESS" });
 				supportReducer.reduce({
 					type: UPDATE_SUPPORT_APPOINTMENT,
