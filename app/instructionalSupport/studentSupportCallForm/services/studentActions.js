@@ -128,12 +128,11 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 			studentService.updatePreference(scheduleId, preference).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Updated preference comments", type: "SUCCESS" });
 
-				var preferenceCommentsComplete = studentReducers._state.preferences.ids
-				.map(function(preference) {
-					preference.comment || "";
-				}).
-				every(function(comment) {
-					comment && comment.length > 0;
+				studentReducers._state.preferences.list[payload.id] = payload;
+				var preferenceCommentsComplete = true;
+				studentReducers._state.preferences.ids.forEach(function(preferenceId) {
+					var preference = studentReducers._state.preferences.list[preferenceId];
+					if (!preference.comment || preference.comment.length == 0) {preferenceCommentsComplete = false;}
 				});
 
 				var action = {
