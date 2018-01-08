@@ -1,0 +1,14 @@
+<div class="course-appointment-input">
+	<ipa-input
+		ng-show="viewType == 'Readers'"
+		value="sectionGroup.readerAppointments"
+		read-only="readOnly"
+		on-update="updateReaderAppointments()">
+	</ipa-input>
+	<ipa-input
+		ng-show="viewType == 'Teaching Assistants'"
+		value="sectionGroup.teachingAssistantAppointments"
+		read-only="readOnly"
+		on-update="updateTeachingAssistantAppointments()">
+	</ipa-input>
+</div>
