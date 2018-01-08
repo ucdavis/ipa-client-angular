@@ -503,6 +503,12 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				sectionGroupId: sectionGroupId,
 				hasSchedulingConflict: (sectionGroup.supportStaffConflicts.indexOf(supportStaffId) > -1)
 			};
+		},
+		setReadOnlyMode: function() {
+			supportReducer.reduce({
+				type: SET_READ_ONLY_MODE,
+				payload: {}
+			});
 		}
 	};
 });

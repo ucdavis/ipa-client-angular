@@ -3,13 +3,14 @@
 	ng-repeat="supportAssignment in supportStaff.supportAssignments"
 	ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
 		<support-assignment-row
+		read-only="state.ui.readOnlyMode"
 		name="supportAssignment.description"
 		on-delete="deleteAssignment"
 		support-assignment="supportAssignment">
 		</support-assignment-row>
 	</div>
 
-	<div class="staff-preferences__assignment">
+	<div ng-hide="state.ui.readOnlyMode" class="staff-preferences__assignment">
 		<assign-course ng-show="state.ui.viewType == 'Readers'"
 		support-staff="supportStaff"
 		assignment-options="supportStaff.assignmentOptions.reader"

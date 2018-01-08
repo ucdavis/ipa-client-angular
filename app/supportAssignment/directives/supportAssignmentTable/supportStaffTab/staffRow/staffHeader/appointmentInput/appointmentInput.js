@@ -5,7 +5,8 @@ supportAssignmentApp.directive("appointmentInput", this.appointmentInput = funct
 		replace: true,
 		scope: {
 			supportStaff: '<',
-			viewType: '<'
+			viewType: '<',
+			readOnly: '<?'
 		},
 		link: function (scope, element, attrs) {
 			scope.updateSupportAppointment = function () {

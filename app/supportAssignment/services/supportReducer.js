@@ -404,6 +404,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 			switch (action.type) {
 				case INIT_STATE:
 					ui = {
+						readOnlyMode: false,
 						tabPivot: "By Course",
 						viewType: "Teaching Assistants",
 						supportStaffTabs: {},
@@ -432,6 +433,9 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 						ui.supportStaffTabs[supportStaff.id] = "Assignments";
 					});
 
+					return ui;
+				case SET_READ_ONLY_MODE:
+					ui.readOnlyMode = true;
 					return ui;
 				case OPEN_AVAILABILITY_MODAL:
 					ui.availabilityModal.isOpen = true;

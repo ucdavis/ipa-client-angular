@@ -24,6 +24,7 @@
 				ng-repeat="supportAssignment in sectionGroup.supportAssignments"
 				ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
 					<support-assignment-row
+					read-only="state.ui.readOnlyMode"
 					name="supportAssignment.fullName"
 					on-delete="deleteAssignment"
 					support-assignment="supportAssignment">
@@ -31,6 +32,7 @@
 				</div>
 				<div class="support-courses-tab__assignment">
 					<assign-support-staff
+					ng-hide="state.ui.readOnlyMode"
 					view-type="state.ui.viewType"
 					section-group="sectionGroup"
 					on-select="assignStaffToSectionGroup"
@@ -59,6 +61,7 @@
 				</div>
 				<div class="support-courses-tab__assignment">
 					<assign-support-staff
+					ng-hide="state.ui.readOnlyMode"
 					view-type="state.ui.viewType"
 					section="section"
 					on-select="assignStaffToSection"
