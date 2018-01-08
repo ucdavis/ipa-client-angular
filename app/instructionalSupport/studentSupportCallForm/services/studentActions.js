@@ -16,9 +16,9 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 				$rootScope.$emit('toast', { message: "Could not load support staff form initial state.", type: "ERROR" });
 			});
 		},
-		addStudentPreference: function (preference) {
+		addStudentPreference: function (sectionGroupId, type) {
 			var self = this;
-			studentService.addStudentPreference(preference).then(function (payload) {
+			studentService.addStudentPreference(sectionGroupId, type).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
 				var action = {
 					type: ADD_STUDENT_PREFERENCE,
