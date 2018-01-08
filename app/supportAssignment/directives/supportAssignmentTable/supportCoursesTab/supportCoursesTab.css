@@ -39,3 +39,7 @@
 .support-courses-tab__spacer {
 	padding-bottom: 10px;
 }
+
+.support-courses-tab__assigned-header {
+	padding-left: 80px;
+}
