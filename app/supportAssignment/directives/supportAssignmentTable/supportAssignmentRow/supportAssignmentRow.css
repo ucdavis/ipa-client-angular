@@ -15,3 +15,8 @@
 	cursor: default;
 	min-height: 31px;
 }
+
+/* Violates BEM to override bootstrap */
+.active.support-assignment-row__delete-icon {
+	box-shadow: none;
+}
