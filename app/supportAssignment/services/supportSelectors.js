@@ -75,6 +75,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 					}
 
 					preference = self.addSupportStaffData(preference, supportStaffList);
+					preference.description = preference.subjectCode + " " + preference.courseNumber + " " + preference.sequencePattern + " " + preference.title;
 					sectionGroup.teachingAssistantAssignmentOptions.supportStaffPreferences.push(preference);
 					processedSupportStaffIds.push(preference.supportStaffId);
 				});
@@ -111,6 +112,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 					}
 
 					preference = self.addSupportStaffData(preference, supportStaffList);
+					preference.description = preference.subjectCode + " " + preference.courseNumber + " " + preference.sequencePattern + " " + preference.title;
 					sectionGroup.readerAssignmentOptions.supportStaffPreferences.push(preference);
 					processedSupportStaffIds.push(preference.supportStaffId);
 				});
@@ -217,6 +219,12 @@ supportAssignmentApp.service('supportSelectors', function () {
 				supportStaffDTO.supportCallResponse = self.findSupportCallResponse(supportStaffSupportCallResponses, supportStaffDTO.id);
 				supportStaffDTO.supportAssignments = self.generateSupportAssignmentsForSupportStaff(supportStaffDTO.id, supportAssignments, sectionGroups, courses, sections);
 				supportStaffDTO.supportStaffPreferences = self.generateSupportStaffPreferences(supportStaffDTO.id, supportStaffPreferences, sectionGroups, courses);
+
+				supportStaffDTO.readerPreferenceCount = self.countPreferencesByType(supportStaffDTO.supportStaffPreferences, 'reader');
+				supportStaffDTO.taPreferenceCount = self.countPreferencesByType(supportStaffDTO.supportStaffPreferences, 'teachingAssistant');
+				supportStaffDTO.readerAssignmentCount = self.countAssignmentsByType(supportStaffDTO.supportAssignments, 'reader');
+				supportStaffDTO.taAssignmentCount = self.countAssignmentsByType(supportStaffDTO.supportAssignments, 'teachingAssistant');
+
 				supportStaffDTO.appointment = self.findSupportAppointment(supportStaffDTO.id, supportAppointments, ui.viewType);
 
 				newSupportStaffList.push(supportStaffDTO);
@@ -225,6 +233,24 @@ supportAssignmentApp.service('supportSelectors', function () {
 			newSupportStaffList = _array_sortByProperty(newSupportStaffList, "lastName");
 
 			return newSupportStaffList;
+		},
+		countPreferencesByType: function(preferences, type) {
+			var count = 0;
+
+			preferences.forEach(function(preference) {
+				if (preference.type == type) {count++;}
+			});
+
+			return count;
+		},
+		countAssignmentsByType: function(preferences, type) {
+			var count = 0;
+
+			preferences.forEach(function(preference) {
+				if (preference.appointmentType == type) {count++;}
+			});
+
+			return count;
 		},
 		// Return the appointment for the specified supportStaff if it matches the current page view.
 		// Otherwise return an empty object.
