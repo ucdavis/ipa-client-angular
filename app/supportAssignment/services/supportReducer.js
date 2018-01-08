@@ -43,6 +43,12 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 						sectionGroup.scheduledBlob = action.payload.sectionGroupBlobs[sectionGroupId];
 					});
 					return sectionGroups;
+				case CALCULATE_SCHEDULE_CONFLICTS:
+					sectionGroups.ids.forEach(function(sectionGroupId) {
+						var sectionGroup = sectionGroups.list[sectionGroupId];
+						sectionGroup.supportStaffConflicts = action.payload.conflicts.bySectionGroupId[sectionGroupId] || [];
+					}); 
+					return sectionGroups;
 				default:
 					return sectionGroups;
 			}
@@ -54,14 +60,24 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 				case INIT_STATE:
 					sections = {
 						ids: [],
-						list: {}
+						list: {},
+						bySectionGroupId: {}
 					};
 
 					action.payload.sections.forEach( function(section) {
 						sections.ids.push(section.id);
 						sections.list[section.id] = section;
+
+						sections.bySectionGroupId[section.sectionGroupId] = sections.bySectionGroupId[section.sectionGroupId] || [];
+						sections.bySectionGroupId[section.sectionGroupId].push(section.id);
 					});
 
+					return sections;
+				case CALCULATE_SCHEDULE_CONFLICTS:
+					sections.ids.forEach(function(sectionId) {
+						var section = sections.list[sectionId];
+						section.supportStaffConflicts = action.payload.conflicts.bySectionId[sectionId] || [];
+					}); 
 					return sections;
 				case CALCULATE_SECTION_SCHEDULING:
 					sections.ids.forEach(function(sectionId) {
@@ -209,42 +225,6 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 					return supportAssignments;
 			}
 		},
-		_assignedSupportStaffListReducers: function (action, assignedSupportStaffList) {
-			var scope = this;
-
-			switch (action.type) {
-				case INIT_STATE:
-					assignedSupportStaffList = {
-						ids: [],
-						list: {}
-					};
-
-					if (action.payload.assignedSupportStaff) {
-						action.payload.assignedSupportStaff.forEach( function(supportStaff) {
-							assignedSupportStaffList.list[supportStaff.id] = supportStaff;
-							assignedSupportStaffList.ids.push(supportStaff.id);
-						});
-					}
-
-					return assignedSupportStaffList;
-				case UPDATE_TABLE_FILTER:
-					var query = action.payload.query;
-
-					// Apply search filters
-					if (query.length > 0) {
-						// Specify the properties that we are interested in searching
-						var searchProperties = ['firstName', 'lastName', 'fullName'];
-
-						_object_search_properties(query, assignedSupportStaffList, searchProperties);
-					} else {
-						assignedSupportStaffList.ids.forEach(function(supportStaffId) {
-							assignedSupportStaffList.list[supportStaffId].isFiltered = false;
-						});
-					}
-				default:
-					return assignedSupportStaffList;
-			}
-		},
 		_supportStaffListReducers: function (action, supportStaffList) {
 			var scope = this;
 
@@ -255,11 +235,34 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 						list: {}
 					};
 
+					// Support staff via roles
 					action.payload.supportStaffList.forEach( function(supportStaff) {
 						supportStaffList.list[supportStaff.id] = supportStaff;
 						supportStaffList.ids.push(supportStaff.id);
 					});
 
+					// Support staff via assignments (but not necessarily roles)
+					action.payload.assignedSupportStaff.forEach( function(supportStaff) {
+						// Only add new supportStaff references
+						if (supportStaffList.ids.indexOf(supportStaff.id) == -1) {
+							supportStaffList.list[supportStaff.id] = supportStaff;
+							supportStaffList.ids.push(supportStaff.id);
+						}
+					});
+
+					return supportStaffList;
+				case CALCULATE_SCHEDULE_CONFLICTS:
+					supportStaffList.ids.forEach(function(supportStaffId) {
+						var supportStaff = supportStaffList.list[supportStaffId];
+						supportStaff.sectionConflicts = action.payload.conflicts.bySupportStaffId[supportStaffId].sectionIds || [];
+						supportStaff.sectionGroupConflicts = action.payload.conflicts.bySupportStaffId[supportStaffId].sectionGroupIds || [];
+					}); 
+					return supportStaffList;
+				case CALCULATE_STAFF_ASSIGNMENT_OPTIONS:
+					supportStaffList.ids.forEach(function(supportStaffId) {
+						var supportStaff = supportStaffList.list[supportStaffId];
+						supportStaff.assignmentOptions = action.payload.staffAssignmentOptions[supportStaffId] || {};
+					});
 					return supportStaffList;
 				case UPDATE_TABLE_FILTER:
 					var query = action.payload.query;
@@ -318,6 +321,17 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 					return instructorPreferences;
 			}
 		},
+		_staffAssignmentOptionReducers: function(action, staffAssignmentOptions) {
+			switch (action.type) {
+				case INIT_STATE:
+					staffAssignmentOptions = {};
+					return staffAssignmentOptions;
+				case CALCULATE_STAFF_ASSIGNMENT_OPTIONS:
+					return action.payload.staffAssignmentOptions;
+				default:
+					return staffAssignmentOptions;
+			}
+		},
 		_supportStaffSupportCallResponseReducers: function (action, supportStaffSupportCallResponses) {
 			var scope = this;
 
@@ -325,12 +339,14 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 				case INIT_STATE:
 					supportStaffSupportCallResponses = {
 						ids: [],
-						list: {}
+						list: {},
+						bySupportStaffId: {}
 					};
 
 					action.payload.studentSupportCallResponses.forEach( function(supportCallResponse) {
 						supportStaffSupportCallResponses.list[supportCallResponse.id] = supportCallResponse;
 						supportStaffSupportCallResponses.ids.push(supportCallResponse.id);
+						supportStaffSupportCallResponses.bySupportStaffId[supportCallResponse.supportStaffId] = supportCallResponse;
 					});
 					return supportStaffSupportCallResponses;
 				default:
@@ -458,9 +474,9 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 			newState.schedule = scope._scheduleReducers(action, scope._state.schedule);
 			newState.supportStaffSupportCallResponses = scope._supportStaffSupportCallResponseReducers(action, scope._state.supportStaffSupportCallResponses);
 			newState.instructorSupportCallResponses = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponses);
-			newState.assignedSupportStaffList = scope._assignedSupportStaffListReducers(action, scope._state.assignedSupportStaffList);
 			newState.sections = scope._sectionReducers(action, scope._state.sections);
 			newState.activities = scope._activityReducers(action, scope._state.activities);
+			newState.staffAssignmentOptions = scope._staffAssignmentOptionReducers(action, scope._state.staffAssignmentOptions);
 
 			scope._state = newState;
 
@@ -469,6 +485,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 			newPageState = {};
 			newPageState.schedule = angular.copy(scope._state.schedule);
 			newPageState.ui = angular.copy(scope._state.ui);
+			newPageState.staffAssignmentOptions = angular.copy(scope._state.staffAssignmentOptions);
 			newPageState.supportAssignmentsUnique = supportSelectors.generateSupportAssignmentsUnique(
 																																			scope._state.supportAssignments,
 																																			scope._state.sectionGroups,
@@ -487,7 +504,6 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 																																			scope._state.sectionGroups,
 																																			scope._state.sections,
 																																			scope._state.supportStaffList,
-																																			scope._state.assignedSupportStaffList,
 																																			scope._state.supportStaffSupportCallResponses,
 																																			scope._state.supportStaffPreferences,
 																																			scope._state.supportAppointments,
@@ -499,7 +515,6 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 																																			scope._state.courses,
 																																			scope._state.sectionGroups,
 																																			scope._state.supportStaffList,
-																																			scope._state.assignedSupportStaffList,
 																																			scope._state.supportStaffSupportCallResponses,
 																																			scope._state.supportStaffPreferences,
 																																			scope._state.instructorPreferences,

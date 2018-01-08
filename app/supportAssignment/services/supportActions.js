@@ -45,8 +45,8 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				$rootScope.$emit('toast', { message: "Could not update instructor support call review.", type: "ERROR" });
 			});
 		},
-		assignStaffToSectionGroup: function (sectionGroup, supportStaffId, type) {
-			supportService.assignStaffToSectionGroup(sectionGroup, supportStaffId, type).then(function (supportAssignment) {
+		assignStaffToSectionGroup: function (sectionGroupId, supportStaffId, type) {
+			supportService.assignStaffToSectionGroup(sectionGroupId, supportStaffId, type).then(function (supportAssignment) {
 				$rootScope.$emit('toast', { message: "Assigned staff", type: "SUCCESS" });
 				supportReducer.reduce({
 					type: ASSIGN_STAFF_TO_SECTION_GROUP,
@@ -58,8 +58,8 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				$rootScope.$emit('toast', { message: "Could not assign staff.", type: "ERROR" });
 			});
 		},
-		assignStaffToSection: function (section, supportStaff, type) {
-			supportService.assignStaffToSection(section, supportStaff, type).then(function (supportAssignment) {
+		assignStaffToSection: function (sectionId, supportStaff, type) {
+			supportService.assignStaffToSection(sectionId, supportStaff, type).then(function (supportAssignment) {
 				$rootScope.$emit('toast', { message: "Assigned staff", type: "SUCCESS" });
 				supportReducer.reduce({
 					type: ASSIGN_STAFF_TO_SECTION,
@@ -178,6 +178,70 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 		performInitCalculations: function() {
 			this.calculateSectionGroupScheduling();
 			this.calculateSectionScheduling();
+			this.calculateScheduleConflicts();
+			this.calculateStaffAssignmentOptions();
+		},
+
+		calculateScheduleConflicts: function() {
+			var self = this;
+
+			var conflicts = {
+				bySupportStaffId: {},
+				bySectionId: [],
+				bySectionGroupId: [],
+			};
+
+			supportReducer._state.supportStaffList.ids.forEach(function(supportStaffId) {
+				var supportStaff = supportReducer._state.supportStaffList.list[supportStaffId];
+				var supportStaffResponse = supportReducer._state.supportStaffSupportCallResponses.bySupportStaffId[supportStaffId];
+
+				var supportConflicts = conflicts.bySupportStaffId[supportStaffId] = {
+					sectionIds: [],
+					sectionGroupIds: []
+				};
+
+				// If the support staff has no availability set, then there cannot be conflicts
+				if (!supportStaffResponse || !supportStaffResponse.availabilityBlob || supportStaffResponse.availabilityBlob.length == 0) {
+					return;
+				}
+
+				supportReducer._state.sections.ids.forEach(function(sectionId) {
+					var sectionConflicts = conflicts.bySectionId[sectionId] = [];
+
+					var section = supportReducer._state.sections.list[sectionId];
+
+					if (self.hasScheduleConflict(supportStaffResponse.availabilityBlob, section.scheduledBlob)) {
+						supportConflicts.sectionIds.push(section.id);
+						sectionConflicts.push(supportStaff.id);
+					}
+				});
+
+				supportReducer._state.sectionGroups.ids.forEach(function(sectionGroupId) {
+					var sectionGroupConflicts = conflicts.bySectionGroupId[sectionGroupId] = [];
+					var sectionGroup = supportReducer._state.sectionGroups.list[sectionGroupId];
+
+					if (self.hasScheduleConflict(supportStaffResponse.availabilityBlob, sectionGroup.scheduledBlob)) {
+						supportConflicts.sectionGroupIds.push(sectionGroup.id);
+						sectionGroupConflicts.push(supportStaff.id);
+					}
+				});
+			});
+
+			supportReducer.reduce({
+				type: CALCULATE_SCHEDULE_CONFLICTS,
+				payload: {
+					conflicts: conflicts
+				}
+			});
+		},
+		// Will return true if support staff is available for all scheduled activities
+		hasScheduleConflict: function(supportStaffBlob, scheduleBlob) {
+			for (var i = 0; i < supportStaffBlob.length; i++) {
+				if (supportStaffBlob[i] == "0" && scheduleBlob[i] == "0") {
+					return true;
+				}
+			}
+			return false;
 		},
 		// Calculate the activity blobs for every sectionGroup
 		calculateSectionGroupScheduling: function() {
@@ -300,6 +364,141 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 			}
 
 			return blobOne;
+		},
+		// Generate the preference options object for support staff assignment dropdown
+		calculateStaffAssignmentOptions: function() {
+			var self = this;
+			staffAssignmentOptions = {};
+
+			/* Example assignmentOption:
+			{
+				sectionId,
+				sectionGroupId,
+				description,
+				type,
+				hasSchedulingConflict
+			}
+			*/
+			supportReducer._state.supportStaffList.ids.forEach(function(supportStaffId) {
+				var supportStaff = supportReducer._state.supportStaffList.list[supportStaffId];
+				allocatedIds = {
+					ta: {
+						sectionIds: [],
+						sectionGroupIds: []
+					},
+					reader: {
+						sectionIds: [],
+						sectionGroupIds: []
+					}
+				};
+
+				var options = staffAssignmentOptions[supportStaffId] = {
+					ta: {
+						preferences: [],
+						instructorPreferences: [],
+						other: []
+					},
+					reader: {
+						preferences: [],
+						other: []
+					}
+				};
+
+				// Generate assignmentOptions for preferences
+				supportStaff.supportStaffPreferences.forEach(function(preference) {
+					var assignmentOption = self.generateAssignmentOption(supportStaff.id, null, preference.sectionGroupId, preference.type, preference.priority);
+
+					if (preference.type == "teachingAssistant") {
+						options.ta.preferences.push(assignmentOption);
+					} else {
+						options.reader.preferences.push(assignmentOption);
+					}
+
+					allocatedIds.ta.sectionGroupIds.push(preference.sectionGroupId);
+				});
+
+				// Generate assignmentOptions for instructorPreferences
+				supportReducer._state.instructorPreferences.ids.forEach(function(instructorPreferenceId) {
+					var preference = supportReducer._state.instructorPreferences.list[instructorPreferenceId];
+					// Ensure preference matches support staff
+					if (preference.supportStaffId != supportStaff.id) {return;}
+
+					var assignmentOption = self.generateAssignmentOption(supportStaff.id, null, preference.sectionGroupId, "teachingAssistant", preference.priority);
+
+					options.ta.instructorPreferences.push(assignmentOption);
+					allocatedIds.ta.sectionGroupIds.push(preference.sectionGroupId);
+				});
+
+				// Create assignmentOptions for any sectionGroups that were not already created from preferences
+				supportReducer._state.sectionGroups.ids.forEach(function(sectionGroupId) {
+					var sectionGroup = supportReducer._state.sectionGroups.list[sectionGroupId];
+
+					if (allocatedIds.ta.sectionGroupIds.indexOf(sectionGroup.id) == -1) {
+						var assignmentOption = self.generateAssignmentOption(supportStaff.id, null, sectionGroup.id, "teachingAssistant", null);
+						options.ta.other.push(assignmentOption);
+						allocatedIds.ta.sectionGroupIds.push(sectionGroup.id);
+					}
+					
+					if (allocatedIds.reader.sectionGroupIds.indexOf(sectionGroup.id) == -1) {
+						var assignmentOption = self.generateAssignmentOption(supportStaff.id, null, sectionGroup.id, "reader", null);
+						options.reader.other.push(assignmentOption);
+						allocatedIds.reader.sectionGroupIds.push(sectionGroup.id);
+					}
+
+					// Create assignmentOptions for any sections associated to that sectionGroup (assuming it is a series)
+					var sections = supportReducer._state.sections.bySectionGroupId[sectionGroupId];
+					if (sections && sections.length > 0) {
+						sections.forEach(function(sectionId) {
+							var section = supportReducer._state.sections.list[sectionId];
+
+							if (isNumber(section.sequenceNumber) == false) {
+								if (allocatedIds.ta.sectionIds.indexOf(section.id) == -1) {
+									var assignmentOption = self.generateAssignmentOption(supportStaff.id, section.id, null, "teachingAssistant", null);
+									options.ta.other.push(assignmentOption);
+									allocatedIds.ta.sectionIds.push(section.id);
+								}
+								
+								if (allocatedIds.reader.sectionIds.indexOf(section.id) == -1) {
+									var assignmentOption = self.generateAssignmentOption(supportStaff.id, section.id, null, "reader", null);
+									options.reader.other.push(assignmentOption);
+									allocatedIds.reader.sectionIds.push(section.id);
+								}
+							}
+						});
+					}
+				});
+			});
+
+			supportReducer.reduce({
+				type: CALCULATE_STAFF_ASSIGNMENT_OPTIONS,
+				payload: {
+					staffAssignmentOptions: staffAssignmentOptions
+				}
+			});
+		},
+		generateAssignmentOption: function(supportStaffId, sectionId, sectionGroupId, type, priority) {
+			if (sectionId) {
+				var section = supportReducer._state.sections.list[sectionId];
+				var sectionGroup = supportReducer._state.sectionGroups.list[section.sectionGroupId];
+				var course = supportReducer._state.courses.list[sectionGroup.courseId];
+				return {
+					sortKey: course.subjectCode + course.courseNumber + section.sequenceNumber,
+					type: type,
+					description: course.subjectCode + " " + course.courseNumber + " " + section.sequenceNumber + " " + course.title,
+					sectionId: sectionId,
+					hasSchedulingConflict: (section.supportStaffConflicts.indexOf(supportStaffId) > -1)
+				};
+			}
+
+			var sectionGroup = supportReducer._state.sectionGroups.list[sectionGroupId];
+			var course = supportReducer._state.courses.list[sectionGroup.courseId];
+			return {
+				sortKey: course.subjectCode + course.courseNumber + course.sequencePattern,
+				type: type,
+				description: course.subjectCode + " " + course.courseNumber + " " + course.sequencePattern + " " + course.title,
+				sectionGroupId: sectionGroupId,
+				hasSchedulingConflict: (sectionGroup.supportStaffConflicts.indexOf(supportStaffId) > -1)
+			};
 		}
 	};
 });
