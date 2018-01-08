@@ -3,81 +3,17 @@
 */
 supportAssignmentApp.service('supportSelectors', function () {
 	return {
-/*
-	Page State Schema:
-		userInterface
-			displayCoursePivot
-			displaySupportStaffPivot
-		schedule
-		sectionGroups
-			courseData
-			assignments
-				supportStaffData
-			aiAssignmentOptions
-				supportStaffPreferences
-					supportStaffData
-					preferenceData
-				instructorPreferences
-					supportStaffData
-					preferenceData
-				other
-					supportStaffData
-					preferenceData
-			readerAssignmentOptions
-				supportStaffPreferences
-				instructorPreferences
-				other
-			taAssignmentOptions
-				supportStaffPreferences
-				instructorPreferences
-				other
-		supportStaff (supportStaff)
-			supportCallResponse
-			supportAssignments (assignment)
-				courseData
-				sectionGroupData
-			supportStaffPreferences (preference)
-				courseData
-				sectionGroupData
-*/
-		// Creates structured json corresponding to a 'support staff' centric view of the data
-
 		generateSectionGroups: function (
 			supportAssignments,
 			courses,
 			sectionGroups,
-			supportStaffFromRoles,
-			assignedSupportStaffList,
+			supportStaffList,
 			supportStaffSupportCallResponses,
 			supportStaffPreferences,
 			instructorPreferences,
 			instructorSupportCallResponses,
 			sections) {
 			var self = this;
-
-			// Blend the two types of support staff together into a unique listing
-			var supportStaffList = {ids: [], list: {}};
-
-			assignedSupportStaffList.ids.forEach(function(supportStaffId) {
-				if (supportStaffList.ids.indexOf(supportStaffId) > -1) {
-					return;
-				}
-				var supportStaffDTO = assignedSupportStaffList.list[supportStaffId];
-				supportStaffDTO.hasAssignmentOrPreference = true;
-				supportStaffList.ids.push(supportStaffId);
-				supportStaffList.list[supportStaffId] = supportStaffDTO;
-			});
-
-			supportStaffFromRoles.ids.forEach(function(supportStaffId) {
-				if (supportStaffList.ids.indexOf(supportStaffId) > -1) {
-					return;
-				}
-
-				var supportStaffDTO = supportStaffFromRoles.list[supportStaffId];
-				supportStaffDTO.hasAssignmentOrPreference = false;
-				supportStaffList.ids.push(supportStaffId);
-				supportStaffList.list[supportStaffId] = supportStaffDTO;
-			});
 
 			// Build sectionGroup DTOs
 			var newSectionGroups = [];
@@ -266,8 +202,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 			courses,
 			sectionGroups,
 			sections,
-			supportStaffFromRoles,
-			assignedSupportStaffList,
+			supportStaffList,
 			supportStaffSupportCallResponses,
 			supportStaffPreferences,
 			supportAppointments,
@@ -275,10 +210,10 @@ supportAssignmentApp.service('supportSelectors', function () {
 			var self = this;
 			var newSupportStaffList = [];
 
-			var supportStaffList = this.combineSupportStaffTypes(supportStaffFromRoles, assignedSupportStaffList);
-
 			// Build the supportStaff view DTOs
-			supportStaffList.forEach( function(supportStaffDTO) {
+			supportStaffList.ids.forEach( function(supportStaffId) {
+				var supportStaffDTO = supportStaffList.list[supportStaffId];
+
 				supportStaffDTO.supportCallResponse = self.findSupportCallResponse(supportStaffSupportCallResponses, supportStaffDTO.id);
 				supportStaffDTO.supportAssignments = self.generateSupportAssignmentsForSupportStaff(supportStaffDTO.id, supportAssignments, sectionGroups, courses, sections);
 				supportStaffDTO.supportStaffPreferences = self.generateSupportStaffPreferences(supportStaffDTO.id, supportStaffPreferences, sectionGroups, courses);
@@ -366,33 +301,6 @@ supportAssignmentApp.service('supportSelectors', function () {
 
 			return supportCallResponse;
 		},
-		// Blend the two types of support staff together into a unique listing
-		combineSupportStaffTypes: function(supportStaffFromRoles, supportStaffFromAssignments) {
-			var processedSupportStaffIds = [];
-			var supportStaffList = [];
-			supportStaffFromAssignments.ids.forEach(function(supportStaffId) {
-				if (processedSupportStaffIds.indexOf(supportStaffId) > -1) {
-					return;
-				}
-				var supportStaffDTO = supportStaffFromAssignments.list[supportStaffId];
-				supportStaffDTO.hasAssignment = true;
-				processedSupportStaffIds.push(supportStaffId);
-				supportStaffList.push(supportStaffDTO);
-			});
-
-			supportStaffFromRoles.ids.forEach(function(supportStaffId) {
-				if (processedSupportStaffIds.indexOf(supportStaffId) > -1) {
-					return;
-				}
-
-				var supportStaffDTO = supportStaffFromRoles.list[supportStaffId];
-				supportStaffDTO.hasAssignment = false;
-				processedSupportStaffIds.push(supportStaffId);
-				supportStaffList.push(supportStaffDTO);
-			});
-
-			return supportStaffList;
-		},
 		generateSupportAssignments: function(supportAssignments, sectionGroups, courses) {
 			var self = this;
 			var newSupportAssignments = [];
@@ -440,7 +348,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 
 			return entity;
 		},
-		// Add the connected courseId
+		// Expects a section or sectionGroup, will add the relevant courseId to it
 		getCourseId: function(entity, sectionGroups, sections) {
 			var derivedSectionGroupId = null;
 
