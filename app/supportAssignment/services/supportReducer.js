@@ -133,7 +133,15 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 						supportAppointments.ids.push(supportAppointment.id);
 						supportAppointments.list[supportAppointment.id] = supportAppointment;
 					});
+					return supportAppointments;
+				case UPDATE_SUPPORT_APPOINTMENT:
+					var supportAppointment = action.payload.supportAppointment;
+					supportAppointment.percentage = isNumber(supportAppointment.percentage) ? supportAppointment.percentage : null;
 
+					if (supportAppointments.ids.indexOf(supportAppointment.id) == -1) {
+						supportAppointments.ids.push(supportAppointment.id);
+					}
+					supportAppointments.list[supportAppointment.id] = supportAppointment;
 					return supportAppointments;
 				default:
 					return supportAppointments;
@@ -404,6 +412,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 							data: null
 						},
 						shortTermCode: action.shortTermCode,
+						termCode: action.year + action.shortTermCode,
 						review: {
 							instructor: {
 								isOpen: (action.payload.schedule.instructorSupportCallReviewOpen[parseInt(action.shortTermCode) - 1] == "1"),

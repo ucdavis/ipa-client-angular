@@ -73,9 +73,9 @@ supportAssignmentApp.factory("supportService", this.supportService = function($h
 
 			return deferred.promise;
 		},
-		updateSupportAppointment: function (supportAppointment, scheduleId) {
+		updateSupportAppointment: function (supportAppointment) {
 			var deferred = $q.defer();
-			$http.put(serverRoot + "/api/instructionalSupportView/schedules/" + scheduleId, supportAppointment, { withCredentials: true })
+			$http.put(serverRoot + "/api/instructionalSupportView/schedules/" + supportAppointment.scheduleId, supportAppointment, { withCredentials: true })
 				.success(function (payload) {
 					deferred.resolve(payload);
 				})

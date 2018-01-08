@@ -9,6 +9,13 @@ supportAssignmentApp.directive("appointmentInput", this.appointmentInput = funct
 		},
 		link: function (scope, element, attrs) {
 			scope.updateSupportAppointment = function () {
+				var type = scope.viewType == "Readers" ? "reader" : "teachingAssistant";
+
+				var appointment = scope.supportStaff.appointment;
+
+				appointment.type = type;
+				appointment.supportStaffId = scope.supportStaff.id;
+
 				supportActions.updateSupportAppointment(scope.supportStaff.appointment);
 			};
 		}
