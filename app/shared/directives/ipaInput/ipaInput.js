@@ -5,7 +5,8 @@ sharedApp.directive("ipaInput", this.ipaInput = function () {
 		replace: true,
 		scope: {
 			onUpdate: '&?',
-			value: '='
+			value: '=',
+			readOnly: '=?'
 		},
 		link: function(scope, element, attrs) {
 			element.unbind("keydown keyup");
