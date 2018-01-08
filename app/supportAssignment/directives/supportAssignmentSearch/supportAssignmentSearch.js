@@ -5,7 +5,11 @@ supportAssignmentApp.directive("supportAssignmentSearch", this.supportAssignment
 		replace: true,
 		scope: {},
 		link: function (scope, element, attrs) {
-			// intentionally empty
+			scope.searchQuery = "";
+
+			scope.filterTable = function() {
+				supportActions.updateTableFilter(scope.searchQuery);
+			};
 		}
 	};
 });

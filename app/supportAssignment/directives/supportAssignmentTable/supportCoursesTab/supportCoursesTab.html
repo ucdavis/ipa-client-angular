@@ -13,7 +13,8 @@
 		</div>
 	</div>
 
-	<div ng-repeat="sectionGroup in state.sectionGroups">
+	<div ng-repeat="sectionGroup in state.sectionGroups"
+	ng-hide="sectionGroup.isFiltered">
 		<div class="support-courses-tab__row">
 			<div class="support-assignments__header-cell">
 				<course-header view-type="state.ui.viewType" section-group="sectionGroup" read-only="state.ui.readOnlyMode"></course-header>

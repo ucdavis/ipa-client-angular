@@ -14,7 +14,9 @@
 			</div>
 		</div>
 
-		<div class="support-staff-tab__row-container" ng-repeat="supportStaff in state.supportStaffList">
+		<div class="support-staff-tab__row-container"
+		ng-repeat="supportStaff in state.supportStaffList"
+		ng-hide="supportStaff.isFiltered">
 			<staff-row state="state" support-staff="supportStaff"></staff-row>
 		</div>
 
