@@ -12,12 +12,12 @@
 		</div>
 
 		<div class="assign-support-staff__dropdown">
-			<div ng-show="assignmentOptions.instructorPreferences && assignmentOptions.instructorPreferences.length > 0"
+			<div ng-show="assignmentOptions.instructorPreferences && assignmentOptions.instructorPreferences.length > 0 && viewType == 'Teaching Assistants'"
 			class="assign-support-staff__dropdown-group-name">
 				Instructor Preferences
 			</div>
 			<div class="assign-support-staff__dropdown-item"
-			ng-show="assignmentOptions.instructorPreferences && assignmentOptions.instructorPreferences.length > 0"
+			ng-show="assignmentOptions.instructorPreferences && assignmentOptions.instructorPreferences.length > 0  && viewType == 'Teaching Assistants'"
 			ng-repeat="preference in assignmentOptions.instructorPreferences"
 			ng-click="triggerSelection(preference)">
 				<div class="assign-support-staff__priority-icon">
