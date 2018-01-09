@@ -2,7 +2,7 @@
 class="ipa-button"
 uib-tooltip="{{tooltipMessage}}"
 tooltip-placement="bottom"
-ng-class="{buttonClass, 'ipa-button--disabled': isDisabled , 'ipa-button--wide': isWide, 'ipa-button--dark-skin': skin == 'dark', 'ipa-button--light-skin': skin == 'light' || !skin }">
+ng-class="{ buttonClass, 'ipa-button--disabled': isDisabled , 'ipa-button--wide': isWide, 'ipa-button--dark-skin': skin == 'dark', 'ipa-button--light-skin': skin == 'light' || !skin }">
 	<div class="ipa-button__container" ng-class="{'ipa-button__container--wide': isWide }" ng-show="!(isDisabled)">
 		<!-- with confirmation -->
 		<div
@@ -42,6 +42,7 @@ ng-class="{buttonClass, 'ipa-button--disabled': isDisabled , 'ipa-button--wide':
 			<div class="ipa-button__text" ng-show="text">
 				{{ text }}
 			</div>
+			<div class="ipa-button__spacer" ng-show="text.length > 0 && iconClass.length > 0"></div>
 			<div ng-class="iconClass">
 			</div>
 		</div>
