@@ -8,8 +8,11 @@
 }
 
 .ipa-header__workgroup-button {
-	border: 1px solid #333;
 	background-color: white;
+}
+
+.header--work-group .ipa-header__workgroup-button {
+	border: 1px solid #777;
 }
 
 /* Violates BEM styles to override bootstrap and neon */
@@ -19,7 +22,7 @@
 .ipa-header .btn-default.ipa-header__year:active,
 .ipa-header .btn-default.ipa-header__year.active,
 .ipa-header .open > .dropdown-toggle.btn-default.ipa-header__year {
-	border: 1px solid #333;
+	border: 1px solid #777;
 }
 
 /* Violates BEM styles to override bootstrap and neon */
@@ -27,5 +30,5 @@
 .btn-default.ipa-header__year:hover,
 .btn-default.ipa-header__year:focus,
 .btn-default.ipa-header__workgroup-button:focus {
-	border: 1px solid #333;
+	border: 1px solid #777;
 }
