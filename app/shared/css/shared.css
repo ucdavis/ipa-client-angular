@@ -197,32 +197,23 @@ table.availability-grid tr td {
 	flex-direction: row;
 }
 
-.ipa-header .header--year-switch {
-	display: flex;
-	align-items: center;
-	margin: 0px 20px 0px 0px;
-	background-color: white;
-	border: 1px solid #D6D6D6;
-	border-radius: 4px;
-}
-
 .ipa-header .year-display {
 	padding-left: 10px;
 	padding-right: 10px;
 }
 
-.ipa-header .header--year-switch a {
+.ipa-header .ipa-header__year a {
 	color: black !important;
 }
 
-.ipa-header .header--year-switch li a {
+.ipa-header .ipa-header__year li a {
     background-color: transparent;
     color: #aaa;
     border: none;
     padding: 5px;
 }
 
-.ipa-header .header--year-switch li a:hover {
+.ipa-header .ipa-header__year li a:hover {
 	background-color: white !important;
 	cursor: pointer;
 }
@@ -255,12 +246,6 @@ table.availability-grid tr td {
 
 .ipa-header .header--work-group .dropdown-toggle span{
 	margin-left: 5px;
-}
-
-
-.ipa-header button {
-	background-color: white;
-	border: 1px solid #D6D6D6;
 }
 
 .ipa-header .btn-group button{

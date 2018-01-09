@@ -23,7 +23,7 @@
 		<div class="left-column">
 			<div class="header--swtich-container">
 				<div class="global-ui">
-					<ul class="pager header--year-switch">
+					<ul class="ipa-header__year pager">
 						<li class="previous" ng-click="offsetYearInUrl(-1)"><a><i class="entypo-left-open-mini clickable hoverable"></i></a></li>
 						<li class="year-display">
 							<a style="cursor: default;">
@@ -34,12 +34,12 @@
 					</ul>
 					<div class="header--work-group btn-group" role="group" aria-label="...">
 						<button ng-if="userHasRolesForWorkgroup(['academicPlanner','reviewer'], sharedState.workgroup)"
-										ng-click="loadWorkgroupPage(sharedState.workgroup.id)" type="button" class="btn btn-default">
+										ng-click="loadWorkgroupPage(sharedState.workgroup.id)" type="button" class="ipa-header__workgroup-button btn btn-default">
 										<a style="color: #303641">
 											<i class="entypo-cog"></i>
 										</a>
 						</button>
-						<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<button class="ipa-header__workgroup-button btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 							<span>
 								{{ sharedState.workgroup.name }}
 								<span class="caret"></span>
