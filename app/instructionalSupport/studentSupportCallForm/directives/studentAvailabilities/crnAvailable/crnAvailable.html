@@ -11,18 +11,18 @@
 			</div>
 
 			<div class="crn-available__crn-ui">
-				<div class="crn-available__input-container">
-					<ipa-input
-					value="state.ui.crnSearch.crn"
-					place-holder="'Enter a CRN'">
-					</ipa-input>
-				</div>
-
 				<div class="crn-available__undo-button" ng-show="state.ui.crnSearch.blob">
 					<ipa-button
 					icon-class="'entypo-ccw'"
 					on-click="clearCrnSearch()">
 					</ipa-button>
+				</div>
+
+				<div class="crn-available__input-container">
+					<ipa-input
+					value="state.ui.crnSearch.crn"
+					place-holder="'Enter a CRN'">
+					</ipa-input>
 				</div>
 
 				<div class="crn-available__add-crn">

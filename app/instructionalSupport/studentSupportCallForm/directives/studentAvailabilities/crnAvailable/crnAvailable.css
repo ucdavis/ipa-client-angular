@@ -18,6 +18,8 @@
 	align-items: center;
 	justify-content: flex-end;
 	min-height: 23px;
+	font-weight: bold;
+	color: #939393;
 }
 
 .crn-available__input-container {
@@ -33,7 +35,7 @@
 }
 
 .crn-available__undo-button {
-	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .crn-available__crn-ui {
