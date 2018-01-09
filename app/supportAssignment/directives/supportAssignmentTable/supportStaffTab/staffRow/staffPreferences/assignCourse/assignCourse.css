@@ -72,6 +72,8 @@
 	color: #8d8b8b;
 	padding-left: 15px;
 	padding-top: 15px;
+	border-bottom: 1px solid #eaecef;
+	padding-bottom: 5px;
 }
 
 .assign-course__scheduling-conflict-icon {
