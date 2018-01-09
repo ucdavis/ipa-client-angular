@@ -52,6 +52,10 @@ instructionalSupportApp.service('supportStaffFormSelectors', function () {
 				if (sectionGroup.teachingAssistantAppointments > 0) {
 					potentialPreferences.teachingAssistants.push(preference);
 				}
+
+				if (sectionGroup.showPlaceholderAI) {
+					potentialPreferences.associateInstructors.push(preference);
+				}
 			});
 
 			return potentialPreferences;
