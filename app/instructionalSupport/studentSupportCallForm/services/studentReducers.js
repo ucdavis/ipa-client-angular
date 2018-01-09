@@ -120,9 +120,12 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 					ui = {
 						isPreferenceCommentModalOpen: false,
 						isFormLocked: false,
-						searchCrn: null,
-						crnSearchFeedback: null,
-						crnSearchAvailability: null,
+						crnSearch: {
+							crn: null,
+							feedback: null,
+							blob: null,
+							displayTimes: null
+						},
 						review: {
 							isFormValid: true,
 							validationErrorMessage: null,
@@ -154,9 +157,27 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 						}
 					}
 					return ui;
+				case CLEAR_CRN_SEARCH:
+					ui.crnSearch.crn = null;
+					ui.crnSearch.feedback = null;
+					ui.crnSearch.blob = null;
+					ui.crnSearch.displayTimes = null;
+					return ui;
 				case CALCULATE_FORM_VALID:
 					ui.review.isFormValid = action.payload.isFormValid;
 					ui.review.validationErrorMessage = action.payload.validationErrorMessage;
+					return ui;
+				case BEGIN_FETCH_ACTIVITIES_BY_CRN:
+					ui.crnSearch.crn = action.payload.crn;
+					ui.crnSearch.feedback = null;
+					ui.crnSearch.blob = null;
+					ui.crnSearch.displayTimes = null;
+					return ui;
+				case CALCULATE_TIMESLOTS_FOR_CRN:
+					ui.crnSearch.crn = action.payload.crn;
+					ui.crnSearch.feedback = action.payload.crnSearchFeedback;
+					ui.crnSearch.blob = action.payload.crnSearchBlob;
+					ui.crnSearch.displayTimes = action.payload.crnSearchTimes;
 					return ui;
 				case OPEN_PREFERENCE_COMMENT_MODAL:
 					ui.isPreferenceCommentModalOpen = true;

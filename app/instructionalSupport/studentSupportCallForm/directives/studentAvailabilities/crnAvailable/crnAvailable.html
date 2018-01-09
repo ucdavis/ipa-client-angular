@@ -1,25 +1,48 @@
 <div class="crn-available">
 	<div class="crn-available__header">
 		<div class="crn-available__header-ui">
-			<div class="crn-available__courses">
-				<div ng-repeat="supportCallCrn in supportCallCrns">
-					<ipa-pill
-					text="supportCallCrn.description">
-					</ipa-pill>
-				</div>
-			</div>
-			<div class="crn-available__input-container">
-				<ipa-input value="state.ui.searchCrn"></ipa-input>
-			</div>
-			<div class="crn-available__add-crn">
+			<div class="crn-available__reset-availability">
 				<ipa-button
-				text="'Add CRN'"
-				on-click="calculateTimesForCrn(state.ui.searchCrn)">
-				<ipa-button>
+				is-disabled="!(state.supportCallResponse.availabilityBlob) || state.supportCallResponse.availabilityBlob.indexOf('0') == -1"
+				icon-class="'glyphicon glyphicon-trash'"
+				text="'Reset Availability'"
+				on-click="clearAvailability()">
+				</ipa-button>
+			</div>
+
+			<div class="crn-available__crn-ui">
+				<div class="crn-available__input-container">
+					<ipa-input
+					value="state.ui.crnSearch.crn"
+					place-holder="'Enter a CRN'">
+					</ipa-input>
+				</div>
+
+				<div class="crn-available__undo-button" ng-show="state.ui.crnSearch.blob">
+					<ipa-button
+					icon-class="'entypo-ccw'"
+					on-click="clearCrnSearch()">
+					</ipa-button>
+				</div>
+
+				<div class="crn-available__add-crn">
+					<ipa-button
+					ng-hide="state.ui.crnSearch.blob"
+					text="'Find CRN'"
+					is-disabled="!(state.ui.crnSearch.crn)"
+					on-click="calculateTimesForCrn(state.ui.crnSearch.crn)">
+					</ipa-button>
+
+					<ipa-button
+					ng-show="state.ui.crnSearch.blob.length > 0"
+					text="'Apply to availability'"
+					on-click="updateAvailability()">
+					<ipa-button>
+				</div>
 			</div>
 		</div>
 		<div class="crn-available__feedback">
-			{{ state.ui.crnSearchFeedback }}
+			{{ state.ui.crnSearch.feedback }}
 		</div>
 	</div>
 	<div class="crn-available__grid-container">
