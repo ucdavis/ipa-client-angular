@@ -264,7 +264,7 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 			var crnSearchTimes = "";
 
 			activities.forEach(function(activity) {
-				crnSearchFeedback = activity.ssbsect_subj_code + " " + activity.ssbsect_crse_numb + " " + activity.ssbsect_seq_numb + " " + activity.scbcrse_title;
+				crnSearchFeedback = "Course found: " + activity.ssbsect_subj_code + " " + activity.ssbsect_crse_numb + " " + activity.ssbsect_seq_numb + " " + activity.scbcrse_title;
 				var activityTimes = self.calculateTimes(activity);
 				crnSearchTimes += activityTimes.description + " ";
 				crnSearchBlob = self.combineBlobs(crnSearchBlob, activityTimes.blob);
