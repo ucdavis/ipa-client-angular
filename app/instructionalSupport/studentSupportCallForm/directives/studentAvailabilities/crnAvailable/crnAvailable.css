@@ -8,10 +8,8 @@
 }
 
 .crn-available__header-ui {
-	flex: 0 0 50%;
 	display: flex;
-	align-items: center;
-	justify-content: flex-end;
+	justify-content: space-between;
 }
 
 .crn-available__feedback {
@@ -19,7 +17,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
-	min-height: 17px;
+	min-height: 23px;
 }
 
 .crn-available__input-container {
@@ -32,4 +30,15 @@
 
 .crn-available__courses {
 	flex: 0 0 auto;
+}
+
+.crn-available__undo-button {
+	margin-left: 10px;
+}
+
+.crn-available__crn-ui {
+	flex: 0 0 50%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
 }

@@ -56,6 +56,28 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 				$rootScope.$emit('toast', { message: "Could not update qualifications.", type: "ERROR" });
 			});
 		},
+		applyCrnToAvailability: function() {
+			var self = this;
+
+			var crnBlob = studentReducers._state.ui.crnSearch.blob;
+			var supportCallResponse = studentReducers._state.supportCallResponse;
+			supportCallResponse.availabilityBlob = supportCallResponse.availabilityBlob ? self.combineBlobs(supportCallResponse.availabilityBlob, crnBlob) : crnBlob;
+
+			self.updateAvailability(supportCallResponse);
+			self.clearCrnSearch();
+		},
+		clearCrnSearch: function() {
+			studentReducers.reduce({
+				type: CLEAR_CRN_SEARCH,
+				payload: {}
+			});
+		},
+		clearAvailability: function() {
+			var self = this;
+			var supportCallResponse = studentReducers._state.supportCallResponse;
+			supportCallResponse.availabilityBlob = null;
+			self.updateAvailability(supportCallResponse);
+		},
 		updateAvailability: function(supportCallResponse) {
 			studentService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Updated availability.", type: "SUCCESS" });
@@ -204,13 +226,17 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 			var self = this;
 
 			studentReducers.reduce({
-				type: BEGIN_FETCH_ACTIVITIES_BY_CRN
+				type: BEGIN_FETCH_ACTIVITIES_BY_CRN,
+				payload: {
+					crn: crn
+				}
 			});
 
 			studentService.getDwActivitiesByCrn(crn, studentReducers._state.misc.termCode).then(function (payload) {
 				studentReducers.reduce({
 					type: COMPLETE_FETCH_ACTIVITIES_BY_CRN
 				});
+
 				self.generateTimesForCrn(payload, crn);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not fetch activities by crn.", type: "ERROR" });
@@ -218,31 +244,40 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 		},
 		generateTimesForCrn: function(activities, crn) {
 			var self = this;
-			if (activities.length) {
+
+			if (!activities || activities.length == 0) {
 				studentReducers.reduce({
 					type: CALCULATE_TIMESLOTS_FOR_CRN,
-					crn: crn,
-					crnSearchFeedback: "No course found",
-					scheduledTimes: []
+					payload: {
+						crn: crn,
+						crnSearchFeedback: "No course found",
+						crnSearchTimes: null,
+						crnSearchBlob: null
+					}
 				});
 
 				return;
 			}
 
-			var availabilityBlob = "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
+			var crnSearchBlob = "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
 			var crnSearchFeedback = "";
+			var crnSearchTimes = "";
 
 			activities.forEach(function(activity) {
+				crnSearchFeedback = activity.ssbsect_subj_code + " " + activity.ssbsect_crse_numb + " " + activity.ssbsect_seq_numb + " " + activity.scbcrse_title;
 				var activityTimes = self.calculateTimes(activity);
-				crnSearchFeedback += activityTimes.description + " ";
-				availabilityBlob = combineBlobs(availabilityBlob, activityTimes.blob);
+				crnSearchTimes += activityTimes.description + " ";
+				crnSearchBlob = self.combineBlobs(crnSearchBlob, activityTimes.blob);
 			});
 
 			studentReducers.reduce({
 				type: CALCULATE_TIMESLOTS_FOR_CRN,
-				crn: crn,
-				crnSearchFeedback: crnSearchFeedback,
-				availabilityBlob: availabilityBlob
+				payload: {
+					crn: crn,
+					crnSearchFeedback: crnSearchFeedback,
+					crnSearchBlob: crnSearchBlob,
+					crnSearchTimes: crnSearchTimes
+				}
 			});
 		},
 		calculateTimes: function(activity) {
@@ -251,10 +286,21 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 				description: ""
 			};
 
-			var startHour = activity.ssrmeet_begin_time.substring(0,2);
+			if (!activity.ssrmeet_begin_time || !activity.ssrmeet_end_time) {
+				return activityTimes;
+			}
+
+			var startHour = activity.ssrmeet_begin_time.substring(0, 2);
 			var startHourIndex = startHour - 7; // 7am should correspond to 0 index.
-			var endHour = activity.ssrmeet_end_time.substring(0,2);
+			var endHour = activity.ssrmeet_end_time.substring(0, 2);
 			var endHourIndex = endHour - 7; // 7am should correspond to 0 index.
+
+			// If end minutes is zero, do not block out that hour. Example 0810-0900 should only block out the 8am-9am block
+			var endMinute = activity.ssrmeet_end_time.substring(2, 4);
+
+			if (endMinute == "00") {
+				endHourIndex--;
+			}
 
 			if (activity.ssrmeet_mon_day) {
 				activityTimes.description += "M";
@@ -306,14 +352,14 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 			return activityTimes;
 		},
 		setCharAt: function(str, index, chr) {
-			if (index > str.length-1) { return str;}
+			if (index > str.length - 1) { return str; }
 
-			return str.substr(0,index) + chr + str.substr(index + 1);
+			return str.substr(0, index) + chr + str.substr(index + 1);
 		},
 		combineBlobs: function (blobOne, blobTwo) {
-			for( var i = 0; i < blobTwo.length; i+2) {
-				if (blobTwo[i] == "0") {
-					blobOne = setCharAt(str, i, "0");
+			for( var i = 0; i < blobTwo.length; i = i + 2) {
+				if (blobTwo[i] == "0" || blobOne[i] == "0") {
+					blobOne = setCharAt(blobOne, i, "0");
 				}
 			}
 

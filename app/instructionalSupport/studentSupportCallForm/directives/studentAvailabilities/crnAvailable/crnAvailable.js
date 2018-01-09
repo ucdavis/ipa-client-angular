@@ -10,7 +10,18 @@ instructionalSupportApp.directive("crnAvailable", this.crnAvailable = function (
 			scope.calculateTimesForCrn = function(crn) {
 				studentActions.fetchTimesByCrn(crn);
 			};
-			// Intentionally empty
+
+			scope.updateAvailability = function() {
+				studentActions.applyCrnToAvailability();
+			};
+
+			scope.clearCrnSearch = function() {
+				studentActions.clearCrnSearch();
+			};
+
+			scope.clearAvailability = function() {
+				studentActions.clearAvailability();
+			};
 		}
 	};
 });
