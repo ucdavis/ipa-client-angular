@@ -136,7 +136,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 					return supportAppointments;
 				case UPDATE_SUPPORT_APPOINTMENT:
 					var supportAppointment = action.payload.supportAppointment;
-					supportAppointment.percentage = isNumber(supportAppointment.percentage) ? supportAppointment.percentage : null;
+					supportAppointment.percentage = parseFloat(supportAppointment.percentage);
 
 					if (supportAppointments.ids.indexOf(supportAppointment.id) == -1) {
 						supportAppointments.ids.push(supportAppointment.id);
@@ -403,6 +403,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 
 			switch (action.type) {
 				case INIT_STATE:
+
 					ui = {
 						readOnlyMode: false,
 						tabPivot: "By Course",
@@ -413,7 +414,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 							data: null
 						},
 						shortTermCode: action.shortTermCode,
-						termCode: action.year + action.shortTermCode,
+						termCode: parseInt(action.shortTermCode) > 4 ? action.year + action.shortTermCode : (parseInt(action.year) + 1) + action.shortTermCode,
 						review: {
 							instructor: {
 								isOpen: (action.payload.schedule.instructorSupportCallReviewOpen[parseInt(action.shortTermCode) - 1] == "1"),
