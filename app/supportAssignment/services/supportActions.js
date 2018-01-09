@@ -120,7 +120,7 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				supportReducer.reduce({
 					type: UPDATE_SUPPORT_APPOINTMENT,
 					payload: {
-						supportAppointment: supportAppointment
+						supportAppointment: payload
 					}
 				});
 			}, function (err) {
