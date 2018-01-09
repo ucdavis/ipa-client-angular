@@ -1,0 +1,19 @@
+/* Violates BEM styles to override bootstrap and neon */
+.ipa-term-selector-dropdown__button,
+.btn.btn-default.ipa-term-selector-dropdown__button,
+.ipa-term-selector-dropdown .open > .dropdown-toggle.btn-default.ipa-term-selector-dropdown__button {
+	border: 1px solid #333;
+}
+
+/* Violates BEM styles to override bootstrap and neon */
+.ipa-term-selector-dropdown .btn-default.ipa-term-selector-dropdown__button:active,
+.btn.btn-default.ipa-term-selector-dropdown__button:focus,
+.ipa-term-selector-dropdown .btn-default.ipa-term-selector-dropdown__button.focus,
+.ipa-term-selector-dropdown .open > .dropdown-toggle.btn-default.ipa-term-selector-dropdown__button:focus {
+	border: 1px solid #333;
+}
+
+/* Violates BEM styles to override bootstrap and neon */
+.btn.btn-default.ipa-term-selector-dropdown__button:hover {
+	border: 1px solid #333;
+}

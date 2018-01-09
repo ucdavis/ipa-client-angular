@@ -1,0 +1,31 @@
+.ipa-header__year {
+	border: 1px solid #333;
+	display: flex;
+	align-items: center;
+	margin: 0px 20px 0px 0px;
+	background-color: white;
+	border-radius: 4px;
+}
+
+.ipa-header__workgroup-button {
+	border: 1px solid #333;
+	background-color: white;
+}
+
+/* Violates BEM styles to override bootstrap and neon */
+.ipa-header .btn-default.ipa-header__workgroup-button:active,
+.ipa-header .btn-default.ipa-header__workgroup-button.active,
+.ipa-header .open > .dropdown-toggle.btn-default.ipa-header__workgroup-button,
+.ipa-header .btn-default.ipa-header__year:active,
+.ipa-header .btn-default.ipa-header__year.active,
+.ipa-header .open > .dropdown-toggle.btn-default.ipa-header__year {
+	border: 1px solid #333;
+}
+
+/* Violates BEM styles to override bootstrap and neon */
+.btn.btn-default.ipa-header__workgroup-button:hover,
+.btn-default.ipa-header__year:hover,
+.btn-default.ipa-header__year:focus,
+.btn-default.ipa-header__workgroup-button:focus {
+	border: 1px solid #333;
+}
