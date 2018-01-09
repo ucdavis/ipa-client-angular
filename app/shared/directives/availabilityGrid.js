@@ -36,8 +36,12 @@ sharedApp.directive("availabilityGrid", this.availabilityGrid = function($timeou
 
 			// Translate blob into availability array
 			scope.$watch('blob', function(blob) {
-				if (typeof blob === 'undefined') { return; }
-				var blobArray = blob.split(',');
+				var blobArray = Array.apply(null, {length: (scope.days.length * scope.hours.length)}).map(function(){return 1;});
+
+				if (blob && blob.length > 0) {
+					blobArray = blob.split(',');
+				}
+
 				scope.buildAvailabilityObject(blobArray);
 			});
 
