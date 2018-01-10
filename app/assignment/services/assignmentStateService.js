@@ -345,6 +345,29 @@ assignmentApp.service('assignmentStateService', function (
 					}
 
 					return instructors;
+				case ASSIGN_ASSOCIATE_INSTRUCTOR:
+					var instructor = action.payload.instructor;
+					var teachingAssignment = action.payload.teachingAssignment;
+
+					if (instructors.ids.indexOf(instructor.id) == -1) {
+						instructor.teachingCallResponses = [];
+						instructor.teachingAssignmentTermCodeIds = {};
+
+						// Scaffold all teachingAssignment termCodeId arrays
+						var allTerms = ['01', '02', '03', '04', '06', '07', '08', '09', '10'];
+						allTerms.forEach(function (slotTerm) {
+							var generatedTermCode = generateTermCode(action.payload.year, slotTerm);
+							instructor.teachingAssignmentTermCodeIds[generatedTermCode] = [];
+						});
+
+						instructor.isFiltered = false;
+
+						instructors.ids.push(instructor.id);
+						instructors.list[instructor.id] = instructor;
+					}
+
+
+					return instructors;
 				case ADD_SCHEDULE_INSTRUCTOR_NOTE:
 					scheduleInstructorNote = action.payload.scheduleInstructorNote;
 					for (i = 0; i < instructors.ids.length; i++) {
@@ -651,6 +674,7 @@ assignmentApp.service('assignmentStateService', function (
 					userInterface.federationInstructorIds = action.payload.federationInstructorIds;
 					userInterface.senateInstructorIds = action.payload.senateInstructorIds;
 					userInterface.scheduleId = action.payload.scheduleId;
+					userInterface.year = action.year;
 
 					userInterface.showInstructors = (action.tab == "instructors");
 					userInterface.showCourses = (action.tab != "instructors");
