@@ -1,12 +1,12 @@
 /**
  * @ngdoc function
- * @name ipaClientAngularApp.controller:AssignmentCtrl
+ * @name ipaClientAngularApp.controller:StudentSupportCallFormCtrl
  * @description
- * # AssignmentCtrl
+ * # StudentSupportCallFormCtrl
  * Controller of the ipaClientAngularApp
  */
-instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'studentActions',
-this.StudentSupportCallFormCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, studentActions) {
+instructionalSupportApp.controller('StudentSupportCallFormCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'studentActions', 'termService',
+this.StudentSupportCallFormCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, studentActions, termService) {
 	$window.document.title = "Instructional Support";
 	$scope.workgroupId = $routeParams.workgroupId;
 	$scope.year = $routeParams.year;
@@ -17,7 +17,6 @@ this.StudentSupportCallFormCtrl = function ($scope, $rootScope, $window, $locati
 
 	$rootScope.$on('studentStateChanged', function (event, data) {
 		$scope.view.state = data;
-		console.log(data);
 	});
 
 	$scope.updatePreferencesOrder = function(preferenceIds) {
@@ -29,17 +28,8 @@ this.StudentSupportCallFormCtrl = function ($scope, $rootScope, $window, $locati
 		$window.location.href = "/summary/" + $scope.workgroupId + "/" + $scope.year + "?mode=instructionalSupport";
 	};
 
-	$scope.termShortCodeToTermCode = function(termShortCode) {
-		// Already a termCode
-		if (termShortCode.length == 6) {
-			return termShortCode;
-		}
-		var year = $scope.year;
-
-		if (["01", "02", "03"].indexOf(termShortCode) >= 0) { year++; }
-		var termCode = year + termShortCode;
-
-		return termCode;
+	$scope.termShortCodeToTermCode = function(term) {
+		return termService.termToTermCode(term, $scope.year);
 	};
 
 	$scope.updatePreferencesOrder = function(preferenceIds, listIndentifier) {

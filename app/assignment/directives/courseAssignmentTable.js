@@ -115,8 +115,8 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 											courseHtml += "<div class=\"alert alert-info tile-assignment\">";
 											courseHtml += "AI Placeholder";
 
-											var popoverTemplate = "Are you sure you want to remove AI Placeholder? <br /><br />" +
-												"<div class='text-center'><button class='btn btn-red' data-event-type='deletePlaceholderAI' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
+											var popoverTemplate = "Are you sure you want to remove the AI Placeholder? <br /><br />" +
+												"<div class='text-center'><button class='btn btn-red' data-event-type='deletePlaceholderAI' data-section-group-id='" + sectionGroup.id + "'>Remove</button>" +
 												"<button class='btn btn-white' data-event-type='dismissDeletePlaceholderAIPop'>Cancel</button></div>";
 
 											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
