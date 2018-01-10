@@ -5,6 +5,7 @@
 				<ipa-button
 				is-disabled="!(state.supportCallResponse.availabilityBlob) || state.supportCallResponse.availabilityBlob.indexOf('0') == -1"
 				icon-class="'glyphicon glyphicon-trash'"
+				confirm-message="'Are you sure you want to reset your availability?'"
 				text="'Reset Availability'"
 				on-click="clearAvailability()">
 				</ipa-button>
@@ -36,6 +37,7 @@
 					<ipa-button
 					ng-show="state.ui.crnSearch.blob.length > 0"
 					text="'Apply to availability'"
+					skin="'dark'"
 					on-click="updateAvailability()">
 					<ipa-button>
 				</div>
