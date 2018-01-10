@@ -206,6 +206,21 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
 			});
 		},
+		assignStudentToAssociateInstructor: function (sectionGroup, supportStaff) {
+			var self = this;
+
+			assignmentService.assignStudentToAssociateInstructor(sectionGroup.id, supportStaff.id).then(function (payload) {
+				$rootScope.$emit('toast', { message: "Assigned Associate Instructor", type: "SUCCESS" });
+				assignmentStateService.reduce({
+					type: ASSIGN_ASSOCIATE_INSTRUCTOR,
+					payload: {
+						data: payload
+					}
+				});
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
+			});
+		},
 		approveInstructorAssignment: function (teachingAssignment, workgroupId, year) {
 			var self = this;
 			teachingAssignment.approved = true;
