@@ -24,16 +24,7 @@ sharedApp.directive('ipaTermSelectorDropdown', function($window, $location, $rou
 			scope.termDefinitions = Term.prototype.generateTable(scope.year);
 
 			scope.getScheduleTerms = function () {
-				if (!scope.termStates) { return; }
-
-				var activeTerms = scope.termStates.map(function (termState) {
-					return termState.termCode;
-				});
-				var scheduleTerms = scope.termDefinitions.filter(function (term) {
-					return activeTerms.indexOf(term.code) >= 0;
-				});
-
-				return scheduleTerms;
+				return scope.termDefinitions;
 			};
 
 			scope.scheduleTerms = scope.getScheduleTerms();
@@ -44,7 +35,7 @@ sharedApp.directive('ipaTermSelectorDropdown', function($window, $location, $rou
 				}
 			});
 
-			if (scope.currentTermDescription == null) {
+			if (scope.termShortCode == null) {
 				scope.readOnlyMode = true;
 				scope.currentTermDescription = "Annual";
 			}
