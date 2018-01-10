@@ -337,7 +337,7 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 
 						assignmentActionCreators.assignStudentToAssociateInstructor(sectionGroup, supportStaff);
 						// Remove 'The Staff' if necessary
-						sectionGroup.showTheStaff = false;
+						sectionGroup.showPlaceholderAI = false;
 					} else if (teachingAssignmentId) {
 						// Approving an existing teachingAssignment
 						teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];

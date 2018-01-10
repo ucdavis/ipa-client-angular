@@ -209,14 +209,28 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 		assignStudentToAssociateInstructor: function (sectionGroup, supportStaff) {
 			var self = this;
 
-			assignmentService.assignStudentToAssociateInstructor(sectionGroup.id, supportStaff.id).then(function (payload) {
+			assignmentService.assignStudentToAssociateInstructor(sectionGroup.id, supportStaff.id).then(function (teachingAssignment) {
 				$rootScope.$emit('toast', { message: "Assigned Associate Instructor", type: "SUCCESS" });
+
+				var instructor = {
+					id: teachingAssignment.instructorId,
+					firstName: supportStaff.firstName,
+					lastName: supportStaff.lastName,
+					fullName: supportStaff.fullName,
+					email: supportStaff.emailAddress,
+					loginId: supportStaff.loginId
+				};
+
 				assignmentStateService.reduce({
 					type: ASSIGN_ASSOCIATE_INSTRUCTOR,
 					payload: {
-						data: payload
+						teachingAssignment: teachingAssignment,
+						instructor: instructor,
+						year: assignmentStateService._state.userInterface.year
 					}
 				});
+
+					self.addAndApproveInstructorAssignment(teachingAssignment, assignmentStateService._state.userInterface.scheduleId);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
 			});
