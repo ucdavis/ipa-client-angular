@@ -142,6 +142,19 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
+		assignStudentToAssociateInstructor: function (sectionGroupId, supportStaffId) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/assignmentView/sectionGroups/" + sectionGroupId + "/supportStaff/" + supportStaffId + "/assignAI", { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		updateScheduleInstructorNote: function (scheduleInstructorNote) {
 			var deferred = $q.defer();
 
