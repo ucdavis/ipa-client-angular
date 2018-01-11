@@ -203,7 +203,7 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				};
 
 				// If the support staff has no availability set, then there cannot be conflicts
-				if (hasAvailability(supportStaffResponse) == false) {
+				if (self.hasAvailability(supportStaffResponse) == false) {
 					return;
 				}
 
