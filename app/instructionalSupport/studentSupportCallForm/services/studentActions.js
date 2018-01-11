@@ -123,8 +123,7 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 		submitPreferences: function (supportCallResponse, workgroupId, year) {
 			studentService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
 				$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
-				var studentSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructionalSupport";
-				$window.location.href = studentSummaryUrl;
+				$window.location.href = "/summary/" + workgroupId + "/" + year + "?mode=instructionalSupport";
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 			});
@@ -154,7 +153,7 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 				var preferenceCommentsComplete = true;
 				studentReducers._state.preferences.ids.forEach(function(preferenceId) {
 					var preference = studentReducers._state.preferences.list[preferenceId];
-					if (!preference.comment || preference.comment.length == 0) {preferenceCommentsComplete = false;}
+					if (!(preference.comment) || preference.comment.length == 0) { preferenceCommentsComplete = false; }
 				});
 
 				var action = {
@@ -170,8 +169,7 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 		},
 		pretendToastMessage: function () {
 			$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
-			var studentSummaryUrl = "/summary/" + studentReducers._state.misc.workgroupId + "/" + studentReducers._state.misc.year + "?mode=instructionalSupport";
-			$window.location.href = studentSummaryUrl;
+			$window.location.href = "/summary/" + studentReducers._state.misc.workgroupId + "/" + studentReducers._state.misc.year + "?mode=instructionalSupport";
 		},
 		openPreferenceCommentsModal: function(preference) {
 			studentReducers.reduce({
@@ -259,6 +257,7 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 				return;
 			}
 
+			// Default availability value, where '1' denotes 'available'
 			var crnSearchBlob = "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
 			var crnSearchFeedback = "";
 			var crnSearchTimes = "";
@@ -280,6 +279,7 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 				}
 			});
 		},
+		// Converts an activity from data-warehouse into an availability blob with a human readable text description of days/times
 		calculateTimes: function(activity) {
 			var activityTimes = {
 				blob: "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1",

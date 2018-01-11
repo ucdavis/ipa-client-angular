@@ -1,50 +1,51 @@
-<div
-class="ipa-button"
-uib-tooltip="{{tooltipMessage}}"
-tooltip-placement="bottom"
-ng-class="{ buttonClass, 'ipa-button--disabled': isDisabled , 'ipa-button--wide': isWide, 'ipa-button--dark-skin': skin == 'dark', 'ipa-button--light-skin': skin == 'light' || !skin }">
-	<div class="ipa-button__container" ng-class="{'ipa-button__container--wide': isWide }" ng-show="!(isDisabled)">
+<div class="ipa-button"
+	uib-tooltip="{{tooltipMessage}}"
+	tooltip-placement="bottom"
+	ng-class="{ buttonClass, 'ipa-button--disabled': isDisabled , 'ipa-button--wide': isWide, 'ipa-button--dark-skin': skin == 'dark', 'ipa-button--light-skin': skin == 'light' || !skin }">
+	<div class="ipa-button__container"
+		ng-class="{'ipa-button__container--wide': isWide }"
+		ng-show="!(isDisabled)">
 		<!-- with confirmation -->
-		<div
-		ng-show="confirmMessage && confirmMessage.length > 0"
-		class="ipa-button__content"
-		ng-class="{'ipa-button__content--slim': size == 'slim', 'ipa-button__content--wide': isWide }"
-		confirm-button="onClick()"
-		message="{{confirmMessage}}"
-		yes="Confirm" no="Cancel" placement="top">
+		<div class="ipa-button__content"
+			ng-show="confirmMessage && confirmMessage.length > 0"
+			ng-class="{'ipa-button__content--slim': size == 'slim', 'ipa-button__content--wide': isWide }"
+			confirm-button="onClick()"
+			message="{{confirmMessage}}"
+			yes="Confirm"
+			no="Cancel"
+			placement="top">
 			<div class="ipa-button__text" ng-show="text">
 				{{ text }}
 			</div>
-			<div ng-class="iconClass">
-			</div>
+			<div ng-class="iconClass"></div>
 		</div>
 
 		<!-- without confirmation -->
-		<div
-		ng-show="!confirmMessage || confirmMessage.length == 0"
-		class="ipa-button__content"
-		ng-class="{'ipa-button__content--slim': size == 'slim', 'ipa-button__content--wide': isWide }"
-		ng-click="onClick()">
-		<div class="ipa-button__text" ng-show="text">
+		<div class="ipa-button__content"
+			ng-show="!confirmMessage || confirmMessage.length == 0"
+			ng-class="{'ipa-button__content--slim': size == 'slim', 'ipa-button__content--wide': isWide }"
+			ng-click="onClick()">
+		<div class="ipa-button__text"
+			ng-show="text">
 			{{ text }}
 		</div>
-		<div class="ipa-button__spacer" ng-show="text.length > 0 && iconClass.length > 0"></div>
-		<div ng-class="iconClass">
-			</div>
+		<div class="ipa-button__spacer"
+			ng-show="text.length > 0 && iconClass.length > 0"></div>
+			<div ng-class="iconClass"></div>
 		</div>
 	</div>
 
 	<!-- disabled state -->
-	<div class="ipa-button__container" ng-class="{'ipa-button__container--wide': isWide }" ng-show="(isDisabled)">
-		<div
-		class="ipa-button__content"
-		ng-class="{'ipa-button__content--slim': size == 'slim', 'ipa-button__content--wide': isWide }">
+	<div class="ipa-button__container"
+		ng-class="{'ipa-button__container--wide': isWide }"
+		ng-show="(isDisabled)">
+		<div class="ipa-button__content"
+			ng-class="{'ipa-button__content--slim': size == 'slim', 'ipa-button__content--wide': isWide }">
 			<div class="ipa-button__text" ng-show="text">
 				{{ text }}
 			</div>
 			<div class="ipa-button__spacer" ng-show="text.length > 0 && iconClass.length > 0"></div>
-			<div ng-class="iconClass">
-			</div>
+			<div ng-class="iconClass"></div>
 		</div>
 	</div>
 </div>

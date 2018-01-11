@@ -3,7 +3,6 @@ Example Usage:
 var tabNames = ['food', 'people', 'animals'];
 var activeTab = "food";
 
-
 <ipa-tabs-vertical
 	tab-names="tabNames"
 	active-tab="activeTab">

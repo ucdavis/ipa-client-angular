@@ -4,7 +4,7 @@ sharedApp.directive("ipaInput", this.ipaInput = function () {
 		templateUrl: 'ipaInput.html',
 		replace: true,
 		scope: {
-			onUpdate: '&?',
+			onUpdate: '&?', // If set, this callback function will be triggered 500ms after changes stop
 			value: '=',
 			readOnly: '=?',
 			placeHolder: '<?'
