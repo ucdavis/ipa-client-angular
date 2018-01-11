@@ -3,23 +3,20 @@
 			<div class="modal-preference-comments__label">
 				{{ preference.subjectCode }} {{ preference.courseNumber }} Comment:
 			</div>
-			<textarea
-				class="modal-preference-comments__input"
+			<textarea class="modal-preference-comments__input"
 				ng-model="preference.comment">
 			</textarea>
 		</div>
 
 		<div class="modal-preference-comments__footer">
-			<button
+			<button class="modal-preference-comments__cancel-button"
 				ng-click="close()"
-				type="button"
-				class="modal-preference-comments__cancel-button">
+				type="button">
 				Cancel
 			</button>
-			<button
+			<button class="modal-preference-comments__confirm-button"
 				ng-click="submitForm()"
-				type="button"
-				class="modal-preference-comments__confirm-button">
+				type="button">
 				Save
 			</button>
 		</div>

@@ -40,9 +40,8 @@
 	</div>
 
 	<div>
-		<div
-		ng-if="state.supportCallResponse.submitted == false"
-		class="student-form-review__submit">
+		<div class="student-form-review__submit"
+			ng-if="state.supportCallResponse.submitted == false">
 			<ipa-button
 				text="'Submit'"
 				on-click="submitStudentPreferences()"
@@ -51,9 +50,8 @@
 				is-wide="true">
 			</ipa-button>
 		</div>
-		<div
-		ng-if="state.supportCallResponse.submitted"
-		class="student-form-review__submit">
+		<div class="student-form-review__submit"
+			ng-if="state.supportCallResponse.submitted">
 			<ipa-button
 				text="'Update'"
 				on-click="pretendToastMessage()"
@@ -64,9 +62,7 @@
 		</div>
 	</div>
 
-	<div
-	class="student-form-review__footer"
-	ng-if="state.supportCallResponse.dueDate">
+	<div class="student-form-review__footer" ng-if="state.supportCallResponse.dueDate">
 		Due Date: {{ state.supportCallResponse.dueDateDescription }}
 	</div>
 </div>

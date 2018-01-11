@@ -3,42 +3,42 @@
 		<div class="crn-available__header-ui">
 			<div class="crn-available__reset-availability">
 				<ipa-button
-				is-disabled="!(state.supportCallResponse.availabilityBlob) || state.supportCallResponse.availabilityBlob.indexOf('0') == -1"
-				icon-class="'glyphicon glyphicon-trash'"
-				confirm-message="'Are you sure you want to reset your availability?'"
-				text="'Reset Availability'"
-				on-click="clearAvailability()">
+					is-disabled="!(state.supportCallResponse.availabilityBlob) || state.supportCallResponse.availabilityBlob.indexOf('0') == -1"
+					icon-class="'glyphicon glyphicon-trash'"
+					confirm-message="'Are you sure you want to reset your availability?'"
+					text="'Reset Availability'"
+					on-click="clearAvailability()">
 				</ipa-button>
 			</div>
 
 			<div class="crn-available__crn-ui">
 				<div class="crn-available__undo-button" ng-show="state.ui.crnSearch.blob">
 					<ipa-button
-					icon-class="'entypo-ccw'"
-					on-click="clearCrnSearch()">
+						icon-class="'entypo-ccw'"
+						on-click="clearCrnSearch()">
 					</ipa-button>
 				</div>
 
 				<div class="crn-available__input-container">
 					<ipa-input
-					value="state.ui.crnSearch.crn"
-					place-holder="'Enter a CRN'">
+						value="state.ui.crnSearch.crn"
+						place-holder="'Enter a CRN'">
 					</ipa-input>
 				</div>
 
 				<div class="crn-available__add-crn">
 					<ipa-button
-					ng-hide="state.ui.crnSearch.blob"
-					text="'Find CRN'"
-					is-disabled="!(state.ui.crnSearch.crn)"
-					on-click="calculateTimesForCrn(state.ui.crnSearch.crn)">
+						ng-hide="state.ui.crnSearch.blob"
+						text="'Find CRN'"
+						is-disabled="!(state.ui.crnSearch.crn)"
+						on-click="calculateTimesForCrn(state.ui.crnSearch.crn)">
 					</ipa-button>
 
 					<ipa-button
-					ng-show="state.ui.crnSearch.blob.length > 0"
-					text="'Apply to availability'"
-					skin="'dark'"
-					on-click="updateAvailability()">
+						ng-show="state.ui.crnSearch.blob.length > 0"
+						text="'Apply to availability'"
+						skin="'dark'"
+						on-click="updateAvailability()">
 					<ipa-button>
 				</div>
 			</div>
@@ -49,8 +49,8 @@
 	</div>
 	<div class="crn-available__grid-container">
 		<grid-available
-		read-only="true"
-		support-call-response="state.supportCallResponse">
+			read-only="true"
+			support-call-response="state.supportCallResponse">
 		</grid-available>
 	</div>
 </div>
