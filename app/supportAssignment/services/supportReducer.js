@@ -503,14 +503,12 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 			newPageState.supportAssignmentsUnique = supportSelectors.generateSupportAssignmentsUnique(
 																																			scope._state.supportAssignments,
 																																			scope._state.sectionGroups,
-																																			scope._state.courses
-																																		);
+																																			scope._state.courses);
 
 			newPageState.supportAssignments = supportSelectors.generateSupportAssignments(
 																																			scope._state.supportAssignments,
 																																			scope._state.sectionGroups,
-																																			scope._state.courses
-																																		);
+																																			scope._state.courses);
 
 			newPageState.supportStaffList = supportSelectors.generateSupportStaffList(
 																																			scope._state.supportAssignments,
@@ -521,8 +519,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 																																			scope._state.supportStaffSupportCallResponses,
 																																			scope._state.supportStaffPreferences,
 																																			scope._state.supportAppointments,
-																																			scope._state.ui
-																																		);
+																																			scope._state.ui);
 
 			newPageState.sectionGroups = supportSelectors.generateSectionGroups(
 																																			scope._state.supportAssignments,
@@ -533,8 +530,7 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 																																			scope._state.supportStaffPreferences,
 																																			scope._state.instructorPreferences,
 																																			scope._state.instructorSupportCallResponses,
-																																			scope._state.sections
-																																		);
+																																			scope._state.sections);
 
 			$rootScope.$emit('supportAssignmentStateChanged', newPageState);
 		}
@@ -543,10 +539,10 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 
 // Sort the course Ids by subject Code and then course number
 sortCourseIds = function(courseIds, courses) {
-
 		courseIds.sort(function (aId, bId) {
 			a = courses[aId];
 			b = courses[bId];
+
 			// Use subject codes to sort
 			if (a.subjectCode > b.subjectCode) {
 				return 1;

@@ -18,8 +18,8 @@
 	<div ng-if="supportStaff.supportStaffPreferences.length > 0">
 		Preference Comments
 		<div
-		ng-repeat="preference in supportStaff.supportStaffPreferences | orderBy: 'priority'"
-		ng-if="preference.comment && preference.comment.length > 0">
+			ng-repeat="preference in supportStaff.supportStaffPreferences | orderBy: 'priority'"
+			ng-if="preference.comment && preference.comment.length > 0">
 			<div class="staff-comments__header">
 				({{ preference.priority }}) <strong>{{ preference.subjectCode }} {{ preference.courseNumber }} Comments:</strong>
 			</div>
@@ -28,7 +28,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="staff-comments__no-comments" ng-if="!supportStaff.supportCallResponse.teachingQualifications && !supportStaff.supportCallResponse.generalComments && supportStaff.supportStaffPreferences.length == 0">
+	<div class="staff-comments__no-comments"
+		ng-if="!supportStaff.supportCallResponse.teachingQualifications && !supportStaff.supportCallResponse.generalComments && supportStaff.supportStaffPreferences.length == 0">
 		No comments
 	</div>
 </div>

@@ -13,6 +13,7 @@ supportAssignmentApp.config(function ($routeProvider) {
 		redirectTo: "/"
 	});
 });
+
 // UI ACTIONS
 var UPDATE_TABLE_FILTER = "UPDATE_TABLE_FILTER";
 var SET_VIEW_PIVOT = "SET_VIEW_PIVOT";

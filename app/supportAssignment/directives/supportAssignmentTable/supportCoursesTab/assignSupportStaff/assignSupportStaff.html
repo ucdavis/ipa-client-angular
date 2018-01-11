@@ -7,19 +7,18 @@
 			Assign {{ viewType }}
 		</div>
 	</div>
-	<div ng-if="expanded" class="assign-support-staff__dropdown-container">
-		<div class="assign-support-staff__dropdown-mask" ng-click="closeDropdown()">
-		</div>
+	<div class="assign-support-staff__dropdown-container" ng-if="expanded">
+		<div class="assign-support-staff__dropdown-mask" ng-click="closeDropdown()"></div>
 
 		<div class="assign-support-staff__dropdown">
-			<div ng-show="assignmentOptions.instructorPreferences && assignmentOptions.instructorPreferences.length > 0 && viewType == 'Teaching Assistants'"
-			class="assign-support-staff__dropdown-group-name">
+			<div class="assign-support-staff__dropdown-group-name"
+				ng-show="assignmentOptions.instructorPreferences && assignmentOptions.instructorPreferences.length > 0 && viewType == 'Teaching Assistants'">
 				Instructor Preferences
 			</div>
 			<div class="assign-support-staff__dropdown-item"
-			ng-show="assignmentOptions.instructorPreferences && assignmentOptions.instructorPreferences.length > 0  && viewType == 'Teaching Assistants'"
-			ng-repeat="preference in assignmentOptions.instructorPreferences"
-			ng-click="triggerSelection(preference)">
+				ng-show="assignmentOptions.instructorPreferences && assignmentOptions.instructorPreferences.length > 0  && viewType == 'Teaching Assistants'"
+				ng-repeat="preference in assignmentOptions.instructorPreferences"
+				ng-click="triggerSelection(preference)">
 				<div class="assign-support-staff__priority-icon">
 					<div class="badge badge-pill badge-dark">
 						{{ preference.priority }}
@@ -29,22 +28,23 @@
 					{{ preference.fullName }}
 				</div>
 				<div class="assign-support-staff__scheduling-conflict-icon">
-					<i
-					ng-show="assignmentOption.hasSchedulingConflict"
-					uib-tooltip="Student availability conflicts with this assignment"
-					tooltip-placement="auto top"
-					class="entypo-attention"></i>
+					<i class="entypo-attention"
+						ng-show="assignmentOption.hasSchedulingConflict"
+						uib-tooltip="Student availability conflicts with this assignment"
+						tooltip-placement="auto top">
+					</i>
 				</div>
 			</div>
 
-			<div ng-show="assignmentOptions.instructorPreferences && assignmentOptions.supportStaffPreferences.length > 0" class="assign-support-staff__dropdown-group-name">
+			<div class="assign-support-staff__dropdown-group-name"
+				ng-show="assignmentOptions.instructorPreferences && assignmentOptions.supportStaffPreferences.length > 0">
 				Student Preferences
 			</div>
 
 			<div class="assign-support-staff__dropdown-item"
-			ng-repeat="preference in assignmentOptions.supportStaffPreferences"
-			ng-show="assignmentOptions.instructorPreferences && assignmentOptions.supportStaffPreferences.length > 0"
-			ng-click="triggerSelection(preference)">
+				ng-repeat="preference in assignmentOptions.supportStaffPreferences"
+				ng-show="assignmentOptions.instructorPreferences && assignmentOptions.supportStaffPreferences.length > 0"
+				ng-click="triggerSelection(preference)">
 				<div class="assign-support-staff__priority-icon">
 					<div class="badge badge-pill badge-dark">
 						{{ preference.priority }}
@@ -54,11 +54,11 @@
 					{{ preference.fullName }}
 				</div>
 				<div class="assign-support-staff__scheduling-conflict-icon">
-					<i
-					ng-show="assignmentOption.hasSchedulingConflict"
-					uib-tooltip="Student availability conflicts with this assignment"
-					tooltip-placement="auto top"
-					class="entypo-attention"></i>
+					<i class="entypo-attention"
+						ng-show="assignmentOption.hasSchedulingConflict"
+						uib-tooltip="Student availability conflicts with this assignment"
+						tooltip-placement="auto top">
+					</i>
 				</div>
 			</div>
 
@@ -67,8 +67,8 @@
 			</div>
 
 			<div class="assign-support-staff__dropdown-item"
-			ng-repeat="preference in assignmentOptions.other"
-			ng-click="triggerSelection(preference)">
+				ng-repeat="preference in assignmentOptions.other"
+				ng-click="triggerSelection(preference)">
 				<div class="assign-support-staff__priority-icon">
 					<div class="badge badge-pill badge-dark">
 						{{ preference.priority }}
@@ -78,11 +78,11 @@
 					{{ preference.fullName }}
 				</div>
 				<div class="assign-support-staff__scheduling-conflict-icon">
-					<i
-					ng-show="assignmentOption.hasSchedulingConflict"
-					uib-tooltip="Student availability conflicts with this assignment"
-					tooltip-placement="auto top"
-					class="entypo-attention"></i>
+					<i class="entypo-attention"
+						ng-show="assignmentOption.hasSchedulingConflict"
+						uib-tooltip="Student availability conflicts with this assignment"
+						tooltip-placement="auto top">
+					</i>
 				</div>
 			</div>
 		</div>

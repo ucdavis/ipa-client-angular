@@ -50,6 +50,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 				var processedSupportStaffIds = [];
 				sectionGroup.teachingAssistantAssignmentOptions = {};
 				sectionGroup.teachingAssistantAssignmentOptions.instructorPreferences = [];
+
 				// Add instructor preferences
 				instructorPreferences.ids.forEach( function(preferenceId) {
 					var preference = instructorPreferences.list[preferenceId];
@@ -199,16 +200,15 @@ supportAssignmentApp.service('supportSelectors', function () {
 
 			return generatedSections;
 		},
-		generateSupportStaffList: function (
-			supportAssignments,
-			courses,
-			sectionGroups,
-			sections,
-			supportStaffList,
-			supportStaffSupportCallResponses,
-			supportStaffPreferences,
-			supportAppointments,
-			ui) {
+		generateSupportStaffList: function (supportAssignments,
+																				courses,
+																				sectionGroups,
+																				sections,
+																				supportStaffList,
+																				supportStaffSupportCallResponses,
+																				supportStaffPreferences,
+																				supportAppointments,
+																				ui) {
 			var self = this;
 			var newSupportStaffList = [];
 
@@ -238,7 +238,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 			var count = 0;
 
 			preferences.forEach(function(preference) {
-				if (preference.type == type) {count++;}
+				if (preference.type == type) { count++; }
 			});
 
 			return count;

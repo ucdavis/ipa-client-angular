@@ -1,6 +1,6 @@
-	<nav year="{{ year }}" term-short-code="{{ termShortCode }}" workgroup-id="{{ workgroupId }}"></nav>
-
+<nav year="{{ year }}" term-short-code="{{ termShortCode }}" workgroup-id="{{ workgroupId }}"></nav>
 <div></div>
+
 <ipa-header page-title="Support Staff Assignments"></ipa-header>
 
 <spinner
@@ -22,15 +22,15 @@
 <div ng-if="view.state && isAllowed == true" class="support-assignments">
 	<!-- Modals -->
 	<ipa-modal
-	is-visible="view.state.ui.availabilityModal.isOpen"
-	header-text="Availability"
-	on-close="closeAvailabilityModal"
-	styles="availabilityModalStyles">
-		<view-availability-modal
-		ng-if="view.state.ui.availabilityModal.isOpen"
 		is-visible="view.state.ui.availabilityModal.isOpen"
-		support-staff="view.state.ui.availabilityModal.data">
-		</modal-preference-comments>
+		header-text="Availability"
+		on-close="closeAvailabilityModal"
+		styles="availabilityModalStyles">
+		<view-availability-modal
+			ng-if="view.state.ui.availabilityModal.isOpen"
+			is-visible="view.state.ui.availabilityModal.isOpen"
+			support-staff="view.state.ui.availabilityModal.data">
+		</view-availability-modal>
 	</ipa-modal>
 
 	<div class="support-assignments__header">
