@@ -31,7 +31,7 @@
 	background-color: #f9f9f9;
 }
 
-.ipa-tabs-vertical__tab:not(.ipa-tabs__tab--active):hover {
+.ipa-tabs-vertical__tab:not(.ipa-tabs-vertical__tab--active):hover {
 	background-color: #d6d6d6;
 	cursor: pointer;
 }
