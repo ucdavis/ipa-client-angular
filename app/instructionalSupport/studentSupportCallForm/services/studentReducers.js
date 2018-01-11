@@ -112,10 +112,10 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 		_uiReducers: function (action, ui) {
 			switch (action.type) {
 				case INIT_STATE:
-				var preferenceCommentsComplete = true;
-				action.payload.studentSupportPreferences.forEach(function(preference) {
-					if (!preference.comment || preference.comment.length == 0) {preferenceCommentsComplete = false;}
-				});
+					var preferenceCommentsComplete = true;
+					action.payload.studentSupportPreferences.forEach(function(preference) {
+						if (!(preference.comment) || preference.comment.length == 0) { preferenceCommentsComplete = false; }
+					});
 
 					ui = {
 						isPreferenceCommentModalOpen: false,

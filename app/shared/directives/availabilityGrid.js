@@ -31,12 +31,12 @@ sharedApp.directive("availabilityGrid", this.availabilityGrid = function($timeou
 
 			// Default availability array (all available)
 			// This line creates an all 1's array the length of days x hours
-			var blobArray = Array.apply(null, {length: (scope.days.length * scope.hours.length)}).map(function(){return 1;});
+			var blobArray = Array.apply(null, { length: (scope.days.length * scope.hours.length)}).map(function() { return 1; });
 			scope.buildAvailabilityObject(blobArray);
 
 			// Translate blob into availability array
 			scope.$watch('blob', function(blob) {
-				var blobArray = Array.apply(null, {length: (scope.days.length * scope.hours.length)}).map(function(){return 1;});
+				var blobArray = Array.apply(null, { length: (scope.days.length * scope.hours.length)}).map(function() { return 1; });
 
 				if (blob && blob.length > 0) {
 					blobArray = blob.split(',');
