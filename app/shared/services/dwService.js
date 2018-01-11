@@ -21,9 +21,10 @@ angular.module('sharedApp')
 			},
 
 			/**
-			 * Returns full term description given termCode, e.g. 201710 -> "Fall Quarter 2017"
+			 * Returns activities associated to the specified crn/termCode
+			 * @param {string} crn
 			 * @param {string} termCode
-			 * @returns {string} Full term description with year, e.g. "Fall Quarter 2017"
+			 * @returns {List[activity]}
 			 */
 			getDwActivitiesByCrn: function (crn, termCode) {
 				var deferred = $q.defer();
