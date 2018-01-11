@@ -13,18 +13,6 @@ instructionalSupportApp.factory("studentService", this.studentService = function
 
 			return deferred.promise;
 		},
-		getDwActivitiesByCrn: function (crn, termCode) {
-			var deferred = $q.defer();
-			$http.get(dwUrl + "/sections/search/crn?termCode=" + termCode + "&crn=" + crn + "&token=" + dwToken)
-				.success(function (result) {
-					deferred.resolve(result);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
-		},
 		addStudentPreference: function(sectionGroupId, type) {
 			var deferred = $q.defer();
 			$http.post(serverRoot + "/api/instructionalSupportStudentFormView/sectionGroups/" + sectionGroupId + "/preferenceType/" + type, { withCredentials: true })
