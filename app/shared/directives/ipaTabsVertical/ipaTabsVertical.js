@@ -1,8 +1,5 @@
 /*
 Example Usage:
-var tabNames = ['food', 'people', 'animals'];
-var activeTab = "food";
-
 <ipa-tabs-vertical
 	tab-names="tabNames"
 	active-tab="activeTab">
@@ -15,9 +12,9 @@ sharedApp.directive("ipaTabsVertical", this.ipaTabsVertical = function () {
 		templateUrl: 'ipaTabsVertical.html',
 		replace: true,
 		scope: {
-			tabNames: '<',
-			activeTab: '<',
-			selectTab: '&'
+			tabNames: '<', // Array of strings, example: ['summary', 'review', 'report']
+			activeTab: '<', // String matching one of the strings in tabNames
+			selectTab: '&' // Callback function
 		},
 		transclude: true,
 		link: function (scope, element, attrs) {
