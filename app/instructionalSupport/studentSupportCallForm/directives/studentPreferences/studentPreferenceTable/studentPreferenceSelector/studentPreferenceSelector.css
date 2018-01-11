@@ -13,3 +13,7 @@
 .student-preference-selector__toggle-button {
 	width: 100%;
 }
+
+.student-preference-selector__dropdown {
+	width: 100%;
+}

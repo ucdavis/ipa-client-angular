@@ -1,8 +1,12 @@
 <div class="student-preference-table">
 	<div ng-show="state && state.supportAssignments.ids.length == 0" class="jumbotron student-preference-table__empty-warn">
-		<p class="lead">There are no courses available for this support call.</p>
+		<p class="lead">
+			There are no courses available for this support call.
+		</p>
 		<br />
-		<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
+		<p class="lead">
+			If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.
+		</p>
 	</div>
 
 	<div ng-show="state && state.supportAssignments.ids.length > 0">
@@ -11,16 +15,14 @@
 				<div class="ipa-table__header-cell ipa-table__body-cell--small ipa-table__body-cell--centered">
 					Priority
 				</div>
-				<div class="ipa-table__header-cell ipa-table__body-cell--small">
-				</div>
+				<div class="ipa-table__header-cell ipa-table__body-cell--small"></div>
 				<div class="ipa-table__header-cell ipa-table__body-cell--large">
 					Course
 				</div>
 				<div class="ipa-table__header-cell ipa-table__body-cell--medium">
 					<div ng-show="state.supportCallResponse.collectPreferenceComments">Comments</div>
 				</div>
-				<div class="ipa-table__header-cell ipa-table__body-cell--small">
-				</div>
+				<div class="ipa-table__header-cell ipa-table__body-cell--small"></div>
 			</div>
 			<div class="ipa-table__body">
 				<div class="ipa-table__body-row" ng-repeat="preference in state.preferences | orderBy: 'priority'">
@@ -73,18 +75,13 @@
 				</div>
 
 				<div class="ipa-table__body-row ipa-table__body-row--borderless">
-					<div class="ipa-table__body-cell ipa-table__body-cell--small">
-					</div>
-					<div class="ipa-table__body-cell ipa-table__body-cell--small">
-					</div>
+					<div class="ipa-table__body-cell ipa-table__body-cell--small"></div>
+					<div class="ipa-table__body-cell ipa-table__body-cell--small"></div>
 					<div class="ipa-table__body-cell ipa-table__body-cell--large student-preference-table__selector-container">
-						<student-preference-selector>
-						</student-preference-selector>
+						<student-preference-selector></student-preference-selector>
 					</div>
-					<div class="ipa-table__body-cell ipa-table__body-cell--medium">
-					</div>
-					<div class="ipa-table__body-cell ipa-table__body-cell--small">
-					</div>
+					<div class="ipa-table__body-cell ipa-table__body-cell--medium"></div>
+					<div class="ipa-table__body-cell ipa-table__body-cell--small"></div>
 				</div>
 			</div>
 		</div>
