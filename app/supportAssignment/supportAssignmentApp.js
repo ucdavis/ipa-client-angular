@@ -3,7 +3,7 @@ window.supportAssignmentApp = angular.module("supportAssignmentApp", ["sharedApp
 supportAssignmentApp.config(function ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year/:termShortCode", {
-		templateUrl: "SupportAssignmentCtrl.html",
+		templateUrl: "supportAssignmentCtrl.html",
 		controller: "SupportAssignmentCtrl",
 		resolve: {
 			payload: SupportAssignmentCtrl.getPayload
