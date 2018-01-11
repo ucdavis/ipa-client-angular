@@ -60,11 +60,7 @@ this.StudentSupportCallFormCtrl = function ($scope, $rootScope, $window, $locati
 
 		// Validate min # of preferences
 		var currentNumPreferences = $scope.view.state.preferences.length;
-		var minNumPreferences = 0;
-
-		if ($scope.view.state.supportCallResponse) {
-			minNumPreferences = $scope.view.state.supportCallResponse.minimumNumberOfPreferences;
-		}
+		var minNumPreferences = $scope.view.state.supportCallResponse ? $scope.view.state.supportCallResponse.minimumNumberOfPreferences : 0;
 
 		if (currentNumPreferences < minNumPreferences) {
 			$scope.validationError = "You must provide at least " + minNumPreferences + " preferences";
