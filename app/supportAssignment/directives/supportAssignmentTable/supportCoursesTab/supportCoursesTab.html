@@ -65,6 +65,7 @@
 					ng-repeat="supportAssignment in section.supportAssignments"
 					ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
 					<support-assignment-row
+						read-only="state.ui.readOnlyMode"
 						name="supportAssignment.fullName"
 						on-delete="deleteAssignment"
 						support-assignment="supportAssignment">
