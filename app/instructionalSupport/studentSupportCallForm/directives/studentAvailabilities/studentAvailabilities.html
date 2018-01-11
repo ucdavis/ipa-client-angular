@@ -8,10 +8,9 @@
 				<div class="legend-square student-availabilities__available-color"></div>Available
 				<div class="legend-square student-availabilities__unavailable-color"></div>Unavailable
 			</small>
-			<div
-			class="student-availabilities__question"
-			tooltip-placement="left"
-			uib-tooltip="You can left click and drag to paint unavailability on the grids below.">
+			<div class="student-availabilities__question"
+				tooltip-placement="left"
+				uib-tooltip="You can left click and drag to paint unavailability on the grids below.">
 				<i class="glyphicon glyphicon-question-sign"></i>
 			</div>
 		</div>
@@ -19,8 +18,8 @@
 
 	<div ng-show="state.supportCallResponse.collectAvailabilityByGrid && !(state.supportCallResponse.collectAvailabilityByCrn)">
 		<grid-available
-		read-only="false"
-		support-call-response="state.supportCallResponse">
+			read-only="false"
+			support-call-response="state.supportCallResponse">
 		</grid-available>
 	</div>
 	<div ng-show="state.supportCallResponse.collectAvailabilityByCrn">
