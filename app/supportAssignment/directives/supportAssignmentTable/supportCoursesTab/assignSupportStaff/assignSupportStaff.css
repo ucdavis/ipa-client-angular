@@ -74,6 +74,7 @@
 	padding-top: 15px;
 	border-bottom: 1px solid #eaecef;
 	padding-bottom: 5px;
+	cursor: default;
 }
 
 .assign-support-staff__priority-icon {
