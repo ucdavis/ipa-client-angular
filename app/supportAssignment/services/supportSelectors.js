@@ -247,7 +247,7 @@ supportAssignmentApp.service('supportSelectors', function () {
 			var count = 0;
 
 			preferences.forEach(function(preference) {
-				if (preference.appointmentType == type) {count++;}
+				if (preference.appointmentType == type) { count++; }
 			});
 
 			return count;

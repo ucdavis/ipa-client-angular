@@ -2,8 +2,6 @@
 Example Usage:
 var tabNames = ['food', 'people', 'animals'];
 var activeTab = "food";
-
-
 <ipa-tabs
 	tab-names="tabNames"
 	active-tab="activeTab">
