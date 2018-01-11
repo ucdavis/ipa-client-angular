@@ -4,7 +4,8 @@ supportAssignmentApp.directive("reviewTools", this.reviewTools = function ($root
 		templateUrl: 'reviewTools.html',
 		replace: true,
 		scope: {
-			supportReview: '<'
+			supportReview: '<',
+			readOnly: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.toggleInstructorSupportCallReview = function() {
