@@ -1,4 +1,4 @@
-instructionalSupportApp.service('studentActions', function ($rootScope, $window, studentService, studentReducers) {
+instructionalSupportApp.service('studentActions', function ($rootScope, $window, studentService, dwService, studentReducers) {
 	return {
 		getInitialState: function (workgroupId, year, termShortCode) {
 			var self = this;
@@ -230,7 +230,7 @@ instructionalSupportApp.service('studentActions', function ($rootScope, $window,
 				}
 			});
 
-			studentService.getDwActivitiesByCrn(crn, studentReducers._state.misc.termCode).then(function (payload) {
+			dwService.getDwActivitiesByCrn(crn, studentReducers._state.misc.termCode).then(function (payload) {
 				studentReducers.reduce({
 					type: COMPLETE_FETCH_ACTIVITIES_BY_CRN
 				});
