@@ -203,7 +203,7 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				};
 
 				// If the support staff has no availability set, then there cannot be conflicts
-				if (!supportStaffResponse || !supportStaffResponse.availabilityBlob || supportStaffResponse.availabilityBlob.length == 0) {
+				if (hasAvailability(supportStaffResponse) == false) {
 					return;
 				}
 
@@ -235,6 +235,19 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 					conflicts: conflicts
 				}
 			});
+		},
+		hasAvailability: function(supportStaffResponse) {
+			// Response object is invalid
+			if (supportStaffResponse == false || supportStaffResponse == null) { return false; }
+
+			// AvailabilityBlob is invalid
+			if (supportStaffResponse.availabilityBlob == false
+				|| supportStaffResponse.availabilityBlob == null
+				|| supportStaffResponse.availabilityBlob.length == 0) {
+					return false;
+				}
+
+			return true;
 		},
 		// Will return true if support staff is available for all scheduled activities
 		hasScheduleConflict: function(supportStaffBlob, scheduleBlob) {
@@ -342,6 +355,7 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 					var dayOffset = 30 * i;
 
 					for (var j = startHourIndex; j <= endHourIndex; j++) {
+						// Multiplying by 2 to skip commas in the serialized format
 						var blobIndex = (j * 2) + dayOffset;
 						activityBlob = setCharAt(activityBlob, blobIndex, "0");
 					}

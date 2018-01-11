@@ -14,7 +14,7 @@ dateToCalendar = function (date) {
 };
 
 millisecondsToDate = function(milliseconds) {
-	if ( !(milliseconds) ) {
+	if (milliseconds == false || milliseconds == null) {
 		return "";
 	}
 	var d = new Date(milliseconds);

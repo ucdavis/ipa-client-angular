@@ -9,17 +9,24 @@
 					Assign {{ state.ui.viewType }}
 				</div>
 				<div>
-					<ipa-radio on-select="setViewType" radio-names="radioNames" active-radio="state.ui.viewType"></ipa-radio>
+					<ipa-radio
+						on-select="setViewType"
+						radio-names="radioNames"
+						active-radio="state.ui.viewType">
+					</ipa-radio>
 				</div>
 			</div>
 		</div>
 
 		<div class="support-staff-tab__row-container"
-		ng-repeat="supportStaff in state.supportStaffList"
-		ng-hide="supportStaff.isFiltered">
-			<staff-row state="state" support-staff="supportStaff"></staff-row>
+			ng-repeat="supportStaff in state.supportStaffList"
+			ng-hide="supportStaff.isFiltered">
+			<staff-row
+				state="state"
+				support-staff="supportStaff">
+			</staff-row>
 		</div>
 
 		<div class="support-staff-tab__spacer"></div>
-	</div>
+		</div>
 </div>
