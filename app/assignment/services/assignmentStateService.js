@@ -122,9 +122,12 @@ assignmentApp.service('assignmentStateService', function (
 
 					action.payload.studentSupportPreferences.forEach( function(preference) {
 						var supportStaff = supportStaffList.list[preference.supportStaffId];
-						preference.description = supportStaff.firstName + " " + supportStaff.lastName;
-						studentPreferences.list[preference.id] = preference;
-						studentPreferences.ids.push(preference.id);
+
+						if (supportStaff) {
+							preference.description = supportStaff.firstName + " " + supportStaff.lastName;
+							studentPreferences.list[preference.id] = preference;
+							studentPreferences.ids.push(preference.id);
+						}
 					});
 					return studentPreferences;
 				default:
@@ -559,10 +562,13 @@ assignmentApp.service('assignmentStateService', function (
 							})
 							.forEach(function (preference) {
 								var supportStaffDTO = angular.copy(supportStaffList.list[preference.supportStaffId]);
-								supportStaffDTO.priority = preference.priority;
 
-								sectionGroupsList[sectionGroup.id].aiAssignmentOptions.preferences.push(supportStaffDTO);
-								preferredSupportStaffIds.push(supportStaffDTO.id);
+								if (supportStaffDTO) {
+									supportStaffDTO.priority = preference.priority;
+
+									sectionGroupsList[sectionGroup.id].aiAssignmentOptions.preferences.push(supportStaffDTO);
+									preferredSupportStaffIds.push(supportStaffDTO.id);
+								}
 							});
 
 							var otherSupportStaffIds = supportStaffList.ids.slice();
