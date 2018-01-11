@@ -6,7 +6,7 @@
  * Service in the ipaClientAngularApp.
  */
 angular.module('sharedApp')
-	.service('dwService', function () {
+	.service('dwService', function ($http, $window, $q, $location) {
 		return {
 			termCodeDescriptions: {
 				'05': 'Summer Session 1',
