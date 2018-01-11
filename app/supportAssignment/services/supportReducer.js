@@ -500,16 +500,11 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 			newPageState.schedule = angular.copy(scope._state.schedule);
 			newPageState.ui = angular.copy(scope._state.ui);
 			newPageState.staffAssignmentOptions = angular.copy(scope._state.staffAssignmentOptions);
-			newPageState.supportAssignmentsUnique = supportSelectors.generateSupportAssignmentsUnique(
-																																			scope._state.supportAssignments,
-																																			scope._state.sectionGroups,
-																																			scope._state.courses);
-
+			newPageState.supportAssignmentsUnique = supportSelectors.generateSupportAssignmentsUnique(scope._state.supportAssignments, scope._state.sectionGroups, scope._state.courses);
 			newPageState.supportAssignments = supportSelectors.generateSupportAssignments(
 																																			scope._state.supportAssignments,
 																																			scope._state.sectionGroups,
 																																			scope._state.courses);
-
 			newPageState.supportStaffList = supportSelectors.generateSupportStaffList(
 																																			scope._state.supportAssignments,
 																																			scope._state.courses,
@@ -520,7 +515,6 @@ supportAssignmentApp.service('supportReducer', function ($rootScope, $log, suppo
 																																			scope._state.supportStaffPreferences,
 																																			scope._state.supportAppointments,
 																																			scope._state.ui);
-
 			newPageState.sectionGroups = supportSelectors.generateSectionGroups(
 																																			scope._state.supportAssignments,
 																																			scope._state.courses,
