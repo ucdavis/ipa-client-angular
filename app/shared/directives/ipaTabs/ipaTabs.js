@@ -2,8 +2,6 @@
 Example Usage:
 var tabNames = ['food', 'people', 'animals'];
 var activeTab = "food";
-
-
 <ipa-tabs
 	tab-names="tabNames"
 	active-tab="activeTab">
@@ -18,7 +16,8 @@ sharedApp.directive("ipaTabs", this.ipaTabs = function () {
 		scope: {
 			tabNames: '<',
 			activeTab: '<',
-			selectTab: '&'
+			selectTab: '&',
+			slim: '<?'
 		},
 		transclude: true,
 		link: function (scope, element, attrs) {
