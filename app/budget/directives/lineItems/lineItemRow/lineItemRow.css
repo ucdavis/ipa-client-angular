@@ -42,6 +42,14 @@
 }
 
 .line-item-row .amount-display {
+	flex: 3 0 0px;
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	justify-content: space-between;
+}
+
+.line-item-row .comment-display {
 	flex: 10 0 0px;
 	display: flex;
 	align-items: center;

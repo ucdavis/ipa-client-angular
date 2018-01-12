@@ -57,10 +57,36 @@
 			<budget-scenario-toolbar></budget-scenario-toolbar>
 		</div>
 
-		<budget-summary summary="view.state.selectedBudgetScenario.summary"></budget-summary>
+		<budget-nav
+			total-balance="view.state.selectedBudgetScenario.summary.totalBalance"
+			selected-route="view.state.ui.selectedRoute"
+			selected-budget-scenario="view.state.selectedBudgetScenario"
+			selected-line-items="view.state.ui.selectedLineItems">
+		</budget-nav>
 
-		<course-costs class="course-costs-container" selected-budget-scenario="view.state.selectedBudgetScenario" instructors="view.state.instructors"></course-costs>
+		<div class="page-content">
+			<budget-summary
+				ng-if="view.state.ui.selectedRoute == 'summary'"
+				summary="view.state.selectedBudgetScenario.summary"
+				budget="view.state.budget">
+			</budget-summary>
+			<course-costs
+				ng-if="view.state.ui.selectedRoute == 'courseCosts'"
+				class="course-costs-container"
+				selected-budget-scenario="view.state.selectedBudgetScenario"
+				instructors="view.state.instructors">
+			</course-costs>
+			<line-items
+				ng-if="view.state.ui.selectedRoute == 'lineItems'"
+				selected-budget-scenario="view.state.selectedBudgetScenario"
+				ui="view.state.ui">
+			</line-items>
+			<instructor-costs
+				ng-if="view.state.ui.selectedRoute == 'instructorCosts'"
+				selected-budget-scenario="view.state.selectedBudgetScenario"
+				instructors="view.state.instructors">
+			</instructor-costs>
+		</div>
 
-		<line-items selected-budget-scenario="view.state.selectedBudgetScenario" ui="view.state.ui"></line-items>
 	</div>
 </div>
