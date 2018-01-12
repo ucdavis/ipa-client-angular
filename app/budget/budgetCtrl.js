@@ -7,10 +7,6 @@ budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$locatio
 
 		$scope.currentUser = authService.getCurrentUser();
 
-		$scope.setRoute = function(selectedRoute) {
-			budgetActions.setRoute(selectedRoute);
-		};
-
 		$rootScope.$on('budgetStateChanged', function (event, data) {
 			$scope.view.state = data;
 

@@ -365,7 +365,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						lineItemCommentsModal: {
 							isOpen: false
 						},
-						tabNav: {
+						sectionNav: {
+							activeTab: "Summary",
+							allTabs: ["Summary", "Instructor Costs", "Course Costs", "Line Items"]
+						},
+						termNav: {
 							activeTab: "Summary",
 							allTabs: ["Summary", "Instructor Costs", "Course Costs", "Line Items"]
 						},
@@ -440,7 +444,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					ui.selectedTerm = action.payload.term;
 					return ui;
 				case SET_ROUTE:
-					ui.tabNav.activeTab = action.payload.selectedRoute;
+					ui.sectionNav.activeTab = action.payload.selectedRoute;
 					return ui;
 				case TOGGLE_SELECT_LINE_ITEM:
 					var lineItemId = action.payload.lineItem.id;

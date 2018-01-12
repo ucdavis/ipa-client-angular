@@ -10,6 +10,10 @@ budgetApp.directive("budgetNav", this.budgetNav = function ($rootScope, budgetAc
 			selectedLineItems: '<'
 		},
 		link: function(scope, element, attrs) {
+			scope.setRoute = function(selectedRoute) {
+				budgetActions.setRoute(selectedRoute);
+			};
+
 			scope.openAddLineItemModal = function() {
 				budgetActions.openAddLineItemModal();
 			};

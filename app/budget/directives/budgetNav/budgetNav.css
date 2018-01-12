@@ -1,16 +1,26 @@
 .budget-nav {
 	display: flex;
 	justify-content: space-between;
+	background-color: #F8F8F8;
+	border: 1px solid #CCCCCC;
+	border-radius: 3px;
 }
 
-.nav-items {
+.budget-nav__nav-container {
 	display: flex;
 }
 
-.side-bar {
+.budget-nav__nav-item {
+	padding: 13px 15px 13px 15px;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+
+.budget-nav__side-bar {
 	display: flex;
 }
 
-.selected-route {
+.budget-nav__nav-item--selected-route {
 	background-color: red;
 }

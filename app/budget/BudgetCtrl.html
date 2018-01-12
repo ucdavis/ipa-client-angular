@@ -56,44 +56,36 @@
 
 			<budget-scenario-toolbar></budget-scenario-toolbar>
 		</div>
-<!--
+
 		<budget-nav
 			total-balance="view.state.selectedBudgetScenario.summary.totalBalance"
-			selected-route="view.state.ui.selectedRoute"
+			selected-route="view.state.ui.sectionNav.activeTab"
 			selected-budget-scenario="view.state.selectedBudgetScenario"
 			selected-line-items="view.state.ui.selectedLineItems">
 		</budget-nav>
--->
 		<div class="page-content">
 			<div class="budget-main-view">
-				<ipa-tabs
-					slim="true"
-					tab-names="view.state.ui.tabNav.allTabs"
-					active-tab="view.state.ui.tabNav.activeTab"
-					select-tab="setRoute">
-
-					<budget-summary
-						ng-if="view.state.ui.tabNav.activeTab == 'Summary'"
-						summary="view.state.selectedBudgetScenario.summary"
-						budget="view.state.budget">
-					</budget-summary>
-					<course-costs
-						ng-if="view.state.ui.tabNav.activeTab == 'Course Costs'"
-						class="course-costs-container"
-						selected-budget-scenario="view.state.selectedBudgetScenario"
-						instructors="view.state.instructors">
-					</course-costs>
-					<line-items
-						ng-if="view.state.ui.tabNav.activeTab == 'Line Items'"
-						selected-budget-scenario="view.state.selectedBudgetScenario"
-						ui="view.state.ui">
-					</line-items>
-					<instructor-costs
-						ng-if="view.state.ui.tabNav.activeTab == 'Instructor Costs'"
-						selected-budget-scenario="view.state.selectedBudgetScenario"
-						instructors="view.state.instructors">
-					</instructor-costs>
-				</ipa-tabs>
+				<budget-summary
+					ng-if="view.state.ui.sectionNav.activeTab == 'Summary'"
+					summary="view.state.selectedBudgetScenario.summary"
+					budget="view.state.budget">
+				</budget-summary>
+				<course-costs
+					ng-if="view.state.ui.sectionNav.activeTab == 'Course Costs'"
+					class="course-costs-container"
+					selected-budget-scenario="view.state.selectedBudgetScenario"
+					instructors="view.state.instructors">
+				</course-costs>
+				<line-items
+					ng-if="view.state.ui.sectionNav.activeTab == 'Line Items'"
+					selected-budget-scenario="view.state.selectedBudgetScenario"
+					ui="view.state.ui">
+				</line-items>
+				<instructor-costs
+					ng-if="view.state.ui.sectionNav.activeTab == 'Instructor Costs'"
+					selected-budget-scenario="view.state.selectedBudgetScenario"
+					instructors="view.state.instructors">
+				</instructor-costs>
 			</div>
 		</div>
 	</div>
