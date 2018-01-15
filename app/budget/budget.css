@@ -2,6 +2,14 @@
 	padding: 20px;
 }
 
+.budget-view__nav-container {
+	margin-bottom: 10px;
+}
+
+/*
+	Incorrectly written CSS below
+*/
+
 .btn-default {
 	color: #303641;
 	background-color: white;

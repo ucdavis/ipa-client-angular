@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: space-between;
 	background-color: #F8F8F8;
-	border: 1px solid #CCCCCC;
+	border: 1px solid #e3e3e3;
 	border-radius: 3px;
 }
 
@@ -12,8 +12,15 @@
 
 .budget-nav__nav-item {
 	padding: 13px 15px 13px 15px;
-	font-size: 14px;
-	font-weight: 500;
+	font-size: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	border-right: 1px solid #e3e3e3;
+}
+
+.budget-nav__nav-item:not(.budget-nav__nav-item--active):hover {
+	background-color: #eee;
+	cursor: pointer;
 }
 
 
@@ -21,6 +28,7 @@
 	display: flex;
 }
 
-.budget-nav__nav-item--selected-route {
-	background-color: red;
+.budget-nav__nav-item--active {
+	cursor: default;
+	background-color: #e3e3e3;
 }
