@@ -370,8 +370,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 							allTabs: ["Summary", "Instructor Costs", "Course Costs", "Line Items"]
 						},
 						termNav: {
-							activeTab: "Summary",
-							allTabs: ["Summary", "Instructor Costs", "Course Costs", "Line Items"]
+							activeTab: null,
+							allTabs: null
 						},
 						isAddBudgetScenarioModalOpen: false,
 						isAddLineItemModalOpen: false,
@@ -416,6 +416,13 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					}
 
 					return ui;
+				case CALCULATE_SELECTED_SCENARIO:
+					ui.selectedBudgetScenario = action.payload.budgetScenarioId;
+					return ui;
+				case CALCULATE_SCENARIO_TERMS:
+					ui.termNav.allTabs = action.payload.allTermTabs;
+					ui.termNav.activeTab = action.payload.activeTermTab;
+					return ui;
 				case CREATE_BUDGET_SCENARIO:
 					// Set initial lineItemDetail UI states
 					action.payload.lineItems.forEach(function(lineItem) {
@@ -442,6 +449,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return ui;
 				case SELECT_TERM:
 					ui.selectedTerm = action.payload.term;
+					ui.termNav.activeTab = action.payload.activeTermTab;
 					return ui;
 				case SET_ROUTE:
 					ui.sectionNav.activeTab = action.payload.selectedRoute;

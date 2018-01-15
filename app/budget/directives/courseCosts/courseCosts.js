@@ -5,11 +5,16 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 		replace: true,
 		scope: {
 			selectedBudgetScenario: '<',
-			instructors: '<'
+			instructors: '<',
+			termNav: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.toggleCourseCostsSection = function() {
 				budgetActions.toggleCourseCostsSection();
+			};
+
+			scope.setActiveTerm = function(activeTermTab) {
+				budgetActions.selectTerm(activeTermTab);
 			};
 		} // end link
 	};

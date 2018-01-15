@@ -5,7 +5,8 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 		replace: true,
 		scope: {
 			selectedBudgetScenario: '<',
-			instructors: '<'
+			instructors: '<',
+			termNav: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.toggleCourseCostsSection = function() {
@@ -14,6 +15,10 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 
 			scope.openCourseComments = function(course) {
 				budgetActions.openAddCourseCommentsModal(course);
+			};
+
+			scope.setActiveTerm = function(activeTermTab) {
+				budgetActions.selectTerm(activeTermTab);
 			};
 		} // end link
 	};

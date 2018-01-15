@@ -1,54 +1,55 @@
 <div class="instructor-costs">
-	<term-selector
-		selected-term="selectedBudgetScenario.selectedTerm"
-		terms="selectedBudgetScenario.terms"
-		term-descriptions="selectedBudgetScenario.termDescriptions">
-	</term-selector>
+	<ipa-tabs
+		tab-names="termNav.allTabs"
+		active-tab="termNav.activeTab"
+		select-tab="setActiveTerm"
+		slim="true">
 
-	<!-- Header -->
-	<div class="course-costs-header">
-		<div class="instructors-header">
-			<div class="cell">
-				Instructor
-			</div>
-			<div class="cell">
-				Reg. Instructor
-			</div>
-			<div class="cell">
-				Reason
-			</div>
-			<div class="cell">
-				Instructor Cost
-			</div>
-			<div class="cell">
-				Comment
-			</div>
-		</div>
-
-		<div class="cell">
-			Total Cost
-		</div>
-	</div>
-
-	<!-- Courses -->
-	<div ng-repeat="course in selectedBudgetScenario.courses track by course.uniqueKey">
-		<div class="course-title">
-			<div>
-				{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
-			</div>
-		</div>
-		<div class="section-group-row" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
-			<div class="instructor-cost">
-				<instructor-cost-row
-					section-group-cost="sectionGroupCost"
-					instructors="instructors"
-					course="course">
-				</instructor-cost-row>
+		<!-- Header -->
+		<div class="course-costs-header">
+			<div class="instructors-header">
+				<div class="cell">
+					Instructor
+				</div>
+				<div class="cell">
+					Reg. Instructor
+				</div>
+				<div class="cell">
+					Reason
+				</div>
+				<div class="cell">
+					Instructor Cost
+				</div>
+				<div class="cell">
+					Comment
+				</div>
 			</div>
 
 			<div class="cell">
-				{{ sectionGroupCost.totalCostDisplay }}
+				Total Cost
 			</div>
 		</div>
-	</div>
+
+		<!-- Courses -->
+		<div ng-repeat="course in selectedBudgetScenario.courses track by course.uniqueKey">
+			<div class="course-title">
+				<div>
+					{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
+				</div>
+			</div>
+			<div class="section-group-row" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+				<div class="instructor-cost">
+					<instructor-cost-row
+						section-group-cost="sectionGroupCost"
+						instructors="instructors"
+						course="course">
+					</instructor-cost-row>
+				</div>
+
+				<div class="cell">
+					{{ sectionGroupCost.totalCostDisplay }}
+				</div>
+			</div>
+		</div>
+	</ipa-tabs>
 </div>

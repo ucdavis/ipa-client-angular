@@ -1,6 +1,8 @@
 budgetApp.service('budgetActions', function ($rootScope, $window, budgetService, budgetReducers) {
 	return {
 		getInitialState: function (workgroupId, year, selectedBudgetScenarioId, selectedTerm) {
+			var self = this;
+
 			budgetService.getInitialState(workgroupId, year).then(function (results) {
 				// Set a default active budget scenario if one was not set in local storage
 				if (!selectedBudgetScenarioId) {
@@ -20,6 +22,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 
 				budgetReducers.reduce(action);
+				self.calculateSelectedScenario();
+				self.calculateScenarioTerms();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
 			});
@@ -36,6 +40,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Created budget scenario", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 				self.selectBudgetScenario(results.budgetScenario.id);
+				self.calculateScenarioTerms();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not create budget scenario.", type: "ERROR" });
 			});
@@ -51,6 +56,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				$rootScope.$emit('toast', { message: "Deleted budget scenario", type: "SUCCESS" });
 				budgetReducers.reduce(action);
+				self.calculateSelectedScenario();
+				self.calculateScenarioTerms();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not delete budget scenario.", type: "ERROR" });
 			});
@@ -293,16 +300,28 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			};
 
 			budgetReducers.reduce(action);
+			self.calculateScenarioTerms();
 		},
-		selectTerm: function(term) {
-			var action = {
-				type: SELECT_TERM,
-				payload: {
-					term: term
-				}
+		selectTerm: function(termTab) {
+			var descriptionTerms = {
+				'Summer Session 1': '05',
+				'Summer Special Session': '06',
+				'Summer Session 2': '07',
+				'Summer Quarter': '08',
+				'Fall Semester': '09',
+				'Fall Quarter': '10',
+				'Winter Quarter': '01',
+				'Spring Semester': '02',
+				'Spring Quarter': '03'
 			};
 
-			budgetReducers.reduce(action);
+			budgetReducers.reduce({
+				type: SELECT_TERM,
+				payload: {
+					term: descriptionTerms[termTab],
+					activeTermTab: termTab
+				}
+			});
 		},
 		toggleSelectLineItem: function(lineItem) {
 			budgetReducers.reduce({
@@ -339,5 +358,67 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 			});
 		},
+		calculateSelectedScenario: function() {
+			var selectedScenarioId = angular.copy(budgetReducers._state.ui.selectedBudgetScenarioId);
+
+			// If a scenario is not already selected, default to first scenario
+			selectedScenarioId == selectedScenarioId || budgetReducers._state.budgetScenarios.ids[0];
+
+			budgetReducers.reduce({
+				type: CALCULATE_SELECTED_SCENARIO,
+				payload: {
+					budgetScenarioId: selectedScenarioId
+				}
+			});
+		},
+		calculateScenarioTerms: function() {
+			var selectedScenarioTerms = [];
+			var allTermTabs = [];
+			var activeTermTab = null;
+
+			var termDescriptions = {
+				'05': 'Summer Session 1',
+				'06': 'Summer Special Session',
+				'07': 'Summer Session 2',
+				'08': 'Summer Quarter',
+				'09': 'Fall Semester',
+				'10': 'Fall Quarter',
+				'01': 'Winter Quarter',
+				'02': 'Spring Semester',
+				'03': 'Spring Quarter'
+			};
+			var sortedTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
+
+			budgetReducers._state.sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
+				var sectionGroupCost = budgetReducers._state.sectionGroupCosts.list[sectionGroupCostId];
+
+				// Skip sectionGroupCost if it doesn't belong to the selected scenario
+				if (sectionGroupCost.budgetScenarioId != budgetReducers._state.ui.selectedBudgetScenarioId) {
+					return;
+				}
+
+				var term = sectionGroupCost.termCode.slice(-2);
+
+				if (selectedScenarioTerms.indexOf(term) == -1) {
+					selectedScenarioTerms.push(term);
+				}
+			});
+
+			sortedTerms.forEach(function(term) {
+				if (selectedScenarioTerms.indexOf(term) > -1) {
+					allTermTabs.push(termDescriptions[term]);
+					activeTermTab = activeTermTab || termDescriptions[term];
+				}
+			});
+
+			budgetReducers.reduce({
+				type: CALCULATE_SCENARIO_TERMS,
+				payload: {
+					allTermTabs: allTermTabs,
+					activeTermTab: activeTermTab,
+					selectedScenarioTerms: selectedScenarioTerms
+				}
+			});
+		}
 	};
 });

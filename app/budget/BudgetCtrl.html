@@ -75,7 +75,8 @@
 					ng-if="view.state.ui.sectionNav.activeTab == 'Course Costs'"
 					class="course-costs-container"
 					selected-budget-scenario="view.state.selectedBudgetScenario"
-					instructors="view.state.instructors">
+					instructors="view.state.instructors"
+					term-nav="view.state.ui.termNav">
 				</course-costs>
 				<line-items
 					ng-if="view.state.ui.sectionNav.activeTab == 'Line Items'"
@@ -85,7 +86,8 @@
 				<instructor-costs
 					ng-if="view.state.ui.sectionNav.activeTab == 'Instructor Costs'"
 					selected-budget-scenario="view.state.selectedBudgetScenario"
-					instructors="view.state.instructors">
+					instructors="view.state.instructors"
+					term-nav="view.state.ui.termNav">
 				</instructor-costs>
 			</div>
 		</div>
