@@ -1,3 +1,7 @@
+.student-availabilities {
+	margin-top: 30px;
+}
+
 .student-availabilities__header-container {
 	display: flex;
 	justify-content: space-between;
