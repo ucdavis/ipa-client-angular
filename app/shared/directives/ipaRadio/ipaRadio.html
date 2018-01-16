@@ -3,7 +3,7 @@
 		class="ipa-radio__option"
 		ng-repeat="radio in radioNames track by $index"
 		ng-click="triggerSelection(radio)"
-		ng-class="{ 'ipa-radio__option--active': radio == activeRadio }">
+		ng-class="{ 'ipa-radio__option--active': radio == activeRadio, 'ipa-radio__option--first': $first, 'ipa-radio__option--last': $last }">
 		{{ radio }}
 	</div>
 </div>

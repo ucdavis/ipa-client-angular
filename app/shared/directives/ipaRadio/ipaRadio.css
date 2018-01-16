@@ -26,9 +26,11 @@
 }
 
 .ipa-radio__option--first {
-	border-radius: 3px;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
 }
 
 .ipa-radio__option--last {
-	border-radius: 3px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
 }
