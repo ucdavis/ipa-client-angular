@@ -38,6 +38,8 @@
 	<!-- disabled state -->
 	<div class="ipa-button__container"
 		ng-class="{'ipa-button__container--wide': isWide }"
+		uib-tooltip="{{disabledTooltipMessage}}"
+		tooltip-placement="bottom"
 		ng-show="(isDisabled)">
 		<div class="ipa-button__content"
 			ng-class="{'ipa-button__content--slim': size == 'slim', 'ipa-button__content--wide': isWide }">

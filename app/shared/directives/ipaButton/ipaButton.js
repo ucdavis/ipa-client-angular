@@ -17,6 +17,7 @@ sharedApp.directive("ipaButton", this.ipaButton = function () {
 			onClick: '&?', // On click action
 			iconClass: '<?', // Provide classes for an icon, example: 'glyphicon glyphicon-trashcan'
 			isDisabled: '<?', // Boolean: activates disabled styles and deactivates click action
+			disabledTooltipMessage: '<?', // Will only show if button is disabled, overrides tooltipMessage
 			tooltipMessage: '<?',
 			confirmMessage: '<?', // Uses a confirm tooltip with the supplied message. Will also wrap the action into the confirm
 			text: '<?', // Displayed on body of button
