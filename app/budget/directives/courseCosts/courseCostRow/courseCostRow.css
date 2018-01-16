@@ -1,10 +1,10 @@
 .course-cost-row {
 	display: flex;
 	height: 100%;
+	background-color: #f6f6f6;
 }
 
 .course-cost-row { /* Override default user agent styling */
-	background-color: #F1F8FA;
 }
 
 .course-cost-row .cell {

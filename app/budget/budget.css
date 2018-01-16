@@ -35,71 +35,14 @@
 	border: 1px solid #D6D6D6;
 }
 
-.glyphicon-triangle-left {
-	transition: 0.1s linear;
-}
-.glyphicon-triangle-left-spin {
-	transform: rotate(-90deg);
-	
-}
-
-.panel-group i {
-	float: right;
-	display: inline-block;
-	line-height: 1.8;
-	font-size: 10px;
-}
-
 .add-budget-scenario .tool-icon {
 	margin: 0 5px 0px 5px;
 	padding: 0px;
 }
 
-.teaching-fund-panel {
-	widows: 100%;
-}
-
-.budget-summary {
-	align-self: center;
-}
-
-.budget-summary .table thead {
-	border-bottom: 1px solid #E5E5E5;
-}
-
-.budget-summary .table thead tr th {
-	font-weight: bold;
-}
-
-.budget-summary .budget-summary-title {
-	width: 35%;
-}
-
-.budget-summary .sum-total {
-	text-align: right;
-	vertical-align: middle;
-}
-
-.budget-summary .budget-summary-title button {
-	margin-left: 10px;
-}
-
-.budget-summary .table > tbody > tr > td, .table > tfoot > tr > td {
-	border-top: unset;
-}
-
-.budget-summary .total-balance thead{
-	border-top: 1px solid #E5E5E5 !important;
-	border-bottom: unset;
-}
-
 .flex-row {
 	display: flex;
 	flex-direction: row;
-}
-
-.bg-gray {
-	background-color: #f9f9f9;
 }
 
 .description {
@@ -121,10 +64,6 @@
 	max-width: 100%;
 }
 
-.testAb span {
-	text-decoration: underline;
-}
-
 [contenteditable]:focus {
 	outline: 1px solid #E5E5E5 !important;
 	background-color: #F9F9F9;
@@ -140,117 +79,6 @@
 	background-color: #F9F9F9;
 }
 
-.description .line-item-container:first-child {
-	padding-top: 20px !important;
-}
-
-.line-item-container {
-	padding: 10px 20px 10px 55px;
-}
-
-
-/* budget summary */
-.budget-pie-chart {
-	height: 250px;
-	align-self: center;
-	justify-content: center;
-	display: flex;
-	flex-wrap: wrap;
-}
-
-.budget-summary table {
-	font-size: 12px;
-}
-
-.budget-table {
-	margin-bottom: 0px !important;
-	border-bottom: unset;
-}
-
-.budget-table thead {
-	border-bottom: 3px solid #ebebeb;
-}
-
-.budget-table thead tr th{
-	background: white !important;
-}
-
-.budget-table thead tr th:first-child{
-	width: 3%;
-}
-
-.budget-table thead tr th:nth-child(3){
-	width: 60%;
-}
-
-.budget-table thead tr th:last-child{
-	width: 10%;
-}
-
-.budget-table > thead > tr > th, .table > tbody > tr > th, .budget-table > tfoot > tr > th, .budget-table > thead > tr > td, .budget-table > tbody > tr > td, .budget-table > tfoot > tr > td {
-	padding: 12px;
-	line-height: 2;
-}
-
-/* cash out - instructional */
-
-.cashout-instructional .course-title {
-	display: inline-block;
-	font-weight: bold;
-	margin: 0;
-	line-height: unset;
-}
-
-.cashout-instructional thead tr th {
-	font-weight: bold;
-	padding-bottom: 20px !important;
-	text-align: center;
-}
-
-.cashout-instructional tbody tr td{
-	border-bottom: 15px solid white;
-	border-top: unset !important;
-	text-align: center;
-	vertical-align: middle;
-}
-
-.cashout-instructional tbody tr td:nth-child(7) {
-	background-color: white !important;
-}
-
-
-.cashout-instructional tbody tr td:nth-child(1), .cashout-instructional td:nth-child(2), .cashout-instructional td:nth-child(3), .cashout-instructional td:nth-child(4), .cashout-instructional td:nth-child(5), .cashout-instructional td:nth-child(6) {
-	background-color: #F1F8FA;
-}
-
-.cashout-instructional tbody tr td:nth-child(8), .cashout-instructional td:nth-child(9), .cashout-instructional td:nth-child(10), .cashout-instructional td:nth-child(11) {
-	background-color: #FAF1F1;
-}
-
-.cashout-instructional tbody tr td:nth-child(12) {
-	background-color: white !important;
-}
-
-.cashout-instructional .course-title-row {
-	background-color: white !important;
-	border-bottom: 10px solid white;
-}
-
-.cashout-instructional .line-item-none {
-	background-color: #F5F5F5 !important;
-}
-
-
-.cashout-instructional .course-title-row i {
-	padding-left: 5px;
-	cursor: pointer;
-	float: unset;
-}
-
-.cashout-instructional .course-title-row i:hover {
-	color: lightslategray;
-}
-
 .btn-instr {
 	width: 100% !important;
 	background: #fff;
@@ -258,28 +86,11 @@
 	border-radius: 3px;
 }
 
-.instr-dropdown {
-	width: 5%;
-}
-
-.buyout-section {
-	max-width: 20%;
-}
-
 .btn-scenario-dropdown {
 	width: 100% !important;
 	background: #fff;
 	border: 1px solid #ccc;
 	border-radius: 3px;
-}
-
-/* cashout/ cashin budget-table*/
-.budget-table i {
-	line-height: 2.2;
-}
-
-.budget-table tr {
-	cursor: pointer;
 }
 
 /* modal */
@@ -311,64 +122,6 @@
 .budget-view .modal-footer .btn-submit {
 	background-color: #303641;
 	color: white;
-}
-
-
-.ta-reader-cost span {
-	text-decoration: unset !important;
-}
-
-.ta-reader-cost form {
-	width: 100%;
-	max-width: 300px;
-	margin: 30px auto;
-}
-.ta-reader-cost form input {
-	font-size: 14px;
-	padding: 0;
-	border: 1px solid #ccc;
-	border-left: 0;
-	width: 100%;
-	color: #666;
-	border-radius: 0px 4px 4px 0px;
-}
-.ta-reader-cost form input:focus {
-	outline: 0;
-}
-
-.ta-reader-cost .flex {
-	display: flex;
-	justify-content: flex-start;
-}
-
-.ta-reader-cost .flex .currency {
-	font-size: 14px;
-	padding: 0 10px 0 10px;
-	color: #999;
-	border: 1px solid #ccc;
-	border-right: 0;
-	line-height: 2.5;
-	border-radius: 4px 0 0 4px;
-	background: white;
-}
-
-.ta-reader-cost .amount-input {
-	border-radius: 0px 4px 4px 0px !important;
-	padding-right: 10px;
-	text-align: right;
-}
-
-.notes-modal .course-notes {
-	height:450px;
-	overflow-y: auto;
-	margin: 0px !important;
-}
-
-.notes-modal .editor-name {
-	font-size: 12px !important;
-	padding: 10px 15px;
-	line-height: 1.66;
-	float: right;
 }
 
 /* overwrite */
