@@ -1,0 +1,17 @@
+<div class="support-assignment-row">
+	<div class="support-assignment-row__text">
+		{{ name }}
+	</div>
+	<div class="support-assignment-row__delete">
+		<i class="btn glyphicon glyphicon-remove support-assignment-row__delete-icon"
+			ng-hide="readOnly"
+			uib-tooltip="Delete assignment"
+			confirm-button="deleteAssignment(supportAssignment)"
+			btn-class="btn-danger"
+			message="Are you sure you want to delete this assignment?"
+			yes="Delete"
+			no="Cancel"
+			placement="top">
+		</i>
+	</div>
+</div>

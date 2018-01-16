@@ -1,0 +1,12 @@
+<div class="ipa-checkbox">
+	<!-- enabled -->
+	<div ng-show="!(isDisabled)" class="ipa-checkbox-container" ng-click="onClick()">
+		<div class="ipa-checkbox__inner" ng-class="{ 'ipa-checkbox__inner--checked': isChecked }"></div>
+	</div>
+
+	<!-- disabled -->
+	<div ng-show="isDisabled" class="ipa-checkbox-container" ng-class="{ 'ipa-checkbox-container--disabled': isDisabled }">
+		<div class="ipa-checkbox__inner" ng-class="{ 'ipa-checkbox__inner--checked': isChecked }"></div>
+	</div>
+</div>
+

@@ -6,7 +6,7 @@
 	</div>
 	<div class="instructor-header__review">
 		<div ng-repeat="term in localState.supportReviewTerms">
-			<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ term }}">
+			<a ng-href="/supportAssignments/{{ workgroupId }}/{{ year }}/{{ term }}">
 				<button
 					class="btn btn-default instructor-header__button">Review {{ getTermDisplayName(term) }} TA Assignments
 				</button>

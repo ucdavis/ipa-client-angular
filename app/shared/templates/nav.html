@@ -136,20 +136,20 @@
 				</a>
 			</li>
 
-			<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport', 'opened': expanded == 'support' || (!expanded && currentBaseHref == 'instructionalSupport') }" 
+			<li ng-class="{ 'active': currentBaseHref == 'supportCalls' || currentBaseHref == 'supportAssignments', 'opened': expanded == 'support' || (!expanded && (currentBaseHref == 'supportCalls' || currentBaseHref == 'supportAssignments')) }" 
 				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('support')">
 					<i class="entypo-users"></i>
 					<span class="title">Support</span>
 				</a>
-				<ul ng-class="{ 'visible': expanded == 'support' || (!expanded && currentBaseHref == 'instructionalSupport') }">
-					<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport' && currentEndHref.length == 2}">
-						<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}">
+				<ul ng-class="{ 'visible': expanded == 'support' || (!expanded && (currentBaseHref == 'supportCalls' || currentBaseHref == 'supportAssignments')) }">
+					<li ng-class="{ 'active': currentBaseHref == 'supportAssignments' && currentEndHref.length == 2}">
+						<a ng-href="/supportAssignments/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}">
 							Support Assignments
 						</a>
 					</li>
-					<li ng-class="{ 'active': currentBaseHref == 'instructionalSupport' && currentEndHref == 'supportCallStatus'}">
-						<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}/supportCallStatus">
+					<li ng-class="{ 'active': currentBaseHref == 'supportCalls' }">
+						<a ng-href="/supportCalls/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}">
 							Support Calls
 						</a>
 					</li>

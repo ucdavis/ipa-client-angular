@@ -1,0 +1,58 @@
+<div class="student-preference-selector">
+	<div class="clickable student-preference-selector__toggle-button"
+		data-toggle="dropdown"
+		aria-haspopup="true"
+		aria-expanded="false">
+		Add Preference...
+	</div>
+	<ul class="student-preference-selector__dropdown dropdown-menu">
+		<li class="dropdown-header"
+			ng-show="state.potentialPreferences.associateInstructors.length > 0"
+			stop-event="click">
+			<b>Associate Instructor Positions</b>
+		</li>
+		<li class="clickable"
+			ng-repeat="preference in state.potentialPreferences.associateInstructors"
+			ng-click="addPreference(preference, 'associateInstructor')">
+			<a class="small">
+				<span class="course-filter-item">
+					{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}}
+				</span>
+			</a>
+		</li>
+
+		<li class="dropdown-header"
+			ng-show="state.potentialPreferences.teachingAssistants.length > 0"
+			stop-event="click">
+			<b>Teaching Assistant Positions</b>
+		</li>
+		<li class="clickable"
+			ng-repeat="preference in state.potentialPreferences.teachingAssistants"
+			ng-click="addPreference(preference, 'teachingAssistant')">
+			<a class="small">
+				<span class="course-filter-item">
+					{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}}
+				</span>
+			</a>
+		</li>
+
+		<li class="dropdown-header"
+			ng-show="state.potentialPreferences.readers.length > 0"
+			stop-event="click">
+			<b>Reader Positions</b>
+		</li>
+		<li class="clickable"
+			ng-repeat="preference in state.potentialPreferences.readers"
+			ng-click="addPreference(preference, 'reader')">
+			<a class="small">
+				<span class="course-filter-item">
+					{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern}}
+				</span>
+			</a>
+		</li>
+		<li class="dropdown-header student-preference-selector__empty-message"
+			ng-show="state.potentialPreferences.readers.length == 0 && state.potentialPreferences.teachingAssistants.length == 0 && state.potentialPreferences.associateInstructors.length == 0">
+			No courses available
+		</li>
+	</ul>
+</div>

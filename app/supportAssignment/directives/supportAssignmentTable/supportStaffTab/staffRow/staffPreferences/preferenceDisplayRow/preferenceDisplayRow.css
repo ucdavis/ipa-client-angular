@@ -1,0 +1,19 @@
+.preference-display-row {
+	width: 80%;
+	border: 1px solid #ddd;
+	padding: 10px 15px;
+	font-weight: bold;
+	color: #555;
+	margin-bottom: 20px;
+	margin-left: 80px;
+	display: flex;
+	justify-content: space-between;
+	background-color: #F8F8F8;
+}
+
+.preference-display-row__text {
+	display: flex;
+	align-items: center;
+	cursor: default;
+	min-height: 31px;
+}

@@ -1,0 +1,36 @@
+.student-form-review {
+	margin-left: 20px;
+	display: flex;
+	flex-flow: column;
+}
+
+.student-form-review__row {
+	display: flex;
+	padding-left: 10px;
+	margin-bottom: 10px;
+	justify-content: flex-start;
+	align-items: center;
+	cursor: default;
+}
+
+.student-form-review__header {
+	display: flex;
+	justify-content: center;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.student-form-review__footer {
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	font-weight: bold;
+}
+
+.student-form-review__icon {
+	padding-right: 5px;
+}
+
+.student-form-review__check {
+	color: green;
+}

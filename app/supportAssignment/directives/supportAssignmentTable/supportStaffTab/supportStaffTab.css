@@ -1,0 +1,25 @@
+.support-staff-tab__row-container {
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.support-staff-tab__right-header {
+	justify-content: space-between;
+}
+
+.support-staff-tab__header-small {
+	width: 250px;
+	display: flex;
+	align-items: center;
+	padding-left: 20px;
+}
+
+.support-staff-tab__spacer {
+	padding-bottom: 10px;
+}
+
+
+.support-staff-tab__assigned-header {
+	padding-left: 115px;
+}

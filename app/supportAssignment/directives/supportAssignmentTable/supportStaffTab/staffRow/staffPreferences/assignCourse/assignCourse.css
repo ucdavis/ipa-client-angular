@@ -1,0 +1,95 @@
+.assign-course {
+	width: 80%;
+	border: 1px solid #ddd;
+	font-weight: bold;
+	color: #555;
+	margin-bottom: 20px;
+	background-color: #F8F8F8;
+	cursor: pointer;
+	position: relative;
+}
+
+.assign-course__container {
+	width: 100%;
+	padding: 10px 15px;
+	display: flex;
+}
+
+.assign-course__text {
+	display: flex;
+	align-items: center;
+}
+
+.assign-course__dropdown-container {
+	position: absolute;
+	width: 100%;
+}
+
+.assign-course__dropdown {
+	position: relative;
+	width: 100%;
+	z-index: 30;
+	background-color: white;
+	margin-top: 4px;
+	border: 1px solid rgba(27,31,35,0.15);
+	border-radius: 3px;
+	box-shadow: 0 3px 12px rgba(27,31,35,0.15);
+	max-height: 300px;
+	overflow-y: scroll;
+}
+
+.assign-course:hover {
+	border-color: #bab9b9
+}
+
+.assign-course__dropdown-item {
+	background-color: #fff;
+	padding-left: 15px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	padding-right: 8px;
+	border-bottom: 1px solid #eaecef;
+	cursor: pointer;
+	font-weight: normal;
+	display: flex;
+}
+
+.assign-course__dropdown-item:hover {
+	background-color: #f4f4f4;
+}
+
+.assign-course__dropdown-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 20;
+	display: block;
+	width: 100vw;
+	height: 100vh;
+}
+
+.assign-course__dropdown-group-name {
+	color: #8d8b8b;
+	padding-left: 15px;
+	padding-top: 15px;
+	border-bottom: 1px solid #eaecef;
+	padding-bottom: 5px;
+	cursor: default;
+}
+
+.assign-course__scheduling-conflict-icon {
+	color: #21A9E1;
+	width: 5%;
+}
+
+.assign-course__priority-icon {
+	width: 5%;
+}
+
+.assign-course__description {
+	width: 90%;
+}
+
+.assign-course__dropdown-item--schedule-conflict {
+	color: #a5a5a5;
+}

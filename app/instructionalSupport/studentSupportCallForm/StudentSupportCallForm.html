@@ -1,0 +1,45 @@
+<nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
+<div></div>
+
+<ipa-header page-title="Support Call"></ipa-header>
+
+<div class="student-support-call-form">
+	<spinner
+		class="student-support-call-form__loading-spinner"
+		ng-if="!view.state"
+		size="20">
+	</spinner>
+
+	<!-- handle lack of access -->
+	<div ng-show="view.state && !view.state.supportCallResponse">
+		<div class="jumbotron student-support-call-form__no-access">
+			<p class="lead">You have not been invited to a support call in this term.</p>
+			<br />
+			<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
+		</div>
+	</div>
+
+	<div ng-if="view.state">
+		<!-- Modals -->
+		<ipa-modal
+			is-visible="view.state.ui.isPreferenceCommentModalOpen"
+			header-text="Add Preference Comment">
+				<modal-preference-comments ng-if="view.state.ui.isPreferenceCommentModalOpen" state="view.state" is-visible="view.state.ui.isPreferenceCommentModalOpen"></modal-preference-comments>
+		</ipa-modal>
+	</div>
+
+	<div ng-show="view.state && view.state.supportCallResponse" class="student-support-call-form__container">
+		<div class="student-support-call-form__page">
+			<div class="student-support-call-form__main">
+				<confirm-eligible support-call-response="view.state.supportCallResponse"></confirm-eligible>
+				<student-preferences state="view.state"></student-preferences>
+				<student-availabilities state="view.state"></student-availabilities>
+				<student-qualifications support-call-response="view.state.supportCallResponse"></student-qualifications>
+				<student-comments support-call-response="view.state.supportCallResponse"></student-comments>
+			</div>
+			<div class="student-support-call-form__sidebar">
+				<student-form-review state="view.state"></student-form-review>
+			</div>
+		</div>
+	</div>
+</div>

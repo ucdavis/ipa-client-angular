@@ -49,6 +49,16 @@ module.exports = function (grunt) {
 				src: ['teachingCall/**/*.html'],
 				dest: '<%= folders.webapp.build %>/js/teachingCallTemplates.js'
 			},
+			supportCallApp: {
+				cwd: '<%= folders.webapp.root %>',
+				src: ['supportCall/**/*.html'],
+				dest: '<%= folders.webapp.build %>/js/supportCallTemplates.js'
+			},
+			supportAssignmentApp: {
+				cwd: '<%= folders.webapp.root %>',
+				src: ['supportAssignment/**/*.html'],
+				dest: '<%= folders.webapp.build %>/js/supportAssignmentTemplates.js'
+			},
 			courseApp: {
 				cwd: '<%= folders.webapp.root %>',
 				src: ['course/**/*.html'],
@@ -217,6 +227,22 @@ module.exports = function (grunt) {
 					'<%= ngtemplates.teachingCallApp.dest %>'
 				],
 				dest: '<%= folders.webapp.build %>/js/teachingCallApp.js'
+			},
+			jsSupportCall: {
+				src: [
+					'<%= folders.webapp.root %>/supportCall/*.js',
+					'<%= folders.webapp.root %>/supportCall/**/*.js',
+					'<%= ngtemplates.supportCallApp.dest %>'
+				],
+				dest: '<%= folders.webapp.build %>/js/supportCallApp.js'
+			},
+			jsSupportAssignment: {
+				src: [
+					'<%= folders.webapp.root %>/supportAssignment/*.js',
+					'<%= folders.webapp.root %>/supportAssignment/**/*.js',
+					'<%= ngtemplates.supportAssignmentApp.dest %>'
+				],
+				dest: '<%= folders.webapp.build %>/js/supportAssignmentApp.js'
 			},
 			// schedulingApp module files
 			jsScheduling: {
@@ -394,6 +420,7 @@ module.exports = function (grunt) {
 									'teaching-call-modal.css', 'teaching-call-status.css', 'teaching-call.css',
 									'teachingCallResponseReport.css', 'workgroup.css', 'instructionalSupportCallConfig.css',
 									'instructionalSupportCallStatus.css', 'workgroupSummary.css',
+									'instructorSupportCallForm.css',
 									'adminApp.js', 'assignmentApp.js', 'budgetApp.js', 'courseApp.js', 'registrarReconciliationReportApp.js',
 									'scheduleSummaryReportApp.js', 'schedulingApp.js', 'sharedApp.js', 'summaryApp.js',
 									'teachingCallApp.js', 'teachingCallResponseReportApp.js', 'workgroupApp.js',
@@ -410,6 +437,8 @@ module.exports = function (grunt) {
 								'<%= folders.webapp.build %>/scheduling.html',
 								'<%= folders.webapp.build %>/summary.html',
 								'<%= folders.webapp.build %>/teachingCall.html',
+								'<%= folders.webapp.build %>/supportCall.html',
+								'<%= folders.webapp.build %>/supportAssignment.html',
 								'<%= folders.webapp.build %>/teachingCallResponseReport.html',
 								'<%= folders.webapp.build %>/workgroup.html']
 				}
@@ -449,6 +478,8 @@ module.exports = function (grunt) {
 							'^/assignments.* /assignment.html [L]',
 							'^/instructionalSupport.* /instructionalSupport.html [L]',
 							'^/teachingCalls.* /teachingCall.html [L]',
+							'^/supportCalls.* /supportCall.html [L]',
+							'^/supportAssignments.* /supportAssignment.html [L]',
 							'^/scheduling.* /scheduling.html [L]',
 							'^/registrarReconciliationReport.* /registrarReconciliationReport.html [L]',
 							'^/scheduleSummaryReport.* /scheduleSummaryReport.html [L]',
@@ -490,10 +521,11 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('build', ['clean', 'eslint', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsProdSnippets',
 		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsBudget', 'concat:jsInstructionalSupport', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsTeachingCall',
-		'concat:jsRegistrarReconciliationReport', 'concat:jsScheduleSummaryReport', 'concat:jsTeachingCallResponseReport', 'concat:cssLib', 'concat:cssShared', 'uglify:dist', 'cssmin', 'cachebreaker']);
+		'concat:jsSupportCall', 'concat:jsSupportAssignment', 'concat:jsRegistrarReconciliationReport', 'concat:jsScheduleSummaryReport', 'concat:jsTeachingCallResponseReport', 'concat:cssLib', 'concat:cssShared', 'uglify:dist', 'cssmin', 'cachebreaker']);
 
 	grunt.registerTask('serve', ['clean', 'eslint', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsDevSnippets',
-		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsBudget', 'concat:jsInstructionalSupport', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsTeachingCall', 'concat:jsScheduling', 'concat:jsRegistrarReconciliationReport',
+		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsBudget', 'concat:jsInstructionalSupport', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsTeachingCall', 'concat:jsSupportCall',
+		'concat:jsSupportAssignment', 'concat:jsScheduling', 'concat:jsRegistrarReconciliationReport',
 		'concat:jsScheduleSummaryReport', 'concat:jsTeachingCallResponseReport', 'concat:cssLib', 'concat:cssShared', 'cachebreaker', 'connect', 'watch']);
 
 	grunt.registerTask('default', ['serve']);

@@ -1,0 +1,8 @@
+<div class="student-comments" ng-show="supportCallResponse.collectGeneralComments">
+	<h5>Comments</h5>
+	<textarea
+		class="student-comments__text"
+		ng-model="supportCallResponse.generalComments"
+		auto-input on-blur="updateStudentComments()">
+	</textarea>
+</div>

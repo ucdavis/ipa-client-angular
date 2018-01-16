@@ -1,0 +1,285 @@
+<div style="user-select: none; display: block; overflow-y: hidden;" id="modal-1" class="modal">
+	<!-- modal page 1 -->
+	<div class="add-support-call-modal modal-dialog teaching-call--width">
+		<div class="modal-content">
+			<div class="modal-header teaching-call--header_style">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="dismiss()">×</button>
+				<h4 class="modal-title">
+					Add
+					<span ng-if="supportCallConfigData.mode == 'instructor'">Instructors</span>
+					<span ng-if="supportCallConfigData.mode == 'supportStaff'">Support Staff</span>
+				</h4>
+			</div>
+			<!-- modal-body -->
+			<div class="modal-body">
+
+				<div class="row flex-box container-fluid">
+					<!-- faculty member info-->
+					<div class="add-support-call--info_style">
+						<h5 style="margin-top: 0px;">
+							<span ng-if="supportCallConfigData.mode == 'instructor'">Instructors</span>
+							<span ng-if="supportCallConfigData.mode == 'supportStaff'">Support Staff</span>
+						</h5>
+
+						<div style="padding-left: 0px; width: 100%; padding-bottom: 10px;" class="btn-group">
+							<!-- Add Instructors Button -->
+							<label  
+							ng-if="areAllInstructorsInvited() == false && supportCallConfigData.mode == 'instructor'"
+							class="instructor-toggle-btn btn btn-sm"
+							style="width: 50%;" id="courses-pivot"
+							ng-click="inviteInstructors()">
+								Add Instructors
+							</label>
+							<label  
+							ng-if="areAllInstructorsInvited()  && supportCallConfigData.mode == 'instructor'"
+							disabled class="instructor-toggle-btn btn btn-sm disabled"
+							uib-tooltip="All Instructors Added"
+							style="width: 50%;" id="courses-pivot">
+								Add Instructors
+							</label>
+
+							<!-- Add Masters Button -->
+							<label  
+							ng-if="areAllMastersInvited() == false && supportCallConfigData.mode == 'supportStaff'"
+							class="instructor-toggle-btn btn btn-sm"
+							style="width: 33%;" id="courses-pivot"
+							ng-click="inviteMasters()">
+								Add Masters
+							</label>
+							<label  
+							ng-if="areAllMastersInvited() && supportCallConfigData.mode == 'supportStaff'"
+							disabled class="instructor-toggle-btn btn btn-sm disabled"
+							uib-tooltip="All Masters Added"
+							style="width: 33%;" id="courses-pivot">
+								Add Masters
+							</label>
+
+							<!-- Add Phds Button -->
+							<label  
+							ng-if="areAllPhdsInvited() == false && supportCallConfigData.mode == 'supportStaff'"
+							class="instructor-toggle-btn btn btn-sm"
+							style="width: 33%;" id="courses-pivot"
+							ng-click="invitePhds()">
+								Add PhDs
+							</label>
+							<label  
+							ng-if="areAllPhdsInvited() && supportCallConfigData.mode == 'supportStaff'"
+							disabled class="instructor-toggle-btn btn btn-sm disabled"
+							uib-tooltip="All Phd Added"
+							style="width: 33%;" id="courses-pivot">
+								Add PhDs
+							</label>
+
+							<!-- Add Non-Departmental Button -->
+							<label  
+							ng-if="areAllInstructionalSupportInvited() == false && supportCallConfigData.mode == 'supportStaff'"
+							class="instructor-toggle-btn btn btn-sm"
+							style="width: 34%;" id="courses-pivot"
+							ng-click="inviteInstructionalSupport()">
+								Add Instr. Support
+							</label>
+							<label  
+							ng-if="areAllInstructionalSupportInvited() && supportCallConfigData.mode == 'supportStaff'"
+							disabled class="instructor-toggle-btn btn btn-sm disabled"
+							uib-tooltip="All Instructional Support Added"
+							style="width: 34%;" id="courses-pivot">
+								Add Instr. Support
+							</label>
+
+						</div>
+
+						<div rows="5" class="overflow-auto flex flex-wrap padding-sm instructor-box">
+							<div class="instructor-list">
+								<div ng-repeat="participant in supportCallConfigData.participantPool" 
+										ng-click="toggleParticipant(participant)" class="label label-default instructor-tag"
+										ng-class="{'label-toggleout': !participant.invited }">
+										{{ participant.lastName }}, {{ participant.firstName }}
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- faculty member info ends-->
+
+					<!-- select dates&terms section-->
+					<div class="teaching-call--info_style container-fluid">
+						<h5 style="margin-top: 0px;">Due Date</h5>
+						<ipa-date-picker>
+						</ipa-date-picker>
+						<div>
+							<ul style="list-style: none; padding-left: 0px; margin-bottom: 0px;">
+								<li role="menuitem" ng-click="toggleAllowSubmissionAfterDueDate()" class="allow-submission-row">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.allowSubmissionAfterDueDate }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Allow submission after due date</label>
+										</div>
+								</li>
+
+								<li class="min-preferences-container" role="menuitem"
+										ng-if="supportCallConfigData.mode == 'supportStaff'">
+									<input class="min-preferences-input" ng-model="supportCallConfigData.minimumNumberOfPreferences">
+									<div class="min-preferences-label">Minimum number of preferences</div>
+								</li>
+
+								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectGeneralComments()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectGeneralComments }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect general comments</label>
+										</div>
+								</li>
+
+								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectTeachingQualifications()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectTeachingQualifications }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect teaching qualifications</label>
+										</div>
+								</li>
+
+								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectPreferenceComments()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectPreferenceComments }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect preference comments</label>
+										</div>
+								</li>
+
+								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleRequirePreferenceComments()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.requirePreferenceComments }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Require preference comments</label>
+										</div>
+								</li>
+
+								<li class="modal-add-support-call__checkbox-row" ng-if="supportCallConfigData.mode == 'supportStaff'">
+									<div class="modal-add-support-call__checkbox">
+										<ipa-checkbox
+											is-checked="supportCallConfigData.collectAvailabilityByGrid"
+											click-action="toggleCollectAvailabilityByGrid()">
+										</ipa-checkbox>
+									</div>
+									<div class="modal-add-support-call__checkbox-label"
+										ng-click="toggleCollectAvailabilityByGrid()">
+											Collect availability
+									</div>
+								</li>
+
+								<li class="modal-add-support-call__checkbox-row" ng-if="supportCallConfigData.mode == 'supportStaff'">
+									<div class="modal-add-support-call__checkbox">
+										<ipa-checkbox
+											is-checked="supportCallConfigData.collectAvailabilityByCrn"
+											click-action="toggleCollectAvailabilityByCrn()"
+											is-disabled="!(supportCallConfigData.collectAvailabilityByGrid)">
+										</ipa-checkbox>
+									</div>
+									<div class="modal-add-support-call__checkbox-label"
+										ng-show="supportCallConfigData.collectAvailabilityByGrid"
+										ng-click="toggleCollectAvailabilityByCrn()">
+											Collect availability (via CRN)
+									</div>
+									<div class="modal-add-support-call__checkbox-label modal-add-support-call__checkbox-label--disabled"
+										ng-show="!(supportCallConfigData.collectAvailabilityByGrid)">
+											Collect availability (via CRN)
+									</div>
+
+								</li>
+
+								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectEligibilityConfirmation()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectEligibilityConfirmation }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect eligibility confirmations</label>
+										</div>
+								</li>
+
+								<li class="modal-add-support-call__item-divider" ng-if="supportCallConfigData.mode == 'supportStaff'">
+								</li>
+
+								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectTeachingAssistantPreferences()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectTeachingAssistantPreferences }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect teaching assistant preferences</label>
+										</div>
+								</li>
+
+								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectReaderPreferences()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectReaderPreferences }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect reader preferences</label>
+										</div>
+								</li>
+
+								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectAssociateInstructorPreferences()">
+										<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+											ng-class="{ 'checked': supportCallConfigData.collectAssociateInstructorPreferences }">
+											<label class="cb-wrapper">
+												<div class="checked"></div>
+											</label>
+											<label>Collect associate instructor preferences</label>
+										</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- select date section ends-->
+				</div>
+			</div>
+
+			<div class="modal-footer modal-footer--teaching-call" style="padding-top: 0px;">
+				<div class="email-style container-fluid">
+					<div class="checkbox" style="display: flex; ">
+						<div ng-click="toggleSendEmails()">
+								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+									ng-class="{ 'checked': supportCallConfigData.sendEmails }">
+									<label class="cb-wrapper">
+										<div class="checked"></div>
+									</label>
+									<label>Send E-mail</label>
+								</div>
+						</div>
+					</div>
+					<textarea ng-if="supportCallConfigData.sendEmails == true" ng-bind-html="supportCallConfigData.message"
+					class="form-control support-call-message-input" placeholder="" rows="5" id="comment"
+					style="height: 99px;"></textarea>
+				</div>
+
+				<!-- send buttons -->
+				<button ng-if="isAddFormComplete() == true && supportCallConfigData.sendEmails"
+								type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Send Support Call</button>
+				<button ng-if="isAddFormComplete() == false && supportCallConfigData.sendEmails"
+								tooltip-placement="left" uib-tooltip="You must select at least one instructor and preference type" type="button"
+								class="disabled btn btn-info neon-dark-confirm-btn">Send Support Call</button>
+
+				<!-- start buttons (no email) -->
+				<button ng-if="isAddFormComplete() == true && !supportCallConfigData.sendEmails"
+								type="button" class="btn neon-dark-confirm-btn" ng-click="submit()">Start Support Call</button>
+				<button ng-if="isAddFormComplete() == false && !supportCallConfigData.sendEmails"
+								tooltip-placement="left" uib-tooltip="You must select at least one instructor and preference type" type="button"
+								class="disabled btn btn-info neon-dark-confirm-btn">Start Support Call</button>
+
+			</div>
+			<!-- modal-footer ends -->
+			
+		</div>
+	</div><!-- modal page 1 ends -->
+</div>

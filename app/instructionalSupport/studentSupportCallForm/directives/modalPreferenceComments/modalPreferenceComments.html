@@ -1,0 +1,23 @@
+<div class="delete-course-modal">
+		<div class="modal-preferenc-comments__body">
+			<div class="modal-preference-comments__label">
+				{{ preference.subjectCode }} {{ preference.courseNumber }} Comment:
+			</div>
+			<textarea class="modal-preference-comments__input"
+				ng-model="preference.comment">
+			</textarea>
+		</div>
+
+		<div class="modal-preference-comments__footer">
+			<button class="modal-preference-comments__cancel-button"
+				ng-click="close()"
+				type="button">
+				Cancel
+			</button>
+			<button class="modal-preference-comments__confirm-button"
+				ng-click="submitForm()"
+				type="button">
+				Save
+			</button>
+		</div>
+</div>

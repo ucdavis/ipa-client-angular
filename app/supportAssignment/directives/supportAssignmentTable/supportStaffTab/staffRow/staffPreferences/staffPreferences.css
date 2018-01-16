@@ -1,0 +1,22 @@
+.staff-preferences {
+	padding: 20px;
+}
+
+.staff-preferences__assignment {
+	display: flex;
+	justify-content: center;
+}
+
+.staff-preferences__title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.staff-preferences__review-header {
+	font-size: 12px;
+	font-weight: 700;
+	color: rgb(85, 85, 85);
+	padding-left: 80px;
+	padding-bottom: 15px;
+}

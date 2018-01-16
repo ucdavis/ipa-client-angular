@@ -1,243 +1,29 @@
-.student-form-header {
-    text-align: center;
-    padding-bottom: 5px;
-    border-bottom: 2px solid rgb(235, 235, 235);
-    padding-bottom: 25px;
-}
-
-.flex-row {
-    display: flex;
-    flex-basis: row;
-}
-
-.student-requirement {
-    flex: 0 1 30%;
-}
-
-.student-requirement h4 {
-    margin-top: 20px;
-}
-
-.empty-flex-box_student-course {
-    flex: 0 1 20%;
-}
-
-.student-course-requirement {
-    color: #2c7ea1;
-    right: 75%;
-    top: -1px;
-    position: absolute;
-}
-
-.student-course_add {
-    height: 30px !important;
-    padding: 6px !important;
-    line-height: 17.15px !important;
-    width: 45%;
-}
-
-.student-course-container {
-    display: flex;
-    flex: 1 1 40%;
-    flex-direction: column;
-    margin-top: 11px;
-}
-
-.student-course_title {
-    margin-bottom: 2px !important;
-}
-
-.religibility-checkbox {
-    margin-top: 15px;
-}
-
-.religibility-checkbox label {
-    font-size: 8.5pt;
-    color: black;
-}
-
-.course-preference-selector {
-    width: 45%;
-}
-
-.course-preference-selector .selectboxit .selectboxit-option-icon-container {
-    margin-left: 23%;
-}
-
-.input-box-container {
-    border-top: 1px solid #EBEBEB;
-}
-
-.input-box-section {
-    display: flex;
-}
-
-.input-box-area {
-    flex: 0 1 47.5%;
-    margin-bottom: 35px;
-}
-
-.empty-flex-box_input-box {
-    flex: 0 1 5%;
-}
-
-.due-day-header {
-    margin-bottom: 34px;
-}
-
-
-/* overwrite */
-
-.row {
-    margin-left: 0px;
-    margin-right: 0px;
-}
-
-.main-content {
-    display: block !important;
-}
-
-textarea.form-control {
-    height: 180px;
-}
-
-.popover-content {
-    color: gray;
-}
-
-.panel-options-drop_down {
-    width: 60px;
-    text-align: center;
-    background: none !important;
-    padding: 5px;
-}
-
-.panel-heading .panel-options {
-    padding: 5px 0px 5px 0px;
-}
-
-.panel-primary>.panel-heading>.panel-options>a {
-    padding: 0px;
-    margin: 0px;
-}
-
-
-/* Comments btn */
-
-.comments-btn {
-    flex: 0 1 auto;
-    align-self: center;
-    margin-left: 10px;
-}
-
-.comments-btn i {
-    font-size: 12pt;
-    color: #95989A;
-}
-
-.comments-btn span {
-    color: #95989A;
-}
-
-.checkbox-inline input {
-    /* fix check mark icon position */
-    top: -3px !important;
-}
-
-h4, .h4 {
-    font-size: 15px;
-}
-
-.sortable-instructor-preferences {
-	list-style: none;
-	margin-bottom: 0px;
-}
-
-.sortable-instructor-preference-placeholder,
-.sortable-student-preference-placeholder {
-	width: 20px;
-	height: 50px;
-}
-
-.student-preference-selector {
-	margin-left: 20px;
-	width: 200px;
-	position: relative;
-	height: 30px;
-	border: 1px solid #ebebeb;
-	border-radius: 4px;
-	display: flex;
-	align-items: center;
-}
-
-.student-support-call-form .student-preference-selector {
-	margin-left: 63px;
-	width: 38%;
-	height: 30px;
-	border: 1px solid #ebebeb;
-	border-radius: 4px;
-	display: flex;
-	align-items: center;
-}
-
 .student-support-call-form {
-	color: black;
+	padding: 10px 20px 10px 20px;
 }
 
-.student-support-call-form .student-course-section {
-	display: flex;
-	margin-bottom: 17px;
+.student-support-call-form__loading-spinner {
+	padding-top: 200px;
 }
 
-.student-support-call-form .sortable-student-preferences {
-	list-style: none;
-	margin-bottom: 0px;
-}
-
-.student-support-call-form .move-course-icon {
-	font-size: 12pt;
-	color: #373e4a;
-	cursor: pointer;
-}
-
-.student-support-call-form .student-course {
+.student-support-call-form__no-access {
+	text-align: center;
+	height: 100%;
 	background-color: white;
-	display: flex;
-	align-items: center;
-	width: 45%;
-	line-height: .9em;
-	flex: 0 1 auto;
 }
 
-.student-support-call-form .student-course-remove {
-	color: #000;
+.student-support-call-form__main {
+	flex: 3 0 0px;
 }
 
-.student-support-call-form .student-course-info {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding-left: 7%;
-	padding-right: 7%;
-	border-radius: 4px;
-	border: 1px solid #adadad;
-	height: 50px;
+.student-support-call-form__sidebar {
+	flex: 1 0 0px;
+}
+
+.student-support-call-form__container {
 	width: 100%;
 }
 
-.student-support-call-form .student-preference {
-	font-size: 8pt;
-	color: rgba(44, 126, 161, 0.7);
-}
-
-.preference-comments-ui {
-	cursor: pointer;
-}
-
-.comments-btn i.preference-comment-submitted {
-	color: black;
-}
-
-.comments-btn i.preference-comment-required {
-	color: #e40000;
+.student-support-call-form__page {
+	display: flex;
 }

@@ -1,0 +1,22 @@
+.support-assignment-row {
+	width: 80%;
+	border: 1px solid #ddd;
+	padding: 10px 15px;
+	font-weight: bold;
+	color: #555;
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.support-assignment-row__text {
+	display: flex;
+	align-items: center;
+	cursor: default;
+	min-height: 31px;
+}
+
+/* Violates BEM to override bootstrap CSS */
+.active.support-assignment-row__delete-icon {
+	box-shadow: none;
+}

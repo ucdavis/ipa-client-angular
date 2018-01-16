@@ -1,0 +1,24 @@
+.support-assignments {
+	padding: 10px 20px 10px 20px;
+	color: #555;
+	padding-bottom: 300px;
+}
+
+.support-assignments__table-container {
+	margin-top: 15px;
+}
+
+.support-assignments__header-cell {
+	background-color: #F8F8F8;
+	width: 250px;
+	border-right: 1px solid #ddd;
+}
+
+.support-assignments__header-cell--section {
+	background-color: #FFF;
+}
+
+.support-assignments__header {
+	display: flex;
+	justify-content: space-between;
+}

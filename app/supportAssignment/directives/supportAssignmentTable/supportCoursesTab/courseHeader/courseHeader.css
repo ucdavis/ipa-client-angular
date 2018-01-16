@@ -1,0 +1,29 @@
+.course-header {
+	padding: 20px;
+}
+
+.course-header__name {
+	font-weight: bold;
+	color: #555;
+	margin-bottom: 15px;
+}
+
+.course-header__cell {
+	padding: 5px;
+	height: 31px;
+}
+
+.course-header__input {
+	border: 1px solid #d9d9d9;
+	border-top-color: #c0c0c0;
+	background-color: white;
+	border-radius: 3px;
+	box-sizing: border-box;
+	height: 31px;
+	width: 30%;
+	padding: 5px;
+}
+
+.course-header__cell--push-right {
+	padding-left: 10px;
+}

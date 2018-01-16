@@ -2,28 +2,6 @@ window.instructionalSupportApp = angular.module("instructionalSupportApp", ["sha
 
 instructionalSupportApp.config(function ($routeProvider) {
 	return $routeProvider
-		.when("/", {
-			templateUrl: "InstructionalSupportAssignment.html",
-			controller: "InstructionalSupportAssignmentCtrl",
-			resolve: {
-				payload: InstructionalSupportAssignmentCtrl.getPayload
-			}
-		})
-		.when("/:workgroupId/:year/:termShortCode/supportCallStatus", {
-			templateUrl: "SupportCallStatus.html",
-			controller: "InstructionalSupportCallStatusCtrl",
-			resolve: {
-				validate: InstructionalSupportCallStatusCtrl.getPayload
-			}
-		})
-		.when("/:workgroupId/:year/:termShortCode", {
-			templateUrl: "InstructionalSupportAssignment.html",
-			controller: "InstructionalSupportAssignmentCtrl",
-			reloadOnSearch: false,
-			resolve: {
-				payload: InstructionalSupportAssignmentCtrl.getPayload
-			}
-		})
 		.when("/:workgroupId/:year/:termShortCode/instructorSupportCallForm", {
 			templateUrl: "InstructorSupportCallForm.html",
 			controller: "InstructorSupportCallFormCtrl",
@@ -68,3 +46,12 @@ var UPDATE_INSTRUCTOR_SUPPORT_CALL_REVIEW = "UPDATE_INSTRUCTOR_SUPPORT_CALL_REVI
 var UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW = "UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW";
 var UPDATE_PREFERENCE = "UPDATE_PREFERENCE";
 var ASSIGN_STAFF_TO_SECTION_GROUP_SLOT = "ASSIGN_STAFF_TO_SECTION_GROUP_SLOT";
+
+// Student Support Call Form
+var OPEN_PREFERENCE_COMMENT_MODAL = "OPEN_PREFERENCE_COMMENT_MODAL";
+var CLOSE_PREFERENCE_COMMENT_MODAL = "CLOSE_PREFERENCE_COMMENT_MODAL";
+var CALCULATE_TIMESLOTS_FOR_CRN = "CALCULATE_TIMESLOTS_FOR_CRN";
+var CALCULATE_FORM_VALID = "CALCULATE_FORM_VALID";
+var BEGIN_FETCH_ACTIVITIES_BY_CRN = "BEGIN_FETCH_ACTIVITIES_BY_CRN";
+var COMPLETE_FETCH_ACTIVITIES_BY_CRN = "COMPLETE_FETCH_ACTIVITIES_BY_CRN";
+var CLEAR_CRN_SEARCH = "CLEAR_CRN_SEARCH";

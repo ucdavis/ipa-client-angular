@@ -950,3 +950,12 @@ li.active-term .dropdown-term-row {
 .assignments-container .course-list-row {
 	page-break-inside: avoid;
 }
+
+.flex-unavability_chart-children .table.availability-grid tr td {
+	border: none;
+	border-top: 1px solid #ddd;
+}
+
+.flex-unavability_chart-children table.availability-grid tr th {
+	padding: 0;
+}

@@ -1,0 +1,34 @@
+.staff-header {
+	padding: 20px;
+}
+
+.staff-header__name {
+	font-weight: bold;
+	color: #555;
+	margin-bottom: 15px;
+}
+
+.staff-header__details {
+	display: flex;
+}
+
+.staff-header__input {
+	flex: 1 0 0px;
+}
+
+.staff-header__input-container {
+	flex: 1 0 0px;
+	display: flex;
+}
+
+.staff-header__info {
+	flex: 1 0 0px;
+	font-size: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.staff-header__availability {
+	flex: 2 0 0px;
+}

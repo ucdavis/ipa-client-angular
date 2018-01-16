@@ -1,0 +1,87 @@
+<div class="support-courses-tab"
+	ng-show="state.ui.tabPivot == 'By Course'">
+	<div class="ipa-table__header">
+		<div class="support-courses-tab__header-small">
+			Course
+		</div>
+		<div class="ipa-table__header-cell ipa-table__body-cell--extra-large support-courses-tab__right-header">
+			<div class="support-courses-tab__assigned-header">
+				Assign {{ state.ui.viewType }}
+			</div>
+			<div>
+				<ipa-radio
+					on-select="setViewType"
+					radio-names="radioNames"
+					active-radio="state.ui.viewType">
+				</ipa-radio>
+			</div>
+		</div>
+	</div>
+
+	<div
+		ng-repeat="sectionGroup in state.sectionGroups"
+		ng-hide="sectionGroup.isFiltered">
+		<div class="support-courses-tab__row">
+			<div class="support-assignments__header-cell">
+				<course-header
+					view-type="state.ui.viewType"
+					section-group="sectionGroup"
+					read-only="state.ui.readOnlyMode">
+				</course-header>
+			</div>
+			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large support-courses-tab__assignment-container">
+				<div class="support-courses-tab__assignment"
+					ng-repeat="supportAssignment in sectionGroup.supportAssignments"
+					ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
+					<support-assignment-row
+						read-only="state.ui.readOnlyMode"
+						name="supportAssignment.fullName"
+						on-delete="deleteAssignment"
+						support-assignment="supportAssignment">
+					</support-assignment-row>
+				</div>
+				<div class="support-courses-tab__assignment">
+					<assign-support-staff
+						ng-hide="state.ui.readOnlyMode"
+						view-type="state.ui.viewType"
+						section-group="sectionGroup"
+						on-select="assignStaffToSectionGroup"
+						assignment-options="sectionGroup.teachingAssistantAssignmentOptions">
+					</assign-support-staff>
+				</div>
+			</div>
+		</div>
+		<div class="support-courses-tab__row"
+			ng-repeat="section in sectionGroup.sections"
+			ng-show="isNumber(section.sequenceNumber) == false">
+			<div class="support-assignments__header-cell support-assignments__header-cell--section">
+				<div class="support-courses-tab__section-header">
+					{{ section.sequenceNumber }}
+				</div>
+			</div>
+
+			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large support-courses-tab__assignment-container">
+				<div class="support-courses-tab__assignment"
+					ng-repeat="supportAssignment in section.supportAssignments"
+					ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
+					<support-assignment-row
+						read-only="state.ui.readOnlyMode"
+						name="supportAssignment.fullName"
+						on-delete="deleteAssignment"
+						support-assignment="supportAssignment">
+					</support-assignment-row>
+				</div>
+				<div class="support-courses-tab__assignment">
+					<assign-support-staff
+						ng-hide="state.ui.readOnlyMode"
+						view-type="state.ui.viewType"
+						section="section"
+						on-select="assignStaffToSection"
+						assignment-options="section.teachingAssistantAssignmentOptions">
+					</assign-support-staff>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="support-courses-tab__spacer"></div>
+</div>

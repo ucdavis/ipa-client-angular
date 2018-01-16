@@ -1,0 +1,45 @@
+.support-courses-tab__row {
+	display: flex;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	border-radius: 3px 3px 0 0;
+	border: 1px solid #ddd;
+}
+
+.support-courses-tab__right-header {
+	justify-content: space-between;
+}
+
+.support-courses-tab__section-header {
+	padding: 20px;
+	font-weight: bold;
+	color: #555;
+}
+
+.support-courses-tab__assignment-container {
+	flex-flow: column;
+	width: 100%;
+	padding: 20px;
+}
+
+.support-courses-tab__assignment {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.support-courses-tab__header-small {
+	width: 250px;
+	display: flex;
+	align-items: center;
+	padding-left: 20px;
+}
+
+.support-courses-tab__spacer {
+	padding-bottom: 10px;
+}
+
+.support-courses-tab__assigned-header {
+	padding-left: 125px;
+}

@@ -1,0 +1,51 @@
+<nav year="{{ year }}" term-short-code="{{ termShortCode }}" workgroup-id="{{ workgroupId }}"></nav>
+<div></div>
+
+<ipa-header page-title="Support Staff Assignments"></ipa-header>
+
+<spinner
+	class="student-support-call-form__loading-spinner"
+	ng-if="!view.state"
+	size="20">
+</spinner>
+
+<!-- handle lack of access -->
+<div ng-show="view.state && isAllowed == false">
+	<div class="jumbotron student-support-call-form__no-access">
+		<p class="lead">You have not been invited to review the {{ sharedState.workgroup.name }} {{ year }}-{{ nextYear }} Support Call</p>
+		<br />
+		<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
+	</div>
+</div>
+
+<!-- regular display -->
+<div ng-if="view.state && isAllowed == true" class="support-assignments">
+	<!-- Modals -->
+	<ipa-modal
+		is-visible="view.state.ui.availabilityModal.isOpen"
+		header-text="Availability"
+		on-close="closeAvailabilityModal"
+		styles="availabilityModalStyles">
+		<view-availability-modal
+			ng-if="view.state.ui.availabilityModal.isOpen"
+			is-visible="view.state.ui.availabilityModal.isOpen"
+			support-staff="view.state.ui.availabilityModal.data">
+		</view-availability-modal>
+	</ipa-modal>
+
+	<div class="support-assignments__header">
+		<support-assignment-search></support-assignment-search>
+		<review-tools
+			support-review="view.state.ui.review"
+			read-only="view.state.ui.readOnlyMode">
+		</review-tools>
+	</div>
+
+	<ipa-section-header header-text="'Support Assignments'">
+		<support-assignment-toolbar></support-assignment-toolbar>
+	</ipa-section-header>
+
+	<div class="support-assignments__table-container">
+		<support-assignment-table state="view.state"></support-assignment-table>
+	</div>
+</div>

@@ -1,0 +1,48 @@
+<div class="staff-header">
+	<div class="staff-header__name">
+		{{ supportStaff.lastName }}, {{ supportStaff.firstName }}
+	</div>
+	<div class="staff-header__details">
+		<div class="staff-header__input-container">
+			<div class="staff-header__input">
+				<appointment-input
+					support-staff="supportStaff"
+					view-type="viewType"
+					read-only="readOnly">
+				</appointment-input>
+			</div>
+			<div class="staff-header__info">
+				<i class="glyphicon glyphicon-question-sign"
+					ng-show="viewType == 'Teaching Assistants'"
+					tooltip-placement="left"
+					uib-tooltip="TA appointment percentage">
+				</i>
+
+				<i class="glyphicon glyphicon-question-sign"
+					ng-show="viewType == 'Readers'"
+					tooltip-placement="left"
+					uib-tooltip="Reader appointment percentage">
+				</i>
+			</div>
+		</div>
+
+		<div class="staff-header__availability">
+			<div ng-show="!supportStaff.supportCallResponse.availabilityBlob || supportStaff.supportCallResponse.availabilityBlob.length == 0">
+				<ipa-button
+					on-click="openAvailabilityModal(supportStaff)"
+					icon-class="'glyphicon glyphicon-calendar'"
+					is-disabled="true"
+					tooltip-message="'No availability submitted'">
+				</ipa-button>
+			</div>
+			<div ng-show="supportStaff.supportCallResponse.availabilityBlob">
+				<ipa-button
+					on-click="openAvailabilityModal(supportStaff)"
+					icon-class="'glyphicon glyphicon-calendar'"
+					tooltip-message="'Show Availability'">
+				</ipa-button>
+			</div>
+
+		</div>
+	</div>
+</div>

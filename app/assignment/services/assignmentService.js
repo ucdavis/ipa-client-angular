@@ -35,20 +35,7 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 
 			return deferred.promise;
 		},
-		createPlaceholderAI: function (sectionGroupId, supportAssignment) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/instructionalSupportView/sectionGroups/" + sectionGroupId + "/instructionalSupportAssignments/1", supportAssignment, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		createPlaceholderStaff: function (sectionGroup) {
+		updateSectionGroup: function (sectionGroup) {
 			var deferred = $q.defer();
 
 			$http.put(serverRoot + "/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup, { withCredentials: true })
@@ -91,33 +78,6 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 			var deferred = $q.defer();
 
 			$http.delete(serverRoot + "/api/assignmentView/preferences/" + teachingAssignment.id, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		removePlaceholderAI: function (supportAssignmentId) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/instructionalSupportView/instructionalSupportAssignments/" + supportAssignmentId, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		
-		removePlaceholderStaff: function (sectionGroup) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
@@ -173,6 +133,19 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 			scheduleInstructorNote.assignmentsCompleted = assignmentsCompleted;
 
 			$http.post(serverRoot + "/api/assignmentView/scheduleInstructorNotes/" + instructorId + "/" + workgroupId + "/" + year, scheduleInstructorNote, { withCredentials: true })
+			.success(function(payload) {
+				deferred.resolve(payload);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		assignStudentToAssociateInstructor: function (sectionGroupId, supportStaffId) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/assignmentView/sectionGroups/" + sectionGroupId + "/supportStaff/" + supportStaffId + "/assignAI", { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})

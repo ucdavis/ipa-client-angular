@@ -2,56 +2,77 @@
 	word-wrap: break-word;
 	display: inline-flex;
 	font-size: 12px;
-	color: #24292e;
 	font-weight: 500;
-	padding: 3px 6px 3px 6px;
 	user-select: none;
+	border: 1px solid rgba(27,31,35,0.2);
+	border-radius: 0.25em;
+	cursor: pointer;
+	width: fit-content;
 }
 
-.ipa-button .icon-container {
+.ipa-button__content {
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-top: 7px;
+	padding-bottom: 7px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.ipa-button .button-text-container {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.ipa-button__spacer {
+	margin-left: 5px;
+}
+
+.ipa-button__content--slim {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 5px;
 	padding-left: 5px;
 }
 
-.ipa-button.skin-light {
-	background-color: #eff3f6;
-	background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
-	border: 1px solid rgba(27,31,35,0.2);
-	border-radius: 0.25em;
-	cursor: pointer;
+.ipa-button__content--wide {
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
-.ipa-button.skin-light:hover {
+.ipa-button--wide {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.ipa-button__container--wide {
+	width: 100%;
+}
+
+.ipa-button--dark-skin {
+	background-color: rgb(48, 54, 65);
+	border-color: rgb(48, 54, 65);
+	color: white;
+}
+
+.ipa-button--light-skin {
+	border-color: rgba(27,31,35,0.2);
+	color: #24292e;
+	background-color: white;
+}
+
+.ipa-button--dark-skin:hover:not(.ipa-button--disabled) {
+	background-color: rgb(18, 24, 35);
+	border-color: rgb(18, 24, 35);
+	color: white;
+}
+
+.ipa-button--light-skin:hover:not(.ipa-button--disabled) {
 	background-color: #e6ebf1;
 	background-image: linear-gradient(-180deg, #f0f3f6 0%, #e6ebf1 90%);
 	border-color: rgba(27,31,35,0.35);
+	color: #24292e;
 }
 
-.ipa-button.skin-light.disabled,
-.ipa-button.skin-light.disabled:hover {
-	
-}
-
-.ipa-button.skin-dark {
-	background-color: #eff3f6;
-	background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
-	border: 1px solid rgba(27,31,35,0.2);
-	border-radius: 0.25em;
-	cursor: pointer;
-}
-
-.ipa-button.skin-danger {
-	background-color: #eff3f6;
-	background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
-	border: 1px solid rgba(27,31,35,0.2);
-	border-radius: 0.25em;
-	cursor: pointer;
+.ipa-button--disabled {
+	cursor: default;
+	background-color: #f0f1f1;
 }
