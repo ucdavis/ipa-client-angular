@@ -13,11 +13,15 @@
 	justify-content: center;
 }
 
-.course-cost-row .section-group-warning {
+.course-cost-row__warning {
 	color: #ce4844;
 	visibility: hidden;
 }
 
-.course-cost-row .show-warning {
+.course-cost-row__warning--show {
 	visibility: visible;
+}
+
+.course-cost-row__number-input {
+	width: 40px;
 }

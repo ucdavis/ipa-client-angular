@@ -126,10 +126,6 @@
 
 /* overwrite */
 
-.dataTables_wrapper {
-	border: unset !important;
-}
-
 form .input-group input {
 	border-radius: 4px !important;
 }

@@ -5,8 +5,8 @@
 	<div class="cell">
 		<div style="position: relative;">
 			<i
-				class="entypo-bell section-group-warning"
-				ng-class="{'show-warning': sectionGroupCost.warnings.totalSeats }"
+				class="entypo-bell course-cost-row__warning"
+				ng-class="{'course-cost-row__warning--show': sectionGroupCost.warnings.totalSeats }"
 				tooltip-append-to-body="true"
 				uib-tooltip="{{ sectionGroupCost.warnings.totalSeats }}"
 				tooltip-placement="bottom">
@@ -14,6 +14,7 @@
 		</div>
 		<div>
 			<input
+				class="course-cost-row__number-input"
 				type="number"
 				ng-model="sectionGroupCost.enrollment"
 				auto-input
@@ -24,8 +25,8 @@
 	<div class="cell">
 		<div style="position: relative;">
 			<i
-				class="entypo-bell section-group-warning"
-				ng-class="{'show-warning': sectionGroupCost.warnings.sectionCount }"
+				class="entypo-bell course-cost-row__warning"
+				ng-class="{'course-cost-row__warning--show': sectionGroupCost.warnings.sectionCount }"
 				tooltip-append-to-body="true"
 				uib-tooltip="{{ sectionGroupCost.warnings.sectionCount }}"
 				tooltip-placement="bottom">
@@ -33,6 +34,7 @@
 		</div>
 		<div>
 			<input
+				class="course-cost-row__number-input"
 				type="number"
 				ng-model="sectionGroupCost.sectionCount"
 				auto-input
@@ -43,8 +45,8 @@
 	<div class="cell">
 		<div style="position: relative;">
 			<i
-				class="entypo-bell section-group-warning"
-				ng-class="{'show-warning': sectionGroupCost.warnings.taCount }"
+				class="entypo-bell course-cost-row__warning"
+				ng-class="{'course-cost-row__warning--show': sectionGroupCost.warnings.taCount }"
 				tooltip-append-to-body="true"
 				uib-tooltip="{{ sectionGroupCost.warnings.taCount }}"
 				tooltip-placement="bottom">
@@ -53,6 +55,7 @@
 
 		<div>
 			<input
+				class="course-cost-row__number-input"
 				type="number"
 				ng-model="sectionGroupCost.taCount"
 				auto-input
@@ -66,8 +69,8 @@
 	<div class="cell">
 		<div style="position: relative;">
 			<i
-				class="entypo-bell section-group-warning"
-				ng-class="{'show-warning': sectionGroupCost.warnings.readerCount }"
+				class="entypo-bell course-cost-row__warning"
+				ng-class="{'course-cost-row__warning--show': sectionGroupCost.warnings.readerCount }"
 				tooltip-append-to-body="true"
 				uib-tooltip="{{ sectionGroupCost.warnings.readerCount }}"
 				tooltip-placement="bottom">
@@ -75,6 +78,7 @@
 		</div>
 		<div>
 			<input
+				class="course-cost-row__number-input"
 				type="number"
 				ng-model="sectionGroupCost.readerCount"
 				auto-input
