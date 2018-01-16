@@ -521,7 +521,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('build', ['clean', 'eslint', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsProdSnippets',
 		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsBudget', 'concat:jsInstructionalSupport', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsScheduling', 'concat:jsTeachingCall',
-		'concat:jsRegistrarReconciliationReport', 'concat:jsScheduleSummaryReport', 'concat:jsTeachingCallResponseReport', 'concat:cssLib', 'concat:cssShared', 'uglify:dist', 'cssmin', 'cachebreaker']);
+		'concat:jsSupportCall', 'concat:jsSupportAssignment', 'concat:jsRegistrarReconciliationReport', 'concat:jsScheduleSummaryReport', 'concat:jsTeachingCallResponseReport', 'concat:cssLib', 'concat:cssShared', 'uglify:dist', 'cssmin', 'cachebreaker']);
 
 	grunt.registerTask('serve', ['clean', 'eslint', 'copy', 'ngtemplates', 'bower_concat', 'concat:jsShared', 'concat:jsConfig', 'concat:jsDevSnippets',
 		'concat:jsCourse', 'concat:jsAdmin', 'concat:jsBudget', 'concat:jsInstructionalSupport', 'concat:jsWorkgroup', 'concat:jsSummary', 'concat:jsAssignment', 'concat:jsTeachingCall', 'concat:jsSupportCall',
