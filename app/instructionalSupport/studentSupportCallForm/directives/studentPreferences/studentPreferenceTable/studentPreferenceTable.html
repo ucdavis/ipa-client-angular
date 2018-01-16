@@ -1,5 +1,5 @@
 <div class="student-preference-table">
-	<div ng-show="state && state.supportAssignments.ids.length == 0" class="jumbotron student-preference-table__empty-warn">
+	<div ng-show="state && state.sectionGroups.ids.length == 0" class="jumbotron student-preference-table__empty-warn">
 		<p class="lead">
 			There are no courses available for this support call.
 		</p>
@@ -9,7 +9,7 @@
 		</p>
 	</div>
 
-	<div ng-show="state && state.supportAssignments.ids.length > 0">
+	<div ng-show="state && state.sectionGroups.ids.length > 0">
 		<div class="ipa-table">
 			<div class="ipa-table__header">
 				<div class="ipa-table__header-cell ipa-table__body-cell--small ipa-table__body-cell--centered">
