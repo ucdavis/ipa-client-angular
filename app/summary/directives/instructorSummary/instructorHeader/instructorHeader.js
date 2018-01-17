@@ -28,6 +28,10 @@ summaryApp.directive("instructorHeader", this.instructorHeader = function ($rout
 			scope.openReviewBlobToTerms = function(openReviewBlob) {
 				var terms = [];
 
+				if (openReviewBlob == false || openReviewBlob == null) {
+					return terms;
+				}
+
 				for (var i = 0; i < openReviewBlob.length; i++) {
 					if (openReviewBlob[i] == "1") {
 						var term = String(i + 1);
