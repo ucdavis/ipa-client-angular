@@ -1,6 +1,7 @@
 /* new table CSS */
 .course-costs__table {
 	width: 100%;
+	margin-bottom: 20px;
 }
 
 .course-costs__table-header {
@@ -10,18 +11,16 @@
 	border-bottom: 1px solid #ddd;
 }
 
-.course-costs__table-header--short {
-	width: 5%;
-}
-
 .course-costs__course-title {
 	padding-top: 15px;
 	padding-bottom: 10px;
-	padding-left: 15px;
+	padding-left: 20px;
 }
 
 .course-costs__table-cell {
-	background-color: #f6f6f6;
+	background-color: #f8f8f8;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .course-costs__table-cell-sequence {
@@ -30,77 +29,34 @@
 
 .course-costs__sequence-container {
 	width: 100%;
-	background-color: #f6f6f6;
-	height: 23px;
+	background-color: #f8f8f8;
+	height: 53px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-/* Old CSS */
+.course-costs__table-cell-total {
+	padding-right: 20px;
+}
 
-
-.course-costs .expand-ui {
-	display: flex;
-	justify-content: space-between;
+.course-costs__total-container {
 	width: 100%;
-	line-height: 1.1;
-	font-size: 14px;
-	font-weight: bold;
-}
-
-.course-costs .expand-ui-container {
-	padding-left: 15px;
-	padding-right: 15px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	cursor: pointer;
-}
-
-.course-costs .expand-ui-triangle {
-	font-size: 10px;
-}
-
-.course-costs .course-costs-header {
-	display: flex;
-	width: 100%;
-}
-
-.course-costs .support-cost-header,
-.course-costs .instructors-header
- {
-	display: flex;
-	flex: 5 0 0px;
-	padding: 15px;
-}
-
-.course-costs .cell {
-	flex: 1 0 0px;
+	background-color: #f8f8f8;
+	height: 53px;
 	display: flex;
 	align-items: center;
-	justify-content: center;
 }
 
-.course-costs .cell-content {
-	flex: 0 1 0px;
+.course-cost__warning {
+	color: #ce4844;
+	visibility: hidden;
 }
 
-.course-costs .course-title {
-	padding: 15px;
-	display: flex;
+.course-cost__warning--show {
+	visibility: visible;
 }
 
-.course-costs .section-group-row {
-	display: flex;
-}
-
-.course-costs__cost {
-	flex: 5 0 0px;
-	padding: 5px;
-	margin: 15px;
-}
-
-.course-costs .comment-ui {
-	padding-left: 1%;
-	cursor: pointer;
+.course-cost__number-input {
+	width: 40px;
 }

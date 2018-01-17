@@ -8,7 +8,7 @@
 		<table class="course-costs__table">
 			<thead>
 				<tr>
-					<th class="course-costs__table-header course-costs__table-header--short"></th> <!-- Spacing for sequence number -->
+					<th class="course-costs__table-header"></th> <!-- Spacing for sequence number -->
 					<th class="course-costs__table-header">Enrollment</th>
 					<th class="course-costs__table-header">Sections</th>
 					<th class="course-costs__table-header">TAs</th>
@@ -20,218 +20,108 @@
 					<th class="course-costs__table-header">Total Cost</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody ng-repeat="course in selectedBudgetScenario.courses track by course.uniqueKey">
 				<tr>
 					<td colspan="10" class="course-costs__course-title">
-						ART 103B intermed drawing: color
+						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
 					</td>
 				</tr>
-				<tr>
+				<tr ng-repeat="sectionGroupCost in course.sectionGroupCosts">
 					<td class="course-costs__table-cell-sequence">
 						<div class="course-costs__sequence-container">
-							001
+							{{ sectionGroupCost.sequencePattern }}
 						</div>
 					</td>
-					<td>
+					<!-- Enrollment -->
+					<td class="course-costs__table-cell">
 						<input
-							class="course-cost-row__number-input"
-							type="number">
+							class="course-cost__number-input"
+							type="number"
+							ng-model="sectionGroupCost.enrollment"
+							auto-input
+							on-enter="updateSectionGroupCost(sectionGroupCost)"
+							on-blur="updateSectionGroupCost(sectionGroupCost)">
 					</td>
-					<td>
+					<!-- Section Count -->
+					<td class="course-costs__table-cell">
+						<i
+							class="entypo-bell course-cost__warning"
+							ng-class="{'course-cost__warning--show': sectionGroupCost.warnings.sectionCount }"
+							tooltip-append-to-body="true"
+							uib-tooltip="{{ sectionGroupCost.warnings.sectionCount }}"
+							tooltip-placement="bottom">
+						</i>
 						<input
-							class="course-cost-row__number-input"
-							type="number">
+							class="course-cost__number-input"
+							type="number"
+							ng-model="sectionGroupCost.sectionCount"
+							auto-input
+							on-enter="updateSectionGroupCost(sectionGroupCost)"
+							on-blur="updateSectionGroupCost(sectionGroupCost)">
 					</td>
-					<td>
+					<!-- TA Count -->
+					<td class="course-costs__table-cell">
+						<i
+							class="entypo-bell course-cost__warning"
+							ng-class="{'course-cost__warning--show': sectionGroupCost.warnings.taCount }"
+							tooltip-append-to-body="true"
+							uib-tooltip="{{ sectionGroupCost.warnings.taCount }}"
+							tooltip-placement="bottom">
+						</i>
 						<input
-							class="course-cost-row__number-input"
-							type="number">
+							class="course-cost__number-input"
+							type="number"
+							ng-model="sectionGroupCost.taCount"
+							auto-input
+							on-enter="updateSectionGroupCost(sectionGroupCost)"
+							on-blur="updateSectionGroupCost(sectionGroupCost)">
 					</td>
-					<td>
-						$55.67
+					<!-- TA Cost -->
+					<td class="course-costs__table-cell">
+						{{ sectionGroupCost.taCostDisplay }}
 					</td>
-					<td>
+					<!-- Reader Count -->
+					<td class="course-costs__table-cell">
+						<i
+							class="entypo-bell course-cost__warning"
+							ng-class="{'course-cost__warning--show': sectionGroupCost.warnings.readerCount }"
+							tooltip-append-to-body="true"
+							uib-tooltip="{{ sectionGroupCost.warnings.readerCount }}"
+							tooltip-placement="bottom">
+						</i>
 						<input
-							class="course-cost-row__number-input"
-							type="number">
+							class="course-cost__number-input"
+							type="number"
+							ng-model="sectionGroupCost.readerCount"
+							auto-input
+							on-enter="updateSectionGroupCost(sectionGroupCost)"
+							on-blur="updateSectionGroupCost(sectionGroupCost)">
 					</td>
-					<td>
-						$143.55
+					<!-- Reader Cost -->
+					<td class="course-costs__table-cell">
+						{{ sectionGroupCost.readerCostDisplay }}
 					</td>
-					<td>
-						$411.23
+					<!-- Sub Total -->
+					<td class="course-costs__table-cell">
+						{{ sectionGroupCost.supportCostSubTotalDisplay }}
 					</td>
-					<td>
-						add comments button
+					<!-- Comments -->
+					<td class="course-costs__table-cell">
+						<ipa-button
+							button-text="'See Comments'"
+							color="'light'"
+							icon-class="'entypo entypo-chat'"
+							on-click="openCourseComments(course)">
+						</ipa-button>
 					</td>
-					<td>
-						$1,999.99
-					</td>
-				</tr>
-				<tr>
-					<td colspan="10">
-						ART 103B intermed drawing: color
-					</td>
-				</tr>
-				<tr>
-					<td>
-						001
-					</td>
-					<td>
-						<input
-							class="course-cost-row__number-input"
-							type="number">
-					</td>
-					<td>
-						<input
-							class="course-cost-row__number-input"
-							type="number">
-					</td>
-					<td>
-						<input
-							class="course-cost-row__number-input"
-							type="number">
-					</td>
-					<td>
-						$55.67
-					</td>
-					<td>
-						<input
-							class="course-cost-row__number-input"
-							type="number">
-					</td>
-					<td>
-						$143.55
-					</td>
-					<td>
-						$411.23
-					</td>
-					<td>
-						add comments button
-					</td>
-					<td>
-						$1,999.99
-					</td>
-				</tr>
-				<tr>
-					<td colspan="10">
-						ART 103B intermed drawing: color
-					</td>
-				</tr>
-				<tr>
-					<td>
-						001
-					</td>
-					<td>
-						<input
-							class="course-cost-row__number-input"
-							type="number">
-					</td>
-					<td>
-						<input
-							class="course-cost-row__number-input"
-							type="number">
-					</td>
-					<td>
-						<input
-							class="course-cost-row__number-input"
-							type="number">
-					</td>
-					<td>
-						$55.67
-					</td>
-					<td>
-						<input
-							class="course-cost-row__number-input"
-							type="number">
-					</td>
-					<td>
-						$143.55
-					</td>
-					<td>
-						$411.23
-					</td>
-					<td>
-						add comments button
-					</td>
-					<td>
-						$1,999.99
+					<!-- Total -->
+					<td class="course-costs__table-cell-total">
+						<div class="course-costs__total-container">
+							{{ sectionGroupCost.totalCostDisplay }}
+						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-
-
-
-		<div class="course-costs-header">
-			<div class="support-cost-header">
-				<div class="cell">
-					Off.
-				</div>
-
-				<div class="cell">
-					Enrollment
-				</div>
-
-				<div class="cell">
-					Sections
-				</div>
-
-				<div class="cell">
-					TAs
-				</div>
-
-				<div class="cell">
-					TA Cost
-				</div>
-
-				<div class="cell">
-					Readers
-				</div>
-
-				<div class="cell">
-					<div class="cell-content">
-						Reader Cost
-					</div>
-				</div>
-
-				<div class="cell">
-					<div class="cell-content">
-						Support Cost
-					</div>
-				</div>
-				
-				<div class="cell">
-					<div class="cell-content">
-						Comment
-					</div>
-				</div>
-			</div>
-
-			<div class="cell">
-				Total Cost
-			</div>
-		</div>
-
-		<!-- Courses -->
-		<div ng-repeat="course in selectedBudgetScenario.courses track by course.uniqueKey">
-			<div class="course-title">
-				<div>
-					{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
-				</div>
-			</div>
-			<div class="section-group-row" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
-				<div class="course-costs__cost">
-					<course-cost-row
-						section-group-cost="sectionGroupCost"
-						course="course">
-					</course-cost-row>
-				</div>
-
-				<div class="cell">
-					{{ sectionGroupCost.totalCostDisplay }}
-				</div>
-			</div>
-		</div>
 	</ipa-tabs>
 </div>
