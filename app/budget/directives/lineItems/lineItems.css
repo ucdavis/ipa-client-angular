@@ -1,92 +1,57 @@
-.line-items-section-content {
-	border: 1px solid rgb(235, 235, 235);
-	border-radius: 4px;
-}
-
-.line-items-section .expand-ui {
-	display: flex;
-	justify-content: space-between;
+.line-items__table {
 	width: 100%;
-	line-height: 1.1;
-	font-size: 14px;
-	font-weight: bold;
+	margin-bottom: 20px;
+	border: 1px solid #e3e3e3;
 }
 
-.line-items-section .expand-ui-container {
+.line-items__table-header {
+	width: 10%;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
 	padding-left: 15px;
-	padding-right: 15px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	cursor: pointer;
 }
 
-.line-items-section .expand-ui-triangle {
-	font-size: 10px;
+.line-items__table-cell {
+	padding-left: 15px;
 }
 
-.line-items-section .type-header {
-	flex: 10 0 0px;
+.line-items__table--amount {
+	width: 3%;
+}
+
+.line-items__table--checkbox {
+	width: 1%;
+}
+
+.line-items__table-cell--dark {
+	background-color: #fafafa;
+}
+
+.line-items__comment-container {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.line-items__amount-container {
+	padding-top: 5px;
+	padding-bottom: 5px;
 	display: flex;
+	padding-right: 10px;
+	justify-content: space-between;
 	align-items: center;
-	border-right: 1px solid rgb(235, 235, 235);
-	padding: 10px;
 }
 
-.line-items-section .description-header {
-	flex: 15 0 0px;
-	display: flex;
-	align-items: center;
-	border-right: 1px solid rgb(235, 235, 235);
-	padding: 10px;
-}
-
-.line-items-section .amount-header {
-	flex: 3 0 0px;
-	display: flex;
-	align-items: center;
-	padding: 10px;
-}
+/* non BEM CSS needs to be re-written */
 
 .line-items-section .checkbox-container {
-	flex: 1 0 0px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-right: 1px solid rgb(235, 235, 235);
-	padding: 10px;
-}
-
-.line-items-section .header-content {
-	display: flex;
-	width: 100%;
-}
-
-.line-items-section .header-container {
-	border-top: 1px solid rgb(235, 235, 235);
-}
-
-.line-items-section .toolbar {
-	display: flex;
-	justify-content: flex-end;
-	width: 100%;
-	position: relative;
-	padding-bottom: 10px;
-}
-
-.line-items-section .toolbar-item {
-	cursor: pointer;
-	height: 18px;
-	margin-right: 12px;
 }
 
 .checkbox-replace.color-primary .cb-wrapper,
 .radio-replace.color-primary .cb-wrapper {
 	border-color: #d2d2d2;
-}
-
-.line-items-section .comment-header {
-	flex: 10 0 0px;
-	display: flex;
-	align-items: center;
-	padding: 10px;
 }
