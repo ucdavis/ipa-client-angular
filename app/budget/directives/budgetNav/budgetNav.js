@@ -5,7 +5,7 @@ budgetApp.directive("budgetNav", this.budgetNav = function ($rootScope, budgetAc
 		replace: true,
 		scope: {
 			totalBalance: '<',
-			selectedRoute: '<',
+			selectedSection: '<',
 			selectedBudgetScenario: '<',
 			selectedLineItems: '<'
 		},
