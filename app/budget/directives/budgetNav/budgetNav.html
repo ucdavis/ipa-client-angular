@@ -14,7 +14,7 @@
 		</div>
 	</div>
 
-	<div class="side-bar">
+	<div class="budget-nav__side-bar">
 		<div ng-if="selectedSection == 'Line Items'">
 			<!-- line items toolbar -->
 			<div class="btn-group toolbar">
@@ -37,8 +37,10 @@
 				</span>
 			</div>
 		</div>
-		<div>
-			Balance: {{ totalBalance }}
+		<div class="budget-nav__total-container">
+			<div class="budget-nav__total">
+				Balance: {{ totalBalance }}
+			</div>
 		</div>
 	</div>
 </div>

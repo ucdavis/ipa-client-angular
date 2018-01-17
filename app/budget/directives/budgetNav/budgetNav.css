@@ -32,3 +32,17 @@
 	cursor: default;
 	background-color: #e3e3e3;
 }
+
+.budget-nav__total-container {
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	padding-right: 15px;
+}
+
+.budget-nav__total {
+	padding-left: 15px;
+	border-left: 1px solid #ddd;
+}
