@@ -8,7 +8,7 @@
 		<!-- with confirmation -->
 		<div class="ipa-button__content"
 			ng-show="confirmMessage && confirmMessage.length > 0"
-			ng-class="{'ipa-button__content--slim': size == 'slim', 'ipa-button__content--wide': isWide }"
+			ng-class="{'ipa-button__content--slim': size == 'slim', 'ipa-button__content--small': size == 'small', 'ipa-button__content--wide': isWide }"
 			confirm-button="onClick()"
 			message="{{confirmMessage}}"
 			yes="Confirm"
@@ -24,7 +24,7 @@
 		<!-- without confirmation -->
 		<div class="ipa-button__content"
 			ng-show="!confirmMessage || confirmMessage.length == 0"
-			ng-class="{'ipa-button__content--slim': size == 'slim', 'ipa-button__content--wide': isWide }"
+			ng-class="{'ipa-button__content--slim': size == 'slim', 'ipa-button__content--small': size == 'small', 'ipa-button__content--wide': isWide }"
 			ng-click="onClick()">
 		<div class="ipa-button__text"
 			ng-show="text">
@@ -42,7 +42,7 @@
 		tooltip-placement="bottom"
 		ng-show="(isDisabled)">
 		<div class="ipa-button__content"
-			ng-class="{'ipa-button__content--slim': size == 'slim', 'ipa-button__content--wide': isWide }">
+			ng-class="{'ipa-button__content--slim': size == 'slim', 'ipa-button__content--small': size == 'small', 'ipa-button__content--wide': isWide }">
 			<div class="ipa-button__text" ng-show="text">
 				{{ text }}
 			</div>
