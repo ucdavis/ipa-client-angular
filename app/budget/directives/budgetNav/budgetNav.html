@@ -15,26 +15,23 @@
 	</div>
 
 	<div class="budget-nav__side-bar">
-		<div ng-if="selectedSection == 'Line Items'">
-			<!-- line items toolbar -->
-			<div class="btn-group toolbar">
-				<span
-					class="toolbar-item glyphicon glyphicon-trash"
-					tooltip-append-to-body="true"
-					tooltip-placement="left"
-					uib-tooltip="Delete line items"
-					confirm-button="deleteLineItems()"
-					message="Are you sure you want to remove the selected line items?"
-					yes="Remove" no="Cancel" placement="left"
-					aria-hidden="true">
-				</span>
-				<span
-					class="toolbar-item glyphicon glyphicon-plus"
-					ng-click="openAddLineItemModal()"
-					tooltip-append-to-body="true"
-					tooltip-placement="left"
-					uib-tooltip="Add line item">
-				</span>
+		<div class="budget-nav__line-item-tools" ng-if="selectedSection == 'Line Items'">
+			<div class="budget-nav__tool">
+				<ipa-button
+					icon-class="'glyphicon glyphicon-trash'"
+					size="'small'"
+					on-click="deleteLineItems()"
+					tooltip-message="'Delete line items'"
+					confirm-message="'Are you sure you want to remove the selected line items?'">
+				</ipa-button>
+			</div>
+			<div class="budget-nav__tool">
+				<ipa-button
+					icon-class="'glyphicon glyphicon-plus'"
+					size="'small'"
+					on-click="openAddLineItemModal()"
+					tooltip-message="'Add line item'">
+				</ipa-button>
 			</div>
 		</div>
 		<div class="budget-nav__total-container">
