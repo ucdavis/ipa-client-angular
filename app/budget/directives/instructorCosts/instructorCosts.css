@@ -1,78 +1,52 @@
-.instructor-costs {
-	border: 1px solid rgb(235, 235, 235);
-	border-radius: 4px;
-}
-
-.instructor-costs .expand-ui {
-	display: flex;
-	justify-content: space-between;
+.instructor-costs__table {
 	width: 100%;
-	line-height: 1.1;
-	font-size: 14px;
-	font-weight: bold;
+	margin-bottom: 20px;
 }
 
-.instructor-costs .expand-ui-container {
-	padding-left: 15px;
-	padding-right: 15px;
+.instructor-costs__table-header {
+	width: 10%;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ddd;
+}
+
+.instructor-costs__course-title {
+	padding-top: 15px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+}
+
+.instructor-costs__table-cell {
+	background-color: #f8f8f8;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	cursor: pointer;
 }
 
-.instructor-costs .expand-ui-triangle {
-	font-size: 10px;
+.instructor-costs__table-cell-total {
+	padding-right: 20px;
 }
 
-.instructor-costs .course-costs-header {
-	display: flex;
+.instructor-costs__total-container {
 	width: 100%;
-}
-
-.instructor-costs .support-cost-header,
-.instructor-costs .instructors-header
- {
-	display: flex;
-	flex: 5 0 0px;
-	padding: 15px;
-}
-
-.instructor-costs .cell {
-	flex: 1 0 0px;
+	background-color: #f8f8f8;
+	height: 53px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.instructor-costs .cell-content {
-	flex: 0 1 0px;
-}
-
-.instructor-costs .course-title {
-	padding: 15px;
+.instructor-costs__instructor-container {
 	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.instructor-costs .section-group-row {
+.instructor-costs__remove-assignment-ui {
+	margin-left: 5px;
+}
+
+.instructor-costs__cell-container {
 	display: flex;
-}
-
-.instructor-costs .support-cost {
-	background-color: #F1F8FA;
-}
-
-.instructor-costs .instructor-cost {
-	background-color: #FAF1F1;
-}
-
-.instructor-costs .support-cost,
-.instructor-costs .instructor-cost {
-	flex: 5 0 0px;
-	padding: 5px;
-	margin: 15px;
-}
-
-.instructor-costs .comment-ui {
-	padding-left: 1%;
-	cursor: pointer;
+	align-items: center;
+	justify-content: center;
 }

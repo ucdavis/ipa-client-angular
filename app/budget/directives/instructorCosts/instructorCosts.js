@@ -20,6 +20,21 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 			scope.setActiveTerm = function(activeTermTab) {
 				budgetActions.selectTerm(activeTermTab);
 			};
+
+			scope.updateSectionGroupCost = function(sectionGroupCost) {
+				budgetActions.updateSectionGroupCost(sectionGroupCost);
+			};
+
+			scope.removeInstructor = function(sectionGroupCost) {
+				sectionGroupCost.instructorId = null;
+				budgetActions.updateSectionGroupCost(sectionGroupCost);
+			};
+
+			scope.removeOriginalInstructor = function(sectionGroupCost) {
+				sectionGroupCost.originalInstructorId = null;
+				budgetActions.updateSectionGroupCost(sectionGroupCost);
+			};
+
 		} // end link
 	};
 });

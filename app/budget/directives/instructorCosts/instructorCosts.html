@@ -4,52 +4,130 @@
 		active-tab="termNav.activeTab"
 		select-tab="setActiveTerm"
 		slim="true">
+		<table class="instructor-costs__table">
+			<thead>
+				<tr>
+					<th class="instructor-costs__table-header">
+						<div class="instructor-costs__cell-container">
+							Instructor
+						</div>
+					</th>
+					<th class="instructor-costs__table-header">
+						<div class="instructor-costs__cell-container">
+							Regular Instructor
+						</div>
+					</th>
+					<th class="instructor-costs__table-header">
+						<div class="instructor-costs__cell-container">
+							Reason
+						</div>
+					</th>
+					<th class="instructor-costs__table-header">
+						<div class="instructor-costs__cell-container">
+							Instructor Cost
+						</div>
+					</th>
+					<th class="instructor-costs__table-header">
+						<div class="instructor-costs__cell-container">
+							Comment
+						</div>
+					</th>
+					<th class="instructor-costs__table-header">
+						<div class="instructor-costs__cell-container">
+							Total Cost
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="course in selectedBudgetScenario.courses track by course.uniqueKey">
+				<tr>
+					<td colspan="10" class="instructor-costs__course-title">
+						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
+					</td>
+				</tr>
+				<tr ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+					<!-- Replacement -->
+					<td class="instructor-costs__table-cell">
+						<div class="instructor-costs__instructor-container">
+							<instructor-assignment-dropdown
+								mode="'instructor'"
+								section-group-cost="sectionGroupCost"
+								instructors="instructors"
+								course="course">
+							</instructor-assignment-dropdown>
+							<ipa-button
+								ng-show="sectionGroupCost.instructor"
+								class="instructor-costs__remove-assignment-ui"
+								size="'small'"
+								icon-class="'glyphicon glyphicon-remove'"
+								confirm-message="'Are you sure you want to remove this instructor?'"
+								tooltip-message="'Delete assignment'"
+								on-click="removeInstructor(sectionGroupCost)">
+							</ipa-button>
+						</div>
+					</td>
 
-		<!-- Header -->
-		<div class="course-costs-header">
-			<div class="instructors-header">
-				<div class="cell">
-					Instructor
-				</div>
-				<div class="cell">
-					Reg. Instructor
-				</div>
-				<div class="cell">
-					Reason
-				</div>
-				<div class="cell">
-					Instructor Cost
-				</div>
-				<div class="cell">
-					Comment
-				</div>
-			</div>
+					<!-- Instructor -->
+					<td class="instructor-costs__table-cell">
+						<div class="instructor-costs__instructor-container">
+							<instructor-assignment-dropdown
+								mode="'originalInstructor'"
+								section-group-cost="sectionGroupCost"
+								instructors="instructors"
+								course="course">
+							</instructor-assignment-dropdown>
+							<ipa-button
+								ng-show="sectionGroupCost.originalInstructor"
+								class="instructor-costs__remove-assignment-ui"
+								size="'small'"
+								icon-class="'glyphicon glyphicon-remove'"
+								confirm-message="'Are you sure you want to remove this instructor?'"
+								tooltip-message="'Delete assignment'"
+								on-click="removeOriginalInstructor(sectionGroupCost)">
+							</ipa-button>
+						</div>
+					</td>
 
-			<div class="cell">
-				Total Cost
-			</div>
-		</div>
+					<!-- Reason -->
+					<td class="instructor-costs__table-cell">
+						<div class="instructor-costs__instructor-container">
+							<input
+								type="text"
+								ng-model="sectionGroupCost.reason"
+								auto-input
+								on-enter="updateSectionGroupCost(sectionGroupCost)"
+								on-blur="updateSectionGroupCost(sectionGroupCost)">
+						</div>
+					</td>
 
-		<!-- Courses -->
-		<div ng-repeat="course in selectedBudgetScenario.courses track by course.uniqueKey">
-			<div class="course-title">
-				<div>
-					{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
-				</div>
-			</div>
-			<div class="section-group-row" ng-repeat="sectionGroupCost in course.sectionGroupCosts">
-				<div class="instructor-cost">
-					<instructor-cost-row
-						section-group-cost="sectionGroupCost"
-						instructors="instructors"
-						course="course">
-					</instructor-cost-row>
-				</div>
+					<!-- Cost -->
+					<td class="instructor-costs__table-cell">
+						<div class="instructor-costs__instructor-container">
+							<instructor-cost-input
+							section-group-cost="sectionGroupCost"></instructor-cost-input>
+						</div>
+					</td>
 
-				<div class="cell">
-					{{ sectionGroupCost.totalCostDisplay }}
-				</div>
-			</div>
-		</div>
+					<!-- Comments -->
+					<td class="instructor-costs__table-cell">
+						<div class="instructor-costs__cell-container">
+							<ipa-button
+								button-text="'See Comments'"
+								text="'Comments'"
+								color="'light'"
+								icon-class="'entypo entypo-chat'"
+								on-click="openCourseComments(course)">
+							</ipa-button>
+						</div>
+					</td>
+					<!-- Total -->
+					<td class="instructor-costs__table-cell-total">
+						<div class="instructor-costs__total-container">
+							{{ sectionGroupCost.totalCostDisplay }}
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</ipa-tabs>
 </div>
