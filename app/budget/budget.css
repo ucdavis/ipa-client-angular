@@ -10,21 +10,6 @@
 	margin-bottom: 30px;
 }
 
-.budget-view__table-toolbar {
-	width: 100%;
-	display: flex;
-	margin-bottom: 20px;
-}
-
-.budget-view__scenario-label {
-	width: 10%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-right: 10px;
-	font-weight: bold;
-}
-
 /*
 	Incorrectly written CSS below
 */
@@ -145,14 +130,6 @@ form .form-group {
 
 .budget-scenario-dropdown .budget-scenario-row {
 	cursor: pointer;
-}
-
-.budget-scenario-dropdown .delete-budget-scenario-button {
-	display: none;
-}
-
-.budget-scenario-dropdown .budget-scenario-row:hover .delete-budget-scenario-button {
-	display: block;
 }
 
 .budget-scenario-dropdown .create-budget-scenario-ui:hover {

@@ -4,25 +4,27 @@
 					aria-haspopup="true" aria-expanded="true">
 
 		<span>
-			{{ view.state.selectedBudgetScenario.name }}
+			{{ state.selectedBudgetScenario.name }}
 			<span class="caret"></span>
 		</span>
 
 	</button>
 
 	<ul class="dropdown-menu dropdown-container" aria-labelledby="dropdownMenu1">
-		<li ng-repeat="budgetScenario in view.state.budgetScenarios" class="budget-scenario-row">
+		<li ng-repeat="budgetScenario in state.budgetScenarios" class="budget-scenario-dropdown__row">
 			<a ng-click="selectBudgetScenario(budgetScenario)" class="budget-scenario-item">
 				<span>
 					{{ budgetScenario.name }}
 				</span>
-				<span class="glyphicon glyphicon-trash delete-budget-scenario-button"
-							uib-tooltip="Delete scenario" tooltip-placement="bottom"
-							confirm-button="deleteBudgetScenario(budgetScenario)"
-							btn-class="btn-danger"
-							message="Are you sure you want to delete this budget scenario?"
-							yes="Confirm" no="Cancel" placement="top">
-				</span>
+				<div class="budget-scenario-dropdown__hover-ui">
+					<ipa-button
+						icon-class="'glyphicon glyphicon-trash'"
+						size="'small'"
+						on-click="deleteBudgetScenario(budgetScenario)"
+						tooltip-message="'Delete scenario'"
+						confirm-message="'Are you sure you want to delete this budget scenario?'">
+					</ipa-button>
+				</div>
 			</a>
 		</li>
 		<li role="presentation" class="divider courses-separator"></li>
