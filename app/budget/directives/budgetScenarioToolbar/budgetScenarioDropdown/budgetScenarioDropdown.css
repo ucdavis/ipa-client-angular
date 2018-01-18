@@ -13,6 +13,11 @@
 	height: 30px;
 }
 
+.budget-scenario-dropdown__toggle-ui {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
 /* Old CSS need to rewrite in BEM style */
 .budget-scenario-dropdown:hover .budget-scenario-row {
 	cursor: pointer;

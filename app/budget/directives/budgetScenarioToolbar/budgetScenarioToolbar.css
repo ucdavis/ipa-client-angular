@@ -8,7 +8,7 @@
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	width: 100%;
+	width: 70%;
 }
 
 .budget-scenario-toolbar__tool {
@@ -25,19 +25,16 @@
 }
 
 .budget-scenario-toolbar__scenario-label {
-	width: 10%;
 	display: flex;
-	justify-content: center;
 	align-items: center;
-	margin-right: 10px;
 	font-weight: bold;
+	margin-right: 10px;
 }
 
 .budget-scenario-toolbar__edit-ui {
 	align-items: center;
-	justify-content: center;
 	display: flex;
-	margin-left: 10px;
+	width: 30%;
 }
 
 .budget-scenario-toolbar__container {
@@ -52,4 +49,5 @@
 
 .budget-scenario-toolbar__rename-input {
 	padding: 6px 12px;
+	height: 25px;
 }

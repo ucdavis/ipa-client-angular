@@ -1,9 +1,9 @@
 <div class="budget-scenario-toolbar">
-	<div class="budget-scenario-toolbar__scenario-label">
-		Budget Scenario
-	</div>
-
 	<div class="budget-scenario-toolbar__edit-ui">
+		<div class="budget-scenario-toolbar__scenario-label">
+			Budget Scenario
+		</div>
+
 		<!-- Regular UI -->
 		<div class="budget-scenario-toolbar__container"
 			ng-show="displayScenarioRenameUI == false">
@@ -21,20 +21,26 @@
 		<!-- Rename scenario UI -->
 		<div class="budget-scenario-toolbar__container"
 			ng-show="displayScenarioRenameUI">
-			<ipa-input class="budget-scenario-toolbar__rename-input"
-				value="newScenarioName">
-			</ipa-input>
+			<div>
+				<ipa-input class="budget-scenario-toolbar__rename-input"
+					on-update="scenarioNameIsValid()"
+					value="newScenarioName">
+				</ipa-input>
+			</div>
 
 			<ipa-button
+				class="budget-scenario-toolbar__edit-button"
 				icon-class="'glyphicon glyphicon-remove'"
 				size="'small'"
 				on-click="cancelScenarioRename()"
 				tooltip-message="'Cancel'">
 			</ipa-button>
 			<ipa-button
+				class="budget-scenario-toolbar__edit-button"
 				icon-class="'glyphicon glyphicon-ok'"
 				size="'small'"
 				on-click="saveNewScenarioName()"
+				is-disabled="isNewScenarioNameValid == false"
 				tooltip-message="'Rename Scenario'">
 			</ipa-button>
 		</div>
