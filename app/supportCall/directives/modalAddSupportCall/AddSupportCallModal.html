@@ -180,20 +180,13 @@
 									<div class="modal-add-support-call__checkbox">
 										<ipa-checkbox
 											is-checked="supportCallConfigData.collectAvailabilityByCrn"
-											click-action="toggleCollectAvailabilityByCrn()"
-											is-disabled="!(supportCallConfigData.collectAvailabilityByGrid)">
+											click-action="toggleCollectAvailabilityByCrn()">
 										</ipa-checkbox>
 									</div>
 									<div class="modal-add-support-call__checkbox-label"
-										ng-show="supportCallConfigData.collectAvailabilityByGrid"
 										ng-click="toggleCollectAvailabilityByCrn()">
 											Collect availability (via CRN)
 									</div>
-									<div class="modal-add-support-call__checkbox-label modal-add-support-call__checkbox-label--disabled"
-										ng-show="!(supportCallConfigData.collectAvailabilityByGrid)">
-											Collect availability (via CRN)
-									</div>
-
 								</li>
 
 								<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectEligibilityConfirmation()">
