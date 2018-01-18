@@ -1,15 +1,22 @@
-.budget-scenario-dropdown .budget-scenario-row {
-	cursor: pointer;
+
+.budget-scenario-dropdown__hover-ui {
+	display: none;
+	padding-right: 10px;
 }
 
-.budget-scenario-dropdown:hover .budget-scenario-row {
-	cursor: pointer;
+.budget-scenario-dropdown__row:hover .budget-scenario-dropdown__hover-ui {
 	display: block;
 }
 
-.budget-scenario-dropdown .delete-budget-scenario-button {
-	display: none;
-	padding-right: 10px;
+.budget-scenario-dropdown__row {
+	cursor: pointer;
+	height: 30px;
+}
+
+/* Old CSS need to rewrite in BEM style */
+.budget-scenario-dropdown:hover .budget-scenario-row {
+	cursor: pointer;
+	display: block;
 }
 
 .budget-scenario-dropdown .dropdown-container {
