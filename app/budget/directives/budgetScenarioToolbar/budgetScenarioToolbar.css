@@ -1,4 +1,10 @@
 .budget-scenario-toolbar {
+	width: 100%;
+	display: flex;
+	margin-bottom: 20px;
+}
+
+.budget-scenario-toolbar__tool-container {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
@@ -16,4 +22,34 @@
 .budget-scenario-toolbar__tool:hover {
 	border-color: #7c7c7c;
 	background-color: #eee;
+}
+
+.budget-scenario-toolbar__scenario-label {
+	width: 10%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.budget-scenario-toolbar__edit-ui {
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	margin-left: 10px;
+}
+
+.budget-scenario-toolbar__container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.budget-scenario-toolbar__edit-button {
+	margin-left: 10px;
+}
+
+.budget-scenario-toolbar__rename-input {
+	padding: 6px 12px;
 }
