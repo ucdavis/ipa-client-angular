@@ -51,7 +51,8 @@
 	</div>
 	<div class="crn-available__grid-container">
 		<grid-available
-			read-only="true"
+			ng-if="state.supportCallResponse"
+			read-only="state.supportCallResponse.collectAvailabilityByGrid == false"
 			support-call-response="state.supportCallResponse">
 		</grid-available>
 	</div>

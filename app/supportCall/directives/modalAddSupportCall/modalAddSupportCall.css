@@ -15,8 +15,3 @@
 .modal-add-support-call__checkbox-label {
 	cursor: pointer;
 }
-
-.modal-add-support-call__checkbox-label--disabled {
-	color: #ccc;
-	cursor: default;
-}
