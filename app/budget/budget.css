@@ -35,16 +35,6 @@
 	border: 1px solid #D6D6D6;
 }
 
-.add-budget-scenario .tool-icon {
-	margin: 0 5px 0px 5px;
-	padding: 0px;
-}
-
-.flex-row {
-	display: flex;
-	flex-direction: row;
-}
-
 .description {
 	padding: 0px !important;
 }
@@ -53,11 +43,6 @@
 	display: block;
 	overflow-x: hidden;
 	text-decoration: underline;
-}
-
-.form-group .span-full-width {
-	display: block;
-	max-width: 100%;
 }
 
 .form-group textarea {
@@ -79,20 +64,6 @@
 	background-color: #F9F9F9;
 }
 
-.btn-instr {
-	width: 100% !important;
-	background: #fff;
-	border: 1px solid #ebebeb;
-	border-radius: 3px;
-}
-
-.btn-scenario-dropdown {
-	width: 100% !important;
-	background: #fff;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-}
-
 /* modal */
 
 .budget-view .modal-header {
@@ -108,20 +79,6 @@
 	color: #fff;
 	zoom: 1;
 	opacity: 1 !important;
-}
-
-.budget-view .modal-header .modal-title {
-	color: white !important;
-}
-
-.budget-view .modal-footer {
-	background-color: #f8f8f8 !important;
-	padding: 15px !important;
-}
-
-.budget-view .modal-footer .btn-submit {
-	background-color: #303641;
-	color: white;
 }
 
 /* overwrite */
