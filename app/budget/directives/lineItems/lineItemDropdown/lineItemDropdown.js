@@ -7,7 +7,9 @@ budgetApp.directive("lineItemDropdown", this.lineItemDropdown = function ($rootS
 			lineItem: '<'
 		},
 		link: function (scope, element, attrs) {
-			// Intetionally blank
+			scope.openEditLineItemModal = function(lineItem) {
+				budgetActions.openAddLineItemModal(lineItem);
+			};
 		} // end link
 	};
 });
