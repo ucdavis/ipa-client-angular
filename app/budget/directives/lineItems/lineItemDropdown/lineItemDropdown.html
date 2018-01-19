@@ -1,16 +1,14 @@
-<div class="line-item-dropdown header--work-group btn-group" role="group" aria-label="...">
-	<button class="btn btn-default dropdown-toggle"
-					type="button" id="dropdownMenu1" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="true">
+<div class="line-item-dropdown header--work-group btn-group">
+	<div class="dropdown-toggle line-item-dropdown__toggle-ui"
+		type="button"
+		id="dropdownMenu1"
+		data-toggle="dropdown"
+		aria-haspopup="true"
+		aria-expanded="true">
+		<i class="entypo-dot-3"></i>
+	</div>
 
-		<span>
-			{{ view.state.selectedBudgetScenario.name }}
-			<span class="caret"></span>
-		</span>
-
-	</button>
-
-	<ul class="dropdown-menu dropdown-container" aria-labelledby="dropdownMenu1">
+	<ul class="dropdown-menu dropdown-container dropdown-menu-right" aria-labelledby="dropdownMenu1">
 		<li class="line-item-row">
 			<a ng-click="openAddLineItemModal(lineItem)" class="budget-scenario-item">
 				<span>
