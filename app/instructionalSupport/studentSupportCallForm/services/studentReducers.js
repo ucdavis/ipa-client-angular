@@ -110,6 +110,37 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 			}
 		},
 		_uiReducers: function (action, ui) {
+			// Return default ui object if studentSupportCallResponse is not present
+			// In this case the page will display a warning that you were not invited to a support call
+			if (action.payload.studentSupportCallResponse == null || action.payload.studentSupportCallResponse == false) {
+				return {
+					isPreferenceCommentModalOpen: false,
+					isFormLocked: false,
+					crnSearch: {
+						crn: null,
+						feedback: null,
+						blob: null,
+						displayTimes: null
+					},
+					review: {
+						isFormValid: true,
+						validationErrorMessage: null,
+						requirePreferenceAmount: {
+							required: false,
+							complete: false
+						},
+						requireEligible: {
+							required: false,
+							complete: false
+						},
+						requirePreferenceComments: {
+							required: false,
+							complete: false
+						}
+					}
+				};
+			}
+
 			switch (action.type) {
 				case INIT_STATE:
 					var preferenceCommentsComplete = true;
@@ -145,16 +176,15 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 
 
 					// Determine if form should be locked (due date is enforced and has passed)
-					if (action.payload.supportCallResponse) {
-						var dueDate = action.payload.supportCallResponse.dueDate;
-						var dueDateEnforced = action.payload.supportCallResponse.allowSubmissionAfterDueDate == false;
-						if (dueDate && dueDateEnforced) {
-							var currentTime = new Date().getTime();
-							if (currentTime > dueDate) {
-								ui.isFormLocked = true;
-							}
+					var dueDate = action.payload.studentSupportCallResponse.dueDate;
+					var dueDateEnforced = action.payload.studentSupportCallResponse.allowSubmissionAfterDueDate == false;
+					if (dueDate && dueDateEnforced) {
+						var currentTime = new Date().getTime();
+						if (currentTime > dueDate) {
+							ui.isFormLocked = true;
 						}
 					}
+
 					return ui;
 				case CLEAR_CRN_SEARCH:
 					ui.crnSearch.feedback = null;
