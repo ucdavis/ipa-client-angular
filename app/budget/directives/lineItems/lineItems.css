@@ -50,6 +50,11 @@
 	align-items: center;
 }
 
+.line-items__table-header-amount-container {
+	border-right: none;
+	padding-left: 15px;
+}
+
 .line-items__table-container--checkbox {
 	display: flex;
 	justify-content: center;
