@@ -12,7 +12,8 @@ sharedApp.directive("ipaCheckbox", this.ipaCheckbox = function() {
 		scope: {
 			isChecked: '=',
 			clickAction: '&?',
-			isDisabled: '<?'
+			isDisabled: '<?',
+			style: '<?' // Options are muted and default (black)
 		},
 		replace: true, // Replace with the template below
 		link: function(scope, element, attrs) {
