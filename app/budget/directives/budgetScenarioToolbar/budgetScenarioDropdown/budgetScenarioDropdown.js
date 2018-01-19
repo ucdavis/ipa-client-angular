@@ -15,6 +15,10 @@ sharedApp.directive('budgetScenarioDropdown', function($window, $location, $rout
 			scope.selectBudgetScenario = function (budgetScenario) {
 				budgetActions.selectBudgetScenario(budgetScenario.id);
 			};
-		} // End Link
+
+			scope.openBudgetScenarioModal = function() {
+				scope.state.openAddBudgetScenario = true;
+			};
+		}
 	};
 });

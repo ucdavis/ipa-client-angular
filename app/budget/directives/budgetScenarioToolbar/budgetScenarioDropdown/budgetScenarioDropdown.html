@@ -18,6 +18,7 @@
 				</span>
 				<div class="budget-scenario-dropdown__hover-ui">
 					<ipa-button
+						ng-show="state.budgetScenarios.length > 1"
 						icon-class="'glyphicon glyphicon-trash'"
 						size="'small'"
 						on-click="deleteBudgetScenario(budgetScenario)"
