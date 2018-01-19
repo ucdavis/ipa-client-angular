@@ -24,6 +24,7 @@
 			<div>
 				<ipa-input class="budget-scenario-toolbar__rename-input"
 					on-update="scenarioNameIsValid()"
+					update-delay="0"
 					value="newScenarioName">
 				</ipa-input>
 			</div>
@@ -41,6 +42,7 @@
 				size="'small'"
 				on-click="saveNewScenarioName()"
 				is-disabled="isNewScenarioNameValid == false"
+				disabled-tooltip-message="validationError"
 				tooltip-message="'Rename Scenario'">
 			</ipa-button>
 		</div>

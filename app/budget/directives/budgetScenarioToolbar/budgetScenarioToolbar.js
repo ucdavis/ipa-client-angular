@@ -10,6 +10,7 @@ sharedApp.directive('budgetScenarioToolbar', function($window, $location, $route
 			scope.displayScenarioRenameUI = false;
 			scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name);
 			scope.isNewScenarioNameValid = true;
+			scope.validationError = "";
 
 			scope.openSupportCostModal = function() {
 				budgetActions.toggleSupportCostModal();
@@ -32,13 +33,22 @@ sharedApp.directive('budgetScenarioToolbar', function($window, $location, $route
 			};
 
 			scope.scenarioNameIsValid = function () {
+				scope.validationError = "";
+
 				var isNamePresent = (scope.newScenarioName.length > 0);
 
-				var isNameInUse = scope.state.budgetScenarios.any(function(scenario) {
+				if (isNamePresent == false) {
+					scope.validationError = "Enter a name";
+				}
+				var isNameInUse = scope.state.budgetScenarios.some(function(scenario) {
 					return (scenario.name == scope.newScenarioName);
 				});
 
-				scope.isNewScenarioNameValid = isNamePresent && isNameInUse == false;
+				if (isNameInUse) {
+					scope.validationError = "Name already in use";
+				}
+
+				scope.isNewScenarioNameValid = isNamePresent && (isNameInUse == false);
 			};
 		} // End Link
 	};
