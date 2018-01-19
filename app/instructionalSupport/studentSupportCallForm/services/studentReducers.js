@@ -121,7 +121,6 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 						isPreferenceCommentModalOpen: false,
 						isFormLocked: false,
 						crnSearch: {
-							crn: null,
 							feedback: null,
 							blob: null,
 							displayTimes: null
@@ -158,7 +157,6 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 					}
 					return ui;
 				case CLEAR_CRN_SEARCH:
-					ui.crnSearch.crn = null;
 					ui.crnSearch.feedback = null;
 					ui.crnSearch.blob = null;
 					ui.crnSearch.displayTimes = null;
@@ -168,13 +166,11 @@ instructionalSupportApp.service('studentReducers', function ($rootScope, $log, s
 					ui.review.validationErrorMessage = action.payload.validationErrorMessage;
 					return ui;
 				case BEGIN_FETCH_ACTIVITIES_BY_CRN:
-					ui.crnSearch.crn = action.payload.crn;
 					ui.crnSearch.feedback = null;
 					ui.crnSearch.blob = null;
 					ui.crnSearch.displayTimes = null;
 					return ui;
 				case CALCULATE_TIMESLOTS_FOR_CRN:
-					ui.crnSearch.crn = action.payload.crn;
 					ui.crnSearch.feedback = action.payload.crnSearchFeedback;
 					ui.crnSearch.blob = action.payload.crnSearchBlob;
 					ui.crnSearch.displayTimes = action.payload.crnSearchTimes;

@@ -7,6 +7,8 @@ instructionalSupportApp.directive("crnAvailable", this.crnAvailable = function (
 			state: '<'
 		},
 		link: function (scope, element, attrs) {
+			scope.searchCrn = "";
+
 			scope.calculateTimesForCrn = function(crn) {
 				studentActions.fetchTimesByCrn(crn);
 			};
@@ -17,6 +19,7 @@ instructionalSupportApp.directive("crnAvailable", this.crnAvailable = function (
 
 			scope.clearCrnSearch = function() {
 				studentActions.clearCrnSearch();
+				scope.searchCrn = "";
 			};
 
 			scope.clearAvailability = function() {

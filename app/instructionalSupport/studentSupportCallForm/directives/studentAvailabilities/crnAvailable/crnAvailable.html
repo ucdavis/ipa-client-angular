@@ -22,7 +22,7 @@
 
 				<div class="crn-available__input-container">
 					<ipa-input
-						value="state.ui.crnSearch.crn"
+						value="searchCrn"
 						place-holder="'Enter a CRN'">
 					</ipa-input>
 				</div>
@@ -32,8 +32,8 @@
 						ng-hide="state.ui.crnSearch.blob"
 						text="'Find CRN'"
 						disabled-tooltip-message="'Enter a CRN'"
-						is-disabled="!(state.ui.crnSearch.crn)"
-						on-click="calculateTimesForCrn(state.ui.crnSearch.crn)">
+						is-disabled="!(searchCrn)"
+						on-click="calculateTimesForCrn(searchCrn)">
 					</ipa-button>
 
 					<ipa-button
