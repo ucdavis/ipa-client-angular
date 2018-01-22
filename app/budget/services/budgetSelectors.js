@@ -112,8 +112,7 @@ budgetApp.service('budgetSelectors', function () {
 				lineItem.comments =_array_sortByProperty(lineItem.comments, "lastModifiedOn", reverseOrder);
 
 				// Add lineItemCategory description
-				var lineItemCategoryDescription = lineItemCategories.list[lineItem.lineItemCategoryId].description;
-				lineItem.lineItemCategoryDescription = lineItemCategoryDescription;
+				lineItem.categoryDescription = lineItemCategories.list[lineItem.lineItemCategoryId].description;
 
 				// Setting UI state for line item detail view
 				lineItem.isDetailViewOpen = ui.lineItemDetails[lineItem.id].isDetailViewOpen;
