@@ -29,9 +29,10 @@
 			<label class="col-sm-4 control-label">Amount</label>
 			<div class="col-sm-5">
 				<div class="input-group form-input" >
-					<input  class="form-control" type="text"
-									ng-model="newLineItem.amount"
-									placeholder="amount">
+					<ipa-input
+						value="newLineItem.amount"
+						mode="'number'">
+					</ipa-input>
 				</div>
 			</div>
 		</div>
