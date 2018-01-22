@@ -41,6 +41,16 @@
 		</ipa-modal>
 
 		<ipa-modal
+			is-visible="view.state.ui.isBudgetConfigModalOpen"
+			header-text="Add Support Costs">
+				<budget-config
+					ng-if="view.state.ui.isBudgetConfigModalOpen"
+					state="view.state"
+					is-visible="view.state.ui.isBudgetConfigModalOpen">
+				</budget-config>
+		</ipa-modal>
+
+		<ipa-modal
 			is-visible="view.state.ui.courseCommentsModal.isOpen"
 			header-text="Course Comments">
 				<add-course-comments

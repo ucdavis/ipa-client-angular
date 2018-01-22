@@ -8,6 +8,10 @@ sharedApp.directive('budgetScenarioToolbar', function($window, $location, $route
 			scope.openSupportCostModal = function() {
 				budgetActions.toggleSupportCostModal();
 			};
-		} // End Link
+
+			scope.openBudgetConfigModal = function() {
+				budgetActions.openBudgetConfigModal();
+			};
+		}
 	};
 });

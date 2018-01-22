@@ -1,5 +1,11 @@
 <div class="budget-scenario-toolbar">
 	<span
+		class="budget-scenario-toolbar__tool glyphicon glyphicon-cog dropdown-toggle"
+		ng-click="openBudgetConfigModal()"
+		uib-tooltip="Open budget configuration">
+	</span>
+
+	<span
 		class="budget-scenario-toolbar__tool glyphicon glyphicon-education dropdown-toggle"
 		ng-click="openSupportCostModal()"
 		uib-tooltip="Set support costs">
