@@ -245,6 +245,18 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			budgetReducers.reduce(action);
 		},
+		closeBudgetConfigModal: function() {
+			budgetReducers.reduce({
+				type: CLOSE_BUDGET_CONFIG_MODAL,
+				payload: {}
+			});
+		},
+		openBudgetConfigModal: function() {
+			budgetReducers.reduce({
+				type: OPEN_BUDGET_CONFIG_MODAL,
+				payload: {}
+			});
+		},
 		toggleAddBudgetScenarioModal: function() {
 			var action = {
 				type: TOGGLE_ADD_BUDGET_SCENARIO_MODAL,

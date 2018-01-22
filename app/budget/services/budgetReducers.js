@@ -375,6 +375,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						},
 						isAddBudgetScenarioModalOpen: false,
 						isAddLineItemModalOpen: false,
+						isBudgetConfigModalOpen: false,
 						isSupportCostModalOpen: false,
 						isLineItemOpen: false,
 						isCourseCostOpen: false,
@@ -506,6 +507,12 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case CLOSE_ADD_LINE_ITEM_MODAL:
 					ui.isAddLineItemModalOpen = false;
 					ui.lineItemToEdit = null;
+					return ui;
+				case OPEN_BUDGET_CONFIG_MODAL:
+					ui.isBudgetConfigModalOpen = true;
+					return ui;
+				case CLOSE_BUDGET_CONFIG_MODAL:
+					ui.isBudgetConfigModalOpen = false;
 					return ui;
 				case TOGGLE_ADD_BUDGET_SCENARIO_MODAL:
 					ui.isAddBudgetScenarioModalOpen = ! ui.isAddBudgetScenarioModalOpen;
