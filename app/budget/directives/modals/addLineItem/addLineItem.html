@@ -1,5 +1,5 @@
 <div class="add-line-item">
-	<form role="form" class="form-horizontal">
+	<form role="form" class="form-horizontal add-line-item__container">
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Category</label>
 			<div class="col-sm-5">
@@ -41,9 +41,10 @@
 			<label class="col-sm-4 control-label">Description</label>
 			<div class="col-sm-5">
 				<div class="input-group form-input">
-					<input  class="form-control" type="text"
-									ng-model="newLineItem.description"
-									placeholder="Description">
+					<ipa-input
+						value="newLineItem.description"
+						placeholder="Description">
+					</ipa-input>
 				</div>
 			</div>
 		</div>
@@ -52,9 +53,10 @@
 			<label class="col-sm-4 control-label">Notes</label>
 			<div class="col-sm-5">
 				<div class="input-group form-input">
-					<input  class="form-control" type="text"
-									ng-model="newLineItem.notes"
-									placeholder="Notes">
+					<ipa-input
+						value="newLineItem.notes"
+						placeholder="Notes">
+					</ipa-input>
 				</div>
 			</div>
 		</div>

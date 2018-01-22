@@ -39,16 +39,6 @@
 	padding: 0px !important;
 }
 
-.form-group span {
-	display: block;
-	overflow-x: hidden;
-	text-decoration: underline;
-}
-
-.form-group textarea {
-	max-width: 100%;
-}
-
 [contenteditable]:focus {
 	outline: 1px solid #E5E5E5 !important;
 	background-color: #F9F9F9;
@@ -82,14 +72,6 @@
 }
 
 /* overwrite */
-
-form .input-group input {
-	border-radius: 4px !important;
-}
-
-form .form-group {
-	padding-top: 20px;
-}
 
 .text-left {
 	text-align: left !important;
