@@ -39,3 +39,7 @@
 	border-bottom-color: white;
 	color: #555;
 }
+
+.ipa-tabs--border-less {
+	border: none;
+}
