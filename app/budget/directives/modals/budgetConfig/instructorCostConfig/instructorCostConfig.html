@@ -1,3 +1,23 @@
 <div>
-	instructor cost config
+	<div class="instructor-box">
+		<div ng-repeat="instructor in newInstructors | orderBy: 'lastName'" class="instructor-item">
+
+			<div class="instructor-label-container">
+				<div class="instructor-label">
+					{{ instructor.fullName }}
+				</div>
+			</div>
+
+			<div class="instructor-cost-container">
+				<div class="instructor-cost">
+					<input
+						type="text"
+						ng-model="instructor.cost"
+						auto-input
+						on-blur="updateInstructorCost(instructor)"
+						class="instructor-cost-input">
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

@@ -1,22 +1,30 @@
 <div class="budget-config">
-	<div class="budget-config__nav">
-		Nav goes here
-	</div>
 	<div class="budget-config__container">
-		<general-config>
-		</general-config>
+		<ipa-tabs
+			class="budget-config__main-content"
+			tab-names="view.allTabs"
+			active-tab="view.activeTab"
+			select-tab="setActiveTab"
+			slim="true">
+			<general-config
+				ng-show="view.activeTab == 'General'">
+			</general-config>
 
-		<group-cost-config>
-		</group-cost-config>
+			<group-cost-config
+				ng-show="view.activeTab == 'Group Cost'">
+			</group-cost-config>
 
-		<instructor-cost-config>
-		</instructor-cost-config>
+			<instructor-cost-config
+				ng-show="view.activeTab == 'Instructor Cost'"
+				instructors="state.instructors">
+			</instructor-cost-config>
+		</ipa-tabs>
 	</div>
 
 	<div class="budget-config__footer">
 		<ipa-button
 			text="'Close'"
-			style="'dark'"
+			skin="'dark'"
 			on-click="close()">
 		</ipa-button>
 	</div>

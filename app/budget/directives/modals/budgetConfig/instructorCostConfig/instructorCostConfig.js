@@ -4,10 +4,14 @@ budgetApp.directive("instructorCostConfig", this.instructorCostConfig = function
 		templateUrl: 'instructorCostConfig.html',
 		replace: true,
 		scope: {
-			state: '<'
+			instructors: '<'
 		},
 		link: function (scope, element, attrs) {
-			// Intentionally blank
+			scope.newInstructors = angular.copy(scope.instructors);
+
+			scope.updateInstructorCost = function (newInstructor) {
+				budgetActions.updateInstructorCost(newInstructor);
+			};
 		}
 	};
 });

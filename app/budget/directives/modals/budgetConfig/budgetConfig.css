@@ -1,3 +1,11 @@
+.budget-config__main-content {
+	height: 400px;
+}
+
+.budget-config__container {
+	padding: 10px;
+}
+
 .budget-config__footer {
 	padding: 10px;
 	display: flex;
