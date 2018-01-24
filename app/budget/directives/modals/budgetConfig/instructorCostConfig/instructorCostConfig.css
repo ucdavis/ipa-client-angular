@@ -2,11 +2,18 @@
 	padding: 20px
 }
 
-.instructor-cost-config__label {
-	font-weight: bold;
-	padding-right: 10px;
-}
-
 .instructor-cost-config__instructor {
 	display: flex;
+	margin-bottom: 15px;
+}
+
+.instructor-cost-config__label {
+	padding-left: 10px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+}
+
+.instructor-cost-config__input {
+	width: 10%;
 }

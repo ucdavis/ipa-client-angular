@@ -3,10 +3,17 @@
 }
 
 .group-cost-config__label {
-	font-weight: bold;
-	padding-right: 10px;
+	padding-left: 10px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
 }
 
 .group-cost-config__cost {
 	display: flex;
+	margin-bottom: 15px;
+}
+
+.group-cost-config__input {
+	width: 10%;
 }

@@ -1,15 +1,15 @@
 <div class="instructor-cost-config">
 		<div class="instructor-cost-config__instructor" ng-repeat="instructor in newInstructors | orderBy: 'lastName'">
-			<div class="instructor-cost-config__label">
-				{{ instructor.fullName }}
-			</div>
-
-			<div>
+			<div class="instructor-cost-config__input">
 				<ipa-input
 					type="text"
 					value="instructor.cost"
 					on-update="updateInstructorCost(instructor)">
 				</ipa-input>
+			</div>
+
+			<div class="instructor-cost-config__label">
+				{{ instructor.fullName }}
 			</div>
 		</div>
 	</div>
