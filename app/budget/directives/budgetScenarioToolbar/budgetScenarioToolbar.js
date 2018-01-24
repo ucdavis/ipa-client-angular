@@ -32,6 +32,8 @@ sharedApp.directive('budgetScenarioToolbar', function($window, $location, $route
 				scope.displayScenarioRenameUI = false;
 			};
 
+			// Verifies that name is unique (within budgets for that schedule) and at least 1 character long.
+			// Will generate an appropriate error message if this is not the case.
 			scope.scenarioNameIsValid = function () {
 				scope.validationError = "";
 
