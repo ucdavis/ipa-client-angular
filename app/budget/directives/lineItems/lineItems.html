@@ -75,7 +75,7 @@
 				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
 					<div class="line-items__amount-container">
 						<div>
-							{{ lineItem.amountDisplay }}
+							{{ toCurrency(lineItem.amount) }}
 						</div>
 						<div>
 							<line-item-dropdown line-item="lineItem"></line-item-dropdown>

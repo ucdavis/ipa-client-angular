@@ -68,7 +68,7 @@ budgetApp.service('budgetSelectors', function () {
 		) {
 			var selectedBudgetScenario = budgetScenarios.list[ui.selectedBudgetScenarioId];
 
-			// selectedBudgetScenarioId refers to a scenario that no longer exists
+			// If selectedBudgetScenarioId refers to a scenario that no longer exists
 			// We will attempt to automatically select another scenario to be 'active'
 			if (selectedBudgetScenario == null) {
 				if (budgetScenarios.ids.length > 0) {
@@ -80,69 +80,6 @@ budgetApp.service('budgetSelectors', function () {
 					return null;
 				}
 			}
-
-			// Set main view UI states
-			selectedBudgetScenario.isLineItemOpen = ui.isLineItemOpen;
-			selectedBudgetScenario.isCourseCostOpen = ui.isCourseCostOpen;
-
-			// Add lineItems
-			selectedBudgetScenario.lineItems = [];
-
-			lineItems.ids.forEach( function (lineItemId) {
-				var lineItem = lineItems.list[lineItemId];
-
-				// Ensure lineItem belongs to selected budget scenario
-				if (lineItem.budgetScenarioId != selectedBudgetScenario.id) {
-					return;
-				}
-
-				// Set lineItemComments
-				lineItem.comments = [];
-
-				lineItemComments.ids.forEach(function(commentId) {
-					var comment = lineItemComments.list[commentId];
-
-					if (comment.lineItemId == lineItem.id) {
-						lineItem.comments.push(comment);
-					}
-				});
-
-				// Sort sectionGroupCostComments
-				var reverseOrder = true;
-				lineItem.comments =_array_sortByProperty(lineItem.comments, "lastModifiedOn", reverseOrder);
-
-				// Add lineItemCategory description
-				lineItem.categoryDescription = lineItemCategories.list[lineItem.lineItemCategoryId].description;
-
-				// Setting UI state for line item detail view
-				lineItem.isDetailViewOpen = ui.lineItemDetails[lineItem.id].isDetailViewOpen;
-				lineItem.displayTypeInput = ui.lineItemDetails[lineItem.id].displayTypeInput;
-				lineItem.displayAmountInput = ui.lineItemDetails[lineItem.id].displayAmountInput;
-				lineItem.displayNotesInput = ui.lineItemDetails[lineItem.id].displayNotesInput;
-				lineItem.displayDescriptionInput = ui.lineItemDetails[lineItem.id].displayDescriptionInput;
-
-				selectedBudgetScenario.lineItems.push(lineItem);
-				if (ui.openLineItems.indexOf(lineItem.id) > -1) {
-					lineItem.isDetailViewOpen = true;
-				}
-
-				// Set 'lastModifiedBy'
-				// Expected formats are 'system' or 'user:bobsmith'
-				// Will convert 'user:bobsmith' to 'Smith, Bob'
-				if (lineItem.lastModifiedBy) {
-					var split = lineItem.lastModifiedBy.split(":");
-					if (split.length > 0 && split[0] == "user") {
-						var loginId = split[1];
-
-						users.ids.forEach(function(userId) {
-							var user = users.list[userId];
-							if (user.loginId == loginId) {
-								lineItem.lastModifiedBy = user.firstName + " " + user.lastName;
-							}
-						});
-					}
-				}
-			});
 
 			// Add sectionGroupCosts (for selected termCode)
 			selectedBudgetScenario.selectedTerm = ui.selectedTerm;
@@ -436,22 +373,24 @@ budgetApp.service('budgetSelectors', function () {
 			// Store all line item costs for graph calculations
 			var rawLineItemCosts = 0;
 			// Calculate raw line items
-			selectedBudgetScenario.lineItems.forEach(function(lineItem) {
-				var index = selectedBudgetScenario.summary.lineItemIndexHash[lineItem.lineItemCategoryId];
-				var lineItemCategorySummary = selectedBudgetScenario.summary.lineItems.categories[index];
-				lineItemCategorySummary.raw += parseFloat(lineItem.amount);
-				lineItemCategorySummary.display = toCurrency(lineItemCategorySummary.raw);
-				selectedBudgetScenario.summary.lineItems.total += parseFloat(lineItem.amount);
+			if (selectedBudgetScenario.lineItems) {
+				selectedBudgetScenario.lineItems.forEach(function(lineItem) {
+					var index = selectedBudgetScenario.summary.lineItemIndexHash[lineItem.lineItemCategoryId];
+					var lineItemCategorySummary = selectedBudgetScenario.summary.lineItems.categories[index];
+					lineItemCategorySummary.raw += parseFloat(lineItem.amount);
+					lineItemCategorySummary.display = toCurrency(lineItemCategorySummary.raw);
+					selectedBudgetScenario.summary.lineItems.total += parseFloat(lineItem.amount);
 
-				lineItem.isSelected = ui.selectedLineItems.indexOf(lineItem.id) > -1;
+					lineItem.isSelected = ui.selectedLineItems.indexOf(lineItem.id) > -1;
 
-				// Calculate line item costs
-				if (lineItem.amount < 0) {
-					rawLineItemCosts += parseFloat(Math.abs(lineItem.amount));
-				}
+					// Calculate line item costs
+					if (lineItem.amount < 0) {
+						rawLineItemCosts += parseFloat(Math.abs(lineItem.amount));
+					}
 
-				lineItem.amountDisplay = toCurrency(lineItem.amount);
-			});
+					lineItem.amountDisplay = toCurrency(lineItem.amount);
+				});
+			}
 
 			// Hash no longer needed
 			delete selectedBudgetScenario.summary.lineItemIndexHash;
