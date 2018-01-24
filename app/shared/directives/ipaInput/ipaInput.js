@@ -22,7 +22,7 @@ sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 			scope.applyUpdate = function() {
 				if (angular.isUndefined(scope.onUpdate)) { return; }
 
-				scope.delay = scope.onUpdate || 500;
+				scope.delay = scope.updateDelay || 1000;
 				$timeout.cancel(scope.timeOut);
 
 				scope.timeOut = $timeout(scope.onUpdate, scope.delay);
