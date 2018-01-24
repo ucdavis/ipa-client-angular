@@ -4,6 +4,7 @@
 
 .general-config__term {
 	width: 25%;
+	margin-bottom: 5px;
 }
 
 .general-config__term-label {

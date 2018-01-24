@@ -1,0 +1,12 @@
+.instructor-cost-config {
+	padding: 20px
+}
+
+.instructor-cost-config__label {
+	font-weight: bold;
+	padding-right: 10px;
+}
+
+.instructor-cost-config__instructor {
+	display: flex;
+}

@@ -1,0 +1,12 @@
+.group-cost-config {
+	padding: 20px;
+}
+
+.group-cost-config__label {
+	font-weight: bold;
+	padding-right: 10px;
+}
+
+.group-cost-config__cost {
+	display: flex;
+}
