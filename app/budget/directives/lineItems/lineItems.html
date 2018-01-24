@@ -1,21 +1,36 @@
-<div class="line-items-section">
+<div class="line-items">
 	<table class="line-items__table">
 		<thead>
 			<tr>
 				<th class="line-items__table-header line-items__table--checkbox">
-					<div class="checkbox-container">
-						<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-							ng-class="{ 'checked': ui.areAllLineItemsSelected }" ng-click="selectAllLineItems(ui.areAllLineItemsSelected)" stop-event="click">
-							<label class="cb-wrapper">
-								<div class="checked"></div>
-							</label>
-						</div>
+					<div class="line-items__table-header-container line-items__table-container--checkbox">
+						<ipa-checkbox
+							style="'muted'"
+							is-checked="ui.areAllLineItemsSelected"
+							click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
+						</ipa-checkbox>
 					</div>
 				</th>
-				<th class="line-items__table-header">Type</th>
-				<th class="line-items__table-header">Description</th>
-				<th class="line-items__table-header">Comments</th>
-				<th class="line-items__table-header line-items__table--amount">Amount</th>
+				<th class="line-items__table-header">
+					<div class="line-items__table-header-container">
+						Type
+					</div>
+				</th>
+				<th class="line-items__table-header">
+					<div class="line-items__table-header-container">
+						Description
+					</div>
+				</th>
+				<th class="line-items__table-header">
+					<div class="line-items__table-header-container">
+						Comments
+					</div>
+				</th>
+				<th class="line-items__table-header line-items__table--amount">
+					<div class="line-items__table-header-amount-container">
+						Amount
+					</div>
+				</th>
 			</tr>
 		</thead>
 
@@ -23,19 +38,18 @@
 			<tr ng-repeat="lineItem in selectedBudgetScenario.lineItems track by $index">
 				<!-- Checkbox -->
 				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
-					<div class="checkbox-container">
-						<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-							ng-class="{ 'checked': lineItem.isSelected }"
-							ng-click="selectLineItem(lineItem)" stop-event="click">
-							<label class="cb-wrapper">
-								<div class="checked"></div>
-							</label>
-						</div>
+					<div class="line-items__table-container--checkbox">
+						<ipa-checkbox
+							style="'muted'"
+							is-checked="lineItem.isSelected"
+							click-action="selectLineItem(lineItem)">
+						</ipa-checkbox>
+					</div>
 				</td>
 
 				<!-- Category -->
 				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
-					{{ lineItem.lineItemCategoryDescription }}
+					{{ lineItem.categoryDescription }}
 				</td>
 
 				<!-- Description -->

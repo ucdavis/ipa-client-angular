@@ -15,7 +15,7 @@ budgetApp.directive("addLineItem", this.addLineItem = function ($rootScope, budg
 				scope.newLineItem = angular.copy(scope.lineItemToEdit);
 			}
 
-			scope.newLineItem.categoryDescription = "Select a category";
+			scope.newLineItem.categoryDescription = scope.newLineItem.categoryDescription || "Select a category";
 
 			// Validates the form and builds a custom message for the user
 			scope.isFormValid = function() {

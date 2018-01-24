@@ -1,25 +1,28 @@
-<div class="line-item-dropdown header--work-group btn-group" role="group" aria-label="...">
-	<button class="btn btn-default dropdown-toggle"
-					type="button" id="dropdownMenu1" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="true">
+<div class="line-item-dropdown header--work-group btn-group">
+	<div class="dropdown-toggle line-item-dropdown__toggle-ui"
+		type="button"
+		data-toggle="dropdown"
+		aria-haspopup="true"
+		aria-expanded="true">
+		<i class="entypo-dot-3"></i>
+	</div>
 
-		<span>
-			{{ view.state.selectedBudgetScenario.name }}
-			<span class="caret"></span>
-		</span>
-
-	</button>
-
-	<ul class="dropdown-menu dropdown-container" aria-labelledby="dropdownMenu1">
+	<ul class="dropdown-menu dropdown-container dropdown-menu-right line-item-edit-dropdown">
 		<li class="line-item-row">
-			<a ng-click="openAddLineItemModal(lineItem)" class="budget-scenario-item">
+			<a ng-click="openEditLineItemModal(lineItem)" class="budget-scenario-item">
 				<span>
 					Edit
 				</span>
 			</a>
 		</li>
 		<li class="line-item-row">
-			<a class="budget-scenario-item">
+			<a class="budget-scenario-item"
+				uib-tooltip="Delete line item"
+				tooltip-placement="bottom"
+				confirm-button="deleteLineItem(lineItem)"
+				btn-class="btn-danger"
+				message="Are you sure you want to delete this line item?"
+				yes="Delete" no="Cancel" placement="top">
 				<span>
 					Delete
 				</span>

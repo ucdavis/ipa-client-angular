@@ -28,6 +28,20 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
 			});
 		},
+		updateBudgetScenario: function (budgetScenario) {
+			budgetService.updateBudgetScenario(budgetScenario).then(function (results) {
+				$rootScope.$emit('toast', { message: "Update budget scenario", type: "SUCCESS" });
+
+				budgetReducers.reduce({
+					type: UPDATE_BUDGET_SCENARIO,
+					payload: {
+						budgetScenario: budgetScenario
+					}
+				});
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update budget scenario.", type: "ERROR" });
+			});
+		},
 		createBudgetScenario: function (newBudgetScenario, budgetId, scenarioId) {
 			var self = this;
 			if (scenarioId == null) { scenarioId = 0;}
@@ -101,26 +115,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not create line item.", type: "ERROR" });
 			});
 		},
-		editLineItem: function (updatedLineItem, budgetScenarioId) {
-			var self = this;
-			// Ensure amount is properly formatted as a float
-			updatedLineItem.amount = parseFloat(updatedLineItem.amount);
-
-			budgetService.updateLineItem(updatedLineItem, budgetScenarioId).then(function (results) {
-				var action = {
-					type: UPDATE_LINE_ITEM,
-					payload: results
-				};
-				$rootScope.$emit('toast', { message: "Updated line item", type: "SUCCESS" });
-				budgetReducers.reduce(action);
-
-				// Close modal
-				self.closeAddLineItemModal();
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not update line item.", type: "ERROR" });
-			});
-		},
 		updateLineItem: function (lineItem) {
+			var self = this;
 			// Ensure amount is properly formatted as a float
 			lineItem.amount = parseFloat(lineItem.amount);
 
@@ -131,6 +127,9 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 				$rootScope.$emit('toast', { message: "Saved line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);
+
+				// Close modal
+				self.closeAddLineItemModal();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not save line item.", type: "ERROR" });
 			});
@@ -326,7 +325,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			};
 
 			budgetReducers.reduce(action);
-			self.calculateScenarioTerms();
+			this.calculateScenarioTerms();
 		},
 		selectTerm: function(termTab) {
 			var descriptionTerms = {

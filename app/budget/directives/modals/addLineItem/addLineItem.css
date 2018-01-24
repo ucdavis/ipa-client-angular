@@ -1,3 +1,7 @@
+.add-line-item__container {
+	padding: 10px;
+}
+
 .add-line-item .btn-category-dropdown {
 	display: flex;
 	justify-content: center;

@@ -25,7 +25,8 @@
 				<add-line-item
 					ng-if="view.state.ui.isAddLineItemModalOpen"
 					state="view.state"
-					is-visible="view.state.ui.isAddLineItemModalOpen">
+					is-visible="view.state.ui.isAddLineItemModalOpen"
+					line-item-to-edit="view.state.ui.lineItemToEdit">
 				</add-line-item>
 		</ipa-modal>
 
@@ -73,16 +74,7 @@
 				</add-line-item-comments>
 		</ipa-modal>
 
-		<div class="budget-view__table-toolbar">
-			<div class="budget-view__scenario-label">
-				Budget Scenario
-			</div>
-			<div class="btn-group add-budget-scenario">
-				<budget-scenario-dropdown></budget-scenario-dropdown>
-			</div>
-
-			<budget-scenario-toolbar></budget-scenario-toolbar>
-		</div>
+		<budget-scenario-toolbar state="view.state"></budget-scenario-toolbar>
 
 		<budget-nav
 			class="budget-view__nav-container"
