@@ -6,15 +6,22 @@
 
 .line-items__table-header {
 	width: 10%;
-	padding-top: 15px;
-	padding-bottom: 15px;
 	border-bottom: 1px solid #ddd;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.line-items__table-header-container {
 	border-right: 1px solid #ddd;
 	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 .line-items__table-cell {
 	padding-left: 15px;
+	padding-right: 15px;
 }
 
 .line-items__table--amount {
@@ -43,15 +50,13 @@
 	align-items: center;
 }
 
-/* non BEM CSS needs to be re-written */
-
-.line-items-section .checkbox-container {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.line-items__table-header-amount-container {
+	border-right: none;
+	padding-left: 15px;
 }
 
-.checkbox-replace.color-primary .cb-wrapper,
-.radio-replace.color-primary .cb-wrapper {
-	border-color: #d2d2d2;
+.line-items__table-container--checkbox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

@@ -1,5 +1,5 @@
 <div class="ipa-button"
-	uib-tooltip="{{disabledTooltipMessage || tooltipMessage}}"
+	uib-tooltip="{{ calculateTooltip() }}"
 	tooltip-placement="bottom"
 	ng-class="{ buttonClass, 'ipa-button--disabled': isDisabled , 'ipa-button--wide': isWide, 'ipa-button--dark-skin': skin == 'dark', 'ipa-button--light-skin': skin == 'light' || !skin }">
 	<div class="ipa-button__container"

@@ -27,7 +27,13 @@ sharedApp.directive("ipaButton", this.ipaButton = function () {
 			skin: '<?' // Default: 'light', planned skins are dark/light/red
 		},
 		link: function(scope, element, attrs) {
-			// Intentionally empty
+			scope.calculateTooltip = function() {
+				if (scope.isDisabled && scope.disabledTooltipMessage && scope.disabledTooltipMessage.length > 0) {
+					return scope.disabledTooltipMessage;
+				}
+
+				return scope.tooltipMessage;
+			};
 		}
 	};
 });

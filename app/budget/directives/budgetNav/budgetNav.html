@@ -20,6 +20,8 @@
 				<ipa-button
 					icon-class="'glyphicon glyphicon-trash'"
 					size="'small'"
+					is-disabled="selectedLineItems.length == 0"
+					disabled-tooltip-message="'No line items selected'"
 					on-click="deleteLineItems()"
 					tooltip-message="'Delete line items'"
 					confirm-message="'Are you sure you want to remove the selected line items?'">

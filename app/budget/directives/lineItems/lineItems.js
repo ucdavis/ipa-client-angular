@@ -12,6 +12,7 @@ budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetAc
 			scope.toggleLineItemSection = function() {
 				budgetActions.toggleLineItemSection();
 			};
+
 			scope.openAddLineItemModal = function() {
 				budgetActions.openAddLineItemModal();
 			};
