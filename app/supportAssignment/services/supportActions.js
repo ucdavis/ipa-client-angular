@@ -84,7 +84,12 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				$rootScope.$emit('toast', { message: "Could not remove assignment.", type: "ERROR" });
 			});
 		},
-		updateReaderAppointments: function (sectionGroup) {
+		updateReaderAppointments: function (sectionGroupDTO) {
+			// Prepare the original sectionGroup for sending to the server
+			// If the front end DTO is sent it generates a server error 413 (Request Entity Too Large)
+			var sectionGroup = supportReducer._state.sectionGroups.list[sectionGroupDTO.id];
+			sectionGroup.teachingAssistantAppointments = sectionGroupDTO.teachingAssistantAppointments;
+
 			supportService.updateSectionGroup(sectionGroup).then(function(payload) {
 				$rootScope.$emit('toast', { message: "Updated Readers", type: "SUCCESS" });
 				supportReducer.reduce({
@@ -97,7 +102,12 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 				$rootScope.$emit('toast', { message: "Could not update readers.", type: "ERROR" });
 			});
 		},
-		updateTeachingAssistantAppointments: function (sectionGroup) {
+		updateTeachingAssistantAppointments: function (sectionGroupDTO) {
+			// Prepare the original sectionGroup for sending to the server
+			// If the front end DTO is sent it generates a server error 413 (Request Entity Too Large)
+			var sectionGroup = supportReducer._state.sectionGroups.list[sectionGroupDTO.id];
+			sectionGroup.teachingAssistantAppointments = sectionGroupDTO.teachingAssistantAppointments;
+
 			supportService.updateSectionGroup(sectionGroup).then(function(payload) {
 				$rootScope.$emit('toast', { message: "Updated Teaching Assistants", type: "SUCCESS" });
 				supportReducer.reduce({
