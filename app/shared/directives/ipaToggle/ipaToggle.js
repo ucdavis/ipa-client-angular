@@ -6,8 +6,9 @@ sharedApp.directive("ipaToggle", this.ipaToggle = function () {
 		scope: {
 			isActive: '<',
 			onClick: '&?',
-			inactiveText: '<?',
-			activeText: '<?'
+			inactiveText: '<?', // Will override text, displays when toggle is inactive
+			activeText: '<?', // Will override text, displays when toggle is active
+			text: '<?' // Text to display on the button
 		},
 		link: function (scope, element, attrs) {
 			// Intentionally empty
