@@ -165,6 +165,12 @@ budgetApp.service('budgetSelectors', function () {
 
 			sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
 				var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+				var shortTerm = sectionGroupCost.termCode.slice(-2);
+
+				// Do not consider sectionGroupCost if term isn't active on the budgetScenario
+				if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) {
+					return;
+				}
 
 				// Ensure sectionGroupCost belongs to selected budget scenario
 				if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) {
