@@ -5,7 +5,7 @@ budgetApp.directive("budgetConfig", this.budgetConfig = function ($rootScope, bu
 		replace: true,
 		scope: {
 			state: '<',
-			budget: '<',
+			selectedBudgetScenario: '<',
 			isVisible: '='
 		},
 		link: function (scope, element, attrs) {

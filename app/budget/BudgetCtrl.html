@@ -42,11 +42,11 @@
 
 		<ipa-modal
 			is-visible="view.state.ui.isBudgetConfigModalOpen"
-			header-text="Add Support Costs">
+			header-text="Budget Configuration">
 				<budget-config
 					ng-if="view.state.ui.isBudgetConfigModalOpen"
 					state="view.state"
-					budget="view.state.budget"
+					selected-budget-scenario="view.state.selectedBudgetScenario"
 					is-visible="view.state.ui.isBudgetConfigModalOpen">
 				</budget-config>
 		</ipa-modal>

@@ -1,12 +1,13 @@
 <div class="budget-config">
 	<div class="budget-config__container">
 		<ipa-tabs
-			class="budget-config__main-content"
 			tab-names="view.allTabs"
 			active-tab="view.activeTab"
 			select-tab="setActiveTab"
-			slim="true">
+			slim="true"
+			container-class="'budget-config__main-content'">
 			<general-config
+				selected-budget-scenario="selectedBudgetScenario"
 				ng-show="view.activeTab == 'General'">
 			</general-config>
 
