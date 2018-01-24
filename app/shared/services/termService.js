@@ -37,6 +37,13 @@ angular.module('sharedApp')
 	
 				return this.termCodeDescriptions[shortTermCode] + " " + year;
 			},
+			getShortTermName: function(term) {
+				if (!term || term.length != 2) {
+					return null;
+				}
+
+				return this.termCodeDescriptions[term];
+			},
 			termToTermCode: function(termDTO, yearDTO) {
 				var year = parseInt(angular.copy(yearDTO));
 				var term = angular.copy(termDTO);
