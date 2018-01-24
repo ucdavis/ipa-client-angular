@@ -151,7 +151,6 @@ budgetApp.service('budgetSelectors', function () {
 
 			var addedAllCoursesHash = {}; // Will hold the index of a given course in courses, based on subj/course number key
 			var addedCoursesHash = {};
-			selectedBudgetScenario.terms = [];
 			selectedBudgetScenario.termDescriptions = {
 				'05': 'Summer Session 1',
 				'06': 'Summer Special Session',
@@ -174,11 +173,6 @@ budgetApp.service('budgetSelectors', function () {
 
 				var termCode = sectionGroupCost.termCode;
 				var term = termCode.slice(-2);
-
-
-				if (selectedBudgetScenario.terms.indexOf(term) == -1) {
-					selectedBudgetScenario.terms.push(term);
-				}
 
 				// Determine if a course for this sectionGroup has been made
 				// Course will hold all sectionGroups with the same subj/course number
