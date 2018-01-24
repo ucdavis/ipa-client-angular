@@ -181,6 +181,20 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not update costs.", type: "ERROR" });
 			});
 		},
+		updateBudgetScenario: function (budget) {
+			budgetService.updateBudgetScenario(budgetScenario).then(function (budgetScenario) {
+				budgetReducers.reduce({
+					type: UPDATE_BUDGET_SCENARIO,
+					payload: {
+						budgetScenario: budgetScenario
+					}
+				});
+
+				$rootScope.$emit('toast', { message: "Updated costs", type: "SUCCESS" });
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update costs.", type: "ERROR" });
+			});
+		},
 		createSectionGroupCostComment: function (comment, sectionGroupCost, currentUserLoginId) {
 			var sectionGroupCostComment = {};
 			sectionGroupCostComment.comment = comment;

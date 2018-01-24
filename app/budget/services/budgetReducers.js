@@ -21,6 +21,10 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					budgetScenarios.ids.push(newBudgetScenario.id);
 					budgetScenarios.list[newBudgetScenario.id] = newBudgetScenario;
 					return budgetScenarios;
+				case UPDATE_BUDGET_SCENARIO:
+					var newBudgetScenario = action.payload.budgetScenario;
+					budgetScenarios.list[newBudgetScenario.id] = newBudgetScenario;
+					return budgetScenarios;
 				case DELETE_BUDGET_SCENARIO:
 					var budgetScenarioId = action.payload.budgetScenarioId;
 					var index = budgetScenarios.ids.indexOf(budgetScenarioId);
