@@ -16,9 +16,10 @@ budgetApp.directive("generalConfig", this.generalConfig = function ($rootScope, 
 			};
 
 			scope.selectBudgetScenarioTerm = function(term) {
-				var index = parseInt(term) -1;
+				var index = parseInt(term) - 1;
+				var newValue = scope.selectedBudgetScenario.activeTermsBlob[index] == "1" ? "0" : "1";
+				scope.selectedBudgetScenario.activeTermsBlob = setCharAt(scope.selectedBudgetScenario.activeTermsBlob, index, newValue);
 
-				scope.selectedBudgetScenario[index] = scope.selectedBudgetScenario[index] ? "1" : "0";
 				budgetActions.updateBudgetScenario(scope.selectedBudgetScenario);
 			};
 		}
