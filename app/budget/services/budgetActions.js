@@ -60,7 +60,6 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		deleteBudgetScenario: function (budgetScenarioId) {
-			var self = this;
 			budgetService.deleteBudgetScenario(budgetScenarioId).then(function (budgetScenarioId) {
 				var action = {
 					type: DELETE_BUDGET_SCENARIO,
@@ -305,7 +304,6 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			budgetReducers.reduce(action);
 		},
 		selectBudgetScenario: function(budgetScenarioId) {
-			var self = this;
 			localStorage.setItem('selectedBudgetScenarioId', budgetScenarioId);
 
 			var action = {
@@ -316,7 +314,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			};
 
 			budgetReducers.reduce(action);
-			self.calculateScenarioTerms();
+			this.calculateScenarioTerms();
 		},
 		selectTerm: function(termTab) {
 			var descriptionTerms = {
