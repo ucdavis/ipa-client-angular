@@ -28,6 +28,20 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
 			});
 		},
+		updateBudgetScenario: function (budgetScenario) {
+			budgetService.updateBudgetScenario(budgetScenario).then(function (results) {
+				$rootScope.$emit('toast', { message: "Update budget scenario", type: "SUCCESS" });
+
+				budgetReducers.reduce({
+					type: UPDATE_BUDGET_SCENARIO,
+					payload: {
+						budgetScenario: budgetScenario
+					}
+				});
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update budget scenario.", type: "ERROR" });
+			});
+		},
 		createBudgetScenario: function (newBudgetScenario, budgetId, scenarioId) {
 			var self = this;
 			if (scenarioId == null) { scenarioId = 0;}
@@ -285,7 +299,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			};
 
 			budgetReducers.reduce(action);
-			self.calculateScenarioTerms();
+			this.calculateScenarioTerms();
 		},
 		selectTerm: function(termTab) {
 			var descriptionTerms = {

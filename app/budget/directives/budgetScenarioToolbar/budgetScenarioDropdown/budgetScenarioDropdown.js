@@ -3,6 +3,9 @@ sharedApp.directive('budgetScenarioDropdown', function($window, $location, $rout
 		restrict: 'E', // Use this via an element selector <budget-scenario-dropdown></budget-scenario-dropdown>
 		templateUrl: 'budgetScenarioDropdown.html', // directive html found here:
 		replace: true, // Replace with the template
+		scope: {
+			state: '<'
+		},
 		link: function (scope, element, attrs) {
 
 			scope.deleteBudgetScenario = function (budgetScenario) {
@@ -12,6 +15,10 @@ sharedApp.directive('budgetScenarioDropdown', function($window, $location, $rout
 			scope.selectBudgetScenario = function (budgetScenario) {
 				budgetActions.selectBudgetScenario(budgetScenario.id);
 			};
-		} // End Link
+
+			scope.openBudgetScenarioModal = function() {
+				scope.state.openAddBudgetScenario = true;
+			};
+		}
 	};
 });
