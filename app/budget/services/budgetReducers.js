@@ -185,6 +185,24 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return instructorCosts;
 			}
 		},
+		courseReducers: function (action, courses) {
+			switch (action.type) {
+
+				case INIT_STATE:
+					courses = {
+						ids: [],
+						list: []
+					};
+
+					action.payload.courses.forEach( function(course) {
+						courses.ids.push(course.id);
+						courses.list[course.id] = course;
+					});
+					return courses;
+				default:
+					return courses;
+			}
+		},
 		userReducers: function (action, users) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -270,26 +288,6 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 								sectionGroup.totalSeats += section.seats;
 							}
 						});
-
-						// Calculate TA/reader count
-						supportAssignments.ids.forEach(function(supportAssignmentId) {
-							var supportAssignment = supportAssignments.list[supportAssignmentId];
-
-							if (supportAssignment.sectionGroupId == sectionGroup.id) {
-								// Ensure supportAssignment is relevant to this sectionGroup
-								if (supportAssignment.appointmentType == "teachingAssistant") {
-									// Add to ta count
-									// A 50% appointment is equal 1 full TA in budgetary considerations
-									sectionGroup.taCount += supportAssignment.appointmentPercentage / 50;
-								} else if (supportAssignment.appointmentType == "reader") {
-									// Add to reader count
-									// A 50% appointment is equal 1 full TA in budgetary considerations
-									sectionGroup.readerCount += supportAssignment.appointmentPercentage / 50;
-								}
-							}
-						});
-
-						// TODO: Calculate instructor data
 
 						// Add to payload
 						sectionGroup.uniqueKey = uniqueKey;
@@ -548,6 +546,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState = {};
 			newState.budget = scope.scheduleBudgetReducers(action, scope._state.budget);
 			newState.budgetScenarios = scope.budgetScenarioReducers(action, scope._state.budgetScenarios);
+			newState.courses = scope.courseReducers(action, scope._state.courses);
 			newState.lineItems = scope.lineItemReducers(action, scope._state.lineItems);
 			newState.lineItemComments = scope.lineItemCommentReducers(action, scope._state.lineItemComments);
 			newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
