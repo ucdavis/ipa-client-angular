@@ -1,4 +1,4 @@
-budgetApp.service('budgetActions', function ($rootScope, $window, budgetService, budgetReducers) {
+budgetApp.service('budgetActions', function ($rootScope, $window, budgetService, budgetReducers, termService) {
 	return {
 		getInitialState: function (workgroupId, year, selectedBudgetScenarioId, selectedTerm) {
 			var self = this;
@@ -29,6 +29,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		updateBudgetScenario: function (budgetScenario) {
+			var self = this;
+
 			budgetService.updateBudgetScenario(budgetScenario).then(function (results) {
 				$rootScope.$emit('toast', { message: "Updated budget scenario", type: "SUCCESS" });
 
@@ -38,6 +40,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 						budgetScenario: results
 					}
 				});
+				self.calculateScenarioTerms();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update budget scenario.", type: "ERROR" });
 			});
@@ -383,43 +386,14 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		calculateScenarioTerms: function() {
-			var selectedScenarioTerms = [];
 			var allTermTabs = [];
 			var activeTermTab = null;
 
-			var termDescriptions = {
-				'05': 'Summer Session 1',
-				'06': 'Summer Special Session',
-				'07': 'Summer Session 2',
-				'08': 'Summer Quarter',
-				'09': 'Fall Semester',
-				'10': 'Fall Quarter',
-				'01': 'Winter Quarter',
-				'02': 'Spring Semester',
-				'03': 'Spring Quarter'
-			};
-			var sortedTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
+			var selectedBudgetScenario = budgetReducers._state.budgetScenarios.list[budgetReducers._state.ui.selectedBudgetScenarioId];
 
-			budgetReducers._state.sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
-				var sectionGroupCost = budgetReducers._state.sectionGroupCosts.list[sectionGroupCostId];
-
-				// Skip sectionGroupCost if it doesn't belong to the selected scenario
-				if (sectionGroupCost.budgetScenarioId != budgetReducers._state.ui.selectedBudgetScenarioId) {
-					return;
-				}
-
-				var term = sectionGroupCost.termCode.slice(-2);
-
-				if (selectedScenarioTerms.indexOf(term) == -1) {
-					selectedScenarioTerms.push(term);
-				}
-			});
-
-			sortedTerms.forEach(function(term) {
-				if (selectedScenarioTerms.indexOf(term) > -1) {
-					allTermTabs.push(termDescriptions[term]);
-					activeTermTab = activeTermTab || termDescriptions[term];
-				}
+			selectedBudgetScenario.terms.forEach(function(term) {
+				allTermTabs.push(termService.getShortTermName(term));
+				activeTermTab = activeTermTab || termService.getShortTermName(term);
 			});
 
 			budgetReducers.reduce({
@@ -427,7 +401,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				payload: {
 					allTermTabs: allTermTabs,
 					activeTermTab: activeTermTab,
-					selectedScenarioTerms: selectedScenarioTerms
+					selectedScenarioTerms: selectedBudgetScenario.terms
 				}
 			});
 		}
