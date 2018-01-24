@@ -95,6 +95,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					}
 				};
 				budgetReducers.reduce(action);
+				$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
 			});
@@ -167,9 +168,6 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		updateBudget: function (budget) {
-			// Update UI
-			this.toggleSupportCostModal();
-
 			budgetService.updateBudget(budget).then(function (budget) {
 				var action = {
 					type: UPDATE_BUDGET,

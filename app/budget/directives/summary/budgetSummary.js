@@ -10,6 +10,7 @@ budgetApp.directive("budgetSummary", this.budgetSummary = function ($rootScope) 
 		link: function (scope, element, attrs) {
 			scope.saveBudget = function () {
 				budgetActions.updateBudget(scope.budget);
-			};		} // end link
+			};
+		} // end link
 	};
 });

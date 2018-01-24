@@ -7,7 +7,9 @@ budgetApp.directive("groupCostConfig", this.groupCostConfig = function ($rootSco
 			state: '<'
 		},
 		link: function (scope, element, attrs) {
-			// Intentionally blank
+			scope.updateBudget = function (budget) {
+				budgetActions.updateBudget(scope.state.budget);
+			};
 		}
 	};
 });
