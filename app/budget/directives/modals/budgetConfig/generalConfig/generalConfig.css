@@ -1,0 +1,18 @@
+.general-config__term-container {
+	padding: 20px;
+}
+
+.general-config__term {
+	width: 25%;
+}
+
+.general-config__term-label {
+	padding-bottom: 10px;
+	padding-left: 10px;
+	font-weight: bold;
+	display: flex;
+}
+
+.general-config__term-info {
+	padding-left: 5px;
+}
