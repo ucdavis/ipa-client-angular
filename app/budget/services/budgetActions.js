@@ -40,6 +40,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					}
 				});
 				self.calculateScenarioTerms();
+				self.calculateSectionGroups();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update budget scenario.", type: "ERROR" });
 			});
@@ -321,22 +322,10 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			this.calculateScenarioTerms();
 		},
 		selectTerm: function(termTab) {
-			var descriptionTerms = {
-				'Summer Session 1': '05',
-				'Summer Special Session': '06',
-				'Summer Session 2': '07',
-				'Summer Quarter': '08',
-				'Fall Semester': '09',
-				'Fall Quarter': '10',
-				'Winter Quarter': '01',
-				'Spring Semester': '02',
-				'Spring Quarter': '03'
-			};
-
 			budgetReducers.reduce({
 				type: SELECT_TERM,
 				payload: {
-					term: descriptionTerms[termTab],
+					term: termService.getTermFromDescription(termTab),
 					activeTermTab: termTab
 				}
 			});
@@ -409,6 +398,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				payload: {
 					allTermTabs: allTermTabs,
 					activeTermTab: activeTermTab,
+					activeTerm: termService.getTermFromDescription(activeTermTab),
 					selectedScenarioTerms: selectedBudgetScenario.terms
 				}
 			});
@@ -470,9 +460,17 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			var selectedBudgetScenario = budgetReducers._state.budgetScenarios.list[budgetReducers._state.ui.selectedBudgetScenarioId];
 			var sectionGroups = budgetReducers._state.scheduleSectionGroups;
+			var activeTerms = selectedBudgetScenario.terms;
 
 			// A 'sectionGroupContainer' contains all sectionGroups for that term/subjectCode/courseNumber
-			var sectionGroupContainers = [];
+			var calculatedSectionGroups = {
+				terms: selectedBudgetScenario.terms,
+				byTerm: {}
+			};
+
+			activeTerms.forEach(function(term) {
+				calculatedSectionGroups.byTerm[term] = [];
+			});
 
 			sectionGroups.uniqueKeys.forEach(function(uniqueKey) {
 				var sectionGroup = sectionGroups.list[uniqueKey];
@@ -484,33 +482,43 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				}
 
 				// Generate container if one does not already exist
-				var container = self.calculateSectionGroupContainer(sectionGroup, sectionGroupContainers);
+				var container = self.calculateSectionGroupContainer(sectionGroup, calculatedSectionGroups.byTerm[shortTerm]);
 				container.sectionGroups.push(sectionGroup);
+			});
+
+			activeTerms.forEach(function(term) {
+				calculatedSectionGroups.byTerm[term] = _array_sortByProperty(calculatedSectionGroups.byTerm[term], "uniqueKey");
 			});
 
 			budgetReducers.reduce({
 				type: CALCULATE_SECTION_GROUPS,
 				payload: {
-					sectionGroupContainers: sectionGroupContainers
+					calculatedSectionGroups: calculatedSectionGroups
 				}
 			});
 		},
 		// Find or create a sectionGroupContainer for this sectionGroup
-		calculateSectionGroupContainer: function(sectionGroup, currentContainers) {
+		calculateSectionGroupContainer: function(sectionGroup, containers) {
 			var course = budgetReducers._state.courses.list[sectionGroup.courseId];
-			var sectionGroupKey = course.subjectCode + course.courseNumber;
+			var uniqueKey = course.subjectCode + course.courseNumber;
 
-			if (currentContainers[sectionGroupKey] == null) {
-				currentContainers[sectionGroupKey] = {
-					subjectCode: course.subjectCode,
-					courseNumber: course.courseNumber,
-					title: course.title,
-					uniqueKey: course.subjectCode + course.courseNumber,
-					sectionGroups: []
-				};
+			newContainer = {
+				subjectCode: course.subjectCode,
+				courseNumber: course.courseNumber,
+				title: course.title,
+				uniqueKey: course.subjectCode + course.courseNumber,
+				sectionGroups: []
+			};
+
+			var properties = ["uniqueKey"];
+			var container = _array_find_by_properties(containers, properties, newContainer);
+
+			if(container == false || container == undefined) {
+				containers.push(newContainer);
+				container = newContainer;
 			}
 
-			return currentContainers[sectionGroupKey];
+			return container;
 		}
 	};
 });

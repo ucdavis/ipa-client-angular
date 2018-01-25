@@ -203,17 +203,20 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return courses;
 			}
 		},
-		calculatedSectionGroupReducers: function (action, sectionGroups) {
+		calculatedSectionGroupReducers: function (action, calculatedSectionGroups) {
 			switch (action.type) {
 
 				case INIT_STATE:
-					sectionGroups = [];
-					return sectionGroups;
+					calculatedSectionGroups = {
+						terms: [],
+						byTerm: {}
+					};
+					return calculatedSectionGroups;
 				case CALCULATE_SECTION_GROUPS:
-					sectionGroups = action.payload.sectionGroupContainers;
-					return sectionGroups;
+					calculatedSectionGroups = action.payload.calculatedSectionGroups;
+					return calculatedSectionGroups;
 				default:
-					return sectionGroups;
+					return calculatedSectionGroups;
 			}
 		},
 		userReducers: function (action, users) {
@@ -386,6 +389,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						},
 						termNav: {
 							activeTab: null,
+							activeTerm: null,
 							allTabs: null
 						},
 						isAddBudgetScenarioModalOpen: false,
@@ -438,6 +442,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case CALCULATE_SCENARIO_TERMS:
 					ui.termNav.allTabs = action.payload.allTermTabs;
 					ui.termNav.activeTab = action.payload.activeTermTab;
+					ui.termNav.activeTerm = action.payload.activeTerm;
 					return ui;
 				case CREATE_BUDGET_SCENARIO:
 					// Set initial lineItemDetail UI states
@@ -466,6 +471,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case SELECT_TERM:
 					ui.selectedTerm = action.payload.term;
 					ui.termNav.activeTab = action.payload.activeTermTab;
+					ui.termNav.activeTerm = action.payload.term;
 					return ui;
 				case SET_ROUTE:
 					ui.sectionNav.activeTab = action.payload.selectedRoute;
