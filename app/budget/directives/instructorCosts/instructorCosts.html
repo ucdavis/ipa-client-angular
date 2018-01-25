@@ -39,16 +39,17 @@
 					</th>
 				</tr>
 			</thead>
-			<tbody ng-repeat="course in selectedBudgetScenario.courses track by course.uniqueKey">
+			<tbody ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
 				<tr>
 					<td colspan="10" class="instructor-costs__course-title">
 						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
 					</td>
 				</tr>
-				<tr ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+				<tr ng-repeat="sectionGroup in course.sectionGroups">
 					<!-- Replacement -->
 					<td class="instructor-costs__table-cell">
 						<div class="instructor-costs__instructor-container">
+							<!--
 							<instructor-assignment-dropdown
 								mode="'instructor'"
 								section-group-cost="sectionGroupCost"
@@ -64,12 +65,14 @@
 								tooltip-message="'Delete assignment'"
 								on-click="removeInstructor(sectionGroupCost)">
 							</ipa-button>
+						-->
 						</div>
 					</td>
 
 					<!-- Instructor -->
 					<td class="instructor-costs__table-cell">
 						<div class="instructor-costs__instructor-container">
+							<!--
 							<instructor-assignment-dropdown
 								mode="'originalInstructor'"
 								section-group-cost="sectionGroupCost"
@@ -85,32 +88,38 @@
 								tooltip-message="'Delete assignment'"
 								on-click="removeOriginalInstructor(sectionGroupCost)">
 							</ipa-button>
+						-->
 						</div>
 					</td>
 
 					<!-- Reason -->
 					<td class="instructor-costs__table-cell">
 						<div class="instructor-costs__instructor-container">
+							<!--
 							<input
 								type="text"
 								ng-model="sectionGroupCost.reason"
 								auto-input
 								on-enter="updateSectionGroupCost(sectionGroupCost)"
 								on-blur="updateSectionGroupCost(sectionGroupCost)">
+							-->
 						</div>
 					</td>
 
 					<!-- Cost -->
 					<td class="instructor-costs__table-cell">
 						<div class="instructor-costs__instructor-container">
+							<!--
 							<instructor-cost-input
 							section-group-cost="sectionGroupCost"></instructor-cost-input>
+							-->
 						</div>
 					</td>
 
 					<!-- Comments -->
 					<td class="instructor-costs__table-cell">
 						<div class="instructor-costs__cell-container">
+							<!--
 							<ipa-button
 								button-text="'See Comments'"
 								text="'Comments'"
@@ -118,12 +127,13 @@
 								icon-class="'entypo entypo-chat'"
 								on-click="openCourseComments(course)">
 							</ipa-button>
+							-->
 						</div>
 					</td>
 					<!-- Total -->
 					<td class="instructor-costs__table-cell-total">
 						<div class="instructor-costs__total-container">
-							{{ sectionGroupCost.totalCostDisplay }}
+							{{ toCurrency(sectionGroup.totalCost) }}
 						</div>
 					</td>
 				</tr>
