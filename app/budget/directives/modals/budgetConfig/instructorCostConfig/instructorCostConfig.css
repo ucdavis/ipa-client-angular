@@ -1,5 +1,7 @@
 .instructor-cost-config {
-	padding: 20px
+	padding: 20px;
+	height: 400px;
+	overflow-y: scroll;
 }
 
 .instructor-cost-config__instructor {
