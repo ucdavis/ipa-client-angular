@@ -7,6 +7,7 @@
 		<table class="instructor-costs__table">
 			<thead>
 				<tr>
+					<th class="course-costs__table-header"></th> <!-- Spacing for sequence number -->
 					<th class="instructor-costs__table-header">
 						<div class="instructor-costs__cell-container">
 							Instructor
@@ -46,6 +47,13 @@
 					</td>
 				</tr>
 				<tr ng-repeat="sectionGroup in course.sectionGroups">
+					<!-- Sequence Number -->
+					<td class="course-costs__table-cell-sequence">
+						<div class="course-costs__sequence-container">
+							{{ sectionGroup.sequencePattern }}
+						</div>
+					</td>
+
 					<!-- Replacement -->
 					<td class="instructor-costs__table-cell">
 						<div class="instructor-costs__instructor-container">
@@ -72,6 +80,9 @@
 					<!-- Instructor -->
 					<td class="instructor-costs__table-cell">
 						<div class="instructor-costs__instructor-container">
+							<div ng-repeat="instructorName in sectionGroup.assignedInstructorNames">
+								{{ instructorName }}
+							</div>
 							<!--
 							<instructor-assignment-dropdown
 								mode="'originalInstructor'"

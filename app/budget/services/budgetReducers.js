@@ -246,25 +246,32 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case INIT_STATE:
 					courses = {
 						ids: [],
-						list: []
+						list: {}
 					};
 					sectionGroups = {
 						ids: [],
-						list: []
+						list: {}
 					};
 					sections = {
 						ids: [],
-						list: []
+						list: {}
 					};
 					teachingAssignments = {
 						ids: [],
-						list: []
+						list: {}
 					};
 					supportAssignments = {
 						ids: [],
-						list: []
+						list: {}
 					};
-
+					instructors = {
+						ids: [],
+						list: {}
+					};
+					action.payload.instructors.forEach( function(instructor) {
+						instructors.ids.push(instructor.id);
+						instructors.list[instructor.id] = instructor;
+					});
 					action.payload.courses.forEach( function(course) {
 						courses.ids.push(course.id);
 						courses.list[course.id] = course;
@@ -309,6 +316,19 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 							}
 						});
 
+						sectionGroup.assignedInstructorIds = [];
+						sectionGroup.assignedInstructorNames = [];
+						// calculate assignedInstructors
+						teachingAssignments.ids.forEach(function(instructorId) {
+							var teachingAssignment = teachingAssignments.list[instructorId];
+
+							if (teachingAssignment.approved && teachingAssignment.sectionGroupId == sectionGroup.id) {
+								sectionGroup.assignedInstructorIds.push(teachingAssignment.instructorId);
+								var instructor = instructors.list[teachingAssignment.instructorId];
+								var instructorName = instructor.lastName + ", " + instructor.firstName;
+								sectionGroup.assignedInstructorNames.push(instructorName);
+							}
+						});
 						// Add to payload
 						sectionGroup.uniqueKey = uniqueKey;
 
