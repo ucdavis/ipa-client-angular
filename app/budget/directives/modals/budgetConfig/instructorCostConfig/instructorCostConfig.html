@@ -2,7 +2,7 @@
 		<div class="instructor-cost-config__instructor" ng-repeat="instructor in newInstructors | orderBy: 'lastName'">
 			<div class="instructor-cost-config__input">
 				<ipa-input
-					type="text"
+					mode="'number'"
 					value="instructor.cost"
 					on-update="updateInstructorCost(instructor)">
 				</ipa-input>
