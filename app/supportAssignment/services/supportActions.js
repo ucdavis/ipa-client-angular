@@ -87,8 +87,16 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 		updateReaderAppointments: function (sectionGroupDTO) {
 			// Prepare the original sectionGroup for sending to the server
 			// If the front end DTO is sent it generates a server error 413 (Request Entity Too Large)
-			var sectionGroup = supportReducer._state.sectionGroups.list[sectionGroupDTO.id];
-			sectionGroup.teachingAssistantAppointments = sectionGroupDTO.teachingAssistantAppointments;
+			var sectionGroup = {
+				id: sectionGroupDTO.id,
+				courseId: sectionGroupDTO.courseId,
+				termCode: sectionGroupDTO.termCode,
+				plannedSeats: sectionGroupDTO.plannedSeats,
+				teachingAssistantAppointments: sectionGroupDTO.teachingAssistantAppointments,
+				readerAppointments: sectionGroupDTO.readerAppointments,
+				showTheStaff: sectionGroupDTO.showTheStaff,
+				showPlaceholderAI: sectionGroupDTO.showPlaceholderAI
+			};
 
 			supportService.updateSectionGroup(sectionGroup).then(function(payload) {
 				$rootScope.$emit('toast', { message: "Updated Readers", type: "SUCCESS" });
@@ -105,9 +113,20 @@ supportAssignmentApp.service('supportActions', function ($rootScope, $window, su
 		updateTeachingAssistantAppointments: function (sectionGroupDTO) {
 			// Prepare the original sectionGroup for sending to the server
 			// If the front end DTO is sent it generates a server error 413 (Request Entity Too Large)
-			var sectionGroup = supportReducer._state.sectionGroups.list[sectionGroupDTO.id];
+			var sectionGroup = {
+				id: sectionGroupDTO.id,
+				courseId: sectionGroupDTO.courseId,
+				termCode: sectionGroupDTO.termCode,
+				plannedSeats: sectionGroupDTO.plannedSeats,
+				teachingAssistantAppointments: sectionGroupDTO.teachingAssistantAppointments,
+				readerAppointments: sectionGroupDTO.readerAppointments,
+				showTheStaff: sectionGroupDTO.showTheStaff,
+				showPlaceholderAI: sectionGroupDTO.showPlaceholderAI
+			};
+
 			sectionGroup.teachingAssistantAppointments = sectionGroupDTO.teachingAssistantAppointments;
 
+			
 			supportService.updateSectionGroup(sectionGroup).then(function(payload) {
 				$rootScope.$emit('toast', { message: "Updated Teaching Assistants", type: "SUCCESS" });
 				supportReducer.reduce({
