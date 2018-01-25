@@ -377,12 +377,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				selectedScenarioId = budgetReducers._state.budgetScenarios.ids[0];
 			}
 
-			budgetReducers.reduce({
-				type: CALCULATE_SELECTED_SCENARIO,
-				payload: {
-					budgetScenarioId: selectedScenarioId
-				}
-			});
+			this.selectBudgetScenario(selectedScenarioId);
 
 			this.calculateScenarioTerms();
 			this.calculateScenarioLineItems();
