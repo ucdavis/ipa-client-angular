@@ -46,7 +46,7 @@
 					</td>
 					<!-- TA Cost -->
 					<td class="course-costs__table-cell">
-						{{ sectionGroup.taCostDisplay }}
+						{{ toCurrency(sectionGroup.taCost) }}
 					</td>
 					<!-- Reader Count -->
 					<td class="course-costs__table-cell">
@@ -54,11 +54,11 @@
 					</td>
 					<!-- Reader Cost -->
 					<td class="course-costs__table-cell">
-						{{ sectionGroup.readerCostDisplay }}
+						{{ toCurrency(sectionGroup.readerCost) }}
 					</td>
 					<!-- Sub Total -->
 					<td class="course-costs__table-cell">
-						{{ sectionGroup.supportCostSubTotalDisplay }}
+						{{ toCurrency(sectionGroup.supportCostSubTotal) }}
 					</td>
 					<!-- Comments -->
 					<td class="course-costs__table-cell">

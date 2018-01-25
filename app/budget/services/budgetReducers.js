@@ -25,6 +25,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					var newBudgetScenario = action.payload.budgetScenario;
 					budgetScenarios.list[newBudgetScenario.id] = newBudgetScenario;
 					return budgetScenarios;
+				case CALCULATE_TOTAL_COST:
+					var budgetScenarioId = action.payload.budgetScenarioId;
+					var budgetScenario = budgetScenarios.list[budgetScenarioId];
+					budgetScenario.totalCost = action.payload.totalCost;
+					return budgetScenarios;
 				case DELETE_BUDGET_SCENARIO:
 					var budgetScenarioId = action.payload.budgetScenarioId;
 					var index = budgetScenarios.ids.indexOf(budgetScenarioId);
@@ -293,8 +298,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 
 						sectionGroup.sectionCount = 0;
 						sectionGroup.totalSeats = 0;
-						sectionGroup.readerCount = 0;
-						sectionGroup.taCount = 0;
+						sectionGroup.sequencePattern = course.sequencePattern;
 						// calculate sectionCount and totalSeats
 						sections.ids.forEach(function(sectionId) {
 							var section = sections.list[sectionId];
