@@ -137,6 +137,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				// Close modal
 				self.closeAddLineItemModal();
 				self.calculateScenarioLineItems();
+				self.calculateTotalCost();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not save line item.", type: "ERROR" });
 			});
