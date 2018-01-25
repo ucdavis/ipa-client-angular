@@ -391,6 +391,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			this.calculateScenarioTerms();
 			this.calculateScenarioLineItems();
+			this.calculateSectionGroups();
 		},
 		calculateScenarioTerms: function() {
 			var allTermTabs = [];
@@ -463,6 +464,53 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					}
 				}
 			});
+		},
+		calculateSectionGroups: function() {
+			var self = this;
+
+			var selectedBudgetScenario = budgetReducers._state.budgetScenarios.list[budgetReducers._state.ui.selectedBudgetScenarioId];
+			var sectionGroups = budgetReducers._state.scheduleSectionGroups;
+
+			// A 'sectionGroupContainer' contains all sectionGroups for that term/subjectCode/courseNumber
+			var sectionGroupContainers = [];
+
+			sectionGroups.uniqueKeys.forEach(function(uniqueKey) {
+				var sectionGroup = sectionGroups.list[uniqueKey];
+				var shortTerm = sectionGroup.termCode.slice(-2);
+
+				// Ensure sectionGroup belongs to an active term in this scenario
+				if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) {
+					return;
+				}
+
+				// Generate container if one does not already exist
+				var container = self.calculateSectionGroupContainer(sectionGroup, sectionGroupContainers);
+				container.sectionGroups.push(sectionGroup);
+			});
+
+			budgetReducers.reduce({
+				type: CALCULATE_SECTION_GROUPS,
+				payload: {
+					sectionGroupContainers: sectionGroupContainers
+				}
+			});
+		},
+		// Find or create a sectionGroupContainer for this sectionGroup
+		calculateSectionGroupContainer: function(sectionGroup, currentContainers) {
+			var course = budgetReducers._state.courses.list[sectionGroup.courseId];
+			var sectionGroupKey = course.subjectCode + course.courseNumber;
+
+			if (currentContainers[sectionGroupKey] == null) {
+				currentContainers[sectionGroupKey] = {
+					subjectCode: course.subjectCode,
+					courseNumber: course.courseNumber,
+					title: course.title,
+					uniqueKey: course.subjectCode + course.courseNumber,
+					sectionGroups: []
+				};
+			}
+
+			return currentContainers[sectionGroupKey];
 		}
 	};
 });

@@ -203,6 +203,19 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return courses;
 			}
 		},
+		calculatedSectionGroupReducers: function (action, sectionGroups) {
+			switch (action.type) {
+
+				case INIT_STATE:
+					sectionGroups = [];
+					return sectionGroups;
+				case CALCULATE_SECTION_GROUPS:
+					sectionGroups = action.payload.sectionGroupContainers;
+					return sectionGroups;
+				default:
+					return sectionGroups;
+			}
+		},
 		userReducers: function (action, users) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -558,6 +571,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.ui = scope.uiReducers(action, scope._state.ui);
 			newState.users = scope.userReducers(action, scope._state.users);
 
+			newState.calculatedSectionGroups = scope.calculatedSectionGroupReducers(action, scope._state.calculatedSectionGroups);
 			scope._state = newState;
 
 			// Build new 'page state'
@@ -586,6 +600,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.ui = newState.ui;
 			newPageState.lineItemCategories = budgetSelectors.generateLineItemCategories(newState.lineItemCategories);
 			newPageState.instructors = budgetSelectors.generateInstructors(newState.instructors, newState.instructorCosts);
+			newPageState.calculatedSectionGroups = newState.calculatedSectionGroups;
 
 			$rootScope.$emit('budgetStateChanged', newPageState);
 			console.log(newPageState);

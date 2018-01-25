@@ -68,23 +68,13 @@ budgetApp.service('budgetSelectors', function () {
 		) {
 			var selectedBudgetScenario = budgetScenarios.list[ui.selectedBudgetScenarioId];
 
-			// If selectedBudgetScenarioId refers to a scenario that no longer exists
-			// We will attempt to automatically select another scenario to be 'active'
 			if (selectedBudgetScenario == null) {
-				if (budgetScenarios.ids.length > 0) {
-					// Pick the first available
-					var budgetScenarioId = budgetScenarios.ids[0];
-					selectedBudgetScenario = budgetScenarios.list[budgetScenarioId];
-				} else {
-					// There are no scenarios, so there cannot be an active scenario
-					return null;
-				}
+				return {};
 			}
 
-			// Add sectionGroupCosts (for selected termCode)
 			selectedBudgetScenario.selectedTerm = ui.selectedTerm;
-			selectedBudgetScenario.courses = []; // Will hold sectionGroupCosts, grouped by subj/course number
-			selectedBudgetScenario.allCourses = []; // Will hold sectionGroupCosts, grouped by subj/course number
+			selectedBudgetScenario.courses = []; // Will hold sectionGroups, grouped by subj/course number
+			selectedBudgetScenario.allCourses = []; // Will hold sectionGroups, grouped by subj/course number
 
 			var addedAllCoursesHash = {}; // Will hold the index of a given course in courses, based on subj/course number key
 			var addedCoursesHash = {};
