@@ -571,6 +571,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case SELECT_BUDGET_SCENARIO:
 					ui.selectedBudgetScenarioId = action.payload.budgetScenarioId;
 					return ui;
+				case DELETE_BUDGET_SCENARIO:
+					if (ui.selectedBudgetScenarioId == action.payload.budgetScenarioId) {
+						ui.selectedBudgetScenarioId = null;
+					}
+					return ui;
 				default:
 					return ui;
 			}
