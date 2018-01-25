@@ -57,7 +57,6 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Created budget scenario", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 				self.selectBudgetScenario(results.budgetScenario.id);
-				self.calculateScenarioTerms();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not create budget scenario.", type: "ERROR" });
 			});
@@ -96,6 +95,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					}
 				};
 				budgetReducers.reduce(action);
+				self.calculateSectionGroups();
+				self.calculateTotalCost();
 				$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
@@ -117,6 +118,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				// Close modal
 				self.closeAddLineItemModal();
 				self.calculateScenarioLineItems();
+				self.calculateTotalCost();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not create line item.", type: "ERROR" });
 			});
@@ -324,6 +326,9 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			budgetReducers.reduce(action);
 			this.calculateScenarioTerms();
+			this.calculateScenarioLineItems();
+			this.calculateSectionGroups();
+			this.calculateTotalCost();
 		},
 		selectTerm: function(termTab) {
 			budgetReducers.reduce({
@@ -378,10 +383,6 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			}
 
 			this.selectBudgetScenario(selectedScenarioId);
-
-			this.calculateScenarioTerms();
-			this.calculateScenarioLineItems();
-			this.calculateSectionGroups();
 		},
 		calculateScenarioTerms: function() {
 			var allTermTabs = [];
@@ -525,7 +526,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			// TODO: Instructor costs
 		},
 		calculateTotalCost: function() {
-			var totalCost = 0;
+			var courseCosts = 0;
+			var lineItemFunds = 0;
 			var terms = budgetReducers._state.calculatedSectionGroups.terms;
 			var sectionGroups = budgetReducers._state.calculatedSectionGroups.byTerm;
 
@@ -533,7 +535,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			terms.forEach(function(term) {
 				sectionGroups[term].forEach(function(course) {
 					course.sectionGroups.forEach(function(sectionGroup) {
-						totalCost += sectionGroup.totalCost;
+						courseCosts += sectionGroup.totalCost;
 					});
 				});
 			});
@@ -541,8 +543,10 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			// Add line item costs
 			budgetReducers._state.lineItems.ids.forEach(function(lineItemId) {
 				var amount = budgetReducers._state.lineItems.list[lineItemId].amount;
-				totalCost += amount;
+				lineItemFunds += amount;
 			});
+
+			var totalCost = lineItemFunds - courseCosts;
 
 			budgetReducers.reduce({
 				type: CALCULATE_TOTAL_COST,

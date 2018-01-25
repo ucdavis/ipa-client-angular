@@ -31,7 +31,7 @@ sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 			// Determines the filters to be applied to input value based on specified mode (no filtering by default)
 			scope.filterValue = function() {
 				if (scope.mode == "number") {
-					var validCharacters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
+					var validCharacters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "-"];
 
 					scope.value = scope.limitToValidCharacters(scope.value, validCharacters);
 				}
