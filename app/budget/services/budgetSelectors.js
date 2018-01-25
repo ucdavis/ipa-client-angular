@@ -68,6 +68,7 @@ budgetApp.service('budgetSelectors', function () {
 		) {
 			var selectedBudgetScenario = budgetScenarios.list[ui.selectedBudgetScenarioId];
 
+/*
 			if (selectedBudgetScenario == null) {
 				return {};
 			}
@@ -426,7 +427,7 @@ budgetApp.service('budgetSelectors', function () {
 			// All calculations are now complete, prepare totals for display
 			selectedBudgetScenario.summary.lineItems.total = toCurrency(selectedBudgetScenario.summary.lineItems.total);
 			selectedBudgetScenario.summary.courseCosts.total = toCurrency(selectedBudgetScenario.summary.courseCosts.total);
-
+*/
 			return selectedBudgetScenario;
 		}
 	};
