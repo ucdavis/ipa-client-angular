@@ -6,7 +6,8 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 		scope: {
 			selectedBudgetScenario: '<',
 			instructors: '<',
-			termNav: '<'
+			termNav: '<',
+			calculatedSectionGroups: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.setActiveTerm = function(activeTermTab) {

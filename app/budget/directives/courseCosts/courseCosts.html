@@ -20,90 +20,45 @@
 					<th class="course-costs__table-header">Total Cost</th>
 				</tr>
 			</thead>
-			<tbody ng-repeat="course in selectedBudgetScenario.courses track by course.uniqueKey">
+			<tbody ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
 				<tr>
 					<td colspan="10" class="course-costs__course-title">
 						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
 					</td>
 				</tr>
-				<tr ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+				<tr ng-repeat="sectionGroup in course.sectionGroups">
 					<td class="course-costs__table-cell-sequence">
 						<div class="course-costs__sequence-container">
-							{{ sectionGroupCost.sequencePattern }}
+							{{ sectionGroup.sequencePattern }}
 						</div>
 					</td>
 					<!-- Enrollment -->
 					<td class="course-costs__table-cell">
-						<input
-							class="course-cost__number-input"
-							type="number"
-							ng-model="sectionGroupCost.enrollment"
-							auto-input
-							on-enter="updateSectionGroupCost(sectionGroupCost)"
-							on-blur="updateSectionGroupCost(sectionGroupCost)">
+						{{ sectionGroup.totalSeats }}
 					</td>
 					<!-- Section Count -->
 					<td class="course-costs__table-cell">
-						<i
-							class="entypo-bell course-cost__warning"
-							ng-class="{'course-cost__warning--show': sectionGroupCost.warnings.sectionCount }"
-							tooltip-append-to-body="true"
-							uib-tooltip="{{ sectionGroupCost.warnings.sectionCount }}"
-							tooltip-placement="bottom">
-						</i>
-						<input
-							class="course-cost__number-input"
-							type="number"
-							ng-model="sectionGroupCost.sectionCount"
-							auto-input
-							on-enter="updateSectionGroupCost(sectionGroupCost)"
-							on-blur="updateSectionGroupCost(sectionGroupCost)">
+						{{ sectionGroup.sectionCount }}
 					</td>
 					<!-- TA Count -->
 					<td class="course-costs__table-cell">
-						<i
-							class="entypo-bell course-cost__warning"
-							ng-class="{'course-cost__warning--show': sectionGroupCost.warnings.taCount }"
-							tooltip-append-to-body="true"
-							uib-tooltip="{{ sectionGroupCost.warnings.taCount }}"
-							tooltip-placement="bottom">
-						</i>
-						<input
-							class="course-cost__number-input"
-							type="number"
-							ng-model="sectionGroupCost.taCount"
-							auto-input
-							on-enter="updateSectionGroupCost(sectionGroupCost)"
-							on-blur="updateSectionGroupCost(sectionGroupCost)">
+						{{ sectionGroup.teachingAssistantAppointments || "0" }}
 					</td>
 					<!-- TA Cost -->
 					<td class="course-costs__table-cell">
-						{{ sectionGroupCost.taCostDisplay }}
+						{{ sectionGroup.taCostDisplay }}
 					</td>
 					<!-- Reader Count -->
 					<td class="course-costs__table-cell">
-						<i
-							class="entypo-bell course-cost__warning"
-							ng-class="{'course-cost__warning--show': sectionGroupCost.warnings.readerCount }"
-							tooltip-append-to-body="true"
-							uib-tooltip="{{ sectionGroupCost.warnings.readerCount }}"
-							tooltip-placement="bottom">
-						</i>
-						<input
-							class="course-cost__number-input"
-							type="number"
-							ng-model="sectionGroupCost.readerCount"
-							auto-input
-							on-enter="updateSectionGroupCost(sectionGroupCost)"
-							on-blur="updateSectionGroupCost(sectionGroupCost)">
+						{{ sectionGroup.readerAppointments || "0" }}
 					</td>
 					<!-- Reader Cost -->
 					<td class="course-costs__table-cell">
-						{{ sectionGroupCost.readerCostDisplay }}
+						{{ sectionGroup.readerCostDisplay }}
 					</td>
 					<!-- Sub Total -->
 					<td class="course-costs__table-cell">
-						{{ sectionGroupCost.supportCostSubTotalDisplay }}
+						{{ sectionGroup.supportCostSubTotalDisplay }}
 					</td>
 					<!-- Comments -->
 					<td class="course-costs__table-cell">
@@ -118,7 +73,7 @@
 					<!-- Total -->
 					<td class="course-costs__table-cell-total">
 						<div class="course-costs__total-container">
-							{{ sectionGroupCost.totalCostDisplay }}
+							{{ sectionGroup.totalCostDisplay }}
 						</div>
 					</td>
 				</tr>
