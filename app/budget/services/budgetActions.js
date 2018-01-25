@@ -80,6 +80,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		updateInstructorCost: function (instructorCostDto) {
+			var self = this;
 			var instructorCost = Object.assign({}, instructorCostDto);
 
 			// InstructorCosts in the front end are blended instructor + instructorCosts
@@ -507,6 +508,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 		calculateSectionGroupCosts: function(sectionGroup) {
 			var budget = budgetReducers._state.budget;
 
+			// Course Costs
 			if (sectionGroup.readerAppointments == null || sectionGroup.readerAppointments == undefined) {
 				sectionGroup.readerCost = 0;
 			} else {
@@ -518,12 +520,23 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				sectionGroup.taCost = sectionGroup.teachingAssistantAppointments * budget.taCost;
 			}
 
-			sectionGroup.supportCostSubTotal = sectionGroup.taCost + sectionGroup.readerCost;
+			sectionGroup.courseCostSubTotal = sectionGroup.taCost + sectionGroup.readerCost;
 
-			sectionGroup.totalCost = 0;
-			sectionGroup.totalCost += sectionGroup.supportCostSubTotal;
+			// Instructor Costs
+			sectionGroup.instructorCostSubTotal = 0;
 
-			// TODO: Instructor costs
+			sectionGroup.assignedInstructorIds.forEach(function(instructorId) {
+				var instructor = budgetReducers._state.instructors.list[instructorId];
+				var instructorCost = budgetReducers._state.instructorCosts.list[instructor.instructorCostId];
+
+				if (instructorCost.cost == false || instructorCost.cost == null) {
+					return;
+				}
+
+				sectionGroup.instructorCostSubTotal += instructorCost.cost;
+			});
+
+			sectionGroup.totalCost = sectionGroup.courseCostSubTotal + sectionGroup.instructorCostSubTotal;
 		},
 		calculateTotalCost: function() {
 			var courseCosts = 0;
