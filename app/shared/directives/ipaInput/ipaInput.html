@@ -3,5 +3,6 @@
 	placeholder="{{placeHolder}}"
 	ng-readonly="readOnly"
 	ng-keyup="updateInput()"
+	type="{{ mode == 'number' ? 'number' : ''}}"
 	ng-class="{'ipa-input--read-only': readOnly }">
 </input>
