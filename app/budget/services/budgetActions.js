@@ -41,6 +41,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				});
 				self.calculateScenarioTerms();
 				self.calculateSectionGroups();
+				self.calculateScenarioLineItems();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update budget scenario.", type: "ERROR" });
 			});
