@@ -2,13 +2,14 @@
 	width: 100%;
 	display: flex;
 	margin-bottom: 20px;
+	justify-content: space-between;
 }
 
 .budget-scenario-toolbar__tool-container {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	width: 70%;
+	width: 25%;
 }
 
 .budget-scenario-toolbar__tool {
@@ -50,4 +51,30 @@
 .budget-scenario-toolbar__rename-input {
 	padding: 6px 12px;
 	height: 25px;
+}
+
+.budget-scenario-toolbar__beta-warning {
+	padding: 15px 20px;
+	border: 1px solid #21A9E1;
+	border-radius: 3px;
+	font-weight: 500;
+	display: flex;
+	width: 40%;
+}
+
+.budget-scenario-toolbar__beta-warning-container {
+	flex: 25 0 0px;
+	display: flex;
+	flex-flow:column;
+	align-items: flex-start;
+}
+
+.budget-scenario-toolbar__beta-warning-text {
+	margin-bottom: 5px;
+}
+
+.budget-scenario-toolbar__beta-warning-icon {
+	flex: 1 0 0px;
+	color: #21A9E1;
+	padding-right: 5px;
 }
