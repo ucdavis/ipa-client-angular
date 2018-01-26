@@ -1,0 +1,19 @@
+.group-cost-config {
+	padding: 20px;
+}
+
+.group-cost-config__label {
+	padding-left: 10px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+}
+
+.group-cost-config__cost {
+	display: flex;
+	margin-bottom: 15px;
+}
+
+.group-cost-config__input {
+	width: 10%;
+}

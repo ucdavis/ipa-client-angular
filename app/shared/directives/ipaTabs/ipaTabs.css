@@ -23,6 +23,11 @@
 	cursor: default;
 }
 
+.ipa-tabs__tab--slim {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
 .ipa-tabs__tab:not(.ipa-tabs__tab--active):hover {
 	background-color: #eee;
 	cursor: pointer;
@@ -33,4 +38,8 @@
 	border: 1px solid #ddd;
 	border-bottom-color: white;
 	color: #555;
+}
+
+.ipa-tabs--border-less {
+	border: none;
 }

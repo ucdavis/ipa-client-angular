@@ -1,66 +1,90 @@
-<div class="line-items-section">
-	<!-- line items toolbar -->
-	<div class="btn-group toolbar">
-		<span
-			class="toolbar-item glyphicon glyphicon-trash"
-			tooltip-append-to-body="true"
-			tooltip-placement="left"
-			uib-tooltip="Delete line items"
-			confirm-button="deleteLineItems()"
-			message="Are you sure you want to remove the selected line items?"
-			yes="Remove" no="Cancel" placement="left"
-			aria-hidden="true">
-		</span>
-		<span
-			class="toolbar-item glyphicon glyphicon-plus"
-			ng-click="openAddLineItemModal()"
-			tooltip-append-to-body="true"
-			tooltip-placement="left"
-			uib-tooltip="Add line item">
-		</span>
-	</div>
-
-	<div class="line-items-section-content">
-		<!-- line items section UI -->
-		<div class="expand-ui-container" ng-click="toggleLineItemSection()">
-			<div class="expand-ui">
-				<div>Line Items</div>
-				<i ng-show="selectedBudgetScenario.isLineItemOpen == false" class="glyphicon glyphicon-triangle-left expand-ui-triangle"></i>
-				<i ng-show="selectedBudgetScenario.isLineItemOpen" class="glyphicon glyphicon-triangle-bottom expand-ui-triangle"></i>
-			</div>
-		</div>
-
-		<div ng-show="selectedBudgetScenario.isLineItemOpen">
-			<!-- line items header -->
-			<div class="header-container">
-				<div class="header-content">
-					<div class="checkbox-container">
-						<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-							ng-class="{ 'checked': ui.areAllLineItemsSelected }" ng-click="selectAllLineItems(ui.areAllLineItemsSelected)" stop-event="click">
-							<label class="cb-wrapper">
-								<div class="checked"></div>
-							</label>
-						</div>
+<div class="line-items">
+	<table class="line-items__table">
+		<thead>
+			<tr>
+				<th class="line-items__table-header line-items__table--checkbox">
+					<div class="line-items__table-header-container line-items__table-container--checkbox">
+						<ipa-checkbox
+							style="'muted'"
+							is-checked="ui.areAllLineItemsSelected"
+							click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
+						</ipa-checkbox>
 					</div>
-
-					<div class="type-header">
+				</th>
+				<th class="line-items__table-header">
+					<div class="line-items__table-header-container">
 						Type
 					</div>
-
-					<div class="description-header">
+				</th>
+				<th class="line-items__table-header">
+					<div class="line-items__table-header-container">
 						Description
 					</div>
-
-					<div class="amount-header">
+				</th>
+				<th class="line-items__table-header">
+					<div class="line-items__table-header-container">
+						Comments
+					</div>
+				</th>
+				<th class="line-items__table-header line-items__table--amount">
+					<div class="line-items__table-header-amount-container">
 						Amount
 					</div>
-				</div>
-			</div>
+				</th>
+			</tr>
+		</thead>
 
-			<div ng-repeat="lineItem in selectedBudgetScenario.lineItems">
-				<line-item-row line-item="lineItem"></line-item-row>
-			</div>
+		<tbody>
+			<tr ng-repeat="lineItem in selectedBudgetScenario.lineItems track by $index">
+				<!-- Checkbox -->
+				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+					<div class="line-items__table-container--checkbox">
+						<ipa-checkbox
+							style="'muted'"
+							is-checked="lineItem.isSelected"
+							click-action="selectLineItem(lineItem)">
+						</ipa-checkbox>
+					</div>
+				</td>
 
-		</div>
-	</div>
+				<!-- Category -->
+				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+					{{ lineItem.categoryDescription }}
+				</td>
+
+				<!-- Description -->
+				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+					{{ lineItem.description }}
+				</td>
+
+				<!-- Comments -->
+				<td class="line-items__table-cell line-items__table-cell--comments" ng-class-odd="'line-items__table-cell--dark'">
+					<div class="line-items__comment-container">
+						<!--
+						<ipa-button
+							text="'Comments'"
+							button-text="'See Comments'"
+							tooltip-message="'View Comments'"
+							color="'light'"
+							icon-class="'entypo entypo-chat'"
+							on-click="openAddLineItemCommentsModal(lineItem)">
+						</ipa-button>
+					-->
+					</div>
+				</td>
+
+				<!-- Amount -->
+				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+					<div class="line-items__amount-container">
+						<div>
+							{{ toCurrency(lineItem.amount) }}
+						</div>
+						<div>
+							<line-item-dropdown line-item="lineItem"></line-item-dropdown>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>

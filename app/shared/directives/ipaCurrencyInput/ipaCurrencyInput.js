@@ -84,7 +84,6 @@ sharedApp.directive('ipaCurrencyInput', function($window, $location, $rootScope)
 					var index = integerEndIndex - i;
 					scope.inputValue = scope.injectAtIndex(scope.inputValue, ",", index);
 				}
-				console.log(scope.inputValue);
 			};
 
 			scope.injectAtIndex = function(string, char, index) {

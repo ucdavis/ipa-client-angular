@@ -21,6 +21,15 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					budgetScenarios.ids.push(newBudgetScenario.id);
 					budgetScenarios.list[newBudgetScenario.id] = newBudgetScenario;
 					return budgetScenarios;
+				case UPDATE_BUDGET_SCENARIO:
+					var newBudgetScenario = action.payload.budgetScenario;
+					budgetScenarios.list[newBudgetScenario.id] = newBudgetScenario;
+					return budgetScenarios;
+				case CALCULATE_TOTAL_COST:
+					var budgetScenarioId = action.payload.budgetScenarioId;
+					var budgetScenario = budgetScenarios.list[budgetScenarioId];
+					budgetScenario.totalCost = action.payload.totalCost;
+					return budgetScenarios;
 				case DELETE_BUDGET_SCENARIO:
 					var budgetScenarioId = action.payload.budgetScenarioId;
 					var index = budgetScenarios.ids.indexOf(budgetScenarioId);
@@ -181,6 +190,40 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return instructorCosts;
 			}
 		},
+		courseReducers: function (action, courses) {
+			switch (action.type) {
+
+				case INIT_STATE:
+					courses = {
+						ids: [],
+						list: []
+					};
+
+					action.payload.courses.forEach( function(course) {
+						courses.ids.push(course.id);
+						courses.list[course.id] = course;
+					});
+					return courses;
+				default:
+					return courses;
+			}
+		},
+		calculatedSectionGroupReducers: function (action, calculatedSectionGroups) {
+			switch (action.type) {
+
+				case INIT_STATE:
+					calculatedSectionGroups = {
+						terms: [],
+						byTerm: {}
+					};
+					return calculatedSectionGroups;
+				case CALCULATE_SECTION_GROUPS:
+					calculatedSectionGroups = action.payload.calculatedSectionGroups;
+					return calculatedSectionGroups;
+				default:
+					return calculatedSectionGroups;
+			}
+		},
 		userReducers: function (action, users) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -203,25 +246,32 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case INIT_STATE:
 					courses = {
 						ids: [],
-						list: []
+						list: {}
 					};
 					sectionGroups = {
 						ids: [],
-						list: []
+						list: {}
 					};
 					sections = {
 						ids: [],
-						list: []
+						list: {}
 					};
 					teachingAssignments = {
 						ids: [],
-						list: []
+						list: {}
 					};
 					supportAssignments = {
 						ids: [],
-						list: []
+						list: {}
 					};
-
+					instructors = {
+						ids: [],
+						list: {}
+					};
+					action.payload.instructors.forEach( function(instructor) {
+						instructors.ids.push(instructor.id);
+						instructors.list[instructor.id] = instructor;
+					});
 					action.payload.courses.forEach( function(course) {
 						courses.ids.push(course.id);
 						courses.list[course.id] = course;
@@ -255,8 +305,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 
 						sectionGroup.sectionCount = 0;
 						sectionGroup.totalSeats = 0;
-						sectionGroup.readerCount = 0;
-						sectionGroup.taCount = 0;
+						sectionGroup.sequencePattern = course.sequencePattern;
 						// calculate sectionCount and totalSeats
 						sections.ids.forEach(function(sectionId) {
 							var section = sections.list[sectionId];
@@ -267,26 +316,19 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 							}
 						});
 
-						// Calculate TA/reader count
-						supportAssignments.ids.forEach(function(supportAssignmentId) {
-							var supportAssignment = supportAssignments.list[supportAssignmentId];
+						sectionGroup.assignedInstructorIds = [];
+						sectionGroup.assignedInstructorNames = [];
+						// calculate assignedInstructors
+						teachingAssignments.ids.forEach(function(instructorId) {
+							var teachingAssignment = teachingAssignments.list[instructorId];
 
-							if (supportAssignment.sectionGroupId == sectionGroup.id) {
-								// Ensure supportAssignment is relevant to this sectionGroup
-								if (supportAssignment.appointmentType == "teachingAssistant") {
-									// Add to ta count
-									// A 50% appointment is equal 1 full TA in budgetary considerations
-									sectionGroup.taCount += supportAssignment.appointmentPercentage / 50;
-								} else if (supportAssignment.appointmentType == "reader") {
-									// Add to reader count
-									// A 50% appointment is equal 1 full TA in budgetary considerations
-									sectionGroup.readerCount += supportAssignment.appointmentPercentage / 50;
-								}
+							if (teachingAssignment.approved && teachingAssignment.sectionGroupId == sectionGroup.id) {
+								sectionGroup.assignedInstructorIds.push(teachingAssignment.instructorId);
+								var instructor = instructors.list[teachingAssignment.instructorId];
+								var instructorName = instructor.lastName + ", " + instructor.firstName;
+								sectionGroup.assignedInstructorNames.push(instructorName);
 							}
 						});
-
-						// TODO: Calculate instructor data
-
 						// Add to payload
 						sectionGroup.uniqueKey = uniqueKey;
 
@@ -365,9 +407,18 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						lineItemCommentsModal: {
 							isOpen: false
 						},
+						sectionNav: {
+							activeTab: "Course Costs",
+							allTabs: ["Course Costs", "Instructor Costs", "Line Items", "Summary"]
+						},
+						termNav: {
+							activeTab: null,
+							activeTerm: null,
+							allTabs: null
+						},
 						isAddBudgetScenarioModalOpen: false,
 						isAddLineItemModalOpen: false,
-						isSupportCostModalOpen: false,
+						isBudgetConfigModalOpen: false,
 						isLineItemOpen: false,
 						isCourseCostOpen: false,
 						openLineItems: [],
@@ -408,6 +459,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					}
 
 					return ui;
+				case CALCULATE_SCENARIO_TERMS:
+					ui.termNav.allTabs = action.payload.allTermTabs;
+					ui.termNav.activeTab = action.payload.activeTermTab;
+					ui.termNav.activeTerm = action.payload.activeTerm;
+					return ui;
 				case CREATE_BUDGET_SCENARIO:
 					// Set initial lineItemDetail UI states
 					action.payload.lineItems.forEach(function(lineItem) {
@@ -434,6 +490,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return ui;
 				case SELECT_TERM:
 					ui.selectedTerm = action.payload.term;
+					ui.termNav.activeTab = action.payload.activeTermTab;
+					ui.termNav.activeTerm = action.payload.term;
+					return ui;
+				case SET_ROUTE:
+					ui.sectionNav.activeTab = action.payload.selectedRoute;
 					return ui;
 				case TOGGLE_SELECT_LINE_ITEM:
 					var lineItemId = action.payload.lineItem.id;
@@ -465,9 +526,6 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						}
 					});
 					return ui;
-				case TOGGLE_SUPPORT_COST_MODAL:
-					ui.isSupportCostModalOpen = ! ui.isSupportCostModalOpen;
-					return ui;
 				case OPEN_ADD_COURSE_COMMENT_MODAL:
 					ui.courseCommentsModal.isOpen = true;
 					ui.courseCommentsModal.sectionGroupCost = action.payload.course.sectionGroupCosts[0];
@@ -480,8 +538,19 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					ui.courseCommentsModal.isOpen = false;
 					ui.courseCommentsModal.course = null;
 					return ui;
-				case TOGGLE_ADD_LINE_ITEM_MODAL:
-					ui.isAddLineItemModalOpen = ! ui.isAddLineItemModalOpen;
+				case OPEN_ADD_LINE_ITEM_MODAL:
+					ui.isAddLineItemModalOpen = true;
+					ui.lineItemToEdit = action.payload.lineItemToEdit;
+					return ui;
+				case CLOSE_ADD_LINE_ITEM_MODAL:
+					ui.isAddLineItemModalOpen = false;
+					ui.lineItemToEdit = null;
+					return ui;
+				case OPEN_BUDGET_CONFIG_MODAL:
+					ui.isBudgetConfigModalOpen = true;
+					return ui;
+				case CLOSE_BUDGET_CONFIG_MODAL:
+					ui.isBudgetConfigModalOpen = false;
 					return ui;
 				case TOGGLE_ADD_BUDGET_SCENARIO_MODAL:
 					ui.isAddBudgetScenarioModalOpen = ! ui.isAddBudgetScenarioModalOpen;
@@ -496,70 +565,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					};
 					return ui;
 				case SELECT_BUDGET_SCENARIO:
-					// Reset main UI
-					ui.isLineItemOpen = false;
-					ui.isCourseCostOpen = false;
-					ui.openLineItems = [];
-
 					ui.selectedBudgetScenarioId = action.payload.budgetScenarioId;
 					return ui;
-				case TOGGLE_LINE_ITEM_SECTION:
-					ui.isLineItemOpen = !(ui.isLineItemOpen);
-					return ui;
-				case TOGGLE_COURSE_COST_SECTION:
-					ui.isCourseCostOpen = !(ui.isCourseCostOpen);
-					return ui;
-				case TOGGLE_LINE_ITEM:
-					var lineItemId = action.payload.lineItemId;
-					var index = ui.openLineItems.indexOf(lineItemId);
-					if (index == -1) {
-						ui.openLineItems.push(lineItemId);
-					} else {
-						ui.openLineItems.splice(index, 1);
-					}
-					return ui;
-				case TOGGLE_SECTION_GROUP_COST_DETAIL:
-					var sectionGroupCostId = action.payload.sectionGroupCostId;
-
-					// Toggle appropriate property
-					switch (action.payload.property) {
-						case "sectionCount":
-							ui.sectionGroupCostDetails[sectionGroupCostId].displaySectionCountInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displaySectionCountInput;
-							return ui;
-						case "taCount":
-							ui.sectionGroupCostDetails[sectionGroupCostId].displayTaCountInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayTaCountInput;
-							return ui;
-						case "readerCount":
-							ui.sectionGroupCostDetails[sectionGroupCostId].displayReaderCountInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayReaderCountInput;
-							return ui;
-						case "enrollment":
-							ui.sectionGroupCostDetails[sectionGroupCostId].displayEnrollmentInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayEnrollmentInput;
-							return ui;
-						case "instructorCost":
-							ui.sectionGroupCostDetails[sectionGroupCostId].displayInstructorCostInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayInstructorCostInput;
-							return ui;
-						case "reason":
-							ui.sectionGroupCostDetails[sectionGroupCostId].displayReasonInput = !ui.sectionGroupCostDetails[sectionGroupCostId].displayReasonInput;
-							return ui;
-					}
-					return ui;
-				case TOGGLE_LINE_ITEM_DETAIL:
-					var lineItemId = action.payload.lineItemId;
-
-					// Toggle appropriate property
-					switch (action.payload.property) {
-						case "description":
-							ui.lineItemDetails[lineItemId].displayDescriptionInput = !ui.lineItemDetails[lineItemId].displayDescriptionInput;
-							return ui;
-						case "amount":
-							ui.lineItemDetails[lineItemId].displayAmountInput = !ui.lineItemDetails[lineItemId].displayAmountInput;
-							return ui;
-						case "notes":
-							ui.lineItemDetails[lineItemId].displayNotesInput = !ui.lineItemDetails[lineItemId].displayNotesInput;
-							return ui;
-						case "type":
-							ui.lineItemDetails[lineItemId].displayTypeInput = !ui.lineItemDetails[lineItemId].displayTypeInput;
-							return ui;
+				case DELETE_BUDGET_SCENARIO:
+					if (ui.selectedBudgetScenarioId == action.payload.budgetScenarioId) {
+						ui.selectedBudgetScenarioId = null;
 					}
 					return ui;
 				default:
@@ -572,6 +582,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState = {};
 			newState.budget = scope.scheduleBudgetReducers(action, scope._state.budget);
 			newState.budgetScenarios = scope.budgetScenarioReducers(action, scope._state.budgetScenarios);
+			newState.courses = scope.courseReducers(action, scope._state.courses);
 			newState.lineItems = scope.lineItemReducers(action, scope._state.lineItems);
 			newState.lineItemComments = scope.lineItemCommentReducers(action, scope._state.lineItemComments);
 			newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
@@ -583,6 +594,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.ui = scope.uiReducers(action, scope._state.ui);
 			newState.users = scope.userReducers(action, scope._state.users);
 
+			newState.calculatedSectionGroups = scope.calculatedSectionGroupReducers(action, scope._state.calculatedSectionGroups);
 			scope._state = newState;
 
 			// Build new 'page state'
@@ -611,6 +623,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.ui = newState.ui;
 			newPageState.lineItemCategories = budgetSelectors.generateLineItemCategories(newState.lineItemCategories);
 			newPageState.instructors = budgetSelectors.generateInstructors(newState.instructors, newState.instructorCosts);
+			newPageState.calculatedSectionGroups = newState.calculatedSectionGroups;
 
 			$rootScope.$emit('budgetStateChanged', newPageState);
 			console.log(newPageState);

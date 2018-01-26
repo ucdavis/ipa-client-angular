@@ -23,10 +23,6 @@ budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$locatio
 				localStorage.removeItem('selectedTerm');
 			}
 		});
-
-		$scope.openBudgetScenarioModal = function() {
-			$scope.view.state.openAddBudgetScenario = true;
-		};
 }]);
 
 BudgetCtrl.getPayload = function (authService, $route, $window, budgetActions) {

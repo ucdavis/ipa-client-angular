@@ -1,12 +1,13 @@
-budgetApp.service('budgetActions', function ($rootScope, $window, budgetService, budgetReducers) {
+budgetApp.service('budgetActions', function ($rootScope, $window, budgetService, budgetReducers, termService) {
 	return {
 		getInitialState: function (workgroupId, year, selectedBudgetScenarioId, selectedTerm) {
-			budgetService.getInitialState(workgroupId, year).then(function (results) {
+			var self = this;
 
+			budgetService.getInitialState(workgroupId, year).then(function (results) {
 				// Set a default active budget scenario if one was not set in local storage
 				if (!selectedBudgetScenarioId) {
 					if (results.budgetScenarios && results.budgetScenarios.length > 0) {
-						selectedBudgetScenarioId = results.budgetScenarios[0].id;
+						selectedBudgetScenarioId = parseInt(results.budgetScenarios[0].id);
 						localStorage.setItem('selectedBudgetScenarioId', selectedBudgetScenarioId);
 					}
 				}
@@ -21,8 +22,28 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 
 				budgetReducers.reduce(action);
+				self.calculateSelectedScenario();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
+			});
+		},
+		updateBudgetScenario: function (budgetScenario) {
+			var self = this;
+
+			budgetService.updateBudgetScenario(budgetScenario).then(function (results) {
+				$rootScope.$emit('toast', { message: "Updated budget scenario", type: "SUCCESS" });
+
+				budgetReducers.reduce({
+					type: UPDATE_BUDGET_SCENARIO,
+					payload: {
+						budgetScenario: results
+					}
+				});
+				self.calculateScenarioTerms();
+				self.calculateSectionGroups();
+				self.calculateScenarioLineItems();
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update budget scenario.", type: "ERROR" });
 			});
 		},
 		createBudgetScenario: function (newBudgetScenario, budgetId, scenarioId) {
@@ -42,6 +63,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		deleteBudgetScenario: function (budgetScenarioId) {
+			var self = this;
+
 			budgetService.deleteBudgetScenario(budgetScenarioId).then(function (budgetScenarioId) {
 				var action = {
 					type: DELETE_BUDGET_SCENARIO,
@@ -52,11 +75,13 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				$rootScope.$emit('toast', { message: "Deleted budget scenario", type: "SUCCESS" });
 				budgetReducers.reduce(action);
+				self.calculateSelectedScenario();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not delete budget scenario.", type: "ERROR" });
 			});
 		},
 		updateInstructorCost: function (instructorCostDto) {
+			var self = this;
 			var instructorCost = Object.assign({}, instructorCostDto);
 
 			// InstructorCosts in the front end are blended instructor + instructorCosts
@@ -72,15 +97,15 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					}
 				};
 				budgetReducers.reduce(action);
+				self.calculateSectionGroups();
+				self.calculateTotalCost();
+				$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
 			});
 		},
 		createLineItem: function (newLineItem, budgetScenarioId) {
-
-			// Close modal
-			this.toggleAddLineItemModal();
-
+			var self = this;
 			// Ensure amount is properly formatted as a float
 			newLineItem.amount = parseFloat(newLineItem.amount);
 
@@ -91,11 +116,17 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 				$rootScope.$emit('toast', { message: "Created line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);
+
+				// Close modal
+				self.closeAddLineItemModal();
+				self.calculateScenarioLineItems();
+				self.calculateTotalCost();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not create line item.", type: "ERROR" });
 			});
 		},
 		updateLineItem: function (lineItem) {
+			var self = this;
 			// Ensure amount is properly formatted as a float
 			lineItem.amount = parseFloat(lineItem.amount);
 
@@ -106,6 +137,11 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 				$rootScope.$emit('toast', { message: "Saved line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);
+
+				// Close modal
+				self.closeAddLineItemModal();
+				self.calculateScenarioLineItems();
+				self.calculateTotalCost();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not save line item.", type: "ERROR" });
 			});
@@ -121,6 +157,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				$rootScope.$emit('toast', { message: "Deleted line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);
+				self.calculateScenarioLineItems();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not delete line item.", type: "ERROR" });
 			});
@@ -140,8 +177,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		updateBudget: function (budget) {
-			// Update UI
-			this.toggleSupportCostModal();
+			var self = this;
 
 			budgetService.updateBudget(budget).then(function (budget) {
 				var action = {
@@ -152,6 +188,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 				$rootScope.$emit('toast', { message: "Updated costs", type: "SUCCESS" });
 				budgetReducers.reduce(action);
+				self.calculateSectionGroups();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update costs.", type: "ERROR" });
 			});
@@ -176,6 +213,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		createLineItemComment: function (comment, lineItem, currentUserLoginId) {
+			var self = this;
+
 			var lineItemComment = {};
 			lineItemComment.comment = comment;
 			lineItemComment.loginId = currentUserLoginId;
@@ -190,17 +229,48 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 				$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
 				budgetReducers.reduce(action);
+				self.calculateScenarioLineItems();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 			});
 		},
-		toggleAddLineItemModal: function() {
+		setRoute: function(selectedRoute) {
+			budgetReducers.reduce({
+				type: SET_ROUTE,
+				payload: {
+					selectedRoute: selectedRoute
+				}
+			});
+		},
+		closeAddLineItemModal: function() {
 			var action = {
-				type: TOGGLE_ADD_LINE_ITEM_MODAL,
+				type: CLOSE_ADD_LINE_ITEM_MODAL,
 				payload: {}
 			};
 
 			budgetReducers.reduce(action);
+		},
+		openAddLineItemModal: function(lineItemToEdit) {
+			var action = {
+				type: OPEN_ADD_LINE_ITEM_MODAL,
+				payload: {
+					lineItemToEdit: lineItemToEdit
+				}
+			};
+
+			budgetReducers.reduce(action);
+		},
+		closeBudgetConfigModal: function() {
+			budgetReducers.reduce({
+				type: CLOSE_BUDGET_CONFIG_MODAL,
+				payload: {}
+			});
+		},
+		openBudgetConfigModal: function() {
+			budgetReducers.reduce({
+				type: OPEN_BUDGET_CONFIG_MODAL,
+				payload: {}
+			});
 		},
 		toggleAddBudgetScenarioModal: function() {
 			var action = {
@@ -238,60 +308,6 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			budgetReducers.reduce(action);
 		},
-		toggleSupportCostModal: function() {
-			var action = {
-				type: TOGGLE_SUPPORT_COST_MODAL,
-				payload: {}
-			};
-
-			budgetReducers.reduce(action);
-		},
-		toggleLineItemSection: function () {
-			var action = {
-				type: TOGGLE_LINE_ITEM_SECTION,
-				payload: {}
-			};
-
-			budgetReducers.reduce(action);
-		},
-		toggleLineItem: function(lineItem) {
-			var action = {
-				type: TOGGLE_LINE_ITEM,
-				payload: {lineItemId: lineItem.id}
-			};
-
-			budgetReducers.reduce(action);
-		},
-		toggleCourseCostsSection: function() {
-			var action = {
-				type: TOGGLE_COURSE_COST_SECTION,
-				payload: {}
-			};
-
-			budgetReducers.reduce(action);
-		},
-		toggleLineItemDetail: function(lineItemId, property) {
-			var action = {
-				type: TOGGLE_LINE_ITEM_DETAIL,
-				payload: {
-					lineItemId: lineItemId,
-					property: property
-				}
-			};
-
-			budgetReducers.reduce(action);
-		},
-		toggleSectionGroupCostDetail: function(sectionGroupCostId, property) {
-			var action = {
-				type: TOGGLE_SECTION_GROUP_COST_DETAIL,
-				payload: {
-					sectionGroupCostId: sectionGroupCostId,
-					property: property
-				}
-			};
-
-			budgetReducers.reduce(action);
-		},
 		selectBudgetScenario: function(budgetScenarioId) {
 			localStorage.setItem('selectedBudgetScenarioId', budgetScenarioId);
 
@@ -303,16 +319,19 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			};
 
 			budgetReducers.reduce(action);
+			this.calculateScenarioTerms();
+			this.calculateScenarioLineItems();
+			this.calculateSectionGroups();
+			this.calculateTotalCost();
 		},
-		selectTerm: function(term) {
-			var action = {
+		selectTerm: function(termTab) {
+			budgetReducers.reduce({
 				type: SELECT_TERM,
 				payload: {
-					term: term
+					term: termService.getTermFromDescription(termTab),
+					activeTermTab: termTab
 				}
-			};
-
-			budgetReducers.reduce(action);
+			});
 		},
 		toggleSelectLineItem: function(lineItem) {
 			budgetReducers.reduce({
@@ -349,5 +368,222 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 			});
 		},
+		calculateSelectedScenario: function() {
+			var selectedScenarioId = angular.copy(budgetReducers._state.ui.selectedBudgetScenarioId);
+
+			// If a scenario is not already selected, default to first scenario
+			if (selectedScenarioId == false || selectedScenarioId == null || selectedScenarioId == "undefined") {
+				selectedScenarioId = budgetReducers._state.budgetScenarios.ids[0];
+			}
+
+			this.selectBudgetScenario(selectedScenarioId);
+		},
+		calculateScenarioTerms: function() {
+			var allTermTabs = [];
+			var activeTermTab = null;
+
+			var selectedBudgetScenario = budgetReducers._state.budgetScenarios.list[budgetReducers._state.ui.selectedBudgetScenarioId];
+
+			selectedBudgetScenario.terms.forEach(function(term) {
+				allTermTabs.push(termService.getShortTermName(term));
+				activeTermTab = activeTermTab || termService.getShortTermName(term);
+			});
+
+			budgetReducers.reduce({
+				type: CALCULATE_SCENARIO_TERMS,
+				payload: {
+					allTermTabs: allTermTabs,
+					activeTermTab: activeTermTab,
+					activeTerm: termService.getTermFromDescription(activeTermTab),
+					selectedScenarioTerms: selectedBudgetScenario.terms
+				}
+			});
+		},
+		calculateScenarioLineItems: function() {
+			var selectedBudgetScenario = budgetReducers._state.budgetScenarios.list[budgetReducers._state.ui.selectedBudgetScenarioId];
+
+			// Add lineItems
+			selectedBudgetScenario.lineItems = [];
+
+			budgetReducers._state.lineItems.ids.forEach( function (lineItemId) {
+				var lineItem = budgetReducers._state.lineItems.list[lineItemId];
+
+				// Ensure lineItem belongs to selected budget scenario
+				if (lineItem.budgetScenarioId != selectedBudgetScenario.id) {
+					return;
+				}
+
+				// Set lineItemComments on lineItems
+				lineItem.comments = [];
+
+				budgetReducers._state.lineItemComments.ids.forEach(function(commentId) {
+					var comment = budgetReducers._state.lineItemComments.list[commentId];
+
+					if (comment.lineItemId == lineItem.id) {
+						lineItem.comments.push(comment);
+					}
+				});
+
+				// Sort sectionGroupCostComments
+				var reverseOrder = true;
+				lineItem.comments =_array_sortByProperty(lineItem.comments, "lastModifiedOn", reverseOrder);
+
+				// Add lineItemCategory description
+				lineItem.categoryDescription = budgetReducers._state.lineItemCategories.list[lineItem.lineItemCategoryId].description;
+
+				selectedBudgetScenario.lineItems.push(lineItem);
+
+				// Set 'lastModifiedBy'
+				// Expected formats are 'system' or 'user:bobsmith'
+				// Will convert 'user:bobsmith' to 'Smith, Bob'
+				if (lineItem.lastModifiedBy) {
+					var split = lineItem.lastModifiedBy.split(":");
+					if (split.length > 0 && split[0] == "user") {
+						var loginId = split[1];
+
+						budgetReducers._state.users.ids.forEach(function(userId) {
+							var user = budgetReducers._state.users.list[userId];
+							if (user.loginId == loginId) {
+								lineItem.lastModifiedBy = user.firstName + " " + user.lastName;
+							}
+						});
+					}
+				}
+			});
+		},
+		calculateSectionGroups: function() {
+			var self = this;
+
+			var selectedBudgetScenario = budgetReducers._state.budgetScenarios.list[budgetReducers._state.ui.selectedBudgetScenarioId];
+			var sectionGroups = budgetReducers._state.scheduleSectionGroups;
+			var activeTerms = selectedBudgetScenario.terms;
+
+			// A 'sectionGroupContainer' contains all sectionGroups for that term/subjectCode/courseNumber
+			var calculatedSectionGroups = {
+				terms: selectedBudgetScenario.terms,
+				byTerm: {}
+			};
+
+			activeTerms.forEach(function(term) {
+				calculatedSectionGroups.byTerm[term] = [];
+			});
+
+			sectionGroups.uniqueKeys.forEach(function(uniqueKey) {
+				var sectionGroup = sectionGroups.list[uniqueKey];
+				var shortTerm = sectionGroup.termCode.slice(-2);
+
+				// Ensure sectionGroup belongs to an active term in this scenario
+				if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) {
+					return;
+				}
+
+				self.calculateSectionGroupCosts(sectionGroup);
+
+				// Generate container if one does not already exist
+				var container = self.calculateSectionGroupContainer(sectionGroup, calculatedSectionGroups.byTerm[shortTerm]);
+				container.sectionGroups.push(sectionGroup);
+			});
+
+			activeTerms.forEach(function(term) {
+				calculatedSectionGroups.byTerm[term] = _array_sortByProperty(calculatedSectionGroups.byTerm[term], "uniqueKey");
+			});
+
+			budgetReducers.reduce({
+				type: CALCULATE_SECTION_GROUPS,
+				payload: {
+					calculatedSectionGroups: calculatedSectionGroups
+				}
+			});
+
+			this.calculateTotalCost();
+		},
+		// Calculate sectionGroup costs
+		calculateSectionGroupCosts: function(sectionGroup) {
+			var budget = budgetReducers._state.budget;
+
+			// Course Costs
+			if (sectionGroup.readerAppointments == null || sectionGroup.readerAppointments == undefined) {
+				sectionGroup.readerCost = 0;
+			} else {
+				sectionGroup.readerCost = sectionGroup.readerAppointments * budget.readerCost;
+			}
+			if (sectionGroup.teachingAssistantAppointments == null || sectionGroup.teachingAssistantAppointments == undefined) {
+				sectionGroup.taCost = 0;
+			} else {
+				sectionGroup.taCost = sectionGroup.teachingAssistantAppointments * budget.taCost;
+			}
+
+			sectionGroup.courseCostSubTotal = sectionGroup.taCost + sectionGroup.readerCost;
+
+			// Instructor Costs
+			sectionGroup.instructorCostSubTotal = 0;
+
+			sectionGroup.assignedInstructorIds.forEach(function(instructorId) {
+				var instructor = budgetReducers._state.instructors.list[instructorId];
+				var instructorCost = budgetReducers._state.instructorCosts.list[instructor.instructorCostId];
+
+				if (instructorCost.cost == false || instructorCost.cost == null) {
+					return;
+				}
+
+				sectionGroup.instructorCostSubTotal += instructorCost.cost;
+			});
+
+			sectionGroup.totalCost = sectionGroup.courseCostSubTotal + sectionGroup.instructorCostSubTotal;
+		},
+		calculateTotalCost: function() {
+			var courseCosts = 0;
+			var lineItemFunds = 0;
+			var terms = budgetReducers._state.calculatedSectionGroups.terms;
+			var sectionGroups = budgetReducers._state.calculatedSectionGroups.byTerm;
+
+			// Add sectionGroup costs
+			terms.forEach(function(term) {
+				sectionGroups[term].forEach(function(course) {
+					course.sectionGroups.forEach(function(sectionGroup) {
+						courseCosts += sectionGroup.totalCost;
+					});
+				});
+			});
+
+			// Add line item costs
+			budgetReducers._state.lineItems.ids.forEach(function(lineItemId) {
+				var amount = budgetReducers._state.lineItems.list[lineItemId].amount;
+				lineItemFunds += amount;
+			});
+
+			var totalCost = lineItemFunds - courseCosts;
+
+			budgetReducers.reduce({
+				type: CALCULATE_TOTAL_COST,
+				payload: {
+					totalCost: totalCost,
+					budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId
+				}
+			});
+		},
+		// Find or create a sectionGroupContainer for this sectionGroup
+		calculateSectionGroupContainer: function(sectionGroup, containers) {
+			var course = budgetReducers._state.courses.list[sectionGroup.courseId];
+			var uniqueKey = course.subjectCode + course.courseNumber;
+
+			newContainer = {
+				subjectCode: course.subjectCode,
+				courseNumber: course.courseNumber,
+				title: course.title,
+				uniqueKey: course.subjectCode + course.courseNumber,
+				sectionGroups: []
+			};
+
+			var properties = ["uniqueKey"];
+			var container = _array_find_by_properties(containers, properties, newContainer);
+
+			if(container == false || container == undefined) {
+				containers.push(newContainer);
+				container = newContainer;
+			}
+
+			return container;
+		}
 	};
 });

@@ -37,6 +37,28 @@ angular.module('sharedApp')
 	
 				return this.termCodeDescriptions[shortTermCode] + " " + year;
 			},
+			getShortTermName: function(term) {
+				if (!term || term.length != 2) {
+					return null;
+				}
+
+				return this.termCodeDescriptions[term];
+			},
+			getTermFromDescription: function(description) {
+				var descriptionTerms = {
+					'Summer Session 1': '05',
+					'Summer Special Session': '06',
+					'Summer Session 2': '07',
+					'Summer Quarter': '08',
+					'Fall Semester': '09',
+					'Fall Quarter': '10',
+					'Winter Quarter': '01',
+					'Spring Semester': '02',
+					'Spring Quarter': '03'
+				};
+
+				return descriptionTerms[description];
+			},
 			termToTermCode: function(termDTO, yearDTO) {
 				var year = parseInt(angular.copy(yearDTO));
 				var term = angular.copy(termDTO);

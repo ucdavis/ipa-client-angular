@@ -1,0 +1,39 @@
+<div class="budget-scenario-dropdown header--work-group btn-group">
+	<button class="btn btn-default dropdown-toggle budget-scenario-dropdown__toggle-ui"
+					type="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="true">
+
+		<span>
+			{{ state.selectedBudgetScenario.name }}
+			<span class="caret"></span>
+		</span>
+
+	</button>
+
+	<ul class="dropdown-menu dropdown-container budget-scenario-edit-dropdown">
+		<li ng-repeat="budgetScenario in state.budgetScenarios" class="budget-scenario-dropdown__row">
+			<a ng-click="selectBudgetScenario(budgetScenario)" class="budget-scenario-item">
+				<span>
+					{{ budgetScenario.name }}
+				</span>
+				<div class="budget-scenario-dropdown__hover-ui">
+					<ipa-button
+						ng-show="state.budgetScenarios.length > 1"
+						icon-class="'glyphicon glyphicon-trash'"
+						size="'small'"
+						on-click="deleteBudgetScenario(budgetScenario)"
+						tooltip-message="'Delete scenario'"
+						confirm-message="'Are you sure you want to delete this budget scenario?'">
+					</ipa-button>
+				</div>
+			</a>
+		</li>
+		<li role="presentation" class="divider courses-separator"></li>
+		<li class="create-budget-scenario-ui">
+			<a ng-click="openBudgetScenarioModal()">
+				Create Budget Scenario
+			</a>
+		</li>
+	</ul>
+
+</div>

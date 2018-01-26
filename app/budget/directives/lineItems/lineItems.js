@@ -14,7 +14,7 @@ budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetAc
 			};
 
 			scope.openAddLineItemModal = function() {
-				budgetActions.toggleAddLineItemModal();
+				budgetActions.openAddLineItemModal();
 			};
 
 			scope.selectAllLineItems = function(areAllLineItemsSelected) {
@@ -27,6 +27,27 @@ budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetAc
 
 			scope.deleteLineItems = function() {
 				budgetActions.deleteLineItems(scope.selectedBudgetScenario, scope.ui.selectedLineItems);
+			};
+
+			scope.deleteLineItem = function(lineItem) {
+				budgetActions.deleteLineItem(lineItem);
+			};
+
+			scope.updateLineItem = function(lineItem, propertyName) {
+				budgetActions.toggleLineItemDetail(lineItem.id, propertyName);
+				budgetActions.updateLineItem(lineItem);
+			};
+
+			scope.openAddLineItemCommentsModal = function(lineItem) {
+				budgetActions.openAddLineItemCommentsModal(lineItem);
+			};
+
+			scope.selectLineItem = function(lineItem) {
+				budgetActions.toggleSelectLineItem(lineItem);
+			};
+
+			scope.toCurrency = function(amount) {
+				return toCurrency(amount);
 			};
 		} // end link
 	};

@@ -1,10 +1,73 @@
-<div class="budget-scenario-toolbar btn-group toolbar">
-	<span 
-		class="tool-icon glyphicon glyphicon-education dropdown-toggle"
-		ng-click="openSupportCostModal()"
-		uib-tooltip="Set support costs">
-	</span>
+<div class="budget-scenario-toolbar">
+	<div class="budget-scenario-toolbar__edit-ui">
+		<div class="budget-scenario-toolbar__scenario-label">
+			Budget Scenario
+		</div>
 
-	<span class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown"></span>
-	<span class="tool-icon glyphicon glyphicon-print"></span>
+		<!-- Regular UI -->
+		<div class="budget-scenario-toolbar__container"
+			ng-show="displayScenarioRenameUI == false">
+			<budget-scenario-dropdown state="state"></budget-scenario-dropdown>
+
+			<ipa-button
+				class="budget-scenario-toolbar__edit-button"
+				icon-class="'glyphicon glyphicon-pencil'"
+				size="'small'"
+				on-click="showScenarioRenameUI()"
+				tooltip-message="'Rename Scenario'">
+			</ipa-button>
+		</div>
+
+		<!-- Rename scenario UI -->
+		<div class="budget-scenario-toolbar__container"
+			ng-show="displayScenarioRenameUI">
+			<div>
+				<ipa-input class="budget-scenario-toolbar__rename-input"
+					on-update="scenarioNameIsValid()"
+					update-delay="0"
+					value="newScenarioName">
+				</ipa-input>
+			</div>
+
+			<ipa-button
+				class="budget-scenario-toolbar__edit-button"
+				icon-class="'glyphicon glyphicon-remove'"
+				size="'small'"
+				on-click="cancelScenarioRename()"
+				tooltip-message="'Cancel'">
+			</ipa-button>
+			<ipa-button
+				class="budget-scenario-toolbar__edit-button"
+				icon-class="'glyphicon glyphicon-ok'"
+				size="'small'"
+				on-click="saveNewScenarioName()"
+				is-disabled="isNewScenarioNameValid == false"
+				disabled-tooltip-message="validationError"
+				tooltip-message="'Rename Scenario'">
+			</ipa-button>
+		</div>
+	</div>
+
+	<div class="budget-scenario-toolbar__beta-warning">
+		<div class="budget-scenario-toolbar__beta-warning-icon">
+			<i class="entypo-attention"></i>
+		</div>
+
+		<div class="budget-scenario-toolbar__beta-warning-container">
+			<div class="budget-scenario-toolbar__beta-warning-text">
+				This Budget Module is currently being developed. Please back up all your data and report any issues to <a href="mailto:ipahelp@ucdavis.edu">ipahelp@ucdavis.edu</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="budget-scenario-toolbar__tool-container">
+		<span
+			class="budget-scenario-toolbar__tool glyphicon glyphicon-cog dropdown-toggle"
+			ng-click="openBudgetConfigModal()"
+			uib-tooltip="Open budget configuration">
+		</span>
+
+		<span class="budget-scenario-toolbar__tool glyphicon glyphicon-download-alt" data-toggle="dropdown"></span>
+		<span class="budget-scenario-toolbar__tool glyphicon glyphicon-print"></span>
+	</div>
 </div>

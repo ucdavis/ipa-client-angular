@@ -21,13 +21,19 @@ sharedApp.directive("ipaButton", this.ipaButton = function () {
 			tooltipMessage: '<?',
 			confirmMessage: '<?', // Uses a confirm tooltip with the supplied message. Will also wrap the action into the confirm
 			text: '<?', // Displayed on body of button
-			size: '<?',
+			size: '<?', // Current options are 'slim', 'short'
 			isWide: '<?', // Boolean: makes button attempt to take 100% width, default is to only take as much width as needed
 			buttonClass: '<?', // Provide additional classes for context specific styling
-			skin: '<?' // Default: 'light', planned skins are dark/light/red
+			skin: '<?' // Options are 'light' and 'dark' (default light)
 		},
 		link: function(scope, element, attrs) {
-			// Intentionally empty
+			scope.calculateTooltip = function() {
+				if (scope.isDisabled && scope.disabledTooltipMessage && scope.disabledTooltipMessage.length > 0) {
+					return scope.disabledTooltipMessage;
+				}
+
+				return scope.tooltipMessage;
+			};
 		}
 	};
 });

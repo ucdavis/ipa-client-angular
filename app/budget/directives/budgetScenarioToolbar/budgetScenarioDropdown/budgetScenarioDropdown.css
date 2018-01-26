@@ -1,0 +1,34 @@
+
+.budget-scenario-dropdown__hover-ui {
+	display: none;
+	padding-right: 10px;
+}
+
+.budget-scenario-dropdown__row:hover .budget-scenario-dropdown__hover-ui {
+	display: block;
+}
+
+.budget-scenario-dropdown__row {
+	cursor: pointer;
+	height: 30px;
+}
+
+.budget-scenario-dropdown__toggle-ui {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+/* Old CSS need to rewrite in BEM style */
+.budget-scenario-dropdown:hover .budget-scenario-row {
+	cursor: pointer;
+	display: block;
+}
+
+.budget-scenario-dropdown .dropdown-container {
+	width: 250px;
+}
+
+.budget-scenario-dropdown .budget-scenario-item {
+	display: flex;
+	justify-content: space-between;
+}

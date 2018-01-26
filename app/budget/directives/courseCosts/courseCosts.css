@@ -1,78 +1,62 @@
-.course-costs-section {
-	border: 1px solid rgb(235, 235, 235);
-	border-radius: 4px;
-}
-
-.course-costs-section .expand-ui {
-	display: flex;
-	justify-content: space-between;
+/* new table CSS */
+.course-costs__table {
 	width: 100%;
-	line-height: 1.1;
-	font-size: 14px;
-	font-weight: bold;
+	margin-bottom: 20px;
 }
 
-.course-costs-section .expand-ui-container {
-	padding-left: 15px;
-	padding-right: 15px;
+.course-costs__table-header {
+	width: 10%;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ddd;
+}
+
+.course-costs__course-title {
+	padding-top: 15px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+}
+
+.course-costs__table-cell {
+	background-color: #f8f8f8;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	cursor: pointer;
 }
 
-.course-costs-section .expand-ui-triangle {
-	font-size: 10px;
+.course-costs__table-cell-sequence {
+	padding-left: 20px;
 }
 
-.course-costs-section .course-costs-header {
-	display: flex;
+.course-costs__sequence-container {
 	width: 100%;
-}
-
-.course-costs-section .support-cost-header,
-.course-costs-section .instructors-header
- {
+	background-color: #f8f8f8;
+	height: 53px;
 	display: flex;
-	flex: 5 0 0px;
-	padding: 15px;
+	justify-content: center;
+	align-items: center;
 }
 
-.course-costs-section .cell {
-	flex: 1 0 0px;
+.course-costs__table-cell-total {
+	padding-right: 20px;
+}
+
+.course-costs__total-container {
+	width: 100%;
+	background-color: #f8f8f8;
+	height: 53px;
 	display: flex;
 	align-items: center;
-	justify-content: center;
 }
 
-.course-costs-section .cell-content {
-	flex: 0 1 0px;
+.course-cost__warning {
+	color: #ce4844;
+	visibility: hidden;
 }
 
-.course-costs-section .course-title {
-	padding: 15px;
-	display: flex;
+.course-cost__warning--show {
+	visibility: visible;
 }
 
-.course-costs-section .section-group-row {
-	display: flex;
-}
-
-.course-costs-section .support-cost {
-	background-color: #F1F8FA;
-}
-
-.course-costs-section .instructor-cost {
-	background-color: #FAF1F1;
-}
-
-.course-costs-section .support-cost,
-.course-costs-section .instructor-cost {
-	flex: 5 0 0px;
-	padding: 5px;
-	margin: 15px;
-}
-
-.course-costs-section .comment-ui {
-	padding-left: 1%;
-	cursor: pointer;
+.course-cost__number-input {
+	width: 40px;
 }
