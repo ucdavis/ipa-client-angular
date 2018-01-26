@@ -7,7 +7,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				// Set a default active budget scenario if one was not set in local storage
 				if (!selectedBudgetScenarioId) {
 					if (results.budgetScenarios && results.budgetScenarios.length > 0) {
-						selectedBudgetScenarioId = results.budgetScenarios[0].id;
+						selectedBudgetScenarioId = parseInt(results.budgetScenarios[0].id);
 						localStorage.setItem('selectedBudgetScenarioId', selectedBudgetScenarioId);
 					}
 				}
