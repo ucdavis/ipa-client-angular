@@ -17,7 +17,9 @@ sharedApp.directive("ipaTabs", this.ipaTabs = function () {
 			tabNames: '<',
 			activeTab: '<',
 			selectTab: '&',
-			slim: '<?'
+			slim: '<?',
+			containerClass: '<?', // Can provide classes to transclusion container
+			borderLess: '<?' // Removes borders from the container
 		},
 		transclude: true,
 		link: function (scope, element, attrs) {

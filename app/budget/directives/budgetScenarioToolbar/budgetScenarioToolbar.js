@@ -16,6 +16,10 @@ sharedApp.directive('budgetScenarioToolbar', function($window, $location, $route
 				budgetActions.toggleSupportCostModal();
 			};
 
+			scope.openBudgetConfigModal = function() {
+				budgetActions.openBudgetConfigModal();
+			};
+
 			scope.showScenarioRenameUI = function() {
 				scope.displayScenarioRenameUI = true;
 				scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name);

@@ -70,7 +70,7 @@
 			<button ng-if="isFormValid() == true"
 							type="button" class="btn neon-dark-confirm-btn"
 							ng-click="submitLineItemForm()">
-							Create
+							{{ lineItemToEdit.id > 0 ? 'Update' : 'Create' }}
 			</button>
 			<button ng-if="isFormValid() == false"
 							type="button" class="disabled btn btn-info neon-dark-confirm-btn"

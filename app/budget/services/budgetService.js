@@ -91,19 +91,6 @@ budgetApp.factory("budgetService", this.budgetService = function($http, $q, $win
 
 			return deferred.promise;
 		},
-		updateBudgetScenario: function(budgetScenario) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/budgetView/budgetScenarios/" + budgetScenario.id, budgetScenario, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
 		deleteLineItem: function(lineItem) {
 			var deferred = $q.defer();
 
@@ -134,6 +121,19 @@ budgetApp.factory("budgetService", this.budgetService = function($http, $q, $win
 			var deferred = $q.defer();
 
 			$http.put(serverRoot + "/api/budgetView/budgets/" + budget.id, budget, { withCredentials: true })
+			.success(function(results) {
+				deferred.resolve(results);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		updateBudgetScenario: function(budgetScenario) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/budgetView/budgetScenarios/" + budgetScenario.id, budgetScenario, { withCredentials: true })
 			.success(function(results) {
 				deferred.resolve(results);
 			})

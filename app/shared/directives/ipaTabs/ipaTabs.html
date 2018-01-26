@@ -8,5 +8,5 @@
 			{{ tab }}
 		</div>
 	</div>
-	<div class="ipa-tabs__content" ng-transclude></div>
+	<div ng-class="{'ipa-tabs--border-less': borderLess }" class="ipa-tabs__content {{containerClass}}" ng-transclude></div>
 </div>

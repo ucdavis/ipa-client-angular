@@ -24,7 +24,7 @@ sharedApp.directive("ipaButton", this.ipaButton = function () {
 			size: '<?', // Current options are 'slim', 'short'
 			isWide: '<?', // Boolean: makes button attempt to take 100% width, default is to only take as much width as needed
 			buttonClass: '<?', // Provide additional classes for context specific styling
-			skin: '<?' // Default: 'light', planned skins are dark/light/red
+			skin: '<?' // Options are 'light' and 'dark' (default light)
 		},
 		link: function(scope, element, attrs) {
 			scope.calculateTooltip = function() {

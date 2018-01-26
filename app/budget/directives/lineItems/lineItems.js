@@ -45,6 +45,10 @@ budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetAc
 			scope.selectLineItem = function(lineItem) {
 				budgetActions.toggleSelectLineItem(lineItem);
 			};
+
+			scope.toCurrency = function(amount) {
+				return toCurrency(amount);
+			};
 		} // end link
 	};
 });

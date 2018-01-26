@@ -21,6 +21,10 @@ budgetApp.directive("budgetNav", this.budgetNav = function ($rootScope, budgetAc
 			scope.deleteLineItems = function() {
 				budgetActions.deleteLineItems(scope.selectedBudgetScenario, scope.selectedLineItems);
 			};
+
+			scope.toCurrency = function (value) {
+				return toCurrency(value);
+			};
 		}
 	};
 });

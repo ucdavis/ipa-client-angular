@@ -10,6 +10,8 @@ sharedApp.directive('budgetScenarioDropdown', function($window, $location, $rout
 
 			scope.deleteBudgetScenario = function (budgetScenario) {
 				budgetActions.deleteBudgetScenario(budgetScenario.id);
+				// Ensure bootstrap dropdown closes properly when confirming deleting budget scenario
+				$(".budget-scenario-dropdown").toggleClass("open");
 			};
 
 			scope.selectBudgetScenario = function (budgetScenario) {

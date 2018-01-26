@@ -6,7 +6,8 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 		scope: {
 			selectedBudgetScenario: '<',
 			instructors: '<',
-			termNav: '<'
+			termNav: '<',
+			calculatedSectionGroups: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.toggleCourseCostsSection = function() {
@@ -35,6 +36,9 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 				budgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 
+			scope.toCurrency = function (value) {
+				return toCurrency(value);
+			};
 		} // end link
 	};
 });

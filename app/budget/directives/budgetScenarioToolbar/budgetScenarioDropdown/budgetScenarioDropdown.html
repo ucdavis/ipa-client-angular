@@ -1,6 +1,6 @@
-<div class="budget-scenario-dropdown header--work-group btn-group" role="group" aria-label="...">
+<div class="budget-scenario-dropdown header--work-group btn-group">
 	<button class="btn btn-default dropdown-toggle budget-scenario-dropdown__toggle-ui"
-					type="button" id="dropdownMenu1" data-toggle="dropdown"
+					type="button" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="true">
 
 		<span>
@@ -10,7 +10,7 @@
 
 	</button>
 
-	<ul class="dropdown-menu dropdown-container" aria-labelledby="dropdownMenu1">
+	<ul class="dropdown-menu dropdown-container budget-scenario-edit-dropdown">
 		<li ng-repeat="budgetScenario in state.budgetScenarios" class="budget-scenario-dropdown__row">
 			<a ng-click="selectBudgetScenario(budgetScenario)" class="budget-scenario-item">
 				<span>
