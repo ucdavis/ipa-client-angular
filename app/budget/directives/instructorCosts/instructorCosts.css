@@ -36,6 +36,10 @@
 }
 
 .instructor-costs__instructor-container {
+	padding-left: 30px;
+}
+
+.instructor-costs__cost-container {
 	display: flex;
 	align-items: center;
 	justify-content: center;

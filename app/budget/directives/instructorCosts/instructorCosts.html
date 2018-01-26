@@ -105,7 +105,6 @@
 
 					<!-- Reason -->
 					<td class="instructor-costs__table-cell">
-						<div class="instructor-costs__instructor-container">
 							<!--
 							<input
 								type="text"
@@ -114,12 +113,11 @@
 								on-enter="updateSectionGroupCost(sectionGroupCost)"
 								on-blur="updateSectionGroupCost(sectionGroupCost)">
 							-->
-						</div>
 					</td>
 
 					<!-- Cost -->
 					<td class="instructor-costs__table-cell">
-						<div class="instructor-costs__instructor-container">
+						<div class="instructor-costs__cost-container">
 							{{ toCurrency(sectionGroup.instructorCostSubTotal) }}
 							<!--
 							<instructor-cost-input
