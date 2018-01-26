@@ -5,15 +5,25 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 		replace: true,
 		scope: {
 			selectedBudgetScenario: '<',
-			instructors: '<'
+			instructors: '<',
+			termNav: '<',
+			calculatedSectionGroups: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.toggleCourseCostsSection = function() {
-				budgetActions.toggleCourseCostsSection();
+			scope.setActiveTerm = function(activeTermTab) {
+				budgetActions.selectTerm(activeTermTab);
+			};
+
+			scope.updateSectionGroupCost = function(sectionGroupCost) {
+				budgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 
 			scope.openCourseComments = function(course) {
 				budgetActions.openAddCourseCommentsModal(course);
+			};
+
+			scope.toCurrency = function (value) {
+				return toCurrency(value);
 			};
 		} // end link
 	};

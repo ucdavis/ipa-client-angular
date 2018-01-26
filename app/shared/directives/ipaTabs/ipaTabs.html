@@ -4,9 +4,9 @@
 			ng-repeat="tab in tabNames track by $index"
 			class="ipa-tabs__tab"
 			ng-click="triggerSelection(tab)"
-			ng-class="{ 'ipa-tabs__tab--active': tab == activeTab }">
+			ng-class="{ 'ipa-tabs__tab--active': tab == activeTab, 'ipa-tabs__tab--slim': slim }">
 			{{ tab }}
 		</div>
 	</div>
-	<div class="ipa-tabs__content" ng-transclude></div>
+	<div ng-class="{'ipa-tabs--border-less': borderLess }" class="ipa-tabs__content {{containerClass}}" ng-transclude></div>
 </div>

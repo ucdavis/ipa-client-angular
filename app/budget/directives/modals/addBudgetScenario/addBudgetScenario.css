@@ -1,12 +1,24 @@
+.add-budget-scenario {
+	padding-top: 15px;
+}
+
+.add-budget-scenario__dropdown {
+	width: 100% !important;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+.add-budget-scenario__dropdown-label {
+	padding-right: 5px;
+	text-decoration: none;
+}
+
+/* Need to rewrite non BEM CSS */
 .add-budget-scenario .btn-scenario-dropdown {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-.add-budget-scenario .btn-scenario-dropdown-label {
-	padding-right: 5px;
-	text-decoration: none;
 }
 
 .add-budget-scenario .dropdown-menu {

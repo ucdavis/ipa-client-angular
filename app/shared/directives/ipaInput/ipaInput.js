@@ -1,4 +1,4 @@
-sharedApp.directive("ipaInput", this.ipaInput = function () {
+sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 	return {
 		restrict: 'E',
 		templateUrl: 'ipaInput.html',
@@ -6,18 +6,26 @@ sharedApp.directive("ipaInput", this.ipaInput = function () {
 		scope: {
 			onUpdate: '&?', // If set, this callback function will be triggered 500ms after changes stop
 			value: '=',
-			readOnly: '=?',
-			placeHolder: '<?'
+			readOnly: '=?', // Boolean
+			placeHolder: '<?', // Default text when empty
+			updateDelay: '<?', // If an update function has been specified it will default to 500ms delay, can override that here
+			mode: '<?' // Options are 'number' (only allow characters 0-9)
 		},
 		link: function(scope, element, attrs) {
-			element.unbind("keydown keyup");
+			// Main method triggered by template, handles filtering/update callback
+			scope.updateInput = function() {
+				scope.applyUpdate();
+			};
 
-			element.bind("keydown keyup", function (event) {
+			// Triggers the update function with default 500ms delay, or uses provided delay override
+			scope.applyUpdate = function() {
 				if (angular.isUndefined(scope.onUpdate)) { return; }
 
-				clearTimeout(scope.timeout);
-				scope.timeout = setTimeout(scope.onUpdate, 500, null, true);
-			});
+				scope.delay = scope.updateDelay || 1000;
+				$timeout.cancel(scope.timeOut);
+
+				scope.timeOut = $timeout(scope.onUpdate, scope.delay);
+			};
 		}
 	};
 });

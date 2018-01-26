@@ -198,3 +198,10 @@ function toCurrency(number) {
 
 	return currency;
 }
+
+function setCharAt(str, index, chr) {
+	// If index is out of bounds, do nothing
+	if (index > str.length - 1) { return str; }
+
+	return str.substr(0,index) + chr + str.substr(index + 1);
+}

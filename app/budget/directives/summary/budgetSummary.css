@@ -1,0 +1,43 @@
+.budget-summary {
+	widows: 100%;
+	align-self: center;
+}
+
+.budget-summary .cost-column {
+	width: 15%;
+}
+
+
+.budget-summary .table thead {
+	border-bottom: 1px solid #E5E5E5;
+}
+
+.budget-summary .table thead tr th {
+	font-weight: bold;
+}
+
+.budget-summary .budget-summary-title {
+	width: 35%;
+}
+
+.budget-summary .sum-total {
+	text-align: right;
+	vertical-align: middle;
+}
+
+.budget-summary .budget-summary-title button {
+	margin-left: 10px;
+}
+
+.budget-summary .table > tbody > tr > td, .table > tfoot > tr > td {
+	border-top: unset;
+}
+
+.budget-summary .total-balance thead{
+	border-top: 1px solid #E5E5E5 !important;
+	border-bottom: unset;
+}
+
+.budget-summary table {
+	font-size: 12px;
+}

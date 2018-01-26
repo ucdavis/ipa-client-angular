@@ -31,6 +31,13 @@
 	padding-left: 5px;
 }
 
+.ipa-button__content--small {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
 .ipa-button__content--wide {
 	width: 100%;
 	display: flex;

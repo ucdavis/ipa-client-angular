@@ -1,0 +1,45 @@
+<div class="budget-nav">
+	<div class="budget-nav__nav-container">
+		<div class="budget-nav__nav-item" ng-click="setRoute('Course Costs')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Course Costs' }">
+			Course Costs
+		</div>
+		<div class="budget-nav__nav-item" ng-click="setRoute('Instructor Costs')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Instructor Costs' }">
+			Instructor Costs
+		</div>
+		<div class="budget-nav__nav-item" ng-click="setRoute('Line Items')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Line Items' }">
+			Line Items
+		</div>
+		<div class="budget-nav__nav-item" ng-click="setRoute('Summary')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Summary' }">
+			Summary
+		</div>
+	</div>
+
+	<div class="budget-nav__side-bar">
+		<div class="budget-nav__line-item-tools" ng-if="selectedSection == 'Line Items'">
+			<div class="budget-nav__tool">
+				<ipa-button
+					icon-class="'glyphicon glyphicon-trash'"
+					size="'small'"
+					is-disabled="selectedLineItems.length == 0"
+					disabled-tooltip-message="'No line items selected'"
+					on-click="deleteLineItems()"
+					tooltip-message="'Delete line items'"
+					confirm-message="'Are you sure you want to remove the selected line items?'">
+				</ipa-button>
+			</div>
+			<div class="budget-nav__tool">
+				<ipa-button
+					icon-class="'glyphicon glyphicon-plus'"
+					size="'small'"
+					on-click="openAddLineItemModal()"
+					tooltip-message="'Add line item'">
+				</ipa-button>
+			</div>
+		</div>
+		<div class="budget-nav__total-container">
+			<div class="budget-nav__total">
+				Balance: {{ toCurrency(selectedBudgetScenario.totalCost) }}
+			</div>
+		</div>
+	</div>
+</div>

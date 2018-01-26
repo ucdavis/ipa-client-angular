@@ -1,0 +1,20 @@
+<div class="instructor-cost-input">
+	<div>
+		<input
+			uib-tooltip="{{inputSource}}" tooltip-placement="top"
+			class="inline-edit"
+			type="number"
+			ng-model="inputValue"
+			auto-input
+			on-enter="updateSectionGroupCost(sectionGroupCost)"
+			on-blur="updateSectionGroupCost(sectionGroupCost)">
+	</div>
+	<div ng-if="inputSource == 'course'">
+		<ipa-button
+			button-text="''"
+			color="'light'"
+			icon-class="'entypo entypo-ccw'"
+			on-click="removeInstructorCost()">
+		</ipa-button>
+	</div>
+</div>

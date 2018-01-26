@@ -1,0 +1,69 @@
+.instructor-costs__table {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.instructor-costs__table-header {
+	width: 10%;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ddd;
+}
+
+.instructor-costs__course-title {
+	padding-top: 15px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+}
+
+.instructor-costs__table-cell {
+	background-color: #f8f8f8;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.instructor-costs__table-cell-total {
+	padding-right: 20px;
+}
+
+.instructor-costs__total-container {
+	width: 100%;
+	background-color: #f8f8f8;
+	height: 53px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.instructor-costs__instructor-container {
+	padding-left: 30px;
+}
+
+.instructor-costs__cost-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.instructor-costs__remove-assignment-ui {
+	margin-left: 5px;
+}
+
+.instructor-costs__cell-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.instructor-costs__table-cell-sequence {
+	padding-left: 20px;
+}
+
+.instructor-costs__sequence-container {
+	width: 100%;
+	background-color: #f8f8f8;
+	height: 53px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

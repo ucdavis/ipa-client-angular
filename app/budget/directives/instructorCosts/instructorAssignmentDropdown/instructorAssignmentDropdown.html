@@ -1,0 +1,19 @@
+<div class="instructor-assignment-dropdown">
+	<ipa-dropdown
+		ng-show="mode == 'originalInstructor'"
+		expanded="sectionGroupCost.expanded"
+		header-text="'Select an instructor'"
+		button-text="sectionGroupCost.originalInstructor.fullName || 'Assign instructor'"
+		items="instructors"
+		select-item="setInstructor(item)">
+	</ipa-dropdown>
+	<ipa-dropdown
+		ng-show="mode == 'instructor'"
+		expanded="sectionGroupCost.expanded"
+		header-text="'Select an instructor'"
+		button-text="sectionGroupCost.instructor.fullName || 'Assign instructor'"
+		items="instructors"
+		select-item="setInstructor(item)">
+	</ipa-dropdown>
+
+</div>

@@ -68,91 +68,17 @@ budgetApp.service('budgetSelectors', function () {
 		) {
 			var selectedBudgetScenario = budgetScenarios.list[ui.selectedBudgetScenarioId];
 
-			// selectedBudgetScenarioId refers to a scenario that no longer exists
-			// We will attempt to automatically select another scenario to be 'active'
+/*
 			if (selectedBudgetScenario == null) {
-				if (budgetScenarios.ids.length > 0) {
-					// Pick the first available
-					var budgetScenarioId = budgetScenarios.ids[0];
-					selectedBudgetScenario = budgetScenarios.list[budgetScenarioId];
-				} else {
-					// There are no scenarios, so there cannot be an active scenario
-					return null;
-				}
+				return {};
 			}
 
-			// Set main view UI states
-			selectedBudgetScenario.isLineItemOpen = ui.isLineItemOpen;
-			selectedBudgetScenario.isCourseCostOpen = ui.isCourseCostOpen;
-
-			// Add lineItems
-			selectedBudgetScenario.lineItems = [];
-
-			lineItems.ids.forEach( function (lineItemId) {
-				var lineItem = lineItems.list[lineItemId];
-
-				// Ensure lineItem belongs to selected budget scenario
-				if (lineItem.budgetScenarioId != selectedBudgetScenario.id) {
-					return;
-				}
-
-				// Set lineItemComments
-				lineItem.comments = [];
-
-				lineItemComments.ids.forEach(function(commentId) {
-					var comment = lineItemComments.list[commentId];
-
-					if (comment.lineItemId == lineItem.id) {
-						lineItem.comments.push(comment);
-					}
-				});
-
-				// Sort sectionGroupCostComments
-				var reverseOrder = true;
-				lineItem.comments =_array_sortByProperty(lineItem.comments, "lastModifiedOn", reverseOrder);
-
-				// Add lineItemCategory description
-				var lineItemCategoryDescription = lineItemCategories.list[lineItem.lineItemCategoryId].description;
-				lineItem.lineItemCategoryDescription = lineItemCategoryDescription;
-
-				// Setting UI state for line item detail view
-				lineItem.isDetailViewOpen = ui.lineItemDetails[lineItem.id].isDetailViewOpen;
-				lineItem.displayTypeInput = ui.lineItemDetails[lineItem.id].displayTypeInput;
-				lineItem.displayAmountInput = ui.lineItemDetails[lineItem.id].displayAmountInput;
-				lineItem.displayNotesInput = ui.lineItemDetails[lineItem.id].displayNotesInput;
-				lineItem.displayDescriptionInput = ui.lineItemDetails[lineItem.id].displayDescriptionInput;
-
-				selectedBudgetScenario.lineItems.push(lineItem);
-				if (ui.openLineItems.indexOf(lineItem.id) > -1) {
-					lineItem.isDetailViewOpen = true;
-				}
-
-				// Set 'lastModifiedBy'
-				// Expected formats are 'system' or 'user:bobsmith'
-				// Will convert 'user:bobsmith' to 'Smith, Bob'
-				if (lineItem.lastModifiedBy) {
-					var split = lineItem.lastModifiedBy.split(":");
-					if (split.length > 0 && split[0] == "user") {
-						var loginId = split[1];
-
-						users.ids.forEach(function(userId) {
-							var user = users.list[userId];
-							if (user.loginId == loginId) {
-								lineItem.lastModifiedBy = user.firstName + " " + user.lastName;
-							}
-						});
-					}
-				}
-			});
-
-			// Add sectionGroupCosts (for selected termCode)
 			selectedBudgetScenario.selectedTerm = ui.selectedTerm;
-			selectedBudgetScenario.courses = []; // Will hold sectionGroupCosts, grouped by subj/course number
-			selectedBudgetScenario.allCourses = []; // Will hold sectionGroupCosts, grouped by subj/course number
+			selectedBudgetScenario.courses = []; // Will hold sectionGroups, grouped by subj/course number
+			selectedBudgetScenario.allCourses = []; // Will hold sectionGroups, grouped by subj/course number
 
 			var addedAllCoursesHash = {}; // Will hold the index of a given course in courses, based on subj/course number key
 			var addedCoursesHash = {};
-			selectedBudgetScenario.terms = [];
 			selectedBudgetScenario.termDescriptions = {
 				'05': 'Summer Session 1',
 				'06': 'Summer Special Session',
@@ -167,6 +93,12 @@ budgetApp.service('budgetSelectors', function () {
 
 			sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
 				var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+				var shortTerm = sectionGroupCost.termCode.slice(-2);
+
+				// Do not consider sectionGroupCost if term isn't active on the budgetScenario
+				if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) {
+					return;
+				}
 
 				// Ensure sectionGroupCost belongs to selected budget scenario
 				if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) {
@@ -175,11 +107,6 @@ budgetApp.service('budgetSelectors', function () {
 
 				var termCode = sectionGroupCost.termCode;
 				var term = termCode.slice(-2);
-
-
-				if (selectedBudgetScenario.terms.indexOf(term) == -1) {
-					selectedBudgetScenario.terms.push(term);
-				}
 
 				// Determine if a course for this sectionGroup has been made
 				// Course will hold all sectionGroups with the same subj/course number
@@ -245,6 +172,7 @@ budgetApp.service('budgetSelectors', function () {
 
 				// Use budget specific cost if instructor is a lecturer
 				var instructor = instructors.list[sectionGroupCost.instructorId];
+				sectionGroupCost.instructorCostOverrides = {};
 
 				if (instructor) {
 					var instructorCost = instructorCosts.list[instructor.instructorCostId];
@@ -252,16 +180,19 @@ budgetApp.service('budgetSelectors', function () {
 
 				if (instructorCost && instructorCost.lecturer) {
 					instructorCostSubTotal = budget.lecturerCost;
+					sectionGroupCost.instructorCostOverrides.lecturerCost = budget.lecturerCost;
 				}
 
 				// Use instructor specific override for instructor cost
 				if (sectionGroupCost.instructorId != null && instructorCost && instructorCost.cost) {
 					instructorCostSubTotal = instructorCost.cost;
+					sectionGroupCost.instructorCostOverrides.instructorCost = instructorCost.cost;
 				}
 
 				// Use sectionGroupCost override for instructor cost
 				if (sectionGroupCost.instructorCost != null) {
 					instructorCostSubTotal = sectionGroupCost.instructorCost;
+					sectionGroupCost.instructorCostOverrides.sectionGroupCost = sectionGroupCost.instructorCost;
 				}
 
 				// Set 'actual instructor cost'
@@ -433,22 +364,24 @@ budgetApp.service('budgetSelectors', function () {
 			// Store all line item costs for graph calculations
 			var rawLineItemCosts = 0;
 			// Calculate raw line items
-			selectedBudgetScenario.lineItems.forEach(function(lineItem) {
-				var index = selectedBudgetScenario.summary.lineItemIndexHash[lineItem.lineItemCategoryId];
-				var lineItemCategorySummary = selectedBudgetScenario.summary.lineItems.categories[index];
-				lineItemCategorySummary.raw += parseFloat(lineItem.amount);
-				lineItemCategorySummary.display = toCurrency(lineItemCategorySummary.raw);
-				selectedBudgetScenario.summary.lineItems.total += parseFloat(lineItem.amount);
+			if (selectedBudgetScenario.lineItems) {
+				selectedBudgetScenario.lineItems.forEach(function(lineItem) {
+					var index = selectedBudgetScenario.summary.lineItemIndexHash[lineItem.lineItemCategoryId];
+					var lineItemCategorySummary = selectedBudgetScenario.summary.lineItems.categories[index];
+					lineItemCategorySummary.raw += parseFloat(lineItem.amount);
+					lineItemCategorySummary.display = toCurrency(lineItemCategorySummary.raw);
+					selectedBudgetScenario.summary.lineItems.total += parseFloat(lineItem.amount);
 
-				lineItem.isSelected = ui.selectedLineItems.indexOf(lineItem.id) > -1;
+					lineItem.isSelected = ui.selectedLineItems.indexOf(lineItem.id) > -1;
 
-				// Calculate line item costs
-				if (lineItem.amount < 0) {
-					rawLineItemCosts += parseFloat(Math.abs(lineItem.amount));
-				}
+					// Calculate line item costs
+					if (lineItem.amount < 0) {
+						rawLineItemCosts += parseFloat(Math.abs(lineItem.amount));
+					}
 
-				lineItem.amountDisplay = toCurrency(lineItem.amount);
-			});
+					lineItem.amountDisplay = toCurrency(lineItem.amount);
+				});
+			}
 
 			// Hash no longer needed
 			delete selectedBudgetScenario.summary.lineItemIndexHash;
@@ -494,7 +427,7 @@ budgetApp.service('budgetSelectors', function () {
 			// All calculations are now complete, prepare totals for display
 			selectedBudgetScenario.summary.lineItems.total = toCurrency(selectedBudgetScenario.summary.lineItems.total);
 			selectedBudgetScenario.summary.courseCosts.total = toCurrency(selectedBudgetScenario.summary.courseCosts.total);
-
+*/
 			return selectedBudgetScenario;
 		}
 	};
