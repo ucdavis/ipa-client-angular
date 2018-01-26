@@ -526,6 +526,12 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						}
 					});
 					return ui;
+				case DELETE_LINE_ITEM:
+					var index = ui.selectedLineItems.indexOf(action.payload.lineItemId);
+					if (index > -1) {
+						ui.selectedLineItems.splice(index, 1);
+					}
+					return ui;
 				case OPEN_ADD_COURSE_COMMENT_MODAL:
 					ui.courseCommentsModal.isOpen = true;
 					ui.courseCommentsModal.sectionGroupCost = action.payload.course.sectionGroupCosts[0];
