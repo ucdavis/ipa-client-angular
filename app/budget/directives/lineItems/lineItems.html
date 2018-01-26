@@ -41,7 +41,7 @@
 					<div class="line-items__table-container--checkbox">
 						<ipa-checkbox
 							style="'muted'"
-							is-checked="lineItem.isSelected"
+							is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
 							click-action="selectLineItem(lineItem)">
 						</ipa-checkbox>
 					</div>
