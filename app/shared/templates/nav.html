@@ -129,7 +129,7 @@
 				</a>
 			</li>
 
-			<li ng-class="{ 'active': currentBaseHref == 'budget' }" ng-if="userHasRoles(['academicPlanner','reviewer']) && isBudgetVisible()">
+			<li ng-class="{ 'active': currentBaseHref == 'budget' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
 				<a ng-href="/budget/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-chart-pie"></i>
 					<span class="title">Budget</span>
