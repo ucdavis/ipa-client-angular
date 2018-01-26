@@ -30,7 +30,7 @@ BudgetCtrl.getPayload = function (authService, $route, $window, budgetActions) {
 		budgetActions.getInitialState(
 			$route.current.params.workgroupId,
 			$route.current.params.year,
-			localStorage.getItem('selectedBudgetScenarioId'),
+			parseInt(localStorage.getItem('selectedBudgetScenarioId')),
 			localStorage.getItem('selectedTerm'));
 	});
 };
