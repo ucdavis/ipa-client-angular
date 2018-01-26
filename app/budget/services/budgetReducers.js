@@ -419,7 +419,6 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						isAddBudgetScenarioModalOpen: false,
 						isAddLineItemModalOpen: false,
 						isBudgetConfigModalOpen: false,
-						isSupportCostModalOpen: false,
 						isLineItemOpen: false,
 						isCourseCostOpen: false,
 						openLineItems: [],
@@ -526,9 +525,6 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 							ui.selectedLineItems.splice(index, 1);
 						}
 					});
-					return ui;
-				case TOGGLE_SUPPORT_COST_MODAL:
-					ui.isSupportCostModalOpen = ! ui.isSupportCostModalOpen;
 					return ui;
 				case OPEN_ADD_COURSE_COMMENT_MODAL:
 					ui.courseCommentsModal.isOpen = true;

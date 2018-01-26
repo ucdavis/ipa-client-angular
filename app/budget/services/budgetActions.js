@@ -307,14 +307,6 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			budgetReducers.reduce(action);
 		},
-		toggleSupportCostModal: function() {
-			var action = {
-				type: TOGGLE_SUPPORT_COST_MODAL,
-				payload: {}
-			};
-
-			budgetReducers.reduce(action);
-		},
 		selectBudgetScenario: function(budgetScenarioId) {
 			localStorage.setItem('selectedBudgetScenarioId', budgetScenarioId);
 
