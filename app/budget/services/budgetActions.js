@@ -527,7 +527,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				var instructor = budgetReducers._state.instructors.list[instructorId];
 				var instructorCost = budgetReducers._state.instructorCosts.list[instructor.instructorCostId];
 
-				if (instructorCost.cost == false || instructorCost.cost == null) {
+				if ( !(instructorCost) || !(instructorCost.cost) ) {
 					return;
 				}
 
