@@ -159,7 +159,7 @@ budgetApp.factory("budgetService", this.budgetService = function($http, $q, $win
 		deleteLineItems: function(budgetScenario, lineItemIds) {
 			var deferred = $q.defer();
 
-			$http.delete(serverRoot + "/api/budgetView/budgetScenarios/" + budgetScenario.id, lineItems, { withCredentials: true })
+			$http.put(serverRoot + "/api/budgetView/budgetScenarios/" + budgetScenario.id + "/lineItems", lineItemIds, { withCredentials: true })
 			.success(function(results) {
 				deferred.resolve(results);
 			})

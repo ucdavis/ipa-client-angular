@@ -425,7 +425,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						selectedLineItems: [],
 						lineItemDetails: {},
 						sectionGroupCostDetails: {},
-						selectedBudgetScenarioId: action.selectedBudgetScenarioId,
+						selectedBudgetScenarioId: parseInt(action.selectedBudgetScenarioId),
 						selectedTerm: action.selectedTerm,
 						workgroupId: action.workgroupId,
 						year: action.year
@@ -565,7 +565,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					};
 					return ui;
 				case SELECT_BUDGET_SCENARIO:
-					ui.selectedBudgetScenarioId = action.payload.budgetScenarioId;
+					ui.selectedBudgetScenarioId = parseInt(action.payload.budgetScenarioId);
 					return ui;
 				case DELETE_BUDGET_SCENARIO:
 					if (ui.selectedBudgetScenarioId == action.payload.budgetScenarioId) {

@@ -147,6 +147,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		deleteLineItem: function(lineItem) {
+			var self = this;
+
 			budgetService.deleteLineItem(lineItem).then(function (lineItemId) {
 				var action = {
 					type: DELETE_LINE_ITEM,
@@ -356,16 +358,19 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		deleteLineItems: function(budgetScenario, lineItemIds) {
+			var self = this;
+
 			budgetService.deleteLineItems(budgetScenario, lineItemIds).then(function (results) {
-				$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
+				$rootScope.$emit('toast', { message: "Deleted line items", type: "SUCCESS" });
 				budgetReducers.reduce({
 					type: DELETE_LINE_ITEMS,
 					payload: {
 						lineItemIds: lineItemIds
 					}
 				});
+				self.calculateScenarioLineItems();
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not delete line items.", type: "ERROR" });
 			});
 		},
 		calculateSelectedScenario: function() {
