@@ -119,12 +119,14 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case INIT_STATE:
 					sectionGroupCosts = {
 						ids: [],
-						list: []
+						list: [],
+						bySectionGroupId: {}
 					};
 
 					action.payload.sectionGroupCosts.forEach( function(sectionGroupCost) {
 						sectionGroupCosts.ids.push(sectionGroupCost.id);
 						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
+						sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] = sectionGroupCost;
 					});
 					return sectionGroupCosts;
 				case CREATE_BUDGET_SCENARIO:
