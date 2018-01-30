@@ -14,12 +14,13 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 				budgetActions.selectTerm(activeTermTab);
 			};
 
-			scope.updateSectionGroupCost = function(sectionGroupCost) {
-				budgetActions.updateSectionGroupCost(sectionGroupCost);
+			scope.overrideSectionGroup = function(sectionGroup, property) {
+				budgetActions.overrideSectionGroup(sectionGroup, property);
 			};
 
-			scope.openCourseComments = function(course) {
-				budgetActions.openAddCourseCommentsModal(course);
+			// Reverts the specified override value
+			scope.revertOverride = function(sectionGroupCost, property) {
+				// TODO
 			};
 
 			scope.toCurrency = function (value) {

@@ -34,7 +34,13 @@
 					</td>
 					<!-- Enrollment -->
 					<td class="course-costs__table-cell">
-						{{ sectionGroup.totalSeats }}
+						<div class="course-cost__number-input">
+							<ipa-input
+								mode="'number'"
+								value="sectionGroup.overrideTotalSeats"
+								on-update="overrideSectionGroup(sectionGroup, 'seats')">
+							</ipa-input>
+						</div>
 					</td>
 					<!-- Section Count -->
 					<td class="course-costs__table-cell">

@@ -41,7 +41,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			if (property == "seats") {
 				oldValue = sectionGroup.totalSeats;
 				newValue = sectionGroup.overrideTotalSeats;
-				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.totalSeats : null;
+				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.enrollment : null;
 				newSectionGroupCost.enrollment = sectionGroup.overrideTotalSeats;
 			}
 
@@ -51,21 +51,30 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			if (isOverriden) {
 				// Create or update sectionGroupCost
 				if (sectionGroup.sectionGroupCost) {
-					budgetService.updateSectionGroupCost(sectionGroupCost);
+					sectionGroup.sectionGroupCost = this.applyOverrideToProperty(sectionGroup.sectionGroupCost, newValue, property);
+					this.updateSectionGroupCost(sectionGroup.sectionGroupCost);
 				} else {
-					budgetService.createSectionGroupCost(newSectionGroupCost);
+					newSectionGroupCost = this.applyOverrideToProperty(newSectionGroupCost, newValue, property);
+					this.createSectionGroupCost(newSectionGroupCost);
 				}
 			}
 
 			if (isOverriden == false && wasOverriden) {
 				// Update sectionGroupCost
-				budgetService.updateSectionGroupCost(sectionGroupCost);
+				this.updateSectionGroupCost(sectionGroup.sectionGroupCost);
 			}
 
 			if (isOverriden == false && wasOverriden == false) {
 				// Do nothing
 				return;
 			}
+		},
+		applyOverrideToProperty: function (sectionGroupCost, value, property) {
+			if (property == "seats") {
+				sectionGroupCost.enrollment = value;
+			}
+
+			return sectionGroupCost;
 		},
 		updateBudgetScenario: function (budgetScenario) {
 			var self = this;
@@ -205,6 +214,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		updateSectionGroupCost: function (sectionGroupCost) {
+			var self = this;
+
 			budgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
 				var action = {
 					type: UPDATE_SECTION_GROUP_COST,
@@ -214,6 +225,26 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 				$rootScope.$emit('toast', { message: "Updated course", type: "SUCCESS" });
 				budgetReducers.reduce(action);
+				self.calculateSectionGroups();
+				self.calculateTotalCost();
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
+			});
+		},
+		createSectionGroupCost: function (sectionGroupCost) {
+			var self = this;
+
+			budgetService.createSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
+				var action = {
+					type: CREATE_SECTION_GROUP_COST,
+					payload: {
+						sectionGroupCost: newSectionGroupCost
+					}
+				};
+				$rootScope.$emit('toast', { message: "Updated course", type: "SUCCESS" });
+				budgetReducers.reduce(action);
+				self.calculateSectionGroups();
+				self.calculateTotalCost();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
 			});
@@ -531,7 +562,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				sectionGroupCostIds.forEach(function(sectionGroupCostId) {
 					var sectionGroupCost = budgetReducers._state.sectionGroupCosts.list[sectionGroupCostId];
 
-					if (sectionGroupCost.budgetScenarioId == sectionGroup.budgetScenarioId) {
+					if (sectionGroupCost.budgetScenarioId == selectedBudgetScenario.id) {
 						sectionGroup.sectionGroupCost = sectionGroupCost;
 					}
 				});
@@ -646,29 +677,29 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 		},
 		calculateSectionGroupOverrides: function(sectionGroup) {
 			// Generate totalSeats override
-			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.totalSeats) {
-				sectionGroup.overrideTotalSeats = angular.copy(sectionGroupCost.totalSeats);
+			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.enrollment) {
+				sectionGroup.overrideTotalSeats = angular.copy(sectionGroup.sectionGroupCost.enrollment);
 			} else {
 				sectionGroup.overrideTotalSeats = angular.copy(sectionGroup.totalSeats);
 			}
 
 			// Generate sections override
 			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.sectionCount) {
-				sectionGroup.overrideSectionCount = angular.copy(sectionGroupCost.sectionCount);
+				sectionGroup.overrideSectionCount = angular.copy(sectionGroup.sectionGroupCost.sectionCount);
 			} else {
 				sectionGroup.overrideSectionCount = angular.copy(sectionGroup.sectionCount);
 			}
 
 			// Generate TAs override
 			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.taCount) {
-				sectionGroup.overrideTeachingAssistantAppointments = angular.copy(sectionGroupCost.taCount);
+				sectionGroup.overrideTeachingAssistantAppointments = angular.copy(sectionGroup.sectionGroupCost.taCount);
 			} else {
 				sectionGroup.overrideTeachingAssistantAppointments = angular.copy(sectionGroup.teachingAssistantAppointments);
 			}
 
 			// Generate Readers override
 			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.readerCount) {
-				sectionGroup.overrideReaderAppointments = angular.copy(sectionGroupCost.readerCount);
+				sectionGroup.overrideReaderAppointments = angular.copy(sectionGroup.sectionGroupCost.readerCount);
 			} else {
 				sectionGroup.overrideReaderAppointments = angular.copy(sectionGroup.readerAppointments);
 			}
