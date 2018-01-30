@@ -482,7 +482,9 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					return;
 				}
 
-				self.calculateSectionGroupCosts(sectionGroup);
+				self.calculateSectionGroupFinancialCosts(sectionGroup);
+
+				sectionGroup.sectionGroupCost = budgetReducers._state.sectionGroupCosts.bySectionGroupId[sectionGroup.id];
 
 				// Generate container if one does not already exist
 				var container = self.calculateSectionGroupContainer(sectionGroup, calculatedSectionGroups.byTerm[shortTerm]);
@@ -503,7 +505,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			this.calculateTotalCost();
 		},
 		// Calculate sectionGroup costs
-		calculateSectionGroupCosts: function(sectionGroup) {
+		calculateSectionGroupFinancialCosts: function(sectionGroup) {
 			var budget = budgetReducers._state.budget;
 
 			// Course Costs
