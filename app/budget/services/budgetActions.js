@@ -27,6 +27,46 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
 			});
 		},
+		// Compares sectionGroup values, the updated override value, and the sectionGroupCost to determine what action to take.
+		// Will potentially create, delete, or update a sectionGroupCost
+		overrideSectionGroup: function (sectionGroup, property) {
+			var oldValue = null;
+			var newValue = null;
+			var savedOverride = null;
+			var newSectionGroupCost = {
+				sectionGroupId: sectionGroup.id,
+				budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId
+			};
+
+			if (property == "seats") {
+				oldValue = sectionGroup.totalSeats;
+				newValue = sectionGroup.overrideTotalSeats;
+				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.totalSeats : null;
+				newSectionGroupCost.enrollment = sectionGroup.overrideTotalSeats;
+			}
+
+			var isOverriden = oldValue != newValue;
+			var wasOverriden = !!(savedOverride);
+
+			if (isOverriden) {
+				// Create or update sectionGroupCost
+				if (sectionGroup.sectionGroupCost) {
+					budgetService.updateSectionGroupCost(sectionGroupCost);
+				} else {
+					budgetService.createSectionGroupCost(newSectionGroupCost);
+				}
+			}
+
+			if (isOverriden == false && wasOverriden) {
+				// Update sectionGroupCost
+				budgetService.updateSectionGroupCost(sectionGroupCost);
+			}
+
+			if (isOverride == false && wasOverriden == false) {
+				// Do nothing
+				return;
+			}
+		},
 		updateBudgetScenario: function (budgetScenario) {
 			var self = this;
 
@@ -486,6 +526,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				sectionGroup.sectionGroupCost = budgetReducers._state.sectionGroupCosts.bySectionGroupId[sectionGroup.id];
 
+				self.calculateSectionGroupOverrides(sectionGroup);
+
 				// Generate container if one does not already exist
 				var container = self.calculateSectionGroupContainer(sectionGroup, calculatedSectionGroups.byTerm[shortTerm]);
 				container.sectionGroups.push(sectionGroup);
@@ -591,6 +633,35 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			}
 
 			return container;
+		},
+		calculateSectionGroupOverrides: function(sectionGroup) {
+			// Generate totalSeats override
+			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.totalSeats) {
+				sectionGroup.overrideTotalSeats = angular.copy(sectionGroupCost.totalSeats);
+			} else {
+				sectionGroup.overrideTotalSeats = angular.copy(sectionGroup.totalSeats);
+			}
+
+			// Generate sections override
+			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.sectionCount) {
+				sectionGroup.overrideSectionCount = angular.copy(sectionGroupCost.sectionCount);
+			} else {
+				sectionGroup.overrideSectionCount = angular.copy(sectionGroup.sectionCount);
+			}
+
+			// Generate TAs override
+			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.taCount) {
+				sectionGroup.overrideTeachingAssistantAppointments = angular.copy(sectionGroupCost.taCount);
+			} else {
+				sectionGroup.overrideTeachingAssistantAppointments = angular.copy(sectionGroup.teachingAssistantAppointments);
+			}
+
+			// Generate Readers override
+			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.readerCount) {
+				sectionGroup.overrideReaderAppointments = angular.copy(sectionGroupCost.readerCount);
+			} else {
+				sectionGroup.overrideReaderAppointments = angular.copy(sectionGroup.readerAppointments);
+			}
 		}
 	};
 });
