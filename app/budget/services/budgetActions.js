@@ -62,7 +62,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				budgetService.updateSectionGroupCost(sectionGroupCost);
 			}
 
-			if (isOverride == false && wasOverriden == false) {
+			if (isOverriden == false && wasOverriden == false) {
 				// Do nothing
 				return;
 			}
@@ -524,7 +524,17 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				self.calculateSectionGroupFinancialCosts(sectionGroup);
 
-				sectionGroup.sectionGroupCost = budgetReducers._state.sectionGroupCosts.bySectionGroupId[sectionGroup.id];
+				// Find the sectionGroupCost for this sectionGroupCost/Scenario combo
+				sectionGroup.sectionGroupCost = null;
+				var sectionGroupCostIds = budgetReducers._state.sectionGroupCosts.bySectionGroupId[sectionGroup.id] || [];
+
+				sectionGroupCostIds.forEach(function(sectionGroupCostId) {
+					var sectionGroupCost = budgetReducers._state.sectionGroupCosts.list[sectionGroupCostId];
+
+					if (sectionGroupCost.budgetScenarioId == sectionGroup.budgetScenarioId) {
+						sectionGroup.sectionGroupCost = sectionGroupCost;
+					}
+				});
 
 				self.calculateSectionGroupOverrides(sectionGroup);
 
