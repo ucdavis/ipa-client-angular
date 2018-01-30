@@ -44,11 +44,23 @@
 					</td>
 					<!-- Section Count -->
 					<td class="course-costs__table-cell">
-						{{ sectionGroup.sectionCount }}
+						<div class="course-cost__number-input">
+							<ipa-input
+								mode="'number'"
+								value="sectionGroup.overrideSectionCount"
+								on-update="overrideSectionGroup(sectionGroup, 'sectionCount')">
+							</ipa-input>
+						</div>
 					</td>
 					<!-- TA Count -->
 					<td class="course-costs__table-cell">
-						{{ sectionGroup.teachingAssistantAppointments || "0" }}
+						<div class="course-cost__number-input">
+							<ipa-input
+								mode="'number'"
+								value="sectionGroup.overrideTeachingAssistantAppointments"
+								on-update="overrideSectionGroup(sectionGroup, 'teachingAssistantAppointments')">
+							</ipa-input>
+						</div>
 					</td>
 					<!-- TA Cost -->
 					<td class="course-costs__table-cell">
@@ -56,7 +68,13 @@
 					</td>
 					<!-- Reader Count -->
 					<td class="course-costs__table-cell">
-						{{ sectionGroup.readerAppointments || "0" }}
+						<div class="course-cost__number-input">
+							<ipa-input
+								mode="'number'"
+								value="sectionGroup.overrideReaderAppointments"
+								on-update="overrideSectionGroup(sectionGroup, 'readerAppointments')">
+							</ipa-input>
+						</div>
 					</td>
 					<!-- Reader Cost -->
 					<td class="course-costs__table-cell">

@@ -146,6 +146,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						sectionGroupCosts.ids.push(sectionGroupCost.id);
 					}
 					sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
+					sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] = sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] || [];
+					sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId].push(sectionGroupCost.id);
 					return sectionGroupCosts;
 				default:
 					return sectionGroupCosts;

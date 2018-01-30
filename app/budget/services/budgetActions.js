@@ -33,6 +33,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			var oldValue = null;
 			var newValue = null;
 			var savedOverride = null;
+
 			var newSectionGroupCost = {
 				sectionGroupId: sectionGroup.id,
 				budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId
@@ -43,6 +44,27 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				newValue = sectionGroup.overrideTotalSeats;
 				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.enrollment : null;
 				newSectionGroupCost.enrollment = sectionGroup.overrideTotalSeats;
+			}
+
+			else if (property == "sectionCount") {
+				oldValue = sectionGroup.sectionCount;
+				newValue = sectionGroup.overrideSectionCount;
+				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.sectionCount : null;
+				newSectionGroupCost.sectionCount = sectionGroup.overrideSectionCount;
+			}
+
+			else if (property == "teachingAssistantAppointments") {
+				oldValue = sectionGroup.teachingAssistantAppointments;
+				newValue = sectionGroup.overrideTeachingAssistantAppointments;
+				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.taCount : null;
+				newSectionGroupCost.taCount = sectionGroup.overrideTeachingAssistantAppointments;
+			}
+
+			else if (property == "readerAppointments") {
+				oldValue = sectionGroup.readerAppointments;
+				newValue = sectionGroup.overrideReaderAppointments;
+				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.readerCount : null;
+				newSectionGroupCost.readerCount = sectionGroup.overrideReaderAppointments;
 			}
 
 			var isOverriden = oldValue != newValue;
@@ -72,6 +94,12 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 		applyOverrideToProperty: function (sectionGroupCost, value, property) {
 			if (property == "seats") {
 				sectionGroupCost.enrollment = value;
+			} else if (property == "sectionCount") {
+				sectionGroupCost.sectionCount = value;
+			} else if (property == "teachingAssistantAppointments") {
+				sectionGroupCost.taCount = value;
+			} else if (property == "readerAppointments") {
+				sectionGroupCost.readerCount = value;
 			}
 
 			return sectionGroupCost;
