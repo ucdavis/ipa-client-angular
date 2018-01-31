@@ -20,7 +20,7 @@
 					<th class="course-costs__table-header">Total Cost</th>
 				</tr>
 			</thead>
-			<tbody ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
+			<tbody class="course-costs__course-container" ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
 				<tr>
 					<td colspan="10" class="course-costs__course-title">
 						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
@@ -34,27 +34,39 @@
 					</td>
 					<!-- Enrollment -->
 					<td class="course-costs__table-cell">
-						<div class="course-cost__number-input">
-							<ipa-input
-								mode="'number'"
-								value="sectionGroup.overrideTotalSeats"
-								on-update="overrideSectionGroup(sectionGroup, 'seats')">
-							</ipa-input>
+						<div class="course-costs__edit-container">
+							<div class="course-costs__number-input">
+								<ipa-input
+									mode="'number'"
+									value="sectionGroup.overrideTotalSeats"
+									on-update="overrideSectionGroup(sectionGroup, 'seats')">
+								</ipa-input>
+							</div>
+							<div class="course-costs__revert-ui" ng-show="sectionGroup.totalSeats != sectionGroup.sectionGroupCost.enrollment">
+								<div class="glyphicon glyphicon-repeat">
+								</div>
+							</div>
 						</div>
 					</td>
 					<!-- Section Count -->
 					<td class="course-costs__table-cell">
-						<div class="course-cost__number-input">
-							<ipa-input
-								mode="'number'"
-								value="sectionGroup.overrideSectionCount"
-								on-update="overrideSectionGroup(sectionGroup, 'sectionCount')">
-							</ipa-input>
+						<div class="course-costs__edit-container">
+							<div class="course-costs__number-input">
+								<ipa-input
+									mode="'number'"
+									value="sectionGroup.overrideSectionCount"
+									on-update="overrideSectionGroup(sectionGroup, 'sectionCount')">
+								</ipa-input>
+							</div>
+							<div class="course-costs__revert-ui" ng-show="sectionGroup.sectionCount != sectionGroup.sectionGroupCost.sectionCount">
+								<div class="glyphicon glyphicon-repeat">
+								</div>
+							</div>
 						</div>
 					</td>
 					<!-- TA Count -->
 					<td class="course-costs__table-cell">
-						<div class="course-cost__number-input">
+						<div class="course-costs__number-input">
 							<ipa-input
 								mode="'number'"
 								value="sectionGroup.overrideTeachingAssistantAppointments"
@@ -68,7 +80,7 @@
 					</td>
 					<!-- Reader Count -->
 					<td class="course-costs__table-cell">
-						<div class="course-cost__number-input">
+						<div class="course-costs__number-input">
 							<ipa-input
 								mode="'number'"
 								value="sectionGroup.overrideReaderAppointments"
