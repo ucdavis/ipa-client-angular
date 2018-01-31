@@ -42,9 +42,9 @@
 									on-update="overrideSectionGroup(sectionGroup, 'seats')">
 								</ipa-input>
 							</div>
-							<div class="course-costs__revert-ui" ng-show="sectionGroup.totalSeats != sectionGroup.sectionGroupCost.enrollment">
-								<div class="glyphicon glyphicon-repeat">
-								</div>
+							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
+								ng-show="sectionGroup.sectionGroupCost.enrollment && sectionGroup.totalSeats != sectionGroup.sectionGroupCost.enrollment"
+								ng-click="revertOverride(sectionGroup, 'seats')">
 							</div>
 						</div>
 					</td>
@@ -58,20 +58,26 @@
 									on-update="overrideSectionGroup(sectionGroup, 'sectionCount')">
 								</ipa-input>
 							</div>
-							<div class="course-costs__revert-ui" ng-show="sectionGroup.sectionCount != sectionGroup.sectionGroupCost.sectionCount">
-								<div class="glyphicon glyphicon-repeat">
-								</div>
+							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
+								ng-show="sectionGroup.sectionGroupCost.sectionCount && sectionGroup.sectionCount != sectionGroup.sectionGroupCost.sectionCount"
+								ng-click="revertOverride(sectionGroup, 'sectionCount')">
 							</div>
 						</div>
 					</td>
 					<!-- TA Count -->
 					<td class="course-costs__table-cell">
-						<div class="course-costs__number-input">
-							<ipa-input
-								mode="'number'"
-								value="sectionGroup.overrideTeachingAssistantAppointments"
-								on-update="overrideSectionGroup(sectionGroup, 'teachingAssistantAppointments')">
-							</ipa-input>
+						<div class="course-costs__edit-container">
+							<div class="course-costs__number-input">
+								<ipa-input
+									mode="'number'"
+									value="sectionGroup.overrideTeachingAssistantAppointments"
+									on-update="overrideSectionGroup(sectionGroup, 'teachingAssistantAppointments')">
+								</ipa-input>
+							</div>
+							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
+								ng-show="sectionGroup.sectionGroupCost.taCount && sectionGroup.teachingAssistantAppointments != sectionGroup.sectionGroupCost.taCount"
+								ng-click="revertOverride(sectionGroup, 'teachingAssistantAppointments')">
+							</div>
 						</div>
 					</td>
 					<!-- TA Cost -->
@@ -80,12 +86,18 @@
 					</td>
 					<!-- Reader Count -->
 					<td class="course-costs__table-cell">
-						<div class="course-costs__number-input">
-							<ipa-input
-								mode="'number'"
-								value="sectionGroup.overrideReaderAppointments"
-								on-update="overrideSectionGroup(sectionGroup, 'readerAppointments')">
-							</ipa-input>
+						<div class="course-costs__edit-container">
+							<div class="course-costs__number-input">
+								<ipa-input
+									mode="'number'"
+									value="sectionGroup.overrideReaderAppointments"
+									on-update="overrideSectionGroup(sectionGroup, 'readerAppointments')">
+								</ipa-input>
+							</div>
+							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
+								ng-show="sectionGroup.sectionGroupCost.readerCount && sectionGroup.readerAppointments != sectionGroup.sectionGroupCost.readerCount"
+								ng-click="revertOverride(sectionGroup, 'readerAppointments')">
+							</div>
 						</div>
 					</td>
 					<!-- Reader Cost -->

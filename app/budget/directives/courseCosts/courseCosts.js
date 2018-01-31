@@ -19,8 +19,18 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 			};
 
 			// Reverts the specified override value
-			scope.revertOverride = function(sectionGroupCost, property) {
-				// TODO
+			scope.revertOverride = function(sectionGroup, property) {
+				if (property == "seats") {
+					sectionGroup.overrideTotalSeats = null;
+				} else if (property == "sectionCount") {
+					sectionGroup.overrideSectionCount = null;
+				} else if (property == "teachingAssistantAppointments") {
+					sectionGroup.overrideTeachingAssistantAppointments = null;
+				} else if (property == "readerAppointments") {
+					sectionGroup.overrideReaderAppointments = null;
+				}
+
+				budgetActions.overrideSectionGroup(sectionGroup, property);
 			};
 
 			scope.toCurrency = function (value) {

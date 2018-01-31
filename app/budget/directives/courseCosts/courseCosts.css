@@ -69,9 +69,7 @@
 .course-costs__revert-ui {
 	display: none;
 	margin-left: 10px;
-	padding-top: 5px;
-	padding-left: 5px;
-	padding-right: 5px;
+	padding: 5px;
 	border: 1px solid #ddd;
 	border-radius: 3px;
 	cursor: pointer;
