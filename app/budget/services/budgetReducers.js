@@ -465,10 +465,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 							};
 					});
 
-					// Set default initial selectedTerm
-					if (ui.selectedTerm == null && action.payload.sectionGroupCosts.length > 0) {
-						ui.selectedTerm = action.payload.sectionGroupCosts[0].termCode.slice(-2);
-					}
+
 
 					return ui;
 				case CALCULATE_SCENARIO_TERMS:
