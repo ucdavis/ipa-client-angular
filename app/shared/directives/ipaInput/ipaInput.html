@@ -1,5 +1,6 @@
 <input class="ipa-input"
 	ng-model="value"
+	ng-blur="triggerUpdate()"
 	placeholder="{{placeHolder}}"
 	ng-readonly="readOnly"
 	ng-keyup="updateInput()"
