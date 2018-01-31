@@ -213,13 +213,13 @@
 							</div>
 							<!-- List of shared activities -->
 							<ul ng-repeat="sharedActivityId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sharedActivityIds track by $index"
-								class="activity-group" ng-init="sharedActivity = view.state.activities.list[sharedActivityId];">
+								class="activity-group">
 								<li ng-show="activityMatchesFilters(sharedActivityId)" 
 									class="activity-item clickable" ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
 									ng-click="setSelectedActivity(sharedActivityId)">
-									<span>{{ sharedActivity.getCodeDescription() }}</span>
-									<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove shared {{ sharedActivity.getCodeDescription() }}"
-										tooltip-append-to-body="true" confirm-button="removeActivity(sharedActivity)" message="Are you sure you want to remove this {{ sharedActivity.getCodeDescription() }}"
+									<span>{{ view.state.activities.list[sharedActivityId].getCodeDescription() }}</span>
+									<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove shared {{ view.state.activities.list[sharedActivityId].getCodeDescription() }}"
+										tooltip-append-to-body="true" confirm-button="removeActivity(view.state.activities.list[sharedActivityId])" message="Are you sure you want to remove this {{ view.state.activities.list[sharedActivityId].getCodeDescription() }}"
 										yes="Delete" no="Cancel" placement="right"></i>
 								</li>
 
@@ -228,7 +228,7 @@
 								class="activity-item muted-activity"
 										uib-tooltip="Activity does not match filters"
 										tooltip-append-to-body="true">
-									<span>{{ sharedActivity.getCodeDescription() }}</span>
+									<span>{{ view.state.activities.list[sharedActivityId].getCodeDescription() }}</span>
 								</li>
 							</ul>
 
