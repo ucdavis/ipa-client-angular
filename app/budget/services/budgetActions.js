@@ -40,30 +40,31 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			};
 
 			if (property == "seats") {
-				oldValue = sectionGroup.totalSeats;
-				newValue = sectionGroup.overrideTotalSeats;
 				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.enrollment : null;
+				oldValue = savedOverride || sectionGroup.totalSeats;
+				newValue = sectionGroup.overrideTotalSeats;
+
 				newSectionGroupCost.enrollment = sectionGroup.overrideTotalSeats;
 			}
 
 			else if (property == "sectionCount") {
-				oldValue = sectionGroup.sectionCount;
-				newValue = sectionGroup.overrideSectionCount;
 				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.sectionCount : null;
+				oldValue = savedOverride || sectionGroup.sectionCount;
+				newValue = sectionGroup.overrideSectionCount;
 				newSectionGroupCost.sectionCount = sectionGroup.overrideSectionCount;
 			}
 
 			else if (property == "teachingAssistantAppointments") {
-				oldValue = sectionGroup.teachingAssistantAppointments;
-				newValue = sectionGroup.overrideTeachingAssistantAppointments;
 				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.taCount : null;
+				oldValue = savedOverride || sectionGroup.teachingAssistantAppointments;
+				newValue = sectionGroup.overrideTeachingAssistantAppointments;
 				newSectionGroupCost.taCount = sectionGroup.overrideTeachingAssistantAppointments;
 			}
 
 			else if (property == "readerAppointments") {
-				oldValue = sectionGroup.readerAppointments;
-				newValue = sectionGroup.overrideReaderAppointments;
 				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.readerCount : null;
+				oldValue = savedOverride || sectionGroup.readerAppointments;
+				newValue = sectionGroup.overrideReaderAppointments;
 				newSectionGroupCost.readerCount = sectionGroup.overrideReaderAppointments;
 			}
 
