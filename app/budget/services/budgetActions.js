@@ -652,15 +652,15 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			var budget = budgetReducers._state.budget;
 
 			// Course Costs
-			if (sectionGroup.readerAppointments == null || sectionGroup.readerAppointments == undefined) {
+			if (sectionGroup.overrideReaderAppointments == null || sectionGroup.overrideReaderAppointments == undefined) {
 				sectionGroup.readerCost = 0;
 			} else {
-				sectionGroup.readerCost = sectionGroup.readerAppointments * budget.readerCost;
+				sectionGroup.readerCost = sectionGroup.overrideReaderAppointments * budget.readerCost;
 			}
-			if (sectionGroup.teachingAssistantAppointments == null || sectionGroup.teachingAssistantAppointments == undefined) {
+			if (sectionGroup.overrideTeachingAssistantAppointments == null || sectionGroup.overrideTeachingAssistantAppointments == undefined) {
 				sectionGroup.taCost = 0;
 			} else {
-				sectionGroup.taCost = sectionGroup.teachingAssistantAppointments * budget.taCost;
+				sectionGroup.taCost = sectionGroup.overrideTeachingAssistantAppointments * budget.taCost;
 			}
 
 			sectionGroup.courseCostSubTotal = sectionGroup.taCost + sectionGroup.readerCost;
