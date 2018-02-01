@@ -48,7 +48,7 @@
 								message="Revert to schedule reader count of {{sectionGroup.totalSeats}}?"
 								yes="Update"
 								no="Cancel"
-								ng-show="sectionGroup.sectionGroupCost.enrollment && sectionGroup.totalSeats != sectionGroup.sectionGroupCost.enrollment">
+								ng-show="sectionGroup.sectionGroupCost.enrollment !== null && sectionGroup.totalSeats != sectionGroup.sectionGroupCost.enrollment">
 							</div>
 						</div>
 					</td>
@@ -68,7 +68,7 @@
 								message="Revert to schedule reader count of {{sectionGroup.sectionCount}}?"
 								yes="Update"
 								no="Cancel"
-								ng-show="sectionGroup.sectionGroupCost.sectionCount && sectionGroup.sectionCount != sectionGroup.sectionGroupCost.sectionCount">
+								ng-show="sectionGroup.sectionGroupCost.sectionCount !== null && sectionGroup.sectionCount != sectionGroup.sectionGroupCost.sectionCount">
 							</div>
 						</div>
 					</td>
@@ -88,7 +88,7 @@
 								message="Revert to schedule reader count of {{sectionGroup.teachingAssistantAppointments}}?"
 								yes="Update"
 								no="Cancel"
-								ng-show="sectionGroup.sectionGroupCost.taCount && sectionGroup.teachingAssistantAppointments != sectionGroup.sectionGroupCost.taCount">
+								ng-show="sectionGroup.sectionGroupCost.taCount !== null && sectionGroup.teachingAssistantAppointments != sectionGroup.sectionGroupCost.taCount">
 							</div>
 						</div>
 					</td>
@@ -112,7 +112,7 @@
 								message="Revert to schedule reader count of {{sectionGroup.readerAppointments}}?"
 								yes="Update"
 								no="Cancel"
-								ng-show="sectionGroup.sectionGroupCost.readerCount && sectionGroup.readerAppointments != sectionGroup.sectionGroupCost.readerCount">
+								ng-show="sectionGroup.sectionGroupCost.readerCount !== null && sectionGroup.readerAppointments != sectionGroup.sectionGroupCost.readerCount">
 							</div>
 						</div>
 					</td>

@@ -737,28 +737,28 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 		},
 		calculateSectionGroupOverrides: function(sectionGroup) {
 			// Generate totalSeats override
-			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.enrollment) {
+			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.enrollment !== null) {
 				sectionGroup.overrideTotalSeats = angular.copy(sectionGroup.sectionGroupCost.enrollment);
 			} else {
 				sectionGroup.overrideTotalSeats = angular.copy(sectionGroup.totalSeats);
 			}
 
 			// Generate sections override
-			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.sectionCount) {
+			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.sectionCount !== null) {
 				sectionGroup.overrideSectionCount = angular.copy(sectionGroup.sectionGroupCost.sectionCount);
 			} else {
 				sectionGroup.overrideSectionCount = angular.copy(sectionGroup.sectionCount);
 			}
 
 			// Generate TAs override
-			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.taCount) {
+			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.taCount !== null) {
 				sectionGroup.overrideTeachingAssistantAppointments = angular.copy(sectionGroup.sectionGroupCost.taCount);
 			} else {
 				sectionGroup.overrideTeachingAssistantAppointments = angular.copy(sectionGroup.teachingAssistantAppointments);
 			}
 
 			// Generate Readers override
-			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.readerCount) {
+			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.readerCount !== null) {
 				sectionGroup.overrideReaderAppointments = angular.copy(sectionGroup.sectionGroupCost.readerCount);
 			} else {
 				sectionGroup.overrideReaderAppointments = angular.copy(sectionGroup.readerAppointments);
