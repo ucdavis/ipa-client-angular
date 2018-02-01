@@ -14,6 +14,10 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 				budgetActions.selectTerm(activeTermTab);
 			};
 
+			scope.openAddCourseCommentsModal = function(sectionGroup) {
+				budgetActions.openAddCourseCommentsModal(sectionGroup);
+			};
+
 			scope.overrideSectionGroup = function(sectionGroup, property) {
 				budgetActions.overrideSectionGroup(sectionGroup, property);
 			};

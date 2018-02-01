@@ -295,21 +295,50 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not update costs.", type: "ERROR" });
 			});
 		},
+		// Will also create sectionGroupCost if it does not already exist.
+		createSectionGroupCostCommentFromSectionGroup: function (comment, sectionGroup, currentUserLoginId) {
+			var self = this;
+			var sectionGroupCost = sectionGroup.sectionGroupCost;
+
+			// Create sectionGroupCost if necessary
+			if (sectionGroupCost == false || sectionGroupCost == null) {
+				var sectionGroupCostDTO = {
+					sectionGroupId: sectionGroup.id,
+					budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId
+				};
+
+				budgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
+					budgetReducers.reduce({
+						type: CREATE_SECTION_GROUP_COST,
+						payload: {
+							sectionGroupCost: newSectionGroupCost
+						}
+					});
+					$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
+					self.createSectionGroupCostComment(comment, newSectionGroupCost, currentUserLoginId);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
+				});
+			} else {
+				self.createSectionGroupCostComment(comment, sectionGroupCost, currentUserLoginId);
+			}
+		},
 		createSectionGroupCostComment: function (comment, sectionGroupCost, currentUserLoginId) {
+			var self = this;
 			var sectionGroupCostComment = {};
 			sectionGroupCostComment.comment = comment;
 			sectionGroupCostComment.loginId = currentUserLoginId;
 			sectionGroupCostComment.sectionGroupCostId = parseInt(sectionGroupCost.id);
 
 			budgetService.createSectionGroupCostComment(sectionGroupCostComment).then(function (newSectionGroupCostComment) {
-				var action = {
+				budgetReducers.reduce({
 					type: CREATE_SECTION_GROUP_COST_COMMENT,
 					payload: {
 						sectionGroupCostComment: newSectionGroupCostComment
 					}
-				};
+				});
 				$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
-				budgetReducers.reduce(action);
+				self.calculateSectionGroups();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 			});
@@ -382,11 +411,11 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			budgetReducers.reduce(action);
 		},
-		openAddCourseCommentsModal: function(course) {
+		openAddCourseCommentsModal: function(sectionGroup) {
 			var action = {
 				type: OPEN_ADD_COURSE_COMMENT_MODAL,
 				payload: {
-					course: course
+					sectionGroup: sectionGroup
 				}
 			};
 
@@ -598,6 +627,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				self.calculateSectionGroupOverrides(sectionGroup);
 
+				self.calculateSectionGroupCostComments(sectionGroup.sectionGroupCost);
+
 				// Generate container if one does not already exist
 				var container = self.calculateSectionGroupContainer(sectionGroup, calculatedSectionGroups.byTerm[shortTerm]);
 				container.sectionGroups.push(sectionGroup);
@@ -732,6 +763,22 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			} else {
 				sectionGroup.overrideReaderAppointments = angular.copy(sectionGroup.readerAppointments);
 			}
+		},
+		calculateSectionGroupCostComments: function(sectionGroupCost) {
+			if (sectionGroupCost == null || sectionGroupCost == undefined) { return; }
+
+			// Set sectionGroupCostComments
+			sectionGroupCost.comments = [];
+
+			budgetReducers._state.sectionGroupCostComments.ids.forEach(function(commentId) {
+				var comment = budgetReducers._state.sectionGroupCostComments.list[commentId];
+
+				if (comment.sectionGroupCostId == sectionGroupCost.id) {
+					sectionGroupCost.comments.push(comment);
+				}
+			});
+
+			sectionGroupCost.comments =_array_sortByProperty(sectionGroupCost.comments, "lastModifiedOn", true);
 		}
 	};
 });

@@ -543,7 +543,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return ui;
 				case OPEN_ADD_COURSE_COMMENT_MODAL:
 					ui.courseCommentsModal.isOpen = true;
-					ui.courseCommentsModal.sectionGroupCost = action.payload.course.sectionGroupCosts[0];
+					ui.courseCommentsModal.sectionGroup = action.payload.sectionGroup;
 					return ui;
 				case OPEN_ADD_LINE_ITEM_COMMENT_MODAL:
 					ui.lineItemCommentsModal.isOpen = true;
