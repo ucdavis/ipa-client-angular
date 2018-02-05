@@ -4,14 +4,28 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			var self = this;
 
 			budgetService.getInitialState(workgroupId, year).then(function (results) {
-				// Set a default active budget scenario if one was not set in local storage
+
+				// BudgetScenario was set in localStorage, need to sanity check
+				if (selectedBudgetScenarioId) {
+					var scenarioFound = false;
+					results.budgetScenarios.forEach(function(budgetScenario) {
+						if (budgetScenario.id == selectedBudgetScenarioId) {
+							scenarioFound = true;
+						}
+					});
+
+					if (scenarioFound == false) {
+						selectedBudgetScenarioId = null;
+					}
+				}
+
+				// BudgetScenario was not set in localStorage, or it didn't correspond to an existing scenario
 				if (!selectedBudgetScenarioId) {
 					if (results.budgetScenarios && results.budgetScenarios.length > 0) {
 						selectedBudgetScenarioId = parseInt(results.budgetScenarios[0].id);
 						localStorage.setItem('selectedBudgetScenarioId', selectedBudgetScenarioId);
 					}
 				}
-
 				var action = {
 					type: INIT_STATE,
 					payload: results,
