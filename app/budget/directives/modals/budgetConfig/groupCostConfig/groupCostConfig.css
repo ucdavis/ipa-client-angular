@@ -1,5 +1,7 @@
 .group-cost-config {
 	padding: 20px;
+	overflow-y: scroll;
+	height: 400px;
 }
 
 .group-cost-config__label {
@@ -15,5 +17,5 @@
 }
 
 .group-cost-config__input {
-	width: 10%;
+	width: 15%;
 }

@@ -26,4 +26,18 @@
 			Reader Cost
 		</div>
 	</div>
+
+	<div class="group-cost-config__cost" ng-repeat="instructorType in state.calculatedInstructorTypes">
+		<div class="group-cost-config__input">
+			<ipa-input
+				value="instructorType.cost"
+				place-holder="'Enter a cost'"
+				mode="'currency'"
+				on-update="updateInstructorType(instructorType)">
+			</ipa-input>
+		</div>
+		<div class="group-cost-config__label">
+			{{ instructorType.description }}
+		</div>
+	</div>
 </div>

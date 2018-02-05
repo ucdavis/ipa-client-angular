@@ -10,6 +10,10 @@ budgetApp.directive("groupCostConfig", this.groupCostConfig = function ($rootSco
 			scope.updateBudget = function (budget) {
 				budgetActions.updateBudget(scope.state.budget);
 			};
+
+			scope.updateInstructorType = function (instructorType) {
+				budgetActions.updateInstructorType(instructorType);
+			};
 		}
 	};
 });
