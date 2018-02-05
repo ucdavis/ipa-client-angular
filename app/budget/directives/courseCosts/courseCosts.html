@@ -43,9 +43,9 @@
 								</ipa-input>
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
-								uib-tooltip="Revert to schedule reader count of {{sectionGroup.totalSeats}}"
+								uib-tooltip="Revert to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}"
 								confirm-button="revertOverride(sectionGroup, 'seats')"
-								message="Revert to schedule reader count of {{sectionGroup.totalSeats}}?"
+								message="Revert to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}?"
 								yes="Update"
 								no="Cancel"
 								ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.enrollment !== null && (sectionGroup.totalSeats != sectionGroup.sectionGroupCost.enrollment)">
@@ -63,9 +63,9 @@
 								</ipa-input>
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
-								uib-tooltip="Revert to schedule reader count of {{sectionGroup.sectionCount}}"
+								uib-tooltip="Revert to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}"
 								confirm-button="revertOverride(sectionGroup, 'sectionCount')"
-								message="Revert to schedule reader count of {{sectionGroup.sectionCount}}?"
+								message="Revert to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}?"
 								yes="Update"
 								no="Cancel"
 								ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.sectionCount !== null && sectionGroup.sectionCount != sectionGroup.sectionGroupCost.sectionCount">
@@ -83,9 +83,9 @@
 								</ipa-input>
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
-								uib-tooltip="Revert to schedule reader count of {{sectionGroup.teachingAssistantAppointments}}"
+								uib-tooltip="Revert to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}"
 								confirm-button="revertOverride(sectionGroup, 'teachingAssistantAppointments')"
-								message="Revert to schedule reader count of {{sectionGroup.teachingAssistantAppointments}}?"
+								message="Revert to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}?"
 								yes="Update"
 								no="Cancel"
 								ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.taCount !== null && sectionGroup.teachingAssistantAppointments != sectionGroup.sectionGroupCost.taCount">
@@ -107,9 +107,9 @@
 								</ipa-input>
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
-								uib-tooltip="Revert to schedule reader count of {{sectionGroup.readerAppointments}}"
+								uib-tooltip="Revert to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}"
 								confirm-button="revertOverride(sectionGroup, 'readerAppointments')"
-								message="Revert to schedule reader count of {{sectionGroup.readerAppointments}}?"
+								message="Revert to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}?"
 								yes="Update"
 								no="Cancel"
 								ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.readerCount !== null && sectionGroup.readerAppointments != sectionGroup.sectionGroupCost.readerCount">
