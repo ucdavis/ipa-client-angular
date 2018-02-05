@@ -16,7 +16,7 @@
 					<th class="course-costs__table-header">Readers</th>
 					<th class="course-costs__table-header">Reader Cost</th>
 					<th class="course-costs__table-header">Support Cost</th>
-					<th class="course-costs__table-header">Comment</th>
+					<th class="course-costs__table-header course-costs__table-header--comments">Comment</th>
 					<th class="course-costs__table-header">Total Cost</th>
 				</tr>
 			</thead>
@@ -46,7 +46,7 @@
 								uib-tooltip="Revert to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}"
 								confirm-button="revertOverride(sectionGroup, 'seats')"
 								message="Revert to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}?"
-								yes="Update"
+								yes="Revert"
 								no="Cancel"
 								ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.enrollment !== null && (sectionGroup.totalSeats != sectionGroup.sectionGroupCost.enrollment)">
 							</div>
@@ -66,7 +66,7 @@
 								uib-tooltip="Revert to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}"
 								confirm-button="revertOverride(sectionGroup, 'sectionCount')"
 								message="Revert to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}?"
-								yes="Update"
+								yes="Revert"
 								no="Cancel"
 								ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.sectionCount !== null && sectionGroup.sectionCount != sectionGroup.sectionGroupCost.sectionCount">
 							</div>
@@ -86,7 +86,7 @@
 								uib-tooltip="Revert to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}"
 								confirm-button="revertOverride(sectionGroup, 'teachingAssistantAppointments')"
 								message="Revert to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}?"
-								yes="Update"
+								yes="Revert"
 								no="Cancel"
 								ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.taCount !== null && sectionGroup.teachingAssistantAppointments != sectionGroup.sectionGroupCost.taCount">
 							</div>
@@ -110,7 +110,7 @@
 								uib-tooltip="Revert to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}"
 								confirm-button="revertOverride(sectionGroup, 'readerAppointments')"
 								message="Revert to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}?"
-								yes="Update"
+								yes="Revert"
 								no="Cancel"
 								ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.readerCount !== null && sectionGroup.readerAppointments != sectionGroup.sectionGroupCost.readerCount">
 							</div>

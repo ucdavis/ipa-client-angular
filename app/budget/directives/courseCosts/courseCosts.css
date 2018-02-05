@@ -67,7 +67,6 @@
 }
 
 .course-costs__revert-ui {
-	display: none;
 	margin-left: 10px;
 	padding: 5px;
 	border: 1px solid #ddd;
@@ -80,6 +79,6 @@
 	background-color: #eee;
 }
 
-.course-costs__course-container:hover .course-costs__revert-ui {
-	display: block;
+.course-costs__table-header--comments {
+	padding-left: 20px;
 }

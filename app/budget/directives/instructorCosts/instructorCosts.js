@@ -14,7 +14,7 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 				budgetActions.toggleCourseCostsSection();
 			};
 
-			scope.openCourseComments = function(sectionGroup) {
+			scope.openAddCourseCommentsModal = function(sectionGroup) {
 				budgetActions.openAddCourseCommentsModal(sectionGroup);
 			};
 
