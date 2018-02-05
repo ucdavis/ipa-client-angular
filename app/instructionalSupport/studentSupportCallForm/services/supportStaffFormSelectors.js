@@ -58,6 +58,10 @@ instructionalSupportApp.service('supportStaffFormSelectors', function () {
 				}
 			});
 
+			potentialPreferences.readers = _array_sortByProperty(potentialPreferences.readers, ["subjectCode", "courseNumber"]);
+			potentialPreferences.teachingAssistants = _array_sortByProperty(potentialPreferences.teachingAssistants, ["subjectCode", "courseNumber"]);
+			potentialPreferences.associateInstructors = _array_sortByProperty(potentialPreferences.associateInstructors, ["subjectCode", "courseNumber"]);
+
 			return potentialPreferences;
 		},
 		// Blend the relevant course data
