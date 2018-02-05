@@ -56,7 +56,7 @@ scheduleSummaryReportApp.service('scheduleSummaryReportStateService', function (
 						sectionGroups.list[slotSectionGroup.id] = slotSectionGroup;
 					});
 
-					sectionGroups.ids = _array_sortIdsByProperty(sectionGroups.list, ["courseNumber"]);
+					sectionGroups.ids = _array_sortIdsByProperty(sectionGroups.list, ["subjectCode", "courseNumber", "sequencePattern"]);
 
 					// Build instructors metadata for searching
 					instructors = {
@@ -142,8 +142,9 @@ scheduleSummaryReportApp.service('scheduleSummaryReportStateService', function (
 						}
 
 						slotSectionGroup.sections.push(slotSection);
-						slotSectionGroup.sections = sortSections(slotSectionGroup.sections);
 					});
+
+					slotSectionGroup.sections = _array_sortByProperty(slotSectionGroup.sections, ["sequenceNumber"]);
 
 					// Add any shared activities to the appropriate sections
 					action.payload.activities.forEach( function(slotActivity) {
@@ -202,20 +203,3 @@ scheduleSummaryReportApp.service('scheduleSummaryReportStateService', function (
 		}
 	};
 });
-
-sortSections = function(sections) {
-	sections.sort(function (a, b) {
-		// Use subject codes to sort if they don't match
-		if (a.sequenceNumber > b.sequenceNumber) {
-			return 1;
-		}
-
-		if (a.sequenceNumber < b.sequenceNumber) {
-			return -1;
-		}
-
-		return -1;
-	});
-
-	return sections;
-};
