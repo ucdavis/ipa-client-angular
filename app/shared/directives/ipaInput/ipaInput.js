@@ -9,7 +9,7 @@ sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 			readOnly: '=?', // Boolean
 			placeHolder: '<?', // Default text when empty
 			updateDelay: '<?', // If an update function has been specified it will default to 500ms delay, can override that here
-			mode: '<?' // Options are 'number' (only allow characters 0-9)
+			mode: '<?' // Options are 'number' (only allow characters 0-9), and 'currency' (currency style formatting and input enforcement)
 		},
 		link: function(scope, element, attrs) {
 			// Main method triggered by template, handles filtering/update callback
@@ -27,7 +27,7 @@ sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 				scope.timeOut = $timeout(scope.onUpdate, scope.delay);
 			};
 
-			scope.triggerUpdate = function() {
+			scope.onBlur = function() {
 				if (angular.isUndefined(scope.onUpdate)) { return; }
 
 				// $timeout.cancel will return true if there was time remaining

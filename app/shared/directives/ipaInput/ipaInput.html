@@ -1,9 +1,22 @@
-<input class="ipa-input"
-	ng-model="value"
-	ng-blur="triggerUpdate()"
-	placeholder="{{placeHolder}}"
-	ng-readonly="readOnly"
-	ng-keyup="updateInput()"
-	type="{{ mode == 'number' ? 'number' : ''}}"
-	ng-class="{'ipa-input--read-only': readOnly }">
-</input>
+<div>
+	<input class="ipa-input"
+		ng-show="mode != 'currency'"
+		ng-model="value"
+		ng-blur="onBlur()"
+		placeholder="{{placeHolder}}"
+		ng-readonly="readOnly"
+		ng-keyup="updateInput()"
+		type="{{ mode == 'number' ? 'number' : ''}}"
+		ng-class="{'ipa-input--read-only': readOnly }">
+
+	<input class="ipa-input"
+		ng-show="mode == 'currency'"
+		currency-input
+		ng-model="value"
+		ng-blur="onBlur()"
+		placeholder="{{placeHolder}}"
+		ng-readonly="readOnly"
+		ng-keyup="updateInput()"
+		type="{{ mode == 'number' ? 'number' : ''}}"
+		ng-class="{'ipa-input--read-only': readOnly }">
+</div>
