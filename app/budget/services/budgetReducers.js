@@ -40,6 +40,42 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return budgetScenarios;
 			}
 		},
+		instructorTypeReducers: function (action, instructorTypes) {
+			switch (action.type) {
+				case INIT_STATE:
+					instructorTypes = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.instructorTypes.forEach( function(instructorType) {
+						instructorTypes.ids.push(instructorType.id);
+						instructorTypes.list[instructorType.id] = instructorType;
+					});
+					return instructorTypes;
+				case CREATE_INSTRUCTOR_TYPE:
+					var newInstructorType = action.payload.instructorType;
+					instructorTypes.ids.push(newInstructorType.id);
+					instructorTypes.list[newInstructorType.id] = newInstructorType;
+					return instructorTypes;
+				case UPDATE_INSTRUCTOR_TYPE:
+					var newInstructorType = action.payload.instructorType;
+					instructorTypes.list[newInstructorType.id] = newInstructorType;
+					return instructorTypes;
+				default:
+					return instructorTypes;
+			}
+		},
+		calculatedInstructorTypeReducers: function (action, calculatedInstructorTypes) {
+			switch (action.type) {
+				case INIT_STATE:
+					return [];
+				case CALCULATE_INSTRUCTOR_TYPES:
+					return action.payload.calculatedInstructorTypes;
+				default:
+					return calculatedInstructorTypes;
+			}
+		},
 		lineItemReducers: function (action, lineItems) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -608,8 +644,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.instructorCosts = scope.instructorCostReducers(action, scope._state.instructorCosts);
 			newState.ui = scope.uiReducers(action, scope._state.ui);
 			newState.users = scope.userReducers(action, scope._state.users);
+			newState.instructorTypes = scope.instructorTypeReducers(action, scope._state.instructorTypes);
 
 			newState.calculatedSectionGroups = scope.calculatedSectionGroupReducers(action, scope._state.calculatedSectionGroups);
+			newState.calculatedInstructorTypes = scope.calculatedInstructorTypeReducers(action, scope._state.calculatedInstructorTypes);
+
 			scope._state = newState;
 
 			// Build new 'page state'
@@ -639,6 +678,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.lineItemCategories = budgetSelectors.generateLineItemCategories(newState.lineItemCategories);
 			newPageState.instructors = budgetSelectors.generateInstructors(newState.instructors, newState.instructorCosts);
 			newPageState.calculatedSectionGroups = newState.calculatedSectionGroups;
+			newPageState.calculatedInstructorTypes = newState.calculatedInstructorTypes;
 
 			$rootScope.$emit('budgetStateChanged', newPageState);
 			console.log(newPageState);

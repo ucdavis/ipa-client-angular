@@ -117,6 +117,19 @@ budgetApp.factory("budgetService", this.budgetService = function($http, $q, $win
 
 			return deferred.promise;
 		},
+		updateInstructorType: function(instructorType) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/budgetView/instructorTypes/" + instructorType.id, instructorType, { withCredentials: true })
+			.success(function(results) {
+				deferred.resolve(results);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		updateBudget: function(budget) {
 			var deferred = $q.defer();
 

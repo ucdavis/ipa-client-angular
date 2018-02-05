@@ -36,6 +36,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 
 				budgetReducers.reduce(action);
+				self.calculateInstructorTypes();
 				self.calculateSelectedScenario();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
@@ -290,6 +291,24 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				self.calculateTotalCost();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
+			});
+		},
+		updateInstructorType: function (newInstructorType) {
+			var self = this;
+			newInstructorType.cost = parseFloat(newInstructorType.cost);
+
+			budgetService.updateInstructorType(newInstructorType).then(function (instructorType) {
+				budgetReducers.reduce({
+					type: UPDATE_INSTRUCTOR_TYPE,
+					payload: {
+						instructorType: instructorType
+					}
+				});
+
+				$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
+				self.calculateInstructorTypes();
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
 			});
 		},
 		updateBudget: function (budget) {
@@ -793,6 +812,25 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 
 			sectionGroupCost.comments =_array_sortByProperty(sectionGroupCost.comments, "lastModifiedOn", true);
+		},
+		calculateInstructorTypes: function() {
+			var instructorTypes = budgetReducers._state.instructorTypes;
+
+			var instructorTypeList = [];
+
+			instructorTypes.ids.forEach(function(instructorTypeId) {
+				var instructorType = instructorTypes.list[instructorTypeId];
+				instructorTypeList.push(instructorType);
+			});
+
+			instructorTypeList = _array_sortByProperty(instructorTypeList, "description");
+
+			budgetReducers.reduce({
+				type: CALCULATE_INSTRUCTOR_TYPES,
+				payload: {
+					calculatedInstructorTypes: instructorTypeList
+				}
+			});
 		}
 	};
 });
