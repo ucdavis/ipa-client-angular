@@ -30,7 +30,7 @@ budgetApp.directive("groupCostConfig", this.groupCostConfig = function ($rootSco
 				}
 
 				if ( !(instructorType.description) || instructorType.description.length == 0) {
-					instructorType.validationError = "Must provide a description";
+					instructorType.validationError = "Please provide a description";
 					return;
 				}
 
@@ -57,7 +57,7 @@ budgetApp.directive("groupCostConfig", this.groupCostConfig = function ($rootSco
 
 			scope.isNewInstructorTypeValid = function() {
 				if ( !(scope.newInstructorType.description) || scope.newInstructorType.description.length == 0) {
-					scope.newInstructorType.validationError = "Must provide a description";
+					scope.newInstructorType.validationError = "Please provide a description";
 					return false;
 				}
 
