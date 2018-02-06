@@ -48,15 +48,37 @@
 	align-items: center;
 }
 
-.course-cost__warning {
+.course-costs__warning {
 	color: #ce4844;
 	visibility: hidden;
 }
 
-.course-cost__warning--show {
+.course-costs__warning--show {
 	visibility: visible;
 }
 
-.course-cost__number-input {
+.course-costs__number-input {
 	width: 40px;
+}
+
+.course-costs__edit-container {
+	display: flex;
+	align-items: center;
+}
+
+.course-costs__revert-ui {
+	margin-left: 10px;
+	padding: 5px;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	cursor: pointer;
+	margin-bottom: 2px;
+}
+
+.course-costs__revert-ui:hover {
+	background-color: #eee;
+}
+
+.course-costs__table-header--comments {
+	padding-left: 20px;
 }

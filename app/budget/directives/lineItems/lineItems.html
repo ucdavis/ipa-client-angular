@@ -4,8 +4,7 @@
 			<tr>
 				<th class="line-items__table-header line-items__table--checkbox">
 					<div class="line-items__table-header-container line-items__table-container--checkbox">
-						<ipa-checkbox
-							style="'muted'"
+						<ipa-checkbox style="'muted'"
 							is-checked="ui.areAllLineItemsSelected"
 							click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
 						</ipa-checkbox>
@@ -39,8 +38,7 @@
 				<!-- Checkbox -->
 				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
 					<div class="line-items__table-container--checkbox">
-						<ipa-checkbox
-							style="'muted'"
+						<ipa-checkbox style="'muted'"
 							is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
 							click-action="selectLineItem(lineItem)">
 						</ipa-checkbox>
@@ -60,16 +58,13 @@
 				<!-- Comments -->
 				<td class="line-items__table-cell line-items__table-cell--comments" ng-class-odd="'line-items__table-cell--dark'">
 					<div class="line-items__comment-container">
-						<!--
-						<ipa-button
-							text="'Comments'"
+						<ipa-button text="'Comments'"
 							button-text="'See Comments'"
 							tooltip-message="'View Comments'"
 							color="'light'"
 							icon-class="'entypo entypo-chat'"
 							on-click="openAddLineItemCommentsModal(lineItem)">
 						</ipa-button>
-					-->
 					</div>
 				</td>
 

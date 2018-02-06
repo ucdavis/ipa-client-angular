@@ -40,6 +40,48 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return budgetScenarios;
 			}
 		},
+		instructorTypeReducers: function (action, instructorTypes) {
+			switch (action.type) {
+				case INIT_STATE:
+					instructorTypes = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.instructorTypes.forEach( function(instructorType) {
+						instructorTypes.ids.push(instructorType.id);
+						instructorTypes.list[instructorType.id] = instructorType;
+					});
+					return instructorTypes;
+				case CREATE_INSTRUCTOR_TYPE:
+					var newInstructorType = action.payload.instructorType;
+					instructorTypes.ids.push(newInstructorType.id);
+					instructorTypes.list[newInstructorType.id] = newInstructorType;
+					return instructorTypes;
+				case DELETE_INSTRUCTOR_TYPE:
+					var instructorTypeId = action.payload.instructorTypeId;
+					var index = instructorTypes.ids.indexOf(instructorTypeId);
+					instructorTypes.ids.splice(index, 1);
+					instructorTypes.list[instructorTypeId] = null;
+					return instructorTypes;
+				case UPDATE_INSTRUCTOR_TYPE:
+					var newInstructorType = action.payload.instructorType;
+					instructorTypes.list[newInstructorType.id] = newInstructorType;
+					return instructorTypes;
+				default:
+					return instructorTypes;
+			}
+		},
+		calculatedInstructorTypeReducers: function (action, calculatedInstructorTypes) {
+			switch (action.type) {
+				case INIT_STATE:
+					return [];
+				case CALCULATE_INSTRUCTOR_TYPES:
+					return action.payload.calculatedInstructorTypes;
+				default:
+					return calculatedInstructorTypes;
+			}
+		},
 		lineItemReducers: function (action, lineItems) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -119,12 +161,15 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case INIT_STATE:
 					sectionGroupCosts = {
 						ids: [],
-						list: []
+						list: [],
+						bySectionGroupId: {}
 					};
 
 					action.payload.sectionGroupCosts.forEach( function(sectionGroupCost) {
 						sectionGroupCosts.ids.push(sectionGroupCost.id);
 						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
+						sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] = sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] || [];
+						sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId].push(sectionGroupCost.id);
 					});
 					return sectionGroupCosts;
 				case CREATE_BUDGET_SCENARIO:
@@ -136,6 +181,15 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case UPDATE_SECTION_GROUP_COST:
 					var sectionGroupCost = action.payload.sectionGroupCost;
 					sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
+					return sectionGroupCosts;
+				case CREATE_SECTION_GROUP_COST:
+					var sectionGroupCost = action.payload.sectionGroupCost;
+					if (sectionGroupCosts.ids.indexOf(sectionGroupCost.id) == -1) {
+						sectionGroupCosts.ids.push(sectionGroupCost.id);
+					}
+					sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
+					sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] = sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] || [];
+					sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId].push(sectionGroupCost.id);
 					return sectionGroupCosts;
 				default:
 					return sectionGroupCosts;
@@ -180,6 +234,16 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					action.payload.instructorCosts.forEach( function(instructorCost) {
 						instructorCosts.ids.push(instructorCost.id);
 						instructorCosts.list[instructorCost.id] = instructorCost;
+					});
+					return instructorCosts;
+				case DELETE_INSTRUCTOR_TYPE:
+					var instructorTypeId = action.payload.instructorTypeId;
+					instructorCosts.ids.forEach(function(instructorCostId) {
+						var instructorCost = instructorCosts.list[instructorCostId];
+
+						if (instructorCost.instructorTypeId == instructorTypeId) {
+							instructorCost.instructorTypeId = null;
+						}
 					});
 					return instructorCosts;
 				case UPDATE_INSTRUCTOR_COST:
@@ -453,10 +517,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 							};
 					});
 
-					// Set default initial selectedTerm
-					if (ui.selectedTerm == null && action.payload.sectionGroupCosts.length > 0) {
-						ui.selectedTerm = action.payload.sectionGroupCosts[0].termCode.slice(-2);
-					}
+
 
 					return ui;
 				case CALCULATE_SCENARIO_TERMS:
@@ -534,7 +595,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return ui;
 				case OPEN_ADD_COURSE_COMMENT_MODAL:
 					ui.courseCommentsModal.isOpen = true;
-					ui.courseCommentsModal.sectionGroupCost = action.payload.course.sectionGroupCosts[0];
+					ui.courseCommentsModal.sectionGroup = action.payload.sectionGroup;
 					return ui;
 				case OPEN_ADD_LINE_ITEM_COMMENT_MODAL:
 					ui.lineItemCommentsModal.isOpen = true;
@@ -599,8 +660,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.instructorCosts = scope.instructorCostReducers(action, scope._state.instructorCosts);
 			newState.ui = scope.uiReducers(action, scope._state.ui);
 			newState.users = scope.userReducers(action, scope._state.users);
+			newState.instructorTypes = scope.instructorTypeReducers(action, scope._state.instructorTypes);
 
 			newState.calculatedSectionGroups = scope.calculatedSectionGroupReducers(action, scope._state.calculatedSectionGroups);
+			newState.calculatedInstructorTypes = scope.calculatedInstructorTypeReducers(action, scope._state.calculatedInstructorTypes);
+
 			scope._state = newState;
 
 			// Build new 'page state'
@@ -630,6 +694,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.lineItemCategories = budgetSelectors.generateLineItemCategories(newState.lineItemCategories);
 			newPageState.instructors = budgetSelectors.generateInstructors(newState.instructors, newState.instructorCosts);
 			newPageState.calculatedSectionGroups = newState.calculatedSectionGroups;
+			newPageState.calculatedInstructorTypes = newState.calculatedInstructorTypes;
 
 			$rootScope.$emit('budgetStateChanged', newPageState);
 			console.log(newPageState);

@@ -9,8 +9,7 @@
 			ng-show="displayScenarioRenameUI == false">
 			<budget-scenario-dropdown state="state"></budget-scenario-dropdown>
 
-			<ipa-button
-				class="budget-scenario-toolbar__edit-button"
+			<ipa-button class="budget-scenario-toolbar__edit-button"
 				icon-class="'glyphicon glyphicon-pencil'"
 				size="'small'"
 				on-click="showScenarioRenameUI()"
@@ -29,15 +28,13 @@
 				</ipa-input>
 			</div>
 
-			<ipa-button
-				class="budget-scenario-toolbar__edit-button"
+			<ipa-button class="budget-scenario-toolbar__edit-button"
 				icon-class="'glyphicon glyphicon-remove'"
 				size="'small'"
 				on-click="cancelScenarioRename()"
 				tooltip-message="'Cancel'">
 			</ipa-button>
-			<ipa-button
-				class="budget-scenario-toolbar__edit-button"
+			<ipa-button class="budget-scenario-toolbar__edit-button"
 				icon-class="'glyphicon glyphicon-ok'"
 				size="'small'"
 				on-click="saveNewScenarioName()"
@@ -61,8 +58,7 @@
 	</div>
 
 	<div class="budget-scenario-toolbar__tool-container">
-		<span
-			class="budget-scenario-toolbar__tool glyphicon glyphicon-cog dropdown-toggle"
+		<span class="budget-scenario-toolbar__tool glyphicon glyphicon-cog dropdown-toggle"
 			ng-click="openBudgetConfigModal()"
 			uib-tooltip="Open budget configuration">
 		</span>

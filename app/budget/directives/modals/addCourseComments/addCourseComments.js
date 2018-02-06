@@ -4,7 +4,7 @@ budgetApp.directive("addCourseComments", this.addCourseComments = function ($roo
 		templateUrl: 'addCourseComments.html',
 		replace: true,
 		scope: {
-			sectionGroupCost: '<',
+			sectionGroup: '<',
 			currentUserLoginId: '<'
 		},
 		link: function (scope, element, attrs) {
@@ -27,7 +27,7 @@ budgetApp.directive("addCourseComments", this.addCourseComments = function ($roo
 			};
 
 			scope.submit = function() {
-				budgetActions.createSectionGroupCostComment(scope.newComment, scope.sectionGroupCost, scope.currentUserLoginId);
+				budgetActions.createSectionGroupCostCommentFromSectionGroup(scope.newComment, scope.sectionGroup, scope.currentUserLoginId);
 				scope.newComment = "";
 			};
 		} // end link
