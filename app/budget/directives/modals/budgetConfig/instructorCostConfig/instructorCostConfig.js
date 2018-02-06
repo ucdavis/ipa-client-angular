@@ -7,8 +7,6 @@ budgetApp.directive("instructorCostConfig", this.instructorCostConfig = function
 			instructors: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.newInstructors = angular.copy(scope.instructors);
-
 			scope.updateInstructorCost = function (newInstructor) {
 				budgetActions.updateInstructorCost(newInstructor);
 			};

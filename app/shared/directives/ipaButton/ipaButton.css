@@ -86,5 +86,5 @@
 
 /* Override bootstrap style to ensure popover properly shows on modal */
 .popover {
-	z-index: 101;
+	z-index: 9999;
 }
