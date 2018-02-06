@@ -11,11 +11,27 @@
 	display: flex;
 }
 
-.group-cost-config__cost {
+.group-cost-config__general-cost {
 	display: flex;
 	margin-bottom: 15px;
 }
 
+.group-cost-config__cost {
+	display: flex;
+}
+
 .group-cost-config__input {
 	width: 15%;
+}
+
+.group-cost-config__delete-button {
+	margin-left: 10px;
+	padding-right: 1px;
+	padding-bottom: 1px;
+}
+
+.group-cost-config__validation-error {
+	margin-bottom: 7px;
+	height: 17px;
+	color: #f26868;
 }

@@ -1,5 +1,5 @@
 <div class="group-cost-config">
-	<div class="group-cost-config__cost">
+	<div class="group-cost-config__general-cost">
 		<div class="group-cost-config__input">
 			<ipa-input
 				value="state.budget.taCost"
@@ -13,7 +13,7 @@
 		</div>
 	</div>
 
-	<div class="group-cost-config__cost">
+	<div class="group-cost-config__general-cost">
 		<div class="group-cost-config__input">
 			<ipa-input
 				value="state.budget.readerCost"
@@ -27,17 +27,61 @@
 		</div>
 	</div>
 
-	<div class="group-cost-config__cost" ng-repeat="instructorType in state.calculatedInstructorTypes">
+	<div ng-repeat="instructorType in state.calculatedInstructorTypes">
+		<div class="group-cost-config__cost">
+			<div class="group-cost-config__input">
+				<ipa-input
+					value="instructorType.cost"
+					place-holder="'Enter cost'"
+					mode="'currency'"
+					on-update="updateInstructorType(instructorType)">
+				</ipa-input>
+			</div>
+
+			<div class="group-cost-config__label">
+				<ipa-input
+					value="instructorType.description"
+					place-holder="'Enter description'"
+					on-update="updateInstructorTypeIfValid(instructorType)">
+				</ipa-input>
+
+				<ipa-button
+					class="group-cost-config__delete-button"
+					icon-class="'glyphicon glyphicon-remove'"
+					size="'small'"
+					on-click="deleteInstructorType(instructorType)"
+					tooltip-message="'Delete instructor type'"
+					confirm-message="'Are you sure you want to delete this instructor type?'">
+				</ipa-button>
+			</div>
+		</div>
+		<div class="group-cost-config__validation-error">
+			{{ instructorType.validationError }}
+		</div>
+	</div>
+	<div class="group-cost-config__cost">
 		<div class="group-cost-config__input">
 			<ipa-input
-				value="instructorType.cost"
-				place-holder="'Enter a cost'"
-				mode="'currency'"
-				on-update="updateInstructorType(instructorType)">
+				value="newInstructorType.cost"
+				place-holder="'Enter cost'"
+				mode="'currency'">
 			</ipa-input>
 		</div>
+
 		<div class="group-cost-config__label">
-			{{ instructorType.description }}
+			<ipa-input
+				value="newInstructorType.description"
+				place-holder="'Enter description'">
+			</ipa-input>
+			<ipa-button
+				class="group-cost-config__delete-button"
+				icon-class="'glyphicon glyphicon-plus'"
+				size="'small'"
+				on-click="createInstructorType()"
+				is-disabled="isNewInstructorTypeValid() == false"
+				disabled-tooltip-message="newInstructorType.validationError"
+				tooltip-message="'Add instructor type'">
+			</ipa-button>
 		</div>
 	</div>
 </div>
