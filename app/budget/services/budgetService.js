@@ -1,225 +1,72 @@
-budgetApp.factory("budgetService", this.budgetService = function($http, $q, $window) {
+budgetApp.factory("budgetService", this.budgetService = function($http, $q, $window, apiService) {
 	return {
+		// Page load
 		getInitialState: function(workgroupId, year) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/budgetView/workgroups/" + workgroupId + "/years/" + year, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.get("/api/budgetView/workgroups/" + workgroupId + "/years/" + year);
 		},
-		createBudgetScenario: function(newBudgetScenario, budgetId, scenarioId) {
-			var deferred = $q.defer();
 
-			$http.post(serverRoot + "/api/budgetView/budgets/" + budgetId + "/budgetScenarios?scenarioId=" + scenarioId, newBudgetScenario, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		createSectionGroupCostComment: function(sectionGroupCostComment) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/budgetView/sectionGroupCosts/" + sectionGroupCostComment.sectionGroupCostId + "/sectionGroupCostComments", sectionGroupCostComment, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		createLineItemComment: function(lineItemComment) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/budgetView/lineItems/" + lineItemComment.lineItemId + "/lineItemComments", lineItemComment, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		deleteBudgetScenario: function(budgetScenarioId) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/budgetView/budgetScenarios/" + budgetScenarioId, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
+		// Line Items
 		createLineItem: function(newLineItem, budgetScenarioId) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/budgetView/budgetScenarios/" + budgetScenarioId + "/lineItems", newLineItem, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.post("/api/budgetView/budgetScenarios/" + budgetScenarioId + "/lineItems", newLineItem);
 		},
 		updateLineItem: function(lineItem, budgetScenarioId) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/budgetView/budgetScenarios/" + budgetScenarioId + "/lineItems/" + lineItem.id, lineItem, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.put("/api/budgetView/budgetScenarios/" + budgetScenarioId + "/lineItems/" + lineItem.id, lineItem);
 		},
 		deleteLineItem: function(lineItem) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/budgetView/lineItems/" + lineItem.id, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		updateInstructorCost: function(instructorCost) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/budgetView/instructorCosts/" + instructorCost.id, instructorCost, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		updateInstructorType: function(instructorType) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/budgetView/instructorTypes/" + instructorType.id, instructorType, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		createInstructorType: function(instructorType) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/budgetView/budgets/" + instructorType.budgetId + "/instructorTypes", instructorType, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		deleteInstructorType: function(instructorTypeId) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/budgetView/instructorTypes/" + instructorTypeId, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		updateBudget: function(budget) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/budgetView/budgets/" + budget.id, budget, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		updateBudgetScenario: function(budgetScenario) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/budgetView/budgetScenarios/" + budgetScenario.id, budgetScenario, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		updateSectionGroupCost: function(sectionGroupCost) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/budgetView/sectionGroupCosts/" + sectionGroupCost.id, sectionGroupCost, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
-		},
-		createSectionGroupCost: function (sectionGroupCost) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/budgetView/budgetScenarios/" + sectionGroupCost.budgetScenarioId + "/sectionGroupCosts", sectionGroupCost, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.delete("/api/budgetView/lineItems/" + lineItem.id);
 		},
 		deleteLineItems: function(budgetScenario, lineItemIds) {
-			var deferred = $q.defer();
+			return apiService.put("/api/budgetView/budgetScenarios/" + budgetScenario.id + "/lineItems", lineItemIds);
+		},
 
-			$http.put(serverRoot + "/api/budgetView/budgetScenarios/" + budgetScenario.id + "/lineItems", lineItemIds, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
+		// Instructor Types
+		updateInstructorType: function(instructorType) {
+			return apiService.put("/api/budgetView/instructorTypes/" + instructorType.id, instructorType);
+		},
+		createInstructorType: function(instructorType) {
+			return apiService.post("/api/budgetView/budgets/" + instructorType.budgetId + "/instructorTypes", instructorType);
+		},
+		deleteInstructorType: function(instructorTypeId) {
+			return apiService.delete("/api/budgetView/instructorTypes/" + instructorTypeId);
+		},
 
-			return deferred.promise;
+		// Budget Scenario
+		createBudgetScenario: function(newBudgetScenario, budgetId, scenarioId) {
+			return apiService.post("/api/budgetView/budgets/" + budgetId + "/budgetScenarios?scenarioId=" + scenarioId, newBudgetScenario);
+		},
+		deleteBudgetScenario: function(budgetScenarioId) {
+			return apiService.delete("/api/budgetView/budgetScenarios/" + budgetScenarioId);
+		},
+		updateBudgetScenario: function(budgetScenario) {
+			return apiService.put("/api/budgetView/budgetScenarios/" + budgetScenario.id, budgetScenario);
+		},
+
+		// Budget
+		updateBudget: function(budget) {
+			return apiService.put("/api/budgetView/budgets/" + budget.id, budget);
+		},
+
+		// SectionGroupCost
+		updateSectionGroupCost: function(sectionGroupCost) {
+			return apiService.put("/api/budgetView/sectionGroupCosts/" + sectionGroupCost.id, sectionGroupCost);
+		},
+		createSectionGroupCost: function (sectionGroupCost) {
+			return apiService.post("/api/budgetView/budgetScenarios/" + sectionGroupCost.budgetScenarioId + "/sectionGroupCosts", sectionGroupCost);
+		},
+
+		// InstructorCost
+		updateInstructorCost: function(instructorCost) {
+			return apiService.put("/api/budgetView/instructorCosts/" + instructorCost.id, instructorCost);
+		},
+
+		// SectionGroupCostComment
+		createSectionGroupCostComment: function(sectionGroupCostComment) {
+			return apiService.post("/api/budgetView/sectionGroupCosts/" + sectionGroupCostComment.sectionGroupCostId + "/sectionGroupCostComments", sectionGroupCostComment);
+		},
+
+		// LineItemComment
+		createLineItemComment: function(lineItemComment) {
+			return apiService.post("/api/budgetView/lineItems/" + lineItemComment.lineItemId + "/lineItemComments", lineItemComment);
 		},
 	};
 });
