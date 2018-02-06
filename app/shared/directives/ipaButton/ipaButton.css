@@ -83,3 +83,8 @@
 	cursor: default;
 	background-color: #f0f1f1;
 }
+
+/* Override bootstrap style to ensure popover properly shows on modal */
+.popover {
+	z-index: 101;
+}
