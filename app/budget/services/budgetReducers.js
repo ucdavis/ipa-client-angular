@@ -58,6 +58,12 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					instructorTypes.ids.push(newInstructorType.id);
 					instructorTypes.list[newInstructorType.id] = newInstructorType;
 					return instructorTypes;
+				case DELETE_INSTRUCTOR_TYPE:
+					var instructorTypeId = action.payload.instructorTypeId;
+					var index = instructorTypes.ids.indexOf(instructorTypeId);
+					instructorTypes.ids.splice(index, 1);
+					instructorTypes.list[instructorTypeId] = null;
+					return instructorTypes;
 				case UPDATE_INSTRUCTOR_TYPE:
 					var newInstructorType = action.payload.instructorType;
 					instructorTypes.list[newInstructorType.id] = newInstructorType;
@@ -228,6 +234,16 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					action.payload.instructorCosts.forEach( function(instructorCost) {
 						instructorCosts.ids.push(instructorCost.id);
 						instructorCosts.list[instructorCost.id] = instructorCost;
+					});
+					return instructorCosts;
+				case DELETE_INSTRUCTOR_TYPE:
+					var instructorTypeId = action.payload.instructorTypeId;
+					instructorCosts.ids.forEach(function(instructorCostId) {
+						var instructorCost = instructorCosts.list[instructorCostId];
+
+						if (instructorCost.instructorTypeId == instructorTypeId) {
+							instructorCost.instructorTypeId = null;
+						}
 					});
 					return instructorCosts;
 				case UPDATE_INSTRUCTOR_COST:

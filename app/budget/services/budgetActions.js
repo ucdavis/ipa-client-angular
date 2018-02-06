@@ -293,6 +293,41 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
 			});
 		},
+		createInstructorType: function (instructorTypeDTO) {
+			var self = this;
+			instructorTypeDTO.cost = parseFloat(instructorTypeDTO.cost);
+
+			budgetService.createInstructorType(instructorTypeDTO).then(function (instructorType) {
+				budgetReducers.reduce({
+					type: CREATE_INSTRUCTOR_TYPE,
+					payload: {
+						instructorType: instructorType
+					}
+				});
+
+				$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
+				self.calculateInstructorTypes();
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
+			});
+		},
+		deleteInstructorType: function (instructorTypeId) {
+			var self = this;
+
+			budgetService.deleteInstructorType(instructorTypeId).then(function (instructorTypeId) {
+				budgetReducers.reduce({
+					type: DELETE_INSTRUCTOR_TYPE,
+					payload: {
+						instructorTypeId: instructorTypeId
+					}
+				});
+
+				$rootScope.$emit('toast', { message: "Deleted instructor type", type: "SUCCESS" });
+				self.calculateInstructorTypes();
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not delete instructor type.", type: "ERROR" });
+			});
+		},
 		updateInstructorType: function (newInstructorType) {
 			var self = this;
 			newInstructorType.cost = parseFloat(newInstructorType.cost);

@@ -130,6 +130,32 @@ budgetApp.factory("budgetService", this.budgetService = function($http, $q, $win
 
 			return deferred.promise;
 		},
+		createInstructorType: function(instructorType) {
+			var deferred = $q.defer();
+
+			$http.post(serverRoot + "/api/budgetView/budgets/" + instructorType.budgetId + "/instructorTypes", instructorType, { withCredentials: true })
+			.success(function(results) {
+				deferred.resolve(results);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
+		deleteInstructorType: function(instructorTypeId) {
+			var deferred = $q.defer();
+
+			$http.delete(serverRoot + "/api/budgetView/instructorTypes/" + instructorTypeId, { withCredentials: true })
+			.success(function(results) {
+				deferred.resolve(results);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		updateBudget: function(budget) {
 			var deferred = $q.defer();
 
