@@ -9,8 +9,7 @@
 			</div>
 		</div>
 		<div ng-repeat="term in generalConfigView.allTerms" class="general-config__term">
-			<ipa-toggle
-				is-active="selectedBudgetScenario.terms.indexOf(term) > -1"
+			<ipa-toggle is-active="selectedBudgetScenario.terms.indexOf(term) > -1"
 				text="getTermName(term)"
 				on-click="selectBudgetScenarioTerm(term)">
 			</ipa-toggle>

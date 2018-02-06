@@ -140,12 +140,12 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			var budget = budgetReducers._state.budget;
 
 			// Course Costs
-			if (sectionGroup.overrideReaderAppointments == null || sectionGroup.overrideReaderAppointments == undefined) {
+			if (sectionGroup.overrideReaderAppointments == null) {
 				sectionGroup.readerCost = 0;
 			} else {
 				sectionGroup.readerCost = sectionGroup.overrideReaderAppointments * budget.readerCost;
 			}
-			if (sectionGroup.overrideTeachingAssistantAppointments == null || sectionGroup.overrideTeachingAssistantAppointments == undefined) {
+			if (sectionGroup.overrideTeachingAssistantAppointments == null) {
 				sectionGroup.taCost = 0;
 			} else {
 				sectionGroup.taCost = sectionGroup.overrideTeachingAssistantAppointments * budget.taCost;
@@ -253,7 +253,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			}
 		},
 		calculateSectionGroupCostComments: function(sectionGroupCost) {
-			if (sectionGroupCost == null || sectionGroupCost == undefined) { return; }
+			if (sectionGroupCost == null) { return; }
 
 			// Set sectionGroupCostComments
 			sectionGroupCost.comments = [];
