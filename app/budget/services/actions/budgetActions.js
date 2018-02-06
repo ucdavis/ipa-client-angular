@@ -1,17 +1,31 @@
-budgetApp.service('budgetActions', function ($rootScope, $window, budgetService, budgetReducers, termService) {
+budgetApp.service('budgetActions', function ($rootScope, $window, budgetService, budgetReducers, termService, budgetCalculations) {
 	return {
 		getInitialState: function (workgroupId, year, selectedBudgetScenarioId, selectedTerm) {
 			var self = this;
 
 			budgetService.getInitialState(workgroupId, year).then(function (results) {
-				// Set a default active budget scenario if one was not set in local storage
+
+				// BudgetScenario was set in localStorage, need to sanity check
+				if (selectedBudgetScenarioId) {
+					var scenarioFound = false;
+					results.budgetScenarios.forEach(function(budgetScenario) {
+						if (budgetScenario.id == selectedBudgetScenarioId) {
+							scenarioFound = true;
+						}
+					});
+
+					if (scenarioFound == false) {
+						selectedBudgetScenarioId = null;
+					}
+				}
+
+				// BudgetScenario was not set in localStorage, or it didn't correspond to an existing scenario
 				if (!selectedBudgetScenarioId) {
 					if (results.budgetScenarios && results.budgetScenarios.length > 0) {
 						selectedBudgetScenarioId = parseInt(results.budgetScenarios[0].id);
 						localStorage.setItem('selectedBudgetScenarioId', selectedBudgetScenarioId);
 					}
 				}
-
 				var action = {
 					type: INIT_STATE,
 					payload: results,
@@ -22,10 +36,89 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 
 				budgetReducers.reduce(action);
-				self.calculateSelectedScenario();
+				budgetCalculations.calculateInstructorTypes();
+				self.selectBudgetScenario();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
 			});
+		},
+		// Compares sectionGroup values, the updated override value, and the sectionGroupCost to determine what action to take.
+		// Will potentially create, delete, or update a sectionGroupCost
+		overrideSectionGroup: function (sectionGroup, property) {
+			var oldValue = null;
+			var newValue = null;
+			var savedOverride = null;
+
+			var newSectionGroupCost = {
+				sectionGroupId: sectionGroup.id,
+				budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId
+			};
+
+			if (property == "seats") {
+				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.enrollment : null;
+				oldValue = savedOverride || sectionGroup.totalSeats;
+				newValue = sectionGroup.overrideTotalSeats;
+
+				newSectionGroupCost.enrollment = sectionGroup.overrideTotalSeats;
+			}
+
+			else if (property == "sectionCount") {
+				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.sectionCount : null;
+				oldValue = savedOverride || sectionGroup.sectionCount;
+				newValue = sectionGroup.overrideSectionCount;
+				newSectionGroupCost.sectionCount = sectionGroup.overrideSectionCount;
+			}
+
+			else if (property == "teachingAssistantAppointments") {
+				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.taCount : null;
+				oldValue = savedOverride || sectionGroup.teachingAssistantAppointments;
+				newValue = sectionGroup.overrideTeachingAssistantAppointments;
+				newSectionGroupCost.taCount = sectionGroup.overrideTeachingAssistantAppointments;
+			}
+
+			else if (property == "readerAppointments") {
+				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.readerCount : null;
+				oldValue = savedOverride || sectionGroup.readerAppointments;
+				newValue = sectionGroup.overrideReaderAppointments;
+				newSectionGroupCost.readerCount = sectionGroup.overrideReaderAppointments;
+			}
+
+			var isOverriden = oldValue != newValue;
+			var wasOverriden = !!(savedOverride);
+
+			if (isOverriden) {
+				// Create or update sectionGroupCost
+				if (sectionGroup.sectionGroupCost) {
+					sectionGroup.sectionGroupCost = this.applyOverrideToProperty(sectionGroup.sectionGroupCost, newValue, property);
+					this.updateSectionGroupCost(sectionGroup.sectionGroupCost);
+				} else {
+					newSectionGroupCost = this.applyOverrideToProperty(newSectionGroupCost, newValue, property);
+					this.createSectionGroupCost(newSectionGroupCost);
+				}
+			}
+
+			if (isOverriden == false && wasOverriden) {
+				// Update sectionGroupCost
+				this.updateSectionGroupCost(sectionGroup.sectionGroupCost);
+			}
+
+			if (isOverriden == false && wasOverriden == false) {
+				// Do nothing
+				return;
+			}
+		},
+		applyOverrideToProperty: function (sectionGroupCost, value, property) {
+			if (property == "seats") {
+				sectionGroupCost.enrollment = value;
+			} else if (property == "sectionCount") {
+				sectionGroupCost.sectionCount = value;
+			} else if (property == "teachingAssistantAppointments") {
+				sectionGroupCost.taCount = value;
+			} else if (property == "readerAppointments") {
+				sectionGroupCost.readerCount = value;
+			}
+
+			return sectionGroupCost;
 		},
 		updateBudgetScenario: function (budgetScenario) {
 			var self = this;
@@ -39,9 +132,9 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 						budgetScenario: results
 					}
 				});
-				self.calculateScenarioTerms();
-				self.calculateSectionGroups();
-				self.calculateScenarioLineItems();
+				budgetCalculations.calculateScenarioTerms();
+				budgetCalculations.calculateSectionGroups();
+				budgetCalculations.calculateScenarioLineItems();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update budget scenario.", type: "ERROR" });
 			});
@@ -75,7 +168,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				$rootScope.$emit('toast', { message: "Deleted budget scenario", type: "SUCCESS" });
 				budgetReducers.reduce(action);
-				self.calculateSelectedScenario();
+				self.selectBudgetScenario();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not delete budget scenario.", type: "ERROR" });
 			});
@@ -97,8 +190,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					}
 				};
 				budgetReducers.reduce(action);
-				self.calculateSectionGroups();
-				self.calculateTotalCost();
+				budgetCalculations.calculateSectionGroups();
+				budgetCalculations.calculateTotalCost();
 				$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
@@ -119,8 +212,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				// Close modal
 				self.closeAddLineItemModal();
-				self.calculateScenarioLineItems();
-				self.calculateTotalCost();
+				budgetCalculations.calculateScenarioLineItems();
+				budgetCalculations.calculateTotalCost();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not create line item.", type: "ERROR" });
 			});
@@ -140,8 +233,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				// Close modal
 				self.closeAddLineItemModal();
-				self.calculateScenarioLineItems();
-				self.calculateTotalCost();
+				budgetCalculations.calculateScenarioLineItems();
+				budgetCalculations.calculateTotalCost();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not save line item.", type: "ERROR" });
 			});
@@ -159,12 +252,14 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				$rootScope.$emit('toast', { message: "Deleted line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);
-				self.calculateScenarioLineItems();
+				budgetCalculations.calculateScenarioLineItems();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not delete line item.", type: "ERROR" });
 			});
 		},
 		updateSectionGroupCost: function (sectionGroupCost) {
+			var self = this;
+
 			budgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
 				var action = {
 					type: UPDATE_SECTION_GROUP_COST,
@@ -174,8 +269,81 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 				$rootScope.$emit('toast', { message: "Updated course", type: "SUCCESS" });
 				budgetReducers.reduce(action);
+				budgetCalculations.calculateSectionGroups();
+				budgetCalculations.calculateTotalCost();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
+			});
+		},
+		createSectionGroupCost: function (sectionGroupCost) {
+			var self = this;
+
+			budgetService.createSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
+				var action = {
+					type: CREATE_SECTION_GROUP_COST,
+					payload: {
+						sectionGroupCost: newSectionGroupCost
+					}
+				};
+				$rootScope.$emit('toast', { message: "Updated course", type: "SUCCESS" });
+				budgetReducers.reduce(action);
+				budgetCalculations.calculateSectionGroups();
+				budgetCalculations.calculateTotalCost();
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
+			});
+		},
+		createInstructorType: function (instructorTypeDTO) {
+			var self = this;
+			instructorTypeDTO.cost = parseFloat(instructorTypeDTO.cost);
+
+			budgetService.createInstructorType(instructorTypeDTO).then(function (instructorType) {
+				budgetReducers.reduce({
+					type: CREATE_INSTRUCTOR_TYPE,
+					payload: {
+						instructorType: instructorType
+					}
+				});
+
+				$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
+				budgetCalculations.calculateInstructorTypes();
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
+			});
+		},
+		deleteInstructorType: function (instructorTypeId) {
+			var self = this;
+
+			budgetService.deleteInstructorType(instructorTypeId).then(function (instructorTypeId) {
+				budgetReducers.reduce({
+					type: DELETE_INSTRUCTOR_TYPE,
+					payload: {
+						instructorTypeId: instructorTypeId
+					}
+				});
+
+				$rootScope.$emit('toast', { message: "Deleted instructor type", type: "SUCCESS" });
+				budgetCalculations.calculateInstructorTypes();
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not delete instructor type.", type: "ERROR" });
+			});
+		},
+		updateInstructorType: function (newInstructorType) {
+			var self = this;
+			newInstructorType.cost = parseFloat(newInstructorType.cost);
+
+			budgetService.updateInstructorType(newInstructorType).then(function (instructorType) {
+				budgetReducers.reduce({
+					type: UPDATE_INSTRUCTOR_TYPE,
+					payload: {
+						instructorType: instructorType
+					}
+				});
+
+				$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
+				budgetCalculations.calculateInstructorTypes();
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
 			});
 		},
 		updateBudget: function (budget) {
@@ -190,26 +358,55 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 				$rootScope.$emit('toast', { message: "Updated costs", type: "SUCCESS" });
 				budgetReducers.reduce(action);
-				self.calculateSectionGroups();
+				budgetCalculations.calculateSectionGroups();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update costs.", type: "ERROR" });
 			});
 		},
+		// Will also create sectionGroupCost if it does not already exist.
+		createSectionGroupCostCommentFromSectionGroup: function (comment, sectionGroup, currentUserLoginId) {
+			var self = this;
+			var sectionGroupCost = sectionGroup.sectionGroupCost;
+
+			// Create sectionGroupCost if necessary
+			if (sectionGroupCost == false || sectionGroupCost == null) {
+				var sectionGroupCostDTO = {
+					sectionGroupId: sectionGroup.id,
+					budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId
+				};
+
+				budgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
+					budgetReducers.reduce({
+						type: CREATE_SECTION_GROUP_COST,
+						payload: {
+							sectionGroupCost: newSectionGroupCost
+						}
+					});
+					$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
+					self.createSectionGroupCostComment(comment, newSectionGroupCost, currentUserLoginId);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
+				});
+			} else {
+				self.createSectionGroupCostComment(comment, sectionGroupCost, currentUserLoginId);
+			}
+		},
 		createSectionGroupCostComment: function (comment, sectionGroupCost, currentUserLoginId) {
+			var self = this;
 			var sectionGroupCostComment = {};
 			sectionGroupCostComment.comment = comment;
 			sectionGroupCostComment.loginId = currentUserLoginId;
 			sectionGroupCostComment.sectionGroupCostId = parseInt(sectionGroupCost.id);
 
 			budgetService.createSectionGroupCostComment(sectionGroupCostComment).then(function (newSectionGroupCostComment) {
-				var action = {
+				budgetReducers.reduce({
 					type: CREATE_SECTION_GROUP_COST_COMMENT,
 					payload: {
 						sectionGroupCostComment: newSectionGroupCostComment
 					}
-				};
+				});
 				$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
-				budgetReducers.reduce(action);
+				budgetCalculations.calculateSectionGroups();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 			});
@@ -231,7 +428,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 				$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
 				budgetReducers.reduce(action);
-				self.calculateScenarioLineItems();
+				budgetCalculations.calculateScenarioLineItems();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 			});
@@ -282,11 +479,11 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			budgetReducers.reduce(action);
 		},
-		openAddCourseCommentsModal: function(course) {
+		openAddCourseCommentsModal: function(sectionGroup) {
 			var action = {
 				type: OPEN_ADD_COURSE_COMMENT_MODAL,
 				payload: {
-					course: course
+					sectionGroup: sectionGroup
 				}
 			};
 
@@ -310,21 +507,29 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			budgetReducers.reduce(action);
 		},
-		selectBudgetScenario: function(budgetScenarioId) {
-			localStorage.setItem('selectedBudgetScenarioId', budgetScenarioId);
+		selectBudgetScenario: function(selectedScenarioId) {
+			// If one was not provided, continue to use currently set scenario
+			if (selectedScenarioId == false || selectedScenarioId == null) {
+				selectedScenarioId = angular.copy(budgetReducers._state.ui.selectedBudgetScenarioId);
+			} else if (selectedScenarioId == false || selectedScenarioId == null || selectedScenarioId == "undefined") {
+				// If a scenario was not already selected, default to first scenario
+				selectedScenarioId = budgetReducers._state.budgetScenarios.ids[0];
+			}
+
+			localStorage.setItem('selectedBudgetScenarioId', selectedScenarioId);
 
 			var action = {
 				type: SELECT_BUDGET_SCENARIO,
 				payload: {
-					budgetScenarioId: budgetScenarioId
+					budgetScenarioId: selectedScenarioId
 				}
 			};
 
 			budgetReducers.reduce(action);
-			this.calculateScenarioTerms();
-			this.calculateScenarioLineItems();
-			this.calculateSectionGroups();
-			this.calculateTotalCost();
+			budgetCalculations.calculateScenarioTerms();
+			budgetCalculations.calculateScenarioLineItems();
+			budgetCalculations.calculateSectionGroups();
+			budgetCalculations.calculateTotalCost();
 		},
 		selectTerm: function(termTab) {
 			budgetReducers.reduce({
@@ -368,227 +573,10 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 						lineItemIds: lineItemIds
 					}
 				});
-				self.calculateScenarioLineItems();
+				budgetCalculations.calculateScenarioLineItems();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not delete line items.", type: "ERROR" });
 			});
-		},
-		calculateSelectedScenario: function() {
-			var selectedScenarioId = angular.copy(budgetReducers._state.ui.selectedBudgetScenarioId);
-
-			// If a scenario is not already selected, default to first scenario
-			if (selectedScenarioId == false || selectedScenarioId == null || selectedScenarioId == "undefined") {
-				selectedScenarioId = budgetReducers._state.budgetScenarios.ids[0];
-			}
-
-			this.selectBudgetScenario(selectedScenarioId);
-		},
-		calculateScenarioTerms: function() {
-			var allTermTabs = [];
-			var activeTermTab = null;
-
-			var selectedBudgetScenario = budgetReducers._state.budgetScenarios.list[budgetReducers._state.ui.selectedBudgetScenarioId];
-
-			selectedBudgetScenario.terms.forEach(function(term) {
-				allTermTabs.push(termService.getShortTermName(term));
-				activeTermTab = activeTermTab || termService.getShortTermName(term);
-			});
-
-			budgetReducers.reduce({
-				type: CALCULATE_SCENARIO_TERMS,
-				payload: {
-					allTermTabs: allTermTabs,
-					activeTermTab: activeTermTab,
-					activeTerm: termService.getTermFromDescription(activeTermTab),
-					selectedScenarioTerms: selectedBudgetScenario.terms
-				}
-			});
-		},
-		calculateScenarioLineItems: function() {
-			var selectedBudgetScenario = budgetReducers._state.budgetScenarios.list[budgetReducers._state.ui.selectedBudgetScenarioId];
-
-			// Add lineItems
-			selectedBudgetScenario.lineItems = [];
-
-			budgetReducers._state.lineItems.ids.forEach( function (lineItemId) {
-				var lineItem = budgetReducers._state.lineItems.list[lineItemId];
-
-				// Ensure lineItem belongs to selected budget scenario
-				if (lineItem.budgetScenarioId != selectedBudgetScenario.id) {
-					return;
-				}
-
-				// Set lineItemComments on lineItems
-				lineItem.comments = [];
-
-				budgetReducers._state.lineItemComments.ids.forEach(function(commentId) {
-					var comment = budgetReducers._state.lineItemComments.list[commentId];
-
-					if (comment.lineItemId == lineItem.id) {
-						lineItem.comments.push(comment);
-					}
-				});
-
-				// Sort sectionGroupCostComments
-				var reverseOrder = true;
-				lineItem.comments =_array_sortByProperty(lineItem.comments, "lastModifiedOn", reverseOrder);
-
-				// Add lineItemCategory description
-				lineItem.categoryDescription = budgetReducers._state.lineItemCategories.list[lineItem.lineItemCategoryId].description;
-
-				selectedBudgetScenario.lineItems.push(lineItem);
-
-				// Set 'lastModifiedBy'
-				// Expected formats are 'system' or 'user:bobsmith'
-				// Will convert 'user:bobsmith' to 'Smith, Bob'
-				if (lineItem.lastModifiedBy) {
-					var split = lineItem.lastModifiedBy.split(":");
-					if (split.length > 0 && split[0] == "user") {
-						var loginId = split[1];
-
-						budgetReducers._state.users.ids.forEach(function(userId) {
-							var user = budgetReducers._state.users.list[userId];
-							if (user.loginId == loginId) {
-								lineItem.lastModifiedBy = user.firstName + " " + user.lastName;
-							}
-						});
-					}
-				}
-			});
-		},
-		calculateSectionGroups: function() {
-			var self = this;
-
-			var selectedBudgetScenario = budgetReducers._state.budgetScenarios.list[budgetReducers._state.ui.selectedBudgetScenarioId];
-			var sectionGroups = budgetReducers._state.scheduleSectionGroups;
-			var activeTerms = selectedBudgetScenario.terms;
-
-			// A 'sectionGroupContainer' contains all sectionGroups for that term/subjectCode/courseNumber
-			var calculatedSectionGroups = {
-				terms: selectedBudgetScenario.terms,
-				byTerm: {}
-			};
-
-			activeTerms.forEach(function(term) {
-				calculatedSectionGroups.byTerm[term] = [];
-			});
-
-			sectionGroups.uniqueKeys.forEach(function(uniqueKey) {
-				var sectionGroup = sectionGroups.list[uniqueKey];
-				var shortTerm = sectionGroup.termCode.slice(-2);
-
-				// Ensure sectionGroup belongs to an active term in this scenario
-				if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) {
-					return;
-				}
-
-				self.calculateSectionGroupCosts(sectionGroup);
-
-				// Generate container if one does not already exist
-				var container = self.calculateSectionGroupContainer(sectionGroup, calculatedSectionGroups.byTerm[shortTerm]);
-				container.sectionGroups.push(sectionGroup);
-			});
-
-			activeTerms.forEach(function(term) {
-				calculatedSectionGroups.byTerm[term] = _array_sortByProperty(calculatedSectionGroups.byTerm[term], "uniqueKey");
-			});
-
-			budgetReducers.reduce({
-				type: CALCULATE_SECTION_GROUPS,
-				payload: {
-					calculatedSectionGroups: calculatedSectionGroups
-				}
-			});
-
-			this.calculateTotalCost();
-		},
-		// Calculate sectionGroup costs
-		calculateSectionGroupCosts: function(sectionGroup) {
-			var budget = budgetReducers._state.budget;
-
-			// Course Costs
-			if (sectionGroup.readerAppointments == null || sectionGroup.readerAppointments == undefined) {
-				sectionGroup.readerCost = 0;
-			} else {
-				sectionGroup.readerCost = sectionGroup.readerAppointments * budget.readerCost;
-			}
-			if (sectionGroup.teachingAssistantAppointments == null || sectionGroup.teachingAssistantAppointments == undefined) {
-				sectionGroup.taCost = 0;
-			} else {
-				sectionGroup.taCost = sectionGroup.teachingAssistantAppointments * budget.taCost;
-			}
-
-			sectionGroup.courseCostSubTotal = sectionGroup.taCost + sectionGroup.readerCost;
-
-			// Instructor Costs
-			sectionGroup.instructorCostSubTotal = 0;
-
-			sectionGroup.assignedInstructorIds.forEach(function(instructorId) {
-				var instructor = budgetReducers._state.instructors.list[instructorId];
-				var instructorCost = budgetReducers._state.instructorCosts.list[instructor.instructorCostId];
-
-				if ( !(instructorCost) || !(instructorCost.cost) ) {
-					return;
-				}
-
-				sectionGroup.instructorCostSubTotal += instructorCost.cost;
-			});
-
-			sectionGroup.totalCost = sectionGroup.courseCostSubTotal + sectionGroup.instructorCostSubTotal;
-		},
-		calculateTotalCost: function() {
-			var courseCosts = 0;
-			var lineItemFunds = 0;
-			var terms = budgetReducers._state.calculatedSectionGroups.terms;
-			var sectionGroups = budgetReducers._state.calculatedSectionGroups.byTerm;
-
-			// Add sectionGroup costs
-			terms.forEach(function(term) {
-				sectionGroups[term].forEach(function(course) {
-					course.sectionGroups.forEach(function(sectionGroup) {
-						courseCosts += sectionGroup.totalCost;
-					});
-				});
-			});
-
-			// Add line item costs
-			budgetReducers._state.lineItems.ids.forEach(function(lineItemId) {
-				var amount = budgetReducers._state.lineItems.list[lineItemId].amount;
-				lineItemFunds += amount;
-			});
-
-			var totalCost = lineItemFunds - courseCosts;
-
-			budgetReducers.reduce({
-				type: CALCULATE_TOTAL_COST,
-				payload: {
-					totalCost: totalCost,
-					budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId
-				}
-			});
-		},
-		// Find or create a sectionGroupContainer for this sectionGroup
-		calculateSectionGroupContainer: function(sectionGroup, containers) {
-			var course = budgetReducers._state.courses.list[sectionGroup.courseId];
-			var uniqueKey = course.subjectCode + course.courseNumber;
-
-			newContainer = {
-				subjectCode: course.subjectCode,
-				courseNumber: course.courseNumber,
-				title: course.title,
-				uniqueKey: course.subjectCode + course.courseNumber,
-				sectionGroups: []
-			};
-
-			var properties = ["uniqueKey"];
-			var container = _array_find_by_properties(containers, properties, newContainer);
-
-			if(container == false || container == undefined) {
-				containers.push(newContainer);
-				container = newContainer;
-			}
-
-			return container;
 		}
 	};
 });

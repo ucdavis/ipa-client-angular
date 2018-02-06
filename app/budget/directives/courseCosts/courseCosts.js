@@ -14,12 +14,27 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 				budgetActions.selectTerm(activeTermTab);
 			};
 
-			scope.updateSectionGroupCost = function(sectionGroupCost) {
-				budgetActions.updateSectionGroupCost(sectionGroupCost);
+			scope.openAddCourseCommentsModal = function(sectionGroup) {
+				budgetActions.openAddCourseCommentsModal(sectionGroup);
 			};
 
-			scope.openCourseComments = function(course) {
-				budgetActions.openAddCourseCommentsModal(course);
+			scope.overrideSectionGroup = function(sectionGroup, property) {
+				budgetActions.overrideSectionGroup(sectionGroup, property);
+			};
+
+			// Reverts the specified override value
+			scope.revertOverride = function(sectionGroup, property) {
+				if (property == "seats") {
+					sectionGroup.overrideTotalSeats = null;
+				} else if (property == "sectionCount") {
+					sectionGroup.overrideSectionCount = null;
+				} else if (property == "teachingAssistantAppointments") {
+					sectionGroup.overrideTeachingAssistantAppointments = null;
+				} else if (property == "readerAppointments") {
+					sectionGroup.overrideReaderAppointments = null;
+				}
+
+				budgetActions.overrideSectionGroup(sectionGroup, property);
 			};
 
 			scope.toCurrency = function (value) {

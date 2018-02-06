@@ -17,8 +17,7 @@
 	<div class="budget-nav__side-bar">
 		<div class="budget-nav__line-item-tools" ng-if="selectedSection == 'Line Items'">
 			<div class="budget-nav__tool">
-				<ipa-button
-					icon-class="'glyphicon glyphicon-trash'"
+				<ipa-button icon-class="'glyphicon glyphicon-trash'"
 					size="'small'"
 					is-disabled="selectedLineItems.length == 0"
 					disabled-tooltip-message="'No line items selected'"
@@ -28,8 +27,7 @@
 				</ipa-button>
 			</div>
 			<div class="budget-nav__tool">
-				<ipa-button
-					icon-class="'glyphicon glyphicon-plus'"
+				<ipa-button icon-class="'glyphicon glyphicon-plus'"
 					size="'small'"
 					on-click="openAddLineItemModal()"
 					tooltip-message="'Add line item'">

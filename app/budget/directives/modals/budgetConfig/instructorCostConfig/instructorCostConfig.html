@@ -1,8 +1,7 @@
 <div class="instructor-cost-config">
-		<div class="instructor-cost-config__instructor" ng-repeat="instructor in newInstructors | orderBy: 'lastName'">
+		<div class="instructor-cost-config__instructor" ng-repeat="instructor in instructors | orderBy: 'lastName'">
 			<div class="instructor-cost-config__input">
-				<ipa-input
-					mode="'number'"
+				<ipa-input mode="'currency'"
 					value="instructor.cost"
 					on-update="updateInstructorCost(instructor)">
 				</ipa-input>
