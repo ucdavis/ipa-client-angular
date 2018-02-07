@@ -13,7 +13,6 @@ budgetApp.directive("instructorCostConfig", this.instructorCostConfig = function
 					budgetActions.updateInstructorCost(instructorCost);
 				} else {
 					budgetActions.createInstructorCost(instructorCost);
-
 				}
 			};
 		}

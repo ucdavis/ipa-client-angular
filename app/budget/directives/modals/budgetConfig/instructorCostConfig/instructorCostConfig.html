@@ -7,15 +7,16 @@
 				</ipa-input>
 			</div>
 
-			<div class="instructor-cost-config__label">
-				{{ instructor.lastName }}, {{ instructor.firstName }}
-			</div>
-
-			<div>
+			<div class="instructor-cost-config__type-container">
 				<instructor-type-dropdown instructor-types="instructorTypes"
 																	instructor-cost="instructor.instructorCost">
 				</instructor-type-dropdown>
 			</div>
+
+			<div class="instructor-cost-config__label">
+				{{ instructor.lastName }}, {{ instructor.firstName }}
+			</div>
+
 		</div>
 	</div>
 </div>

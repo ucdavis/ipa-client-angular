@@ -314,6 +314,29 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
 			});
 		},
+		assignInstructorType: function (instructorCost, instructorTypeId) {
+			instructorCost.instructorTypeId = instructorTypeId;
+
+			// Ensure cost is passed as a number
+			instructorCost.cost = parseFloat(instructorCost.cost);
+
+			budgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
+				var action = {
+					type: UPDATE_INSTRUCTOR_COST,
+					payload: {
+						instructorCost: newInstructorCost
+					}
+				};
+				budgetReducers.reduce(action);
+				budgetCalculations.calculateSectionGroups();
+				budgetCalculations.calculateTotalCost();
+				budgetCalculations.calculateInstructors();
+				$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
+			});
+
+		},
 		createInstructorType: function (instructorTypeDTO) {
 			var self = this;
 			instructorTypeDTO.cost = parseFloat(instructorTypeDTO.cost);

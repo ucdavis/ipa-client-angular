@@ -9,7 +9,7 @@ sharedApp.directive('instructorTypeDropdown', function($window, $location, $rout
 		},
 		link: function (scope, element, attrs) {
 			scope.assignInstructorType = function (instructorType) {
-				budgetActions.assignInstructorType(instructorCost);
+				budgetActions.assignInstructorType(scope.instructorCost, instructorType.id);
 			};
 		}
 	};
