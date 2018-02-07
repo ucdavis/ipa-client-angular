@@ -314,11 +314,41 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
 			});
 		},
-		assignInstructorType: function (instructorCost, instructorTypeId) {
-			instructorCost.instructorTypeId = instructorTypeId;
+		// Will create instructorCost before assigning instructorType if necessary
+		assignInstructorTypeAndCost: function (instructorCost, instructorTypeId) {
+			var self = this;
 
 			// Ensure cost is passed as a number
 			instructorCost.cost = parseFloat(instructorCost.cost);
+
+			// Make instructorCost if necessary
+			if (instructorCost.id <= 0) {
+				budgetService.createInstructorCost(instructorCost).then(function (newInstructorCost) {
+					var action = {
+						type: CREATE_INSTRUCTOR_COST,
+						payload: {
+							instructorCost: newInstructorCost
+						}
+					};
+					budgetReducers.reduce(action);
+					budgetCalculations.calculateSectionGroups();
+					budgetCalculations.calculateTotalCost();
+
+					newInstructorCost.instructorTypeId = instructorTypeId;
+
+					self.asignInstructorType(newInstructorCost);
+					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
+				});
+
+			} else {
+				instructorCost.instructorTypeId = instructorTypeId;
+				self.asignInstructorType(instructorCost);
+			}
+		},
+		asignInstructorType: function(instructorCost) {
+			var self = this;
 
 			budgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
 				var action = {
@@ -335,7 +365,6 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
 			});
-
 		},
 		createInstructorType: function (instructorTypeDTO) {
 			var self = this;
