@@ -291,6 +291,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			var instructorTypes = budgetReducers._state.instructorTypes;
 			var instructors = budgetReducers._state.instructors;
 			var instructorCosts = budgetReducers._state.instructorCosts;
+			var budgetId = budgetReducers._state.budget.id;
+
 			var calculatedInstructors = [];
 
 			instructors.ids.forEach(function(instructorId) {
@@ -316,6 +318,15 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 						}
 					});
 				});
+
+				if (instructor.instructorCost == null) {
+					instructor.instructorCost = {
+						id: null,
+						cost: null,
+						instructorId: instructor.id,
+						budgetId: budgetId
+					};
+				}
 			});
 
 			calculatedInstructors = _array_sortByProperty(calculatedInstructors, "lastName");

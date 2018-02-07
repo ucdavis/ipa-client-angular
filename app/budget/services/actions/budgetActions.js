@@ -178,14 +178,34 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			var self = this;
 			var instructorCost = Object.assign({}, instructorCostDto);
 
-			// InstructorCosts in the front end are blended instructor + instructorCosts
-			instructorCost.id = instructorCost.instructorCostId;
 			// Ensure cost is passed as a number
 			instructorCost.cost = parseFloat(instructorCost.cost);
 
 			budgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
 				var action = {
 					type: UPDATE_INSTRUCTOR_COST,
+					payload: {
+						instructorCost: newInstructorCost
+					}
+				};
+				budgetReducers.reduce(action);
+				budgetCalculations.calculateSectionGroups();
+				budgetCalculations.calculateTotalCost();
+				$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
+			});
+		},
+		createInstructorCost: function (instructorCostDto) {
+			var self = this;
+			var instructorCost = Object.assign({}, instructorCostDto);
+
+			// Ensure cost is passed as a number
+			instructorCost.cost = parseFloat(instructorCost.cost);
+
+			budgetService.createInstructorCost(instructorCost).then(function (newInstructorCost) {
+				var action = {
+					type: CREATE_INSTRUCTOR_COST,
 					payload: {
 						instructorCost: newInstructorCost
 					}

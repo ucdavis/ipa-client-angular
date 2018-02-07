@@ -260,6 +260,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					var instructorCost = action.payload.instructorCost;
 					instructorCosts.list[instructorCost.id] = instructorCost;
 					return instructorCosts;
+				case CREATE_INSTRUCTOR_COST:
+					var instructorCost = action.payload.instructorCost;
+					instructorCosts.ids.push(instructorCost.id);
+					instructorCosts.list[instructorCost.id] = instructorCost;
+					return instructorCosts;
 				default:
 					return instructorCosts;
 			}
