@@ -1,5 +1,5 @@
-<div class="budget-scenario-dropdown header--work-group btn-group">
-	<button class="btn btn-default dropdown-toggle budget-scenario-dropdown__toggle-ui"
+<div class="instructor-type-dropdown btn-group">
+	<button class="btn btn-default dropdown-toggle instructor-type-dropdown__toggle-ui"
 					type="button" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="true">
 		<span>
@@ -8,14 +8,13 @@
 		</span>
 	</button>
 
-	<ul class="dropdown-menu dropdown-container budget-scenario-edit-dropdown">
-		<li ng-repeat="instructorType in instructorTypes" class="budget-scenario-dropdown__row">
-			<a ng-click="assignInstructorType(instructorType)" class="budget-scenario-item">
+	<ul class="dropdown-menu dropdown-container">
+		<li ng-repeat="instructorType in instructorTypes" class="instructor-type-dropdown__row">
+			<a ng-click="assignInstructorType(instructorType)" class="instructor-type-dropdown__row-content">
 				<span>
 					{{ instructorType.description }}
 				</span>
 			</a>
 		</li>
 	</ul>
-
 </div>

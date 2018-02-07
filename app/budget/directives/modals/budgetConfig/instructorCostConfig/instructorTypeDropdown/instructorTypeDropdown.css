@@ -1,0 +1,14 @@
+.instructor-type-dropdown__toggle-ui {
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+.instructor-type-dropdown__row {
+	cursor: pointer;
+	height: 30px;
+}
+
+.instructor-type-dropdown__row-content {
+	display: flex;
+	justify-content: space-between;
+}

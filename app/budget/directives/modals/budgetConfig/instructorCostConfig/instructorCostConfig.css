@@ -19,3 +19,7 @@
 .instructor-cost-config__input {
 	width: 15%;
 }
+
+.instructor-cost-config__type-container {
+	padding-left: 10px;
+}
