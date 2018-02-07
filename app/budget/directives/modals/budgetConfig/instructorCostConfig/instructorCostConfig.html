@@ -1,14 +1,20 @@
 <div class="instructor-cost-config">
-		<div class="instructor-cost-config__instructor" ng-repeat="instructor in instructors | orderBy: 'lastName'">
+		<div class="instructor-cost-config__instructor" ng-repeat="instructorCost in instructors | orderBy: 'lastName'">
 			<div class="instructor-cost-config__input">
 				<ipa-input mode="'currency'"
-					value="instructor.cost"
-					on-update="updateInstructorCost(instructor)">
+					value="instructorCost.cost"
+					on-update="updateInstructorCost(instructorCost)">
 				</ipa-input>
 			</div>
 
 			<div class="instructor-cost-config__label">
-				{{ instructor.lastName }}, {{ instructor.firstName }}
+				{{ instructorCost.lastName }}, {{ instructorCost.firstName }}
+			</div>
+
+			<div>
+				<instructor-type-dropdown instructor-types="instructorTypes"
+																	instructor-cost="instructorCost">
+				</instructor-type-dropdown>
 			</div>
 		</div>
 	</div>

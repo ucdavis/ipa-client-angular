@@ -14,7 +14,8 @@
 			</group-cost-config>
 
 			<instructor-cost-config ng-show="view.activeTab == 'Instructor Cost'"
-				instructors="state.instructors">
+			                        instructors="state.calculatedInstructors"
+			                        instructor-types="state.calculatedInstructorTypes">
 			</instructor-cost-config>
 		</ipa-tabs>
 	</div>

@@ -37,6 +37,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				budgetReducers.reduce(action);
 				budgetCalculations.calculateInstructorTypes();
+				budgetCalculations.calculateInstructors();
 				self.selectBudgetScenario();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
@@ -324,6 +325,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				$rootScope.$emit('toast', { message: "Deleted instructor type", type: "SUCCESS" });
 				budgetCalculations.calculateInstructorTypes();
+				budgetCalculations.calculateInstructors();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not delete instructor type.", type: "ERROR" });
 			});
@@ -342,6 +344,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
 				budgetCalculations.calculateInstructorTypes();
+				budgetCalculations.calculateInstructors();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
 			});

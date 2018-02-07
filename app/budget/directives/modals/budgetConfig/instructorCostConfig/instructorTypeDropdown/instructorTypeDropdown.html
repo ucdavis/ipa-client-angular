@@ -1,0 +1,21 @@
+<div class="budget-scenario-dropdown header--work-group btn-group">
+	<button class="btn btn-default dropdown-toggle budget-scenario-dropdown__toggle-ui"
+					type="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="true">
+		<span>
+			{{ instructorCost.instructorType.description || 'Select a type' }}
+			<span class="caret"></span>
+		</span>
+	</button>
+
+	<ul class="dropdown-menu dropdown-container budget-scenario-edit-dropdown">
+		<li ng-repeat="instructorType in instructorTypes" class="budget-scenario-dropdown__row">
+			<a ng-click="assignInstructorType(instructorType)" class="budget-scenario-item">
+				<span>
+					{{ instructorType.name }}
+				</span>
+			</a>
+		</li>
+	</ul>
+
+</div>

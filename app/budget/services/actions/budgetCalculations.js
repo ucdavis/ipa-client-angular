@@ -286,6 +286,46 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					calculatedInstructorTypes: instructorTypeList
 				}
 			});
+		},
+		calculateInstructors: function() {
+			var instructorTypes = budgetReducers._state.instructorTypes;
+			var instructors = budgetReducers._state.instructors;
+			var instructorCosts = budgetReducers._state.instructorCosts;
+			var calculatedInstructors = [];
+
+			instructors.ids.forEach(function(instructorId) {
+				var instructor = instructors.list[instructorId];
+				instructor.instructorCost = null;
+				calculatedInstructors.push(instructor);
+
+				// Attach instructorCost
+				instructorCosts.ids.forEach(function(instructorCostId) {
+					var instructorCost = instructorCosts.list[instructorCostId];
+
+					if (instructorCost.id == instructor.instructorCostId) {
+						instructor.instructorCost = instructorCost;
+						instructorCost.instructorType = null;
+					}
+
+					// Attach instructorType
+					instructorTypes.ids.forEach(function(instructorTypeId) {
+						var instructorType = instructorTypes.list[instructorTypeId];
+
+						if (instructorType.id == instructorCost.instructorTypeId) {
+							instructorCost.instructorType = instructorType;
+						}
+					});
+				});
+			});
+
+			calculatedInstructors = _array_sortByProperty(calculatedInstructors, "lastName");
+
+			budgetReducers.reduce({
+				type: CALCULATE_INSTRUCTORS,
+				payload: {
+					calculatedInstructors: calculatedInstructors
+				}
+			});
 		}
 	};
 });

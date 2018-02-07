@@ -223,6 +223,16 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return instructors;
 			}
 		},
+		calculatedInstructorReducers: function (action, calculatedInstructors) {
+			switch (action.type) {
+				case INIT_STATE:
+					return [];
+				case CALCULATE_INSTRUCTORS:
+					return action.payload.calculatedInstructors;
+				default:
+					return calculatedInstructors;
+			}
+		},
 		instructorCostReducers: function (action, instructorCosts) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -664,6 +674,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 
 			newState.calculatedSectionGroups = scope.calculatedSectionGroupReducers(action, scope._state.calculatedSectionGroups);
 			newState.calculatedInstructorTypes = scope.calculatedInstructorTypeReducers(action, scope._state.calculatedInstructorTypes);
+			newState.calculatedInstructors = scope.calculatedInstructorReducers(action, scope._state.calculatedInstructors);
 
 			scope._state = newState;
 
@@ -695,6 +706,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.instructors = budgetSelectors.generateInstructors(newState.instructors, newState.instructorCosts);
 			newPageState.calculatedSectionGroups = newState.calculatedSectionGroups;
 			newPageState.calculatedInstructorTypes = newState.calculatedInstructorTypes;
+			newPageState.calculatedInstructors = newState.calculatedInstructors;
+			newPageState.calculatedInstructors = newState.calculatedInstructors;
 
 			$rootScope.$emit('budgetStateChanged', newPageState);
 			console.log(newPageState);
