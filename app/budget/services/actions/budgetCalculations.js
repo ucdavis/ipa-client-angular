@@ -251,6 +251,43 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			} else {
 				sectionGroup.overrideReaderAppointments = angular.copy(sectionGroup.readerAppointments);
 			}
+
+			// Generate Instructor cost overrides
+			sectionGroup.overrideInstructorCost = null;
+
+			// (1st option) attempt to use per-course instructor cost
+			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.instructorCost !== null) {
+				sectionGroup.overrideInstructorCost = angular.copy(sectionGroup.sectionGroupCost.instructorCost);
+				sectionGroup.overrideInstructorCostSource = "course";
+			} else {
+				// (2nd option) Attempt to use per-instructor cost
+				var instructorCost = null;
+
+				// Attempt to use instructor override
+				if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.instructorId != null) {
+					instructorCost = budgetReducers._state.instructorCosts.byInstructorId[sectionGroup.sectionGroupCost.instructorId];
+				}
+
+				// Attempt to use assigned instructors
+				if (instructorCost == null) {
+					sectionGroup.assignedInstructorIds.forEach(function(instructorId) {
+						instructorCost = budgetReducers._state.instructorCosts.byInstructorId[instructorId];
+					});
+				}
+
+				if (instructorCost && instructorCost.cost != null) {
+					sectionGroup.overrideInstructorCost = angular.copy(instructorCost.cost);
+					sectionGroup.overrideInstructorCostSource = "instructor";
+				} else if (instructorCost) {
+					// (3rd option) Attempt to use per instructorType instructor cost
+					var instructorType = budgetReducers._state.instructorTypes.list[instructorCost.instructorTypeId];
+
+					if (instructorType && instructorType.cost != null) {
+						sectionGroup.overrideInstructorCost = angular.copy(instructorType.cost);
+						sectionGroup.overrideInstructorCostSource = "type";
+					}
+				}
+			}
 		},
 		calculateSectionGroupCostComments: function(sectionGroupCost) {
 			if (sectionGroupCost == null) { return; }
