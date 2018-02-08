@@ -238,32 +238,38 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case INIT_STATE:
 					instructorCosts = {
 						ids: [],
-						list: []
+						list: [],
+						byInstructorId: {}
 					};
 
 					action.payload.instructorCosts.forEach( function(instructorCost) {
 						instructorCosts.ids.push(instructorCost.id);
 						instructorCosts.list[instructorCost.id] = instructorCost;
+						instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
 					});
 					return instructorCosts;
 				case DELETE_INSTRUCTOR_TYPE:
 					var instructorTypeId = action.payload.instructorTypeId;
 					instructorCosts.ids.forEach(function(instructorCostId) {
 						var instructorCost = instructorCosts.list[instructorCostId];
-
+						var instructorCostByInstructor = instructorCosts.byInstructorId[instructorCost.instructorId];
 						if (instructorCost.instructorTypeId == instructorTypeId) {
 							instructorCost.instructorTypeId = null;
+							instructorCostByInstructor.instructorTypeId = null;
 						}
 					});
 					return instructorCosts;
 				case UPDATE_INSTRUCTOR_COST:
 					var instructorCost = action.payload.instructorCost;
 					instructorCosts.list[instructorCost.id] = instructorCost;
+					instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
+
 					return instructorCosts;
 				case CREATE_INSTRUCTOR_COST:
 					var instructorCost = action.payload.instructorCost;
 					instructorCosts.ids.push(instructorCost.id);
 					instructorCosts.list[instructorCost.id] = instructorCost;
+					instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
 					return instructorCosts;
 				default:
 					return instructorCosts;
