@@ -244,7 +244,6 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			// Generate Instructor cost overrides
 			sectionGroup.overrideInstructorCost = null;
 
-			if (sectionGroup.uniqueKey == "ECS-010-A-201810") {debugger;}
 			// (1st option) attempt to use per-course instructor cost
 			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.cost != null) {
 				sectionGroup.overrideInstructorCost = angular.copy(sectionGroup.sectionGroupCost.cost);

@@ -105,28 +105,20 @@
 
 					<!-- Reason -->
 					<td class="instructor-costs__table-cell">
-							<!--
-							<input
-								type="text"
-								ng-model="sectionGroupCost.reason"
-								auto-input
-								on-enter="updateSectionGroupCost(sectionGroupCost)"
-								on-blur="updateSectionGroupCost(sectionGroupCost)">
-							-->
+						<div class="instructor-costs__cost-container">
+							<ipa-input value="sectionGroup.sectionGroupCost.reason"
+							           on-update="updateSectionGroupCost(sectionGroup.sectionGroupCost)">
+							</ipa-input>
+						</div>
 					</td>
 
 					<!-- Cost -->
 					<td class="instructor-costs__table-cell">
 						<div class="instructor-costs__cost-container">
-							<ipa-input
-								mode="'currency'"
-								value="sectionGroup.overrideInstructorCost"
-								on-update="updateInstructorCost(sectionGroup.sectionGroupCost, sectionGroup.overrideInstructorCost)">
+							<ipa-input mode="'currency'"
+							           value="sectionGroup.overrideInstructorCost"
+							           on-update="updateInstructorCost(sectionGroup.sectionGroupCost, sectionGroup.overrideInstructorCost)">
 							</ipa-input>
-							<!--
-							<instructor-cost-input
-							section-group-cost="sectionGroupCost"></instructor-cost-input>
-							-->
 						</div>
 					</td>
 
@@ -134,10 +126,10 @@
 					<td class="instructor-costs__table-cell">
 						<div class="instructor-costs__cell-container">
 							<ipa-button button-text="'See Comments'"
-								text="'Comments'"
-								color="'light'"
-								icon-class="'entypo entypo-chat'"
-								on-click="openAddCourseCommentsModal(sectionGroup)">
+							            text="'Comments'"
+							            color="'light'"
+							            icon-class="'entypo entypo-chat'"
+							            on-click="openAddCourseCommentsModal(sectionGroup)">
 							</ipa-button>
 						</div>
 					</td>
