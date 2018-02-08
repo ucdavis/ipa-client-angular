@@ -1,5 +1,6 @@
 <div class="ipa-dropdown">
-	<div class="expand-button expand-button-skin"
+	<div class="expand-button"
+			ng-class="{'ipa-dropdown__expand-button-skin--default': !style, 'ipa-dropdown__expand-button-skin--minimal': style == 'minimal'}"
 			ng-click="toggleDropdown()"
 			ng-class="{ 'selected': expanded == true }">
 
