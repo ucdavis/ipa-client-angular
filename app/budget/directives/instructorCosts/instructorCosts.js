@@ -39,6 +39,12 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 			scope.toCurrency = function (value) {
 				return toCurrency(value);
 			};
+
+			scope.updateInstructorCost = function(sectionGroupCost, overrideInstructorCost) {
+				sectionGroupCost.cost = parseFloat(overrideInstructorCost);
+
+				budgetActions.updateSectionGroupCost(sectionGroupCost);
+			};
 		} // end link
 	};
 });
