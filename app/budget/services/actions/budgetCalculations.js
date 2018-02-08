@@ -99,8 +99,6 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					return;
 				}
 
-				self.calculateSectionGroupFinancialCosts(sectionGroup);
-
 				// Find the sectionGroupCost for this sectionGroupCost/Scenario combo
 				sectionGroup.sectionGroupCost = null;
 				var sectionGroupCostIds = budgetReducers._state.sectionGroupCosts.bySectionGroupId[sectionGroup.id] || [];
@@ -116,6 +114,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				self.calculateSectionGroupOverrides(sectionGroup);
 
 				self.calculateSectionGroupCostComments(sectionGroup.sectionGroupCost);
+
+				self.calculateSectionGroupFinancialCosts(sectionGroup);
 
 				// Generate container if one does not already exist
 				var container = self.calculateSectionGroupContainer(sectionGroup, calculatedSectionGroups.byTerm[shortTerm]);
@@ -154,18 +154,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			sectionGroup.courseCostSubTotal = sectionGroup.taCost + sectionGroup.readerCost;
 
 			// Instructor Costs
-			sectionGroup.instructorCostSubTotal = 0;
-
-			sectionGroup.assignedInstructorIds.forEach(function(instructorId) {
-				var instructor = budgetReducers._state.instructors.list[instructorId];
-				var instructorCost = budgetReducers._state.instructorCosts.list[instructor.instructorCostId];
-
-				if ( !(instructorCost) || !(instructorCost.cost) ) {
-					return;
-				}
-
-				sectionGroup.instructorCostSubTotal += instructorCost.cost;
-			});
+			sectionGroup.instructorCostSubTotal = sectionGroup.overrideInstructorCost || 0;
 
 			sectionGroup.totalCost = sectionGroup.courseCostSubTotal + sectionGroup.instructorCostSubTotal;
 		},
