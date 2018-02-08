@@ -4,7 +4,7 @@ sharedApp.directive('ipaDropdown', function() {
 		templateUrl: 'ipaDropdown.html', // directive html found here:
 		scope: {
 			items: '<', // Each item is expected to have an id, description (display value), and selected (bool flag).
-			headerText: '<',
+			headerText: '<?',
 			buttonText: '<',
 			searchable: '<',
 			selectItem: '&'
