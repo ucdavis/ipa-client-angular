@@ -106,3 +106,10 @@
 	width: 100vw;
 	height: 100vh;
 }
+
+.ipa-dropdown__button-text {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 2px;
+}

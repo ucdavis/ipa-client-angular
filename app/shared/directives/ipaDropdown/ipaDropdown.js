@@ -8,6 +8,7 @@ sharedApp.directive('ipaDropdown', function() {
 			buttonText: '<',
 			searchable: '<',
 			selectItem: '&',
+			buttonClass: '<?',
 			style: '<?'
 		},
 		replace: true, // Replace with the template below
