@@ -221,11 +221,17 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 		calculateSectionGroupInstructors: function(sectionGroup) {
 			var instructor = null;
 			var originalInstructor = null;
+
 			if (sectionGroup.sectionGroupCost) {
 				instructor = budgetReducers._state.instructors.list[sectionGroup.sectionGroupCost.instructorId];
 				originalInstructor = budgetReducers._state.instructors.list[sectionGroup.sectionGroupCost.originalInstructorId];
+
+				if (instructor == null) {
+					instructor = budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
+				}
 			} else {
 				instructor = budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
+				originalInstructor = null;
 			}
 
 			sectionGroup.instructorName = instructor ? instructor.lastName + ", " + instructor.firstName : null;
