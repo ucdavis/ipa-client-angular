@@ -37,6 +37,9 @@
 
 .instructor-costs__instructor-container {
 	padding-left: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .instructor-costs__cost-container {
@@ -66,4 +69,24 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.instructor-costs__instructor-reversion-ui {
+	width: 30%;
+}
+
+.instructor-costs__instructor-dropdown-container {
+	width: 70%;
+}
+
+.instructor-costs__instructor-dropdown {
+	width: 100px;
+}
+
+.instructor-costs__revert-ui {
+	padding: 5px;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	cursor: pointer;
+	margin-bottom: 2px;
 }

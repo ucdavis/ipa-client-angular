@@ -58,6 +58,9 @@ budgetApp.factory("budgetService", this.budgetService = function($http, $q, $win
 		updateInstructorCost: function(instructorCost) {
 			return apiService.put("/api/budgetView/instructorCosts/" + instructorCost.id, instructorCost);
 		},
+		createInstructorCost: function(instructorCost) {
+			return apiService.put("/api/budgetView/budgets/" + instructorCost.budgetId + "/instructorCosts", instructorCost);
+		},
 
 		// SectionGroupCostComment
 		createSectionGroupCostComment: function(sectionGroupCostComment) {

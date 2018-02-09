@@ -18,19 +18,19 @@
 		<div class="budget-nav__line-item-tools" ng-if="selectedSection == 'Line Items'">
 			<div class="budget-nav__tool">
 				<ipa-button icon-class="'glyphicon glyphicon-trash'"
-					size="'small'"
-					is-disabled="selectedLineItems.length == 0"
-					disabled-tooltip-message="'No line items selected'"
-					on-click="deleteLineItems()"
-					tooltip-message="'Delete line items'"
-					confirm-message="'Are you sure you want to remove the selected line items?'">
+				            size="'small'"
+				            is-disabled="selectedLineItems.length == 0"
+				            disabled-tooltip-message="'No line items selected'"
+				            on-click="deleteLineItems()"
+				            tooltip-message="'Delete line items'"
+				            confirm-message="'Are you sure you want to remove the selected line items?'">
 				</ipa-button>
 			</div>
 			<div class="budget-nav__tool">
 				<ipa-button icon-class="'glyphicon glyphicon-plus'"
-					size="'small'"
-					on-click="openAddLineItemModal()"
-					tooltip-message="'Add line item'">
+				            size="'small'"
+				            on-click="openAddLineItemModal()"
+				            tooltip-message="'Add line item'">
 				</ipa-button>
 			</div>
 		</div>

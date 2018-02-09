@@ -37,6 +37,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				budgetReducers.reduce(action);
 				budgetCalculations.calculateInstructorTypes();
+				budgetCalculations.calculateInstructors();
 				self.selectBudgetScenario();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
@@ -177,14 +178,34 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			var self = this;
 			var instructorCost = Object.assign({}, instructorCostDto);
 
-			// InstructorCosts in the front end are blended instructor + instructorCosts
-			instructorCost.id = instructorCost.instructorCostId;
 			// Ensure cost is passed as a number
 			instructorCost.cost = parseFloat(instructorCost.cost);
 
 			budgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
 				var action = {
 					type: UPDATE_INSTRUCTOR_COST,
+					payload: {
+						instructorCost: newInstructorCost
+					}
+				};
+				budgetReducers.reduce(action);
+				budgetCalculations.calculateSectionGroups();
+				budgetCalculations.calculateTotalCost();
+				$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
+			});
+		},
+		createInstructorCost: function (instructorCostDto) {
+			var self = this;
+			var instructorCost = Object.assign({}, instructorCostDto);
+
+			// Ensure cost is passed as a number
+			instructorCost.cost = parseFloat(instructorCost.cost);
+
+			budgetService.createInstructorCost(instructorCost).then(function (newInstructorCost) {
+				var action = {
+					type: CREATE_INSTRUCTOR_COST,
 					payload: {
 						instructorCost: newInstructorCost
 					}
@@ -293,6 +314,58 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
 			});
 		},
+		// Will create instructorCost before assigning instructorType if necessary
+		assignInstructorTypeAndCost: function (instructorCost, instructorTypeId) {
+			var self = this;
+
+			// Ensure cost is passed as a number
+			instructorCost.cost = parseFloat(instructorCost.cost);
+
+			// Make instructorCost if necessary
+			if (instructorCost.id <= 0) {
+				budgetService.createInstructorCost(instructorCost).then(function (newInstructorCost) {
+					var action = {
+						type: CREATE_INSTRUCTOR_COST,
+						payload: {
+							instructorCost: newInstructorCost
+						}
+					};
+					budgetReducers.reduce(action);
+					budgetCalculations.calculateSectionGroups();
+					budgetCalculations.calculateTotalCost();
+
+					newInstructorCost.instructorTypeId = instructorTypeId;
+
+					self.asignInstructorType(newInstructorCost);
+					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
+				});
+
+			} else {
+				instructorCost.instructorTypeId = instructorTypeId;
+				self.asignInstructorType(instructorCost);
+			}
+		},
+		asignInstructorType: function(instructorCost) {
+			var self = this;
+
+			budgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
+				var action = {
+					type: UPDATE_INSTRUCTOR_COST,
+					payload: {
+						instructorCost: newInstructorCost
+					}
+				};
+				budgetReducers.reduce(action);
+				budgetCalculations.calculateSectionGroups();
+				budgetCalculations.calculateTotalCost();
+				budgetCalculations.calculateInstructors();
+				$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
+			});
+		},
 		createInstructorType: function (instructorTypeDTO) {
 			var self = this;
 			instructorTypeDTO.cost = parseFloat(instructorTypeDTO.cost);
@@ -324,6 +397,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				$rootScope.$emit('toast', { message: "Deleted instructor type", type: "SUCCESS" });
 				budgetCalculations.calculateInstructorTypes();
+				budgetCalculations.calculateInstructors();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not delete instructor type.", type: "ERROR" });
 			});
@@ -342,6 +416,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
 				budgetCalculations.calculateInstructorTypes();
+				budgetCalculations.calculateInstructors();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
 			});
@@ -362,6 +437,62 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update costs.", type: "ERROR" });
 			});
+		},
+		setOriginalInstructorFromSectionGroup: function (sectionGroup, originalInstructorId) {
+			var self = this;
+			var sectionGroupCost = sectionGroup.sectionGroupCost;
+
+			// Create sectionGroupCost if necessary
+			if (sectionGroupCost == false || sectionGroupCost == null) {
+				var sectionGroupCostDTO = {
+					sectionGroupId: sectionGroup.id,
+					budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId,
+					originalInstructorId: originalInstructorId
+				};
+
+				budgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
+					budgetReducers.reduce({
+						type: CREATE_SECTION_GROUP_COST,
+						payload: {
+							sectionGroupCost: newSectionGroupCost
+						}
+					});
+					$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
+				});
+			} else {
+				sectionGroupCost.originalInstructorId = originalInstructorId;
+				self.updateSectionGroupCost(sectionGroupCost);
+			}
+		},
+		setInstructorFromSectionGroup: function (sectionGroup, instructorId) {
+			var self = this;
+			var sectionGroupCost = sectionGroup.sectionGroupCost;
+
+			// Create sectionGroupCost if necessary
+			if (sectionGroupCost == false || sectionGroupCost == null) {
+				var sectionGroupCostDTO = {
+					sectionGroupId: sectionGroup.id,
+					budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId,
+					instructorId: instructorId
+				};
+
+				budgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
+					budgetReducers.reduce({
+						type: CREATE_SECTION_GROUP_COST,
+						payload: {
+							sectionGroupCost: newSectionGroupCost
+						}
+					});
+					$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
+				});
+			} else {
+				sectionGroupCost.instructorId = instructorId;
+				self.updateSectionGroupCost(sectionGroupCost);
+			}
 		},
 		// Will also create sectionGroupCost if it does not already exist.
 		createSectionGroupCostCommentFromSectionGroup: function (comment, sectionGroup, currentUserLoginId) {
@@ -508,12 +639,14 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			budgetReducers.reduce(action);
 		},
 		selectBudgetScenario: function(selectedScenarioId) {
-			// If one was not provided, continue to use currently set scenario
-			if (selectedScenarioId == false || selectedScenarioId == null) {
+			// If scenarioId was not provided, attempt to use currently selected scenario
+			if (selectedScenarioId == null) {
 				selectedScenarioId = angular.copy(budgetReducers._state.ui.selectedBudgetScenarioId);
-			} else if (selectedScenarioId == false || selectedScenarioId == null || selectedScenarioId == "undefined") {
+
 				// If a scenario was not already selected, default to first scenario
-				selectedScenarioId = budgetReducers._state.budgetScenarios.ids[0];
+				if (selectedScenarioId == null) {
+					selectedScenarioId = budgetReducers._state.budgetScenarios.ids[0];
+				}
 			}
 
 			localStorage.setItem('selectedBudgetScenarioId', selectedScenarioId);

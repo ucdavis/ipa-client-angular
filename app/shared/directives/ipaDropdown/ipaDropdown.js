@@ -4,10 +4,12 @@ sharedApp.directive('ipaDropdown', function() {
 		templateUrl: 'ipaDropdown.html', // directive html found here:
 		scope: {
 			items: '<', // Each item is expected to have an id, description (display value), and selected (bool flag).
-			headerText: '<',
+			headerText: '<?',
 			buttonText: '<',
 			searchable: '<',
-			selectItem: '&'
+			selectItem: '&',
+			buttonClass: '<?',
+			style: '<?'
 		},
 		replace: true, // Replace with the template below
 		link: function(scope, element, attrs, iAttr) {
@@ -56,8 +58,13 @@ sharedApp.directive('ipaDropdown', function() {
 				scope.expanded = false;
 			};
 
+			scope.openDropdown = function() {
+				scope.expanded = true;
+			};
+
 			scope.selectDropdownItem = function(item) {
 				scope.selectItem({item: item});
+				scope.closeDropdown();
 			};
 		}
 	};
