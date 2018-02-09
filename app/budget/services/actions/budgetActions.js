@@ -639,12 +639,14 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			budgetReducers.reduce(action);
 		},
 		selectBudgetScenario: function(selectedScenarioId) {
-			// If one was not provided, continue to use currently set scenario
-			if (selectedScenarioId == false || selectedScenarioId == null) {
+			// If scenarioId was not provided, attempt to use currently selected scenario
+			if (selectedScenarioId == null) {
 				selectedScenarioId = angular.copy(budgetReducers._state.ui.selectedBudgetScenarioId);
-			} else if (selectedScenarioId == false || selectedScenarioId == null || selectedScenarioId == "undefined") {
+
 				// If a scenario was not already selected, default to first scenario
-				selectedScenarioId = budgetReducers._state.budgetScenarios.ids[0];
+				if (selectedScenarioId == null) {
+					selectedScenarioId = budgetReducers._state.budgetScenarios.ids[0];
+				}
 			}
 
 			localStorage.setItem('selectedBudgetScenarioId', selectedScenarioId);
