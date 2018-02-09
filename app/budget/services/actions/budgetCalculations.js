@@ -111,10 +111,16 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					}
 				});
 
+				// Generate the placeholders used while editing by cascading values from the relevant sources
 				self.calculateSectionGroupOverrides(sectionGroup);
 
+				// Attach comments data
 				self.calculateSectionGroupCostComments(sectionGroup.sectionGroupCost);
 
+				// Attach instructors
+				self.calculateSectionGroupInstructors(sectionGroup);
+
+				// Attach cost data
 				self.calculateSectionGroupFinancialCosts(sectionGroup);
 
 				// Generate container if one does not already exist
@@ -211,6 +217,19 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			}
 
 			return container;
+		},
+		calculateSectionGroupInstructors: function(sectionGroup) {
+			var instructor = null;
+			var originalInstructor = null;
+			if (sectionGroup.sectionGroupCost) {
+				instructor = budgetReducers._state.instructors.list[sectionGroup.sectionGroupCost.instructorId];
+				originalInstructor = budgetReducers._state.instructors.list[sectionGroup.sectionGroupCost.originalInstructorId];
+			} else {
+				instructor = budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
+			}
+
+			sectionGroup.instructorName = instructor ? instructor.lastName + ", " + instructor.firstName : null;
+			sectionGroup.originalInstructorName = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
 		},
 		calculateSectionGroupOverrides: function(sectionGroup) {
 			// Generate totalSeats override

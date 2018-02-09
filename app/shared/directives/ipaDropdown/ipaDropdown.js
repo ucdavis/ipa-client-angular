@@ -57,8 +57,13 @@ sharedApp.directive('ipaDropdown', function() {
 				scope.expanded = false;
 			};
 
+			scope.openDropdown = function() {
+				scope.expanded = true;
+			};
+
 			scope.selectDropdownItem = function(item) {
 				scope.selectItem({item: item});
+				scope.closeDropdown();
 			};
 		}
 	};

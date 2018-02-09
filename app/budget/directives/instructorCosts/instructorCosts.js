@@ -43,7 +43,6 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 			};
 
 			scope.updateSectionGroupCost = function(sectionGroupCost) {
-				debugger;
 				budgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 		} // end link

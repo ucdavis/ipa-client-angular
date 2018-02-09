@@ -438,6 +438,62 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not update costs.", type: "ERROR" });
 			});
 		},
+		setOriginalInstructorFromSectionGroup: function (sectionGroup, originalInstructorId) {
+			var self = this;
+			var sectionGroupCost = sectionGroup.sectionGroupCost;
+
+			// Create sectionGroupCost if necessary
+			if (sectionGroupCost == false || sectionGroupCost == null) {
+				var sectionGroupCostDTO = {
+					sectionGroupId: sectionGroup.id,
+					budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId,
+					originalInstructorId: originalInstructorId
+				};
+
+				budgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
+					budgetReducers.reduce({
+						type: CREATE_SECTION_GROUP_COST,
+						payload: {
+							sectionGroupCost: newSectionGroupCost
+						}
+					});
+					$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
+				});
+			} else {
+				sectionGroupCost.originalInstructorId = originalInstructorId;
+				self.updateSectionGroupCost(sectionGroupCost);
+			}
+		},
+		setInstructorFromSectionGroup: function (sectionGroup, instructorId) {
+			var self = this;
+			var sectionGroupCost = sectionGroup.sectionGroupCost;
+
+			// Create sectionGroupCost if necessary
+			if (sectionGroupCost == false || sectionGroupCost == null) {
+				var sectionGroupCostDTO = {
+					sectionGroupId: sectionGroup.id,
+					budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId,
+					instructorId: instructorId
+				};
+
+				budgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
+					budgetReducers.reduce({
+						type: CREATE_SECTION_GROUP_COST,
+						payload: {
+							sectionGroupCost: newSectionGroupCost
+						}
+					});
+					$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
+				});
+			} else {
+				sectionGroupCost.instructorId = instructorId;
+				self.updateSectionGroupCost(sectionGroupCost);
+			}
+		},
 		// Will also create sectionGroupCost if it does not already exist.
 		createSectionGroupCostCommentFromSectionGroup: function (comment, sectionGroup, currentUserLoginId) {
 			var self = this;
