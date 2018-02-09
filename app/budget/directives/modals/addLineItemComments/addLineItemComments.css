@@ -19,6 +19,7 @@
 
 .add-line-item-comments .comment-body {
 	padding: 1%;
+	white-space: pre-wrap;
 }
 
 .add-line-item-comments .comment-textarea {
