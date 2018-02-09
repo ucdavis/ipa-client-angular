@@ -457,6 +457,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 							sectionGroupCost: newSectionGroupCost
 						}
 					});
+
+					self.updateSectionGroupCost(newSectionGroupCost);
 					$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
@@ -485,6 +487,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 							sectionGroupCost: newSectionGroupCost
 						}
 					});
+					self.updateSectionGroupCost(newSectionGroupCost);
 					$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
