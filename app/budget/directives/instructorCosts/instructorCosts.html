@@ -78,24 +78,27 @@
 						</div>
 					</td>
 
-					<!-- Instructor -->
+					<!-- Regular instructor -->
 					<td class="instructor-costs__table-cell">
 						<div class="instructor-costs__instructor-container">
-							<instructor-assignment-dropdown
-								mode="'originalInstructor'"
-								section-group="sectionGroup"
-								instructors="instructors"
-								course="course">
-							</instructor-assignment-dropdown>
-							<ipa-button
-								ng-show="sectionGroup.sectionGroupCost.originalInstructor"
-								class="instructor-costs__remove-assignment-ui"
-								size="'small'"
-								icon-class="'glyphicon glyphicon-remove'"
-								confirm-message="'Are you sure you want to remove this instructor?'"
-								tooltip-message="'Delete assignment'"
-								on-click="removeOriginalInstructor(sectionGroup.sectionGroupCost)">
-							</ipa-button>
+							<div class="instructor-costs__instructor-dropdown-container">
+								<instructor-assignment-dropdown
+									mode="'originalInstructor'"
+									section-group="sectionGroup"
+									instructors="instructors"
+									course="course">
+								</instructor-assignment-dropdown>
+							</div>
+							<div class="instructor-costs__instructor-reversion-ui">
+								<div class="glyphicon glyphicon-remove instructor-costs__revert-ui"
+									uib-tooltip="Remove instructor"
+									confirm-button="removeOriginalInstructor(sectionGroup.sectionGroupCost)"
+									message="Are you sure you want to remove this instructor?"
+									yes="Remove"
+									no="Cancel"
+									ng-show="sectionGroup.sectionGroupCost.originalInstructorId > 0">
+								</div>
+							</div>
 						</div>
 					</td>
 
