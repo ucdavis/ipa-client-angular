@@ -1,9 +1,10 @@
 <div class="ipa-dropdown">
-	<div class="expand-button expand-button-skin"
-			ng-click="toggleDropdown()"
+	<div class="expand-button"
+			ng-class="{'ipa-dropdown__expand-button-skin--default': !style, 'ipa-dropdown__expand-button-skin--minimal': style == 'minimal'}"
+			ng-click="openDropdown()"
 			ng-class="{ 'selected': expanded == true }">
 
-			<div>
+			<div class="ipa-dropdown__button-text" ng-class="buttonClass">
 				{{ buttonText }}
 			</div>
 			<div>
@@ -16,7 +17,7 @@
 		</div>
 
 		<div class="dropdown">
-			<div class="header-row">
+			<div ng-show="headerText" class="header-row">
 				<div>
 					{{ headerText }}
 				</div>

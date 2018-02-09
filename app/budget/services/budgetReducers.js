@@ -223,32 +223,53 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return instructors;
 			}
 		},
+		calculatedInstructorReducers: function (action, calculatedInstructors) {
+			switch (action.type) {
+				case INIT_STATE:
+					return [];
+				case CALCULATE_INSTRUCTORS:
+					return action.payload.calculatedInstructors;
+				default:
+					return calculatedInstructors;
+			}
+		},
 		instructorCostReducers: function (action, instructorCosts) {
 			switch (action.type) {
 				case INIT_STATE:
 					instructorCosts = {
 						ids: [],
-						list: []
+						list: [],
+						byInstructorId: {}
 					};
 
 					action.payload.instructorCosts.forEach( function(instructorCost) {
 						instructorCosts.ids.push(instructorCost.id);
 						instructorCosts.list[instructorCost.id] = instructorCost;
+						instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
 					});
 					return instructorCosts;
 				case DELETE_INSTRUCTOR_TYPE:
 					var instructorTypeId = action.payload.instructorTypeId;
 					instructorCosts.ids.forEach(function(instructorCostId) {
 						var instructorCost = instructorCosts.list[instructorCostId];
-
+						var instructorCostByInstructor = instructorCosts.byInstructorId[instructorCost.instructorId];
 						if (instructorCost.instructorTypeId == instructorTypeId) {
 							instructorCost.instructorTypeId = null;
+							instructorCostByInstructor.instructorTypeId = null;
 						}
 					});
 					return instructorCosts;
 				case UPDATE_INSTRUCTOR_COST:
 					var instructorCost = action.payload.instructorCost;
 					instructorCosts.list[instructorCost.id] = instructorCost;
+					instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
+
+					return instructorCosts;
+				case CREATE_INSTRUCTOR_COST:
+					var instructorCost = action.payload.instructorCost;
+					instructorCosts.ids.push(instructorCost.id);
+					instructorCosts.list[instructorCost.id] = instructorCost;
+					instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
 					return instructorCosts;
 				default:
 					return instructorCosts;
@@ -664,6 +685,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 
 			newState.calculatedSectionGroups = scope.calculatedSectionGroupReducers(action, scope._state.calculatedSectionGroups);
 			newState.calculatedInstructorTypes = scope.calculatedInstructorTypeReducers(action, scope._state.calculatedInstructorTypes);
+			newState.calculatedInstructors = scope.calculatedInstructorReducers(action, scope._state.calculatedInstructors);
 
 			scope._state = newState;
 
@@ -695,6 +717,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.instructors = budgetSelectors.generateInstructors(newState.instructors, newState.instructorCosts);
 			newPageState.calculatedSectionGroups = newState.calculatedSectionGroups;
 			newPageState.calculatedInstructorTypes = newState.calculatedInstructorTypes;
+			newPageState.calculatedInstructors = newState.calculatedInstructors;
+			newPageState.calculatedInstructors = newState.calculatedInstructors;
 
 			$rootScope.$emit('budgetStateChanged', newPageState);
 			console.log(newPageState);

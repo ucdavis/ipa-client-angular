@@ -5,19 +5,17 @@ budgetApp.directive("instructorAssignmentDropdown", this.instructorAssignmentDro
 		replace: true,
 		scope: {
 			mode: '<',
-			sectionGroupCost: '<',
+			sectionGroup: '<',
 			instructors: '<',
 			course: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.setInstructor = function(instructor) {
-				scope.sectionGroupCost.instructorId = instructor.id;
-				budgetActions.updateSectionGroupCost(scope.sectionGroupCost);
+				budgetActions.setInstructorFromSectionGroup(scope.sectionGroup, instructor.id);
 			};
 
 			scope.setOriginalInstructor = function(originalInstructor) {
-				scope.sectionGroupCost.originalInstructorId = originalInstructor.id;
-				budgetActions.updateSectionGroupCost(scope.sectionGroupCost);
+				budgetActions.setOriginalInstructorFromSectionGroup(scope.sectionGroup, originalInstructor.id);
 			};
 		} // end link
 	};

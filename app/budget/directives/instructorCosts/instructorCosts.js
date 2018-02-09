@@ -22,10 +22,6 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 				budgetActions.selectTerm(activeTermTab);
 			};
 
-			scope.updateSectionGroupCost = function(sectionGroupCost) {
-				budgetActions.updateSectionGroupCost(sectionGroupCost);
-			};
-
 			scope.removeInstructor = function(sectionGroupCost) {
 				sectionGroupCost.instructorId = null;
 				budgetActions.updateSectionGroupCost(sectionGroupCost);
@@ -38,6 +34,16 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 
 			scope.toCurrency = function (value) {
 				return toCurrency(value);
+			};
+
+			scope.updateInstructorCost = function(sectionGroupCost, overrideInstructorCost) {
+				sectionGroupCost.cost = angular.copy(parseFloat(overrideInstructorCost));
+
+				scope.updateSectionGroupCost(sectionGroupCost);
+			};
+
+			scope.updateSectionGroupCost = function(sectionGroupCost) {
+				budgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 		} // end link
 	};
