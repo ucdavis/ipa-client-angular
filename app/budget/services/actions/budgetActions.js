@@ -472,6 +472,15 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			var self = this;
 			var sectionGroupCost = sectionGroup.sectionGroupCost;
 
+			// Instructor being assigned matches schedule data, so we should not override
+			if (sectionGroup.assignedInstructorIds.indexOf(instructorId) > -1) {
+				if (sectionGroupCost != false) {
+					sectionGroupCost.instructorId = null;
+					self.updateSectionGroupCost(sectionGroupCost);
+					return;
+				}
+			}
+
 			// Create sectionGroupCost if necessary
 			if (sectionGroupCost == false || sectionGroupCost == null) {
 				var sectionGroupCostDTO = {
@@ -488,9 +497,9 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 						}
 					});
 					self.updateSectionGroupCost(newSectionGroupCost);
-					$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
+					$rootScope.$emit('toast', { message: "Assigned instructor", type: "SUCCESS" });
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not assign instructor.", type: "ERROR" });
 				});
 			} else {
 				sectionGroupCost.instructorId = instructorId;
@@ -516,10 +525,10 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 							sectionGroupCost: newSectionGroupCost
 						}
 					});
-					$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
+					$rootScope.$emit('toast', { message: "Saved course", type: "SUCCESS" });
 					self.createSectionGroupCostComment(comment, newSectionGroupCost, currentUserLoginId);
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not save course.", type: "ERROR" });
 				});
 			} else {
 				self.createSectionGroupCostComment(comment, sectionGroupCost, currentUserLoginId);
