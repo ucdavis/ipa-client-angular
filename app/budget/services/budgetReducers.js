@@ -538,8 +538,6 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 							};
 					});
 
-
-
 					return ui;
 				case CALCULATE_SCENARIO_TERMS:
 					ui.termNav.allTabs = action.payload.allTermTabs;
@@ -692,23 +690,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			// Build new 'page state'
 			// This is the 'view friendly' version of the store
 			newPageState = {};
-			newPageState.selectedBudgetScenario = budgetSelectors.generateSelectedBudgetScenario(
-				newState.budgetScenarios,
-				newState.lineItems,
-				newState.lineItemComments,
-				newState.ui,
-				newState.lineItemCategories,
-				newState.sectionGroupCosts,
-				newState.sectionGroupCostComments,
-				newState.instructors,
-				newState.budget,
-				newState.instructorCosts,
-				newState.sectionGroups,
-				newState.sections,
-				newState.courses,
-				newState.scheduleSectionGroups,
-				newState.users
-			);
+			newPageState.selectedBudgetScenario = budgetSelectors.generateSelectedBudgetScenario(newState.budgetScenarios, newState.ui);
 
 			newPageState.budgetScenarios = budgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
 			newPageState.budget = newState.budget;
