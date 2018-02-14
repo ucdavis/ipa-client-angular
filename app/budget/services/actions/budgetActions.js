@@ -526,15 +526,15 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 						}
 					});
 					$rootScope.$emit('toast', { message: "Saved course", type: "SUCCESS" });
-					self.createSectionGroupCostComment(comment, newSectionGroupCost, currentUserLoginId);
+					self._createSectionGroupCostComment(comment, newSectionGroupCost, currentUserLoginId);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not save course.", type: "ERROR" });
 				});
 			} else {
-				self.createSectionGroupCostComment(comment, sectionGroupCost, currentUserLoginId);
+				self._createSectionGroupCostComment(comment, sectionGroupCost, currentUserLoginId);
 			}
 		},
-		createSectionGroupCostComment: function (comment, sectionGroupCost, currentUserLoginId) {
+		_createSectionGroupCostComment: function (comment, sectionGroupCost, currentUserLoginId) {
 			var self = this;
 			var sectionGroupCostComment = {};
 			sectionGroupCostComment.comment = comment;
