@@ -714,10 +714,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.budget = newState.budget;
 			newPageState.ui = newState.ui;
 			newPageState.lineItemCategories = budgetSelectors.generateLineItemCategories(newState.lineItemCategories);
-			newPageState.instructors = budgetSelectors.generateInstructors(newState.instructors, newState.instructorCosts);
 			newPageState.calculatedSectionGroups = newState.calculatedSectionGroups;
 			newPageState.calculatedInstructorTypes = newState.calculatedInstructorTypes;
-			newPageState.calculatedInstructors = newState.calculatedInstructors;
 			newPageState.calculatedInstructors = newState.calculatedInstructors;
 
 			$rootScope.$emit('budgetStateChanged', newPageState);
