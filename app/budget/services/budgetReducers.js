@@ -82,6 +82,16 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return calculatedInstructorTypes;
 			}
 		},
+		calculatedTeachingAssignmentReducers: function (action, calculatedTeachingAssignments) {
+			switch (action.type) {
+				case INIT_STATE:
+					return [];
+				case CALCULATE_TEACHING_ASSIGNMENTS:
+					return action.payload.calculatedTeachingAssignments;
+				default:
+					return calculatedTeachingAssignments;
+			}
+		},
 		lineItemReducers: function (action, lineItems) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -291,6 +301,24 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return courses;
 				default:
 					return courses;
+			}
+		},
+		teachingAssignmentReducers: function (action, teachingAssignments) {
+			switch (action.type) {
+
+				case INIT_STATE:
+					teachingAssignments = {
+						ids: [],
+						list: []
+					};
+
+					action.payload.teachingAssignments.forEach( function(teachingAssignment) {
+						teachingAssignments.ids.push(teachingAssignment.id);
+						teachingAssignments.list[teachingAssignment.id] = teachingAssignment;
+					});
+					return teachingAssignments;
+				default:
+					return teachingAssignments;
 			}
 		},
 		calculatedSectionGroupReducers: function (action, calculatedSectionGroups) {
@@ -680,10 +708,12 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.ui = scope.uiReducers(action, scope._state.ui);
 			newState.users = scope.userReducers(action, scope._state.users);
 			newState.instructorTypes = scope.instructorTypeReducers(action, scope._state.instructorTypes);
+			newState.teachingAssignments = scope.teachingAssignmentReducers(action, scope._state.teachingAssignments);
 
 			newState.calculatedSectionGroups = scope.calculatedSectionGroupReducers(action, scope._state.calculatedSectionGroups);
 			newState.calculatedInstructorTypes = scope.calculatedInstructorTypeReducers(action, scope._state.calculatedInstructorTypes);
 			newState.calculatedInstructors = scope.calculatedInstructorReducers(action, scope._state.calculatedInstructors);
+			newState.calculatedTeachingAssignments = scope.calculatedTeachingAssignmentReducers(action, scope._state.calculatedTeachingAssignments);
 
 			scope._state = newState;
 
