@@ -338,6 +338,28 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				}
 			});
 		},
+		calculateLineItems: function() {
+			var calculatedLineItems = [];
+
+			budgetReducers._state.teachingAssignments.ids.forEach(function(teachingAssignmentId) {
+				var teachingAssignment = teachingAssignments.list[teachingAssignmentId];
+
+				if (teachingAssignment.approved == false) { return; }
+
+				if (teachingAssignment.buyout || teachingAssignment.workLifeBalance) {
+					var lineItem = self._matchingLineItemExists(teachingAssignment, budgetReducers._state.lineItems);
+
+					if (lineItem == false) {
+						lineItem = self.scaffoldLineItem(teachingAssignment);
+					}
+
+					calculatedLineItems.push(lineItem);
+				}
+			});
+		},
+		_matchingLineItemExists: function(teachingAssignment, lineItems) {
+			// TODO
+		},
 		calculateInstructors: function() {
 			var instructorTypes = budgetReducers._state.instructorTypes;
 			var instructors = budgetReducers._state.instructors;
