@@ -358,7 +358,42 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			});
 		},
 		_matchingLineItemExists: function(teachingAssignment, lineItems) {
-			// TODO
+			if (lineItems == false || lineItems.ids == false) { return false; }
+
+			lineItems.ids.forEach(function(lineItem) {
+				if (lineItem.teachingAssignmentId == teachingAssignment.id) {
+					return true;
+				}
+			});
+
+			return false;
+		},
+		// Auto-generate a lineItem for this teachingAssignment
+		scaffoldLineItem(teachingAssignment) {
+			var lineItemCategoryId = null;
+			var typeDescription = null;
+
+			var instructor = budgetReducers._state.instructors.list[teachingAssignment.instructorId];
+			var termDescription = termService.getTermName(teachingAssignment.termCode);
+
+			if (teachingAssignment.buyout) {
+				typeDescription = "Buyout Funds";
+				lineItemCategoryId = 2;
+			} else if (teachingAssignment.workLifeBalance) {
+				typeDescription = "Work-Life Balance";
+				lineItemCategoryId = 5;
+			}
+
+			var description = instructor.firstName + " " + instructor.lastName + " " + typeDescription + " for " + termDescription;
+
+			lineItem = {
+				budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId,
+				description: description,
+				lineItemCategoryId: lineItemCategoryId,
+				hidden: false
+			};
+
+			return lineItem;
 		},
 		calculateInstructors: function() {
 			var instructorTypes = budgetReducers._state.instructorTypes;
