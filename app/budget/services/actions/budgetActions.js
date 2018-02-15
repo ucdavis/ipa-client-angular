@@ -26,19 +26,23 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 						localStorage.setItem('selectedBudgetScenarioId', selectedBudgetScenarioId);
 					}
 				}
-				var action = {
+
+				budgetReducers.reduce({
 					type: INIT_STATE,
 					payload: results,
 					year: year,
 					workgroupId: workgroupId,
 					selectedBudgetScenarioId: selectedBudgetScenarioId,
 					selectedTerm: selectedTerm
-				};
+				});
 
-				budgetReducers.reduce(action);
+				// Ensure budgetScenario is properly set
+				self.selectBudgetScenario();
+
+				// Perform follow up calculations
 				budgetCalculations.calculateInstructorTypes();
 				budgetCalculations.calculateInstructors();
-				self.selectBudgetScenario();
+				budgetCalculations.calculateLineItems();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
 			});
