@@ -226,7 +226,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			var self = this;
 			// Ensure amount is properly formatted as a float
 			newLineItem.amount = parseFloat(newLineItem.amount);
-
+			newLineItem.hidden = false;
 			budgetService.createLineItem(newLineItem, budgetScenarioId).then(function (results) {
 				var action = {
 					type: CREATE_LINE_ITEM,

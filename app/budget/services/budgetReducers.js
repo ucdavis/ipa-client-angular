@@ -82,14 +82,14 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return calculatedInstructorTypes;
 			}
 		},
-		calculatedTeachingAssignmentReducers: function (action, calculatedTeachingAssignments) {
+		calculatedLineItemReducers: function (action, calculatedLineItems) {
 			switch (action.type) {
 				case INIT_STATE:
 					return [];
-				case CALCULATE_TEACHING_ASSIGNMENTS:
-					return action.payload.calculatedTeachingAssignments;
+				case CALCULATE_LINE_ITEMS:
+					return action.payload.calculatedLineItems;
 				default:
-					return calculatedTeachingAssignments;
+					return calculatedLineItems;
 			}
 		},
 		lineItemReducers: function (action, lineItems) {
@@ -713,7 +713,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.calculatedSectionGroups = scope.calculatedSectionGroupReducers(action, scope._state.calculatedSectionGroups);
 			newState.calculatedInstructorTypes = scope.calculatedInstructorTypeReducers(action, scope._state.calculatedInstructorTypes);
 			newState.calculatedInstructors = scope.calculatedInstructorReducers(action, scope._state.calculatedInstructors);
-			newState.calculatedTeachingAssignments = scope.calculatedTeachingAssignmentReducers(action, scope._state.calculatedTeachingAssignments);
+			newState.calculatedLineItems = scope.calculatedLineItemReducers(action, scope._state.calculatedLineItems);
 
 			scope._state = newState;
 
@@ -726,9 +726,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.budget = newState.budget;
 			newPageState.ui = newState.ui;
 			newPageState.lineItemCategories = budgetSelectors.generateLineItemCategories(newState.lineItemCategories);
+
 			newPageState.calculatedSectionGroups = newState.calculatedSectionGroups;
 			newPageState.calculatedInstructorTypes = newState.calculatedInstructorTypes;
 			newPageState.calculatedInstructors = newState.calculatedInstructors;
+			newPageState.calculatedLineItems = newState.calculatedLineItems;
 
 			$rootScope.$emit('budgetStateChanged', newPageState);
 			console.log(newPageState);

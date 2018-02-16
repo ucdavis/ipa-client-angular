@@ -37,6 +37,7 @@ angular.module('sharedApp')
 	
 				return this.termCodeDescriptions[shortTermCode] + " " + year;
 			},
+			// Example: '10' -> 'Fall Quarter'
 			getShortTermName: function(term) {
 				if (!term || term.length != 2) {
 					return null;
