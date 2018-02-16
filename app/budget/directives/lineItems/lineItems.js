@@ -5,7 +5,8 @@ budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetAc
 		replace: true,
 		scope: {
 			selectedBudgetScenario: '<',
-			ui: '<'
+			ui: '<',
+			lineItems: '<'
 			// '<' This is proper one way binding, as opposed to string interpoation or passing value as a function that can be called
 		},
 		link: function (scope, element, attrs) {

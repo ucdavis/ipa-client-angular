@@ -339,7 +339,17 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			});
 		},
 		calculateLineItems: function() {
+			var self = this;
 			var calculatedLineItems = [];
+
+			budgetReducers._state.lineItems.ids.forEach(function(lineItemId) {
+				var lineItem = budgetReducers._state.lineItems.list[lineItemId];
+				var selectedBudgetScenarioId = budgetReducers._state.ui.selectedBudgetScenarioId;
+
+				if (lineItem.budgetScenarioId == selectedBudgetScenarioId) {
+					calculatedLineItems.push(lineItem);
+				}
+			});
 
 			budgetReducers._state.teachingAssignments.ids.forEach(function(teachingAssignmentId) {
 				var teachingAssignment = teachingAssignments.list[teachingAssignmentId];
@@ -354,6 +364,15 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					}
 
 					calculatedLineItems.push(lineItem);
+				}
+			});
+
+			calculatedLineItems = _array_sortByProperty(calculatedLineItems, "lineItemCategoryId");
+
+			budgetReducers.reduce({
+				type: CALCULATE_LINE_ITEMS,
+				payload: {
+					calculatedLineItems: calculatedLineItems
 				}
 			});
 		},
@@ -384,12 +403,14 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				lineItemCategoryId = 5;
 			}
 
+			var categoryDescription = budgetReducers._state.lineItemCategories.list[lineItemCategoryId].description;
 			var description = instructor.firstName + " " + instructor.lastName + " " + typeDescription + " for " + termDescription;
 
 			lineItem = {
 				budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId,
 				description: description,
 				lineItemCategoryId: lineItemCategoryId,
+				categoryDescription: categoryDescription,
 				hidden: false
 			};
 
