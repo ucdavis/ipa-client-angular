@@ -34,6 +34,11 @@ budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetAc
 				budgetActions.deleteLineItem(lineItem);
 			};
 
+			scope.unHideLineItem = function(lineItem) {
+				lineItem.hidden = false;
+				budgetActions.updateLineItem(lineItem);
+			};
+
 			scope.updateLineItem = function(lineItem, propertyName) {
 				budgetActions.toggleLineItemDetail(lineItem.id, propertyName);
 				budgetActions.updateLineItem(lineItem);
