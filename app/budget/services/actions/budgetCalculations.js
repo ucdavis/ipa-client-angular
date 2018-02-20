@@ -129,8 +129,12 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 
 			// Add line item costs
 			budgetReducers._state.lineItems.ids.forEach(function(lineItemId) {
-				var amount = budgetReducers._state.lineItems.list[lineItemId].amount;
-				lineItemFunds += amount;
+				var lineItem = budgetReducers._state.lineItems.list[lineItemId];
+
+				// Ignore hidden lineItems
+				if (lineItem.hidden) { return; }
+
+				lineItemFunds += lineItem.amount;
 			});
 
 			var totalCost = lineItemFunds - courseCosts;
