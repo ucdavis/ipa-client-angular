@@ -60,3 +60,11 @@
 	justify-content: center;
 	align-items: center;
 }
+
+.line-items__cell--orphaned {
+	 text-decoration: line-through;
+}
+
+.line-items__orphan-warn {
+	color: #21A9E1;
+}
