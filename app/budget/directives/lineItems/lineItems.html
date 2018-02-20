@@ -46,12 +46,16 @@
 				</td>
 
 				<!-- Category -->
-				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'" ng-class="{'line-items__cell--orphaned' : lineItem.isOrphaned}">
 					{{ lineItem.categoryDescription }}
+					<span ng-if="lineItem.isOrphaned">
+						<i class="entypo-attention line-items__orphan-warn"
+						   uib-tooltip="The assignment this line item was based on no longer exists on the schedule">
+					</span>
 				</td>
 
 				<!-- Description -->
-				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'" ng-class="{'line-items__cell--orphaned' : lineItem.isOrphaned}">
 					{{ lineItem.description }}
 				</td>
 
