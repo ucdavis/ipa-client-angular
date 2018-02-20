@@ -7,7 +7,8 @@ budgetApp.directive("budgetNav", this.budgetNav = function ($rootScope, budgetAc
 			totalBalance: '<',
 			selectedSection: '<',
 			selectedBudgetScenario: '<',
-			selectedLineItems: '<'
+			selectedLineItems: '<',
+			filters: '<'
 		},
 		link: function(scope, element, attrs) {
 			scope.setRoute = function(selectedRoute) {
