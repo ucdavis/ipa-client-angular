@@ -225,8 +225,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 		createLineItem: function (newLineItem, budgetScenarioId) {
 			var self = this;
 			// Ensure amount is properly formatted as a float
-			newLineItem.amount = parseFloat(newLineItem.amount);
-			newLineItem.hidden = false;
+			newLineItem.amount = newLineItem.amount ? parseFloat(newLineItem.amount) : null;
+
 			budgetService.createLineItem(newLineItem, budgetScenarioId).then(function (newLineItem) {
 				var action = {
 					type: CREATE_LINE_ITEM,
@@ -247,8 +247,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			var self = this;
 
 			// Create instead of update if appropriate
-			if (lineItem.id == false || lineItem.id == 0) {
-				this.createLineItem(lineItem);
+			if (lineItem.id == null || lineItem.id == 0) {
+				this.createLineItem(lineItem, lineItem.budgetScenarioId);
 				return;
 			}
 
@@ -272,6 +272,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		deleteLineItem: function(lineItem) {
+			debugger;
 			var self = this;
 
 			// If the lineItem is based on a teachingAssignment, do not delete it, instead mark it as hidden
@@ -766,6 +767,21 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				budgetCalculations.calculateLineItems();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not delete line items.", type: "ERROR" });
+			});
+		},
+		toggleLineItemFilter: function(filter) {
+			var actionType = null;
+
+			if (filter.type == "showHidden") {
+				actionType = TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN;
+			}
+
+			// No matching filter found
+			if (actionType == null) { return; }
+
+			budgetReducers.reduce({
+				type: actionType,
+				payload: {}
 			});
 		}
 	};

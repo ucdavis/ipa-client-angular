@@ -520,6 +520,15 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						lineItemCommentsModal: {
 							isOpen: false
 						},
+						filters: {
+							lineItems: {
+								showHidden: {
+									type: "showHidden",
+									description: "Show Hidden line items",
+									selected: false
+								}
+							}
+						},
 						sectionNav: {
 							activeTab: "Course Costs",
 							allTabs: ["Course Costs", "Instructor Costs", "Line Items", "Summary"]
@@ -571,6 +580,9 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					ui.termNav.allTabs = action.payload.allTermTabs;
 					ui.termNav.activeTab = action.payload.activeTermTab;
 					ui.termNav.activeTerm = action.payload.activeTerm;
+					return ui;
+				case TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN:
+					ui.filters.lineItems.showHidden.selected = !ui.filters.lineItems.showHidden.selected;
 					return ui;
 				case CREATE_BUDGET_SCENARIO:
 					// Set initial lineItemDetail UI states
