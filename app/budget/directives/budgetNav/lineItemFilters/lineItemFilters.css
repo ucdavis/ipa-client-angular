@@ -24,15 +24,24 @@
 
 .line-item-filters__filter {
 	background-color: #fff;
-	padding-left: 30px;
+	padding-left: 15px;
 	padding-top: 8px;
 	padding-bottom: 8px;
 	padding-right: 8px;
 	border-bottom: 1px solid #eaecef;
 	cursor: pointer;
 	display: flex;
+	align-items: baseline;
 }
 
 .line-item-filters__filter:hover {
 	background-color: #f4f4f4;
+}
+
+.line-item-filters__checkbox-container {
+	margin-right: 5px;
+}
+
+.line-item-filters__filter-container {
+	padding-top: 5px;
 }
