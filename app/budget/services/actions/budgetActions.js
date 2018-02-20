@@ -227,10 +227,10 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			// Ensure amount is properly formatted as a float
 			newLineItem.amount = parseFloat(newLineItem.amount);
 			newLineItem.hidden = false;
-			budgetService.createLineItem(newLineItem, budgetScenarioId).then(function (results) {
+			budgetService.createLineItem(newLineItem, budgetScenarioId).then(function (newLineItem) {
 				var action = {
 					type: CREATE_LINE_ITEM,
-					payload: results
+					payload: newLineItem
 				};
 				$rootScope.$emit('toast', { message: "Created line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);
@@ -572,7 +572,34 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 			});
 		},
-		createLineItemComment: function (comment, lineItem, currentUserLoginId) {
+		// Will create the lineItem if necessary
+		createLineItemComment: function(comment, lineItem, currentUserLoginId) {
+			var self = this;
+
+			// Create lineItem if necessary
+			if (lineItem.id == null || lineItem.id <= 0) {
+				var budgetScenarioId = budgetReducers._state.ui.selectedBudgetScenarioId;
+
+				budgetService.createLineItem(lineItem, budgetScenarioId).then(function (newLineItem) {
+					lineItem.id = newLineItem.id;
+
+					budgetReducers.reduce({
+						type: CREATE_LINE_ITEM,
+						payload: lineItem
+					});
+					budgetCalculations.calculateLineItems();
+					budgetCalculations.calculateTotalCost();
+
+					$rootScope.$emit('toast', { message: "Saved line item", type: "SUCCESS" });
+					self._createLineItemComment(comment, lineItem, currentUserLoginId);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not save line item.", type: "ERROR" });
+				});
+			} else {
+				self._createLineItemComment(comment, lineItem, currentUserLoginId);
+			}
+		},
+		_createLineItemComment: function (comment, lineItem, currentUserLoginId) {
 			var self = this;
 
 			var lineItemComment = {};
