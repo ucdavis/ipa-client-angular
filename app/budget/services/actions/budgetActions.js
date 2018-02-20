@@ -139,7 +139,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				});
 				budgetCalculations.calculateScenarioTerms();
 				budgetCalculations.calculateSectionGroups();
-				budgetCalculations.calculateScenarioLineItems();
+				budgetCalculations.calculateLineItems();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update budget scenario.", type: "ERROR" });
 			});
@@ -237,7 +237,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				// Close modal
 				self.closeAddLineItemModal();
-				budgetCalculations.calculateScenarioLineItems();
+				budgetCalculations.calculateLineItems();
 				budgetCalculations.calculateTotalCost();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not create line item.", type: "ERROR" });
@@ -258,7 +258,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				// Close modal
 				self.closeAddLineItemModal();
-				budgetCalculations.calculateScenarioLineItems();
+				budgetCalculations.calculateLineItems();
 				budgetCalculations.calculateTotalCost();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not save line item.", type: "ERROR" });
@@ -277,7 +277,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 				$rootScope.$emit('toast', { message: "Deleted line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);
-				budgetCalculations.calculateScenarioLineItems();
+				budgetCalculations.calculateLineItems();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not delete line item.", type: "ERROR" });
 			});
@@ -575,7 +575,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				};
 				$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
 				budgetReducers.reduce(action);
-				budgetCalculations.calculateScenarioLineItems();
+				budgetCalculations.calculateLineItems();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 			});
@@ -676,7 +676,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 
 			budgetReducers.reduce(action);
 			budgetCalculations.calculateScenarioTerms();
-			budgetCalculations.calculateScenarioLineItems();
+			budgetCalculations.calculateLineItems();
 			budgetCalculations.calculateSectionGroups();
 			budgetCalculations.calculateTotalCost();
 		},
@@ -722,7 +722,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 						lineItemIds: lineItemIds
 					}
 				});
-				budgetCalculations.calculateScenarioLineItems();
+				budgetCalculations.calculateLineItems();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not delete line items.", type: "ERROR" });
 			});
