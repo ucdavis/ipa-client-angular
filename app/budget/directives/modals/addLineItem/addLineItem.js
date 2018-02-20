@@ -24,10 +24,6 @@ budgetApp.directive("addLineItem", this.addLineItem = function ($rootScope, budg
 					scope.formValidationErrorMessage += " You must select a category.";
 				}
 
-				if (!(scope.newLineItem.amount) || scope.newLineItem.amount.length < 1) {
-					scope.formValidationErrorMessage += " You must specify an amount.";
-				}
-
 				if (!(scope.newLineItem.description) || scope.newLineItem.description.length < 1) {
 					scope.formValidationErrorMessage += " You must add a description.";
 				}
