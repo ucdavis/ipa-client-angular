@@ -295,6 +295,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				var lineItem = budgetReducers._state.lineItems.list[lineItemId];
 				var selectedBudgetScenarioId = budgetReducers._state.ui.selectedBudgetScenarioId;
 
+				// Ensure lineItem is relevant to user selections
 				if (lineItem.budgetScenarioId == selectedBudgetScenarioId) {
 					// Set 'lastModifiedBy', will convert 'user:bobsmith' to 'Smith, Bob'
 					if (lineItem.lastModifiedBy) {
@@ -314,6 +315,9 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					// Set comments
 					lineItem = self.calculateLineItemComments(lineItem);
 
+					// Set lineItem category description
+					lineItem.categoryDescription = budgetReducers._state.lineItemCategories.list[lineItem.lineItemCategoryId].description;
+
 					calculatedLineItems.push(lineItem);
 				}
 			});
@@ -325,13 +329,10 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				if (teachingAssignment.approved == false) { return; }
 
 				if (teachingAssignment.buyout || teachingAssignment.workLifeBalance) {
-					var lineItem = self._matchingLineItemExists(teachingAssignment, budgetReducers._state.lineItems);
-
-					if (lineItem == false) {
+					if (self._matchingLineItemExists(teachingAssignment, budgetReducers._state.lineItems) == false) {
 						lineItem = self.scaffoldLineItem(teachingAssignment);
+						calculatedLineItems.push(lineItem);
 					}
-
-					calculatedLineItems.push(lineItem);
 				}
 			});
 
@@ -364,13 +365,18 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 		_matchingLineItemExists: function(teachingAssignment, lineItems) {
 			if (lineItems == false || lineItems.ids == false) { return false; }
 
-			lineItems.ids.forEach(function(lineItem) {
+			var lineItemExists = false;
+
+			lineItems.ids.forEach(function(lineItemId) {
+				var lineItem = lineItems.list[lineItemId];
+
 				if (lineItem.teachingAssignmentId == teachingAssignment.id) {
-					return true;
+					lineItemExists = true;
+					return;
 				}
 			});
 
-			return false;
+			return lineItemExists;
 		},
 		// Auto-generate a lineItem for this teachingAssignment
 		scaffoldLineItem(teachingAssignment) {
