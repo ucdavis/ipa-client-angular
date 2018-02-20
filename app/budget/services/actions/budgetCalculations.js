@@ -290,6 +290,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			var self = this;
 			var calculatedLineItems = [];
 
+			// Set meta data on persisted lineItems
 			budgetReducers._state.lineItems.ids.forEach(function(lineItemId) {
 				var lineItem = budgetReducers._state.lineItems.list[lineItemId];
 				var selectedBudgetScenarioId = budgetReducers._state.ui.selectedBudgetScenarioId;
@@ -317,6 +318,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				}
 			});
 
+			// Calculate implicit lineItems
 			budgetReducers._state.teachingAssignments.ids.forEach(function(teachingAssignmentId) {
 				var teachingAssignment = teachingAssignments.list[teachingAssignmentId];
 
@@ -394,7 +396,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				description: description,
 				lineItemCategoryId: lineItemCategoryId,
 				categoryDescription: categoryDescription,
-				hidden: false
+				hidden: false,
+				teachingAssignmentId: teachingAssignment.id
 			};
 
 			return lineItem;
