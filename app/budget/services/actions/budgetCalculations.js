@@ -296,7 +296,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				var selectedBudgetScenarioId = budgetReducers._state.ui.selectedBudgetScenarioId;
 
 				// Ensure lineItem is relevant to user selections
-				if (lineItem.budgetScenarioId == selectedBudgetScenarioId) {
+				if (lineItem.budgetScenarioId == selectedBudgetScenarioId && lineItem.hidden == false) {
 					// Set 'lastModifiedBy', will convert 'user:bobsmith' to 'Smith, Bob'
 					if (lineItem.lastModifiedBy) {
 						var split = lineItem.lastModifiedBy.split(":");

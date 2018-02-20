@@ -245,6 +245,13 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 		},
 		updateLineItem: function (lineItem) {
 			var self = this;
+
+			// Create instead of update if appropriate
+			if (lineItem.id == false || lineItem.id == 0) {
+				this.createLineItem(lineItem);
+				return;
+			}
+
 			// Ensure amount is properly formatted as a float
 			lineItem.amount = parseFloat(lineItem.amount);
 
@@ -266,6 +273,13 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 		},
 		deleteLineItem: function(lineItem) {
 			var self = this;
+
+			// If the lineItem is based on a teachingAssignment, do not delete it, instead mark it as hidden
+			if (lineItem.teachingAssignmentId > 0) {
+				lineItem.hidden = true;
+				this.updateLineItem(lineItem);
+				return;
+			}
 
 			budgetService.deleteLineItem(lineItem).then(function (lineItemId) {
 				var action = {
