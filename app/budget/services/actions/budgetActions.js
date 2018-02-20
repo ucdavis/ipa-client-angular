@@ -272,7 +272,6 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 		},
 		deleteLineItem: function(lineItem) {
-			debugger;
 			var self = this;
 
 			// If the lineItem is based on a teachingAssignment, do not delete it, instead mark it as hidden
@@ -783,6 +782,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				type: actionType,
 				payload: {}
 			});
+
+			budgetCalculations.calculateLineItems();
 		}
 	};
 });
