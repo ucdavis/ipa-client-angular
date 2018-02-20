@@ -51,6 +51,17 @@
 					<span ng-if="lineItem.isOrphaned">
 						<i class="entypo-attention line-items__orphan-warn"
 						   uib-tooltip="The assignment this line item was based on no longer exists on the schedule">
+						</i>
+					</span>
+					<span ng-if="lineItem.hidden">
+						<i class="entypo-attention line-items__orphan-warn"
+						   uib-tooltip="This line item is being hidden, but the assignment its based on still exists.">
+						</i>
+						<ipa-button icon-class="'glyphicon glyphicon-plus'"
+												size="'small'"
+												on-click="unHideLineItem(lineItem)"
+												tooltip-message="'Restore line item'">
+						</ipa-button>
 					</span>
 				</td>
 
