@@ -784,6 +784,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			});
 
 			budgetCalculations.calculateLineItems();
+			budgetCalculations.calculateTotalCost();
 		}
 	};
 });
