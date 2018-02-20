@@ -316,6 +316,12 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 						}
 					}
 
+					// Check if orphaned
+					if (lineItem.teachingAssignmentId) {
+						var teachingAssignment = budgetReducers._state.teachingAssignments.list[lineItem.teachingAssignmentId];
+						lineItem.isOrphaned = teachingAssignment ? false : true;
+					}
+
 					// Set comments
 					lineItem = self.calculateLineItemComments(lineItem);
 
