@@ -21,58 +21,6 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				}
 			});
 		},
-		calculateScenarioLineItems: function() {
-			var selectedBudgetScenario = budgetReducers._state.budgetScenarios.list[budgetReducers._state.ui.selectedBudgetScenarioId];
-
-			// Add lineItems
-			selectedBudgetScenario.lineItems = [];
-
-			budgetReducers._state.lineItems.ids.forEach( function (lineItemId) {
-				var lineItem = budgetReducers._state.lineItems.list[lineItemId];
-
-				// Ensure lineItem belongs to selected budget scenario
-				if (lineItem.budgetScenarioId != selectedBudgetScenario.id) {
-					return;
-				}
-
-				// Set lineItemComments on lineItems
-				lineItem.comments = [];
-
-				budgetReducers._state.lineItemComments.ids.forEach(function(commentId) {
-					var comment = budgetReducers._state.lineItemComments.list[commentId];
-
-					if (comment.lineItemId == lineItem.id) {
-						lineItem.comments.push(comment);
-					}
-				});
-
-				// Sort sectionGroupCostComments
-				var reverseOrder = true;
-				lineItem.comments =_array_sortByProperty(lineItem.comments, "lastModifiedOn", reverseOrder);
-
-				// Add lineItemCategory description
-				lineItem.categoryDescription = budgetReducers._state.lineItemCategories.list[lineItem.lineItemCategoryId].description;
-
-				selectedBudgetScenario.lineItems.push(lineItem);
-
-				// Set 'lastModifiedBy'
-				// Expected formats are 'system' or 'user:bobsmith'
-				// Will convert 'user:bobsmith' to 'Smith, Bob'
-				if (lineItem.lastModifiedBy) {
-					var split = lineItem.lastModifiedBy.split(":");
-					if (split.length > 0 && split[0] == "user") {
-						var loginId = split[1];
-
-						budgetReducers._state.users.ids.forEach(function(userId) {
-							var user = budgetReducers._state.users.list[userId];
-							if (user.loginId == loginId) {
-								lineItem.lastModifiedBy = user.firstName + " " + user.lastName;
-							}
-						});
-					}
-				}
-			});
-		},
 		calculateSectionGroups: function() {
 			var self = this;
 
@@ -347,6 +295,24 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				var selectedBudgetScenarioId = budgetReducers._state.ui.selectedBudgetScenarioId;
 
 				if (lineItem.budgetScenarioId == selectedBudgetScenarioId) {
+					// Set 'lastModifiedBy', will convert 'user:bobsmith' to 'Smith, Bob'
+					if (lineItem.lastModifiedBy) {
+						var split = lineItem.lastModifiedBy.split(":");
+						if (split.length > 0 && split[0] == "user") {
+							var loginId = split[1];
+
+							budgetReducers._state.users.ids.forEach(function(userId) {
+								var user = budgetReducers._state.users.list[userId];
+								if (user.loginId == loginId) {
+									lineItem.lastModifiedBy = user.firstName + " " + user.lastName;
+								}
+							});
+						}
+					}
+
+					// Set comments
+					lineItem = self.calculateLineItemComments(lineItem);
+
 					calculatedLineItems.push(lineItem);
 				}
 			});
@@ -375,6 +341,23 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					calculatedLineItems: calculatedLineItems
 				}
 			});
+		},
+		calculateLineItemComments: function(lineItem) {
+			lineItem.comments = [];
+
+			budgetReducers._state.lineItemComments.ids.forEach(function(commentId) {
+				var comment = budgetReducers._state.lineItemComments.list[commentId];
+
+				if (comment.lineItemId == lineItem.id) {
+					lineItem.comments.push(comment);
+				}
+			});
+
+			// Sort sectionGroupCostComments
+			var reverseOrder = true;
+			lineItem.comments =_array_sortByProperty(lineItem.comments, "lastModifiedOn", reverseOrder);
+
+			return lineItem;
 		},
 		_matchingLineItemExists: function(teachingAssignment, lineItems) {
 			if (lineItems == false || lineItems.ids == false) { return false; }
