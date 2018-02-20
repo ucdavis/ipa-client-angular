@@ -70,13 +70,13 @@
 			<button ng-if="isFormValid() == true"
 							type="button" class="btn neon-dark-confirm-btn"
 							ng-click="submitLineItemForm()">
-							{{ lineItemToEdit.id > 0 ? 'Update' : 'Create' }}
+							{{ (lineItemToEdit.id > 0 || lineItemToEdit.teachingAssignmentId > 0) ? 'Update' : 'Create' }}
 			</button>
 			<button ng-if="isFormValid() == false"
 							type="button" class="disabled btn btn-info neon-dark-confirm-btn"
 							tooltip-placement="left"
 							uib-tooltip="{{formValidationErrorMessage}}">
-							Create
+							{{ (lineItemToEdit.id > 0 || lineItemToEdit.teachingAssignmentId > 0) ? 'Update' : 'Create' }}
 			</button>
 		</div>
 	</form>
