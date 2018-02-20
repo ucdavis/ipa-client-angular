@@ -300,7 +300,10 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				var selectedBudgetScenarioId = budgetReducers._state.ui.selectedBudgetScenarioId;
 
 				// Ensure lineItem is relevant to user selections
-				if (lineItem.budgetScenarioId == selectedBudgetScenarioId && lineItem.hidden == false) {
+				if (lineItem.budgetScenarioId == selectedBudgetScenarioId) {
+					// Apply filtered/hidden logic
+					if (self.isLineItemFiltered(lineItem)) { return; }
+
 					// Set 'lastModifiedBy', will convert 'user:bobsmith' to 'Smith, Bob'
 					if (lineItem.lastModifiedBy) {
 						var split = lineItem.lastModifiedBy.split(":");
@@ -354,6 +357,16 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					calculatedLineItems: calculatedLineItems
 				}
 			});
+		},
+		isLineItemFiltered: function(lineItem) {
+			var isFiltered = false;
+
+			// Hidden lineItem and hidden filter logic
+			if (lineItem.hidden && budgetReducers._state.ui.filters.lineItems.showHidden.selected == false) {
+				isFiltered = true;
+			}
+
+			return isFiltered;
 		},
 		calculateLineItemComments: function(lineItem) {
 			lineItem.comments = [];
