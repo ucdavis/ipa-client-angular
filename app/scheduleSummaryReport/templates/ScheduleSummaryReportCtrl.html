@@ -96,11 +96,15 @@
 
 						<!-- CRN -->
 						<td class="data-cell">
-							<div ng-if="section.crn">
-								{{ section.crn }}
+							<div>
+								{{ section.crn || 'No CRN' }}
 							</div>
-							<div ng-if="!section.crn">
-								No CRN
+						</td>
+
+						<!-- Enrollment -->
+						<td class="data-cell">
+							<div>
+
 							</div>
 						</td>
 
