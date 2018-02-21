@@ -305,13 +305,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 		},
 		teachingAssignmentReducers: function (action, teachingAssignments) {
 			switch (action.type) {
-
 				case INIT_STATE:
 					teachingAssignments = {
 						ids: [],
 						list: []
 					};
-
 					action.payload.teachingAssignments.forEach( function(teachingAssignment) {
 						teachingAssignments.ids.push(teachingAssignment.id);
 						teachingAssignments.list[teachingAssignment.id] = teachingAssignment;
@@ -323,7 +321,6 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 		},
 		calculatedSectionGroupReducers: function (action, calculatedSectionGroups) {
 			switch (action.type) {
-
 				case INIT_STATE:
 					calculatedSectionGroups = {
 						terms: [],
