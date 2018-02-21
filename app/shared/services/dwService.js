@@ -37,6 +37,33 @@ angular.module('sharedApp')
 					});
 
 				return deferred.promise;
+			},
+			/**
+			 * Provides a list of census snapshots based on the parameters given.
+			 * SubjectCode param is required.
+			 */
+			getDwCensusData: function(subjectCode, courseNumber, termCode) {
+				if (subject == null) { return null; }
+
+				var params = "subjectCode=" + subjectCode;
+
+				if (courseNumber) {
+					if (params.length > 0) {
+						params += "&";
+					}
+
+					params += "courseNumber=" + courseNumber;
+				}
+
+				if (termCode) {
+					if (params.length > 0) {
+						params += "&";
+					}
+
+					params += "termCode=" + termCode;
+				}
+
+				return apiService.get("/census" + params + "&token=" + dwToken, null, dwUrl);
 			}
 		};
 	});
