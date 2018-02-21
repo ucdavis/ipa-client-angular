@@ -1,40 +1,48 @@
 angular.module('sharedApp')
 	.service('apiService', function ($http, $q) {
 		return {
-			get: function(url, data) {
+			get: function(url, data, serverUrl) {
+				serverUrl = serverUrl || serverRoot;
+
 				var config = {
 					method: "GET",
-					url: serverRoot + url,
+					url: serverUrl + url,
 					data: data,
 					withCredentials: true 
 				};
 
 				return this.query(config);
 			},
-			delete: function(url, data) {
+			delete: function(url, data, serverUrl) {
+				serverUrl = serverUrl || serverRoot;
+
 				var config = {
 					method: "DELETE",
-					url: serverRoot + url,
+					url: serverUrl + url,
 					data: data,
 					withCredentials: true 
 				};
 
 				return this.query(config);
 			},
-			put: function(url, data) {
+			put: function(url, data, serverUrl) {
+				serverUrl = serverUrl || serverRoot;
+
 				var config = {
 					method: "PUT",
-					url: serverRoot + url,
+					url: serverUrl + url,
 					data: data,
 					withCredentials: true 
 				};
 
 				return this.query(config);
 			},
-			post: function(url, data) {
+			post: function(url, data, serverUrl) {
+				serverUrl = serverUrl || serverRoot;
+
 				var config = {
 					method: "POST",
-					url: serverRoot + url,
+					url: serverUrl + url,
 					data: data,
 					withCredentials: true 
 				};
