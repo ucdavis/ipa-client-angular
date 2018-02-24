@@ -27,19 +27,25 @@ scheduleSummaryReportApp.service('scheduleSummaryReportActionCreators', function
 			var subjectCodes = this._getScheduleSubjectCodes();
 
 			subjectCodes.forEach(function(subjectCode) {
-				dwService.getDwCensusData(subjectCode, null, termCode).then(function(sections) {
+				dwService.getDwCensusData(subjectCode, null, termCode).then(function(censusSections) {
 					var filteredSections = [];
 
-					sections.forEach(function(section) {
-						if (section.snapshotCode == SNAPSHOT_CODE) {
-							filteredSections.push(section);
-						}
-					});
+					censusSections.forEach(function(censusSection) {
+						if (censusSection.snapshotCode == SNAPSHOT_CODE) {
+							var censusSectionGroupKey = censusSection.subjectCode + censusSection.courseNumber + sequenceNumberToPattern(censusSection.sequenceNumber);
 
-					scheduleSummaryReportStateService.reduce({
-						type: GET_CENSUS_DATA,
-						payload: {
-							sections: filteredSections
+							scheduleSummaryReportStateService._state.sectionGroups.ids.forEach(function(sectionGroupId) {
+								var sectionGroup = scheduleSummaryReportStateService._state.sectionGroups.list[sectionGroupId];
+								var sectionGroupUniqueKey = sectionGroup.subjectCode + sectionGroup.courseNumber + sectionGroup.sequencePattern;
+
+								if (sectionGroupUniqueKey == censusSectionGroupKey) {
+									sectionGroup.sections.forEach(function(section) {
+										if (section.sequenceNumber == censusSection.sequenceNumber) {
+											section.enrollment = censusSection.currentEnrolledCount;
+										}
+									});
+								}
+							});
 						}
 					});
 				}, function (err) {
