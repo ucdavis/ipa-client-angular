@@ -43,9 +43,9 @@ angular.module('sharedApp')
 			 * SubjectCode param is required.
 			 */
 			getDwCensusData: function(subjectCode, courseNumber, termCode) {
-				if (subject == null) { return null; }
+				if (subjectCode == null) { return null; }
 
-				var params = "subjectCode=" + subjectCode;
+				var params = "?subjectCode=" + subjectCode;
 
 				if (courseNumber) {
 					if (params.length > 0) {
