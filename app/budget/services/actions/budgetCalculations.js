@@ -376,7 +376,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 
 			// Sort sectionGroupCostComments
 			var reverseOrder = true;
-			lineItem.comments =_array_sortByProperty(lineItem.comments, "lastModifiedOn", reverseOrder);
+			lineItem.comments = _array_sortByProperty(lineItem.comments, "lastModifiedOn", reverseOrder);
 
 			return lineItem;
 		},

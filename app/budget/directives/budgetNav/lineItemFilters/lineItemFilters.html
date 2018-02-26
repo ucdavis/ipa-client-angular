@@ -1,8 +1,8 @@
 <div class="line-item-filters">
 	<ipa-button icon-class="'glyphicon glyphicon-filter'"
-							size="'small'"
-							on-click="toggleLineItemFilterDropdown()"
-							tooltip-message="'Filters'">
+	            size="'small'"
+	            on-click="toggleLineItemFilterDropdown()"
+	            tooltip-message="'Filters'">
 	</ipa-button>
 
 	<div class="line-item-filters__dropdown-container" ng-show="isDropdownOpen">
@@ -17,11 +17,11 @@
 				     ng-click="toggleLineItemFilter(filter)"
 				     stop-event="click">
 				     <div class="line-item-filters__checkbox-container" stop-event="click">
-							 <ipa-checkbox style="'muted'"
-	 						               is-checked="filter.selected"
-	 						               click-action="toggleLineItemFilter(filter)">
-	 						</ipa-checkbox>
-				   	</div>
+				       <ipa-checkbox style="'muted'"
+				                     is-checked="filter.selected"
+				                     click-action="toggleLineItemFilter(filter)">
+				       </ipa-checkbox>
+				     </div>
 				     {{ filter.description }}
 				</div>
 			</div>
