@@ -79,6 +79,15 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				return header;
 			};
 
+			scope.isNonCourseBasedAssignment = function (teachingAssignment) {
+				return (teachingAssignment.buyout
+				|| teachingAssignment.courseRelease
+				|| teachingAssignment.inResidence
+				|| teachingAssignment.workLifeBalance
+				|| teachingAssignment.leaveOfAbsence
+				|| teachingAssignment.sabbatical);
+			};
+
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				scope.view.state = data;
 
@@ -213,7 +222,13 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 												plannedSeatsHtml = "<small>Seats: 0</small>";
 												unitsLow = "<small>Units: 4</small>";
 											}
-											courseHtml += "<div class=\"alert alert-info tile-assignment\">";
+											courseHtml += "<div class=\"alert alert-info tile-assignment";
+
+											if (scope.isNonCourseBasedAssignment(teachingAssignment)) {
+												courseHtml += " non-course-assignment";
+											}
+
+											courseHtml += "\">";
 											courseHtml += "<p>" + displayTitle + "</p>";
 											courseHtml += "<div class=\"tile-assignment-details\">";
 											courseHtml += plannedSeatsHtml;
