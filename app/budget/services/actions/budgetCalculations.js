@@ -397,7 +397,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			return lineItemExists;
 		},
 		// Auto-generate a lineItem for this teachingAssignment
-		scaffoldLineItem(teachingAssignment) {
+		scaffoldLineItem: function(teachingAssignment) {
 			var lineItemCategoryId = null;
 			var typeDescription = null;
 
