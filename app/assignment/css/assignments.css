@@ -959,3 +959,7 @@ li.active-term .dropdown-term-row {
 .flex-unavability_chart-children table.availability-grid tr th {
 	padding: 0;
 }
+
+.non-course-assignment {
+	 background-color: #6bc9f0;
+}

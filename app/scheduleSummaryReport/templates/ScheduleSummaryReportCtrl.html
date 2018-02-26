@@ -22,10 +22,11 @@
 		<div class="col-sm-12">
 			<table class="table section-diff-table" style="margin-top: 0px;">
 				<colgroup>
-					<col span="1" style="width: 25%;">
-					<col span="1" style="width: 8%;">
-					<col span="1" style="width: 9%;">
-					<col span="1" style="width: 8%;">
+					<col span="1" style="width: 22%;">
+					<col span="1" style="width: 7%;">
+					<col span="1" style="width: 7%;">
+					<col span="1" style="width: 7%;">
+					<col span="1" style="width: 7%;">
 					<col span="1" style="width: 10%;">
 					<col span="1" style="width: 10%;">
 					<col span="1" style="width: 10%;">
@@ -42,7 +43,7 @@
 					<th>Days</th>
 					<th>Start</th>
 					<th>End</th>
-					<th>Location</th>
+					<th class="schedule-summary-report__location-header">Location</th>
 				</thead>
 				<tr ng-hide="view.state">
 					<td>
@@ -96,17 +97,21 @@
 
 						<!-- CRN -->
 						<td class="data-cell">
-							<div ng-if="section.crn">
-								{{ section.crn }}
+							<div>
+								{{ section.crn || 'No CRN' }}
 							</div>
-							<div ng-if="!section.crn">
-								No CRN
+						</td>
+
+						<!-- Enrollment -->
+						<td class="data-cell">
+							<div class="data-cell__value">
+								{{ section.enrollment }}
 							</div>
 						</td>
 
 						<!-- Seats -->
 						<td class="data-cell">
-							<div>
+							<div class="data-cell__value">
 								{{ section.seats }}
 							</div>
 						</td>

@@ -44,3 +44,15 @@ nextSequenceNumber = function (course, sectionGroup, sections) {
 
 	return course.sequencePattern + newNumber;
 };
+
+sequenceNumberToPattern = function(sequenceNumber) {
+	if (sequenceNumber.length != 3) { return null; }
+
+	// sequencePattern is letter based (example 'A02')
+	if (sequenceNumber.toLowerCase() != sequenceNumber.toUpperCase()) {
+		return sequenceNumber[0].toUpperCase();
+	}
+
+	// sequencePattern is numeric
+	return sequenceNumber;
+};

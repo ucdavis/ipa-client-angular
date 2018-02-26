@@ -6,7 +6,7 @@
  * Service in the ipaClientAngularApp.
  */
 angular.module('sharedApp')
-	.service('dwService', function ($http, $window, $q, $location) {
+	.service('dwService', function ($http, $window, $q, $location, apiService) {
 		return {
 			termCodeDescriptions: {
 				'05': 'Summer Session 1',
@@ -37,6 +37,28 @@ angular.module('sharedApp')
 					});
 
 				return deferred.promise;
+			},
+			/**
+			 * Provides a list of census snapshots based on the parameters given.
+			 * SubjectCode param is required.
+			 */
+			getDwCensusData: function(subjectCode, courseNumber, termCode) {
+				if (subjectCode == null) { return null; }
+
+				var paramArray = [];
+				paramArray.push("?subjectCode=" + subjectCode);
+
+				if (courseNumber) {
+					paramArray.push("courseNumber=" + courseNumber);
+				}
+
+				if (termCode) {
+					paramArray.push("termCode=" + termCode);
+				}
+
+				params = paramArray.join("&");
+
+				return apiService.get("/census" + params + "&token=" + dwToken, null, dwUrl);
 			}
 		};
 	});
