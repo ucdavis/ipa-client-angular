@@ -43,7 +43,7 @@
 					<th>Days</th>
 					<th>Start</th>
 					<th>End</th>
-					<th>Location</th>
+					<th class="schedule-summary-report__location-header">Location</th>
 				</thead>
 				<tr ng-hide="view.state">
 					<td>
@@ -104,14 +104,14 @@
 
 						<!-- Enrollment -->
 						<td class="data-cell">
-							<div>
+							<div class="data-cell__value">
 								{{ section.enrollment }}
 							</div>
 						</td>
 
 						<!-- Seats -->
 						<td class="data-cell">
-							<div>
+							<div class="data-cell__value">
 								{{ section.seats }}
 							</div>
 						</td>
