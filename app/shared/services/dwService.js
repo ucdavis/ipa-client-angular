@@ -45,23 +45,18 @@ angular.module('sharedApp')
 			getDwCensusData: function(subjectCode, courseNumber, termCode) {
 				if (subjectCode == null) { return null; }
 
-				var params = "?subjectCode=" + subjectCode;
+				var paramArray = [];
+				paramArray.push("?subjectCode=" + subjectCode);
 
 				if (courseNumber) {
-					if (params.length > 0) {
-						params += "&";
-					}
-
-					params += "courseNumber=" + courseNumber;
+					paramArray.push("courseNumber=" + courseNumber);
 				}
 
 				if (termCode) {
-					if (params.length > 0) {
-						params += "&";
-					}
-
-					params += "termCode=" + termCode;
+					paramArray.push("termCode=" + termCode);
 				}
+
+				params = paramArray.join("&");
 
 				return apiService.get("/census" + params + "&token=" + dwToken, null, dwUrl);
 			}
