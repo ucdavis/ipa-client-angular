@@ -178,8 +178,15 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 			switch (action.type) {
 				case INIT_WORKGROUP:
 					ui = {
-						addUserPending: false
+						addUserPending: false,
+						roles: {
+							activeRoleTab: "Academic Planner",
+							allTabs: ["Academic Planner", "Instructor", "Reviewer", "Instructional Support", "Senate Instructor", "Student Masters", "Student PhD"]
+						}
 					};
+					return ui;
+				case SET_ROLE_TAB:
+					ui.activeRoleTab = action.payload.activeRoleTab;
 					return ui;
 				case ADD_USER_PENDING:
 					ui.addUserPending = true;
