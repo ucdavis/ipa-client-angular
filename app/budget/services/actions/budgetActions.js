@@ -222,7 +222,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
 			});
 		},
-		createLineItem: function (newLineItem, budgetScenarioId) {
+		createLineItem: function (newLineItem, budgetScenarioId, message) {
 			var self = this;
 			// Ensure amount is properly formatted as a float
 			newLineItem.amount = newLineItem.amount ? parseFloat(newLineItem.amount) : null;
@@ -232,7 +232,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					type: CREATE_LINE_ITEM,
 					payload: newLineItem
 				};
-				$rootScope.$emit('toast', { message: "Created line item", type: "SUCCESS" });
+				$rootScope.$emit('toast', { message: message || "Created line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 
 				// Close modal
