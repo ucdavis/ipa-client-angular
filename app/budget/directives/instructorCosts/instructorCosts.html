@@ -71,7 +71,7 @@
 								     message="Revert to {{ !!(sectionGroup.assignedInstructorNames[0]) ? sectionGroup.assignedInstructorNames[0] : 'none' }}?"
 								     yes="Revert"
 								     no="Cancel"
-								     ng-show="sectionGroup.sectionGroupCost.instructorId > 0">
+								     ng-show="sectionGroup.sectionGroupCost.instructorId > 0 && sectionGroup.sectionGroupCost.instructorId != sectionGroup.assignedInstructorIds[0]">
 								</div>
 							</div>
 						</div>
