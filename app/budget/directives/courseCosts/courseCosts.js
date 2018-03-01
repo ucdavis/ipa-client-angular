@@ -5,7 +5,6 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 		replace: true,
 		scope: {
 			selectedBudgetScenario: '<',
-			instructors: '<',
 			termNav: '<',
 			calculatedSectionGroups: '<'
 		},
