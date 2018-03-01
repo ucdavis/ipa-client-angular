@@ -436,6 +436,10 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 
 			instructors.ids.forEach(function(instructorId) {
 				var instructor = instructors.list[instructorId];
+
+				// Add description for display
+				instructor.description = instructor.lastName + ", " + instructor.firstName;
+
 				instructor.instructorCost = null;
 				calculatedInstructors.push(instructor);
 
