@@ -39,6 +39,7 @@
 				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
 					<div class="line-items__table-container--checkbox">
 						<ipa-checkbox style="'muted'"
+						              is-disabled="!(lineItem.id)"
 						              is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
 						              click-action="selectLineItem(lineItem)">
 						</ipa-checkbox>
