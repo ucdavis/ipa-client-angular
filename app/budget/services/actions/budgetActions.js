@@ -112,9 +112,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			}
 		},
 		// When reverting to schedule data, null should be sent to backend.
-		// However, if user emptied the input we should treat that as setting the override to an explicit value of 0.
+		// However, if user emptied the input it should be treated as explicitly setting an override of 0.
 		_calculateNewValue: function (newValue, isReversion) {
-			debugger;
 			return isReversion ? newValue : newValue || 0;
 		},
 		applyOverrideToProperty: function (sectionGroupCost, value, property) {
