@@ -18,7 +18,26 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 			};
 
 			scope.overrideSectionGroup = function(sectionGroup, property) {
+				sectionGroup = scope.enforceNumericParams(sectionGroup);
 				budgetActions.overrideSectionGroup(sectionGroup, property);
+			};
+
+			// Will ensure certain properties are numbers, if they exist on the object.
+			scope.enforceNumericParams = function(obj) {
+				var propertiesShouldBeNumber = [
+					"overrideTeachingAssistantAppointments",
+					"overrideSectionCount",
+					"overrideReaderAppointments",
+					"overrideTotalSeats"
+				];
+
+				propertiesShouldBeNumber.forEach(function(property) {
+					if (obj[property] != null) {
+						obj[property] = parseFloat(obj[property]);
+					}
+				});
+
+				return obj;
 			};
 
 			// Reverts the specified override value

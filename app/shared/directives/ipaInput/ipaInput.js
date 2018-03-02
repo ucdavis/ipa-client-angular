@@ -25,7 +25,7 @@ sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 					var PERIOD = 140;
 					var BACK_SPACE = 8;
 
-					if (isNumericKeyCode(e.keyCode) == false
+					if (scope.isNumericKeyCode(e.keyCode) == false
 					&& e.keyCode != PERIOD
 					&& e.keyCode != BACK_SPACE) {
 						e.preventDefault();
@@ -37,7 +37,7 @@ sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 			scope.isNumericKeyCode = function (keyCode) {
 				// Numbers on top of keyboard are keyCodes: 48 - 57
 				// Numbers on keypad are keyCodes: 96 - 105
-				return (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105);
+				return (keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105);
 			};
 
 			// Main method triggered by template, handles filtering/update callback
