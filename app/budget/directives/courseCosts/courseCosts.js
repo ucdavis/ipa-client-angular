@@ -52,7 +52,7 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 					sectionGroup.overrideReaderAppointments = null;
 				}
 
-				budgetActions.overrideSectionGroup(sectionGroup, property);
+				budgetActions.overrideSectionGroup(sectionGroup, property, isReversion = true);
 			};
 
 			scope.toCurrency = function (value) {
