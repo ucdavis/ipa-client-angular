@@ -1,0 +1,62 @@
+.roles-table__table {
+	width: 100%;
+	margin-bottom: 20px;
+	border: 1px solid #e3e3e3;
+}
+
+.roles-table__table-header {
+	width: 10%;
+	border-bottom: 1px solid #ddd;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.roles-table__table-header-container {
+	border-right: 1px solid #ddd;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.roles-table__table-cell {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.roles-table__table--amount {
+	width: 3%;
+}
+
+.roles-table__table--checkbox {
+	width: 1%;
+}
+
+.roles-table__table-cell--dark {
+	background-color: #fafafa;
+}
+
+.roles-table__comment-container {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.roles-table__amount-container {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	display: flex;
+	padding-right: 10px;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.roles-table__table-header-amount-container {
+	border-right: none;
+	padding-left: 15px;
+}
+
+.roles-table__table-container--checkbox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
