@@ -24,10 +24,11 @@
 		</thead>
 
 		<tbody>
-			<tr ng-repeat="userRole in userRoles track by $index">
+			<tr ng-repeat="userRole in userRoles track by $index"
+			    ng-if="userRole.roleId == activeRoleId">
 				<!-- Name -->
 				<td class="roles-table__table-cell" ng-class-odd="'roles-table__table-cell--dark'">
-					{{userRole.role}} - {{ activeRoleTab}} - {{ userRole.userDisplayName }}
+					{{ userRole.userDisplayName }}
 				</td>
 
 				<!-- Email -->
