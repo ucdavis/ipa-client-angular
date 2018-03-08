@@ -165,6 +165,14 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				$rootScope.$emit('toast', { message: "Could not add user.", type: "ERROR" });
 			});
 		},
+		setRoleTab: function(tabName) {
+			workgroupStateService.reduce({
+				type: SET_ROLE_TAB,
+				payload: {
+					activeRoleTab: tabName
+				}
+			});
+		},
 		removeUserFromWorkgroup: function (workgroupId, user) {
 			workgroupService.removeUserFromWorkgroup(workgroupId, user).then(function () {
 				$rootScope.$emit('toast', { message: "Removed user " + user.firstName + " " + user.lastName, type: "SUCCESS" });

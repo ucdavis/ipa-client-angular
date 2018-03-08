@@ -186,7 +186,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					};
 					return ui;
 				case SET_ROLE_TAB:
-					ui.activeRoleTab = action.payload.activeRoleTab;
+					ui.roles.activeRoleTab = action.payload.activeRoleTab;
 					return ui;
 				case ADD_USER_PENDING:
 					ui.addUserPending = true;

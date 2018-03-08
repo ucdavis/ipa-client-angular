@@ -5,8 +5,8 @@
  * # WorkgroupCtrl
  * Controller of the ipaClientAngularApp
  */
-workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$uibModal',
-		this.WorkgroupCtrl = function ($scope, $rootScope, $routeParams, $location, $uibModal) {
+workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$uibModal', 'workgroupActionCreators',
+		this.WorkgroupCtrl = function ($scope, $rootScope, $routeParams, $location, $uibModal, workgroupActionCreators) {
 
 		$scope.ROWS_PER_HEADER = 20;
 
@@ -16,6 +16,7 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 
 		$rootScope.$on('workgroupStateChanged', function (event, data) {
 			$scope.view.state = data;
+			console.log(data);
 		});
 
 		$scope.openImpersonateModal = function() {
@@ -29,6 +30,10 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 					}
 				}
 			});
+		};
+
+		$scope.setRoleTab = function (tabName) {
+			workgroupActionCreators.setRoleTab(tabName);
 		};
 
 		$scope.setActiveTab = function (tabName) {
