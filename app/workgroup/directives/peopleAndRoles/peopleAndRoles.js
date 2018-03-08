@@ -1,11 +1,11 @@
-workgroupApp.directive("peopleAndRoles", this.peopleAndRoles = function ($rootScope, workgroupStateService) {
+workgroupApp.directive("peopleAndRoles", this.peopleAndRoles = function ($rootScope, workgroupActionCreators) {
 	return {
 		restrict: 'E',
 		templateUrl: 'peopleAndRoles.html',
 		replace: true,
 		scope: {
-			users: '<',
-			activeRoleTab: '<'
+			ui: '<',
+			calculatedUserRoles: '<'
 		},
 		link: function(scope, element, attrs) {
 			scope.setRoleTab = function(tabName) {

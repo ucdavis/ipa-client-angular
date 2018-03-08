@@ -1,14 +1,14 @@
-workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, workgroupStateService) {
+workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, workgroupActionCreators) {
 	return {
 		restrict: 'E',
 		templateUrl: 'rolesTable.html',
 		replace: true,
 		scope: {
-			users: '<',
+			userRoles: '<',
 			activeRoleTab: '<'
 		},
 		link: function(scope, element, attrs) {
-			// intentionally blank
+			// Intentionally blank
 		}
 	};
 });

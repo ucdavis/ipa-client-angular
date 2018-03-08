@@ -17,7 +17,8 @@
 			<uib-tabset active="activeWorkgroupTab" justified="false" class="panel-options pull-left nav-tabs">
 
 				<uib-tab index="'people'" heading="People &amp; Roles" select="setActiveTab('people')">
-					<people-and-roles state="view.state">
+					<people-and-roles ui="view.state.ui"
+					                  calculated-user-roles="view.state.calculatedUserRoles">
 					</people-and-roles>
 
 					<div class="users-view" ng-controller="UserCtrl">
