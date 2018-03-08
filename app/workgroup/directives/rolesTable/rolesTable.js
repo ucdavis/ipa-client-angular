@@ -8,9 +8,7 @@ workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, wor
 			activeRoleTab: '<'
 		},
 		link: function(scope, element, attrs) {
-			scope.setRoleTab = function(role) {
-				budgetActions.setRoleTab(role);
-			};
+			// intentionally blank
 		}
 	};
 });
