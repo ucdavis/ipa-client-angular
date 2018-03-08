@@ -9,12 +9,15 @@
 workgroupApp.service('workgroupActionCreators', function (workgroupStateService, workgroupService, $rootScope, Role) {
 	return {
 		getInitialState: function (workgroupId) {
+			var self = this;
+
 			workgroupService.getWorkgroupByCode(workgroupId).then(function (payload) {
 				var action = {
 					type: INIT_WORKGROUP,
 					payload: payload
 				};
 				workgroupStateService.reduce(action);
+				self._calculateUserRoles();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load workgroup initial state.", type: "ERROR" });
 			});
@@ -186,6 +189,52 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not remove user.", type: "ERROR" });
 			});
+		},
+		_calculateUserRoles: function () {
+			var self = this;
+			calculatedUserRoles = [];
+
+			workgroupStateService._state.userRoles.ids.forEach(function(userRoleId) {
+				var userRole = workgroupStateService._state.userRoles.list[userRoleId];
+
+				// Ignore registrar ('5') and admin ('3') userRoles
+				if (userRole.roleId == 5 || userRole.roleId == 3) {
+					return;
+				}
+
+				var newUserRole = self._generateUserRole(userRole);
+				calculatedUserRoles.push(newUserRole);
+			});
+
+			workgroupStateService.reduce({
+				type: CALCULATE_USER_ROLES,
+				payload: {
+					calculatedUserRoles: calculatedUserRoles
+				}
+			});
+		},
+		_generateUserRole: function (userRole) {
+			var user = workgroupStateService._state.users.list[userRole.userId];
+			var roleId = null;
+
+			workgroupStateService._state.roles.ids.forEach(function(slotRoleId) {
+				var role = workgroupStateService._state.roles.list[slotRoleId];
+
+				if (role.name == userRole.role) {
+					roleId = role.id;
+				}
+			});
+
+			return {
+				id: userRole.id,
+				role: userRole.role,
+				roleId: roleId,
+				workgroupId: userRole.workgroupId,
+				userDisplayName: user.name,
+				userId: user.id,
+				userLoginId: user.loginId,
+				userEmail: user.email
+			};
 		}
 	};
 });

@@ -85,6 +85,25 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					return locations;
 			}
 		},
+		_userRoleReducers: function (action, userRoles) {
+			switch (action.type) {
+				case INIT_WORKGROUP:
+					userRoles = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.users.forEach(function(user) {
+						user.userRoles.forEach(function(userRole) {
+							userRoles.ids.push(userRole.id);
+							userRoles.list[userRole.id] = userRole;
+						});
+					});
+					return userRoles;
+				default:
+					return userRoles;
+			}
+		},
 		_userReducers: function (action, users) {
 			var scope = this;
 			var userIndex;
@@ -95,7 +114,8 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 						newUser: {},
 						ids: [],
 						userSearchResults: [],
-						searchQuery: ""
+						searchQuery: "",
+						list: {}
 					};
 					var usersList = {};
 					var length = action.payload.users ? action.payload.users.length : 0;
@@ -172,6 +192,19 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					return roles;
 			}
 		},
+		_calculatedUserRoleReducers: function (action, calculatedUserRoles) {
+			var scope = this;
+			
+			switch (action.type) {
+				case INIT_WORKGROUP:
+					return [];
+				case CALCULATE_USER_ROLES:
+					return action.payload.calculatedUserRoles;
+				default:
+					return calculatedUserRoles;
+			}
+		},
+
 		_uiReducers: function (action, ui) {
 			var scope = this;
 
@@ -211,6 +244,8 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 			newState.users = scope._userReducers(action, scope._state.users);
 			newState.roles = scope._roleReducers(action, scope._state.roles);
 			newState.ui = scope._uiReducers(action, scope._state.ui);
+			newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
+			newState.calculatedUserRoles = scope._calculatedUserRoleReducers(action, scope._state.calculatedUserRoles);
 
 			scope._state = newState;
 			$rootScope.$emit('workgroupStateChanged', scope._state);

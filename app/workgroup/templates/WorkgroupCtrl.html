@@ -16,15 +16,9 @@
 		<div class="panel-heading">
 			<uib-tabset active="activeWorkgroupTab" justified="false" class="panel-options pull-left nav-tabs">
 
-
 				<uib-tab index="'people'" heading="People &amp; Roles" select="setActiveTab('people')">
-					<ipa-tabs
-						tab-names="view.state.ui.roles.allTabs"
-						active-tab="view.state.ui.roles.activeRoleTab"
-						select-tab="setRoleTab"
-						slim="true">
-						<roles-table users="view.state.users"></roles-table>
-					</ipa-tabs>
+					<people-and-roles state="view.state">
+					</people-and-roles>
 
 					<div class="users-view" ng-controller="UserCtrl">
 						<div class="row" ng-hide="view.state.users">

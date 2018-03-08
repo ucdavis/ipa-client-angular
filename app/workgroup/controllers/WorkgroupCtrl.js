@@ -32,10 +32,6 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 			});
 		};
 
-		$scope.setRoleTab = function (tabName) {
-			workgroupActionCreators.setRoleTab(tabName);
-		};
-
 		$scope.setActiveTab = function (tabName) {
 			$scope.activeWorkgroupTab = tabName;
 			$location.search({ tab: tabName });
