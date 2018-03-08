@@ -5,7 +5,7 @@ workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, wor
 		replace: true,
 		scope: {
 			userRoles: '<',
-			activeRoleTab: '<'
+			activeRoleId: '<'
 		},
 		link: function(scope, element, attrs) {
 			// Intentionally blank

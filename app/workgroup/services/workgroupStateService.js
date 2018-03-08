@@ -214,12 +214,21 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 						addUserPending: false,
 						roles: {
 							activeRoleTab: "Academic Planner",
-							allTabs: ["Academic Planner", "Instructor", "Reviewer", "Instructional Support", "Senate Instructor", "Student Masters", "Student PhD"]
+							activeRoleId: 2,
+							allTabs: [
+								"Academic Planner",
+								"Presence",
+								"Instructor",
+								"Reviewer",
+								"Instructional Support",
+								"Student Masters",
+								"Student PhD"],
 						}
 					};
 					return ui;
 				case SET_ROLE_TAB:
 					ui.roles.activeRoleTab = action.payload.activeRoleTab;
+					ui.roles.activeRoleId = action.payload.activeRoleId;
 					return ui;
 				case ADD_USER_PENDING:
 					ui.addUserPending = true;

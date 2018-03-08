@@ -172,9 +172,23 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 			workgroupStateService.reduce({
 				type: SET_ROLE_TAB,
 				payload: {
-					activeRoleTab: tabName
+					activeRoleTab: tabName,
+					activeRoleId: this._getRoleIdFromTabName(tabName)
 				}
 			});
+		},
+		_getRoleIdFromTabName: function(tabName) {
+			tabNameRoleIds = {
+				"Academic Planner": 2,
+				"Instructor": 15,
+				"Reviewer": 10,
+				"Instructional Support": 11,
+				"Student Masters": 12,
+				"Student PhD": 13,
+				"Presence": 9
+			};
+
+			return tabNameRoleIds[tabName];
 		},
 		removeUserFromWorkgroup: function (workgroupId, user) {
 			workgroupService.removeUserFromWorkgroup(workgroupId, user).then(function () {
@@ -197,8 +211,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 			workgroupStateService._state.userRoles.ids.forEach(function(userRoleId) {
 				var userRole = workgroupStateService._state.userRoles.list[userRoleId];
 
-				// Ignore registrar ('5') and admin ('3') userRoles
-				if (userRole.roleId == 5 || userRole.roleId == 3) {
+				if (userRole.role == 'admin' || userRole.role == 'registrar') {
 					return;
 				}
 
@@ -215,20 +228,22 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 		},
 		_generateUserRole: function (userRole) {
 			var user = workgroupStateService._state.users.list[userRole.userId];
-			var roleId = null;
+			var role = null;
 
-			workgroupStateService._state.roles.ids.forEach(function(slotRoleId) {
-				var role = workgroupStateService._state.roles.list[slotRoleId];
+			workgroupStateService._state.roles.ids.forEach(function(roleId) {
+				var slotRole = workgroupStateService._state.roles.list[roleId];
 
-				if (role.name == userRole.role) {
-					roleId = role.id;
+				if (slotRole.name == userRole.role) {
+					role = slotRole;
 				}
 			});
 
+			if (role == null) { debugger;}
 			return {
 				id: userRole.id,
 				role: userRole.role,
-				roleId: roleId,
+				roleDisplay: role.name,
+				roleId: role.id,
 				workgroupId: userRole.workgroupId,
 				userDisplayName: user.name,
 				userId: user.id,
