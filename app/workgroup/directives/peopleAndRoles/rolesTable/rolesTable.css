@@ -50,7 +50,7 @@
 	align-items: center;
 }
 
-.roles-table__table-header-amount-container {
+.roles-table__table-header--no-border {
 	border-right: none;
 	padding-left: 15px;
 }

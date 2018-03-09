@@ -122,17 +122,24 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				$rootScope.$emit('toast', { message: "Could not add role for user.", type: "ERROR" });
 			});
 		},
-		removeRoleFromUser: function (workgroupId, user, role, userRoleToBeDeleted) {
+		removeRoleFromUser: function (userId, roleId, userRoleToBeDeleted) {
+			var self = this;
+			var user = workgroupStateService._state.users.list[userId];
+			var role = workgroupStateService._state.roles.list[roleId];
+			var workgroupId = workgroupStateService._state.ui.workgroupId;
+
 			workgroupService.removeRoleFromUser(workgroupId, user, role).then(function (userRole) {
 				$rootScope.$emit('toast', { message: user.firstName + " " + user.lastName + " is no longer " + role.getDisplayName(), type: "SUCCESS" });
-				var action = {
+
+				workgroupStateService.reduce({
 					type: REMOVE_USER_ROLE,
 					payload: {
 						user: user,
 						userRole: userRoleToBeDeleted
 					}
-				};
-				workgroupStateService.reduce(action);
+				});
+
+				self._calculateUserRoles();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not remove role from user.", type: "ERROR" });
 			});
@@ -238,7 +245,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 					role = slotRole;
 				}
 			});
-			if (role == null) {debugger;}
+
 			return {
 				id: userRole.id,
 				role: userRole.role,
