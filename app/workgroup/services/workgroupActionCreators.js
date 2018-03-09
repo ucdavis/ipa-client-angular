@@ -108,6 +108,8 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 			});
 		},
 		addRoleToUser: function (workgroupId, user, role) {
+			var self = this;
+
 			workgroupService.addRoleToUser(workgroupId, user, role).then(function (userRole) {
 				$rootScope.$emit('toast', { message: user.firstName + " " + user.lastName + " is now " + role.getDisplayName(), type: "SUCCESS" });
 				var action = {
@@ -118,6 +120,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 					}
 				};
 				workgroupStateService.reduce(action);
+				self._calculateUserRoles();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not add role for user.", type: "ERROR" });
 			});
@@ -153,28 +156,44 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 			};
 			workgroupStateService.reduce(action);
 		},
-		createUser: function (workgroupId, dwUser) {
-			var scope = this;
-			var role = new Role({ name: "presence" });
+		createUser: function (workgroupId, dwUser, roleId) {
+			var self = this;
+			var role = new Role({ name: workgroupStateService._state.roles.list[roleId].name });
 
-			workgroupStateService.reduce({
-				type: ADD_USER_PENDING,
-				payload: {}
+			var existingUser = this._userPresent(dwUser);
+			if (!existingUser) {
+				workgroupStateService.reduce({
+					type: ADD_USER_PENDING,
+					payload: {}
+				});
+
+				workgroupService.createUser(workgroupId, dwUser).then(function (newUser) {
+					var action = {
+						type: ADD_USER_COMPLETED,
+						payload: {
+							user: newUser
+						}
+					};
+					workgroupStateService.reduce(action);
+					self.addRoleToUser(workgroupId, newUser, new Role({ name: "presence"}));
+					self.addRoleToUser(workgroupId, newUser, role);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not add user.", type: "ERROR" });
+				});
+			} else {
+				self.addRoleToUser(workgroupId, existingUser, role);
+			}
+		},
+		_userPresent: function (user) {
+			var userPresent = null;
+			workgroupStateService._state.users.ids.forEach(function(userId) {
+				var slotUser = workgroupStateService._state.users.list[userId];
+				if (slotUser.loginId == user.loginId && slotUser.email == user.email) {
+					userPresent = slotUser;
+				}
 			});
 
-			workgroupService.createUser(workgroupId, dwUser).then(function (newUser) {
-				$rootScope.$emit('toast', { message: "Added user " + newUser.firstName + " " + newUser.lastName, type: "SUCCESS" });
-				var action = {
-					type: ADD_USER_COMPLETED,
-					payload: {
-						user: newUser
-					}
-				};
-				workgroupStateService.reduce(action);
-				scope.addRoleToUser(workgroupId, newUser, role);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not add user.", type: "ERROR" });
-			});
+			return userPresent;
 		},
 		setRoleTab: function(tabName) {
 			workgroupStateService.reduce({

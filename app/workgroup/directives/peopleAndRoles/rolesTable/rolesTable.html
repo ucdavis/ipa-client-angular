@@ -1,4 +1,31 @@
 <div class="roles-table">
+	<div class="row roles-table__search-container">
+		<!-- this is search bar -->
+		<div class="col-md-4 pull-right">
+			<div class="input-group search-input">
+				<input type="text" ng-model="view.state.users.searchQuery" placeholder="Search by name or login ID" uib-typeahead="person.name for person in searchUsers($viewValue)"
+					ng-change="view.state.users.newUser = {}" typeahead-loading="view.loadingPeople" typeahead-no-results="view.noResults"
+					typeahead-wait-ms="400" typeahead-min-length="2" typeahead-on-select="searchUsersResultSelected($item, $model, $label, $event)"
+					class="form-control typeahead">
+				<ul class="typeahead-status dropdown-menu" ng-show="view.noResults">
+					<li><a>No results</a></li>
+				</ul>
+				<i ng-show="view.loadingPeople || ui.addUserPending"><spinner size="20"></spinner></i>
+				<i ng-hide="users.searchQuery || view.loadingPeople" class="entypo-search"></i>
+				<i ng-show="users.searchQuery && !view.loadingPeople && !ui.addUserPending" class="entypo-cancel" ng-click="clearUserSearch()"></i>
+				<span class="input-group-btn">
+					<button ng-disabled="!users.newUser.name || ui.addUserPending"
+						class="btn-add-person btn btn-primary"
+						ng-click="addUserToWorkgroup()">
+						Add Person
+					</button>
+				</span>
+			</div>
+			<!-- /input-group -->
+		</div>
+		<!-- /.col-lg-6 -->
+	</div>
+
 	<table class="roles-table__table">
 		<thead>
 			<tr>
