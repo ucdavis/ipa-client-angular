@@ -39,6 +39,7 @@ workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, wor
 			scope.addUserToWorkgroup = function() {
 				scope.users.newUser;
 				workgroupActionCreators.createUser(scope.ui.workgroupId, scope.users.newUser, scope.activeRoleId);
+				scope.clearUserSearch();
 			};
 		}
 	};
