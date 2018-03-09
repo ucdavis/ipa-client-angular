@@ -103,6 +103,11 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					});
 
 					return userRoles;
+				case ADD_USER_ROLE:
+					var userRole = action.payload.userRole;
+					userRoles.ids.push(userRole.id);
+					userRoles.list[userRole.id] = userRole;
+					return userRoles;
 				case REMOVE_USER_ROLE:
 					var index = userRoles.ids.indexOf(action.payload.userRole.id);
 
@@ -150,21 +155,6 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					userIndex = users.ids.indexOf(action.payload.user.id);
 					users.ids.splice(userIndex, 1);
 					delete users.list[action.payload.user.id];
-					return users;
-				case ADD_USER_ROLE:
-					users.list[action.payload.user.id].userRoles.push(action.payload.userRole);
-
-					// Uncheck other mutually exclusive roles if any
-					var exclusiveRoles = ["federationInstructor", "senateInstructor"];
-					var exclusiveIndex = exclusiveRoles.indexOf(action.payload.userRole.role);
-					if (exclusiveIndex >= 0) {
-						exclusiveRoles.splice(exclusiveIndex, 1);
-						users.list[action.payload.user.id].userRoles = users.list[action.payload.user.id].userRoles
-							.filter(function (ur) {
-								return exclusiveRoles.indexOf(ur.role) < 0;
-							});
-					}
-
 					return users;
 				case SEARCH_USERS:
 					users.userSearchResults = action.payload.userSearchResults;

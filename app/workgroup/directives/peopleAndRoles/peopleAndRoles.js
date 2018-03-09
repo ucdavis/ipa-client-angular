@@ -5,6 +5,7 @@ workgroupApp.directive("peopleAndRoles", this.peopleAndRoles = function ($rootSc
 		replace: true,
 		scope: {
 			ui: '<',
+			users: '<',
 			calculatedUserRoles: '<'
 		},
 		link: function(scope, element, attrs) {

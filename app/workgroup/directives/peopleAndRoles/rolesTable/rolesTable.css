@@ -1,3 +1,9 @@
+.roles-table__search-container {
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+}
+
 .roles-table__table {
 	width: 100%;
 	margin-bottom: 20px;

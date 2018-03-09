@@ -1,15 +1,44 @@
-workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, workgroupActionCreators) {
+workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, workgroupActionCreators, workgroupService) {
 	return {
 		restrict: 'E',
 		templateUrl: 'rolesTable.html',
 		replace: true,
 		scope: {
 			userRoles: '<',
-			activeRoleId: '<'
+			activeRoleId: '<',
+			users: '<',
+			ui: '<'
 		},
 		link: function(scope, element, attrs) {
+			scope.view = {
+				loadingPeople: false,
+				noResults: false
+			};
+
 			scope.removeUserRole = function (userRole) {
 				workgroupActionCreators.removeRoleFromUser(userRole.userId, userRole.roleId, userRole);
+			};
+
+			scope.clearUserSearch = function () {
+				scope.users.newUser = {};
+				scope.users.searchQuery = "";
+			};
+
+			scope.searchUsers = function (query) {
+				return workgroupService.searchUsers(scope.ui.workgroupId, query).then(function (userSearchResults) {
+					return userSearchResults;
+				}, function (err) {
+					$rootScope.$emit('toast', {message: "Could not search users.", type: "ERROR"});
+				});
+			};
+
+			scope.searchUsersResultSelected = function ($item, $model, $label, $event) {
+				scope.users.newUser = $item;
+			};
+
+			scope.addUserToWorkgroup = function() {
+				scope.users.newUser;
+				workgroupActionCreators.createUser(scope.ui.workgroupId, scope.users.newUser, scope.activeRoleId);
 			};
 		}
 	};
