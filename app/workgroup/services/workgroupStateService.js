@@ -101,6 +101,14 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 							userRoles.list[userRole.id] = userRole;
 						});
 					});
+
+					return userRoles;
+				case REMOVE_USER_ROLE:
+					var index = userRoles.ids.indexOf(action.payload.userRole.id);
+
+					if (index > -1) {
+						userRoles.ids.splice(index, 1);
+					}
 					return userRoles;
 				default:
 					return userRoles;
@@ -158,10 +166,6 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					}
 
 					return users;
-				case REMOVE_USER_ROLE:
-					var userRoleIndex = users.list[action.payload.user.id].userRoles.indexOf(action.payload.userRole);
-					users.list[action.payload.user.id].userRoles.splice(userRoleIndex, 1);
-					return users;
 				case SEARCH_USERS:
 					users.userSearchResults = action.payload.userSearchResults;
 					return users;
@@ -187,6 +191,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 							rolesList[roleData.id] = new Role(roleData);
 						}
 					}
+
 					roles.ids = _array_sortIdsByProperty(rolesList, "name");
 					roles.list = rolesList;
 					return roles;
@@ -214,6 +219,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 				case INIT_WORKGROUP:
 					ui = {
 						addUserPending: false,
+						workgroupId: action.workgroupId,
 						roles: {
 							activeRoleTab: "Academic Planner",
 							activeRoleId: 2,

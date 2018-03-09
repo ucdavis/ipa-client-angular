@@ -8,7 +8,9 @@ workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, wor
 			activeRoleId: '<'
 		},
 		link: function(scope, element, attrs) {
-			// Intentionally blank
+			scope.removeUserRole = function (userRole) {
+				workgroupActionCreators.removeRoleFromUser(userRole.userId, userRole.roleId, userRole);
+			};
 		}
 	};
 });

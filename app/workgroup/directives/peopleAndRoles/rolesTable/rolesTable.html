@@ -12,11 +12,11 @@
 						Email
 					</div>
 				</th>
-				<th class="roles-table__table-header">
+				<th class="roles-table__table-header roles-table__table-header--no-border">
 					<div class="roles-table__table-header-container">
 					</div>
 				</th>
-				<th class="roles-table__table-header roles-table__table--amount">
+				<th class="roles-table__table-header roles-table__table-header--no-border">
 					<div class="roles-table__table-header-amount-container">
 					</div>
 				</th>
@@ -24,31 +24,31 @@
 		</thead>
 
 		<tbody>
-			<tr ng-repeat="userRole in userRoles track by $index"
+			<tr ng-repeat="userRole in userRoles track by userRole.id"
 			    ng-if="userRole.roleId == activeRoleId">
 				<!-- Name -->
-				<td class="roles-table__table-cell" ng-class-odd="'roles-table__table-cell--dark'">
+				<td class="roles-table__table-cell">
 					{{ userRole.userDisplayName }}
 				</td>
 
 				<!-- Email -->
-				<td class="roles-table__table-cell" ng-class-odd="'roles-table__table-cell--dark'">
+				<td class="roles-table__table-cell">
 					{{ userRole.userEmail }}
 				</td>
 
 				<!-- Remove -->
-				<td class="roles-table__table-cell roles-table__table-cell--comments" ng-class-odd="'roles-table__table-cell--dark'">
+				<td class="roles-table__table-cell roles-table__table-cell--comments">
 					<div class="roles-table__comment-container">
 						<ipa-button text="'Remove'"
 						            color="'light'"
-						            icon-class="'glyphicon glyphicon-trash'"
-						            on-click="removeRoleFromUser(user)">
+						            on-click="removeUserRole(userRole)"
+						            confirm-message="'Remove role from user?'">
 						</ipa-button>
 					</div>
 				</td>
 
 				<!-- Dropdown for instructors -->
-				<td class="roles-table__table-cell" ng-class-odd="'roles-table__table-cell--dark'">
+				<td class="roles-table__table-cell">
 					<div class="roles-table__amount-container">
 						instructor dropdown here
 					</div>
