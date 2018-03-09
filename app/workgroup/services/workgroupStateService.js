@@ -95,6 +95,8 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 
 					action.payload.users.forEach(function(user) {
 						user.userRoles.forEach(function(userRole) {
+							if (userRole.workgroupId != action.workgroupId) { return; }
+
 							userRoles.ids.push(userRole.id);
 							userRoles.list[userRole.id] = userRole;
 						});
@@ -175,7 +177,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					roles = {
 						ids: []
 					};
-					var _hiddenRoles = ['admin', 'registrar', 'presence'];
+					var _hiddenRoles = ['admin', 'registrar'];
 					var rolesList = {};
 					var length = action.payload.roles ? action.payload.roles.length : 0;
 
