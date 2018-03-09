@@ -14,7 +14,8 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 			workgroupService.getWorkgroupByCode(workgroupId).then(function (payload) {
 				var action = {
 					type: INIT_WORKGROUP,
-					payload: payload
+					payload: payload,
+					workgroupId: workgroupId
 				};
 				workgroupStateService.reduce(action);
 				self._calculateUserRoles();
@@ -237,8 +238,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 					role = slotRole;
 				}
 			});
-
-			if (role == null) { debugger;}
+			if (role == null) {debugger;}
 			return {
 				id: userRole.id,
 				role: userRole.role,
