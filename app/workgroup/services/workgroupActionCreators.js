@@ -23,6 +23,25 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				$rootScope.$emit('toast', { message: "Could not load workgroup initial state.", type: "ERROR" });
 			});
 		},
+		setInstructorType: function (instructorType, userRole) {
+			var self = this;
+
+			userRole.instructorTypeId = instructorType.id;
+
+			workgroupService.updateUserRole(userRole).then(function (newUserRole) {
+				$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
+				var action = {
+					type: UPDATE_USER_ROLE,
+					payload: {
+						userRole: newUserRole
+					}
+				};
+				workgroupStateService.reduce(action);
+				self._calculateUserRoles();
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update instructor type", type: "ERROR" });
+			});
+		},
 		addTag: function (workgroupId, tag) {
 			workgroupService.addTag(workgroupId, tag).then(function (newTag) {
 				$rootScope.$emit('toast', { message: "Created tag " + newTag.name, type: "SUCCESS" });
@@ -269,6 +288,8 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				}
 			});
 
+			var instructorTypeDescription = userRole.instructorTypeId > 0 ? workgroupStateService._state.instructorTypes.list[userRole.instructorTypeId].description : null;
+
 			return {
 				id: userRole.id,
 				role: userRole.role,
@@ -279,7 +300,9 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				userId: user.id,
 				userLoginId: user.loginId,
 				userEmail: user.email,
-				displayPresence: shouldDisplayPresence
+				displayPresence: shouldDisplayPresence,
+				instructorTypeId: userRole.instructorTypeId,
+				instructorTypeDescription: instructorTypeDescription
 			};
 		},
 		// Will generate a list of presence userRoles that should be displayed in the presence column.
