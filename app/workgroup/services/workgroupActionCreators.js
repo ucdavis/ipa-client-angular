@@ -233,7 +233,9 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 		},
 		_calculateUserRoles: function () {
 			var self = this;
-			calculatedUserRoles = [];
+
+			var userRolesWithPresence = this._calculateUserRolesWithPresence();
+			var calculatedUserRoles = [];
 
 			workgroupStateService._state.userRoles.ids.forEach(function(userRoleId) {
 				var userRole = workgroupStateService._state.userRoles.list[userRoleId];
@@ -242,7 +244,9 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 					return;
 				}
 
-				var newUserRole = self._generateUserRole(userRole);
+				var displayPresence = (userRolesWithPresence.indexOf(userRole.id) > -1);
+				var newUserRole = self._generateUserRole(userRole, displayPresence);
+
 				calculatedUserRoles.push(newUserRole);
 			});
 
@@ -253,7 +257,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				}
 			});
 		},
-		_generateUserRole: function (userRole) {
+		_generateUserRole: function (userRole, shouldDisplayPresence) {
 			var user = workgroupStateService._state.users.list[userRole.userId];
 			var role = null;
 
@@ -274,8 +278,42 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				userDisplayName: user.name,
 				userId: user.id,
 				userLoginId: user.loginId,
-				userEmail: user.email
+				userEmail: user.email,
+				displayPresence: shouldDisplayPresence
 			};
+		},
+		// Will generate a list of presence userRoles that should be displayed in the presence column.
+		// Presence userRole will only show if the user does not have any other userRoles in the workgroup
+		_calculateUserRolesWithPresence: function() {
+
+			// Identify which users shouldn't have presence displayed
+			var usersWithAccess = [];
+
+			workgroupStateService._state.userRoles.ids.forEach(function(userRoleId) {
+				var userRole = workgroupStateService._state.userRoles.list[userRoleId];
+				// Ignore userRoles from other workgroups
+				if (userRole.workgroupId != workgroupStateService._state.ui.workgroupId) { return; }
+
+				// Ignore presence, admin and registrar roles as these roles are not displayed in the UI
+				if (userRole.role == "presence" || userRole.role == "admin" || userRole.role == "registrar") { return; }
+
+				usersWithAccess.push(userRole.userId);
+			});
+
+			// List of UserRole ids.
+			var presenceUserRoles = [];
+			workgroupStateService._state.userRoles.ids.forEach(function(userRoleId) {
+				var userRole = workgroupStateService._state.userRoles.list[userRoleId];
+				// Ignore userRoles from other workgroups
+				if (userRole.workgroupId != workgroupStateService._state.ui.workgroupId) { return; }
+
+				// If user does not have access, and we found the presence role, add it to the list
+				if (userRole.roleId == 9 && usersWithAccess.indexOf(userRole.userId) == -1) {
+					presenceUserRoles.push(userRole.id);
+				}
+			});
+
+			return presenceUserRoles;
 		}
 	};
 });
