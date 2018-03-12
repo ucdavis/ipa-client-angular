@@ -103,6 +103,10 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					});
 
 					return userRoles;
+				case UPDATE_USER_ROLE:
+					var userRole = action.payload.userRole;
+					userRoles.list[userRole.id] = userRole;
+					return userRoles;
 				case ADD_USER_ROLE:
 					var userRole = action.payload.userRole;
 					userRoles.ids.push(userRole.id);
@@ -189,6 +193,26 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					return roles;
 			}
 		},
+		_instructorTypeReducers: function (action, instructorTypes) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_WORKGROUP:
+					instructorTypes = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.instructorTypes.forEach(function(instructorType) {
+						instructorTypes.list[instructorType.id] = instructorType;
+						instructorTypes.ids.push(instructorType.id);
+					});
+
+					return instructorTypes;
+				default:
+					return instructorTypes;
+			}
+		},
 		_calculatedUserRoleReducers: function (action, calculatedUserRoles) {
 			var scope = this;
 			
@@ -221,8 +245,13 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 								"Instructional Support",
 								"Student Masters",
 								"Student PhD"],
-						}
+						},
+						instructorTypes: []
 					};
+
+					action.payload.instructorTypes.forEach(function(instructorType) {
+						ui.instructorTypes.push(instructorType);
+					});
 					return ui;
 				case SET_ROLE_TAB:
 					ui.roles.activeRoleTab = action.payload.activeRoleTab;
@@ -253,6 +282,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 			newState.ui = scope._uiReducers(action, scope._state.ui);
 			newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
 			newState.calculatedUserRoles = scope._calculatedUserRoleReducers(action, scope._state.calculatedUserRoles);
+			newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 
 			scope._state = newState;
 			$rootScope.$emit('workgroupStateChanged', scope._state);
