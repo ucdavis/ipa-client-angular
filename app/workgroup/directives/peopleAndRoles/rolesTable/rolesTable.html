@@ -27,6 +27,12 @@
 	</div>
 
 	<table class="roles-table__table">
+		<colgroup>
+			<col span="1" style="width: 25%;">
+			<col span="1" style="width: 25%;">
+			<col span="1" style="width: 25%;">
+			<col span="1" style="width: 25%;">
+		</colgroup>
 		<thead>
 			<tr>
 				<th class="roles-table__table-header">
@@ -35,16 +41,16 @@
 					</div>
 				</th>
 				<th class="roles-table__table-header">
-					<div class="roles-table__table-header-container">
+					<div class="roles-table__table-header-container roles-table__table-header--no-border">
 						Email
 					</div>
 				</th>
-				<th class="roles-table__table-header roles-table__table-header--no-border">
-					<div class="roles-table__table-header-container">
+				<th class="roles-table__table-header">
+					<div class="roles-table__table-header-container roles-table__table-header--no-border">
 					</div>
 				</th>
-				<th class="roles-table__table-header roles-table__table-header--no-border">
-					<div class="roles-table__table-header-amount-container">
+				<th class="roles-table__table-header">
+					<div class="roles-table__table-header-amount-container roles-table__table-header--no-border">
 					</div>
 				</th>
 			</tr>
@@ -77,7 +83,11 @@
 				<!-- Dropdown for instructors -->
 				<td class="roles-table__table-cell">
 					<div class="roles-table__amount-container">
-						instructor dropdown here
+						<ipa-dropdown ng-show="activeRoleId == 9"
+						              button-text="userRole.instructorType || 'Assign instructor type'"
+						              items="instructorTypes"
+						              select-item="setInstructorType(item)">
+						</ipa-dropdown>
 					</div>
 				</td>
 			</tr>
