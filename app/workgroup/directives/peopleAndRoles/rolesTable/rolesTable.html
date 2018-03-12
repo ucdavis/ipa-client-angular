@@ -83,11 +83,11 @@
 				<!-- Dropdown for instructors -->
 				<td class="roles-table__table-cell">
 					<div class="roles-table__amount-container">
-						<ipa-dropdown ng-show="activeRoleId == 9"
-						              button-text="userRole.instructorType || 'Assign instructor type'"
-						              items="instructorTypes"
-						              select-item="setInstructorType(item)">
-						</ipa-dropdown>
+						<!-- 15 is the role for 'instructor' -->
+						<instructor-type-selector ng-show="activeRoleId == 15"
+						                          instructor-types="ui.instructorTypes"
+																			user-role="userRole">
+						</intructor-type-selector>
 					</div>
 				</td>
 			</tr>
