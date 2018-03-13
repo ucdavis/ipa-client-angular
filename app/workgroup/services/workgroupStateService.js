@@ -246,7 +246,8 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 								"Student Masters",
 								"Student PhD"],
 						},
-						instructorTypes: []
+						instructorTypes: [],
+						roleTotals: {}
 					};
 
 					action.payload.instructorTypes.forEach(function(instructorType) {
@@ -259,6 +260,9 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					return ui;
 				case ADD_USER_PENDING:
 					ui.addUserPending = true;
+					return ui;
+				case CALCULATE_ROLE_TOTALS:
+					ui.roleTotals = action.payload.roleTotals;
 					return ui;
 				case ADD_USER_COMPLETED:
 					ui.addUserPending = false;

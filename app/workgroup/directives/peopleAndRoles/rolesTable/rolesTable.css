@@ -66,3 +66,11 @@
 	justify-content: center;
 	align-items: center;
 }
+
+.roles-table__no-roles {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+	color: #aaabae;
+}

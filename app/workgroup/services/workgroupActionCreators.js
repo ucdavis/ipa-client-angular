@@ -275,6 +275,8 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 					calculatedUserRoles: calculatedUserRoles
 				}
 			});
+
+			this._calculateRoleTotals();
 		},
 		_generateUserRole: function (userRole, shouldDisplayPresence) {
 			var user = workgroupStateService._state.users.list[userRole.userId];
@@ -308,7 +310,6 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 		// Will generate a list of presence userRoles that should be displayed in the presence column.
 		// Presence userRole will only show if the user does not have any other userRoles in the workgroup
 		_calculateUserRolesWithPresence: function() {
-
 			// Identify which users shouldn't have presence displayed
 			var usersWithAccess = [];
 
@@ -337,6 +338,35 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 			});
 
 			return presenceUserRoles;
+		},
+		// Calculates totals for each 'role' category
+		_calculateRoleTotals: function() {
+			var roleIds = [];
+
+			workgroupStateService._state.roles.ids.forEach(function(roleId) {
+				var role = workgroupStateService._state.roles.list[roleId];
+				roleIds.push(role.id);
+			});
+
+			var roleTotals = {};
+			roleIds.forEach(function(roleId) {
+				roleTotals[roleId] = 0;
+			});
+
+			workgroupStateService._state.calculatedUserRoles.forEach(function(userRole) {
+				// Role 9 is 'presence' which is a special case
+				// It should only be counted if displayPresence was calculated to be true, when the user has no access.
+				if (userRole.roleId == 9 && userRole.displayPresence == false) { return; }
+
+				roleTotals[userRole.roleId] += 1;
+			});
+
+			workgroupStateService.reduce({
+				type: CALCULATE_ROLE_TOTALS,
+				payload: {
+					roleTotals: roleTotals
+				}
+			});
 		}
 	};
 });
