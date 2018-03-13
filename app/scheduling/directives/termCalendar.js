@@ -49,7 +49,7 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			var unavailabilityEventTextColor = "#555555";
 
 			var tagEventTextColor = "#FFFFFF";
-			var selectedActivityTaggedColorShift = -80;
+			var selectedActivityTaggedColorShift = .6;
 
 			var refreshCalendar = function () {
 				var parentAspectRatio = element.parent().width() / element.parent().height();
@@ -106,6 +106,38 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 					}
 				});
 			};
+
+			// Supply a color and amount to shift the color (out of 255)
+			// Example to lighten: lightenOrDarkenColor("#F06D06", 20);
+			// Example to darken: lightenOrDarkenColor("#F06D06", -20);
+			var lightenOrDarkenColor = function(hexColor, amt) {
+				var rgbValues = hexToRgb(hexColor);
+
+				var r = parseInt(rgbValues.r * amt);
+				var g = parseInt(rgbValues.g * amt);
+				var b = parseInt(rgbValues.b * amt);
+
+				return rgbToHex(r, g, b);
+			};
+
+			// Converts a piece of the rgb value to its hex equivalent
+			function rgbComponentToHex(c) {
+				var hex = c.toString(16);
+				return hex.length == 1 ? "0" + hex : hex;
+			}
+
+			function rgbToHex(r, g, b) {
+				return "#" + rgbComponentToHex(r) + rgbComponentToHex(g) + rgbComponentToHex(b);
+			}
+
+			function hexToRgb(hex) {
+				var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+				return result ? {
+					r: parseInt(result[1], 16),
+					g: parseInt(result[2], 16),
+					b: parseInt(result[3], 16)
+				} : null;
+			}
 
 			var getActivities = function () {
 				// Each of these If blocks will add to a 'events array'
@@ -277,9 +309,15 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			var styleCalendarEvents = function (calendarActivities, backgroundColor, borderColor, textColor, tagColor) {
 				calendarActivities.forEach(function (event) {
 					if (scope.view.state.uiState.selectedActivityId === event.activityId) {
+						if (tagColor) {
+							event.color = lightenOrDarkenColor(tagColor, selectedActivityTaggedColorShift);
+							event.borderColor = lightenOrDarkenColor(tagColor, selectedActivityTaggedColorShift);
+							event.textColor = textColor;
+						} else {
 							event.color = highlightedEventBackgroundColor;
 							event.borderColor = highlightedEventBorderColor;
 							event.textColor = highlightedEventTextColor;
+						}
 					} else {
 						event.color = angular.copy(backgroundColor);
 						event.borderColor = angular.copy(borderColor);
