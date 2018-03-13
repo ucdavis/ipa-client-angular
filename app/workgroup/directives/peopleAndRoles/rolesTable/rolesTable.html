@@ -41,12 +41,15 @@
 					</div>
 				</th>
 				<th class="roles-table__table-header">
-					<div class="roles-table__table-header-container roles-table__table-header--no-border">
+					<div class="roles-table__table-header-container" ng-class="{'roles-table__table-header--no-border': activeRoleId != 15 }">
 						Email
 					</div>
 				</th>
 				<th class="roles-table__table-header">
 					<div class="roles-table__table-header-container roles-table__table-header--no-border">
+						<span ng-if="activeRoleId == 15">
+							Instructor Type
+						</span>
 					</div>
 				</th>
 				<th class="roles-table__table-header">
@@ -69,17 +72,6 @@
 					{{ userRole.userEmail }}
 				</td>
 
-				<!-- Remove -->
-				<td class="roles-table__table-cell roles-table__table-cell--comments">
-					<div class="roles-table__comment-container">
-						<ipa-button text="'Remove'"
-						            color="'light'"
-						            on-click="removeUserRole(userRole)"
-						            confirm-message="'Remove role from user?'">
-						</ipa-button>
-					</div>
-				</td>
-
 				<!-- Dropdown for instructors -->
 				<td class="roles-table__table-cell">
 					<div class="roles-table__amount-container">
@@ -90,6 +82,25 @@
 						</intructor-type-selector>
 					</div>
 				</td>
+
+				<!-- Remove -->
+				<td class="roles-table__table-cell roles-table__table-cell--comments">
+					<div class="roles-table__comment-container">
+						<ipa-button text="'Remove'"
+						            color="'light'"
+						            on-click="removeUserRole(userRole)"
+						            confirm-message="'Remove role from user?'">
+						</ipa-button>
+					</div>
+				</td>
+			</tr>
+
+			<tr ng-if="userRoles.length == 0">
+				<td colspan="4">
+				<div>
+					No users
+				</div>
+			</td>
 			</tr>
 		</tbody>
 	</table>
