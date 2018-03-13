@@ -95,9 +95,9 @@
 				</td>
 			</tr>
 
-			<tr ng-if="userRoles.length == 0">
+			<tr ng-show="ui.roleTotals[activeRoleId] == 0">
 				<td colspan="4">
-				<div>
+				<div class="roles-table__no-roles">
 					No users
 				</div>
 			</td>
