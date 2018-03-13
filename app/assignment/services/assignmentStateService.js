@@ -677,8 +677,6 @@ assignmentApp.service('assignmentStateService', function (
 					userInterface.instructorId = action.payload.instructorId;
 					userInterface.userId = action.payload.userId;
 
-					userInterface.federationInstructorIds = action.payload.federationInstructorIds;
-					userInterface.senateInstructorIds = action.payload.senateInstructorIds;
 					userInterface.scheduleId = action.payload.scheduleId;
 					userInterface.year = action.year;
 

@@ -21,27 +21,6 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', { message: "Could not load assignment view.", type: "ERROR" });
 			});
 		},
-		getInitialTeachingCallState: function (workgroupId, year) {
-			assignmentService.getInitialTeachingCallState(workgroupId, year).then(function (payload) {
-				var action = {
-					type: INIT_TEACHING_CALL_VIEW,
-					payload: payload,
-					year: year
-				};
-				assignmentStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not load teaching call state.", type: "ERROR" });
-			});
-		},
-		initializeActiveTeachingCall: function (activeTeachingCall) {
-			var action = {
-				type: INIT_ACTIVE_TEACHING_CALL,
-				payload: {
-					activeTeachingCall: activeTeachingCall
-				}
-			};
-			assignmentStateService.reduce(action);
-		},
 		removePlaceholderAI: function (sectionGroup) {
 			assignmentService.updateSectionGroup(sectionGroup).then(function (payload) {
 				var action = {
