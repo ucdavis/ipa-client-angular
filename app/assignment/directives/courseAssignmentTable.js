@@ -146,9 +146,15 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 
 											if (teachingAssignment.approved === true) {
 												var instructor = scope.view.state.instructorMasterList.list[teachingAssignment.instructorId];
+												var instructorType = scope.view.state.instructorTypes.list[teachingAssignment.instructorTypeId];
+
 												// Add approved teachingAssignment to term
 												courseHtml += "<div class=\"alert alert-info tile-assignment\">";
-												courseHtml += instructor.fullName;
+												if (instructor) {
+													courseHtml += instructor.fullName;
+												} else {
+													courseHtml += instructorType.description;
+												}
 
 												if (scope.userCanEdit()) {
 													var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
