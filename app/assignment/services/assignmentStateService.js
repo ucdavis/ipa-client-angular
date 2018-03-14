@@ -81,6 +81,23 @@ assignmentApp.service('assignmentStateService', function (
 					return courses;
 			}
 		},
+		_instructorTypeReducers: function (action, instructorTypes) {
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					var instructorTypes = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.instructorTypes.forEach( function(instructorType) {
+						instructorTypes.list[instructorType.id] = instructorType;
+						instructorTypes.ids.push(instructorType.id);
+					});
+					return instructorTypes;
+				default:
+					return instructorTypes;
+			}
+		},
 		_supportStaffReducers: function (action, supportStaffList) {
 			var scope = this;
 
@@ -765,7 +782,7 @@ assignmentApp.service('assignmentStateService', function (
 			newState.theStaff = scope._theStaffReducers(action, scope._state.theStaff);
 			newState.supportStaffList = scope._supportStaffReducers(action, scope._state.supportStaffList);
 			newState.studentPreferences = scope._studentPreferenceReducers(action, scope._state.studentPreferences);
-
+			newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 			scope._state = newState;
 
 			$rootScope.$emit('assignmentStateChanged', scope._state);
