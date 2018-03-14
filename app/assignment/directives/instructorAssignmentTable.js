@@ -143,9 +143,8 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 								courseHtml += "<div><strong>";
 								if (instructor) {
 									courseHtml += instructor.fullName;
-								} else {
-									courseHtml += "taco - no instructor for id: " + instructorId;
 								}
+
 								courseHtml += "</strong>";
 								courseHtml += "</div>";
 
