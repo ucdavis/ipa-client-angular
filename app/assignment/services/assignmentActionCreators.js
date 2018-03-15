@@ -21,17 +21,6 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', { message: "Could not load assignment view.", type: "ERROR" });
 			});
 		},
-		removePlaceholderAI: function (sectionGroup) {
-			assignmentService.updateSectionGroup(sectionGroup).then(function (payload) {
-				var action = {
-					type: REMOVE_PLACEHOLDER_AI,
-					payload: payload
-				};
-				assignmentStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not remove placeholder AI.", type: "ERROR" });
-			});
-		},
 		updateTagFilters: function (tagIds) {
 			var action = {
 				type: UPDATE_TAG_FILTERS,
@@ -185,6 +174,35 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 				$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
 			});
 		},
+		assignInstructorType: function (teachingAssignment) {
+			var scheduleId = assignmentStateService._state.userInterface.scheduleId;
+
+			assignmentService.addTeachingAssignment(teachingAssignment, scheduleId).then(function (teachingAssignment) {
+				$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
+				assignmentStateService.reduce({
+					type: ADD_TEACHING_ASSIGNMENT,
+					payload: {
+						teachingAssignment: teachingAssignment
+					}
+				});
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
+			});
+		},
+		unassignInstructorType: function (originalTeachingAssignment) {
+			assignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {
+				$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
+
+				assignmentStateService.reduce({
+					type: REMOVE_TEACHING_ASSIGNMENT,
+					payload: {
+						teachingAssignment: originalTeachingAssignment
+					}
+				});
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
+			});
+		},
 		assignStudentToAssociateInstructor: function (sectionGroup, supportStaff) {
 			var self = this;
 
@@ -230,22 +248,6 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
 			});
-
-		},
-		createPlaceholderAI: function (sectionGroup) {
-			assignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
-				$rootScope.$emit('toast', { message: "Created AI placeholder", type: "SUCCESS" });
-					var action = {
-						type: CREATE_PLACEHOLDER_AI,
-						payload: {
-							sectionGroup: sectionGroup
-						}
-					};
-					assignmentStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not create AI placeholder.", type: "ERROR" });
-			});
-
 		},
 		createPlaceholderStaff: function (sectionGroup) {
 			assignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
