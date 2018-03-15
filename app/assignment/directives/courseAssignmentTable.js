@@ -205,6 +205,16 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 												courseHtml += ' href="#">The Staff</a></li>';
 											}
 
+											scope.view.state.instructorTypes.ids.forEach(function(instructorTypeId) {
+												var instructorType = scope.view.state.instructorTypes.list[instructorTypeId];
+												courseHtml += "<li><a";
+												courseHtml += ' data-is-instructor-type="true"';
+												courseHtml += ' data-section-group-id="' + sectionGroup.id + '"';
+												courseHtml += ' data-instructor-type-id="' + instructorType.id + '"';
+												courseHtml += ' href="#">' + instructorType.description + '</a>';
+												courseHtml += '</li>';
+											});
+
 											courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
 
 											var interestedInstructorIds = [];
