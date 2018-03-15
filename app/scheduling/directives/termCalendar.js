@@ -49,7 +49,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			var unavailabilityEventTextColor = "#555555";
 
 			var tagEventTextColor = "#FFFFFF";
-			var selectedActivityTaggedColorShift = .6;
+			// This will be used to 'darken' the color of a card on the calendar if it has a user specified 'tag' color
+			var selectedActivityTintingMultiplier = .6;
 
 			var refreshCalendar = function () {
 				var parentAspectRatio = element.parent().width() / element.parent().height();
@@ -108,8 +109,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			};
 
 			// Supply a color and amount to shift the color (out of 255)
-			// Example to lighten: lightenOrDarkenColor("#F06D06", 20);
-			// Example to darken: lightenOrDarkenColor("#F06D06", -20);
+			// Example to lighten: lightenOrDarkenColor("#F06D06", 1.2);
+			// Example to darken: lightenOrDarkenColor("#F06D06", .6);
 			var lightenOrDarkenColor = function(hexColor, amt) {
 				var rgbValues = hexToRgb(hexColor);
 
@@ -121,6 +122,7 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			};
 
 			// Converts a piece of the rgb value to its hex equivalent
+			// Example: rgbComponentToHex(110) -> "6e"
 			function rgbComponentToHex(c) {
 				var hex = c.toString(16);
 				return hex.length == 1 ? "0" + hex : hex;
@@ -131,11 +133,16 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			}
 
 			function hexToRgb(hex) {
-				var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-				return result ? {
-					r: parseInt(result[1], 16),
-					g: parseInt(result[2], 16),
-					b: parseInt(result[3], 16)
+				var expandedHex = {
+					r: hex.slice(1, 3),
+					g: hex.slice(3,5),
+					b: hex.slice(5,7)
+				};
+
+				return expandedHex ? {
+					r: parseInt(expandedHex.r, 16),
+					b: parseInt(expandedHex.b, 16),
+					g: parseInt(expandedHex.g, 16)
 				} : null;
 			}
 
@@ -310,8 +317,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				calendarActivities.forEach(function (event) {
 					if (scope.view.state.uiState.selectedActivityId === event.activityId) {
 						if (tagColor) {
-							event.color = lightenOrDarkenColor(tagColor, selectedActivityTaggedColorShift);
-							event.borderColor = lightenOrDarkenColor(tagColor, selectedActivityTaggedColorShift);
+							event.color = lightenOrDarkenColor(tagColor, selectedActivityTintingMultiplier);
+							event.borderColor = lightenOrDarkenColor(tagColor, selectedActivityTintingMultiplier);
 							event.textColor = textColor;
 						} else {
 							event.color = highlightedEventBackgroundColor;
