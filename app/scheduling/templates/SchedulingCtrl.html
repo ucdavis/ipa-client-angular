@@ -160,6 +160,10 @@
 										ng-repeat="instructorId in view.state.sectionGroups.list[sectionGroupId].instructorIds track by $index">
 										{{ view.state.instructors.list[instructorId] | lastSpaceInitial }}{{ $last ? '':', '}}
 									</div>
+									<span class="label label-default" style="padding: 3px; margin-left: 3px;"
+										ng-repeat="instructorTypeId in view.state.sectionGroups.list[sectionGroupId].instructorTypeIds track by $index">
+										{{ view.state.instructorTypes.list[instructorTypeId].description }}{{ $last ? '':', '}}
+									</span>
 								</div>
 
 								<div ng-if="view.state.sectionGroups.list[sectionGroupId].showTheStaff">
