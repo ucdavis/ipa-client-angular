@@ -332,13 +332,32 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 					var sectionGroupId = $el.data('section-group-id');
 					var instructorId = $el.data('instructor-id');
 					var supportStaffId = $el.data('support-staff-id');
+					var instructorTypeId = $el.data('instructor-type-id');
+					var teachingAssignmentId = $el.data('teaching-assignment-id');
 
-					teachingAssignmentId = $el.data('teaching-assignment-id');
 					var isAssignPlaceholderAI = $el.data('is-placeholder-ai');
 					var isAssignPlaceholderStaff = $el.data('is-placeholder-staff');
+					var isInstructorType = $el.data('is-instructor-type');
 
+					if (isInstructorType) {
+						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+
+						newTeachingAssignment = {
+							sectionGroupId: sectionGroupId,
+							termCode: sectionGroup.termCode,
+							priority: 1,
+							approved: true,
+							instructorTypeId: instructorTypeId
+						};
+
+						// Remove The Staff if necessary
+						if (sectionGroup) {
+							sectionGroup.showTheStaff = false;
+						}
+
+						assignmentActionCreators.assignInstructorType(newTeachingAssignment);
 					// Create a 'The Staff' placeholder
-					if (isAssignPlaceholderStaff) {
+					} else if (isAssignPlaceholderStaff) {
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 						sectionGroup.showTheStaff = true;
 						assignmentActionCreators.createPlaceholderStaff(sectionGroup);

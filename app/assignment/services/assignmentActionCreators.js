@@ -177,12 +177,12 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 		assignInstructorType: function (teachingAssignment) {
 			var scheduleId = assignmentStateService._state.userInterface.scheduleId;
 
-			assignmentService.addTeachingAssignment(teachingAssignment, scheduleId).then(function (teachingAssignment) {
+			assignmentService.addInstructorAssignment(teachingAssignment, scheduleId).then(function (newTeachingAssignment) {
 				$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
 				assignmentStateService.reduce({
 					type: ADD_TEACHING_ASSIGNMENT,
 					payload: {
-						teachingAssignment: teachingAssignment
+						teachingAssignment: newTeachingAssignment
 					}
 				});
 			}, function (err) {
