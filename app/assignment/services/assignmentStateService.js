@@ -400,7 +400,9 @@ assignmentApp.service('assignmentStateService', function (
 				case ADD_TEACHING_ASSIGNMENT:
 					teachingAssignment = action.payload.teachingAssignment;
 					instructor = instructors.list[teachingAssignment.instructorId];
-					instructor.teachingAssignmentTermCodeIds[teachingAssignment.termCode].push(teachingAssignment.id);
+					if (instructor) {
+						instructor.teachingAssignmentTermCodeIds[teachingAssignment.termCode].push(teachingAssignment.id);
+					}
 					return instructors;
 				case REMOVE_TEACHING_ASSIGNMENT:
 					teachingAssignment = action.payload.teachingAssignment;
