@@ -62,6 +62,9 @@ teachingCallResponseReportApp.service('teachingCallResponseReportStateService', 
 					teachingAssignments = action.payload.teachingAssignments;
 
 					teachingAssignments.forEach( function(teachingAssignment) {
+						// Ignore teachingAssignments that aren't people based
+						if (teachingAssignment.instructorId == null) { return; }
+
 						// Ignore assignments from the academic coordinator
 						if (teachingAssignment.fromInstructor) {
 							// Find the relevant instructor
