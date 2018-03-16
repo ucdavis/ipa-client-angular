@@ -103,7 +103,7 @@ assignmentApp.factory("assignmentService", this.assignmentService = function($ht
 		addInstructorAssignment: function (teachingAssignment, scheduleId) {
 			var deferred = $q.defer();
 			teachingAssignment.termCode = String(teachingAssignment.termCode);
-			$http.post(serverRoot + "/api/assignmentView/schedules/" + scheduleId + "/teachingAssignments/", teachingAssignment, { withCredentials: true })
+			$http.post(serverRoot + "/api/assignmentView/schedules/" + scheduleId + "/teachingAssignments", teachingAssignment, { withCredentials: true })
 			.success(function(payload) {
 				deferred.resolve(payload);
 			})
