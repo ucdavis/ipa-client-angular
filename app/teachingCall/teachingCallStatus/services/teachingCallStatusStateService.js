@@ -13,6 +13,7 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 					};
 
 					action.payload.teachingCallReceipts.forEach( function(teachingCallReceipt) {
+/*
 						teachingCallReceipt.isSenateInstructor = false;
 						teachingCallReceipt.isFederationInstructor = false;
 
@@ -28,7 +29,7 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 						if (action.payload.lecturerInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
 							teachingCallReceipt.isLecturerInstructor = true;
 						}
-
+*/
 						// Record to state
 						teachingCallReceipts.ids.push(teachingCallReceipt.id);
 						teachingCallReceipts.list[teachingCallReceipt.id] = teachingCallReceipt;
@@ -87,6 +88,48 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 					return teachingCallReceipts;
 			}
 		},
+		_userRoleReducers: function (action, userRoles) {
+			switch (action.type) {
+				case INIT_STATE:
+					// Hashing user values for calculation
+					users = {
+						ids: [],
+						list: {}
+					};
+					action.payload.users.forEach(function(user) {
+						users.ids.push(user.id);
+						users.list[user.id] = user;
+					});
+					// Hashing instructor values for calculation
+					instructors = {
+						ids: [],
+						list: {},
+						byLoginId: {}
+					};
+					action.payload.instructors.forEach(function(instructor) {
+						instructors.ids.push(instructor.id);
+						instructors.list[instructor.id] = instructor;
+						instructors.byLoginId[instructor.loginId] = instructor;
+					});
+
+					userRoles = {
+						ids: [],
+						list: {}
+					};
+					action.payload.userRoles.forEach(function(userRole) {
+						var user = users.list[userRole.userId];
+						var instructor = instructors.byLoginId[user.loginId];
+						userRole.instructorId = instructor.id;
+						userRole.loginId = user.loginId;
+
+						userRoles.ids.push(userRole.id);
+						userRoles.list[userRole.id] = userRole;
+					});
+					return userRoles;
+				default:
+					return userRoles;
+			}
+		},
 		_instructorReducers: function (action, instructors, teachingCallReceipts) {
 			var scope = this;
 
@@ -95,10 +138,16 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 					instructors = {
 						ids: [],
 						list: [],
-						senateInstructorIds: [],
-						federationInstructorIds: []
+						//senateInstructorIds: [],
+					//	federationInstructorIds: []
 					};
 
+					action.payload.instructors.forEach(function(instructor) {
+						instructors.ids.push(instructor.id);
+						instructors.list[instructor.id] = instructor;
+					});
+
+/*
 					instructors.senateInstructorIds = action.payload.senateInstructorIds;
 					instructors.federationInstructorIds = action.payload.federationInstructorIds;
 					instructors.lecturerInstructorIds = action.payload.lecturerInstructorIds;
@@ -140,7 +189,7 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 
 					// Ensure instructors are pre-sorted by last name
 					instructors.ids = _array_sortIdsByProperty(instructors.list, ["lastName"]);
-
+*/
 					return instructors;
 				case ADD_INSTRUCTORS_TO_TEACHING_CALL:
 					action.payload.teachingCallReceipts.forEach(function(slotReceipt) {
@@ -161,7 +210,10 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 			newState = {};
 			newState.instructors = scope._instructorReducers(action, scope._state.instructors, angular.copy(scope._state.teachingCallReceipts));
 			newState.teachingCallReceipts = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipts, angular.copy(scope._state.instructors));
+			newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
+
 			scope._state = newState;
+			console.log(newState);
 
 			// Build new 'page state'
 			// This is the 'view friendly' version of the store
@@ -178,7 +230,6 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 			newPageState.eligible.lecturer = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, false, false, false, true);
 
 			$rootScope.$emit('teachingCallStatusStateChanged', newPageState);
-
 			$log.debug("Teaching Call Status state updated:");
 			$log.debug(newPageState, action.type);
 		}

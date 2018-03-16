@@ -80,6 +80,20 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not remove instructor from teaching call.", type: "ERROR" });
 			});
+		},
+		_calculateInstructorsEligibleForTeachingCall: function() {
+			// TODO
+		},
+		_calculateInstructorsInTeachingCall: function() {
+			var teachingCallReceipts = workgroupStateService._state.teachingCallREceipts;
+			var userRoles = workgroupStateService._state.userRoles;
+			var instructorTypes = workgroupStateService._state.instructorTypes;
+			var instructors = workgroupStateService._state.instructors;
+
+			teachingCallReceipts.ids.forEach(function(teachingCallReceiptId) {
+				var teachingCallReceipt = teachingCallReceipts.list[teachingCallReceiptId];
+				var instructor = instructors[teachingCallReceipt.instructorId];
+			});
 		}
 	};
 });
