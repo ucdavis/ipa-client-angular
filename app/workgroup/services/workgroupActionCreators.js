@@ -269,6 +269,8 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				calculatedUserRoles.push(newUserRole);
 			});
 
+			calculatedUserRoles = _array_sortByProperty(calculatedUserRoles, "userDisplayName");
+
 			workgroupStateService.reduce({
 				type: CALCULATE_USER_ROLES,
 				payload: {
