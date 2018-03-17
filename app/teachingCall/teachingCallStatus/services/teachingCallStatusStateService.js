@@ -88,46 +88,39 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 					return teachingCallReceipts;
 			}
 		},
-		_userRoleReducers: function (action, userRoles) {
+		_instructorTypeReducers: function (action, instructorTypes) {
+			var scope = this;
+
 			switch (action.type) {
 				case INIT_STATE:
-					// Hashing user values for calculation
-					users = {
+					instructorTypes = {
 						ids: [],
 						list: {}
 					};
-					action.payload.users.forEach(function(user) {
-						users.ids.push(user.id);
-						users.list[user.id] = user;
-					});
-					// Hashing instructor values for calculation
-					instructors = {
-						ids: [],
-						list: {},
-						byLoginId: {}
-					};
-					action.payload.instructors.forEach(function(instructor) {
-						instructors.ids.push(instructor.id);
-						instructors.list[instructor.id] = instructor;
-						instructors.byLoginId[instructor.loginId] = instructor;
+
+					action.payload.instructorTypes.forEach(function(instructorType) {
+						instructorTypes.list[instructorType.id] = instructorType;
+						instructorTypes.ids.push(instructorType.id);
 					});
 
-					userRoles = {
-						ids: [],
-						list: {}
-					};
-					action.payload.userRoles.forEach(function(userRole) {
-						var user = users.list[userRole.userId];
-						var instructor = instructors.byLoginId[user.loginId];
-						userRole.instructorId = instructor.id;
-						userRole.loginId = user.loginId;
-
-						userRoles.ids.push(userRole.id);
-						userRoles.list[userRole.id] = userRole;
-					});
-					return userRoles;
+					return instructorTypes;
 				default:
-					return userRoles;
+					return instructorTypes;
+			}
+		},
+		_calculationReducers: function(action, calculations) {
+			switch (action.type) {
+				case INIT_STATE:
+					var calculations = {
+						teachingCallsByInstructorType: {},
+						instructorsEligibleForCall: {}
+					};
+					return calculations;
+				case CALCULATE_INSTRUCTORS_IN_CALL:
+					calculations.teachingCallsByInstructorType = action.payload.teachingCallsByInstructorType;
+					return calculations;
+				default:
+					return calculations;
 			}
 		},
 		_instructorReducers: function (action, instructors, teachingCallReceipts) {
@@ -135,14 +128,37 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 
 			switch (action.type) {
 				case INIT_STATE:
+					// Hashing user values for calculation
+					users = {
+						ids: [],
+						list: {},
+						byLoginId: {}
+					};
+					action.payload.users.forEach(function(user) {
+						users.ids.push(user.id);
+						users.list[user.id] = user;
+						users.byLoginId[user.loginId] = user;
+					});
+					userRoles = {
+						ids: [],
+						list: {},
+						byUserId: {}
+					};
+					action.payload.userRoles.forEach(function(userRole) {
+						userRoles.ids.push(userRole.id);
+						userRoles.list[userRole.id] = userRole;
+						userRoles.byUserId[userRole.userId] = userRole;
+					});
+
 					instructors = {
 						ids: [],
-						list: [],
-						//senateInstructorIds: [],
-					//	federationInstructorIds: []
+						list: []
 					};
 
 					action.payload.instructors.forEach(function(instructor) {
+						var user = users.byLoginId[instructor.loginId];
+						var userRole = userRoles.byUserId[user.id];
+						instructor.instructorTypeId = userRole.instructorTypeId;
 						instructors.ids.push(instructor.id);
 						instructors.list[instructor.id] = instructor;
 					});
@@ -210,8 +226,8 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 			newState = {};
 			newState.instructors = scope._instructorReducers(action, scope._state.instructors, angular.copy(scope._state.teachingCallReceipts));
 			newState.teachingCallReceipts = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipts, angular.copy(scope._state.instructors));
-			newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
-
+			newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
+			newState.calculations = scope._calculationReducers(action, scope._state.calculations);
 			scope._state = newState;
 			console.log(newState);
 

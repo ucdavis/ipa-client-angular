@@ -1,6 +1,8 @@
 teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCallStatusStateService, teachingCallStatusService, $rootScope, $window, Role) {
 	return {
 		getInitialState: function (workgroupId, year, tab) {
+			var self = this;
+
 			teachingCallStatusService.getInitialState(workgroupId, year).then(function (payload) {
 				var action = {
 					type: INIT_STATE,
@@ -9,6 +11,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 					tab: tab
 				};
 				teachingCallStatusStateService.reduce(action);
+				self._calculateInstructorsInCall();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load initial teaching call status state.", type: "ERROR" });
 			});
@@ -84,15 +87,30 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 		_calculateInstructorsEligibleForTeachingCall: function() {
 			// TODO
 		},
-		_calculateInstructorsInTeachingCall: function() {
-			var teachingCallReceipts = workgroupStateService._state.teachingCallREceipts;
-			var userRoles = workgroupStateService._state.userRoles;
-			var instructorTypes = workgroupStateService._state.instructorTypes;
-			var instructors = workgroupStateService._state.instructors;
+		_calculateInstructorsInCall: function() {
+			var teachingCallReceipts = teachingCallStatusStateService._state.teachingCallReceipts;
+			var instructorTypes = teachingCallStatusStateService._state.instructorTypes;
+			var instructors = teachingCallStatusStateService._state.instructors;
+
+			teachingCallsByInstructorType = {};
+
+			instructorTypes.ids.forEach(function(instructorTypeId) {
+				var instructorType = instructorTypes.list[instructorTypeId];
+				teachingCallsByInstructorType[instructorTypeId] = [];
+			});
 
 			teachingCallReceipts.ids.forEach(function(teachingCallReceiptId) {
 				var teachingCallReceipt = teachingCallReceipts.list[teachingCallReceiptId];
-				var instructor = instructors[teachingCallReceipt.instructorId];
+				var instructor = instructors.list[teachingCallReceipt.instructorId];
+
+				teachingCallsByInstructorType[instructor.instructorTypeId] = teachingCallReceipt;
+			});
+			debugger;
+			teachingCallStatusStateService.reduce({
+				action: CALCULATE_INSTRUCTORS_IN_CALL,
+				payload: {
+					teachingCallsByInstructorType: teachingCallsByInstructorType
+				}
 			});
 		}
 	};
