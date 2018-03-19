@@ -12,6 +12,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				};
 				teachingCallStatusStateService.reduce(action);
 				self._calculateInstructorsInCall();
+				self._calculateEligibleInstructors();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load initial teaching call status state.", type: "ERROR" });
 			});
@@ -34,6 +35,8 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 					}
 				};
 				teachingCallStatusStateService.reduce(action);
+				self._calculateInstructorsInCall();
+				self._calculateEligibleInstructors();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not set next email contact.", type: "ERROR" });
 			});
@@ -67,6 +70,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				};
 				teachingCallStatusStateService.reduce(action);
 				self._calculateInstructorsInCall();
+				self._calculateEligibleInstructors();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not add instructors to teaching call.", type: "ERROR" });
 			});
@@ -84,19 +88,49 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				};
 				teachingCallStatusStateService.reduce(action);
 				self._calculateInstructorsInCall();
+				self._calculateEligibleInstructors();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not remove instructor from teaching call.", type: "ERROR" });
 			});
 		},
-		_calculateInstructorsEligibleForTeachingCall: function() {
-			// TODO
+		// Generate's a DTO that lists all instructors NOT in a teachingCall, broken up by instructorType
+		_calculateEligibleInstructors: function() {
+			var self = this;
+
+			var teachingCallReceipts = teachingCallStatusStateService._state.teachingCallReceipts;
+			var instructorTypes = teachingCallStatusStateService._state.instructorTypes;
+			var instructors = teachingCallStatusStateService._state.instructors;
+			var instructorsInCalls = teachingCallStatusStateService._state.calculations.teachingCallsByInstructorType;
+
+			var instructorsEligibleForCall = [];
+			var atLeastOneEligibleForCall = false;
+
+			instructors.ids.forEach(function(instructorId) {
+				var instructor = instructors.list[instructorId];
+
+				var instructorHasCall = _array_find_by_properties(instructorsInCalls[instructor.instructorTypeId], ["instructorId"], {instructorId: instructor.id});
+				// Skip instructors that are in a call
+				if (instructorHasCall) { return; }
+
+				atLeastOneEligibleForCall = true;
+				instructorsEligibleForCall.push(instructor);
+			});
+
+			teachingCallStatusStateService.reduce({
+				type: CALCULATE_ELIGIBLE_INSTRUCTORS,
+				payload: {
+					instructorsEligibleForCall: instructorsEligibleForCall,
+					atLeastOneEligibleForCall: atLeastOneEligibleForCall
+				}
+			});
 		},
+		// Generates DTO's for each teachingCallReceipt/instructor and sorts them by instructorType
 		_calculateInstructorsInCall: function() {
 			var teachingCallReceipts = teachingCallStatusStateService._state.teachingCallReceipts;
 			var instructorTypes = teachingCallStatusStateService._state.instructorTypes;
 			var instructors = teachingCallStatusStateService._state.instructors;
 
-			teachingCallsByInstructorType = {};
+			var teachingCallsByInstructorType = {};
 
 			instructorTypes.ids.forEach(function(instructorTypeId) {
 				var instructorType = instructorTypes.list[instructorTypeId];
@@ -106,6 +140,8 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 			teachingCallReceipts.ids.forEach(function(teachingCallReceiptId) {
 				var teachingCallReceipt = teachingCallReceipts.list[teachingCallReceiptId];
 				var instructor = instructors.list[teachingCallReceipt.instructorId];
+
+				if (instructor == null) { return; }
 
 				teachingCallReceipt.firstName = instructor.firstName;
 				teachingCallReceipt.lastName = instructor.lastName;

@@ -4,37 +4,16 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 		_state: {},
 		_teachingCallReceiptReducers: function (action, teachingCallReceipts, instructors) {
 			var scope = this;
-
 			switch (action.type) {
 				case INIT_STATE:
 					teachingCallReceipts = {
 						ids: [],
 						list: []
 					};
-
 					action.payload.teachingCallReceipts.forEach( function(teachingCallReceipt) {
-/*
-						teachingCallReceipt.isSenateInstructor = false;
-						teachingCallReceipt.isFederationInstructor = false;
-
-						// Add senate/federation instructor metadata
-						if (action.payload.senateInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
-							teachingCallReceipt.isSenateInstructor = true;
-						}
-
-						if (action.payload.federationInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
-							teachingCallReceipt.isFederationInstructor = true;
-						}
-
-						if (action.payload.lecturerInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
-							teachingCallReceipt.isLecturerInstructor = true;
-						}
-*/
-						// Record to state
 						teachingCallReceipts.ids.push(teachingCallReceipt.id);
 						teachingCallReceipts.list[teachingCallReceipt.id] = teachingCallReceipt;
 					});
-
 					return teachingCallReceipts;
 				case CONTACT_INSTRUCTORS:
 					// Update the message and nextContactAt fields
@@ -42,47 +21,21 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 
 					receiptsPayload.forEach(function(slotReceipt) {
 						var originalReceipt = teachingCallReceipts.list[slotReceipt.id];
-
 						originalReceipt.message = slotReceipt.message;
 						originalReceipt.nextContactAt = slotReceipt.nextContactAt;
 					});
 					return teachingCallReceipts;
 				case ADD_INSTRUCTORS_TO_TEACHING_CALL:
-					var receiptsPayload = action.payload.teachingCallReceipts;
-
-					receiptsPayload.forEach(function(teachingCallReceipt) {
-
-						teachingCallReceipt.isSenateInstructor = false;
-						teachingCallReceipt.isFederationInstructor = false;
-						teachingCallReceipt.isLecturerInstructor = false;
-
-						// Add senate/federation instructor metadata
-						if (instructors.senateInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
-							teachingCallReceipt.isSenateInstructor = true;
-						}
-
-						if (instructors.federationInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
-							teachingCallReceipt.isFederationInstructor = true;
-						}
-
-						if (instructors.lecturerInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
-							teachingCallReceipt.isLecturerInstructor = true;
-						}
-
-						// Record to state
+					action.payload.teachingCallReceipts.forEach(function(teachingCallReceipt) {
 						teachingCallReceipts.ids.push(teachingCallReceipt.id);
 						teachingCallReceipts.list[teachingCallReceipt.id] = teachingCallReceipt;
-
 					});
-
 					return teachingCallReceipts;
 				case REMOVE_INSTRUCTOR_FROM_TEACHING_CALL:
 					var receiptId = action.payload.teachingCallReceiptId;
 					var index = teachingCallReceipts.ids.indexOf(receiptId);
 					teachingCallReceipts.ids.splice(index, 1);
-
 					delete teachingCallReceipts.list[receiptId];
-
 					return teachingCallReceipts;
 				default:
 					return teachingCallReceipts;
@@ -90,19 +43,16 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 		},
 		_instructorTypeReducers: function (action, instructorTypes) {
 			var scope = this;
-
 			switch (action.type) {
 				case INIT_STATE:
 					instructorTypes = {
 						ids: [],
 						list: {}
 					};
-
 					action.payload.instructorTypes.forEach(function(instructorType) {
 						instructorTypes.list[instructorType.id] = instructorType;
 						instructorTypes.ids.push(instructorType.id);
 					});
-
 					return instructorTypes;
 				default:
 					return instructorTypes;
@@ -113,8 +63,13 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 				case INIT_STATE:
 					var calculations = {
 						teachingCallsByInstructorType: {},
-						instructorsEligibleForCall: {}
+						instructorsEligibleForCall: {},
+						atLeastOneEligibleForCall: false
 					};
+					return calculations;
+				case CALCULATE_ELIGIBLE_INSTRUCTORS:
+					calculations.instructorsEligibleForCall = action.payload.instructorsEligibleForCall;
+					calculations.atLeastOneEligibleForCall = action.payload.atLeastOneEligibleForCall;
 					return calculations;
 				case CALCULATE_INSTRUCTORS_IN_CALL:
 					calculations.teachingCallsByInstructorType = action.payload.teachingCallsByInstructorType;
@@ -125,7 +80,6 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 		},
 		_instructorReducers: function (action, instructors, teachingCallReceipts) {
 			var scope = this;
-
 			switch (action.type) {
 				case INIT_STATE:
 					// Hashing user values for calculation
@@ -163,49 +117,6 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 						instructors.list[instructor.id] = instructor;
 					});
 
-/*
-					instructors.senateInstructorIds = action.payload.senateInstructorIds;
-					instructors.federationInstructorIds = action.payload.federationInstructorIds;
-					instructors.lecturerInstructorIds = action.payload.lecturerInstructorIds;
-
-					var length = action.payload.instructors ? action.payload.instructors.length : 0;
-
-					for (i = 0; i < length; i++) {
-						var instructor = action.payload.instructors[i];
-						instructor.isSenateInstructor = false;
-						instructor.isFederationInstructor = false;
-						instructor.isLecturerInstructor = false;
-
-						// Add senate/federation instructor metadata
-						if (action.payload.senateInstructorIds.indexOf(instructor.id) > -1) {
-							instructor.isSenateInstructor = true;
-						}
-
-						if (action.payload.federationInstructorIds.indexOf(instructor.id) > -1) {
-							instructor.isFederationInstructor = true;
-						}
-
-						if (action.payload.lecturerInstructorIds.indexOf(instructor.id) > -1) {
-							instructor.isLecturerInstructor = true;
-						}
-
-						// Find teachingCallReceiptId if it exists
-						instructor.teachingCallReceiptId = 0;
-
-						for (var j = 0; j < action.payload.teachingCallReceipts.length; j++) {
-							var teachingCallReceipt = action.payload.teachingCallReceipts[j];
-							if (teachingCallReceipt.instructorId == instructor.id) {
-								instructor.teachingCallReceiptId = teachingCallReceipt.id;
-								break;
-							}
-						}
-
-						instructors.list[instructor.id] = instructor;
-					}
-
-					// Ensure instructors are pre-sorted by last name
-					instructors.ids = _array_sortIdsByProperty(instructors.list, ["lastName"]);
-*/
 					return instructors;
 				case ADD_INSTRUCTORS_TO_TEACHING_CALL:
 					action.payload.teachingCallReceipts.forEach(function(slotReceipt) {
@@ -234,18 +145,8 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 			// Build new 'page state'
 			// This is the 'view friendly' version of the store
 			newPageState = {};
-			newPageState.teachingCall = {};
-			newPageState.eligible = {};
-
 			newPageState.instructorTypes = newState.instructorTypes;
 			newPageState.calculations = newState.calculations;
-			newPageState.teachingCall.senate = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, true, true, false, false);
-			newPageState.teachingCall.federation = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, true, false, true, false);
-			newPageState.teachingCall.lecturer = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, true, false, false, true);
-
-			newPageState.eligible.senate = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, false, true, false, false);
-			newPageState.eligible.federation = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, false, false, true, false);
-			newPageState.eligible.lecturer = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, false, false, false, true);
 
 			$rootScope.$emit('teachingCallStatusStateChanged', newPageState);
 			$log.debug("Teaching Call Status state updated:");
