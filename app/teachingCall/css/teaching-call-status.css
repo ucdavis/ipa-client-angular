@@ -68,7 +68,8 @@
 .instructor-box {
 	border: 1px solid #ccc !important;
 	border-radius: 5px;
-	height: 75%;
+	max-height: 75%;
+	min-height: 65%;
 }
 
 .instructor-tag {

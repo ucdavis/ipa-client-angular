@@ -15,48 +15,24 @@
 						<h5 style="margin-top: 0px;">Instructors</h5>
 
 						<div class="btn-group instructor-toggle-btn-container">
-							<label  
-							ng-if="areAllSenateInvited() == false"
-							class="instructor-toggle-btn btn btn-sm"
-							id="courses-pivot"
-							ng-click="addSenateInstructors()">
-								Add Senate
-							</label>
-							<label  
-							ng-if="areAllSenateInvited()"
-							disabled class="instructor-toggle-btn btn btn-sm"
-							uib-tooltip="All Senate Instructors Added"
-							id="courses-pivot">
-								Add Senate
-							</label>
-							<label
-							ng-if="areAllFederationInvited() == false"
-							class="instructor-toggle-btn btn btn-sm"
-							id="courses-pivot"
-							ng-click="addFederationInstructors() == false">
-								Add Federation
-							</label>
-							<label
-							ng-if="areAllFederationInvited()"
-							disabled class="instructor-toggle-btn btn btn-sm"
-							uib-tooltip="All Federation Instructors Added"
-							id="courses-pivot">
-								Add Federation
-							</label>
-							<label
-							ng-if="areAllLecturersInvited() == false"
-							class="instructor-toggle-btn btn btn-sm"
-							id="courses-pivot"
-							ng-click="addLecturerInstructors() == false">
-								Add Lecturers
-							</label>
-							<label
-							ng-if="areAllLecturersInvited()"
-							disabled class="instructor-toggle-btn btn btn-sm"
-							uib-tooltip="All Lecturer Instructors Added"
-							id="courses-pivot">
-								Add Lecturers
-							</label>
+							<span ng-repeat="instructorTypeId in instructorTypes.ids">
+								<span ng-if="areThereInstructorsOfType(instructorTypeId)">
+									<label
+									ng-if="!areAllInstructorsOfTypeInvited(instructorTypeId)"
+									class="instructor-toggle-btn btn btn-sm add-instructor-modal__instructor-btn"
+									id="courses-pivot"
+									ng-click="inviteInstructorsOfType(instructorTypeId)">
+										Add {{ instructorTypes.list[instructorTypeId].description }}
+									</label>
+									<label
+									ng-if="areAllInstructorsOfTypeInvited(instructorTypeId)"
+									disabled class="instructor-toggle-btn btn btn-sm add-instructor-modal__instructor-btn"
+									uib-tooltip="All Instructors Added"
+									id="courses-pivot">
+										Add {{ instructorTypes.list[instructorTypeId].description }}
+									</label>
+								</span>
+							</span>
 						</div>
 
 						<div rows="5" class="overflow-auto flex flex-wrap padding-sm instructor-box">
