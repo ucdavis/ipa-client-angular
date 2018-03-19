@@ -39,6 +39,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 			});
 		},
 		addInstructorsToTeachingCall: function (workgroupId, year, teachingCallConfig) {
+			var self = this;
 			teachingCallConfig.instructorIds = [];
 
 			teachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
@@ -65,11 +66,13 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 					}
 				};
 				teachingCallStatusStateService.reduce(action);
+				self._calculateInstructorsInCall();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not add instructors to teaching call.", type: "ERROR" });
 			});
 		},
 		removeInstructorFromTeachingCall: function (workgroupId, year, instructor) {
+			var self = this;
 			var receiptId = instructor.teachingCallReceiptId;
 			teachingCallStatusService.removeInstructorFromTeachingCall(receiptId).then(function (teachingCallReceiptId) {
 				$rootScope.$emit('toast', { message: "Removed from Teaching Call", type: "SUCCESS" });
@@ -80,6 +83,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 					}
 				};
 				teachingCallStatusStateService.reduce(action);
+				self._calculateInstructorsInCall();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not remove instructor from teaching call.", type: "ERROR" });
 			});
@@ -103,11 +107,19 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				var teachingCallReceipt = teachingCallReceipts.list[teachingCallReceiptId];
 				var instructor = instructors.list[teachingCallReceipt.instructorId];
 
-				teachingCallsByInstructorType[instructor.instructorTypeId] = teachingCallReceipt;
+				teachingCallReceipt.firstName = instructor.firstName;
+				teachingCallReceipt.lastName = instructor.lastName;
+				teachingCallReceipt.instructorId = instructor.id;
+				teachingCallReceipt.teachingCallReceiptId = teachingCallReceipt.id;
+				teachingCallReceipt.lastContactedAt = teachingCallReceipt.lastContactedAt ? moment(teachingCallReceipt.lastContactedAt).format("YYYY-MM-DD").toFullDate() : null;
+				teachingCallReceipt.nextContactAt = teachingCallReceipt.nextContactAt ? moment(teachingCallReceipt.nextContactAt).format("YYYY-MM-DD").toFullDate() : null;
+				teachingCallReceipt.dueDate = teachingCallReceipt.dueDate ? moment(teachingCallReceipt.dueDate).format("YYYY-MM-DD").toFullDate() : null;
+
+				teachingCallsByInstructorType[instructor.instructorTypeId].push(teachingCallReceipt);
 			});
-			debugger;
+
 			teachingCallStatusStateService.reduce({
-				action: CALCULATE_INSTRUCTORS_IN_CALL,
+				type: CALCULATE_INSTRUCTORS_IN_CALL,
 				payload: {
 					teachingCallsByInstructorType: teachingCallsByInstructorType
 				}
