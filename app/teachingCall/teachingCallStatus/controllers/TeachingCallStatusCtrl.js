@@ -38,14 +38,13 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 				var instructorIsSelected = false;
 
 				if ($scope.view.state) {
-					$scope.view.state.teachingCall.senate.forEach(function(instructor) {
-						if (instructor.selected) {
-							instructorIsSelected = true;
-						}
-					});
-					$scope.view.state.teachingCall.federation.forEach(function(instructor) {
-						if (instructor.selected) {
-							instructorIsSelected = true;
+					$scope.view.state.instructorTypes.ids.forEach(function(instructorTypeId) {
+						if ($scope.view.state.calculations.teachingCallsByInstructorType[instructorTypeId]) {
+							$scope.view.state.calculations.teachingCallsByInstructorType[instructorTypeId].forEach(function(instructor) {
+								if (instructor.selected) {
+									instructorIsSelected = true;
+								}
+							});
 						}
 					});
 				}
