@@ -11,16 +11,18 @@
 	</spinner>
 
 	<div ng-if="view.state">
-
 		<!-- Toolbar Buttons -->
 		<div class="teaching-call-status teaching-call-status-buttons">
 			<div style="flex: 20 1 0px; display: flex; justify-content: flex-end;">
 				<div style="padding-right: 5px;">
-					<a ng-if="view.state.eligible.senate.length > 0 || view.state.eligible.federation.length > 0 || view.state.eligible.lecturer.length > 0" ng-click="openAddInstructorsModal()" class="btn btn-default">
+					<a class="btn btn-default"
+					   ng-if="view.state.calculations.atLeastOneEligibleForCall"
+					   ng-click="openAddInstructorsModal()">
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
 						Add Instructors
 					</a>
-					<span ng-if="view.state.eligible.senate.length == 0 && view.state.eligible.federation.length == 0 && view.state.eligible.lecturer.length == 0" uib-tooltip="All instructors called">
+					<span ng-if="view.state.calculations.atLeastOneEligibleForCall == false"
+					      uib-tooltip="All instructors called">
 						<a class="disabled btn btn-default" style="color: #808080;">
 							<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
 							Add Instructors
@@ -32,7 +34,7 @@
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
 						Contact Instructors
 					</a>
-					<span ng-if="atLeastOneInstructorSelected() == false" uib-tooltip="Select at least one instructor to contact">
+					<span ng-if="!(atLeastOneInstructorSelected())" uib-tooltip="Select at least one instructor to contact">
 						<a class="disabled btn btn-default" style="color: #808080;">
 							<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
 							Contact Instructors
@@ -44,7 +46,6 @@
 			<div class="column-hover-ui">
 			</div>
 		</div>
-
 
 		<!-- Repeating sections -->
 		<div class="instructor-section-container"

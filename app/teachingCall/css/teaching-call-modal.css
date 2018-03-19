@@ -135,3 +135,9 @@
 .instructor-list {
 	height: 235px;
 }
+
+.instructor-toggle-btn-container .add-instructor-modal__instructor-btn {
+	margin-right: 3px;
+	margin-bottom: 3px;
+	width: fit-content;
+}
