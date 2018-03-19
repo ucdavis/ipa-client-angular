@@ -100,7 +100,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 			if (index == -1) {
 				selectedInstructorIds.push(instructorId);
 			} else {
-				selectedInstructorIds = selectedInstructorIds.splice(instructorId, 1);
+				selectedInstructorIds.splice(index, 1);
 			}
 
 			teachingCallStatusStateService.reduce({
