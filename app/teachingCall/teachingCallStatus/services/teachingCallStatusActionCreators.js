@@ -93,6 +93,55 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				$rootScope.$emit('toast', { message: "Could not remove instructor from teaching call.", type: "ERROR" });
 			});
 		},
+		toggleInstructor: function(instructorId) {
+			var selectedInstructorIds = teachingCallStatusStateService._state.ui.selectedInstructorIds;
+			var index = selectedInstructorIds.indexOf(instructorId);
+
+			if (index == -1) {
+				selectedInstructorIds.push(instructorId);
+			} else {
+				selectedInstructorIds = selectedInstructorIds.splice(instructorId, 1);
+			}
+
+			teachingCallStatusStateService.reduce({
+				type: SELECT_INSTRUCTORS,
+				payload: {
+					selectedInstructorIds: selectedInstructorIds
+				}
+			});
+		},
+		selectInstructorsByType: function(instructorTypeId) {
+			var instructorIdsToSelect = [];
+
+			teachingCallStatusStateService._state.calculations.teachingCallsByInstructorType[instructorTypeId].forEach(function(instructor) {
+				instructorIdsToSelect.push(instructor.instructorId);
+			});
+
+			var selectedInstructorIds = _.union(instructorIdsToSelect, teachingCallStatusStateService._state.ui.selectedInstructorIds);
+
+			teachingCallStatusStateService.reduce({
+				type: SELECT_INSTRUCTORS,
+				payload: {
+					selectedInstructorIds: selectedInstructorIds
+				}
+			});
+		},
+		unSelectInstructorsByType: function(instructorTypeId) {
+			var instructorIdsToRemove = [];
+
+			teachingCallStatusStateService._state.calculations.teachingCallsByInstructorType[instructorTypeId].forEach(function(instructor) {
+				instructorIdsToRemove.push(instructor.instructorId);
+			});
+
+			var selectedInstructorIds = _.difference(teachingCallStatusStateService._state.ui.selectedInstructorIds, instructorIdsToRemove);
+
+			teachingCallStatusStateService.reduce({
+				type: SELECT_INSTRUCTORS,
+				payload: {
+					selectedInstructorIds: selectedInstructorIds
+				}
+			});
+		},
 		// Generate's a DTO that lists all instructors NOT in a teachingCall, broken up by instructorType
 		_calculateEligibleInstructors: function() {
 			var self = this;

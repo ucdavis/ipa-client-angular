@@ -58,6 +58,20 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 					return instructorTypes;
 			}
 		},
+		_uiReducers: function(action, ui) {
+			switch (action.type) {
+				case INIT_STATE:
+					var ui = {
+						selectedInstructorIds: []
+					};
+					return ui;
+				case SELECT_INSTRUCTORS:
+					ui.selectedInstructorIds = action.payload.selectedInstructorIds;
+					return ui;
+				default:
+					return ui;
+			}
+		},
 		_calculationReducers: function(action, calculations) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -139,14 +153,16 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 			newState.teachingCallReceipts = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipts, angular.copy(scope._state.instructors));
 			newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 			newState.calculations = scope._calculationReducers(action, scope._state.calculations);
+			newState.ui = scope._uiReducers(action, scope._state.ui);
+
 			scope._state = newState;
-			console.log(newState);
 
 			// Build new 'page state'
 			// This is the 'view friendly' version of the store
 			newPageState = {};
 			newPageState.instructorTypes = newState.instructorTypes;
 			newPageState.calculations = newState.calculations;
+			newPageState.ui = newState.ui;
 
 			$rootScope.$emit('teachingCallStatusStateChanged', newPageState);
 			$log.debug("Teaching Call Status state updated:");
