@@ -160,9 +160,11 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 			// Build new 'page state'
 			// This is the 'view friendly' version of the store
 			newPageState = {};
+			newPageState.instructors = newState.instructors;
 			newPageState.instructorTypes = newState.instructorTypes;
 			newPageState.calculations = newState.calculations;
 			newPageState.ui = newState.ui;
+			newPageState.teachingCallReceipts = newState.teachingCallReceipts;
 
 			$rootScope.$emit('teachingCallStatusStateChanged', newPageState);
 			$log.debug("Teaching Call Status state updated:");

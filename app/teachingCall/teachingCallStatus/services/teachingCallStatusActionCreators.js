@@ -18,6 +18,8 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 			});
 		},
 		contactInstructors: function (workgroupId, year, teachingCallConfig, selectedInstructors) {
+			var self = this;
+
 			// Turn these instructor view objects into teachingCallReceipts
 			var receiptsPayload = selectedInstructors;
 			receiptsPayload.forEach( function(instructor) {
