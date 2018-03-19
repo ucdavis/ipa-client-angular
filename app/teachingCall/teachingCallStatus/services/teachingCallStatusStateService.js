@@ -237,6 +237,8 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 			newPageState.teachingCall = {};
 			newPageState.eligible = {};
 
+			newPageState.instructorTypes = newState.instructorTypes;
+			newPageState.calculations = newState.calculations;
 			newPageState.teachingCall.senate = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, true, true, false, false);
 			newPageState.teachingCall.federation = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, true, false, true, false);
 			newPageState.teachingCall.lecturer = teachingCallStatusSelectors.generateInstructorGroup(newState.instructors, newState.teachingCallReceipts, true, false, false, true);
