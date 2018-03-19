@@ -19,7 +19,7 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 				return $scope.view.state ? $scope.view.state.ui.selectedInstructorIds.indexOf(instructorId) > -1 : false;
 			};
 
-			$scope.toggleInstructorType = function(instructorTypeId) {
+			$scope.areAllInstructorsOfTypeSelected = function(instructorTypeId) {
 				var allInstructorsAlreadyToggled = true;
 
 				$scope.view.state.calculations.teachingCallsByInstructorType[instructorTypeId].forEach(function(instructor) {
@@ -27,6 +27,12 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 						allInstructorsAlreadyToggled = false;
 					}
 				});
+
+				return allInstructorsAlreadyToggled;
+			};
+
+			$scope.toggleInstructorType = function(instructorTypeId) {
+				var allInstructorsAlreadyToggled = $scope.areAllInstructorsOfTypeSelected(instructorTypeId);
 
 				if (allInstructorsAlreadyToggled) {
 					teachingCallStatusActionCreators.unSelectInstructorsByType(instructorTypeId);

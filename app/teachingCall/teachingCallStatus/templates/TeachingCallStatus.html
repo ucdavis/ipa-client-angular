@@ -64,7 +64,9 @@
 				<!-- table header -->
 				<div style="display: flex;">
 					<div class="header-cell first-cell cell column-checkbox">
-						<input ng-click="toggleInstructorType(instructorTypeId)" type="checkbox">
+						<input ng-click="toggleInstructorType(instructorTypeId)"
+						       ng-checked="areAllInstructorsOfTypeSelected(instructorTypeId)"
+						       type="checkbox">
 					</div>
 					<div class="header-left-cell column-name">
 						<div style="padding-left:10px;">Name</div>
