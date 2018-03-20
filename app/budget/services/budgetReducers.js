@@ -40,16 +40,15 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return budgetScenarios;
 			}
 		},
-		_instructorTypeReducers: function (action, instructorTypes) {
+		instructorTypeReducers: function (action, instructorTypes) {
 			var scope = this;
 
 			switch (action.type) {
-				case INIT_WORKGROUP:
+				case INIT_STATE:
 					instructorTypes = {
 						ids: [],
 						list: {}
 					};
-
 					action.payload.instructorTypes.forEach(function(instructorType) {
 						instructorTypes.list[instructorType.id] = instructorType;
 						instructorTypes.ids.push(instructorType.id);
@@ -63,7 +62,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 		instructorTypeCostReducers: function (action, instructorTypeCosts) {
 			switch (action.type) {
 				case INIT_STATE:
-					instructorTypes = {
+					instructorTypeCosts = {
 						ids: [],
 						list: {}
 					};
@@ -452,7 +451,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						teachingAssignments.ids.forEach(function(instructorId) {
 							var teachingAssignment = teachingAssignments.list[instructorId];
 
-							if (teachingAssignment.approved && teachingAssignment.sectionGroupId == sectionGroup.id) {
+							if (teachingAssignment.approved && teachingAssignment.intsructorId && teachingAssignment.sectionGroupId == sectionGroup.id) {
 								sectionGroup.assignedInstructorIds.push(teachingAssignment.instructorId);
 								var instructor = instructors.list[teachingAssignment.instructorId];
 								var instructorName = instructor.lastName + ", " + instructor.firstName;
