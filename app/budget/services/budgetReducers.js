@@ -40,7 +40,27 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return budgetScenarios;
 			}
 		},
-		instructorTypeReducers: function (action, instructorTypes) {
+		_instructorTypeReducers: function (action, instructorTypes) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_WORKGROUP:
+					instructorTypes = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.instructorTypes.forEach(function(instructorType) {
+						instructorTypes.list[instructorType.id] = instructorType;
+						instructorTypes.ids.push(instructorType.id);
+					});
+
+					return instructorTypes;
+				default:
+					return instructorTypes;
+			}
+		},
+		instructorTypeCostReducers: function (action, instructorTypeCosts) {
 			switch (action.type) {
 				case INIT_STATE:
 					instructorTypes = {
@@ -48,38 +68,38 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						list: {}
 					};
 
-					action.payload.instructorTypes.forEach( function(instructorType) {
-						instructorTypes.ids.push(instructorType.id);
-						instructorTypes.list[instructorType.id] = instructorType;
+					action.payload.instructorTypeCosts.forEach( function(instructorTypeCost) {
+						instructorTypeCosts.ids.push(instructorTypeCost.id);
+						instructorTypeCosts.list[instructorTypeCost.id] = instructorTypeCost;
 					});
-					return instructorTypes;
+					return instructorTypeCosts;
 				case CREATE_INSTRUCTOR_TYPE:
-					var newInstructorType = action.payload.instructorType;
-					instructorTypes.ids.push(newInstructorType.id);
-					instructorTypes.list[newInstructorType.id] = newInstructorType;
+					var newInstructorTypeCost = action.payload.instructorTypeCost;
+					instructorTypeCosts.ids.push(newInstructorTypeCost.id);
+					instructorTypeCosts.list[newInstructorTypeCost.id] = newInstructorTypeCost;
 					return instructorTypes;
 				case DELETE_INSTRUCTOR_TYPE:
 					var instructorTypeId = action.payload.instructorTypeId;
 					var index = instructorTypes.ids.indexOf(instructorTypeId);
-					instructorTypes.ids.splice(index, 1);
-					instructorTypes.list[instructorTypeId] = null;
+					instructorTypeCosts.ids.splice(index, 1);
+					instructorTypeCosts.list[instructorTypeCostId] = null;
 					return instructorTypes;
 				case UPDATE_INSTRUCTOR_TYPE:
-					var newInstructorType = action.payload.instructorType;
-					instructorTypes.list[newInstructorType.id] = newInstructorType;
-					return instructorTypes;
+					var newInstructorTypeCost = action.payload.instructorTypeCost;
+					instructorTypeCosts.list[newInstructorTypeCost.id] = newInstructorTypeCost;
+					return instructorTypeCosts;
 				default:
-					return instructorTypes;
+					return instructorTypeCosts;
 			}
 		},
-		calculatedInstructorTypeReducers: function (action, calculatedInstructorTypes) {
+		calculatedInstructorTypeCostReducers: function (action, calculatedInstructorTypeCosts) {
 			switch (action.type) {
 				case INIT_STATE:
 					return [];
 				case CALCULATE_INSTRUCTOR_TYPES:
-					return action.payload.calculatedInstructorTypes;
+					return action.payload.calculatedInstructorTypeCosts;
 				default:
-					return calculatedInstructorTypes;
+					return calculatedInstructorTypeCosts;
 			}
 		},
 		calculatedLineItemReducers: function (action, calculatedLineItems) {
@@ -717,10 +737,11 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.ui = scope.uiReducers(action, scope._state.ui);
 			newState.users = scope.userReducers(action, scope._state.users);
 			newState.instructorTypes = scope.instructorTypeReducers(action, scope._state.instructorTypes);
+			newState.instructorTypeCosts = scope.instructorTypeCostReducers(action, scope._state.instructorTypeCosts);
 			newState.teachingAssignments = scope.teachingAssignmentReducers(action, scope._state.teachingAssignments);
 
 			newState.calculatedSectionGroups = scope.calculatedSectionGroupReducers(action, scope._state.calculatedSectionGroups);
-			newState.calculatedInstructorTypes = scope.calculatedInstructorTypeReducers(action, scope._state.calculatedInstructorTypes);
+			newState.calculatedInstructorTypeCosts = scope.calculatedInstructorTypeCostReducers(action, scope._state.calculatedInstructorTypeCosts);
 			newState.calculatedInstructors = scope.calculatedInstructorReducers(action, scope._state.calculatedInstructors);
 			newState.calculatedLineItems = scope.calculatedLineItemReducers(action, scope._state.calculatedLineItems);
 
