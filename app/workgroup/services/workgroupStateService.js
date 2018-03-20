@@ -109,8 +109,10 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					return userRoles;
 				case ADD_USER_ROLE:
 					var userRole = action.payload.userRole;
-					userRoles.ids.push(userRole.id);
-					userRoles.list[userRole.id] = userRole;
+					if (userRoles.ids.indexOf(userRole.id) == -1) {
+						userRoles.ids.push(userRole.id);
+						userRoles.list[userRole.id] = userRole;
+					}
 					return userRoles;
 				case REMOVE_USER_ROLE:
 					var index = userRoles.ids.indexOf(action.payload.userRole.id);
