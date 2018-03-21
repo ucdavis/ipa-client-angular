@@ -266,25 +266,6 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 
 			sectionGroupCost.comments =_array_sortByProperty(sectionGroupCost.comments, "lastModifiedOn", true);
 		},
-		calculateInstructorTypes: function() {
-			var instructorTypes = budgetReducers._state.instructorTypes;
-
-			var instructorTypeList = [];
-
-			instructorTypes.ids.forEach(function(instructorTypeId) {
-				var instructorType = instructorTypes.list[instructorTypeId];
-				instructorTypeList.push(instructorType);
-			});
-
-			instructorTypeList = _array_sortByProperty(instructorTypeList, "description");
-
-			budgetReducers.reduce({
-				type: CALCULATE_INSTRUCTOR_TYPES,
-				payload: {
-					calculatedInstructorTypes: instructorTypeList
-				}
-			});
-		},
 		calculateLineItems: function() {
 			var self = this;
 			var calculatedLineItems = [];
@@ -476,6 +457,38 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					calculatedInstructors: calculatedInstructors
 				}
 			});
-		}
+		},
+		calculateInstructorTypeCosts: function () {
+			var instructorTypes = budgetReducers._state.instructorTypes;
+			var instructorTypeCosts = budgetReducers._state.instructorTypeCosts;
+			var budgetId = budgetReducers._state.budget.id;
+
+			var calculatedInstructorTypeCosts = [];
+
+			instructorTypes.ids.forEach(function(instructorTypeId) {
+				var instructorType = instructorTypes.list[instructorTypeId];
+				var instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+
+				if (instructorTypeCost == null) {
+					instructorTypeCost = {
+						cost: null,
+						instructorTypeId: instructorType.id,
+						description: instructorType.description,
+						budgetId: budgetId
+					};
+				}
+
+				calculatedInstructorTypeCosts.push(instructorTypeCost)
+			});
+
+			calculatedInstructorTypeCosts = _array_sortByProperty(calculatedInstructorTypeCosts, "description");
+
+			budgetReducers.reduce({
+				type: CALCULATE_INSTRUCTOR_TYPE_COSTS,
+				payload: {
+					calculatedInstructorTypeCosts: calculatedInstructorTypeCosts
+				}
+			});
+		},
 	};
 });
