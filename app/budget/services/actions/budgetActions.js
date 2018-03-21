@@ -40,9 +40,10 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				self.selectBudgetScenario();
 
 				// Perform follow up calculations
-				budgetCalculations.calculateInstructorTypes();
+				budgetCalculations.calculateInstructorTypeCosts();
 				budgetCalculations.calculateInstructors();
 				budgetCalculations.calculateLineItems();
+				budgetCalculations.calculateInstructorTypeCosts();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
 			});
@@ -384,56 +385,38 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
 			});
 		},
-		createInstructorType: function (instructorTypeDTO) {
+		createInstructorTypeCost: function (instructorTypeDTO) {
 			var self = this;
 			instructorTypeDTO.cost = parseFloat(instructorTypeDTO.cost);
 
 			budgetService.createInstructorType(instructorTypeDTO).then(function (instructorType) {
 				budgetReducers.reduce({
-					type: CREATE_INSTRUCTOR_TYPE,
+					type: CREATE_INSTRUCTOR_TYPE_COST,
 					payload: {
 						instructorType: instructorType
 					}
 				});
 
 				$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
-				budgetCalculations.calculateInstructorTypes();
+				budgetCalculations.calculateInstructorTypeCosts();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
 			});
 		},
-		deleteInstructorType: function (instructorTypeId) {
+		updateInstructorTypeCost: function (newInstructorTypeCost) {
 			var self = this;
+			newInstructorTypeCost.cost = parseFloat(newInstructorTypeCost.cost);
 
-			budgetService.deleteInstructorType(instructorTypeId).then(function (instructorTypeId) {
+			budgetService.updateInstructorTypeCost(newInstructorTypeCost).then(function (instructorTypeCost) {
 				budgetReducers.reduce({
-					type: DELETE_INSTRUCTOR_TYPE,
+					type: UPDATE_INSTRUCTOR_TYPE_COST,
 					payload: {
-						instructorTypeId: instructorTypeId
-					}
-				});
-
-				$rootScope.$emit('toast', { message: "Deleted instructor type", type: "SUCCESS" });
-				budgetCalculations.calculateInstructorTypes();
-				budgetCalculations.calculateInstructors();
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not delete instructor type.", type: "ERROR" });
-			});
-		},
-		updateInstructorType: function (newInstructorType) {
-			var self = this;
-			newInstructorType.cost = parseFloat(newInstructorType.cost);
-
-			budgetService.updateInstructorType(newInstructorType).then(function (instructorType) {
-				budgetReducers.reduce({
-					type: UPDATE_INSTRUCTOR_TYPE,
-					payload: {
-						instructorType: instructorType
+						instructorTypeCost: instructorTypeCost
 					}
 				});
 
 				$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
-				budgetCalculations.calculateInstructorTypes();
+				budgetCalculations.calculateInstructorTypeCosts();
 				budgetCalculations.calculateInstructors();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });

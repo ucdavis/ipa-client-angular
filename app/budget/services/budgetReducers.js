@@ -64,18 +64,21 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case INIT_STATE:
 					instructorTypeCosts = {
 						ids: [],
-						list: {}
+						list: {},
+						byInstructorTypeId: {}
 					};
 
 					action.payload.instructorTypeCosts.forEach( function(instructorTypeCost) {
 						instructorTypeCosts.ids.push(instructorTypeCost.id);
 						instructorTypeCosts.list[instructorTypeCost.id] = instructorTypeCost;
+						instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
 					});
 					return instructorTypeCosts;
 				case CREATE_INSTRUCTOR_TYPE:
 					var newInstructorTypeCost = action.payload.instructorTypeCost;
 					instructorTypeCosts.ids.push(newInstructorTypeCost.id);
 					instructorTypeCosts.list[newInstructorTypeCost.id] = newInstructorTypeCost;
+					instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
 					return instructorTypes;
 				case DELETE_INSTRUCTOR_TYPE:
 					var instructorTypeId = action.payload.instructorTypeId;
@@ -86,6 +89,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case UPDATE_INSTRUCTOR_TYPE:
 					var newInstructorTypeCost = action.payload.instructorTypeCost;
 					instructorTypeCosts.list[newInstructorTypeCost.id] = newInstructorTypeCost;
+					instructorTypeCosts.byInstructorTypeId[newInstructorTypeCost.instructorTypeId] = newInstructorTypeCost;
 					return instructorTypeCosts;
 				default:
 					return instructorTypeCosts;
@@ -95,7 +99,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			switch (action.type) {
 				case INIT_STATE:
 					return [];
-				case CALCULATE_INSTRUCTOR_TYPES:
+				case CALCULATE_INSTRUCTOR_TYPE_COSTS:
 					return action.payload.calculatedInstructorTypeCosts;
 				default:
 					return calculatedInstructorTypeCosts;
@@ -757,7 +761,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.lineItemCategories = budgetSelectors.generateLineItemCategories(newState.lineItemCategories);
 
 			newPageState.calculatedSectionGroups = newState.calculatedSectionGroups;
-			newPageState.calculatedInstructorTypes = newState.calculatedInstructorTypes;
+			newPageState.calculatedInstructorTypeCosts = newState.calculatedInstructorTypeCosts;
 			newPageState.calculatedInstructors = newState.calculatedInstructors;
 			newPageState.calculatedLineItems = newState.calculatedLineItems;
 
