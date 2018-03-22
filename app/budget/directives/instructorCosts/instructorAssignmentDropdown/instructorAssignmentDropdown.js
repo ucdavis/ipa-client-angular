@@ -6,8 +6,7 @@ budgetApp.directive("instructorAssignmentDropdown", this.instructorAssignmentDro
 		scope: {
 			mode: '<',
 			sectionGroup: '<',
-			instructors: '<',
-			course: '<'
+			instructors: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.setInstructor = function(instructor) {
