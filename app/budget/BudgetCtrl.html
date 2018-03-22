@@ -94,7 +94,8 @@
 			</line-items>
 			<instructor-costs
 				ng-if="view.state.ui.sectionNav.activeTab == 'Instructor Costs'"
-				instructors="view.state.ui.assignmentOptions"
+				instructor-assignment-options="view.state.ui.instructorAssignmentOptions"
+				regular-instructor-assignment-options="view.state.calculatedInstructors"
 				calculated-section-groups="view.state.calculatedSectionGroups"
 				term-nav="view.state.ui.termNav">
 			</instructor-costs>

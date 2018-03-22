@@ -4,7 +4,8 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 		templateUrl: 'instructorCosts.html',
 		replace: true,
 		scope: {
-			instructors: '<',
+			instructorAssignmentOptions: '<',
+			regularInstructorAssignmentOptions: '<',
 			termNav: '<',
 			calculatedSectionGroups: '<'
 		},

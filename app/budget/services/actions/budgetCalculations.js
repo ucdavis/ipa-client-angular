@@ -453,20 +453,20 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			calculatedInstructors = _array_sortByProperty(calculatedInstructors, "lastName");
 
 
-			assignmentOptions = [];
+			instructorAssignmentOptions = [];
 
 			instructorTypes.ids.forEach(function(instructorTypeId) {
 				var instructorType = instructorTypes.list[instructorTypeId];
-				assignmentOptions.push(instructorType);
+				instructorAssignmentOptions.push(instructorType);
 			});
 
-			assignmentOptions = assignmentOptions.concat(calculatedInstructors);
+			instructorAssignmentOptions = instructorAssignmentOptions.concat(calculatedInstructors);
 
 			budgetReducers.reduce({
 				type: CALCULATE_INSTRUCTORS,
 				payload: {
 					calculatedInstructors: calculatedInstructors,
-					assignmentOptions: assignmentOptions
+					instructorAssignmentOptions: instructorAssignmentOptions
 				}
 			});
 		},
