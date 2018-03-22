@@ -478,7 +478,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					};
 				}
 
-				calculatedInstructorTypeCosts.push(instructorTypeCost)
+				calculatedInstructorTypeCosts.push(instructorTypeCost);
 			});
 
 			calculatedInstructorTypeCosts = _array_sortByProperty(calculatedInstructorTypeCosts, "description");

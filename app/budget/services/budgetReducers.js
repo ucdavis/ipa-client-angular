@@ -67,26 +67,19 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						list: {},
 						byInstructorTypeId: {}
 					};
-
 					action.payload.instructorTypeCosts.forEach( function(instructorTypeCost) {
 						instructorTypeCosts.ids.push(instructorTypeCost.id);
 						instructorTypeCosts.list[instructorTypeCost.id] = instructorTypeCost;
 						instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
 					});
 					return instructorTypeCosts;
-				case CREATE_INSTRUCTOR_TYPE:
+				case CREATE_INSTRUCTOR_TYPE_COST:
 					var newInstructorTypeCost = action.payload.instructorTypeCost;
 					instructorTypeCosts.ids.push(newInstructorTypeCost.id);
 					instructorTypeCosts.list[newInstructorTypeCost.id] = newInstructorTypeCost;
-					instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
-					return instructorTypes;
-				case DELETE_INSTRUCTOR_TYPE:
-					var instructorTypeId = action.payload.instructorTypeId;
-					var index = instructorTypes.ids.indexOf(instructorTypeId);
-					instructorTypeCosts.ids.splice(index, 1);
-					instructorTypeCosts.list[instructorTypeCostId] = null;
-					return instructorTypes;
-				case UPDATE_INSTRUCTOR_TYPE:
+					instructorTypeCosts.byInstructorTypeId[newInstructorTypeCost.instructorTypeId] = newInstructorTypeCost;
+					return instructorTypeCosts;
+				case UPDATE_INSTRUCTOR_TYPE_COST:
 					var newInstructorTypeCost = action.payload.instructorTypeCost;
 					instructorTypeCosts.list[newInstructorTypeCost.id] = newInstructorTypeCost;
 					instructorTypeCosts.byInstructorTypeId[newInstructorTypeCost.instructorTypeId] = newInstructorTypeCost;
@@ -279,17 +272,6 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						instructorCosts.ids.push(instructorCost.id);
 						instructorCosts.list[instructorCost.id] = instructorCost;
 						instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
-					});
-					return instructorCosts;
-				case DELETE_INSTRUCTOR_TYPE:
-					var instructorTypeId = action.payload.instructorTypeId;
-					instructorCosts.ids.forEach(function(instructorCostId) {
-						var instructorCost = instructorCosts.list[instructorCostId];
-						var instructorCostByInstructor = instructorCosts.byInstructorId[instructorCost.instructorId];
-						if (instructorCost.instructorTypeId == instructorTypeId) {
-							instructorCost.instructorTypeId = null;
-							instructorCostByInstructor.instructorTypeId = null;
-						}
 					});
 					return instructorCosts;
 				case UPDATE_INSTRUCTOR_COST:
