@@ -11,13 +11,9 @@
 	display: flex;
 }
 
-.group-cost-config__general-cost {
-	display: flex;
-	margin-bottom: 15px;
-}
-
 .group-cost-config__cost {
 	display: flex;
+	padding-bottom: 5px;
 }
 
 .group-cost-config__input {
