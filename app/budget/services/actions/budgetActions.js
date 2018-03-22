@@ -385,15 +385,22 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
 			});
 		},
-		createInstructorTypeCost: function (instructorTypeDTO) {
+		createOrUpdateInstructorTypeCosts: function (instructorTypeCost) {
+			if (instructorTypeCost.id > 0) {
+				this._updateInstructorTypeCost(instructorTypeCost);
+			} else {
+				this._createInstructorTypeCost(instructorTypeCost);
+			}
+		},
+		_createInstructorTypeCost: function (instructorTypeCostDTO) {
 			var self = this;
-			instructorTypeDTO.cost = parseFloat(instructorTypeDTO.cost);
+			instructorTypeCostDTO.cost = parseFloat(instructorTypeCostDTO.cost);
 
-			budgetService.createInstructorType(instructorTypeDTO).then(function (instructorType) {
+			budgetService.createInstructorTypeCost(instructorTypeCostDTO).then(function (instructorTypeCost) {
 				budgetReducers.reduce({
 					type: CREATE_INSTRUCTOR_TYPE_COST,
 					payload: {
-						instructorType: instructorType
+						instructorTypeCost: instructorTypeCost
 					}
 				});
 
@@ -403,7 +410,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
 			});
 		},
-		updateInstructorTypeCost: function (newInstructorTypeCost) {
+		_updateInstructorTypeCost: function (newInstructorTypeCost) {
 			var self = this;
 			newInstructorTypeCost.cost = parseFloat(newInstructorTypeCost.cost);
 
