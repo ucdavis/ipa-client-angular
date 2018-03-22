@@ -545,6 +545,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						isBudgetConfigModalOpen: false,
 						isLineItemOpen: false,
 						isCourseCostOpen: false,
+						assignmentOptions: [],
 						openLineItems: [],
 						selectedLineItems: [],
 						lineItemDetails: {},
@@ -577,6 +578,9 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 							};
 					});
 
+					return ui;
+				case CALCULATE_INSTRUCTORS:
+					ui.assignmentOptions = action.payload.assignmentOptions;
 					return ui;
 				case CALCULATE_SCENARIO_TERMS:
 					ui.termNav.allTabs = action.payload.allTermTabs;

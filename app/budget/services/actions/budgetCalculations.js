@@ -418,6 +418,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			instructors.ids.forEach(function(instructorId) {
 				var instructor = instructors.list[instructorId];
 				instructor.instructorCost = null;
+				instructor.description = instructor.lastName + ", " + instructor.firstName;
 				calculatedInstructors.push(instructor);
 
 				// Attach instructorCost
@@ -451,10 +452,21 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 
 			calculatedInstructors = _array_sortByProperty(calculatedInstructors, "lastName");
 
+
+			assignmentOptions = [];
+
+			instructorTypes.ids.forEach(function(instructorTypeId) {
+				var instructorType = instructorTypes.list[instructorTypeId];
+				assignmentOptions.push(instructorType);
+			});
+
+			assignmentOptions = assignmentOptions.concat(calculatedInstructors);
+
 			budgetReducers.reduce({
 				type: CALCULATE_INSTRUCTORS,
 				payload: {
-					calculatedInstructors: calculatedInstructors
+					calculatedInstructors: calculatedInstructors,
+					assignmentOptions: assignmentOptions
 				}
 			});
 		},
