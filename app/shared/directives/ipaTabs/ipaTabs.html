@@ -5,7 +5,7 @@
 			class="ipa-tabs__tab"
 			ng-click="triggerSelection(tab)"
 			ng-class="{ 'ipa-tabs__tab--active': tab == activeTab, 'ipa-tabs__tab--slim': slim }">
-			{{ tab }}
+			{{ tabOverrides[tab] || tab }}
 		</div>
 	</div>
 	<div ng-class="{'ipa-tabs--border-less': borderLess }" class="ipa-tabs__content {{containerClass}}" ng-transclude></div>
