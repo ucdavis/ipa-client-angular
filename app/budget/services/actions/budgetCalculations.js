@@ -176,9 +176,16 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				instructorType = budgetReducers._state.instructorTypes.list[sectionGroup.sectionGroupCost.instructorTypeId];
 			}
 
+			var assignedInstructor = budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
+			var assignedInstructorType = budgetReducers._state.instructorTypes.list[sectionGroup.assignedInstructorTypeIds[0]];
+
+			sectionGroup.reversionDisplayName = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : null;
+			sectionGroup.reversionDisplayName = assignedInstructorType ? assignedInstructorType.description : null;
+			sectionGroup.reversionDisplayName = sectionGroup.reversionDisplayName || "no instructor";
+
 			// use assigned instructors if an override wasn't set
-			instructor = instructor ? instructor : budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
-			instructorType = instructorType ? instructorType : budgetReducers._state.instructorTypes.list[sectionGroup.assignedInstructorTypeIds[0]];
+			instructor = instructor ? instructor : assignedInstructor;
+			instructorType = instructorType ? instructorType : assignedInstructorType;
 
 			if (instructor) {
 				sectionGroup.instructorName = instructor.lastName + ", " + instructor.firstName;
