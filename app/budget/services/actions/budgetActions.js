@@ -484,6 +484,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			if (sectionGroup.assignedInstructorTypeIds.indexOf(instructorType.id) > -1) {
 				if (sectionGroupCost != false) {
 					sectionGroupCost.instructorTypeId = null;
+					sectionGroupCost.instructorId = null;
 					self.updateSectionGroupCost(sectionGroupCost);
 					return;
 				}
@@ -524,6 +525,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			if (sectionGroup.assignedInstructorIds.indexOf(instructor.id) > -1) {
 				if (sectionGroupCost != false) {
 					sectionGroupCost.instructorId = null;
+					sectionGroupCost.instructorTypeId = null;
 					self.updateSectionGroupCost(sectionGroupCost);
 					return;
 				}
