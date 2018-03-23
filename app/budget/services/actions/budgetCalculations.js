@@ -196,6 +196,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			sectionGroup.originalInstructorName = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
 		},
 		calculateSectionGroupOverrides: function(sectionGroup) {
+			var self = this;
+
 			// Generate totalSeats override
 			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.enrollment !== null) {
 				sectionGroup.overrideTotalSeats = angular.copy(sectionGroup.sectionGroupCost.enrollment);
@@ -231,35 +233,76 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.cost != null) {
 				sectionGroup.overrideInstructorCost = angular.copy(sectionGroup.sectionGroupCost.cost);
 				sectionGroup.overrideInstructorCostSource = "course";
-			} else {
-				// (2nd option) Attempt to use per-instructor cost
-				var instructorCost = null;
+			} else if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.instructorId > 0) {
+				// (2nd option) Attempt to use instructor override (either from instructorCost, or the instructor's instructorTypeCost)
+				// If instructor override exists, attempt to use its instructorCost
+				var instructorCost = budgetReducers._state.instructorCosts.byInstructorId[sectionGroup.sectionGroupCost.instructorId];
 
-				// Attempt to use instructor override
-				if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.instructorId != null) {
-					instructorCost = budgetReducers._state.instructorCosts.byInstructorId[sectionGroup.sectionGroupCost.instructorId];
+				if (instructorCost != null && instructorCost.cost != null) {
+					sectionGroup.overrideInstructorCost = angular.copy(instructorCost.cost);
+					sectionGroup.overrideInstructorCostSource = "instructor";
 				}
 
-				// Attempt to use assigned instructors
-				if (instructorCost == null) {
-					sectionGroup.assignedInstructorIds.forEach(function(instructorId) {
-						instructorCost = budgetReducers._state.instructorCosts.byInstructorId[instructorId];
-					});
+				// If an instructorCost was found via override, use it
+				if (instructorCost && instructorCost.cost != null) {
+					sectionGroup.overrideInstructorCost = angular.copy(instructorCost.cost);
+					sectionGroup.overrideInstructorCostSource = "instructor";
+				} else {
+					var instructorTypeCost = self._findInstructorTypeCostBySectionGroupIdAndInstructorId(sectionGroup.id, sectionGroup.sectionGroupCost.instructorId);
+
+					if (instructorTypeCost && instructorTypeCost.cost != null) {
+						sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
+						sectionGroup.overrideInstructorCostSource = "instructor type";
+					}
 				}
+			} else if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.instructorTypeId > 0) {
+				// (3rd option) Attempt to use instructorType override
+				var instructorTypeCost = budgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroup.sectionGroupCost.instructorTypeId];
+
+				// If an instructorTypeCost was found via overriden or assignments, use it
+				if (instructorTypeCost != null && instructorTypeCost.cost != null) {
+					sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
+					sectionGroup.overrideInstructorCostSource = "instructor type";
+				}
+			} else if (sectionGroup.assignedInstructorIds.length > 0) {
+				// (4th option) Attempt to use assigned instructor
+				sectionGroup.assignedInstructorIds.forEach(function(instructorId) {
+					instructorCost = budgetReducers._state.instructorCosts.byInstructorId[instructorId];
+				});
 
 				if (instructorCost && instructorCost.cost != null) {
 					sectionGroup.overrideInstructorCost = angular.copy(instructorCost.cost);
 					sectionGroup.overrideInstructorCostSource = "instructor";
-				} else if (instructorCost) {
-					// (3rd option) Attempt to use per instructorType instructor cost
-					var instructorType = budgetReducers._state.instructorTypes.list[instructorCost.instructorTypeId];
+				}
+			} else if (sectionGroup.assignedInstructorTypeIds.length > 0) {
+				// (5th option) Attempt to use assigned instructorType
+				var instructorTypeCost = null;
 
-					if (instructorType && instructorType.cost != null) {
-						sectionGroup.overrideInstructorCost = angular.copy(instructorType.cost);
-						sectionGroup.overrideInstructorCostSource = "type";
-					}
+				sectionGroup.assignedInstructorTypeIds.forEach(function(instructorTypeId) {
+					instructorTypeCost = instructorTypeCost || budgetReducers._state.instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+				});
+
+				if (instructorTypeCost != null && instructorTypeCost.cost != null) {
+					sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
+					sectionGroup.overrideInstructorCostSource = "instructor type";
 				}
 			}
+		},
+		_findInstructorTypeCostBySectionGroupIdAndInstructorId: function (sectionGroupId, instructorId) {
+			var teachingAssignments = budgetReducers._state.teachingAssignments;
+			var instructorTypeCosts = budgetReducers._state.instructorTypeCosts;
+
+			var teachingAssignment = null;
+
+			teachingAssignments.ids.forEach(function(teachingAssignmentId) {
+				var slotTeachingAssignment = teachingAssignments.list[teachingAssignmentId];
+
+				if (slotTeachingAssignment.instructorId == instructorId && slotTeachingAssignment.sectionGroupId == sectionGroupId) {
+					teachingAssignment = slotTeachingAssignment;
+				}
+			});
+
+			return teachingAssignment ? instructorTypeCosts.byInstructorTypeId[teachingAssignment.instructorTypeId] : null;
 		},
 		calculateSectionGroupCostComments: function(sectionGroupCost) {
 			if (sectionGroupCost == null) { return; }
