@@ -10,7 +10,11 @@ budgetApp.directive("instructorAssignmentDropdown", this.instructorAssignmentDro
 		},
 		link: function (scope, element, attrs) {
 			scope.setInstructor = function(instructor) {
-				budgetActions.setInstructorFromSectionGroup(scope.sectionGroup, instructor);
+				if (instructor.isInstructorType) {
+					budgetActions.setInstructorTypeFromSectionGroup(scope.sectionGroup, instructor);
+				} else {
+					budgetActions.setInstructorFromSectionGroup(scope.sectionGroup, instructor);
+				}
 			};
 
 			scope.setOriginalInstructor = function(originalInstructor) {
