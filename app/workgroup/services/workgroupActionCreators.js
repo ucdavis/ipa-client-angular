@@ -219,6 +219,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				type: SET_ROLE_TAB,
 				payload: {
 					activeRoleTab: tabName,
+					activeRoleTabDisplay: tabName == "Presence" ? "Unassigned" : tabName,
 					activeRoleId: this._getRoleIdFromTabName(tabName)
 				}
 			});

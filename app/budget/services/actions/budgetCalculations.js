@@ -170,7 +170,6 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			var instructor = null;
 			var instructorType = null;
 
-			if (sectionGroup.id == 177141) { debugger; }
 			// If overrides exist for this sectionGroup
 			if (sectionGroup.sectionGroupCost) {
 				instructor = budgetReducers._state.instructors.list[sectionGroup.sectionGroupCost.instructorId];
