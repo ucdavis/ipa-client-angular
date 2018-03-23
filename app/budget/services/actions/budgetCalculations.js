@@ -170,27 +170,33 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			var instructor = null;
 			var instructorType = null;
 
+			if (sectionGroup.id == 177141) { debugger; }
 			// If overrides exist for this sectionGroup
 			if (sectionGroup.sectionGroupCost) {
 				instructor = budgetReducers._state.instructors.list[sectionGroup.sectionGroupCost.instructorId];
 				instructorType = budgetReducers._state.instructorTypes.list[sectionGroup.sectionGroupCost.instructorTypeId];
+
+				if (instructor) {
+					sectionGroup.instructorName = instructor.lastName + ", " + instructor.firstName;
+				} else if (instructorType) {
+					sectionGroup.instructorName = instructorType.description;
+				}
 			}
 
 			var assignedInstructor = budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
 			var assignedInstructorType = budgetReducers._state.instructorTypes.list[sectionGroup.assignedInstructorTypeIds[0]];
 
 			sectionGroup.reversionDisplayName = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : null;
-			sectionGroup.reversionDisplayName = assignedInstructorType ? assignedInstructorType.description : null;
+			sectionGroup.reversionDisplayName = assignedInstructorType ? assignedInstructorType.description : sectionGroup.reversionDisplayName;
 			sectionGroup.reversionDisplayName = sectionGroup.reversionDisplayName || "no instructor";
 
 			// use assigned instructors if an override wasn't set
-			instructor = instructor ? instructor : assignedInstructor;
-			instructorType = instructorType ? instructorType : assignedInstructorType;
-
-			if (instructor) {
-				sectionGroup.instructorName = instructor.lastName + ", " + instructor.firstName;
-			} else if (instructorType) {
-				sectionGroup.instructorName = instructorType.description;
+			if (instructor == null && instructorType == null) {
+				if (assignedInstructor) {
+					sectionGroup.instructorName = assignedInstructor.lastName + ", " + assignedInstructor.firstName;
+				} else if (assignedInstructorType) {
+					sectionGroup.instructorName = instructorType.description;
+				}
 			}
 
 			sectionGroup.originalInstructorName = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
