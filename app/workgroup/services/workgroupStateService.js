@@ -240,7 +240,8 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 							activeRoleTab: "Academic Planner",
 							activeRoleId: 2,
 							tabOverrides: {
-								"Presence" : "Unassigned"
+								"Presence" : "Unassigned",
+								"Academic Planner" : "Staff"
 							},
 							allTabs: [
 								"Academic Planner",
