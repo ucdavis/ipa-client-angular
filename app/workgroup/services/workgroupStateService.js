@@ -177,7 +177,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					roles = {
 						ids: []
 					};
-					var _hiddenRoles = ['admin', 'registrar'];
+					var _hiddenRoles = ['admin', 'registrar', 'reviewer'];
 					var rolesList = {};
 					var length = action.payload.roles ? action.payload.roles.length : 0;
 
