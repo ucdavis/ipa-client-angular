@@ -363,22 +363,50 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						ids: [],
 						list: {}
 					};
+					action.payload.courses.forEach( function(course) {
+						courses.ids.push(course.id);
+						courses.list[course.id] = course;
+					});
 					sectionGroups = {
 						ids: [],
 						list: {}
 					};
+					action.payload.sectionGroups.forEach( function(sectionGroup) {
+						sectionGroups.ids.push(sectionGroup.id);
+						sectionGroups.list[sectionGroup.id] = sectionGroup;
+					});
 					sections = {
 						ids: [],
 						list: {}
 					};
+					action.payload.sections.forEach( function(section) {
+						sections.ids.push(section.id);
+						sections.list[section.id] = section;
+					});
 					teachingAssignments = {
 						ids: [],
 						list: {}
 					};
+					action.payload.teachingAssignments.forEach( function(teachingAssignment) {
+						teachingAssignments.ids.push(teachingAssignment.id);
+						teachingAssignments.list[teachingAssignment.id] = teachingAssignment;
+					});
+					instructorTypes = {
+						ids: [],
+						list: {}
+					};
+					action.payload.instructorTypes.forEach( function(instructorType) {
+						instructorTypes.ids.push(instructorType.id);
+						instructorTypes.list[instructorType.id] = instructorType;
+					});
 					supportAssignments = {
 						ids: [],
 						list: {}
 					};
+					action.payload.supportAssignments.forEach( function(supportAssignment) {
+						supportAssignments.ids.push(supportAssignment.id);
+						supportAssignments.list[supportAssignment.id] = supportAssignment;
+					});
 					instructors = {
 						ids: [],
 						list: {}
@@ -387,27 +415,6 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						instructors.ids.push(instructor.id);
 						instructors.list[instructor.id] = instructor;
 					});
-					action.payload.courses.forEach( function(course) {
-						courses.ids.push(course.id);
-						courses.list[course.id] = course;
-					});
-					action.payload.sectionGroups.forEach( function(sectionGroup) {
-						sectionGroups.ids.push(sectionGroup.id);
-						sectionGroups.list[sectionGroup.id] = sectionGroup;
-					});
-					action.payload.sections.forEach( function(section) {
-						sections.ids.push(section.id);
-						sections.list[section.id] = section;
-					});
-					action.payload.teachingAssignments.forEach( function(teachingAssignment) {
-						teachingAssignments.ids.push(teachingAssignment.id);
-						teachingAssignments.list[teachingAssignment.id] = teachingAssignment;
-					});
-					action.payload.supportAssignments.forEach( function(supportAssignment) {
-						supportAssignments.ids.push(supportAssignment.id);
-						supportAssignments.list[supportAssignment.id] = supportAssignment;
-					});
-
 					scheduleSectionGroups = {
 						uniqueKeys: [],
 						list: []
@@ -433,15 +440,23 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 
 						sectionGroup.assignedInstructorIds = [];
 						sectionGroup.assignedInstructorNames = [];
+						sectionGroup.assignedInstructorTypeIds = [];
+						sectionGroup.assignedInstructorTypeNames = [];
+
 						// calculate assignedInstructors
 						teachingAssignments.ids.forEach(function(instructorId) {
 							var teachingAssignment = teachingAssignments.list[instructorId];
+							if (teachingAssignment.sectionGroupId != sectionGroup.id || !(teachingAssignment.approved)) { return; }
 
-							if (teachingAssignment.approved && teachingAssignment.intsructorId && teachingAssignment.sectionGroupId == sectionGroup.id) {
+							if (teachingAssignment.instructorId) {
 								sectionGroup.assignedInstructorIds.push(teachingAssignment.instructorId);
 								var instructor = instructors.list[teachingAssignment.instructorId];
 								var instructorName = instructor.lastName + ", " + instructor.firstName;
 								sectionGroup.assignedInstructorNames.push(instructorName);
+							} else if (teachingAssignment.instructorTypeId > 0 && !(teachingAssignment.instructorId)) {
+								sectionGroup.assignedInstructorTypeIds.push(teachingAssignment.instructorTypeId);
+								var instructorType = instructorTypes.list[teachingAssignment.instructorTypeId];
+								sectionGroup.assignedInstructorTypeNames.push(instructorType.description);
 							}
 						});
 						// Add to payload

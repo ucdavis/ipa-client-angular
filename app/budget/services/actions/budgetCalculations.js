@@ -166,22 +166,28 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			return container;
 		},
 		calculateSectionGroupInstructors: function(sectionGroup) {
+			var originalInstructor = sectionGroup.sectionGroupCost ? budgetReducers._state.instructors.list[sectionGroup.sectionGroupCost.originalInstructorId] : null;
 			var instructor = null;
-			var originalInstructor = null;
+			var instructorType = null;
 
+			// If overrides exist for this sectionGroup
 			if (sectionGroup.sectionGroupCost) {
 				instructor = budgetReducers._state.instructors.list[sectionGroup.sectionGroupCost.instructorId];
-				originalInstructor = budgetReducers._state.instructors.list[sectionGroup.sectionGroupCost.originalInstructorId];
-
-				if (instructor == null) {
-					instructor = budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
-				}
-			} else {
-				instructor = budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
-				originalInstructor = null;
+				instructorType = budgetReducers._state.instructorTypes.list[sectionGroup.sectionGroupCost.instructorTypeId];
 			}
 
-			sectionGroup.instructorName = instructor ? instructor.lastName + ", " + instructor.firstName : null;
+			// use assigned instructors if an override wasn't set
+			instructor = instructor ? instructor : budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
+			instructorType = instructorType ? instructorType : budgetReducers._state.instructorTypes.list[sectionGroup.assignedInstructorTypeIds[0]];
+
+			instructor = budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
+
+			if (instructor) {
+				sectionGroup.instructorName = instructor.lastName + ", " + instructor.firstName;
+			} else if (instructorType) {
+				sectionGroup.instructorName = instructorType.description;
+			}
+
 			sectionGroup.originalInstructorName = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
 		},
 		calculateSectionGroupOverrides: function(sectionGroup) {
@@ -457,6 +463,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 
 			instructorTypes.ids.forEach(function(instructorTypeId) {
 				var instructorType = instructorTypes.list[instructorTypeId];
+				instructorType.isInstructorType = true;
 				instructorAssignmentOptions.push(instructorType);
 			});
 
