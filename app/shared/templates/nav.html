@@ -44,7 +44,7 @@
 				<ul ng-class="{ 'visible': expanded == 'summary' || (!expanded && currentBaseHref == 'summary') }">
 					<li ng-if="isPlanner || isAdmin" ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'workgroup' }">
 						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=workgroup">
-							Workgroup
+							Staff
 						</a>
 					</li>
 					<li ng-if="isInstructor || isAdmin" ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'instructor' }">
