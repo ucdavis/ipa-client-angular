@@ -155,7 +155,7 @@
 								<!-- TODO: Display enrollment and total seats (Involves modifying payload to include all sections) -->
 
 								<div ng-if="view.state.sectionGroups.list[sectionGroupId].instructorIds.length">
-									instructor{{ view.state.sectionGroups.list[sectionGroupId].instructorIds.length > 1 ? 's':'' }}:
+									Instructor{{ view.state.sectionGroups.list[sectionGroupId].instructorIds.length > 1 ? 's':'' }}:
 									<div class="label label-default" style="padding: 3px; margin-left: 3px;"
 										ng-repeat="instructorId in view.state.sectionGroups.list[sectionGroupId].instructorIds track by $index">
 										{{ view.state.instructors.list[instructorId] | lastSpaceInitial }}{{ $last ? '':', '}}
