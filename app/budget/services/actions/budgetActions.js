@@ -476,12 +476,12 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				self.updateSectionGroupCost(sectionGroupCost);
 			}
 		},
-		setInstructorFromSectionGroup: function (sectionGroup, instructorId) {
+		setInstructorFromSectionGroup: function (sectionGroup, instructor) {
 			var self = this;
 			var sectionGroupCost = sectionGroup.sectionGroupCost;
 
 			// Instructor being assigned matches schedule data, so we should not override
-			if (sectionGroup.assignedInstructorIds.indexOf(instructorId) > -1) {
+			if (sectionGroup.assignedInstructorIds.indexOf(instructor.id) > -1) {
 				if (sectionGroupCost != false) {
 					sectionGroupCost.instructorId = null;
 					self.updateSectionGroupCost(sectionGroupCost);
