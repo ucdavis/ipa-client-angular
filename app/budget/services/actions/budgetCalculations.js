@@ -180,8 +180,6 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			instructor = instructor ? instructor : budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
 			instructorType = instructorType ? instructorType : budgetReducers._state.instructorTypes.list[sectionGroup.assignedInstructorTypeIds[0]];
 
-			instructor = budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
-
 			if (instructor) {
 				sectionGroup.instructorName = instructor.lastName + ", " + instructor.firstName;
 			} else if (instructorType) {
