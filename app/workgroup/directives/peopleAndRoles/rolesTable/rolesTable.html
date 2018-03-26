@@ -61,7 +61,7 @@
 
 		<tbody>
 			<tr ng-repeat="userRole in userRoles track by userRole.id"
-			    ng-if="userRole.roleId == activeRoleId && (activeRoleId != 9 || userRole.displayPresence)">
+			    ng-if="(activeRoleId == -1 && (userRole.roleId == 11 || userRole.roleId == 12 || userRole.roleId == 13)) || (userRole.roleId == activeRoleId && (activeRoleId != 9 || userRole.displayPresence))">
 				<!-- Name -->
 				<td class="roles-table__table-cell">
 					{{ userRole.userDisplayName }}

@@ -224,15 +224,14 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				}
 			});
 		},
+		// Will return the roleId, or -1 for student (as it does not match a specific roleId, but will be expected to match 11,12 or 13 for masters, phd, instructional support)
 		_getRoleIdFromTabName: function(tabName) {
 			tabNameRoleIds = {
 				"Academic Planner": 2,
 				"Instructor": 15,
 				"Reviewer": 10,
-				"Instructional Support": 11,
-				"Student Masters": 12,
-				"Student PhD": 13,
-				"Presence": 9
+				"Student": -1,
+				"Presence": 9,
 			};
 
 			return tabNameRoleIds[tabName];
