@@ -250,7 +250,12 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 								"Presence"],
 						},
 						instructorTypes: [],
-						roleTotals: {}
+						roleTotals: {},
+						studentRoles: [
+							{id: 11, description: "Instructional Support", name: "instructionalSupport"},
+							{id: 12, description: "Student Masters", name: "studentMasters"},
+							{id: 13, description: "Student PhD", name: "studentPhd"}
+						]
 					};
 
 					action.payload.instructorTypes.forEach(function(instructorType) {

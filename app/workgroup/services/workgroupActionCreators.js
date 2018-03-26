@@ -28,7 +28,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 
 			userRole.instructorTypeId = instructorType.id;
 
-			workgroupService.updateUserRole(userRole).then(function (newUserRole) {
+			workgroupService.setInstructorType(userRole).then(function (newUserRole) {
 				$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
 				var action = {
 					type: UPDATE_USER_ROLE,
@@ -124,6 +124,23 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				workgroupStateService.reduce(action);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not remove location.", type: "ERROR" });
+			});
+		},
+		updateStudentRole: function (userRole) {
+			var self = this;
+
+			workgroupService.updateUserRole(userRole).then(function (newUserRole) {
+				$rootScope.$emit('toast', { message: "Updated student role", type: "SUCCESS" });
+				var action = {
+					type: UPDATE_USER_ROLE,
+					payload: {
+						userRole: newUserRole
+					}
+				};
+				workgroupStateService.reduce(action);
+				self._calculateUserRoles();
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not update student role", type: "ERROR" });
 			});
 		},
 		addRoleToUser: function (workgroupId, user, role) {
@@ -236,20 +253,6 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 
 			return tabNameRoleIds[tabName];
 		},
-		removeUserFromWorkgroup: function (workgroupId, user) {
-			workgroupService.removeUserFromWorkgroup(workgroupId, user).then(function () {
-				$rootScope.$emit('toast', { message: "Removed user " + user.firstName + " " + user.lastName, type: "SUCCESS" });
-				var action = {
-					type: REMOVE_USER,
-					payload: {
-						user: user
-					}
-				};
-				workgroupStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not remove user.", type: "ERROR" });
-			});
-		},
 		_calculateUserRoles: function () {
 			var self = this;
 
@@ -298,6 +301,7 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 				id: userRole.id,
 				role: userRole.role,
 				roleDisplay: role.name,
+				description: getRoleDisplayName(userRole.role),
 				roleId: role.id,
 				workgroupId: userRole.workgroupId,
 				userDisplayName: user.name,
