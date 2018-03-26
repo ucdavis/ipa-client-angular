@@ -47,83 +47,91 @@
 			</div>
 		</div>
 
-		<!-- Repeating sections -->
-		<div class="instructor-section-container"
-		     ng-repeat="instructorTypeId in view.state.instructorTypes.ids"
-		     ng-show="view.state.calculations.teachingCallsByInstructorType[instructorTypeId].length > 0">
-			<div class="instructor-section" style="width: 100%;">
-				<!-- table title -->
-				<div style="display: flex;">
-					<div class="table-title">
-						<div style="padding-left: 20px;">{{ view.state.instructorTypes.list[instructorTypeId].description }}</div>
-					</div>
-					<div class="column-hover-ui">
-					</div>
-				</div>
+		<div ng-show="view.state && view.state.ui.instructorsInCalls == false"
+		     class="teaching-call-status__no-calls-splash">
+			There are no instructors in a teaching call.
+			Use the add instructor button.
+		</div>
 
-				<!-- table header -->
-				<div style="display: flex;">
-					<div class="header-cell first-cell cell column-checkbox">
-						<input ng-click="toggleInstructorType(instructorTypeId)"
-						       ng-checked="areAllInstructorsOfTypeSelected(instructorTypeId)"
-						       type="checkbox">
-					</div>
-					<div class="header-left-cell column-name">
-						<div style="padding-left:10px;">Name</div>
-					</div>
-					<div class="header-cell column-submitted">Submitted</div>
-					<div class="header-cell column-last">Last Contacted</div>
-					<div class="header-cell column-next">Next Contact</div>
-					<div class="header-cell column-due">Due Date</div>
-					<div class="column-hover-ui"></div>
-				</div>
-
-				<div class="table-row"
-				     style="display: flex;"
-				     ng-repeat="instructor in view.state.calculations.teachingCallsByInstructorType[instructorTypeId]">
-
-					<div class="column-checkbox cell first-cell">
-						<input type="checkbox" ng-checked="instructorIsSelected(instructor.instructorId)" ng-click="toggleInstructor(instructor)">
-					</div>
-					<div class="column-name left-cell">
-						<div style="padding-left: 10px; display: flex; flex-wrap: wrap;">
-							<span style="flex: 1 0 auto;">
-								{{ instructor.lastName }},
-							</span>
-							<span style="flex: 1 0 auto; padding-right: 10px;">
-								&nbsp;{{ instructor.firstName }}
-								<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
-									class="text-primary clickable hovrable"
-									teaching-call-tooltip
-									title="Teaching Call"
-									terms-blob="{{instructor.termsBlob}}"
-									show-unavail="{{instructor.showUnavailabilities}}"
-									message="{{instructor.message}}"
-									placement="right">
-							</span>
+		<div ng-show="view.state && view.state.ui.instructorsInCalls">
+			<!-- Repeating sections -->
+			<div class="instructor-section-container"
+			     ng-repeat="instructorTypeId in view.state.instructorTypes.ids"
+			     ng-show="view.state.calculations.teachingCallsByInstructorType[instructorTypeId].length > 0">
+				<div class="instructor-section" style="width: 100%;">
+					<!-- table title -->
+					<div style="display: flex;">
+						<div class="table-title">
+							<div style="padding-left: 20px;">{{ view.state.instructorTypes.list[instructorTypeId].description }}</div>
+						</div>
+						<div class="column-hover-ui">
 						</div>
 					</div>
-					<div class="column-submitted cell">
-						<i class="glyphicon glyphicon-ok" ng-if="instructor.isDone"></i>
+
+					<!-- table header -->
+					<div style="display: flex;">
+						<div class="header-cell first-cell cell column-checkbox">
+							<input ng-click="toggleInstructorType(instructorTypeId)"
+							       ng-checked="areAllInstructorsOfTypeSelected(instructorTypeId)"
+							       type="checkbox">
+						</div>
+						<div class="header-left-cell column-name">
+							<div style="padding-left:10px;">Name</div>
+						</div>
+						<div class="header-cell column-submitted">Submitted</div>
+						<div class="header-cell column-last">Last Contacted</div>
+						<div class="header-cell column-next">Next Contact</div>
+						<div class="header-cell column-due">Due Date</div>
+						<div class="column-hover-ui"></div>
 					</div>
-					<div class="column-last cell">
-						{{ instructor.lastContactedAt }}
-					</div>
-					<div class="column-next cell">
-						{{ instructor.nextContactAt }}
-					</div>
-					<div class="column-due cell">{{ instructor.dueDate }}</div>
-					<div class="column-hover-ui">
-						<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
-							class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
-							tooltip-placement="left"
-							uib-tooltip="Remove Instructor"
-							btn-class="teaching-call-status-tooltip"
-							confirm-button="removeInstructor(instructor)"
-							message="Are you sure you want to remove this instructor?
-								This will cancel any pending notifications."
-							yes="Remove" no="Cancel" placement="top">
-						</span>
+
+					<div class="table-row"
+					     style="display: flex;"
+					     ng-repeat="instructor in view.state.calculations.teachingCallsByInstructorType[instructorTypeId]">
+
+						<div class="column-checkbox cell first-cell">
+							<input type="checkbox" ng-checked="instructorIsSelected(instructor.instructorId)" ng-click="toggleInstructor(instructor)">
+						</div>
+						<div class="column-name left-cell">
+							<div style="padding-left: 10px; display: flex; flex-wrap: wrap;">
+								<span style="flex: 1 0 auto;">
+									{{ instructor.lastName }},
+								</span>
+								<span style="flex: 1 0 auto; padding-right: 10px;">
+									&nbsp;{{ instructor.firstName }}
+									<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
+										class="text-primary clickable hovrable"
+										teaching-call-tooltip
+										title="Teaching Call"
+										terms-blob="{{instructor.termsBlob}}"
+										show-unavail="{{instructor.showUnavailabilities}}"
+										message="{{instructor.message}}"
+										placement="right">
+								</span>
+							</div>
+						</div>
+						<div class="column-submitted cell">
+							<i class="glyphicon glyphicon-ok" ng-if="instructor.isDone"></i>
+						</div>
+						<div class="column-last cell">
+							{{ instructor.lastContactedAt }}
+						</div>
+						<div class="column-next cell">
+							{{ instructor.nextContactAt }}
+						</div>
+						<div class="column-due cell">{{ instructor.dueDate }}</div>
+						<div class="column-hover-ui">
+							<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
+								class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
+								tooltip-placement="left"
+								uib-tooltip="Remove Instructor"
+								btn-class="teaching-call-status-tooltip"
+								confirm-button="removeInstructor(instructor)"
+								message="Are you sure you want to remove this instructor?
+									This will cancel any pending notifications."
+								yes="Remove" no="Cancel" placement="top">
+							</span>
+						</div>
 					</div>
 				</div>
 			</div>

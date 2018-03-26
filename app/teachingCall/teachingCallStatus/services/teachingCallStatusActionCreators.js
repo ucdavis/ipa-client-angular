@@ -182,6 +182,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 			var instructors = teachingCallStatusStateService._state.instructors;
 
 			var teachingCallsByInstructorType = {};
+			var instructorsInCalls = false;
 
 			instructorTypes.ids.forEach(function(instructorTypeId) {
 				var instructorType = instructorTypes.list[instructorTypeId];
@@ -203,12 +204,15 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				teachingCallReceipt.dueDate = teachingCallReceipt.dueDate ? moment(teachingCallReceipt.dueDate).format("YYYY-MM-DD").toFullDate() : null;
 
 				teachingCallsByInstructorType[instructor.instructorTypeId].push(teachingCallReceipt);
+
+				instructorsInCalls = true;
 			});
 
 			teachingCallStatusStateService.reduce({
 				type: CALCULATE_INSTRUCTORS_IN_CALL,
 				payload: {
-					teachingCallsByInstructorType: teachingCallsByInstructorType
+					teachingCallsByInstructorType: teachingCallsByInstructorType,
+					instructorsInCalls: instructorsInCalls
 				}
 			});
 		}

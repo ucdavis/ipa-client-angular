@@ -62,8 +62,12 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 			switch (action.type) {
 				case INIT_STATE:
 					var ui = {
-						selectedInstructorIds: []
+						selectedInstructorIds: [],
+						instructorsInCalls: false
 					};
+					return ui;
+				case CALCULATE_INSTRUCTORS_IN_CALL:
+					ui.instructorsInCalls = action.payload.instructorsInCalls;
 					return ui;
 				case SELECT_INSTRUCTORS:
 					ui.selectedInstructorIds = action.payload.selectedInstructorIds;
