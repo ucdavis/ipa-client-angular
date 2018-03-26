@@ -246,10 +246,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 							allTabs: [
 								"Academic Planner",
 								"Instructor",
-								"Reviewer",
-								"Instructional Support",
-								"Student Masters",
-								"Student PhD",
+								"Student",
 								"Presence"],
 						},
 						instructorTypes: [],
