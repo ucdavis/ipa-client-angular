@@ -211,3 +211,11 @@
 	padding-bottom: 15px;
 	padding-top: 20px;
 }
+
+.teaching-call-status__no-calls-splash {
+	display: flex;
+	justify-content: center;
+	margin-top: 100px;
+	font-size: 19px;
+	color: gray;
+}
