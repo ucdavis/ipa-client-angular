@@ -41,13 +41,13 @@
 					</div>
 				</th>
 				<th class="roles-table__table-header">
-					<div class="roles-table__table-header-container" ng-class="{'roles-table__table-header--no-border': activeRoleId != 15 }">
+					<div class="roles-table__table-header-container" ng-class="{'roles-table__table-header--no-border': activeRoleId != 15 && activeRoleId != -1 }">
 						Email
 					</div>
 				</th>
 				<th class="roles-table__table-header">
 					<div class="roles-table__table-header-container roles-table__table-header--no-border">
-						<span ng-if="activeRoleId == 15">
+						<span ng-if="activeRoleId == 15 || activeRoleId == -1">
 							Type
 						</span>
 					</div>
@@ -75,10 +75,16 @@
 				<!-- Dropdown for instructors -->
 				<td class="roles-table__table-cell">
 					<div class="roles-table__amount-container">
+						<!-- -1 is the category for 'student-ish' roles -->
+						<student-role-selector ng-show="activeRoleId == -1"
+																	 student-roles="ui.studentRoles"
+																	 user-role="userRole">
+						</student-role-selector>
+
 						<!-- 15 is the role for 'instructor' -->
 						<instructor-type-selector ng-show="activeRoleId == 15"
 						                          instructor-types="ui.instructorTypes"
-																			user-role="userRole">
+						                          user-role="userRole">
 						</intructor-type-selector>
 					</div>
 				</td>
