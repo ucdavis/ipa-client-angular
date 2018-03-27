@@ -219,3 +219,36 @@
 	font-size: 19px;
 	color: gray;
 }
+
+.teaching-call-status__toolbar-top {
+	flex: 20 1 0px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.teaching-call-status__message {
+	padding: 15px 20px;
+	border: 1px solid #21A9E1;
+	border-radius: 3px;
+	font-weight: 500;
+	display: flex;
+	width: 40%;
+	margin-right: 90px;
+}
+
+.teaching-call-status__message-container {
+	flex: 25 0 0px;
+	display: flex;
+	flex-flow:column;
+	align-items: flex-start;
+}
+
+.teaching-call-status__message-text {
+	margin-bottom: 5px;
+}
+
+.teaching-call-status__message-icon {
+	flex: 1 0 0px;
+	color: #21A9E1;
+	padding-right: 5px;
+}
