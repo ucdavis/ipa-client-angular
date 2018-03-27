@@ -22,6 +22,12 @@ workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, wor
 			scope.clearUserSearch = function () {
 				scope.users.newUser = {};
 				scope.users.searchQuery = "";
+				scope.view.noResults = false;
+			};
+
+			scope.searchOnChange = function () {
+				scope.view.noResults = false;
+				scope.users.newUser = {};
 			};
 
 			scope.searchUsers = function (query) {

@@ -4,7 +4,7 @@
 		<div class="col-md-4 pull-right">
 			<div class="input-group search-input">
 				<input type="text" ng-model="users.searchQuery" placeholder="Search by name or login ID" uib-typeahead="person.name for person in searchUsers($viewValue)"
-					ng-change="users.newUser = {}" typeahead-loading="view.loadingPeople" typeahead-no-results="view.noResults"
+					ng-change="searchOnChange()" typeahead-loading="view.loadingPeople" typeahead-no-results="view.noResults"
 					typeahead-wait-ms="400" typeahead-min-length="2" typeahead-on-select="searchUsersResultSelected($item, $model, $label, $event)"
 					class="form-control typeahead">
 				<ul class="typeahead-status dropdown-menu" ng-show="view.noResults">
