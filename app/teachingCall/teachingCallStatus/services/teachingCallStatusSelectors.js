@@ -67,6 +67,7 @@ teachingCallApp.service('teachingCallStatusSelectors', function () {
 				}
 
 				if (teachingCallReceiptCopy.nextContactAt) {
+					newInstructor.nextContactRaw = teachingCallReceiptCopy.nextContactAt;
 					newInstructor.nextContactAt = moment(teachingCallReceiptCopy.nextContactAt).format("YYYY-MM-DD").toFullDate();
 				}
 

@@ -13,6 +13,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				teachingCallStatusStateService.reduce(action);
 				self._calculateInstructorsInCall();
 				self._calculateEligibleInstructors();
+				self._calculatePendingEmails();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load initial teaching call status state.", type: "ERROR" });
 			});
@@ -25,6 +26,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 			receiptsPayload.forEach( function(instructor) {
 				instructor.id = instructor.teachingCallReceiptId;
 				instructor.message = teachingCallConfig.message;
+				instructor.nextContactAtRaw = instructor.nextContactAt;
 				instructor.nextContactAt = teachingCallConfig.dueDate.getTime();
 			});
 
@@ -39,6 +41,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				teachingCallStatusStateService.reduce(action);
 				self._calculateInstructorsInCall();
 				self._calculateEligibleInstructors();
+				self._calculatePendingEmails();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not set next email contact.", type: "ERROR" });
 			});
@@ -73,6 +76,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				teachingCallStatusStateService.reduce(action);
 				self._calculateInstructorsInCall();
 				self._calculateEligibleInstructors();
+				self._calculatePendingEmails();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not add instructors to teaching call.", type: "ERROR" });
 			});
@@ -200,6 +204,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				teachingCallReceipt.instructorId = instructor.id;
 				teachingCallReceipt.teachingCallReceiptId = teachingCallReceipt.id;
 				teachingCallReceipt.lastContactedAt = teachingCallReceipt.lastContactedAt ? moment(teachingCallReceipt.lastContactedAt).format("YYYY-MM-DD").toFullDate() : null;
+				teachingCallReceipt.nextContactAtRaw = teachingCallReceipt.nextContactAt;
 				teachingCallReceipt.nextContactAt = teachingCallReceipt.nextContactAt ? moment(teachingCallReceipt.nextContactAt).format("YYYY-MM-DD").toFullDate() : null;
 				teachingCallReceipt.dueDate = teachingCallReceipt.dueDate ? moment(teachingCallReceipt.dueDate).format("YYYY-MM-DD").toFullDate() : null;
 
@@ -214,6 +219,28 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 					teachingCallsByInstructorType: teachingCallsByInstructorType,
 					instructorsInCalls: instructorsInCalls
 				}
+			});
+		},
+		_calculatePendingEmails: function() {
+			teachingCallStatusStateService._state.teachingCallReceipts.ids.forEach(function(teachingCallReceiptId) {
+				var teachingCallReceipt = teachingCallStatusStateService._state.teachingCallReceipts.list[teachingCallReceiptId];
+
+				var haveUnsentEmails = false;
+
+				if (teachingCallReceipt.nextContactAtRaw) {
+					var elapsed = elapsedMinutes(teachingCallReceipt.nextContactAtRaw);
+
+					if (elapsed < 10) {
+						haveUnsentEmails = true;
+					}
+				}
+
+				teachingCallStatusStateService.reduce({
+					type: CALCULATE_PENDING_EMAILS,
+					payload: {
+						haveUnsentEmails: haveUnsentEmails
+					}
+				});
 			});
 		}
 	};

@@ -63,8 +63,12 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 				case INIT_STATE:
 					var ui = {
 						selectedInstructorIds: [],
-						instructorsInCalls: false
+						instructorsInCalls: false,
+						haveUnsentEmails: false
 					};
+					return ui;
+				case CALCULATE_PENDING_EMAILS:
+					ui.haveUnsentEmails = action.payload.haveUnsentEmails;
 					return ui;
 				case CALCULATE_INSTRUCTORS_IN_CALL:
 					ui.instructorsInCalls = action.payload.instructorsInCalls;
