@@ -33,11 +33,15 @@
 			</div>
 
 			<div class="items">
-				<div
-				class="item"
-				ng-repeat="item in items"
-				ng-click="selectDropdownItem(item)">
-					{{ item.description }}
+				<div ng-repeat="item in items">
+					<div ng-show="item.rowType == 'subheader'" class="ipa-dropdown__subheader-row">
+						{{ item.description }}
+					</div>
+					<div class="item"
+					     ng-show="!item.type"
+					     ng-click="selectDropdownItem(item)">
+						{{ item.description }}
+					</div>
 				</div>
 			</div>
 		</div> <!-- dropdown -->
