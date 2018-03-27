@@ -194,7 +194,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				if (assignedInstructor) {
 					sectionGroup.instructorName = assignedInstructor.lastName + ", " + assignedInstructor.firstName;
 				} else if (assignedInstructorType) {
-					sectionGroup.instructorName = instructorType.description;
+					sectionGroup.instructorName = assignedInstructorType.description;
 				}
 			}
 
