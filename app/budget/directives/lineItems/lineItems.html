@@ -50,11 +50,13 @@
 					{{ lineItem.categoryDescription }}
 					<span ng-if="lineItem.isOrphaned">
 						<i class="entypo-attention line-items__orphan-warn"
+						   tooltip-append-to-body="true"
 						   uib-tooltip="The assignment this line item was based on no longer exists on the schedule">
 						</i>
 					</span>
 					<span ng-if="lineItem.hidden">
 						<i class="entypo-attention line-items__orphan-warn"
+						   tooltip-append-to-body="true"
 						   uib-tooltip="This line item is being hidden, but the assignment its based on still exists.">
 						</i>
 						<ipa-button icon-class="'glyphicon glyphicon-plus'"

@@ -66,6 +66,7 @@
 							<div class="instructor-costs__instructor-reversion-ui">
 								<div class="glyphicon glyphicon-repeat instructor-costs__revert-ui"
 								     uib-tooltip="Revert to {{ sectionGroup.reversionDisplayName }}"
+								     tooltip-append-to-body="true"
 								     confirm-button="removeInstructor(sectionGroup.sectionGroupCost)"
 								     message="Revert to {{ sectionGroup.reversionDisplayName }}?"
 								     yes="Revert"
@@ -88,6 +89,7 @@
 							</div>
 							<div class="instructor-costs__instructor-reversion-ui">
 								<div class="glyphicon glyphicon-remove instructor-costs__revert-ui"
+								     tooltip-append-to-body="true"
 								     uib-tooltip="Remove instructor"
 								     confirm-button="removeOriginalInstructor(sectionGroup.sectionGroupCost)"
 								     message="Are you sure you want to remove this instructor?"

@@ -43,6 +43,7 @@
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
 							     uib-tooltip="Revert to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}"
+							     tooltip-append-to-body="true"
 							     confirm-button="revertOverride(sectionGroup, 'seats')"
 							     message="Revert to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}?"
 							     yes="Revert"
@@ -62,6 +63,7 @@
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
 							     uib-tooltip="Revert to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}"
+							     tooltip-append-to-body="true"
 							     confirm-button="revertOverride(sectionGroup, 'sectionCount')"
 							     message="Revert to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}?"
 							     yes="Revert"
@@ -81,6 +83,7 @@
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
 							     uib-tooltip="Revert to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}"
+							     tooltip-append-to-body="true"
 							     confirm-button="revertOverride(sectionGroup, 'teachingAssistantAppointments')"
 							     message="Revert to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}?"
 							     yes="Revert"
@@ -104,6 +107,7 @@
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
 							     uib-tooltip="Revert to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}"
+							     tooltip-append-to-body="true"
 							     confirm-button="revertOverride(sectionGroup, 'readerAppointments')"
 							     message="Revert to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}?"
 							     yes="Revert"
