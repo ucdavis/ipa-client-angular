@@ -19,25 +19,25 @@
 					   ng-if="view.state.calculations.atLeastOneEligibleForCall"
 					   ng-click="openAddInstructorsModal()">
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
-						Add Instructors
+						Call Instructors
 					</a>
 					<span ng-if="view.state.calculations.atLeastOneEligibleForCall == false"
 					      uib-tooltip="All instructors called">
 						<a class="disabled btn btn-default" style="color: #808080;">
 							<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
-							Add Instructors
+							Call Instructors
 						</a>
 					</span>
 				</div>
 				<div>
 					<a ng-if="atLeastOneInstructorSelected()" ng-click="openContactInstructorsModal()" class="btn btn-default">
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
-						Contact Instructors
+						Send Follow-Up
 					</a>
 					<span ng-if="!(atLeastOneInstructorSelected())" uib-tooltip="Select at least one instructor to contact">
 						<a class="disabled btn btn-default" style="color: #808080;">
 							<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
-							Contact Instructors
+							Send Follow-Up
 						</a>
 					</span>
 				</div>
