@@ -520,6 +520,11 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				instructorAssignmentOptions.push(instructorType);
 			});
 
+			instructorAssignmentOptions.push({
+				rowType: "subheader",
+				description: "Instructors"
+			});
+
 			instructorAssignmentOptions = instructorAssignmentOptions.concat(calculatedInstructors);
 
 			budgetReducers.reduce({
