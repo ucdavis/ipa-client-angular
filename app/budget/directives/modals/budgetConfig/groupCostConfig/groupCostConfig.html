@@ -1,43 +1,54 @@
-<div class="group-cost-config">
-	<div class="group-cost-config__cost">
-		<div class="group-cost-config__input">
-			<ipa-input value="state.budget.taCost"
-				place-holder="'Enter a cost for TAs'"
-				mode="'currency'"
-				on-update="updateBudget()">
-			</ipa-input>
-		</div>
-		<div class="group-cost-config__label">
-			TA Cost
-		</div>
-	</div>
+<div class="instructor-cost-config">
+	<table class="instructor-cost-config__table">
+		<colgroup>
+			<col span="1" style="width: 50%;">
+			<col span="1" style="width: 50%;">
+		</colgroup>
+		<thead>
+			<tr class="instructor-cost-config__table-row">
+				<th class="instructor-cost-config__cell">Type</th>
+				<th class="instructor-cost-config__cell">Cost</th>
+			</tr>
+		</thead>
+		<tbody class="course-costs__course-container">
+			<tr>
+				<td class="instructor-cost-config__cell">
+					TA
+				</td>
+				<td class="instructor-cost-config__cell">
+					<ipa-input value="state.budget.taCost"
+						place-holder="'Enter a cost for TAs'"
+						mode="'currency'"
+						on-update="updateBudget()">
+					</ipa-input>
+				</td>
+			</tr>
 
-	<div class="group-cost-config__cost">
-		<div class="group-cost-config__input">
-			<ipa-input value="state.budget.readerCost"
-				place-holder="'Enter a cost for Readers'"
-				mode="'currency'"
-				on-update="updateBudget()">
-			</ipa-input>
-		</div>
-		<div class="group-cost-config__label">
-			Reader Cost
-		</div>
-	</div>
+			<tr>
+				<td class="instructor-cost-config__cell">
+					Reader
+				</td>
+				<td class="instructor-cost-config__cell">
+					<ipa-input value="instructorTypeCost.cost"
+						place-holder="'Enter cost'"
+						mode="'currency'"
+						on-update="updateInstructorTypeCost(instructorTypeCost)">
+					</ipa-input>
+				</td>
+			</tr>
 
-	<div ng-repeat="instructorTypeCost in state.calculatedInstructorTypeCosts">
-		<div class="group-cost-config__cost">
-			<div class="group-cost-config__input">
-				<ipa-input value="instructorTypeCost.cost"
-					place-holder="'Enter cost'"
-					mode="'currency'"
-					on-update="updateInstructorTypeCost(instructorTypeCost)">
-				</ipa-input>
-			</div>
-
-			<div class="group-cost-config__label">
-				{{ instructorTypeCost.description }}
-			</div>
-		</div>
-	</div>
+			<tr ng-repeat="instructorTypeCost in state.calculatedInstructorTypeCosts">
+				<td class="instructor-cost-config__cell">
+					{{ instructorTypeCost.description }}
+				</td>
+				<td class="instructor-cost-config__cell">
+					<ipa-input value="instructorTypeCost.cost"
+						place-holder="'Enter cost'"
+						mode="'currency'"
+						on-update="updateInstructorTypeCost(instructorTypeCost)">
+					</ipa-input>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
