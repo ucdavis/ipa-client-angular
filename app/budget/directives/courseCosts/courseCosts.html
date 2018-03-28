@@ -126,6 +126,9 @@
 					</td>
 					<!-- Comments -->
 					<td class="course-costs__table-cell">
+						<span ng-show="sectionGroup.sectionGroupCost.commentCount > 0">
+							({{ sectionGroup.sectionGroupCost.commentCount }})
+						</span>
 						<ipa-button button-text="'See Comments'"
 						            text="'Comments'"
 						            color="'light'"
