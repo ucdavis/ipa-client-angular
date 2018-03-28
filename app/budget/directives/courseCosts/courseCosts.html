@@ -6,6 +6,18 @@
 		slim="true">
 
 		<table class="course-costs__table">
+			<colgroup>
+				<col span="1" style="width: 6%;">
+				<col span="1" style="width: 10%;">
+				<col span="1" style="width: 10%;">
+				<col span="1" style="width: 10%;">
+				<col span="1" style="width: 10%;">
+				<col span="1" style="width: 10%;">
+				<col span="1" style="width: 10%;">
+				<col span="1" style="width: 10%;">
+				<col span="1" style="width: 16%;">
+				<col span="1" style="width: 8%;">
+			</colgroup>
 			<thead>
 				<tr>
 					<th class="course-costs__table-header"></th> <!-- Spacing for sequence number -->
@@ -126,11 +138,7 @@
 					</td>
 					<!-- Comments -->
 					<td class="course-costs__table-cell">
-						<span ng-show="sectionGroup.sectionGroupCost.commentCount > 0">
-							({{ sectionGroup.sectionGroupCost.commentCount }})
-						</span>
-						<ipa-button button-text="'See Comments'"
-						            text="'Comments'"
+						<ipa-button text="'Comments' + sectionGroup.sectionGroupCost.commentCountDisplay"
 						            color="'light'"
 						            icon-class="'entypo entypo-chat'"
 						            on-click="openAddCourseCommentsModal(sectionGroup)">
