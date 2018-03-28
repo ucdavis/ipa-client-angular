@@ -314,12 +314,14 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 
 			// Set sectionGroupCostComments
 			sectionGroupCost.comments = [];
+			sectionGroupCost.commentCount = 0;
 
 			budgetReducers._state.sectionGroupCostComments.ids.forEach(function(commentId) {
 				var comment = budgetReducers._state.sectionGroupCostComments.list[commentId];
 
 				if (comment.sectionGroupCostId == sectionGroupCost.id) {
 					sectionGroupCost.comments.push(comment);
+					sectionGroupCost.commentCount += 1;
 				}
 			});
 
@@ -405,12 +407,14 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 		},
 		calculateLineItemComments: function(lineItem) {
 			lineItem.comments = [];
+			lineItem.commentCount = 0;
 
 			budgetReducers._state.lineItemComments.ids.forEach(function(commentId) {
 				var comment = budgetReducers._state.lineItemComments.list[commentId];
 
 				if (comment.lineItemId == lineItem.id) {
 					lineItem.comments.push(comment);
+					lineItem.commentCount += 1;
 				}
 			});
 
