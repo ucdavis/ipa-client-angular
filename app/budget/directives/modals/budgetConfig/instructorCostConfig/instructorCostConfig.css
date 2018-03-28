@@ -2,24 +2,25 @@
 	padding: 20px;
 	height: 400px;
 	overflow-y: scroll;
-}
-
-.instructor-cost-config__instructor {
 	display: flex;
-	margin-bottom: 5px;
-}
-
-.instructor-cost-config__label {
-	padding-left: 10px;
 	justify-content: center;
-	align-items: center;
-	display: flex;
 }
 
-.instructor-cost-config__input {
-	width: 15%;
+.instructor-cost-config__table {
+	width: 70%;
+	border: 1px solid #ddd;
+	border-radius: 3px;
 }
 
-.instructor-cost-config__type-container {
-	padding-left: 10px;
+.instructor-cost-config__table-row {
+	border-bottom: 1px solid #ddd;
+}
+
+.instructor-cost-config__cell {
+	padding: 10px;
+}
+
+.instructor-costs__cost-container {
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
