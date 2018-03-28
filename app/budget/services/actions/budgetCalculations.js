@@ -481,17 +481,23 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			var assignedInstructors = budgetReducers._state.assignedInstructors;
 
 			var calculatedInstructors = [];
+			var calculatedActiveInstructors = [];
+			var usedInstructorIds = [];
 
 			activeInstructors.ids.forEach(function(instructorId) {
+				if (usedInstructorIds.indexOf(instructorId) > -1) { return; }
+
+				calculatedActiveInstructors.push(self._generateInstructor(instructorId));
 				calculatedInstructors.push(self._generateInstructor(instructorId));
+				usedInstructorIds.push(instructorId);
 			});
 
 			assignedInstructors.ids.forEach(function(instructorId) {
+				if (usedInstructorIds.indexOf(instructorId) > -1) { return; }
+
 				calculatedInstructors.push(self._generateInstructor(instructorId));
+				usedInstructorIds.push(instructorId);
 			});
-
-			calculatedInstructors = _array_sortByProperty(calculatedInstructors, "lastName");
-
 
 			instructorAssignmentOptions = [];
 
@@ -506,13 +512,14 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				description: "Instructors"
 			});
 
-			instructorAssignmentOptions = instructorAssignmentOptions.concat(calculatedInstructors);
+			instructorAssignmentOptions = instructorAssignmentOptions.concat(calculatedActiveInstructors);
 
 			budgetReducers.reduce({
 				type: CALCULATE_INSTRUCTORS,
 				payload: {
 					calculatedInstructors: calculatedInstructors,
-					instructorAssignmentOptions: instructorAssignmentOptions
+					instructorAssignmentOptions: instructorAssignmentOptions,
+					regularInstructorAssignmentOptions: calculatedActiveInstructors
 				}
 			});
 		},

@@ -614,6 +614,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						isLineItemOpen: false,
 						isCourseCostOpen: false,
 						instructorAssignmentOptions: [],
+						regularInstructorAssignmentOptions: [],
 						openLineItems: [],
 						selectedLineItems: [],
 						lineItemDetails: {},
@@ -649,6 +650,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return ui;
 				case CALCULATE_INSTRUCTORS:
 					ui.instructorAssignmentOptions = action.payload.instructorAssignmentOptions;
+					ui.regularInstructorAssignmentOptions = action.payload.regularInstructorAssignmentOptions;
+
 					return ui;
 				case CALCULATE_SCENARIO_TERMS:
 					ui.termNav.allTabs = action.payload.allTermTabs;
