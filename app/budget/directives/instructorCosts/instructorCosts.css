@@ -10,18 +10,8 @@
 	border-bottom: 1px solid #ddd;
 }
 
-.instructor-costs__table-header--short {
-	width: 5%;
-	padding-top: 15px;
-	padding-bottom: 15px;
-	border-bottom: 1px solid #ddd;
-}
-
-.instructor-costs__table-header--large {
-	width: 15%;
-	padding-top: 15px;
-	padding-bottom: 15px;
-	border-bottom: 1px solid #ddd;
+.instructor-costs__table-header--comments {
+    padding-left: 20px;
 }
 
 .instructor-costs__course-title {
@@ -69,6 +59,10 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.instructor-costs__cell-container--left {
+	justify-content: flex-start;
 }
 
 .instructor-costs__cell-container--large {
