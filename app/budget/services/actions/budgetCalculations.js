@@ -166,13 +166,13 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			return container;
 		},
 		calculateSectionGroupInstructors: function(sectionGroup) {
-			var originalInstructor = sectionGroup.sectionGroupCost ? budgetReducers._state.instructors.list[sectionGroup.sectionGroupCost.originalInstructorId] : null;
+			var originalInstructor = sectionGroup.sectionGroupCost ? budgetReducers._state.assignedInstructors.list[sectionGroup.sectionGroupCost.originalInstructorId] : null;
 			var instructor = null;
 			var instructorType = null;
 
 			// If overrides exist for this sectionGroup
 			if (sectionGroup.sectionGroupCost) {
-				instructor = budgetReducers._state.instructors.list[sectionGroup.sectionGroupCost.instructorId];
+				instructor = budgetReducers._state.activeInstructors.list[sectionGroup.sectionGroupCost.instructorId] || budgetReducers._state.assignedInstructors.list[sectionGroup.sectionGroupCost.instructorId];
 				instructorType = budgetReducers._state.instructorTypes.list[sectionGroup.sectionGroupCost.instructorTypeId];
 
 				if (instructor) {
@@ -182,7 +182,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				}
 			}
 
-			var assignedInstructor = budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
+			var assignedInstructor = budgetReducers._state.assignedInstructors.list[sectionGroup.assignedInstructorIds[0]];
 			var assignedInstructorType = budgetReducers._state.instructorTypes.list[sectionGroup.assignedInstructorTypeIds[0]];
 
 			sectionGroup.reversionDisplayName = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : null;
@@ -475,46 +475,19 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			return lineItem;
 		},
 		calculateInstructors: function() {
+			var self = this;
 			var instructorTypes = budgetReducers._state.instructorTypes;
-			var instructors = budgetReducers._state.instructors;
-			var instructorCosts = budgetReducers._state.instructorCosts;
-			var budgetId = budgetReducers._state.budget.id;
+			var activeInstructors = budgetReducers._state.activeInstructors;
+			var assignedInstructors = budgetReducers._state.assignedInstructors;
 
 			var calculatedInstructors = [];
 
-			instructors.ids.forEach(function(instructorId) {
-				var instructor = instructors.list[instructorId];
-				instructor.instructorCost = null;
-				instructor.description = instructor.lastName + ", " + instructor.firstName;
-				calculatedInstructors.push(instructor);
+			activeInstructors.ids.forEach(function(instructorId) {
+				calculatedInstructors.push(self._generateInstructor(instructorId));
+			});
 
-				// Attach instructorCost
-				instructorCosts.ids.forEach(function(instructorCostId) {
-					var instructorCost = instructorCosts.list[instructorCostId];
-
-					if (instructorCost.id == instructor.instructorCostId) {
-						instructor.instructorCost = instructorCost;
-						instructorCost.instructorType = null;
-					}
-
-					// Attach instructorType
-					instructorTypes.ids.forEach(function(instructorTypeId) {
-						var instructorType = instructorTypes.list[instructorTypeId];
-
-						if (instructorType.id == instructorCost.instructorTypeId) {
-							instructorCost.instructorType = instructorType;
-						}
-					});
-				});
-
-				if (instructor.instructorCost == null) {
-					instructor.instructorCost = {
-						id: null,
-						cost: null,
-						instructorId: instructor.id,
-						budgetId: budgetId
-					};
-				}
+			assignedInstructors.ids.forEach(function(instructorId) {
+				calculatedInstructors.push(self._generateInstructor(instructorId));
 			});
 
 			calculatedInstructors = _array_sortByProperty(calculatedInstructors, "lastName");
@@ -542,6 +515,45 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					instructorAssignmentOptions: instructorAssignmentOptions
 				}
 			});
+		},
+		_generateInstructor: function (instructorId) {
+			var instructorCosts = budgetReducers._state.instructorCosts;
+			var instructorTypes = budgetReducers._state.instructorTypes;
+			var instructor = assignedInstructors.list[instructorId] || activeInstructors.list[instructorId];
+			var budgetId = budgetReducers._state.budget.id;
+
+			instructor.instructorCost = null;
+			instructor.description = instructor.lastName + ", " + instructor.firstName;
+
+			// Attach instructorCost
+			instructorCosts.ids.forEach(function(instructorCostId) {
+				var instructorCost = instructorCosts.list[instructorCostId];
+
+				if (instructorCost.id == instructor.instructorCostId) {
+					instructor.instructorCost = instructorCost;
+					instructorCost.instructorType = null;
+				}
+
+				// Attach instructorType
+				instructorTypes.ids.forEach(function(instructorTypeId) {
+					var instructorType = instructorTypes.list[instructorTypeId];
+
+					if (instructorType.id == instructorCost.instructorTypeId) {
+						instructorCost.instructorType = instructorType;
+					}
+				});
+			});
+
+			if (instructor.instructorCost == null) {
+				instructor.instructorCost = {
+					id: null,
+					cost: null,
+					instructorId: instructor.id,
+					budgetId: budgetId
+				};
+			}
+
+			return instructor;
 		},
 		calculateInstructorTypeCosts: function () {
 			var instructorTypes = budgetReducers._state.instructorTypes;
@@ -575,5 +587,12 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				}
 			});
 		},
+		// Will first look at userRoles for a match, and then teachingAssignments as a fallback.
+		_calculateInstructorTypeIdForInstructor: function(instructor) {
+			var users = budgetReducers._state.scheduleSectionGroups;
+			var userRoles = budgetReducers._state.userRoles;
+			var teachingAssignments = budgetReducers._state.teachingAssignments;
+
+		}
 	};
 });
