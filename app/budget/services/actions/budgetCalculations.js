@@ -325,6 +325,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				}
 			});
 
+			sectionGroupCost.commentCountDisplay = sectionGroupCost.commentCount > 0 ? " (" + sectionGroupCost.commentCount + ")" : '   ';
+
 			sectionGroupCost.comments =_array_sortByProperty(sectionGroupCost.comments, "lastModifiedOn", true);
 		},
 		calculateLineItems: function() {
@@ -417,6 +419,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					lineItem.commentCount += 1;
 				}
 			});
+
+			lineItem.commentCountDisplay = lineItem.commentCount > 0 ? " (" + lineItem.commentCount + ")" : '';
 
 			// Sort sectionGroupCostComments
 			var reverseOrder = true;
