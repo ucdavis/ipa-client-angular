@@ -1,33 +1,26 @@
 .group-cost-config {
 	padding: 20px;
-	overflow-y: scroll;
 	height: 400px;
+	overflow-y: scroll;
+	padding-left: 100px;
 }
 
-.group-cost-config__label {
-	padding-left: 10px;
-	justify-content: center;
-	align-items: center;
-	display: flex;
+
+.group-cost-config__table {
+	width: 70%;
+	border: 1px solid #ddd;
+	border-radius: 3px;
 }
 
-.group-cost-config__cost {
-	display: flex;
+.group-cost-config__table-row {
+	border-bottom: 1px solid #ddd;
+}
+
+.group-cost-config__cell {
+	padding: 10px;
+}
+
+.group-cost__cost-container {
+	padding-top: 5px;
 	padding-bottom: 5px;
-}
-
-.group-cost-config__input {
-	width: 15%;
-}
-
-.group-cost-config__delete-button {
-	margin-left: 10px;
-	padding-right: 1px;
-	padding-bottom: 1px;
-}
-
-.group-cost-config__validation-error {
-	margin-bottom: 7px;
-	height: 17px;
-	color: #f26868;
 }
