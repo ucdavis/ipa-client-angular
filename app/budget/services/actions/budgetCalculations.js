@@ -47,6 +47,10 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					return;
 				}
 
+				var instructorId = sectionGroup.assignedInstructorIds[0];
+				if (instructorId) {
+					sectionGroup.instructorType = self._calculateInstructorType(instructorId);
+				}
 				// Find the sectionGroupCost for this sectionGroupCost/Scenario combo
 				sectionGroup.sectionGroupCost = null;
 				var sectionGroupCostIds = budgetReducers._state.sectionGroupCosts.bySectionGroupId[sectionGroup.id] || [];
@@ -303,12 +307,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			}
 
 			// (5th option) Attempt to use assigned instructorType
-			if (sectionGroup.assignedInstructorTypeIds.length > 0) {
-				var instructorTypeCost = null;
-
-				sectionGroup.assignedInstructorTypeIds.forEach(function(instructorTypeId) {
-					instructorTypeCost = instructorTypeCost || budgetReducers._state.instructorTypeCosts.byInstructorTypeId[instructorTypeId];
-				});
+			if (sectionGroup.instructorType && sectionGroup.instructorType.id > 0) {
+				instructorTypeCost = budgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroup.instructorType.id];
 
 				if (instructorTypeCost != null && instructorTypeCost.cost != null) {
 					sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
@@ -557,7 +557,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			instructor.instructorCost = null;
 			instructor.description = instructor.lastName + ", " + instructor.firstName;
 
-			instructor.instructorType = this._calculateInstructorType(instructor);
+			instructor.instructorType = this._calculateInstructorType(instructor.id);
 			// Attach instructorCost
 			instructorCosts.ids.forEach(function(instructorCostId) {
 				var instructorCost = instructorCosts.list[instructorCostId];
@@ -621,14 +621,18 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			});
 		},
 		// Will first look at userRoles for a match, and then teachingAssignments as a fallback.
-		_calculateInstructorType: function(instructor) {
+		_calculateInstructorType: function(instructorId) {
 			var instructorType = null;
+
+			var assignedInstructors = budgetReducers._state.assignedInstructors;
+			var activeInstructors = budgetReducers._state.activeInstructors;
 
 			var users = budgetReducers._state.users;
 			var userRoles = budgetReducers._state.userRoles;
 			var teachingAssignments = budgetReducers._state.teachingAssignments;
 			var instructorTypes = budgetReducers._state.instructorTypes;
 
+			var instructor = assignedInstructors.list[instructorId] || activeInstructors.list[instructorId];
 			var user = users.byLoginId[instructor.loginId.toLowerCase()];
 
 			if (userRoles.byUserId[user.id]) {
