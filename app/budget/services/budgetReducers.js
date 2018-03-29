@@ -372,12 +372,14 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case INIT_STATE:
 					users = {
 						ids: [],
-						list: []
+						list: [],
+						byLoginId: {}
 					};
 
 					action.payload.users.forEach( function(user) {
 						users.ids.push(user.id);
 						users.list[user.id] = user;
+						users.byLoginId[user.loginId.toLowerCase()] = user;
 					});
 					return users;
 				default:
@@ -389,12 +391,15 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case INIT_STATE:
 					userRoles = {
 						ids: [],
-						list: []
+						list: [],
+						byUserId: {}
 					};
 
 					action.payload.userRoles.forEach( function(userRole) {
 						userRoles.ids.push(userRole.id);
 						userRoles.list[userRole.id] = userRole;
+						userRoles.byUserId[userRole.userId] = userRoles.byUserId[userRole.userId] || [];
+						userRoles.byUserId[userRole.userId].push(userRole);
 					});
 					return userRoles;
 				default:
