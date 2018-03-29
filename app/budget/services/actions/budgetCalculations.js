@@ -167,38 +167,48 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 		},
 		calculateSectionGroupInstructors: function(sectionGroup) {
 			var originalInstructor = sectionGroup.sectionGroupCost ? budgetReducers._state.assignedInstructors.list[sectionGroup.sectionGroupCost.originalInstructorId] : null;
-			var instructor = null;
-			var instructorType = null;
-
-			// If overrides exist for this sectionGroup
-			if (sectionGroup.sectionGroupCost) {
-				instructor = budgetReducers._state.activeInstructors.list[sectionGroup.sectionGroupCost.instructorId] || budgetReducers._state.assignedInstructors.list[sectionGroup.sectionGroupCost.instructorId];
-				instructorType = budgetReducers._state.instructorTypes.list[sectionGroup.sectionGroupCost.instructorTypeId];
-
-				if (instructor) {
-					sectionGroup.instructorName = instructor.lastName + ", " + instructor.firstName;
-				} else if (instructorType) {
-					sectionGroup.instructorName = instructorType.description;
-				}
-			}
+			sectionGroup.originalInstructorName = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
 
 			var assignedInstructor = budgetReducers._state.assignedInstructors.list[sectionGroup.assignedInstructorIds[0]];
 			var assignedInstructorType = budgetReducers._state.instructorTypes.list[sectionGroup.assignedInstructorTypeIds[0]];
 
-			sectionGroup.reversionDisplayName = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : null;
-			sectionGroup.reversionDisplayName = assignedInstructorType ? assignedInstructorType.description : sectionGroup.reversionDisplayName;
-			sectionGroup.reversionDisplayName = sectionGroup.reversionDisplayName || "no instructor";
+			var assignedInstructorId = assignedInstructor && assignedInstructor.id > 0 ? assignedInstructor.id : null;
+			var assignedInstructorTypeId = assignedInstructorType && assignedInstructorType.id > 0 ? assignedInstructorType.id : null;
 
-			// use assigned instructors if an override wasn't set
-			if (instructor == null && instructorType == null) {
+			var overrideInstructor = null;
+			var overrideInstructorType = null;
+
+			if (sectionGroup.sectionGroupCost) {
+				overrideInstructor = budgetReducers._state.activeInstructors.list[sectionGroup.sectionGroupCost.instructorId] || budgetReducers._state.assignedInstructors.list[sectionGroup.sectionGroupCost.instructorId];
+				overrideInstructorType = budgetReducers._state.instructorTypes.list[sectionGroup.sectionGroupCost.instructorTypeId];
+			}
+
+			var overrideInstructorId = overrideInstructor && overrideInstructor.id > 0 ? overrideInstructor.id : null;
+			var overrideInstructorTypeId = overrideInstructorType && overrideInstructorType.id > 0 ? overrideInstructorType.id : null;
+
+			// Set instructor name
+			if (overrideInstructor == null && overrideInstructorType == null) {
 				if (assignedInstructor) {
 					sectionGroup.instructorName = assignedInstructor.lastName + ", " + assignedInstructor.firstName;
 				} else if (assignedInstructorType) {
 					sectionGroup.instructorName = assignedInstructorType.description;
 				}
+			} else if (overrideInstructor) {
+				sectionGroup.instructorName = overrideInstructor.lastName + ", " + overrideInstructor.firstName;
+			} else if (overrideInstructorType) {
+				sectionGroup.instructorName = overrideInstructorType.description;
 			}
 
-			sectionGroup.originalInstructorName = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
+			// Calculate reversion
+			if ( (!overrideInstructorTypeId && !overrideInstructorId)
+			|| (assignedInstructorId > 0 && overrideInstructorId > 0 && assignedInstructorId == overrideInstructorId)
+			|| (assignedInstructorTypeId > 0 && overrideInstructorTypeId > 0 && assignedInstructorTypeId == overrideInstructorTypeId)) {
+				sectionGroup.reversionDisplayName = '';
+			} else if (assignedInstructorId > 0) {
+				sectionGroup.reversionDisplayName = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : "no instructor";
+			} else if (overrideInstructorTypeId > 0) {
+				sectionGroup.reversionDisplayName = assignedInstructorType ? assignedInstructorType.description : "no instructor";
+			}
 		},
 		calculateSectionGroupOverrides: function(sectionGroup) {
 			var self = this;
