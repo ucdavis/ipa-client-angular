@@ -459,7 +459,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			var lineItemCategoryId = null;
 			var typeDescription = null;
 
-			var instructor = budgetReducers._state.instructors.list[teachingAssignment.instructorId];
+			var instructor = budgetReducers._state.assignedInstructors.list[teachingAssignment.instructorId];
+
 			var termDescription = termService.getTermName(teachingAssignment.termCode);
 
 			if (teachingAssignment.buyout) {
