@@ -635,6 +635,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			var instructor = assignedInstructors.list[instructorId] || activeInstructors.list[instructorId];
 			var user = users.byLoginId[instructor.loginId.toLowerCase()];
 
+			if (!user) { return; }
+
 			if (userRoles.byUserId[user.id]) {
 				userRoles.byUserId[user.id].forEach(function(userRole) {
 					// 15 is the roleId of 'instructor'
