@@ -186,7 +186,7 @@ assignmentApp.service('assignmentActionCreators', function (assignmentStateServi
 					}
 				});
 			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
+				$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
 			});
 		},
 		unassignInstructorType: function (originalTeachingAssignment) {
