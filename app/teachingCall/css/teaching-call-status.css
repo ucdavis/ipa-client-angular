@@ -107,6 +107,8 @@
 
 .remove-instructor-ui {
 	visibility: hidden;
+	color: rgba(180, 20, 20, 0.8);
+	font-size: 20px;
 }
 
 .table-row:hover .remove-instructor-ui {
@@ -254,5 +256,24 @@
 }
 
 .teaching-call-status__name-content {
+	padding-left:10px;
+}
+
+.teaching-call-status__instructor-container {
+	padding-left: 10px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.teaching-call-status__instructor-content {
+	flex: 1 0 auto;
+}
+
+.teaching-call-status__instructor-details {
+	flex: 1 0 auto;
+	padding-right: 10px;
+}
+
+.teaching-call-status__instructor-tooltip {
 	padding-left:10px;
 }
