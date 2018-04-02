@@ -127,6 +127,11 @@ sharedApp
 						break;
 				}
 			});
-
 		}]
-	);
+	)
+	.constant('Roles', {
+		reviewer: 10,
+		instructor: 15,
+		academicPlanner: 2,
+		presence: 9
+	});
