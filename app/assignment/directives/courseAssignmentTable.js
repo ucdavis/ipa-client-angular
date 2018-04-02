@@ -356,13 +356,13 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 						}
 
 						assignmentActionCreators.assignInstructorType(newTeachingAssignment);
-					// Create a 'The Staff' placeholder
 					} else if (isAssignPlaceholderStaff) {
+						// Create a 'The Staff' placeholder
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 						sectionGroup.showTheStaff = true;
 						assignmentActionCreators.createPlaceholderStaff(sectionGroup);
-					// Create a support assignment for an AI
 					} else if (isAssignPlaceholderAI) {
+						// Create a support assignment for an AI
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 						sectionGroup.showPlaceholderAI = true;
 						assignmentActionCreators.createPlaceholderAI(sectionGroup);
