@@ -86,22 +86,20 @@
 						<div class="column-hover-ui"></div>
 					</div>
 
-					<div class="table-row"
-					     style="display: flex;"
+					<div class="table-row teaching-call-status__instructor-header"
 					     ng-repeat="instructor in view.state.calculations.teachingCallsByInstructorType[instructorTypeId]">
 
 						<div class="column-checkbox cell first-cell">
 							<input type="checkbox" ng-checked="instructorIsSelected(instructor.instructorId)" ng-click="toggleInstructor(instructor)">
 						</div>
 						<div class="column-name left-cell">
-							<div style="padding-left: 10px; display: flex; flex-wrap: wrap;">
-								<span style="flex: 1 0 auto;">
+							<div class="teaching-call-status__instructor-container">
+								<span class="teaching-call-status__instructor-content">
 									{{ instructor.lastName }},
 								</span>
-								<span style="flex: 1 0 auto; padding-right: 10px;">
+								<span class="teaching-call-status__instructor-details">
 									&nbsp;{{ instructor.firstName }}
-									<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
-										class="text-primary clickable hovrable"
+									<i class="glyphicon glyphicon-list-alt teaching-call-status__instructor-tooltip text-primary clickable hovrable"
 										teaching-call-tooltip
 										title="Teaching Call"
 										terms-blob="{{instructor.termsBlob}}"
@@ -122,8 +120,7 @@
 						</div>
 						<div class="column-due cell">{{ instructor.dueDate }}</div>
 						<div class="column-hover-ui">
-							<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
-							      class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
+							<span class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
 							      tooltip-placement="left"
 							      uib-tooltip="Remove Instructor"
 							      btn-class="teaching-call-status-tooltip"
