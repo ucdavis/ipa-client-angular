@@ -461,3 +461,8 @@ i.selected-section-group-remove {
 .filter-course--tag {
 	color: white;
 }
+
+.courses__metadata-container {
+	padding: 3px;
+	margin-left: 3px;
+}

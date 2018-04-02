@@ -95,6 +95,8 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				$rootScope.$emit('toast', { message: "Could not remove instructor from teaching call.", type: "ERROR" });
 			});
 		},
+		// Will toggle the selected state (checkbox) for the specified instructor.
+		// This is done by adding or removing the instructorId from the 'selectedInstructors' list
 		toggleInstructor: function(instructorId) {
 			var selectedInstructorIds = teachingCallStatusStateService._state.ui.selectedInstructorIds;
 			var index = selectedInstructorIds.indexOf(instructorId);

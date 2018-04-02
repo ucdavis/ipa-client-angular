@@ -34,7 +34,7 @@
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
 						Contact Instructors
 					</a>
-					<span ng-if="!(atLeastOneInstructorSelected())" uib-tooltip="Select at least one instructor to contact">
+					<span ng-if="atLeastOneInstructorSelected() == false" uib-tooltip="Select at least one instructor to contact">
 						<a class="disabled btn btn-default" style="color: #808080;">
 							<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
 							Contact Instructors
@@ -49,8 +49,8 @@
 
 		<div ng-show="view.state && view.state.ui.instructorsInCalls == false"
 		     class="teaching-call-status__no-calls-splash">
-			There are no instructors in a teaching call.
-			Use the add instructor button.
+			There are no instructors called.
+			Use the 'Add Instructor' button above.
 		</div>
 
 		<div ng-show="view.state && view.state.ui.instructorsInCalls">
@@ -122,14 +122,15 @@
 						<div class="column-due cell">{{ instructor.dueDate }}</div>
 						<div class="column-hover-ui">
 							<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
-								class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
-								tooltip-placement="left"
-								uib-tooltip="Remove Instructor"
-								btn-class="teaching-call-status-tooltip"
-								confirm-button="removeInstructor(instructor)"
-								message="Are you sure you want to remove this instructor?
-									This will cancel any pending notifications."
-								yes="Remove" no="Cancel" placement="top">
+							      class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
+							      tooltip-placement="left"
+							      uib-tooltip="Remove Instructor"
+							      btn-class="teaching-call-status-tooltip"
+							      confirm-button="removeInstructor(instructor)"
+							      message="Are you sure you want to remove this instructor? This will cancel any pending notifications."
+							      yes="Remove"
+							      no="Cancel"
+							      placement="top">
 							</span>
 						</div>
 					</div>
