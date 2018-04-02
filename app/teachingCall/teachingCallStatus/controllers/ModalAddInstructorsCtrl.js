@@ -38,7 +38,7 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', ['$scope', '$rootScope', '
 		instructor.invited = false;
 	});
 
-	$scope.areThereInstructorsOfType = function(instructorTypeId) {
+	$scope.instructorTypeUsed = function(instructorTypeId) {
 		var atLeastOneInstructor = false;
 
 		if ($scope.startTeachingCallConfig.invitedInstructors) {
@@ -62,16 +62,12 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', ['$scope', '$rootScope', '
 		$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
 	};
 
-	$scope.areAllInstructorsOfTypeInvited = function (instructorTypeId) {
-		var areAllInvited = true;
-
-		$scope.startTeachingCallConfig.invitedInstructors.forEach(function(instructor) {
-			if(instructor.instructorTypeId == instructorTypeId && instructor.invited == false) {
-				areAllInvited = false;
-			}
+	$scope.allInstructorTypeInvited = function (instructorTypeId) {
+		var excludedInstructors = $scope.startTeachingCallConfig.invitedInstructors.find(function(instructor) {
+			return instructor.instructorTypeId == instructorTypeId && instructor.invited == false;
 		});
 
-		return areAllInvited;
+		return excludedInstructors > 0;
 	};
 
 	$scope.activeTermIds = [];
