@@ -6,7 +6,7 @@
  * Service in the workgroupApp.
  * Central location for sharedState information.
  */
-workgroupApp.service('workgroupActionCreators', function (workgroupStateService, workgroupService, $rootScope, Role) {
+workgroupApp.service('workgroupActionCreators', function (workgroupStateService, workgroupService, $rootScope, Role, Roles) {
 	return {
 		getInitialState: function (workgroupId) {
 			var self = this;
@@ -244,11 +244,11 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 		// Will return the roleId, or -1 for student (as it does not match a specific roleId, but will be expected to match 11,12 or 13 for masters, phd, instructional support)
 		_getRoleIdFromTabName: function(tabName) {
 			tabNameRoleIds = {
-				"Academic Planner": 2,
-				"Instructor": 15,
-				"Reviewer": 10,
+				"Academic Planner": Roles.academicPlanner,
+				"Instructor": Roles.instructor,
+				"Reviewer": Roles.reviewer,
 				"Student": -1,
-				"Presence": 9,
+				"Presence": Roles.presence,
 			};
 
 			return tabNameRoleIds[tabName];
