@@ -226,6 +226,10 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 		},
 
 		_uiReducers: function (action, ui) {
+			var INSTRUCTIONAL_SUPPORT_ROLE_ID = 11;
+			var STUDENT_MASTERS_ROLE_ID = 12;
+			var STUDENT_PHD_ROLE_ID = 13;
+			var ACADEMIC_PLANNER_ROLE_ID = 2;
 			var scope = this;
 
 			switch (action.type) {
@@ -235,7 +239,7 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 						workgroupId: action.workgroupId,
 						roles: {
 							activeRoleTab: "Academic Planner",
-							activeRoleId: 2,
+							activeRoleId: ACADEMIC_PLANNER_ROLE_ID,
 							tabOverrides: {
 								"Presence" : "Unassigned",
 								"Academic Planner" : "Staff"
@@ -249,9 +253,9 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 						instructorTypes: [],
 						roleTotals: {},
 						studentRoles: [
-							{id: 11, description: "Instructional Support", name: "instructionalSupport"},
-							{id: 12, description: "Student Masters", name: "studentMasters"},
-							{id: 13, description: "Student PhD", name: "studentPhd"}
+							{id: INSTRUCTIONAL_SUPPORT_ROLE_ID, description: "Instructional Support", name: "instructionalSupport"},
+							{id: STUDENT_MASTERS_ROLE_ID, description: "Student Masters", name: "studentMasters"},
+							{id: STUDENT_PHD_ROLE_ID, description: "Student PhD", name: "studentPhd"}
 						]
 					};
 

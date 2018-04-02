@@ -27,12 +27,6 @@
 	</div>
 
 	<table class="roles-table__table">
-		<colgroup>
-			<col span="1" style="width: 25%;">
-			<col span="1" style="width: 25%;">
-			<col span="1" style="width: 25%;">
-			<col span="1" style="width: 25%;">
-		</colgroup>
 		<thead>
 			<tr>
 				<th class="roles-table__table-header">
@@ -77,8 +71,8 @@
 					<div class="roles-table__amount-container">
 						<!-- -1 is the category for 'student-ish' roles -->
 						<student-role-selector ng-show="activeRoleId == -1"
-																	 student-roles="ui.studentRoles"
-																	 user-role="userRole">
+						                       student-roles="ui.studentRoles"
+						                       user-role="userRole">
 						</student-role-selector>
 
 						<!-- 15 is the role for 'instructor' -->
@@ -103,10 +97,10 @@
 
 			<tr ng-show="ui.roleTotals[activeRoleId] == 0">
 				<td colspan="4">
-				<div class="roles-table__no-roles">
-					No users
-				</div>
-			</td>
+					<div class="roles-table__no-roles">
+						No users
+					</div>
+				</td>
 			</tr>
 		</tbody>
 	</table>
