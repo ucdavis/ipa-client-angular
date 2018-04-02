@@ -20,49 +20,56 @@
 
 .instructor-section {
 	margin-bottom: 50px;
+	width: 100%;
+}
+
+.instructor-section__title-container {
+	display: flex;
+}
+
+.instructor-section__title-content {
+	padding-left: 20px;
 }
 
 .instructor-section .panel-title {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .instructor-section .panel-teaching-call-status{
-    border-radius: 0px !important;
+	border-radius: 0px !important;
 }
 
 .teaching-call-status .btn-default {
-    border: 1px solid #d2d2d2 !important;
+	border: 1px solid #d2d2d2 !important;
 }
 
 .teaching-call-status .btn-group {
-    margin-top: 25px;
-    margin-bottom: 25px;
+	margin-top: 25px;
+	margin-bottom: 25px;
 }
-
-
 
 /* modal style */
 
 .instructors-modal .modal-header {
-    background: #303641;
-    color: white;
+	background: #303641;
+	color: white;
 }
 
 .instructors-modal .modal-footer {
-    background-color:#f8f8f8;
+	background-color:#f8f8f8;
 }
 .instructor-toggle {
-    margin: 15px 0px 15px 0px;
+	margin: 15px 0px 15px 0px;
 }
 
 .instructor-toggle label {
-    border: 1px solid #ccc !important;
-    padding-top: 3px;
-    padding-bottom: 3px;
+	border: 1px solid #ccc !important;
+	padding-top: 3px;
+	padding-bottom: 3px;
 }
 
 .instructor-toggle span {
-    font-size: 9pt !important;
+	font-size: 9pt !important;
 }
 
 .instructor-box {
@@ -218,4 +225,34 @@
 	margin-top: 100px;
 	font-size: 19px;
 	color: gray;
+}
+
+.teaching-call-status__loading-spinner {
+	padding-top: 200px;
+}
+
+.teaching-call-status__table-ui {
+	flex: 20 1 0px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.teaching-call-status__table-ui-container {
+	padding-right: 5px;
+}
+
+.teaching-call-status__table-ui-btn {
+	padding-right: 5px;
+}
+
+.teaching-call-status__table-ui-btn--disabled {
+	color: #808080;
+}
+
+.teaching-call-status__instructor-header {
+	display: flex;
+}
+
+.teaching-call-status__name-content {
+	padding-left:10px;
 }
