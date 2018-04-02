@@ -221,10 +221,10 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return sectionGroupCosts;
 			}
 		},
-		instructorReducers: function (action, instructors) {
+		assignedInstructorReducers: function (action, assignedInstructors) {
 			switch (action.type) {
 				case INIT_STATE:
-					instructors = {
+					assignedInstructors = {
 						ids: [],
 						list: []
 					};
@@ -235,18 +235,46 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						instructorCostsByInstructorId[instructorCost.instructorId] = instructorCost;
 					});
 
-					action.payload.instructors.forEach( function(instructor) {
+					action.payload.assignedInstructors.forEach( function(instructor) {
 						var instructorCost = instructorCostsByInstructorId[instructor.id];
 						if (instructorCost) {
 							instructor.instructorCostId = instructorCost.id;
 						}
 
-						instructors.ids.push(instructor.id);
-						instructors.list[instructor.id] = instructor;
+						assignedInstructors.ids.push(instructor.id);
+						assignedInstructors.list[instructor.id] = instructor;
 					});
-					return instructors;
+					return assignedInstructors;
 				default:
-					return instructors;
+					return assignedInstructors;
+			}
+		},
+		activeInstructorReducers: function (action, activeInstructors) {
+			switch (action.type) {
+				case INIT_STATE:
+					activeInstructors = {
+						ids: [],
+						list: []
+					};
+
+					// Create hash for quick lookup
+					var instructorCostsByInstructorId = {};
+					action.payload.instructorCosts.forEach( function(instructorCost) {
+						instructorCostsByInstructorId[instructorCost.instructorId] = instructorCost;
+					});
+
+					action.payload.activeInstructors.forEach( function(instructor) {
+						var instructorCost = instructorCostsByInstructorId[instructor.id];
+						if (instructorCost) {
+							instructor.instructorCostId = instructorCost.id;
+						}
+
+						activeInstructors.ids.push(instructor.id);
+						activeInstructors.list[instructor.id] = instructor;
+					});
+					return activeInstructors;
+				default:
+					return activeInstructors;
 			}
 		},
 		calculatedInstructorReducers: function (action, calculatedInstructors) {
@@ -344,16 +372,38 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 				case INIT_STATE:
 					users = {
 						ids: [],
-						list: []
+						list: [],
+						byLoginId: {}
 					};
 
 					action.payload.users.forEach( function(user) {
 						users.ids.push(user.id);
 						users.list[user.id] = user;
+						users.byLoginId[user.loginId.toLowerCase()] = user;
 					});
 					return users;
 				default:
 					return users;
+			}
+		},
+		userRoleReducers: function (action, userRoles) {
+			switch (action.type) {
+				case INIT_STATE:
+					userRoles = {
+						ids: [],
+						list: [],
+						byUserId: {}
+					};
+
+					action.payload.userRoles.forEach( function(userRole) {
+						userRoles.ids.push(userRole.id);
+						userRoles.list[userRole.id] = userRole;
+						userRoles.byUserId[userRole.userId] = userRoles.byUserId[userRole.userId] || [];
+						userRoles.byUserId[userRole.userId].push(userRole);
+					});
+					return userRoles;
+				default:
+					return userRoles;
 			}
 		},
 		scheduleSectionGroupReducers: function (action, scheduleSectionGroups) {
@@ -407,13 +457,21 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						supportAssignments.ids.push(supportAssignment.id);
 						supportAssignments.list[supportAssignment.id] = supportAssignment;
 					});
-					instructors = {
+					assignedInstructors = {
 						ids: [],
 						list: {}
 					};
-					action.payload.instructors.forEach( function(instructor) {
-						instructors.ids.push(instructor.id);
-						instructors.list[instructor.id] = instructor;
+					action.payload.assignedInstructors.forEach( function(instructor) {
+						assignedInstructors.ids.push(instructor.id);
+						assignedInstructors.list[instructor.id] = instructor;
+					});
+					activeInstructors = {
+						ids: [],
+						list: {}
+					};
+					action.payload.activeInstructors.forEach( function(instructor) {
+						activeInstructors.ids.push(instructor.id);
+						activeInstructors.list[instructor.id] = instructor;
 					});
 					scheduleSectionGroups = {
 						uniqueKeys: [],
@@ -450,7 +508,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 
 							if (teachingAssignment.instructorId) {
 								sectionGroup.assignedInstructorIds.push(teachingAssignment.instructorId);
-								var instructor = instructors.list[teachingAssignment.instructorId];
+								var instructor = assignedInstructors.list[teachingAssignment.instructorId];
 								var instructorName = instructor.lastName + ", " + instructor.firstName;
 								sectionGroup.assignedInstructorNames.push(instructorName);
 							} else if (teachingAssignment.instructorTypeId > 0 && !(teachingAssignment.instructorId)) {
@@ -561,6 +619,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						isLineItemOpen: false,
 						isCourseCostOpen: false,
 						instructorAssignmentOptions: [],
+						regularInstructorAssignmentOptions: [],
 						openLineItems: [],
 						selectedLineItems: [],
 						lineItemDetails: {},
@@ -596,6 +655,8 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return ui;
 				case CALCULATE_INSTRUCTORS:
 					ui.instructorAssignmentOptions = action.payload.instructorAssignmentOptions;
+					ui.regularInstructorAssignmentOptions = action.payload.regularInstructorAssignmentOptions;
+
 					return ui;
 				case CALCULATE_SCENARIO_TERMS:
 					ui.termNav.allTabs = action.payload.allTermTabs;
@@ -736,10 +797,12 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
 			newState.sectionGroupCostComments = scope.sectionGroupCostCommentReducers(action, scope._state.sectionGroupCostComments);
 			newState.scheduleSectionGroups = scope.scheduleSectionGroupReducers(action, scope._state.scheduleSectionGroups);
-			newState.instructors = scope.instructorReducers(action, scope._state.instructors);
+			newState.assignedInstructors = scope.assignedInstructorReducers(action, scope._state.assignedInstructors);
+			newState.activeInstructors = scope.activeInstructorReducers(action, scope._state.activeInstructors);
 			newState.instructorCosts = scope.instructorCostReducers(action, scope._state.instructorCosts);
 			newState.ui = scope.uiReducers(action, scope._state.ui);
 			newState.users = scope.userReducers(action, scope._state.users);
+			newState.userRoles = scope.userRoleReducers(action, scope._state.userRoles);
 			newState.instructorTypes = scope.instructorTypeReducers(action, scope._state.instructorTypes);
 			newState.instructorTypeCosts = scope.instructorTypeCostReducers(action, scope._state.instructorTypeCosts);
 			newState.teachingAssignments = scope.teachingAssignmentReducers(action, scope._state.teachingAssignments);

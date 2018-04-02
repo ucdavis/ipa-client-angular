@@ -5,6 +5,8 @@ budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$locatio
 
 		$scope.view = {};
 
+		$scope.budgetConfigStyles = { "width" : "40%" };
+
 		$scope.currentUser = authService.getCurrentUser();
 
 		$rootScope.$on('budgetStateChanged', function (event, data) {

@@ -177,15 +177,12 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					roles = {
 						ids: []
 					};
-					var _hiddenRoles = ['admin', 'registrar', 'reviewer'];
 					var rolesList = {};
 					var length = action.payload.roles ? action.payload.roles.length : 0;
 
 					for (var i = 0; i < length; i++) {
 						var roleData = action.payload.roles[i];
-						if (_hiddenRoles.indexOf(roleData.name) < 0) {
-							rolesList[roleData.id] = new Role(roleData);
-						}
+						rolesList[roleData.id] = new Role(roleData);
 					}
 
 					roles.ids = _array_sortIdsByProperty(rolesList, "name");

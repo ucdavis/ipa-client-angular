@@ -32,7 +32,8 @@
 
 		<ipa-modal
 			is-visible="view.state.ui.isBudgetConfigModalOpen"
-			header-text="Budget Configuration">
+			header-text="Budget Configuration"
+			styles="budgetConfigStyles">
 				<budget-config
 					ng-if="view.state.ui.isBudgetConfigModalOpen"
 					state="view.state"
@@ -95,7 +96,7 @@
 			<instructor-costs
 				ng-if="view.state.ui.sectionNav.activeTab == 'Instructor Costs'"
 				instructor-assignment-options="view.state.ui.instructorAssignmentOptions"
-				regular-instructor-assignment-options="view.state.calculatedInstructors"
+				regular-instructor-assignment-options="view.state.ui.regularInstructorAssignmentOptions"
 				calculated-section-groups="view.state.calculatedSectionGroups"
 				term-nav="view.state.ui.termNav">
 			</instructor-costs>

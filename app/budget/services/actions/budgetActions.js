@@ -40,7 +40,6 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				self.selectBudgetScenario();
 
 				// Perform follow up calculations
-				budgetCalculations.calculateInstructorTypeCosts();
 				budgetCalculations.calculateInstructors();
 				budgetCalculations.calculateLineItems();
 				budgetCalculations.calculateInstructorTypeCosts();
