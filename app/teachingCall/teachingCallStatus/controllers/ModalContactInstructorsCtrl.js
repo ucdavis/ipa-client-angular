@@ -156,5 +156,4 @@ teachingCallApp.controller('ModalContactInstructorsCtrl', this.ModalContactInstr
 
 		$uibModalInstance.close($scope.startTeachingCallConfig);
 	};
-
 });
