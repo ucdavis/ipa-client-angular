@@ -67,13 +67,13 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				self.calculateSectionGroupOverrides(sectionGroup);
 
 				// Attach comments data
-				self.calculateSectionGroupCostComments(sectionGroup.sectionGroupCost);
+				self._calculateSectionGroupCostComments(sectionGroup.sectionGroupCost);
 
 				// Attach instructors
-				self.calculateSectionGroupInstructors(sectionGroup);
+				self._calculateSectionGroupInstructors(sectionGroup);
 
 				// Attach cost data
-				self.calculateSectionGroupFinancialCosts(sectionGroup);
+				self._calculateSectionGroupFinancialCosts(sectionGroup);
 
 				// Generate container if one does not already exist
 				var container = self.calculateSectionGroupContainer(sectionGroup, calculatedSectionGroups.byTerm[shortTerm]);
@@ -94,7 +94,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			this.calculateTotalCost();
 		},
 		// Calculate sectionGroup costs
-		calculateSectionGroupFinancialCosts: function(sectionGroup) {
+		_calculateSectionGroupFinancialCosts: function(sectionGroup) {
 			var budget = budgetReducers._state.budget;
 
 			// Course Costs
@@ -169,8 +169,9 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 
 			return container;
 		},
-		calculateSectionGroupInstructors: function(sectionGroup) {
+		_calculateSectionGroupInstructors: function(sectionGroup) {
 			var originalInstructor = sectionGroup.sectionGroupCost ? budgetReducers._state.assignedInstructors.list[sectionGroup.sectionGroupCost.originalInstructorId] : null;
+
 			sectionGroup.originalInstructorName = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
 
 			var assignedInstructor = budgetReducers._state.assignedInstructors.list[sectionGroup.assignedInstructorIds[0]];
@@ -191,6 +192,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			var overrideInstructorTypeId = overrideInstructorType && overrideInstructorType.id > 0 ? overrideInstructorType.id : null;
 
 			// Set instructor name
+			sectionGroup.instructorName = null;
+
 			if (overrideInstructor == null && overrideInstructorType == null) {
 				if (assignedInstructor) {
 					sectionGroup.instructorName = assignedInstructor.lastName + ", " + assignedInstructor.firstName;
@@ -210,8 +213,10 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				sectionGroup.reversionDisplayName = '';
 			} else if (assignedInstructorId > 0) {
 				sectionGroup.reversionDisplayName = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : "no instructor";
-			} else if (overrideInstructorTypeId > 0) {
+			} else if (assignedInstructorTypeId > 0) {
 				sectionGroup.reversionDisplayName = assignedInstructorType ? assignedInstructorType.description : "no instructor";
+			} else {
+				sectionGroup.reversionDisplayName = "no instructor";
 			}
 		},
 		calculateSectionGroupOverrides: function(sectionGroup) {
@@ -333,7 +338,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 
 			return teachingAssignment ? instructorTypeCosts.byInstructorTypeId[teachingAssignment.instructorTypeId] : null;
 		},
-		calculateSectionGroupCostComments: function(sectionGroupCost) {
+		_calculateSectionGroupCostComments: function(sectionGroupCost) {
 			if (sectionGroupCost == null) { return; }
 
 			// Set sectionGroupCostComments
