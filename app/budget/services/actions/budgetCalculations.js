@@ -1,4 +1,4 @@
-budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetService, budgetReducers, termService) {
+budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetService, budgetReducers, termService, Roles) {
 	return {
 		calculateScenarioTerms: function() {
 			var allTermTabs = [];
@@ -644,8 +644,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 
 			if (userRoles.byUserId[user.id]) {
 				userRoles.byUserId[user.id].forEach(function(userRole) {
-					// 15 is the roleId of 'instructor'
-					if (userRole.roleId != 15) { return; }
+					if (userRole.roleId != Roles.instructor) { return; }
 
 					instructorType = instructorTypes.list[userRole.instructorTypeId];
 				});
