@@ -1,22 +1,27 @@
 <div class="instructor-cost-config">
-		<div class="instructor-cost-config__instructor" ng-repeat="instructor in instructors | orderBy: 'lastName'">
-			<div class="instructor-cost-config__input">
-				<ipa-input mode="'currency'"
-					value="instructor.instructorCost.cost"
-					on-update="updateInstructorCost(instructor.instructorCost)">
-				</ipa-input>
-			</div>
-
-			<div class="instructor-cost-config__type-container">
-				<instructor-type-dropdown instructor-types="instructorTypes"
-				                          instructor-cost="instructor.instructorCost">
-				</instructor-type-dropdown>
-			</div>
-
-			<div class="instructor-cost-config__label">
-				{{ instructor.lastName }}, {{ instructor.firstName }}
-			</div>
-
-		</div>
-	</div>
+	<table class="instructor-cost-config__table">
+		<thead>
+			<tr class="instructor-cost-config__table-row">
+				<th class="instructor-cost-config__cell">Instructor</th>
+				<th class="instructor-cost-config__cell">Type</th>
+				<th class="instructor-cost-config__cell">Cost</th>
+			</tr>
+		</thead>
+		<tbody class="course-costs__course-container" ng-repeat="instructor in instructors | orderBy: 'lastName'">
+			<tr>
+				<td class="instructor-cost-config__cell">
+					{{ instructor.lastName }}, {{ instructor.firstName }}
+				</td>
+				<td class="instructor-cost-config__cell">
+					{{ instructor.instructorType.description }}
+				</td>
+				<td class="instructor-cost-config__cell">
+					<ipa-input mode="'currency'"
+					           value="instructor.instructorCost.cost"
+					           on-update="updateInstructorCost(instructor.instructorCost)">
+					</ipa-input>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>

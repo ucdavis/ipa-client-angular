@@ -6,67 +6,47 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 			$scope.view = {};
 
-			$scope.selectedInstructors = [];
-			$scope.senateInstructorsSelected = false;
-			$scope.federationInstructorsSelected = false;
-
 			$rootScope.$on('teachingCallStatusStateChanged', function (event, data) {
 				$scope.view.state = data;
+				console.log(data);
 			});
 
-			$scope.toggleSelectedInstructor = function(instructor) {
-				instructor.selected = !instructor.selected;
+			$scope.toggleInstructor = function(instructor) {
+				teachingCallStatusActionCreators.toggleInstructor(instructor.instructorId);
 			};
 
-			$scope.toggleSenateInstructors = function() {
-				$scope.senateInstructorsSelected = !$scope.senateInstructorsSelected;
-
-				$scope.view.state.teachingCall.senate.forEach(function(instructor) {
-					instructor.selected = $scope.senateInstructorsSelected;
-				});
+			$scope.instructorIsSelected = function(instructorId) {
+				return $scope.view.state ? $scope.view.state.ui.selectedInstructorIds.indexOf(instructorId) > -1 : false;
 			};
 
-			$scope.toggleFederationInstructors = function() {
-				$scope.federationInstructorsSelected = !$scope.federationInstructorsSelected;
+			$scope.areAllInstructorsOfTypeSelected = function(instructorTypeId) {
+				var allInstructorsAlreadyToggled = true;
 
-				$scope.view.state.teachingCall.federation.forEach(function(instructor) {
-					instructor.selected = $scope.federationInstructorsSelected;
+				$scope.view.state.calculations.teachingCallsByInstructorType[instructorTypeId].forEach(function(instructor) {
+					if ($scope.instructorIsSelected(instructor.instructorId) == false) {
+						allInstructorsAlreadyToggled = false;
+					}
 				});
+
+				return allInstructorsAlreadyToggled;
+			};
+
+			$scope.toggleInstructorType = function(instructorTypeId) {
+				var allInstructorsAlreadyToggled = $scope.areAllInstructorsOfTypeSelected(instructorTypeId);
+
+				if (allInstructorsAlreadyToggled) {
+					teachingCallStatusActionCreators.unSelectInstructorsByType(instructorTypeId);
+				} else {
+					teachingCallStatusActionCreators.selectInstructorsByType(instructorTypeId);
+				}
 			};
 
 			$scope.atLeastOneInstructorSelected = function() {
-				var instructorIsSelected = false;
-
-				if ($scope.view.state) {
-					$scope.view.state.teachingCall.senate.forEach(function(instructor) {
-						if (instructor.selected) {
-							instructorIsSelected = true;
-						}
-					});
-					$scope.view.state.teachingCall.federation.forEach(function(instructor) {
-						if (instructor.selected) {
-							instructorIsSelected = true;
-						}
-					});
-				}
-
-				return instructorIsSelected;
+				return $scope.view.state ? $scope.view.state.ui.selectedInstructorIds.length > 0 : false;
 			};
 
 			// Launches Contact Instructor Modal
 			$scope.openContactInstructorsModal = function() {
-				selectedInstructors = [];
-				$scope.view.state.teachingCall.senate.forEach(function(instructor) {
-					if (instructor.selected) {
-						selectedInstructors.push(instructor);
-					}
-				});
-				$scope.view.state.teachingCall.federation.forEach(function(instructor) {
-					if (instructor.selected) {
-						selectedInstructors.push(instructor);
-					}
-				});
-
 				modalInstance = $uibModal.open({
 					templateUrl: 'ModalContactInstructors.html',
 					controller: ModalContactInstructorsCtrl,
@@ -80,9 +60,6 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 						},
 						state: function () {
 							return $scope.view.state;
-						},
-						selectedInstructors: function () {
-							return selectedInstructors;
 						}
 					}
 				});

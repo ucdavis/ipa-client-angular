@@ -5,8 +5,8 @@
  * # WorkgroupCtrl
  * Controller of the ipaClientAngularApp
  */
-workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$uibModal',
-		this.WorkgroupCtrl = function ($scope, $rootScope, $routeParams, $location, $uibModal) {
+workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$uibModal', 'workgroupActionCreators',
+		this.WorkgroupCtrl = function ($scope, $rootScope, $routeParams, $location, $uibModal, workgroupActionCreators) {
 
 		$scope.ROWS_PER_HEADER = 20;
 

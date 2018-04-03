@@ -17,6 +17,7 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', ['$scope', '$rootScope', '
 
 	$scope.year = scheduleYear;
 	$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
+	$scope.instructorTypes = state.instructorTypes;
 
 	$scope.allTerms = {
 		'05': 'Summer Session 1',
@@ -30,17 +31,44 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', ['$scope', '$rootScope', '
 		'03': 'Spring Quarter'
 	};
 
-	$scope.senateGroup = angular.copy(state.eligible.senate);
-	$scope.federationGroup = angular.copy(state.eligible.federation);
-	$scope.lecturerGroup = angular.copy(state.eligible.lecturer);
-
-	$scope.startTeachingCallConfig.invitedInstructors = $scope.senateGroup.concat($scope.federationGroup);
-	$scope.startTeachingCallConfig.invitedInstructors = $scope.startTeachingCallConfig.invitedInstructors.concat($scope.lecturerGroup);
+	$scope.startTeachingCallConfig.invitedInstructors = state.calculations.instructorsEligibleForCall;
 	$scope.startTeachingCallConfig.invitedInstructors = _array_sortByProperty($scope.startTeachingCallConfig.invitedInstructors, "lastName");
 
-	$scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
-		slotInstructor.invited = false;
+	$scope.startTeachingCallConfig.invitedInstructors.forEach(function(instructor) {
+		instructor.invited = false;
 	});
+
+	$scope.instructorTypeUsed = function(instructorTypeId) {
+		var atLeastOneInstructor = false;
+
+		if ($scope.startTeachingCallConfig.invitedInstructors) {
+			$scope.startTeachingCallConfig.invitedInstructors.forEach(function(instructor) {
+				if(instructor.instructorTypeId == instructorTypeId) {
+					atLeastOneInstructor = true;
+				}
+			});
+		}
+
+		return atLeastOneInstructor;
+	};
+
+	$scope.inviteInstructorsOfType = function (instructorTypeId) {
+		$scope.startTeachingCallConfig.invitedInstructors.forEach(function(instructor) {
+			if(instructor.instructorTypeId == instructorTypeId) {
+				instructor.invited = true;
+			}
+		});
+
+		$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
+	};
+
+	$scope.allInstructorTypeInvited = function (instructorTypeId) {
+		var excludedInstructors = $scope.startTeachingCallConfig.invitedInstructors.find(function(instructor) {
+			return instructor.instructorTypeId == instructorTypeId && instructor.invited == false;
+		});
+
+		return excludedInstructors > 0;
+	};
 
 	$scope.activeTermIds = [];
 
@@ -142,82 +170,6 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', ['$scope', '$rootScope', '
 	$scope.toggleTermActive = function (term) {
 		term = term.slice(-2);
 		$scope.startTeachingCallConfig.activeTerms[term] = !$scope.startTeachingCallConfig.activeTerms[term];
-		$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
-	};
-
-	$scope.addSenateInstructors = function () {
-		$scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
-			if(slotInstructor.isSenateInstructor) {
-				slotInstructor.invited = true;
-			}
-		});
-
-		$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
-	};
-
-	$scope.areAllSenateInvited = function() {
-		if (!$scope.startTeachingCallConfig.invitedInstructors) {
-			return true;
-		}
-
-		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
-			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
-
-			if (slotInstructor.isSenateInstructor && !slotInstructor.invited) {
-				return false;
-			}
-		}
-
-		return true;
-	};
-
-	$scope.areAllFederationInvited = function() {
-		if (!$scope.startTeachingCallConfig.invitedInstructors) {
-			return true;
-		}
-
-		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
-			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
-
-			if (slotInstructor.isFederationInstructor && !slotInstructor.invited) {
-				return false;
-			}
-		}
-
-		return true;	};
-
-	$scope.areAllLecturersInvited = function() {
-		if (!$scope.startTeachingCallConfig.invitedInstructors) {
-			return true;
-		}
-
-		for (var i = 0; i < $scope.startTeachingCallConfig.invitedInstructors.length; i++) {
-			var slotInstructor = $scope.startTeachingCallConfig.invitedInstructors[i];
-
-			if (slotInstructor.isLecturerInstructor && !slotInstructor.invited) {
-				return false;
-			}
-		}
-
-		return true;	};
-
-	$scope.addLecturerInstructors = function () {
-		$scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
-			if(slotInstructor.isLecturerInstructor) {
-				slotInstructor.invited = true;
-			}
-		});
-
-		$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
-	};
-
-	$scope.addFederationInstructors = function () {
-		$scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
-			if(slotInstructor.isFederationInstructor) {
-				slotInstructor.invited = true;
-			}
-		});
-
 		$scope.startTeachingCallConfig.isAddInstructorFormComplete = $scope.isAddInstructorFormComplete();
 	};
 

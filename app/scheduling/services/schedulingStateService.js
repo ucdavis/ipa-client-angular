@@ -113,9 +113,16 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 						// Set sectionGroup instructorIds
 						sectionGroupsList[sectionGroupData.id].instructorIds = action.payload.teachingAssignments
 							.filter(function (ta) {
-								return ta.sectionGroupId === sectionGroupData.id;
+								return ta.sectionGroupId === sectionGroupData.id && ta.instructorId != null;
 							})
 							.map(function (ta) { return ta.instructorId; });
+
+							// Set sectionGroup instructorTypeIds
+							sectionGroupsList[sectionGroupData.id].instructorTypeIds = action.payload.teachingAssignments
+								.filter(function (ta) {
+									return ta.sectionGroupId === sectionGroupData.id && ta.instructorId == null && ta.instructorTypeId != null;
+								})
+								.map(function (ta) { return ta.instructorTypeId; });
 
 						// Set sectionGroup teachingCallResponseIds
 						if (sectionGroupsList[sectionGroupData.id].instructorIds.length) {
@@ -383,6 +390,23 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 					return tags;
 			}
 		},
+		_instructorTypeReducers: function (action, instructorTypes) {
+			switch (action.type) {
+				case INIT_STATE:
+					var instructorTypes = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.instructorTypes.forEach( function(instructorType) {
+						instructorTypes.list[instructorType.id] = instructorType;
+						instructorTypes.ids.push(instructorType.id);
+					});
+					return instructorTypes;
+				default:
+					return instructorTypes;
+			}
+		},
 		_locationReducers: function (action, locations) {
 			var scope = this;
 
@@ -532,6 +556,7 @@ schedulingApp.service('schedulingStateService', function ($rootScope, $log, Cour
 			newState.locations = scope._locationReducers(action, scope._state.locations);
 			newState.filters = scope._filterReducers(action, scope._state.filters);
 			newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
+			newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 
 			scope._state = newState;
 			$rootScope.$emit('schedulingStateChanged', {

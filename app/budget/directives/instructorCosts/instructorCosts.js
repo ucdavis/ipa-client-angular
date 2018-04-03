@@ -4,8 +4,8 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 		templateUrl: 'instructorCosts.html',
 		replace: true,
 		scope: {
-			selectedBudgetScenario: '<',
-			instructors: '<',
+			instructorAssignmentOptions: '<',
+			regularInstructorAssignmentOptions: '<',
 			termNav: '<',
 			calculatedSectionGroups: '<'
 		},
@@ -24,6 +24,7 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 
 			scope.removeInstructor = function(sectionGroupCost) {
 				sectionGroupCost.instructorId = null;
+				sectionGroupCost.instructorTypeId = null;
 				budgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 

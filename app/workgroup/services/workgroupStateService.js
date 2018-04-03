@@ -85,6 +85,46 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					return locations;
 			}
 		},
+		_userRoleReducers: function (action, userRoles) {
+			switch (action.type) {
+				case INIT_WORKGROUP:
+					userRoles = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.users.forEach(function(user) {
+						user.userRoles.forEach(function(userRole) {
+							if (userRole.workgroupId != action.workgroupId) { return; }
+
+							userRoles.ids.push(userRole.id);
+							userRoles.list[userRole.id] = userRole;
+						});
+					});
+
+					return userRoles;
+				case UPDATE_USER_ROLE:
+					var userRole = action.payload.userRole;
+					userRoles.list[userRole.id] = userRole;
+					return userRoles;
+				case ADD_USER_ROLE:
+					var userRole = action.payload.userRole;
+					if (userRoles.ids.indexOf(userRole.id) == -1) {
+						userRoles.ids.push(userRole.id);
+						userRoles.list[userRole.id] = userRole;
+					}
+					return userRoles;
+				case REMOVE_USER_ROLE:
+					var index = userRoles.ids.indexOf(action.payload.userRole.id);
+
+					if (index > -1) {
+						userRoles.ids.splice(index, 1);
+					}
+					return userRoles;
+				default:
+					return userRoles;
+			}
+		},
 		_userReducers: function (action, users) {
 			var scope = this;
 			var userIndex;
@@ -95,7 +135,8 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 						newUser: {},
 						ids: [],
 						userSearchResults: [],
-						searchQuery: ""
+						searchQuery: "",
+						list: {}
 					};
 					var usersList = {};
 					var length = action.payload.users ? action.payload.users.length : 0;
@@ -121,25 +162,6 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					users.ids.splice(userIndex, 1);
 					delete users.list[action.payload.user.id];
 					return users;
-				case ADD_USER_ROLE:
-					users.list[action.payload.user.id].userRoles.push(action.payload.userRole);
-
-					// Uncheck other mutually exclusive roles if any
-					var exclusiveRoles = ["federationInstructor", "senateInstructor"];
-					var exclusiveIndex = exclusiveRoles.indexOf(action.payload.userRole.role);
-					if (exclusiveIndex >= 0) {
-						exclusiveRoles.splice(exclusiveIndex, 1);
-						users.list[action.payload.user.id].userRoles = users.list[action.payload.user.id].userRoles
-							.filter(function (ur) {
-								return exclusiveRoles.indexOf(ur.role) < 0;
-							});
-					}
-
-					return users;
-				case REMOVE_USER_ROLE:
-					var userRoleIndex = users.list[action.payload.user.id].userRoles.indexOf(action.payload.userRole);
-					users.list[action.payload.user.id].userRoles.splice(userRoleIndex, 1);
-					return users;
 				case SEARCH_USERS:
 					users.userSearchResults = action.payload.userSearchResults;
 					return users;
@@ -155,16 +177,14 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					roles = {
 						ids: []
 					};
-					var _hiddenRoles = ['admin', 'registrar', 'presence'];
 					var rolesList = {};
 					var length = action.payload.roles ? action.payload.roles.length : 0;
 
 					for (var i = 0; i < length; i++) {
 						var roleData = action.payload.roles[i];
-						if (_hiddenRoles.indexOf(roleData.name) < 0) {
-							rolesList[roleData.id] = new Role(roleData);
-						}
+						rolesList[roleData.id] = new Role(roleData);
 					}
+
 					roles.ids = _array_sortIdsByProperty(rolesList, "name");
 					roles.list = rolesList;
 					return roles;
@@ -172,17 +192,86 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 					return roles;
 			}
 		},
+		_instructorTypeReducers: function (action, instructorTypes) {
+			var scope = this;
+
+			switch (action.type) {
+				case INIT_WORKGROUP:
+					instructorTypes = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.instructorTypes.forEach(function(instructorType) {
+						instructorTypes.list[instructorType.id] = instructorType;
+						instructorTypes.ids.push(instructorType.id);
+					});
+
+					return instructorTypes;
+				default:
+					return instructorTypes;
+			}
+		},
+		_calculatedUserRoleReducers: function (action, calculatedUserRoles) {
+			var scope = this;
+			
+			switch (action.type) {
+				case INIT_WORKGROUP:
+					return [];
+				case CALCULATE_USER_ROLES:
+					return action.payload.calculatedUserRoles;
+				default:
+					return calculatedUserRoles;
+			}
+		},
+
 		_uiReducers: function (action, ui) {
+			var INSTRUCTIONAL_SUPPORT_ROLE_ID = 11;
+			var STUDENT_MASTERS_ROLE_ID = 12;
+			var STUDENT_PHD_ROLE_ID = 13;
+			var ACADEMIC_PLANNER_ROLE_ID = 2;
 			var scope = this;
 
 			switch (action.type) {
 				case INIT_WORKGROUP:
 					ui = {
-						addUserPending: false
+						addUserPending: false,
+						workgroupId: action.workgroupId,
+						roles: {
+							activeRoleTab: "Academic Planner",
+							activeRoleId: ACADEMIC_PLANNER_ROLE_ID,
+							tabOverrides: {
+								"Presence" : "Unassigned",
+								"Academic Planner" : "Staff"
+							},
+							allTabs: [
+								"Academic Planner",
+								"Instructor",
+								"Student",
+								"Presence"],
+						},
+						instructorTypes: [],
+						roleTotals: {},
+						studentRoles: [
+							{id: INSTRUCTIONAL_SUPPORT_ROLE_ID, description: "Instructional Support", name: "instructionalSupport"},
+							{id: STUDENT_MASTERS_ROLE_ID, description: "Student Masters", name: "studentMasters"},
+							{id: STUDENT_PHD_ROLE_ID, description: "Student PhD", name: "studentPhd"}
+						]
 					};
+
+					action.payload.instructorTypes.forEach(function(instructorType) {
+						ui.instructorTypes.push(instructorType);
+					});
+					return ui;
+				case SET_ROLE_TAB:
+					ui.roles.activeRoleTab = action.payload.activeRoleTab;
+					ui.roles.activeRoleId = action.payload.activeRoleId;
 					return ui;
 				case ADD_USER_PENDING:
 					ui.addUserPending = true;
+					return ui;
+				case CALCULATE_ROLE_TOTALS:
+					ui.roleTotals = action.payload.roleTotals;
 					return ui;
 				case ADD_USER_COMPLETED:
 					ui.addUserPending = false;
@@ -204,6 +293,9 @@ workgroupApp.service('workgroupStateService', function ($rootScope, Role, Tag, L
 			newState.users = scope._userReducers(action, scope._state.users);
 			newState.roles = scope._roleReducers(action, scope._state.roles);
 			newState.ui = scope._uiReducers(action, scope._state.ui);
+			newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
+			newState.calculatedUserRoles = scope._calculatedUserRoleReducers(action, scope._state.calculatedUserRoles);
+			newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 
 			scope._state = newState;
 			$rootScope.$emit('workgroupStateChanged', scope._state);

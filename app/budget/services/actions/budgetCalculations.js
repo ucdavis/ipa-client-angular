@@ -1,4 +1,4 @@
-budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetService, budgetReducers, termService) {
+budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetService, budgetReducers, termService, Roles) {
 	return {
 		calculateScenarioTerms: function() {
 			var allTermTabs = [];
@@ -47,6 +47,10 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					return;
 				}
 
+				var instructorId = sectionGroup.assignedInstructorIds[0];
+				if (instructorId) {
+					sectionGroup.instructorType = self._calculateInstructorType(instructorId);
+				}
 				// Find the sectionGroupCost for this sectionGroupCost/Scenario combo
 				sectionGroup.sectionGroupCost = null;
 				var sectionGroupCostIds = budgetReducers._state.sectionGroupCosts.bySectionGroupId[sectionGroup.id] || [];
@@ -63,13 +67,13 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				self.calculateSectionGroupOverrides(sectionGroup);
 
 				// Attach comments data
-				self.calculateSectionGroupCostComments(sectionGroup.sectionGroupCost);
+				self._calculateSectionGroupCostComments(sectionGroup.sectionGroupCost);
 
 				// Attach instructors
-				self.calculateSectionGroupInstructors(sectionGroup);
+				self._calculateSectionGroupInstructors(sectionGroup);
 
 				// Attach cost data
-				self.calculateSectionGroupFinancialCosts(sectionGroup);
+				self._calculateSectionGroupFinancialCosts(sectionGroup);
 
 				// Generate container if one does not already exist
 				var container = self.calculateSectionGroupContainer(sectionGroup, calculatedSectionGroups.byTerm[shortTerm]);
@@ -90,7 +94,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			this.calculateTotalCost();
 		},
 		// Calculate sectionGroup costs
-		calculateSectionGroupFinancialCosts: function(sectionGroup) {
+		_calculateSectionGroupFinancialCosts: function(sectionGroup) {
 			var budget = budgetReducers._state.budget;
 
 			// Course Costs
@@ -165,26 +169,59 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 
 			return container;
 		},
-		calculateSectionGroupInstructors: function(sectionGroup) {
-			var instructor = null;
-			var originalInstructor = null;
+		_calculateSectionGroupInstructors: function(sectionGroup) {
+			var originalInstructor = sectionGroup.sectionGroupCost ? budgetReducers._state.assignedInstructors.list[sectionGroup.sectionGroupCost.originalInstructorId] : null;
+
+			sectionGroup.originalInstructorName = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
+
+			var assignedInstructor = budgetReducers._state.assignedInstructors.list[sectionGroup.assignedInstructorIds[0]];
+			var assignedInstructorType = budgetReducers._state.instructorTypes.list[sectionGroup.assignedInstructorTypeIds[0]];
+
+			var assignedInstructorId = assignedInstructor && assignedInstructor.id > 0 ? assignedInstructor.id : null;
+			var assignedInstructorTypeId = assignedInstructorType && assignedInstructorType.id > 0 ? assignedInstructorType.id : null;
+
+			var overrideInstructor = null;
+			var overrideInstructorType = null;
 
 			if (sectionGroup.sectionGroupCost) {
-				instructor = budgetReducers._state.instructors.list[sectionGroup.sectionGroupCost.instructorId];
-				originalInstructor = budgetReducers._state.instructors.list[sectionGroup.sectionGroupCost.originalInstructorId];
-
-				if (instructor == null) {
-					instructor = budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
-				}
-			} else {
-				instructor = budgetReducers._state.instructors.list[sectionGroup.assignedInstructorIds[0]];
-				originalInstructor = null;
+				overrideInstructor = budgetReducers._state.activeInstructors.list[sectionGroup.sectionGroupCost.instructorId] || budgetReducers._state.assignedInstructors.list[sectionGroup.sectionGroupCost.instructorId];
+				overrideInstructorType = budgetReducers._state.instructorTypes.list[sectionGroup.sectionGroupCost.instructorTypeId];
 			}
 
-			sectionGroup.instructorName = instructor ? instructor.lastName + ", " + instructor.firstName : null;
-			sectionGroup.originalInstructorName = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
+			var overrideInstructorId = overrideInstructor && overrideInstructor.id > 0 ? overrideInstructor.id : null;
+			var overrideInstructorTypeId = overrideInstructorType && overrideInstructorType.id > 0 ? overrideInstructorType.id : null;
+
+			// Set instructor name
+			sectionGroup.instructorName = null;
+
+			if (overrideInstructor == null && overrideInstructorType == null) {
+				if (assignedInstructor) {
+					sectionGroup.instructorName = assignedInstructor.lastName + ", " + assignedInstructor.firstName;
+				} else if (assignedInstructorType) {
+					sectionGroup.instructorName = assignedInstructorType.description;
+				}
+			} else if (overrideInstructor) {
+				sectionGroup.instructorName = overrideInstructor.lastName + ", " + overrideInstructor.firstName;
+			} else if (overrideInstructorType) {
+				sectionGroup.instructorName = overrideInstructorType.description;
+			}
+
+			// Calculate reversion
+			if ( (!overrideInstructorTypeId && !overrideInstructorId)
+			|| (assignedInstructorId > 0 && overrideInstructorId > 0 && assignedInstructorId == overrideInstructorId)
+			|| (assignedInstructorTypeId > 0 && overrideInstructorTypeId > 0 && assignedInstructorTypeId == overrideInstructorTypeId)) {
+				sectionGroup.reversionDisplayName = '';
+			} else if (assignedInstructorId > 0) {
+				sectionGroup.reversionDisplayName = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : "no instructor";
+			} else if (assignedInstructorTypeId > 0) {
+				sectionGroup.reversionDisplayName = assignedInstructorType ? assignedInstructorType.description : "no instructor";
+			} else {
+				sectionGroup.reversionDisplayName = "no instructor";
+			}
 		},
 		calculateSectionGroupOverrides: function(sectionGroup) {
+			var self = this;
+
 			// Generate totalSeats override
 			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.enrollment !== null) {
 				sectionGroup.overrideTotalSeats = angular.copy(sectionGroup.sectionGroupCost.enrollment);
@@ -220,70 +257,106 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.cost != null) {
 				sectionGroup.overrideInstructorCost = angular.copy(sectionGroup.sectionGroupCost.cost);
 				sectionGroup.overrideInstructorCostSource = "course";
-			} else {
-				// (2nd option) Attempt to use per-instructor cost
-				var instructorCost = null;
+				return;
+			}
 
-				// Attempt to use instructor override
-				if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.instructorId != null) {
-					instructorCost = budgetReducers._state.instructorCosts.byInstructorId[sectionGroup.sectionGroupCost.instructorId];
+			// (2nd option) Attempt to use instructor override (either from instructorCost, or the instructor's instructorTypeCost)
+			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.instructorId > 0) {
+				var instructorCost = budgetReducers._state.instructorCosts.byInstructorId[sectionGroup.sectionGroupCost.instructorId];
+
+				if (instructorCost != null && instructorCost.cost != null) {
+					sectionGroup.overrideInstructorCost = angular.copy(instructorCost.cost);
+					sectionGroup.overrideInstructorCostSource = "instructor";
+					return;
 				}
 
-				// Attempt to use assigned instructors
-				if (instructorCost == null) {
-					sectionGroup.assignedInstructorIds.forEach(function(instructorId) {
-						instructorCost = budgetReducers._state.instructorCosts.byInstructorId[instructorId];
-					});
+				// If an instructorCost was found via override, use it
+				if (instructorCost && instructorCost.cost != null) {
+					sectionGroup.overrideInstructorCost = angular.copy(instructorCost.cost);
+					sectionGroup.overrideInstructorCostSource = "instructor";
+					return;
+				} else {
+					var instructorTypeCost = self._findInstructorTypeCostBySectionGroupIdAndInstructorId(sectionGroup.id, sectionGroup.sectionGroupCost.instructorId);
+
+					if (instructorTypeCost && instructorTypeCost.cost != null) {
+						sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
+						sectionGroup.overrideInstructorCostSource = "instructor type";
+						return;
+					}
 				}
+			}
+
+			// (3rd option) Attempt to use instructorType override
+			if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.instructorTypeId > 0) {
+				var instructorTypeCost = budgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroup.sectionGroupCost.instructorTypeId];
+
+				// If an instructorTypeCost was found via overriden or assignments, use it
+				if (instructorTypeCost != null && instructorTypeCost.cost != null) {
+					sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
+					sectionGroup.overrideInstructorCostSource = "instructor type";
+					return;
+				}
+			}
+
+			// (4th option) Attempt to use assigned instructor
+			if (sectionGroup.assignedInstructorIds.length > 0) {
+				sectionGroup.assignedInstructorIds.forEach(function(instructorId) {
+					instructorCost = budgetReducers._state.instructorCosts.byInstructorId[instructorId];
+				});
 
 				if (instructorCost && instructorCost.cost != null) {
 					sectionGroup.overrideInstructorCost = angular.copy(instructorCost.cost);
 					sectionGroup.overrideInstructorCostSource = "instructor";
-				} else if (instructorCost) {
-					// (3rd option) Attempt to use per instructorType instructor cost
-					var instructorType = budgetReducers._state.instructorTypes.list[instructorCost.instructorTypeId];
+					return;
+				}
+			}
 
-					if (instructorType && instructorType.cost != null) {
-						sectionGroup.overrideInstructorCost = angular.copy(instructorType.cost);
-						sectionGroup.overrideInstructorCostSource = "type";
-					}
+			// (5th option) Attempt to use assigned instructorType
+			if (sectionGroup.instructorType && sectionGroup.instructorType.id > 0) {
+				instructorTypeCost = budgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroup.instructorType.id];
+
+				if (instructorTypeCost != null && instructorTypeCost.cost != null) {
+					sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
+					sectionGroup.overrideInstructorCostSource = "instructor type";
+					return;
 				}
 			}
 		},
-		calculateSectionGroupCostComments: function(sectionGroupCost) {
+		_findInstructorTypeCostBySectionGroupIdAndInstructorId: function (sectionGroupId, instructorId) {
+			var teachingAssignments = budgetReducers._state.teachingAssignments;
+			var instructorTypeCosts = budgetReducers._state.instructorTypeCosts;
+
+			var teachingAssignment = null;
+
+			teachingAssignments.ids.forEach(function(teachingAssignmentId) {
+				var slotTeachingAssignment = teachingAssignments.list[teachingAssignmentId];
+
+				if (slotTeachingAssignment.instructorId == instructorId && slotTeachingAssignment.sectionGroupId == sectionGroupId) {
+					teachingAssignment = slotTeachingAssignment;
+				}
+			});
+
+			return teachingAssignment ? instructorTypeCosts.byInstructorTypeId[teachingAssignment.instructorTypeId] : null;
+		},
+		_calculateSectionGroupCostComments: function(sectionGroupCost) {
 			if (sectionGroupCost == null) { return; }
 
 			// Set sectionGroupCostComments
 			sectionGroupCost.comments = [];
+			sectionGroupCost.commentCount = 0;
 
 			budgetReducers._state.sectionGroupCostComments.ids.forEach(function(commentId) {
 				var comment = budgetReducers._state.sectionGroupCostComments.list[commentId];
 
 				if (comment.sectionGroupCostId == sectionGroupCost.id) {
 					sectionGroupCost.comments.push(comment);
+					sectionGroupCost.commentCount += 1;
 				}
 			});
+
+			sectionGroupCost.commentCountDisplay = sectionGroupCost.commentCount > 0 ? " (" + sectionGroupCost.commentCount + ")" : '   ';
 
 			sectionGroupCost.comments =_array_sortByProperty(sectionGroupCost.comments, "lastModifiedOn", true);
-		},
-		calculateInstructorTypes: function() {
-			var instructorTypes = budgetReducers._state.instructorTypes;
-
-			var instructorTypeList = [];
-
-			instructorTypes.ids.forEach(function(instructorTypeId) {
-				var instructorType = instructorTypes.list[instructorTypeId];
-				instructorTypeList.push(instructorType);
-			});
-
-			instructorTypeList = _array_sortByProperty(instructorTypeList, "description");
-
-			budgetReducers.reduce({
-				type: CALCULATE_INSTRUCTOR_TYPES,
-				payload: {
-					calculatedInstructorTypes: instructorTypeList
-				}
-			});
 		},
 		calculateLineItems: function() {
 			var self = this;
@@ -365,14 +438,18 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 		},
 		calculateLineItemComments: function(lineItem) {
 			lineItem.comments = [];
+			lineItem.commentCount = 0;
 
 			budgetReducers._state.lineItemComments.ids.forEach(function(commentId) {
 				var comment = budgetReducers._state.lineItemComments.list[commentId];
 
 				if (comment.lineItemId == lineItem.id) {
 					lineItem.comments.push(comment);
+					lineItem.commentCount += 1;
 				}
 			});
+
+			lineItem.commentCountDisplay = lineItem.commentCount > 0 ? " (" + lineItem.commentCount + ")" : '';
 
 			// Sort sectionGroupCostComments
 			var reverseOrder = true;
@@ -401,7 +478,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			var lineItemCategoryId = null;
 			var typeDescription = null;
 
-			var instructor = budgetReducers._state.instructors.list[teachingAssignment.instructorId];
+			var instructor = budgetReducers._state.assignedInstructors.list[teachingAssignment.instructorId];
+
 			var termDescription = termService.getTermName(teachingAssignment.termCode);
 
 			if (teachingAssignment.buyout) {
@@ -427,55 +505,163 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			return lineItem;
 		},
 		calculateInstructors: function() {
+			var self = this;
 			var instructorTypes = budgetReducers._state.instructorTypes;
-			var instructors = budgetReducers._state.instructors;
-			var instructorCosts = budgetReducers._state.instructorCosts;
-			var budgetId = budgetReducers._state.budget.id;
+			var activeInstructors = budgetReducers._state.activeInstructors;
+			var assignedInstructors = budgetReducers._state.assignedInstructors;
 
 			var calculatedInstructors = [];
+			var calculatedActiveInstructors = [];
+			var usedInstructorIds = [];
 
-			instructors.ids.forEach(function(instructorId) {
-				var instructor = instructors.list[instructorId];
-				instructor.instructorCost = null;
-				calculatedInstructors.push(instructor);
+			activeInstructors.ids.forEach(function(instructorId) {
+				if (usedInstructorIds.indexOf(instructorId) > -1) { return; }
 
-				// Attach instructorCost
-				instructorCosts.ids.forEach(function(instructorCostId) {
-					var instructorCost = instructorCosts.list[instructorCostId];
-
-					if (instructorCost.id == instructor.instructorCostId) {
-						instructor.instructorCost = instructorCost;
-						instructorCost.instructorType = null;
-					}
-
-					// Attach instructorType
-					instructorTypes.ids.forEach(function(instructorTypeId) {
-						var instructorType = instructorTypes.list[instructorTypeId];
-
-						if (instructorType.id == instructorCost.instructorTypeId) {
-							instructorCost.instructorType = instructorType;
-						}
-					});
-				});
-
-				if (instructor.instructorCost == null) {
-					instructor.instructorCost = {
-						id: null,
-						cost: null,
-						instructorId: instructor.id,
-						budgetId: budgetId
-					};
-				}
+				calculatedActiveInstructors.push(self._generateInstructor(instructorId));
+				calculatedInstructors.push(self._generateInstructor(instructorId));
+				usedInstructorIds.push(instructorId);
 			});
 
-			calculatedInstructors = _array_sortByProperty(calculatedInstructors, "lastName");
+			assignedInstructors.ids.forEach(function(instructorId) {
+				if (usedInstructorIds.indexOf(instructorId) > -1) { return; }
+
+				calculatedInstructors.push(self._generateInstructor(instructorId));
+				usedInstructorIds.push(instructorId);
+			});
+
+			instructorAssignmentOptions = [];
+
+			instructorTypes.ids.forEach(function(instructorTypeId) {
+				var instructorType = instructorTypes.list[instructorTypeId];
+				instructorType.isInstructorType = true;
+				instructorAssignmentOptions.push(instructorType);
+			});
+
+			instructorAssignmentOptions.push({
+				rowType: "subheader",
+				description: "Instructors"
+			});
+
+			instructorAssignmentOptions = instructorAssignmentOptions.concat(calculatedActiveInstructors);
 
 			budgetReducers.reduce({
 				type: CALCULATE_INSTRUCTORS,
 				payload: {
-					calculatedInstructors: calculatedInstructors
+					calculatedInstructors: calculatedInstructors,
+					instructorAssignmentOptions: instructorAssignmentOptions,
+					regularInstructorAssignmentOptions: calculatedActiveInstructors
 				}
 			});
+		},
+		_generateInstructor: function (instructorId) {
+			var instructorCosts = budgetReducers._state.instructorCosts;
+			var instructorTypes = budgetReducers._state.instructorTypes;
+			var instructor = assignedInstructors.list[instructorId] || activeInstructors.list[instructorId];
+			var budgetId = budgetReducers._state.budget.id;
+
+			instructor.instructorCost = null;
+			instructor.description = instructor.lastName + ", " + instructor.firstName;
+
+			instructor.instructorType = this._calculateInstructorType(instructor.id);
+			// Attach instructorCost
+			instructorCosts.ids.forEach(function(instructorCostId) {
+				var instructorCost = instructorCosts.list[instructorCostId];
+
+				if (instructorCost.id == instructor.instructorCostId) {
+					instructor.instructorCost = instructorCost;
+					instructorCost.instructorType = null;
+				}
+
+				// Attach instructorType
+				instructorTypes.ids.forEach(function(instructorTypeId) {
+					var instructorType = instructorTypes.list[instructorTypeId];
+
+					if (instructorType.id == instructorCost.instructorTypeId) {
+						instructorCost.instructorType = instructorType;
+					}
+				});
+			});
+
+			if (instructor.instructorCost == null) {
+				instructor.instructorCost = {
+					id: null,
+					cost: null,
+					instructorId: instructor.id,
+					budgetId: budgetId
+				};
+			}
+
+			return instructor;
+		},
+		calculateInstructorTypeCosts: function () {
+			var instructorTypes = budgetReducers._state.instructorTypes;
+			var instructorTypeCosts = budgetReducers._state.instructorTypeCosts;
+			var budgetId = budgetReducers._state.budget.id;
+
+			var calculatedInstructorTypeCosts = [];
+
+			instructorTypes.ids.forEach(function(instructorTypeId) {
+				var instructorType = instructorTypes.list[instructorTypeId];
+				var instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+
+				if (instructorTypeCost == null) {
+					instructorTypeCost = {
+						cost: null,
+						instructorTypeId: instructorType.id,
+						description: instructorType.description,
+						budgetId: budgetId
+					};
+				}
+
+				calculatedInstructorTypeCosts.push(instructorTypeCost);
+			});
+
+			calculatedInstructorTypeCosts = _array_sortByProperty(calculatedInstructorTypeCosts, "description");
+
+			budgetReducers.reduce({
+				type: CALCULATE_INSTRUCTOR_TYPE_COSTS,
+				payload: {
+					calculatedInstructorTypeCosts: calculatedInstructorTypeCosts
+				}
+			});
+		},
+		// Will first look at userRoles for a match, and then teachingAssignments as a fallback.
+		_calculateInstructorType: function(instructorId) {
+			var instructorType = null;
+
+			var assignedInstructors = budgetReducers._state.assignedInstructors;
+			var activeInstructors = budgetReducers._state.activeInstructors;
+
+			var users = budgetReducers._state.users;
+			var userRoles = budgetReducers._state.userRoles;
+			var teachingAssignments = budgetReducers._state.teachingAssignments;
+			var instructorTypes = budgetReducers._state.instructorTypes;
+
+			var instructor = assignedInstructors.list[instructorId] || activeInstructors.list[instructorId];
+			var user = users.byLoginId[instructor.loginId.toLowerCase()];
+
+			if (!user) { return; }
+
+			if (userRoles.byUserId[user.id]) {
+				userRoles.byUserId[user.id].forEach(function(userRole) {
+					if (userRole.roleId != Roles.instructor) { return; }
+
+					instructorType = instructorTypes.list[userRole.instructorTypeId];
+				});
+			}
+
+			if (instructorType) { return instructorType; }
+
+			// Find instructorType by teachingAssignment
+			teachingAssignments.ids.forEach(function(teachingAssignmentId) {
+				var teachingAssignment = teachingAssignments.list[teachingAssignmentId];
+
+				if (teachingAssignment.instructorId == instructor.id) {
+					instructorType = instructorTypes.list[teachingAssignment.instructorTypeId];
+				}
+			});
+
+			return instructorType;
 		}
 	};
 });

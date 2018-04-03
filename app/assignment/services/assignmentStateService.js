@@ -81,6 +81,23 @@ assignmentApp.service('assignmentStateService', function (
 					return courses;
 			}
 		},
+		_instructorTypeReducers: function (action, instructorTypes) {
+			switch (action.type) {
+				case INIT_ASSIGNMENT_VIEW:
+					var instructorTypes = {
+						ids: [],
+						list: {}
+					};
+
+					action.payload.instructorTypes.forEach( function(instructorType) {
+						instructorTypes.list[instructorType.id] = instructorType;
+						instructorTypes.ids.push(instructorType.id);
+					});
+					return instructorTypes;
+				default:
+					return instructorTypes;
+			}
+		},
 		_supportStaffReducers: function (action, supportStaffList) {
 			var scope = this;
 
@@ -383,7 +400,9 @@ assignmentApp.service('assignmentStateService', function (
 				case ADD_TEACHING_ASSIGNMENT:
 					teachingAssignment = action.payload.teachingAssignment;
 					instructor = instructors.list[teachingAssignment.instructorId];
-					instructor.teachingAssignmentTermCodeIds[teachingAssignment.termCode].push(teachingAssignment.id);
+					if (instructor) {
+						instructor.teachingAssignmentTermCodeIds[teachingAssignment.termCode].push(teachingAssignment.id);
+					}
 					return instructors;
 				case REMOVE_TEACHING_ASSIGNMENT:
 					teachingAssignment = action.payload.teachingAssignment;
@@ -677,8 +696,6 @@ assignmentApp.service('assignmentStateService', function (
 					userInterface.instructorId = action.payload.instructorId;
 					userInterface.userId = action.payload.userId;
 
-					userInterface.federationInstructorIds = action.payload.federationInstructorIds;
-					userInterface.senateInstructorIds = action.payload.senateInstructorIds;
 					userInterface.scheduleId = action.payload.scheduleId;
 					userInterface.year = action.year;
 
@@ -767,7 +784,7 @@ assignmentApp.service('assignmentStateService', function (
 			newState.theStaff = scope._theStaffReducers(action, scope._state.theStaff);
 			newState.supportStaffList = scope._supportStaffReducers(action, scope._state.supportStaffList);
 			newState.studentPreferences = scope._studentPreferenceReducers(action, scope._state.studentPreferences);
-
+			newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 			scope._state = newState;
 
 			$rootScope.$emit('assignmentStateChanged', scope._state);

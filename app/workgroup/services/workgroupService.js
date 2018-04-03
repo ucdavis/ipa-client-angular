@@ -47,6 +47,19 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 
 			return deferred.promise;
 		},
+		setInstructorType: function (userRole) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/workgroupView/workgroups/" + userRole.workgroupId + "/userRoles/" + userRole.id + "/instructorTypes/" + userRole.instructorTypeId, { withCredentials: true })
+			.success(function(results) {
+				deferred.resolve(results);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 		removeTag: function(workgroupId, tag) {
 			var deferred = $q.defer();
 
@@ -163,6 +176,19 @@ workgroupApp.factory("workgroupService", this.workgroupService = function($http,
 			});
 
 			return deferred.promise;
-		}
+		},
+		updateUserRole: function (userRole) {
+			var deferred = $q.defer();
+
+			$http.put(serverRoot + "/api/workgroupView/userRoles/" + userRole.id + "/roles/" + userRole.roleId, { withCredentials: true })
+			.success(function(results) {
+				deferred.resolve(results);
+			})
+			.error(function() {
+				deferred.reject();
+			});
+
+			return deferred.promise;
+		},
 	};
 });

@@ -1,13 +1,24 @@
-teachingCallApp.controller('ModalContactInstructorsCtrl', this.ModalContactInstructorsCtrl = function($scope, $rootScope, $uibModalInstance, scheduleYear, workgroupId, state, selectedInstructors) {
+teachingCallApp.controller('ModalContactInstructorsCtrl', this.ModalContactInstructorsCtrl = function($scope, $rootScope, $uibModalInstance, scheduleYear, workgroupId, state) {
+
 	$scope.startTeachingCallConfig = {};
 	$scope.startTeachingCallConfig.dueDate = new Date();
 	$scope.startTeachingCallConfig.showUnavailabilities = true;
 	$scope.startTeachingCallConfig.message = "Please consider your teaching for next year in light of what you have taught in recent years.";
 	$scope.startTeachingCallConfig.message += " As always, we will attempt to accommodate your requests, but we may need to ask some of you to make changes in order to balance our course offerings effectively.";
+
 	$scope.year = scheduleYear;
 	$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
-	$scope.selectedInstructors = selectedInstructors;
-	$scope.startTeachingCallConfig.selectedInstructors = selectedInstructors;
+	$scope.selectedInstructorIds = state.ui.selectedInstructorIds;
+
+	$scope.startTeachingCallConfig.selectedInstructors = [];
+
+	state.teachingCallReceipts.ids.forEach(function(teachingCallReceiptId) {
+		var teachingCallReceipt = state.teachingCallReceipts.list[teachingCallReceiptId];
+
+		if ($scope.selectedInstructorIds.indexOf(teachingCallReceipt.instructorId) > -1) {
+			$scope.startTeachingCallConfig.selectedInstructors.push(teachingCallReceipt);
+		}
+	});
 
 	$scope.allTerms = {
 		'05': 'Summer Session 1',
@@ -30,9 +41,6 @@ teachingCallApp.controller('ModalContactInstructorsCtrl', this.ModalContactInstr
 
 	$scope.minDate = new Date();
 	$scope.parent = {dueDate:''};
-
-	$scope.senateInstructors = {};
-	$scope.federationInstructors = {};
 
 	$scope.startTeachingCallConfig.activeTerms = {};
 
@@ -148,5 +156,4 @@ teachingCallApp.controller('ModalContactInstructorsCtrl', this.ModalContactInstr
 
 		$uibModalInstance.close($scope.startTeachingCallConfig);
 	};
-
 });

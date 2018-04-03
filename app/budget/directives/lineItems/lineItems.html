@@ -50,11 +50,13 @@
 					{{ lineItem.categoryDescription }}
 					<span ng-if="lineItem.isOrphaned">
 						<i class="entypo-attention line-items__orphan-warn"
+						   tooltip-append-to-body="true"
 						   uib-tooltip="The assignment this line item was based on no longer exists on the schedule">
 						</i>
 					</span>
 					<span ng-if="lineItem.hidden">
 						<i class="entypo-attention line-items__orphan-warn"
+						   tooltip-append-to-body="true"
 						   uib-tooltip="This line item is being hidden, but the assignment its based on still exists.">
 						</i>
 						<ipa-button icon-class="'glyphicon glyphicon-plus'"
@@ -73,8 +75,7 @@
 				<!-- Comments -->
 				<td class="line-items__table-cell line-items__table-cell--comments" ng-class-odd="'line-items__table-cell--dark'">
 					<div class="line-items__comment-container">
-						<ipa-button text="'Comments'"
-						            button-text="'See Comments'"
+						<ipa-button text="'Comments' + lineItem.commentCountDisplay"
 						            tooltip-message="'View Comments'"
 						            color="'light'"
 						            icon-class="'entypo entypo-chat'"

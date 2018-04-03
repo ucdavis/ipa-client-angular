@@ -40,9 +40,9 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				self.selectBudgetScenario();
 
 				// Perform follow up calculations
-				budgetCalculations.calculateInstructorTypes();
 				budgetCalculations.calculateInstructors();
 				budgetCalculations.calculateLineItems();
+				budgetCalculations.calculateInstructorTypeCosts();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
 			});
@@ -384,56 +384,45 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
 			});
 		},
-		createInstructorType: function (instructorTypeDTO) {
+		createOrUpdateInstructorTypeCosts: function (instructorTypeCost) {
+			if (instructorTypeCost.id > 0) {
+				this._updateInstructorTypeCost(instructorTypeCost);
+			} else {
+				this._createInstructorTypeCost(instructorTypeCost);
+			}
+		},
+		_createInstructorTypeCost: function (instructorTypeCostDTO) {
 			var self = this;
-			instructorTypeDTO.cost = parseFloat(instructorTypeDTO.cost);
+			instructorTypeCostDTO.cost = parseFloat(instructorTypeCostDTO.cost);
 
-			budgetService.createInstructorType(instructorTypeDTO).then(function (instructorType) {
+			budgetService.createInstructorTypeCost(instructorTypeCostDTO).then(function (instructorTypeCost) {
 				budgetReducers.reduce({
-					type: CREATE_INSTRUCTOR_TYPE,
+					type: CREATE_INSTRUCTOR_TYPE_COST,
 					payload: {
-						instructorType: instructorType
+						instructorTypeCost: instructorTypeCost
 					}
 				});
 
 				$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
-				budgetCalculations.calculateInstructorTypes();
+				budgetCalculations.calculateInstructorTypeCosts();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
 			});
 		},
-		deleteInstructorType: function (instructorTypeId) {
+		_updateInstructorTypeCost: function (newInstructorTypeCost) {
 			var self = this;
+			newInstructorTypeCost.cost = parseFloat(newInstructorTypeCost.cost);
 
-			budgetService.deleteInstructorType(instructorTypeId).then(function (instructorTypeId) {
+			budgetService.updateInstructorTypeCost(newInstructorTypeCost).then(function (instructorTypeCost) {
 				budgetReducers.reduce({
-					type: DELETE_INSTRUCTOR_TYPE,
+					type: UPDATE_INSTRUCTOR_TYPE_COST,
 					payload: {
-						instructorTypeId: instructorTypeId
-					}
-				});
-
-				$rootScope.$emit('toast', { message: "Deleted instructor type", type: "SUCCESS" });
-				budgetCalculations.calculateInstructorTypes();
-				budgetCalculations.calculateInstructors();
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not delete instructor type.", type: "ERROR" });
-			});
-		},
-		updateInstructorType: function (newInstructorType) {
-			var self = this;
-			newInstructorType.cost = parseFloat(newInstructorType.cost);
-
-			budgetService.updateInstructorType(newInstructorType).then(function (instructorType) {
-				budgetReducers.reduce({
-					type: UPDATE_INSTRUCTOR_TYPE,
-					payload: {
-						instructorType: instructorType
+						instructorTypeCost: instructorTypeCost
 					}
 				});
 
 				$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
-				budgetCalculations.calculateInstructorTypes();
+				budgetCalculations.calculateInstructorTypeCosts();
 				budgetCalculations.calculateInstructors();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
@@ -486,13 +475,14 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				self.updateSectionGroupCost(sectionGroupCost);
 			}
 		},
-		setInstructorFromSectionGroup: function (sectionGroup, instructorId) {
+		setInstructorTypeFromSectionGroup: function (sectionGroup, instructorType) {
 			var self = this;
 			var sectionGroupCost = sectionGroup.sectionGroupCost;
 
-			// Instructor being assigned matches schedule data, so we should not override
-			if (sectionGroup.assignedInstructorIds.indexOf(instructorId) > -1) {
+			// Instructor being assigned matches schedule data, so we should nullify the override
+			if (sectionGroup.assignedInstructorTypeIds.indexOf(instructorType.id) > -1) {
 				if (sectionGroupCost != false) {
+					sectionGroupCost.instructorTypeId = null;
 					sectionGroupCost.instructorId = null;
 					self.updateSectionGroupCost(sectionGroupCost);
 					return;
@@ -504,7 +494,49 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				var sectionGroupCostDTO = {
 					sectionGroupId: sectionGroup.id,
 					budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId,
-					instructorId: instructorId
+					instructorTypeId: instructorType.id,
+					instructorId: null
+				};
+
+				budgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
+					budgetReducers.reduce({
+						type: CREATE_SECTION_GROUP_COST,
+						payload: {
+							sectionGroupCost: newSectionGroupCost
+						}
+					});
+					self.updateSectionGroupCost(newSectionGroupCost);
+					$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
+				});
+			} else {
+				sectionGroupCost.instructorTypeId = instructorType.id;
+				sectionGroupCost.instructorId = null;
+				self.updateSectionGroupCost(sectionGroupCost);
+			}
+		},
+		setInstructorFromSectionGroup: function (sectionGroup, instructor) {
+			var self = this;
+			var sectionGroupCost = sectionGroup.sectionGroupCost;
+
+			// Instructor being assigned matches schedule data, so we should nullify the override
+			if (sectionGroup.assignedInstructorIds.indexOf(instructor.id) > -1) {
+				if (sectionGroupCost != false) {
+					sectionGroupCost.instructorId = null;
+					sectionGroupCost.instructorTypeId = null;
+					self.updateSectionGroupCost(sectionGroupCost);
+					return;
+				}
+			}
+
+			// Create sectionGroupCost if necessary
+			if (sectionGroupCost == false || sectionGroupCost == null) {
+				var sectionGroupCostDTO = {
+					sectionGroupId: sectionGroup.id,
+					budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId,
+					instructorId: instructor.id,
+					instructorTypeId: null
 				};
 
 				budgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
@@ -520,7 +552,8 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					$rootScope.$emit('toast', { message: "Could not assign instructor.", type: "ERROR" });
 				});
 			} else {
-				sectionGroupCost.instructorId = instructorId;
+				sectionGroupCost.instructorId = instructor.id;
+				sectionGroupCost.instructorTypeId = null;
 				self.updateSectionGroupCost(sectionGroupCost);
 			}
 		},
