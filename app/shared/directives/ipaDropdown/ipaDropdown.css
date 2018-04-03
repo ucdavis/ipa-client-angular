@@ -75,6 +75,19 @@
 	justify-content: space-between;
 }
 
+.ipa-dropdown__subheader-row {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	padding-left: 10px;
+	padding-right: 10px;
+	line-height: 16px;
+	border-bottom: 1px solid #e1e4e8;
+	display: flex;
+	justify-content: space-between;
+	font-weight: bold;
+	font-weight: bold;
+}
+
 .ipa-dropdown .search-row {
 	border-bottom: 1px solid #e1e4e8;
 }

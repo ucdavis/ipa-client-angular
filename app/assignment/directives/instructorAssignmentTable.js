@@ -141,7 +141,10 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 								courseHtml += " data-instructor-id=" + instructor.id + " data-schedule-instructor-note-id=" + instructor.scheduleInstructorNoteId + "></i>";
 								courseHtml += "</span>";
 								courseHtml += "<div><strong>";
-								courseHtml += instructor.fullName;
+								if (instructor) {
+									courseHtml += instructor.fullName;
+								}
+
 								courseHtml += "</strong>";
 								courseHtml += "</div>";
 

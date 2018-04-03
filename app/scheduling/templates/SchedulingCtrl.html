@@ -155,11 +155,15 @@
 								<!-- TODO: Display enrollment and total seats (Involves modifying payload to include all sections) -->
 
 								<div ng-if="view.state.sectionGroups.list[sectionGroupId].instructorIds.length">
-									instructor{{ view.state.sectionGroups.list[sectionGroupId].instructorIds.length > 1 ? 's':'' }}:
-									<div class="label label-default" style="padding: 3px; margin-left: 3px;"
+									Instructor{{ view.state.sectionGroups.list[sectionGroupId].instructorIds.length > 1 ? 's' : '' }}:
+									<div class="label label-default courses__metadata-container"
 										ng-repeat="instructorId in view.state.sectionGroups.list[sectionGroupId].instructorIds track by $index">
-										{{ view.state.instructors.list[instructorId] | lastSpaceInitial }}{{ $last ? '':', '}}
+										{{ view.state.instructors.list[instructorId] | lastSpaceInitial }}{{ $last ? '' : ', '}}
 									</div>
+									<span class="label label-default courses__metadata-container"
+										ng-repeat="instructorTypeId in view.state.sectionGroups.list[sectionGroupId].instructorTypeIds track by $index">
+										{{ view.state.instructorTypes.list[instructorTypeId].description }}{{ $last ? '' : ', '}}
+									</span>
 								</div>
 
 								<div ng-if="view.state.sectionGroups.list[sectionGroupId].showTheStaff">
@@ -171,7 +175,7 @@
 
 								<div ng-if="view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].tagIds.length">
 									Tags:
-									<div class="label" style="padding: 3px; margin-left: 3px;"
+									<div class="label courses__metadata-container"
 										ng-repeat="tagId in view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].tagIds track by $index"
 										ng-style="{ 'background-color': view.state.tags.list[tagId].color || '#333', 'color': view.state.tags.list[tagId].getTextColor() }">
 										{{ view.state.tags.list[tagId].name }}

@@ -146,9 +146,15 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 
 											if (teachingAssignment.approved === true) {
 												var instructor = scope.view.state.instructorMasterList.list[teachingAssignment.instructorId];
+												var instructorType = scope.view.state.instructorTypes.list[teachingAssignment.instructorTypeId];
+
 												// Add approved teachingAssignment to term
 												courseHtml += "<div class=\"alert alert-info tile-assignment\">";
-												courseHtml += instructor.fullName;
+												if (instructor) {
+													courseHtml += instructor.fullName;
+												} else {
+													courseHtml += instructorType.description;
+												}
 
 												if (scope.userCanEdit()) {
 													var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
@@ -198,6 +204,16 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 												courseHtml += ' data-section-group-id="' + sectionGroup.id + '"';
 												courseHtml += ' href="#">The Staff</a></li>';
 											}
+
+											scope.view.state.instructorTypes.ids.forEach(function(instructorTypeId) {
+												var instructorType = scope.view.state.instructorTypes.list[instructorTypeId];
+												courseHtml += "<li><a";
+												courseHtml += ' data-is-instructor-type="true"';
+												courseHtml += ' data-section-group-id="' + sectionGroup.id + '"';
+												courseHtml += ' data-instructor-type-id="' + instructorType.id + '"';
+												courseHtml += ' href="#">' + instructorType.description + '</a>';
+												courseHtml += '</li>';
+											});
 
 											courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
 
@@ -316,18 +332,37 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 					var sectionGroupId = $el.data('section-group-id');
 					var instructorId = $el.data('instructor-id');
 					var supportStaffId = $el.data('support-staff-id');
+					var instructorTypeId = $el.data('instructor-type-id');
+					var teachingAssignmentId = $el.data('teaching-assignment-id');
 
-					teachingAssignmentId = $el.data('teaching-assignment-id');
 					var isAssignPlaceholderAI = $el.data('is-placeholder-ai');
 					var isAssignPlaceholderStaff = $el.data('is-placeholder-staff');
+					var isInstructorType = $el.data('is-instructor-type');
 
-					// Create a 'The Staff' placeholder
-					if (isAssignPlaceholderStaff) {
+					if (isInstructorType) {
+						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+
+						newTeachingAssignment = {
+							sectionGroupId: sectionGroupId,
+							termCode: sectionGroup.termCode,
+							priority: 1,
+							approved: true,
+							instructorTypeId: instructorTypeId
+						};
+
+						// Remove The Staff if necessary
+						if (sectionGroup) {
+							sectionGroup.showTheStaff = false;
+						}
+
+						assignmentActionCreators.assignInstructorType(newTeachingAssignment);
+					} else if (isAssignPlaceholderStaff) {
+						// Create a 'The Staff' placeholder
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 						sectionGroup.showTheStaff = true;
 						assignmentActionCreators.createPlaceholderStaff(sectionGroup);
-					// Create a support assignment for an AI
 					} else if (isAssignPlaceholderAI) {
+						// Create a support assignment for an AI
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 						sectionGroup.showPlaceholderAI = true;
 						assignmentActionCreators.createPlaceholderAI(sectionGroup);

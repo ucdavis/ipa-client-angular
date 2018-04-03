@@ -20,16 +20,12 @@ budgetApp.factory("budgetService", this.budgetService = function($http, $q, $win
 		},
 
 		// Instructor Types
-		updateInstructorType: function(instructorType) {
-			return apiService.put("/api/budgetView/instructorTypes/" + instructorType.id, instructorType);
+		updateInstructorTypeCost: function(instructorTypeCost) {
+			return apiService.put("/api/budgetView/instructorTypeCosts/" + instructorTypeCost.id, instructorTypeCost);
 		},
-		createInstructorType: function(instructorType) {
-			return apiService.post("/api/budgetView/budgets/" + instructorType.budgetId + "/instructorTypes", instructorType);
+		createInstructorTypeCost: function(instructorTypeCost) {
+			return apiService.post("/api/budgetView/budgets/" + instructorTypeCost.budgetId + "/instructorTypeCosts", instructorTypeCost);
 		},
-		deleteInstructorType: function(instructorTypeId) {
-			return apiService.delete("/api/budgetView/instructorTypes/" + instructorTypeId);
-		},
-
 		// Budget Scenario
 		createBudgetScenario: function(newBudgetScenario, budgetId, scenarioId) {
 			return apiService.post("/api/budgetView/budgets/" + budgetId + "/budgetScenarios?scenarioId=" + scenarioId, newBudgetScenario);

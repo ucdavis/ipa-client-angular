@@ -6,6 +6,18 @@
 		slim="true">
 
 		<table class="course-costs__table">
+			<colgroup>
+				<col style="width: 6%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 16%;">
+				<col style="width: 8%;">
+			</colgroup>
 			<thead>
 				<tr>
 					<th class="course-costs__table-header"></th> <!-- Spacing for sequence number -->
@@ -43,6 +55,7 @@
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
 							     uib-tooltip="Revert to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}"
+							     tooltip-append-to-body="true"
 							     confirm-button="revertOverride(sectionGroup, 'seats')"
 							     message="Revert to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}?"
 							     yes="Revert"
@@ -62,6 +75,7 @@
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
 							     uib-tooltip="Revert to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}"
+							     tooltip-append-to-body="true"
 							     confirm-button="revertOverride(sectionGroup, 'sectionCount')"
 							     message="Revert to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}?"
 							     yes="Revert"
@@ -81,6 +95,7 @@
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
 							     uib-tooltip="Revert to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}"
+							     tooltip-append-to-body="true"
 							     confirm-button="revertOverride(sectionGroup, 'teachingAssistantAppointments')"
 							     message="Revert to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}?"
 							     yes="Revert"
@@ -104,6 +119,7 @@
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
 							     uib-tooltip="Revert to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}"
+							     tooltip-append-to-body="true"
 							     confirm-button="revertOverride(sectionGroup, 'readerAppointments')"
 							     message="Revert to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}?"
 							     yes="Revert"
@@ -122,8 +138,7 @@
 					</td>
 					<!-- Comments -->
 					<td class="course-costs__table-cell">
-						<ipa-button button-text="'See Comments'"
-						            text="'Comments'"
+						<ipa-button text="'Comments' + sectionGroup.sectionGroupCost.commentCountDisplay"
 						            color="'light'"
 						            icon-class="'entypo entypo-chat'"
 						            on-click="openAddCourseCommentsModal(sectionGroup)">

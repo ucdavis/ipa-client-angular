@@ -1,0 +1,107 @@
+<div class="roles-table">
+	<div class="row roles-table__search-container">
+		<!-- this is search bar -->
+		<div class="col-md-4 pull-right">
+			<div class="input-group search-input">
+				<input type="text" ng-model="users.searchQuery" placeholder="Search by name or login ID" uib-typeahead="person.name for person in searchUsers($viewValue)"
+					ng-change="searchOnChange()" typeahead-loading="view.loadingPeople" typeahead-no-results="view.noResults"
+					typeahead-wait-ms="400" typeahead-min-length="2" typeahead-on-select="searchUsersResultSelected($item, $model, $label, $event)"
+					class="form-control typeahead">
+				<ul class="typeahead-status dropdown-menu" ng-show="view.noResults">
+					<li><a>No results</a></li>
+				</ul>
+				<i ng-show="view.loadingPeople || ui.addUserPending"><spinner size="20"></spinner></i>
+				<i ng-hide="users.searchQuery || view.loadingPeople" class="entypo-search"></i>
+				<i ng-show="users.searchQuery && !view.loadingPeople && !ui.addUserPending" class="entypo-cancel" ng-click="clearUserSearch()"></i>
+				<span class="input-group-btn">
+					<button ng-disabled="!users.newUser.name || ui.addUserPending"
+						class="btn-add-person btn btn-primary"
+						ng-click="addUserToWorkgroup()">
+						Add Person
+					</button>
+				</span>
+			</div>
+			<!-- /input-group -->
+		</div>
+		<!-- /.col-lg-6 -->
+	</div>
+
+	<table class="roles-table__table">
+		<thead>
+			<tr>
+				<th class="roles-table__table-header">
+					<div class="roles-table__table-header-container">
+						Name
+					</div>
+				</th>
+				<th class="roles-table__table-header">
+					<div class="roles-table__table-header-container" ng-class="{'roles-table__table-header--no-border': activeRoleId != 15 && activeRoleId != -1 }">
+						Email
+					</div>
+				</th>
+				<th class="roles-table__table-header">
+					<div class="roles-table__table-header-container roles-table__table-header--no-border">
+						<span ng-if="activeRoleId == 15 || activeRoleId == -1">
+							Type
+						</span>
+					</div>
+				</th>
+				<th class="roles-table__table-header">
+					<div class="roles-table__table-header-amount-container roles-table__table-header--no-border">
+					</div>
+				</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr ng-repeat="userRole in userRoles track by userRole.id"
+			    ng-if="(activeRoleId == -1 && (userRole.roleId == 11 || userRole.roleId == 12 || userRole.roleId == 13)) || (userRole.roleId == activeRoleId && (activeRoleId != 9 || userRole.displayPresence))">
+				<!-- Name -->
+				<td class="roles-table__table-cell">
+					{{ userRole.userDisplayName }}
+				</td>
+
+				<!-- Email -->
+				<td class="roles-table__table-cell">
+					{{ userRole.userEmail }}
+				</td>
+
+				<!-- Dropdown for instructors -->
+				<td class="roles-table__table-cell">
+					<div class="roles-table__amount-container">
+						<!-- -1 is the category for 'student-ish' roles -->
+						<student-role-selector ng-show="activeRoleId == -1"
+						                       student-roles="ui.studentRoles"
+						                       user-role="userRole">
+						</student-role-selector>
+
+						<!-- 15 is the role for 'instructor' -->
+						<instructor-type-selector ng-show="activeRoleId == 15"
+						                          instructor-types="ui.instructorTypes"
+						                          user-role="userRole">
+						</intructor-type-selector>
+					</div>
+				</td>
+
+				<!-- Remove -->
+				<td class="roles-table__table-cell roles-table__table-cell--comments">
+					<div class="roles-table__comment-container">
+						<ipa-button text="'Remove'"
+						            color="'light'"
+						            on-click="removeUserRole(userRole)"
+						            confirm-message="'Remove role from user?'">
+						</ipa-button>
+					</div>
+				</td>
+			</tr>
+
+			<tr ng-show="ui.roleTotals[activeRoleId] == 0">
+				<td colspan="4">
+					<div class="roles-table__no-roles">
+						No users
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
