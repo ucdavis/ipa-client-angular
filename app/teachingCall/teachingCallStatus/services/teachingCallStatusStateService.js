@@ -27,7 +27,9 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 					return teachingCallReceipts;
 				case ADD_INSTRUCTORS_TO_TEACHING_CALL:
 					action.payload.teachingCallReceipts.forEach(function(teachingCallReceipt) {
-						teachingCallReceipts.ids.push(teachingCallReceipt.id);
+						if (teachingCallReceipts.ids.indexOf(teachingCallReceipt.id) == -1) {
+							teachingCallReceipts.ids.push(teachingCallReceipt.id);
+						}
 						teachingCallReceipts.list[teachingCallReceipt.id] = teachingCallReceipt;
 					});
 					return teachingCallReceipts;
