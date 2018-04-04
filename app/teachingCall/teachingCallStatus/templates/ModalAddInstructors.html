@@ -3,7 +3,13 @@
 	<div class="modal-dialog teaching-call--width">
 		<div class="modal-content">
 			<div class="modal-header teaching-call--header_style">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
+				<button type="button"
+				        class="close"
+				        data-dismiss="modal"
+				        aria-hidden="true"
+				        ng-click="cancel()">
+					×
+				</button>
 				<h4 class="modal-title">Add Instructors</h4>
 			</div>
 			<!-- modal-body -->
@@ -50,11 +56,24 @@
 					<div class="teaching-call--info_style container-fluid">
 						<h5 style="margin-top: 0px;">Due Date</h5>
 						<p class="input-group datepicker-bar">
-							<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="startTeachingCallConfig.dueDate" is-open="popup1.opened"
-							datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" 
-							popup-placement="bottom-left" show-button-bar="false" ng-click="open1()"/>
+							<input type="text"
+							       class="form-control"
+							       uib-datepicker-popup="{{format}}"
+							       ng-model="startTeachingCallConfig.dueDate"
+							       is-open="popup1.opened"
+							       datepicker-options="dateOptions"
+							       ng-required="true"
+							       close-text="Close"
+							       alt-input-formats="altInputFormats" 
+							       popup-placement="bottom-left"
+							       show-button-bar="false"
+							       ng-click="open1()"/>
 							<span class="input-group-btn">
-								<button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+								<button type="button"
+								        class="btn btn-default"
+								        ng-click="open1()">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button>
 							</span>
 						</p>
 						<div>
@@ -99,7 +118,13 @@
 						</div>
 
 					</div>
-					<textarea ng-if="startTeachingCallConfig.sendEmail == true" ng-bind-html="startTeachingCallConfig.message" class="form-control teaching-call-message-input" placeholder="" rows="5" id="comment"></textarea>
+					<textarea ng-if="startTeachingCallConfig.sendEmail == true"
+					          ng-bind-html="startTeachingCallConfig.message"
+					          class="form-control teaching-call-message-input"
+					          placeholder=""
+					          rows="5"
+					          id="comment">
+					</textarea>
 				</div>
 				<!-- send buttons -->
 				<button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == true && startTeachingCallConfig.sendEmail"

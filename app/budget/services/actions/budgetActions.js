@@ -49,7 +49,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 		},
 		// Compares sectionGroup values, the updated override value, and the sectionGroupCost to determine what action to take.
 		// Will potentially create, delete, or update a sectionGroupCost
-		overrideSectionGroup: function (sectionGroup, property) {
+		overrideSectionGroup: function (sectionGroup, property, isReversion) {
 			var oldValue = null;
 			var newValue = null;
 			var savedOverride = null;
@@ -62,29 +62,28 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 			if (property == "seats") {
 				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.enrollment : null;
 				oldValue = savedOverride || sectionGroup.totalSeats;
-				newValue = sectionGroup.overrideTotalSeats;
-
+				newValue = this._calculateNewValue(sectionGroup.overrideTotalSeats, isReversion);
 				newSectionGroupCost.enrollment = sectionGroup.overrideTotalSeats;
 			}
 
 			else if (property == "sectionCount") {
 				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.sectionCount : null;
 				oldValue = savedOverride || sectionGroup.sectionCount;
-				newValue = sectionGroup.overrideSectionCount;
+				newValue = this._calculateNewValue(sectionGroup.overrideSectionCount, isReversion);
 				newSectionGroupCost.sectionCount = sectionGroup.overrideSectionCount;
 			}
 
 			else if (property == "teachingAssistantAppointments") {
 				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.taCount : null;
 				oldValue = savedOverride || sectionGroup.teachingAssistantAppointments;
-				newValue = sectionGroup.overrideTeachingAssistantAppointments;
+				newValue = this._calculateNewValue(sectionGroup.overrideTeachingAssistantAppointments, isReversion);
 				newSectionGroupCost.taCount = sectionGroup.overrideTeachingAssistantAppointments;
 			}
 
 			else if (property == "readerAppointments") {
 				savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.readerCount : null;
 				oldValue = savedOverride || sectionGroup.readerAppointments;
-				newValue = sectionGroup.overrideReaderAppointments;
+				newValue = this._calculateNewValue(sectionGroup.overrideReaderAppointments, isReversion);
 				newSectionGroupCost.readerCount = sectionGroup.overrideReaderAppointments;
 			}
 
@@ -111,6 +110,11 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				// Do nothing
 				return;
 			}
+		},
+		// When reverting to schedule data, null should be sent to backend.
+		// However, if user emptied the input it should be treated as explicitly setting an override of 0.
+		_calculateNewValue: function (newValue, isReversion) {
+			return isReversion ? newValue : newValue || 0;
 		},
 		applyOverrideToProperty: function (sectionGroupCost, value, property) {
 			if (property == "seats") {
@@ -222,7 +226,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 				$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
 			});
 		},
-		createLineItem: function (newLineItem, budgetScenarioId) {
+		createLineItem: function (newLineItem, budgetScenarioId, message) {
 			var self = this;
 			// Ensure amount is properly formatted as a float
 			newLineItem.amount = newLineItem.amount ? parseFloat(newLineItem.amount) : null;
@@ -232,7 +236,7 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					type: CREATE_LINE_ITEM,
 					payload: newLineItem
 				};
-				$rootScope.$emit('toast', { message: "Created line item", type: "SUCCESS" });
+				$rootScope.$emit('toast', { message: message || "Created line item", type: "SUCCESS" });
 				budgetReducers.reduce(action);
 
 				// Close modal

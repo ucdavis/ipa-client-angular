@@ -20,4 +20,4 @@ workgroupApp.controller('TagCtrl', ['$scope', '$rootScope', '$routeParams', 'wor
 				workgroupActionCreators.updateTag($scope.workgroupId, tag);
 			};
 
-	}]);
+}]);

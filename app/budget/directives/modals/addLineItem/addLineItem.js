@@ -46,7 +46,7 @@ budgetApp.directive("addLineItem", this.addLineItem = function ($rootScope, budg
 				if (scope.lineItemToEdit && scope.lineItemToEdit.id > 0) {
 					budgetActions.updateLineItem(scope.newLineItem, scope.state.selectedBudgetScenario.id);
 				} else {
-					budgetActions.createLineItem(scope.newLineItem, scope.state.selectedBudgetScenario.id);
+					budgetActions.createLineItem(scope.newLineItem, scope.state.selectedBudgetScenario.id, "Saved line item");
 				}
 			};
 

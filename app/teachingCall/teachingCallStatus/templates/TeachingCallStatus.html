@@ -7,7 +7,8 @@
 <div class="teaching-call-status"><!-- main content container -->
 
 	<spinner ng-if="!view.state"
-		size="20" style="padding-top: 200px;">
+	         size="20"
+	         class="teaching-call-status__loading-spinner">
 	</spinner>
 
 	<div ng-if="view.state">
@@ -53,8 +54,8 @@
 
 		<div ng-show="view.state && view.state.ui.instructorsInCalls == false"
 		     class="teaching-call-status__no-calls-splash">
-			There are no instructors in a teaching call.
-			Use the add instructor button.
+			There are no instructors called.
+			Use the 'Add Instructor' button above.
 		</div>
 
 		<div ng-show="view.state && view.state.ui.instructorsInCalls">
@@ -62,22 +63,13 @@
 			<div class="instructor-section-container"
 			     ng-repeat="instructorTypeId in view.state.instructorTypes.ids"
 			     ng-show="view.state.calculations.teachingCallsByInstructorType[instructorTypeId].length > 0">
-				<div class="instructor-section" style="width: 100%;">
+				<div class="instructor-section">
 					<!-- table title -->
-					<div style="display: flex;">
+					<div class="instructor-section__title-container">
 						<div class="table-title">
-							<div style="padding-left: 20px;">{{ view.state.instructorTypes.list[instructorTypeId].description }}</div>
+							<div class="instructor-section__title-content">{{ view.state.instructorTypes.list[instructorTypeId].description }}</div>
 						</div>
 						<div class="column-hover-ui">
-						</div>
-					</div>
-
-					<!-- table header -->
-					<div style="display: flex;">
-						<div class="header-cell first-cell cell column-checkbox">
-							<input ng-click="toggleInstructorType(instructorTypeId)"
-							       ng-checked="areAllInstructorsOfTypeSelected(instructorTypeId)"
-							       type="checkbox">
 						</div>
 						<div class="header-left-cell column-name">
 							<div style="padding-left:10px;">Name</div>
@@ -89,22 +81,37 @@
 						<div class="column-hover-ui"></div>
 					</div>
 
-					<div class="table-row"
-					     style="display: flex;"
+					<!-- table header -->
+					<div class="teaching-call-status__instructor-header">
+						<div class="header-cell first-cell cell column-checkbox">
+							<input ng-click="toggleInstructorType(instructorTypeId)"
+							       ng-checked="areAllInstructorsOfTypeSelected(instructorTypeId)"
+							       type="checkbox">
+						</div>
+						<div class="header-left-cell column-name">
+							<div class="teaching-call-status__name-content">Name</div>
+						</div>
+						<div class="header-cell column-submitted">Submitted</div>
+						<div class="header-cell column-last">Last Contacted</div>
+						<div class="header-cell column-next">Next Contact</div>
+						<div class="header-cell column-due">Due Date</div>
+						<div class="column-hover-ui"></div>
+					</div>
+
+					<div class="table-row teaching-call-status__instructor-header"
 					     ng-repeat="instructor in view.state.calculations.teachingCallsByInstructorType[instructorTypeId]">
 
 						<div class="column-checkbox cell first-cell">
 							<input type="checkbox" ng-checked="instructorIsSelected(instructor.instructorId)" ng-click="toggleInstructor(instructor)">
 						</div>
 						<div class="column-name left-cell">
-							<div style="padding-left: 10px; display: flex; flex-wrap: wrap;">
-								<span style="flex: 1 0 auto;">
+							<div class="teaching-call-status__instructor-container">
+								<span class="teaching-call-status__instructor-content">
 									{{ instructor.lastName }},
 								</span>
-								<span style="flex: 1 0 auto; padding-right: 10px;">
+								<span class="teaching-call-status__instructor-details">
 									&nbsp;{{ instructor.firstName }}
-									<i class="glyphicon glyphicon-list-alt" style="padding-left:10px;"
-										class="text-primary clickable hovrable"
+									<i class="glyphicon glyphicon-list-alt teaching-call-status__instructor-tooltip clickable hovrable"
 										teaching-call-tooltip
 										title="Teaching Call"
 										terms-blob="{{instructor.termsBlob}}"
@@ -125,15 +132,15 @@
 						</div>
 						<div class="column-due cell">{{ instructor.dueDate }}</div>
 						<div class="column-hover-ui">
-							<span style="color: rgba(180, 20, 20, 0.8); font-size: 20px;"
-								class="remove-instructor-ui entypo-minus-circled text-primary clickable hovrable"
-								tooltip-placement="left"
-								uib-tooltip="Remove Instructor"
-								btn-class="teaching-call-status-tooltip"
-								confirm-button="removeInstructor(instructor)"
-								message="Are you sure you want to remove this instructor?
-									This will cancel any pending notifications."
-								yes="Remove" no="Cancel" placement="top">
+							<span class="remove-instructor-ui entypo-minus-circled clickable hovrable"
+							      tooltip-placement="left"
+							      uib-tooltip="Remove Instructor"
+							      btn-class="teaching-call-status-tooltip"
+							      confirm-button="removeInstructor(instructor)"
+							      message="Are you sure you want to remove this instructor? This will cancel any pending notifications."
+							      yes="Remove"
+							      no="Cancel"
+							      placement="top">
 							</span>
 						</div>
 					</div>

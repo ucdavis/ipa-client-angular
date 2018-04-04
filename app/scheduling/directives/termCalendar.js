@@ -49,7 +49,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			var unavailabilityEventTextColor = "#555555";
 
 			var tagEventTextColor = "#FFFFFF";
-			var selectedActivityTaggedColorShift = -80;
+			// This will be used to 'darken' the color of a card on the calendar if it has a user specified 'tag' color
+			var selectedActivityTintingMultiplier = .6;
 
 			var refreshCalendar = function () {
 				var parentAspectRatio = element.parent().width() / element.parent().height();
@@ -108,41 +109,42 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			};
 
 			// Supply a color and amount to shift the color (out of 255)
-			// Example to lighten: lightenOrDarkenColor("#F06D06", 20);
-			// Example to darken: lightenOrDarkenColor("#F06D06", -20);
-			var lightenOrDarkenColor = function(col, amt) {
-				var usePound = false;
+			// Example to lighten: lightenOrDarkenColor("#F06D06", 1.2);
+			// Example to darken: lightenOrDarkenColor("#F06D06", .6);
+			var lightenOrDarkenColor = function(hexColor, amt) {
+				var rgbValues = hexToRgb(hexColor);
 
-				if (col[0] == "#") {
-					col = col.slice(1);
-					usePound = true;
-				}
+				var r = parseInt(rgbValues.r * amt);
+				var g = parseInt(rgbValues.g * amt);
+				var b = parseInt(rgbValues.b * amt);
 
-				var num = parseInt(col,16);
-				var r = (num >> 16) + amt;
-
-				if (r > 255) {
-					r = 255;
-				} else if (r < 0) {
-					r = 0;
-				}
-
-				var b = ((num >> 8) & 0x00FF) + amt;
-
-				if (b > 255) {
-					b = 255;
-				} else if (b < 0) { b = 0; }
-
-				var g = (num & 0x0000FF) + amt;
-
-				if (g > 255) {
-					g = 255;
-				} else if (g < 0) {
-					g = 0;
-				}
-
-				return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
+				return rgbToHex(r, g, b);
 			};
+
+			// Converts a piece of the rgb value to its hex equivalent
+			// Example: rgbComponentToHex(110) -> "6e"
+			function rgbComponentToHex(c) {
+				var hex = c.toString(16);
+				return hex.length == 1 ? "0" + hex : hex;
+			}
+
+			function rgbToHex(r, g, b) {
+				return "#" + rgbComponentToHex(r) + rgbComponentToHex(g) + rgbComponentToHex(b);
+			}
+
+			function hexToRgb(hex) {
+				var expandedHex = {
+					r: hex.slice(1, 3),
+					g: hex.slice(3,5),
+					b: hex.slice(5,7)
+				};
+
+				return expandedHex ? {
+					r: parseInt(expandedHex.r, 16),
+					b: parseInt(expandedHex.b, 16),
+					g: parseInt(expandedHex.g, 16)
+				} : null;
+			}
 
 			var getActivities = function () {
 				// Each of these If blocks will add to a 'events array'
@@ -315,8 +317,8 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 				calendarActivities.forEach(function (event) {
 					if (scope.view.state.uiState.selectedActivityId === event.activityId) {
 						if (tagColor) {
-							event.color = lightenOrDarkenColor(tagColor, selectedActivityTaggedColorShift);
-							event.borderColor = lightenOrDarkenColor(tagColor, selectedActivityTaggedColorShift);
+							event.color = lightenOrDarkenColor(tagColor, selectedActivityTintingMultiplier);
+							event.borderColor = lightenOrDarkenColor(tagColor, selectedActivityTintingMultiplier);
 							event.textColor = textColor;
 						} else {
 							event.color = highlightedEventBackgroundColor;

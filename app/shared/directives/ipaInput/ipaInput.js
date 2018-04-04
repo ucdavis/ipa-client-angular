@@ -12,6 +12,34 @@ sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 			mode: '<?' // Options are 'number' (only allow characters 0-9), and 'currency' (currency style formatting and input enforcement)
 		},
 		link: function(scope, element, attrs) {
+
+			scope.$watch('mode',function() {
+				if (scope.mode && scope.mode == 'number') {
+					scope.onlyAllowNumberInputs();
+				}
+			});
+
+			// Limits input to: backspace, period, and 0-9.
+			scope.onlyAllowNumberInputs = function() {
+				element.on('keydown', function (e) {
+					var PERIOD = 140;
+					var BACK_SPACE = 8;
+
+					if (scope.isNumericKeyCode(e.keyCode) == false
+					&& e.keyCode != PERIOD
+					&& e.keyCode != BACK_SPACE) {
+						e.preventDefault();
+					}
+				});
+			};
+
+			// Returns true if keyCode falls within one of the two numeric ranges.
+			scope.isNumericKeyCode = function (keyCode) {
+				// Numbers on top of keyboard are keyCodes: 48 - 57
+				// Numbers on keypad are keyCodes: 96 - 105
+				return (keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105);
+			};
+
 			// Main method triggered by template, handles filtering/update callback
 			scope.updateInput = function() {
 				scope.applyUpdate();

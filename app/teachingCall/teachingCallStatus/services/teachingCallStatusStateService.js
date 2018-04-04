@@ -133,6 +133,9 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 
 					action.payload.instructors.forEach(function(instructor) {
 						var user = users.byLoginId[instructor.loginId];
+						// Instructor may not have an associated user
+						if (!user) { return; }
+
 						var userRole = userRoles.byUserId[user.id];
 						instructor.instructorTypeId = userRole.instructorTypeId;
 						instructors.ids.push(instructor.id);
