@@ -150,32 +150,16 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 		},
 		// Generate's a DTO that lists all instructors NOT in a teachingCall, broken up by instructorType
 		_calculateEligibleInstructors: function() {
-			var self = this;
-
-			var teachingCallReceipts = teachingCallStatusStateService._state.teachingCallReceipts;
-			var instructorTypes = teachingCallStatusStateService._state.instructorTypes;
-			var instructors = teachingCallStatusStateService._state.instructors;
-			var instructorsInCalls = teachingCallStatusStateService._state.calculations.teachingCallsByInstructorType;
-
 			var instructorsEligibleForCall = [];
-			var atLeastOneEligibleForCall = false;
 
-			instructors.ids.forEach(function(instructorId) {
-				var instructor = instructors.list[instructorId];
-
-				var instructorHasCall = _array_find_by_properties(instructorsInCalls[instructor.instructorTypeId], ["instructorId"], {instructorId: instructor.id});
-				// Skip instructors that are in a call
-				if (instructorHasCall) { return; }
-
-				atLeastOneEligibleForCall = true;
-				instructorsEligibleForCall.push(instructor);
+			teachingCallStatusStateService._state.instructors.ids.forEach(function(instructorId) {
+				instructorsEligibleForCall.push(teachingCallStatusStateService._state.instructors.list[instructorId]);
 			});
 
 			teachingCallStatusStateService.reduce({
 				type: CALCULATE_ELIGIBLE_INSTRUCTORS,
 				payload: {
-					instructorsEligibleForCall: instructorsEligibleForCall,
-					atLeastOneEligibleForCall: atLeastOneEligibleForCall
+					instructorsEligibleForCall: instructorsEligibleForCall
 				}
 			});
 		},

@@ -85,13 +85,11 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 				case INIT_STATE:
 					var calculations = {
 						teachingCallsByInstructorType: {},
-						instructorsEligibleForCall: {},
-						atLeastOneEligibleForCall: false
+						instructorsEligibleForCall: {}
 					};
 					return calculations;
 				case CALCULATE_ELIGIBLE_INSTRUCTORS:
 					calculations.instructorsEligibleForCall = action.payload.instructorsEligibleForCall;
-					calculations.atLeastOneEligibleForCall = action.payload.atLeastOneEligibleForCall;
 					return calculations;
 				case CALCULATE_INSTRUCTORS_IN_CALL:
 					calculations.teachingCallsByInstructorType = action.payload.teachingCallsByInstructorType;
