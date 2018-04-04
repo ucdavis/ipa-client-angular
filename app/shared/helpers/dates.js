@@ -30,8 +30,7 @@ millisecondsToDate = function(milliseconds) {
 // Returns the minutes since the datetime elapsed.
 // Expects datetime in the format '1476082800000'
 elapsedMinutes = function (time) {
-	var elapsed = moment().diff(time, 'minutes');
-	return elapsed;
+	return moment().diff(time, 'minutes');;
 };
 
 isCurrentTerm = function(termStart, termEnd) {
