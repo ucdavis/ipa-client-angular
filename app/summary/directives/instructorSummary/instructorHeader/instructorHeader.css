@@ -33,3 +33,9 @@
 .instructor-header__reminder {
 	line-height: 25px;
 }
+
+.instructor-header__notification-container {
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
+}

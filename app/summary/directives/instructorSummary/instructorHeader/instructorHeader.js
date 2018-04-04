@@ -1,4 +1,4 @@
-summaryApp.directive("instructorHeader", this.instructorHeader = function ($routeParams, $rootScope) {
+summaryApp.directive("instructorHeader", this.instructorHeader = function ($routeParams, $rootScope, $location, $window) {
 	return {
 		restrict: 'E',
 		templateUrl: 'instructorHeader.html',
@@ -11,6 +11,13 @@ summaryApp.directive("instructorHeader", this.instructorHeader = function ($rout
 			scope.year = $routeParams.year;
 
 			scope.localState = {};
+
+			scope.shouldDisplayTCSubmit = function() {
+				var submittedTC = $location.search().submittedTC == "true";
+				var fromTeachingCall = $window.document.referrer && $window.document.referrer.indexOf("/teachingCalls/") > -1;
+
+				return submittedTC && fromTeachingCall;
+			};
 
 			$rootScope.$on('summaryStateChanged', function (event, data) {
 				scope.mapDataToState(data);

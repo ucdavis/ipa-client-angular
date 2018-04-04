@@ -1,5 +1,9 @@
 <div class="instructor-header">
-	<div>
+	<div class="instructor-header__notification-container">
+		<div ng-if="shouldDisplayTCSubmit()" class="instructor-header__info">
+			<span class="instructor-header__reminder">Teaching preferences have been successfully submitted</span>
+		</div>
+
 		<div ng-if="localState.atLeastOneAlert" class="instructor-header__info">
 			<span class="instructor-header__reminder">Please refer to this icon <i class="entypo-attention instructor-header__icon"></i> to review all necessary Information.</span>
 		</div>
