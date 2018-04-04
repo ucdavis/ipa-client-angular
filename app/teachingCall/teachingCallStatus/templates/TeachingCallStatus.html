@@ -27,21 +27,21 @@
 					</div>
 				</div>
 
-				<div style="padding-right: 5px;">
+				<div class="teaching-call-status__submission-container">
 					<a class="btn btn-default"
 					   ng-click="openAddInstructorsModal()">
-						<i style="padding-right: 5px;" class="glyphicon glyphicon-plus"></i>
+						<i class="glyphicon glyphicon-plus teaching-call-status__btn-icon"></i>
 						Call Instructors
 					</a>
 				</div>
 				<div>
 					<a ng-if="atLeastOneInstructorSelected()" ng-click="openContactInstructorsModal()" class="btn btn-default">
-						<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
+						<i class="glyphicon glyphicon-bullhorn teaching-call-status__btn-icon"></i>
 						Send Follow-Up
 					</a>
 					<span ng-if="!(atLeastOneInstructorSelected())" uib-tooltip="Select at least one instructor to contact">
-						<a class="disabled btn btn-default" style="color: #808080;">
-							<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
+						<a class="disabled btn btn-default teaching-call-status__submission-btn">
+							<i class="glyphicon glyphicon-bullhorn teaching-call-status__btn-icon"></i>
 							Send Follow-Up
 						</a>
 					</span>
@@ -72,7 +72,7 @@
 						<div class="column-hover-ui">
 						</div>
 						<div class="header-left-cell column-name">
-							<div style="padding-left:10px;">Name</div>
+							<div class="instructor-section__name">Name</div>
 						</div>
 						<div class="header-cell column-submitted">Submitted</div>
 						<div class="header-cell column-last">Last Contacted</div>

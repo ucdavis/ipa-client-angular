@@ -276,3 +276,19 @@
 .teaching-call-status__instructor-tooltip {
 	padding-left:10px;
 }
+
+.teaching-call-status__btn-icon {
+	padding-right: 5px;
+}
+
+.teaching-call-status__submission-btn {
+	color: #808080;
+}
+
+.teaching-call-status__submission-container {
+	padding-right: 5px;
+}
+
+.instructor-section__name {
+	padding-left:10px;
+}
