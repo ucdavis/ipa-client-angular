@@ -209,13 +209,13 @@
 			<button ng-if="view.state.isDone && view.state.formHasChanges == false"
 							uib-tooltip="No changes to save."
 							type="button" class="disabled btn btn-white">
-				Submit
+				Update
 			</button>
 
 			<!-- pretend submit button -->
 			<button ng-if="view.state.isDone && view.state.formHasChanges == true"
 							ng-click="pretendSubmitForm()" type="button" class="btn btn-primary">
-				Submit
+				Update
 			</button>
 
 			<div class="submit-success-label" ng-if="view.state.formJustSubmitted">

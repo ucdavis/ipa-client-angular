@@ -58,7 +58,8 @@ teachingCallApp.service('teachingCallFormActionCreators', function (teachingCall
 		},
 		submitTeachingCall: function (teachingCallReceipt, workgroupId, year) {
 			teachingCallFormService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
-				var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor";
+				var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor&submittedTC=true";
+				$window.location.href = instructorSummaryUrl;
 				$rootScope.$emit('toast', { message: "Preferences saved.", type: "SUCCESS" });
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not save preferences.", type: "ERROR" });
