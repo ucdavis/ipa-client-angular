@@ -27,10 +27,11 @@ millisecondsToDate = function(milliseconds) {
 	return formattedDate;
 };
 
-// Returns the minutes since the datetime elapsed.
+// Will return the number of minutes between now and the datetime.
+// If datetime is in the future the number will be negative, and if datetime is in the past the number will be positive.
 // Expects datetime in the format '1476082800000'
-elapsedMinutes = function (time) {
-	return moment().diff(time, 'minutes');;
+elapsedMinutes = function (datetime) {
+	return moment().diff(datetime, 'minutes');
 };
 
 isCurrentTerm = function(termStart, termEnd) {

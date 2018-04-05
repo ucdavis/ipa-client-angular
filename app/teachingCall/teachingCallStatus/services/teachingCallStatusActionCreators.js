@@ -95,6 +95,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				teachingCallStatusStateService.reduce(action);
 				self._calculateInstructorsInCall();
 				self._calculateEligibleInstructors();
+				self._calculatePendingEmails();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not remove instructor from teaching call.", type: "ERROR" });
 			});
@@ -216,9 +217,8 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				var haveUnsentEmails = false;
 
 				if (teachingCallReceipt.nextContactAtRaw) {
-					var elapsed = elapsedMinutes(teachingCallReceipt.nextContactAtRaw);
 
-					if (elapsed < EMAIL_TASK_DELAY) {
+					if (elapsedMinutes(teachingCallReceipt.nextContactAtRaw) >= 0) {
 						haveUnsentEmails = true;
 					}
 				}
