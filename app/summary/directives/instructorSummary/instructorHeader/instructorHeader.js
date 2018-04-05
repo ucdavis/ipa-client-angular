@@ -14,6 +14,8 @@ summaryApp.directive("instructorHeader", this.instructorHeader = function ($rout
 
 			scope.shouldDisplayTCSubmit = function() {
 				var submittedTC = $location.search().submittedTC == "true";
+				// Ensure the page referrer is from the teachingCall form.
+				// We want to avoid displaying the splash message in the case that the user bookmarks the url with the submitted param.
 				var fromTeachingCall = $window.document.referrer && $window.document.referrer.indexOf("/teachingCalls/") > -1;
 
 				return submittedTC && fromTeachingCall;
