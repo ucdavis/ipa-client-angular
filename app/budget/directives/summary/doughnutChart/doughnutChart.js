@@ -116,5 +116,3 @@ budgetApp.directive("doughnutChart", this.doughnutChart = function ($rootScope, 
 		} // end link
 	};
 });
-
-
