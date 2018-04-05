@@ -208,6 +208,8 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 			});
 		},
 		_calculatePendingEmails: function() {
+			var EMAIL_TASK_DELAY = 5;
+
 			teachingCallStatusStateService._state.teachingCallReceipts.ids.forEach(function(teachingCallReceiptId) {
 				var teachingCallReceipt = teachingCallStatusStateService._state.teachingCallReceipts.list[teachingCallReceiptId];
 
@@ -216,7 +218,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				if (teachingCallReceipt.nextContactAtRaw) {
 					var elapsed = elapsedMinutes(teachingCallReceipt.nextContactAtRaw);
 
-					if (elapsed < 10) {
+					if (elapsed < EMAIL_TASK_DELAY) {
 						haveUnsentEmails = true;
 					}
 				}
