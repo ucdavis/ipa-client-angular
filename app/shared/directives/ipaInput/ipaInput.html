@@ -1,6 +1,7 @@
 <div>
 	<input class="ipa-input"
-		ng-show="mode != 'currency'"
+		ng-show="!mode || mode == 'number'"
+		type="text"
 		ng-model="value"
 		ng-blur="onBlur()"
 		placeholder="{{placeHolder}}"

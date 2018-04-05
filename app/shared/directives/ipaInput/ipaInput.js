@@ -12,22 +12,30 @@ sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 			mode: '<?' // Options are 'number' (only allow characters 0-9), and 'currency' (currency style formatting and input enforcement)
 		},
 		link: function(scope, element, attrs) {
-
 			scope.$watch('mode',function() {
 				if (scope.mode && scope.mode == 'number') {
 					scope.onlyAllowNumberInputs();
 				}
 			});
 
-			// Limits input to: backspace, period, and 0-9.
+			// Limits input to numbers and acceptable misc. keys
 			scope.onlyAllowNumberInputs = function() {
 				element.on('keydown', function (e) {
-					var PERIOD = 140;
+					// Unicode character codes that represent an actual key on the keyboard.
+					var PERIOD = 190;
 					var BACK_SPACE = 8;
+					var LEFT_ARROW = 37;
+					var RIGHT_ARROW = 39;
+
+					var acceptableMiscValues = [
+						PERIOD,
+						BACK_SPACE,
+						LEFT_ARROW,
+						RIGHT_ARROW
+					];
 
 					if (scope.isNumericKeyCode(e.keyCode) == false
-					&& e.keyCode != PERIOD
-					&& e.keyCode != BACK_SPACE) {
+					&& (acceptableMiscValues.indexOf(e.keyCode) == -1)) {
 						e.preventDefault();
 					}
 				});
@@ -36,8 +44,16 @@ sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 			// Returns true if keyCode falls within one of the two numeric ranges.
 			scope.isNumericKeyCode = function (keyCode) {
 				// Numbers on top of keyboard are keyCodes: 48 - 57
+				var MIN_NUMBER_TOP_ROW_KEYCODE = 48;
+				var MAX_NUMBER_TOP_ROW_KEYCODE = 57;
 				// Numbers on keypad are keyCodes: 96 - 105
-				return (keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105);
+				var MIN_NUMBER_PAD_KEYCODE = 96;
+				var MAX_NUMBER_PAD_KEYCODE = 105;
+
+				var isTopRowNumber = (keyCode >= MIN_NUMBER_TOP_ROW_KEYCODE && keyCode <= MAX_NUMBER_TOP_ROW_KEYCODE);
+				var isNumpadNumber = (keyCode >= MIN_NUMBER_PAD_KEYCODE && keyCode <= MAX_NUMBER_PAD_KEYCODE);
+
+				return (isTopRowNumber || isNumpadNumber);
 			};
 
 			// Main method triggered by template, handles filtering/update callback
