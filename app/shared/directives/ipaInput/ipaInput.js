@@ -18,9 +18,10 @@ sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 				}
 			});
 
-			// Limits input to: backspace, period, and 0-9.
+			// Limits input to numbers and acceptable misc. keys
 			scope.onlyAllowNumberInputs = function() {
 				element.on('keydown', function (e) {
+					// Unicode character codes that represent an actual key on the keyboard.
 					var PERIOD = 190;
 					var BACK_SPACE = 8;
 					var LEFT_ARROW = 37;
@@ -35,7 +36,6 @@ sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 
 					if (scope.isNumericKeyCode(e.keyCode) == false
 					&& (acceptableMiscValues.indexOf(e.keyCode) == -1)) {
-						console.log(e.keyCode);
 						e.preventDefault();
 					}
 				});
