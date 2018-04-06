@@ -255,7 +255,7 @@
 }
 
 .teaching-call-status__name-content {
-	padding-left:10px;
+	padding-left: 10px;
 }
 
 .teaching-call-status__instructor-container {
@@ -312,7 +312,7 @@
 .teaching-call-status__message-container {
 	flex: 25 0 0px;
 	display: flex;
-	flex-flow:column;
+	flex-flow: column;
 	align-items: flex-start;
 }
 
