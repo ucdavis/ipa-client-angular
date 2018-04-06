@@ -13,10 +13,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			var showDoNotPrintParam = enableUnpublishedCourses ? "?showDoNotPrint=true" : "";
 
 			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + showDoNotPrintParam, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -27,11 +27,11 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			var showDoNotPrintParam = enableUnpublishedCourses ? "?showDoNotPrint=true" : "";
 
 			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel" + showDoNotPrintParam, { withCredentials: true })
-				.success(function (payload) {
-					$window.location.href = payload.redirect;
+				.then(function (response) {
+					$window.location.href = response.data.redirect;
 					deferred.resolve(payload);
-				})
-				.error(function () {
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -41,10 +41,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			var deferred = $q.defer();
 
 			$http.post(serverRoot + "/api/courseView/sectionGroups/", sectionGroup, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -55,10 +55,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			if (!sectionGroup) { return; }
 
 			$http.put(serverRoot + "/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -68,10 +68,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			var deferred = $q.defer();
 
 			$http.delete(serverRoot + "/api/courseView/sectionGroups/" + sectionGroupId, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -91,10 +91,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			}
 
 			$http.post(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/courses", course, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -104,10 +104,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			var deferred = $q.defer();
 
 			$http.post(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/sectionGroups?importTimes=" + importTimes + "&importAssignments=" + importAssignments, sectionGroupImports, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -117,10 +117,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			var deferred = $q.defer();
 
 			$http.post(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/createCourses?importTimes=" + importTimes + "&importAssignments=" + importAssignments, sectionGroupImports, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -131,10 +131,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			if (!course) { return; }
 
 			$http.put(serverRoot + "/api/courseView/courses/" + course.id, course, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -145,10 +145,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			if (!course) { return; }
 
 			$http.delete(serverRoot + "/api/courseView/courses/" + course.id, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -158,10 +158,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			var deferred = $q.defer();
 
 			$http.put(serverRoot + "/api/courseView/schedules/" + workgroupId + "/" + year + "/courses", courseIds, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -171,10 +171,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			var deferred = $q.defer();
 
 			$http.put(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/massAddTags", massAssignTags, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -184,10 +184,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			var deferred = $q.defer();
 
 			$http.get(dwUrl + "/courses/search?q=" + query + "&token=" + dwToken)
-				.success(function (result) {
-					deferred.resolve(result);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -198,10 +198,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			var privateParam = includePrivate ? "&private=true" : "";
 
 			$http.get(dwUrl + "/sections/search?subjectCode=" + subjectCode + "&academicYear=" + year + "&token=" + dwToken + privateParam)
-				.success(function (result) {
-					deferred.resolve(result);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -212,10 +212,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			if (!course) { return; }
 
 			$http.post(serverRoot + "/api/courseView/courses/" + course.id + "/tags/" + tag.id, tag, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -226,10 +226,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			if (!course || !tag) { return; }
 
 			$http.delete(serverRoot + "/api/courseView/courses/" + course.id + "/tags/" + tag.id, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -239,10 +239,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			var deferred = $q.defer();
 
 			$http.get(serverRoot + "/api/courseView/sectionGroups/" + sectionGroupId + "/sections/", { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -253,10 +253,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			if (!section) { return; }
 
 			$http.put(serverRoot + "/api/courseView/sections/" + section.id, section, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -267,10 +267,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			if (!section) { return; }
 
 			$http.post(serverRoot + "/api/courseView/sectionGroups/" + section.sectionGroupId + "/sections", section, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -281,10 +281,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			if (!section) { return; }
 
 			$http.delete(serverRoot + "/api/courseView/sections/" + section.id, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -295,10 +295,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			if (!course) { return; }
 
 			$http.get(dwUrl + "/census?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + dwToken)
-				.success(function (result) {
-					deferred.resolve(result);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
@@ -309,10 +309,10 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 			var privateParam = includePrivate ? "&private=true" : "";
 
 			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/queryCourses", includePrivate, { withCredentials: true })
-				.success(function (result) {
-					deferred.resolve(result);
-				})
-				.error(function () {
+				.then(function (response) {
+					deferred.resolve(response.data);
+				},
+				function () {
 					deferred.reject();
 				});
 
