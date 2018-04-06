@@ -22,14 +22,14 @@
 
 						<div class="btn-group instructor-toggle-btn-container">
 							<span ng-repeat="instructorTypeId in instructorTypes.ids">
-								<span ng-if="areThereInstructorsOfType(instructorTypeId)">
-									<label ng-if="!areAllInstructorsOfTypeInvited(instructorTypeId)"
+								<span ng-if="instructorTypeUsed(instructorTypeId)">
+									<label ng-if="!allInstructorTypeInvited(instructorTypeId)"
 									       class="instructor-toggle-btn btn btn-sm add-instructor-modal__instructor-btn"
 									       id="courses-pivot"
 									       ng-click="inviteInstructorsOfType(instructorTypeId)">
 										Add {{ instructorTypes.list[instructorTypeId].description }}
 									</label>
-									<label ng-if="areAllInstructorsOfTypeInvited(instructorTypeId)"
+									<label ng-if="allInstructorTypeInvited(instructorTypeId)"
 									       disabled class="instructor-toggle-btn btn btn-sm add-instructor-modal__instructor-btn"
 									       uib-tooltip="All Instructors Added"
 									       id="courses-pivot">
