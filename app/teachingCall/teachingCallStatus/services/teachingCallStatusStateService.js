@@ -27,7 +27,9 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 					return teachingCallReceipts;
 				case ADD_INSTRUCTORS_TO_TEACHING_CALL:
 					action.payload.teachingCallReceipts.forEach(function(teachingCallReceipt) {
-						teachingCallReceipts.ids.push(teachingCallReceipt.id);
+						if (teachingCallReceipts.ids.indexOf(teachingCallReceipt.id) == -1) {
+							teachingCallReceipts.ids.push(teachingCallReceipt.id);
+						}
 						teachingCallReceipts.list[teachingCallReceipt.id] = teachingCallReceipt;
 					});
 					return teachingCallReceipts;
@@ -63,8 +65,12 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 				case INIT_STATE:
 					var ui = {
 						selectedInstructorIds: [],
-						instructorsInCalls: false
+						instructorsInCalls: false,
+						haveUnsentEmails: false
 					};
+					return ui;
+				case CALCULATE_PENDING_EMAILS:
+					ui.haveUnsentEmails = action.payload.haveUnsentEmails;
 					return ui;
 				case CALCULATE_INSTRUCTORS_IN_CALL:
 					ui.instructorsInCalls = action.payload.instructorsInCalls;
@@ -81,13 +87,11 @@ teachingCallApp.service('teachingCallStatusStateService', function (
 				case INIT_STATE:
 					var calculations = {
 						teachingCallsByInstructorType: {},
-						instructorsEligibleForCall: {},
-						atLeastOneEligibleForCall: false
+						instructorsEligibleForCall: {}
 					};
 					return calculations;
 				case CALCULATE_ELIGIBLE_INSTRUCTORS:
 					calculations.instructorsEligibleForCall = action.payload.instructorsEligibleForCall;
-					calculations.atLeastOneEligibleForCall = action.payload.atLeastOneEligibleForCall;
 					return calculations;
 				case CALCULATE_INSTRUCTORS_IN_CALL:
 					calculations.teachingCallsByInstructorType = action.payload.teachingCallsByInstructorType;

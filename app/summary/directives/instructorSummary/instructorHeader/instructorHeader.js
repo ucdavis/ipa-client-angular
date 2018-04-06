@@ -1,4 +1,4 @@
-summaryApp.directive("instructorHeader", this.instructorHeader = function ($routeParams, $rootScope) {
+summaryApp.directive("instructorHeader", this.instructorHeader = function ($routeParams, $rootScope, $location, $window) {
 	return {
 		restrict: 'E',
 		templateUrl: 'instructorHeader.html',
@@ -11,6 +11,15 @@ summaryApp.directive("instructorHeader", this.instructorHeader = function ($rout
 			scope.year = $routeParams.year;
 
 			scope.localState = {};
+
+			scope.shouldDisplayTCSubmit = function() {
+				var submittedTC = $location.search().submittedTC == "true";
+				// Ensure the page referrer is from the teachingCall form.
+				// We want to avoid displaying the splash message in the case that the user bookmarks the url with the submitted param.
+				var fromTeachingCall = $window.document.referrer && $window.document.referrer.indexOf("/teachingCalls/") > -1;
+
+				return submittedTC && fromTeachingCall;
+			};
 
 			$rootScope.$on('summaryStateChanged', function (event, data) {
 				scope.mapDataToState(data);

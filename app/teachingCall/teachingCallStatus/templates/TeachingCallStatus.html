@@ -15,30 +15,34 @@
 		<!-- Toolbar Buttons -->
 		<div class="teaching-call-status teaching-call-status-buttons">
 			<div class="teaching-call-status__table-ui">
-				<div class="teaching-call-status__table-ui-container">
+
+				<div ng-show="view.state.ui.haveUnsentEmails" class="teaching-call-status__message">
+					<div class="teaching-call-status__message-icon">
+						<i class="entypo-attention"></i>
+					</div>
+					<div class="teaching-call-status__message-container">
+						<div class="teaching-call-status__message-text">
+							E-mails will be sent in the next few minutes.
+						</div>
+					</div>
+				</div>
+
+				<div class="teaching-call-status__submission-container">
 					<a class="btn btn-default"
-					   ng-if="view.state.calculations.atLeastOneEligibleForCall"
 					   ng-click="openAddInstructorsModal()">
-						<i class="glyphicon glyphicon-plus teaching-call-status__table-ui-btn"></i>
-						Add Instructors
+						<i class="glyphicon glyphicon-plus teaching-call-status__btn-icon"></i>
+						Call Instructors
 					</a>
-					<span ng-if="view.state.calculations.atLeastOneEligibleForCall == false"
-					      uib-tooltip="All instructors called">
-						<a class="disabled btn btn-default">
-							<i class="glyphicon glyphicon-plus teaching-call-status__table-ui-btn teaching-call-status__table-ui-btn--disabled"></i>
-							Add Instructors
-						</a>
-					</span>
 				</div>
 				<div>
 					<a ng-if="atLeastOneInstructorSelected()" ng-click="openContactInstructorsModal()" class="btn btn-default">
-						<i class="glyphicon glyphicon-bullhorn teaching-call-status__table-ui-btn"></i>
-						Contact Instructors
+						<i class="glyphicon glyphicon-bullhorn teaching-call-status__btn-icon"></i>
+						Send Follow-Up
 					</a>
-					<span ng-if="atLeastOneInstructorSelected() == false" uib-tooltip="Select at least one instructor to contact">
-						<a class="disabled btn btn-default">
-							<i class="glyphicon glyphicon-bullhorn teaching-call-status__table-ui-btn teaching-call-status__table-ui-btn--disabled"></i>
-							Contact Instructors
+					<span ng-if="!(atLeastOneInstructorSelected())" uib-tooltip="Select at least one instructor to contact">
+						<a class="disabled btn btn-default teaching-call-status__submission-btn">
+							<i class="glyphicon glyphicon-bullhorn teaching-call-status__btn-icon"></i>
+							Send Follow-Up
 						</a>
 					</span>
 				</div>

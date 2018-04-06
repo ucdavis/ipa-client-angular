@@ -13,6 +13,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				teachingCallStatusStateService.reduce(action);
 				self._calculateInstructorsInCall();
 				self._calculateEligibleInstructors();
+				self._calculatePendingEmails();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not load initial teaching call status state.", type: "ERROR" });
 			});
@@ -25,6 +26,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 			receiptsPayload.forEach( function(instructor) {
 				instructor.id = instructor.teachingCallReceiptId;
 				instructor.message = teachingCallConfig.message;
+				instructor.nextContactAtRaw = instructor.nextContactAt;
 				instructor.nextContactAt = teachingCallConfig.dueDate.getTime();
 			});
 
@@ -39,6 +41,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				teachingCallStatusStateService.reduce(action);
 				self._calculateInstructorsInCall();
 				self._calculateEligibleInstructors();
+				self._calculatePendingEmails();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not set next email contact.", type: "ERROR" });
 			});
@@ -73,6 +76,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				teachingCallStatusStateService.reduce(action);
 				self._calculateInstructorsInCall();
 				self._calculateEligibleInstructors();
+				self._calculatePendingEmails();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not add instructors to teaching call.", type: "ERROR" });
 			});
@@ -91,6 +95,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				teachingCallStatusStateService.reduce(action);
 				self._calculateInstructorsInCall();
 				self._calculateEligibleInstructors();
+				self._calculatePendingEmails();
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not remove instructor from teaching call.", type: "ERROR" });
 			});
@@ -148,32 +153,16 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 		},
 		// Generate's a DTO that lists all instructors NOT in a teachingCall, broken up by instructorType
 		_calculateEligibleInstructors: function() {
-			var self = this;
-
-			var teachingCallReceipts = teachingCallStatusStateService._state.teachingCallReceipts;
-			var instructorTypes = teachingCallStatusStateService._state.instructorTypes;
-			var instructors = teachingCallStatusStateService._state.instructors;
-			var instructorsInCalls = teachingCallStatusStateService._state.calculations.teachingCallsByInstructorType;
-
 			var instructorsEligibleForCall = [];
-			var atLeastOneEligibleForCall = false;
 
-			instructors.ids.forEach(function(instructorId) {
-				var instructor = instructors.list[instructorId];
-
-				var instructorHasCall = _array_find_by_properties(instructorsInCalls[instructor.instructorTypeId], ["instructorId"], {instructorId: instructor.id});
-				// Skip instructors that are in a call
-				if (instructorHasCall) { return; }
-
-				atLeastOneEligibleForCall = true;
-				instructorsEligibleForCall.push(instructor);
+			teachingCallStatusStateService._state.instructors.ids.forEach(function(instructorId) {
+				instructorsEligibleForCall.push(teachingCallStatusStateService._state.instructors.list[instructorId]);
 			});
 
 			teachingCallStatusStateService.reduce({
 				type: CALCULATE_ELIGIBLE_INSTRUCTORS,
 				payload: {
-					instructorsEligibleForCall: instructorsEligibleForCall,
-					atLeastOneEligibleForCall: atLeastOneEligibleForCall
+					instructorsEligibleForCall: instructorsEligibleForCall
 				}
 			});
 		},
@@ -202,6 +191,7 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 				teachingCallReceipt.instructorId = instructor.id;
 				teachingCallReceipt.teachingCallReceiptId = teachingCallReceipt.id;
 				teachingCallReceipt.lastContactedAt = teachingCallReceipt.lastContactedAt ? moment(teachingCallReceipt.lastContactedAt).format("YYYY-MM-DD").toFullDate() : null;
+				teachingCallReceipt.nextContactAtRaw = teachingCallReceipt.nextContactAt;
 				teachingCallReceipt.nextContactAt = teachingCallReceipt.nextContactAt ? moment(teachingCallReceipt.nextContactAt).format("YYYY-MM-DD").toFullDate() : null;
 				teachingCallReceipt.dueDate = teachingCallReceipt.dueDate ? moment(teachingCallReceipt.dueDate).format("YYYY-MM-DD").toFullDate() : null;
 
@@ -216,6 +206,29 @@ teachingCallApp.service('teachingCallStatusActionCreators', function (teachingCa
 					teachingCallsByInstructorType: teachingCallsByInstructorType,
 					instructorsInCalls: instructorsInCalls
 				}
+			});
+		},
+		_calculatePendingEmails: function() {
+			var EMAIL_TASK_DELAY = 5;
+
+			teachingCallStatusStateService._state.teachingCallReceipts.ids.forEach(function(teachingCallReceiptId) {
+				var teachingCallReceipt = teachingCallStatusStateService._state.teachingCallReceipts.list[teachingCallReceiptId];
+
+				var haveUnsentEmails = false;
+
+				if (teachingCallReceipt.nextContactAtRaw) {
+
+					if (elapsedMinutes(teachingCallReceipt.nextContactAtRaw) >= 0) {
+						haveUnsentEmails = true;
+					}
+				}
+
+				teachingCallStatusStateService.reduce({
+					type: CALCULATE_PENDING_EMAILS,
+					payload: {
+						haveUnsentEmails: haveUnsentEmails
+					}
+				});
 			});
 		}
 	};
