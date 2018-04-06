@@ -353,6 +353,7 @@ summaryApp.service('summaryStateService', function ($rootScope, $log, Course, Sc
 					};
 
 					action.payload.instructorSupportCallResponses.forEach(function(response) {
+						response.dueDateDescription = millisecondsToDate(response.dueDate);
 						supportCallResponses.ids.push(response.id);
 						supportCallResponses.list[response.id] = response;
 						supportCallResponses.byTerm[response.termCode.slice(-2)] = response;
