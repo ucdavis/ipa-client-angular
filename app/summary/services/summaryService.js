@@ -12,10 +12,10 @@ summaryApp.factory("summaryService", this.summaryService = function($http, $q) {
 			var deferred = $q.defer();
 
 			$http.get(serverRoot + "/api/summaryView/" + workgroupId + "/" + year, { withCredentials: true })
-			.success(function(summaryView) {
-				deferred.resolve(summaryView);
-			})
-			.error(function() {
+			.then(function(results) {
+				deferred.resolve(results.data);
+			},
+			function() {
 				deferred.reject();
 			});
 
