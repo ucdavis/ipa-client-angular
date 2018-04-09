@@ -6,59 +6,19 @@
  * Service in the adminApp.
  * adminApp specific api calls.
  */
-adminApp.factory("adminService", this.adminService = function($http, $q) {
+adminApp.factory("adminService", this.adminService = function($http, $q, apiService) {
 	return {
 		getAdminView: function() {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/adminView", { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.get("/api/adminView");
 		},
 		updateWorkgroup: function(workgroup) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/adminView/workgroups/" + workgroup.id, workgroup, { withCredentials: true })
-			.success(function(workgroup) {
-				deferred.resolve(workgroup);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.put("/api/adminView/workgroups/" + workgroup.id, workgroup);
 		},
 		removeWorkgroup: function(workgroupId) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/adminView/workgroups/" + workgroupId, { withCredentials: true })
-			.success(function() {
-				deferred.resolve();
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.delete("/api/adminView/workgroups/" + workgroupId);
 		},
 		addWorkgroup: function(workgroup) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/adminView/workgroups", workgroup, { withCredentials: true })
-			.success(function(workgroup) {
-				deferred.resolve(workgroup);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.post("/api/adminView/workgroups", workgroup);
 		}
 	};
 });
