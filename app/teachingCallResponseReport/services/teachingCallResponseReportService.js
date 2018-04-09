@@ -6,30 +6,18 @@
  * Service in the teachingCallResponseReportApp.
  * teachingCallResponseReportApp specific api calls.
  */
-teachingCallResponseReportApp.factory("teachingCallResponseReportService", this.teachingCallResponseReportService = function ($http, $q, $window) {
+teachingCallResponseReportApp.factory("teachingCallResponseReportService", this.teachingCallResponseReportService = function ($http, $q, $window, apiService) {
 	return {
 		getInitialState: function (workgroupId, year) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/teachingCallResponseReportView/workgroups/" + workgroupId + "/years/" + year, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.get("/api/teachingCallResponseReportView/workgroups/" + workgroupId + "/years/" + year);
 		},
 		download: function (workgroupId, year) {
-			var deferred = $q.defer();
-
 			$http.get(serverRoot + "/api/teachingCallResponseReportView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
-			.success(function(payload) {
+			.then(function(payload) {
 				$window.location.href = payload.redirect;
 				deferred.resolve(payload);
-			})
-			.error(function() {
+			},
+			function() {
 				deferred.reject();
 			});
 
