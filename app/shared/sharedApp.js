@@ -112,7 +112,7 @@ sharedApp
 
 				switch (data.type) {
 					case "SUCCESS":
-						toastr.then(title, message, options);
+						toastr.success(title, message, options);
 						break;
 					case "ERROR":
 						options.timeOut = 0; // do not auto-hide error messages
