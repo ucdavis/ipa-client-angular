@@ -1,95 +1,25 @@
-teachingCallApp.factory("teachingCallFormService", this.teachingCallFormService = function($http, $q, $window) {
+teachingCallApp.factory("teachingCallFormService", this.teachingCallFormService = function(apiService) {
 	return {
 		getInitialState: function(workgroupId, year) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/teachingCallView/" + workgroupId + "/" + year + "/teachingCallForm", { withCredentials: true })
-			.success(function(assignmentView) {
-				deferred.resolve(assignmentView);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.get("/api/teachingCallView/" + workgroupId + "/" + year + "/teachingCallForm");
 		},
 		addPreference: function (teachingAssignment) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/assignmentView/preferences/" + teachingAssignment.scheduleId, teachingAssignment, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.post("/api/assignmentView/preferences/" + teachingAssignment.scheduleId, teachingAssignment);
 		},
 		removePreference: function (teachingAssignment) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/assignmentView/preferences/" + teachingAssignment.id, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.delete("/api/assignmentView/preferences/" + teachingAssignment.id);
 		},
 		updateAssignmentsOrder: function (sortedTeachingAssignmentIds, scheduleId) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/assignmentView/schedules/" + scheduleId + "/teachingAssignments" , sortedTeachingAssignmentIds, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.put("/api/assignmentView/schedules/" + scheduleId + "/teachingAssignments" , sortedTeachingAssignmentIds);
 		},
 		updateTeachingCallResponse: function (teachingCallResponse) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/assignmentView/teachingCallResponses/" + teachingCallResponse.id, teachingCallResponse, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.put("/api/assignmentView/teachingCallResponses/" + teachingCallResponse.id, teachingCallResponse);
 		},
 		createAvailability: function (teachingCallResponse) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/assignmentView/teachingCallResponses/" + teachingCallResponse.scheduleId  + "/" + teachingCallResponse.instructorId, teachingCallResponse, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.post("/api/assignmentView/teachingCallResponses/" + teachingCallResponse.scheduleId  + "/" + teachingCallResponse.instructorId, teachingCallResponse);
 		},
 		updateTeachingCallReceipt: function (teachingCallReceipt) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/assignmentView/teachingCallReceipts/" + teachingCallReceipt.id, teachingCallReceipt, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.put("/api/assignmentView/teachingCallReceipts/" + teachingCallReceipt.id, teachingCallReceipt);
 		},
 		allTerms: function () {
 			var allTerms = {
