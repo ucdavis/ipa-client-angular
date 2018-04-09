@@ -6,7 +6,7 @@
  * Service in the workgroupApp.
  * workgroupApp specific api calls.
  */
-assignmentApp.factory("assignmentService", this.assignmentService = function($http, $q, $window) {
+assignmentApp.factory("assignmentService", this.assignmentService = function(apiService) {
 	return {
 		getInitialState: function(workgroupId, year) {
 			return apiService.get("/api/assignmentView/" + workgroupId + "/" + year);

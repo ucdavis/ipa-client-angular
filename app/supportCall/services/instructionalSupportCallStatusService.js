@@ -1,91 +1,25 @@
-supportCallApp.factory("instructionalSupportCallStatusService", this.instructionalSupportAssignmentService = function($http, $q, $window) {
+supportCallApp.factory("instructionalSupportCallStatusService", this.instructionalSupportAssignmentService = function(apiService) {
 	return {
 		getInitialState: function(workgroupId, year, termShortCode) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/instructionalSupportView/workgroups/" + workgroupId + "/years/" + year +"/" + termShortCode + "/supportCallStatus", { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.get("/api/instructionalSupportView/workgroups/" + workgroupId + "/years/" + year +"/" + termShortCode + "/supportCallStatus");
 		},
 		addStudentsSupportCall: function(scheduleId, studentSupportCall) {
-			var deferred = $q.defer();
-			$http.post(serverRoot + "/api/supportCallView/" + scheduleId + "/addStudents", studentSupportCall, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.post("/api/supportCallView/" + scheduleId + "/addStudents", studentSupportCall);
 		},
 		addInstructorsSupportCall: function(scheduleId, instructorSupportCall) {
-			var deferred = $q.defer();
-			$http.post(serverRoot + "/api/supportCallView/" + scheduleId + "/addInstructors", instructorSupportCall, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.post("/api/supportCallView/" + scheduleId + "/addInstructors", instructorSupportCall);
 		},
 		contactInstructorsSupportCall: function(scheduleId, supportCallData) {
-			var deferred = $q.defer();
-			$http.put(serverRoot + "/api/supportCallView/" + scheduleId + "/contactInstructors", supportCallData, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.put("/api/supportCallView/" + scheduleId + "/contactInstructors", supportCallData);
 		},
 		contactSupportStaffSupportCall: function(scheduleId, supportCallData) {
-			var deferred = $q.defer();
-			$http.put(serverRoot + "/api/supportCallView/" + scheduleId + "/contactSupportStaff", supportCallData, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.put("/api/supportCallView/" + scheduleId + "/contactSupportStaff", supportCallData);
 		},
 		removeInstructorFromSupportCall: function(instructor, scheduleId, termCode) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/supportCallView/schedules/" + scheduleId + "/instructorSupportCallResponses/" + instructor.supportCallResponseId, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.delete("/api/supportCallView/schedules/" + scheduleId + "/instructorSupportCallResponses/" + instructor.supportCallResponseId);
 		},
 		removeStudentFromSupportCall: function(student, scheduleId, termCode) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/supportCallView/schedules/" + scheduleId + "/studentSupportCallResponses/" + student.supportCallResponseId, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.delete("/api/supportCallView/schedules/" + scheduleId + "/studentSupportCallResponses/" + student.supportCallResponseId);
 		}
 	};
 });

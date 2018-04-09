@@ -6,7 +6,7 @@
  * Service in the reportApp.
  * reportApp specific api calls.
  */
-registrarReconciliationReportApp.factory("reportService", this.reportService = function ($http, $q, $window, apiService) {
+registrarReconciliationReportApp.factory("reportService", this.reportService = function (apiService) {
 	return {
 		getSchedulesToCompare: function (workgroupId) {
 			return apiService.get("/api/reportView/workgroups/" + workgroupId);

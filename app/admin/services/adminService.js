@@ -6,7 +6,7 @@
  * Service in the adminApp.
  * adminApp specific api calls.
  */
-adminApp.factory("adminService", this.adminService = function($http, $q, apiService) {
+adminApp.factory("adminService", this.adminService = function(apiService) {
 	return {
 		getAdminView: function() {
 			return apiService.get("/api/adminView");
