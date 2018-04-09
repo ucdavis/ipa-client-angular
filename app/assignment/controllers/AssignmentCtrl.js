@@ -102,6 +102,9 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 
 				modalInstance.result.then(function (teachingCallConfig) {
 					$scope.startTeachingCall($scope.workgroupId, $scope.year, teachingCallConfig);
+				},
+				function () {
+					// Modal closed
 				});
 			};
 
@@ -180,6 +183,9 @@ assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '
 							assignmentActionCreators.addScheduleInstructorNote(instructor.id, $scope.year, $scope.workgroupId, privateComment);
 						}
 					}
+				},
+				function () {
+					// Modal closed
 				});
 			};
 
