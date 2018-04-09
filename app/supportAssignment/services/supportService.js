@@ -1,4 +1,4 @@
-supportAssignmentApp.factory("supportService", this.supportService = function($http, $q, $window) {
+supportAssignmentApp.factory("supportService", this.supportService = function(apiService) {
 	return {
 		getInitialState: function(workgroupId, year, termShortCode) {
 			return apiService.get("/api/instructionalSupportView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termShortCode);
