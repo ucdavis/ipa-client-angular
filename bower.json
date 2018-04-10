@@ -15,10 +15,7 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "angular-ui-calendar": "1.0.1",
-    "angular-sanitize": "1.5.8"
-  },
+  "dependencies": {},
   "resolutions": {
     "jquery": "2.2.4",
     "angular": "1.6.9",
