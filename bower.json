@@ -17,7 +17,6 @@
   ],
   "dependencies": {
     "angular-ui-calendar": "1.0.1",
-    "angular-ui-select": "0.19.1",
     "angular-sanitize": "1.5.8",
     "bootstrap": "3.3.6",
     "mjolnic-bootstrap-colorpicker": "bootstrap-colorpicker#^2.3.3",

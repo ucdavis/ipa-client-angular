@@ -284,7 +284,9 @@ module.exports = function (grunt) {
 				src: [
 					'bower_components/bootstrap/dist/css/bootstrap.css',
 					'bower_components/fullcalendar/dist/fullcalendar.css',
-					'bower_components/ng-notify/dist/ng-notify.min.css'
+					'bower_components/ng-notify/dist/ng-notify.min.css',
+					'node_modules/ui-select/dist/select.css',
+					'node_modules/selectize/dist/css/selectize.default.css'
 				],
 				dest: '<%= folders.webapp.build %>/css/lib.css'
 			},
