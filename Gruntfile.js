@@ -282,7 +282,7 @@ module.exports = function (grunt) {
 			// Vendor CSS files
 			cssLib: {
 				src: [
-					'bower_components/bootstrap/dist/css/bootstrap.css',
+					'node_modules/bootstrap/dist/css/bootstrap.css',
 					'bower_components/fullcalendar/dist/fullcalendar.css',
 					'bower_components/ng-notify/dist/ng-notify.min.css',
 					'node_modules/ui-select/dist/select.css',
@@ -327,7 +327,7 @@ module.exports = function (grunt) {
 				expand: true,
 				flatten: true,
 				src: [
-					'bower_components/bootstrap/dist/fonts/*',
+					'node_modules/bootstrap/dist/fonts/*',
 					'vendor/fonts/*'
 				],
 				dest: '<%= folders.webapp.build %>/fonts/'
@@ -336,7 +336,7 @@ module.exports = function (grunt) {
 				expand: true,
 				flatten: true,
 				src: [
-					'bower_components/bootstrap/dist/css/*',
+					'node_modules/bootstrap/dist/css/*',
 					'vendor/css/*'
 				],
 				dest: '<%= folders.webapp.build %>/css/'
@@ -346,7 +346,7 @@ module.exports = function (grunt) {
 				flatten: true,
 				src: [
 					'clientConfig.js',
-					'bower_components/bootstrap/dist/js/*',
+					'node_modules/bootstrap/dist/js/*',
 					'node_modules/fuse.js/dist/fuse.min.js',
 					'vendor/js/*'
 				],

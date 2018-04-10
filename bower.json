@@ -17,8 +17,7 @@
   ],
   "dependencies": {
     "angular-ui-calendar": "1.0.1",
-    "angular-sanitize": "1.5.8",
-    "bootstrap": "3.3.6"
+    "angular-sanitize": "1.5.8"
   },
   "resolutions": {
     "jquery": "2.2.4",
