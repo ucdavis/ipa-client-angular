@@ -39,10 +39,25 @@ module.exports = {
     inline: true,
     historyApiFallback: {
       index: 'index.html',
-      rewrites: [
-        { from: /^\/walrus\/.*$/, to: 'walrus.html'},
-        { from: /^.*$/, to: '/views/404.html' }
-      ]
+      historyApiFallback: {
+        disableDotRule: true,
+        rewrites: [
+          { from: /^\/admin/, to: 'admin.html' },
+          { from: /^\/budget/, to: 'budget.html' },
+          { from: /^\/workgroups/, to: 'workgroups.html' },
+          { from: /^\/summary/, to: 'summary.html' },
+          { from: /^\/courses/, to: 'courses.html' },
+          { from: /^\/assignments/, to: 'assignments.html' },
+          { from: /^\/instructionalSupport/, to: 'instructionalSupport.html' },
+          { from: /^\/teachingCalls/, to: 'teachingCalls.html' },
+          { from: /^\/supportCalls/, to: 'supportCalls.html' },
+          { from: /^\/supportAssignments/, to: 'supportAssignments.html' },
+          { from: /^\/scheduling/, to: 'scheduling.html' },
+          { from: /^\/registrarReconciliationReport/, to: 'registrarReconciliationReport.html' },
+          { from: /^\/scheduleSummaryReport/, to: 'scheduleSummaryReport.html' },
+          { from: /^\/teachingCallResponseReport/, to: 'teachingCallResponseReport.html' }
+        ]
+      }
     }
   }
 };
