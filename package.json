@@ -4,7 +4,10 @@
   "description": "Instructional Planning and Administration AngularJS Client",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "server": "webpack-dev-server --inline --progress --history-api-fallback --mode=development",
+    "start": "npm run server"
   },
   "repository": {
     "type": "git",
