@@ -6,7 +6,7 @@
  * Service in the ipaClientAngularApp.
  */
 angular.module('sharedApp')
-	.service('dwService', function ($http, $window, $q, $location, apiService) {
+	.service('dwService', function (apiService) {
 		return {
 			termCodeDescriptions: {
 				'05': 'Summer Session 1',
@@ -27,16 +27,7 @@ angular.module('sharedApp')
 			 * @returns {List[activity]}
 			 */
 			getDwActivitiesByCrn: function (crn, termCode) {
-				var deferred = $q.defer();
-				$http.get(dwUrl + "/sections/search/crn?termCode=" + termCode + "&crn=" + crn + "&token=" + dwToken)
-					.success(function (result) {
-						deferred.resolve(result);
-					})
-					.error(function () {
-						deferred.reject();
-					});
-
-				return deferred.promise;
+				return apiService.get("/sections/search/crn?termCode=" + termCode + "&crn=" + crn + "&token=" + dwToken, null, dwUrl);
 			},
 			/**
 			 * Provides a list of census snapshots based on the parameters given.

@@ -1,4 +1,4 @@
-budgetApp.factory("budgetService", this.budgetService = function($http, $q, $window, apiService) {
+budgetApp.factory("budgetService", this.budgetService = function(apiService) {
 	return {
 		// Page load
 		getInitialState: function(workgroupId, year) {

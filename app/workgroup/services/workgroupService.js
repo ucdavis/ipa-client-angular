@@ -6,189 +6,49 @@
  * Service in the workgroupApp.
  * workgroupApp specific api calls.
  */
-workgroupApp.factory("workgroupService", this.workgroupService = function($http, $q) {
+workgroupApp.factory("workgroupService", this.workgroupService = function(apiService) {
 	return {
 		getWorkgroupByCode: function(workgroupId) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/workgroupView/" + workgroupId, { withCredentials: true })
-			.success(function(workgroup) {
-				deferred.resolve(workgroup);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.get("/api/workgroupView/" + workgroupId);
 		},
 		addTag: function (workgroupId, tag) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/workgroupView/" + workgroupId + "/tags", tag, { withCredentials: true })
-			.success(function(tag) {
-				deferred.resolve(tag);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.post("/api/workgroupView/" + workgroupId + "/tags", tag);
 		},
 		updateTag: function (workgroupId, tag) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/workgroupView/" + workgroupId + "/tags/" + tag.id, tag, { withCredentials: true })
-			.success(function(tag) {
-				deferred.resolve(tag);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.put("/api/workgroupView/" + workgroupId + "/tags/" + tag.id, tag);
 		},
 		setInstructorType: function (userRole) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/workgroupView/workgroups/" + userRole.workgroupId + "/userRoles/" + userRole.id + "/instructorTypes/" + userRole.instructorTypeId, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.put("/api/workgroupView/workgroups/" + userRole.workgroupId + "/userRoles/" + userRole.id + "/instructorTypes/" + userRole.instructorTypeId);
 		},
 		removeTag: function(workgroupId, tag) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/workgroupView/" + workgroupId + "/tags/" + tag.id, { withCredentials: true })
-			.success(function() {
-				deferred.resolve();
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.delete("/api/workgroupView/" + workgroupId + "/tags/" + tag.id);
 		},
 		addLocation: function (workgroupId, location) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/workgroupView/" + workgroupId + "/locations", location, { withCredentials: true })
-			.success(function(location) {
-				deferred.resolve(location);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.post("/api/workgroupView/" + workgroupId + "/locations", location);
 		},
 		updateLocation: function (workgroupId, location) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/workgroupView/" + workgroupId + "/locations/" + location.id, location, { withCredentials: true })
-			.success(function(location) {
-				deferred.resolve(location);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.put("/api/workgroupView/" + workgroupId + "/locations/" + location.id, location);
 		},
 		removeLocation: function(workgroupId, location) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/workgroupView/" + workgroupId + "/locations/" + location.id, { withCredentials: true })
-			.success(function() {
-				deferred.resolve();
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.delete("/api/workgroupView/" + workgroupId + "/locations/" + location.id);
 		},
 		addRoleToUser: function (workgroupId, user, role) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupId + "/roles/" + role.name, null, { withCredentials: true })
-			.success(function(userRole) {
-				deferred.resolve(userRole);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.post("/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupId + "/roles/" + role.name, null);
 		},
 		removeRoleFromUser: function (workgroupId, user, role) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupId + "/roles/" + role.name, { withCredentials: true })
-			.success(function() {
-				deferred.resolve();
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.delete("/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupId + "/roles/" + role.name);
 		},
 		searchUsers: function(workgroupId, query) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/people/search?query=" + query, { withCredentials: true })
-			.success(function(result) {
-				deferred.resolve(result);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.get("/api/people/search?query=" + query);
 		},
 		createUser: function (workgroupId, user) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/workgroupView/workgroups/" + workgroupId + "/users", user, { withCredentials: true })
-			.success(function(newUser) {
-				deferred.resolve(newUser);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.post("/api/workgroupView/workgroups/" + workgroupId + "/users", user);
 		},
 		removeUserFromWorkgroup: function (workgroupId, user) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/workgroupView/workgroups/" + workgroupId + "/users/" + user.loginId, { withCredentials: true })
-			.success(function() {
-				deferred.resolve();
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.delete("/api/workgroupView/workgroups/" + workgroupId + "/users/" + user.loginId);
 		},
 		updateUserRole: function (userRole) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/workgroupView/userRoles/" + userRole.id + "/roles/" + userRole.roleId, { withCredentials: true })
-			.success(function(results) {
-				deferred.resolve(results);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.put("/api/workgroupView/userRoles/" + userRole.id + "/roles/" + userRole.roleId);
 		},
 	};
 });

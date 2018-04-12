@@ -53,10 +53,10 @@ angular.module('sharedApp')
 				var deferred = $q.defer();
 
 				$http(config)
-				.success(function(results) {
-					deferred.resolve(results);
-				})
-				.error(function() {
+				.then(function(response) {
+					deferred.resolve(response.data);
+				},
+				function() {
 					deferred.reject();
 				});
 

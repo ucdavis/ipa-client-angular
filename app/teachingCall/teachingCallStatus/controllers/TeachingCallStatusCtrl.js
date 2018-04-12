@@ -66,6 +66,9 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 
 				modalInstance.result.then(function (teachingCallConfig) {
 					$scope.contactInstructors($scope.workgroupId, $scope.year, teachingCallConfig);
+				},
+				function () {
+					// Modal closed
 				});
 			};
 
@@ -109,6 +112,9 @@ teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$
 
 				modalInstance.result.then(function (teachingCallConfig) {
 					$scope.addInstructorsToTeachingCall($scope.workgroupId, $scope.year, teachingCallConfig);
+				},
+				function () {
+					// Modal closed
 				});
 			};
 

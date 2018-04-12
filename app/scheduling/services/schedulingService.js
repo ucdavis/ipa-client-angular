@@ -6,126 +6,34 @@
  * Service in the schedulingApp.
  * schedulingApp specific api calls.
  */
-schedulingApp.factory("schedulingService", this.schedulingService = function ($http, $q) {
+schedulingApp.factory("schedulingService", this.schedulingService = function (apiService) {
 	return {
 		getScheduleByWorkgroupIdAndYearAndTermCode: function (workgroupId, year, termCode) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/schedulingView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termCode, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.get("/api/schedulingView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termCode);
 		},
 		updateActivity: function (activity) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/schedulingView/activities/" + activity.id, activity, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.put("/api/schedulingView/activities/" + activity.id, activity);
 		},
 		removeActivity: function (activityId) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/schedulingView/activities/" + activityId, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.delete("/api/schedulingView/activities/" + activityId);
 		},
 		createSharedActivity: function (activityCode, sectionGroupId) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/schedulingView/sectionGroups/" + sectionGroupId + "/activities/" + activityCode, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.post("/api/schedulingView/sectionGroups/" + sectionGroupId + "/activities/" + activityCode);
 		},
 		createActivity: function (activityCode, sectionId) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/schedulingView/sections/" + sectionId + "/activities/" + activityCode, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.post("/api/schedulingView/sections/" + sectionId + "/activities/" + activityCode);
 		},
 		getActivities: function (section) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/schedulingView/sections/" + section.id + "/activities", { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.get("/api/schedulingView/sections/" + section.id + "/activities");
 		},
 		getCourseActivityTypes: function (course) {
-			var deferred = $q.defer();
-
-			$http.get(dwUrl + "/activities?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + dwToken)
-				.success(function (result) {
-					deferred.resolve(result);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.get("/activities?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + dwToken, null, dwUrl);
 		},
 		createSection: function (section) {
-			var deferred = $q.defer();
-			if (!section) { return; }
-
-			$http.post(serverRoot + "/api/courseView/sectionGroups/" + section.sectionGroupId + "/sections", section, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.post("/api/courseView/sectionGroups/" + section.sectionGroupId + "/sections", section);
 		},
 		deleteSection: function (section) {
-			var deferred = $q.defer();
-			if (!section) { return; }
-
-			$http.delete(serverRoot + "/api/courseView/sections/" + section.id, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.delete("/api/courseView/sections/" + section.id);
 		}
 	};
 });

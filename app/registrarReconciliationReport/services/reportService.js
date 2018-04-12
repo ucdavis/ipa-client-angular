@@ -6,163 +6,43 @@
  * Service in the reportApp.
  * reportApp specific api calls.
  */
-registrarReconciliationReportApp.factory("reportService", this.reportService = function ($http, $q, $window) {
+registrarReconciliationReportApp.factory("reportService", this.reportService = function (apiService) {
 	return {
 		getSchedulesToCompare: function (workgroupId) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/reportView/workgroups/" + workgroupId, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.get("/api/reportView/workgroups/" + workgroupId);
 		},
 		getTermComparisonReport: function (workgroupId, year, termCode) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/reportView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termCode, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.get("/api/reportView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termCode);
 		},
 		updateSection: function (section) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/reportView/sections/" + section.id, section, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.put("/api/reportView/sections/" + section.id, section);
 		},
 		createSection: function (section) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/reportView/sectionGroups/" + section.sectionGroupId + "/sections/" + section.sequenceNumber, section, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.post("/api/reportView/sectionGroups/" + section.sectionGroupId + "/sections/" + section.sequenceNumber, section);
 		},
 		updateActivity: function (activity) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/reportView/activities/" + activity.id, activity, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.put("/api/reportView/activities/" + activity.id, activity);
 		},
 		deleteActivity: function (activity) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/reportView/activities/" + activity.id, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.delete("/api/reportView/activities/" + activity.id);
 		},
 		createActivity: function (sectionId, activity) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/reportView/sections/" + sectionId + "/activities/" + activity.typeCode, activity, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.post("/api/reportView/sections/" + sectionId + "/activities/" + activity.typeCode, activity);
 		},
 		assignInstructor: function (sectionGroupId, instructor) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/reportView/sectionGroups/" + sectionGroupId + "/instructors", instructor, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.post("/api/reportView/sectionGroups/" + sectionGroupId + "/instructors", instructor);
 		},
 		unAssignInstructor: function (sectionGroupId, instructor) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/reportView/sectionGroups/" + sectionGroupId + "/instructors/" + instructor.loginId, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.delete("/api/reportView/sectionGroups/" + sectionGroupId + "/instructors/" + instructor.loginId);
 		},
 		deleteSection: function (section) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/reportView/sections/" + section.id, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.delete("/api/reportView/sections/" + section.id);
 		},
 		createSyncAction: function (syncAction) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/reportView/syncActions", syncAction, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.post("/api/reportView/syncActions", syncAction);
 		},
 		deleteSyncAction: function (syncActionId) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/reportView/syncActions/" + syncActionId, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.delete("/api/reportView/syncActions/" + syncActionId);
 		}
 	};
 });

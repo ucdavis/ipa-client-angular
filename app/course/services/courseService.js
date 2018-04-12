@@ -6,79 +6,26 @@
  * Service in the courseApp.
  * courseApp specific api calls.
  */
-courseApp.factory("courseService", this.courseService = function ($http, $q, $window) {
+courseApp.factory("courseService", this.courseService = function (apiService) {
 	return {
 		getScheduleByWorkgroupIdAndYear: function (workgroupId, year, enableUnpublishedCourses) {
-			var deferred = $q.defer();
 			var showDoNotPrintParam = enableUnpublishedCourses ? "?showDoNotPrint=true" : "";
-
-			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + showDoNotPrintParam, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.get("/api/courseView/workgroups/" + workgroupId + "/years/" + year + showDoNotPrintParam);
 		},
 		downloadSchedule: function (workgroupId, year, enableUnpublishedCourses) {
-			var deferred = $q.defer();
 			var showDoNotPrintParam = enableUnpublishedCourses ? "?showDoNotPrint=true" : "";
-
-			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel" + showDoNotPrintParam, { withCredentials: true })
-				.success(function (payload) {
-					$window.location.href = payload.redirect;
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.get("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel" + showDoNotPrintParam);
 		},
 		addSectionGroup: function (sectionGroup) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/courseView/sectionGroups/", sectionGroup, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.post("/api/courseView/sectionGroups/", sectionGroup);
 		},
 		updateSectionGroup: function (sectionGroup) {
-			var deferred = $q.defer();
-			if (!sectionGroup) { return; }
-
-			$http.put(serverRoot + "/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.put("/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup);
 		},
 		removeSectionGroup: function (sectionGroupId) {
-			var deferred = $q.defer();
-
-			$http.delete(serverRoot + "/api/courseView/sectionGroups/" + sectionGroupId, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.delete("/api/courseView/sectionGroups/" + sectionGroupId);
 		},
 		createCourse: function (course, workgroupId, year) {
-			var deferred = $q.defer();
 			if (!course) { return; }
 
 			course.tags = [];
@@ -90,233 +37,73 @@ courseApp.factory("courseService", this.courseService = function ($http, $q, $wi
 				});
 			}
 
-			$http.post(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/courses", course, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.post("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/courses", course);
 		},
 		importCoursesAndSectionGroups: function (sectionGroupImports, workgroupId, year, importTimes, importAssignments) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/sectionGroups?importTimes=" + importTimes + "&importAssignments=" + importAssignments, sectionGroupImports, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.post("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/sectionGroups?importTimes=" + importTimes + "&importAssignments=" + importAssignments, sectionGroupImports);
 		},
 		importCoursesAndSectionGroupsFromIPA: function (sectionGroupImports, workgroupId, year, importTimes, importAssignments) {
-			var deferred = $q.defer();
-
-			$http.post(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/createCourses?importTimes=" + importTimes + "&importAssignments=" + importAssignments, sectionGroupImports, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.post("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/createCourses?importTimes=" + importTimes + "&importAssignments=" + importAssignments, sectionGroupImports);
 		},
 		updateCourse: function (course) {
-			var deferred = $q.defer();
 			if (!course) { return; }
 
-			$http.put(serverRoot + "/api/courseView/courses/" + course.id, course, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.put("/api/courseView/courses/" + course.id, course);
 		},
 		deleteCourse: function (course) {
-			var deferred = $q.defer();
-			if (!course) { return; }
-
-			$http.delete(serverRoot + "/api/courseView/courses/" + course.id, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.delete("/api/courseView/courses/" + course.id);
 		},
 		deleteMultipleCourses: function (courseIds, workgroupId, year) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/courseView/schedules/" + workgroupId + "/" + year + "/courses", courseIds, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.put("/api/courseView/schedules/" + workgroupId + "/" + year + "/courses", courseIds);
 		},
 		submitMassAssignTags: function (massAssignTags, workgroupId, year) {
-			var deferred = $q.defer();
-
-			$http.put(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/massAddTags", massAssignTags, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.put("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/massAddTags", massAssignTags);
 		},
 		searchCourses: function (query) {
-			var deferred = $q.defer();
-
-			$http.get(dwUrl + "/courses/search?q=" + query + "&token=" + dwToken)
-				.success(function (result) {
-					deferred.resolve(result);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.get("/courses/search?q=" + query + "&token=" + dwToken, null, dwUrl);
 		},
 		searchImportCourses: function (subjectCode, year, includePrivate) {
-			var deferred = $q.defer();
 			var privateParam = includePrivate ? "&private=true" : "";
 
-			$http.get(dwUrl + "/sections/search?subjectCode=" + subjectCode + "&academicYear=" + year + "&token=" + dwToken + privateParam)
-				.success(function (result) {
-					deferred.resolve(result);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.get("/sections/search?subjectCode=" + subjectCode + "&academicYear=" + year + "&token=" + dwToken + privateParam, null, dwUrl);
 		},
 		addTagToCourse: function (course, tag) {
-			var deferred = $q.defer();
 			if (!course) { return; }
 
-			$http.post(serverRoot + "/api/courseView/courses/" + course.id + "/tags/" + tag.id, tag, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.post("/api/courseView/courses/" + course.id + "/tags/" + tag.id, tag);
 		},
 		removeTagFromCourse: function (course, tag) {
-			var deferred = $q.defer();
 			if (!course || !tag) { return; }
 
-			$http.delete(serverRoot + "/api/courseView/courses/" + course.id + "/tags/" + tag.id, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.delete("/api/courseView/courses/" + course.id + "/tags/" + tag.id);
 		},
 		getSectionsBySectionGroupId: function (sectionGroupId) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/courseView/sectionGroups/" + sectionGroupId + "/sections/", { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.get("/api/courseView/sectionGroups/" + sectionGroupId + "/sections/");
 		},
 		updateSection: function (section) {
-			var deferred = $q.defer();
 			if (!section) { return; }
 
-			$http.put(serverRoot + "/api/courseView/sections/" + section.id, section, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.put("/api/courseView/sections/" + section.id, section);
 		},
 		createSection: function (section) {
-			var deferred = $q.defer();
 			if (!section) { return; }
 
-			$http.post(serverRoot + "/api/courseView/sectionGroups/" + section.sectionGroupId + "/sections", section, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.post("/api/courseView/sectionGroups/" + section.sectionGroupId + "/sections", section);
 		},
 		deleteSection: function (section) {
-			var deferred = $q.defer();
 			if (!section) { return; }
 
-			$http.delete(serverRoot + "/api/courseView/sections/" + section.id, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.delete("/api/courseView/sections/" + section.id);
 		},
 		getCourseCensus: function (course) {
-			var deferred = $q.defer();
 			if (!course) { return; }
 
-			$http.get(dwUrl + "/census?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + dwToken)
-				.success(function (result) {
-					deferred.resolve(result);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.get("/census?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + dwToken, null, dwUrl);
 		},
 		searchCoursesFromIPA: function (workgroupId, year, includePrivate) {
-			var deferred = $q.defer();
 			var privateParam = includePrivate ? "&private=true" : "";
 
-			$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/queryCourses", includePrivate, { withCredentials: true })
-				.success(function (result) {
-					deferred.resolve(result);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.get("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/queryCourses", includePrivate);
 		}
 	};
 });

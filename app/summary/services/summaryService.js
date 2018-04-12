@@ -6,20 +6,10 @@
  * Service in the workgroupApp.
  * workgroupApp specific api calls.
  */
-summaryApp.factory("summaryService", this.summaryService = function($http, $q) {
+summaryApp.factory("summaryService", this.summaryService = function(apiService) {
 	return {
 		getInitialState: function(workgroupId, year) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/summaryView/" + workgroupId + "/" + year, { withCredentials: true })
-			.success(function(summaryView) {
-				deferred.resolve(summaryView);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.get("/api/summaryView/" + workgroupId + "/" + year);
 		}
 	};
 });

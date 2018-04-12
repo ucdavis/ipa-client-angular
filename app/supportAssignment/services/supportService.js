@@ -1,103 +1,28 @@
-supportAssignmentApp.factory("supportService", this.supportService = function($http, $q, $window) {
+supportAssignmentApp.factory("supportService", this.supportService = function(apiService) {
 	return {
 		getInitialState: function(workgroupId, year, termShortCode) {
-			var deferred = $q.defer();
-
-			$http.get(serverRoot + "/api/instructionalSupportView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termShortCode, { withCredentials: true })
-			.success(function(assignmentView) {
-				deferred.resolve(assignmentView);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.get("/api/instructionalSupportView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termShortCode);
 		},
 		deleteAssignment: function(supportAssignment) {
-			var deferred = $q.defer();
-			$http.delete(serverRoot + "/api/instructionalSupportView/instructionalSupportAssignments/" + supportAssignment.id, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.delete("/api/instructionalSupportView/instructionalSupportAssignments/" + supportAssignment.id);
 		},
 		assignStaffToSectionGroup: function(sectionGroupId, supportStaffId, type) {
-			var deferred = $q.defer();
-			$http.post(serverRoot + "/api/instructionalSupportView/sectionGroups/" + sectionGroupId + "/assignmentType/" + type + "/supportStaff/" + supportStaffId, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.post("/api/instructionalSupportView/sectionGroups/" + sectionGroupId + "/assignmentType/" + type + "/supportStaff/" + supportStaffId);
 		},
 		assignStaffToSection: function(sectionId, supportStaffId, type) {
-			var deferred = $q.defer();
-			$http.post(serverRoot + "/api/instructionalSupportView/sections/" + sectionId + "/assignmentType/" + type + "/supportStaff/" + supportStaffId, { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.post("/api/instructionalSupportView/sections/" + sectionId + "/assignmentType/" + type + "/supportStaff/" + supportStaffId);
 		},
 		toggleSupportStaffSupportCallReview: function(scheduleId, termShortCode) {
-			var deferred = $q.defer();
-			$http.put(serverRoot + "/api/instructionalSupportView/schedules/" + scheduleId + "/terms/" + termShortCode + "/toggleSupportStaffSupportCallReview", { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.put("/api/instructionalSupportView/schedules/" + scheduleId + "/terms/" + termShortCode + "/toggleSupportStaffSupportCallReview");
 		},
 		toggleInstructorSupportCallReview: function(scheduleId, termShortCode) {
-			var deferred = $q.defer();
-			$http.put(serverRoot + "/api/instructionalSupportView/schedules/" + scheduleId + "/terms/" + termShortCode + "/toggleInstructorSupportCallReview", { withCredentials: true })
-			.success(function(payload) {
-				deferred.resolve(payload);
-			})
-			.error(function() {
-				deferred.reject();
-			});
-
-			return deferred.promise;
+			return apiService.put("/api/instructionalSupportView/schedules/" + scheduleId + "/terms/" + termShortCode + "/toggleInstructorSupportCallReview");
 		},
 		updateSupportAppointment: function (supportAppointment) {
-			var deferred = $q.defer();
-			$http.put(serverRoot + "/api/instructionalSupportView/schedules/" + supportAppointment.scheduleId, supportAppointment, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.put("/api/instructionalSupportView/schedules/" + supportAppointment.scheduleId, supportAppointment);
 		},
 		updateSectionGroup: function (sectionGroup) {
-			var deferred = $q.defer();
-			if (!sectionGroup) { return; }
-
-			$http.put(serverRoot + "/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup, { withCredentials: true })
-				.success(function (payload) {
-					deferred.resolve(payload);
-				})
-				.error(function () {
-					deferred.reject();
-				});
-
-			return deferred.promise;
+			return apiService.put("/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup);
 		}
 	};
 });
