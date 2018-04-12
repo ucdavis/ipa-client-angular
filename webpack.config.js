@@ -28,6 +28,7 @@ module.exports = {
       { from: 'app/**/*.css', to: '', flatten: true }
     ]),
     new ConcatPlugin({
+      uglify: true,
       sourceMap: false,
       fileName: 'admin.[hash:8].js',
       filesToConcat: ['./app/admin/**/*.js'],
