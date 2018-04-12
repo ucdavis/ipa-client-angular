@@ -3,6 +3,7 @@ var webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const ConcatPlugin = require('webpack-concat-plugin');
 
 module.exports = {
   entry: {
@@ -25,7 +26,12 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'app/**/*.html', to: '', flatten: true },
       { from: 'app/**/*.css', to: '', flatten: true }
-    ])
+    ]),
+    new ConcatPlugin({
+      sourceMap: false,
+      fileName: 'admin.[hash:8].js',
+      filesToConcat: ['./app/admin/**/*.js'],
+    })
   ],
   devServer: {
     contentBase: path.join(__dirname, "dist"),

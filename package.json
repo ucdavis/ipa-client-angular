@@ -36,7 +36,7 @@
     "grunt-contrib-uglify": "1.0.1",
     "grunt-contrib-watch": "1.0.0",
     "gruntify-eslint": "3.1.0",
-    "webpack-concat-plugin": "^2.4.2"
+    "webpack-concat-plugin": "3.0.0-beta.0"
   },
   "dependencies": {
     "angular": "1.6.9",
