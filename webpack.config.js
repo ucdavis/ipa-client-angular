@@ -16,11 +16,27 @@ module.exports = {
     // Purge contents of dist first
     new CleanWebpackPlugin(['dist']),
     // Copy html to output path (dist)
+    new CopyWebpackPlugin([
+      { from: 'app/**/*.html', to: '', flatten: true }
+    ]),
     // Copy css to output /css inside output path (dist)
     new CopyWebpackPlugin([
-      { from: 'app/**/*.html', to: '', flatten: true },
-      { from: 'app/**/*.css', to: 'css', flatten: true }
+      { from: 'app/**/*.css', to: 'css', flatten: true },
+      { from: 'vendor/css/**/*.css', to: 'css', flatten: true },
+      { from: 'node_modules/bootstrap/dist/css/**/*.css', to: 'css', flatten: true }
     ]),
+    // Copy fonts to output /fonts inside output path (dist)
+    new CopyWebpackPlugin([
+      { from: 'vendor/fonts/**/*', to: 'fonts', flatten: true },
+      { from: 'node_modules/bootstrap/dist/fonts/**/*', to: 'fonts', flatten: true },
+      { from: 'vendor/font/**/*', to: 'font', flatten: true }
+    ]),
+    // Copy assets to output /fonts inside output path (dist)
+    new CopyWebpackPlugin([
+    { from: 'app/assets/images/*', to: 'images', flatten: true },
+    { from: 'app/assets/images/colorpicker/*', to: 'images/colorpicker', flatten: true }
+  ]),
+    // Concat admin JS
     new ConcatPlugin({
       uglify: true,
       sourceMap: false,
