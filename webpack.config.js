@@ -35,15 +35,23 @@ module.exports = {
   plugins: [
     // Purge contents of dist first
     new CleanWebpackPlugin(['dist']),
+
     // Copy html to output path (dist)
     new CopyWebpackPlugin([
       {
         from: 'app/**/*.html',
-        to: 'templates/[name]Template.js',
+        to: '',
         flatten: true,
-        transform: function (content, path) {
-          return generateTemplateCache(content, path);
-      }}
+      }
+    ]),
+    // Create courses templateCaches
+    new CopyWebpackPlugin([
+      {
+        from: 'app/course/**/*.html',
+        to: 'templates/course/[name]Template.js',
+        flatten: true,
+        transform: function (content, path) { return generateTemplateCache(content, path); }
+      }
     ]),
     // Copy json status to output path (dist)
     new CopyWebpackPlugin([
@@ -185,7 +193,8 @@ module.exports = {
       fileName: 'js/courseApp.js',
       filesToConcat: [
         './app/course/courseApp.js',
-        './app/course/**/*.js'
+        './app/course/**/*.js',
+        './app/dist/templates/course/*.js'
       ],
     }),
     // Concat instructionalSupport JS
