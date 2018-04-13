@@ -72,7 +72,7 @@ module.exports = {
     ]),
     // Concat lib JS
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/lib.js',
       filesToConcat: [
@@ -81,31 +81,33 @@ module.exports = {
         './vendor/js/jquery-ui.min.js',
         './node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
         './node_modules/ng-idle/angular-idle.min.js',
+        './node_modules/angular-route/angular-route.min.js',
+        './node_modules/toastr/build/toastr.min.js',
         './node_modules/angular-sanitize/angular-sanitize.min.js',
-        './node_modules/ui-select/dist/select.js',
-        './node_modules/selectize/dist/js/standalone/selectize',
-        './node_modules/selectize/dist/js/standalone/selectize.min.js',
+        './node_modules/microplugin/src/microplugin.js',
+        './node_modules/selectize/dist/js/selectize.js',
+        './node_modules/ui-select/dist/select.js'
       ],
     }),
     // Concat shared JS
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/sharedApp.js',
       filesToConcat: [
+        './app/shared/sharedApp.js',
         './app/shared/helpers/**/*.js',
         './app/shared/entities/**/*.js',
         './app/shared/sharedReducers.js',
-        './app/shared/sharedApp.js',
         './app/shared/controllers/**/*.js',
         './app/shared/directives/**/*.js',
         './app/shared/filters/**/*.js',
-        './app/shared/service/**/*.js'
+        './app/shared/services/**/*.js'
       ],
     }),
     // Configuration files, separated so that they can be excluded in JS testing
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/sharedConfig.js',
       filesToConcat: [
@@ -115,7 +117,7 @@ module.exports = {
     }),
     // Production Snippets from various 3rd party services
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/snippets.js',
       filesToConcat: [
@@ -132,7 +134,7 @@ module.exports = {
     }),
     // Concat workgroup JS
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/workgroupApp.js',
       filesToConcat: ['./app/workgroup/**/*.js'],
@@ -149,7 +151,7 @@ module.exports = {
     }),
     // Concat assignment JS
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/assignmentApp.js',
       filesToConcat: [
@@ -159,7 +161,7 @@ module.exports = {
     }),
     // Concat teachingCall JS
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/teachingCallApp.js',
       filesToConcat: [
@@ -169,7 +171,7 @@ module.exports = {
     }),
     // Concat supportCall JS
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/supportCallApp.js',
       filesToConcat: [
@@ -179,7 +181,7 @@ module.exports = {
     }),
     // Concat scheduling JS
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/schedulingApp.js',
       filesToConcat: [
@@ -189,7 +191,7 @@ module.exports = {
     }),
     // Concat registrarReconciliationReport JS
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/registrarReconciliationReportApp.js',
       filesToConcat: [
@@ -199,7 +201,7 @@ module.exports = {
     }),
     // Concat scheduleSummaryReport JS
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/scheduleSummaryReportApp.js',
       filesToConcat: [
@@ -209,7 +211,7 @@ module.exports = {
     }),
     // Concat teachingCallResponseReport JS
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/teachingCallResponseReportApp.js',
       filesToConcat: [
