@@ -76,9 +76,15 @@ module.exports = {
       sourceMap: false,
       fileName: 'js/lib.js',
       filesToConcat: [
+        './node_modules/angular/angular.js',
         './vendor/js/jquery-1.11.3.min.js',
         './vendor/js/jquery-ui.min.js',
-        './node_modules/angular/angular.min.js'
+        './node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
+        './node_modules/ng-idle/angular-idle.min.js',
+        './node_modules/angular-sanitize/angular-sanitize.min.js',
+        './node_modules/ui-select/dist/select.js',
+        './node_modules/selectize/dist/js/standalone/selectize',
+        './node_modules/selectize/dist/js/standalone/selectize.min.js',
       ],
     }),
     // Concat shared JS
@@ -119,7 +125,7 @@ module.exports = {
     }),
     // Concat admin JS
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/adminApp.js',
       filesToConcat: ['./app/admin/**/*.js'],
@@ -133,7 +139,7 @@ module.exports = {
     }),
     // Concat summary JS
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       fileName: 'js/summaryApp.js',
       filesToConcat: [
