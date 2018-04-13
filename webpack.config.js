@@ -30,7 +30,6 @@ module.exports = {
       { from: 'node_modules/bootstrap/dist/css/**/*.css', to: 'css', flatten: true }
     ]),
     // Concat CSS lib
-    /*
     new ConcatPlugin({
       uglify: false,
       sourceMap: false,
@@ -43,7 +42,6 @@ module.exports = {
         './node_modules/selectize/dist/css/selectize.default.css'
       ],
     }),
-    */
     // Concat shared CSS
     new ConcatPlugin({
       uglify: false,
@@ -64,6 +62,13 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'app/assets/images/*', to: 'images', flatten: true },
       { from: 'app/assets/images/colorpicker/*', to: 'images/colorpicker', flatten: true }
+    ]),
+    // Copy vendor JS
+    new CopyWebpackPlugin([
+      { from: 'clientConfig.js', to: 'js', flatten: true },
+      { from: 'node_modules/bootstrap/dist/js/*', to: 'js', flatten: true },
+      { from: 'node_modules/fuse.js/dist/fuse.min.js', to: 'js', flatten: true },
+      { from: 'vendor/js/*', to: 'js', flatten: true },
     ]),
     // Concat shared JS
     new ConcatPlugin({
