@@ -4,6 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ConcatPlugin = require('webpack-concat-plugin');
+var jsesc = require('jsesc');
 
 module.exports = {
   entry: {
@@ -17,7 +18,28 @@ module.exports = {
     new CleanWebpackPlugin(['dist']),
     // Copy html to output path (dist)
     new CopyWebpackPlugin([
-      { from: 'app/**/*.html', to: '', flatten: true }
+      {
+        from: 'app/**/*.html',
+        to: 'templates/[name].js',
+        flatten: true,
+        transform: function (content, path) {
+          var explodedPath = path.split('/');
+          var templateName = explodedPath ? explodedPath[explodedPath.length -1] : null;
+
+          if (templateName == null) { return content; }
+
+          var template = content.toString('utf8');
+          var explodedTemplate = template.split(/\r?\n/);
+          var stringifiedTemplate = "";
+
+          for (var i = 0; i < explodedTemplate.length; i++) {
+            stringifiedTemplate += explodedTemplate[i];
+          }
+          stringifiedTemplate = "'" + stringifiedTemplate.replace("'", "\\'") + "'";
+          var templateCache = "myApp.run(function($templateCache) { $templateCache.put('" + templateName + ".html', " + stringifiedTemplate + ");});";
+
+          return templateCache;
+      }}
     ]),
     // Copy json status to output path (dist)
     new CopyWebpackPlugin([
@@ -132,12 +154,45 @@ module.exports = {
       fileName: 'js/adminApp.js',
       filesToConcat: ['./app/admin/**/*.js'],
     }),
-    // Concat workgroup JS
+    // Concat assignment JS
     new ConcatPlugin({
       uglify: false,
       sourceMap: false,
-      fileName: 'js/workgroupApp.js',
-      filesToConcat: ['./app/workgroup/**/*.js'],
+      fileName: 'js/assignmentApp.js',
+      filesToConcat: [
+        './app/assignment/assignmentApp.js',
+        './app/assignment/**/*.js'
+      ]
+    }),
+    // Concat budget JS
+    new ConcatPlugin({
+      uglify: false,
+      sourceMap: false,
+      fileName: 'js/budgetApp.js',
+      filesToConcat: [
+        './app/budget/budgetApp.js',
+        './app/budget/**/*.js'
+      ]
+    }),
+    // Concat course JS
+    new ConcatPlugin({
+      uglify: false,
+      sourceMap: false,
+      fileName: 'js/courseApp.js',
+      filesToConcat: [
+        './app/course/courseApp.js',
+        './app/course/**/*.js'
+      ],
+    }),
+    // Concat instructionalSupport JS
+    new ConcatPlugin({
+      uglify: false,
+      sourceMap: false,
+      fileName: 'js/instructionalSupportApp.js',
+      filesToConcat: [
+        './app/instructionalSupport/instructionalSupportApp.js',
+        './app/instructionalSupport/**/*.js'
+      ],
     }),
     // Concat summary JS
     new ConcatPlugin({
@@ -147,17 +202,7 @@ module.exports = {
       filesToConcat: [
         './app/summary/summaryApp.js',
         './app/summary/**/*.js'
-      ],
-    }),
-    // Concat assignment JS
-    new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
-      fileName: 'js/assignmentApp.js',
-      filesToConcat: [
-        './app/assignment/assignmentApp.js',
-        './app/assignment/**/*.js'
-      ],
+      ]
     }),
     // Concat teachingCall JS
     new ConcatPlugin({
@@ -167,7 +212,7 @@ module.exports = {
       filesToConcat: [
         './app/teachingCall/teachingCallApp.js',
         './app/teachingCall/**/*.js'
-      ],
+      ]
     }),
     // Concat supportCall JS
     new ConcatPlugin({
@@ -177,7 +222,17 @@ module.exports = {
       filesToConcat: [
         './app/supportCall/supportCallApp.js',
         './app/supportCall/**/*.js'
-      ],
+      ]
+    }),
+    // Concat workgroup JS
+    new ConcatPlugin({
+      uglify: false,
+      sourceMap: false,
+      fileName: 'js/workgroupApp.js',
+      filesToConcat: [
+        './app/workgroup/workgroupApp.js',
+        './app/workgroup/**/*.js'
+      ]
     }),
     // Concat scheduling JS
     new ConcatPlugin({
@@ -187,7 +242,7 @@ module.exports = {
       filesToConcat: [
         './app/scheduling/schedulingApp.js',
         './app/scheduling/**/*.js'
-      ],
+      ]
     }),
     // Concat registrarReconciliationReport JS
     new ConcatPlugin({
@@ -197,7 +252,7 @@ module.exports = {
       filesToConcat: [
         './app/registrarReconciliationReport/registrarReconciliationReportApp.js',
         './app/registrarReconciliationReport/**/*.js'
-      ],
+      ]
     }),
     // Concat scheduleSummaryReport JS
     new ConcatPlugin({
@@ -207,7 +262,7 @@ module.exports = {
       filesToConcat: [
         './app/scheduleSummaryReport/scheduleSummaryReportApp.js',
         './app/scheduleSummaryReport/**/*.js'
-      ],
+      ]
     }),
     // Concat teachingCallResponseReport JS
     new ConcatPlugin({
@@ -217,7 +272,7 @@ module.exports = {
       filesToConcat: [
         './app/teachingCallResponseReport/teachingCallResponseReportApp.js',
         './app/teachingCallResponseReport/**/*.js'
-      ],
+      ]
     })
   ],
   /*
