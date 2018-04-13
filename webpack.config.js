@@ -7,22 +7,16 @@ const ConcatPlugin = require('webpack-concat-plugin');
 
 module.exports = {
   entry: {
-    vendor: [
-      './src/index.js',
-      './src/print.js'
-    ],
-    app: './src/index.js',
-    print: './src/print.js',
-    main: './src/index.js',
-    walrus: './src/walrus.js',
-
+    app: './app/admin/adminApp.js',
   },
   output: {
-    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
   plugins: [
+    // Purge contents of dist first
     new CleanWebpackPlugin(['dist']),
+    // Copy html to output path (dist)
+    // Copy css to output /css inside output path (dist)
     new CopyWebpackPlugin([
       { from: 'app/**/*.html', to: '', flatten: true },
       { from: 'app/**/*.css', to: 'css', flatten: true }
