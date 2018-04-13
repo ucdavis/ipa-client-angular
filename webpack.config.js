@@ -19,12 +19,41 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'app/**/*.html', to: '', flatten: true }
     ]),
+    // Copy json status to output path (dist)
+    new CopyWebpackPlugin([
+      { from: 'app/**/*.json', to: '', flatten: true }
+    ]),
     // Copy css to output /css inside output path (dist)
     new CopyWebpackPlugin([
       { from: 'app/**/*.css', to: 'css', flatten: true },
       { from: 'vendor/css/**/*.css', to: 'css', flatten: true },
       { from: 'node_modules/bootstrap/dist/css/**/*.css', to: 'css', flatten: true }
     ]),
+    // Concat CSS lib
+    /*
+    new ConcatPlugin({
+      uglify: false,
+      sourceMap: false,
+      fileName: 'lib.css',
+      filesToConcat: [
+        './node_modules/bootstrap/dist/css/bootstrap.css',
+        './node_modules/fullcalendar/dist/fullcalendar.css',
+        './node_modules/ng-notify/dist/ng-notify.min.css',
+        './node_modules/ui-select/dist/select.css',
+        './node_modules/selectize/dist/css/selectize.default.css'
+      ],
+    }),
+    */
+    // Concat shared CSS
+    new ConcatPlugin({
+      uglify: false,
+      sourceMap: false,
+      fileName: 'lib.css',
+      filesToConcat: [
+        './app/shared/**/*.css',
+        './app/shared/directives/**/*.css'
+      ],
+    }),
     // Copy fonts to output /fonts inside output path (dist)
     new CopyWebpackPlugin([
       { from: 'vendor/fonts/**/*', to: 'fonts', flatten: true },
@@ -33,15 +62,114 @@ module.exports = {
     ]),
     // Copy assets to output /fonts inside output path (dist)
     new CopyWebpackPlugin([
-    { from: 'app/assets/images/*', to: 'images', flatten: true },
-    { from: 'app/assets/images/colorpicker/*', to: 'images/colorpicker', flatten: true }
-  ]),
+      { from: 'app/assets/images/*', to: 'images', flatten: true },
+      { from: 'app/assets/images/colorpicker/*', to: 'images/colorpicker', flatten: true }
+    ]),
+    // Concat shared JS
+    new ConcatPlugin({
+      uglify: true,
+      sourceMap: false,
+      fileName: 'sharedApp.js',
+      filesToConcat: [
+        './app/shared/helpers/**/*.js',
+        './app/shared/entities/**/*.js',
+        './app/shared/sharedReducers.js',
+        './app/shared/sharedApp.js',
+        './app/shared/controllers/**/*.js',
+        './app/shared/directives/**/*.js',
+        './app/shared/filters/**/*.js',
+        './app/shared/service/**/*.js'
+      ],
+    }),
+    // Configuration files, separated so that they can be excluded in JS testing
+    new ConcatPlugin({
+      uglify: true,
+      sourceMap: false,
+      fileName: 'sharedConfig.js',
+      filesToConcat: [
+        './app/shared/exceptionHandler.js',
+        './app/shared/sharedInterceptors.js'
+      ],
+    }),
+    // Production Snippets from various 3rd party services
+    new ConcatPlugin({
+      uglify: true,
+      sourceMap: false,
+      fileName: 'snippets.js',
+      filesToConcat: [
+        './vendor/js/userEcho.js',
+        './vendor/js/googleAnalytics.js'
+      ],
+    }),
     // Concat admin JS
     new ConcatPlugin({
       uglify: true,
       sourceMap: false,
-      fileName: 'admin.[hash:8].js',
+      fileName: 'adminApp.js',
       filesToConcat: ['./app/admin/**/*.js'],
+    }),
+    // Concat workgroup JS
+    new ConcatPlugin({
+      uglify: true,
+      sourceMap: false,
+      fileName: 'workgroupApp.js',
+      filesToConcat: ['./app/workgroup/**/*.js'],
+    }),
+    // Concat summary JS
+    new ConcatPlugin({
+      uglify: true,
+      sourceMap: false,
+      fileName: 'summaryApp.js',
+      filesToConcat: ['./app/summary/**/*.js'],
+    }),
+    // Concat assignment JS
+    new ConcatPlugin({
+      uglify: true,
+      sourceMap: false,
+      fileName: 'assignmentApp.js',
+      filesToConcat: ['./app/assignment/**/*.js'],
+    }),
+    // Concat teachingCall JS
+    new ConcatPlugin({
+      uglify: true,
+      sourceMap: false,
+      fileName: 'teachingCallApp.js',
+      filesToConcat: ['./app/teachingCall/**/*.js'],
+    }),
+    // Concat supportCall JS
+    new ConcatPlugin({
+      uglify: true,
+      sourceMap: false,
+      fileName: 'supportCallApp.js',
+      filesToConcat: ['./app/supportCall/**/*.js'],
+    }),
+    // Concat scheduling JS
+    new ConcatPlugin({
+      uglify: true,
+      sourceMap: false,
+      fileName: 'schedulingApp.js',
+      filesToConcat: ['./app/scheduling/**/*.js'],
+    }),
+    // Concat registrarReconciliationReport JS
+    new ConcatPlugin({
+      uglify: true,
+      sourceMap: false,
+      fileName: 'registrarReconciliationReportApp.js',
+      filesToConcat: ['./app/registrarReconciliationReport/**/*.js'],
+    }),
+    // Concat scheduleSummaryReport JS
+    new ConcatPlugin({
+      uglify: true,
+      sourceMap: false,
+      fileName: 'scheduleSummaryReportApp.js',
+      filesToConcat: ['./app/scheduleSummaryReport/**/*.js'],
+    }),
+    // Concat teachingCallResponseReport JS
+    new ConcatPlugin({
+      uglify: true,
+      sourceMap: false,
+      fileName: 'teachingCallResponseReportApp.js',
+      filesToConcat: ['./app/teachingCallResponseReport/**/*.js'],
     })
   ],
   devServer: {
