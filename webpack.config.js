@@ -33,7 +33,7 @@ module.exports = {
     new ConcatPlugin({
       uglify: false,
       sourceMap: false,
-      fileName: 'lib.css',
+      fileName: 'css/lib.css',
       filesToConcat: [
         './node_modules/bootstrap/dist/css/bootstrap.css',
         './node_modules/fullcalendar/dist/fullcalendar.css',
@@ -70,6 +70,16 @@ module.exports = {
       { from: 'node_modules/fuse.js/dist/fuse.min.js', to: 'js', flatten: true },
       { from: 'vendor/js/*', to: 'js', flatten: true },
     ]),
+    // Concat lib JS
+    new ConcatPlugin({
+      uglify: true,
+      sourceMap: false,
+      fileName: 'js/lib.js',
+      filesToConcat: [
+        './vendor/js/jquery-1.11.3.min.js',
+        './vendor/js/jquery-ui.min.js'
+      ],
+    }),
     // Concat shared JS
     new ConcatPlugin({
       uglify: true,
