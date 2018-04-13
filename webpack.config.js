@@ -29,7 +29,7 @@ module.exports = {
       { from: 'vendor/css/**/*.css', to: 'css', flatten: true },
       { from: 'node_modules/bootstrap/dist/css/**/*.css', to: 'css', flatten: true }
     ]),
-    // Concat CSS lib
+    // Concat lib CSS
     new ConcatPlugin({
       uglify: false,
       sourceMap: false,
@@ -77,7 +77,8 @@ module.exports = {
       fileName: 'js/lib.js',
       filesToConcat: [
         './vendor/js/jquery-1.11.3.min.js',
-        './vendor/js/jquery-ui.min.js'
+        './vendor/js/jquery-ui.min.js',
+        './node_modules/angular/angular.min.js'
       ],
     }),
     // Concat shared JS
@@ -135,56 +136,80 @@ module.exports = {
       uglify: true,
       sourceMap: false,
       fileName: 'js/summaryApp.js',
-      filesToConcat: ['./app/summary/**/*.js'],
+      filesToConcat: [
+        './app/summary/summaryApp.js',
+        './app/summary/**/*.js'
+      ],
     }),
     // Concat assignment JS
     new ConcatPlugin({
       uglify: true,
       sourceMap: false,
       fileName: 'js/assignmentApp.js',
-      filesToConcat: ['./app/assignment/**/*.js'],
+      filesToConcat: [
+        './app/assignment/assignmentApp.js',
+        './app/assignment/**/*.js'
+      ],
     }),
     // Concat teachingCall JS
     new ConcatPlugin({
       uglify: true,
       sourceMap: false,
       fileName: 'js/teachingCallApp.js',
-      filesToConcat: ['./app/teachingCall/**/*.js'],
+      filesToConcat: [
+        './app/teachingCall/teachingCallApp.js',
+        './app/teachingCall/**/*.js'
+      ],
     }),
     // Concat supportCall JS
     new ConcatPlugin({
       uglify: true,
       sourceMap: false,
       fileName: 'js/supportCallApp.js',
-      filesToConcat: ['./app/supportCall/**/*.js'],
+      filesToConcat: [
+        './app/supportCall/supportCallApp.js',
+        './app/supportCall/**/*.js'
+      ],
     }),
     // Concat scheduling JS
     new ConcatPlugin({
       uglify: true,
       sourceMap: false,
       fileName: 'js/schedulingApp.js',
-      filesToConcat: ['./app/scheduling/**/*.js'],
+      filesToConcat: [
+        './app/scheduling/schedulingApp.js',
+        './app/scheduling/**/*.js'
+      ],
     }),
     // Concat registrarReconciliationReport JS
     new ConcatPlugin({
       uglify: true,
       sourceMap: false,
       fileName: 'js/registrarReconciliationReportApp.js',
-      filesToConcat: ['./app/registrarReconciliationReport/**/*.js'],
+      filesToConcat: [
+        './app/registrarReconciliationReport/registrarReconciliationReportApp.js',
+        './app/registrarReconciliationReport/**/*.js'
+      ],
     }),
     // Concat scheduleSummaryReport JS
     new ConcatPlugin({
       uglify: true,
       sourceMap: false,
       fileName: 'js/scheduleSummaryReportApp.js',
-      filesToConcat: ['./app/scheduleSummaryReport/**/*.js'],
+      filesToConcat: [
+        './app/scheduleSummaryReport/scheduleSummaryReportApp.js',
+        './app/scheduleSummaryReport/**/*.js'
+      ],
     }),
     // Concat teachingCallResponseReport JS
     new ConcatPlugin({
       uglify: true,
       sourceMap: false,
       fileName: 'js/teachingCallResponseReportApp.js',
-      filesToConcat: ['./app/teachingCallResponseReport/**/*.js'],
+      filesToConcat: [
+        './app/teachingCallResponseReport/teachingCallResponseReportApp.js',
+        './app/teachingCallResponseReport/**/*.js'
+      ],
     })
   ],
   devServer: {
