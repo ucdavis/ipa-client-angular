@@ -25,7 +25,7 @@ module.exports = {
     new CleanWebpackPlugin(['dist']),
     new CopyWebpackPlugin([
       { from: 'app/**/*.html', to: '', flatten: true },
-      { from: 'app/**/*.css', to: '', flatten: true }
+      { from: 'app/**/*.css', to: 'css', flatten: true }
     ]),
     new ConcatPlugin({
       uglify: true,
