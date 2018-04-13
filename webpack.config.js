@@ -238,26 +238,29 @@ module.exports = {
     compress: true,
     port: 9000,
     inline: true,
-    historyApiFallback: {
-      index: 'index.html',
-      disableDotRule: false,
-      rewrites: [
-        { from: /^\/admin.*/, to: '/admin.html' },
-        { from: /^\/budget.*/, to: '/budget.html' },
-        { from: /^\/workgroups.*/, to: '/workgroups.html' },
-        { from: /^\/summary.*/, to: '/summary.html' },
-        { from: /^\/courses.*/, to: '/courses.html' },
-        { from: /^\/assignments.*/, to: '/assignments.html' },
-        { from: /^\/instructionalSupport.*/, to: '/instructionalSupport.html' },
-        { from: /^\/teachingCalls.*/, to: '/teachingCalls.html' },
-        { from: /^\/supportCalls.*/, to: '/supportCalls.html' },
-        { from: /^\/supportAssignments.*/, to: '/supportAssignments.html' },
-        { from: /^\/scheduling.*/, to: '/scheduling.html' },
-        { from: /^\/registrarReconciliationReport.*/, to: '/registrarReconciliationReport.html' },
-        { from: /^\/scheduleSummaryReport.*/, to: '/scheduleSummaryReport.html' },
-        { from: /^\/teachingCallResponseReport.*/, to: '/teachingCallResponseReport.html' },
-        { from: /./, to: '/not-found.html' }
-      ]
+    proxy: {
+      "/*": {
+        target: "http://localhost:9000",
+        bypass: function(req, res, proxyOptions) {
+          if ((req.url.indexOf("/summary") > -1 ) && (req.url != "/summary.html")) { return "/summary.html"; }
+          if ((req.url.indexOf("/admin") > -1 ) && (req.url != "/admin.html")) { return "/admin.html"; }
+          if ((req.url.indexOf("/budget") > -1 ) && (req.url != "/budget.html")) { return "/budget.html"; }
+          if ((req.url.indexOf("/workgroups") > -1 ) && (req.url != "/workgroup.html")) { return "/workgroup.html"; }
+          if ((req.url.indexOf("/courses") > -1 ) && (req.url != "/course.html")) { return "/course.html"; }
+          if ((req.url.indexOf("/assignments") > -1 ) && (req.url != "/assignment.html")) { return "/assignment.html"; }
+          if ((req.url.indexOf("/instructionalSupport") > -1 ) && (req.url != "/instructionalSupport.html")) { return "/instructionalSupport.html"; }
+          if ((req.url.indexOf("/teachingCalls") > -1 ) && (req.url != "/teachingCall.html")) { return "/teachingCall.html"; }
+          if ((req.url.indexOf("/supportCalls") > -1 ) && (req.url != "/supportCall.html")) { return "/supportCall.html"; }
+          if ((req.url.indexOf("/supportAssignments") > -1 ) && (req.url != "/supportAssignments.html")) { return "/supportAssignments.html"; }
+          if ((req.url.indexOf("/scheduling") > -1 ) && (req.url != "/scheduling.html")) { return "/scheduling.html"; }
+          if ((req.url.indexOf("/registrarReconciliationReport") > -1 ) && (req.url != "/registrarReconciliationReport.html")) { return "/registrarReconciliationReport.html"; }
+          if ((req.url.indexOf("/scheduleSummaryReport") > -1 ) && (req.url != "/scheduleSummaryReport.html")) { return "/scheduleSummaryReport.html"; }
+          if ((req.url.indexOf("/teachingCallResponseReport") > -1 ) && (req.url != "/teachingCallResponseReport.html")) { return "/teachingCallResponseReport.html"; }
+          if ((req.url.indexOf("/scheduleSummaryReport") > -1 ) && (req.url != "/scheduleSummaryReport.html")) { return "/scheduleSummaryReport.html"; }
+
+          return req.url;
+        }
+      }
     }
   }
 };
