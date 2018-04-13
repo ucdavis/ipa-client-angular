@@ -6,6 +6,25 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ConcatPlugin = require('webpack-concat-plugin');
 var jsesc = require('jsesc');
 
+function generateTemplateCache (content, path) {
+  var explodedPath = path.split('/');
+  var templateName = explodedPath ? explodedPath[explodedPath.length -1] : null;
+
+  if (templateName == null) { return content; }
+
+  var template = content.toString('utf8');
+  var explodedTemplate = template.split(/\r?\n/);
+  var stringifiedTemplate = "";
+
+  for (var i = 0; i < explodedTemplate.length; i++) {
+    stringifiedTemplate += explodedTemplate[i];
+  }
+  stringifiedTemplate = "'" + stringifiedTemplate.replace(/'/g, "\\'") + "'";
+  var templateCache = "myApp.run(function($templateCache) { $templateCache.put('" + templateName + ".html', " + stringifiedTemplate + ");});";
+
+  return templateCache;
+}
+
 module.exports = {
   entry: {
     app: './app/admin/adminApp.js',
@@ -20,25 +39,10 @@ module.exports = {
     new CopyWebpackPlugin([
       {
         from: 'app/**/*.html',
-        to: 'templates/[name].js',
+        to: 'templates/[name]Template.js',
         flatten: true,
         transform: function (content, path) {
-          var explodedPath = path.split('/');
-          var templateName = explodedPath ? explodedPath[explodedPath.length -1] : null;
-
-          if (templateName == null) { return content; }
-
-          var template = content.toString('utf8');
-          var explodedTemplate = template.split(/\r?\n/);
-          var stringifiedTemplate = "";
-
-          for (var i = 0; i < explodedTemplate.length; i++) {
-            stringifiedTemplate += explodedTemplate[i];
-          }
-          stringifiedTemplate = "'" + stringifiedTemplate.replace("'", "\\'") + "'";
-          var templateCache = "myApp.run(function($templateCache) { $templateCache.put('" + templateName + ".html', " + stringifiedTemplate + ");});";
-
-          return templateCache;
+          return generateTemplateCache(content, path);
       }}
     ]),
     // Copy json status to output path (dist)
