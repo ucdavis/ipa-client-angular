@@ -218,6 +218,19 @@ module.exports = {
       ],
     })
   ],
+  /*
+  module: {
+    rules: [
+      {
+        test: /\.html$/,
+        use: [
+          { loader:'ngtemplate-loader?relativeTo=' + (path.resolve(__dirname, './app/**')) },
+          { loader: 'html-loader' }
+        ]
+      }
+    ]
+  },
+  */
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     compress: true,
