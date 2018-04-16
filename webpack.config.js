@@ -83,7 +83,7 @@ module.exports = {
         './node_modules/angular/angular.js',
         './vendor/js/jquery-1.11.3.min.js',
         './vendor/js/jquery-ui.min.js',
-        './node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
+        './vendor/angular-bootstrap/ui-bootstrap-tpls.js',
         './node_modules/ng-idle/angular-idle.min.js',
         './node_modules/angular-route/angular-route.min.js',
         './node_modules/toastr/build/toastr.min.js',
@@ -119,7 +119,6 @@ module.exports = {
       sourceMap: false,
       fileName: 'js/sharedApp.js',
       filesToConcat: [
-        './node_modules/angular-ui-bootstrap/template/**/*.js',
         './app/shared/sharedApp.js',
         './app/shared/helpers/**/*.js',
         './app/shared/entities/**/*.js',
