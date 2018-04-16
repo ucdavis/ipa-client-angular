@@ -4,26 +4,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ConcatPlugin = require('webpack-concat-plugin');
-var jsesc = require('jsesc');
-
-function generateTemplateCache (content, path) {
-  var explodedPath = path.split('/');
-  var templateName = explodedPath ? explodedPath[explodedPath.length -1] : null;
-
-  if (templateName == null) { return content; }
-
-  var template = content.toString('utf8');
-  var explodedTemplate = template.split(/\r?\n/);
-  var stringifiedTemplate = "";
-
-  for (var i = 0; i < explodedTemplate.length; i++) {
-    stringifiedTemplate += explodedTemplate[i];
-  }
-  stringifiedTemplate = "'" + stringifiedTemplate.replace(/'/g, "\\'") + "'";
-  var templateCache = "myApp.run(function($templateCache) { $templateCache.put('" + templateName + ".html', " + stringifiedTemplate + ");});";
-
-  return templateCache;
-}
 
 module.exports = {
   entry: {
@@ -33,24 +13,12 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   plugins: [
-    // Purge contents of dist first
-    new CleanWebpackPlugin(['dist']),
-
     // Copy html to output path (dist)
     new CopyWebpackPlugin([
       {
         from: 'app/**/*.html',
         to: '',
         flatten: true,
-      }
-    ]),
-    // Create courses templateCaches
-    new CopyWebpackPlugin([
-      {
-        from: 'app/course/**/*.html',
-        to: 'templates/course/[name]Template.js',
-        flatten: true,
-        transform: function (content, path) { return generateTemplateCache(content, path); }
       }
     ]),
     // Copy json status to output path (dist)
@@ -110,6 +78,8 @@ module.exports = {
       sourceMap: false,
       fileName: 'js/lib.js',
       filesToConcat: [
+        './node_modules/underscore/underscore-min.js',
+        './node_modules/moment/min/moment.min.js',
         './node_modules/angular/angular.js',
         './vendor/js/jquery-1.11.3.min.js',
         './vendor/js/jquery-ui.min.js',
@@ -121,22 +91,6 @@ module.exports = {
         './node_modules/microplugin/src/microplugin.js',
         './node_modules/selectize/dist/js/selectize.js',
         './node_modules/ui-select/dist/select.js'
-      ],
-    }),
-    // Concat shared JS
-    new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
-      fileName: 'js/sharedApp.js',
-      filesToConcat: [
-        './app/shared/sharedApp.js',
-        './app/shared/helpers/**/*.js',
-        './app/shared/entities/**/*.js',
-        './app/shared/sharedReducers.js',
-        './app/shared/controllers/**/*.js',
-        './app/shared/directives/**/*.js',
-        './app/shared/filters/**/*.js',
-        './app/shared/services/**/*.js'
       ],
     }),
     // Configuration files, separated so that they can be excluded in JS testing
@@ -159,6 +113,24 @@ module.exports = {
         './vendor/js/googleAnalytics.js'
       ],
     }),
+    // Concat shared JS
+    new ConcatPlugin({
+      uglify: false,
+      sourceMap: false,
+      fileName: 'js/sharedApp.js',
+      filesToConcat: [
+        './node_modules/angular-ui-bootstrap/template/**/*.js',
+        './app/shared/sharedApp.js',
+        './app/shared/helpers/**/*.js',
+        './app/shared/entities/**/*.js',
+        './app/shared/sharedReducers.js',
+        './app/shared/controllers/**/*.js',
+        './app/shared/directives/**/*.js',
+        './app/shared/filters/**/*.js',
+        './app/shared/services/**/*.js',
+        './dist/templates/shared/**/*.js'
+      ],
+    }),
     // Concat admin JS
     new ConcatPlugin({
       uglify: false,
@@ -173,7 +145,8 @@ module.exports = {
       fileName: 'js/assignmentApp.js',
       filesToConcat: [
         './app/assignment/assignmentApp.js',
-        './app/assignment/**/*.js'
+        './app/assignment/**/*.js',
+        './dist/templates/assignment/**/*.js'
       ]
     }),
     // Concat budget JS
@@ -183,7 +156,8 @@ module.exports = {
       fileName: 'js/budgetApp.js',
       filesToConcat: [
         './app/budget/budgetApp.js',
-        './app/budget/**/*.js'
+        './app/budget/**/*.js',
+        './dist/templates/budget/**/*.js'
       ]
     }),
     // Concat course JS
@@ -194,7 +168,7 @@ module.exports = {
       filesToConcat: [
         './app/course/courseApp.js',
         './app/course/**/*.js',
-        './app/dist/templates/course/*.js'
+        './dist/templates/course/**/*.js'
       ],
     }),
     // Concat instructionalSupport JS
@@ -204,7 +178,9 @@ module.exports = {
       fileName: 'js/instructionalSupportApp.js',
       filesToConcat: [
         './app/instructionalSupport/instructionalSupportApp.js',
-        './app/instructionalSupport/**/*.js'
+        './app/instructionalSupport/**/*.js',
+        './dist/templates/instructionalSupport/**/*.js'
+
       ],
     }),
     // Concat summary JS
@@ -214,7 +190,9 @@ module.exports = {
       fileName: 'js/summaryApp.js',
       filesToConcat: [
         './app/summary/summaryApp.js',
-        './app/summary/**/*.js'
+        './app/summary/**/*.js',
+        './dist/templates/summary/**/*.js'
+
       ]
     }),
     // Concat teachingCall JS
@@ -224,7 +202,19 @@ module.exports = {
       fileName: 'js/teachingCallApp.js',
       filesToConcat: [
         './app/teachingCall/teachingCallApp.js',
-        './app/teachingCall/**/*.js'
+        './app/teachingCall/**/*.js',
+        './dist/templates/teachingCall/**/*.js'
+      ]
+    }),
+    // Concat supportAssignment JS
+    new ConcatPlugin({
+      uglify: false,
+      sourceMap: false,
+      fileName: 'js/supportAssignmentApp.js',
+      filesToConcat: [
+        './app/supportAssignment/supportAssignmentApp.js',
+        './app/supportAssignment/**/*.js',
+        './dist/templates/supportAssignment/**/*.js'
       ]
     }),
     // Concat supportCall JS
@@ -234,7 +224,8 @@ module.exports = {
       fileName: 'js/supportCallApp.js',
       filesToConcat: [
         './app/supportCall/supportCallApp.js',
-        './app/supportCall/**/*.js'
+        './app/supportCall/**/*.js',
+        './dist/templates/supportCall/**/*.js'
       ]
     }),
     // Concat workgroup JS
@@ -244,7 +235,8 @@ module.exports = {
       fileName: 'js/workgroupApp.js',
       filesToConcat: [
         './app/workgroup/workgroupApp.js',
-        './app/workgroup/**/*.js'
+        './app/workgroup/**/*.js',
+        './dist/templates/workgroup/**/*.js'
       ]
     }),
     // Concat scheduling JS
@@ -254,7 +246,8 @@ module.exports = {
       fileName: 'js/schedulingApp.js',
       filesToConcat: [
         './app/scheduling/schedulingApp.js',
-        './app/scheduling/**/*.js'
+        './app/scheduling/**/*.js',
+        './dist/templates/scheduling/**/*.js'
       ]
     }),
     // Concat registrarReconciliationReport JS
@@ -264,7 +257,8 @@ module.exports = {
       fileName: 'js/registrarReconciliationReportApp.js',
       filesToConcat: [
         './app/registrarReconciliationReport/registrarReconciliationReportApp.js',
-        './app/registrarReconciliationReport/**/*.js'
+        './app/registrarReconciliationReport/**/*.js',
+        './dist/templates/registrarReconciliationReport/**/*.js'
       ]
     }),
     // Concat scheduleSummaryReport JS
@@ -274,7 +268,8 @@ module.exports = {
       fileName: 'js/scheduleSummaryReportApp.js',
       filesToConcat: [
         './app/scheduleSummaryReport/scheduleSummaryReportApp.js',
-        './app/scheduleSummaryReport/**/*.js'
+        './app/scheduleSummaryReport/**/*.js',
+        './dist/templates/scheduleSummaryReport/**/*.js'
       ]
     }),
     // Concat teachingCallResponseReport JS
@@ -284,23 +279,11 @@ module.exports = {
       fileName: 'js/teachingCallResponseReportApp.js',
       filesToConcat: [
         './app/teachingCallResponseReport/teachingCallResponseReportApp.js',
-        './app/teachingCallResponseReport/**/*.js'
+        './app/teachingCallResponseReport/**/*.js',
+        './dist/templates/teachingCallResponseReport/**/*.js'
       ]
     })
   ],
-  /*
-  module: {
-    rules: [
-      {
-        test: /\.html$/,
-        use: [
-          { loader:'ngtemplate-loader?relativeTo=' + (path.resolve(__dirname, './app/**')) },
-          { loader: 'html-loader' }
-        ]
-      }
-    ]
-  },
-  */
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     compress: true,
@@ -319,7 +302,7 @@ module.exports = {
           if ((req.url.indexOf("/instructionalSupport") > -1 ) && (req.url != "/instructionalSupport.html")) { return "/instructionalSupport.html"; }
           if ((req.url.indexOf("/teachingCalls") > -1 ) && (req.url != "/teachingCall.html")) { return "/teachingCall.html"; }
           if ((req.url.indexOf("/supportCalls") > -1 ) && (req.url != "/supportCall.html")) { return "/supportCall.html"; }
-          if ((req.url.indexOf("/supportAssignments") > -1 ) && (req.url != "/supportAssignments.html")) { return "/supportAssignments.html"; }
+          if ((req.url.indexOf("/supportAssignments") > -1 ) && (req.url != "/supportAssignment.html")) { return "/supportAssignment.html"; }
           if ((req.url.indexOf("/scheduling") > -1 ) && (req.url != "/scheduling.html")) { return "/scheduling.html"; }
           if ((req.url.indexOf("/registrarReconciliationReport") > -1 ) && (req.url != "/registrarReconciliationReport.html")) { return "/registrarReconciliationReport.html"; }
           if ((req.url.indexOf("/scheduleSummaryReport") > -1 ) && (req.url != "/scheduleSummaryReport.html")) { return "/scheduleSummaryReport.html"; }
