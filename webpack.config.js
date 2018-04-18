@@ -78,10 +78,9 @@ module.exports = {
       sourceMap: false,
       fileName: 'js/lib.js',
       filesToConcat: [
-        './vendor/legacy/jquery/dist/jquery.js',
+        './node_modules/jquery/dist/jquery.js',
         './node_modules/underscore/underscore-min.js',
         './node_modules/moment/min/moment.min.js',
-
         './node_modules/angular/angular.js',
         './node_modules/ng-idle/angular-idle.min.js',
         './node_modules/angular-sanitize/angular-sanitize.min.js',
@@ -89,13 +88,12 @@ module.exports = {
         './node_modules/toastr/build/toastr.min.js',
         './node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
         './node_modules/fullcalendar/dist/fullcalendar.js',
+        './node_modules/selectize/dist/js/standalone/selectize.js',
+        './node_modules/angular-selectize2/dist/angular-selectize.js',
+        './node_modules/ui-select/dist/select.js',
 
-        './vendor/legacy/bootstrap/dist/js/bootstrap.js',
-        './vendor/legacy/angular-bootstrap/ui-bootstrap-tpls.js',
-
-//      './vendor/js/jquery-ui.min.js',
-//      './node_modules/microplugin/src/microplugin.js',
-//      './node_modules/selectize/dist/js/selectize.js',
+        './node_modules/bootstrap/dist/js/bootstrap.js',
+        './node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
       ],
     }),
     // Configuration files, separated so that they can be excluded in JS testing
