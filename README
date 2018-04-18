@@ -1,11 +1,11 @@
 Installation
 ------------
-1. Ensure 'npm' and 'node' are installed
+1. Ensure 'npm', 'node' and 'yarn' are installed
 
 Dev Machine Instructions
 ------------------------
-1. npm install
-2. npm run start
+1. yarn install
+2. yarn start
 
 Docker Notes
 ------------
