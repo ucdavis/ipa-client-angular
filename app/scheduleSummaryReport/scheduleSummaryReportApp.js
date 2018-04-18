@@ -1,4 +1,22 @@
-window.scheduleSummaryReportApp = angular.module("scheduleSummaryReportApp", ["sharedApp", "ngRoute"]);
+// Found in 'dist' via resolve config
+import 'templates/scheduleSummaryReport/scheduleSummaryReportCtrlTemplate.js';
+
+// ScheduleSummaryReport controllers
+import './controllers/scheduleSummaryReportCtrl.js';
+
+// ScheduleSummaryReport services
+import './services/scheduleSummaryActionCreators.js';
+import './services/scheduleSummaryService.js';
+import './services/scheduleSummaryStateService.js';
+
+// CONSTANTS
+var INIT_STATE = "INIT_STATE";
+
+// App declaration
+const scheduleSummaryReportApp = angular.module("scheduleSummaryReportApp", [
+	"sharedApp",
+	"ngRoute"
+]);
 
 scheduleSummaryReportApp.config(function ($routeProvider) {
 	return $routeProvider
@@ -30,4 +48,4 @@ scheduleSummaryReportApp.config(function ($routeProvider) {
 		});
 });
 
-var INIT_STATE = "INIT_STATE";
+export default scheduleSummaryReportApp;

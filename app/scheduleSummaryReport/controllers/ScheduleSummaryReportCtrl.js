@@ -1,3 +1,8 @@
+// ScheduleSummaryReport services
+import '.././services/scheduleSummaryActionCreators.js';
+import '.././services/scheduleSummaryService.js';
+import '.././services/scheduleSummaryStateService.js';
+
 /**
  * @ngdoc function
  * @name ipaClientAngularApp.controller:ReportCtrl

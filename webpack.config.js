@@ -7,10 +7,18 @@ const ConcatPlugin = require('webpack-concat-plugin');
 
 module.exports = {
   entry: {
-    app: './app/admin/adminApp.js',
+    scheduleSummaryReportApp: './app/scheduleSummaryReport/scheduleSummaryReportApp.js',
   },
   output: {
+    filename: 'js/scheduleSummaryReportApp.js',
     path: path.resolve(__dirname, 'dist')
+  },
+  resolve: {
+    modules: [
+      "dist",
+      path.resolve(__dirname, "app"),
+      "node_modules"
+    ]
   },
   plugins: [
     // Copy html to output path (dist)
@@ -265,17 +273,6 @@ module.exports = {
         './dist/templates/registrarReconciliationReport/**/*.js'
       ]
     }),
-    // Concat scheduleSummaryReport JS
-    new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
-      fileName: 'js/scheduleSummaryReportApp.js',
-      filesToConcat: [
-        './app/scheduleSummaryReport/scheduleSummaryReportApp.js',
-        './app/scheduleSummaryReport/**/*.js',
-        './dist/templates/scheduleSummaryReport/**/*.js'
-      ]
-    }),
     // Concat teachingCallResponseReport JS
     new ConcatPlugin({
       uglify: false,
@@ -309,7 +306,6 @@ module.exports = {
           if ((req.url.indexOf("/supportAssignments") > -1 ) && (req.url != "/supportAssignment.html")) { return "/supportAssignment.html"; }
           if ((req.url.indexOf("/scheduling") > -1 ) && (req.url != "/scheduling.html")) { return "/scheduling.html"; }
           if ((req.url.indexOf("/registrarReconciliationReport") > -1 ) && (req.url != "/registrarReconciliationReport.html")) { return "/registrarReconciliationReport.html"; }
-          if ((req.url.indexOf("/scheduleSummaryReport") > -1 ) && (req.url != "/scheduleSummaryReport.html")) { return "/scheduleSummaryReport.html"; }
           if ((req.url.indexOf("/teachingCallResponseReport") > -1 ) && (req.url != "/teachingCallResponseReport.html")) { return "/teachingCallResponseReport.html"; }
           if ((req.url.indexOf("/scheduleSummaryReport") > -1 ) && (req.url != "/scheduleSummaryReport.html")) { return "/scheduleSummaryReport.html"; }
 
