@@ -87,6 +87,7 @@ module.exports = {
         './node_modules/angular-sanitize/angular-sanitize.min.js',
         './node_modules/angular-route/angular-route.min.js',
         './node_modules/toastr/build/toastr.min.js',
+        './node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
 
         './vendor/legacy/bootstrap/dist/js/bootstrap.js',
         './vendor/legacy/angular-bootstrap/ui-bootstrap-tpls.js',
