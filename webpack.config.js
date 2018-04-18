@@ -33,7 +33,7 @@ module.exports = {
     ]),
     // Concat lib CSS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'css/lib.css',
       filesToConcat: [
@@ -46,7 +46,7 @@ module.exports = {
     }),
     // Concat shared CSS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'css/shared.css',
       filesToConcat: [
@@ -74,7 +74,7 @@ module.exports = {
     ]),
     // Concat lib JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/lib.js',
       filesToConcat: [
@@ -98,7 +98,7 @@ module.exports = {
     }),
     // Configuration files, separated so that they can be excluded in JS testing
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/sharedConfig.js',
       filesToConcat: [
@@ -108,7 +108,7 @@ module.exports = {
     }),
     // Production Snippets from various 3rd party services
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/snippets.js',
       filesToConcat: [
@@ -118,7 +118,7 @@ module.exports = {
     }),
     // Concat shared JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/sharedApp.js',
       filesToConcat: [
@@ -135,7 +135,7 @@ module.exports = {
     }),
     // Concat admin JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/adminApp.js',
       filesToConcat: [
@@ -146,7 +146,7 @@ module.exports = {
     }),
     // Concat assignment JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/assignmentApp.js',
       filesToConcat: [
@@ -157,7 +157,7 @@ module.exports = {
     }),
     // Concat budget JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/budgetApp.js',
       filesToConcat: [
@@ -168,7 +168,7 @@ module.exports = {
     }),
     // Concat course JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/courseApp.js',
       filesToConcat: [
@@ -179,7 +179,7 @@ module.exports = {
     }),
     // Concat instructionalSupport JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/instructionalSupportApp.js',
       filesToConcat: [
@@ -191,7 +191,7 @@ module.exports = {
     }),
     // Concat summary JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/summaryApp.js',
       filesToConcat: [
@@ -203,7 +203,7 @@ module.exports = {
     }),
     // Concat teachingCall JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/teachingCallApp.js',
       filesToConcat: [
@@ -214,7 +214,7 @@ module.exports = {
     }),
     // Concat supportAssignment JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/supportAssignmentApp.js',
       filesToConcat: [
@@ -225,7 +225,7 @@ module.exports = {
     }),
     // Concat supportCall JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/supportCallApp.js',
       filesToConcat: [
@@ -236,7 +236,7 @@ module.exports = {
     }),
     // Concat workgroup JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/workgroupApp.js',
       filesToConcat: [
@@ -247,7 +247,7 @@ module.exports = {
     }),
     // Concat scheduling JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/schedulingApp.js',
       filesToConcat: [
@@ -258,7 +258,7 @@ module.exports = {
     }),
     // Concat registrarReconciliationReport JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/registrarReconciliationReportApp.js',
       filesToConcat: [
@@ -269,7 +269,7 @@ module.exports = {
     }),
     // Concat scheduleSummaryReport JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/scheduleSummaryReportApp.js',
       filesToConcat: [
@@ -280,7 +280,7 @@ module.exports = {
     }),
     // Concat teachingCallResponseReport JS
     new ConcatPlugin({
-      uglify: false,
+      uglify: true,
       sourceMap: false,
       fileName: 'js/teachingCallResponseReportApp.js',
       filesToConcat: [
