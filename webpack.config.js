@@ -139,7 +139,11 @@ module.exports = {
       uglify: false,
       sourceMap: false,
       fileName: 'js/adminApp.js',
-      filesToConcat: ['./app/admin/**/*.js'],
+      filesToConcat: [
+        './app/admin/adminApp.js',
+        './app/admin/**/*.js',
+        './dist/templates/admin/**/*.js'
+      ],
     }),
     // Concat assignment JS
     new ConcatPlugin({
