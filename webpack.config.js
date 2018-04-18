@@ -33,7 +33,6 @@ module.exports = {
     ]),
     // Concat lib CSS
     new ConcatPlugin({
-      uglify: true,
       sourceMap: false,
       fileName: 'css/lib.css',
       filesToConcat: [
@@ -46,7 +45,6 @@ module.exports = {
     }),
     // Concat shared CSS
     new ConcatPlugin({
-      uglify: true,
       sourceMap: false,
       fileName: 'css/shared.css',
       filesToConcat: [
