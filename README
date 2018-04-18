@@ -1,12 +1,11 @@
 Installation
 ------------
-1. Ensure 'npm', 'bower', and 'grunt' are installed. Bower and Grunt can be installed via npm.
+1. Ensure 'npm' and 'node' are installed
 
 Dev Machine Instructions
 ------------------------
 1. npm install
-2. bower install
-3. grunt serve
+2. npm run start
 
 Docker Notes
 ------------
