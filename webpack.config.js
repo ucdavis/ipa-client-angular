@@ -78,19 +78,22 @@ module.exports = {
       sourceMap: false,
       fileName: 'js/lib.js',
       filesToConcat: [
+        './vendor/legacy/jquery/dist/jquery.js',
         './node_modules/underscore/underscore-min.js',
         './node_modules/moment/min/moment.min.js',
+
         './node_modules/angular/angular.js',
-        './vendor/js/jquery-1.11.3.min.js',
-        './vendor/js/jquery-ui.min.js',
-        './vendor/angular-bootstrap/ui-bootstrap-tpls.js',
         './node_modules/ng-idle/angular-idle.min.js',
+        './node_modules/angular-sanitize/angular-sanitize.min.js',
         './node_modules/angular-route/angular-route.min.js',
         './node_modules/toastr/build/toastr.min.js',
-        './node_modules/angular-sanitize/angular-sanitize.min.js',
-        './node_modules/microplugin/src/microplugin.js',
-        './node_modules/selectize/dist/js/selectize.js',
-        './node_modules/ui-select/dist/select.js'
+
+        './vendor/legacy/bootstrap/dist/js/bootstrap.js',
+        './vendor/legacy/angular-bootstrap/ui-bootstrap-tpls.js',
+
+//      './vendor/js/jquery-ui.min.js',
+//      './node_modules/microplugin/src/microplugin.js',
+//      './node_modules/selectize/dist/js/selectize.js',
       ],
     }),
     // Configuration files, separated so that they can be excluded in JS testing
