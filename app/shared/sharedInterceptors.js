@@ -1,4 +1,4 @@
-var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
+export function slowConnectionInterceptor ($q, $timeout, $rootScope) {
 	var reqCount = 0;
 	return {
 		request: function (config) {
@@ -45,7 +45,9 @@ var slowConnectionInterceptor = function ($q, $timeout, $rootScope) {
 	};
 };
 
-var tokenValidatorInterceptor = function ($q, $injector, $rootScope) {
+slowConnectionInterceptor.$inject = ['$q', '$timeout', '$rootScope'];
+
+export function tokenValidatorInterceptor ($q, $injector, $rootScope) {
 	return {
 		responseError: function (rejection) {
 			if (rejection.status === 440) {
@@ -63,9 +65,4 @@ var tokenValidatorInterceptor = function ($q, $injector, $rootScope) {
 	};
 };
 
-sharedApp
-	// Intercept Ajax traffic
-	.config(function($httpProvider) {
-		$httpProvider.interceptors.push(slowConnectionInterceptor);
-		$httpProvider.interceptors.push(tokenValidatorInterceptor);
-	});
+tokenValidatorInterceptor.$inject = ['$q', '$timeout', '$rootScope'];

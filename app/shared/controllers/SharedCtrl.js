@@ -1,12 +1,5 @@
-/**
- * @ngdoc function
- * @name ipaClientAngularApp.controller:SharedCtrl
- * @description
- * # SharedCtrl
- * Controller of the ipaClientAngularApp
- */
-sharedApp.controller('SharedCtrl', ['$scope', '$rootScope', '$http', '$uibModal', '$log', 'authService',
-		this.SharedCtrl = function ($scope, $rootScope, $http, $uibModal, $log, authService) {
+class SharedCtrl {
+		constructor ($scope, $rootScope, $http, $uibModal, $log, authService) {
 
 			$rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
 				if (!$rootScope.loadingError) { $rootScope.loadingError = 'unknown'; }
@@ -47,4 +40,9 @@ sharedApp.controller('SharedCtrl', ['$scope', '$rootScope', '$http', '$uibModal'
 				authService.logout("/");
 			});
 
-	}]);
+	};
+}
+
+	SharedCtrl.$inject = ['$scope', '$rootScope', '$http', '$uibModal', '$log', 'authService'];
+
+	export default SharedCtrl;
