@@ -20,24 +20,15 @@ function config ($routeProvider) {
 	return $routeProvider
 		.when("/:workgroupId/:year", {
 			template: require('./templates/ScheduleSummaryReportCtrl.html'),
-			controller: "ScheduleSummaryReportCtrl",
-			resolve: {
-				payload: ScheduleSummaryReportCtrl.getPayload
-			}
+			controller: "ScheduleSummaryReportCtrl"
 		})
 		.when("/:workgroupId/:year/:termShortCode", {
 			template: require('./templates/ScheduleSummaryReportCtrl.html'),
-			controller: "ScheduleSummaryReportCtrl",
-			resolve: {
-				payload: ScheduleSummaryReportCtrl.getPayload
-			}
+			controller: "ScheduleSummaryReportCtrl"
 		})
 		.when("/", {
 			template: require('./templates/ScheduleSummaryReportCtrl.html'),
-			controller: "ScheduleSummaryReportCtrl",
-			resolve: {
-				payload: ScheduleSummaryReportCtrl.getPayload
-			}
+			controller: "ScheduleSummaryReportCtrl"
 		})
 		.otherwise({
 			redirectTo: function () {
