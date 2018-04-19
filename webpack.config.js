@@ -21,7 +21,8 @@ module.exports = {
     ]
   },
   module: {
-    rules: [{
+    rules: [
+    {
       // JS LOADER
       // Reference: https://github.com/babel/babel-loader
       // Transpile .js files using babel-loader
@@ -29,7 +30,12 @@ module.exports = {
       test: /\.js$/,
       loader: 'babel-loader',
       exclude: /node_modules/
-    }]  
+    },
+    {
+      test: /\.html$/,
+      loader: 'raw-loader' 
+    }
+  ],
   },
   plugins: [
     // Copy html to output path (dist)
