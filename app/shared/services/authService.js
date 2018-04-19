@@ -1,12 +1,6 @@
-/**
- * @ngdoc service
- * @name ipaClientAngularApp.authService
- * @description
- * # authService
- * Service in the ipaClientAngularApp.
- */
-angular.module('sharedApp')
-	.service('authService', function ($http, $window, $q, $location, $rootScope, $log, CurrentUser, $route) {
+
+class AuthService {
+	constructor ($http, $window, $q, $location, $rootScope, $log, CurrentUser, $route) {
 		return {
 			validateToken: function (token) {
 				var self = this;
@@ -308,4 +302,9 @@ angular.module('sharedApp')
 				$("form#unknownErrorForm").submit();
 			}
 		};
-	});
+	}
+}
+
+AuthService.$inject = ['$http', '$window', '$q', '$location', '$rootScope', '$log', 'CurrentUser', '$route'];
+
+export default AuthService;
