@@ -8,9 +8,10 @@ const ConcatPlugin = require('webpack-concat-plugin');
 module.exports = {
   entry: {
     scheduleSummaryReportApp: './app/scheduleSummaryReport/scheduleSummaryReportApp.js',
+    sharedApp: './app/shared/sharedApp.js',
   },
   output: {
-    filename: 'js/scheduleSummaryReportApp.js',
+    filename: 'js/[name].js',
     path: path.resolve(__dirname, 'dist')
   },
   resolve: {
@@ -119,16 +120,6 @@ module.exports = {
         './node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
       ],
     }),
-    // Configuration files, separated so that they can be excluded in JS testing
-    new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
-      fileName: 'js/sharedConfig.js',
-      filesToConcat: [
-        './app/shared/exceptionHandler.js',
-        './app/shared/sharedInterceptors.js'
-      ],
-    }),
     // Production Snippets from various 3rd party services
     new ConcatPlugin({
       uglify: false,
@@ -137,23 +128,6 @@ module.exports = {
       filesToConcat: [
         './vendor/js/userEcho.js',
         './vendor/js/googleAnalytics.js'
-      ],
-    }),
-    // Concat shared JS
-    new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
-      fileName: 'js/sharedApp.js',
-      filesToConcat: [
-        './app/shared/sharedApp.js',
-        './app/shared/helpers/**/*.js',
-        './app/shared/entities/**/*.js',
-        './app/shared/sharedReducers.js',
-        './app/shared/controllers/**/*.js',
-        './app/shared/directives/**/*.js',
-        './app/shared/filters/**/*.js',
-        './app/shared/services/**/*.js',
-        './dist/templates/shared/**/*.js'
       ],
     }),
     // Concat admin JS
