@@ -2,9 +2,9 @@
 import ScheduleSummaryReportCtrl from './controllers/scheduleSummaryReportCtrl.js';
 
 // ScheduleSummaryReport services
-import './services/scheduleSummaryActionCreators.js';
-import './services/scheduleSummaryService.js';
-import './services/scheduleSummaryStateService.js';
+import ScheduleSummaryReportActionCreators from './services/scheduleSummaryReportActionCreators.js';
+import ScheduleSummaryReportService from './services/scheduleSummaryReportService.js';
+import ScheduleSummaryReportStateService from './services/scheduleSummaryReportStateService.js';
 
 // CONSTANTS
 var INIT_STATE = "INIT_STATE";
@@ -15,9 +15,8 @@ var dependencies = [
 	"ngRoute"
 ];
 
-// App declaration
-const scheduleSummaryReportApp = angular.module("scheduleSummaryReportApp", dependencies)
-.config(function ($routeProvider) {
+// Config
+function config ($routeProvider) {
 	return $routeProvider
 		.when("/:workgroupId/:year", {
 			template: require('./templates/ScheduleSummaryReportCtrl.html'),
@@ -45,7 +44,16 @@ const scheduleSummaryReportApp = angular.module("scheduleSummaryReportApp", depe
 				window.location = "/not-found.html";
 			}
 		});
-})
-.controller('ScheduleSummaryReportCtrl', ScheduleSummaryReportCtrl);
+};
+
+config.$inject = ['$routeProvider'];
+
+// App declaration
+const scheduleSummaryReportApp = angular.module("scheduleSummaryReportApp", dependencies)
+.config(config)
+.controller('ScheduleSummaryReportCtrl', ScheduleSummaryReportCtrl)
+.service('ScheduleSummaryReportActionCreators', ScheduleSummaryReportActionCreators)
+.service('ScheduleSummaryReportService', ScheduleSummaryReportService)
+.service('ScheduleSummaryReportStateService', ScheduleSummaryReportStateService);
 
 export default scheduleSummaryReportApp;

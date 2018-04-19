@@ -1,5 +1,7 @@
 class ScheduleSummaryReportCtrl {
 	constructor($scope, $rootScope, $routeParams, Term, scheduleSummaryReportActionCreators, authService, scheduleSummaryReportService) {
+		console.log("scheduleSummaryReportCtrl initialized");
+
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
 		this.$routeParams = $routeParams;
@@ -7,9 +9,7 @@ class ScheduleSummaryReportCtrl {
 		this.scheduleSummaryReportActionCreators = scheduleSummaryReportActionCreators;
 		this.authService = authService;
 		this.scheduleSummaryReportService = scheduleSummaryReportService;
-	}
 
-	$onInit() {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.termShortCode = $routeParams.termShortCode;
