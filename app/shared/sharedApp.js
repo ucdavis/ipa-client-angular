@@ -84,8 +84,9 @@ config.$inject = ['$httpProvider', '$compileProvider', '$logProvider', 'IdleProv
 // App declaration
 const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .config(config)
-.config(sharedInterceptors)
-.config(exceptionHandlers)
+.config(slowConnectionInterceptor)
+.config(tokenValidatorInterceptor)
+.config(exceptionHandler)
 // Intercept Ajax traffic
 .config(function($httpProvider) {
 	$httpProvider.interceptors.push(slowConnectionInterceptor);
