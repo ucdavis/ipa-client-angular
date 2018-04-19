@@ -1,18 +1,15 @@
-// ScheduleSummaryReport services
-import '.././services/scheduleSummaryActionCreators.js';
-import '.././services/scheduleSummaryService.js';
-import '.././services/scheduleSummaryStateService.js';
+class ScheduleSummaryReportCtrl {
+	constructor($scope, $rootScope, $routeParams, Term, scheduleSummaryReportActionCreators, authService, scheduleSummaryReportService) {
+		this.$scope = $scope;
+		this.$rootScope = $rootScope;
+		this.$routeParams = $routeParams;
+		this.Term = Term;
+		this.scheduleSummaryReportActionCreators = scheduleSummaryReportActionCreators;
+		this.authService = authService;
+		this.scheduleSummaryReportService = scheduleSummaryReportService;
+	}
 
-/**
- * @ngdoc function
- * @name ipaClientAngularApp.controller:ReportCtrl
- * @description
- * # ReportCtrl
- * Controller of the ipaClientAngularApp
- */
-scheduleSummaryReportApp.controller('ScheduleSummaryReportCtrl', ['$scope', '$rootScope', '$routeParams', 'Term', 'scheduleSummaryReportActionCreators', 'authService', 'scheduleSummaryReportService',
-	this.ScheduleSummaryReportCtrl = function ($scope, $rootScope, $routeParams, Term, scheduleSummaryReportActionCreators, authService, scheduleSummaryReportService) {
-
+	$onInit() {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.termShortCode = $routeParams.termShortCode;
@@ -53,14 +50,14 @@ scheduleSummaryReportApp.controller('ScheduleSummaryReportCtrl', ['$scope', '$ro
 		} else {
 			$scope.previousShortTermCode = $scope.allTerms[index];
 		}
-
+	
 		var index = $scope.allTerms.indexOf($scope.termShortCode) + 1;
 		if (index > 8) {
 			$scope.nextShortTermCode = null;
 		} else {
 			$scope.nextShortTermCode = $scope.allTerms[index];
 		}
-
+	
 		for (var i = 0; i < $scope.allTerms.length; i++) {
 			shortTermCode = $scope.allTerms[i];
 
@@ -72,47 +69,48 @@ scheduleSummaryReportApp.controller('ScheduleSummaryReportCtrl', ['$scope', '$ro
 			fullTerm = slotYear + shortTermCode;
 			$scope.fullTerms.push(fullTerm);
 		}
-
 	}
-]);
 
-ScheduleSummaryReportCtrl.getPayload = function (authService, $route, Term, scheduleSummaryReportActionCreators) {
-	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+	calculateCurrentTermShortCode(termStates) {
+		var earliestTermCode = null;
 
-		var termShortCode = $route.current.params.termShortCode;
+		termStates.forEach( function(termState) {
 
-		if (!termShortCode) {
-			var termStates = authService.getTermStates();
-			var termShortCode = calculateCurrentTermShortCode(termStates);
-		}
+			if (termState.state == "ANNUAL_DRAFT") {
 
-		var term = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, $route.current.params.year);
-		return scheduleSummaryReportActionCreators.getInitialState(
-			$route.current.params.workgroupId,
-			$route.current.params.year,
-			term.code
-		);
-	});
-};
-
-calculateCurrentTermShortCode = function(termStates) {
-	var earliestTermCode = null;
-
-	termStates.forEach( function(termState) {
-
-		if (termState.state == "ANNUAL_DRAFT") {
-
-			if ( (earliestTermCode == null) || earliestTermCode > termState.termCode) {
-				earliestTermCode = termState.termCode;
+				if ( (earliestTermCode == null) || earliestTermCode > termState.termCode) {
+					earliestTermCode = termState.termCode;
+				}
 			}
-		}
-	});
+		});
 
-	// Default to fall quarter if current term cannot be deduced from termStates
-	if (earliestTermCode == null) {
-		return "10";
+		// Default to fall quarter if current term cannot be deduced from termStates
+		if (earliestTermCode == null) {
+			return "10";
+		}
+
+		return earliestTermCode.slice(-2);
 	}
 
+	getPayload() {
+		return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+			var termShortCode = $route.current.params.termShortCode;
 
-	return earliestTermCode.slice(-2);
+			if (!termShortCode) {
+				var termStates = authService.getTermStates();
+				var termShortCode = this.calculateCurrentTermShortCode(termStates);
+			}
+
+			var term = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, $route.current.params.year);
+			return scheduleSummaryReportActionCreators.getInitialState(
+				$route.current.params.workgroupId,
+				$route.current.params.year,
+				term.code
+			);
+		});
+	}
 };
+
+ScheduleSummaryReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'Term', 'scheduleSummaryReportActionCreators', 'authService', 'scheduleSummaryReportService'];
+
+export default ScheduleSummaryReportCtrl;
