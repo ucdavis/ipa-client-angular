@@ -1,6 +1,3 @@
-// Found in 'dist' via resolve config
-import 'templates/scheduleSummaryReport/scheduleSummaryReportCtrlTemplate.js';
-
 // ScheduleSummaryReport controllers
 import ScheduleSummaryReportCtrl from './controllers/scheduleSummaryReportCtrl.js';
 
@@ -23,21 +20,21 @@ const scheduleSummaryReportApp = angular.module("scheduleSummaryReportApp", depe
 .config(function ($routeProvider) {
 	return $routeProvider
 		.when("/:workgroupId/:year", {
-			templateUrl: "ScheduleSummaryReportCtrl.html",
+			template: require('./templates/ScheduleSummaryReportCtrl.html'),
 			controller: "ScheduleSummaryReportCtrl",
 			resolve: {
 				payload: ScheduleSummaryReportCtrl.getPayload
 			}
 		})
 		.when("/:workgroupId/:year/:termShortCode", {
-			templateUrl: "ScheduleSummaryReportCtrl.html",
+			template: require('./templates/ScheduleSummaryReportCtrl.html'),
 			controller: "ScheduleSummaryReportCtrl",
 			resolve: {
 				payload: ScheduleSummaryReportCtrl.getPayload
 			}
 		})
 		.when("/", {
-			templateUrl: "ScheduleSummaryReportCtrl.html",
+			template: require('./templates/ScheduleSummaryReportCtrl.html'),
 			controller: "ScheduleSummaryReportCtrl",
 			resolve: {
 				payload: ScheduleSummaryReportCtrl.getPayload
