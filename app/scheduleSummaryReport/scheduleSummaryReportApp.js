@@ -1,3 +1,5 @@
+import sharedApp from './../shared/sharedApp.js';
+
 // ScheduleSummaryReport controllers
 import ScheduleSummaryReportCtrl from './controllers/scheduleSummaryReportCtrl.js';
 

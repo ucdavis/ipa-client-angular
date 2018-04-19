@@ -9,9 +9,8 @@ import SharedCtrl from './controllers/SharedCtrl.js';
 // Services
 import AuthService from './services/AuthService.js';
 
-console.log("shared app pulled in");
 // Dependencies
-dependencies = [
+var sharedAppDependencies = [
 	// 3rd party modules
 	'ui.bootstrap',
 	'ngIdle',
@@ -83,7 +82,7 @@ function config ($httpProvider, $compileProvider, $logProvider, IdleProvider, $l
 config.$inject = ['$httpProvider', '$compileProvider', '$logProvider', 'IdleProvider', '$locationProvider'];
 
 // App declaration
-const sharedApp = angular.module("sharedApp", dependencies)
+const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .config(config)
 .config(sharedInterceptors)
 .config(exceptionHandlers)
@@ -158,3 +157,5 @@ const sharedApp = angular.module("sharedApp", dependencies)
 	academicPlanner: 2,
 	presence: 9
 });
+
+export default sharedApp;
