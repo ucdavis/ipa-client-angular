@@ -1,11 +1,12 @@
 class ScheduleSummaryReportCtrl {
-	constructor($scope, $rootScope, $routeParams, $route, Term, scheduleSummaryReportActionCreators, authService, scheduleSummaryReportService) {
+	constructor($scope, $rootScope, $routeParams, $route, Term, scheduleSummaryReportActionCreators, AuthService, scheduleSummaryReportService) {
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
 		this.$routeParams = $routeParams;
+		this.$route = $route;
 		this.Term = Term;
 		this.scheduleSummaryReportActionCreators = scheduleSummaryReportActionCreators;
-		this.authService = authService;
+		this.authService = AuthService;
 		this.scheduleSummaryReportService = scheduleSummaryReportService;
 
 		$scope.workgroupId = $routeParams.workgroupId;
@@ -93,24 +94,24 @@ class ScheduleSummaryReportCtrl {
 	}
 
 	getPayload() {
-		return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-			var termShortCode = $route.current.params.termShortCode;
+		return this.authService.validate(localStorage.getItem('JWT'), this.$route.current.params.workgroupId, this.$route.current.params.year).then(function () {
+			var termShortCode = this.$route.current.params.termShortCode;
 
 			if (!termShortCode) {
 				var termStates = authService.getTermStates();
 				var termShortCode = this.calculateCurrentTermShortCode(termStates);
 			}
 
-			var term = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, $route.current.params.year);
+			var term = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, this.$route.current.params.year);
 			return scheduleSummaryReportActionCreators.getInitialState(
-				$route.current.params.workgroupId,
-				$route.current.params.year,
+				this.$route.current.params.workgroupId,
+				this.$route.current.params.year,
 				term.code
 			);
 		});
 	}
 };
 
-ScheduleSummaryReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$route', 'Term', 'ScheduleSummaryReportActionCreators', 'authService', 'ScheduleSummaryReportService'];
+ScheduleSummaryReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$route', 'Term', 'ScheduleSummaryReportActionCreators', 'AuthService', 'ScheduleSummaryReportService'];
 
 export default ScheduleSummaryReportCtrl;
