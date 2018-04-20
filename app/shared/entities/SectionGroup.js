@@ -1,4 +1,4 @@
-angular.module('sectionGroup', [])
+const SectionGroup = angular.module('SectionGroup', [])
 
 .factory('SectionGroup', ['$http', function($http) {
 	function SectionGroup(coData) {
@@ -13,3 +13,5 @@ angular.module('sectionGroup', [])
 	};
 	return SectionGroup;
 }]);
+
+export default SectionGroup;

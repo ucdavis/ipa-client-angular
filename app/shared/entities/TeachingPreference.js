@@ -1,4 +1,4 @@
-angular.module('teachingPreference', [])
+const TeachingPreference = angular.module('TeachingPreference', [])
 
 .factory('TeachingPreference', ['$http', function($http) {
 	function TeachingPreference(teachingPreferenceData) {
@@ -13,3 +13,5 @@ angular.module('teachingPreference', [])
 	};
 	return TeachingPreference;
 }]);
+
+export default TeachingPreference;

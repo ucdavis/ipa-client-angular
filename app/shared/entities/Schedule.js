@@ -1,5 +1,4 @@
-angular.module('schedule', [])
-
+const Schedule = angular.module('Schedule', [])
 .factory('Schedule', ['$http', function($http) {
 	function Schedule(scheduleData) {
 		if (scheduleData) {
@@ -13,3 +12,5 @@ angular.module('schedule', [])
 	};
 	return Schedule;
 }]);
+
+export default Schedule;

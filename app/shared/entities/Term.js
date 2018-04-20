@@ -1,5 +1,4 @@
-angular.module('term', [])
-
+const Term = angular.module('Term', [])
 .factory('Term', ['$http', function($http) {
 	function Term(termData) {
 		if (termData) {
@@ -62,3 +61,5 @@ angular.module('term', [])
 
 	return Term;
 }]);
+
+export default Term;

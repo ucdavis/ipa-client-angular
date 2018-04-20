@@ -3,7 +3,7 @@
  * Workgroup Configuration page and possibly elsewhere.
  */
 
-angular.module('role', [])
+const Role = angular.module('Role', [])
 
 .factory('Role', ['$http', function($http) {
 	function Role(roleData) {
@@ -28,3 +28,5 @@ angular.module('role', [])
 	};
 	return Role;
 }]);
+
+export default Role;

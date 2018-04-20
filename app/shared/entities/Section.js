@@ -1,4 +1,4 @@
-angular.module('section', [])
+const Section = angular.module('Section', [])
 
 .factory('Section', ['$http', function($http) {
 	function Section(sectionData) {
@@ -13,3 +13,5 @@ angular.module('section', [])
 	};
 	return Section;
 }]);
+
+export default Section;

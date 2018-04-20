@@ -1,4 +1,4 @@
-angular.module('building', [])
+const Building = angular.module('Building', [])
 
 .factory('Building', ['$http', function($http) {
 	function Building(buildingData) {
@@ -13,3 +13,5 @@ angular.module('building', [])
 	};
 	return Building;
 }]);
+
+export default Building;

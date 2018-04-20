@@ -1,4 +1,4 @@
-angular.module('scheduleTermState', [])
+const ScheduleTermState = angular.module('ScheduleTermState', [])
 
 .factory('ScheduleTermState', ['$http', function($http) {
 	function ScheduleTermState(scheduleTermStateData) {
@@ -13,3 +13,5 @@ angular.module('scheduleTermState', [])
 	};
 	return ScheduleTermState;
 }]);
+
+export default ScheduleTermState;

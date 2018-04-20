@@ -1,5 +1,4 @@
-angular.module('instructor', [])
-
+const Instructor = angular.module('Instructor', [])
 .factory('Instructor', ['$http', function($http) {
 	function Instructor(instructorData) {
 		if (instructorData) {
@@ -13,3 +12,5 @@ angular.module('instructor', [])
 	};
 	return Instructor;
 }]);
+
+export default Instructor;

@@ -1,9 +1,4 @@
-/**
- * @author okadri
- * Stores instructor receipt information for a given TeachingCall
- * It has a flag to indicate whether the instructor has completed inputing preferences
- */
-angular.module('teachingCallReceipt', [])
+const TeachingCallReceipt = angular.module('TeachingCallReceipt', [])
 
 .factory('TeachingCallReceipt', ['$http', function($http) {
 	function TeachingCallReceipt(teachingCallReceiptData) {
@@ -18,3 +13,5 @@ angular.module('teachingCallReceipt', [])
 	};
 	return TeachingCallReceipt;
 }]);
+
+export default TeachingCallReceipt;

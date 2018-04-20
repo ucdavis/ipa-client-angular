@@ -1,4 +1,4 @@
-angular.module('syncAction', [])
+const SyncAction = angular.module('SyncAction', [])
 
 	.factory('SyncAction', ['$http', function ($http) {
 		function SyncAction(syncActionData) {
@@ -13,3 +13,5 @@ angular.module('syncAction', [])
 		};
 		return SyncAction;
 	}]);
+
+	export default SyncAction;

@@ -1,4 +1,4 @@
-angular.module('workgroup', [])
+const Workgroup = angular.module('Workgroup', [])
 
 .factory('Workgroup', ['$http', function($http) {
 	function Workgroup(workgroupData) {
@@ -13,3 +13,5 @@ angular.module('workgroup', [])
 	};
 	return Workgroup;
 }]);
+
+export default Workgroup;

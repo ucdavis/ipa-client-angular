@@ -1,4 +1,4 @@
-angular.module('courseOfferingGroup', [])
+const CourseOfferingGroup = angular.module('CourseOfferingGroup', [])
 
 .factory('CourseOfferingGroup', ['$http', function($http) {
 	function CourseOfferingGroup(cogData) {
@@ -13,3 +13,5 @@ angular.module('courseOfferingGroup', [])
 	};
 	return CourseOfferingGroup;
 }]);
+
+export default CourseOfferingGroup;
