@@ -5,8 +5,10 @@
  * # dwService
  * Service in the ipaClientAngularApp.
  */
-angular.module('sharedApp')
-	.service('dwService', function (apiService) {
+class DwService {
+	constructor(ApiService) {
+		this.apiService = ApiService;
+
 		return {
 			termCodeDescriptions: {
 				'05': 'Summer Session 1',
@@ -52,4 +54,7 @@ angular.module('sharedApp')
 				return apiService.get("/census" + params + "&token=" + dwToken, null, dwUrl);
 			}
 		};
-	});
+	}
+}
+
+export default DwService;
