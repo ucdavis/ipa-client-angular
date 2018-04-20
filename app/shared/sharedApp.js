@@ -9,6 +9,11 @@ import SharedCtrl from './controllers/SharedCtrl.js';
 // Services
 import AuthService from './services/AuthService.js';
 
+// Entities
+import CurrentUser from './entities/CurrentUser.js';
+import UserRole from './entities/UserRole.js';
+import Term from './entities/Term.js';
+
 // Dependencies
 var sharedAppDependencies = [
 	// 3rd party modules
@@ -23,7 +28,7 @@ var sharedAppDependencies = [
 //	'sectionGroup',
 //	'courseOffering',
 //	'course',
-	'currentUser',
+		'CurrentUser',
 //	'instructor',
 //	'location',
 //	'scheduleInstructorNote',
@@ -31,9 +36,9 @@ var sharedAppDependencies = [
 //	'tag',
 //	'workgroup',
 //	'user',
-//	'userRole',
+		'UserRole',
 //	'schedule',
-		'term',
+		'Term',
 //	'role',
 // 'section',
 // 'syncAction',
@@ -84,6 +89,10 @@ config.$inject = ['$httpProvider', '$compileProvider', '$logProvider', 'IdleProv
 // App declaration
 const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .config(config)
+.controller('SharedCtrl', SharedCtrl)
+.service('AuthService', AuthService)
+
+/*
 .config(slowConnectionInterceptor)
 .config(tokenValidatorInterceptor)
 .config(exceptionHandler)
@@ -92,8 +101,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 	$httpProvider.interceptors.push(slowConnectionInterceptor);
 	$httpProvider.interceptors.push(tokenValidatorInterceptor);
 })
-.controller('SharedCtrl', SharedCtrl)
-.service('AuthService', AuthService)
+
 // Detect route errors
 .run(['$rootScope', 'Idle',
 	function ($rootScope, Idle) {
@@ -158,5 +166,5 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 	academicPlanner: 2,
 	presence: 9
 });
-
+*/
 export default sharedApp;
