@@ -29,13 +29,19 @@ class ScheduleSummaryReportCtrl {
 				$scope.view.state = {};
 			}
 
+			$rootScope.$on('sharedStateSet', function (event, data) {
+				$scope.sharedState = data;
+				debugger;
+
+				$scope.view.hasAccess = $scope.sharedState ? ($scope.sharedState.currentUser.isAdmin() || $scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id)) : false;
+			});
+
 			// Identifying
 			$rootScope.$on('reportStateChanged', function (event, data) {
 				$scope.view.state = data.state;
 				console.log($scope.view.state);
 
-				$scope.view.hasAccess = $scope.sharedState.currentUser.isAdmin() ||
-					$scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id);
+				$scope.view.hasAccess = $scope.sharedState ? ($scope.sharedState.currentUser.isAdmin() || $scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id)) : false;
 			});
 
 			$scope.allTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
