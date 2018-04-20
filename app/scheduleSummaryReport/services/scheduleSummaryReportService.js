@@ -7,7 +7,8 @@
  * reportApp specific api calls.
  */
 class ScheduleSummaryReportService {
-	constructor(apiService) {
+	constructor(ApiService) {
+		this.apiService = ApiService;
 		return {
 			getInitialState: function (workgroupId, year, termCode) {
 				return apiService.get("/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + termCode);
@@ -19,6 +20,6 @@ class ScheduleSummaryReportService {
 	}
 };
 
-ScheduleSummaryReportService.$inject = ['apiService'];
+ScheduleSummaryReportService.$inject = ['ApiService'];
 
 export default ScheduleSummaryReportService;

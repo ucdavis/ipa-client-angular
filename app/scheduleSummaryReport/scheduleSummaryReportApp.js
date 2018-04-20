@@ -8,6 +8,9 @@ import ScheduleSummaryReportActionCreators from './services/scheduleSummaryRepor
 import ScheduleSummaryReportService from './services/scheduleSummaryReportService.js';
 import ScheduleSummaryReportStateService from './services/scheduleSummaryReportStateService.js';
 
+// Shared services
+import ApiService from './../shared/services/ApiService.js';
+
 // CONSTANTS
 var INIT_STATE = "INIT_STATE";
 
@@ -47,6 +50,7 @@ const scheduleSummaryReportApp = angular.module("scheduleSummaryReportApp", depe
 .controller('ScheduleSummaryReportCtrl', ScheduleSummaryReportCtrl)
 .service('ScheduleSummaryReportActionCreators', ScheduleSummaryReportActionCreators)
 .service('ScheduleSummaryReportService', ScheduleSummaryReportService)
-.service('ScheduleSummaryReportStateService', ScheduleSummaryReportStateService);
+.service('ScheduleSummaryReportStateService', ScheduleSummaryReportStateService)
+.service('ApiService', ApiService);
 
 export default scheduleSummaryReportApp;

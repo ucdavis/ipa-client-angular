@@ -13,6 +13,7 @@ import AuthService from './services/AuthService.js';
 import CurrentUser from './entities/CurrentUser.js';
 import UserRole from './entities/UserRole.js';
 import Term from './entities/Term.js';
+import SectionGroup from './entities/SectionGroup.js';
 
 // Dependencies
 var sharedAppDependencies = [
@@ -25,7 +26,7 @@ var sharedAppDependencies = [
 
 	// Local modules
 //	'courseOfferingGroup',
-//	'sectionGroup',
+		'SectionGroup',
 //	'courseOffering',
 //	'course',
 		'CurrentUser',

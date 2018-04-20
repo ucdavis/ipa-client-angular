@@ -1,5 +1,8 @@
-angular.module('sharedApp')
-	.service('apiService', function ($http, $q) {
+class ApiService {
+	constructor ($http, $q) {
+		this.$http = $http;
+		this.$q = $q;
+
 		return {
 			get: function(url, data, serverUrl) {
 				serverUrl = serverUrl || serverRoot;
@@ -63,4 +66,7 @@ angular.module('sharedApp')
 				return deferred.promise;
 			}
 		};
-	});
+	};
+}
+
+export default ApiService;

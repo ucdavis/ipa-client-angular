@@ -1,5 +1,11 @@
 class ScheduleSummaryReportActionCreators {
 	constructor(scheduleSummaryReportStateService, scheduleSummaryReportService, $rootScope, dwService, termService) {
+		this.scheduleSummaryReportStateService = scheduleSummaryReportStateService;
+		this.scheduleSummaryReportService = scheduleSummaryReportService;
+		this.$rootScope = $rootScope;
+		this.dwService = dwService;
+		this.termService = termService;
+
 		return {
 			getInitialState: function (workgroupId, year, termCode) {
 				var self = this;
