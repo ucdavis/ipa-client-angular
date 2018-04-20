@@ -6,6 +6,8 @@ import sections from './helpers/sections.js';
 import string from './helpers/string.js';
 import types from './helpers/types.js';
 
+// Directives
+import ipaHeader from './directives/ipaHeader/ipaHeader.js';
 
 // Config
 import exceptionHandler from './exceptionHandler.js';
@@ -101,7 +103,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .config(config)
 .controller('SharedCtrl', SharedCtrl)
 .service('AuthService', AuthService)
-
+.directive('ipaHeader', ipaHeader);
 /*
 .config(slowConnectionInterceptor)
 .config(tokenValidatorInterceptor)
