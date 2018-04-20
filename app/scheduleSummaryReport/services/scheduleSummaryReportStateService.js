@@ -1,14 +1,14 @@
 class ScheduleSummaryReportStateService {
-	constructor ($rootScope, $log, Term, SectionGroup) {
+	constructor ($rootScope, $log, Term, SectionGroup, ActionTypes) {
 		return {
 			_state: {},
 			_sectionGroupReducers: function (action, sectionGroups) {
 				var section;
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 
 						// Build courses metadata for searching
-						courses = {
+						let courses = {
 							ids: [],
 							list: {}
 						};
@@ -21,7 +21,7 @@ class ScheduleSummaryReportStateService {
 
 
 						// Build sectionGroups metadata
-						sectionGroups = {
+						let sectionGroups = {
 							ids: [],
 							list: {}
 						};
@@ -52,7 +52,7 @@ class ScheduleSummaryReportStateService {
 						sectionGroups.ids = _array_sortIdsByProperty(sectionGroups.list, ["subjectCode", "courseNumber", "sequencePattern"]);
 
 						// Build instructors metadata for searching
-						instructors = {
+						let instructors = {
 							ids: [],
 							list: {}
 						};
@@ -65,7 +65,7 @@ class ScheduleSummaryReportStateService {
 
 
 						// Build teachingAssignment metadata for searching
-						teachingAssignments = {
+						let teachingAssignments = {
 							ids: [],
 							list: {}
 						};
@@ -94,7 +94,7 @@ class ScheduleSummaryReportStateService {
 
 
 						// Build sections metadata for searching
-						sections = {
+						let sections = {
 							ids: [],
 							list: {}
 						};
@@ -105,13 +105,13 @@ class ScheduleSummaryReportStateService {
 						});
 
 						// Build activities metadata for searching and add metadata to sections
-						activities = {
+						let activities = {
 							ids: [],
 							list: {}
 						};
 
 						action.payload.activities.forEach( function(slotActivity) {
-							slotSection = sections.list[slotActivity.sectionId];
+							let slotSection = sections.list[slotActivity.sectionId];
 
 							if (slotSection) {
 								if (slotSection.activities == null) {
@@ -125,9 +125,11 @@ class ScheduleSummaryReportStateService {
 							activities.list[slotActivity.id] = slotActivity;
 						});
 
+						let slotSectionGroup = null;
+
 						// Add the combined sections to sectionGroups
 						sections.ids.forEach( function(slotSectionId) {
-							slotSection = sections.list[slotSectionId];
+							let slotSection = sections.list[slotSectionId];
 							slotSectionGroup = sectionGroups.list[slotSection.sectionGroupId];
 
 							if (slotSectionGroup.sections == null) {
@@ -141,7 +143,7 @@ class ScheduleSummaryReportStateService {
 
 						// Add any shared activities to the appropriate sections
 						action.payload.activities.forEach( function(slotActivity) {
-							slotSection = sections.list[slotActivity.sectionId];
+							let slotSection = sections.list[slotActivity.sectionId];
 							slotSectionGroup = sectionGroups.list[slotActivity.sectionGroupId];
 
 							// Check if this activity is a shared activity
@@ -182,7 +184,7 @@ class ScheduleSummaryReportStateService {
 					return;
 				}
 
-				newState = {};
+				let newState = {};
 				newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 
 				scope._state = newState;
@@ -198,6 +200,6 @@ class ScheduleSummaryReportStateService {
 	}
 };
 
-ScheduleSummaryReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup'];
+ScheduleSummaryReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup', 'ActionTypes'];
 
 export default ScheduleSummaryReportStateService;
