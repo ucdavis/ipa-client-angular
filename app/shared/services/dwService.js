@@ -7,6 +7,7 @@
  */
 class DwService {
 	constructor(ApiService) {
+		var self = this;
 		this.apiService = ApiService;
 
 		return {
@@ -29,7 +30,7 @@ class DwService {
 			 * @returns {List[activity]}
 			 */
 			getDwActivitiesByCrn: function (crn, termCode) {
-				return apiService.get("/sections/search/crn?termCode=" + termCode + "&crn=" + crn + "&token=" + dwToken, null, dwUrl);
+				return self.apiService.get("/sections/search/crn?termCode=" + termCode + "&crn=" + crn + "&token=" + dwToken, null, dwUrl);
 			},
 			/**
 			 * Provides a list of census snapshots based on the parameters given.
@@ -49,9 +50,9 @@ class DwService {
 					paramArray.push("termCode=" + termCode);
 				}
 
-				params = paramArray.join("&");
+				let params = paramArray.join("&");
 
-				return apiService.get("/census" + params + "&token=" + dwToken, null, dwUrl);
+				return self.apiService.get("/census" + params + "&token=" + dwToken, null, dwUrl);
 			}
 		};
 	}
