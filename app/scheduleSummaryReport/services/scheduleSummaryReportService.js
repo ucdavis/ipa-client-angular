@@ -8,13 +8,14 @@
  */
 class ScheduleSummaryReportService {
 	constructor(ApiService) {
+		var self = this;
 		this.apiService = ApiService;
 		return {
 			getInitialState: function (workgroupId, year, termCode) {
-				return apiService.get("/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + termCode);
+				return self.apiService.get("/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + termCode);
 			},
 			downloadSchedule: function (workgroupId, year, shortTermCode) {
-				return apiService.get("/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + shortTermCode + "/generateExcel");
+				return self.apiService.get("/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + shortTermCode + "/generateExcel");
 			}
 		};
 	}

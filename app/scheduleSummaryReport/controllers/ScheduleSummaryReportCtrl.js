@@ -1,5 +1,6 @@
 class ScheduleSummaryReportCtrl {
 	constructor($scope, $rootScope, $routeParams, $route, Term, scheduleSummaryReportActionCreators, AuthService, scheduleSummaryReportService) {
+		var self = this;
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
 		this.$routeParams = $routeParams;
@@ -55,15 +56,14 @@ class ScheduleSummaryReportCtrl {
 			}
 
 			for (var i = 0; i < $scope.allTerms.length; i++) {
-				shortTermCode = $scope.allTerms[i];
+				let shortTermCode = $scope.allTerms[i];
+				let slotYear = parseInt($scope.year) + 1;
 
 				if (parseInt(shortTermCode) > 4) {
 					slotYear = $scope.year;
-				} else {
-					slotYear = parseInt($scope.year) + 1;
 				}
-				fullTerm = slotYear + shortTermCode;
-				$scope.fullTerms.push(fullTerm);
+
+				$scope.fullTerms.push(slotYear + shortTermCode);
 			}
 		});
 	}
@@ -96,7 +96,6 @@ class ScheduleSummaryReportCtrl {
 	getPayload() {
 		var self = this;
 		return self.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
-			debugger;
 			var termShortCode = self.$route.current.params.termShortCode;
 
 			if (!termShortCode) {
@@ -104,8 +103,8 @@ class ScheduleSummaryReportCtrl {
 				var termShortCode = self.calculateCurrentTermShortCode(termStates);
 			}
 
-			var term = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, self.$route.current.params.year);
-			return scheduleSummaryReportActionCreators.getInitialState(
+			var term = self.Term.prototype.getTermByTermShortCodeAndYear(termShortCode, self.$route.current.params.year);
+			return self.scheduleSummaryReportActionCreators.getInitialState(
 				self.$route.current.params.workgroupId,
 				self.$route.current.params.year,
 				term.code
