@@ -1,6 +1,15 @@
 
 class AuthService {
 	constructor ($http, $window, $q, $location, $rootScope, $log, CurrentUser, $route) {
+		this.$http = $http;
+		this.$window = $window;
+		this.$q = $q;
+		this.$location = $location;
+		this.$rootScope = $rootScope;
+		this.$log = $log;
+		this.CurrentUser = CurrentUser;
+		this.$route = $route;
+
 		return {
 			validateToken: function (token) {
 				var self = this;
