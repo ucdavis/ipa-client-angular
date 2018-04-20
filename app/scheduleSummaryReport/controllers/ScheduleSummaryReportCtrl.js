@@ -94,18 +94,20 @@ class ScheduleSummaryReportCtrl {
 	}
 
 	getPayload() {
-		return this.authService.validate(localStorage.getItem('JWT'), this.$route.current.params.workgroupId, this.$route.current.params.year).then(function () {
-			var termShortCode = this.$route.current.params.termShortCode;
+		var self = this;
+		return self.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
+			debugger;
+			var termShortCode = self.$route.current.params.termShortCode;
 
 			if (!termShortCode) {
 				var termStates = authService.getTermStates();
-				var termShortCode = this.calculateCurrentTermShortCode(termStates);
+				var termShortCode = self.calculateCurrentTermShortCode(termStates);
 			}
 
-			var term = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, this.$route.current.params.year);
+			var term = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, self.$route.current.params.year);
 			return scheduleSummaryReportActionCreators.getInitialState(
-				this.$route.current.params.workgroupId,
-				this.$route.current.params.year,
+				self.$route.current.params.workgroupId,
+				self.$route.current.params.year,
 				term.code
 			);
 		});
