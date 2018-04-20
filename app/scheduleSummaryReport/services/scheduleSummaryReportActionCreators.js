@@ -71,6 +71,6 @@ class ScheduleSummaryReportActionCreators {
 	};
 }
 
-ScheduleSummaryReportActionCreators.$inject = ['ScheduleSummaryReportStateService', 'ScheduleSummaryReportService', '$rootScope', 'dwService', 'termService'];
+ScheduleSummaryReportActionCreators.$inject = ['ScheduleSummaryReportStateService', 'ScheduleSummaryReportService', '$rootScope', 'DwService', 'TermService'];
 
 export default ScheduleSummaryReportActionCreators;
