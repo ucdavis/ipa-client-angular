@@ -1,5 +1,5 @@
 class SharedCtrl {
-		constructor ($scope, $rootScope, $http, $uibModal, $log, authService) {
+		constructor ($scope, $rootScope, $http, $uibModal, $log, AuthService) {
 
 			$rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
 				if (!$rootScope.loadingError) { $rootScope.loadingError = 'unknown'; }
@@ -37,12 +37,12 @@ class SharedCtrl {
 			});
 
 			$scope.$on('IdleTimeout', function () {
-				authService.logout("/");
+				AuthService.logout("/");
 			});
 
 	};
 }
 
-	SharedCtrl.$inject = ['$scope', '$rootScope', '$http', '$uibModal', '$log', 'authService'];
+	SharedCtrl.$inject = ['$scope', '$rootScope', '$http', '$uibModal', '$log', 'AuthService'];
 
 	export default SharedCtrl;
