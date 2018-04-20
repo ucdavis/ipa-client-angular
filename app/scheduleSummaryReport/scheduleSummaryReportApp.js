@@ -56,6 +56,8 @@ const scheduleSummaryReportApp = angular.module("scheduleSummaryReportApp", depe
 .service('ScheduleSummaryReportStateService', ScheduleSummaryReportStateService)
 .service('ApiService', ApiService)
 .service('DwService', DwService)
-.service('TermService', TermService);
-
+.service('TermService', TermService)
+.constant('ActionTypes', {
+	INIT_STATE: "INIT_STATE"
+});
 export default scheduleSummaryReportApp;
