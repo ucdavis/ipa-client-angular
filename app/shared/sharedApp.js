@@ -6,9 +6,6 @@ import sections from './helpers/sections.js';
 import string from './helpers/string.js';
 import types from './helpers/types.js';
 
-// Directives
-import ipaHeader from './directives/ipaHeader/ipaHeader.js';
-
 // Config
 import exceptionHandler from './exceptionHandler.js';
 import { slowConnectionInterceptor } from './sharedInterceptors.js';
@@ -25,6 +22,11 @@ import CurrentUser from './entities/CurrentUser.js';
 import UserRole from './entities/UserRole.js';
 import Term from './entities/Term.js';
 import SectionGroup from './entities/SectionGroup.js';
+
+// Directives
+import ipaButton from './directives/ipaButton/ipaButton.js';
+import ipaHeader from './directives/ipaHeader/ipaHeader.js';
+import nav from './directives/nav/nav.js';
 
 // Dependencies
 var sharedAppDependencies = [
@@ -103,7 +105,10 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .config(config)
 .controller('SharedCtrl', SharedCtrl)
 .service('AuthService', AuthService)
-.directive('ipaHeader', ipaHeader);
+.directive('ipaButton', ipaButton)
+.directive('ipaHeader', ipaHeader)
+.directive('nav', nav)
+
 /*
 .config(slowConnectionInterceptor)
 .config(tokenValidatorInterceptor)
