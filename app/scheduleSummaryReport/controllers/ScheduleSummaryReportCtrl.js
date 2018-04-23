@@ -31,8 +31,6 @@ class ScheduleSummaryReportCtrl {
 
 			$rootScope.$on('sharedStateSet', function (event, data) {
 				$scope.sharedState = data;
-				debugger;
-
 				$scope.view.hasAccess = $scope.sharedState ? ($scope.sharedState.currentUser.isAdmin() || $scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id)) : false;
 			});
 
