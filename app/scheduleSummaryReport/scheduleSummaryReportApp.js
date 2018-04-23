@@ -1,5 +1,3 @@
-import sharedApp from './../shared/sharedApp.js';
-
 // ScheduleSummaryReport controllers
 import ScheduleSummaryReportCtrl from './controllers/scheduleSummaryReportCtrl.js';
 
@@ -54,10 +52,11 @@ const scheduleSummaryReportApp = angular.module("scheduleSummaryReportApp", depe
 .service('ScheduleSummaryReportActionCreators', ScheduleSummaryReportActionCreators)
 .service('ScheduleSummaryReportService', ScheduleSummaryReportService)
 .service('ScheduleSummaryReportStateService', ScheduleSummaryReportStateService)
-.service('ApiService', ApiService)
 .service('DwService', DwService)
+.service('ApiService', ApiService)
 .service('TermService', TermService)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE"
 });
+
 export default scheduleSummaryReportApp;
