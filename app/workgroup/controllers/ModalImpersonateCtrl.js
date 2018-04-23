@@ -17,8 +17,7 @@ workgroupApp.controller('ModalImpersonateCtrl', this.ModalImpersonateCtrl = func
 		user.userRoles.forEach( function(userRole) {
 			if (userRole.role == "studentMasters"
 			|| userRole.role == "studentPhd"
-			|| userRole.role == "senateInstructor"
-			|| userRole.role == "federationInstructor"
+			|| userRole.role == "instructor"
 			|| userRole.role == "instructionalSupport") {
 					canBeImpersonated = true;
 				}

@@ -46,7 +46,7 @@ supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope'
 						// Check if this is an instructor reviewing the support assignments
 						if (isInstructorReviewOpen) {
 							userRoles.forEach(function(userRole) {
-								if (userRole.roleName == "federationInstructor" || userRole.roleName == "senateInstructor") {
+								if (userRole.roleName == "instructor") {
 									$scope.isAllowed = true;
 									$scope.readOnlyMode = true;
 								}
