@@ -31,7 +31,7 @@ summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$
 			var isAdmin = currentUser.isAdmin();
 			var isAcademicPlanner = currentUser.hasRole('academicPlanner', $scope.workgroupId);
 			var isReviewer = currentUser.hasRole('reviewer', $scope.workgroupId);
-			var isInstructor = currentUser.hasRoles(['senateInstructor', 'federationInstructor'], $scope.workgroupId);
+			var isInstructor = currentUser.isInstructor($scope.workgroupId);
 			var isInstructionalSupport = currentUser.hasRoles(['studentMasters', 'studentPhd', 'instructionalSupport'], $scope.workgroupId);
 
 			if (isAcademicPlanner || isReviewer || isAdmin) {

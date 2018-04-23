@@ -195,26 +195,14 @@ assignmentApp.service('assignmentStateService', function (
 				case INIT_ASSIGNMENT_VIEW:
 					teachingCalls = {
 						ids: [],
-						list: [],
-						eligibleGroups: {}
+						list: []
 					};
-					teachingCalls.eligibleGroups.senateInstructors = true;
-					teachingCalls.eligibleGroups.federationInstructors = true;
 
 					var teachingCallsList = {};
 					var length = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
 					for (var i = 0; i < length; i++) {
 						teachingCall = new TeachingCall(action.payload.teachingCalls[i]);
 						teachingCallsList[teachingCall.id] = teachingCall;
-
-						// Gather eligible group data
-						if (teachingCall.sentToSenate) {
-							teachingCalls.eligibleGroups.senateInstructors = false;
-						}
-						if (teachingCall.sentToFederation) {
-							teachingCalls.eligibleGroups.federationInstructors = false;
-						}
-
 					}
 					teachingCalls.ids = _array_sortIdsByProperty(teachingCallsList, ["id"]);
 					teachingCalls.list = teachingCallsList;

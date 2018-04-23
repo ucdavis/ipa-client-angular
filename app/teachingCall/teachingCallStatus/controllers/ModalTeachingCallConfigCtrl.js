@@ -24,9 +24,6 @@ teachingCallApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCall
 	$scope.minDate = new Date();
 	$scope.parent = {dueDate:''};
 
-	$scope.senateInstructors = {};
-	$scope.federationInstructors = {};
-
 	$scope.startTeachingCallConfig.activeTerms = {};
 	$scope.allTerms = allTerms;
 	$scope.displayedFormPage = 1;
@@ -101,14 +98,6 @@ teachingCallApp.controller('ModalTeachingCallConfigCtrl', this.ModalTeachingCall
 	$scope.toggleTermActive = function (term) {
 		term = term.slice(-2);
 		$scope.startTeachingCallConfig.activeTerms[term] = !$scope.startTeachingCallConfig.activeTerms[term];
-	};
-
-	$scope.toggleSenateInstructors = function () {
-		$scope.startTeachingCallConfig.sentToSenate = !$scope.startTeachingCallConfig.sentToSenate;
-	};
-
-	$scope.toggleFederationInstructors = function () {
-		$scope.startTeachingCallConfig.sentToFederation = !$scope.startTeachingCallConfig.sentToFederation;
 	};
 
 	// Datepicker config
