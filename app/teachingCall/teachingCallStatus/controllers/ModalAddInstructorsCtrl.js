@@ -80,10 +80,6 @@ teachingCallApp.controller('ModalAddInstructorsCtrl', ['$scope', '$rootScope', '
 	$scope.minDate = new Date();
 	$scope.parent = {dueDate:''};
 
-	$scope.senateInstructors = {};
-	$scope.federationInstructors = {};
-	$scope.lecturerInstructors = {};
-
 	$scope.startTeachingCallConfig.activeTerms = {};
 
 	allTerms = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
