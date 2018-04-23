@@ -117,14 +117,6 @@ teachingCallApp.controller('ModalContactInstructorsCtrl', this.ModalContactInstr
 		$scope.startTeachingCallConfig.activeTerms[term] = !$scope.startTeachingCallConfig.activeTerms[term];
 	};
 
-	$scope.toggleSenateInstructors = function () {
-		$scope.startTeachingCallConfig.sentToSenate = !$scope.startTeachingCallConfig.sentToSenate;
-	};
-
-	$scope.toggleFederationInstructors = function () {
-		$scope.startTeachingCallConfig.sentToFederation = !$scope.startTeachingCallConfig.sentToFederation;
-	};
-
 	// Datepicker config
 	$scope.inlineOptions = {
 		minDate: new Date(),
