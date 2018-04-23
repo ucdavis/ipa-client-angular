@@ -1,10 +1,12 @@
-sharedApp.directive("nav", this.nav = function ($location, $rootScope, authService, Term) {
+import AuthService from './../../services/AuthService.js';
+
+let nav = function ($location, $rootScope, AuthService, Term) {
 	return {
 		restrict: 'E',
-		templateUrl: 'nav.html',
+		template: require('./nav.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
-			scope.sharedState = authService.getSharedState();
+			scope.sharedState = AuthService.getSharedState();
 
 			// Get or persist termShortCode
 			scope.termShortCode = attrs.termShortCode;
@@ -120,4 +122,6 @@ sharedApp.directive("nav", this.nav = function ($location, $rootScope, authServi
 			};
 		} // End link
 	};
-});
+};
+
+export default nav;
