@@ -73,7 +73,7 @@ class ScheduleSummaryReportCtrl {
 	}
 
 	download () {
-		scheduleSummaryReportService.downloadSchedule($scope.workgroupId, $scope.year, $scope.termShortCode);
+		this.scheduleSummaryReportService.downloadSchedule($scope.workgroupId, $scope.year, $scope.termShortCode);
 	}
 
 	getPayload() {
