@@ -8,6 +8,8 @@ const ConcatPlugin = require('webpack-concat-plugin');
 module.exports = {
   entry: {
     scheduleSummaryReportApp: './app/scheduleSummaryReport/scheduleSummaryReportApp.js',
+    registrarReconciliationReportApp: './app/registrarReconciliationReport/registrarReconciliationReportApp.js',
+    teachingCallResponseReportApp: './app/teachingCallResponseReport/teachingCallResponseReportApp.js',
     sharedApp: './app/shared/sharedApp.js',
   },
   output: {
@@ -115,7 +117,6 @@ module.exports = {
         './node_modules/selectize/dist/js/standalone/selectize.js',
         './node_modules/angular-selectize2/dist/angular-selectize.js',
         './node_modules/ui-select/dist/select.js',
-
         './node_modules/bootstrap/dist/js/bootstrap.js',
         './node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
       ],
@@ -262,17 +263,6 @@ module.exports = {
         './app/registrarReconciliationReport/registrarReconciliationReportApp.js',
         './app/registrarReconciliationReport/**/*.js',
         './dist/templates/registrarReconciliationReport/**/*.js'
-      ]
-    }),
-    // Concat teachingCallResponseReport JS
-    new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
-      fileName: 'js/teachingCallResponseReportApp.js',
-      filesToConcat: [
-        './app/teachingCallResponseReport/teachingCallResponseReportApp.js',
-        './app/teachingCallResponseReport/**/*.js',
-        './dist/templates/teachingCallResponseReport/**/*.js'
       ]
     })
   ],
