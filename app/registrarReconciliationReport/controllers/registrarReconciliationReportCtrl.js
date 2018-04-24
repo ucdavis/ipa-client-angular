@@ -5,9 +5,41 @@
  * # RegistrarReconciliationReportCtrl
  * Controller of the ipaClientAngularApp
  */
-registrarReconciliationReportApp.controller('RegistrarReconciliationReportCtrl', ['$scope', '$rootScope', '$routeParams', 'Term', 'reportActionCreators', 'authService',
-	this.RegistrarReconciliationReportCtrl = function ($scope, $rootScope, $routeParams, Term, reportActionCreators, authService) {
+class RegistrarReconciliationReportCtrl {
+	constructor ($scope, $rootScope, $routeParams, Term, registrarReconciliationReportActionCreators, AuthService) {
+		var self = this;
+		this.$scope = $scope;
+		this.$rootScope = $rootScope;
+		this.$routeParams = $routeParams;
+		this.Term = Term;
+		this.registrarReconciliationReportActionCreators = registrarReconciliationReportActionCreators;
+		this.authService = AuthService;
 
+		this.getPayload().then( function() {
+			self.initialize();
+		})
+	};
+
+	getPayload () {
+		return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+
+			var termShortCode = $route.current.params.termShortCode;
+	
+			if (!termShortCode) {
+				var termStates = authService.getTermStates();
+				var termShortCode = calculateCurrentTermShortCode(termStates);
+			}
+	
+			var term = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, $route.current.params.year);
+			return reportActionCreators.getInitialState(
+				$route.current.params.workgroupId,
+				$route.current.params.year,
+				term.code
+			);
+		});	
+	};
+
+	initialize () {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.termShortCode = $routeParams.termShortCode;
@@ -59,46 +91,28 @@ registrarReconciliationReportApp.controller('RegistrarReconciliationReportCtrl',
 			fullTerm = slotYear + shortTermCode;
 			$scope.fullTerms.push(fullTerm);
 		}
+	};
 
-	}
-]);
-
-RegistrarReconciliationReportCtrl.getPayload = function (authService, $route, Term, reportActionCreators) {
-	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-
-		var termShortCode = $route.current.params.termShortCode;
-
-		if (!termShortCode) {
-			var termStates = authService.getTermStates();
-			var termShortCode = calculateCurrentTermShortCode(termStates);
-		}
-
-		var term = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, $route.current.params.year);
-		return reportActionCreators.getInitialState(
-			$route.current.params.workgroupId,
-			$route.current.params.year,
-			term.code
-		);
-	});
-};
-
-calculateCurrentTermShortCode = function(termStates) {
-	var earliestTermCode = null;
-
-	termStates.forEach( function(termState) {
-
-		if (termState.state == "ANNUAL_DRAFT") {
-
-			if ( (earliestTermCode == null) || earliestTermCode > termState.termCode) {
-				earliestTermCode = termState.termCode;
+	calculateCurrentTermShortCode = function(termStates) {
+		var earliestTermCode = null;
+	
+		termStates.forEach( function(termState) {
+	
+			if (termState.state == "ANNUAL_DRAFT") {
+	
+				if ( (earliestTermCode == null) || earliestTermCode > termState.termCode) {
+					earliestTermCode = termState.termCode;
+				}
 			}
+		});
+	
+		// Default to fall quarter if current term cannot be deduced from termStates
+		if (earliestTermCode == null) {
+			return "10";
 		}
-	});
+	
+		return earliestTermCode.slice(-2);
+	};
+}
 
-	// Default to fall quarter if current term cannot be deduced from termStates
-	if (earliestTermCode == null) {
-		return "10";
-	}
-
-	return earliestTermCode.slice(-2);
-};
+RegistrarReconciliationReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'Term', 'RegistrarReconciliationReportActionCreators', 'AuthService'];
