@@ -1,5 +1,5 @@
 // ScheduleSummaryReport controllers
-import ScheduleSummaryReportCtrl from './controllers/scheduleSummaryReportCtrl.js';
+import RegistrarReconciliationReportCtrl from './controllers/registrarReconciliationReportCtrl.js';
 
 // ScheduleSummaryReport services
 import ScheduleSummaryReportActionCreators from './services/scheduleSummaryReportActionCreators.js';
@@ -11,9 +11,6 @@ import ApiService from './../shared/services/ApiService.js';
 import DwService from './../shared/services/DwService.js';
 import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
-
-// CONSTANTS
-var INIT_STATE = "INIT_STATE";
 
 // Dependencies
 var dependencies = [
