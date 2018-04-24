@@ -1,8 +1,9 @@
 class TeachingCallResponseReportCtrl {
-	constructor ($scope, $rootScope, $routeParams, teachingCallResponseReportActionCreators, AuthService, TeachingCallResponseReportService, TermService) {
+	constructor ($scope, $rootScope, $route, $routeParams, teachingCallResponseReportActionCreators, AuthService, TeachingCallResponseReportService, TermService) {
 		var self = this;
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
+		this.$route = $route;
 		this.$routeParams = $routeParams;
 		this.teachingCallResponseReportActionCreators = teachingCallResponseReportActionCreators;
 		this.authService = AuthService;
@@ -10,17 +11,23 @@ class TeachingCallResponseReportCtrl {
 		this.thermService = TermService;
 
 
+		this.getPayload().then( function(results) {
+			self.initialize();
+		});
+	}
 
-		$scope.workgroupId = $routeParams.workgroupId;
-		$scope.year = $routeParams.year;
+	initialize () {
+		var self = this;
+		this.$scope.workgroupId = this.$routeParams.workgroupId;
+		this.$scope.year = this.$routeParams.year;
 
-		$scope.view = {};
+		this.$scope.view = {};
 
-		$rootScope.$on('reportStateChanged', function (event, data) {
-			$scope.view.state = data.state;
+		this.$rootScope.$on('reportStateChanged', function (event, data) {
+			self.$scope.view.state = data.state;
 
-			$scope.view.hasAccess = $scope.sharedState.currentUser.isAdmin() ||
-				$scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id);
+			self.$scope.view.hasAccess = self.$scope.sharedState.currentUser.isAdmin() ||
+				self.$scope.sharedState.currentUser.hasRole('academicPlanner', self.$scope.sharedState.workgroup.id);
 		});
 	}
 
@@ -40,7 +47,6 @@ class TeachingCallResponseReportCtrl {
 	};
 };
 
+TeachingCallResponseReportCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'TeachingCallResponseReportActionCreators', 'AuthService', 'TeachingCallResponseReportService', 'TermService'];
 
-TeachingCallResponseReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'teachingCallResponseReportActionCreators', 'AuthService', 'TeachingCallResponseReportService', 'TermService'];
-
-export default ScheduleSummaryReportCtrl;
+export default TeachingCallResponseReportCtrl;

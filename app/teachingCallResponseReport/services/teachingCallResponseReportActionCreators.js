@@ -9,7 +9,7 @@ class TeachingCallResponseReportActionCreators {
 			getInitialState: function (workgroupId, year, termCode) {
 				teachingCallResponseReportService.getInitialState(workgroupId, year).then(function (payload) {
 					var action = {
-						type: INIT_STATE,
+						type: ActionTypes.INIT_STATE,
 						payload: payload,
 						year: year
 					};

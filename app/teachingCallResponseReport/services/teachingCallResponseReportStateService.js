@@ -1,20 +1,22 @@
 class TeachingCallResponseReportStateService {
-	constructor ($rootScope, $log, Term, SectionGroup) {
+	constructor ($rootScope, $log, Term, SectionGroup, ActionTypes, StringService) {
+		var self = this;
 		this.$rootScope = $rootScope;
 		this.$log = $log;
 		this.Term = Term;
 		this.SectionGroup = SectionGroup;
+		this.ActionTypes = ActionTypes;
 
 		return {
 			_state: {},
 			_instructorReducers: function (action, instructors) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						// Root state object
-						instructors = action.payload.instructors;
+						let instructors = action.payload.instructors;
 	
 						// Get availability blobs and put on instructor in an associative array by termCode
-						teachingCallResponses = action.payload.teachingCallResponses;
+						let teachingCallResponses = action.payload.teachingCallResponses;
 	
 						teachingCallResponses.forEach( function(teachingCallResponse) {
 							instructors.forEach( function(instructor) {
@@ -23,13 +25,13 @@ class TeachingCallResponseReportStateService {
 										instructor.availabilityByTermCode = {};
 									}
 	
-									instructor.availabilityByTermCode[teachingCallResponse.termCode] = availabilityBlobToDescriptions(teachingCallResponse.availabilityBlob);
+									instructor.availabilityByTermCode[teachingCallResponse.termCode] = self.availabilityBlobToDescriptions(teachingCallResponse.availabilityBlob);
 								}
 							});
 						});
 	
 						// Get isDone (submitted) and comments and put them on instructor
-						teachingCallReceipts = action.payload.teachingCallReceipts;
+						let teachingCallReceipts = action.payload.teachingCallReceipts;
 	
 						teachingCallReceipts.forEach( function(teachingCallReceipt) {
 							instructors.forEach( function(instructor) {
@@ -41,7 +43,7 @@ class TeachingCallResponseReportStateService {
 						});
 	
 						// Make courses and sectionGroups indexable for easy teachingAssignment translation
-						sectionGroups = {
+						let sectionGroups = {
 							list: {},
 							ids: []
 						};
@@ -51,7 +53,7 @@ class TeachingCallResponseReportStateService {
 							sectionGroups.list[sectionGroup.id] = sectionGroup;
 						});
 	
-						courses = {
+						let courses = {
 							list: {},
 							ids: []
 						};
@@ -61,13 +63,9 @@ class TeachingCallResponseReportStateService {
 							courses.list[course.id] = course;
 						});
 	
-						teachingAssignments = action.payload.teachingAssignments;
-	
 						// Look for unique instances of assignments (there are duplicates for multiple sectionGroups)
 						// then look for associated course data, and add that assignment to the instructor
-						teachingAssignments = action.payload.teachingAssignments;
-	
-						teachingAssignments.forEach( function(teachingAssignment) {
+						action.payload.teachingAssignments.forEach( function(teachingAssignment) {
 							// Ignore teachingAssignments that aren't people based
 							if (teachingAssignment.instructorId == null) { return; }
 	
@@ -157,12 +155,14 @@ class TeachingCallResponseReportStateService {
 				}
 			},
 			_termCodeReducers: function (action, termCodes) {
+				var self = this;
+
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						var collapsedTermsBlob = "0000000000";
 	
 						// Collapse the teachingCall termsBlobs into one
-						teachingCallReceipts = action.payload.teachingCallReceipts;
+						let teachingCallReceipts = action.payload.teachingCallReceipts;
 	
 						teachingCallReceipts.forEach( function(teachingCallReceipt) {
 							// Loop through blobFlags in teachingCalls termBlob
@@ -170,7 +170,7 @@ class TeachingCallResponseReportStateService {
 								var blobFlag = teachingCallReceipt.termsBlob[i];
 								if (blobFlag == "1") {
 									// Change the relevant flag to 1
-									collapsedTermsBlob = setCharAt(collapsedTermsBlob, i, "1");
+									collapsedTermsBlob = StringService.setCharAt(collapsedTermsBlob, i, "1");
 								}
 							}
 						});
@@ -239,6 +239,7 @@ class TeachingCallResponseReportStateService {
 	 * @param  {array} blob A 75 length array representing unavailabilities
 	 */
 	availabilityBlobToDescriptions (blob) {
+		var self = this;
 		var hoursArray = blob.split(',');
 
 		if (hoursArray.length != 75) {
@@ -246,16 +247,17 @@ class TeachingCallResponseReportStateService {
 		}
 
 		var descriptions = [];
-		descriptions.push(describeDayArray(hoursArray.slice(0,14), "M"));
-		descriptions.push(describeDayArray(hoursArray.slice(15,29), "T"));
-		descriptions.push(describeDayArray(hoursArray.slice(30,44), "W"));
-		descriptions.push(describeDayArray(hoursArray.slice(45,59), "R"));
-		descriptions.push(describeDayArray(hoursArray.slice(60,74), "F"));
+		descriptions.push(self.describeDayArray(hoursArray.slice(0,14), "M"));
+		descriptions.push(self.describeDayArray(hoursArray.slice(15,29), "T"));
+		descriptions.push(self.describeDayArray(hoursArray.slice(30,44), "W"));
+		descriptions.push(self.describeDayArray(hoursArray.slice(45,59), "R"));
+		descriptions.push(self.describeDayArray(hoursArray.slice(60,74), "F"));
 
 		return descriptions;
 	};
 
 	describeDayArray (dayArray, dayCode) {
+		var self = this;
 		var descriptions = {
 			day: dayCode,
 			times: ""
@@ -276,13 +278,13 @@ class TeachingCallResponseReportStateService {
 					endTimeBlock++;
 				}
 			} else if (hourFlag == "0" && startTimeBlock != null) {
-				blocks.push(blockDescription(startTimeBlock, endTimeBlock));
+				blocks.push(self.blockDescription(startTimeBlock, endTimeBlock));
 				startTimeBlock = null;
 			}
 		});
 
 		if (startTimeBlock != null) {
-			blocks.push(blockDescription(startTimeBlock, endTimeBlock));
+			blocks.push(self.blockDescription(startTimeBlock, endTimeBlock));
 		}
 
 		if(blocks.length == 0) {
@@ -303,6 +305,6 @@ class TeachingCallResponseReportStateService {
 	};
 }
 
-TeachingCallResponseReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup'];
+TeachingCallResponseReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup', 'ActionTypes', 'StringService'];
 
 export default TeachingCallResponseReportStateService;

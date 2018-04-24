@@ -22,7 +22,7 @@ class ScheduleSummaryReportCtrl {
 		$scope.term = Term.prototype.getTermByTermShortCodeAndYear($scope.termShortCode, $scope.year);
 		$scope.view = {};
 
-		this.getPayload().then( function(results) {
+		this.getPayload().then( function() {
 			// Remove cloak if the url is incomplete, no payload or state calculations are necessary.
 			if ($scope.termShortCode == null) {
 				$rootScope.loadingView = false;
