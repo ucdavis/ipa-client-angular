@@ -15,8 +15,8 @@ class ScheduleSummaryReportCtrl {
 		$scope.termShortCode = $routeParams.termShortCode;
 
 		if (!$scope.termShortCode) {
-			var termStates = authService.getTermStates();
-			$scope.termShortCode = calculateCurrentTermShortCode(termStates);
+			var termStates = self.authService.getTermStates();
+			$scope.termShortCode = self.calculateCurrentTermShortCode(termStates);
 		}
 
 		$scope.term = Term.prototype.getTermByTermShortCodeAndYear($scope.termShortCode, $scope.year);
@@ -76,6 +76,26 @@ class ScheduleSummaryReportCtrl {
 		scheduleSummaryReportService.downloadSchedule($scope.workgroupId, $scope.year, $scope.termShortCode);
 	}
 
+	getPayload() {
+		var self = this;
+
+		return self.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
+			var termShortCode = self.$route.current.params.termShortCode;
+
+			if (!termShortCode) {
+				var termStates = self.authService.getTermStates();
+				var termShortCode = self.calculateCurrentTermShortCode(termStates);
+			}
+
+			var term = self.Term.prototype.getTermByTermShortCodeAndYear(termShortCode, self.$route.current.params.year);
+			return self.scheduleSummaryReportActionCreators.getInitialState(
+				self.$route.current.params.workgroupId,
+				self.$route.current.params.year,
+				term.code
+			);
+		});
+	}
+
 	calculateCurrentTermShortCode(termStates) {
 		var earliestTermCode = null;
 
@@ -96,26 +116,8 @@ class ScheduleSummaryReportCtrl {
 
 		return earliestTermCode.slice(-2);
 	}
-
-	getPayload() {
-		var self = this;
-		return self.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
-			var termShortCode = self.$route.current.params.termShortCode;
-
-			if (!termShortCode) {
-				var termStates = authService.getTermStates();
-				var termShortCode = self.calculateCurrentTermShortCode(termStates);
-			}
-
-			var term = self.Term.prototype.getTermByTermShortCodeAndYear(termShortCode, self.$route.current.params.year);
-			return self.scheduleSummaryReportActionCreators.getInitialState(
-				self.$route.current.params.workgroupId,
-				self.$route.current.params.year,
-				term.code
-			);
-		});
-	}
 };
+
 
 ScheduleSummaryReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$route', 'Term', 'ScheduleSummaryReportActionCreators', 'AuthService', 'ScheduleSummaryReportService'];
 
