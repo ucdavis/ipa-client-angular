@@ -1,12 +1,12 @@
 /**
  * @ngdoc function
- * @name ipaClientAngularApp.controller:ReportCtrl
+ * @name ipaClientAngularApp.controller:RegistrarReconciliationReportCtrl
  * @description
- * # ReportCtrl
+ * # RegistrarReconciliationReportCtrl
  * Controller of the ipaClientAngularApp
  */
-registrarReconciliationReportApp.controller('ReportCtrl', ['$scope', '$rootScope', '$routeParams', 'Term', 'reportActionCreators', 'authService',
-	this.ReportCtrl = function ($scope, $rootScope, $routeParams, Term, reportActionCreators, authService) {
+registrarReconciliationReportApp.controller('RegistrarReconciliationReportCtrl', ['$scope', '$rootScope', '$routeParams', 'Term', 'reportActionCreators', 'authService',
+	this.RegistrarReconciliationReportCtrl = function ($scope, $rootScope, $routeParams, Term, reportActionCreators, authService) {
 
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
@@ -63,7 +63,7 @@ registrarReconciliationReportApp.controller('ReportCtrl', ['$scope', '$rootScope
 	}
 ]);
 
-ReportCtrl.getPayload = function (authService, $route, Term, reportActionCreators) {
+RegistrarReconciliationReportCtrl.getPayload = function (authService, $route, Term, reportActionCreators) {
 	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
 
 		var termShortCode = $route.current.params.termShortCode;
