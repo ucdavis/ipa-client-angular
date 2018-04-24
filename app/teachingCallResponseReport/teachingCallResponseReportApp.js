@@ -1,19 +1,51 @@
-window.teachingCallResponseReportApp = angular.module("teachingCallResponseReportApp", ["sharedApp", "ngRoute"]);
+// ScheduleSummaryReport controllers
+import TeachingCallResponseReportCtrl from './controllers/teachingCallResponseReportCtrl.js';
 
-teachingCallResponseReportApp.config(function ($routeProvider) {
+// ScheduleSummaryReport services
+import TeachingCallResponseReportActionCreators from './services/teachingCallResponseReportActionCreators.js';
+import TeachingCallResponseReportService from './services/teachingCallResponseReportService.js';
+import TeachingCallResponseReportStateService from './services/teachingCallResponseReportStateService.js';
+
+// Shared services
+import ApiService from './../shared/services/ApiService.js';
+import DwService from './../shared/services/DwService.js';
+import TermService from './../shared/services/TermService.js';
+import AuthService from './../shared/services/AuthService.js';
+
+// Dependencies
+var dependencies = [
+	"sharedApp",
+	"ngRoute"
+];
+
+// Config
+function config ($routeProvider) {
 	return $routeProvider
 		.when("/:workgroupId/:year", {
-			templateUrl: "TeachingCallResponseReportCtrl.html",
-			controller: "TeachingCallResponseReportCtrl",
-			resolve: {
-				payload: TeachingCallResponseReportCtrl.getPayload
-			}
+			template: require('./templates/TeachingCallResponseReportCtrl.html'),
+			controller: "TeachingCallResponseReportCtrl"
 		})
 		.otherwise({
 			redirectTo: function () {
 				window.location = "/not-found.html";
 			}
 		});
+};
+
+config.$inject = ['$routeProvider'];
+
+// App declaration
+const teachingCallResponseReportApp = angular.module("teachingCallResponseReportApp", dependencies)
+.config(config)
+.controller('TeachingCallResponseReportCtrl', TeachingCallResponseReportCtrl)
+.service('TeachingCallResponseReportActionCreators', TeachingCallResponseReportActionCreators)
+.service('TeachingCallResponseReportService', TeachingCallResponseReportService)
+.service('TeachingCallResponseReportStateService', TeachingCallResponseReportStateService)
+.service('DwService', DwService)
+.service('ApiService', ApiService)
+.service('TermService', TermService)
+.constant('ActionTypes', {
+	INIT_STATE: "INIT_STATE"
 });
 
-var INIT_STATE = "INIT_STATE";
+export default teachingCallResponseReportApp;
