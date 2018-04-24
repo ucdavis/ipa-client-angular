@@ -1,5 +1,3 @@
-import AuthService from './../../services/AuthService.js';
-
 let ipaHeader = function ($window, $location, $rootScope, AuthService, $routeParams) {
 	return {
 		restrict: 'E', // Use this via an element selector <dss-modal></dss-modal>

@@ -26,6 +26,8 @@ import SectionGroup from './entities/SectionGroup.js';
 // Directives
 import ipaButton from './directives/ipaButton/ipaButton.js';
 import ipaHeader from './directives/ipaHeader/ipaHeader.js';
+import ipaTermSelectorDropdown from './directives/ipaTermSelectorDropdown/ipaTermSelectorDropdown.js';
+
 import nav from './directives/nav/nav.js';
 
 // Dependencies
@@ -107,6 +109,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .service('AuthService', AuthService)
 .directive('ipaButton', ipaButton)
 .directive('ipaHeader', ipaHeader)
+.directive('ipaTermSelectorDropdown', ipaTermSelectorDropdown)
 .directive('nav', nav)
 
 /*
