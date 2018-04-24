@@ -1,5 +1,5 @@
 // ScheduleSummaryReport controllers
-import RegistrarReconciliationReportCtrl from './controllers/registrarReconciliationReportCtrl.js';
+import ScheduleSummaryReportCtrl from './controllers/scheduleSummaryReportCtrl.js';
 
 // ScheduleSummaryReport services
 import ScheduleSummaryReportActionCreators from './services/scheduleSummaryReportActionCreators.js';

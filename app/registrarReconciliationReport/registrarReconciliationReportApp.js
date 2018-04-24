@@ -20,18 +20,12 @@ var dependencies = [
 function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year/:termShortCode", {
-		templateUrl: "ReportCtrl.html",
-		controller: "ReportCtrl",
-		resolve: {
-			payload: ReportCtrl.getPayload
-		}
+		template: require('./registrarReconciliationReportCtrl.html'),
+		controller: "RegistrarReconciliationReportCtrl"
 	})
 	.when("/", {
-		templateUrl: "ReportCtrl.html",
-		controller: "ReportCtrl",
-		resolve: {
-			payload: ReportCtrl.getPayload
-		}
+		template: require('./registrarReconciliationReportCtrl.html'),
+		controller: "RegistrarReconciliationReportCtrl"
 	})
 	.otherwise({
 		redirectTo: function () {

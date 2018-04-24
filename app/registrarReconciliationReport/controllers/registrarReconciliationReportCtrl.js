@@ -5,7 +5,7 @@
  * # RegistrarReconciliationReportCtrl
  * Controller of the ipaClientAngularApp
  */
-class RegistrarReconciliationReportCtrl {
+class registrarReconciliationReportCtrl {
 	constructor ($scope, $rootScope, $routeParams, Term, registrarReconciliationReportActionCreators, AuthService) {
 		var self = this;
 		this.$scope = $scope;
@@ -93,7 +93,7 @@ class RegistrarReconciliationReportCtrl {
 		}
 	};
 
-	calculateCurrentTermShortCode = function(termStates) {
+	calculateCurrentTermShortCode (termStates) {
 		var earliestTermCode = null;
 	
 		termStates.forEach( function(termState) {
@@ -115,4 +115,6 @@ class RegistrarReconciliationReportCtrl {
 	};
 }
 
-RegistrarReconciliationReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'Term', 'RegistrarReconciliationReportActionCreators', 'AuthService'];
+registrarReconciliationReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'Term', 'RegistrarReconciliationReportActionCreators', 'AuthService'];
+
+export default registrarReconciliationReportCtrl;

@@ -253,17 +253,6 @@ module.exports = {
         './app/scheduling/**/*.js',
         './dist/templates/scheduling/**/*.js'
       ]
-    }),
-    // Concat registrarReconciliationReport JS
-    new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
-      fileName: 'js/registrarReconciliationReportApp.js',
-      filesToConcat: [
-        './app/registrarReconciliationReport/registrarReconciliationReportApp.js',
-        './app/registrarReconciliationReport/**/*.js',
-        './dist/templates/registrarReconciliationReport/**/*.js'
-      ]
     })
   ],
   devServer: {
