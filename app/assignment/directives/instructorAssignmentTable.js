@@ -278,6 +278,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 
 												// This teachingAssignment is a buyout/sabb/release
 												if (teachingAssignment.approved == false && (teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.workLifeBalance || teachingAssignment.leaveOfAbsence || teachingAssignment.sabbatical)) {
+													let preferenceDisplayText = "";
+
 													if (teachingAssignment.buyout) {
 														preferenceDisplayText = "Buyout";
 														nonCoursePreferences.buyout = true;
@@ -430,7 +432,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 
 						//Add 'The Staff'
 
-						courseHtml = "";
+						let courseHtml = "";
 						courseHtml += "<div class=\"course-list-row\">";
 						courseHtml += "<div class=\"description-cell\">";
 						courseHtml += "<div>";

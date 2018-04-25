@@ -31,37 +31,38 @@ class AssignmentCtrl {
 	}
 
 	initialize () {
-		$rootScope.$on('assignmentStateChanged', function (event, data) {
-			$scope.view.state = data;
+		var self = this;
+		this.$rootScope.$on('assignmentStateChanged', function (event, data) {
+			self.$scope.view.state = data;
 		});
 
-		$scope.showInstructors = function () {
-			assignmentActionCreators.showInstructors();
+		this.$scope.showInstructors = function () {
+			self.assignmentActionCreators.showInstructors();
 		};
 
-		$scope.showCourses = function () {
-			assignmentActionCreators.showCourses();
+		this.$scope.showCourses = function () {
+			self.assignmentActionCreators.showCourses();
 		};
 
-		$scope.termToggled = function (id) {
-			assignmentActionCreators.toggleTermFilter(id);
+		this.$scope.termToggled = function (id) {
+			self.assignmentActionCreators.toggleTermFilter(id);
 		};
 
-		$scope.toggleDisplayCompletedInstructors = function () {
-			assignmentActionCreators.toggleDisplayCompletedInstructors(!$scope.view.state.filters.showCompletedInstructors);
+		this.$scope.toggleDisplayCompletedInstructors = function () {
+			self.assignmentActionCreators.toggleDisplayCompletedInstructors(!self.$scope.view.state.filters.showCompletedInstructors);
 		};
 
-		$scope.approveInstructorAssignment = function (teachingAssignmentId) {
-			var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
-			assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
+		this.$scope.approveInstructorAssignment = function (teachingAssignmentId) {
+			var teachingAssignment = self.$scope.view.state.teachingAssignments.list[teachingAssignmentId];
+			self.assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
 		};
 
-		$scope.unapproveInstructorAssignment = function(teachingAssignmentId) {
-			var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
-			assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
+		this.$scope.unapproveInstructorAssignment = function(teachingAssignmentId) {
+			var teachingAssignment = self.$scope.view.state.teachingAssignments.list[teachingAssignmentId];
+			self.assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
 		};
 
-		$scope.addAndApproveInstructorAssignment = function(sectionGroupId, instructorId, termCode) {
+		this.$scope.addAndApproveInstructorAssignment = function(sectionGroupId, instructorId, termCode) {
 			var teachingAssignment = {
 				sectionGroupId: sectionGroupId,
 				instructorId: instructorId,
@@ -70,21 +71,21 @@ class AssignmentCtrl {
 				approved: true
 			};
 
-			assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
+			self.assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
 		};
 
 		// Triggered by global search field, redraws table based on query
-		$scope.filterTable = function (query) {
-			clearTimeout($scope.t);
-			$scope.t = setTimeout($scope.startFilter, 700, query);
+		this.$scope.filterTable = function (query) {
+			clearTimeout(self.$scope.t);
+			self.$scope.t = setTimeout(self.$scope.startFilter, 700, query);
 		};
 
-		$scope.startFilter = function (query) {
-			assignmentActionCreators.updateTableFilter(query);
+		this.$scope.startFilter = function (query) {
+			self.assignmentActionCreators.updateTableFilter(query);
 		};
 
-		$scope.toggleTag = function (tagId) {
-			var tagFilters = $scope.view.state.filters.enabledTagIds;
+		this.$scope.toggleTag = function (tagId) {
+			var tagFilters = self.$scope.view.state.filters.enabledTagIds;
 			var tagIndex = tagFilters.indexOf(tagId);
 
 			if (tagIndex < 0) {
@@ -93,17 +94,17 @@ class AssignmentCtrl {
 				tagFilters.splice(tagIndex, 1);
 			}
 
-			assignmentActionCreators.updateTagFilters(tagFilters);
+			self.assignmentActionCreators.updateTagFilters(tagFilters);
 		};
 
 		// Launched from the instructorTable directive UI handler
-		$scope.openCommentModal = function(instructorId) {
-			var instructor = $scope.view.state.instructors.list[instructorId];
+		this.$scope.openCommentModal = function(instructorId) {
+			var instructor = self.$scope.view.state.instructors.list[instructorId];
 			var scheduleInstructorNote = {};
 
 			// Create new scheduleInstructorNote object if one does not already exist
 			if (instructor.scheduleInstructorNoteId) {
-				scheduleInstructorNote = $scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
+				scheduleInstructorNote = self.$scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
 			} else {
 				scheduleInstructorNote = {};
 				scheduleInstructorNote.instructorComment = "";
@@ -112,16 +113,16 @@ class AssignmentCtrl {
 			// Find a teachingCallReceipt for this instructor and schedule, if one exists.
 			var teachingCallReceipt = null;
 
-			for (var i = 0; i < $scope.view.state.teachingCallReceipts.ids.length; i++) {
-				teachingCallReceipt = $scope.view.state.teachingCallReceipts.list[$scope.view.state.teachingCallReceipts.ids[i]];
+			for (var i = 0; i < self.$scope.view.state.teachingCallReceipts.ids.length; i++) {
+				teachingCallReceipt = self.$scope.view.state.teachingCallReceipts.list[self.$scope.view.state.teachingCallReceipts.ids[i]];
 
 				if (teachingCallReceipt.instructorId == instructor.id) {
 					break;
 				}
 			}
 
-			modalInstance = $uibModal.open({
-				templateUrl: 'ModalComment.html',
+			modalInstance = this.$uibModal.open({
+				templateUrl: require('./../templates/ModalComment.html'),
 				controller: ModalCommentCtrl,
 				size: 'lg',
 				resolve: {
@@ -159,13 +160,13 @@ class AssignmentCtrl {
 			});
 		};
 
-		$scope.openUnavailabilityModal = function(instructorId) {
+		this.$scope.openUnavailabilityModal = function(instructorId) {
 			var instructor = $scope.view.state.instructors.list[instructorId];
 
 			var termDisplayNames = {};
 
 			modalInstance = $uibModal.open({
-				templateUrl: 'ModalUnavailability.html',
+				template: require('./../templates/ModalUnavailability.html'),
 				controller: ModalUnavailabilityCtrl,
 				size: 'lg',
 				resolve: {
@@ -189,25 +190,25 @@ class AssignmentCtrl {
 			});
 		};
 
-		$scope.download = function () {
-			assignmentService.download($scope.workgroupId, $scope.year);
+		this.$scope.download = function () {
+			self.assignmentService.download(this.$scope.workgroupId, this.$scope.year);
 		};
 
-		$scope.setActiveTab = function (tabName) {
-			$location.search({ tab: tabName });
+		this.$scope.setActiveTab = function (tabName) {
+			self.$location.search({ tab: tabName });
 			switch (tabName) {
 				case "instructors":
-					$scope.showInstructors();
+					self.$scope.showInstructors();
 					break;
 				default:
-					$scope.showCourses();
+					self.$scope.showCourses();
 					break;
 			}
 		};
 
 		// Set the active tab according to the URL
 		// Otherwise redirect to the default view
-		$scope.setActiveTab($routeParams.tab || "courses");
+		this.$scope.setActiveTab(this.$routeParams.tab || "courses");
 	}
 
 	getPayload () {
