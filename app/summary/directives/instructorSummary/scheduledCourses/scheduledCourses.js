@@ -1,7 +1,7 @@
-summaryApp.directive("scheduledCourses", this.scheduledCourses = function ($rootScope) {
+let scheduledCourses = function ($rootScope) {
 	return {
 		restrict: 'E',
-		templateUrl: 'scheduledCourses.html',
+		template: require('./scheduledCourses.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			$rootScope.$on('summaryStateChanged', function (event, data) {
@@ -210,4 +210,6 @@ summaryApp.directive("scheduledCourses", this.scheduledCourses = function ($root
 			}
 		}
 	};
-});
+};
+
+export default scheduledCourses;

@@ -1,7 +1,7 @@
-summaryApp.directive("instructorHeader", this.instructorHeader = function ($routeParams, $rootScope, $location, $window) {
+let instructorHeader = function ($routeParams, $rootScope, $location, $window) {
 	return {
 		restrict: 'E',
-		templateUrl: 'instructorHeader.html',
+		template: require('./instructorHeader.html'),
 		replace: true,
 		scope: {
 			state: '<'
@@ -61,4 +61,6 @@ summaryApp.directive("instructorHeader", this.instructorHeader = function ($rout
 			}
 		}
 	};
-});
+};
+
+export default instructorHeader;

@@ -12,8 +12,13 @@ import TermService from './../shared/services/TermService.js';
 
 // Directives
 import workgroupSummary from './directives/workgroupSummary/workgroupSummary.js';
-import instructorSummary from './directives/instructorSummary/instructorSummary.js';
 import supportSummary from './directives/supportSummary/supportSummary.js';
+
+import instructorSummary from './directives/instructorSummary/instructorSummary.js';
+import instructorHeader from './directives/instructorSummary/instructorHeader/instructorHeader.js';
+import scheduledCourses from './directives/instructorSummary/scheduledCourses/scheduledCourses.js';
+import supportCalls from './directives/instructorSummary/supportCalls/supportCalls.js';
+import teachingCalls from './directives/instructorSummary/teachingCalls/teachingCalls.js';
 
 // Dependencies
 var dependencies = [
@@ -52,6 +57,10 @@ const summaryApp = angular.module("summaryApp", dependencies)
 .directive('workgroupSummary', workgroupSummary)
 .directive('instructorSummary', instructorSummary)
 .directive('supportSummary', supportSummary)
+.directive('instructorHeader', instructorHeader)
+.directive('scheduledCourses', scheduledCourses)
+.directive('supportCalls', supportCalls)
+.directive('teachingCalls', teachingCalls)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	SELECT_TERM: "SELECT_TERM"

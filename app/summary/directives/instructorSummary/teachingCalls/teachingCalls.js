@@ -1,10 +1,12 @@
-summaryApp.directive("teachingCalls", this.teachingCalls = function () {
+let teachingCalls = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'teachingCalls.html',
+		template: require('./teachingCalls.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			// Do nothing
 		}
 	};
-});
+};
+
+export default teachingCalls;
