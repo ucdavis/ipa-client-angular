@@ -1,5 +1,5 @@
 // Controllers
-import AdminCtrl from './controllers/AdminCtrl.js';
+import AdminCtrl from './controllers/adminCtrl.js';
 
 // Services
 import AdminActionCreators from './services/adminActionCreators.js';
@@ -19,11 +19,11 @@ var dependencies = [
 function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year", {
-		template: require('./AdminCtrl.html'),
+		template: require('./adminCtrl.html'),
 		controller: "AdminCtrl"
 	})
 	.when("/", {
-		template: require('./AdminCtrl.html'),
+		template: require('./adminCtrl.html'),
 		controller: "AdminCtrl"
 	})
 	.otherwise({
