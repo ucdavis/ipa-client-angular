@@ -1,7 +1,7 @@
-workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, workgroupActionCreators, workgroupService) {
+let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'rolesTable.html',
+		template: require('./rolesTable.html'),
 		replace: true,
 		scope: {
 			userRoles: '<',
@@ -49,4 +49,6 @@ workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, wor
 			};
 		}
 	};
-});
+};
+
+export default rolesTable;

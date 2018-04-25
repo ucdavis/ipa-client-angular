@@ -5,7 +5,12 @@
  * # UserCtrl
  * Controller of the ipaClientAngularApp
  */
-workgroupApp.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$timeout', 'workgroupActionCreators', 'workgroupService',
-		this.UserCtrl = function ($scope, $rootScope, $routeParams, $timeout, workgroupActionCreators, workgroupService) {
-			// Intentionall Blank
-}]);
+class UserCtrl {
+	constructor ($scope, $rootScope, $routeParams, $timeout, WorkgroupActionCreators, WorkgroupService) {
+			// Intentionally Blank
+	}
+}
+
+UserCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$timeout', 'WorkgroupActionCreators', 'WorkgroupService'];
+
+export default UserCtrl;

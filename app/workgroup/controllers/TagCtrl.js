@@ -5,19 +5,22 @@
  * # TagCtrl
  * Controller of the ipaClientAngularApp
  */
-workgroupApp.controller('TagCtrl', ['$scope', '$rootScope', '$routeParams', 'workgroupActionCreators',
-		this.TagCtrl = function ($scope, $rootScope, $routeParams, workgroupActionCreators) {
+class TagCtrl {
+	constructor ($scope, $rootScope, $routeParams, WorkgroupActionCreators) {
+		$scope.addTag = function () {
+			workgroupActionCreators.addTag($scope.workgroupId, $scope.view.state.tags.newTag);
+		};
 
-			$scope.addTag = function () {
-				workgroupActionCreators.addTag($scope.workgroupId, $scope.view.state.tags.newTag);
-			};
+		$scope.removeTag = function (tagId) {
+			workgroupActionCreators.removeTag($scope.workgroupId, $scope.view.state.tags.list[tagId]);
+		};
 
-			$scope.removeTag = function (tagId) {
-				workgroupActionCreators.removeTag($scope.workgroupId, $scope.view.state.tags.list[tagId]);
-			};
+		$scope.updateTag = function (tag) {
+			workgroupActionCreators.updateTag($scope.workgroupId, tag);
+		};
+	}
+}
 
-			$scope.updateTag = function (tag) {
-				workgroupActionCreators.updateTag($scope.workgroupId, tag);
-			};
+TagCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'WorkgroupActionCreators'];
 
-}]);
+export default TagCtrl;

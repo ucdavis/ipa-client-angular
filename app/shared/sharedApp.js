@@ -133,6 +133,12 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .directive('ipaHeader', ipaHeader)
 .directive('ipaTermSelectorDropdown', ipaTermSelectorDropdown)
 .directive('nav', nav)
+.constant('Roles', {
+	reviewer: 10,
+	instructor: 15,
+	academicPlanner: 2,
+	presence: 9
+});
 
 /*
 .config(slowConnectionInterceptor)
@@ -202,11 +208,5 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 		});
 	}]
 )
-.constant('Roles', {
-	reviewer: 10,
-	instructor: 15,
-	academicPlanner: 2,
-	presence: 9
-});
 */
 export default sharedApp;

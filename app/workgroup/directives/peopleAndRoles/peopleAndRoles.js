@@ -1,7 +1,7 @@
-workgroupApp.directive("peopleAndRoles", this.peopleAndRoles = function ($rootScope, workgroupActionCreators) {
+let peopleAndRoles = function ($rootScope, WorkgroupActionCreators) {
 	return {
 		restrict: 'E',
-		templateUrl: 'peopleAndRoles.html',
+		template: require('./peopleAndRoles.html'),
 		replace: true,
 		scope: {
 			ui: '<',
@@ -14,4 +14,6 @@ workgroupApp.directive("peopleAndRoles", this.peopleAndRoles = function ($rootSc
 			};
 		}
 	};
-});
+};
+
+export default peopleAndRoles;

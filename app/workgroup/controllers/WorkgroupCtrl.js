@@ -5,15 +5,17 @@
  * # WorkgroupCtrl
  * Controller of the ipaClientAngularApp
  */
-workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$uibModal', 'workgroupActionCreators',
-		this.WorkgroupCtrl = function ($scope, $rootScope, $routeParams, $location, $uibModal, workgroupActionCreators) {
-
+class WorkgroupCtrl {
+	constructor ($scope, $rootScope, $route, $routeParams, $location, $uibModal, WorkgroupActionCreators) {
 		$scope.ROWS_PER_HEADER = 20;
 
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.view = {};
 
+	}
+
+	initialize () {
 		$rootScope.$on('workgroupStateChanged', function (event, data) {
 			$scope.view.state = data;
 		});
@@ -53,10 +55,16 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 			// Otherwise redirect to the default view
 			$scope.setActiveTab('people');
 		}
-	}]);
+	}
 
-WorkgroupCtrl.getPayload = function (authService, workgroupActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		return workgroupActionCreators.getInitialState($route.current.params.workgroupId);
-	});
-};
+	getPayload () {
+		authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+			return workgroupActionCreators.getInitialState($route.current.params.workgroupId);
+		});
+	
+	}
+}
+
+WorkgroupCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', '$location', '$uibModal', 'WorkgroupActionCreators'];
+
+export default WorkgroupCtrl;

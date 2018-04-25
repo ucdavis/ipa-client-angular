@@ -1,7 +1,7 @@
-workgroupApp.directive("studentRoleSelector", this.studentRoleSelector = function (workgroupActionCreators) {
+let studentRoleSelector = function (WorkgroupActionCreators) {
 	return {
 		restrict: 'E',
-		templateUrl: 'studentRoleSelector.html',
+		template: require('./studentRoleSelector.html'),
 		replace: true,
 		scope: {
 			studentRoles: '<',
@@ -14,4 +14,6 @@ workgroupApp.directive("studentRoleSelector", this.studentRoleSelector = functio
 			};
 		}
 	};
-});
+};
+
+export default studentRoleSelector;
