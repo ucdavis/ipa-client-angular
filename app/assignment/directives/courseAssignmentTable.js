@@ -1,7 +1,7 @@
 /**
  * Provides the main course table in the Courses View
  */
-let courseAssignmentTable = function ($rootScope, assignmentActionCreators) {
+let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 	return {
 		restrict: 'A',
 		template: '<div class=\"course-list-row\">' +

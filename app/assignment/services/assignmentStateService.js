@@ -10,13 +10,15 @@ class AssignmentStateService {
 	constructor ($rootScope, $log, SectionGroup, Course, ScheduleTermState,
 	ScheduleInstructorNote, Term, Tag, Instructor, TeachingAssignment,
 	TeachingCall, TeachingCallReceipt, TeachingCallResponse, ActionTypes) {
+		var self = this;
+
 		return {
 			_state: {},
 			_courseReducers: function (action, courses) {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_ASSIGNMENT_VIEW:
+					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						courses = {
 							ids: [],
 							list: []
@@ -47,7 +49,7 @@ class AssignmentStateService {
 						courses.ids = _array_sortIdsByProperty(coursesList, ["subjectCode", "courseNumber", "sequencePattern"]);
 						courses.list = coursesList;
 						return courses;
-					case UPDATE_TABLE_FILTER:
+					case ActionTypes.UPDATE_TABLE_FILTER:
 						var query = action.payload.query;
 	
 						// Apply search filters
@@ -63,7 +65,7 @@ class AssignmentStateService {
 						}
 	
 						return courses;
-					case UPDATE_TAG_FILTERS:
+					case ActionTypes.UPDATE_TAG_FILTERS:
 						// Set the course.isFiltered flag to false if any tag matches the filters
 						courses.ids.forEach(function (courseId) {
 							// Display all courses if none of the tags is checked
@@ -296,7 +298,7 @@ class AssignmentStateService {
 							// Scaffold all teachingAssignment termCodeId arrays
 							var allTerms = ['01', '02', '03', '04', '06', '07', '08', '09', '10'];
 							allTerms.forEach(function (slotTerm) {
-								var generatedTermCode = generateTermCode(action.year, slotTerm);
+								var generatedTermCode = self.generateTermCode(action.year, slotTerm);
 								instructor.teachingAssignmentTermCodeIds[generatedTermCode] = [];
 							});
 	
@@ -713,13 +715,13 @@ class AssignmentStateService {
 							enabledTerms.ids.push(id);
 						}
 	
-						enabledTerms.ids = orderTermsChronologically(enabledTerms.ids);
+						enabledTerms.ids = self.orderTermsChronologically(enabledTerms.ids);
 	
 						// Generate termCode list entries
 						for (i = 1; i < 11; i++) {
 							// 4 is not used as a termCode
 							if (i != 4) {
-								var termCode = generateTermCode(action.year, i);
+								var termCode = self.generateTermCode(action.year, i);
 								enabledTerms.list[i] = termCode;
 							}
 						}
@@ -729,7 +731,7 @@ class AssignmentStateService {
 						// Check localStorage for saved termFilter settings
 						var termFiltersBlob = localStorage.getItem("termFilters");
 						if (termFiltersBlob) {
-							userInterface.enabledTerms.ids = deserializeTermFiltersBlob(termFiltersBlob);
+							userInterface.enabledTerms.ids = self.deserializeTermFiltersBlob(termFiltersBlob);
 						}
 	
 						return userInterface;
@@ -767,7 +769,7 @@ class AssignmentStateService {
 					return;
 				}
 	
-				newState = {};
+				let newState = {};
 				newState.scheduleTermStates = scope._scheduleTermStateReducers(action, scope._state.scheduleTermStates);
 				newState.courses = scope._courseReducers(action, scope._state.courses);
 				newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);

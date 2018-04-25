@@ -7,6 +7,18 @@
  */
 class AssignmentCtrl {
 	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, AssignmentActionCreators, AssignmentService, AuthService) {
+		var self = this;
+		this.$scope = $scope;
+		this.$rootScope = $rootScope;
+		this.$window = $window;
+		this.$location = $location;
+		this.$route = $route;
+		this.$routeParams = $routeParams;
+		this.$uibModal = $uibModal;
+		this.assignmentActionCreators = AssignmentActionCreators;
+		this.assignmentService = AssignmentService;
+		this.authService = AuthService;
+
 		$window.document.title = "Assignments";
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
@@ -199,8 +211,10 @@ class AssignmentCtrl {
 	}
 
 	getPayload () {
-		authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-			assignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.tab);
+		var self = this;
+
+		return this.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
+			self.assignmentActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year, self.$route.current.params.tab);
 		});
 	}
 }
