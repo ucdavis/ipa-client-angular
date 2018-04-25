@@ -1,7 +1,7 @@
-sharedApp.directive("massImportSummary", this.massImportSummary = function (courseActionCreators) {
+let massImportSummary = function (courseActionCreators) {
 	return {
 		restrict: 'E',
-		templateUrl: 'massImportSummary.html',
+		template: require('./massImportSummary.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			/**
@@ -32,4 +32,6 @@ sharedApp.directive("massImportSummary", this.massImportSummary = function (cour
 			};
 		}
 	};
-});
+};
+
+export default massImportSummary;

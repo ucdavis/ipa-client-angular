@@ -1,7 +1,7 @@
-sharedApp.directive("newCourse", this.newCourse = function (courseActionCreators, courseService) {
+let newCourse = function (courseActionCreators, courseService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'newCourse.html',
+		template: require('./newCourse.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 
@@ -79,4 +79,6 @@ sharedApp.directive("newCourse", this.newCourse = function (courseActionCreators
 
 		}
 	};
-});
+};
+
+export default newCourse;

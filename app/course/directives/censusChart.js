@@ -2,7 +2,7 @@
  * Uses Chart JS to display either a bar chart (historical courses), or a line chart (future courses)
  * Example: <census-chart census="census" term="termCode"course-id="courseId"></census-chart>
  */
-courseApp.directive("censusChart", this.censusChart = function ($rootScope, $timeout) {
+let censusChart = function ($rootScope, $timeout) {
 	return {
 		restrict: 'E',
 		template: '<canvas></canvas>',
@@ -145,4 +145,6 @@ courseApp.directive("censusChart", this.censusChart = function ($rootScope, $tim
 			}, true);
 		}
 	};
-});
+};
+
+export default censusChart;

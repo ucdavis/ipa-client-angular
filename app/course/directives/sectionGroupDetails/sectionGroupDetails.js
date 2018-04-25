@@ -1,7 +1,7 @@
-sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function (courseActionCreators, $rootScope) {
+let sectionGroupDetails = function (courseActionCreators, $rootScope) {
 	return {
 		restrict: 'E',
-		templateUrl: 'sectionGroupDetails.html',
+		template: require('./sectionGroupDetails.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.isLocked = function () {
@@ -58,4 +58,6 @@ sharedApp.directive("sectionGroupDetails", this.sectionGroupDetails = function (
 
 		}
 	};
-});
+};
+
+export default sectionGroupDetails;

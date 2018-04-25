@@ -1,7 +1,7 @@
-sharedApp.directive("courseDetails", this.courseDetails = function () {
+let courseDetails = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'courseDetails.html',
+		template: require('./courseDetails.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			/**
@@ -39,4 +39,6 @@ sharedApp.directive("courseDetails", this.courseDetails = function () {
 
 		}
 	};
-});
+};
+
+export default courseDetails;

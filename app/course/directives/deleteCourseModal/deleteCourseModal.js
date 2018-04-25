@@ -1,7 +1,7 @@
-courseApp.directive("deleteCourseModal", this.deleteCourseModal = function ($rootScope, courseActionCreators, $routeParams) {
+let deleteCourseModal = function ($rootScope, courseActionCreators, $routeParams) {
 	return {
 		restrict: 'E',
-		templateUrl: 'deleteCourseModal.html',
+		template: require('./deleteCourseModal.html'),
 		replace: true,
 		scope: {
 			state: '<',
@@ -20,4 +20,6 @@ courseApp.directive("deleteCourseModal", this.deleteCourseModal = function ($roo
 			};
 		} // end link
 	};
-});
+};
+
+export default deleteCourseModal;
