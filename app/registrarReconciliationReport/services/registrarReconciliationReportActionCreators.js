@@ -15,7 +15,7 @@ class RegistrarReconciliationReportActionCreators {
 
 		return {
 			getInitialState: function (workgroupId, year, termCode) {
-				reportService.getTermComparisonReport(workgroupId, year, termCode).then(function (sectionDiffs) {
+				RegistrarReconciliationReportService.getTermComparisonReport(workgroupId, year, termCode).then(function (sectionDiffs) {
 					var action = {
 						type: INIT_STATE,
 						payload: {
@@ -60,7 +60,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param property
 			 */
 			updateActivity: function (activity, property) {
-				reportService.updateActivity(activity).then(function (updatedActivity) {
+				RegistrarReconciliationReportService.updateActivity(activity).then(function (updatedActivity) {
 					$rootScope.$emit('toast', { message: "Updated " + activity.typeCode.getActivityCodeDescription() + " " + property, type: "SUCCESS" });
 					var action = {
 						type: UPDATE_ACTIVITY,
@@ -69,7 +69,7 @@ class RegistrarReconciliationReportActionCreators {
 							property: property
 						}
 					};
-					reportStateService.reduce(action);
+					RegistrarReconciliationReportService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
 				});
@@ -80,7 +80,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param activity
 			 */
 			deleteActivity: function (activity) {
-				reportService.deleteActivity(activity).then(function () {
+				RegistrarReconciliationReportService.deleteActivity(activity).then(function () {
 					$rootScope.$emit('toast', { message: "Deleted " + activity.typeCode.getActivityCodeDescription(), type: "SUCCESS" });
 					var action = {
 						type: DELETE_ACTIVITY,
@@ -88,7 +88,7 @@ class RegistrarReconciliationReportActionCreators {
 							activity: activity
 						}
 					};
-					reportStateService.reduce(action);
+					RegistrarReconciliationReportStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not delete activity.", type: "ERROR" });
 				});
@@ -105,7 +105,7 @@ class RegistrarReconciliationReportActionCreators {
 				activity.startTime = moment(activity.startTime, "HHmm").format("HH:mm:ss");
 				activity.endTime = moment(activity.endTime, "HHmm").format("HH:mm:ss");
 	
-				reportService.createActivity(section.id, activity).then(function (createdActivity) {
+				RegistrarReconciliationReportService.createActivity(section.id, activity).then(function (createdActivity) {
 					$rootScope.$emit('toast', { message: "Created " + activity.typeCode.getActivityCodeDescription(), type: "SUCCESS" });
 					var action = {
 						type: CREATE_ACTIVITY,
@@ -115,7 +115,7 @@ class RegistrarReconciliationReportActionCreators {
 							activity: createdActivity
 						}
 					};
-					reportStateService.reduce(action);
+					RegistrarReconciliationReportStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not create activity.", type: "ERROR" });
 				});
@@ -130,7 +130,7 @@ class RegistrarReconciliationReportActionCreators {
 					});
 				}
 	
-				reportService.createSection(section).then(function (sectionDiff) {
+				RegistrarReconciliationReportService.createSection(section).then(function (sectionDiff) {
 					$rootScope.$emit('toast', { message: "Created Section", type: "SUCCESS" });
 	
 					sectionDiff.changes = [];
@@ -140,7 +140,7 @@ class RegistrarReconciliationReportActionCreators {
 							sectionDiff: sectionDiff
 						}
 					};
-					reportStateService.reduce(action);
+					RegistrarReconciliationReportStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not create section.", type: "ERROR" });
 				});
@@ -153,7 +153,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param instructor
 			 */
 			assignInstructor: function (section, instructor) {
-				reportService.assignInstructor(section.sectionGroupId, instructor).then(function (teachingAssingment) {
+				RegistrarReconciliationReportService.assignInstructor(section.sectionGroupId, instructor).then(function (teachingAssingment) {
 					$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
 					var action = {
 						type: ASSIGN_INSTRUCTOR,
@@ -162,7 +162,7 @@ class RegistrarReconciliationReportActionCreators {
 							instructor: instructor
 						}
 					};
-					reportStateService.reduce(action);
+					RegistrarReconciliationReportStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not assign instructor.", type: "ERROR" });
 				});
@@ -174,7 +174,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param instructor
 			 */
 			unAssignInstructor: function (section, instructor) {
-				reportService.unAssignInstructor(section.sectionGroupId, instructor).then(function (teachingAssingment) {
+				RegistrarReconciliationReportService.unAssignInstructor(section.sectionGroupId, instructor).then(function (teachingAssingment) {
 					$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
 					var action = {
 						type: UNASSIGN_INSTRUCTOR,
@@ -183,7 +183,7 @@ class RegistrarReconciliationReportActionCreators {
 							instructor: instructor
 						}
 					};
-					reportStateService.reduce(action);
+					RegistrarReconciliationReportStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not unassign instructor.", type: "ERROR" });
 				});
@@ -194,7 +194,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param section
 			 */
 			deleteSection: function (section) {
-				reportService.deleteSection(section).then(function () {
+				RegistrarReconciliationReportService.deleteSection(section).then(function () {
 					$rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
 					var action = {
 						type: DELETE_SECTION,
@@ -202,7 +202,7 @@ class RegistrarReconciliationReportActionCreators {
 							section: section
 						}
 					};
-					reportStateService.reduce(action);
+					RegistrarReconciliationReportStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not delete section.", type: "ERROR" });
 				});
@@ -225,7 +225,7 @@ class RegistrarReconciliationReportActionCreators {
 					sectionGroupId: sectionGroupId
 				};
 	
-				reportService.createSyncAction(newSyncAction).then(function (syncAction) {
+				RegistrarReconciliationReportService.createSyncAction(newSyncAction).then(function (syncAction) {
 					$rootScope.$emit('toast', { message: "Created to-do item", type: "SUCCESS" });
 					var action = {
 						type: CREATE_SYNC_ACTION,
@@ -234,7 +234,7 @@ class RegistrarReconciliationReportActionCreators {
 							sectionUniqueKey: sectionUniqueKey
 						}
 					};
-					reportStateService.reduce(action);
+					RegistrarReconciliationReportStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not create to-do item.", type: "ERROR" });
 				});
@@ -248,7 +248,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param childProperty: for activities this can be dayIndicator, startTime, endTime, location. null value applies the to-do to the whole activity
 			 */
 			deleteBannerToDoItem: function (syncAction) {
-				reportService.deleteSyncAction(syncAction.id).then(function () {
+				RegistrarReconciliationReportService.deleteSyncAction(syncAction.id).then(function () {
 					$rootScope.$emit('toast', { message: "Deleted to-do item", type: "SUCCESS" });
 					var action = {
 						type: DELETE_SYNC_ACTION,
@@ -256,7 +256,7 @@ class RegistrarReconciliationReportActionCreators {
 							syncAction: syncAction
 						}
 					};
-					reportStateService.reduce(action);
+					RegistrarReconciliationReportStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not delete to-do item.", type: "ERROR" });
 				});

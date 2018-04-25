@@ -8,44 +8,45 @@
  */
 class RegistrarReconciliationReportService {
 	constructor (ApiService) {
+		var self = this;
 		this.apiService = ApiService;
 
 		return {
 			getSchedulesToCompare: function (workgroupId) {
-				return apiService.get("/api/reportView/workgroups/" + workgroupId);
+				return self.apiService.get("/api/reportView/workgroups/" + workgroupId);
 			},
 			getTermComparisonReport: function (workgroupId, year, termCode) {
-				return apiService.get("/api/reportView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termCode);
+				return self.apiService.get("/api/reportView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termCode);
 			},
 			updateSection: function (section) {
-				return apiService.put("/api/reportView/sections/" + section.id, section);
+				return self.apiService.put("/api/reportView/sections/" + section.id, section);
 			},
 			createSection: function (section) {
-				return apiService.post("/api/reportView/sectionGroups/" + section.sectionGroupId + "/sections/" + section.sequenceNumber, section);
+				return self.apiService.post("/api/reportView/sectionGroups/" + section.sectionGroupId + "/sections/" + section.sequenceNumber, section);
 			},
 			updateActivity: function (activity) {
-				return apiService.put("/api/reportView/activities/" + activity.id, activity);
+				return self.apiService.put("/api/reportView/activities/" + activity.id, activity);
 			},
 			deleteActivity: function (activity) {
-				return apiService.delete("/api/reportView/activities/" + activity.id);
+				return self.apiService.delete("/api/reportView/activities/" + activity.id);
 			},
 			createActivity: function (sectionId, activity) {
-				return apiService.post("/api/reportView/sections/" + sectionId + "/activities/" + activity.typeCode, activity);
+				return self.apiService.post("/api/reportView/sections/" + sectionId + "/activities/" + activity.typeCode, activity);
 			},
 			assignInstructor: function (sectionGroupId, instructor) {
-				return apiService.post("/api/reportView/sectionGroups/" + sectionGroupId + "/instructors", instructor);
+				return self.apiService.post("/api/reportView/sectionGroups/" + sectionGroupId + "/instructors", instructor);
 			},
 			unAssignInstructor: function (sectionGroupId, instructor) {
-				return apiService.delete("/api/reportView/sectionGroups/" + sectionGroupId + "/instructors/" + instructor.loginId);
+				return self.apiService.delete("/api/reportView/sectionGroups/" + sectionGroupId + "/instructors/" + instructor.loginId);
 			},
 			deleteSection: function (section) {
-				return apiService.delete("/api/reportView/sections/" + section.id);
+				return self.apiService.delete("/api/reportView/sections/" + section.id);
 			},
 			createSyncAction: function (syncAction) {
-				return apiService.post("/api/reportView/syncActions", syncAction);
+				return self.apiService.post("/api/reportView/syncActions", syncAction);
 			},
 			deleteSyncAction: function (syncActionId) {
-				return apiService.delete("/api/reportView/syncActions/" + syncActionId);
+				return self.apiService.delete("/api/reportView/syncActions/" + syncActionId);
 			}
 		};
 	}

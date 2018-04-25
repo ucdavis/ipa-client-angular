@@ -6,11 +6,12 @@
  * Controller of the ipaClientAngularApp
  */
 class registrarReconciliationReportCtrl {
-	constructor ($scope, $rootScope, $routeParams, Term, registrarReconciliationReportActionCreators, AuthService) {
+	constructor ($scope, $rootScope, $route, $routeParams, Term, registrarReconciliationReportActionCreators, AuthService) {
 		var self = this;
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
 		this.$routeParams = $routeParams;
+		this.$route = $route;
 		this.Term = Term;
 		this.registrarReconciliationReportActionCreators = registrarReconciliationReportActionCreators;
 		this.authService = AuthService;
@@ -21,75 +22,80 @@ class registrarReconciliationReportCtrl {
 	};
 
 	getPayload () {
-		return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+		var self = this;
 
-			var termShortCode = $route.current.params.termShortCode;
+		return this.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
+
+			var termShortCode = self.$route.current.params.termShortCode;
 	
 			if (!termShortCode) {
 				var termStates = authService.getTermStates();
 				var termShortCode = calculateCurrentTermShortCode(termStates);
 			}
 	
-			var term = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, $route.current.params.year);
-			return reportActionCreators.getInitialState(
-				$route.current.params.workgroupId,
-				$route.current.params.year,
+			var term = self.Term.prototype.getTermByTermShortCodeAndYear(termShortCode, self.$route.current.params.year);
+			return self.registrarReconciliationReportActionCreators.getInitialState(
+				self.$route.current.params.workgroupId,
+				self.$route.current.params.year,
 				term.code
 			);
 		});	
 	};
 
 	initialize () {
-		$scope.workgroupId = $routeParams.workgroupId;
-		$scope.year = $routeParams.year;
-		$scope.termShortCode = $routeParams.termShortCode;
+		this.$scope.workgroupId = this.$routeParams.workgroupId;
+		this.$scope.year = this.$routeParams.year;
+		this.$scope.termShortCode = this.$routeParams.termShortCode;
 
-		if (!$scope.termShortCode) {
+		if (!this.$scope.termShortCode) {
 			var termStates = authService.getTermStates();
-			$scope.termShortCode = calculateCurrentTermShortCode(termStates);
+			this.$scope.termShortCode = calculateCurrentTermShortCode(termStates);
 		}
 
-		$scope.term = Term.prototype.getTermByTermShortCodeAndYear($scope.termShortCode, $scope.year);
-		$scope.view = {};
+		this.$scope.term = this.Term.prototype.getTermByTermShortCodeAndYear(this.$scope.termShortCode, this.$scope.year);
+		this.$scope.view = {};
 
 		// Remove cloak if the url is incomplete, no payload or state calculations are necessary.
-		if ($scope.termShortCode == null) {
-			$rootScope.loadingView = false;
-			$scope.view.state = {};
+		if (this.$scope.termShortCode == null) {
+			this.$rootScope.loadingView = false;
+			this.$scope.view.state = {};
 		}
 
-		$rootScope.$on('reportStateChanged', function (event, data) {
-			$scope.view.state = data.state;
+		this.$rootScope.$on('reportStateChanged', function (event, data) {
+			this.$scope.view.state = data.state;
 
-			$scope.view.hasAccess = $scope.sharedState.currentUser.isAdmin() ||
-				$scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id);
+			this.$scope.view.hasAccess = this.$scope.sharedState.currentUser.isAdmin() ||
+			this.$scope.sharedState.currentUser.hasRole('academicPlanner', this.$scope.sharedState.workgroup.id);
 		});
 
-		$scope.allTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
-		$scope.fullTerms = [];
+		this.$scope.allTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
+		this.$scope.fullTerms = [];
 
-		index = $scope.allTerms.indexOf($scope.termShortCode) - 1;
+		let index = this.$scope.allTerms.indexOf(this.$scope.termShortCode) - 1;
+
 		if (index < 0) {
 			index = 8;
 		}
-		$scope.previousShortTermCode = $scope.allTerms[index];
 
-		var index = $scope.allTerms.indexOf($scope.termShortCode) + 1;
+		this.$scope.previousShortTermCode = this.$scope.allTerms[index];
+
+		index = this.$scope.allTerms.indexOf(this.$scope.termShortCode) + 1;
 		if (index > 8) {
 			index = 0;
 		}
-		$scope.nextShortTermCode = $scope.allTerms[index];
 
-		for (var i = 0; i < $scope.allTerms.length; i++) {
-			shortTermCode = $scope.allTerms[i];
+		this.$scope.nextShortTermCode = this.$scope.allTerms[index];
+
+		for (var i = 0; i < this.$scope.allTerms.length; i++) {
+			let shortTermCode = this.$scope.allTerms[i];
+			let slotYear = parseInt(this.$scope.year) + 1;
 
 			if (parseInt(shortTermCode) > 4) {
-				slotYear = $scope.year;
-			} else {
-				slotYear = parseInt($scope.year) + 1;
+				slotYear = this.$scope.year;
 			}
-			fullTerm = slotYear + shortTermCode;
-			$scope.fullTerms.push(fullTerm);
+
+			let fullTerm = slotYear + shortTermCode;
+			this.$scope.fullTerms.push(fullTerm);
 		}
 	};
 
@@ -115,6 +121,6 @@ class registrarReconciliationReportCtrl {
 	};
 }
 
-registrarReconciliationReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'Term', 'RegistrarReconciliationReportActionCreators', 'AuthService'];
+registrarReconciliationReportCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Term', 'RegistrarReconciliationReportActionCreators', 'AuthService'];
 
 export default registrarReconciliationReportCtrl;
