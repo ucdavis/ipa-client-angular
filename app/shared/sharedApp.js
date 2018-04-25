@@ -18,10 +18,32 @@ import SharedCtrl from './controllers/SharedCtrl.js';
 import AuthService from './services/AuthService.js';
 
 // Entities
+import Activity from './entities/Activity.js';
+import Building from './entities/Building.js';
+import CourseOfferingGroup from './entities/CourseOfferingGroup.js';
+import CourseOffering from './entities/CourseOffering.js';
+import Course from './entities/Course.js';
 import CurrentUser from './entities/CurrentUser.js';
-import UserRole from './entities/UserRole.js';
-import Term from './entities/Term.js';
+import Event from './entities/Event.js';
+import Instructor from './entities/Instructor.js';
+import Location from './entities/Location.js';
+import Role from './entities/Role.js';
+import ScheduleInstructorNote from './entities/ScheduleInstructorNote.js';
+import ScheduleTermState from './entities/ScheduleTermState.js';
+import Schedule from './entities/Schedule.js';
+import Section from './entities/Section.js';
 import SectionGroup from './entities/SectionGroup.js';
+import SyncAction from './entities/SyncAction.js';
+import Tag from './entities/Tag.js';
+import TeachingAssignment from './entities/TeachingAssignment.js';
+import TeachingPreference from './entities/TeachingPreference.js';
+import TeachingCall from './entities/TeachingCall.js';
+import TeachingCallReceipt from './entities/TeachingCallReceipt.js';
+import TeachingCallResponse from './entities/TeachingCallResponse.js';
+import Term from './entities/Term.js';
+import User from './entities/User.js';
+import UserRole from './entities/UserRole.js';
+import Workgroup from './entities/Workgroup.js';
 
 // Directives
 import ipaButton from './directives/ipaButton/ipaButton.js';
@@ -40,32 +62,32 @@ var sharedAppDependencies = [
 	'selectize',
 
 	// Local modules
-//	'courseOfferingGroup',
+		'CourseOfferingGroup',
 		'SectionGroup',
-//	'courseOffering',
-//	'course',
+		'CourseOffering',
+		'Course',
 		'CurrentUser',
-//	'instructor',
-//	'location',
-//	'scheduleInstructorNote',
-//	'scheduleTermState',
-//	'tag',
-//	'workgroup',
-//	'user',
+		'Instructor',
+		'Location',
+		'ScheduleInstructorNote',
+		'ScheduleTermState',
+		'Tag',
+		'Workgroup',
+		'User',
 		'UserRole',
-//	'schedule',
+		'Schedule',
 		'Term',
-//	'role',
-// 'section',
-// 'syncAction',
-// 'activity',
-// 'building',
-// 'event',
-// 'teachingAssignment',
-// 'teachingPreference',
-// 'teachingCall',
-// 'teachingCallReceipt',
-// 'teachingCallResponse'
+		'Role',
+		'Section',
+		'SyncAction',
+		'Activity',
+		'Building',
+		'Event',
+		'TeachingAssignment',
+		'TeachingPreference',
+		'TeachingCall',
+		'TeachingCallReceipt',
+		'TeachingCallResponse'
 ];
 
 // Config
