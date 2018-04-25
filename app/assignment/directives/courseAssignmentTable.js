@@ -1,7 +1,7 @@
 /**
  * Provides the main course table in the Courses View
  */
-assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = function ($rootScope, assignmentActionCreators) {
+let courseAssignmentTable = function ($rootScope, assignmentActionCreators) {
 	return {
 		restrict: 'A',
 		template: '<div class=\"course-list-row\">' +
@@ -460,4 +460,6 @@ assignmentApp.directive("courseAssignmentTable", this.courseAssignmentTable = fu
 			}); // end UI event handler
 		} // end link
 	};
-});
+};
+
+export default courseAssignmentTable;

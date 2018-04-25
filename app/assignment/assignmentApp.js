@@ -1,44 +1,78 @@
-window.assignmentApp = angular.module("assignmentApp", ["sharedApp", "ngRoute"]);
+// Controllers
+import AssignmentCtrl from './controllers/AssignmentCtrl.js';
+import ModalCommentCtrl from './controllers/ModalCommentCtrl.js';
+import ModalUnavailabilityCtrl from './controllers/ModalUnavailabilityCtrl.js';
 
-assignmentApp.config(function ($routeProvider) {
+// Services
+import AssignmentActionCreators from './services/assignmentActionCreators.js';
+import AssignmentService from './services/assignmentService.js';
+import AssignmentStateService from './services/assignmentStateService.js';
+
+// Shared services
+import ApiService from './../shared/services/ApiService.js';
+import TermService from './../shared/services/TermService.js';
+
+// Directives
+import courseAssignmentTable from './directives/courseAssignmentTable.js';
+import instructorAssignmentTable from './directives/instructorAssignmentTable.js';
+
+// Dependencies
+var dependencies = [
+	"sharedApp",
+	"ngRoute"
+];
+
+// Config
+function config ($routeProvider) {
 	return $routeProvider
-		.when("/:workgroupId/:year", {
-			templateUrl: "AssignmentCtrl.html",
-			controller: "AssignmentCtrl",
-			reloadOnSearch: false,
-			resolve: {
-				validate: AssignmentCtrl.validate
-			}
-		})
-		.when("/", {
-			templateUrl: "AssignmentCtrl.html",
-			controller: "AssignmentCtrl",
-			resolve: {
-				validate: AssignmentCtrl.validate
-			}
-		})
-		.otherwise({
-			redirectTo: "/"
-		});
+	.when("/:workgroupId/:year", {
+		template: require('./templates/AssignmentCtrl.html'),
+		controller: "AssignmentCtrl",
+		reloadOnSearch: false
+	})
+	.when("/", {
+		template: require('./templates/AssignmentCtrl.html'),
+		controller: "AssignmentCtrl"
+	})
+	.otherwise({
+		redirectTo: "/"
+	});
+};
+
+config.$inject = ['$routeProvider'];
+
+// App declaration
+const assignmentApp = angular.module("assignmentApp", dependencies)
+.config(config)
+.controller('AssignmentCtrl', AssignmentCtrl)
+.controller('ModalCommentCtrl', ModalCommentCtrl)
+.controller('ModalUnavailabilityCtrl', ModalUnavailabilityCtrl)
+.service('AssignmentActionCreators', AssignmentActionCreators)
+.service('AssignmentService', AssignmentService)
+.service('AssignmentStateService', AssignmentStateService)
+.service('ApiService', ApiService)
+.service('TermService', TermService)
+.directive('courseAssignmentTable', courseAssignmentTable)
+.directive('instructorAssignmentTable', instructorAssignmentTable)
+.constant('ActionTypes', {
+	INIT_ASSIGNMENT_VIEW: "INIT_ASSIGNMENT_VIEW",
+	ADD_TEACHING_ASSIGNMENT: "ADD_TEACHING_ASSIGNMENT",
+	UPDATE_TEACHING_ASSIGNMENT: "UPDATE_TEACHING_ASSIGNMENT",
+	REMOVE_TEACHING_ASSIGNMENT: "REMOVE_TEACHING_ASSIGNMENT",
+	ADD_SCHEDULE_INSTRUCTOR_NOTE: "ADD_SCHEDULE_INSTRUCTOR_NOTE",
+	UPDATE_SCHEDULE_INSTRUCTOR_NOTE: "UPDATE_SCHEDULE_INSTRUCTOR_NOTE",
+	ADD_TEACHING_CALL_RESPONSE: "ADD_TEACHING_CALL_RESPONSE",
+	UPDATE_TEACHING_CALL_RESPONSE: "UPDATE_TEACHING_CALL_RESPONSE",
+	UPDATE_TEACHING_CALL_RECEIPT: "UPDATE_TEACHING_CALL_RECEIPT",
+	CREATE_PLACEHOLDER_STAFF: "CREATE_PLACEHOLDER_STAFF",
+	REMOVE_PLACEHOLDER_STAFF: "REMOVE_PLACEHOLDER_STAFF",
+	ASSIGN_ASSOCIATE_INSTRUCTOR: "ASSIGN_ASSOCIATE_INSTRUCTOR",
+	SWITCH_MAIN_VIEW: "SWITCH_MAIN_VIEW",
+	TOGGLE_TERM_FILTER: "TOGGLE_TERM_FILTER",
+	UPDATE_TABLE_FILTER: "UPDATE_TABLE_FILTER",
+	UPDATE_TAG_FILTERS: "UPDATE_TAG_FILTERS",
+	TOGGLE_UNPUBLISHED_COURSES: "TOGGLE_UNPUBLISHED_COURSES",
+	TOGGLE_COMPLETED_INSTRUCTORS: "TOGGLE_COMPLETED_INSTRUCTORS"
 });
 
-var INIT_ASSIGNMENT_VIEW = "INIT_ASSIGNMENT_VIEW";
-var ADD_TEACHING_ASSIGNMENT = "ADD_TEACHING_ASSIGNMENT";
-var UPDATE_TEACHING_ASSIGNMENT = "UPDATE_TEACHING_ASSIGNMENT";
-var REMOVE_TEACHING_ASSIGNMENT = "REMOVE_TEACHING_ASSIGNMENT";
-var ADD_SCHEDULE_INSTRUCTOR_NOTE = "ADD_SCHEDULE_INSTRUCTOR_NOTE";
-var UPDATE_SCHEDULE_INSTRUCTOR_NOTE = "UPDATE_SCHEDULE_INSTRUCTOR_NOTE";
-var ADD_TEACHING_CALL_RESPONSE = "ADD_TEACHING_CALL_RESPONSE";
-var UPDATE_TEACHING_CALL_RESPONSE = "UPDATE_TEACHING_CALL_RESPONSE";
-var UPDATE_TEACHING_CALL_RECEIPT = "UPDATE_TEACHING_CALL_RECEIPT";
-var CREATE_PLACEHOLDER_STAFF = "CREATE_PLACEHOLDER_STAFF";
-var REMOVE_PLACEHOLDER_STAFF = "REMOVE_PLACEHOLDER_STAFF";
-var ASSIGN_ASSOCIATE_INSTRUCTOR = "ASSIGN_ASSOCIATE_INSTRUCTOR";
-
-// UI state manipulations
-var SWITCH_MAIN_VIEW = "SWITCH_MAIN_VIEW";
-var TOGGLE_TERM_FILTER = "TOGGLE_TERM_FILTER";
-var UPDATE_TABLE_FILTER = "UPDATE_TABLE_FILTER";
-var UPDATE_TAG_FILTERS = "UPDATE_TAG_FILTERS";
-var TOGGLE_UNPUBLISHED_COURSES = "TOGGLE_UNPUBLISHED_COURSES";
-var TOGGLE_COMPLETED_INSTRUCTORS = "TOGGLE_COMPLETED_INSTRUCTORS";
+export default assignmentApp;

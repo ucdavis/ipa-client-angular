@@ -1,18 +1,24 @@
-assignmentApp.controller('ModalUnavailabilityCtrl', this.ModalUnavailabilityCtrl = function($scope, $rootScope, $uibModalInstance, assignmentActionCreators, teachingCallResponses, termDisplayNames, instructor) {
-	$scope.teachingCallResponses = teachingCallResponses;
-	$scope.termDisplayNames = termDisplayNames;
-	$scope.instructor = instructor;
+class ModalUnavailabilityCtrl {
+	constructor ($scope, $rootScope, $uibModalInstance, AssignmentActionCreators, teachingCallResponses, termDisplayNames, instructor) {
+		$scope.teachingCallResponses = teachingCallResponses;
+		$scope.termDisplayNames = termDisplayNames;
+		$scope.instructor = instructor;
+	
+		$scope.confirm = function () {
+			$uibModalInstance.close();
+		};
+	
+		$scope.cancel = function () {
+			$uibModalInstance.dismiss('cancel');
+		};
+	
+		$scope.saveUnavailabilities = function (teachingCallResponse, blob) {
+			teachingCallResponse.availabilityBlob = blob;
+			assignmentActionCreators.updateTeachingCallResponse(teachingCallResponse);
+		};
+	}
+}
 
-	$scope.confirm = function () {
-		$uibModalInstance.close();
-	};
+ModalUnavailabilityCtrl.$inject = ['$scope', '$rootScope', '$uibModalInstance', 'AssignmentActionCreators', 'teachingCallResponses', 'termDisplayNames', 'instructor'];
 
-	$scope.cancel = function () {
-		$uibModalInstance.dismiss('cancel');
-	};
-
-	$scope.saveUnavailabilities = function (teachingCallResponse, blob) {
-		teachingCallResponse.availabilityBlob = blob;
-		assignmentActionCreators.updateTeachingCallResponse(teachingCallResponse);
-	};
-});
+export default ModalUnavailabilityCtrl;
