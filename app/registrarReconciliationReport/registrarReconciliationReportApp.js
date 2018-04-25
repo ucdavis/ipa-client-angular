@@ -20,11 +20,11 @@ var dependencies = [
 function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year/:termShortCode", {
-		template: require('./registrarReconciliationReportCtrl.html'),
+		template: require('./registrarReconciliationReport.html'),
 		controller: "RegistrarReconciliationReportCtrl"
 	})
 	.when("/", {
-		template: require('./registrarReconciliationReportCtrl.html'),
+		template: require('./registrarReconciliationReport.html'),
 		controller: "RegistrarReconciliationReportCtrl"
 	})
 	.otherwise({
