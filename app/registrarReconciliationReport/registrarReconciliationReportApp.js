@@ -1,7 +1,7 @@
-// ScheduleSummaryReport controllers
+// Controllers
 import RegistrarReconciliationReportCtrl from './controllers/registrarReconciliationReportCtrl.js';
 
-// ScheduleSummaryReport services
+// Services
 import RegistrarReconciliationReportActionCreators from './services/registrarReconciliationReportActionCreators.js';
 import RegistrarReconciliationReportService from './services/registrarReconciliationReportService.js';
 import RegistrarReconciliationReportStateService from './services/registrarReconciliationReportStateService.js';

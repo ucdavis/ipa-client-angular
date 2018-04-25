@@ -10,6 +10,7 @@ module.exports = {
     scheduleSummaryReportApp: './app/scheduleSummaryReport/scheduleSummaryReportApp.js',
     registrarReconciliationReportApp: './app/registrarReconciliationReport/registrarReconciliationReportApp.js',
     teachingCallResponseReportApp: './app/teachingCallResponseReport/teachingCallResponseReportApp.js',
+    adminApp: './app/admin/adminApp.js',
     sharedApp: './app/shared/sharedApp.js',
   },
   output: {
@@ -135,17 +136,6 @@ module.exports = {
       filesToConcat: [
         './vendor/js/userEcho.js',
         './vendor/js/googleAnalytics.js'
-      ],
-    }),
-    // Concat admin JS
-    new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
-      fileName: 'js/adminApp.js',
-      filesToConcat: [
-        './app/admin/adminApp.js',
-        './app/admin/**/*.js',
-        './dist/templates/admin/**/*.js'
       ],
     }),
     // Concat assignment JS
