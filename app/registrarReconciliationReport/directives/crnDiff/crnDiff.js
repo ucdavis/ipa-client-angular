@@ -2,10 +2,10 @@
  * example:
  * <crn-diff></crn-diff>
  */
-registrarReconciliationReportApp.directive("crnDiff", this.crnDiff = function (reportActionCreators) {
+let crnDiff = function (RegistrarReconciliationReportActionCreators) {
 	return {
 		restrict: "E",
-		templateUrl: 'crnDiff.html',
+		template: require('./crnDiff.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.section = scope.view.state.sections.list[scope.sectionId];
@@ -15,8 +15,10 @@ registrarReconciliationReportApp.directive("crnDiff", this.crnDiff = function (r
 					id: scope.section.id,
 					crn: crn
 				};
-				reportActionCreators.updateSection(section, 'crn', scope.section.uniqueKey);
+				RegistrarReconciliationReportActionCreators.updateSection(section, 'crn', scope.section.uniqueKey);
 			};
 		}
 	};
-});
+};
+
+export default crnDiff;

@@ -2,10 +2,10 @@
  * example:
  * <day-indicator-diff></day-indicator-diff>
  */
-registrarReconciliationReportApp.directive("dayIndicatorDiff", this.dayIndicatorDiff = function (reportActionCreators) {
+let dayIndicatorDiff = function (RegistrarReconciliationReportActionCreators) {
 	return {
 		restrict: "E",
-		templateUrl: 'dayIndicatorDiff.html',
+		template: require('./dayIndicatorDiff.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.updateDayIndicator = function (dayIndicator) {
@@ -14,8 +14,10 @@ registrarReconciliationReportApp.directive("dayIndicatorDiff", this.dayIndicator
 					typeCode: scope.activity.typeCode,
 					dayIndicator: dayIndicator
 				};
-				reportActionCreators.updateActivity(activity, 'dayIndicator');
+				RegistrarReconciliationReportActionCreators.updateActivity(activity, 'dayIndicator');
 			};
 		}
 	};
-});
+};
+
+export default dayIndicatorDiff;

@@ -2,10 +2,10 @@
  * example:
  * <seats-diff></seats-diff>
  */
-registrarReconciliationReportApp.directive("seatsDiff", this.seatsDiff = function (reportActionCreators) {
+let seatsDiff = function (RegistrarReconciliationReportActionCreators) {
 	return {
 		restrict: "E",
-		templateUrl: 'seatsDiff.html',
+		template: require('./seatsDiff.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.section = scope.view.state.sections.list[scope.sectionId];
@@ -15,8 +15,10 @@ registrarReconciliationReportApp.directive("seatsDiff", this.seatsDiff = functio
 					id: scope.section.id,
 					seats: seats
 				};
-				reportActionCreators.updateSection(section, 'seats', scope.section.uniqueKey);
+				RegistrarReconciliationReportActionCreators.updateSection(section, 'seats', scope.section.uniqueKey);
 			};
 		}
 	};
-});
+};
+
+export default seatsDiff;

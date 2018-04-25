@@ -2,10 +2,10 @@
  * example:
  * <end-time-diff></end-time-diff>
  */
-registrarReconciliationReportApp.directive("endTimeDiff", this.endTimeDiff = function (reportActionCreators) {
+let endTimeDiff = function (RegistrarReconciliationReportActionCreators) {
 	return {
 		restrict: "E",
-		templateUrl: 'endTimeDiff.html',
+		template: require('./endTimeDiff.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.updateEndTime = function (endTime) {
@@ -14,8 +14,10 @@ registrarReconciliationReportApp.directive("endTimeDiff", this.endTimeDiff = fun
 					typeCode: scope.activity.typeCode,
 					endTime: moment(endTime, "HHmm").format("HH:mm:ss")
 				};
-				reportActionCreators.updateActivity(activity, 'endTime');
+				RegistrarReconciliationReportActionCreators.updateActivity(activity, 'endTime');
 			};
 		}
 	};
-});
+};
+
+export default endTimeDiff;

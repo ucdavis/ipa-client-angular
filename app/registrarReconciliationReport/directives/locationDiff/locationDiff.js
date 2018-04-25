@@ -2,10 +2,10 @@
  * example:
  * <location-diff></location-diff>
  */
-registrarReconciliationReportApp.directive("locationDiff", this.locationDiff = function (reportActionCreators) {
+let locationDiff = function (RegistrarReconciliationReportActionCreators) {
 	return {
 		restrict: "E",
-		templateUrl: 'locationDiff.html',
+		template: require('./locationDiff.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.updateBannerLocation = function (bannerLocation) {
@@ -14,8 +14,10 @@ registrarReconciliationReportApp.directive("locationDiff", this.locationDiff = f
 					typeCode: scope.activity.typeCode,
 					bannerLocation: bannerLocation
 				};
-				reportActionCreators.updateActivity(activity, 'bannerLocation');
+				RegistrarReconciliationReportActionCreators.updateActivity(activity, 'bannerLocation');
 			};
 		}
 	};
-});
+};
+
+export default locationDiff;

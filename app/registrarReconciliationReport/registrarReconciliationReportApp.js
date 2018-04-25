@@ -10,6 +10,18 @@ import RegistrarReconciliationReportStateService from './services/registrarRecon
 import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
 
+// Directives
+import activityDiff from './directives/activityDiff/activityDiff.js';
+import changeAction from './directives/changeAction/changeAction.js';
+import crnDiff from './directives/crnDiff/crnDiff.js';
+import dayIndicatorDiff from './directives/dayIndicatorDiff/dayIndicatorDiff.js';
+import endTimeDiff from './directives/endTimeDiff/endTimeDiff.js';
+import locationDiff from './directives/locationDiff/locationDiff.js';
+import seatsDiff from './directives/seatsDiff/seatsDiff.js';
+import sectionDiff from './directives/sectionDiff/sectionDiff.js';
+import startTimeDiff from './directives/startTimeDiff/startTimeDiff.js';
+import syncActionList from './directives/syncActionList/syncActionList.js';
+
 // Dependencies
 var dependencies = [
 	"sharedApp",
@@ -20,11 +32,11 @@ var dependencies = [
 function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year/:termShortCode", {
-		template: require('./templates/registrarReconciliationReportCtrl.html'),
+		template: require('./registrarReconciliationReportCtrl.html'),
 		controller: "RegistrarReconciliationReportCtrl"
 	})
 	.when("/", {
-		template: require('./templates/registrarReconciliationReportCtrl.html'),
+		template: require('./registrarReconciliationReportCtrl.html'),
 		controller: "RegistrarReconciliationReportCtrl"
 	})
 	.otherwise({
@@ -45,6 +57,16 @@ const registrarReconciliationReportApp = angular.module("registrarReconciliation
 .service('RegistrarReconciliationReportStateService', RegistrarReconciliationReportStateService)
 .service('ApiService', ApiService)
 .service('TermService', TermService)
+.directive('activityDiff', activityDiff)
+.directive('changeAction', changeAction)
+.directive('crnDiff', crnDiff)
+.directive('dayIndicatorDiff', dayIndicatorDiff)
+.directive('endTimeDiff', endTimeDiff)
+.directive('locationDiff', locationDiff)
+.directive('seatsDiff', seatsDiff)
+.directive('sectionDiff', sectionDiff)
+.directive('startTimeDiff', startTimeDiff)
+.directive('syncActionList', syncActionList)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	UPDATE_SECTION: "UPDATE_SECTION",

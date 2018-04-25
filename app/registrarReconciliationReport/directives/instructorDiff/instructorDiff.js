@@ -2,20 +2,22 @@
  * example:
  * <instructor-diff></instructor-diff>
  */
-registrarReconciliationReportApp.directive("instructorDiff", this.instructorDiff = function (reportActionCreators) {
+let instructorDiff = function (RegistrarReconciliationReportActionCreators) {
 	return {
 		restrict: "E",
-		templateUrl: 'instructorDiff.html',
+		template: require('./instructorDiff.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.uniqueIndex = attrs.uniqueIndex;
 			scope.assignInstructor = function () {
-				reportActionCreators.assignInstructor(scope.section, scope.instructor);
+				RegistrarReconciliationReportActionCreators.assignInstructor(scope.section, scope.instructor);
 			};
 
 			scope.unAssignInstructor = function () {
-				reportActionCreators.unAssignInstructor(scope.section, scope.instructor);
+				RegistrarReconciliationReportActionCreators.unAssignInstructor(scope.section, scope.instructor);
 			};
 		}
 	};
-});
+};
+
+export default instructorDiff;

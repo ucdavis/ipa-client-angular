@@ -2,10 +2,10 @@
  * example:
  * <sync-action-list></sync-action-list>
  */
-registrarReconciliationReportApp.directive("syncActionList", this.syncActionList = function ($rootScope, $log, reportActionCreators) {
+let syncActionList = function ($rootScope, $log, RegistrarReconciliationReportActionCreators) {
 	return {
 		restrict: "E",
-		templateUrl: 'syncActionList.html',
+		template: require('./syncActionList.html'),
 		scope: true,
 		replace: true,
 		link: function (scope, element, attrs) {
@@ -16,7 +16,7 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 			};
 
 			scope.deleteBannerToDoItem = function (item) {
-				reportActionCreators.deleteBannerToDoItem(item);
+				RegistrarReconciliationReportActionCreators.deleteBannerToDoItem(item);
 			};
 
 			scope.findSectionUniqueKeyById = function (id, sections) {
@@ -227,4 +227,6 @@ registrarReconciliationReportApp.directive("syncActionList", this.syncActionList
 			}
 		}
 	};
-});
+};
+
+export default syncActionList;

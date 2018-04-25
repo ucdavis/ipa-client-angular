@@ -2,10 +2,10 @@
  * example:
  * <tr section-diff></tr>
  */
-registrarReconciliationReportApp.directive("sectionDiff", this.sectionDiff = function (reportActionCreators) {
+let sectionDiff = function (RegistrarReconciliationReportActionCreators) {
 	return {
 		restrict: "A",
-		templateUrl: 'sectionDiff.html',
+		template: require('./sectionDiff.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.section = scope.view.state.sections.list[scope.sectionId];
@@ -16,11 +16,11 @@ registrarReconciliationReportApp.directive("sectionDiff", this.sectionDiff = fun
 					property = "deleteSection-" + scope.section.uniqueKey;
 				}
 
-				reportActionCreators.createBannerToDoItem(scope.section.id, property, childUniqueKey, childProperty, scope.section.uniqueKey, scope.section.sectionGroupId);
+				RegistrarReconciliationReportActionCreators.createBannerToDoItem(scope.section.id, property, childUniqueKey, childProperty, scope.section.uniqueKey, scope.section.sectionGroupId);
 			};
 
 			scope.createSection = function (section) {
-				reportActionCreators.createSection(section);
+				RegistrarReconciliationReportActionCreators.createSection(section);
 			};
 
 			scope.setActiveChangeAction = function (event, object, index, property) {
@@ -40,7 +40,7 @@ registrarReconciliationReportApp.directive("sectionDiff", this.sectionDiff = fun
 			};
 
 			scope.deleteSection = function (section) {
-				reportActionCreators.deleteSection(section);
+				RegistrarReconciliationReportActionCreators.deleteSection(section);
 			};
 
 			function hasChanges(object, property) {
@@ -54,4 +54,6 @@ registrarReconciliationReportApp.directive("sectionDiff", this.sectionDiff = fun
 			}
 		}
 	};
-});
+};
+
+export default sectionDiff;

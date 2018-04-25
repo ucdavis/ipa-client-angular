@@ -9,10 +9,10 @@
  *	hide-ipa-message="true"
  * ></change-action>
  */
-registrarReconciliationReportApp.directive("changeAction", this.changeAction = function () {
+let changeAction = function () {
 	return {
 		restrict: "E",
-		templateUrl: 'changeAction.html',
+		template: require('./changeAction.html'),
 		replace: true,
 		scope: {
 			title: '@',
@@ -27,4 +27,6 @@ registrarReconciliationReportApp.directive("changeAction", this.changeAction = f
 			scope.hideIpaMessage = attrs.hideIpaMessage == 'true';
 		}
 	};
-});
+};
+
+export default changeAction;

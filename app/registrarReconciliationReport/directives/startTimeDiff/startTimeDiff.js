@@ -2,10 +2,10 @@
  * example:
  * <start-time-diff></start-time-diff>
  */
-registrarReconciliationReportApp.directive("startTimeDiff", this.startTimeDiff = function (reportActionCreators) {
+let startTimeDiff = function (RegistrarReconciliationReportActionCreators) {
 	return {
 		restrict: "E",
-		templateUrl: 'startTimeDiff.html',
+		template: require('./startTimeDiff.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.updateStartTime = function (startTime) {
@@ -14,8 +14,10 @@ registrarReconciliationReportApp.directive("startTimeDiff", this.startTimeDiff =
 					typeCode: scope.activity.typeCode,
 					startTime: moment(startTime, "HHmm").format("HH:mm:ss")
 				};
-				reportActionCreators.updateActivity(activity, 'startTime');
+				RegistrarReconciliationReportActionCreators.updateActivity(activity, 'startTime');
 			};
 		}
 	};
-});
+};
+
+export default startTimeDiff;
