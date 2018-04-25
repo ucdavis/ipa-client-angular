@@ -12,9 +12,10 @@ module.exports = {
     teachingCallResponseReportApp: './app/teachingCallResponseReport/teachingCallResponseReportApp.js',
     assignmentApp: './app/assignment/assignmentApp.js',
     adminApp: './app/admin/adminApp.js',
+    courseApp: './app/course/courseApp.js',
     summaryApp: './app/summary/summaryApp.js',
     workgroupApp: './app/workgroup/workgroupApp.js',
-    sharedApp: './app/shared/sharedApp.js',
+    sharedApp: './app/shared/sharedApp.js'
   },
   output: {
     filename: 'js/[name].js',
@@ -22,7 +23,6 @@ module.exports = {
   },
   resolve: {
     modules: [
-      "dist",
       path.resolve(__dirname, "app"),
       "node_modules"
     ]
