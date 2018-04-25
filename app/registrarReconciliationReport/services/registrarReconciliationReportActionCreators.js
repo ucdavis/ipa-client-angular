@@ -17,12 +17,12 @@ class RegistrarReconciliationReportActionCreators {
 			getInitialState: function (workgroupId, year, termCode) {
 				RegistrarReconciliationReportService.getTermComparisonReport(workgroupId, year, termCode).then(function (sectionDiffs) {
 					var action = {
-						type: INIT_STATE,
+						type: ActionTypes.INIT_STATE,
 						payload: {
 							sectionDiffs: sectionDiffs
 						}
 					};
-					reportStateService.reduce(action);
+					RegistrarReconciliationReportStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not load report initial state.", type: "ERROR" });
 				});
@@ -39,14 +39,14 @@ class RegistrarReconciliationReportActionCreators {
 				reportService.updateSection(section).then(function (updatedSection) {
 					$rootScope.$emit('toast', { message: "Updated section " + updatedSection.sequenceNumber + " " + property, type: "SUCCESS" });
 					var action = {
-						type: UPDATE_SECTION,
+						type: ActionTypes.UPDATE_SECTION,
 						payload: {
 							section: updatedSection,
 							property: property,
 							uniqueKey: uniqueKey
 						}
 					};
-					reportStateService.reduce(action);
+					RegistrarReconciliationReportStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update section.", type: "ERROR" });
 				});
@@ -63,13 +63,13 @@ class RegistrarReconciliationReportActionCreators {
 				RegistrarReconciliationReportService.updateActivity(activity).then(function (updatedActivity) {
 					$rootScope.$emit('toast', { message: "Updated " + activity.typeCode.getActivityCodeDescription() + " " + property, type: "SUCCESS" });
 					var action = {
-						type: UPDATE_ACTIVITY,
+						type: ActionTypes.UPDATE_ACTIVITY,
 						payload: {
 							activity: updatedActivity,
 							property: property
 						}
 					};
-					RegistrarReconciliationReportService.reduce(action);
+					RegistrarReconciliationReportStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
 				});
@@ -83,7 +83,7 @@ class RegistrarReconciliationReportActionCreators {
 				RegistrarReconciliationReportService.deleteActivity(activity).then(function () {
 					$rootScope.$emit('toast', { message: "Deleted " + activity.typeCode.getActivityCodeDescription(), type: "SUCCESS" });
 					var action = {
-						type: DELETE_ACTIVITY,
+						type: ActionTypes.DELETE_ACTIVITY,
 						payload: {
 							activity: activity
 						}
@@ -108,7 +108,7 @@ class RegistrarReconciliationReportActionCreators {
 				RegistrarReconciliationReportService.createActivity(section.id, activity).then(function (createdActivity) {
 					$rootScope.$emit('toast', { message: "Created " + activity.typeCode.getActivityCodeDescription(), type: "SUCCESS" });
 					var action = {
-						type: CREATE_ACTIVITY,
+						type: ActionTypes.CREATE_ACTIVITY,
 						payload: {
 							section: section,
 							activityIndex: activityIndex,
@@ -156,7 +156,7 @@ class RegistrarReconciliationReportActionCreators {
 				RegistrarReconciliationReportService.assignInstructor(section.sectionGroupId, instructor).then(function (teachingAssingment) {
 					$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
 					var action = {
-						type: ASSIGN_INSTRUCTOR,
+						type: ActionTypes.ASSIGN_INSTRUCTOR,
 						payload: {
 							section: section,
 							instructor: instructor
@@ -177,7 +177,7 @@ class RegistrarReconciliationReportActionCreators {
 				RegistrarReconciliationReportService.unAssignInstructor(section.sectionGroupId, instructor).then(function (teachingAssingment) {
 					$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
 					var action = {
-						type: UNASSIGN_INSTRUCTOR,
+						type: ActionTypes.UNASSIGN_INSTRUCTOR,
 						payload: {
 							section: section,
 							instructor: instructor
@@ -197,7 +197,7 @@ class RegistrarReconciliationReportActionCreators {
 				RegistrarReconciliationReportService.deleteSection(section).then(function () {
 					$rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
 					var action = {
-						type: DELETE_SECTION,
+						type: ActionTypes.DELETE_SECTION,
 						payload: {
 							section: section
 						}
@@ -228,7 +228,7 @@ class RegistrarReconciliationReportActionCreators {
 				RegistrarReconciliationReportService.createSyncAction(newSyncAction).then(function (syncAction) {
 					$rootScope.$emit('toast', { message: "Created to-do item", type: "SUCCESS" });
 					var action = {
-						type: CREATE_SYNC_ACTION,
+						type: ActionTypes.CREATE_SYNC_ACTION,
 						payload: {
 							syncAction: syncAction,
 							sectionUniqueKey: sectionUniqueKey
@@ -251,7 +251,7 @@ class RegistrarReconciliationReportActionCreators {
 				RegistrarReconciliationReportService.deleteSyncAction(syncAction.id).then(function () {
 					$rootScope.$emit('toast', { message: "Deleted to-do item", type: "SUCCESS" });
 					var action = {
-						type: DELETE_SYNC_ACTION,
+						type: ActionTypes.DELETE_SYNC_ACTION,
 						payload: {
 							syncAction: syncAction
 						}

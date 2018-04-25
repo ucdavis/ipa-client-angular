@@ -43,6 +43,7 @@ class registrarReconciliationReportCtrl {
 	};
 
 	initialize () {
+		var self = this;
 		this.$scope.workgroupId = this.$routeParams.workgroupId;
 		this.$scope.year = this.$routeParams.year;
 		this.$scope.termShortCode = this.$routeParams.termShortCode;
@@ -62,10 +63,10 @@ class registrarReconciliationReportCtrl {
 		}
 
 		this.$rootScope.$on('reportStateChanged', function (event, data) {
-			this.$scope.view.state = data.state;
+			self.$scope.view.state = data.state;
 
-			this.$scope.view.hasAccess = this.$scope.sharedState.currentUser.isAdmin() ||
-			this.$scope.sharedState.currentUser.hasRole('academicPlanner', this.$scope.sharedState.workgroup.id);
+			self.$scope.view.hasAccess = self.$scope.sharedState.currentUser.isAdmin() ||
+			self.$scope.sharedState.currentUser.hasRole('academicPlanner', self.$scope.sharedState.workgroup.id);
 		});
 
 		this.$scope.allTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];

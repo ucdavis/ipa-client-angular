@@ -20,7 +20,7 @@ class RegistrarReconciliationReportStateService {
 			_sectionReducers: function (action, sections) {
 				var section;
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						sections = {
 							ids: []
 						};
@@ -121,7 +121,7 @@ class RegistrarReconciliationReportStateService {
 											case "startTime":
 											case "endTime":
 											case "dayIndicator":
-												activity = _.find(slotSection.activities, { uniqueKey: change.affectedLocalId });
+												let activity = _.find(slotSection.activities, { uniqueKey: change.affectedLocalId });
 												activity.dwChanges = activity.dwChanges || {};
 												activity.dwChanges[change.propertyName] = { isToDo: false };
 												activity.dwChanges[change.propertyName].value = change.right;
@@ -168,7 +168,7 @@ class RegistrarReconciliationReportStateService {
 	
 						sections.list = sectionList;
 						return sections;
-					case UPDATE_SECTION:
+					case ActionTypes.UPDATE_SECTION:
 						section = sections.list[action.payload.uniqueKey];
 						// Apply the changes on the section
 						section[action.payload.property] = action.payload.section[action.payload.property];
@@ -179,7 +179,7 @@ class RegistrarReconciliationReportStateService {
 							delete section.dwChanges;
 						}
 						return sections;
-					case ASSIGN_INSTRUCTOR:
+					case ActionTypes.ASSIGN_INSTRUCTOR:
 						section = sections.list[action.payload.section.uniqueKey];
 						var instructorIndex = section.instructors.indexOf(action.payload.instructor);
 	
@@ -187,12 +187,12 @@ class RegistrarReconciliationReportStateService {
 						delete section.instructors[instructorIndex].noLocal;
 	
 						return sections;
-					case UNASSIGN_INSTRUCTOR:
+					case ActionTypes.UNASSIGN_INSTRUCTOR:
 						section = sections.list[action.payload.section.uniqueKey];
 						var instructorIndex = section.instructors.indexOf(action.payload.instructor);
 						section.instructors.splice(instructorIndex, 1);
 						return sections;
-					case UPDATE_ACTIVITY:
+					case ActionTypes.UPDATE_ACTIVITY:
 						// Find other sections that might have this activity (shared activity)
 						var otherSectionIds = sections.ids
 							.filter(function (sid) {
@@ -215,7 +215,7 @@ class RegistrarReconciliationReportStateService {
 						});
 	
 						return sections;
-					case DELETE_ACTIVITY:
+					case ActionTypes.DELETE_ACTIVITY:
 						// Find sections that have this activity
 						var sectionIds = sections.ids
 							.filter(function (sid) {
@@ -230,19 +230,19 @@ class RegistrarReconciliationReportStateService {
 						});
 	
 						return sections;
-					case CREATE_ACTIVITY:
+					case ActionTypes.CREATE_ACTIVITY:
 						section = sections.list[action.payload.section.uniqueKey];
 						// Set the id of the persisted activity
 						section.activities[action.payload.activityIndex].id = action.payload.activity.id;
 						// Remove the noLocal flag
 						delete section.activities[action.payload.activityIndex].noLocal;
 						return sections;
-					case DELETE_SECTION:
+					case ActionTypes.DELETE_SECTION:
 						var idIndex = sections.ids.indexOf(action.payload.section.uniqueKey);
 						sections.ids.splice(idIndex, 1);
 						delete sections.list[action.payload.section.uniqueKey];
 						return sections;
-					case CREATE_SECTION:
+					case ActionTypes.CREATE_SECTION:
 						var ipaSectionData = action.payload.sectionDiff.ipaSection;
 						var dwSectionData = action.payload.sectionDiff.dwSection;
 						var sectionChanges = action.payload.sectionDiff.changes;
@@ -257,13 +257,13 @@ class RegistrarReconciliationReportStateService {
 						sections.ids.sort();
 	
 						return sections;
-					case CREATE_SYNC_ACTION:
+					case ActionTypes.CREATE_SYNC_ACTION:
 						section = sections.list[action.payload.sectionUniqueKey];
 						if (!section) { return sections; }
 	
 						section = this._togglePropertyToDo(section, action.payload.syncAction);
 						return sections;
-					case DELETE_SYNC_ACTION:
+					case ActionTypes.DELETE_SYNC_ACTION:
 						section = sections.list[action.payload.syncAction.sectionUniqueKey];
 						if (!section) { return sections; }
 	
@@ -275,7 +275,7 @@ class RegistrarReconciliationReportStateService {
 			},
 			_syncActionReducers: function (action, syncActions) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						syncActions = {
 							ids: [],
 						};
@@ -293,7 +293,7 @@ class RegistrarReconciliationReportStateService {
 						syncActions.ids = _array_sortIdsByProperty(syncActionList, "sectionId");
 						syncActions.list = syncActionList;
 						return syncActions;
-					case CREATE_SECTION:
+					case ActionTypes.CREATE_SECTION:
 						var sectionDiffData = action.payload.sectionDiff;
 						syncActionLength = sectionDiffData.syncActions.length;
 						for (var j = 0; j < syncActionLength; j++) {
@@ -302,11 +302,11 @@ class RegistrarReconciliationReportStateService {
 						}
 	
 						return syncActions;
-					case CREATE_SYNC_ACTION:
+					case ActionTypes.CREATE_SYNC_ACTION:
 						syncActions.list[action.payload.syncAction.id] = action.payload.syncAction;
 						syncActions.ids.push(action.payload.syncAction.id);
 						return syncActions;
-					case DELETE_SYNC_ACTION:
+					case ActionTypes.DELETE_SYNC_ACTION:
 						var syncActionIndex = syncActions.ids.indexOf(action.payload.syncAction.id);
 						delete syncActions.list[action.payload.syncAction.id];
 						syncActions.ids.splice(syncActionIndex, 1);
@@ -317,7 +317,7 @@ class RegistrarReconciliationReportStateService {
 			},
 			_uiStateReducers: function (action, uiState) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						uiState = {};
 						return uiState;
 					default:
@@ -331,7 +331,7 @@ class RegistrarReconciliationReportStateService {
 					return;
 				}
 	
-				newState = {};
+				let newState = {};
 				newState.sections = scope._sectionReducers(action, scope._state.sections);
 				newState.syncActions = scope._syncActionReducers(action, scope._state.syncActions);
 				newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
