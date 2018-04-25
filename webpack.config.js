@@ -119,6 +119,12 @@ module.exports = {
         './node_modules/ui-select/dist/select.js',
         './node_modules/bootstrap/dist/js/bootstrap.js',
         './node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
+        './app/shared/helpers/array.js',
+        './app/shared/helpers/dates.js',
+        './app/shared/helpers/object.js',
+        './app/shared/helpers/sections.js',
+        './app/shared/helpers/string.js',
+        './app/shared/helpers/types.js'
       ],
     }),
     // Production Snippets from various 3rd party services
