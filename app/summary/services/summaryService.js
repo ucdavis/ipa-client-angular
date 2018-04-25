@@ -6,10 +6,18 @@
  * Service in the workgroupApp.
  * workgroupApp specific api calls.
  */
-summaryApp.factory("summaryService", this.summaryService = function(apiService) {
-	return {
-		getInitialState: function(workgroupId, year) {
-			return apiService.get("/api/summaryView/" + workgroupId + "/" + year);
-		}
-	};
-});
+class SummaryService {
+	constructor (ApiService) {
+		var self = this;
+		this.apiService = ApiService;
+		return {
+			getInitialState: function(workgroupId, year) {
+				return self.apiService.get("/api/summaryView/" + workgroupId + "/" + year);
+			}
+		};
+	}
+}
+
+SummaryService.$inject = ['ApiService'];
+
+export default SummaryService;

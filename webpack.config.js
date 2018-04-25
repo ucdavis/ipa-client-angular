@@ -11,6 +11,7 @@ module.exports = {
     registrarReconciliationReportApp: './app/registrarReconciliationReport/registrarReconciliationReportApp.js',
     teachingCallResponseReportApp: './app/teachingCallResponseReport/teachingCallResponseReportApp.js',
     adminApp: './app/admin/adminApp.js',
+    summaryApp: './app/summary/summaryApp.js',
     sharedApp: './app/shared/sharedApp.js',
   },
   output: {
@@ -182,18 +183,6 @@ module.exports = {
         './dist/templates/instructionalSupport/**/*.js'
 
       ],
-    }),
-    // Concat summary JS
-    new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
-      fileName: 'js/summaryApp.js',
-      filesToConcat: [
-        './app/summary/summaryApp.js',
-        './app/summary/**/*.js',
-        './dist/templates/summary/**/*.js'
-
-      ]
     }),
     // Concat teachingCall JS
     new ConcatPlugin({

@@ -18,7 +18,7 @@ class registrarReconciliationReportCtrl {
 
 		this.getPayload().then( function() {
 			self.initialize();
-		})
+		});
 	};
 
 	getPayload () {

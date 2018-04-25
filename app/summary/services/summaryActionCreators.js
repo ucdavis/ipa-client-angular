@@ -1,33 +1,45 @@
 /**
  * @ngdoc service
- * @name workgroupApp.workgroupActionCreators
+ * @name SummaryApp.SummaryActionCreators
  * @description
- * # workgroupActionCreators
- * Service in the workgroupApp.
- * Central location for sharedState information.
+ * # SummaryActionCreators
+ * Service in the SummaryApp.
  */
-summaryApp.service('summaryActionCreators', function (summaryStateService, summaryService, $rootScope, Role) {
-	return {
-		getInitialState: function (workgroupId, year) {
-			summaryService.getInitialState(workgroupId, year).then(function (payload) {
-				var action = {
-					type: INIT_STATE,
-					payload: payload,
-					year: year,
-					workgroupId: workgroupId
-				};
-				summaryStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not load summary initial state.", type: "ERROR" });
-			});
-		},
-		selectTerm: function(term) {
-			summaryStateService.reduce({
-				type: SELECT_TERM,
-				payload: {
-					selectedTerm: term
-				}
-			});
-		}
-	};
-});
+class summaryActionCreators {
+	constructor (SummaryStateService, SummaryService, $rootScope, Role, ActionTypes) {
+		var self = this;
+		this.summaryStateService = SummaryStateService;
+		this.summaryService = SummaryService;
+		this.$rootScope = $rootScope;
+		this.Role = Role;
+		this.ActionTypes = ActionTypes;
+
+		return {
+			getInitialState: function (workgroupId, year) {
+				self.summaryService.getInitialState(workgroupId, year).then(function (payload) {
+					var action = {
+						type: ActionTypes.INIT_STATE,
+						payload: payload,
+						year: year,
+						workgroupId: workgroupId
+					};
+					self.summaryStateService.reduce(action);
+				}, function (err) {
+					self.$rootScope.$emit('toast', { message: "Could not load summary initial state.", type: "ERROR" });
+				});
+			},
+			selectTerm: function(term) {
+				self.summaryStateService.reduce({
+					type: ActionTypes.SELECT_TERM,
+					payload: {
+						selectedTerm: term
+					}
+				});
+			}
+		};	
+	}
+}
+
+summaryActionCreators.$inject = ['SummaryStateService', 'SummaryService', '$rootScope', 'Role', 'ActionTypes'];
+
+export default summaryActionCreators;
