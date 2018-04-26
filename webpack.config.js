@@ -17,6 +17,7 @@ module.exports = {
     workgroupApp: './app/workgroup/workgroupApp.js',
     schedulingApp: './app/scheduling/schedulingApp.js',
     supportCallApp: './app/supportCall/supportCallApp.js',
+    supportAssignmentApp: './app/supportCall/supportAssignmentApp.js',
     sharedApp: './app/shared/sharedApp.js',
   },
   output: {
@@ -176,17 +177,6 @@ module.exports = {
         './app/teachingCall/teachingCallApp.js',
         './app/teachingCall/**/*.js',
         './dist/templates/teachingCall/**/*.js'
-      ]
-    }),
-    // Concat supportAssignment JS
-    new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
-      fileName: 'js/supportAssignmentApp.js',
-      filesToConcat: [
-        './app/supportAssignment/supportAssignmentApp.js',
-        './app/supportAssignment/**/*.js',
-        './dist/templates/supportAssignment/**/*.js'
       ]
     })
   ],
