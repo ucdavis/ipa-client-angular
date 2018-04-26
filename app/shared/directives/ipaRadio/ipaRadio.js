@@ -1,7 +1,7 @@
-sharedApp.directive("ipaRadio", this.ipaRadio = function () {
+let ipaRadio = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'ipaRadio.html',
+		template: require('./ipaRadio.html'),
 		replace: true,
 		scope: {
 			radioNames: '<',
@@ -21,4 +21,6 @@ sharedApp.directive("ipaRadio", this.ipaRadio = function () {
 			};
 		}
 	};
-});
+};
+
+export default ipaRadio;

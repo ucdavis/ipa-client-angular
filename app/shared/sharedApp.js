@@ -48,8 +48,12 @@ import Workgroup from './entities/Workgroup.js';
 // Directives
 import ipaButton from './directives/ipaButton/ipaButton.js';
 import ipaHeader from './directives/ipaHeader/ipaHeader.js';
+import ipaTabs from './directives/ipaTabs/ipaTabs.js';
+import ipaTabsVertical from './directives/ipaTabs/ipaTabs.js';
 import ipaTermSelectorDropdown from './directives/ipaTermSelectorDropdown/ipaTermSelectorDropdown.js';
 import nav from './directives/nav/nav.js';
+import ipaModal from './directives/ipaModal/ipaModal.js';
+import ipaRadio from './directives/ipaRadio/ipaRadio.js';
 
 // Filters
 import lastCommaFirst from './filters/lastCommaFirst.js';
@@ -135,8 +139,11 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .service('AuthService', AuthService)
 .directive('ipaButton', ipaButton)
 .directive('ipaHeader', ipaHeader)
+.directive('ipaTabs', ipaTabs)
 .directive('ipaTermSelectorDropdown', ipaTermSelectorDropdown)
 .directive('nav', nav)
+.directive('ipaModal', ipaModal)
+.directive('ipaRadio', ipaRadio)
 .filter('lastCommaFirst', lastCommaFirst)
 .filter('lastSpaceInitial', lastSpaceInitial)
 .filter('ordinal', ordinal)

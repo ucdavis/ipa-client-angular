@@ -41,62 +41,62 @@ class SupportAssignmentCtrl {
 			SupportActions.closeAvailabilityModal();
 		};
 
+		here.$scope.sharedState = here.AuthService.getSharedState();
+
 		here.$rootScope.$on('sharedStateSet', function (event, sharedStateData) {
-			here.$rootScope.$on('supportAssignmentStateChanged', function (event, data) {
-				here.$scope.sharedState = sharedStateData;
-				var isInstructorReviewOpen = here.$scope.isInstructorSupportCallReviewOpen();
-				var isStudentReviewOpen = here.$scope.isSupportStaffSupportCallReviewOpen();
-				var userRoles = here.$scope.sharedState.currentUser.userRoles;
-
-				// Default access to none
-				here.$scope.isAllowed = false;
-				here.$scope.readOnlyMode = false;
-
-				// Determine access level
-				userRoles.forEach(function(userRole) {
-					if (userRole.roleName == "academicPlanner" || userRole.roleName == "admin") {
-						here.$scope.isAllowed = true;
-						here.$scope.readOnlyMode = false;
-					}
-				});
-
-				// If access has not yet been set
-				if (here.$scope.isAllowed == false) {
-					// Check if this is an instructor reviewing the support assignments
-					if (isInstructorReviewOpen) {
-						userRoles.forEach(function(userRole) {
-							if (userRole.roleName == "federationInstructor" || userRole.roleName == "senateInstructor") {
-								here.$scope.isAllowed = true;
-								here.$scope.readOnlyMode = true;
-							}
-						});
-					}
-
-					// Check if this is a student reviewing the support assignments
-					if (isStudentReviewOpen) {
-						userRoles.forEach(function(userRole) {
-							if (userRole.roleName == "studentPhd" || userRole.roleName == "studentMasters" || userRole.roleName == "instructionalSupport") {
-								here.$scope.isAllowed = true;
-								here.$scope.readOnlyMode = true;
-							}
-						});
-					}
-				}
-
-				if (here.$scope.readOnlyMode == true && here.$scope.isAllowed == true && here.$scope.view.state.ui.readOnlyMode == false) {
-					SupportActions.setReadOnlyMode();
-				}
-			});
+			here.$scope.sharedState = here.AuthService.getSharedState();
 		});
 
 		here.$rootScope.$on('supportAssignmentStateChanged', function (event, data) {
 			here.$scope.view.state = data;
-			console.log(here.$scope.view.state);
 
 			// Resolves occasional discrepancies with view binding, because we're using event listeners
 			here.$timeout(function() {
 				here.$scope.$apply();
 			});
+
+			var isInstructorReviewOpen = here.$scope.isInstructorSupportCallReviewOpen();
+			var isStudentReviewOpen = here.$scope.isSupportStaffSupportCallReviewOpen();
+			var userRoles = here.$scope.sharedState.currentUser.userRoles;
+
+			// Default access to none
+			here.$scope.isAllowed = false;
+			here.$scope.readOnlyMode = false;
+
+			// Determine access level
+			userRoles.forEach(function(userRole) {
+				if (userRole.roleName == "academicPlanner" || userRole.roleName == "admin") {
+					here.$scope.isAllowed = true;
+					here.$scope.readOnlyMode = false;
+				}
+			});
+
+			// If access has not yet been set
+			if (here.$scope.isAllowed == false) {
+				// Check if this is an instructor reviewing the support assignments
+				if (isInstructorReviewOpen) {
+					userRoles.forEach(function(userRole) {
+						if (userRole.roleName == "federationInstructor" || userRole.roleName == "senateInstructor") {
+							here.$scope.isAllowed = true;
+							here.$scope.readOnlyMode = true;
+						}
+					});
+				}
+
+				// Check if this is a student reviewing the support assignments
+				if (isStudentReviewOpen) {
+					userRoles.forEach(function(userRole) {
+						if (userRole.roleName == "studentPhd" || userRole.roleName == "studentMasters" || userRole.roleName == "instructionalSupport") {
+							here.$scope.isAllowed = true;
+							here.$scope.readOnlyMode = true;
+						}
+					});
+				}
+			}
+
+			if (here.$scope.readOnlyMode == true && here.$scope.isAllowed == true && here.$scope.view.state.ui.readOnlyMode == false) {
+				SupportActions.setReadOnlyMode();
+			}
 		});
 
 		here.$scope.isInstructorSupportCallReviewOpen = function () {

@@ -1,7 +1,7 @@
-sharedApp.directive('ipaModal', function() {
+let ipaModal = function() {
 	return {
 		restrict: 'E', // Use this via an element selector <ipa-modal></ipa-modal>
-		templateUrl: 'ipaModal.html', // directive html found here:
+		template: require('./ipaModal.html'), // directive html found here:
 		scope: {
 			isVisible: '=',
 			onClose: '&?',
@@ -52,4 +52,6 @@ sharedApp.directive('ipaModal', function() {
 			};
 		}
 	};
-});
+};
+
+export default ipaModal;

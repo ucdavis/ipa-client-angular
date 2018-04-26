@@ -1,4 +1,4 @@
-let viewAvailabilityModal = function ($rootScope, supportActions) {
+let viewAvailabilityModal = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',
 		template: require('./viewAvailabilityModal.html'),
@@ -9,7 +9,7 @@ let viewAvailabilityModal = function ($rootScope, supportActions) {
 		},
 		link: function (scope, element, attrs) {
 			scope.close = function() {
-				supportActions.closeAvailabilityModal();
+				SupportActions.closeAvailabilityModal();
 				scope.isVisible = false;
 			};
 		} // end link
