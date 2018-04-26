@@ -1,5 +1,5 @@
 class BudgetCalculations {
-	constructor (BudgetReducers, TermService, Roles) {
+	constructor (BudgetReducers, TermService, Roles, ActionTypes) {
 		return {
 			calculateScenarioTerms: function() {
 				var allTermTabs = [];
@@ -13,7 +13,7 @@ class BudgetCalculations {
 				});
 	
 				BudgetReducers.reduce({
-					type: CALCULATE_SCENARIO_TERMS,
+					type: ActionTypes.CALCULATE_SCENARIO_TERMS,
 					payload: {
 						allTermTabs: allTermTabs,
 						activeTermTab: activeTermTab,
@@ -86,7 +86,7 @@ class BudgetCalculations {
 				});
 	
 				BudgetReducers.reduce({
-					type: CALCULATE_SECTION_GROUPS,
+					type: ActionTypes.CALCULATE_SECTION_GROUPS,
 					payload: {
 						calculatedSectionGroups: calculatedSectionGroups
 					}
@@ -140,7 +140,7 @@ class BudgetCalculations {
 				var totalCost = lineItemFunds - courseCosts;
 	
 				BudgetReducers.reduce({
-					type: CALCULATE_TOTAL_COST,
+					type: ActionTypes.CALCULATE_TOTAL_COST,
 					payload: {
 						totalCost: totalCost,
 						budgetScenarioId: BudgetReducers._state.ui.selectedBudgetScenarioId
@@ -152,7 +152,7 @@ class BudgetCalculations {
 				var course = BudgetReducers._state.courses.list[sectionGroup.courseId];
 				var uniqueKey = course.subjectCode + course.courseNumber;
 	
-				newContainer = {
+				let newContainer = {
 					subjectCode: course.subjectCode,
 					courseNumber: course.courseNumber,
 					title: course.title,
@@ -406,13 +406,13 @@ class BudgetCalculations {
 	
 				// Calculate implicit lineItems
 				BudgetReducers._state.teachingAssignments.ids.forEach(function(teachingAssignmentId) {
-					var teachingAssignment = teachingAssignments.list[teachingAssignmentId];
+					var teachingAssignment = BudgetReducers._state.teachingAssignments.list[teachingAssignmentId];
 	
 					if (teachingAssignment.approved == false) { return; }
 	
 					if (teachingAssignment.buyout || teachingAssignment.workLifeBalance) {
 						if (self._matchingLineItemExists(teachingAssignment, BudgetReducers._state.lineItems) == false) {
-							lineItem = self.scaffoldLineItem(teachingAssignment);
+							let lineItem = self.scaffoldLineItem(teachingAssignment);
 							calculatedLineItems.push(lineItem);
 						}
 					}
@@ -421,7 +421,7 @@ class BudgetCalculations {
 				calculatedLineItems = _array_sortByProperty(calculatedLineItems, "lineItemCategoryId");
 	
 				BudgetReducers.reduce({
-					type: CALCULATE_LINE_ITEMS,
+					type: ActionTypes.CALCULATE_LINE_ITEMS,
 					payload: {
 						calculatedLineItems: calculatedLineItems
 					}
@@ -494,7 +494,7 @@ class BudgetCalculations {
 				var categoryDescription = BudgetReducers._state.lineItemCategories.list[lineItemCategoryId].description;
 				var description = instructor.firstName + " " + instructor.lastName + " " + typeDescription + " for " + termDescription;
 	
-				lineItem = {
+				let lineItem = {
 					budgetScenarioId: BudgetReducers._state.ui.selectedBudgetScenarioId,
 					description: description,
 					lineItemCategoryId: lineItemCategoryId,
@@ -530,7 +530,7 @@ class BudgetCalculations {
 					usedInstructorIds.push(instructorId);
 				});
 	
-				instructorAssignmentOptions = [];
+				let instructorAssignmentOptions = [];
 	
 				instructorTypes.ids.forEach(function(instructorTypeId) {
 					var instructorType = instructorTypes.list[instructorTypeId];
@@ -546,7 +546,7 @@ class BudgetCalculations {
 				instructorAssignmentOptions = instructorAssignmentOptions.concat(calculatedActiveInstructors);
 	
 				BudgetReducers.reduce({
-					type: CALCULATE_INSTRUCTORS,
+					type: ActionTypes.CALCULATE_INSTRUCTORS,
 					payload: {
 						calculatedInstructors: calculatedInstructors,
 						instructorAssignmentOptions: instructorAssignmentOptions,
@@ -557,6 +557,8 @@ class BudgetCalculations {
 			_generateInstructor: function (instructorId) {
 				var instructorCosts = BudgetReducers._state.instructorCosts;
 				var instructorTypes = BudgetReducers._state.instructorTypes;
+				var assignedInstructors = BudgetReducers._state.assignedInstructors;
+				var activeInstructors = BudgetReducers._state.activeInstructors;
 				var instructor = assignedInstructors.list[instructorId] || activeInstructors.list[instructorId];
 				var budgetId = BudgetReducers._state.budget.id;
 	
@@ -620,7 +622,7 @@ class BudgetCalculations {
 				calculatedInstructorTypeCosts = _array_sortByProperty(calculatedInstructorTypeCosts, "description");
 	
 				BudgetReducers.reduce({
-					type: CALCULATE_INSTRUCTOR_TYPE_COSTS,
+					type: ActionTypes.CALCULATE_INSTRUCTOR_TYPE_COSTS,
 					payload: {
 						calculatedInstructorTypeCosts: calculatedInstructorTypeCosts
 					}
@@ -668,7 +670,7 @@ class BudgetCalculations {
 	}
 }
 
-BudgetCalculations.$inject = ['BudgetReducers', 'TermService', 'Roles'];
+BudgetCalculations.$inject = ['BudgetReducers', 'TermService', 'Roles', 'ActionTypes'];
 
 export default BudgetCalculations;
 

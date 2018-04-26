@@ -2,8 +2,8 @@
 import BudgetCtrl from './budgetCtrl.js';
 
 // Services
-import BudgetActions from './services/budgetActions.js';
-import BudgetCalculations from './services/budgetCalculations.js';
+import BudgetActions from './services/actions/budgetActions.js';
+import BudgetCalculations from './services/actions/budgetCalculations.js';
 import BudgetReducers from './services/budgetReducers.js';
 import BudgetSelectors from './services/budgetSelectors.js';
 import BudgetService from './services/budgetService.js';
@@ -23,8 +23,8 @@ import instructorCosts from './directives/instructorCosts/instructorCosts.js';
 import instructorAssignmentDropdown from './directives/instructorCosts/instructorAssignmentDropdown/instructorAssignmentDropdown.js';
 import lineItems from './directives/lineItems/lineItems.js';
 import lineItemDropdown from './directives/lineItems/lineItemDropdown/lineItemDropdown.js';
-import summary from './directives/summary/summary.js';
-import doughnutChart from './directives/summary/doughnutChart/doughnutChart.js';
+import budgetSummary from './directives/budgetSummary/budgetSummary.js';
+import doughnutChart from './directives/budgetSummary/doughnutChart/doughnutChart.js';
 
 import addBudgetScenario from './directives/modals/addBudgetScenario/addBudgetScenario.js';
 import addCourseComments from './directives/modals/addCourseComments/addCourseComments.js';
@@ -67,34 +67,43 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .service('ApiService', ApiService)
 .service('TermService', TermService)
 .service('AuthService', AuthService)
-.directive('assignTagTooltip', assignTagTooltip)
+.directive('budgetNav', budgetNav)
+.directive('lineItemFilters', lineItemFilters)
+.directive('budgetScenarioToolbar', budgetScenarioToolbar)
+.directive('budgetScenarioDropdown', budgetScenarioDropdown)
+.directive('courseCosts', courseCosts)
+.directive('instructorCosts', instructorCosts)
+.directive('instructorAssignmentDropdown', instructorAssignmentDropdown)
+.directive('lineItems', lineItems)
+.directive('lineItemDropdown', lineItemDropdown)
+.directive('budgetSummary', budgetSummary)
+.directive('doughnutChart', doughnutChart)
+.directive('addBudgetScenario', addBudgetScenario)
+.directive('addCourseComments', addCourseComments)
+.directive('addLineItem', addLineItem)
+.directive('addLineItemComments', addLineItemComments)
+.directive('budgetConfig', budgetConfig)
+.directive('generalConfig', generalConfig)
+.directive('groupCostConfig', groupCostConfig)
+.directive('instructorCostConfig', instructorCostConfig)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
-
 	CREATE_BUDGET_SCENARIO: "CREATE_BUDGET_SCENARIO",
 	DELETE_BUDGET_SCENARIO: "DELETE_BUDGET_SCENARIO",
 	UPDATE_BUDGET_SCENARIO: "UPDATE_BUDGET_SCENARIO",
-	
 	CREATE_LINE_ITEM: "CREATE_LINE_ITEM",
 	UPDATE_LINE_ITEM: "UPDATE_LINE_ITEM",
 	DELETE_LINE_ITEM: "DELETE_LINE_ITEM",
 	DELETE_LINE_ITEMS: "DELETE_LINE_ITEMS",
-	
 	UPDATE_BUDGET: "UPDATE_BUDGET",
-	
 	CREATE_SECTION_GROUP_COST_COMMENT: "CREATE_SECTION_GROUP_COST_COMMENT",
-	
 	CREATE_LINE_ITEM_COMMENT: "CREATE_LINE_ITEM_COMMENT",
-	
 	CREATE_SECTION_GROUP_COST: "CREATE_SECTION_GROUP_COST",
 	UPDATE_SECTION_GROUP_COST: "UPDATE_SECTION_GROUP_COST",
-	
 	CREATE_INSTRUCTOR_TYPE_COST: "CREATE_INSTRUCTOR_TYPE_COST",
 	UPDATE_INSTRUCTOR_TYPE_COST: "UPDATE_INSTRUCTOR_TYPE_COST",
-	
 	CREATE_INSTRUCTOR_COST: "CREATE_INSTRUCTOR_COST",
 	UPDATE_INSTRUCTOR_COST: "UPDATE_INSTRUCTOR_COST",
-	
 	OPEN_ADD_LINE_ITEM_MODAL: "OPEN_ADD_LINE_ITEM_MODAL",
 	CLOSE_ADD_LINE_ITEM_MODAL: "CLOSE_ADD_LINE_ITEM_MODAL",
 	OPEN_ADD_COURSE_COMMENT_MODAL: "OPEN_ADD_COURSE_COMMENT_MODAL",
@@ -103,16 +112,13 @@ const budgetApp = angular.module("budgetApp", dependencies)
 	OPEN_ADD_LINE_ITEM_COMMENT_MODAL: "OPEN_ADD_LINE_ITEM_COMMENT_MODAL",
 	CLOSE_BUDGET_CONFIG_MODAL: "CLOSE_BUDGET_CONFIG_MODAL",
 	OPEN_BUDGET_CONFIG_MODAL: "OPEN_BUDGET_CONFIG_MODAL",
-	
 	SELECT_BUDGET_SCENARIO: "SELECT_BUDGET_SCENARIO",
 	SELECT_TERM: "SELECT_TERM",
-	
 	TOGGLE_SELECT_LINE_ITEM: "TOGGLE_SELECT_LINE_ITEM",
 	SELECT_ALL_LINE_ITEMS: "SELECT_ALL_LINE_ITEMS",
 	DESELECT_ALL_LINE_ITEMS: "DESELECT_ALL_LINE_ITEMS",
 	SET_ROUTE: "SET_ROUTE",
 	TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN: "TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN",
-	
 	CALCULATE_SCENARIO_TERMS: "CALCULATE_SCENARIO_TERMS",
 	CALCULATE_SECTION_GROUPS: "CALCULATE_SECTION_GROUPS",
 	CALCULATE_TOTAL_COST: "CALCULATE_TOTAL_COST",

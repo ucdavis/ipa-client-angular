@@ -6,7 +6,7 @@ class BudgetSelectors {
 		return {
 			// Generate list of budget scenarios to display in the dropdown selector
 			generateBudgetScenarios: function (budgetScenarios) {
-				budgetScenarioList = [];
+				let budgetScenarioList = [];
 	
 				budgetScenarios.ids.forEach( function (budgetScenarioId) {
 					budgetScenarioList.push(budgetScenarios.list[budgetScenarioId]);
@@ -15,7 +15,7 @@ class BudgetSelectors {
 				return budgetScenarioList;
 			},
 			generateLineItemCategories: function (lineItemCategories) {
-				lineItemCategoryList = [];
+				let lineItemCategoryList = [];
 	
 				lineItemCategories.ids.forEach( function (lineItemCategoryId) {
 					lineItemCategoryList.push(lineItemCategories.list[lineItemCategoryId]);

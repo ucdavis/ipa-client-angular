@@ -1,12 +1,12 @@
 class BudgetReducers {
-	constructor ($rootScope, $log, BudgetSelectors) {
+	constructor ($rootScope, $log, BudgetSelectors, ActionTypes) {
 		return {
 			_state: {},
 			budgetScenarioReducers: function (action, budgetScenarios) {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						budgetScenarios = {
 							ids: [],
 							list: {}
@@ -17,21 +17,21 @@ class BudgetReducers {
 							budgetScenarios.list[budgetScenario.id] = budgetScenario;
 						});
 						return budgetScenarios;
-					case CREATE_BUDGET_SCENARIO:
+					case ActionTypes.CREATE_BUDGET_SCENARIO:
 						var newBudgetScenario = action.payload.budgetScenario;
 						budgetScenarios.ids.push(newBudgetScenario.id);
 						budgetScenarios.list[newBudgetScenario.id] = newBudgetScenario;
 						return budgetScenarios;
-					case UPDATE_BUDGET_SCENARIO:
+					case ActionTypes.UPDATE_BUDGET_SCENARIO:
 						var newBudgetScenario = action.payload.budgetScenario;
 						budgetScenarios.list[newBudgetScenario.id] = newBudgetScenario;
 						return budgetScenarios;
-					case CALCULATE_TOTAL_COST:
+					case ActionTypes.CALCULATE_TOTAL_COST:
 						var budgetScenarioId = action.payload.budgetScenarioId;
 						var budgetScenario = budgetScenarios.list[budgetScenarioId];
 						budgetScenario.totalCost = action.payload.totalCost;
 						return budgetScenarios;
-					case DELETE_BUDGET_SCENARIO:
+					case ActionTypes.DELETE_BUDGET_SCENARIO:
 						var budgetScenarioId = action.payload.budgetScenarioId;
 						var index = budgetScenarios.ids.indexOf(budgetScenarioId);
 						budgetScenarios.ids.splice(index, 1);
@@ -45,7 +45,7 @@ class BudgetReducers {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						instructorTypes = {
 							ids: [],
 							list: {}
@@ -62,7 +62,7 @@ class BudgetReducers {
 			},
 			instructorTypeCostReducers: function (action, instructorTypeCosts) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						instructorTypeCosts = {
 							ids: [],
 							list: {},
@@ -74,13 +74,13 @@ class BudgetReducers {
 							instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
 						});
 						return instructorTypeCosts;
-					case CREATE_INSTRUCTOR_TYPE_COST:
+					case ActionTypes.CREATE_INSTRUCTOR_TYPE_COST:
 						var newInstructorTypeCost = action.payload.instructorTypeCost;
 						instructorTypeCosts.ids.push(newInstructorTypeCost.id);
 						instructorTypeCosts.list[newInstructorTypeCost.id] = newInstructorTypeCost;
 						instructorTypeCosts.byInstructorTypeId[newInstructorTypeCost.instructorTypeId] = newInstructorTypeCost;
 						return instructorTypeCosts;
-					case UPDATE_INSTRUCTOR_TYPE_COST:
+					case ActionTypes.UPDATE_INSTRUCTOR_TYPE_COST:
 						var newInstructorTypeCost = action.payload.instructorTypeCost;
 						instructorTypeCosts.list[newInstructorTypeCost.id] = newInstructorTypeCost;
 						instructorTypeCosts.byInstructorTypeId[newInstructorTypeCost.instructorTypeId] = newInstructorTypeCost;
@@ -91,9 +91,9 @@ class BudgetReducers {
 			},
 			calculatedInstructorTypeCostReducers: function (action, calculatedInstructorTypeCosts) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						return [];
-					case CALCULATE_INSTRUCTOR_TYPE_COSTS:
+					case ActionTypes.CALCULATE_INSTRUCTOR_TYPE_COSTS:
 						return action.payload.calculatedInstructorTypeCosts;
 					default:
 						return calculatedInstructorTypeCosts;
@@ -101,9 +101,9 @@ class BudgetReducers {
 			},
 			calculatedLineItemReducers: function (action, calculatedLineItems) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						return [];
-					case CALCULATE_LINE_ITEMS:
+					case ActionTypes.CALCULATE_LINE_ITEMS:
 						return action.payload.calculatedLineItems;
 					default:
 						return calculatedLineItems;
@@ -111,7 +111,7 @@ class BudgetReducers {
 			},
 			lineItemReducers: function (action, lineItems) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						lineItems = {
 							ids: [],
 							list: {}
@@ -121,22 +121,22 @@ class BudgetReducers {
 							lineItems.list[lineItem.id] = lineItem;
 						});
 						return lineItems;
-					case CREATE_BUDGET_SCENARIO:
+					case ActionTypes.CREATE_BUDGET_SCENARIO:
 						action.payload.lineItems.forEach( function( lineItem) {
 							lineItems.ids.push(lineItem.id);
 							lineItems.list[lineItem.id] = lineItem;
 						});
 						return lineItems;
-					case CREATE_LINE_ITEM:
+					case ActionTypes.CREATE_LINE_ITEM:
 						var newLineItem = action.payload;
 						lineItems.ids.push(newLineItem.id);
 						lineItems.list[newLineItem.id] = newLineItem;
 						return lineItems;
-					case UPDATE_LINE_ITEM:
+					case ActionTypes.UPDATE_LINE_ITEM:
 						var updatedLineItem = action.payload;
 						lineItems.list[updatedLineItem.id] = updatedLineItem;
 						return lineItems;
-					case DELETE_LINE_ITEMS:
+					case ActionTypes.DELETE_LINE_ITEMS:
 						action.payload.lineItemIds.forEach(function(lineItemId) {
 							var index = lineItems.ids.indexOf(lineItemId);
 							if (index > -1) {
@@ -145,7 +145,7 @@ class BudgetReducers {
 							}
 						});
 						return lineItems;
-					case DELETE_LINE_ITEM:
+					case ActionTypes.DELETE_LINE_ITEM:
 						var lineItemId = action.payload.lineItemId;
 						var index = lineItems.ids.indexOf(lineItemId);
 						lineItems.ids.splice(index, 1);
@@ -157,10 +157,10 @@ class BudgetReducers {
 			},
 			scheduleBudgetReducers: function (action, budget) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						budget = action.payload.budget;
 						return budget;
-					case UPDATE_BUDGET:
+					case ActionTypes.UPDATE_BUDGET:
 						budget = action.payload.budget;
 					default:
 						return budget;
@@ -168,7 +168,7 @@ class BudgetReducers {
 			},
 			lineItemCategoryReducers: function (action, lineItemCategories) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						lineItemCategories = {
 							ids: [],
 							list: []
@@ -185,7 +185,7 @@ class BudgetReducers {
 			},
 			sectionGroupCostReducers: function (action, sectionGroupCosts) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						sectionGroupCosts = {
 							ids: [],
 							list: [],
@@ -199,17 +199,17 @@ class BudgetReducers {
 							sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId].push(sectionGroupCost.id);
 						});
 						return sectionGroupCosts;
-					case CREATE_BUDGET_SCENARIO:
+					case ActionTypes.CREATE_BUDGET_SCENARIO:
 						action.payload.sectionGroupCosts.forEach( function(sectionGroupCost) {
 							sectionGroupCosts.ids.push(sectionGroupCost.id);
 							sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
 						});
 						return sectionGroupCosts;
-					case UPDATE_SECTION_GROUP_COST:
+					case ActionTypes.UPDATE_SECTION_GROUP_COST:
 						var sectionGroupCost = action.payload.sectionGroupCost;
 						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
 						return sectionGroupCosts;
-					case CREATE_SECTION_GROUP_COST:
+					case ActionTypes.CREATE_SECTION_GROUP_COST:
 						var sectionGroupCost = action.payload.sectionGroupCost;
 						if (sectionGroupCosts.ids.indexOf(sectionGroupCost.id) == -1) {
 							sectionGroupCosts.ids.push(sectionGroupCost.id);
@@ -224,7 +224,7 @@ class BudgetReducers {
 			},
 			assignedInstructorReducers: function (action, assignedInstructors) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						assignedInstructors = {
 							ids: [],
 							list: []
@@ -252,7 +252,7 @@ class BudgetReducers {
 			},
 			activeInstructorReducers: function (action, activeInstructors) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						activeInstructors = {
 							ids: [],
 							list: []
@@ -280,9 +280,9 @@ class BudgetReducers {
 			},
 			calculatedInstructorReducers: function (action, calculatedInstructors) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						return [];
-					case CALCULATE_INSTRUCTORS:
+					case ActionTypes.CALCULATE_INSTRUCTORS:
 						return action.payload.calculatedInstructors;
 					default:
 						return calculatedInstructors;
@@ -290,7 +290,7 @@ class BudgetReducers {
 			},
 			instructorCostReducers: function (action, instructorCosts) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						instructorCosts = {
 							ids: [],
 							list: [],
@@ -303,13 +303,13 @@ class BudgetReducers {
 							instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
 						});
 						return instructorCosts;
-					case UPDATE_INSTRUCTOR_COST:
+					case ActionTypes.UPDATE_INSTRUCTOR_COST:
 						var instructorCost = action.payload.instructorCost;
 						instructorCosts.list[instructorCost.id] = instructorCost;
 						instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
 	
 						return instructorCosts;
-					case CREATE_INSTRUCTOR_COST:
+					case ActionTypes.CREATE_INSTRUCTOR_COST:
 						var instructorCost = action.payload.instructorCost;
 						instructorCosts.ids.push(instructorCost.id);
 						instructorCosts.list[instructorCost.id] = instructorCost;
@@ -322,7 +322,7 @@ class BudgetReducers {
 			courseReducers: function (action, courses) {
 				switch (action.type) {
 	
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						courses = {
 							ids: [],
 							list: []
@@ -339,7 +339,7 @@ class BudgetReducers {
 			},
 			teachingAssignmentReducers: function (action, teachingAssignments) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						teachingAssignments = {
 							ids: [],
 							list: []
@@ -355,13 +355,13 @@ class BudgetReducers {
 			},
 			calculatedSectionGroupReducers: function (action, calculatedSectionGroups) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						calculatedSectionGroups = {
 							terms: [],
 							byTerm: {}
 						};
 						return calculatedSectionGroups;
-					case CALCULATE_SECTION_GROUPS:
+					case ActionTypes.CALCULATE_SECTION_GROUPS:
 						calculatedSectionGroups = action.payload.calculatedSectionGroups;
 						return calculatedSectionGroups;
 					default:
@@ -370,7 +370,7 @@ class BudgetReducers {
 			},
 			userReducers: function (action, users) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						users = {
 							ids: [],
 							list: [],
@@ -389,7 +389,7 @@ class BudgetReducers {
 			},
 			userRoleReducers: function (action, userRoles) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						userRoles = {
 							ids: [],
 							list: [],
@@ -409,8 +409,8 @@ class BudgetReducers {
 			},
 			scheduleSectionGroupReducers: function (action, scheduleSectionGroups) {
 				switch (action.type) {
-					case INIT_STATE:
-						courses = {
+					case ActionTypes.INIT_STATE:
+						let courses = {
 							ids: [],
 							list: {}
 						};
@@ -418,7 +418,7 @@ class BudgetReducers {
 							courses.ids.push(course.id);
 							courses.list[course.id] = course;
 						});
-						sectionGroups = {
+						let sectionGroups = {
 							ids: [],
 							list: {}
 						};
@@ -426,7 +426,7 @@ class BudgetReducers {
 							sectionGroups.ids.push(sectionGroup.id);
 							sectionGroups.list[sectionGroup.id] = sectionGroup;
 						});
-						sections = {
+						let sections = {
 							ids: [],
 							list: {}
 						};
@@ -434,7 +434,7 @@ class BudgetReducers {
 							sections.ids.push(section.id);
 							sections.list[section.id] = section;
 						});
-						teachingAssignments = {
+						let teachingAssignments = {
 							ids: [],
 							list: {}
 						};
@@ -442,7 +442,7 @@ class BudgetReducers {
 							teachingAssignments.ids.push(teachingAssignment.id);
 							teachingAssignments.list[teachingAssignment.id] = teachingAssignment;
 						});
-						instructorTypes = {
+						let instructorTypes = {
 							ids: [],
 							list: {}
 						};
@@ -450,7 +450,7 @@ class BudgetReducers {
 							instructorTypes.ids.push(instructorType.id);
 							instructorTypes.list[instructorType.id] = instructorType;
 						});
-						supportAssignments = {
+						let supportAssignments = {
 							ids: [],
 							list: {}
 						};
@@ -458,7 +458,7 @@ class BudgetReducers {
 							supportAssignments.ids.push(supportAssignment.id);
 							supportAssignments.list[supportAssignment.id] = supportAssignment;
 						});
-						assignedInstructors = {
+						let assignedInstructors = {
 							ids: [],
 							list: {}
 						};
@@ -466,7 +466,7 @@ class BudgetReducers {
 							assignedInstructors.ids.push(instructor.id);
 							assignedInstructors.list[instructor.id] = instructor;
 						});
-						activeInstructors = {
+						let activeInstructors = {
 							ids: [],
 							list: {}
 						};
@@ -532,7 +532,7 @@ class BudgetReducers {
 			},
 			sectionGroupCostCommentReducers: function (action, sectionGroupCostComments) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						sectionGroupCostComments = {
 							ids: [],
 							list: []
@@ -543,13 +543,13 @@ class BudgetReducers {
 							sectionGroupCostComments.list[sectionGroupCostComment.id] = sectionGroupCostComment;
 						});
 						return sectionGroupCostComments;
-					case CREATE_BUDGET_SCENARIO:
+					case ActionTypes.CREATE_BUDGET_SCENARIO:
 						action.payload.sectionGroupCostComments.forEach( function(sectionGroupCostComment) {
 							sectionGroupCostComments.ids.push(sectionGroupCostComment.id);
 							sectionGroupCostComments.list[sectionGroupCostComment.id] = sectionGroupCostComment;
 						});
 						return sectionGroupCostComments;
-					case CREATE_SECTION_GROUP_COST_COMMENT:
+					case ActionTypes.CREATE_SECTION_GROUP_COST_COMMENT:
 						var comment = action.payload.sectionGroupCostComment;
 						sectionGroupCostComments.ids.push(comment.id);
 						sectionGroupCostComments.list[comment.id] = comment;
@@ -560,7 +560,7 @@ class BudgetReducers {
 			},
 			lineItemCommentReducers: function (action, lineItemComments) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						lineItemComments = {
 							ids: [],
 							list: []
@@ -571,13 +571,13 @@ class BudgetReducers {
 							lineItemComments.list[lineItemComment.id] = lineItemComment;
 						});
 						return lineItemComments;
-					case CREATE_BUDGET_SCENARIO:
+					case ActionTypes.CREATE_BUDGET_SCENARIO:
 						action.payload.lineItemComments.forEach( function(lineItemComment) {
 							lineItemComments.ids.push(lineItemComment.id);
 							lineItemComments.list[lineItemComment.id] = lineItemComment;
 						});
 						return lineItemComments;
-					case CREATE_LINE_ITEM_COMMENT:
+					case ActionTypes.CREATE_LINE_ITEM_COMMENT:
 						var comment = action.payload.lineItemComment;
 						lineItemComments.ids.push(comment.id);
 						lineItemComments.list[comment.id] = comment;
@@ -588,7 +588,7 @@ class BudgetReducers {
 			},
 			uiReducers: function (action, ui) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						ui = {
 							courseCommentsModal: {
 								isOpen: false
@@ -654,20 +654,20 @@ class BudgetReducers {
 						});
 	
 						return ui;
-					case CALCULATE_INSTRUCTORS:
+					case ActionTypes.CALCULATE_INSTRUCTORS:
 						ui.instructorAssignmentOptions = action.payload.instructorAssignmentOptions;
 						ui.regularInstructorAssignmentOptions = action.payload.regularInstructorAssignmentOptions;
 	
 						return ui;
-					case CALCULATE_SCENARIO_TERMS:
+					case ActionTypes.CALCULATE_SCENARIO_TERMS:
 						ui.termNav.allTabs = action.payload.allTermTabs;
 						ui.termNav.activeTab = action.payload.activeTermTab;
 						ui.termNav.activeTerm = action.payload.activeTerm;
 						return ui;
-					case TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN:
+					case ActionTypes.TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN:
 						ui.filters.lineItems.showHidden.selected = !ui.filters.lineItems.showHidden.selected;
 						return ui;
-					case CREATE_BUDGET_SCENARIO:
+					case ActionTypes.CREATE_BUDGET_SCENARIO:
 						// Set initial lineItemDetail UI states
 						action.payload.lineItems.forEach(function(lineItem) {
 								ui.lineItemDetails[lineItem.id] = {
@@ -691,15 +691,15 @@ class BudgetReducers {
 						});
 	
 						return ui;
-					case SELECT_TERM:
+					case ActionTypes.SELECT_TERM:
 						ui.selectedTerm = action.payload.term;
 						ui.termNav.activeTab = action.payload.activeTermTab;
 						ui.termNav.activeTerm = action.payload.term;
 						return ui;
-					case SET_ROUTE:
+					case ActionTypes.SET_ROUTE:
 						ui.sectionNav.activeTab = action.payload.selectedRoute;
 						return ui;
-					case TOGGLE_SELECT_LINE_ITEM:
+					case ActionTypes.TOGGLE_SELECT_LINE_ITEM:
 						var lineItemId = action.payload.lineItem.id;
 						var index = ui.selectedLineItems.indexOf(lineItemId);
 						if (index == -1) {
@@ -709,7 +709,7 @@ class BudgetReducers {
 							ui.areAllLineItemsSelected = false;
 						}
 						return ui;
-					case SELECT_ALL_LINE_ITEMS:
+					case ActionTypes.SELECT_ALL_LINE_ITEMS:
 						action.payload.lineItems.forEach(function(lineItem) {
 							if (ui.selectedLineItems.indexOf(lineItem.id) == -1) {
 								ui.selectedLineItems.push(lineItem.id);
@@ -717,11 +717,11 @@ class BudgetReducers {
 						});
 						ui.areAllLineItemsSelected = true;
 						return ui;
-					case DESELECT_ALL_LINE_ITEMS:
+					case ActionTypes.DESELECT_ALL_LINE_ITEMS:
 						ui.selectedLineItems = [];
 						ui.areAllLineItemsSelected = false;
 						return ui;
-					case DELETE_LINE_ITEMS:
+					case ActionTypes.DELETE_LINE_ITEMS:
 						action.payload.lineItemIds.forEach(function(lineItemId) {
 							var index = ui.selectedLineItems.indexOf(lineItemId);
 							if (index > -1) {
@@ -729,42 +729,42 @@ class BudgetReducers {
 							}
 						});
 						return ui;
-					case DELETE_LINE_ITEM:
+					case ActionTypes.DELETE_LINE_ITEM:
 						var index = ui.selectedLineItems.indexOf(action.payload.lineItemId);
 						if (index > -1) {
 							ui.selectedLineItems.splice(index, 1);
 						}
 						return ui;
-					case OPEN_ADD_COURSE_COMMENT_MODAL:
+					case ActionTypes.OPEN_ADD_COURSE_COMMENT_MODAL:
 						ui.courseCommentsModal.isOpen = true;
 						ui.courseCommentsModal.sectionGroup = action.payload.sectionGroup;
 						return ui;
-					case OPEN_ADD_LINE_ITEM_COMMENT_MODAL:
+					case ActionTypes.OPEN_ADD_LINE_ITEM_COMMENT_MODAL:
 						ui.lineItemCommentsModal.isOpen = true;
 						ui.lineItemCommentsModal.lineItem = action.payload.lineItem;
 						return ui;
-					case CLOSE_ADD_COURSE_COMMENT_MODAL:
+					case ActionTypes.CLOSE_ADD_COURSE_COMMENT_MODAL:
 						ui.courseCommentsModal.isOpen = false;
 						ui.courseCommentsModal.course = null;
 						return ui;
-					case OPEN_ADD_LINE_ITEM_MODAL:
+					case ActionTypes.OPEN_ADD_LINE_ITEM_MODAL:
 						ui.isAddLineItemModalOpen = true;
 						ui.lineItemToEdit = action.payload.lineItemToEdit;
 						return ui;
-					case CLOSE_ADD_LINE_ITEM_MODAL:
+					case ActionTypes.CLOSE_ADD_LINE_ITEM_MODAL:
 						ui.isAddLineItemModalOpen = false;
 						ui.lineItemToEdit = null;
 						return ui;
-					case OPEN_BUDGET_CONFIG_MODAL:
+					case ActionTypes.OPEN_BUDGET_CONFIG_MODAL:
 						ui.isBudgetConfigModalOpen = true;
 						return ui;
-					case CLOSE_BUDGET_CONFIG_MODAL:
+					case ActionTypes.CLOSE_BUDGET_CONFIG_MODAL:
 						ui.isBudgetConfigModalOpen = false;
 						return ui;
-					case TOGGLE_ADD_BUDGET_SCENARIO_MODAL:
+					case ActionTypes.TOGGLE_ADD_BUDGET_SCENARIO_MODAL:
 						ui.isAddBudgetScenarioModalOpen = ! ui.isAddBudgetScenarioModalOpen;
 						return ui;
-					case CREATE_LINE_ITEM:
+					case ActionTypes.CREATE_LINE_ITEM:
 						var lineItem = action.payload;
 						ui.lineItemDetails[lineItem.id] = {
 							displayDescriptionInput: false,
@@ -773,10 +773,10 @@ class BudgetReducers {
 							displayNotesInput: false
 						};
 						return ui;
-					case SELECT_BUDGET_SCENARIO:
+					case ActionTypes.SELECT_BUDGET_SCENARIO:
 						ui.selectedBudgetScenarioId = parseInt(action.payload.budgetScenarioId);
 						return ui;
-					case DELETE_BUDGET_SCENARIO:
+					case ActionTypes.DELETE_BUDGET_SCENARIO:
 						if (ui.selectedBudgetScenarioId == action.payload.budgetScenarioId) {
 							ui.selectedBudgetScenarioId = null;
 						}
@@ -788,7 +788,7 @@ class BudgetReducers {
 			reduce: function (action) {
 				var scope = this;
 	
-				newState = {};
+				let newState = {};
 				newState.budget = scope.scheduleBudgetReducers(action, scope._state.budget);
 				newState.budgetScenarios = scope.budgetScenarioReducers(action, scope._state.budgetScenarios);
 				newState.courses = scope.courseReducers(action, scope._state.courses);
@@ -817,7 +817,7 @@ class BudgetReducers {
 	
 				// Build new 'page state'
 				// This is the 'view friendly' version of the store
-				newPageState = {};
+				let newPageState = {};
 				newPageState.selectedBudgetScenario = BudgetSelectors.generateSelectedBudgetScenario(newState.budgetScenarios, newState.ui);
 	
 				newPageState.budgetScenarios = BudgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
@@ -837,6 +837,6 @@ class BudgetReducers {
 	}
 }
 
-BudgetReducers.$inject = ['$rootScope', '$log', 'BudgetSelectors']
+BudgetReducers.$inject = ['$rootScope', '$log', 'BudgetSelectors', 'ActionTypes'];
 
 export default BudgetReducers;
