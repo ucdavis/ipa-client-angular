@@ -1,7 +1,7 @@
-supportAssignmentApp.directive("viewAvailabilityModal", this.viewAvailabilityModal = function ($rootScope, supportActions) {
+let viewAvailabilityModal = function ($rootScope, supportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'viewAvailabilityModal.html',
+		template: require('./viewAvailabilityModal.html'),
 		replace: true,
 		scope: {
 			supportStaff: '<',
@@ -14,4 +14,6 @@ supportAssignmentApp.directive("viewAvailabilityModal", this.viewAvailabilityMod
 			};
 		} // end link
 	};
-});
+};
+
+export default viewAvailabilityModal;

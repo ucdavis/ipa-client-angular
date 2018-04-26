@@ -1,7 +1,7 @@
-supportAssignmentApp.directive("courseAppointmentInput", this.courseAppointmentInput = function (supportActions) {
+let courseAppointmentInput = function (SupportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'courseAppointmentInput.html',
+		template: require('./courseAppointmentInput.html'),
 		replace: true,
 		scope: {
 			sectionGroup: '=',
@@ -11,13 +11,15 @@ supportAssignmentApp.directive("courseAppointmentInput", this.courseAppointmentI
 		link: function (scope, element, attrs) {
 			scope.updateTeachingAssistantAppointments = function () {
 				scope.sectionGroup.teachingAssistantAppointments = parseFloat(scope.sectionGroup.teachingAssistantAppointments);
-				supportActions.updateTeachingAssistantAppointments(scope.sectionGroup);
+				SupportActions.updateTeachingAssistantAppointments(scope.sectionGroup);
 			};
 
 			scope.updateReaderAppointments = function() {
 				scope.sectionGroup.readerAppointments = parseFloat(scope.sectionGroup.readerAppointments);
-				supportActions.updateReaderAppointments(scope.sectionGroup);
+				SupportActions.updateReaderAppointments(scope.sectionGroup);
 			};
 		}
 	};
-});
+};
+
+export default courseAppointmentInput;

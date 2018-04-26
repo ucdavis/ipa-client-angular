@@ -1,7 +1,7 @@
-supportAssignmentApp.directive("staffRow", this.staffRow = function ($rootScope, supportActions) {
+let staffRow = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'staffRow.html',
+		template: require('./staffRow.html'),
 		replace: true,
 		scope: {
 			state: '<',
@@ -11,8 +11,10 @@ supportAssignmentApp.directive("staffRow", this.staffRow = function ($rootScope,
 			scope.tabNames = ['Assignments', 'Comments'];
 
 			scope.setSupportStaffTab = function (tabName) {
-				supportActions.setSupportStaffTab(tabName, scope.supportStaff.id);
+				SupportActions.setSupportStaffTab(tabName, scope.supportStaff.id);
 			};
 		}
 	};
-});
+};
+
+export default staffRow;

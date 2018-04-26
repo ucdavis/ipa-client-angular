@@ -1,7 +1,7 @@
-supportAssignmentApp.directive("assignSupportStaff", this.assignSupportStaff = function () {
+let assignSupportStaff = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'assignSupportStaff.html',
+		template: require('./assignSupportStaff.html'),
 		replace: true,
 		scope: {
 			assignmentOptions: '<',
@@ -27,4 +27,6 @@ supportAssignmentApp.directive("assignSupportStaff", this.assignSupportStaff = f
 			};
 		}
 	};
-});
+};
+
+export default assignSupportStaff;

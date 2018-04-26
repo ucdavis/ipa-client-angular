@@ -1,7 +1,7 @@
-supportAssignmentApp.directive("supportAssignmentTable", this.supportAssignmentTable = function ($rootScope, supportActions) {
+let supportAssignmentTable = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'supportAssignmentTable.html',
+		template: require('./supportAssignmentTable.html'),
 		replace: true,
 		scope: {
 			state: '<'
@@ -10,8 +10,10 @@ supportAssignmentApp.directive("supportAssignmentTable", this.supportAssignmentT
 			scope.tabNames = ['By Support Staff', 'By Course'];
 
 			scope.setViewPivot = function (tabName) {
-				supportActions.setViewPivot(tabName);
+				SupportActions.setViewPivot(tabName);
 			};
 		}
 	};
-});
+};
+
+export default supportAssignmentTable;

@@ -1,11 +1,13 @@
-supportAssignmentApp.directive("supportAssignmentToolbar", this.supportAssignmentToolbar = function ($rootScope, supportActions) {
+let supportAssignmentToolbar = function ($rootScope) {
 	return {
 		restrict: 'E',
-		templateUrl: 'supportAssignmentToolbar.html',
+		template: require('./supportAssignmentToolbar.html'),
 		replace: true,
 		scope: {},
 		link: function (scope, element, attrs) {
 			// intentionally empty
 		}
 	};
-});
+};
+
+export default supportAssignmentToolbar;

@@ -1,7 +1,7 @@
-supportAssignmentApp.directive("supportAssignmentSearch", this.supportAssignmentSearch = function ($rootScope, supportActions) {
+let supportAssignmentSearch = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'supportAssignmentSearch.html',
+		template: require('./supportAssignmentSearch.html'),
 		replace: true,
 		scope: {},
 		link: function (scope, element, attrs) {
@@ -12,4 +12,6 @@ supportAssignmentApp.directive("supportAssignmentSearch", this.supportAssignment
 			};
 		}
 	};
-});
+};
+
+export default supportAssignmentSearch;

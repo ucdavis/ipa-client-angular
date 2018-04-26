@@ -1,7 +1,7 @@
-supportAssignmentApp.directive("supportStaffTab", this.supportStaffTab = function ($rootScope, supportActions) {
+let supportStaffTab = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'supportStaffTab.html',
+		template: require('./supportStaffTab.html'),
 		replace: true,
 		scope: {
 			state: '<'
@@ -10,8 +10,10 @@ supportAssignmentApp.directive("supportStaffTab", this.supportStaffTab = functio
 			scope.radioNames = ["Teaching Assistants", "Readers"];
 
 			scope.setViewType = function(type) {
-				supportActions.setViewType(type);
+				SupportActions.setViewType(type);
 			};
 		}
 	};
-});
+};
+
+export default supportStaffTab;

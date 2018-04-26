@@ -1,7 +1,7 @@
-supportAssignmentApp.directive("reviewTools", this.reviewTools = function ($rootScope, supportActions) {
+let reviewTools = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'reviewTools.html',
+		template: require('./reviewTools.html'),
 		replace: true,
 		scope: {
 			supportReview: '<',
@@ -9,12 +9,14 @@ supportAssignmentApp.directive("reviewTools", this.reviewTools = function ($root
 		},
 		link: function (scope, element, attrs) {
 			scope.toggleInstructorSupportCallReview = function() {
-				supportActions.toggleInstructorSupportCallReview();
+				SupportActions.toggleInstructorSupportCallReview();
 			};
 
 			scope.toggleStudentSupportCallReview = function() {
-				supportActions.toggleStudentSupportCallReview();
+				SupportActions.toggleStudentSupportCallReview();
 			};
 		}
 	};
-});
+};
+
+export default reviewTools;

@@ -1,7 +1,7 @@
-supportAssignmentApp.directive("appointmentInput", this.appointmentInput = function ($rootScope, supportActions) {
+let appointmentInput = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'appointmentInput.html',
+		template: require('./appointmentInput.html'),
 		replace: true,
 		scope: {
 			supportStaff: '<',
@@ -17,8 +17,10 @@ supportAssignmentApp.directive("appointmentInput", this.appointmentInput = funct
 				appointment.type = type;
 				appointment.supportStaffId = scope.supportStaff.id;
 
-				supportActions.updateSupportAppointment(scope.supportStaff.appointment);
+				SupportActions.updateSupportAppointment(scope.supportStaff.appointment);
 			};
 		}
 	};
-});
+};
+
+export default appointmentInput;

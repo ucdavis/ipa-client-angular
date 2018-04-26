@@ -1,7 +1,7 @@
-supportAssignmentApp.directive("staffPreferences", this.staffPreferences = function ($rootScope, supportActions) {
+let staffPreferences = function ($rootScope, supportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'staffPreferences.html',
+		template: require('./staffPreferences.html'),
 		replace: true,
 		scope: {
 			state: '<',
@@ -13,4 +13,6 @@ supportAssignmentApp.directive("staffPreferences", this.staffPreferences = funct
 			};
 		}
 	};
-});
+};
+
+export default staffPreferences;

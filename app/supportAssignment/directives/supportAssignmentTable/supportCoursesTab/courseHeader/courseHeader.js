@@ -1,7 +1,7 @@
-supportAssignmentApp.directive("courseHeader", this.courseHeader = function ($rootScope, supportActions) {
+let courseHeader = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'courseHeader.html',
+		template: require('./courseHeader.html'),
 		replace: true,
 		scope: {
 			sectionGroup: '<',
@@ -10,12 +10,14 @@ supportAssignmentApp.directive("courseHeader", this.courseHeader = function ($ro
 		},
 		link: function (scope, element, attrs) {
 			scope.updateTeachingAssistantAppointments = function(sectionGroup) {
-				supportActions.updateTeachingAssistantAppointments(sectionGroup);
+				SupportActions.updateTeachingAssistantAppointments(sectionGroup);
 			};
 
 			scope.updateReaderAppointments = function(sectionGroup) {
-				supportActions.updateReaderAppointments(sectionGroup);
+				SupportActions.updateReaderAppointments(sectionGroup);
 			};
 		}
 	};
-});
+};
+
+export default courseHeader;

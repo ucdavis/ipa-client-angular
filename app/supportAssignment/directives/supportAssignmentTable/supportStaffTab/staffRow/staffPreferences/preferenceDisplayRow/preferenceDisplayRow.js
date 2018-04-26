@@ -1,7 +1,7 @@
-supportAssignmentApp.directive("preferenceDisplayRow", this.preferenceDisplayRow = function () {
+let preferenceDisplayRow = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'preferenceDisplayRow.html',
+		template: require('./preferenceDisplayRow.html'),
 		replace: true,
 		scope: {
 			text: '<'
@@ -10,4 +10,6 @@ supportAssignmentApp.directive("preferenceDisplayRow", this.preferenceDisplayRow
 			// Intentionally empty
 		}
 	};
-});
+};
+
+export default preferenceDisplayRow;
