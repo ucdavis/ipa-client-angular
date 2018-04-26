@@ -14,7 +14,26 @@ import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
 
 // Directives
-import assignTagTooltip from './directives/assignTagTooltip/assignTagTooltip.js';
+import budgetNav from './directives/budgetNav/budgetNav.js';
+import lineItemFilters from './directives/budgetNav/lineItemFilters/lineItemFilters.js';
+import budgetScenarioToolbar from './directives/budgetScenarioToolbar/budgetScenarioToolbar.js';
+import budgetScenarioDropdown from './directives/budgetScenarioToolbar/budgetScenarioDropdown/budgetScenarioDropdown.js';
+import courseCosts from './directives/courseCosts/courseCosts.js';
+import instructorCosts from './directives/instructorCosts/instructorCosts.js';
+import instructorAssignmentDropdown from './directives/instructorCosts/instructorAssignmentDropdown/instructorAssignmentDropdown.js';
+import lineItems from './directives/lineItems/lineItems.js';
+import lineItemDropdown from './directives/lineItems/lineItemDropdown/lineItemDropdown.js';
+import summary from './directives/summary/summary.js';
+import doughnutChart from './directives/summary/doughnutChart/doughnutChart.js';
+
+import addBudgetScenario from './directives/modals/addBudgetScenario/addBudgetScenario.js';
+import addCourseComments from './directives/modals/addCourseComments/addCourseComments.js';
+import addLineItem from './directives/modals/addLineItem/addLineItem.js';
+import addLineItemComments from './directives/modals/addLineItemComments/addLineItemComments.js';
+import budgetConfig from './directives/modals/budgetConfig/budgetConfig.js';
+import generalConfig from './directives/modals/budgetConfig/generalConfig/generalConfig.js';
+import groupCostConfig from './directives/modals/budgetConfig/groupCostConfig/groupCostConfig.js';
+import instructorCostConfig from './directives/modals/budgetConfig/instructorCostConfig/instructorCostConfig.js';
 
 // Dependencies
 var dependencies = [
@@ -100,9 +119,6 @@ const budgetApp = angular.module("budgetApp", dependencies)
 	CALCULATE_INSTRUCTOR_TYPE_COSTS: "CALCULATE_INSTRUCTOR_TYPE_COSTS",
 	CALCULATE_INSTRUCTORS: "CALCULATE_INSTRUCTORS",
 	CALCULATE_LINE_ITEMS: "CALCULATE_LINE_ITEMS"
-	});
+});
 
 export default budgetApp;
-
-
-

@@ -1,7 +1,7 @@
-budgetApp.directive("budgetSummary", this.budgetSummary = function ($rootScope) {
+let budgetSummary = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'budgetSummary.html',
+		template: require('./budgetSummary.html'),
 		replace: true,
 		scope: {
 			summary: '<',
@@ -13,4 +13,6 @@ budgetApp.directive("budgetSummary", this.budgetSummary = function ($rootScope) 
 			};
 		} // end link
 	};
-});
+};
+
+export default budgetSummary;

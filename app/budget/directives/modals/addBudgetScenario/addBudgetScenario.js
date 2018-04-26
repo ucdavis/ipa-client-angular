@@ -1,7 +1,7 @@
-budgetApp.directive("addBudgetScenario", this.addBudgetScenario = function ($rootScope, budgetActions) {
+let addBudgetScenario = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'addBudgetScenario.html',
+		template: require('./addBudgetScenario.html'),
 		replace: true,
 		scope: {
 			state: '<',
@@ -25,7 +25,7 @@ budgetApp.directive("addBudgetScenario", this.addBudgetScenario = function ($roo
 				}
 			};
 			scope.submitBudgetScenarioForm = function () {
-				budgetActions.createBudgetScenario(scope.newBudgetScenario, scope.state.budget.id, scope.newBudgetScenario.budgetScenarioId);
+				BudgetActions.createBudgetScenario(scope.newBudgetScenario, scope.state.budget.id, scope.newBudgetScenario.budgetScenarioId);
 			};
 
 			scope.close = function() {
@@ -33,4 +33,6 @@ budgetApp.directive("addBudgetScenario", this.addBudgetScenario = function ($roo
 			};
 		} // end link
 	};
-});
+};
+
+export default addBudgetScenario;

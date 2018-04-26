@@ -1,7 +1,7 @@
-sharedApp.directive('budgetScenarioDropdown', function($window, $location, $routeParams, $rootScope, budgetActions) {
+let budgetScenarioDropdown = function($window, $location, $routeParams, $rootScope, BudgetActions) {
 	return {
 		restrict: 'E', // Use this via an element selector <budget-scenario-dropdown></budget-scenario-dropdown>
-		templateUrl: 'budgetScenarioDropdown.html', // directive html found here:
+		template: require('./budgetScenarioDropdown.html'), // directive html found here:
 		replace: true, // Replace with the template
 		scope: {
 			state: '<'
@@ -9,13 +9,13 @@ sharedApp.directive('budgetScenarioDropdown', function($window, $location, $rout
 		link: function (scope, element, attrs) {
 
 			scope.deleteBudgetScenario = function (budgetScenario) {
-				budgetActions.deleteBudgetScenario(budgetScenario.id);
+				BudgetActions.deleteBudgetScenario(budgetScenario.id);
 				// Ensure bootstrap dropdown closes properly when confirming deleting budget scenario
 				$(".budget-scenario-dropdown").toggleClass("open");
 			};
 
 			scope.selectBudgetScenario = function (budgetScenario) {
-				budgetActions.selectBudgetScenario(budgetScenario.id);
+				BudgetActions.selectBudgetScenario(budgetScenario.id);
 			};
 
 			scope.openBudgetScenarioModal = function() {
@@ -23,4 +23,6 @@ sharedApp.directive('budgetScenarioDropdown', function($window, $location, $rout
 			};
 		}
 	};
-});
+};
+
+export default budgetScenarioDropdown;

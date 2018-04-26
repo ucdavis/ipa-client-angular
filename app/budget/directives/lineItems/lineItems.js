@@ -1,7 +1,7 @@
-budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetActions) {
+let lineItems = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'lineItems.html',
+		template: require('./lineItems.html'),
 		replace: true,
 		scope: {
 			selectedBudgetScenario: '<',
@@ -11,45 +11,45 @@ budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetAc
 		},
 		link: function (scope, element, attrs) {
 			scope.toggleLineItemSection = function() {
-				budgetActions.toggleLineItemSection();
+				BudgetActions.toggleLineItemSection();
 			};
 
 			scope.openAddLineItemModal = function() {
-				budgetActions.openAddLineItemModal();
+				BudgetActions.openAddLineItemModal();
 			};
 
 			scope.selectAllLineItems = function(areAllLineItemsSelected) {
 				if (areAllLineItemsSelected) {
-					budgetActions.deselectAllLineItems();
+					BudgetActions.deselectAllLineItems();
 				} else {
-					budgetActions.selectAllLineItems(scope.selectedBudgetScenario.lineItems);
+					BudgetActions.selectAllLineItems(scope.selectedBudgetScenario.lineItems);
 				}
 			};
 
 			scope.deleteLineItems = function() {
-				budgetActions.deleteLineItems(scope.selectedBudgetScenario, scope.ui.selectedLineItems);
+				BudgetActions.deleteLineItems(scope.selectedBudgetScenario, scope.ui.selectedLineItems);
 			};
 
 			scope.deleteLineItem = function(lineItem) {
-				budgetActions.deleteLineItem(lineItem);
+				BudgetActions.deleteLineItem(lineItem);
 			};
 
 			scope.unHideLineItem = function(lineItem) {
 				lineItem.hidden = false;
-				budgetActions.updateLineItem(lineItem);
+				BudgetActions.updateLineItem(lineItem);
 			};
 
 			scope.updateLineItem = function(lineItem, propertyName) {
-				budgetActions.toggleLineItemDetail(lineItem.id, propertyName);
-				budgetActions.updateLineItem(lineItem);
+				BudgetActions.toggleLineItemDetail(lineItem.id, propertyName);
+				BudgetActions.updateLineItem(lineItem);
 			};
 
 			scope.openAddLineItemCommentsModal = function(lineItem) {
-				budgetActions.openAddLineItemCommentsModal(lineItem);
+				BudgetActions.openAddLineItemCommentsModal(lineItem);
 			};
 
 			scope.selectLineItem = function(lineItem) {
-				budgetActions.toggleSelectLineItem(lineItem);
+				BudgetActions.toggleSelectLineItem(lineItem);
 			};
 
 			scope.toCurrency = function(amount) {
@@ -57,4 +57,6 @@ budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetAc
 			};
 		} // end link
 	};
-});
+};
+
+export default lineItems;

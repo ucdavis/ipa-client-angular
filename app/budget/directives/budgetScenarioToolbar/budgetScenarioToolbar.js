@@ -1,7 +1,7 @@
-sharedApp.directive('budgetScenarioToolbar', function($window, $location, $routeParams, $rootScope, budgetActions) {
+let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScope, BudgetActions) {
 	return {
 		restrict: 'E', // Use this via an element selector <budget-scenario-dropdown></budget-scenario-dropdown>
-		templateUrl: 'budgetScenarioToolbar.html', // directive html found here:
+		template: require('./budgetScenarioToolbar.html'), // directive html found here:
 		replace: true, // Replace with the template
 		scope: {
 			state: '<'
@@ -13,11 +13,11 @@ sharedApp.directive('budgetScenarioToolbar', function($window, $location, $route
 			scope.validationError = "";
 
 			scope.openSupportCostModal = function() {
-				budgetActions.toggleSupportCostModal();
+				BudgetActions.toggleSupportCostModal();
 			};
 
 			scope.openBudgetConfigModal = function() {
-				budgetActions.openBudgetConfigModal();
+				BudgetActions.openBudgetConfigModal();
 			};
 
 			scope.showScenarioRenameUI = function() {
@@ -32,7 +32,7 @@ sharedApp.directive('budgetScenarioToolbar', function($window, $location, $route
 
 			scope.saveNewScenarioName = function() {
 				scope.state.selectedBudgetScenario.name = angular.copy(scope.newScenarioName);
-				budgetActions.updateBudgetScenario(scope.state.selectedBudgetScenario);
+				BudgetActions.updateBudgetScenario(scope.state.selectedBudgetScenario);
 				scope.displayScenarioRenameUI = false;
 			};
 
@@ -58,4 +58,6 @@ sharedApp.directive('budgetScenarioToolbar', function($window, $location, $route
 			};
 		} // End Link
 	};
-});
+};
+
+export default budgetScenarioToolbar;

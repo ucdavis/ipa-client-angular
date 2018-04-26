@@ -1,7 +1,7 @@
-budgetApp.directive("budgetNav", this.budgetNav = function ($rootScope, budgetActions) {
+let budgetNav = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'budgetNav.html',
+		template: require('./budgetNav.html'),
 		replace: true,
 		scope: {
 			totalBalance: '<',
@@ -12,15 +12,15 @@ budgetApp.directive("budgetNav", this.budgetNav = function ($rootScope, budgetAc
 		},
 		link: function(scope, element, attrs) {
 			scope.setRoute = function(selectedRoute) {
-				budgetActions.setRoute(selectedRoute);
+				BudgetActions.setRoute(selectedRoute);
 			};
 
 			scope.openAddLineItemModal = function() {
-				budgetActions.openAddLineItemModal();
+				BudgetActions.openAddLineItemModal();
 			};
 
 			scope.deleteLineItems = function() {
-				budgetActions.deleteLineItems(scope.selectedBudgetScenario, scope.selectedLineItems);
+				BudgetActions.deleteLineItems(scope.selectedBudgetScenario, scope.selectedLineItems);
 			};
 
 			scope.toCurrency = function (value) {
@@ -28,4 +28,6 @@ budgetApp.directive("budgetNav", this.budgetNav = function ($rootScope, budgetAc
 			};
 		}
 	};
-});
+};
+
+export default budgetNav;

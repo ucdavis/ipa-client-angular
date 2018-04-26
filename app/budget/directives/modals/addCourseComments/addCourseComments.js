@@ -1,7 +1,7 @@
-budgetApp.directive("addCourseComments", this.addCourseComments = function ($rootScope, budgetActions) {
+let addCourseComments = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'addCourseComments.html',
+		template: require('./addCourseComments.html'),
 		replace: true,
 		scope: {
 			sectionGroup: '<',
@@ -27,9 +27,11 @@ budgetApp.directive("addCourseComments", this.addCourseComments = function ($roo
 			};
 
 			scope.submit = function() {
-				budgetActions.createSectionGroupCostCommentFromSectionGroup(scope.newComment, scope.sectionGroup, scope.currentUserLoginId);
+				BudgetActions.createSectionGroupCostCommentFromSectionGroup(scope.newComment, scope.sectionGroup, scope.currentUserLoginId);
 				scope.newComment = "";
 			};
 		} // end link
 	};
-});
+};
+
+export default addCourseComments;

@@ -1,7 +1,7 @@
-budgetApp.directive("addLineItemComments", this.addLineItemComments = function ($rootScope, budgetActions) {
+let addLineItemComments = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'addLineItemComments.html',
+		template: require('./addLineItemComments.html'),
 		replace: true,
 		scope: {
 			lineItem: '<',
@@ -27,9 +27,11 @@ budgetApp.directive("addLineItemComments", this.addLineItemComments = function (
 			};
 
 			scope.submit = function() {
-				budgetActions.createLineItemComment(scope.newComment, scope.lineItem, scope.currentUserLoginId);
+				BudgetActions.createLineItemComment(scope.newComment, scope.lineItem, scope.currentUserLoginId);
 				scope.newComment = "";
 			};
 		} // end link
 	};
-});
+};
+
+export default addLineItemComments;

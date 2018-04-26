@@ -1,7 +1,7 @@
-budgetApp.directive("generalConfig", this.generalConfig = function ($rootScope, termService, budgetActions) {
+let generalConfig = function (TermService, BudgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'generalConfig.html',
+		template: require('./generalConfig.html'),
 		replace: true,
 		scope: {
 			selectedBudgetScenario: '<'
@@ -12,7 +12,7 @@ budgetApp.directive("generalConfig", this.generalConfig = function ($rootScope, 
 			};
 
 			scope.getTermName = function(term) {
-				return termService.getShortTermName(term);
+				return TermService.getShortTermName(term);
 			};
 
 			scope.selectBudgetScenarioTerm = function(term) {
@@ -20,8 +20,10 @@ budgetApp.directive("generalConfig", this.generalConfig = function ($rootScope, 
 				var newValue = scope.selectedBudgetScenario.activeTermsBlob[index] == "1" ? "0" : "1";
 				scope.selectedBudgetScenario.activeTermsBlob = setCharAt(scope.selectedBudgetScenario.activeTermsBlob, index, newValue);
 
-				budgetActions.updateBudgetScenario(scope.selectedBudgetScenario);
+				BudgetActions.updateBudgetScenario(scope.selectedBudgetScenario);
 			};
 		}
 	};
-});
+};
+
+export default generalConfig;

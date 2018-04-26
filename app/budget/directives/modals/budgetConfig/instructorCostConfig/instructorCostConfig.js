@@ -1,7 +1,7 @@
-budgetApp.directive("instructorCostConfig", this.instructorCostConfig = function ($rootScope, budgetActions) {
+let instructorCostConfig = function (BudgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'instructorCostConfig.html',
+		template: require('./instructorCostConfig.html'),
 		replace: true,
 		scope: {
 			instructors: '<',
@@ -10,11 +10,13 @@ budgetApp.directive("instructorCostConfig", this.instructorCostConfig = function
 		link: function (scope, element, attrs) {
 			scope.updateInstructorCost = function (instructorCost) {
 				if (instructorCost.id > 0) {
-					budgetActions.updateInstructorCost(instructorCost);
+					BudgetActions.updateInstructorCost(instructorCost);
 				} else {
-					budgetActions.createInstructorCost(instructorCost);
+					BudgetActions.createInstructorCost(instructorCost);
 				}
 			};
 		}
 	};
-});
+};
+
+export default instructorCostConfig;

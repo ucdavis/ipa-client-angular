@@ -1,7 +1,7 @@
-budgetApp.directive("addLineItem", this.addLineItem = function ($rootScope, budgetActions) {
+let addLineItem = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'addLineItem.html',
+		template: require('./addLineItem.html'),
 		replace: true,
 		scope: {
 			state: '<',
@@ -44,9 +44,9 @@ budgetApp.directive("addLineItem", this.addLineItem = function ($rootScope, budg
 			scope.submitLineItemForm = function () {
 				scope.newLineItem.budgetScenarioId = scope.state.selectedBudgetScenario.id;
 				if (scope.lineItemToEdit && scope.lineItemToEdit.id > 0) {
-					budgetActions.updateLineItem(scope.newLineItem, scope.state.selectedBudgetScenario.id);
+					BudgetActions.updateLineItem(scope.newLineItem, scope.state.selectedBudgetScenario.id);
 				} else {
-					budgetActions.createLineItem(scope.newLineItem, scope.state.selectedBudgetScenario.id, "Saved line item");
+					BudgetActions.createLineItem(scope.newLineItem, scope.state.selectedBudgetScenario.id, "Saved line item");
 				}
 			};
 
@@ -55,4 +55,6 @@ budgetApp.directive("addLineItem", this.addLineItem = function ($rootScope, budg
 			};
 		} // end link
 	};
-});
+};
+
+export default addLineItem;

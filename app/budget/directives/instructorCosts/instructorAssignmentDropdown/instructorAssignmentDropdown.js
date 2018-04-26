@@ -1,7 +1,7 @@
-budgetApp.directive("instructorAssignmentDropdown", this.instructorAssignmentDropdown = function ($rootScope, budgetActions) {
+let instructorAssignmentDropdown = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'instructorAssignmentDropdown.html',
+		template: require('./instructorAssignmentDropdown.html'),
 		replace: true,
 		scope: {
 			mode: '<',
@@ -11,15 +11,17 @@ budgetApp.directive("instructorAssignmentDropdown", this.instructorAssignmentDro
 		link: function (scope, element, attrs) {
 			scope.setInstructor = function(instructor) {
 				if (instructor.isInstructorType) {
-					budgetActions.setInstructorTypeFromSectionGroup(scope.sectionGroup, instructor);
+					BudgetActions.setInstructorTypeFromSectionGroup(scope.sectionGroup, instructor);
 				} else {
-					budgetActions.setInstructorFromSectionGroup(scope.sectionGroup, instructor);
+					BudgetActions.setInstructorFromSectionGroup(scope.sectionGroup, instructor);
 				}
 			};
 
 			scope.setOriginalInstructor = function(originalInstructor) {
-				budgetActions.setOriginalInstructorFromSectionGroup(scope.sectionGroup, originalInstructor.id);
+				BudgetActions.setOriginalInstructorFromSectionGroup(scope.sectionGroup, originalInstructor.id);
 			};
 		} // end link
 	};
-});
+};
+
+export default instructorAssignmentDropdown;

@@ -1,7 +1,7 @@
-budgetApp.directive("budgetConfig", this.budgetConfig = function ($rootScope, budgetActions) {
+let budgetConfig = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'budgetConfig.html',
+		template: require('./budgetConfig.html'),
 		replace: true,
 		scope: {
 			state: '<',
@@ -23,4 +23,6 @@ budgetApp.directive("budgetConfig", this.budgetConfig = function ($rootScope, bu
 			};
 		}
 	};
-});
+};
+
+export default budgetConfig;

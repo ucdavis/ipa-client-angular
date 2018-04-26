@@ -1,7 +1,7 @@
-budgetApp.directive("doughnutChart", this.doughnutChart = function ($rootScope, $document) {
+let doughnutChart = function ($document) {
 	return {
 		restrict: 'E',
-		templateUrl: 'doughnutChart.html',
+		template: require('./doughnutChart.html'),
 		replace: true,
 		scope: {
 			params: '<',
@@ -115,4 +115,6 @@ budgetApp.directive("doughnutChart", this.doughnutChart = function ($rootScope, 
 			});
 		} // end link
 	};
-});
+};
+
+export default doughnutChart;
