@@ -1,4 +1,4 @@
-sharedApp.directive("studentSupportCallTooltip", this.confirmButton = function ($document, $timeout) {
+let studentSupportCallTooltip = function ($document, $timeout) {
 	return {
 		restrict: 'A',
 		scope: {
@@ -134,4 +134,6 @@ sharedApp.directive("studentSupportCallTooltip", this.confirmButton = function (
 			});
 		}
 	};
-});
+};
+
+export default studentSupportCallTooltip;

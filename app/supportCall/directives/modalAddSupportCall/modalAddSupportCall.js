@@ -1,7 +1,7 @@
-sharedApp.directive("modalAddSupportCall", this.modalAddSupportCall = function ($rootScope) {
+let modalAddSupportCall = function ($rootScope) {
 	return {
 		restrict: 'E',
-		templateUrl: 'AddSupportCallModal.html',
+		template: require('./AddSupportCallModal.html'),
 		replace: true,
 		scope: {
 			state: '='
@@ -278,4 +278,6 @@ sharedApp.directive("modalAddSupportCall", this.modalAddSupportCall = function (
 
 		} // End link
 	};
-});
+};
+
+export default modalAddSupportCall;

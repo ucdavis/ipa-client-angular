@@ -16,7 +16,8 @@ module.exports = {
     summaryApp: './app/summary/summaryApp.js',
     workgroupApp: './app/workgroup/workgroupApp.js',
     schedulingApp: './app/scheduling/schedulingApp.js',
-    sharedApp: './app/shared/sharedApp.js'
+    supportCall: './app/supportCall/supportCallApp.js',
+    sharedApp: './app/shared/sharedApp.js',
   },
   output: {
     filename: 'js/[name].js',

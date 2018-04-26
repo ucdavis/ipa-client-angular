@@ -5,8 +5,8 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-supportCallApp.controller('InstructionalSupportCallStatusCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'instructionalSupportCallStatusActionCreators',
-	this.InstructionalSupportCallStatusCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, instructionalSupportCallStatusActionCreators) {
+class SupportCallStatusCtrl {
+	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, SupportCallStatusActionCreators, AuthService) {
 		$window.document.title = "Instructional Support";
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
@@ -25,16 +25,22 @@ supportCallApp.controller('InstructionalSupportCallStatusCtrl', ['$scope', '$roo
 
 		$scope.view = {};
 
+		this.getPayload().then( function() {
+			self.initialize();
+		});
+	}
+
+	initialize () {
 		$rootScope.$on('supportCallStatusStateChanged', function (event, data) {
 			$scope.view.state = data;
 		});
 
 		$scope.removeInstructor = function(instructor) {
-			instructionalSupportCallStatusActionCreators.removeInstructorFromSupportCall(instructor, $scope.view.state.misc.scheduleId, $scope.termCode);
+			SupportCallStatusActionCreators.removeInstructorFromSupportCall(instructor, $scope.view.state.misc.scheduleId, $scope.termCode);
 		};
 
 		$scope.removeSupportStaff = function(supportStaff) {
-			instructionalSupportCallStatusActionCreators.removeSupportStaffFromSupportCall(supportStaff, $scope.view.state.misc.scheduleId, $scope.termCode);
+			SupportCallStatusActionCreators.removeSupportStaffFromSupportCall(supportStaff, $scope.view.state.misc.scheduleId, $scope.termCode);
 		};
 
 		$scope.numberToFloor = function(number) {
@@ -196,10 +202,16 @@ supportCallApp.controller('InstructionalSupportCallStatusCtrl', ['$scope', '$roo
 				// Modal closed
 			});
 		};
-}]);
+	}
 
-InstructionalSupportCallStatusCtrl.getPayload = function (authService, instructionalSupportCallStatusActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		instructionalSupportCallStatusActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode);
-	});
-};
+	getPayload () {
+		var self = this;
+		return self.AuthService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
+			self.SupportCallStatusActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year, self.$route.current.params.termShortCode);
+		});	
+	}
+}
+
+SupportCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$uibModal', 'SupportCallStatusActionCreators', 'AuthService'];
+
+export default SupportCallStatusCtrl;
