@@ -5,8 +5,18 @@
  * # SchedulingCtrl
  * Controller of the ipaClientAngularApp
  */
-schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParams', 'Activity', 'Term', 'schedulingActionCreators', 'authService',
-	this.SchedulingCtrl = function ($scope, $rootScope, $routeParams, Activity, Term, schedulingActionCreators, authService) {
+class SchedulingCtrl {
+	constructor ($scope, $rootScope, $route, $routeParams, Activity, Term, SchedulingActionCreators, AuthService) {
+		var self = this;
+		this.$scope = $scope;
+		this.$rootScope = $rootScope;
+		this.$route = $route;
+		this.$routeParams = $routeParams;
+		this.Activity = Activity;
+		this.Term = Term
+		this.SchedulingActionCreators = SchedulingActionCreators
+		this.AuthService = AuthService;
+
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.termShortCode = $routeParams.termShortCode;
@@ -24,7 +34,14 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			'P', '7', 'Z'
 		];
 
-		$scope.getWeekDays = function(dayIndicator) {
+		this.getPayload().then( function() {
+			self.initialize();
+		});
+	}
+
+	initialize () {
+		var self = this;
+		this.$scope.getWeekDays = function(dayIndicator) {
 			if (!dayIndicator) {
 				return "";
 			}
@@ -32,40 +49,40 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			return dayIndicator.getWeekDays();
 		};
 
-		$scope.standardPatterns = Activity.prototype.getStandardTimes();
+		self.$scope.standardPatterns = self.Activity.prototype.getStandardTimes();
 
-		$rootScope.$on('schedulingStateChanged', function (event, data) {
-			$scope.view.state = data.state;
+		self.$rootScope.$on('schedulingStateChanged', function (event, data) {
+			self.$scope.view.state = data.state;
 		});
 
-		$scope.setSelectedSectionGroup = function (sectionGroupId) {
-			var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroupId];
-			schedulingActionCreators.setSelectedSectionGroup(sectionGroup);
-			$scope.getSectionGroupDetails(sectionGroupId);
+		this.$scope.setSelectedSectionGroup = function (sectionGroupId) {
+			var sectionGroup = self.$scope.view.state.sectionGroups.list[sectionGroupId];
+			self.SchedulingActionCreators.setSelectedSectionGroup(sectionGroup);
+			self.$scope.getSectionGroupDetails(sectionGroupId);
 		};
 
-		$scope.toggleCheckedSectionGroup = function (sectionGroupId, event) {
+		this.$scope.toggleCheckedSectionGroup = function (sectionGroupId, event) {
 			event.stopPropagation();
-			schedulingActionCreators.toggleCheckedSectionGroup(sectionGroupId);
-			$scope.getSectionGroupDetails(sectionGroupId);
+			self.SchedulingActionCreators.toggleCheckedSectionGroup(sectionGroupId);
+			self.$scope.getSectionGroupDetails(sectionGroupId);
 		};
 
-		$scope.setSelectedActivity = function (activityId) {
-			var activity = $scope.view.state.activities.list[activityId];
-			schedulingActionCreators.setSelectedActivity(activity);
+		this.$scope.setSelectedActivity = function (activityId) {
+			var activity = self.$scope.view.state.activities.list[activityId];
+			self.SchedulingActionCreators.setSelectedActivity(activity);
 		};
 
-		$scope.getSectionGroupDetails = function (sectionGroupId) {
-			var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroupId];
-			var course = $scope.view.state.courses.list[sectionGroup.courseId];
+		this.$scope.getSectionGroupDetails = function (sectionGroupId) {
+			var sectionGroup = self.$scope.view.state.sectionGroups.list[sectionGroupId];
+			var course = self.$scope.view.state.courses.list[sectionGroup.courseId];
 
 			// Initialize course activity types if not done already
 			if (course && course.activityTypes === undefined) {
-				schedulingActionCreators.getCourseActivityTypes(course);
+				self.SchedulingActionCreators.getCourseActivityTypes(course);
 			}
 		};
 
-		$scope.getMeridianTime = function (time) {
+		self.$scope.getMeridianTime = function (time) {
 			if (!time) {
 				return "";
 			}
@@ -74,12 +91,12 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 			return ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ' ' + time.meridian;
 		};
 
-		$scope.toggleCalendarDay = function (index) {
-			schedulingActionCreators.toggleDay(index);
+		self.$scope.toggleCalendarDay = function (index) {
+			SchedulingActionCreators.toggleDay(index);
 		};
 
-		$scope.toggleTagFilter = function (tagId) {
-			var tagFilters = $scope.view.state.filters.enabledTagIds;
+		self.$scope.toggleTagFilter = function (tagId) {
+			var tagFilters = self.$scope.view.state.filters.enabledTagIds;
 			var tagIndex = tagFilters.indexOf(tagId);
 
 			if (tagIndex < 0) {
@@ -88,11 +105,11 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				tagFilters.splice(tagIndex, 1);
 			}
 
-			schedulingActionCreators.updateTagFilters(tagFilters);
+			SchedulingActionCreators.updateTagFilters(tagFilters);
 		};
 
-		$scope.toggleLocationFilter = function (locationId) {
-			var locationFilters = $scope.view.state.filters.enabledLocationIds;
+		self.$scope.toggleLocationFilter = function (locationId) {
+			var locationFilters = self.$scope.view.state.filters.enabledLocationIds;
 			var locationIndex = locationFilters.indexOf(locationId);
 
 			if (locationIndex < 0) {
@@ -101,11 +118,11 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				locationFilters.splice(locationIndex, 1);
 			}
 
-			schedulingActionCreators.updateLocationFilters(locationFilters);
+			SchedulingActionCreators.updateLocationFilters(locationFilters);
 		};
 
-		$scope.toggleInstructorFilter = function (instructorId) {
-			var instructorFilters = $scope.view.state.filters.enabledInstructorIds;
+		self.$scope.toggleInstructorFilter = function (instructorId) {
+			var instructorFilters = self.$scope.view.state.filters.enabledInstructorIds;
 			var instructorIndex = instructorFilters.indexOf(instructorId);
 
 			if (instructorIndex < 0) {
@@ -114,143 +131,143 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 				instructorFilters.splice(instructorIndex, 1);
 			}
 
-			schedulingActionCreators.updateInstructorFilters(instructorFilters);
+			SchedulingActionCreators.updateInstructorFilters(instructorFilters);
 		};
 
-		$scope.setLocation = function (locationId) {
-			if (!$scope.view.state.uiState.selectedActivityId) { return; }
-			var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+		self.$scope.setLocation = function (locationId) {
+			if (!self.$scope.view.state.uiState.selectedActivityId) { return; }
+			var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
 			activity.locationId = locationId;
-			$scope.saveActivity();
+			self.$scope.saveActivity();
 		};
 
-		$scope.toggleActivityDay = function (index) {
-			var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+		self.$scope.toggleActivityDay = function (index) {
+			var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
 			var dayArr = activity.dayIndicator.split('');
 			dayArr[index] = Math.abs(1 - parseInt(dayArr[index])).toString();
 			activity.dayIndicator = dayArr.join('');
-			$scope.saveActivity();
+			self.$scope.saveActivity();
 		};
 
-		$scope.setActivityStandardTime = function (time) {
-			var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+		self.$scope.setActivityStandardTime = function (time) {
+			var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
 			activity.frequency = 1;
 			activity.startTime = time ? time.start : null;
 			activity.endTime = time ? time.end : null;
-			$scope.saveActivity();
+			self.$scope.saveActivity();
 		};
 
-		$scope.saveActivity = function () {
-			var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+		self.$scope.saveActivity = function () {
+			var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
 
 			if (activity.frequency < 1) {
 				activity.frequency = 1;
 			}
 
 			if (activity.dayIndicator) {
-				schedulingActionCreators.updateActivity(activity);
+				self.SchedulingActionCreators.updateActivity(activity);
 			}
 		};
 
-		$scope.setDayPattern = function(dayPattern) {
+		self.$scope.setDayPattern = function(dayPattern) {
 			if (!dayPattern) {
-				var activity = $scope.view.state.activities.list[$scope.view.state.uiState.selectedActivityId];
+				var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
 				activity.endTime = null;
 				activity.startTime = null;
 
-				schedulingActionCreators.updateActivity(activity);
+				self.SchedulingActionCreators.updateActivity(activity);
 			}
 		};
 
-		$scope.removeActivity = function (activity) {
-			schedulingActionCreators.removeActivity(activity);
+		self.$scope.removeActivity = function (activity) {
+			self.SchedulingActionCreators.removeActivity(activity);
 		};
 
-		$scope.removeSection = function (section) {
-			schedulingActionCreators.removeSection(section);
+		self.$scope.removeSection = function (section) {
+			self.SchedulingActionCreators.removeSection(section);
 		};
 
-		$scope.createSharedActivity = function (activityCode, sectionGroup) {
-			schedulingActionCreators.createSharedActivity(activityCode, sectionGroup);
-			$scope.view.addSharedActivityPopoverIsOpen[sectionGroup.id] = false;
+		self.$scope.createSharedActivity = function (activityCode, sectionGroup) {
+			self.SchedulingActionCreators.createSharedActivity(activityCode, sectionGroup);
+			self.$scope.view.addSharedActivityPopoverIsOpen[sectionGroup.id] = false;
 		};
 
-		$scope.createActivity = function (activityCode, sectionId, sectionGroup) {
-			schedulingActionCreators.createActivity(activityCode, sectionId, sectionGroup);
-			$scope.view.addActivityPopoverIsOpen[sectionId] = false;
+		self.$scope.createActivity = function (activityCode, sectionId, sectionGroup) {
+			self.SchedulingActionCreators.createActivity(activityCode, sectionId, sectionGroup);
+			self.$scope.view.addActivityPopoverIsOpen[sectionId] = false;
 		};
 
-		$scope.closeActivityDetails = function () {
-			schedulingActionCreators.setSelectedActivity();
+		self.$scope.closeActivityDetails = function () {
+			self.SchedulingActionCreators.setSelectedActivity();
 		};
 
-		$scope.toggleCheckAll = function () {
-			var sectionGroupIdsToCheck = $scope.view.state.sectionGroups.ids.filter(function (sgId) {
-				return $scope.matchesFilters($scope.view.state.sectionGroups.list[sgId]);
+		self.$scope.toggleCheckAll = function () {
+			var sectionGroupIdsToCheck = self.$scope.view.state.sectionGroups.ids.filter(function (sgId) {
+				return self.$scope.matchesFilters(self.$scope.view.state.sectionGroups.list[sgId]);
 			});
-			schedulingActionCreators.toggleCheckAll(sectionGroupIdsToCheck);
+			self.SchedulingActionCreators.toggleCheckAll(sectionGroupIdsToCheck);
 		};
 
-		$scope.calculateNextSequenceNumber = function(sectionGroup) {
+		self.$scope.calculateNextSequenceNumber = function(sectionGroup) {
 			if (!sectionGroup) {
 				return null;
 			}
 
-			var course = $scope.view.state.courses.list[sectionGroup.courseId];
-			var sectionGroup = $scope.view.state.sectionGroups.list[sectionGroup.id];
+			var course = self.$scope.view.state.courses.list[sectionGroup.courseId];
+			var sectionGroup = self.$scope.view.state.sectionGroups.list[sectionGroup.id];
 			var sections = [];
 
 			sectionGroup.sectionIds.forEach(function(sectionId) {
-				sections.push($scope.view.state.sections.list[sectionId]);
+				sections.push(self.$scope.view.state.sections.list[sectionId]);
 			});
 
 			return nextSequenceNumber(course, sectionGroup, sections);
 		};
 
-		$scope.createSection = function (sectionGroup) {
+		self.$scope.createSection = function (sectionGroup) {
 			var section = {
 				sectionGroupId: sectionGroup.id,
-				sequenceNumber: $scope.calculateNextSequenceNumber(sectionGroup),
+				sequenceNumber: self.$scope.calculateNextSequenceNumber(sectionGroup),
 				seats: 0
 			};
 
-			schedulingActionCreators.createSection(section);
+			self.SchedulingActionCreators.createSection(section);
 		};
 
 		// Return true if the user does not have write access
-		$scope.isLocked = function () {
+		self.$scope.isLocked = function () {
 			// Keep UI locked while state is still loading
-			if (!$scope.view.state) { return true; }
+			if (!self.$scope.view.state) { return true; }
 
-			var hasAuthorizedRole = $scope.sharedState.currentUser.isAdmin() ||
-				$scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id);
+			var hasAuthorizedRole = self.$scope.sharedState.currentUser.isAdmin() ||
+				self.$scope.sharedState.currentUser.hasRole('academicPlanner', self.$scope.sharedState.workgroup.id);
 			return !(hasAuthorizedRole);
 		};
 
-		$scope.activityMatchesFilters = function (activityId) {
+		self.$scope.activityMatchesFilters = function (activityId) {
 			// When filter is off, all activities match
-			if ($scope.view.state.filters.enabledLocationIds.length === 0) {
+			if (self.$scope.view.state.filters.enabledLocationIds.length === 0) {
 				return true;
 			}
 
-			var locationId = $scope.view.state.activities.list[activityId].locationId;
+			var locationId = self.$scope.view.state.activities.list[activityId].locationId;
 
-			return ($scope.view.state.filters.enabledLocationIds.indexOf(locationId) >= 0);
+			return (self.$scope.view.state.filters.enabledLocationIds.indexOf(locationId) >= 0);
 		};
 
-		$scope.matchesFilters = function (sectionGroup) {
+		self.$scope.matchesFilters = function (sectionGroup) {
 			var satisfiesTagFilters = (
-				$scope.view.state.filters.enabledTagIds.length === 0 ||
-				$scope.view.state.courses.list[sectionGroup.courseId].matchesTagFilters
+				self.$scope.view.state.filters.enabledTagIds.length === 0 ||
+				self.$scope.view.state.courses.list[sectionGroup.courseId].matchesTagFilters
 			);
 
 			var satisfiesLocationFilters = (
-				$scope.view.state.filters.enabledLocationIds.length === 0 ||
+				self.$scope.view.state.filters.enabledLocationIds.length === 0 ||
 				matchesLocationFilters(sectionGroup)
 			);
 
 			var satisfiesInstructorFilters = (
-				$scope.view.state.filters.enabledInstructorIds.length === 0 ||
+				self.$scope.view.state.filters.enabledInstructorIds.length === 0 ||
 				matchesInstructorFilters(sectionGroup)
 			);
 
@@ -258,33 +275,38 @@ schedulingApp.controller('SchedulingCtrl', ['$scope', '$rootScope', '$routeParam
 		};
 
 		var matchesLocationFilters = function (sectionGroup) {
-			var sectionGroupLocationIds = $scope.view.state.activities.ids
+			var sectionGroupLocationIds = self.$scope.view.state.activities.ids
 				.filter(function (activityId) {
-					return $scope.view.state.activities.list[activityId].sectionGroupId == sectionGroup.id;
+					return self.$scope.view.state.activities.list[activityId].sectionGroupId == sectionGroup.id;
 				}).map(function (activityId) {
-					return $scope.view.state.activities.list[activityId].locationId;
+					return self.$scope.view.state.activities.list[activityId].locationId;
 				});
 
-			return $scope.view.state.filters.enabledLocationIds.some(function (locationId) {
+			return self.$scope.view.state.filters.enabledLocationIds.some(function (locationId) {
 				return sectionGroupLocationIds.indexOf(locationId) >= 0;
 			});
 		};
 
 		var matchesInstructorFilters = function (sectionGroup) {
-			return $scope.view.state.filters.enabledInstructorIds.some(function (instructorId) {
+			return self.$scope.view.state.filters.enabledInstructorIds.some(function (instructorId) {
 				return sectionGroup.instructorIds.indexOf(instructorId) >= 0;
 			});
 		};
-
 	}
-]);
 
-SchedulingCtrl.getPayload = function (authService, $route, Term, schedulingActionCreators) {
-	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		var term = Term.prototype.getTermByTermShortCodeAndYear($route.current.params.termShortCode, $route.current.params.year);
-		return schedulingActionCreators.getInitialState(
-			$route.current.params.workgroupId,
-			$route.current.params.year,
-			term.code);
-	});
-};
+	getPayload () {
+		var self = this;
+		return self.AuthService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
+			var term = self.Term.prototype.getTermByTermShortCodeAndYear(self.$route.current.params.termShortCode, self.$route.current.params.year);
+			return self.SchedulingActionCreators.getInitialState(
+				self.$route.current.params.workgroupId,
+				self.$route.current.params.year,
+				term.code);
+		});
+	}
+}
+
+SchedulingCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Activity', 'Term', 'SchedulingActionCreators', 'AuthService'];
+
+export default SchedulingCtrl;
+

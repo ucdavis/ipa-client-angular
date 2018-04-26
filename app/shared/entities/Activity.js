@@ -110,7 +110,7 @@ const Activity = angular.module('Activity', [])
 		 * one of the registrar's standard time patterns'
 		 */
 		setStandardTimes: function () {
-			standardTimePatterns = this.getStandardTimes();
+			let standardTimePatterns = this.getStandardTimes();
 
 			if (parseInt(this.frequency) !== 1 || !this.startTime || !this.endTime) {
 				this.isStandardTimes = false;

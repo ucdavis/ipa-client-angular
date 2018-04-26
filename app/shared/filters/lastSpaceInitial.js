@@ -4,7 +4,7 @@
  * Removes the "." from the generic instructor "The Staff"
  */
 
-sharedApp.filter("lastSpaceInitial", this.lastSpaceInitial = function() {
+let lastSpaceInitial = function() {
 	return function (instructor) {
 		if (!(instructor && instructor.firstName && instructor.lastName)) { return; }
 		var firstInitial = instructor.firstName.charAt(0);
@@ -12,4 +12,6 @@ sharedApp.filter("lastSpaceInitial", this.lastSpaceInitial = function() {
 			return name.trim() !== ".";
 		}).join(" ");
 	};
-});
+};
+
+export default lastSpaceInitial;

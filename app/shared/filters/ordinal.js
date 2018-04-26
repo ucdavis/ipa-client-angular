@@ -3,10 +3,12 @@
  * Expects an Integer
  */
 
-sharedApp.filter("ordinal", this.ordinal = function() {
+let ordinal = function() {
 	return function (number) {
 		if (number && isNumber(number)) {
 			return toOrdinalSuffix(number);
 		}
 	};
-});
+};
+
+export default ordinal;

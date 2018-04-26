@@ -9,6 +9,7 @@ import SchedulingStateService from './services/schedulingStateService.js';
 // Shared services
 import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
+import AuthService from './../shared/services/AuthService.js';
 
 // Directives
 import termCalendar from './directives/termCalendar/termCalendar.js';
@@ -16,7 +17,7 @@ import timeInput from './directives/timeInput/timeInput.js';
 import activityDetails from './directives/activityDetails/activityDetails.js';
 import locationEditor from './directives/activityDetails/locationEditor/locationEditor.js';
 import timeEditor from './directives/activityDetails/timeEditor/timeEditor.js';
-import freeformTimeInput from './directives/activityDetails/timeEditor/freeformTimeInput/freeformTimeInput.js';
+import freeformTimeInput from './directives/activityDetails/timeEditor/freeformTimeSelector/freeformTimeSelector.js';
 import standardTimeSelector from './directives/activityDetails/timeEditor/standardTimeSelector/standardTimeSelector.js';
 
 // Dependencies
@@ -50,11 +51,12 @@ config.$inject = ['$routeProvider'];
 const schedulingApp = angular.module("schedulingApp", dependencies)
 .config(config)
 .controller('SchedulingCtrl', SchedulingCtrl)
-.service('CourseActionCreators', CourseActionCreators)
-.service('CourseService', CourseService)
-.service('CourseStateService', CourseStateService)
+.service('SchedulingActionCreators', SchedulingActionCreators)
+.service('SchedulingService', SchedulingService)
+.service('SchedulingStateService', SchedulingStateService)
 .service('ApiService', ApiService)
 .service('TermService', TermService)
+.service('AuthService', AuthService)
 .directive('termCalendar', termCalendar)
 .directive('timeInput', timeInput)
 .directive('activityDetails', activityDetails)

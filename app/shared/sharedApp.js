@@ -49,8 +49,12 @@ import Workgroup from './entities/Workgroup.js';
 import ipaButton from './directives/ipaButton/ipaButton.js';
 import ipaHeader from './directives/ipaHeader/ipaHeader.js';
 import ipaTermSelectorDropdown from './directives/ipaTermSelectorDropdown/ipaTermSelectorDropdown.js';
-
 import nav from './directives/nav/nav.js';
+
+// Filters
+import lastCommaFirst from './filters/lastCommaFirst.js';
+import lastSpaceInitial from './filters/lastSpaceInitial.js';
+import ordinal from './filters/ordinal.js';
 
 // Dependencies
 var sharedAppDependencies = [
@@ -133,6 +137,9 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .directive('ipaHeader', ipaHeader)
 .directive('ipaTermSelectorDropdown', ipaTermSelectorDropdown)
 .directive('nav', nav)
+.filter('lastCommaFirst', lastCommaFirst)
+.filter('lastSpaceInitial', lastSpaceInitial)
+.filter('ordinal', ordinal)
 .constant('Roles', {
 	reviewer: 10,
 	instructor: 15,

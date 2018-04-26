@@ -9,6 +9,7 @@ import CourseStateService from './services/courseStateService.js';
 // Shared services
 import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
+import AuthService from './../shared/services/AuthService.js';
 
 // Directives
 import assignTagTooltip from './directives/assignTagTooltip/assignTagTooltip.js';
@@ -53,6 +54,7 @@ const courseApp = angular.module("courseApp", dependencies)
 .service('CourseStateService', CourseStateService)
 .service('ApiService', ApiService)
 .service('TermService', TermService)
+.service('AuthService', AuthService)
 .directive('assignTagTooltip', assignTagTooltip)
 .directive('courseDetails', courseDetails)
 .directive('deleteCourseModal', deleteCourseModal)
