@@ -1,9 +1,11 @@
-schedulingApp.directive("locationEditor", this.locationEditor = function () {
+let locationEditor = function () {
 	return {
 		restrict: "E",
-		templateUrl: 'locationEditor.html',
+		template: require('./locationEditor.html'),
 		link: function (scope, element, attrs) {
 			// Intentionally blank
 		}
 	};
-});
+};
+
+export default locationEditor;

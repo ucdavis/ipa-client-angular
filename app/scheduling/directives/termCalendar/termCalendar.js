@@ -1,4 +1,4 @@
-schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope, $timeout, schedulingActionCreators) {
+let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 	return {
 		restrict: 'E',
 		template: '<div id="calendar"></div>',
@@ -15,12 +15,12 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 
 				setTimeout(function() {
 					$(window).resize(function() {
-						$('#calendar').fullCalendar('option', 'height', get_calendar_height());
-						$('.section-group-container').height(get_calendar_height());
+						$('#calendar').fullCalendar('option', 'height', scope.get_calendar_height());
+						$('.section-group-container').height(scope.get_calendar_height());
 					});
 
 					$('#calendar').fullCalendar({
-						height: get_calendar_height()
+						height: scope.get_calendar_height()
 					});
 				}, 500);
 			};
@@ -60,7 +60,7 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 					allDaySlot: false,
 					allDayDefault: false,
 					aspectRatio: parentAspectRatio,
-					height: get_calendar_height(),
+					height: scope.get_calendar_height(),
 					minTime: '07:00',
 					maxTime: '22:00',
 					header: false,
@@ -76,10 +76,10 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 					eventClick: function (calEvent, jsEvent, view) {
 						var closeTarget = angular.element(jsEvent.target).hasClass('activity-remove');
 						if (closeTarget) {
-							schedulingActionCreators.toggleCheckedSectionGroup(calEvent.sectionGroupId);
+							SchedulingActionCreators.toggleCheckedSectionGroup(calEvent.sectionGroupId);
 						} else {
 							var activity = scope.view.state.activities.list[calEvent.activityId];
-							schedulingActionCreators.setSelectedActivity(activity);
+							SchedulingActionCreators.setSelectedActivity(activity);
 						}
 
 						// Important: notify angular since this happends outside of the scope
@@ -96,7 +96,7 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 						element.find('a.section-group-' + event.sectionGroupId).removeClass('hover-section-group');
 					},
 					dayClick: function (date, jsEvent, view) {
-						schedulingActionCreators.setSelectedActivity();
+						SchedulingActionCreators.setSelectedActivity();
 						$timeout(function () {
 							scope.$apply();
 						});
@@ -373,14 +373,17 @@ schedulingApp.directive("termCalendar", this.termCalendar = function ($rootScope
 			$.extend(neonCalendar, {
 				isPresent: neonCalendar.$container.length > 0
 			});
+
+			scope.get_calendar_height = function () {
+				if ($(window).height() < 485) {
+					return $(window).height();
+				}
+			
+				return $(window).height() - 178;
+			}
+
 		}
 	};
-});
+};
 
-function get_calendar_height() {
-	if ($(window).height() < 485) {
-		return $(window).height();
-	}
-
-	return $(window).height() - 178;
-}
+export default termCalendar;

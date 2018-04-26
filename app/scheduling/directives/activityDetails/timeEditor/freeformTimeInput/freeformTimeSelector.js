@@ -1,7 +1,7 @@
-schedulingApp.directive("freeformTimeSelector", this.freeformTimeSelector = function (schedulingActionCreators) {
+let freeformTimeSelector = function (SchedulingActionCreators) {
 	return {
 		restrict: "E",
-		templateUrl: 'freeformTimeSelector.html',
+		template: require('./freeformTimeSelector.html'),
 		scope: {
 			activity: '='
 		},
@@ -16,8 +16,10 @@ schedulingApp.directive("freeformTimeSelector", this.freeformTimeSelector = func
 					scope.activity.endTime = endTime.format("HH:mm");
 				}
 
-				schedulingActionCreators.updateActivity(scope.activity);
+				SchedulingActionCreators.updateActivity(scope.activity);
 			};
 		}
 	};
-});
+};
+
+export default freeformTimeSelector;
