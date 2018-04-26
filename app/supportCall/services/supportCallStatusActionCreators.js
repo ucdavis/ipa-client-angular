@@ -5,7 +5,7 @@ class SupportCallStatusActionCreators {
 			getInitialState: function (workgroupId, year, termShortCode) {
 				SupportCallStatusService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
 					var action = {
-						type: INIT_STATE,
+						type: ActionTypes.INIT_STATE,
 						payload: payload,
 						year: year,
 						workgroupId: workgroupId,
@@ -34,7 +34,7 @@ class SupportCallStatusActionCreators {
 				SupportCallStatusService.addStudentsSupportCall(scheduleId, supportCallData).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Students added to support call", type: "SUCCESS" });
 					var action = {
-						type: ADD_STUDENT_SUPPORT_CALL,
+						type: ActionTypes.ADD_STUDENT_SUPPORT_CALL,
 						payload: payload
 					};
 					SupportCallStatusStateService.reduce(action);
@@ -60,7 +60,7 @@ class SupportCallStatusActionCreators {
 				SupportCallStatusService.addInstructorsSupportCall(scheduleId, supportCallData).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Instructors added to support call", type: "SUCCESS" });
 					var action = {
-						type: ADD_INSTRUCTOR_SUPPORT_CALL,
+						type: ActionTypes.ADD_INSTRUCTOR_SUPPORT_CALL,
 						payload: payload
 					};
 					SupportCallStatusStateService.reduce(action);
@@ -83,7 +83,7 @@ class SupportCallStatusActionCreators {
 				SupportCallStatusService.contactInstructorsSupportCall(scheduleId, supportCallData).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Instructor contact scheduled", type: "SUCCESS" });
 					var action = {
-						type: CONTACT_INSTRUCTOR_SUPPORT_CALL,
+						type: ActionTypes.CONTACT_INSTRUCTOR_SUPPORT_CALL,
 						payload: payload
 					};
 					SupportCallStatusStateService.reduce(action);
@@ -106,7 +106,7 @@ class SupportCallStatusActionCreators {
 				SupportCallStatusService.contactSupportStaffSupportCall(scheduleId, supportCallData).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Student contact scheduled", type: "SUCCESS" });
 					var action = {
-						type: CONTACT_STUDENT_SUPPORT_CALL,
+						type: ActionTypes.CONTACT_STUDENT_SUPPORT_CALL,
 						payload: payload
 					};
 					SupportCallStatusStateService.reduce(action);
@@ -118,7 +118,7 @@ class SupportCallStatusActionCreators {
 				SupportCallStatusService.removeInstructorFromSupportCall(instructor, scheduleId, termCode).then(function (supportCallResponseId) {
 					$rootScope.$emit('toast', { message: "Instructor removed from support call", type: "SUCCESS" });
 					var action = {
-						type: DELETE_INSTRUCTOR_SUPPORT_CALL,
+						type: ActionTypes.DELETE_INSTRUCTOR_SUPPORT_CALL,
 						payload: {
 							supportCallResponseId: supportCallResponseId,
 							instructorId: instructor.id
@@ -133,7 +133,7 @@ class SupportCallStatusActionCreators {
 				SupportCallStatusService.removeStudentFromSupportCall(supportStaff, scheduleId, termCode).then(function (supportCallResponseId) {
 					$rootScope.$emit('toast', { message: "Student removed from support call", type: "SUCCESS" });
 					var action = {
-						type: DELETE_STUDENT_SUPPORT_CALL,
+						type: ActionTypes.DELETE_STUDENT_SUPPORT_CALL,
 						payload: {
 							supportCallResponseId: supportCallResponseId,
 							supportStaffId: supportStaff.id

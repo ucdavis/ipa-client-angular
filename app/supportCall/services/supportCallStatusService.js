@@ -1,6 +1,8 @@
 class SupportCallStatusService {
 	constructor (ApiService) {
 		var self = this;
+		this.ApiService = ApiService;
+
 		return {
 			getInitialState: function(workgroupId, year, termShortCode) {
 				return self.ApiService.get("/api/instructionalSupportView/workgroups/" + workgroupId + "/years/" + year +"/" + termShortCode + "/supportCallStatus");

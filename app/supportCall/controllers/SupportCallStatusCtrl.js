@@ -7,23 +7,34 @@
  */
 class SupportCallStatusCtrl {
 	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, SupportCallStatusActionCreators, AuthService) {
-		$window.document.title = "Instructional Support";
-		$scope.workgroupId = $routeParams.workgroupId;
-		$scope.year = $routeParams.year;
-		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
-		$scope.termShortCode = $routeParams.termShortCode;
+		this.$scope = $scope;
+		this.$rootScope = $rootScope;
+		this.$window = $window;
+		this.$location = $location;
+		this.$route = $route;
+		this.$routeParams = $routeParams;
+		this.$uibModal = $uibModal;
+		this.SupportCallStatusActionCreators = SupportCallStatusActionCreators;
+		this.AuthService = AuthService;
 
-		$scope.instructorsSelected = false;
-		$scope.supportStaffSelected = false;
+		var self = this;
+		self.$window.document.title = "Instructional Support";
+		self.$scope.workgroupId = self.$routeParams.workgroupId;
+		self.$scope.year = self.$routeParams.year;
+		self.$scope.nextYear = (parseInt(self.$scope.year) + 1).toString().slice(-2);
+		self.$scope.termShortCode = self.$routeParams.termShortCode;
+
+		self.$scope.instructorsSelected = false;
+		self.$scope.supportStaffSelected = false;
 
 		// Generate termCode
-		if ($scope.termShortCode < 4) {
-			$scope.termCode = (parseInt($scope.year) + 1) + $scope.termShortCode;
+		if (self.$scope.termShortCode < 4) {
+			self.$scope.termCode = (parseInt(self.$scope.year) + 1) + self.$scope.termShortCode;
 		} else {
-			$scope.termCode = $scope.year + $scope.termShortCode;
+			self.$scope.termCode = self.$scope.year + self.$scope.termShortCode;
 		}
 
-		$scope.view = {};
+		self.$scope.view = {};
 
 		this.getPayload().then( function() {
 			self.initialize();
@@ -31,31 +42,32 @@ class SupportCallStatusCtrl {
 	}
 
 	initialize () {
-		$rootScope.$on('supportCallStatusStateChanged', function (event, data) {
-			$scope.view.state = data;
+		var self = this;
+		self.$rootScope.$on('supportCallStatusStateChanged', function (event, data) {
+			self.$scope.view.state = data;
 		});
 
-		$scope.removeInstructor = function(instructor) {
-			SupportCallStatusActionCreators.removeInstructorFromSupportCall(instructor, $scope.view.state.misc.scheduleId, $scope.termCode);
+		self.$scope.removeInstructor = function(instructor) {
+			SupportCallStatusActionCreators.removeInstructorFromSupportCall(instructor, self.$scope.view.state.misc.scheduleId, self.$scope.termCode);
 		};
 
-		$scope.removeSupportStaff = function(supportStaff) {
-			SupportCallStatusActionCreators.removeSupportStaffFromSupportCall(supportStaff, $scope.view.state.misc.scheduleId, $scope.termCode);
+		self.$scope.removeSupportStaff = function(supportStaff) {
+			SupportCallStatusActionCreators.removeSupportStaffFromSupportCall(supportStaff, self.$scope.view.state.misc.scheduleId, self.$scope.termCode);
 		};
 
-		$scope.numberToFloor = function(number) {
+		self.$scope.numberToFloor = function(number) {
 			return Math.floor(number);
 		};
 
-		$scope.openAddInstructorsModal = function() {
-			$scope.openAddParticipantsSupportCall("instructor");
+		self.$scope.openAddInstructorsModal = function() {
+			self.$scope.openAddParticipantsSupportCall("instructor");
 		};
 
-		$scope.openAddSupportStaffModal = function () {
-			$scope.openAddParticipantsSupportCall("supportStaff");
+		self.$scope.openAddSupportStaffModal = function () {
+			self.$scope.openAddParticipantsSupportCall("supportStaff");
 		};
 
-		$scope.toggleParticipantSelection = function(participant) {
+		self.$scope.toggleParticipantSelection = function(participant) {
 			if (participant.selected) {
 				participant.selected = false;
 			} else {
@@ -63,27 +75,27 @@ class SupportCallStatusCtrl {
 			}
 		};
 
-		$scope.toggleInstructorsSelection = function() {
-			$scope.instructorsSelected = !$scope.instructorsSelected;
+		self.$scope.toggleInstructorsSelection = function() {
+			self.$scope.instructorsSelected = !self.$scope.instructorsSelected;
 
-			$scope.view.state.supportCall.instructors.forEach(function(instructor) {
-				instructor.selected = $scope.instructorsSelected;
+			self.$scope.view.state.supportCall.instructors.forEach(function(instructor) {
+				instructor.selected = self.$scope.instructorsSelected;
 			});
 		};
 
-		$scope.toggleSupportStaffSelection = function() {
-			$scope.supportStaffSelected = !$scope.supportStaffSelected;
+		self.$scope.toggleSupportStaffSelection = function() {
+			self.$scope.supportStaffSelected = !self.$scope.supportStaffSelected;
 
-			$scope.view.state.supportCall.supportStaff.forEach(function(slotSupportStaff) {
-				slotSupportStaff.selected = $scope.supportStaffSelected;
+			self.$scope.view.state.supportCall.supportStaff.forEach(function(slotSupportStaff) {
+				slotSupportStaff.selected = self.$scope.supportStaffSelected;
 			});
 		};
 
-		$scope.atLeastOneInstructorSelected = function() {
+		self.$scope.atLeastOneInstructorSelected = function() {
 			var instructorIsSelected = false;
 
-			if ($scope.view.state) {
-				$scope.view.state.supportCall.instructors.forEach(function(instructor) {
+			if (self.$scope.view.state) {
+				self.$scope.view.state.supportCall.instructors.forEach(function(instructor) {
 					if (instructor.selected) {
 						instructorIsSelected = true;
 					}
@@ -93,11 +105,11 @@ class SupportCallStatusCtrl {
 			return instructorIsSelected;
 		};
 
-		$scope.atLeastOneStudentSelected = function() {
+		self.$scope.atLeastOneStudentSelected = function() {
 			var instructorIsSelected = false;
 
-			if ($scope.view.state) {
-				$scope.view.state.supportCall.supportStaff.forEach(function(participant) {
+			if (self.$scope.view.state) {
+				self.$scope.view.state.supportCall.supportStaff.forEach(function(participant) {
 					if (participant.selected) {
 						instructorIsSelected = true;
 					}
@@ -107,9 +119,9 @@ class SupportCallStatusCtrl {
 			return instructorIsSelected;
 		};
 
-		$scope.openAddParticipantsSupportCall = function(supportCallMode) {
-			modalInstance = $uibModal.open({
-				templateUrl: 'AddSupportCallModal.html',
+		self.$scope.openAddParticipantsSupportCall = function(supportCallMode) {
+			modalInstance = self.$uibModal.open({
+				template: require('./../directives/modalAddSupportCall/AddSupportCallModal.html'),
 				controller: ModalAddSupportCallCtrl,
 				size: 'lg',
 				resolve: {
@@ -117,19 +129,19 @@ class SupportCallStatusCtrl {
 						return supportCallMode;
 					},
 					scheduleId: function () {
-						return $scope.view.state.misc.scheduleId;
+						return self.$scope.view.state.misc.scheduleId;
 					},
 					state: function () {
-						return $scope.view.state;
+						return self.$scope.view.state;
 					},
 					year: function () {
-						return $scope.year;
+						return self.$scope.year;
 					},
 					nextYear: function () {
-						return $scope.nextYear;
+						return self.$scope.nextYear;
 					},
 					termShortCode: function () {
-						return $scope.termShortCode;
+						return self.$scope.termShortCode;
 					}
 				}
 			});
@@ -142,34 +154,34 @@ class SupportCallStatusCtrl {
 			});
 		};
 
-		$scope.openContactStudentsModal = function() {
-			$scope.openContactParticipantModal("supportStaff");
+		self.$scope.openContactStudentsModal = function() {
+			self.$scope.openContactParticipantModal("supportStaff");
 		};
 
-		$scope.openContactInstructorsModal = function() {
-			$scope.openContactParticipantModal("instructor");
+		self.$scope.openContactInstructorsModal = function() {
+			self.$scope.openContactParticipantModal("instructor");
 		};
 
 		// Launches Contact Modal
-		$scope.openContactParticipantModal = function(supportCallMode) {
+		self.$scope.openContactParticipantModal = function(supportCallMode) {
 			selectedParticipants = [];
 
 			if (supportCallMode == "instructor") {
-				$scope.view.state.supportCall.instructors.forEach(function(instructor) {
+				self.$scope.view.state.supportCall.instructors.forEach(function(instructor) {
 					if (instructor.selected) {
 						selectedParticipants.push(instructor);
 					}
 				});
 			}
 			if (supportCallMode == "supportStaff") {
-				$scope.view.state.supportCall.supportStaff.forEach(function(slotSupportStaff) {
+				self.$scope.view.state.supportCall.supportStaff.forEach(function(slotSupportStaff) {
 					if (slotSupportStaff.selected) {
 						selectedParticipants.push(slotSupportStaff);
 					}
 				});
 			}
 
-			modalInstance = $uibModal.open({
+			modalInstance = self.$uibModal.open({
 				templateUrl: 'ContactSupportCallModal.html',
 				controller: ModalContactSupportCallCtrl,
 				size: 'lg',
@@ -178,16 +190,16 @@ class SupportCallStatusCtrl {
 						return supportCallMode;
 					},
 					scheduleId: function () {
-						return $scope.view.state.misc.scheduleId;
+						return self.$scope.view.state.misc.scheduleId;
 					},
 					state: function () {
-						return $scope.view.state;
+						return self.$scope.view.state;
 					},
 					year: function () {
-						return $scope.year;
+						return self.$scope.year;
 					},
 					termShortCode: function () {
-						return $scope.termShortCode;
+						return self.$scope.termShortCode;
 					},
 					selectedParticipants: function () {
 						return selectedParticipants;

@@ -7,9 +7,9 @@ class SupportCallStatusSelectors {
 			// Will combine metadata of instructors and supportCallResponses,
 			// Filtering based on eligibility and groupType
 			generateInstructorGroup: function (instructors, supportCallResponses, isEligible) {
-				generatedInstructors = [];
 				self = this;
-	
+				let generatedInstructors = [];
+
 				instructors.ids.forEach( function (instructorId) {
 					var instructor = instructors.list[instructorId];
 					var supportCallResponse = supportCallResponses.list[instructor.supportCallResponseId];
@@ -26,8 +26,8 @@ class SupportCallStatusSelectors {
 			},
 	
 			generateSupportStaffGroup: function (supportStaffList, supportCallResponses, isEligible, groupType) {
-				generatedSupportStaffList = [];
 				self = this;
+				let generatedSupportStaffList = [];
 	
 				supportStaffList.ids.forEach( function (supportStaffId) {
 					var supportStaff = supportStaffList.list[supportStaffId];

@@ -1,5 +1,10 @@
 class SupportCallStatusStateService {
 	constructor ($rootScope, $log, SupportCallStatusSelectors, ActionTypes) {
+		this.$rootScope = $rootScope;
+		this.$log = $log;
+		this.SupportCallStatusSelectors = SupportCallStatusSelectors;
+		this.ActionTypes = ActionTypes;
+
 		var self = this;
 		return {
 			_state: {},
@@ -222,7 +227,7 @@ class SupportCallStatusStateService {
 	
 				// Build new 'state'
 				// The 'state' is the normalized source of truth
-				newState = {};
+				let newState = {};
 				newState.instructors = scope._instructorReducers(action, scope._state.instructors);
 				newState.instructorSupportCallResponses = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponses);
 				newState.supportStaff = scope._supportStaffReducers(action, scope._state.supportStaff);
@@ -233,7 +238,7 @@ class SupportCallStatusStateService {
 	
 				// Build new 'page state'
 				// This is the 'view friendly' version of the store
-				newPageState = {};
+				let newPageState = {};
 				newPageState.supportCall = {};
 				newPageState.eligible = {};
 				newPageState.misc = {};
