@@ -1,13 +1,17 @@
-budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$timeout', 'budgetActions', 'authService',
-	this.BudgetCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $timeout, budgetActions, authService) {
+class BudgetCtrl {
+	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $timeout, BudgetActions, AuthService) {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 
 		$scope.view = {};
 
 		$scope.budgetConfigStyles = { "width" : "40%" };
+	}
 
-		$scope.currentUser = authService.getCurrentUser();
+	initialize () {
+		var here = this;
+
+		$scope.currentUser = AuthService.getCurrentUser();
 
 		$rootScope.$on('budgetStateChanged', function (event, data) {
 			$scope.view.state = data;
@@ -25,16 +29,26 @@ budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$locatio
 				localStorage.removeItem('selectedTerm');
 			}
 		});
-}]);
 
-BudgetCtrl.getPayload = function (authService, $route, $window, budgetActions) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		var selectedBudgetScenarioId = parseInt(localStorage.getItem('selectedBudgetScenarioId')) || null;
+		this.getPayload().then( function() {
+			here.initialize();
+		});
+	}
 
-		budgetActions.getInitialState(
-			$route.current.params.workgroupId,
-			$route.current.params.year,
-			selectedBudgetScenarioId,
-			localStorage.getItem('selectedTerm'));
-	});
-};
+	getPayload () {
+	return AuthService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+			var selectedBudgetScenarioId = parseInt(localStorage.getItem('selectedBudgetScenarioId')) || null;
+	
+			budgetActions.getInitialState(
+				$route.current.params.workgroupId,
+				$route.current.params.year,
+				selectedBudgetScenarioId,
+				localStorage.getItem('selectedTerm'));
+		});
+	
+	}
+}
+
+BudgetCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$timeout', 'BudgetActions', 'AuthService'];
+
+export default BudgetCtrl;
