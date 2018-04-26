@@ -6,7 +6,7 @@ class SupportReducer {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						sectionGroups = {
 							ids: [],
 							list: {}
@@ -18,12 +18,12 @@ class SupportReducer {
 						});
 	
 						return sectionGroups;
-					case UPDATE_SECTIONGROUP:
+					case ActionTypes.UPDATE_SECTIONGROUP:
 						sectionGroup = action.payload.sectionGroup;
 						sectionGroups.list[sectionGroup.id].readerAppointments = sectionGroup.readerAppointments;
 						sectionGroups.list[sectionGroup.id].teachingAssistantAppointments = sectionGroup.teachingAssistantAppointments;
 						return sectionGroups;
-					case UPDATE_TABLE_FILTER:
+					case ActionTypes.UPDATE_TABLE_FILTER:
 						var query = action.payload.query;
 	
 						// Apply search filters
@@ -38,13 +38,13 @@ class SupportReducer {
 							});
 						}
 						return sectionGroups;
-					case CALCULATE_SECTION_GROUP_SCHEDULING:
+					case ActionTypes.CALCULATE_SECTION_GROUP_SCHEDULING:
 						sectionGroups.ids.forEach(function(sectionGroupId) {
 							var sectionGroup = sectionGroups.list[sectionGroupId];
 							sectionGroup.scheduledBlob = action.payload.sectionGroupBlobs[sectionGroupId];
 						});
 						return sectionGroups;
-					case CALCULATE_SCHEDULE_CONFLICTS:
+					case ActionTypes.CALCULATE_SCHEDULE_CONFLICTS:
 						sectionGroups.ids.forEach(function(sectionGroupId) {
 							var sectionGroup = sectionGroups.list[sectionGroupId];
 							sectionGroup.supportStaffConflicts = action.payload.conflicts.bySectionGroupId[sectionGroupId] || [];
@@ -58,7 +58,7 @@ class SupportReducer {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						sections = {
 							ids: [],
 							list: {},
@@ -74,13 +74,13 @@ class SupportReducer {
 						});
 	
 						return sections;
-					case CALCULATE_SCHEDULE_CONFLICTS:
+					case ActionTypes.CALCULATE_SCHEDULE_CONFLICTS:
 						sections.ids.forEach(function(sectionId) {
 							var section = sections.list[sectionId];
 							section.supportStaffConflicts = action.payload.conflicts.bySectionId[sectionId] || [];
 						}); 
 						return sections;
-					case CALCULATE_SECTION_SCHEDULING:
+					case ActionTypes.CALCULATE_SECTION_SCHEDULING:
 						sections.ids.forEach(function(sectionId) {
 							var section = sections.list[sectionId];
 							section.scheduledBlob = action.payload.sectionBlobs[sectionId];
@@ -94,7 +94,7 @@ class SupportReducer {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						activities = {
 							ids: [],
 							list: {},
@@ -124,7 +124,7 @@ class SupportReducer {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						supportAppointments = {
 							ids: [],
 							list: {}
@@ -135,7 +135,7 @@ class SupportReducer {
 							supportAppointments.list[supportAppointment.id] = supportAppointment;
 						});
 						return supportAppointments;
-					case UPDATE_SUPPORT_APPOINTMENT:
+					case ActionTypes.UPDATE_SUPPORT_APPOINTMENT:
 						var supportAppointment = action.payload.supportAppointment;
 						supportAppointment.percentage = parseFloat(supportAppointment.percentage);
 	
@@ -152,7 +152,7 @@ class SupportReducer {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						courses = {
 							ids: [],
 							list: {}
@@ -172,7 +172,7 @@ class SupportReducer {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						supportAssignments = {
 							ids: [],
 							list: {},
@@ -196,21 +196,21 @@ class SupportReducer {
 						});
 	
 						return supportAssignments;
-					case ASSIGN_STAFF_TO_SECTION_GROUP:
+					case ActionTypes.ASSIGN_STAFF_TO_SECTION_GROUP:
 						var supportAssignment = action.payload.supportAssignment;
 						supportAssignments.ids.push(supportAssignment.id);
 						supportAssignments.list[supportAssignment.id] = supportAssignment;
 						supportAssignments.bySectionGroupIds[supportAssignment.sectionGroupId] = supportAssignments.bySectionGroupIds[supportAssignment.sectionGroupId] || [];
 						supportAssignments.bySectionGroupIds[supportAssignment.sectionGroupId].push(supportAssignment.id);
 						return supportAssignments;
-					case ASSIGN_STAFF_TO_SECTION:
+					case ActionTypes.ASSIGN_STAFF_TO_SECTION:
 						var supportAssignment = action.payload.supportAssignment;
 						supportAssignments.ids.push(supportAssignment.id);
 						supportAssignments.list[supportAssignment.id] = supportAssignment;
 						supportAssignments.bySectionIds[supportAssignment.sectionId] = supportAssignments.bySectionIds[supportAssignment.sectionId] || [];
 						supportAssignments.bySectionIds[supportAssignment.sectionId].push(supportAssignment.id);
 						return supportAssignments;
-					case DELETE_ASSIGNMENT:
+					case ActionTypes.DELETE_ASSIGNMENT:
 						var index = supportAssignments.ids.indexOf(action.payload.id);
 						var sectionId = action.payload.sectionId ? action.payload.sectionId : null;
 						var sectionGroupId = action.payload.sectionGroupId ? action.payload.sectionGroupId : null;
@@ -238,7 +238,7 @@ class SupportReducer {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						supportStaffList = {
 							ids: [],
 							list: {}
@@ -260,20 +260,20 @@ class SupportReducer {
 						});
 	
 						return supportStaffList;
-					case CALCULATE_SCHEDULE_CONFLICTS:
+					case ActionTypes.CALCULATE_SCHEDULE_CONFLICTS:
 						supportStaffList.ids.forEach(function(supportStaffId) {
 							var supportStaff = supportStaffList.list[supportStaffId];
 							supportStaff.sectionConflicts = action.payload.conflicts.bySupportStaffId[supportStaffId].sectionIds || [];
 							supportStaff.sectionGroupConflicts = action.payload.conflicts.bySupportStaffId[supportStaffId].sectionGroupIds || [];
 						}); 
 						return supportStaffList;
-					case CALCULATE_STAFF_ASSIGNMENT_OPTIONS:
+					case ActionTypes.CALCULATE_STAFF_ASSIGNMENT_OPTIONS:
 						supportStaffList.ids.forEach(function(supportStaffId) {
 							var supportStaff = supportStaffList.list[supportStaffId];
 							supportStaff.assignmentOptions = action.payload.staffAssignmentOptions[supportStaffId] || {};
 						});
 						return supportStaffList;
-					case UPDATE_TABLE_FILTER:
+					case ActionTypes.UPDATE_TABLE_FILTER:
 						var query = action.payload.query;
 	
 						// Apply search filters
@@ -296,7 +296,7 @@ class SupportReducer {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						supportStaffPreferences = {
 							ids: [],
 							list: {}
@@ -315,7 +315,7 @@ class SupportReducer {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						instructorPreferences = {
 							ids: [],
 							list: {}
@@ -332,10 +332,10 @@ class SupportReducer {
 			},
 			_staffAssignmentOptionReducers: function(action, staffAssignmentOptions) {
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						staffAssignmentOptions = {};
 						return staffAssignmentOptions;
-					case CALCULATE_STAFF_ASSIGNMENT_OPTIONS:
+					case ActionTypes.CALCULATE_STAFF_ASSIGNMENT_OPTIONS:
 						return action.payload.staffAssignmentOptions;
 					default:
 						return staffAssignmentOptions;
@@ -345,7 +345,7 @@ class SupportReducer {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						supportStaffSupportCallResponses = {
 							ids: [],
 							list: {},
@@ -366,7 +366,7 @@ class SupportReducer {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						instructorSupportCallResponses = {
 							ids: [],
 							list: {}
@@ -385,14 +385,14 @@ class SupportReducer {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						schedule = {};
 						schedule = action.payload.schedule;
 						return schedule;
-					case UPDATE_INSTRUCTOR_SUPPORT_CALL_REVIEW:
+					case ActionTypes.UPDATE_INSTRUCTOR_SUPPORT_CALL_REVIEW:
 						schedule = action.payload.schedule;
 						return schedule;
-					case UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW:
+					case ActionTypes.UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW:
 						schedule = action.payload.schedule;
 						return schedule;
 					default:
@@ -403,7 +403,7 @@ class SupportReducer {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 	
 						ui = {
 							readOnlyMode: false,
@@ -436,28 +436,28 @@ class SupportReducer {
 						});
 	
 						return ui;
-					case SET_READ_ONLY_MODE:
+					case ActionTypes.SET_READ_ONLY_MODE:
 						ui.readOnlyMode = true;
 						return ui;
-					case OPEN_AVAILABILITY_MODAL:
+					case ActionTypes.OPEN_AVAILABILITY_MODAL:
 						ui.availabilityModal.isOpen = true;
 						ui.availabilityModal.data = action.payload.supportStaff;
 						return ui;
-					case CLOSE_AVAILABILITY_MODAL:
+					case ActionTypes.CLOSE_AVAILABILITY_MODAL:
 						ui.availabilityModal.isOpen = false;
 						ui.availabilityModal.data = null;
 						return ui;
-					case SET_SUPPORT_STAFF_TAB:
+					case ActionTypes.SET_SUPPORT_STAFF_TAB:
 						ui.supportStaffTabs[action.payload.supportStaffId] = action.payload.tabName;
 						return ui;
-					case SET_VIEW_PIVOT:
+					case ActionTypes.SET_VIEW_PIVOT:
 						ui.tabPivot = action.payload.tabName;
 						return ui;
-					case SET_VIEW_TYPE:
+					case ActionTypes.SET_VIEW_TYPE:
 						ui.viewType = action.payload.viewType;
 						return ui;
-					case UPDATE_INSTRUCTOR_SUPPORT_CALL_REVIEW:
-					case UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW:
+					case ActionTypes.UPDATE_INSTRUCTOR_SUPPORT_CALL_REVIEW:
+					case ActionTypes.UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW:
 						ui.review = {
 							instructor: {
 								isOpen: (action.payload.schedule.instructorSupportCallReviewOpen[parseInt(action.payload.shortTermCode) - 1] == "1"),
@@ -477,7 +477,7 @@ class SupportReducer {
 			reduce: function (action) {
 				var scope = this;
 	
-				newState = {};
+				let newState = {};
 				newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 				newState.courses = scope._courseReducers(action, scope._state.courses);
 				newState.supportAssignments = scope._supportAssignmentsReducers(action, scope._state.supportAssignments);
@@ -497,16 +497,16 @@ class SupportReducer {
 	
 				// Build new 'page state'
 				// This is the 'view friendly' version of the store
-				newPageState = {};
+				let newPageState = {};
 				newPageState.schedule = angular.copy(scope._state.schedule);
 				newPageState.ui = angular.copy(scope._state.ui);
 				newPageState.staffAssignmentOptions = angular.copy(scope._state.staffAssignmentOptions);
-				newPageState.supportAssignmentsUnique = supportSelectors.generateSupportAssignmentsUnique(scope._state.supportAssignments, scope._state.sectionGroups, scope._state.courses);
-				newPageState.supportAssignments = supportSelectors.generateSupportAssignments(
+				newPageState.supportAssignmentsUnique = SupportSelectors.generateSupportAssignmentsUnique(scope._state.supportAssignments, scope._state.sectionGroups, scope._state.courses);
+				newPageState.supportAssignments = SupportSelectors.generateSupportAssignments(
 																																				scope._state.supportAssignments,
 																																				scope._state.sectionGroups,
 																																				scope._state.courses);
-				newPageState.supportStaffList = supportSelectors.generateSupportStaffList(
+				newPageState.supportStaffList = SupportSelectors.generateSupportStaffList(
 																																				scope._state.supportAssignments,
 																																				scope._state.courses,
 																																				scope._state.sectionGroups,
@@ -516,7 +516,7 @@ class SupportReducer {
 																																				scope._state.supportStaffPreferences,
 																																				scope._state.supportAppointments,
 																																				scope._state.ui);
-				newPageState.sectionGroups = supportSelectors.generateSectionGroups(
+				newPageState.sectionGroups = SupportSelectors.generateSectionGroups(
 																																				scope._state.supportAssignments,
 																																				scope._state.courses,
 																																				scope._state.sectionGroups,

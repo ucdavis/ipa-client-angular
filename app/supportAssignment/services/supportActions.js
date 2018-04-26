@@ -7,8 +7,8 @@ class SupportActions {
 				var self = this;
 	
 				SupportService.getInitialState(workgroupId, year, shortTermCode).then(function (payload) {
-					supportReducer.reduce({
-						type: INIT_STATE,
+					SupportReducer.reduce({
+						type: ActionTypes.INIT_STATE,
 						payload: payload,
 						year: year,
 						tab: tab,
@@ -24,7 +24,7 @@ class SupportActions {
 				SupportService.toggleSupportStaffSupportCallReview(SupportReducer._state.schedule.id, SupportReducer._state.ui.shortTermCode).then(function (schedule) {
 					$rootScope.$emit('toast', { message: "Updated student support call review", type: "SUCCESS" });
 					SupportReducer.reduce({
-						type: UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW,
+						type: ActionTypes.UPDATE_SUPPORT_STAFF_SUPPORT_CALL_REVIEW,
 						payload: {
 							schedule: schedule,
 							shortTermCode: SupportReducer._state.ui.shortTermCode
@@ -38,7 +38,7 @@ class SupportActions {
 				SupportService.toggleInstructorSupportCallReview(SupportReducer._state.schedule.id, SupportReducer._state.ui.shortTermCode).then(function (schedule) {
 					$rootScope.$emit('toast', { message: "Updated instructor support call review", type: "SUCCESS" });
 					SupportReducer.reduce({
-						type: UPDATE_INSTRUCTOR_SUPPORT_CALL_REVIEW,
+						type: ActionTypes.UPDATE_INSTRUCTOR_SUPPORT_CALL_REVIEW,
 						payload: {
 							schedule: schedule,
 							shortTermCode: SupportReducer._state.ui.shortTermCode
@@ -52,7 +52,7 @@ class SupportActions {
 				SupportService.assignStaffToSectionGroup(sectionGroupId, supportStaffId, type).then(function (supportAssignment) {
 					$rootScope.$emit('toast', { message: "Assigned staff", type: "SUCCESS" });
 					SupportReducer.reduce({
-						type: ASSIGN_STAFF_TO_SECTION_GROUP,
+						type: ActionTypes.ASSIGN_STAFF_TO_SECTION_GROUP,
 						payload: {
 							supportAssignment: supportAssignment
 						}
@@ -65,7 +65,7 @@ class SupportActions {
 				SupportService.assignStaffToSection(sectionId, supportStaff, type).then(function (supportAssignment) {
 					$rootScope.$emit('toast', { message: "Assigned staff", type: "SUCCESS" });
 					SupportReducer.reduce({
-						type: ASSIGN_STAFF_TO_SECTION,
+						type: ActionTypes.ASSIGN_STAFF_TO_SECTION,
 						payload: {
 							supportAssignment: supportAssignment
 						}
@@ -78,7 +78,7 @@ class SupportActions {
 				SupportService.deleteAssignment(supportAssignment).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Removed Assignment", type: "SUCCESS" });
 					SupportReducer.reduce({
-						type: DELETE_ASSIGNMENT,
+						type: ActionTypes.DELETE_ASSIGNMENT,
 						payload: supportAssignment,
 						sectionId: supportAssignment.sectionId,
 						sectionGroupId: supportAssignment.sectionGroupId
@@ -104,7 +104,7 @@ class SupportActions {
 				SupportService.updateSectionGroup(sectionGroup).then(function(payload) {
 					$rootScope.$emit('toast', { message: "Updated Readers", type: "SUCCESS" });
 					SupportReducer.reduce({
-						type: UPDATE_SECTIONGROUP,
+						type: ActionTypes.UPDATE_SECTIONGROUP,
 						payload: {
 							sectionGroup: sectionGroup
 						}
@@ -133,7 +133,7 @@ class SupportActions {
 				SupportService.updateSectionGroup(sectionGroup).then(function(payload) {
 					$rootScope.$emit('toast', { message: "Updated Teaching Assistants", type: "SUCCESS" });
 					SupportReducer.reduce({
-						type: UPDATE_SECTIONGROUP,
+						type: ActionTypes.UPDATE_SECTIONGROUP,
 						payload: {
 							sectionGroup: sectionGroup
 						}
@@ -150,7 +150,7 @@ class SupportActions {
 				SupportService.updateSupportAppointment(supportAppointment).then(function(payload) {
 					$rootScope.$emit('toast', { message: "Updated Appointment", type: "SUCCESS" });
 					SupportReducer.reduce({
-						type: UPDATE_SUPPORT_APPOINTMENT,
+						type: ActionTypes.UPDATE_SUPPORT_APPOINTMENT,
 						payload: {
 							supportAppointment: payload
 						}
@@ -162,7 +162,7 @@ class SupportActions {
 			// Example 'Comments', 'Teaching Assignments'
 			setViewPivot: function (tabName) {
 				SupportReducer.reduce({
-					type: SET_VIEW_PIVOT,
+					type: ActionTypes.SET_VIEW_PIVOT,
 					payload: {
 						tabName: tabName
 					}
@@ -171,7 +171,7 @@ class SupportActions {
 			// Example 'Reader', 'Teaching Assistants'
 			setViewType: function (viewType) {
 				SupportReducer.reduce({
-					type: SET_VIEW_TYPE,
+					type: ActionTypes.SET_VIEW_TYPE,
 					payload: {
 						viewType: viewType
 					}
@@ -179,7 +179,7 @@ class SupportActions {
 			},
 			setSupportStaffTab: function(tabName, supportStaffId) {
 				SupportReducer.reduce({
-					type: SET_SUPPORT_STAFF_TAB,
+					type: ActionTypes.SET_SUPPORT_STAFF_TAB,
 					payload: {
 						tabName: tabName,
 						supportStaffId: supportStaffId
@@ -188,7 +188,7 @@ class SupportActions {
 			},
 			updateTableFilter: function (query) {
 				var action = {
-					type: UPDATE_TABLE_FILTER,
+					type: ActionTypes.UPDATE_TABLE_FILTER,
 					payload: {
 						query: query
 					}
@@ -197,7 +197,7 @@ class SupportActions {
 			},
 			openAvailabilityModal: function(supportStaff) {
 				SupportReducer.reduce({
-					type: OPEN_AVAILABILITY_MODAL,
+					type: ActionTypes.OPEN_AVAILABILITY_MODAL,
 					payload: {
 						supportStaff: supportStaff
 					}
@@ -205,7 +205,7 @@ class SupportActions {
 			},
 			closeAvailabilityModal: function(supportStaff) {
 				SupportReducer.reduce({
-					type: CLOSE_AVAILABILITY_MODAL,
+					type: ActionTypes.CLOSE_AVAILABILITY_MODAL,
 					payload: {}
 				});
 			},
@@ -262,7 +262,7 @@ class SupportActions {
 				});
 	
 				SupportReducer.reduce({
-					type: CALCULATE_SCHEDULE_CONFLICTS,
+					type: ActionTypes.CALCULATE_SCHEDULE_CONFLICTS,
 					payload: {
 						conflicts: conflicts
 					}
@@ -301,7 +301,7 @@ class SupportActions {
 				});
 	
 				SupportReducer.reduce({
-					type: CALCULATE_SECTION_GROUP_SCHEDULING,
+					type: ActionTypes.CALCULATE_SECTION_GROUP_SCHEDULING,
 					payload: {
 						sectionGroupBlobs: sectionGroupBlobs
 					}
@@ -318,7 +318,7 @@ class SupportActions {
 				});
 	
 				SupportReducer.reduce({
-					type: CALCULATE_SECTION_SCHEDULING,
+					type: ActionTypes.CALCULATE_SECTION_SCHEDULING,
 					payload: {
 						sectionBlobs: sectionBlobs
 					}
@@ -416,7 +416,7 @@ class SupportActions {
 			// Generate the preference options object for support staff assignment dropdown
 			calculateStaffAssignmentOptions: function() {
 				var self = this;
-				staffAssignmentOptions = {};
+				let staffAssignmentOptions = {};
 	
 				/* Example assignmentOption:
 				{
@@ -518,7 +518,7 @@ class SupportActions {
 				});
 	
 				SupportReducer.reduce({
-					type: CALCULATE_STAFF_ASSIGNMENT_OPTIONS,
+					type: ActionTypes.CALCULATE_STAFF_ASSIGNMENT_OPTIONS,
 					payload: {
 						staffAssignmentOptions: staffAssignmentOptions
 					}
@@ -552,7 +552,7 @@ class SupportActions {
 			},
 			setReadOnlyMode: function() {
 				SupportReducer.reduce({
-					type: SET_READ_ONLY_MODE,
+					type: ActionTypes.SET_READ_ONLY_MODE,
 					payload: {}
 				});
 			}

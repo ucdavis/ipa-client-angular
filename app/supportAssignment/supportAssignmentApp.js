@@ -1,5 +1,5 @@
 // Controllers
-import SupportAssignmentCtrl from './controllers/SupportAssignmentCtrl.js';
+import SupportAssignmentCtrl from './SupportAssignmentCtrl.js';
 
 // Services
 import SupportActions from './services/supportActions.js';
@@ -14,23 +14,23 @@ import AuthService from './../shared/services/AuthService.js';
 
 // Directives
 import viewAvailabilityModal from './directives/modals/viewAvailabilityModal/viewAvailabilityModal.js';
-import reviewTools from './directives/modals/reviewTools/reviewTools.js';
-import supportAssignmentSearch from './directives/modals/supportAssignmentSearch/supportAssignmentSearch.js';
-import supportAssignmentToolbar from './directives/modals/supportAssignmentToolbar/supportAssignmentToolbar.js';
-import supportAssignmentTable from './directives/modals/supportAssignmentTable/supportAssignmentTable.js';
-import supportAssignmentRow from './directives/modals/supportAssignmentTable/supportAssignmentRow/supportAssignmentRow.js';
-import supportStaffTab from './directives/modals/supportAssignmentTable/supportStaffTab/supportStaffTab.js';
-import staffRow from './directives/modals/supportAssignmentTable/supportStaffTab/staffRow/staffRow.js';
-import staffComments from './directives/modals/supportAssignmentTable/supportStaffTab/staffRow/staffComments/staffComments.js';
-import staffHeader from './directives/modals/supportAssignmentTable/supportStaffTab/staffRow/staffHeader/staffHeader.js';
-import appointmentInput from './directives/modals/supportAssignmentTable/supportStaffTab/staffRow/staffHeader/appointmentInput/appointmentInput.js';
-import staffPreferences from './directives/modals/supportAssignmentTable/supportStaffTab/staffRow/staffPreferences/staffPreferences.js';
-import assignCourse from './directives/modals/supportAssignmentTable/supportStaffTab/staffRow/staffPreferences/assignCourse/assignCourse.js';
-import preferenceDisplayRow from './directives/modals/supportAssignmentTable/supportStaffTab/staffRow/staffPreferences/preferenceDisplayRow/preferenceDisplayRow.js';
-import supportCoursesTab from './directives/modals/supportAssignmentTable/supportCoursesTab/supportCoursesTab.js';
-import assignSupportStaff from './directives/modals/supportAssignmentTable/supportCoursesTab/assignSupportStaff/assignSupportStaff.js';
-import courseHeader from './directives/modals/supportAssignmentTable/supportCoursesTab/courseHeader/courseHeader.js';
-import courseAppointmentInput from './directives/modals/supportAssignmentTable/supportCoursesTab/courseHeader/courseAppointmentInput/courseAppointmentInput.js';
+import reviewTools from './directives/reviewTools/reviewTools.js';
+import supportAssignmentSearch from './directives/supportAssignmentSearch/supportAssignmentSearch.js';
+import supportAssignmentToolbar from './directives/supportAssignmentToolbar/supportAssignmentToolbar.js';
+import supportAssignmentTable from './directives/supportAssignmentTable/supportAssignmentTable.js';
+import supportAssignmentRow from './directives/supportAssignmentTable/supportAssignmentRow/supportAssignmentRow.js';
+import supportStaffTab from './directives/supportAssignmentTable/supportStaffTab/supportStaffTab.js';
+import staffRow from './directives/supportAssignmentTable/supportStaffTab/staffRow/staffRow.js';
+import staffComments from './directives/supportAssignmentTable/supportStaffTab/staffRow/staffComments/staffComments.js';
+import staffHeader from './directives/supportAssignmentTable/supportStaffTab/staffRow/staffHeader/staffHeader.js';
+import appointmentInput from './directives/supportAssignmentTable/supportStaffTab/staffRow/staffHeader/appointmentInput/appointmentInput.js';
+import staffPreferences from './directives//supportAssignmentTable/supportStaffTab/staffRow/staffPreferences/staffPreferences.js';
+import assignCourse from './directives/supportAssignmentTable/supportStaffTab/staffRow/staffPreferences/assignCourse/assignCourse.js';
+import preferenceDisplayRow from './directives/supportAssignmentTable/supportStaffTab/staffRow/staffPreferences/preferenceDisplayRow/preferenceDisplayRow.js';
+import supportCoursesTab from './directives/supportAssignmentTable/supportCoursesTab/supportCoursesTab.js';
+import assignSupportStaff from './directives/supportAssignmentTable/supportCoursesTab/assignSupportStaff/assignSupportStaff.js';
+import courseHeader from './directives/supportAssignmentTable/supportCoursesTab/courseHeader/courseHeader.js';
+import courseAppointmentInput from './directives/supportAssignmentTable/supportCoursesTab/courseHeader/courseAppointmentInput/courseAppointmentInput.js';
 
 // Dependencies
 var dependencies = [
@@ -42,7 +42,7 @@ var dependencies = [
 function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year/:termShortCode", {
-		templateUrl: "supportAssignmentCtrl.html",
+		template: require('./supportAssignmentCtrl.html'),
 		controller: "SupportAssignmentCtrl"
 	})
 	.otherwise({
