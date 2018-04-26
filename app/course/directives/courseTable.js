@@ -1,7 +1,8 @@
 /**
  * Provides the main course table in the Courses View
  */
-let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile) {
+let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile, ActionTypes) {
+
 	return {
 		restrict: 'A',
 		template: '<thead><tr><th>&nbsp;</th></tr></thead><tbody><tr><td>' +
@@ -9,6 +10,8 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 		'<img src="/images/ajax-loader.gif" style="width: 32px; height: 32px;" /> &nbsp; Loading schedule</div>' +
 		'</td></tr></tbody>',
 		link: function (scope, element, attrs) {
+			var self = this;
+
 			scope.view = {};
 
 			scope.previouslySelectedCourseId = null;
@@ -16,33 +19,33 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
 			// To limit the cases of rerendering the table, this the list of actions that will cause it to do so
 			var rerenderStateActions = [
-				INIT_STATE,
-				IMPORT_COURSES,
-				NEW_COURSE,
-				CREATE_COURSE,
-				REMOVE_COURSE,
-				UPDATE_COURSE,
-				CELL_SELECTED,
-				CLOSE_DETAILS,
-				CLOSE_NEW_COURSE_DETAILS,
-				UPDATE_TABLE_FILTER,
-				TOGGLE_TERM_FILTER,
-				BEGIN_IMPORT_MODE,
-				END_IMPORT_MODE,
-				SEARCH_IMPORT_COURSES,
-				UPDATE_TAG_FILTERS,
-				TOGGLE_UNPUBLISHED_COURSES,
-				REMOVE_SECTION_GROUP,
-				ADD_SECTION_GROUP,
-				DELETE_MULTIPLE_COURSES,
-				MASS_ASSIGN_TAGS
+				ActionTypes.INIT_STATE,
+				ActionTypes.IMPORT_COURSES,
+				ActionTypes.NEW_COURSE,
+				ActionTypes.CREATE_COURSE,
+				ActionTypes.REMOVE_COURSE,
+				ActionTypes.UPDATE_COURSE,
+				ActionTypes.CELL_SELECTED,
+				ActionTypes.CLOSE_DETAILS,
+				ActionTypes.CLOSE_NEW_COURSE_DETAILS,
+				ActionTypes.UPDATE_TABLE_FILTER,
+				ActionTypes.TOGGLE_TERM_FILTER,
+				ActionTypes.BEGIN_IMPORT_MODE,
+				ActionTypes.END_IMPORT_MODE,
+				ActionTypes.SEARCH_IMPORT_COURSES,
+				ActionTypes.UPDATE_TAG_FILTERS,
+				ActionTypes.TOGGLE_UNPUBLISHED_COURSES,
+				ActionTypes.REMOVE_SECTION_GROUP,
+				ActionTypes.ADD_SECTION_GROUP,
+				ActionTypes.DELETE_MULTIPLE_COURSES,
+				ActionTypes.MASS_ASSIGN_TAGS
 			];
 
 			$rootScope.$on('courseStateChanged', function (event, data) {
 				// Rerender only if on of the specified state actions
 				if (rerenderStateActions.indexOf(data.action.type) < 0) { return; }
 
-				if (data.action.type == CLOSE_DETAILS) {
+				if (data.action.type == ActionTypes.CLOSE_DETAILS) {
 					// Remove existing highlighting
 					element.find('tbody > tr').removeClass("selected-tr");
 					element.find('tbody > tr > td').removeClass("selected-td");
@@ -50,14 +53,14 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 					return;
 				}
 
-				if (data.action.type == ADD_SECTION_GROUP) {
+				if (data.action.type == ActionTypes.ADD_SECTION_GROUP) {
 					// Indicate on the textbox that the sectionGroup is offered
 					$('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').addClass("is-offered");
 
 					return;
 				}
 
-				if (data.action.type == REMOVE_SECTION_GROUP) {
+				if (data.action.type == ActionTypes.REMOVE_SECTION_GROUP) {
 					// Empty the textbox
 					$('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input.planned-seats').val("");
 					$('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').removeClass("is-offered");
@@ -65,7 +68,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 					return;
 				}
 
-				if (data.action.type == CELL_SELECTED) {
+				if (data.action.type == ActionTypes.CELL_SELECTED) {
 					if (scope.previouslySelectedCourseId == data.state.uiState.selectedCourseId
 							&& scope.previouslySelectedTermCode == data.state.uiState.selectedTermCode) {
 							return;
@@ -88,8 +91,8 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
 					scope.manuallyDeselectAllCourseRows();
 					scope.manuallyToggleSelectedCourse(data.state.uiState.selectedCourseId);
-					courseActionCreators.deselectAllCourseRows();
-					courseActionCreators.toggleSelectCourse(data.state.uiState.selectedCourseId);
+					CourseActionCreators.deselectAllCourseRows();
+					CourseActionCreators.toggleSelectCourse(data.state.uiState.selectedCourseId);
 
 					return;
 				}
@@ -116,7 +119,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 				// Render the header
 				// TODO: Add class 'sorting-asc', 'sorting-desc', or 'sorting' to indicate sort direction
 				var isChecked = (data.state.courses.ids != 0 && data.state.uiState.selectedCourseRowIds.length == data.state.courses.ids.length);
-				var header = '<thead><tr><th class="checkbox-cell">' + getCheckbox(0, "selectAllCourseRows", isChecked) + "</th><th class=\"\">Course</th>";
+				var header = '<thead><tr><th class="checkbox-cell">' + scope.getCheckbox(0, "selectAllCourseRows", isChecked) + "</th><th class=\"\">Course</th>";
 
 				// Filter scope.termDefinitions to only those terms which are enabled by the filter.
 				// Store this in termsToRender.
@@ -146,16 +149,16 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
 					$.each(sortedBlendedCoursesArray, function (rowIdx, course) {
 						if (course.id === undefined) {
-							body += getImportCourseRow(course, termsToRender, data.state);
+							body += scope.getImportCourseRow(course, termsToRender, data.state);
 						} else {
-							body += getCourseRow(rowIdx, course.id, termsToRender, data.state);
+							body += scope.getCourseRow(rowIdx, course.id, termsToRender, data.state);
 						}
 					});
 				} else if (data.state.courses.ids.length) {
 					var allContentFilteredOut = true;
 
 					$.each(data.state.courses.ids, function (rowIdx, courseId) {
-						var row = getCourseRow(rowIdx, courseId, termsToRender, data.state);
+						var row = scope.getCourseRow(rowIdx, courseId, termsToRender, data.state);
 
 						if (row) {
 							allContentFilteredOut = false;
@@ -178,27 +181,27 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 					body += "<tr><td class=\"text-center text-muted\" colspan=\"" + numberOfColumns + "\">No Courses</td></tr>";
 				}
 
-				body += getTotalsRow(termsToRender, data.state);
+				body += scope.getTotalsRow(termsToRender, data.state);
 				element.append(header + body);
 
 				$('delete-course').popover();
 
 				element.find('input.planned-seats').blur(function (e) {
 					$timeout(function () {
-						$el = $(e.target);
-						savePlannedSeats($el, scope, courseActionCreators);
+						let $el = $(e.target);
+						scope.savePlannedSeats($el, scope, CourseActionCreators);
 
 						// Important: notify angular since this happens outside of the scope
 						scope.$apply();
 					}, 500);
 				}).focus(function (e) {
 					// Select the cell when the input is focused (In case user tabs between inputs)
-					$el = $(e.target);
+					let $el = $(e.target);
 					// Select a cell/row
-					courseId = $el.closest("tr").data('course-id');
+					let courseId = $el.closest("tr").data('course-id');
 					var termCode = $el.closest("td").data('term-code');
 
-					courseActionCreators.setActiveCell(courseId, termCode);
+					CourseActionCreators.setActiveCell(courseId, termCode);
 					// Important: notify angular since this happens outside of the scope
 					$timeout(function () {
 						scope.$apply();
@@ -210,10 +213,10 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 			element.keypress(function (e) {
 				if (e.which == 13) {
 					// ENTER button pressed
-					$el = $(e.target);
+					let $el = $(e.target);
 
 					if ($el.hasClass('planned-seats')) {
-						savePlannedSeats($el, scope, courseActionCreators);
+						scope.savePlannedSeats($el, scope, CourseActionCreators);
 
 						// Important: notify angular since this happens outside of the scope
 						$timeout(function () {
@@ -229,7 +232,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 			// Emit sg-clicked event whenever a table <td> is clicked.
 			// I'm sorry. Really.
 			element.click(function (e) {
-				$el = $(e.target);
+				let $el = $(e.target);
 				var courseId;
 
 				if ($el.data('event-type') == 'deleteCoursePop') {
@@ -244,7 +247,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 					courseId = $el.data('course-id');
 					var course = scope.view.state.courses.list[courseId];
 
-					courseActionCreators.deleteCourse(course);
+					CourseActionCreators.deleteCourse(course);
 					// Important: notify angular since this happens outside of the scope
 					$timeout(function () {
 						scope.$apply();
@@ -260,7 +263,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
 					var index = $el.data('index');
 
-					courseActionCreators.newCourse(index);
+					CourseActionCreators.newCourse(index);
 					// Important: notify angular since this happens outside of the scope
 					$timeout(function () {
 						scope.$apply();
@@ -268,7 +271,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 				} else if ($el.data('event-type') == 'selectCourseRow') {
 					var courseId = $el.data('course-id');
 					scope.manuallyToggleSelectedCourse(courseId);
-					courseActionCreators.toggleSelectCourse(courseId);
+					CourseActionCreators.toggleSelectCourse(courseId);
 
 					$timeout(function () {
 						scope.$apply();
@@ -279,13 +282,13 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 					if (isChecked) {
 						scope.manuallyDeselectAllCourseRows();
 
-						courseActionCreators.deselectAllCourseRows();
+						CourseActionCreators.deselectAllCourseRows();
 						$timeout(function () {
 							scope.$apply();
 						});
 					} else {
 						scope.manuallySelectAllCourseRows();
-						courseActionCreators.selectAllCourseRows(scope.view.state.courses.ids);
+						CourseActionCreators.selectAllCourseRows(scope.view.state.courses.ids);
 						$timeout(function () {
 							scope.$apply();
 						});
@@ -295,7 +298,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 					courseId = $el.closest("tr").data('course-id');
 					var termCode = $el.closest("td").data('term-code');
 
-					courseActionCreators.setActiveCell(courseId, termCode);
+					CourseActionCreators.setActiveCell(courseId, termCode);
 					// Important: notify angular since this happens outside of the scope
 					$timeout(function () {
 						scope.$apply();
@@ -317,7 +320,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 						row.removeClass('selected-import-course');
 					}
 
-					courseActionCreators.toggleImportCourse(courseSubjectCode, courseNumber, courseSequencePattern);
+					CourseActionCreators.toggleImportCourse(courseSubjectCode, courseNumber, courseSequencePattern);
 					// Important: notify angular since this happens outside of the scope
 					$timeout(function () {
 						scope.$apply();
@@ -485,7 +488,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 				return row;
 			};
 
-			scope.savePlannedSeats = function ($el, scope, courseActionCreators) {
+			scope.savePlannedSeats = function ($el, scope, CourseActionCreators) {
 				var courseId = $el.closest("tr").data('course-id');
 				var termCode = $el.closest("td").data('term-code').toString();
 				var sectionGroup = _.findWhere(scope.view.state.sectionGroups.list, { courseId: courseId, termCode: termCode });
@@ -501,7 +504,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
 					// Save existing sectionGroup
 					sectionGroup.plannedSeats = plannedSeats;
-					courseActionCreators.updateSectionGroup(sectionGroup);
+					CourseActionCreators.updateSectionGroup(sectionGroup);
 
 					// If sequence is numeric sync the seats on the section to the new sectionGroup value
 					scope.view.state.sections.ids.forEach(function(sectionId) {
@@ -509,7 +512,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
 						if (section.sectionGroupId == sectionGroup.id && isNumber(section.sequenceNumber)) {
 							section.seats = sectionGroup.plannedSeats;
-							courseActionCreators.updateSection(section);
+							CourseActionCreators.updateSection(section);
 						}
 					});
 
@@ -520,7 +523,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 						termCode: termCode,
 						plannedSeats: plannedSeats
 					};
-					courseActionCreators.addSectionGroup(sectionGroup);
+					CourseActionCreators.addSectionGroup(sectionGroup);
 				}
 			};
 
@@ -552,5 +555,3 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 };
 
 export default courseTable;
-
-

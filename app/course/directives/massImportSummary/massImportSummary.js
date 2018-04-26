@@ -1,4 +1,4 @@
-let massImportSummary = function (courseActionCreators) {
+let massImportSummary = function (CourseActionCreators) {
 	return {
 		restrict: 'E',
 		template: require('./massImportSummary.html'),
@@ -23,10 +23,10 @@ let massImportSummary = function (courseActionCreators) {
 				var importAssignments = scope.view.state.uiState.massImportInstructors;
 
 				if (scope.view.state.uiState.massImportSource == 'IPA') {
-					courseActionCreators.importCoursesAndSectionGroupsFromIPA(
+					CourseActionCreators.importCoursesAndSectionGroupsFromIPA(
 						sectionGroupImports, scope.workgroupId, scope.year, selectedCourseIds.length, importTimes, importAssignments);
 				} else {
-					courseActionCreators.importCoursesAndSectionGroups(
+					CourseActionCreators.importCoursesAndSectionGroups(
 						sectionGroupImports, scope.workgroupId, scope.year, selectedCourseIds.length, importTimes, importAssignments);
 				}
 			};

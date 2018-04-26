@@ -10,12 +10,12 @@ class CourseActionCreators {
 	constructor (CourseStateService, CourseService, $rootScope, Role, ActionTypes) {
 		return {
 			getInitialState: function (workgroupId, year) {
-				courseService.getScheduleByWorkgroupIdAndYear(workgroupId, year).then(function (payload) {
+				CourseService.getScheduleByWorkgroupIdAndYear(workgroupId, year).then(function (payload) {
 					var action = {
 						type: ActionTypes.INIT_STATE,
 						payload: payload
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not load initial course state.", type: "ERROR" });
 				});
@@ -36,12 +36,12 @@ class CourseActionCreators {
 					}
 				});
 	
-				courseService.submitMassAssignTags(massAssignTags, workgroupId, year).then(function (payload) {
+				CourseService.submitMassAssignTags(massAssignTags, workgroupId, year).then(function (payload) {
 					var action = {
 						type: ActionTypes.MASS_ASSIGN_TAGS,
 						massAssignTags: massAssignTags
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 					$rootScope.$emit('toast', { message: "Updated tags.", type: "SUCCESS" });
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update tags.", type: "ERROR" });
@@ -55,7 +55,7 @@ class CourseActionCreators {
 						termCode: termCode
 					}
 				};
-				courseStateService.reduce(action);
+				CourseStateService.reduce(action);
 			},
 			toggleImportCourse: function (subjectCode, courseNumber, sequencePattern) {
 				var action = {
@@ -66,21 +66,21 @@ class CourseActionCreators {
 						sequencePattern: sequencePattern
 					}
 				};
-				courseStateService.reduce(action);
+				CourseStateService.reduce(action);
 			},
 			closeDetails: function () {
 				var action = {
 					type: ActionTypes.CLOSE_DETAILS,
 					payload: {}
 				};
-				courseStateService.reduce(action);
+				CourseStateService.reduce(action);
 			},
 			closeNewCourseDetails: function () {
 				var action = {
 					type: ActionTypes.CLOSE_NEW_COURSE_DETAILS,
 					payload: {}
 				};
-				courseStateService.reduce(action);
+				CourseStateService.reduce(action);
 			},
 			toggleTermFilter: function (termId) {
 				var action = {
@@ -89,15 +89,15 @@ class CourseActionCreators {
 						termId: termId
 					}
 				};
-				courseStateService.reduce(action);
+				CourseStateService.reduce(action);
 			},
 			setUnpublishedCoursesFilter: function (workgroupId, year, enableUnpublishedCourses) {
-				courseService.getScheduleByWorkgroupIdAndYear(workgroupId, year, enableUnpublishedCourses).then(function (payload) {
+				CourseService.getScheduleByWorkgroupIdAndYear(workgroupId, year, enableUnpublishedCourses).then(function (payload) {
 					var action = {
 						type: ActionTypes.TOGGLE_UNPUBLISHED_COURSES,
 						payload: payload
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not toggle unpublished courses.", type: "ERROR" });
 				});
@@ -109,10 +109,10 @@ class CourseActionCreators {
 						tagIds: tagIds
 					}
 				};
-				courseStateService.reduce(action);
+				CourseStateService.reduce(action);
 			},
 			addSectionGroup: function (sectionGroup) {
-				courseService.addSectionGroup(sectionGroup).then(function (sectionGroup) {
+				CourseService.addSectionGroup(sectionGroup).then(function (sectionGroup) {
 					$rootScope.$emit('toast', { message: "Created course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ADD_SECTION_GROUP,
@@ -120,13 +120,13 @@ class CourseActionCreators {
 							sectionGroup: sectionGroup
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not create course offering.", type: "ERROR" });
 				});
 			},
 			updateSectionGroup: function (sectionGroup) {
-				courseService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
+				CourseService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
 					$rootScope.$emit('toast', { message: "Updated course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_SECTION_GROUP,
@@ -134,14 +134,14 @@ class CourseActionCreators {
 							sectionGroup: sectionGroup
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update course offering.", type: "ERROR" });
 				});
 			},
 			removeSectionGroup: function (sectionGroup) {
 				if (!sectionGroup) { return; }
-				courseService.removeSectionGroup(sectionGroup.id).then(function () {
+				CourseService.removeSectionGroup(sectionGroup.id).then(function () {
 					$rootScope.$emit('toast', { message: "Deleted course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.REMOVE_SECTION_GROUP,
@@ -149,14 +149,14 @@ class CourseActionCreators {
 							sectionGroup: sectionGroup
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not delete course offering.", type: "ERROR" });
 				});
 			},
 			deleteCourse: function (course) {
 				var courseTitle = course.title;
-				courseService.deleteCourse(course).then(function () {
+				CourseService.deleteCourse(course).then(function () {
 					$rootScope.$emit('toast', { message: "Deleted course " + courseTitle, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.REMOVE_COURSE,
@@ -164,14 +164,14 @@ class CourseActionCreators {
 							course: course
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not delete course.", type: "ERROR" });
 				});
 			},
 			deleteMultipleCourses: function (courseIds, workgroupId, year) {
 				var self = this;
-				courseService.deleteMultipleCourses(courseIds, workgroupId, year).then(function () {
+				CourseService.deleteMultipleCourses(courseIds, workgroupId, year).then(function () {
 					$rootScope.$emit('toast', { message: "Deleted courses.", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.DELETE_MULTIPLE_COURSES,
@@ -179,7 +179,7 @@ class CourseActionCreators {
 							courseIds: courseIds
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 	
 					self.closeCourseDeletionModal();
 					self.deselectAllCourseRows();
@@ -192,8 +192,8 @@ class CourseActionCreators {
 					type: ActionTypes.BEGIN_SEARCH_IMPORT_COURSES,
 					payload: {}
 				};
-				courseStateService.reduce(action);
-				courseService.searchImportCourses(subjectCode, year, includePrivate).then(function (sectionGroups) {
+				CourseStateService.reduce(action);
+				CourseService.searchImportCourses(subjectCode, year, includePrivate).then(function (sectionGroups) {
 					var action = {
 						type: ActionTypes.SEARCH_IMPORT_COURSES,
 						payload: {
@@ -201,7 +201,7 @@ class CourseActionCreators {
 							sectionGroups: sectionGroups
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not search import courses.", type: "ERROR" });
 				});
@@ -211,8 +211,8 @@ class CourseActionCreators {
 					type: ActionTypes.BEGIN_SEARCH_IMPORT_COURSES,
 					payload: {}
 				};
-				courseStateService.reduce(action);
-				courseService.searchCoursesFromIPA(workgroupId, year, includePrivate).then(function (sectionGroups) {
+				CourseStateService.reduce(action);
+				CourseService.searchCoursesFromIPA(workgroupId, year, includePrivate).then(function (sectionGroups) {
 					var action = {
 						type: ActionTypes.SEARCH_IMPORT_COURSES,
 						payload: {
@@ -220,7 +220,7 @@ class CourseActionCreators {
 							sectionGroups: sectionGroups
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not search IPA courses.", type: "ERROR" });
 				});
@@ -232,7 +232,7 @@ class CourseActionCreators {
 						index: index
 					}
 				};
-				courseStateService.reduce(action);
+				CourseStateService.reduce(action);
 				// This needs to run after the reducer
 				this.setActiveCell(0);
 			},
@@ -245,7 +245,7 @@ class CourseActionCreators {
 			 * @returns							created course
 			 */
 			createCourse: function (newCourse, workgroupId, year) {
-				courseService.createCourse(newCourse, workgroupId, year).then(function (createdCourse) {
+				CourseService.createCourse(newCourse, workgroupId, year).then(function (createdCourse) {
 					$rootScope.$emit('toast', { message: "Created course " + createdCourse.title, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.CREATE_COURSE,
@@ -253,7 +253,7 @@ class CourseActionCreators {
 							course: createdCourse
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not create course.", type: "ERROR" });
 				});
@@ -263,13 +263,13 @@ class CourseActionCreators {
 				var importTimes = importTimes ? true : false;
 				var importAssignments = importAssignments ? true : false;
 	
-				courseService.importCoursesAndSectionGroups(sectionGroupImports, workgroupId, year, importTimes, importAssignments).then(function (payload) {
+				CourseService.importCoursesAndSectionGroups(sectionGroupImports, workgroupId, year, importTimes, importAssignments).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.IMPORT_COURSES,
 						payload: payload
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not import courses.", type: "ERROR" });
 				});
@@ -278,19 +278,19 @@ class CourseActionCreators {
 				var importTimes = importTimes ? true : false;
 				var importAssignments = importAssignments ? true : false;
 	
-				courseService.importCoursesAndSectionGroupsFromIPA(sectionGroupImports, workgroupId, year, importTimes, importAssignments).then(function (payload) {
+				CourseService.importCoursesAndSectionGroupsFromIPA(sectionGroupImports, workgroupId, year, importTimes, importAssignments).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.IMPORT_COURSES,
 						payload: payload
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not import courses from IPA.", type: "ERROR" });
 				});
 			},
 			updateCourse: function (course) {
-				courseService.updateCourse(course).then(function (updatedCourse) {
+				CourseService.updateCourse(course).then(function (updatedCourse) {
 					$rootScope.$emit('toast', { message: "Updated course " + updatedCourse.title, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_COURSE,
@@ -298,13 +298,13 @@ class CourseActionCreators {
 							course: updatedCourse
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
 				});
 			},
 			addTagToCourse: function (course, tag) {
-				courseService.addTagToCourse(course, tag).then(function (updatedCourse) {
+				CourseService.addTagToCourse(course, tag).then(function (updatedCourse) {
 					$rootScope.$emit('toast', { message: "Added tag " + tag.name, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_COURSE,
@@ -312,13 +312,13 @@ class CourseActionCreators {
 							course: updatedCourse
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not add tag to course.", type: "ERROR" });
 				});
 			},
 			removeTagFromCourse: function (course, tag) {
-				courseService.removeTagFromCourse(course, tag).then(function (updatedCourse) {
+				CourseService.removeTagFromCourse(course, tag).then(function (updatedCourse) {
 					$rootScope.$emit('toast', { message: "Removed tag " + tag.name, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_COURSE,
@@ -326,31 +326,31 @@ class CourseActionCreators {
 							course: updatedCourse
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not remove tag from course.", type: "ERROR" });
 				});
 			},
 			getSectionsBySectionGroup: function (sectionGroup) {
-				courseStateService.reduce({
+				CourseStateService.reduce({
 					type: ActionTypes.BEGIN_FETCH_SECTIONS,
 					payload: {}
 				});
-				courseService.getSectionsBySectionGroupId(sectionGroup.id).then(function (sections) {
+				CourseService.getSectionsBySectionGroupId(sectionGroup.id).then(function (sections) {
 					var action = {
-						type: FETCH_SECTIONS,
+						type: ActionTypes.FETCH_SECTIONS,
 						payload: {
 							sectionGroup: sectionGroup,
 							sections: sections
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not get sections for section group.", type: "ERROR" });
 				});
 			},
 			updateSection: function (section) {
-				courseService.updateSection(section).then(function (section) {
+				CourseService.updateSection(section).then(function (section) {
 					$rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_SECTION,
@@ -358,13 +358,13 @@ class CourseActionCreators {
 							section: section
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update section.", type: "ERROR" });
 				});
 			},
 			createSection: function (section) {
-				courseService.createSection(section).then(function (section) {
+				CourseService.createSection(section).then(function (section) {
 					$rootScope.$emit('toast', { message: "Created section " + section.sequenceNumber, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.CREATE_SECTION,
@@ -372,13 +372,13 @@ class CourseActionCreators {
 							section: section
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not create section.", type: "ERROR" });
 				});
 			},
 			deleteSection: function (section) {
-				courseService.deleteSection(section).then(function () {
+				CourseService.deleteSection(section).then(function () {
 					$rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.REMOVE_SECTION,
@@ -386,7 +386,7 @@ class CourseActionCreators {
 							section: section
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not delete section.", type: "ERROR" });
 				});
@@ -398,29 +398,29 @@ class CourseActionCreators {
 						query: query
 					}
 				};
-				courseStateService.reduce(action);
+				CourseStateService.reduce(action);
 			},
 			beginImportMode: function () {
 				var action = {
 					type: ActionTypes.BEGIN_IMPORT_MODE,
 					payload: {}
 				};
-				courseStateService.reduce(action);
+				CourseStateService.reduce(action);
 			},
 			endImportMode: function () {
 				var action = {
 					type: ActionTypes.END_IMPORT_MODE,
 					payload: {}
 				};
-				courseStateService.reduce(action);
+				CourseStateService.reduce(action);
 			},
 			getCourseCensus: function (course) {
-				courseStateService.reduce({
-					type: BEGIN_FETCH_CENSUS,
+				CourseStateService.reduce({
+					type: ActionTypes.BEGIN_FETCH_CENSUS,
 					payload: {}
 				});
 	
-				courseService.getCourseCensus(course).then(function (census) {
+				CourseService.getCourseCensus(course).then(function (census) {
 					var action = {
 						type: ActionTypes.GET_COURSE_CENSUS,
 						payload: {
@@ -428,13 +428,13 @@ class CourseActionCreators {
 							census: census
 						}
 					};
-					courseStateService.reduce(action);
+					CourseStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not get course census.", type: "ERROR" });
 				});
 			},
 			toggleSelectCourse: function(courseId) {
-				courseStateService.reduce({
+				CourseStateService.reduce({
 					type: ActionTypes.TOGGLE_SELECT_COURSE_ROW,
 					payload: {
 						courseId: courseId
@@ -442,7 +442,7 @@ class CourseActionCreators {
 				});
 			},
 			selectAllCourseRows: function(courseIds) {
-				courseStateService.reduce({
+				CourseStateService.reduce({
 					type: ActionTypes.SELECT_ALL_COURSE_ROWS,
 					payload: {
 						courseIds: courseIds
@@ -450,25 +450,24 @@ class CourseActionCreators {
 				});
 			},
 			deselectAllCourseRows: function() {
-				courseStateService.reduce({
+				CourseStateService.reduce({
 					type: ActionTypes.DESELECT_ALL_COURSE_ROWS,
 					payload: {}
 				});
 			},
 			openCourseDeletionModal: function() {
-				courseStateService.reduce({
+				CourseStateService.reduce({
 					type: ActionTypes.OPEN_COURSE_DELETION_MODAL,
 					payload: {}
 				});
 			},
 			closeCourseDeletionModal: function() {
-				courseStateService.reduce({
+				CourseStateService.reduce({
 					type: ActionTypes.CLOSE_COURSE_DELETION_MODAL,
 					payload: {}
 				});
 			}
 		};
-	
 	}
 }
 

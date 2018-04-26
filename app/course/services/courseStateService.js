@@ -8,13 +8,15 @@
  */
 class CourseStateService {
 	constructor ($rootScope, $log, Course, Term, SectionGroup, Section, Tag, ActionTypes) {
+		var self = this;
+
 		return {
 			_state: {},
 			_termReducers: function (action, terms) {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						terms = {
 							ids: []
 						};
@@ -37,9 +39,9 @@ class CourseStateService {
 				var newCourseIndex;
 	
 				switch (action.type) {
-					case INIT_STATE:
-					case IMPORT_COURSES:
-					case TOGGLE_UNPUBLISHED_COURSES:
+					case ActionTypes.INIT_STATE:
+					case ActionTypes.IMPORT_COURSES:
+					case ActionTypes.TOGGLE_UNPUBLISHED_COURSES:
 						courses = {
 							newCourse: null,
 							ids: [],
@@ -54,10 +56,10 @@ class CourseStateService {
 						courses.ids = _array_sortIdsByProperty(coursesList, ["subjectCode", "courseNumber", "sequencePattern"]);
 						courses.list = coursesList;
 						return courses;
-					case BEGIN_SEARCH_IMPORT_COURSES:
+					case ActionTypes.BEGIN_SEARCH_IMPORT_COURSES:
 						courses.importList = null;
 						return courses;
-					case SEARCH_IMPORT_COURSES:
+					case ActionTypes.SEARCH_IMPORT_COURSES:
 						var importList = [];
 						action.payload.sectionGroups.forEach(function (sg) {
 	
@@ -94,7 +96,7 @@ class CourseStateService {
 							return course.subjectCode + course.courseNumber + course.sequenceNumber;
 						});
 						return courses;
-					case TOGGLE_IMPORT_COURSE:
+					case ActionTypes.TOGGLE_IMPORT_COURSE:
 						var matchingImportCourse = _.find(courses.importList, function (course) {
 							return (course.subjectCode == action.payload.subjectCode) &&
 								(course.courseNumber == action.payload.courseNumber) &&
@@ -104,17 +106,17 @@ class CourseStateService {
 							matchingImportCourse.import = !matchingImportCourse.import;
 						}
 						return courses;
-					case NEW_COURSE:
+					case ActionTypes.NEW_COURSE:
 						// Insert a new id of '0' at the specified index
 						courses.ids.splice(action.payload.index, 0, 0);
 						courses.newCourse = new Course();
 						return courses;
-					case CLOSE_NEW_COURSE_DETAILS:
+					case ActionTypes.CLOSE_NEW_COURSE_DETAILS:
 						newCourseIndex = courses.ids.indexOf(0);
 						courses.ids.splice(newCourseIndex, 1);
 						courses.newCourse = null;
 						return courses;
-					case CREATE_COURSE:
+					case ActionTypes.CREATE_COURSE:
 						// Close details
 						newCourseIndex = courses.ids.indexOf(0);
 						courses.ids.splice(newCourseIndex, 1);
@@ -123,22 +125,22 @@ class CourseStateService {
 						courses.list[action.payload.course.id] = new Course(action.payload.course);
 						courses.ids.splice(newCourseIndex, 0, action.payload.course.id);
 						return courses;
-					case DELETE_MULTIPLE_COURSES:
+					case ActionTypes.DELETE_MULTIPLE_COURSES:
 						action.payload.courseIds.forEach(function(courseId) {
 							var courseIndex = courses.ids.indexOf(courseId);
 							courses.ids.splice(courseIndex, 1);
 							delete courses.list[courseId];
 						});
 							return courses;
-					case REMOVE_COURSE:
+					case ActionTypes.REMOVE_COURSE:
 						var courseIndex = courses.ids.indexOf(action.payload.course.id);
 						courses.ids.splice(courseIndex, 1);
 						delete courses.list[action.payload.course.id];
 						return courses;
-					case UPDATE_COURSE:
+					case ActionTypes.UPDATE_COURSE:
 						courses.list[action.payload.course.id] = new Course(action.payload.course);
 						return courses;
-					case MASS_ASSIGN_TAGS:
+					case ActionTypes.MASS_ASSIGN_TAGS:
 						var courseIds = action.massAssignTags.courseIds;
 						var tagIdsToAdd = action.massAssignTags.tagIdsToAdd;
 						var tagIdsToRemove = action.massAssignTags.tagIdsToRemove;
@@ -160,7 +162,7 @@ class CourseStateService {
 						});
 	
 						return courses;
-					case UPDATE_TABLE_FILTER:
+					case ActionTypes.UPDATE_TABLE_FILTER:
 						var query = action.payload.query;
 	
 						// Specify the properties that we are interested in searching
@@ -169,7 +171,7 @@ class CourseStateService {
 						_object_search_properties(query, courses, courseKeyList);
 	
 						return courses;
-					case UPDATE_TAG_FILTERS:
+					case ActionTypes.UPDATE_TAG_FILTERS:
 						// Set the course.isFiltered flag to false if any tag matches the filters
 						courses.ids.forEach(function (courseId) {
 							// Display all courses if none of the tags is checked
@@ -183,11 +185,11 @@ class CourseStateService {
 							}
 						});
 						return courses;
-					case GET_COURSE_CENSUS:
+					case ActionTypes.GET_COURSE_CENSUS:
 						var course = courses.list[action.payload.course.id];
 						if (course) { course.census = action.payload.census; }
 						return courses;
-					case END_IMPORT_MODE:
+					case ActionTypes.END_IMPORT_MODE:
 						courses.importList = null;
 						return courses;
 					default:
@@ -199,9 +201,9 @@ class CourseStateService {
 				var sectionGroupData;
 	
 				switch (action.type) {
-					case INIT_STATE:
-					case IMPORT_COURSES:
-					case TOGGLE_UNPUBLISHED_COURSES:
+					case ActionTypes.INIT_STATE:
+					case ActionTypes.IMPORT_COURSES:
+					case ActionTypes.TOGGLE_UNPUBLISHED_COURSES:
 						sectionGroups = {
 							newSectionGroup: null,
 							selectedSectionGroup: null,
@@ -217,7 +219,7 @@ class CourseStateService {
 						}
 						sectionGroups.list = sectionGroupsList;
 						return sectionGroups;
-					case SEARCH_IMPORT_COURSES:
+					case ActionTypes.SEARCH_IMPORT_COURSES:
 						sectionGroups.importList = [];
 						action.payload.sectionGroups.forEach(function (sg) {
 							// Find any duplicate in importList
@@ -243,14 +245,14 @@ class CourseStateService {
 							}
 						});
 						return sectionGroups;
-					case ADD_SECTION_GROUP:
+					case ActionTypes.ADD_SECTION_GROUP:
 						sectionGroups.list[action.payload.sectionGroup.id] = new SectionGroup(action.payload.sectionGroup);
 						sectionGroups.list[action.payload.sectionGroup.id].sectionIds = []; // Skips fetching sections for new SGs
 						sectionGroups.ids.push(action.payload.sectionGroup.id);
 						sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
 						sectionGroups.newSectionGroup = null;
 						return sectionGroups;
-					case REMOVE_SECTION_GROUP:
+					case ActionTypes.REMOVE_SECTION_GROUP:
 						var sectionGroupIndex = sectionGroups.ids.indexOf(action.payload.sectionGroup.id);
 						sectionGroups.ids.splice(sectionGroupIndex, 1);
 						delete sectionGroups.list[action.payload.sectionGroup.id];
@@ -260,10 +262,10 @@ class CourseStateService {
 						});
 						sectionGroups.selectedSectionGroup = sectionGroups.newSectionGroup;
 						return sectionGroups;
-					case UPDATE_SECTION_GROUP:
+					case ActionTypes.UPDATE_SECTION_GROUP:
 						sectionGroups.list[action.payload.sectionGroup.id].plannedSeats = action.payload.sectionGroup.plannedSeats;
 						return sectionGroups;
-					case FETCH_SECTIONS:
+					case ActionTypes.FETCH_SECTIONS:
 						sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections
 							.sort(function (sectionA, sectionB) {
 								if (sectionA.sequenceNumber < sectionB.sequenceNumber) { return -1; }
@@ -272,16 +274,16 @@ class CourseStateService {
 							})
 							.map(function (section) { return section.id; });
 						return sectionGroups;
-					case CREATE_SECTION:
+					case ActionTypes.CREATE_SECTION:
 						sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.section.sectionGroupId];
 						if (!sectionGroups.selectedSectionGroup.sectionIds) { sectionGroups.selectedSectionGroup.sectionIds = []; }
 						sectionGroups.selectedSectionGroup.sectionIds.push(action.payload.section.id);
 						return sectionGroups;
-					case REMOVE_SECTION:
+					case ActionTypes.REMOVE_SECTION:
 						var sectionIdIndex = sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.indexOf(action.payload.section.id);
 						sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.splice(sectionIdIndex, 1);
 						return sectionGroups;
-					case CELL_SELECTED:
+					case ActionTypes.CELL_SELECTED:
 						sectionGroups.selectedSectionGroup = _.find(sectionGroups.list, function (sg) {
 							return (sg.termCode == action.payload.termCode) && (sg.courseId == action.payload.courseId);
 						});
@@ -293,11 +295,11 @@ class CourseStateService {
 							sectionGroups.newSectionGroup = new SectionGroup(sectionGroupData);
 						}
 						return sectionGroups;
-					case CLOSE_DETAILS:
+					case ActionTypes.CLOSE_DETAILS:
 						sectionGroups.selectedSectionGroup = null;
 						sectionGroups.newSectionGroup = null;
 						return sectionGroups;
-					case END_IMPORT_MODE:
+					case ActionTypes.END_IMPORT_MODE:
 						sectionGroups.importList = null;
 						return sectionGroups;
 					default:
@@ -308,28 +310,28 @@ class CourseStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						sections = {
 							list: {},
 							ids: []
 						};
 						return sections;
-					case FETCH_SECTIONS:
+					case ActionTypes.FETCH_SECTIONS:
 						action.payload.sections.forEach(function (sectionData) {
 							sections.list[sectionData.id] = new Section(sectionData);
 							sections.ids.push(sectionData.id);
 						});
 						return sections;
-					case CREATE_SECTION:
+					case ActionTypes.CREATE_SECTION:
 						sections.list[action.payload.section.id] = new Section(action.payload.section);
 						sections.ids.push(action.payload.section.id);
 						return sections;
-					case REMOVE_SECTION:
+					case ActionTypes.REMOVE_SECTION:
 						var sectionIndex = sections.ids.indexOf(action.payload.section.id);
 						sections.ids.splice(sectionIndex, 1);
 						delete sections.list[action.payload.section.id];
 						return sections;
-					case UPDATE_SECTION:
+					case ActionTypes.UPDATE_SECTION:
 						sections.list[action.payload.section.id] = new Section(action.payload.section);
 						return sections;
 					default:
@@ -340,7 +342,7 @@ class CourseStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						tags = {
 							ids: [],
 							list: {},
@@ -365,7 +367,7 @@ class CourseStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						// A filter is 'enabled' if it is checked, i.e. the category it represents
 						// is selected to be shown/on/active.
 						filters = {
@@ -379,10 +381,10 @@ class CourseStateService {
 						// Check localStorage for saved termFilter settings
 						var termFiltersBlob = localStorage.getItem("termFilters");
 						if (termFiltersBlob) {
-							filters.enabledTerms = deserializeTermFiltersBlob(termFiltersBlob);
+							filters.enabledTerms = self.deserializeTermFiltersBlob(termFiltersBlob);
 						}
 						return filters;
-					case TOGGLE_TERM_FILTER:
+					case ActionTypes.TOGGLE_TERM_FILTER:
 						var tagId = action.payload.termId;
 						var idx = filters.enabledTerms.indexOf(tagId);
 						// A term in the term filter dropdown has been toggled on or off.
@@ -393,13 +395,13 @@ class CourseStateService {
 							// Toggle off
 							filters.enabledTerms.splice(idx, 1);
 						}
-						var termFiltersBlob = serializeTermFilters(filters.enabledTerms);
+						var termFiltersBlob = self.serializeTermFilters(filters.enabledTerms);
 						localStorage.setItem("termFilters", termFiltersBlob);
 						return filters;
-					case UPDATE_TAG_FILTERS:
+					case ActionTypes.UPDATE_TAG_FILTERS:
 						filters.enabledTagIds = action.payload.tagIds;
 						return filters;
-					case TOGGLE_UNPUBLISHED_COURSES:
+					case ActionTypes.TOGGLE_UNPUBLISHED_COURSES:
 						filters.enableUnpublishedCourses = !filters.enableUnpublishedCourses;
 						filters.enabledTagIds = [];
 						return filters;
@@ -411,9 +413,9 @@ class CourseStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
-					case IMPORT_COURSES:
-					case TOGGLE_UNPUBLISHED_COURSES:
+					case ActionTypes.INIT_STATE:
+					case ActionTypes.IMPORT_COURSES:
+					case ActionTypes.TOGGLE_UNPUBLISHED_COURSES:
 						uiState = {
 							tableGrayedOut: false,
 							selectedCourseId: null,
@@ -432,53 +434,53 @@ class CourseStateService {
 	
 						uiState.tableLocked = false;
 						return uiState;
-					case BEGIN_FETCH_SECTIONS:
+					case ActionTypes.BEGIN_FETCH_SECTIONS:
 						uiState.sectionsFetchInProgress = true;
 						return uiState;
-					case FETCH_SECTIONS:
+					case ActionTypes.FETCH_SECTIONS:
 						uiState.sectionsFetchInProgress = false;
 						return uiState;
-					case BEGIN_FETCH_CENSUS:
+					case ActionTypes.BEGIN_FETCH_CENSUS:
 						uiState.censusFetchInProgress = true;
 						return uiState;
-					case GET_COURSE_CENSUS:
+					case ActionTypes.GET_COURSE_CENSUS:
 						uiState.censusFetchInProgress = false;
 						return uiState;
-					case NEW_COURSE:
+					case ActionTypes.NEW_COURSE:
 						uiState.tableLocked = true;
 						uiState.tableGrayedOut = true;
 						return uiState;
-					case CREATE_COURSE:
+					case ActionTypes.CREATE_COURSE:
 						uiState.selectedCourseId = action.payload.course.id;
 						uiState.tableLocked = false;
 						uiState.tableGrayedOut = false;
 						return uiState;
-					case CELL_SELECTED:
+					case ActionTypes.CELL_SELECTED:
 						uiState.selectedCourseId = action.payload.courseId;
 						uiState.selectedTermCode = action.payload.termCode;
 						return uiState;
-					case CLOSE_DETAILS:
+					case ActionTypes.CLOSE_DETAILS:
 						uiState.selectedCourseId = null;
 						uiState.selectedTermCode = null;
 						return uiState;
-					case CLOSE_NEW_COURSE_DETAILS:
+					case ActionTypes.CLOSE_NEW_COURSE_DETAILS:
 						uiState.tableLocked = false;
 						uiState.tableGrayedOut = false;
 						return uiState;
-					case BEGIN_SEARCH_IMPORT_COURSES:
+					case ActionTypes.BEGIN_SEARCH_IMPORT_COURSES:
 						uiState.searchingCourseToImport = true;
 						return uiState;
-					case SEARCH_IMPORT_COURSES:
+					case ActionTypes.SEARCH_IMPORT_COURSES:
 						uiState.searchingCourseToImport = false;
 						return uiState;
-					case BEGIN_IMPORT_MODE:
+					case ActionTypes.BEGIN_IMPORT_MODE:
 						uiState.tableLocked = true;
 						uiState.tableGrayedOut = true;
 						uiState.massImportMode = true;
 						uiState.selectedCourseId = null;
 						uiState.selectedTermCode = null;
 						return uiState;
-					case END_IMPORT_MODE:
+					case ActionTypes.END_IMPORT_MODE:
 						uiState.tableLocked = false;
 						uiState.tableGrayedOut = false;
 						uiState.massImportMode = false;
@@ -486,7 +488,7 @@ class CourseStateService {
 						uiState.massImportYear = null;
 						uiState.massImportPrivate = false;
 						return uiState;
-					case REMOVE_COURSE:
+					case ActionTypes.REMOVE_COURSE:
 						var courseId = action.payload.course.id;
 						// Remove the details pane if it was showing the deleted course
 						if (uiState.selectedCourseId == courseId) {
@@ -501,7 +503,7 @@ class CourseStateService {
 						}
 	
 						return uiState;
-					case TOGGLE_SELECT_COURSE_ROW:
+					case ActionTypes.TOGGLE_SELECT_COURSE_ROW:
 						var courseId = action.payload.courseId;
 						var index = uiState.selectedCourseRowIds.indexOf(courseId);
 	
@@ -512,7 +514,7 @@ class CourseStateService {
 						}
 	
 						return uiState;
-					case SELECT_ALL_COURSE_ROWS:
+					case ActionTypes.SELECT_ALL_COURSE_ROWS:
 						var courseIds = action.payload.courseIds;
 						courseIds.forEach(function(courseId) {
 							var index = uiState.selectedCourseRowIds.indexOf(courseId);
@@ -521,13 +523,13 @@ class CourseStateService {
 							}
 						});
 						return uiState;
-					case DESELECT_ALL_COURSE_ROWS:
+					case ActionTypes.DESELECT_ALL_COURSE_ROWS:
 						uiState.selectedCourseRowIds = [];
 						return uiState;
-					case OPEN_COURSE_DELETION_MODAL:
+					case ActionTypes.OPEN_COURSE_DELETION_MODAL:
 						uiState.isCourseDeleteModalOpen = true;
 						return uiState;
-					case CLOSE_COURSE_DELETION_MODAL:
+					case ActionTypes.CLOSE_COURSE_DELETION_MODAL:
 						uiState.isCourseDeleteModalOpen = false;
 						return uiState;
 					default:
@@ -541,7 +543,7 @@ class CourseStateService {
 					return;
 				}
 	
-				newState = {};
+				let newState = {};
 				newState.terms = scope._termReducers(action, scope._state.terms);
 				newState.courses = scope._courseReducers(action, scope._state.courses);
 				newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
@@ -562,38 +564,37 @@ class CourseStateService {
 		};
 	}
 
-// Creates a buildfield to store enabled term filters
-// Always 9 digits (skips 4th unused term), and in chronologic order
-// Example: "101010001"
-serializeTermFilters (termFilters) {
-	var termsBlob = "";
-	var orderedTerms = [5, 6, 7, 8, 9, 10, 1, 2, 3];
+	// Creates a buildfield to store enabled term filters
+	// Always 9 digits (skips 4th unused term), and in chronologic order
+	// Example: "101010001"
+	serializeTermFilters (termFilters) {
+		var termsBlob = "";
+		var orderedTerms = [5, 6, 7, 8, 9, 10, 1, 2, 3];
 
-	orderedTerms.forEach(function (term) {
-		if (termFilters.indexOf(term) > -1) {
-			termsBlob += "1";
-		} else {
-			termsBlob += "0";
+		orderedTerms.forEach(function (term) {
+			if (termFilters.indexOf(term) > -1) {
+				termsBlob += "1";
+			} else {
+				termsBlob += "0";
+			}
+		});
+
+		return termsBlob;
+	};
+
+	deserializeTermFiltersBlob (termFiltersBlob) {
+		var termFiltersArray = [];
+		var orderedTerms = [5, 6, 7, 8, 9, 10, 1, 2, 3];
+
+		for (var i = 0; i < orderedTerms.length; i++) {
+
+			if (termFiltersBlob[i] == "1") {
+				termFiltersArray.push(orderedTerms[i]);
+			}
 		}
-	});
 
-	return termsBlob;
-};
-
-deserializeTermFiltersBlob (termFiltersBlob) {
-	var termFiltersArray = [];
-	var orderedTerms = [5, 6, 7, 8, 9, 10, 1, 2, 3];
-
-	for (var i = 0; i < orderedTerms.length; i++) {
-
-		if (termFiltersBlob[i] == "1") {
-			termFiltersArray.push(orderedTerms[i]);
-		}
-	}
-
-	return termFiltersArray;
-};
-
+		return termFiltersArray;
+	};
 }
 
 CourseStateService.$inject = ['$rootScope', '$log', 'Course', 'Term', 'SectionGroup', 'Section', 'Tag', 'ActionTypes'];

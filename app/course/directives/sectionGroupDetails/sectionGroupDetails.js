@@ -1,4 +1,4 @@
-let sectionGroupDetails = function (courseActionCreators, $rootScope) {
+let sectionGroupDetails = function (CourseActionCreators, $rootScope) {
 	return {
 		restrict: 'E',
 		template: require('./sectionGroupDetails.html'),
@@ -17,11 +17,11 @@ let sectionGroupDetails = function (courseActionCreators, $rootScope) {
 					seats: seats
 				};
 
-				courseActionCreators.createSection(section);
+				CourseActionCreators.createSection(section);
 			};
 
 			scope.removeSectionGroup = function (sectionGroup) {
-				courseActionCreators.removeSectionGroup(sectionGroup);
+				CourseActionCreators.removeSectionGroup(sectionGroup);
 			};
 
 			/**

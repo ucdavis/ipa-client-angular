@@ -1,4 +1,4 @@
-let deleteCourseModal = function ($rootScope, courseActionCreators, $routeParams) {
+let deleteCourseModal = function ($rootScope, CourseActionCreators, $routeParams) {
 	return {
 		restrict: 'E',
 		template: require('./deleteCourseModal.html'),
@@ -12,7 +12,7 @@ let deleteCourseModal = function ($rootScope, courseActionCreators, $routeParams
 			scope.year = $routeParams.year;
 
 			scope.confirmDeleteCourses = function () {
-				courseActionCreators.deleteMultipleCourses(scope.state.uiState.selectedCourseRowIds, scope.workgroupId, scope.year);
+				CourseActionCreators.deleteMultipleCourses(scope.state.uiState.selectedCourseRowIds, scope.workgroupId, scope.year);
 			};
 
 			scope.close = function() {

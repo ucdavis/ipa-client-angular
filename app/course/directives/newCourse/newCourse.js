@@ -1,4 +1,4 @@
-let newCourse = function (courseActionCreators, courseService) {
+let newCourse = function (CourseActionCreators, CourseService) {
 	return {
 		restrict: 'E',
 		template: require('./newCourse.html'),
@@ -31,7 +31,7 @@ let newCourse = function (courseActionCreators, courseService) {
 			};
 
 			scope.searchCourses = function (query) {
-				return courseService.searchCourses(query).then(function (courseSearchResults) {
+				return CourseService.searchCourses(query).then(function (courseSearchResults) {
 					return courseSearchResults.slice(0, 20);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not search courses.", type: "ERROR" });
@@ -73,7 +73,7 @@ let newCourse = function (courseActionCreators, courseService) {
 
 			scope.createCourse = function () {
 				if (scope.newCourseIsValid()) {
-					courseActionCreators.createCourse(scope.view.state.courses.newCourse, scope.workgroupId, scope.year);
+					CourseActionCreators.createCourse(scope.view.state.courses.newCourse, scope.workgroupId, scope.year);
 				}
 			};
 

@@ -128,7 +128,8 @@ module.exports = {
         './app/shared/helpers/object.js',
         './app/shared/helpers/sections.js',
         './app/shared/helpers/string.js',
-        './app/shared/helpers/types.js'
+        './app/shared/helpers/types.js',
+        'course/constants.js'
       ],
     }),
     // Production Snippets from various 3rd party services
@@ -151,17 +152,6 @@ module.exports = {
         './app/budget/**/*.js',
         './dist/templates/budget/**/*.js'
       ]
-    }),
-    // Concat course JS
-    new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
-      fileName: 'js/courseApp.js',
-      filesToConcat: [
-        './app/course/courseApp.js',
-        './app/course/**/*.js',
-        './dist/templates/course/**/*.js'
-      ],
     }),
     // Concat instructionalSupport JS
     new ConcatPlugin({
