@@ -1,7 +1,7 @@
-sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
+let ipaInput = function ($timeout) {
 	return {
 		restrict: 'E',
-		templateUrl: 'ipaInput.html',
+		template: require('./ipaInput.html'),
 		replace: true,
 		scope: {
 			onUpdate: '&?', // If set, this callback function will be triggered 500ms after changes stop
@@ -83,4 +83,6 @@ sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 			};
 		}
 	};
-});
+};
+
+export default ipaInput;

@@ -54,6 +54,7 @@ import ipaTermSelectorDropdown from './directives/ipaTermSelectorDropdown/ipaTer
 import nav from './directives/nav/nav.js';
 import ipaModal from './directives/ipaModal/ipaModal.js';
 import ipaRadio from './directives/ipaRadio/ipaRadio.js';
+import ipaInput from './directives/ipaInput/ipaInput.js';
 
 // Filters
 import lastCommaFirst from './filters/lastCommaFirst.js';
@@ -144,6 +145,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .directive('nav', nav)
 .directive('ipaModal', ipaModal)
 .directive('ipaRadio', ipaRadio)
+.directive('ipaInput', ipaInput)
 .filter('lastCommaFirst', lastCommaFirst)
 .filter('lastSpaceInitial', lastSpaceInitial)
 .filter('ordinal', ordinal)
