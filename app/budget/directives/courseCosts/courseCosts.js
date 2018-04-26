@@ -51,7 +51,7 @@ let courseCosts = function ($rootScope, BudgetActions) {
 					sectionGroup.overrideReaderAppointments = null;
 				}
 
-				budgetActions.overrideSectionGroup(sectionGroup, property, isReversion = true);
+				BudgetActions.overrideSectionGroup(sectionGroup, property, true);
 			};
 
 			scope.toCurrency = function (value) {

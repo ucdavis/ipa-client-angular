@@ -1,7 +1,7 @@
-sharedApp.directive('ipaDropdown', function() {
+let ipaDropdown = function() {
 	return {
 		restrict: 'E',
-		templateUrl: 'ipaDropdown.html', // directive html found here:
+		template: require('./ipaDropdown.html'), // directive html found here:
 		scope: {
 			items: '<', // Each item is expected to have an id, description (display value), and selected (bool flag).
 			headerText: '<?',
@@ -68,4 +68,6 @@ sharedApp.directive('ipaDropdown', function() {
 			};
 		}
 	};
-});
+};
+
+export default ipaDropdown;
