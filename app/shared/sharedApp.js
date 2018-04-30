@@ -213,12 +213,14 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .config(exceptionHandler)
 
 // Intercept Ajax traffic
-/*
 
+/*
 .config(function($httpProvider) {
 	$httpProvider.interceptors.push(slowConnectionInterceptor);
 	$httpProvider.interceptors.push(tokenValidatorInterceptor);
-});
+})
+*/
+/*
 // Detect route errors
 .run(['$rootScope', 'Idle',
 	function ($rootScope, Idle) {
@@ -243,6 +245,8 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 		Idle.watch();
 	}
 ])
+
+*/
 
 // Listen to toast requests
 .run(['$rootScope',
@@ -277,5 +281,5 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 		});
 	}]
 )
-*/
+
 export default sharedApp;
