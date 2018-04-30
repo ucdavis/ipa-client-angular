@@ -5,10 +5,10 @@
 	click-action="toggleThing()">
 </ipa-checkbox>
 */
-sharedApp.directive("ipaCheckbox", this.ipaCheckbox = function() {
+let ipaCheckbox = function() {
 	return {
 		restrict: 'E',
-		templateUrl: 'ipaCheckbox.html', // directive html found here:
+		template: require('./ipaCheckbox.html'), // directive html found here:
 		scope: {
 			isChecked: '=',
 			clickAction: '&?',
@@ -22,4 +22,6 @@ sharedApp.directive("ipaCheckbox", this.ipaCheckbox = function() {
 			};
 		}
 	};
-});
+};
+
+export default ipaCheckbox;

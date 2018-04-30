@@ -1,4 +1,4 @@
-sharedApp.directive("slider", this.slider = function () {
+let slider = function () {
 	return {
 		restrict: "AE",
 		scope: {
@@ -25,4 +25,6 @@ sharedApp.directive("slider", this.slider = function () {
 			});
 		}
 	};
-});
+};
+
+export default slider;

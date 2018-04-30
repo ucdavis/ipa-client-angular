@@ -1,5 +1,3 @@
-import AuthService from './../../services/AuthService.js';
-
 let nav = function ($location, $rootScope, AuthService, Term) {
 	return {
 		restrict: 'E',

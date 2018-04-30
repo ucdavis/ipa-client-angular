@@ -6,10 +6,10 @@ Example Usage:
 </ipa-tabs-vertical>
 */
 
-sharedApp.directive("ipaTabsVertical", this.ipaTabsVertical = function () {
+let ipaTabsVertical = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'ipaTabsVertical.html',
+		template: require('./ipaTabsVertical.html'),
 		replace: true,
 		scope: {
 			tabNames: '<', // Array of strings, example: ['summary', 'review', 'report']
@@ -30,4 +30,6 @@ sharedApp.directive("ipaTabsVertical", this.ipaTabsVertical = function () {
 			};
 		}
 	};
-});
+};
+
+export default ipaTabsVertical;

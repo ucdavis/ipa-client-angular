@@ -1,7 +1,7 @@
-sharedApp.directive("ipaSectionHeader", this.ipaSectionHeader = function() {
+let ipaSectionHeader = function() {
 	return {
 		restrict: 'E',
-		templateUrl: 'ipaSectionHeader.html',
+		template: require('./ipaSectionHeader.html'),
 		scope: {
 			headerText: '<'
 		},
@@ -15,4 +15,6 @@ sharedApp.directive("ipaSectionHeader", this.ipaSectionHeader = function() {
 			*/
 		}
 	};
-});
+};
+
+export default ipaSectionHeader;

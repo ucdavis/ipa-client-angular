@@ -46,17 +46,41 @@ import UserRole from './entities/UserRole.js';
 import Workgroup from './entities/Workgroup.js';
 
 // Directives
+import availabilityGrid from './directives/availabilityGrid/availabilityGrid.js';
 import ipaButton from './directives/ipaButton/ipaButton.js';
+import ipaCheckbox from './directives/ipaCheckbox/ipaCheckbox.js';
+import ipaCurrencyInput from './directives/ipaCurrencyInput/ipaCurrencyInput.js';
+import ipaDatePicker from './directives/ipaDatePicker/ipaDatePicker.js';
+import ipaDropdown from './directives/ipaDropdown/ipaDropdown.js';
 import ipaHeader from './directives/ipaHeader/ipaHeader.js';
-import ipaTabs from './directives/ipaTabs/ipaTabs.js';
-import ipaTabsVertical from './directives/ipaTabs/ipaTabs.js';
-import ipaTermSelectorDropdown from './directives/ipaTermSelectorDropdown/ipaTermSelectorDropdown.js';
-import nav from './directives/nav/nav.js';
+import ipaInput from './directives/ipaInput/ipaInput.js';
+import currencyInput from './directives/ipaInput/currencyInput.js';
 import ipaModal from './directives/ipaModal/ipaModal.js';
 import ipaRadio from './directives/ipaRadio/ipaRadio.js';
-import ipaInput from './directives/ipaInput/ipaInput.js';
-import ipaDropdown from './directives/ipaDropdown/ipaDropdown.js';
+import ipaSectionHeader from './directives/ipaSectionHeader/ipaSectionHeader.js';
+import ipaTabs from './directives/ipaTabs/ipaTabs.js';
+import ipaTabsVertical from './directives/ipaTabs/ipaTabs.js';
+import ipaTermSelector from './directives/ipaTermSelector/ipaTermSelector.js';
+import ipaTermSelectorDropdown from './directives/ipaTermSelectorDropdown/ipaTermSelectorDropdown.js';
+import ipaToggle from './directives/ipaToggle/ipaToggle.js';
+import nav from './directives/nav/nav.js';
+import noMobileSupport from './directives/noMobileSupport/noMobileSupport.js';
+import autoInput from './directives/autoInput.js';
+import collapsableSidebarContainer from './directives/collapsableSidebarContainer.js';
+import colorpicker from './directives/colorpicker.js';
 import confirmButton from './directives/confirmButton.js';
+import disableElement from './directives/disableElement.js';
+import focusOnShow from './directives/focusOnShow.js';
+import infoTooltip from './directives/infoTooltip.js';
+import multiselectDropdown from './directives/multiselectDropdown.js';
+import popoverToggleCloseOthers from './directives/popoverToggleCloseOthers.js';
+import preventDefault from './directives/preventDefault.js';
+import searchableMultiselect from './directives/searchableMultiselect.js';
+import slider from './directives/slider.js';
+import sortable from './directives/sortable.js';
+import spinner from './directives/spinner.js';
+import stickyHeader from './directives/stickyHeader.js';
+import stopEvent from './directives/stopEvent.js';
 
 // Filters
 import lastCommaFirst from './filters/lastCommaFirst.js';
@@ -140,16 +164,41 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .config(config)
 .controller('SharedCtrl', SharedCtrl)
 .service('AuthService', AuthService)
+.directive('availabilityGrid', availabilityGrid)
 .directive('ipaButton', ipaButton)
+.directive('ipaCheckbox', ipaCheckbox)
+.directive('ipaCurrencyInput', ipaCurrencyInput)
+.directive('ipaDatePicker', ipaDatePicker)
+.directive('ipaDropdown', ipaDropdown)
 .directive('ipaHeader', ipaHeader)
-.directive('ipaTabs', ipaTabs)
-.directive('ipaTermSelectorDropdown', ipaTermSelectorDropdown)
-.directive('nav', nav)
+.directive('ipaInput', ipaInput)
+.directive('currencyInput', currencyInput)
 .directive('ipaModal', ipaModal)
 .directive('ipaRadio', ipaRadio)
-.directive('ipaInput', ipaInput)
-.directive('ipaDropdown', ipaDropdown)
+.directive('ipaSectionHeader', ipaSectionHeader)
+.directive('ipaTabs', ipaTabs)
+.directive('ipaTabsVertical', ipaTabsVertical)
+.directive('ipaTermSelector', ipaTermSelector)
+.directive('ipaTermSelectorDropdown', ipaTermSelectorDropdown)
+.directive('ipaToggle', ipaToggle)
+.directive('nav', nav)
+.directive('noMobileSupport', noMobileSupport)
+.directive('autoInput', autoInput)
+.directive('collapsableSidebarContainer', collapsableSidebarContainer)
+.directive('colorpicker', colorpicker)
 .directive('confirmButton', confirmButton)
+.directive('disableElement', disableElement)
+.directive('focusOnShow', focusOnShow)
+.directive('infoTooltip', infoTooltip)
+.directive('multiselectDropdown', multiselectDropdown)
+.directive('popoverToggleCloseOthers', popoverToggleCloseOthers)
+.directive('preventDefault', preventDefault)
+.directive('searchableMultiselect', searchableMultiselect)
+.directive('slider', slider)
+.directive('sortable', sortable)
+.directive('spinner', spinner)
+.directive('stickyHeader', stickyHeader)
+.directive('stopEvent', stopEvent)
 .filter('lastCommaFirst', lastCommaFirst)
 .filter('lastSpaceInitial', lastSpaceInitial)
 .filter('ordinal', ordinal)

@@ -1,6 +1,6 @@
-sharedApp.directive("searchableMultiselect", this.searchableMultiselect = function() {
+let searchableMultiselect = function() {
 	return {
-		templateUrl: 'searchableMultiselect.html',
+		template: require('./searchableMultiselect.html'),
 		restrict: 'AE',
 		scope: {
 			displayAttr: '@',
@@ -59,4 +59,6 @@ sharedApp.directive("searchableMultiselect", this.searchableMultiselect = functi
 			};
 		}
 	};
-});
+};
+
+export default searchableMultiselect;

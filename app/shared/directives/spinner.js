@@ -1,7 +1,7 @@
 /**
  * Example: <spinner text="Fetching stuff..."></spinner>
  */
-sharedApp.directive("spinner", this.spinner = function () {
+let spinner = function () {
 	return {
 		restrict: "E",
 		replace: true,
@@ -13,4 +13,6 @@ sharedApp.directive("spinner", this.spinner = function () {
 			target.html('<img src="/images/ajax-loader.gif" style="width:' + size + 'px; height:' + size + 'px; " />' + text);
 		}
 	};
-});
+};
+
+export default spinner;

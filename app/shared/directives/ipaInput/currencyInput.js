@@ -1,7 +1,7 @@
 /**
 	Helper directive used by ipaInput for handling currency rendering/parsing
 **/
-sharedApp.directive("currencyInput", this.currencyInput = function ($filter, $parse) {
+let currencyInput = function ($filter, $parse) {
 	return {
 		require: 'ngModel',
 		restrict: 'A',
@@ -69,4 +69,6 @@ sharedApp.directive("currencyInput", this.currencyInput = function ($filter, $pa
 			};
 		}
 	};
-});
+};
+
+export default currencyInput;

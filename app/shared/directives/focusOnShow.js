@@ -1,4 +1,4 @@
-sharedApp.directive("focusOnShow", this.focusOnShow = function ($timeout) {
+let focusOnShow = function ($timeout) {
 	return function (scope, element, attrs) {
 		// Case 1: using ng-if
 		$timeout(function () {
@@ -12,4 +12,6 @@ sharedApp.directive("focusOnShow", this.focusOnShow = function ($timeout) {
 			});
 		}, true);
 	};
-});
+};
+
+export default focusOnShow;

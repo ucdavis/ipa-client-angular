@@ -3,7 +3,7 @@
  * Usage: <input auto-input on-enter="save()" on-blur="save()" on-escape="cancel()"></input>
  */
 
-sharedApp.directive("autoInput", this.autoInput = function ($rootScope) {
+let autoInput = function ($rootScope) {
 	return {
 		scope: {
 			ngModel: '=',
@@ -172,4 +172,6 @@ sharedApp.directive("autoInput", this.autoInput = function ($rootScope) {
 			};
 		}
 	};
-});
+};
+
+export default autoInput;

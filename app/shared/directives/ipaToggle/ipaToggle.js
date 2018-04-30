@@ -1,7 +1,7 @@
-sharedApp.directive("ipaToggle", this.ipaToggle = function () {
+let ipaToggle = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'ipaToggle.html',
+		template: require('./ipaToggle.html'),
 		replace: true,
 		scope: {
 			isActive: '<',
@@ -14,4 +14,6 @@ sharedApp.directive("ipaToggle", this.ipaToggle = function () {
 			// Intentionally empty
 		}
 	};
-});
+};
+
+export default ipaToggle;

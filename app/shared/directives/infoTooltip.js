@@ -1,4 +1,4 @@
-sharedApp.directive("infoTooltip", this.confirmButton = function ($document, $timeout) {
+let infoTooltip = function ($document, $timeout) {
 	return {
 		restrict: 'A',
 		scope: {
@@ -67,4 +67,6 @@ sharedApp.directive("infoTooltip", this.confirmButton = function ($document, $ti
 			});
 		}
 	};
-});
+};
+
+export default infoTooltip;

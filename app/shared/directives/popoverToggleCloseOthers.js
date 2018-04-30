@@ -3,7 +3,7 @@
  * Requires to change the default trigger of the element to 'open'
  * e.g popover-trigger="open"
  */
-sharedApp.directive("popoverToggleCloseOthers", this.popoverToggleCloseOthers = function() {
+let popoverToggleCloseOthers = function() {
 	return {
 		restrict: 'A',
 		link: function (scope, element, attr) {
@@ -27,4 +27,6 @@ sharedApp.directive("popoverToggleCloseOthers", this.popoverToggleCloseOthers = 
 			}
 		}
 	};
-});
+};
+
+export default popoverToggleCloseOthers;

@@ -1,4 +1,4 @@
-sharedApp.directive("disableElement", this.disableElement = function () {
+let disableElement = function () {
 	return {
 		restrict: "AE",
 		scope: {
@@ -22,4 +22,6 @@ sharedApp.directive("disableElement", this.disableElement = function () {
 			});
 		}
 	};
-});
+};
+
+export default disableElement;

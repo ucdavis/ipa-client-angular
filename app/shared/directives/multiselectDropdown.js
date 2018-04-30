@@ -1,6 +1,6 @@
-sharedApp.directive("multiselectDropdown", this.multiselectDropdown = function() {
+let multiselectDropdown = function() {
 	return {
-		templateUrl: 'multiselectDropdown.html',
+		template: require('./multiselectDropdown.html'),
 		restrict: 'A',
 		scope: {
 			items: '=',
@@ -21,4 +21,6 @@ sharedApp.directive("multiselectDropdown", this.multiselectDropdown = function()
 			};
 		}
 	};
-});
+};
+
+export default multiselectDropdown;

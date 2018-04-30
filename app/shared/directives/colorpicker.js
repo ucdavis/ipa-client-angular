@@ -2,7 +2,7 @@
  * Colorpicker input directive
  * Example: <colorpicker type="text" color="my.model" />
  */
-sharedApp.directive("colorpicker", this.colorpicker = function ($timeout) {
+let colorpicker = function ($timeout) {
 	return {
 		restrict: "E",
 		template: "<div class=\"input-group\"> " +
@@ -47,4 +47,6 @@ sharedApp.directive("colorpicker", this.colorpicker = function ($timeout) {
 			};
 		}
 	};
-});
+};
+
+export default colorpicker;

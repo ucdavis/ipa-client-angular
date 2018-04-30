@@ -1,7 +1,7 @@
-sharedApp.directive("availabilityGrid", this.availabilityGrid = function($timeout) {
+let availabilityGrid = function($timeout) {
 	return {
 		restrict: 'E',
-		templateUrl: 'availabilityGrid.html',
+		template: require('./availabilityGrid.html'),
 		replace: true,
 		scope: {
 			blob: '=',
@@ -116,4 +116,6 @@ sharedApp.directive("availabilityGrid", this.availabilityGrid = function($timeou
 			}
 		}
 	};
-});
+};
+
+export default availabilityGrid;
