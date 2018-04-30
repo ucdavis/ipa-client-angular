@@ -29,6 +29,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   resolve: {
+    extensions: [ '.tsx', '.ts', '.js' ],
     modules: [
       path.resolve(__dirname, "app"),
       "node_modules"
@@ -48,6 +49,11 @@ module.exports = {
     {
       test: /\.html$/,
       loader: 'raw-loader' 
+    },
+    {
+      test: /\.tsx?$/,
+      use: 'ts-loader',
+      exclude: /node_modules/
     }
   ],
   },
@@ -130,12 +136,7 @@ module.exports = {
         './node_modules/ui-select/dist/select.js',
         './node_modules/bootstrap/dist/js/bootstrap.js',
         './node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
-        './app/shared/helpers/array.js',
-        './app/shared/helpers/dates.js',
-        './app/shared/helpers/object.js',
-        './app/shared/helpers/sections.js',
-        './app/shared/helpers/string.js',
-        './app/shared/helpers/types.js',
+        './app/shared/helpers/*.js',
         'course/constants.js'
       ],
     }),
