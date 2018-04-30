@@ -59,7 +59,7 @@ import ipaModal from './directives/ipaModal/ipaModal.js';
 import ipaRadio from './directives/ipaRadio/ipaRadio.js';
 import ipaSectionHeader from './directives/ipaSectionHeader/ipaSectionHeader.js';
 import ipaTabs from './directives/ipaTabs/ipaTabs.js';
-import ipaTabsVertical from './directives/ipaTabs/ipaTabs.js';
+import ipaTabsVertical from './directives/ipaTabsVertical/ipaTabsVertical.js';
 import ipaTermSelector from './directives/ipaTermSelector/ipaTermSelector.js';
 import ipaTermSelectorDropdown from './directives/ipaTermSelectorDropdown/ipaTermSelectorDropdown.js';
 import ipaToggle from './directives/ipaToggle/ipaToggle.js';
