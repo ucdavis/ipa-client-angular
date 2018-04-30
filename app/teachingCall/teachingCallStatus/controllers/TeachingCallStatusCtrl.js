@@ -1,20 +1,24 @@
 class TeachingCallStatusCtrl {
-	constructor ($scope, $rootScope, $window, $route, $routeParams, $uibModal, TeachingCallStatusActionCreators, TeachingCallStatusService, AuthService) {
+	constructor ($scope, $rootScope, $window, $route, $routeParams, TeachingCallStatusActionCreators, TeachingCallStatusService, AuthService) {
 		this.AuthService = AuthService;
 		this.$rootScope = $rootScope;
 		this.$window = $window;
 		this.$route = $route;
 		this.$routeParams = $routeParams;
-		this.$uibModal = $uibModal;
 		this.TeachingCallStatusActionCreators = TeachingCallStatusActionCreators;
 		this.TeachingCallStatusService = TeachingCallStatusService;
 		this.AuthService = AuthService;
+
+		$scope.modalStyles = { "width" : "75%" };
 
 		$window.document.title = "Teaching Call Status";
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
-		$scope.view = {};
+		$scope.view = {
+			year: $scope.year,
+			workgroupId: $scope.workgroupId
+		};
 
 		$rootScope.$on('teachingCallStatusStateChanged', function (event, data) {
 			$scope.view.state = data;
@@ -101,49 +105,9 @@ class TeachingCallStatusCtrl {
 		};
 
 
-		// Launches Contact Instructor Modal
+		// Launches Call Instructor Modal
 		$scope.openAddInstructorsModal = function() {
-			modalInstance = $uibModal.open({
-				templateUrl: 'ModalAddInstructors.html',
-				controller: ModalAddInstructorsCtrl,
-				size: 'lg',
-				resolve: {
-					scheduleYear: function () {
-						return $scope.year;
-					},
-					workgroupId: function () {
-						return $scope.workGroupId;
-					},
-					state: function () {
-						return $scope.view.state;
-					}
-				}
-			});
-
-			modalInstance.result.then(function (teachingCallConfig) {
-				$scope.addInstructorsToTeachingCall($scope.workgroupId, $scope.year, teachingCallConfig);
-			},
-			function () {
-				// Modal closed
-			});
-		};
-
-		// Triggered on TeachingCall Config submission
-		$scope.addInstructorsToTeachingCall = function(workgroupId, year, teachingCallConfig) {
-			teachingCallConfig.termsBlob = "";
-			var allTerms = ['01','02','03','04','05','06','07','08','09','10'];
-
-			for (var i = 0; i < allTerms.length; i++) {
-				if (teachingCallConfig.activeTerms[allTerms[i]] === true) {
-					teachingCallConfig.termsBlob += "1";
-				} else {
-					teachingCallConfig.termsBlob += "0";
-				}
-			}
-
-			delete teachingCallConfig.activeTerms;
-
-			TeachingCallStatusActionCreators.addInstructorsToTeachingCall(workgroupId, year, teachingCallConfig);
+			$scope.view.state.openCallInstructorModal = true;
 		};
 
 		$scope.removeInstructor = function(instructor) {
@@ -161,6 +125,6 @@ class TeachingCallStatusCtrl {
 	}
 }
 
-TeachingCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$route', '$routeParams', '$uibModal', 'TeachingCallStatusActionCreators', 'TeachingCallStatusService', 'AuthService'];
+TeachingCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$route', '$routeParams', 'TeachingCallStatusActionCreators', 'TeachingCallStatusService', 'AuthService'];
 
 export default TeachingCallStatusCtrl;
