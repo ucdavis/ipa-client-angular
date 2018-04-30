@@ -1,6 +1,5 @@
 // Controllers
 import SupportCallStatusCtrl from './controllers/SupportCallStatusCtrl.js';
-import ModalAddSupportCallCtrl from './controllers/ModalAddSupportCallCtrl.js';
 
 // Services
 import SupportCallStatusActionCreators from './services/supportCallStatusActionCreators.js';
@@ -15,7 +14,8 @@ import AuthService from './../shared/services/AuthService.js';
 
 // Directives
 import instructorSupportCallTooltip from './directives/instructorSupportCallTooltip.js';
-import modalAddSupportCall from './directives/modalAddSupportCall/modalAddSupportCall.js';
+import addSupportCallModal from './directives/addSupportCallModal/addSupportCallModal.js';
+import contactModal from './directives/contactModal/contactModal.js';
 import studentSupportCallTooltip from './directives/studentSupportCallTooltip.js';
 
 // Dependencies
@@ -42,7 +42,6 @@ config.$inject = ['$routeProvider'];
 const supportCallApp = angular.module("supportCallApp", dependencies)
 .config(config)
 .controller('SupportCallStatusCtrl', SupportCallStatusCtrl)
-.controller('ModalAddSupportCallCtrl', ModalAddSupportCallCtrl)
 .service('SupportCallStatusActionCreators', SupportCallStatusActionCreators)
 .service('SupportCallStatusService', SupportCallStatusService)
 .service('SupportCallStatusStateService', SupportCallStatusStateService)
@@ -51,7 +50,8 @@ const supportCallApp = angular.module("supportCallApp", dependencies)
 .service('TermService', TermService)
 .service('AuthService', AuthService)
 .directive('instructorSupportCallTooltip', instructorSupportCallTooltip)
-.directive('modalAddSupportCall', modalAddSupportCall)
+.directive('addSupportCallModal', addSupportCallModal)
+.directive('contactModal', contactModal)
 .directive('studentSupportCallTooltip', studentSupportCallTooltip)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
