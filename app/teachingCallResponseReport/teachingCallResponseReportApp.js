@@ -31,7 +31,7 @@ function config ($routeProvider) {
 			window.location = "/not-found.html";
 		}
 	});
-};
+}
 
 config.$inject = ['$routeProvider'];
 

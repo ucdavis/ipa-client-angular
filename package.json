@@ -22,7 +22,7 @@
   "devDependencies": {
     "clean-webpack-plugin": "0.1.19",
     "copy-webpack-plugin": "4.5.1",
-    "eslint": "3.9.1",
+    "eslint": "^4.19.1",
     "eslint-plugin-angular": "1.4.1",
     "html-webpack-plugin": "3.2.0",
     "ngtemplate-loader": "2.0.1",
@@ -42,6 +42,7 @@
     "babel-loader": "^7.1.4",
     "bootstrap": "3.3.6",
     "bootstrap-colorpicker": "2.5.1",
+    "eslint-loader": "^2.0.0",
     "fullcalendar": "2.3.1",
     "fuse.js": "3.2.0",
     "jquery": "2.2.4",
