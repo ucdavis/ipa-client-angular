@@ -1,4 +1,4 @@
-export function slowConnectionInterceptor ($q, $timeout, $rootScope) {
+export function slowConnectionInterceptor () {
 	var reqCount = 0;
 	return {
 		request: function (config) {
@@ -45,9 +45,7 @@ export function slowConnectionInterceptor ($q, $timeout, $rootScope) {
 	};
 };
 
-slowConnectionInterceptor.$inject = ['$q', '$timeout', '$rootScope'];
-
-export function tokenValidatorInterceptor ($q, $injector, $rootScope) {
+export function tokenValidatorInterceptor () {
 	return {
 		responseError: function (rejection) {
 			if (rejection.status === 440) {
@@ -64,5 +62,3 @@ export function tokenValidatorInterceptor ($q, $injector, $rootScope) {
 		}
 	};
 };
-
-tokenValidatorInterceptor.$inject = ['$q', '$timeout', '$rootScope'];

@@ -8,7 +8,7 @@ let supportAssignmentSearch = function ($rootScope, SupportActions) {
 			scope.searchQuery = "";
 
 			scope.filterTable = function() {
-				supportActions.updateTableFilter(scope.searchQuery);
+				SupportActions.updateTableFilter(scope.searchQuery);
 			};
 		}
 	};

@@ -207,18 +207,18 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 	instructor: 15,
 	academicPlanner: 2,
 	presence: 9
-});
-
-/*
+})
 .config(slowConnectionInterceptor)
 .config(tokenValidatorInterceptor)
 .config(exceptionHandler)
+
 // Intercept Ajax traffic
+/*
+
 .config(function($httpProvider) {
 	$httpProvider.interceptors.push(slowConnectionInterceptor);
 	$httpProvider.interceptors.push(tokenValidatorInterceptor);
-})
-
+});
 // Detect route errors
 .run(['$rootScope', 'Idle',
 	function ($rootScope, Idle) {
