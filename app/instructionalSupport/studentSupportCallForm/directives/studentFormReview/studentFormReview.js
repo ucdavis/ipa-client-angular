@@ -1,7 +1,7 @@
-instructionalSupportApp.directive("studentFormReview", this.studentFormReview = function (studentActions) {
+let studentFormReview = function (StudentFormActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'studentFormReview.html',
+		template: require('./studentFormReview.html'),
 		replace: true,
 		scope: {
 			state: '<'
@@ -10,12 +10,14 @@ instructionalSupportApp.directive("studentFormReview", this.studentFormReview = 
 			scope.submitStudentPreferences = function() {
 				var newSupportCallResponse = angular.copy(scope.state.supportCallResponse);
 				newSupportCallResponse.submitted = true;
-				studentActions.submitPreferences(newSupportCallResponse, scope.state.misc.workgroupId, scope.state.misc.year);
+				StudentFormActions.submitPreferences(newSupportCallResponse, scope.state.misc.workgroupId, scope.state.misc.year);
 			};
 
 			scope.pretendToastMessage = function() {
-				studentActions.pretendToastMessage();
+				StudentFormActions.pretendToastMessage();
 			};
 		}
 	};
-});
+};
+
+export default studentFormReview;

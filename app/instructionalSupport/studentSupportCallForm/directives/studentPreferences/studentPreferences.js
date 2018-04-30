@@ -1,7 +1,7 @@
-instructionalSupportApp.directive("studentPreferences", this.studentPreferences = function () {
+let studentPreferences = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'studentPreferences.html',
+		template: require('./studentPreferences.html'),
 		replace: true,
 		scope: {
 			state: '<'
@@ -10,4 +10,6 @@ instructionalSupportApp.directive("studentPreferences", this.studentPreferences 
 			// Intentionally blank
 		}
 	};
-});
+};
+
+export default studentPreferences;

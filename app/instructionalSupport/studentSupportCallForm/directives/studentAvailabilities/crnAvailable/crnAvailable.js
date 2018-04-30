@@ -1,7 +1,7 @@
-instructionalSupportApp.directive("crnAvailable", this.crnAvailable = function (studentActions) {
+let crnAvailable = function (StudentFormActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'crnAvailable.html',
+		template: require('./crnAvailable.html'),
 		replace: true,
 		scope: {
 			state: '<'
@@ -10,21 +10,23 @@ instructionalSupportApp.directive("crnAvailable", this.crnAvailable = function (
 			scope.searchCrn = "";
 
 			scope.calculateTimesForCrn = function(crn) {
-				studentActions.fetchTimesByCrn(crn);
+				StudentFormActions.fetchTimesByCrn(crn);
 			};
 
 			scope.updateAvailability = function() {
-				studentActions.applyCrnToAvailability();
+				StudentFormActions.applyCrnToAvailability();
 			};
 
 			scope.clearCrnSearch = function() {
-				studentActions.clearCrnSearch();
+				StudentFormActions.clearCrnSearch();
 				scope.searchCrn = "";
 			};
 
 			scope.clearAvailability = function() {
-				studentActions.clearAvailability();
+				StudentFormActions.clearAvailability();
 			};
 		}
 	};
-});
+};
+
+export default crnAvailable;

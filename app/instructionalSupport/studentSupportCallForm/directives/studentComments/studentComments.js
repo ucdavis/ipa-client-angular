@@ -1,15 +1,17 @@
-instructionalSupportApp.directive("studentComments", this.studentComments = function (studentActions) {
+let studentComments = function (StudentFormActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'studentComments.html',
+		template: require('./studentComments.html'),
 		replace: true,
 		scope: {
 			supportCallResponse: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.updateStudentComments = function() {
-				studentActions.updateStudentComments(scope.supportCallResponse);
+				StudentFormActions.updateStudentComments(scope.supportCallResponse);
 			};
 		}
 	};
-});
+};
+
+export default studentComments;

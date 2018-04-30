@@ -14,13 +14,15 @@ module.exports = {
     adminApp: './app/admin/adminApp.js',
     budgetApp: './app/budget/budgetApp.js',
     courseApp: './app/course/courseApp.js',
+    instructionalSupportApp: './app/instructionalSupport/instructionalSupportApp.js',
     summaryApp: './app/summary/summaryApp.js',
-    workgroupApp: './app/workgroup/workgroupApp.js',
     schedulingApp: './app/scheduling/schedulingApp.js',
     supportCallApp: './app/supportCall/supportCallApp.js',
     supportAssignmentApp: './app/supportAssignment/supportAssignmentApp.js',
     sharedApp: './app/shared/sharedApp.js',
-    teachingCallApp: './app/teachingCall/teachingCallApp.js'
+    teachingCallApp: './app/teachingCall/teachingCallApp.js',
+    workgroupApp: './app/workgroup/workgroupApp.js'
+
   },
   output: {
     filename: 'js/[name].js',
@@ -145,18 +147,6 @@ module.exports = {
       filesToConcat: [
         './vendor/js/userEcho.js',
         './vendor/js/googleAnalytics.js'
-      ],
-    }),
-    // Concat instructionalSupport JS
-    new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
-      fileName: 'js/instructionalSupportApp.js',
-      filesToConcat: [
-        './app/instructionalSupport/instructionalSupportApp.js',
-        './app/instructionalSupport/**/*.js',
-        './dist/templates/instructionalSupport/**/*.js'
-
       ],
     })
   ],

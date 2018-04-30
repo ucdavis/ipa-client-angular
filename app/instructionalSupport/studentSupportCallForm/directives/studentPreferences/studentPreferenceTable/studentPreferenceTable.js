@@ -1,7 +1,7 @@
-instructionalSupportApp.directive("studentPreferenceTable", this.studentPreferenceTable = function (studentActions) {
+let studentPreferenceTable = function (studentActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'studentPreferenceTable.html',
+		template: require('./studentPreferenceTable.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.deletePreference = function(preference) {
@@ -34,4 +34,6 @@ instructionalSupportApp.directive("studentPreferenceTable", this.studentPreferen
 			};
 		}
 	};
-});
+};
+
+export default studentPreferenceTable;

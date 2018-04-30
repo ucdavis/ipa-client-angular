@@ -1,7 +1,7 @@
-instructionalSupportApp.directive("studentPreferenceSelector", this.studentPreferenceSelector = function (studentActions) {
+let studentPreferenceSelector = function (studentActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'studentPreferenceSelector.html',
+		template: require('./studentPreferenceSelector.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.addPreference = function(preference, type) {
@@ -9,4 +9,6 @@ instructionalSupportApp.directive("studentPreferenceSelector", this.studentPrefe
 			};
 		}
 	};
-});
+};
+
+export default studentPreferenceSelector;

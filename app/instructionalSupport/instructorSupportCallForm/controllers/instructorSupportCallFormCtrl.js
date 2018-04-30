@@ -1,98 +1,118 @@
 /**
  * @ngdoc function
- * @name ipaClientAngularApp.controller:AssignmentCtrl
+ * @name ipaClientAngularApp.controller:InstructorSupportCallFormCtrl
  * @description
- * # AssignmentCtrl
+ * # InstructorSupportCallFormApp
  * Controller of the ipaClientAngularApp
  */
-instructionalSupportApp.controller('InstructorSupportCallFormCtrl', ['$scope', '$route', '$rootScope', '$window', '$timeout', '$location', '$routeParams', '$uibModal', 'instructionalSupportInstructorFormActionCreators',
-		this.InstructorSupportCallFormCtrl = function ($scope, $route, $rootScope, $window, $timeout, $location, $routeParams, $uibModal, instructionalSupportInstructorFormActionCreators) {
-			$scope.view = {};
+class InstructorSupportCallFormCtrl {
+	constructor ($scope, $route, $rootScope, $window, $timeout, $location, $routeParams, $uibModal, InstructorFormActions, AuthService) {
+		this.$scope = $scope;
+		this.$route = $route;
+		this.$rootScope = $rootScope;
+		this.$window = $window;
+		this.$timeout = $timeout;
+		this.$location = $location;
+		this.$routeParams = $routeParams;
+		this.$uibModal = $uibModal;
+		this.InstructorFormActions = InstructorFormActions;
+		this.AuthService = AuthService;
 
-			$window.document.title = "Instructional Support";
-			$scope.workgroupId = $routeParams.workgroupId;
-			$scope.year = $routeParams.year;
-			$scope.termShortCode = $routeParams.termShortCode;
+		$scope.view = {};
 
-			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
-			$scope.listenersActive = false;
+		$window.document.title = "Instructional Support";
+		$scope.workgroupId = $routeParams.workgroupId;
+		$scope.year = $routeParams.year;
+		$scope.termShortCode = $routeParams.termShortCode;
 
-			$rootScope.$on('instructorFormStateChanged', function (event, data) {
-				$scope.view.state = data;
-			});
+		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
+		$scope.listenersActive = false;
 
-			$rootScope.$on('sharedStateSet', function (event, data) {
-				$scope.sharedState = data;
-				$scope.isInstructor = $scope.sharedState.currentUser.isInstructor($scope.workgroupId);
-			});
+		$rootScope.$on('instructorFormStateChanged', function (event, data) {
+			$scope.view.state = data;
+		});
 
-			$scope.addPreference = function(sectionGroupId, supportStaffId) {
-				instructionalSupportInstructorFormActionCreators.addInstructorPreference(sectionGroupId, supportStaffId);
-			};
+		$rootScope.$on('sharedStateSet', function (event, data) {
+			$scope.sharedState = data;
+			$scope.isInstructor = $scope.sharedState.currentUser.isInstructor($scope.workgroupId);
+		});
 
-			$scope.deleteInstructorPreference = function(preference) {
-				instructionalSupportInstructorFormActionCreators.deleteInstructorPreference(preference, $scope.view.state.studentPreferences);
-			};
+		$scope.addPreference = function(sectionGroupId, supportStaffId) {
+			InstructorFormActions.addInstructorPreference(sectionGroupId, supportStaffId);
+		};
 
-			$scope.updateSupportCallResponse = function() {
-				instructionalSupportInstructorFormActionCreators.updateSupportCallResponse($scope.view.state.supportCallResponse);
-			};
+		$scope.deleteInstructorPreference = function(preference) {
+			InstructorFormActions.deleteInstructorPreference(preference, $scope.view.state.studentPreferences);
+		};
 
-			$scope.submitPreferences = function() {
-				$scope.view.state.supportCallResponse.submitted = true;
-				instructionalSupportInstructorFormActionCreators.submitInstructorPreferences($scope.view.state.supportCallResponse, $scope.workgroupId, $scope.year);
-			};
+		$scope.updateSupportCallResponse = function() {
+			InstructorFormActions.updateSupportCallResponse($scope.view.state.supportCallResponse);
+		};
 
-			// Used on 'update preferences' button, since saving is not required again.
-			$scope.pretendToastMessage = function() {
-				instructionalSupportInstructorFormActionCreators.pretendToastMessage();
-				$window.location.href = "/summary/" + $scope.workgroupId + "/" + $scope.year + "?mode=instructor";
-			};
+		$scope.submitPreferences = function() {
+			$scope.view.state.supportCallResponse.submitted = true;
+			InstructorFormActions.submitInstructorPreferences($scope.view.state.supportCallResponse, $scope.workgroupId, $scope.year);
+		};
 
-			// Activates sortable lists for each sectionGroup, after a short delay to give the view time to render
-			$scope.listenForSort = function() {
-				if ($scope.listenersActive) {
-					return;
-				}
-				$scope.listenersActive = true;
+		// Used on 'update preferences' button, since saving is not required again.
+		$scope.pretendToastMessage = function() {
+			InstructorFormActions.pretendToastMessage();
+			$window.location.href = "/summary/" + $scope.workgroupId + "/" + $scope.year + "?mode=instructor";
+		};
 
-				setTimeout(function() {
-					var listenerIds = [];
-					$scope.view.state.sectionGroups.forEach(function(sectionGroup) {
-						var listener = "#sortable-" + sectionGroup.id;
-						listenerIds.push(listener);
-					});
+		// Activates sortable lists for each sectionGroup, after a short delay to give the view time to render
+		$scope.listenForSort = function() {
+			if ($scope.listenersActive) {
+				return;
+			}
+			$scope.listenersActive = true;
 
-					listenerIds.forEach( function(listenerId) {
-						$(listenerId).sortable({
-							placeholder: "sortable-student-preference-placeholder",
-							update: function( event, ui ) {
-								var preferenceIds = $( listenerId ).sortable( "toArray" );
-								$scope.updatePreferencesOrder(preferenceIds, listenerId);
-							},
-							axis: "y"
-						});
-					});
-				}, 500);
-			};
-
-			$scope.updatePreferencesOrder = function(preferenceIds, listIndentifier) {
-				var filteredPreferenceIds = [];
-
-				preferenceIds.forEach(function(id) {
-					if (id.length > 0) {
-						filteredPreferenceIds.push(id);
-					}
+			setTimeout(function() {
+				var listenerIds = [];
+				$scope.view.state.sectionGroups.forEach(function(sectionGroup) {
+					var listener = "#sortable-" + sectionGroup.id;
+					listenerIds.push(listener);
 				});
 
-				var sectionGroupId = listIndentifier.slice(10);
-				var scheduleId = $scope.view.state.misc.scheduleId;
-				instructionalSupportInstructorFormActionCreators.updateInstructorPreferencesOrder(filteredPreferenceIds, scheduleId, sectionGroupId);
-			};
-	}]);
+				listenerIds.forEach( function(listenerId) {
+					$(listenerId).sortable({
+						placeholder: "sortable-student-preference-placeholder",
+						update: function( event, ui ) {
+							var preferenceIds = $( listenerId ).sortable( "toArray" );
+							$scope.updatePreferencesOrder(preferenceIds, listenerId);
+						},
+						axis: "y"
+					});
+				});
+			}, 500);
+		};
 
-InstructorSupportCallFormCtrl.getPayload = function (authService, instructionalSupportInstructorFormActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		instructionalSupportInstructorFormActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode);
-	});
-};
+		$scope.updatePreferencesOrder = function(preferenceIds, listIndentifier) {
+			var filteredPreferenceIds = [];
+
+			preferenceIds.forEach(function(id) {
+				if (id.length > 0) {
+					filteredPreferenceIds.push(id);
+				}
+			});
+
+			var sectionGroupId = listIndentifier.slice(10);
+			var scheduleId = $scope.view.state.misc.scheduleId;
+			InstructorFormActions.updateInstructorPreferencesOrder(filteredPreferenceIds, scheduleId, sectionGroupId);
+		};
+
+		this.getPayload();
+	}
+
+	getPayload() {
+		var _self = this;
+		return this.AuthService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
+			_self.InstructorFormActions.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year, _self.$route.current.params.termShortCode);
+		});
+	
+	}
+}
+
+InstructorSupportCallFormCtrl.$inject = ['$scope', '$route', '$rootScope', '$window', '$timeout', '$location', '$routeParams', '$uibModal', 'InstructorFormActions', 'AuthService'];
+
+export default InstructorSupportCallFormCtrl;
