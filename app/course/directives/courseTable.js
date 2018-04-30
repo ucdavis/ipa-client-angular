@@ -329,7 +329,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 			});
 
 			element.bind('mousewheel', function (e) {
-				$el = $(e.target);
+				let $el = $(e.target);
 
 				// Disable scrolling on number inputs as it might increase accidental changes
 				if ($el.hasClass('planned-seats') && $el.is(":focus") ) {
