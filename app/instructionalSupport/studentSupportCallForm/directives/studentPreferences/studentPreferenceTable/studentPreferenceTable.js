@@ -1,15 +1,15 @@
-let studentPreferenceTable = function (studentActions) {
+let studentPreferenceTable = function (StudentFormActions) {
 	return {
 		restrict: 'E',
 		template: require('./studentPreferenceTable.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.deletePreference = function(preference) {
-				studentActions.deleteStudentPreference(preference);
+				StudentFormActions.deleteStudentPreference(preference);
 			};
 
 			scope.openPreferenceCommentsModal = function(preference) {
-				studentActions.openPreferenceCommentsModal(preference);
+				StudentFormActions.openPreferenceCommentsModal(preference);
 			};
 
 			// Will reorder the preferenceIds
@@ -22,7 +22,7 @@ let studentPreferenceTable = function (studentActions) {
 				preferenceIds = scope.swapPositions(preferenceIds, index, index + changeValue);
 				var termCode = scope.state.supportCallResponse.termCode;
 
-				studentActions.updatePreferencesOrder(preferenceIds, scope.state.misc.scheduleId, termCode);
+				StudentFormActions.updatePreferencesOrder(preferenceIds, scope.state.misc.scheduleId, termCode);
 			};
 
 			scope.swapPositions = function (array, indexA, indexB) {

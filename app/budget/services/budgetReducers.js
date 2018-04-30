@@ -831,7 +831,6 @@ class BudgetReducers {
 				newPageState.calculatedLineItems = newState.calculatedLineItems;
 	
 				$rootScope.$emit('budgetStateChanged', newPageState);
-				console.log(newPageState);
 			}
 		};
 	}

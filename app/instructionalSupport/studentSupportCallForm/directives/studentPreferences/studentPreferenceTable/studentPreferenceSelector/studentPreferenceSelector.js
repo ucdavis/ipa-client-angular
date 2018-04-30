@@ -1,11 +1,11 @@
-let studentPreferenceSelector = function (studentActions) {
+let studentPreferenceSelector = function (StudentFormActions) {
 	return {
 		restrict: 'E',
 		template: require('./studentPreferenceSelector.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.addPreference = function(preference, type) {
-				studentActions.addStudentPreference(preference.id, type);
+				StudentFormActions.addStudentPreference(preference.id, type);
 			};
 		}
 	};

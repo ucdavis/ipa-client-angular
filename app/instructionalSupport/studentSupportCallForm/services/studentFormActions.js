@@ -2,7 +2,7 @@ class StudentFormActions {
 	constructor ($rootScope, $window, StudentFormService, DwService, StudentFormReducers, ActionTypes) {
 		return {
 			getInitialState: function (workgroupId, year, termShortCode) {
-				var self = this;
+				var _self = this;
 				StudentFormService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
 					var action = {
 						type: ActionTypes.INIT_STATE,
@@ -12,23 +12,23 @@ class StudentFormActions {
 						termShortCode: termShortCode
 					};
 					StudentFormReducers.reduce(action);
-					self.calculateFormValid();
+					_self.calculateFormValid();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not load support staff form initial state.", type: "ERROR" });
 				});
 			},
 			addStudentPreference: function (sectionGroupId, type) {
-				var self = this;
+				var _self = this;
 				StudentFormService.addStudentPreference(sectionGroupId, type).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ADD_STUDENT_PREFERENCE,
 						payload: payload,
-						preferences: StudentFormReducerss._state.preferences,
+						preferences: StudentFormReducers._state.preferences,
 						supportCallResponse: StudentFormReducers._state.supportCallResponse
 					};
 					StudentFormReducers.reduce(action);
-					self.calculateFormValid();
+					_self.calculateFormValid();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not add preference.", type: "ERROR" });
 				});

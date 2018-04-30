@@ -15,9 +15,9 @@ let availabilityGrid = function($timeout) {
 			scope.buildAvailabilityObject = function(blobArray) {
 				var i = 0;
 				scope.availability = {};
-				for ( d = 0; d < scope.days.length; d++) {
+				for (let d = 0; d < scope.days.length; d++) {
 					scope.availability[d] = {};
-					for ( h = 0; h < scope.hours.length; h++) {
+					for (let h = 0; h < scope.hours.length; h++) {
 						if (i < blobArray.length) {
 							scope.availability[d][h] = blobArray[i++];
 						} else {

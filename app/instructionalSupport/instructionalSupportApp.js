@@ -28,6 +28,9 @@ import gridAvailable from './studentSupportCallForm/directives/studentAvailabili
 import studentComments from './studentSupportCallForm/directives/studentComments/studentComments.js';
 import studentFormReview from './studentSupportCallForm/directives/studentFormReview/studentFormReview.js';
 import studentPreferences from './studentSupportCallForm/directives/studentPreferences/studentPreferences.js';
+import studentPreferenceTable from './studentSupportCallForm/directives/studentPreferences/studentPreferenceTable/studentPreferenceTable.js';
+import studentPreferenceSelector from './studentSupportCallForm/directives/studentPreferences/studentPreferenceTable/studentPreferenceSelector/studentPreferenceSelector.js';
+
 import studentQualifications from './studentSupportCallForm/directives/studentQualifications/studentQualifications.js';
 
 // Dependencies
@@ -80,6 +83,8 @@ const instructionalSupportApp = angular.module("instructionalSupportApp", depend
 .directive('studentComments', studentComments)
 .directive('studentFormReview', studentFormReview)
 .directive('studentPreferences', studentPreferences)
+.directive('studentPreferenceTable', studentPreferenceTable)
+.directive('studentPreferenceSelector', studentPreferenceSelector)
 .directive('studentQualifications', studentQualifications)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
