@@ -1,8 +1,5 @@
 // Controllers
 import TeachingCallFormCtrl from './teachingCallForm/controllers/TeachingCallFormCtrl.js';
-
-import ModalContactInstructorsCtrl from './teachingCallStatus/controllers/ModalContactInstructorsCtrl.js';
-import ModalTeachingCallConfigCtrl from './teachingCallStatus/controllers/ModalTeachingCallConfigCtrl.js';
 import TeachingCallStatusCtrl from './teachingCallStatus/controllers/TeachingCallStatusCtrl.js';
 
 // Services
@@ -22,6 +19,7 @@ import AuthService from './../shared/services/AuthService.js';
 // Directives
 import teachingCallTooltip from './teachingCallStatus/directives/teachingCallTooltip.js';
 import addInstructorsModal from './teachingCallStatus/directives/modals/addInstructorsModal/addInstructorsModal.js';
+import contactInstructorsModal from './teachingCallStatus/directives/modals/contactInstructorsModal/contactInstructorsModal.js';
 
 // Dependencies
 var dependencies = [
@@ -49,8 +47,6 @@ const teachingCallApp = angular.module("teachingCallApp", dependencies)
 .config(config)
 .controller('TeachingCallFormCtrl', TeachingCallFormCtrl)
 .controller('TeachingCallStatusCtrl', TeachingCallStatusCtrl)
-.controller('ModalContactInstructorsCtrl', ModalContactInstructorsCtrl)
-.controller('ModalTeachingCallConfigCtrl', ModalTeachingCallConfigCtrl)
 .service('TeachingCallFormActionCreators', TeachingCallFormActionCreators)
 .service('TeachingCallFormService', TeachingCallFormService)
 .service('TeachingCallFormStateService', TeachingCallFormStateService)
@@ -61,6 +57,7 @@ const teachingCallApp = angular.module("teachingCallApp", dependencies)
 .service('TermService', TermService)
 .service('AuthService', AuthService)
 .directive('addInstructorsModal', addInstructorsModal)
+.directive('contactInstructorsModal', contactInstructorsModal)
 .directive('teachingCallTooltip', teachingCallTooltip)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",

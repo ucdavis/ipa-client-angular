@@ -23,7 +23,16 @@
 			                     is-visible="view.state.openCallInstructorModal">
 			</add-instructors-modal>
 		</ipa-modal>
-
+		<ipa-modal is-visible="view.state.openContactInstructorModal"
+		           header-text="Send Follow-Up"
+		           styles="modalStyles">
+			<contact-instructors-modal ng-if="view.state.openContactInstructorModal"
+			                     workgroup-id="view.workgroupId"
+			                     year="view.year"
+			                     state="view.state"
+			                     is-visible="view.state.openContactInstructorModal">
+			</contact-instructors-modal>
+		</ipa-modal>
 		<!-- Toolbar Buttons -->
 		<div class="teaching-call-status teaching-call-status-buttons">
 			<div class="teaching-call-status__table-ui">

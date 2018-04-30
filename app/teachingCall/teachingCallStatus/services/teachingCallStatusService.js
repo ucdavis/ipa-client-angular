@@ -8,7 +8,7 @@ class TeachingCallStatusService {
 				return ApiService.post("/api/teachingCallView/" + workgroupId + "/" + year + "/addInstructors", teachingCallConfig);
 			},
 			contactInstructors: function (workgroupId, year, receiptsPayload) {
-				payload = {};
+				let payload = {};
 				payload.receipts = receiptsPayload;
 	
 				return ApiService.put("/api/teachingCallView/" + workgroupId + "/" + year + "/contactInstructors", payload);

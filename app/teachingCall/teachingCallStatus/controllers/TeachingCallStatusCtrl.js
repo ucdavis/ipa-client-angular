@@ -61,49 +61,8 @@ class TeachingCallStatusCtrl {
 
 		// Launches Contact Instructor Modal
 		$scope.openContactInstructorsModal = function() {
-			modalInstance = $uibModal.open({
-				templateUrl: 'ModalContactInstructors.html',
-				controller: ModalContactInstructorsCtrl,
-				size: 'lg',
-				resolve: {
-					scheduleYear: function () {
-						return $scope.year;
-					},
-					workgroupId: function () {
-						return $scope.workGroupId;
-					},
-					state: function () {
-						return $scope.view.state;
-					}
-				}
-			});
-
-			modalInstance.result.then(function (teachingCallConfig) {
-				$scope.contactInstructors($scope.workgroupId, $scope.year, teachingCallConfig);
-			},
-			function () {
-				// Modal closed
-			});
+			$scope.view.state.openContactInstructorModal = true;
 		};
-
-		// Triggered on TeachingCall Config submission
-		$scope.contactInstructors = function(workgroupId, year, teachingCallConfig) {
-			teachingCallConfig.termsBlob = "";
-			var allTerms = ['01','02','03','04','05','06','07','08','09','10'];
-
-			for (var i = 0; i < allTerms.length; i++) {
-				if (teachingCallConfig.activeTerms[allTerms[i]] === true) {
-					teachingCallConfig.termsBlob += "1";
-				} else {
-					teachingCallConfig.termsBlob += "0";
-				}
-			}
-
-			delete teachingCallConfig.activeTerms;
-
-			TeachingCallStatusActionCreators.contactInstructors(workgroupId, year, teachingCallConfig, teachingCallConfig.selectedInstructors);
-		};
-
 
 		// Launches Call Instructor Modal
 		$scope.openAddInstructorsModal = function() {
