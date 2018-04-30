@@ -8,9 +8,9 @@
  */
 class AssignmentActionCreators {
 	constructor (AssignmentStateService, AssignmentService, $rootScope, $window, Role, ActionTypes) {
-		var self = this;
-		this.assignmentStateService = AssignmentStateService;
-		this.assignmentService = AssignmentService;
+		var _self = this;
+		this.AssignmentStateService = AssignmentStateService;
+		this.AssignmentService = AssignmentService;
 		this.$rootScope = $rootScope;
 		this.$window = $window;
 		this.Role = Role;
@@ -18,123 +18,123 @@ class AssignmentActionCreators {
 
 		return {
 			getInitialState: function (workgroupId, year, tab) {
-				self.assignmentService.getInitialState(workgroupId, year).then(function (payload) {
+				_self.AssignmentService.getInitialState(workgroupId, year).then(function (payload) {
 					var action = {
 						type: ActionTypes.INIT_ASSIGNMENT_VIEW,
 						payload: payload,
 						year: year,
 						tab: tab
 					};
-					self.assignmentStateService.reduce(action);
+					_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not load assignment view.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not load assignment view.", type: "ERROR" });
 				});
 			},
 			updateTagFilters: function (tagIds) {
 				var action = {
-					type: UPDATE_TAG_FILTERS,
+					type: ActionTypes.UPDATE_TAG_FILTERS,
 					payload: {
 						tagIds: tagIds
 					}
 				};
-				self.assignmentStateService.reduce(action);
+				_self.AssignmentStateService.reduce(action);
 			},
 			updateAssignmentsOrder: function (sortedTeachingAssignmentIds, scheduleId) {
-				self.assignmentService.updateAssignmentsOrder(sortedTeachingAssignmentIds, scheduleId).then(function (sortedTeachingAssignmentIds) {
+				_self.AssignmentService.updateAssignmentsOrder(sortedTeachingAssignmentIds, scheduleId).then(function (sortedTeachingAssignmentIds) {
 					$rootScope.$emit('toast', { message: "Updated Assignment Priority", type: "SUCCESS" });
 					var action = {
-						type: UPDATE_TEACHING_ASSIGNMENT_ORDER,
+						type: ActionTypes.UPDATE_TEACHING_ASSIGNMENT_ORDER,
 						payload: {
 							sortedTeachingAssignmentIds: sortedTeachingAssignmentIds
 						}
 					};
-					self.assignmentStateService.reduce(action);
+					_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not update assignment order.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not update assignment order.", type: "ERROR" });
 				});
 			},
 			addScheduleInstructorNote: function (instructorId, year, workgroupId, comment, assignmentsCompleted) {
-				self.assignmentService.addScheduleInstructorNote(instructorId, year, workgroupId, comment, assignmentsCompleted).then(function (scheduleInstructorNote) {
-					self.$rootScope.$emit('toast', { message: "Added instructor comment", type: "SUCCESS" });
+				_self.AssignmentService.addScheduleInstructorNote(instructorId, year, workgroupId, comment, assignmentsCompleted).then(function (scheduleInstructorNote) {
+					_self.$rootScope.$emit('toast', { message: "Added instructor comment", type: "SUCCESS" });
 					var action = {
-						type: ADD_SCHEDULE_INSTRUCTOR_NOTE,
+						type: ActionTypes.ADD_SCHEDULE_INSTRUCTOR_NOTE,
 						payload: {
 							scheduleInstructorNote: scheduleInstructorNote
 						}
 					};
-					self.assignmentStateService.reduce(action);
+					_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not add instructor comment.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not add instructor comment.", type: "ERROR" });
 				});
 			},
 			updateScheduleInstructorNote: function (scheduleInstructorNote) {
-				self.assignmentService.updateScheduleInstructorNote(scheduleInstructorNote).then(function (scheduleInstructorNote) {
-					self.$rootScope.$emit('toast', { message: "Updated instructor comment", type: "SUCCESS" });
+				_self.AssignmentService.updateScheduleInstructorNote(scheduleInstructorNote).then(function (scheduleInstructorNote) {
+					_self.$rootScope.$emit('toast', { message: "Updated instructor comment", type: "SUCCESS" });
 					var action = {
-						type: UPDATE_SCHEDULE_INSTRUCTOR_NOTE,
+						type: ActionTypes.UPDATE_SCHEDULE_INSTRUCTOR_NOTE,
 						payload: {
 							scheduleInstructorNote: scheduleInstructorNote
 						}
 					};
-					self.assignmentStateService.reduce(action);
+					_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not update instructor comment.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not update instructor comment.", type: "ERROR" });
 				});
 			},
 			markInstructorComplete: function (scheduleInstructorNote) {
-				self.assignmentService.updateScheduleInstructorNote(scheduleInstructorNote).then(function (scheduleInstructorNote) {
-					self.$rootScope.$emit('toast', { message: "Instructor marked completed", type: "SUCCESS" });
+				_self.AssignmentService.updateScheduleInstructorNote(scheduleInstructorNote).then(function (scheduleInstructorNote) {
+					_self.$rootScope.$emit('toast', { message: "Instructor marked completed", type: "SUCCESS" });
 					var action = {
-						type: UPDATE_SCHEDULE_INSTRUCTOR_NOTE,
+						type: ActionTypes.UPDATE_SCHEDULE_INSTRUCTOR_NOTE,
 						payload: {
 							scheduleInstructorNote: scheduleInstructorNote
 						}
 					};
-					self.assignmentStateService.reduce(action);
+					_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not mark instructor complete.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not mark instructor complete.", type: "ERROR" });
 				});
 			},
 			markInstructorIncomplete: function (scheduleInstructorNote) {
-				self.assignmentService.updateScheduleInstructorNote(scheduleInstructorNote).then(function (scheduleInstructorNote) {
-					self.$rootScope.$emit('toast', { message: "Instructor marked incomplete", type: "SUCCESS" });
+				_self.AssignmentService.updateScheduleInstructorNote(scheduleInstructorNote).then(function (scheduleInstructorNote) {
+					_self.$rootScope.$emit('toast', { message: "Instructor marked incomplete", type: "SUCCESS" });
 					var action = {
-						type: UPDATE_SCHEDULE_INSTRUCTOR_NOTE,
+						type: ActionTypes.UPDATE_SCHEDULE_INSTRUCTOR_NOTE,
 						payload: {
 							scheduleInstructorNote: scheduleInstructorNote
 						}
 					};
-					self.assignmentStateService.reduce(action);
+					_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not mark instructor incomplete.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not mark instructor incomplete.", type: "ERROR" });
 				});
 			},
 			updateTeachingCallResponse: function (teachingCallResponse) {
-				self.assignmentService.updateTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
-					self.$rootScope.$emit('toast', { message: "Updated availabilities", type: "SUCCESS" });
+				_self.AssignmentService.updateTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
+					_self.$rootScope.$emit('toast', { message: "Updated availabilities", type: "SUCCESS" });
 					var action = {
-						type: UPDATE_TEACHING_CALL_RESPONSE,
+						type: ActionTypes.UPDATE_TEACHING_CALL_RESPONSE,
 						payload: {
 							teachingCallResponse: teachingCallResponse
 						}
 					};
-					self.assignmentStateService.reduce(action);
+					_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not update availabilities.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not update availabilities.", type: "ERROR" });
 				});
 			},
 			updateTeachingCallReceipt: function (teachingCallReceipt) {
-				self.assignmentService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
-					self.$rootScope.$emit('toast', { message: "Updated Preferences", type: "SUCCESS" });
+				_self.AssignmentService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
+					_self.$rootScope.$emit('toast', { message: "Updated Preferences", type: "SUCCESS" });
 					var action = {
-						type: UPDATE_TEACHING_CALL_RECEIPT,
+						type: ActionTypes.UPDATE_TEACHING_CALL_RECEIPT,
 						payload: {
 							teachingCallReceipt: teachingCallReceipt
 						}
 					};
-					self.assignmentStateService.reduce(action);
+					_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 				});
 			},
 			addInstructorAssignment: function (instructorId, year, workgroupId, comment) {
@@ -142,81 +142,80 @@ class AssignmentActionCreators {
 				scheduleInstructorNote.instructorId = instructorId;
 				scheduleInstructorNote.comment = comment;
 	
-				self.assignmentService.addScheduleInstructorNote(scheduleInstructorNote).then(function (scheduleInstructorNote) {
-					self.$rootScope.$emit('toast', { message: "Added instructor comment", type: "SUCCESS" });
+				_self.AssignmentService.addScheduleInstructorNote(scheduleInstructorNote).then(function (scheduleInstructorNote) {
+					_self.$rootScope.$emit('toast', { message: "Added instructor comment", type: "SUCCESS" });
 					var action = {
-						type: ADD_SCHEDULE_INSTRUCTOR_NOTE,
+						type: ActionTypes.ADD_SCHEDULE_INSTRUCTOR_NOTE,
 						payload: {
 							scheduleInstructorNote: scheduleInstructorNote
 						}
 					};
-					self.assignmentStateService.reduce(action);
+					_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not add instructor comment.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not add instructor comment.", type: "ERROR" });
 				});
 			},
 			removeInstructorAssignment: function (teachingAssignment) {
-				self.assignmentService.removeInstructorAssignment(sectionGroupId, instructorId).then(function (sectionGroupId) {
-					self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
+				_self.AssignmentService.removeInstructorAssignment(sectionGroupId, instructorId).then(function (sectionGroupId) {
+					_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
 					var action = {
-						type: REMOVE_TEACHING_ASSIGNMENT,
+						type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,
 						payload: {
 							sectionGroup: sectionGroup
 						}
 					};
-					self.assignmentStateService.reduce(action);
+					_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
 				});
 			},
 			addAndApproveInstructorAssignment: function (teachingAssignment, scheduleId) {
-				self.assignmentService.addInstructorAssignment(teachingAssignment, scheduleId).then(function (teachingAssignment) {
-					self.$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
+				_self.AssignmentService.addInstructorAssignment(teachingAssignment, scheduleId).then(function (teachingAssignment) {
+					_self.$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
 					var action = {
-						type: ADD_TEACHING_ASSIGNMENT,
+						type: ActionTypes.ADD_TEACHING_ASSIGNMENT,
 						payload: {
 							teachingAssignment: teachingAssignment
 						}
 					};
-					self.assignmentStateService.reduce(action);
+					_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
 				});
 			},
 			assignInstructorType: function (teachingAssignment) {
-				var scheduleId = assignmentStateService._state.userInterface.scheduleId;
+				var scheduleId = AssignmentStateService._state.userInterface.scheduleId;
 	
-				self.assignmentService.addInstructorAssignment(teachingAssignment, scheduleId).then(function (newTeachingAssignment) {
-					self.$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
-					self.assignmentStateService.reduce({
+				_self.AssignmentService.addInstructorAssignment(teachingAssignment, scheduleId).then(function (newTeachingAssignment) {
+					_self.$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
+					_self.AssignmentStateService.reduce({
 						type: ActionTypes.ADD_TEACHING_ASSIGNMENT,
 						payload: {
 							teachingAssignment: newTeachingAssignment
 						}
 					});
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
 				});
 			},
 			unassignInstructorType: function (originalTeachingAssignment) {
-				self.assignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {
-					self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
+				_self.AssignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {
+					_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
 	
-					self.assignmentStateService.reduce({
+					_self.AssignmentStateService.reduce({
 						type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,
 						payload: {
 							teachingAssignment: originalTeachingAssignment
 						}
 					});
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
 				});
 			},
 			assignStudentToAssociateInstructor: function (sectionGroup, supportStaff) {
-				var self = this;
-	
-				self.assignmentService.assignStudentToAssociateInstructor(sectionGroup.id, supportStaff.id).then(function (teachingAssignment) {
-					self.$rootScope.$emit('toast', { message: "Assigned Associate Instructor", type: "SUCCESS" });
+				var here = this;
+				_self.AssignmentService.assignStudentToAssociateInstructor(sectionGroup.id, supportStaff.id).then(function (teachingAssignment) {
+					_self.$rootScope.$emit('toast', { message: "Assigned Associate Instructor", type: "SUCCESS" });
 	
 					var instructor = {
 						id: teachingAssignment.instructorId,
@@ -227,69 +226,68 @@ class AssignmentActionCreators {
 						loginId: supportStaff.loginId
 					};
 	
-					self.assignmentStateService.reduce({
-						type: ASSIGN_ASSOCIATE_INSTRUCTOR,
+					_self.AssignmentStateService.reduce({
+						type: ActionTypes.ASSIGN_ASSOCIATE_INSTRUCTOR,
 						payload: {
 							teachingAssignment: teachingAssignment,
 							instructor: instructor,
-							year: assignmentStateService._state.userInterface.year
+							year: AssignmentStateService._state.userInterface.year
 						}
 					});
 	
-						self.addAndApproveInstructorAssignment(teachingAssignment, assignmentStateService._state.userInterface.scheduleId);
+					here.addAndApproveInstructorAssignment(teachingAssignment, AssignmentStateService._state.userInterface.scheduleId);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
 				});
 			},
 			approveInstructorAssignment: function (teachingAssignment, workgroupId, year) {
-				var self = this;
 				teachingAssignment.approved = true;
 	
-				self.assignmentService.updateInstructorAssignment(teachingAssignment).then(function (teachingAssignment) {
+				_self.AssignmentService.updateInstructorAssignment(teachingAssignment).then(function (teachingAssignment) {
 					$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
 						var action = {
-							type: UPDATE_TEACHING_ASSIGNMENT,
+							type: ActionTypes.UPDATE_TEACHING_ASSIGNMENT,
 							payload: {
 								teachingAssignment: teachingAssignment
 							}
 						};
-						self.assignmentStateService.reduce(action);
+						_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
 				});
 			},
 			createPlaceholderStaff: function (sectionGroup) {
-				self.assignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
-					self.$rootScope.$emit('toast', { message: "Assigned The Staff", type: "SUCCESS" });
+				_self.AssignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
+					_self.$rootScope.$emit('toast', { message: "Assigned The Staff", type: "SUCCESS" });
 						var action = {
 							type: CREATE_PLACEHOLDER_STAFF,
 							payload: {
 								sectionGroup: sectionGroup
 							}
 						};
-						self.assignmentStateService.reduce(action);
+						_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not assign The Staff.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not assign The Staff.", type: "ERROR" });
 				});
 			},
 			removePlaceholderStaff: function (sectionGroup) {
-				self.assignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
-					self.$rootScope.$emit('toast', { message: "Removed The Staff", type: "SUCCESS" });
+				_self.AssignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
+					_self.$rootScope.$emit('toast', { message: "Removed The Staff", type: "SUCCESS" });
 						var action = {
-							type: REMOVE_PLACEHOLDER_STAFF,
+							type: ActionTypes.REMOVE_PLACEHOLDER_STAFF,
 							payload: {
 								sectionGroup: sectionGroup
 							}
 						};
-						self.assignmentStateService.reduce(action);
+						_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not remove The Staff.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not remove The Staff.", type: "ERROR" });
 				});
 			},
 			unapproveInstructorAssignment: function (originalTeachingAssignment) {
 				originalTeachingAssignment.approved = false;
-				self.assignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {
-					self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
+				_self.AssignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {
+					_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
 					var action;
 					// If unapproving a teachingPreference that was not created by the instructor, delete it instead
 					if (originalTeachingAssignment.fromInstructor === false && originalTeachingAssignment.approved === false) {
@@ -299,7 +297,7 @@ class AssignmentActionCreators {
 								teachingAssignment: originalTeachingAssignment
 							}
 						};
-						self.assignmentStateService.reduce(action);
+						_self.AssignmentStateService.reduce(action);
 	
 					} else {
 						action = {
@@ -308,24 +306,24 @@ class AssignmentActionCreators {
 								teachingAssignment: teachingAssignment
 							}
 						};
-						self.assignmentStateService.reduce(action);
+						_self.AssignmentStateService.reduce(action);
 					}
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
 				});
 			},
 			addTeachingCallResponse: function (teachingCallResponse) {
-				self.assignmentService.addTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
-					self.$rootScope.$emit('toast', { message: "Updated availablities", type: "SUCCESS" });
+				_self.AssignmentService.addTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
+					_self.$rootScope.$emit('toast', { message: "Updated availablities", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ADD_TEACHING_CALL_RESPONSE,
 						payload: {
 							teachingCallResponse: teachingCallResponse
 						}
 					};
-					self.assignmentStateService.reduce(action);
+					_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					self.$rootScope.$emit('toast', { message: "Could not update availabilities.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not update availabilities.", type: "ERROR" });
 				});
 			},
 			showCourses: function () {
@@ -336,7 +334,7 @@ class AssignmentActionCreators {
 						showCourses: true
 					}
 				};
-				self.assignmentStateService.reduce(action);
+				_self.AssignmentStateService.reduce(action);
 			},
 			toggleDisplayCompletedInstructors: function (showCompletedInstructors) {
 				var action = {
@@ -345,7 +343,7 @@ class AssignmentActionCreators {
 						showCompletedInstructors: showCompletedInstructors
 					}
 				};
-				self.assignmentStateService.reduce(action);
+				_self.AssignmentStateService.reduce(action);
 			},
 			showInstructors: function () {
 				var action = {
@@ -355,7 +353,7 @@ class AssignmentActionCreators {
 						showCourses: false
 					}
 				};
-				self.assignmentStateService.reduce(action);
+				_self.AssignmentStateService.reduce(action);
 			},
 			toggleTermFilter: function (termId) {
 				var action = {
@@ -364,7 +362,7 @@ class AssignmentActionCreators {
 						termId: termId
 					}
 				};
-				self.assignmentStateService.reduce(action);
+				_self.AssignmentStateService.reduce(action);
 			},
 			updateTableFilter: function (query) {
 				var action = {
@@ -373,7 +371,7 @@ class AssignmentActionCreators {
 						query: query
 					}
 				};
-				self.assignmentStateService.reduce(action);
+				_self.AssignmentStateService.reduce(action);
 			}
 		};
 	}

@@ -513,7 +513,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 			}); // end on event 'assignmentStateChanged'
 			// Handle Instructor UI events
 			element.click(function (e) {
-				$el = $(e.target);
+				let $el = $(e.target);
 				var teachingAssignment, teachingAssignmentId, instructorId;
 				// Approving a teachingAssignment or creating a new one
 				if ($el.is('a')) {

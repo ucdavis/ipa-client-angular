@@ -324,7 +324,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 			// Handle Instructor UI events
 			element.click(function (e) {
-				$el = $(e.target);
+				let $el = $(e.target);
 
 				var teachingAssignmentId, teachingAssignment;
 				// Approving a teachingAssignment or creating a new one
@@ -342,7 +342,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					if (isInstructorType) {
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 
-						newTeachingAssignment = {
+						let newTeachingAssignment = {
 							sectionGroupId: sectionGroupId,
 							termCode: sectionGroup.termCode,
 							priority: 1,
@@ -355,28 +355,28 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 							sectionGroup.showTheStaff = false;
 						}
 
-						assignmentActionCreators.assignInstructorType(newTeachingAssignment);
+						AssignmentActionCreators.assignInstructorType(newTeachingAssignment);
 					} else if (isAssignPlaceholderStaff) {
 						// Create a 'The Staff' placeholder
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 						sectionGroup.showTheStaff = true;
-						assignmentActionCreators.createPlaceholderStaff(sectionGroup);
+						AssignmentActionCreators.createPlaceholderStaff(sectionGroup);
 					} else if (isAssignPlaceholderAI) {
 						// Create a support assignment for an AI
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 						sectionGroup.showPlaceholderAI = true;
-						assignmentActionCreators.createPlaceholderAI(sectionGroup);
+						AssignmentActionCreators.createPlaceholderAI(sectionGroup);
 					} else if (sectionGroupId && supportStaffId) {
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 						var supportStaff = scope.view.state.supportStaffList.list[supportStaffId];
 
-						assignmentActionCreators.assignStudentToAssociateInstructor(sectionGroup, supportStaff);
+						AssignmentActionCreators.assignStudentToAssociateInstructor(sectionGroup, supportStaff);
 						// Remove 'The Staff' if necessary
 						sectionGroup.showPlaceholderAI = false;
 					} else if (teachingAssignmentId) {
 						// Approving an existing teachingAssignment
 						teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
-						assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
+						AssignmentActionCreators.approveInstructorAssignment(teachingAssignment);
 
 						// Remove The Staff if necessary
 						var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
@@ -399,7 +399,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 							sectionGroup.showTheStaff = false;
 						}
 
-						assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment, scope.view.state.userInterface.scheduleId);
+						AssignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment, scope.view.state.userInterface.scheduleId);
 					}
 				}
 
@@ -413,7 +413,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				else if ($el.data('event-type') == 'deleteAssignment') {
 					teachingAssignmentId = $el.data('teaching-assignment-id');
 					teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
-					assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
+					AssignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
 				}
 
 				// Close Assignment deletion confirmation popover
@@ -438,14 +438,14 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					sectionGroupId = $el.data('section-group-id');
 					sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 					sectionGroup.showTheStaff = false;
-					assignmentActionCreators.removePlaceholderStaff(sectionGroup);
+					AssignmentActionCreators.removePlaceholderStaff(sectionGroup);
 				}
 				// User has confirmed deletion of Placeholder AI
 				else if ($el.data('event-type') == 'deletePlaceholderAI') {
 					sectionGroupId = $el.data('section-group-id');
 					sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 					sectionGroup.showPlaceholderAI = false;
-					assignmentActionCreators.removePlaceholderAI(sectionGroup);
+					AssignmentActionCreators.removePlaceholderAI(sectionGroup);
 				}
 				// Close The Staff deletion confirmation popover
 				else if ($el.data('event-type') == 'dismissDeleteTheStaffPop') {

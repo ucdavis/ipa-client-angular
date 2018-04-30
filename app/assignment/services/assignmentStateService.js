@@ -10,7 +10,7 @@ class AssignmentStateService {
 	constructor ($rootScope, $log, SectionGroup, Course, ScheduleTermState,
 	ScheduleInstructorNote, Term, Tag, Instructor, TeachingAssignment,
 	TeachingCall, TeachingCallReceipt, TeachingCallResponse, ActionTypes) {
-		var self = this;
+		var _self = this;
 
 		return {
 			_state: {},
@@ -298,7 +298,7 @@ class AssignmentStateService {
 							// Scaffold all teachingAssignment termCodeId arrays
 							var allTerms = ['01', '02', '03', '04', '06', '07', '08', '09', '10'];
 							allTerms.forEach(function (slotTerm) {
-								var generatedTermCode = self.generateTermCode(action.year, slotTerm);
+								var generatedTermCode = _self.generateTermCode(action.year, slotTerm);
 								instructor.teachingAssignmentTermCodeIds[generatedTermCode] = [];
 							});
 	
@@ -306,7 +306,7 @@ class AssignmentStateService {
 	
 							// Create arrays of teachingAssignmentIds for each termCode
 							for (j = 0; j < action.payload.scheduleTermStates.length; j++) {
-								termCode = action.payload.scheduleTermStates[j].termCode;
+								let termCode = action.payload.scheduleTermStates[j].termCode;
 								instructor.teachingAssignmentTermCodeIds[termCode] = [];
 	
 								// Create array of teachingAssignmentIds that are associated to this termCode and instructor
@@ -332,7 +332,7 @@ class AssignmentStateService {
 							// Find scheduleInstructorNote associated to this instructor, if it exists
 							instructor.scheduleInstructorNoteId = null;
 							for (j = 0; j < action.payload.scheduleInstructorNotes.length; j++) {
-								scheduleInstructorNote = action.payload.scheduleInstructorNotes[j];
+								let scheduleInstructorNote = action.payload.scheduleInstructorNotes[j];
 								if (scheduleInstructorNote.instructorId == instructor.id) {
 									instructor.scheduleInstructorNoteId = scheduleInstructorNote.id;
 								}
@@ -391,9 +391,9 @@ class AssignmentStateService {
 	
 						return instructors;
 					case ActionTypes.ADD_SCHEDULE_INSTRUCTOR_NOTE:
-						scheduleInstructorNote = action.payload.scheduleInstructorNote;
+						let scheduleInstructorNote = action.payload.scheduleInstructorNote;
 						for (i = 0; i < instructors.ids.length; i++) {
-							instructor = instructors.list[instructors.ids[i]];
+							let instructor = instructors.list[instructors.ids[i]];
 							if (instructor.id == scheduleInstructorNote.instructorId) {
 								instructor.scheduleInstructorNoteId = scheduleInstructorNote.id;
 							}
@@ -414,8 +414,8 @@ class AssignmentStateService {
 							return instructors;
 						}
 	
-						termCode = teachingAssignment.termCode;
-						index = instructor.teachingAssignmentTermCodeIds[termCode].indexOf(teachingAssignment.id);
+						let termCode = teachingAssignment.termCode;
+						let index = instructor.teachingAssignmentTermCodeIds[termCode].indexOf(teachingAssignment.id);
 	
 						if (index > -1) {
 							instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode].splice(index, 1);
@@ -715,13 +715,13 @@ class AssignmentStateService {
 							enabledTerms.ids.push(id);
 						}
 	
-						enabledTerms.ids = self.orderTermsChronologically(enabledTerms.ids);
+						enabledTerms.ids = _self.orderTermsChronologically(enabledTerms.ids);
 	
 						// Generate termCode list entries
 						for (i = 1; i < 11; i++) {
 							// 4 is not used as a termCode
 							if (i != 4) {
-								var termCode = self.generateTermCode(action.year, i);
+								var termCode = _self.generateTermCode(action.year, i);
 								enabledTerms.list[i] = termCode;
 							}
 						}
@@ -731,7 +731,7 @@ class AssignmentStateService {
 						// Check localStorage for saved termFilter settings
 						var termFiltersBlob = localStorage.getItem("termFilters");
 						if (termFiltersBlob) {
-							userInterface.enabledTerms.ids = self.deserializeTermFiltersBlob(termFiltersBlob);
+							userInterface.enabledTerms.ids = _self.deserializeTermFiltersBlob(termFiltersBlob);
 						}
 	
 						return userInterface;
@@ -750,12 +750,12 @@ class AssignmentStateService {
 						if (idx === -1) {
 							// Toggle on
 							userInterface.enabledTerms.ids.push(termId);
-							userInterface.enabledTerms.ids = orderTermsChronologically(userInterface.enabledTerms.ids);
+							userInterface.enabledTerms.ids = _self.orderTermsChronologically(userInterface.enabledTerms.ids);
 						} else {
 							// Toggle off
 							userInterface.enabledTerms.ids.splice(idx, 1);
 						}
-						var termFiltersBlob = serializeTermFilters(userInterface.enabledTerms.ids);
+						var termFiltersBlob = _self.serializeTermFilters(userInterface.enabledTerms.ids);
 						localStorage.setItem("termFilters", termFiltersBlob);
 						return userInterface;
 					default:
