@@ -40,7 +40,7 @@ class SupportCallStatusSelectors {
 					}
 	
 					//Confirm matching group type
-					groupConfirmed = false;
+					let groupConfirmed = false;
 					if (groupType == "phd" && supportStaff.isPhd) {
 						groupConfirmed = true;
 					}

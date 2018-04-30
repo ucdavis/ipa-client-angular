@@ -19,7 +19,7 @@ class SupportReducer {
 	
 						return sectionGroups;
 					case ActionTypes.UPDATE_SECTIONGROUP:
-						sectionGroup = action.payload.sectionGroup;
+						let sectionGroup = action.payload.sectionGroup;
 						sectionGroups.list[sectionGroup.id].readerAppointments = sectionGroup.readerAppointments;
 						sectionGroups.list[sectionGroup.id].teachingAssistantAppointments = sectionGroup.teachingAssistantAppointments;
 						return sectionGroups;

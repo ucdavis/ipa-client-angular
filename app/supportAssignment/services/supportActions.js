@@ -429,7 +429,7 @@ class SupportActions {
 				*/
 				SupportReducer._state.supportStaffList.ids.forEach(function(supportStaffId) {
 					var supportStaff = SupportReducer._state.supportStaffList.list[supportStaffId];
-					allocatedIds = {
+					let allocatedIds = {
 						ta: {
 							sectionIds: [],
 							sectionGroupIds: []

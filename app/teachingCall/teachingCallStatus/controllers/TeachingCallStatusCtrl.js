@@ -9,6 +9,7 @@ class TeachingCallStatusCtrl {
 		this.TeachingCallStatusActionCreators = TeachingCallStatusActionCreators;
 		this.TeachingCallStatusService = TeachingCallStatusService;
 		this.AuthService = AuthService;
+
 		$window.document.title = "Teaching Call Status";
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;

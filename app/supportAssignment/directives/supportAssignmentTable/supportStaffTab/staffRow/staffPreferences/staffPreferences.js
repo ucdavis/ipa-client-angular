@@ -1,4 +1,4 @@
-let staffPreferences = function ($rootScope, supportActions) {
+let staffPreferences = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',
 		template: require('./staffPreferences.html'),
@@ -9,7 +9,7 @@ let staffPreferences = function ($rootScope, supportActions) {
 		},
 		link: function (scope, element, attrs) {
 			scope.deleteAssignment = function(supportAssignment) {
-				supportActions.deleteAssignment(supportAssignment);
+				SupportActions.deleteAssignment(supportAssignment);
 			};
 		}
 	};
