@@ -20,6 +20,7 @@ module.exports = {
     supportCallApp: './app/supportCall/supportCallApp.js',
     supportAssignmentApp: './app/supportAssignment/supportAssignmentApp.js',
     sharedApp: './app/shared/sharedApp.js',
+    teachingCallApp: './app/teachingCall/teachingCallApp.js'
   },
   output: {
     filename: 'js/[name].js',
@@ -157,17 +158,6 @@ module.exports = {
         './dist/templates/instructionalSupport/**/*.js'
 
       ],
-    }),
-    // Concat teachingCall JS
-    new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
-      fileName: 'js/teachingCallApp.js',
-      filesToConcat: [
-        './app/teachingCall/teachingCallApp.js',
-        './app/teachingCall/**/*.js',
-        './dist/templates/teachingCall/**/*.js'
-      ]
     })
   ],
   devServer: {

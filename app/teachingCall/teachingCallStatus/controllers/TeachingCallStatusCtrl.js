@@ -1,148 +1,165 @@
-teachingCallApp.controller('TeachingCallStatusCtrl', ['$scope', '$rootScope', '$window', '$routeParams', '$uibModal', 'teachingCallStatusActionCreators', 'teachingCallStatusService',
-		this.TeachingCallStatusCtrl = function ($scope, $rootScope, $window, $routeParams, $uibModal, teachingCallStatusActionCreators, teachingCallStatusService) {
-			$window.document.title = "Teaching Call Status";
-			$scope.workgroupId = $routeParams.workgroupId;
-			$scope.year = $routeParams.year;
-			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
-			$scope.view = {};
+class TeachingCallStatusCtrl {
+	constructor ($scope, $rootScope, $window, $route, $routeParams, $uibModal, TeachingCallStatusActionCreators, TeachingCallStatusService, AuthService) {
+		this.AuthService = AuthService;
+		this.$rootScope = $rootScope;
+		this.$window = $window;
+		this.$route = $route;
+		this.$routeParams = $routeParams;
+		this.$uibModal = $uibModal;
+		this.TeachingCallStatusActionCreators = TeachingCallStatusActionCreators;
+		this.TeachingCallStatusService = TeachingCallStatusService;
+		this.AuthService = AuthService;
+		$window.document.title = "Teaching Call Status";
+		$scope.workgroupId = $routeParams.workgroupId;
+		$scope.year = $routeParams.year;
+		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
+		$scope.view = {};
 
-			$rootScope.$on('teachingCallStatusStateChanged', function (event, data) {
-				$scope.view.state = data;
-				console.log(data);
+		$rootScope.$on('teachingCallStatusStateChanged', function (event, data) {
+			$scope.view.state = data;
+			console.log(data);
+		});
+
+		$scope.toggleInstructor = function(instructor) {
+			TeachingCallStatusActionCreators.toggleInstructor(instructor.instructorId);
+		};
+
+		$scope.instructorIsSelected = function(instructorId) {
+			return $scope.view.state ? $scope.view.state.ui.selectedInstructorIds.indexOf(instructorId) > -1 : false;
+		};
+
+		$scope.areAllInstructorsOfTypeSelected = function(instructorTypeId) {
+			var allInstructorsAlreadyToggled = true;
+
+			$scope.view.state.calculations.teachingCallsByInstructorType[instructorTypeId].forEach(function(instructor) {
+				if ($scope.instructorIsSelected(instructor.instructorId) == false) {
+					allInstructorsAlreadyToggled = false;
+				}
 			});
 
-			$scope.toggleInstructor = function(instructor) {
-				teachingCallStatusActionCreators.toggleInstructor(instructor.instructorId);
-			};
+			return allInstructorsAlreadyToggled;
+		};
 
-			$scope.instructorIsSelected = function(instructorId) {
-				return $scope.view.state ? $scope.view.state.ui.selectedInstructorIds.indexOf(instructorId) > -1 : false;
-			};
+		$scope.toggleInstructorType = function(instructorTypeId) {
+			var allInstructorsAlreadyToggled = $scope.areAllInstructorsOfTypeSelected(instructorTypeId);
 
-			$scope.areAllInstructorsOfTypeSelected = function(instructorTypeId) {
-				var allInstructorsAlreadyToggled = true;
+			if (allInstructorsAlreadyToggled) {
+				TeachingCallStatusActionCreators.unSelectInstructorsByType(instructorTypeId);
+			} else {
+				TeachingCallStatusActionCreators.selectInstructorsByType(instructorTypeId);
+			}
+		};
 
-				$scope.view.state.calculations.teachingCallsByInstructorType[instructorTypeId].forEach(function(instructor) {
-					if ($scope.instructorIsSelected(instructor.instructorId) == false) {
-						allInstructorsAlreadyToggled = false;
+		$scope.atLeastOneInstructorSelected = function() {
+			return $scope.view.state ? $scope.view.state.ui.selectedInstructorIds.length > 0 : false;
+		};
+
+		// Launches Contact Instructor Modal
+		$scope.openContactInstructorsModal = function() {
+			modalInstance = $uibModal.open({
+				templateUrl: 'ModalContactInstructors.html',
+				controller: ModalContactInstructorsCtrl,
+				size: 'lg',
+				resolve: {
+					scheduleYear: function () {
+						return $scope.year;
+					},
+					workgroupId: function () {
+						return $scope.workGroupId;
+					},
+					state: function () {
+						return $scope.view.state;
 					}
-				});
+				}
+			});
 
-				return allInstructorsAlreadyToggled;
-			};
+			modalInstance.result.then(function (teachingCallConfig) {
+				$scope.contactInstructors($scope.workgroupId, $scope.year, teachingCallConfig);
+			},
+			function () {
+				// Modal closed
+			});
+		};
 
-			$scope.toggleInstructorType = function(instructorTypeId) {
-				var allInstructorsAlreadyToggled = $scope.areAllInstructorsOfTypeSelected(instructorTypeId);
+		// Triggered on TeachingCall Config submission
+		$scope.contactInstructors = function(workgroupId, year, teachingCallConfig) {
+			teachingCallConfig.termsBlob = "";
+			var allTerms = ['01','02','03','04','05','06','07','08','09','10'];
 
-				if (allInstructorsAlreadyToggled) {
-					teachingCallStatusActionCreators.unSelectInstructorsByType(instructorTypeId);
+			for (var i = 0; i < allTerms.length; i++) {
+				if (teachingCallConfig.activeTerms[allTerms[i]] === true) {
+					teachingCallConfig.termsBlob += "1";
 				} else {
-					teachingCallStatusActionCreators.selectInstructorsByType(instructorTypeId);
+					teachingCallConfig.termsBlob += "0";
 				}
-			};
+			}
 
-			$scope.atLeastOneInstructorSelected = function() {
-				return $scope.view.state ? $scope.view.state.ui.selectedInstructorIds.length > 0 : false;
-			};
+			delete teachingCallConfig.activeTerms;
 
-			// Launches Contact Instructor Modal
-			$scope.openContactInstructorsModal = function() {
-				modalInstance = $uibModal.open({
-					templateUrl: 'ModalContactInstructors.html',
-					controller: ModalContactInstructorsCtrl,
-					size: 'lg',
-					resolve: {
-						scheduleYear: function () {
-							return $scope.year;
-						},
-						workgroupId: function () {
-							return $scope.workGroupId;
-						},
-						state: function () {
-							return $scope.view.state;
-						}
-					}
-				});
+			TeachingCallStatusActionCreators.contactInstructors(workgroupId, year, teachingCallConfig, teachingCallConfig.selectedInstructors);
+		};
 
-				modalInstance.result.then(function (teachingCallConfig) {
-					$scope.contactInstructors($scope.workgroupId, $scope.year, teachingCallConfig);
-				},
-				function () {
-					// Modal closed
-				});
-			};
 
-			// Triggered on TeachingCall Config submission
-			$scope.contactInstructors = function(workgroupId, year, teachingCallConfig) {
-				teachingCallConfig.termsBlob = "";
-				var allTerms = ['01','02','03','04','05','06','07','08','09','10'];
-
-				for (var i = 0; i < allTerms.length; i++) {
-					if (teachingCallConfig.activeTerms[allTerms[i]] === true) {
-						teachingCallConfig.termsBlob += "1";
-					} else {
-						teachingCallConfig.termsBlob += "0";
+		// Launches Contact Instructor Modal
+		$scope.openAddInstructorsModal = function() {
+			modalInstance = $uibModal.open({
+				templateUrl: 'ModalAddInstructors.html',
+				controller: ModalAddInstructorsCtrl,
+				size: 'lg',
+				resolve: {
+					scheduleYear: function () {
+						return $scope.year;
+					},
+					workgroupId: function () {
+						return $scope.workGroupId;
+					},
+					state: function () {
+						return $scope.view.state;
 					}
 				}
+			});
 
-				delete teachingCallConfig.activeTerms;
+			modalInstance.result.then(function (teachingCallConfig) {
+				$scope.addInstructorsToTeachingCall($scope.workgroupId, $scope.year, teachingCallConfig);
+			},
+			function () {
+				// Modal closed
+			});
+		};
 
-				teachingCallStatusActionCreators.contactInstructors(workgroupId, year, teachingCallConfig, teachingCallConfig.selectedInstructors);
-			};
+		// Triggered on TeachingCall Config submission
+		$scope.addInstructorsToTeachingCall = function(workgroupId, year, teachingCallConfig) {
+			teachingCallConfig.termsBlob = "";
+			var allTerms = ['01','02','03','04','05','06','07','08','09','10'];
 
-
-			// Launches Contact Instructor Modal
-			$scope.openAddInstructorsModal = function() {
-				modalInstance = $uibModal.open({
-					templateUrl: 'ModalAddInstructors.html',
-					controller: ModalAddInstructorsCtrl,
-					size: 'lg',
-					resolve: {
-						scheduleYear: function () {
-							return $scope.year;
-						},
-						workgroupId: function () {
-							return $scope.workGroupId;
-						},
-						state: function () {
-							return $scope.view.state;
-						}
-					}
-				});
-
-				modalInstance.result.then(function (teachingCallConfig) {
-					$scope.addInstructorsToTeachingCall($scope.workgroupId, $scope.year, teachingCallConfig);
-				},
-				function () {
-					// Modal closed
-				});
-			};
-
-			// Triggered on TeachingCall Config submission
-			$scope.addInstructorsToTeachingCall = function(workgroupId, year, teachingCallConfig) {
-				teachingCallConfig.termsBlob = "";
-				var allTerms = ['01','02','03','04','05','06','07','08','09','10'];
-
-				for (var i = 0; i < allTerms.length; i++) {
-					if (teachingCallConfig.activeTerms[allTerms[i]] === true) {
-						teachingCallConfig.termsBlob += "1";
-					} else {
-						teachingCallConfig.termsBlob += "0";
-					}
+			for (var i = 0; i < allTerms.length; i++) {
+				if (teachingCallConfig.activeTerms[allTerms[i]] === true) {
+					teachingCallConfig.termsBlob += "1";
+				} else {
+					teachingCallConfig.termsBlob += "0";
 				}
+			}
 
-				delete teachingCallConfig.activeTerms;
+			delete teachingCallConfig.activeTerms;
 
-				teachingCallStatusActionCreators.addInstructorsToTeachingCall(workgroupId, year, teachingCallConfig);
-			};
+			TeachingCallStatusActionCreators.addInstructorsToTeachingCall(workgroupId, year, teachingCallConfig);
+		};
 
-			$scope.removeInstructor = function(instructor) {
-				teachingCallStatusActionCreators.removeInstructorFromTeachingCall($scope.workgroupId, $scope.year, instructor);
-			};
-	}]);
+		$scope.removeInstructor = function(instructor) {
+			TeachingCallStatusActionCreators.removeInstructorFromTeachingCall($scope.workgroupId, $scope.year, instructor);
+		};
 
-TeachingCallStatusCtrl.validate = function (authService, teachingCallStatusActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		teachingCallStatusActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
-	});
-};
+		this.getPayload();
+	}
+
+	getPayload () {
+		var _self = this;
+		return _self.AuthService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
+			_self.TeachingCallStatusActionCreators.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year);
+		});
+	}
+}
+
+TeachingCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$route', '$routeParams', '$uibModal', 'TeachingCallStatusActionCreators', 'TeachingCallStatusService', 'AuthService'];
+
+export default TeachingCallStatusCtrl;
