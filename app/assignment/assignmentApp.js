@@ -1,6 +1,5 @@
 // Controllers
 import AssignmentCtrl from './controllers/AssignmentCtrl.js';
-import ModalCommentCtrl from './controllers/ModalCommentCtrl.js';
 import ModalUnavailabilityCtrl from './controllers/ModalUnavailabilityCtrl.js';
 
 // Services
@@ -15,6 +14,7 @@ import TermService from './../shared/services/TermService.js';
 // Directives
 import courseAssignmentTable from './directives/courseAssignmentTable.js';
 import instructorAssignmentTable from './directives/instructorAssignmentTable.js';
+import commentModal from './directives/modals/commentModal/commentModal.js';
 
 // Dependencies
 var dependencies = [
@@ -45,7 +45,6 @@ config.$inject = ['$routeProvider'];
 const assignmentApp = angular.module("assignmentApp", dependencies)
 .config(config)
 .controller('AssignmentCtrl', AssignmentCtrl)
-.controller('ModalCommentCtrl', ModalCommentCtrl)
 .controller('ModalUnavailabilityCtrl', ModalUnavailabilityCtrl)
 .service('AssignmentActionCreators', AssignmentActionCreators)
 .service('AssignmentService', AssignmentService)
@@ -54,6 +53,7 @@ const assignmentApp = angular.module("assignmentApp", dependencies)
 .service('TermService', TermService)
 .directive('courseAssignmentTable', courseAssignmentTable)
 .directive('instructorAssignmentTable', instructorAssignmentTable)
+.directive('commentModal', commentModal)
 .constant('ActionTypes', {
 	INIT_ASSIGNMENT_VIEW: "INIT_ASSIGNMENT_VIEW",
 	ADD_TEACHING_ASSIGNMENT: "ADD_TEACHING_ASSIGNMENT",
