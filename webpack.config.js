@@ -18,7 +18,7 @@ module.exports = {
     summaryApp: './app/summary/summaryApp.js',
     schedulingApp: './app/scheduling/schedulingApp.js',
     supportCallApp: './app/supportCall/supportCallApp.js',
-    supportAssignmentApp: './app/supportAssignment/supportAssignmentApp.js',
+    supportAssignmentApp: './app/supportAssignment/supportAssignmentApp.ts',
     sharedApp: './app/shared/sharedApp.js',
     teachingCallApp: './app/teachingCall/teachingCallApp.js',
     workgroupApp: './app/workgroup/workgroupApp.js'
