@@ -9,12 +9,12 @@ class SupportCallStatusCtrl {
 		this.SupportCallStatusActionCreators = SupportCallStatusActionCreators;
 		this.AuthService = AuthService;
 
-		var self = this;
+		var _self = this;
 		$window.document.title = "Instructional Support";
-		$scope.workgroupId = self.$routeParams.workgroupId;
-		$scope.year = self.$routeParams.year;
+		$scope.workgroupId = _self.$routeParams.workgroupId;
+		$scope.year = _self.$routeParams.year;
 		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
-		$scope.termShortCode = self.$routeParams.termShortCode;
+		$scope.termShortCode = _self.$routeParams.termShortCode;
 
 		$scope.instructorsSelected = false;
 		$scope.supportStaffSelected = false;
@@ -36,7 +36,7 @@ class SupportCallStatusCtrl {
 			}
 		};
 
-		self.$rootScope.$on('supportCallStatusStateChanged', function (event, data) {
+		_self.$rootScope.$on('supportCallStatusStateChanged', function (event, data) {
 			$scope.view.state = data;
 		});
 
@@ -115,7 +115,6 @@ class SupportCallStatusCtrl {
 		$scope.openAddParticipantsSupportCall = function(supportCallMode) {
 			$scope.view.supportCallMode = supportCallMode;
 			$scope.view.state.openAddSupportCallModal = true;
-			console.log("Attempted to trigger");
 		};
 
 		$scope.openContactStudentsModal = function() {
@@ -128,7 +127,7 @@ class SupportCallStatusCtrl {
 
 		// Launches Contact Modal
 		$scope.openContactParticipantModal = function(supportCallMode) {
-			selectedParticipants = [];
+			let selectedParticipants = [];
 
 			if (supportCallMode == "instructor") {
 				$scope.view.state.supportCall.instructors.forEach(function(instructor) {
@@ -144,39 +143,9 @@ class SupportCallStatusCtrl {
 					}
 				});
 			}
-
-			modalInstance = self.$uibModal.open({
-				templateUrl: 'ContactSupportCallModal.html',
-				controller: ModalContactSupportCallCtrl,
-				size: 'lg',
-				resolve: {
-					supportCallMode: function () {
-						return supportCallMode;
-					},
-					scheduleId: function () {
-						return $scope.view.state.misc.scheduleId;
-					},
-					state: function () {
-						return $scope.view.state;
-					},
-					year: function () {
-						return $scope.year;
-					},
-					termShortCode: function () {
-						return $scope.termShortCode;
-					},
-					selectedParticipants: function () {
-						return selectedParticipants;
-					}
-				}
-			});
-
-			modalInstance.result.then(function () {
-				// This modal does not 'submit' in a traditional sense.
-			},
-			function () {
-				// Modal closed
-			});
+			$scope.view.supportCallMode = supportCallMode;
+			$scope.view.selectedParticipants = selectedParticipants;
+			$scope.view.state.openContactModal = true;
 		};
 
 		this.getPayload();
@@ -184,9 +153,9 @@ class SupportCallStatusCtrl {
 
 
 	getPayload () {
-		var self = this;
-		return self.AuthService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
-			self.SupportCallStatusActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year, self.$route.current.params.termShortCode);
+		var _self = this;
+		return _self.AuthService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
+			_self.SupportCallStatusActionCreators.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year, _self.$route.current.params.termShortCode);
 		});	
 	}
 }

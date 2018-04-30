@@ -14,7 +14,7 @@
 		<!-- Modals -->
 		<ipa-modal
 			is-visible="view.state.openAddSupportCallModal"
-			header-text="Add New Budget Scenario"
+			header-text="Add Support Call"
 			styles="view.modalStyles">
 				<add-support-call-modal
 					ng-if="view.state.openAddSupportCallModal"
@@ -23,9 +23,25 @@
 					year="view.year"
 					term-short-code="view.termShortCode"
 					support-call-mode="view.supportCallMode"
+					selected-participants="view.selectedParticipants"
 					is-visible="view.state.openAddSupportCallModal">
 				</add-support-call-modal>
 		</ipa-modal>
+		<ipa-modal
+			is-visible="view.state.openContactModal"
+			header-text="Contact Support Staff"
+			styles="view.modalStyles">
+				<add-support-call-modal
+					ng-if="view.state.openContactModal"
+					state="view.state"
+					schedule-id="view.state.misc.scheduleId"
+					year="view.year"
+					term-short-code="view.termShortCode"
+					support-call-mode="view.supportCallMode"
+					is-visible="view.state.openContactModal">
+				</add-support-call-modal>
+		</ipa-modal>
+
 		<!-- Toolbar Buttons -->
 		<div class="teaching-call-status teaching-call-status-buttons">
 			<div style="flex: 20 1 0px; display: flex; justify-content: flex-end;">
