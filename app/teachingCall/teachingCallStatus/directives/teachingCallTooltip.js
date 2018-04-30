@@ -29,7 +29,7 @@ let teachingCallTooltip = function ($document, $timeout) {
 					}
 				});
 				// Convert termCodes to term descriptions
-				allTermDescriptions = {
+				let allTermDescriptions = {
 					'05': 'Summer Session 1',
 					'06': 'Summer Special Session',
 					'07': 'Summer Session 2',
@@ -42,8 +42,8 @@ let teachingCallTooltip = function ($document, $timeout) {
 				};
 
 				// Comma Separated term descriptions
-				termDescriptions = "";
-				firstTerm = true;
+				let termDescriptions = "";
+				let firstTerm = true;
 				sortedTerms.forEach(function(term) {
 
 					if (firstTerm) {
