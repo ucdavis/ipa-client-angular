@@ -1,3 +1,5 @@
+import 'TeachingCall/css/teaching-call-status.css';
+
 class TeachingCallStatusCtrl {
 	constructor ($scope, $rootScope, $window, $route, $routeParams, TeachingCallStatusActionCreators, TeachingCallStatusService, AuthService) {
 		this.AuthService = AuthService;

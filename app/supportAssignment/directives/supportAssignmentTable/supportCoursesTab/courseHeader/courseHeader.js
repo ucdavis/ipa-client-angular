@@ -1,3 +1,5 @@
+import './courseHeader.css';
+
 let courseHeader = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',

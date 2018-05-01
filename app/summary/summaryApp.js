@@ -1,3 +1,5 @@
+import './css/summary.css';
+
 // Controllers
 import SummaryCtrl from './SummaryCtrl.js';
 

@@ -1,3 +1,5 @@
+import './studentComments.css';
+
 let studentComments = function (StudentFormActions) {
 	return {
 		restrict: 'E',

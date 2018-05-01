@@ -1,3 +1,5 @@
+import 'TeachingCall/css/teaching-call-form.css';
+
 class TeachingCallFormCtrl {
 	constructor ($scope, $rootScope, $window, $route, $routeParams, $timeout, TeachingCallFormActionCreators, TeachingCallFormService, AuthService) {
 		this.$scope = $scope;

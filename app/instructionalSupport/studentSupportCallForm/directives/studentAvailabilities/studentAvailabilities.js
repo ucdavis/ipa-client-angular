@@ -1,3 +1,5 @@
+import './studentAvailabilities.css';
+
 let studentAvailabilities = function () {
 	return {
 		restrict: 'E',

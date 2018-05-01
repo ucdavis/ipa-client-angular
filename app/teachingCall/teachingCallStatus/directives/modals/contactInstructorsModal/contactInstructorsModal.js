@@ -1,3 +1,5 @@
+import './contact-instructors-modal.css';
+
 let contactInstructorsModal = function (TermService, TeachingCallStatusActionCreators) {
 	return {
 		restrict: 'E',

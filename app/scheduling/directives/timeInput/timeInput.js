@@ -1,3 +1,5 @@
+import './timeInput.css';
+
 /**
  * example:
  * <time-input	time="time"

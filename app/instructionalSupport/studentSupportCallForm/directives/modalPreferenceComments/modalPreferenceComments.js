@@ -1,3 +1,5 @@
+import './modalPreferenceComments.css';
+
 let modalPreferenceComments = function ($rootScope, StudentFormActions) {
 	return {
 		restrict: 'E',

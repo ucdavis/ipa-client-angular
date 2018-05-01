@@ -1,3 +1,5 @@
+import './standardTimeSelector.css';
+
 let standardTimeSelector = function($window, $location, $routeParams, $rootScope, SchedulingActionCreators, Activity) {
 	return {
 		restrict: 'E', // Use this via an element selector <time-pattern-selector></time-pattern-selector>

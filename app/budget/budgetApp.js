@@ -1,3 +1,5 @@
+import './budget.css';
+
 // Controllers
 import BudgetCtrl from './budgetCtrl.js';
 

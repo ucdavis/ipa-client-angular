@@ -1,3 +1,5 @@
+import './assignCourse.css';
+
 let assignCourse = function (SupportActions) {
 	return {
 		restrict: 'E',

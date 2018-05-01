@@ -1,3 +1,5 @@
+import './studentPreferences.css';
+
 let studentPreferences = function () {
 	return {
 		restrict: 'E',

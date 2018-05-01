@@ -1,3 +1,5 @@
+import './addBudgetScenario.css';
+
 let addBudgetScenario = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',

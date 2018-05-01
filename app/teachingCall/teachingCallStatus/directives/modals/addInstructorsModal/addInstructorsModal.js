@@ -1,3 +1,5 @@
+import './add-instructors-modal.css';
+
 let addInstructorsModal = function (TermService, TeachingCallStatusActionCreators) {
 	return {
 		restrict: 'E',

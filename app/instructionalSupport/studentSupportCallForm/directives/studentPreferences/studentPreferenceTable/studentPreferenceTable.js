@@ -1,3 +1,5 @@
+import './studentPreferenceTable.css';
+
 let studentPreferenceTable = function (StudentFormActions) {
 	return {
 		restrict: 'E',

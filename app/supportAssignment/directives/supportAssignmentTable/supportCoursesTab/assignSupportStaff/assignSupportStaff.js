@@ -1,3 +1,5 @@
+import './assignSupportStaff.css';
+
 let assignSupportStaff = function () {
 	return {
 		restrict: 'E',

@@ -1,3 +1,5 @@
+import './assignTagTooltip.css';
+
 let assignTagTooltip = function ($rootScope) {
 	return {
 		restrict: 'E', // Use this via an element selector <ipa-modal></ipa-modal>

@@ -1,3 +1,6 @@
+import './css/teaching-call.css';
+import './css/teaching-call-modal.css';
+
 // Controllers
 import TeachingCallFormCtrl from './teachingCallForm/controllers/TeachingCallFormCtrl.js';
 import TeachingCallStatusCtrl from './teachingCallStatus/controllers/TeachingCallStatusCtrl.js';

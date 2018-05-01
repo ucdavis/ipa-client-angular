@@ -1,3 +1,5 @@
+import './studentFormReview.css';
+
 let studentFormReview = function (StudentFormActions) {
 	return {
 		restrict: 'E',

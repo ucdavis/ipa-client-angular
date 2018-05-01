@@ -1,3 +1,5 @@
+import './addCourseComments.css';
+
 let addCourseComments = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',

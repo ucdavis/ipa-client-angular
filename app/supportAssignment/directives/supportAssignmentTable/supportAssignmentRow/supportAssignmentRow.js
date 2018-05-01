@@ -1,3 +1,5 @@
+import './supportAssignmentRow.css';
+
 let supportAssignmentRow = function ($rootScope) {
 	return {
 		restrict: 'E',

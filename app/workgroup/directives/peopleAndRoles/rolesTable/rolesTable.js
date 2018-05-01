@@ -1,3 +1,5 @@
+import './rolesTable.css';
+
 let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService) {
 	return {
 		restrict: 'E',

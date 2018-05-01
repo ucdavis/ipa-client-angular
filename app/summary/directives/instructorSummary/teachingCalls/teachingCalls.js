@@ -1,3 +1,5 @@
+import './teachingCalls.css';
+
 let teachingCalls = function () {
 	return {
 		restrict: 'E',

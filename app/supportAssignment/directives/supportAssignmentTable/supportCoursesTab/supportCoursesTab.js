@@ -1,3 +1,5 @@
+import './supportCoursesTab.css';
+
 let supportCoursesTab = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',

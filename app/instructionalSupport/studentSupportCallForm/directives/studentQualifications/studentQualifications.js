@@ -1,3 +1,5 @@
+import './studentQualifications.css';
+
 let studentQualifications = function (StudentFormActions) {
 	return {
 		restrict: 'E',

@@ -1,3 +1,5 @@
+import './css/scheduling.css';
+
 // Controllers
 import SchedulingCtrl from './controllers/SchedulingCtrl.js';
 

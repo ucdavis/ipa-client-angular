@@ -2,7 +2,7 @@ const path = require('path');
 var webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ConcatPlugin = require('webpack-concat-plugin');
 
 function injectHashesInLinks (content, path) {
@@ -64,32 +64,41 @@ module.exports = {
     modules: [
       path.resolve(__dirname, "app"),
       "node_modules"
-    ]
+    ],
+    alias: {
+      Workgroup: path.resolve(__dirname, 'app/workgroup/'),
+      TeachingCall: path.resolve(__dirname, 'app/teachingCall/')
+    }
+    
   },
   module: {
     rules: [
-    {
-      test: /\.tsx?$/,
-      use: 'ts-loader',
-      exclude: /node_modules/
-    },
-    {
-      // JS LOADER
-      // Reference: https://github.com/babel/babel-loader
-      // Transpile .js files using babel-loader
-      // Compiles ES6 and ES7 into ES5 code
-      test: /\.js$/,
-      use: [
-        'babel-loader',
-        "eslint-loader"
-      ],
-      exclude: /node_modules/
-    },
-    {
-      test: /\.html$/,
-      loader: 'raw-loader' 
-    }
-  ],
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
+      },
+      {
+        // JS LOADER
+        // Reference: https://github.com/babel/babel-loader
+        // Transpile .js files using babel-loader
+        // Compiles ES6 and ES7 into ES5 code
+        test: /\.js$/,
+        use: [
+          'babel-loader',
+          "eslint-loader"
+        ],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.html$/,
+        loader: 'raw-loader' 
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      }
+    ]
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
@@ -108,7 +117,6 @@ module.exports = {
     ]),
     // Copy css to output /css inside output path (dist)
     new CopyWebpackPlugin([
-      { from: 'app/**/*.css', to: 'css', flatten: true },
       { from: 'vendor/css/**/*.css', to: 'css', flatten: true },
       { from: 'node_modules/bootstrap/dist/css/**/*.css', to: 'css', flatten: true }
     ]),

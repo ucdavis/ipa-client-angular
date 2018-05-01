@@ -1,3 +1,6 @@
+import './css/assignments.css';
+import './css/teaching-call-modal.css';
+
 // Controllers
 import AssignmentCtrl from './controllers/AssignmentCtrl.js';
 

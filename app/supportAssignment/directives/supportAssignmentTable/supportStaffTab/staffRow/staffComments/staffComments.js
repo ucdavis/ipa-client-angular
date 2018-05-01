@@ -1,3 +1,5 @@
+import './staffComments.css';
+
 let staffComments = function ($rootScope) {
 	return {
 		restrict: 'E',

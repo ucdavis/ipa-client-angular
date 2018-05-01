@@ -1,3 +1,5 @@
+import './budgetNav.css';
+
 let budgetNav = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',

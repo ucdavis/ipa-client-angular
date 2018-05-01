@@ -1,3 +1,5 @@
+import './lineItemFilters.css';
+
 let lineItemFilters = function(BudgetActions) {
 	return {
 		restrict: 'E',

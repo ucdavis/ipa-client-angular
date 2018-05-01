@@ -1,3 +1,5 @@
+import './scheduledCourses.css';
+
 let scheduledCourses = function ($rootScope) {
 	return {
 		restrict: 'E',

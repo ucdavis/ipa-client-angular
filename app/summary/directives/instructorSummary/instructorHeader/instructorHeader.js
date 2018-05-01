@@ -1,3 +1,5 @@
+import './instructorHeader.css';
+
 let instructorHeader = function ($routeParams, $rootScope, $location, $window) {
 	return {
 		restrict: 'E',

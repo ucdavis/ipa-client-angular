@@ -1,3 +1,5 @@
+import './budgetSummary.css';
+
 let budgetSummary = function () {
 	return {
 		restrict: 'E',

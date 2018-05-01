@@ -1,3 +1,5 @@
+import './crnAvailable.css';
+
 let crnAvailable = function (StudentFormActions) {
 	return {
 		restrict: 'E',

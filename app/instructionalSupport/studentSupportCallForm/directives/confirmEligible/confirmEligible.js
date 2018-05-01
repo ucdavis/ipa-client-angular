@@ -1,3 +1,5 @@
+import './confirmEligible.css';
+
 let confirmEligible = function ($rootScope, StudentFormActions) {
 	return {
 		restrict: 'E',

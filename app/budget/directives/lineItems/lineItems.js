@@ -1,3 +1,5 @@
+import './lineItems.css';
+
 let lineItems = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',

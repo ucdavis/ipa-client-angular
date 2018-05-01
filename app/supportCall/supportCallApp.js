@@ -1,3 +1,7 @@
+import './supportCallStatus.css';
+import './supportCallConfig.css';
+import './modalAddSupportCall.css';
+
 // Controllers
 import SupportCallStatusCtrl from './controllers/SupportCallStatusCtrl.js';
 

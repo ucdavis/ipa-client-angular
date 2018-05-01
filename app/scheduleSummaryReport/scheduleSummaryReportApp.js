@@ -1,7 +1,9 @@
-// ScheduleSummaryReport controllers
+import './css/scheduleSummaryReport.css';
+
+// Controllers
 import ScheduleSummaryReportCtrl from './controllers/scheduleSummaryReportCtrl.js';
 
-// ScheduleSummaryReport services
+// Services
 import ScheduleSummaryReportActionCreators from './services/scheduleSummaryReportActionCreators.js';
 import ScheduleSummaryReportService from './services/scheduleSummaryReportService.js';
 import ScheduleSummaryReportStateService from './services/scheduleSummaryReportStateService.js';

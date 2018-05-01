@@ -1,3 +1,5 @@
+import './gridAvailable.css';
+
 let gridAvailable = function (StudentFormActions, $timeout) {
 	return {
 		restrict: 'E',

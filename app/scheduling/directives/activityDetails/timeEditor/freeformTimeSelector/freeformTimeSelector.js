@@ -1,3 +1,5 @@
+import './freeformTimeSelector.css';
+
 let freeformTimeSelector = function (SchedulingActionCreators) {
 	return {
 		restrict: "E",

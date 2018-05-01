@@ -1,3 +1,5 @@
+import './deleteCourseModal.css';
+
 let deleteCourseModal = function ($rootScope, CourseActionCreators, $routeParams) {
 	return {
 		restrict: 'E',

@@ -1,3 +1,5 @@
+import './budgetConfig.css';
+
 let budgetConfig = function () {
 	return {
 		restrict: 'E',

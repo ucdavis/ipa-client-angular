@@ -1,3 +1,5 @@
+import './css/course.css';
+
 // Controllers
 import CourseCtrl from './controllers/CourseCtrl.js';
 

@@ -1,3 +1,5 @@
+import './viewAvailabilityModal.css';
+
 let viewAvailabilityModal = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',

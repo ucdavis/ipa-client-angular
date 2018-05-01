@@ -1,3 +1,5 @@
+import './css/report.css';
+
 // Controllers
 import RegistrarReconciliationReportCtrl from './controllers/registrarReconciliationReportCtrl.js';
 

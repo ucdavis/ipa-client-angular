@@ -1,3 +1,5 @@
+import './supportAssignmentSearch.css';
+
 let supportAssignmentSearch = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',

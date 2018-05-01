@@ -1,3 +1,5 @@
+import './staffHeader.css';
+
 let staffHeader = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',

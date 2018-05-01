@@ -1,3 +1,5 @@
+import './supportStaffTab.css';
+
 let supportStaffTab = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',

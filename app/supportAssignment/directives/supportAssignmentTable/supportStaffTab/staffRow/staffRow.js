@@ -1,3 +1,5 @@
+import './staffRow.css';
+
 let staffRow = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',

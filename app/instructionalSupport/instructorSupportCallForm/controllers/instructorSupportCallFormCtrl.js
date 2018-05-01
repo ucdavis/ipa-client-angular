@@ -1,3 +1,6 @@
+import './../instructorSupportCallForm.css';
+import './../instructorComment.css';
+
 /**
  * @ngdoc function
  * @name ipaClientAngularApp.controller:InstructorSupportCallFormCtrl

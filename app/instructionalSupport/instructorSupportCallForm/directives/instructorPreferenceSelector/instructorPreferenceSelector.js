@@ -1,3 +1,5 @@
+import './instructorPreferenceSelector.css';
+
 /**
  * Provides the main course table in the Courses View
  */

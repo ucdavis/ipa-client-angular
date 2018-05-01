@@ -1,3 +1,5 @@
+import './studentPreferenceSelector.css';
+
 let studentPreferenceSelector = function (StudentFormActions) {
 	return {
 		restrict: 'E',

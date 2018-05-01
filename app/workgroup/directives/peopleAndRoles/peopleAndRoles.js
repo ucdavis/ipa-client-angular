@@ -1,3 +1,5 @@
+import './peopleAndRoles.css';
+
 let peopleAndRoles = function ($rootScope, WorkgroupActionCreators) {
 	return {
 		restrict: 'E',

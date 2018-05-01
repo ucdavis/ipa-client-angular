@@ -1,3 +1,5 @@
+import './css/teachingCallResponseReport.css';
+
 // Controller imports
 import TeachingCallResponseReportCtrl from './controllers/teachingCallResponseReportCtrl.js';
 

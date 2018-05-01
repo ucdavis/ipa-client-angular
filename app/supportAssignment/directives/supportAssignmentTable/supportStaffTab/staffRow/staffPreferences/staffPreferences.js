@@ -1,3 +1,5 @@
+import './staffPreferences.css';
+
 let staffPreferences = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',

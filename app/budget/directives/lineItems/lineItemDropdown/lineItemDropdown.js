@@ -1,3 +1,5 @@
+import './lineItemDropdown.css';
+
 let lineItemDropdown = function (BudgetActions) {
 	return {
 		restrict: 'E',

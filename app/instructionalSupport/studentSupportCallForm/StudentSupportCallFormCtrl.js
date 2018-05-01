@@ -1,3 +1,5 @@
+import './studentSupportCallForm.css';
+
 /**
  * @ngdoc function
  * @name ipaClientAngularApp.controller:StudentSupportCallFormCtrl

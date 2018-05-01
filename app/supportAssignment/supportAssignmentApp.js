@@ -1,3 +1,5 @@
+import './supportAssignment.css';
+
 // Controllers
 import SupportAssignmentCtrl from './SupportAssignmentCtrl.js';
 

@@ -1,3 +1,5 @@
+import './instructorCostConfig.css';
+
 let instructorCostConfig = function (BudgetActions) {
 	return {
 		restrict: 'E',

@@ -1,3 +1,5 @@
+import './budgetScenarioDropdown.css';
+
 let budgetScenarioDropdown = function($window, $location, $routeParams, $rootScope, BudgetActions) {
 	return {
 		restrict: 'E', // Use this via an element selector <budget-scenario-dropdown></budget-scenario-dropdown>

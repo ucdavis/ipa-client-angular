@@ -1,3 +1,5 @@
+import './reviewTools.css';
+
 let reviewTools = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',

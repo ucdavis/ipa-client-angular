@@ -1,3 +1,5 @@
+import './groupCostConfig.css';
+
 let groupCostConfig = function (BudgetActions) {
 	return {
 		restrict: 'E',

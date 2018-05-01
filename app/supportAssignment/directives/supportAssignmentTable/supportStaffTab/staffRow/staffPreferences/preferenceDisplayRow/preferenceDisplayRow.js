@@ -1,3 +1,5 @@
+import './preferenceDisplayRow.css';
+
 let preferenceDisplayRow = function () {
 	return {
 		restrict: 'E',

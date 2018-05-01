@@ -1,3 +1,5 @@
+import './css/workgroup.css';
+
 // Controllers
 import LocationCtrl from './controllers/LocationCtrl.js';
 import TagCtrl from './controllers/TagCtrl.js';

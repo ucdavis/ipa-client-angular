@@ -1,3 +1,5 @@
+import './courseCosts.css';
+
 let courseCosts = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',

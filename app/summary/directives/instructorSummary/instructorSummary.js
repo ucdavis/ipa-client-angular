@@ -1,3 +1,5 @@
+import './instructorSummary.css';
+
 let instructorSummary = function () {
 	return {
 		restrict: 'E',

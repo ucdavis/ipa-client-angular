@@ -1,3 +1,5 @@
+import './css/admin.css';
+
 // Controllers
 import AdminCtrl from './controllers/adminCtrl.js';
 

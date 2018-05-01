@@ -1,3 +1,5 @@
+import './supportAssignmentTable.css';
+
 let supportAssignmentTable = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',

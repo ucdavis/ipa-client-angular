@@ -1,3 +1,5 @@
+import './workgroupSummary.css';
+
 let workgroupSummary = function () {
 	return {
 		restrict: 'E',

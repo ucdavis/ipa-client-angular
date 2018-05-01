@@ -1,3 +1,5 @@
+import './supportCalls.css';
+
 let supportCalls = function () {
 	return {
 		restrict: 'E',

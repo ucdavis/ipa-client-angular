@@ -1,3 +1,5 @@
+import './courseAppointmentInput.css';
+
 let courseAppointmentInput = function (SupportActions) {
 	return {
 		restrict: 'E',

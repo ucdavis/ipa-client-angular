@@ -1,3 +1,5 @@
+import './generalConfig.css';
+
 let generalConfig = function (TermService, BudgetActions) {
 	return {
 		restrict: 'E',
