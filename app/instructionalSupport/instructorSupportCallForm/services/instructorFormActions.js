@@ -1,61 +1,68 @@
+
 class InstructorFormActions {
-	constructor ($rootScope, $window, InstructorFormService, InstructorFormStateService) {
+	constructor ($rootScope, $window, InstructorFormService, InstructorFormStateService, ActionTypes) {
+		this.$rootScope = $rootScope;
+		this.$window = $window;
+		this.InstructorFormService = InstructorFormService;
+		this.InstructorFormStateService = InstructorFormStateService;
+		this.ActionTypes = ActionTypes;
+
 		return {
 			getInitialState: function (workgroupId, year, termShortCode) {
-				instructionalSupportInstructorFormService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
+				InstructorFormService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
 					var action = {
-						type: INIT_STATE,
+						type: ActionTypes.INIT_STATE,
 						payload: payload,
 						year: year
 					};
-					instructionalSupportInstructorFormStateService.reduce(action);
+					InstructorFormStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not load instructional support initial state.", type: "ERROR" });
 				});
 			},
 			addInstructorPreference: function (sectionGroupId, supportStaffId) {
-				instructionalSupportInstructorFormService.addInstructorPreference(sectionGroupId, supportStaffId).then(function (newPreference) {
+				InstructorFormService.addInstructorPreference(sectionGroupId, supportStaffId).then(function (newPreference) {
 					$rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
 					var action = {
-						type: ADD_INSTRUCTOR_PREFERENCE,
+						type: ActionTypes.ADD_INSTRUCTOR_PREFERENCE,
 						payload:  {
 							newPreference: newPreference
 						}
 					};
-					instructionalSupportInstructorFormStateService.reduce(action);
+					InstructorFormStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not add instructor preference.", type: "ERROR" });
 				});
 			},
 			updateSupportCallResponse: function (supportCallResponse) {
-				instructionalSupportInstructorFormService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
+				InstructorFormService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
 					var action = {
-						type: UPDATE_SUPPORT_CALL_RESPONSE,
+						type: ActionTypes.UPDATE_SUPPORT_CALL_RESPONSE,
 						payload: payload
 					};
-					instructionalSupportInstructorFormStateService.reduce(action);
+					InstructorFormStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update preference.", type: "ERROR" });
 				});
 			},
 			deleteInstructorPreference: function (preference, studentPreferences) {
-				instructionalSupportInstructorFormService.deleteInstructorPreference(preference.id).then(function (payload) {
+				InstructorFormService.deleteInstructorPreference(preference.id).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Removed Preference", type: "SUCCESS" });
 					var action = {
-						type: DELETE_INSTRUCTOR_PREFERENCE,
+						type: ActionTypes.DELETE_INSTRUCTOR_PREFERENCE,
 						payload: {
 							preference: preference,
 							studentPreferences: studentPreferences
 						}
 					};
-					instructionalSupportInstructorFormStateService.reduce(action);
+					InstructorFormStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not remove preference.", type: "ERROR" });
 				});
 			},
 			submitInstructorPreferences: function (supportCallResponse, workgroupId, year) {
-				instructionalSupportInstructorFormService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
+				InstructorFormService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
 	
 					var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor";
@@ -65,13 +72,13 @@ class InstructorFormActions {
 				});
 			},
 			updateInstructorPreferencesOrder: function (preferenceIds, scheduleId, sectionGroupId) {
-				instructionalSupportInstructorFormService.updatePreferencesOrder(preferenceIds, scheduleId, sectionGroupId).then(function (payload) {
+				InstructorFormService.updatePreferencesOrder(preferenceIds, scheduleId, sectionGroupId).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
 					var action = {
-						type: UPDATE_PREFERENCES_ORDER,
+						type: ActionTypes.UPDATE_PREFERENCES_ORDER,
 						payload: payload
 					};
-					instructionalSupportInstructorFormStateService.reduce(action);
+					InstructorFormStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update preference order.", type: "ERROR" });
 				});
@@ -83,6 +90,6 @@ class InstructorFormActions {
 	}
 }
 
-InstructorFormActions.$inject = ['$rootScope', '$window', 'InstructorFormService', 'InstructorFormStateService'];
+InstructorFormActions.$inject = ['$rootScope', '$window', 'InstructorFormService', 'InstructorFormStateService', 'ActionTypes'];
 
 export default InstructorFormActions;

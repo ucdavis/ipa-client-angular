@@ -1,12 +1,17 @@
 class InstructorFormStateService {
-	constructor ($rootScope, $log, InstructorFormSelectors) {
+	constructor ($rootScope, $log, InstructorFormSelectors, ActionTypes) {
+		this.$rootScope = $rootScope;
+		this.$log = $log;
+		this.InstructorFormSelectors = InstructorFormSelectors;
+		this.ActionTypes = ActionTypes;
+
 		return {
 			_state: {},
 			_sectionGroupReducers: function (action, sectionGroups) {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						sectionGroups = {
 							ids: [],
 							list: {}
@@ -27,8 +32,8 @@ class InstructorFormStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
-						courses = {
+					case ActionTypes.INIT_STATE:
+						let courses = {
 							ids: [],
 							list: {}
 						};
@@ -48,7 +53,7 @@ class InstructorFormStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						misc = {};
 						misc.scheduleId = action.payload.scheduleId;
 						return misc;
@@ -60,7 +65,7 @@ class InstructorFormStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						supportStaff = {
 							ids: [],
 							list: {}
@@ -80,7 +85,7 @@ class InstructorFormStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						studentPreferences = {
 							ids: [],
 							list: {}
@@ -100,7 +105,7 @@ class InstructorFormStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						instructorPreferences = {
 							ids: [],
 							list: {}
@@ -112,12 +117,12 @@ class InstructorFormStateService {
 						});
 	
 						return instructorPreferences;
-					case ADD_INSTRUCTOR_PREFERENCE:
+					case ActionTypes.ADD_INSTRUCTOR_PREFERENCE:
 						var preference = action.payload.newPreference;
 						instructorPreferences.ids.push(preference.id);
 						instructorPreferences.list[preference.id] = preference;
 						return instructorPreferences;
-					case DELETE_INSTRUCTOR_PREFERENCE:
+					case ActionTypes.DELETE_INSTRUCTOR_PREFERENCE:
 						var preferenceId = action.payload.preference.id;
 						var index = instructorPreferences.ids.indexOf(preferenceId);
 	
@@ -131,10 +136,10 @@ class InstructorFormStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_STATE:
+					case ActionTypes.INIT_STATE:
 						supportCallResponse = action.payload.instructorSupportCallResponse;
 						return supportCallResponse;
-					case UPDATE_SUPPORT_CALL_RESPONSE:
+					case ActionTypes.UPDATE_SUPPORT_CALL_RESPONSE:
 						supportCallResponse = action.payload;
 						return supportCallResponse;
 					default:
@@ -160,7 +165,7 @@ class InstructorFormStateService {
 				let newPageState = {};
 				newPageState.supportCallResponse = angular.copy(scope._state.supportCallResponse);
 				newPageState.misc = angular.copy(scope._state.misc);
-				newPageState.sectionGroups = instructorSupportCallFormSelectors.generateSectionGroups(
+				newPageState.sectionGroups = InstructorFormSelectors.generateSectionGroups(
 																																							scope._state.sectionGroups,
 																																							scope._state.supportStaff,
 																																							scope._state.studentPreferences,
@@ -174,6 +179,6 @@ class InstructorFormStateService {
 	}
 }
 
-InstructorFormStateService.$inject = ['$rootScope', '$log', 'InstructorFormSelectors'];
+InstructorFormStateService.$inject = ['$rootScope', '$log', 'InstructorFormSelectors', 'ActionTypes'];
 
 export default InstructorFormStateService;

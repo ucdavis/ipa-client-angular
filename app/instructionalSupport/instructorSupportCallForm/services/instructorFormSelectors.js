@@ -4,7 +4,7 @@ class InstructorFormSelectors {
 			generateSectionGroups: function (sectionGroups, supportStaff, studentPreferences, instructorPreferences, courses) {
 				var self = this;
 	
-				newSectionGroups = [];
+				let newSectionGroups = [];
 	
 				sectionGroups.ids.forEach( function (sectionGroupId) {
 					var sectionGroup = sectionGroups.list[sectionGroupId];
