@@ -97,7 +97,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 		_calculateSectionGroupFinancialCosts: function(sectionGroup) {
 			var budget = budgetReducers._state.budget;
 
-			// Course Costs
+			// Support Costs
 			if (sectionGroup.overrideReaderAppointments == null) {
 				sectionGroup.readerCost = 0;
 			} else {
