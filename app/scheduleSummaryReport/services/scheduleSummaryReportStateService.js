@@ -198,7 +198,7 @@ class ScheduleSummaryReportStateService {
 			}
 		};
 	}
-};
+}
 
 ScheduleSummaryReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup', 'ActionTypes'];
 

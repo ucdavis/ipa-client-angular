@@ -7,7 +7,7 @@
  */
 
  class SummaryCtrl {
-	 constructor ($scope, $route, $routeParams, $rootScope, $location, AuthService, SummaryActionCreators) {
+		constructor ($scope, $route, $routeParams, $rootScope, $location, AuthService, SummaryActionCreators) {
 		var self = this;
 		this.$scope = $scope;
 		this.$route = $route;

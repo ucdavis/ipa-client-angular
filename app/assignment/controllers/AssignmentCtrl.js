@@ -25,7 +25,7 @@ class AssignmentCtrl {
 			workgroupId: $routeParams.workgroupId
 		};
 
-		$scope.unavailabilityModalStyles = { "width": "62%" }
+		$scope.unavailabilityModalStyles = { "width": "62%" };
 		$scope.isCommentModalOpen = false;
 		$scope.isUnavailabilityModalOpen = false;
 

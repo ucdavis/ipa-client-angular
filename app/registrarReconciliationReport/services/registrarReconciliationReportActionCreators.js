@@ -262,7 +262,7 @@ class RegistrarReconciliationReportActionCreators {
 				});
 			}
 		};	
-	};
+	}
 }
 
 RegistrarReconciliationReportActionCreators.$inject = ['RegistrarReconciliationReportStateService', 'RegistrarReconciliationReportService', '$rootScope', 'ActionTypes'];

@@ -19,7 +19,7 @@ class ScheduleSummaryReportService {
 			}
 		};
 	}
-};
+}
 
 ScheduleSummaryReportService.$inject = ['ApiService'];
 

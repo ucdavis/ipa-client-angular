@@ -529,7 +529,7 @@ class SummaryStateService {
 		formattedDate = moment(formattedDate, "YYYY-MM-DD").format('LL');
 	
 		return formattedDate;
-	};
+	}
 }
 
 SummaryStateService.$inject = ['$rootScope', '$log', 'Course', 'ScheduleTermState', 'SectionGroup', 'Section', 'Tag', 'Event', 'Activity', 'TeachingCall', 'TeachingCallReceipt', 'ActionTypes'];

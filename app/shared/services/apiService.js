@@ -66,7 +66,7 @@ class ApiService {
 				return deferred.promise;
 			}
 		};
-	};
+	}
 }
 
 export default ApiService;

@@ -806,7 +806,7 @@ class AssignmentStateService {
 		var termCode = year + term;
 	
 		return termCode;
-	};
+	}
 	
 	// Sorts a list of termIds into chronological order
 	orderTermsChronologically (terms) {
@@ -819,7 +819,7 @@ class AssignmentStateService {
 		});
 	
 		return terms;
-	};
+	}
 	
 	// Creates a buildfield to store enabled term filters
 	// Always 9 digits (skips 4th unused term), and in chronologic order
@@ -836,7 +836,7 @@ class AssignmentStateService {
 			}
 		});
 		return termsBlob;
-	};
+	}
 	
 	deserializeTermFiltersBlob (termFiltersBlob) {
 		var termFiltersArray = [];
@@ -850,7 +850,7 @@ class AssignmentStateService {
 		}
 	
 		return termFiltersArray;
-	};
+	}
 }
 
 AssignmentStateService.$inject = ['$rootScope', '$log', 'SectionGroup', 'Course', 'ScheduleTermState',

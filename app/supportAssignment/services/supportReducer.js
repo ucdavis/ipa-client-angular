@@ -569,7 +569,7 @@ class SupportReducer {
 		});
 
 		return courseIds;
-	};
+	}
 }
 
 SupportReducer.$inject = ['$rootScope', '$log', 'SupportSelectors', 'ActionTypes'];

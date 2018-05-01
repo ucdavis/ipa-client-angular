@@ -38,7 +38,7 @@ function config ($routeProvider) {
 		template: require('./teachingCallStatus/templates/TeachingCallStatus.html'),
 		controller: "TeachingCallStatusCtrl"
 	});
-};
+}
 
 config.$inject = ['$routeProvider'];
 

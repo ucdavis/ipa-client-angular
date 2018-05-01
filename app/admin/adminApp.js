@@ -29,7 +29,7 @@ function config ($routeProvider) {
 	.otherwise({
 		redirectTo: "/"
 	});
-};
+}
 
 config.$inject = ['$routeProvider'];
 

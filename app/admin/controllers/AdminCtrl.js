@@ -21,7 +21,7 @@ class AdminCtrl {
 
 		this.getPayload().then( function() {
 			self.initialize();
-		})
+		});
 	}
 
 	initialize () {

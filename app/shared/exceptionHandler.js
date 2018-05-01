@@ -24,7 +24,7 @@ function exceptionHandler($provide) {
 			}
 		};
 	});
-};
+}
 
 exceptionHandler.$inject = ['$provide'];
 

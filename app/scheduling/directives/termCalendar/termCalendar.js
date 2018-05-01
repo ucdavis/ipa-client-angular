@@ -380,8 +380,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				}
 			
 				return $(window).height() - 178;
-			}
-
+			};
 		}
 	};
 };

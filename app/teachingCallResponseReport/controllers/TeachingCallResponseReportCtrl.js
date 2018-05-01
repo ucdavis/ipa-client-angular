@@ -33,19 +33,19 @@ class TeachingCallResponseReportCtrl {
 
 	getTermName (term) {
 		return this.termService.getTermName(term);
-	};
+	}
 
 	download () {
 		this.teachingCallResponseReportService.download($scope.workgroupId, $scope.year);
-	};
+	}
 
 	getPayload () {
 		var self = this;
 		return self.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
 			return self.teachingCallResponseReportActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year);
 		});
-	};
-};
+	}
+}
 
 TeachingCallResponseReportCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'TeachingCallResponseReportActionCreators', 'AuthService', 'TeachingCallResponseReportService', 'TermService'];
 

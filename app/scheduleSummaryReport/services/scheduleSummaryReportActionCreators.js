@@ -69,7 +69,7 @@ class ScheduleSummaryReportActionCreators {
 				return subjectCodes;
 			}
 		};
-	};
+	}
 }
 
 ScheduleSummaryReportActionCreators.$inject = ['ScheduleSummaryReportStateService', 'ScheduleSummaryReportService', '$rootScope', 'DwService', 'TermService', 'ActionTypes'];

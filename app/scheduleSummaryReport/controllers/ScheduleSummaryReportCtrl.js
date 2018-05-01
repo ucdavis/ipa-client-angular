@@ -116,7 +116,7 @@ class ScheduleSummaryReportCtrl {
 
 		return earliestTermCode.slice(-2);
 	}
-};
+}
 
 
 ScheduleSummaryReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$route', 'Term', 'ScheduleSummaryReportActionCreators', 'AuthService', 'ScheduleSummaryReportService'];

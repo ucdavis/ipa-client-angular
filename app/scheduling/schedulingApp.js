@@ -43,7 +43,7 @@ function config ($routeProvider) {
 		}
 	});
 
-};
+}
 
 config.$inject = ['$routeProvider'];
 
@@ -88,11 +88,11 @@ const schedulingApp = angular.module("schedulingApp", dependencies)
 // Eventually we will want to migrate away from uib-popover-template as the library is not being updated and is not webpack friendly
 var addSharedActivityList = require('./templates/addSharedActivityList.html');
 schedulingApp.run(["$templateCache",($templateCache)=>{
-	$templateCache.put("addSharedActivityList", addSharedActivityList)
+	$templateCache.put("addSharedActivityList", addSharedActivityList);
 }]);
 var addActivityList = require('./templates/addActivityList.html');
 schedulingApp.run(["$templateCache",($templateCache)=>{
-	$templateCache.put("addActivityList", addActivityList)
+	$templateCache.put("addActivityList", addActivityList);
 }]);
 
 export default schedulingApp;

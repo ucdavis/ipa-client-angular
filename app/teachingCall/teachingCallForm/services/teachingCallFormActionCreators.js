@@ -131,7 +131,7 @@ class TeachingCallFormActionCreators {
 				$rootScope.$emit('toast', { message: "Preferences saved.", type: "SUCCESS" });
 				TeachingCallFormStateService.reduce(action);
 			}
-		}
+		};
 	}
 }
 

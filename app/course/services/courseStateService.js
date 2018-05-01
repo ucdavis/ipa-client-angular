@@ -580,7 +580,7 @@ class CourseStateService {
 		});
 
 		return termsBlob;
-	};
+	}
 
 	deserializeTermFiltersBlob (termFiltersBlob) {
 		var termFiltersArray = [];
@@ -594,7 +594,7 @@ class CourseStateService {
 		}
 
 		return termFiltersArray;
-	};
+	}
 }
 
 CourseStateService.$inject = ['$rootScope', '$log', 'Course', 'Term', 'SectionGroup', 'Section', 'Tag', 'ActionTypes'];

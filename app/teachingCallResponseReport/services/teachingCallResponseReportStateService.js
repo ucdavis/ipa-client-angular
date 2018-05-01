@@ -233,7 +233,7 @@ class TeachingCallResponseReportStateService {
 				});
 			}
 		};	
-	};
+	}
 
 	/**
 	 * @param  {array} blob A 75 length array representing unavailabilities
@@ -254,7 +254,7 @@ class TeachingCallResponseReportStateService {
 		descriptions.push(self.describeDayArray(hoursArray.slice(60,74), "F"));
 
 		return descriptions;
-	};
+	}
 
 	describeDayArray (dayArray, dayCode) {
 		var self = this;
@@ -295,14 +295,14 @@ class TeachingCallResponseReportStateService {
 		descriptions.times = blocks.join(", ");
 
 		return descriptions;
-	};
+	}
 
 	blockDescription (startTime, endTime) {
 		var start = (startTime > 12 ? (startTime - 12) + "pm" : startTime + "am" );
 		var end = (endTime > 12 ? (endTime - 12) + "pm" : endTime + "am" );
 
 		return start + "-" + end;
-	};
+	}
 }
 
 TeachingCallResponseReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup', 'ActionTypes', 'StringService'];

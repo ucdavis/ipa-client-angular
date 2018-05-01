@@ -19,7 +19,7 @@ class TeachingCallResponseReportActionCreators {
 				});
 			}
 		};	
-	};
+	}
 }
 
 TeachingCallResponseReportActionCreators.$inject = ['TeachingCallResponseReportStateService', 'TeachingCallResponseReportService', '$rootScope', 'ActionTypes'];

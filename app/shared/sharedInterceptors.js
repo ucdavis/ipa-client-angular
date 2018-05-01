@@ -43,7 +43,7 @@ export function slowConnectionInterceptor () {
 			return $q.reject(rejection);
 		}
 	};
-};
+}
 
 export function tokenValidatorInterceptor () {
 	return {
@@ -61,4 +61,4 @@ export function tokenValidatorInterceptor () {
 			return $q.reject(rejection);
 		}
 	};
-};
+}

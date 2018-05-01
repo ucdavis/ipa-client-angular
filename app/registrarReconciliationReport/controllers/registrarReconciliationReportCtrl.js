@@ -19,7 +19,7 @@ class registrarReconciliationReportCtrl {
 		this.getPayload().then( function() {
 			self.initialize();
 		});
-	};
+	}
 
 	getPayload () {
 		var self = this;
@@ -40,7 +40,7 @@ class registrarReconciliationReportCtrl {
 				term.code
 			);
 		});	
-	};
+	}
 
 	initialize () {
 		var self = this;
@@ -98,7 +98,7 @@ class registrarReconciliationReportCtrl {
 			let fullTerm = slotYear + shortTermCode;
 			this.$scope.fullTerms.push(fullTerm);
 		}
-	};
+	}
 
 	calculateCurrentTermShortCode (termStates) {
 		var earliestTermCode = null;
@@ -119,7 +119,7 @@ class registrarReconciliationReportCtrl {
 		}
 	
 		return earliestTermCode.slice(-2);
-	};
+	}
 }
 
 registrarReconciliationReportCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Term', 'RegistrarReconciliationReportActionCreators', 'AuthService'];

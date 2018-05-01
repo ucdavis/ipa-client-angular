@@ -280,6 +280,6 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 			}
 		});
 	}]
-)
+);
 
 export default sharedApp;

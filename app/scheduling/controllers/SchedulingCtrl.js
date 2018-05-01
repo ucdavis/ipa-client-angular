@@ -13,8 +13,8 @@ class SchedulingCtrl {
 		this.$route = $route;
 		this.$routeParams = $routeParams;
 		this.Activity = Activity;
-		this.Term = Term
-		this.SchedulingActionCreators = SchedulingActionCreators
+		this.Term = Term;
+		this.SchedulingActionCreators = SchedulingActionCreators;
 		this.AuthService = AuthService;
 
 		$scope.workgroupId = $routeParams.workgroupId;

@@ -211,7 +211,7 @@ class SchedulingActionCreators {
 					$rootScope.$emit('toast', { message: "Could not get activities.", type: "ERROR" });
 				});
 			}
-		}
+		};
 	}
 }
 

@@ -42,7 +42,7 @@ function config ($routeProvider) {
 		redirectTo: "/"
 	});
 
-};
+}
 
 config.$inject = ['$routeProvider'];
 

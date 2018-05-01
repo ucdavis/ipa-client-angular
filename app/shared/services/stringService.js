@@ -1,10 +1,12 @@
 class StringService {
-  constructor () {}
+  constructor () {
+    // Intentionally blank
+  }
 
   // Returns false on null, undefined, zero characters, or only whitespace
   isEmpty () {
     return (!this || this.length === 0 || !this.trim());
-  };
+  }
 
   // Returns the appropriate suffix, e.g. 1st, 2nd, 3rd, 4th, etc.
   appendOrdinalSuffix () {
@@ -20,17 +22,17 @@ class StringService {
       return this + "rd";
     }
     return this + "th";
-  };
+  }
 
   // Removes leading zeroes from a number
   toNumber () {
     return Number(this).toString();
-  };
+  }
 
   // Converts a 4-digit year to academic year format. Example: 2015 -> 2015-16
   yearToAcademicYear () {
     return this + "-" + (Number(this) + 1).toString().slice(-2);
-  };
+  }
 
   /**
    * Converts 24 'military time' to 12 hour am/pm time
@@ -51,7 +53,7 @@ class StringService {
       // Case "1300"
       return moment(this, "HHmm").format(returnFormat);
     }
-  };
+  }
 
   /**
    * Returns the registrar's name for the term code
@@ -80,7 +82,7 @@ class StringService {
     var description = excludeYear ? "" : year + ' ';
     description += _allTerms[code];
     return description;
-  };
+  }
 
   getTermDisplayName () {
     var code = this;
@@ -102,7 +104,7 @@ class StringService {
     };
 
     return termDescriptions[code];
-  };
+  }
 
   // Turns '2016-10-01' into 'October 1st 2016'
   toFullDate () {
@@ -111,7 +113,7 @@ class StringService {
     }
 
     return moment(this, "YYYY-MM-DD").format('LL');
-  };
+  }
 
   // Turns 'D' into 'Discussion'
   getActivityCodeDescription () {
@@ -151,7 +153,7 @@ class StringService {
       'Z': "Term Paper"
     };
     return codeDescriptions[this];
-  };
+  }
 
   // Turns 0101010 into MWF
   getWeekDays () {
@@ -168,7 +170,7 @@ class StringService {
     });
 
     return dayStr;
-  };
+  }
 
   setCharAt(str,index,newChar) {
     if (index > str.length-1) {

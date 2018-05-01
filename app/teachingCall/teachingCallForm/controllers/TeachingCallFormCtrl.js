@@ -259,6 +259,6 @@ class TeachingCallFormCtrl {
 	}
 }
 
-TeachingCallFormCtrl.$inject = ['$scope', '$rootScope', '$window', '$route', '$routeParams', '$timeout', 'TeachingCallFormActionCreators', 'TeachingCallFormService', 'AuthService']
+TeachingCallFormCtrl.$inject = ['$scope', '$rootScope', '$window', '$route', '$routeParams', '$timeout', 'TeachingCallFormActionCreators', 'TeachingCallFormService', 'AuthService'];
 
 export default TeachingCallFormCtrl;
