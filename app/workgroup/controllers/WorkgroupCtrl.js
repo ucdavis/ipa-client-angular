@@ -6,31 +6,26 @@
  * Controller of the ipaClientAngularApp
  */
 class WorkgroupCtrl {
-	constructor ($scope, $rootScope, $route, $routeParams, $location, $uibModal, WorkgroupActionCreators) {
+	constructor ($scope, $rootScope, $route, $routeParams, $location, WorkgroupActionCreators, AuthService) {
+		this.$scope = $scope;
+		this.AuthService = AuthService;
+		this.$route = $route;
+		this.$routeParams = $routeParams;
+		this.$location = $location;
+		this.WorkgroupActionCreators = WorkgroupActionCreators;
+		this.AuthService = AuthService;
 		$scope.ROWS_PER_HEADER = 20;
 
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.view = {};
 
-	}
-
-	initialize () {
 		$rootScope.$on('workgroupStateChanged', function (event, data) {
 			$scope.view.state = data;
 		});
 
 		$scope.openImpersonateModal = function() {
-			modalInstance = $uibModal.open({
-				templateUrl: 'ModalImpersonate.html',
-				controller: ModalImpersonateCtrl,
-				size: 'lg',
-				resolve: {
-					state: function () {
-						return $scope.view.state;
-					}
-				}
-			});
+			$scope.view.isImpersonationModalOpen = true;
 		};
 
 		$scope.setActiveTab = function (tabName) {
@@ -55,16 +50,13 @@ class WorkgroupCtrl {
 			// Otherwise redirect to the default view
 			$scope.setActiveTab('people');
 		}
-	}
 
-	getPayload () {
-		authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-			return workgroupActionCreators.getInitialState($route.current.params.workgroupId);
+		AuthService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+			WorkgroupActionCreators.getInitialState($route.current.params.workgroupId);
 		});
-	
 	}
 }
 
-WorkgroupCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', '$location', '$uibModal', 'WorkgroupActionCreators'];
+WorkgroupCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', '$location', 'WorkgroupActionCreators', 'AuthService'];
 
 export default WorkgroupCtrl;

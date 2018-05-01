@@ -14,7 +14,7 @@ class WorkgroupStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_WORKGROUP:
+					case ActionTypes.INIT_WORKGROUP:
 						tags = {
 							newTag: {},
 							ids: []
@@ -30,17 +30,17 @@ class WorkgroupStateService {
 						tags.ids = _array_sortIdsByProperty(tagsList, "name");
 						tags.list = tagsList;
 						return tags;
-					case ADD_TAG:
+					case ActionTypes.ADD_TAG:
 						tags.list[action.payload.tag.id] = action.payload.tag;
 						tags.ids.push(action.payload.tag.id);
 						tags.newTag = {};
 						return tags;
-					case REMOVE_TAG:
+					case ActionTypes.REMOVE_TAG:
 						var tagIndex = tags.ids.indexOf(action.payload.tag.id);
 						tags.ids.splice(tagIndex, 1);
 						delete tags.list[action.payload.tag.id];
 						return tags;
-					case UPDATE_TAG:
+					case ActionTypes.UPDATE_TAG:
 						tags.list[action.payload.tag.id] = action.payload.tag;
 						return tags;
 					default:
@@ -51,7 +51,7 @@ class WorkgroupStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_WORKGROUP:
+					case ActionTypes.INIT_WORKGROUP:
 						locations = {
 							newLocation: {},
 							ids: []
@@ -69,17 +69,17 @@ class WorkgroupStateService {
 						locations.ids = _array_sortIdsByProperty(locationsList, "description");
 						locations.list = locationsList;
 						return locations;
-					case ADD_LOCATION:
+					case ActionTypes.ADD_LOCATION:
 						locations.list[action.payload.location.id] = action.payload.location;
 						locations.ids.push(action.payload.location.id);
 						locations.newLocation = {};
 						return locations;
-					case REMOVE_LOCATION:
+					case ActionTypes.REMOVE_LOCATION:
 						var locationIndex = locations.ids.indexOf(action.payload.location.id);
 						locations.ids.splice(locationIndex, 1);
 						delete locations.list[action.payload.location.id];
 						return locations;
-					case UPDATE_LOCATION:
+					case ActionTypes.UPDATE_LOCATION:
 						locations.list[action.payload.location.id] = action.payload.location;
 						return locations;
 					default:
@@ -88,7 +88,7 @@ class WorkgroupStateService {
 			},
 			_userRoleReducers: function (action, userRoles) {
 				switch (action.type) {
-					case INIT_WORKGROUP:
+					case ActionTypes.INIT_WORKGROUP:
 						userRoles = {
 							ids: [],
 							list: {}
@@ -104,18 +104,18 @@ class WorkgroupStateService {
 						});
 	
 						return userRoles;
-					case UPDATE_USER_ROLE:
+					case ActionTypes.UPDATE_USER_ROLE:
 						var userRole = action.payload.userRole;
 						userRoles.list[userRole.id] = userRole;
 						return userRoles;
-					case ADD_USER_ROLE:
+					case ActionTypes.ADD_USER_ROLE:
 						var userRole = action.payload.userRole;
 						if (userRoles.ids.indexOf(userRole.id) == -1) {
 							userRoles.ids.push(userRole.id);
 							userRoles.list[userRole.id] = userRole;
 						}
 						return userRoles;
-					case REMOVE_USER_ROLE:
+					case ActionTypes.REMOVE_USER_ROLE:
 						var index = userRoles.ids.indexOf(action.payload.userRole.id);
 	
 						if (index > -1) {
@@ -131,7 +131,7 @@ class WorkgroupStateService {
 				var userIndex;
 	
 				switch (action.type) {
-					case INIT_WORKGROUP:
+					case ActionTypes.INIT_WORKGROUP:
 						users = {
 							newUser: {},
 							ids: [],
@@ -148,7 +148,7 @@ class WorkgroupStateService {
 						users.ids = _array_sortIdsByProperty(usersList, "name");
 						users.list = usersList;
 						return users;
-					case ADD_USER_COMPLETED:
+					case ActionTypes.ADD_USER_COMPLETED:
 						userIndex = users.ids.indexOf(action.payload.user.id);
 						if (userIndex >= 0) { return users; }
 	
@@ -158,12 +158,12 @@ class WorkgroupStateService {
 						users.userSearchResults = [];
 						users.searchQuery = "";
 						return users;
-					case REMOVE_USER:
+					case ActionTypes.REMOVE_USER:
 						userIndex = users.ids.indexOf(action.payload.user.id);
 						users.ids.splice(userIndex, 1);
 						delete users.list[action.payload.user.id];
 						return users;
-					case SEARCH_USERS:
+					case ActionTypes.SEARCH_USERS:
 						users.userSearchResults = action.payload.userSearchResults;
 						return users;
 					default:
@@ -174,7 +174,7 @@ class WorkgroupStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_WORKGROUP:
+					case ActionTypes.INIT_WORKGROUP:
 						roles = {
 							ids: []
 						};
@@ -197,7 +197,7 @@ class WorkgroupStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_WORKGROUP:
+					case ActionTypes.INIT_WORKGROUP:
 						instructorTypes = {
 							ids: [],
 							list: {}
@@ -217,9 +217,9 @@ class WorkgroupStateService {
 				var scope = this;
 				
 				switch (action.type) {
-					case INIT_WORKGROUP:
+					case ActionTypes.INIT_WORKGROUP:
 						return [];
-					case CALCULATE_USER_ROLES:
+					case ActionTypes.CALCULATE_USER_ROLES:
 						return action.payload.calculatedUserRoles;
 					default:
 						return calculatedUserRoles;
@@ -234,7 +234,7 @@ class WorkgroupStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case INIT_WORKGROUP:
+					case ActionTypes.INIT_WORKGROUP:
 						ui = {
 							addUserPending: false,
 							workgroupId: action.workgroupId,
@@ -264,17 +264,17 @@ class WorkgroupStateService {
 							ui.instructorTypes.push(instructorType);
 						});
 						return ui;
-					case SET_ROLE_TAB:
+					case ActionTypes.SET_ROLE_TAB:
 						ui.roles.activeRoleTab = action.payload.activeRoleTab;
 						ui.roles.activeRoleId = action.payload.activeRoleId;
 						return ui;
-					case ADD_USER_PENDING:
+					case ActionTypes.ADD_USER_PENDING:
 						ui.addUserPending = true;
 						return ui;
-					case CALCULATE_ROLE_TOTALS:
+					case ActionTypes.CALCULATE_ROLE_TOTALS:
 						ui.roleTotals = action.payload.roleTotals;
 						return ui;
-					case ADD_USER_COMPLETED:
+					case ActionTypes.ADD_USER_COMPLETED:
 						ui.addUserPending = false;
 						return ui;
 					default:
@@ -288,7 +288,7 @@ class WorkgroupStateService {
 					return;
 				}
 	
-				newState = {};
+				let newState = {};
 				newState.tags = scope._tagReducers(action, scope._state.tags);
 				newState.locations = scope._locationReducers(action, scope._state.locations);
 				newState.users = scope._userReducers(action, scope._state.users);

@@ -10,46 +10,46 @@ class WorkgroupService {
 	constructor (ApiService) {
 		return {
 			getWorkgroupByCode: function(workgroupId) {
-				return apiService.get("/api/workgroupView/" + workgroupId);
+				return ApiService.get("/api/workgroupView/" + workgroupId);
 			},
 			addTag: function (workgroupId, tag) {
-				return apiService.post("/api/workgroupView/" + workgroupId + "/tags", tag);
+				return ApiService.post("/api/workgroupView/" + workgroupId + "/tags", tag);
 			},
 			updateTag: function (workgroupId, tag) {
-				return apiService.put("/api/workgroupView/" + workgroupId + "/tags/" + tag.id, tag);
+				return ApiService.put("/api/workgroupView/" + workgroupId + "/tags/" + tag.id, tag);
 			},
 			setInstructorType: function (userRole) {
-				return apiService.put("/api/workgroupView/workgroups/" + userRole.workgroupId + "/userRoles/" + userRole.id + "/instructorTypes/" + userRole.instructorTypeId);
+				return ApiService.put("/api/workgroupView/workgroups/" + userRole.workgroupId + "/userRoles/" + userRole.id + "/instructorTypes/" + userRole.instructorTypeId);
 			},
 			removeTag: function(workgroupId, tag) {
-				return apiService.delete("/api/workgroupView/" + workgroupId + "/tags/" + tag.id);
+				return ApiService.delete("/api/workgroupView/" + workgroupId + "/tags/" + tag.id);
 			},
 			addLocation: function (workgroupId, location) {
-				return apiService.post("/api/workgroupView/" + workgroupId + "/locations", location);
+				return ApiService.post("/api/workgroupView/" + workgroupId + "/locations", location);
 			},
 			updateLocation: function (workgroupId, location) {
-				return apiService.put("/api/workgroupView/" + workgroupId + "/locations/" + location.id, location);
+				return ApiService.put("/api/workgroupView/" + workgroupId + "/locations/" + location.id, location);
 			},
 			removeLocation: function(workgroupId, location) {
-				return apiService.delete("/api/workgroupView/" + workgroupId + "/locations/" + location.id);
+				return ApiService.delete("/api/workgroupView/" + workgroupId + "/locations/" + location.id);
 			},
 			addRoleToUser: function (workgroupId, user, role) {
-				return apiService.post("/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupId + "/roles/" + role.name, null);
+				return ApiService.post("/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupId + "/roles/" + role.name, null);
 			},
 			removeRoleFromUser: function (workgroupId, user, role) {
-				return apiService.delete("/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupId + "/roles/" + role.name);
+				return ApiService.delete("/api/workgroupView/users/" + user.loginId + "/workgroups/" + workgroupId + "/roles/" + role.name);
 			},
 			searchUsers: function(workgroupId, query) {
-				return apiService.get("/api/people/search?query=" + query);
+				return ApiService.get("/api/people/search?query=" + query);
 			},
 			createUser: function (workgroupId, user) {
-				return apiService.post("/api/workgroupView/workgroups/" + workgroupId + "/users", user);
+				return ApiService.post("/api/workgroupView/workgroups/" + workgroupId + "/users", user);
 			},
 			removeUserFromWorkgroup: function (workgroupId, user) {
-				return apiService.delete("/api/workgroupView/workgroups/" + workgroupId + "/users/" + user.loginId);
+				return ApiService.delete("/api/workgroupView/workgroups/" + workgroupId + "/users/" + user.loginId);
 			},
 			updateUserRole: function (userRole) {
-				return apiService.put("/api/workgroupView/userRoles/" + userRole.id + "/roles/" + userRole.roleId);
+				return ApiService.put("/api/workgroupView/userRoles/" + userRole.id + "/roles/" + userRole.roleId);
 			},
 		};
 	}

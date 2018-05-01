@@ -1,0 +1,23 @@
+
+<div class="impersonate-modal modal-body">
+  <div ng-repeat="userId in state.users.ids | orderBy: 'lastName'"
+       class="impersonate-tag"
+       ng-init="user=state.users.list[userId]"
+       ng-click="selectUser(user)"
+       ng-class="{ 'selected-user': user.id == selectedUser.id }"
+       ng-if="canBeImpersonated(state.users.list[userId])">
+    <i class="entypo-user"></i>
+    {{ user.name }}
+    <span class="email">
+      {{ user.email }}
+    </span>
+  </div>
+  <div class="modal-footer">
+    <button ng-if="!(selectedUser)" class="btn btn-primary disabled" uib-tooltip="Select an instructor to impersonate">
+      Impersonate
+    </button>
+    <button ng-if="selectedUser" class="btn btn-primary" ng-click="impersonate()">
+      Impersonate {{ selectedUser.firstName }} {{ selectedUser.lastName }}
+    </button>
+  </div>
+</div>

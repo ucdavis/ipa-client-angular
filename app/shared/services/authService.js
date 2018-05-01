@@ -233,7 +233,7 @@ class AuthService {
 
 				// Loop over the user roles to look for user workgroups
 				for (var i = 0; i < userRoles.length; i++) {
-					userRole = userRoles[i];
+					let userRole = userRoles[i];
 
 					// Find the first valid workgroup in the roles and do the redirect
 					if (userRole.workgroupId > 0) {

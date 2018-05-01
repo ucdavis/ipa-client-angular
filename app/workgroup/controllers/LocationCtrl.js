@@ -22,7 +22,7 @@ class LocationCtrl {
 		};
 
 		$scope.isLocationFormValid = function () {
-			isFormValid = true;
+			var isFormValid = true;
 
 			// Dont attempt validation before page is initialized
 			if (!$scope.view.state) {

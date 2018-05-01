@@ -1,6 +1,5 @@
 // Controllers
 import LocationCtrl from './controllers/LocationCtrl.js';
-import ModalImpersonateCtrl from './controllers/ModalImpersonateCtrl.js';
 import TagCtrl from './controllers/TagCtrl.js';
 import UserCtrl from './controllers/UserCtrl.js';
 import WorkgroupCtrl from './controllers/WorkgroupCtrl.js';
@@ -19,6 +18,7 @@ import peopleAndRoles from './directives/peopleAndRoles/peopleAndRoles.js';
 import rolesTable from './directives/peopleAndRoles/rolesTable/rolesTable.js';
 import instructorTypeSelector from './directives/peopleAndRoles/rolesTable/instructorTypeSelector/instructorTypeSelector.js';
 import studentRoleSelector from './directives/peopleAndRoles/rolesTable/studentRoleSelector/studentRoleSelector.js';
+import impersonationModal from './directives/modals/impersonationModal/impersonationModal.js';
 
 // Dependencies
 var dependencies = [
@@ -50,7 +50,6 @@ config.$inject = ['$routeProvider'];
 const workgroupApp = angular.module("workgroupApp", dependencies)
 .config(config)
 .controller('LocationCtrl', LocationCtrl)
-.controller('ModalImpersonateCtrl', ModalImpersonateCtrl)
 .controller('TagCtrl', TagCtrl)
 .controller('UserCtrl', UserCtrl)
 .controller('WorkgroupCtrl', WorkgroupCtrl)
@@ -63,6 +62,7 @@ const workgroupApp = angular.module("workgroupApp", dependencies)
 .directive('rolesTable', rolesTable)
 .directive('instructorTypeSelector', instructorTypeSelector)
 .directive('studentRoleSelector', studentRoleSelector)
+.directive('impersonationModal', impersonationModal)
 .constant('ActionTypes', {
 	ADD_TAG: "ADD_TAG",
 	REMOVE_TAG: "REMOVE_TAG",

@@ -10,11 +10,11 @@ let ipaHeader = function ($window, $location, $rootScope, AuthService, $routePar
 			scope.greeting = scope.greetings[Math.floor(Math.random() * scope.greetings.length)];
 
 			scope.impersonate = function(loginId) {
-				authService.impersonate(loginId);
+				AuthService.impersonate(loginId);
 			};
 
 			scope.unImpersonate = function() {
-				authService.unimpersonate();
+				AuthService.unimpersonate();
 			};
 
 			// Will navigate to the summary page of the specified workgroup, on the same year

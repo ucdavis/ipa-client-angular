@@ -9,8 +9,8 @@
 class WorkgroupActionCreators {
 	constructor (WorkgroupStateService, WorkgroupService, $rootScope, Role, Roles, ActionTypes) {
 		var self = this;
-		this.workgroupStateService = WorkgroupStateService;
-		this.workgroupService = WorkgroupService;
+		this.WorkgroupStateService = WorkgroupStateService;
+		this.WorkgroupService = WorkgroupService;
 		this.$rootScope = $rootScope;
 		this.Role = Role;
 		this.Roles = Roles;
@@ -20,13 +20,13 @@ class WorkgroupActionCreators {
 			getInitialState: function (workgroupId) {
 				var self = this;
 	
-				workgroupService.getWorkgroupByCode(workgroupId).then(function (payload) {
+				WorkgroupService.getWorkgroupByCode(workgroupId).then(function (payload) {
 					var action = {
 						type: ActionTypes.INIT_WORKGROUP,
 						payload: payload,
 						workgroupId: workgroupId
 					};
-					workgroupStateService.reduce(action);
+					WorkgroupStateService.reduce(action);
 					self._calculateUserRoles();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not load workgroup initial state.", type: "ERROR" });
@@ -37,7 +37,7 @@ class WorkgroupActionCreators {
 	
 				userRole.instructorTypeId = instructorType.id;
 	
-				workgroupService.setInstructorType(userRole).then(function (newUserRole) {
+				WorkgroupService.setInstructorType(userRole).then(function (newUserRole) {
 					$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_USER_ROLE,
@@ -45,14 +45,14 @@ class WorkgroupActionCreators {
 							userRole: newUserRole
 						}
 					};
-					workgroupStateService.reduce(action);
+					WorkgroupStateService.reduce(action);
 					self._calculateUserRoles();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update instructor type", type: "ERROR" });
 				});
 			},
 			addTag: function (workgroupId, tag) {
-				workgroupService.addTag(workgroupId, tag).then(function (newTag) {
+				WorkgroupService.addTag(workgroupId, tag).then(function (newTag) {
 					$rootScope.$emit('toast', { message: "Created tag " + newTag.name, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ADD_TAG,
@@ -60,13 +60,13 @@ class WorkgroupActionCreators {
 							tag: newTag
 						}
 					};
-					workgroupStateService.reduce(action);
+					WorkgroupStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Not could create tag.", type: "ERROR" });
 				});
 			},
 			updateTag: function (workgroupId, tag) {
-				workgroupService.updateTag(workgroupId, tag).then(function (newTag) {
+				WorkgroupService.updateTag(workgroupId, tag).then(function (newTag) {
 					$rootScope.$emit('toast', { message: "Updated tag " + newTag.name, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_TAG,
@@ -74,13 +74,13 @@ class WorkgroupActionCreators {
 							tag: newTag
 						}
 					};
-					workgroupStateService.reduce(action);
+					WorkgroupStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update tag.", type: "ERROR" });
 				});
 			},
 			removeTag: function (workgroupId, tag) {
-				workgroupService.removeTag(workgroupId, tag).then(function () {
+				WorkgroupService.removeTag(workgroupId, tag).then(function () {
 					$rootScope.$emit('toast', { message: "Removed tag " + tag.name, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.REMOVE_TAG,
@@ -88,13 +88,13 @@ class WorkgroupActionCreators {
 							tag: tag
 						}
 					};
-					workgroupStateService.reduce(action);
+					WorkgroupStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not remove tag.", type: "ERROR" });
 				});
 			},
 			addLocation: function (workgroupId, location) {
-				workgroupService.addLocation(workgroupId, location).then(function (newLocation) {
+				WorkgroupService.addLocation(workgroupId, location).then(function (newLocation) {
 					$rootScope.$emit('toast', { message: "Created location " + newLocation.description, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ADD_LOCATION,
@@ -102,13 +102,13 @@ class WorkgroupActionCreators {
 							location: newLocation
 						}
 					};
-					workgroupStateService.reduce(action);
+					WorkgroupStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not create location.", type: "ERROR" });
 				});
 			},
 			updateLocation: function (workgroupId, location) {
-				workgroupService.updateLocation(workgroupId, location).then(function (newLocation) {
+				WorkgroupService.updateLocation(workgroupId, location).then(function (newLocation) {
 					$rootScope.$emit('toast', { message: "Renamed location to " + newLocation.description, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_LOCATION,
@@ -116,13 +116,13 @@ class WorkgroupActionCreators {
 							location: newLocation
 						}
 					};
-					workgroupStateService.reduce(action);
+					WorkgroupStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not rename location.", type: "ERROR" });
 				});
 			},
 			removeLocation: function (workgroupId, location) {
-				workgroupService.removeLocation(workgroupId, location).then(function (newLocation) {
+				WorkgroupService.removeLocation(workgroupId, location).then(function (newLocation) {
 					$rootScope.$emit('toast', { message: "Removed location " + location.description, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.REMOVE_LOCATION,
@@ -130,7 +130,7 @@ class WorkgroupActionCreators {
 							location: location
 						}
 					};
-					workgroupStateService.reduce(action);
+					WorkgroupStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not remove location.", type: "ERROR" });
 				});
@@ -138,7 +138,7 @@ class WorkgroupActionCreators {
 			updateStudentRole: function (userRole) {
 				var self = this;
 	
-				workgroupService.updateUserRole(userRole).then(function (newUserRole) {
+				WorkgroupService.updateUserRole(userRole).then(function (newUserRole) {
 					$rootScope.$emit('toast', { message: "Updated student role", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_USER_ROLE,
@@ -146,7 +146,7 @@ class WorkgroupActionCreators {
 							userRole: newUserRole
 						}
 					};
-					workgroupStateService.reduce(action);
+					WorkgroupStateService.reduce(action);
 					self._calculateUserRoles();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update student role", type: "ERROR" });
@@ -155,7 +155,7 @@ class WorkgroupActionCreators {
 			addRoleToUser: function (workgroupId, user, role) {
 				var self = this;
 	
-				workgroupService.addRoleToUser(workgroupId, user, role).then(function (userRole) {
+				WorkgroupService.addRoleToUser(workgroupId, user, role).then(function (userRole) {
 					$rootScope.$emit('toast', { message: user.firstName + " " + user.lastName + " is now " + role.getDisplayName(), type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ADD_USER_ROLE,
@@ -164,7 +164,7 @@ class WorkgroupActionCreators {
 							userRole: userRole,
 						}
 					};
-					workgroupStateService.reduce(action);
+					WorkgroupStateService.reduce(action);
 					self._calculateUserRoles();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not add role for user.", type: "ERROR" });
@@ -172,14 +172,14 @@ class WorkgroupActionCreators {
 			},
 			removeRoleFromUser: function (userId, roleId, userRoleToBeDeleted) {
 				var self = this;
-				var user = workgroupStateService._state.users.list[userId];
-				var role = workgroupStateService._state.roles.list[roleId];
-				var workgroupId = workgroupStateService._state.ui.workgroupId;
+				var user = WorkgroupStateService._state.users.list[userId];
+				var role = WorkgroupStateService._state.roles.list[roleId];
+				var workgroupId = WorkgroupStateService._state.ui.workgroupId;
 	
-				workgroupService.removeRoleFromUser(workgroupId, user, role).then(function (userRole) {
+				WorkgroupService.removeRoleFromUser(workgroupId, user, role).then(function (userRole) {
 					$rootScope.$emit('toast', { message: user.firstName + " " + user.lastName + " is no longer " + role.getDisplayName(), type: "SUCCESS" });
 	
-					workgroupStateService.reduce({
+					WorkgroupStateService.reduce({
 						type: ActionTypes.REMOVE_USER_ROLE,
 						payload: {
 							user: user,
@@ -199,27 +199,27 @@ class WorkgroupActionCreators {
 						userSearchResults: []
 					}
 				};
-				workgroupStateService.reduce(action);
+				WorkgroupStateService.reduce(action);
 			},
 			createUser: function (workgroupId, dwUser, roleId) {
 				var self = this;
-				var role = new Role({ name: workgroupStateService._state.roles.list[roleId].name });
+				var role = new Role({ name: WorkgroupStateService._state.roles.list[roleId].name });
 	
 				var existingUser = this._userPresent(dwUser);
 				if (!existingUser) {
-					workgroupStateService.reduce({
+					WorkgroupStateService.reduce({
 						type: ActionTypes.ADD_USER_PENDING,
 						payload: {}
 					});
 	
-					workgroupService.createUser(workgroupId, dwUser).then(function (newUser) {
+					WorkgroupService.createUser(workgroupId, dwUser).then(function (newUser) {
 						var action = {
 							type: ActionTypes.ADD_USER_COMPLETED,
 							payload: {
 								user: newUser
 							}
 						};
-						workgroupStateService.reduce(action);
+						WorkgroupStateService.reduce(action);
 						self.addRoleToUser(workgroupId, newUser, new Role({ name: "presence"}));
 						self.addRoleToUser(workgroupId, newUser, role);
 					}, function (err) {
@@ -231,8 +231,8 @@ class WorkgroupActionCreators {
 			},
 			_userPresent: function (user) {
 				var userPresent = null;
-				workgroupStateService._state.users.ids.forEach(function(userId) {
-					var slotUser = workgroupStateService._state.users.list[userId];
+				WorkgroupStateService._state.users.ids.forEach(function(userId) {
+					var slotUser = WorkgroupStateService._state.users.list[userId];
 					if (slotUser.loginId == user.loginId && slotUser.email == user.email) {
 						userPresent = slotUser;
 					}
@@ -241,7 +241,7 @@ class WorkgroupActionCreators {
 				return userPresent;
 			},
 			setRoleTab: function(tabName) {
-				workgroupStateService.reduce({
+				WorkgroupStateService.reduce({
 					type: ActionTypes.SET_ROLE_TAB,
 					payload: {
 						activeRoleTab: tabName,
@@ -268,8 +268,8 @@ class WorkgroupActionCreators {
 				var userRolesWithPresence = this._calculateUserRolesWithPresence();
 				var calculatedUserRoles = [];
 	
-				workgroupStateService._state.userRoles.ids.forEach(function(userRoleId) {
-					var userRole = workgroupStateService._state.userRoles.list[userRoleId];
+				WorkgroupStateService._state.userRoles.ids.forEach(function(userRoleId) {
+					var userRole = WorkgroupStateService._state.userRoles.list[userRoleId];
 	
 					if (userRole.role == 'admin' || userRole.role == 'registrar') {
 						return;
@@ -283,7 +283,7 @@ class WorkgroupActionCreators {
 	
 				calculatedUserRoles = _array_sortByProperty(calculatedUserRoles, "userDisplayName");
 	
-				workgroupStateService.reduce({
+				WorkgroupStateService.reduce({
 					type: ActionTypes.CALCULATE_USER_ROLES,
 					payload: {
 						calculatedUserRoles: calculatedUserRoles
@@ -293,18 +293,18 @@ class WorkgroupActionCreators {
 				this._calculateRoleTotals();
 			},
 			_generateUserRole: function (userRole, shouldDisplayPresence) {
-				var user = workgroupStateService._state.users.list[userRole.userId];
+				var user = WorkgroupStateService._state.users.list[userRole.userId];
 				var role = null;
 	
-				workgroupStateService._state.roles.ids.forEach(function(roleId) {
-					var slotRole = workgroupStateService._state.roles.list[roleId];
+				WorkgroupStateService._state.roles.ids.forEach(function(roleId) {
+					var slotRole = WorkgroupStateService._state.roles.list[roleId];
 	
 					if (slotRole.name == userRole.role) {
 						role = slotRole;
 					}
 				});
 	
-				var instructorTypeDescription = userRole.instructorTypeId > 0 ? workgroupStateService._state.instructorTypes.list[userRole.instructorTypeId].description : null;
+				var instructorTypeDescription = userRole.instructorTypeId > 0 ? WorkgroupStateService._state.instructorTypes.list[userRole.instructorTypeId].description : null;
 	
 				return {
 					id: userRole.id,
@@ -328,10 +328,10 @@ class WorkgroupActionCreators {
 				// Identify which users shouldn't have presence displayed
 				var usersWithAccess = [];
 	
-				workgroupStateService._state.userRoles.ids.forEach(function(userRoleId) {
-					var userRole = workgroupStateService._state.userRoles.list[userRoleId];
+				WorkgroupStateService._state.userRoles.ids.forEach(function(userRoleId) {
+					var userRole = WorkgroupStateService._state.userRoles.list[userRoleId];
 					// Ignore userRoles from other workgroups
-					if (userRole.workgroupId != workgroupStateService._state.ui.workgroupId) { return; }
+					if (userRole.workgroupId != WorkgroupStateService._state.ui.workgroupId) { return; }
 	
 					// Ignore presence, admin and registrar roles as these roles are not displayed in the UI
 					if (userRole.role == "presence" || userRole.role == "admin" || userRole.role == "registrar") { return; }
@@ -341,10 +341,10 @@ class WorkgroupActionCreators {
 	
 				// List of UserRole ids.
 				var presenceUserRoles = [];
-				workgroupStateService._state.userRoles.ids.forEach(function(userRoleId) {
-					var userRole = workgroupStateService._state.userRoles.list[userRoleId];
+				WorkgroupStateService._state.userRoles.ids.forEach(function(userRoleId) {
+					var userRole = WorkgroupStateService._state.userRoles.list[userRoleId];
 					// Ignore userRoles from other workgroups
-					if (userRole.workgroupId != workgroupStateService._state.ui.workgroupId) { return; }
+					if (userRole.workgroupId != WorkgroupStateService._state.ui.workgroupId) { return; }
 	
 					// If user does not have access, and we found the presence role, add it to the list
 					if (userRole.roleId == 9 && usersWithAccess.indexOf(userRole.userId) == -1) {
@@ -358,8 +358,8 @@ class WorkgroupActionCreators {
 			_calculateRoleTotals: function() {
 				var roleIds = [];
 	
-				workgroupStateService._state.roles.ids.forEach(function(roleId) {
-					var role = workgroupStateService._state.roles.list[roleId];
+				WorkgroupStateService._state.roles.ids.forEach(function(roleId) {
+					var role = WorkgroupStateService._state.roles.list[roleId];
 					roleIds.push(role.id);
 				});
 	
@@ -368,7 +368,7 @@ class WorkgroupActionCreators {
 					roleTotals[roleId] = 0;
 				});
 	
-				workgroupStateService._state.calculatedUserRoles.forEach(function(userRole) {
+				WorkgroupStateService._state.calculatedUserRoles.forEach(function(userRole) {
 					// Role 9 is 'presence' which is a special case
 					// It should only be counted if displayPresence was calculated to be true, when the user has no access.
 					if (userRole.roleId == 9 && userRole.displayPresence == false) { return; }
@@ -376,7 +376,7 @@ class WorkgroupActionCreators {
 					roleTotals[userRole.roleId] += 1;
 				});
 	
-				workgroupStateService.reduce({
+				WorkgroupStateService.reduce({
 					type: ActionTypes.CALCULATE_ROLE_TOTALS,
 					payload: {
 						roleTotals: roleTotals
