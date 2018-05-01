@@ -14,6 +14,10 @@ let commentModal = function (AssignmentActionCreators) {
       workgroupId: '<'
 		},
 		link: function (scope, element, attrs) {
+			scope.close = function () {
+        scope.isVisible = false;
+      };
+
       scope.confirm = function () {
 				if (scope.privateComment != scope.scheduleInstructorNote.instructorComment) {
 					// Update the scheduleInstructorNote
@@ -29,10 +33,6 @@ let commentModal = function (AssignmentActionCreators) {
 
         scope.close();
       };
-
-      scope.close = function () {
-        this.isVisible = false;
-      };  
     } // end link
 	};
 };

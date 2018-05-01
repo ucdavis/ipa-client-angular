@@ -50,8 +50,8 @@ let availabilityGrid = function($timeout) {
 
 				// Translate back into blob
 				var blob = [];
-				for ( d = 0; d < scope.days.length; d++) {
-					for ( h = 0; h < scope.hours.length; h++) {
+				for (let d = 0; d < scope.days.length; d++) {
+					for (let h = 0; h < scope.hours.length; h++) {
 						blob.push(scope.availability[d][h]);
 					}
 				}

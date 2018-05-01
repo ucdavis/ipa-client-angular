@@ -6,22 +6,29 @@
 <ipa-header page-title="Assignments"></ipa-header>
 
 <div class="main-content">
-		<ipa-modal
-		is-visible="view.openCommentModal"
-		header-text="Comments">
-			<comment-modal
-				ng-if="view.openCommentModal"
-				state="view.state"
-				instructor="view.instructor"
-				instructor-comment="view.instructorComment"
-				schedule-instructor-note="view.scheduleInstructorNote"
-				private-comment="view.scheduleInstructorNote.instructorComment"
-				year="view.state.userInterface.year"
-				workgroup-id="workgroupId"
-				is-visible="view.openCommentModal">
-			</comment-modal>
+	<ipa-modal is-visible="isCommentModalOpen"
+							header-text="Comments">
+		<comment-modal ng-if="isCommentModalOpen"
+										state="view.state"
+										instructor="view.instructor"
+										instructor-comment="view.instructorComment"
+										schedule-instructor-note="view.scheduleInstructorNote"
+										private-comment="view.scheduleInstructorNote.instructorComment"
+										year="view.state.userInterface.year"
+										workgroup-id="workgroupId"
+										is-visible="isCommentModalOpen">
+		</comment-modal>
 	</ipa-modal>
-
+	<ipa-modal is-visible="isUnavailabilityModalOpen"
+							styles="unavailabilityModalStyles"
+							header-text="Unavailabilities">
+		<unavailability-modal ng-if="isUnavailabilityModalOpen"
+													instructor="view.instructor"
+													term-display-names="view.termDisplayNames"
+													teaching-call-responses="view.teachingCallResponses"
+													is-visible="isUnavailabilityModalOpen">
+		</unavailability-modal>
+	</ipa-modal>
 	<div class="row hidden-print" style="margin-bottom: 2em;">
 		<div class="col-sm-offset-3 col-sm-6">
 			<input type="search" class="form-control" placeholder="Search" ng-model="searchQuery" ng-change="filterTable(searchQuery)"/>

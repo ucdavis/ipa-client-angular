@@ -22,9 +22,12 @@ class AssignmentCtrl {
 		$scope.year = $routeParams.year;
 		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 		$scope.view = {
-			openCommentModal: false,
 			workgroupId: $routeParams.workgroupId
 		};
+
+		$scope.unavailabilityModalStyles = { "width": "62%" }
+		$scope.isCommentModalOpen = false;
+		$scope.isUnavailabilityModalOpen = false;
 
 		$rootScope.$on('assignmentStateChanged', function (event, data) {
 			$scope.view.state = data;
@@ -125,38 +128,18 @@ class AssignmentCtrl {
 				$scope.view.instructorComment = "";
 			}
 
-			$scope.view.openCommentModal = true;
+			$scope.isCommentModalOpen = true;
 			$scope.$apply();
 		};
 
 		$scope.openUnavailabilityModal = function(instructorId) {
 			var instructor = $scope.view.state.instructors.list[instructorId];
 
-			var termDisplayNames = {};
-
-			modalInstance = $uibModal.open({
-				template: require('./../templates/ModalUnavailability.html'),
-				controller: ModalUnavailabilityCtrl,
-				size: 'lg',
-				resolve: {
-					teachingCallResponses: function () {
-						return instructor.teachingCallResponses;
-					},
-					termDisplayNames: function () {
-						return assignmentService.allTerms();
-					},
-					instructor: function () {
-						return instructor;
-					}
-				}
-			});
-
-			modalInstance.result.then(function () {
-				// This modal does not 'submit' in a traditional sense.
-			},
-			function () {
-				// Modal closed
-			});
+			$scope.view.teachingCallResponses = instructor.teachingCallResponses;
+			$scope.view.termDisplayNames = AssignmentService.allTerms();
+			$scope.view.instructor = instructor;
+			$scope.isUnavailabilityModalOpen = true;
+			$scope.$apply();
 		};
 
 		$scope.download = function () {
