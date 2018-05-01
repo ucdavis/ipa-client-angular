@@ -81,8 +81,18 @@ const schedulingApp = angular.module("schedulingApp", dependencies)
 	FETCH_COURSE_ACTIVITY_TYPES: "FETCH_COURSE_ACTIVITY_TYPES",
 	CREATE_SECTION: "CREATE_SECTION",
 	DELETE_SECTION: "DELETE_SECTION",
-	GET_ACTIVITIES: "GET_ACTIVITIES",
-
+	GET_ACTIVITIES: "GET_ACTIVITIES"
 });
+
+// Injecting these templates into schedulingApp so uib-popover-template can see them
+// Eventually we will want to migrate away from uib-popover-template as the library is not being updated and is not webpack friendly
+var addSharedActivityList = require('./templates/addSharedActivityList.html');
+schedulingApp.run(["$templateCache",($templateCache)=>{
+	$templateCache.put("addSharedActivityList", addSharedActivityList)
+}]);
+var addActivityList = require('./templates/addActivityList.html');
+schedulingApp.run(["$templateCache",($templateCache)=>{
+	$templateCache.put("addActivityList", addActivityList)
+}]);
 
 export default schedulingApp;
