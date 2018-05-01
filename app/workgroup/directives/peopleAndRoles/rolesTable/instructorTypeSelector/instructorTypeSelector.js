@@ -9,7 +9,7 @@ let instructorTypeSelector = function (WorkgroupActionCreators) {
 		},
 		link: function(scope, element, attrs) {
 			scope.setInstructorType = function(instructorType) {
-				workgroupActionCreators.setInstructorType(instructorType, scope.userRole);
+				WorkgroupActionCreators.setInstructorType(instructorType, scope.userRole);
 			};
 		}
 	};

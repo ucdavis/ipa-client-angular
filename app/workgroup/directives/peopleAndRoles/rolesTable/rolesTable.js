@@ -16,7 +16,7 @@ let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService
 			};
 
 			scope.removeUserRole = function (userRole) {
-				workgroupActionCreators.removeRoleFromUser(userRole.userId, userRole.roleId, userRole);
+				WorkgroupActionCreators.removeRoleFromUser(userRole.userId, userRole.roleId, userRole);
 			};
 
 			scope.clearUserSearch = function () {
@@ -31,7 +31,7 @@ let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService
 			};
 
 			scope.searchUsers = function (query) {
-				return workgroupService.searchUsers(scope.ui.workgroupId, query).then(function (userSearchResults) {
+				return WorkgroupService.searchUsers(scope.ui.workgroupId, query).then(function (userSearchResults) {
 					return userSearchResults;
 				}, function (err) {
 					$rootScope.$emit('toast', {message: "Could not search users.", type: "ERROR"});
@@ -44,7 +44,7 @@ let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService
 
 			scope.addUserToWorkgroup = function() {
 				scope.users.newUser;
-				workgroupActionCreators.createUser(scope.ui.workgroupId, scope.users.newUser, scope.activeRoleId);
+				WorkgroupActionCreators.createUser(scope.ui.workgroupId, scope.users.newUser, scope.activeRoleId);
 				scope.clearUserSearch();
 			};
 		}

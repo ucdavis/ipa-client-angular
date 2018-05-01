@@ -10,7 +10,7 @@ let studentRoleSelector = function (WorkgroupActionCreators) {
 		link: function(scope, element, attrs) {
 			scope.updateStudentRole = function(role) {
 				scope.userRole.roleId = role.id;
-				workgroupActionCreators.updateStudentRole(scope.userRole);
+				WorkgroupActionCreators.updateStudentRole(scope.userRole);
 			};
 		}
 	};

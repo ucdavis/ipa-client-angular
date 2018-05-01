@@ -10,7 +10,7 @@ let peopleAndRoles = function ($rootScope, WorkgroupActionCreators) {
 		},
 		link: function(scope, element, attrs) {
 			scope.setRoleTab = function(tabName) {
-				workgroupActionCreators.setRoleTab(tabName);
+				WorkgroupActionCreators.setRoleTab(tabName);
 			};
 		}
 	};

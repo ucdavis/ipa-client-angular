@@ -252,7 +252,7 @@ class WorkgroupActionCreators {
 			},
 			// Will return the roleId, or -1 for student (as it does not match a specific roleId, but will be expected to match 11,12 or 13 for masters, phd, instructional support)
 			_getRoleIdFromTabName: function(tabName) {
-				tabNameRoleIds = {
+				let tabNameRoleIds = {
 					"Academic Planner": Roles.academicPlanner,
 					"Instructor": Roles.instructor,
 					"Reviewer": Roles.reviewer,
