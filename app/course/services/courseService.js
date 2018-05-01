@@ -7,26 +7,42 @@
  * courseApp specific api calls.
  */
 class CourseService {
-	constructor (ApiService) {
-		var self = this;
-		this.apiService = ApiService;
+	constructor (ApiService, $q, $http, $window) {
+		this.ApiService = ApiService;
+		this.$q = $q;
+		this.$http = $http;
+		this.$window = $window;
+
+		var _self = this;
+		this.ApiService = ApiService;
 		return {
 			getScheduleByWorkgroupIdAndYear: function (workgroupId, year, enableUnpublishedCourses) {
 				var showDoNotPrintParam = enableUnpublishedCourses ? "?showDoNotPrint=true" : "";
-				return self.apiService.get("/api/courseView/workgroups/" + workgroupId + "/years/" + year + showDoNotPrintParam);
+				return _self.ApiService.get("/api/courseView/workgroups/" + workgroupId + "/years/" + year + showDoNotPrintParam);
 			},
 			downloadSchedule: function (workgroupId, year, enableUnpublishedCourses) {
+				var deferred = $q.defer();
 				var showDoNotPrintParam = enableUnpublishedCourses ? "?showDoNotPrint=true" : "";
-				return self.apiService.get("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel" + showDoNotPrintParam);
+
+				_self.$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel" + showDoNotPrintParam, { withCredentials: true })
+					.then(function (payload) {
+						_self.$window.location.href = payload.redirect;
+						deferred.resolve(payload);
+					},
+					function () {
+						deferred.reject();
+					});
+
+				return deferred.promise;
 			},
 			addSectionGroup: function (sectionGroup) {
-				return self.apiService.post("/api/courseView/sectionGroups/", sectionGroup);
+				return _self.ApiService.post("/api/courseView/sectionGroups/", sectionGroup);
 			},
 			updateSectionGroup: function (sectionGroup) {
-				return self.apiService.put("/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup);
+				return _self.ApiService.put("/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup);
 			},
 			removeSectionGroup: function (sectionGroupId) {
-				return self.apiService.delete("/api/courseView/sectionGroups/" + sectionGroupId);
+				return _self.ApiService.delete("/api/courseView/sectionGroups/" + sectionGroupId);
 			},
 			createCourse: function (course, workgroupId, year) {
 				if (!course) { return; }
@@ -40,78 +56,78 @@ class CourseService {
 					});
 				}
 	
-				return self.apiService.post("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/courses", course);
+				return _self.ApiService.post("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/courses", course);
 			},
 			importCoursesAndSectionGroups: function (sectionGroupImports, workgroupId, year, importTimes, importAssignments) {
-				return self.apiService.post("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/sectionGroups?importTimes=" + importTimes + "&importAssignments=" + importAssignments, sectionGroupImports);
+				return _self.ApiService.post("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/sectionGroups?importTimes=" + importTimes + "&importAssignments=" + importAssignments, sectionGroupImports);
 			},
 			importCoursesAndSectionGroupsFromIPA: function (sectionGroupImports, workgroupId, year, importTimes, importAssignments) {
-				return self.apiService.post("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/createCourses?importTimes=" + importTimes + "&importAssignments=" + importAssignments, sectionGroupImports);
+				return _self.ApiService.post("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/createCourses?importTimes=" + importTimes + "&importAssignments=" + importAssignments, sectionGroupImports);
 			},
 			updateCourse: function (course) {
 				if (!course) { return; }
 	
-				return self.apiService.put("/api/courseView/courses/" + course.id, course);
+				return _self.ApiService.put("/api/courseView/courses/" + course.id, course);
 			},
 			deleteCourse: function (course) {
-				return self.apiService.delete("/api/courseView/courses/" + course.id);
+				return _self.ApiService.delete("/api/courseView/courses/" + course.id);
 			},
 			deleteMultipleCourses: function (courseIds, workgroupId, year) {
-				return self.apiService.put("/api/courseView/schedules/" + workgroupId + "/" + year + "/courses", courseIds);
+				return _self.ApiService.put("/api/courseView/schedules/" + workgroupId + "/" + year + "/courses", courseIds);
 			},
 			submitMassAssignTags: function (massAssignTags, workgroupId, year) {
-				return self.apiService.put("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/massAddTags", massAssignTags);
+				return _self.ApiService.put("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/massAddTags", massAssignTags);
 			},
 			searchCourses: function (query) {
-				return self.apiService.get("/courses/search?q=" + query + "&token=" + dwToken, null, dwUrl);
+				return _self.ApiService.get("/courses/search?q=" + query + "&token=" + dwToken, null, dwUrl);
 			},
 			searchImportCourses: function (subjectCode, year, includePrivate) {
 				var privateParam = includePrivate ? "&private=true" : "";
 	
-				return self.apiService.get("/sections/search?subjectCode=" + subjectCode + "&academicYear=" + year + "&token=" + dwToken + privateParam, null, dwUrl);
+				return _self.ApiService.get("/sections/search?subjectCode=" + subjectCode + "&academicYear=" + year + "&token=" + dwToken + privateParam, null, dwUrl);
 			},
 			addTagToCourse: function (course, tag) {
 				if (!course) { return; }
 	
-				return self.apiService.post("/api/courseView/courses/" + course.id + "/tags/" + tag.id, tag);
+				return _self.ApiService.post("/api/courseView/courses/" + course.id + "/tags/" + tag.id, tag);
 			},
 			removeTagFromCourse: function (course, tag) {
 				if (!course || !tag) { return; }
 	
-				return self.apiService.delete("/api/courseView/courses/" + course.id + "/tags/" + tag.id);
+				return _self.ApiService.delete("/api/courseView/courses/" + course.id + "/tags/" + tag.id);
 			},
 			getSectionsBySectionGroupId: function (sectionGroupId) {
-				return self.apiService.get("/api/courseView/sectionGroups/" + sectionGroupId + "/sections/");
+				return _self.ApiService.get("/api/courseView/sectionGroups/" + sectionGroupId + "/sections/");
 			},
 			updateSection: function (section) {
 				if (!section) { return; }
 	
-				return self.apiService.put("/api/courseView/sections/" + section.id, section);
+				return _self.ApiService.put("/api/courseView/sections/" + section.id, section);
 			},
 			createSection: function (section) {
 				if (!section) { return; }
 	
-				return self.apiService.post("/api/courseView/sectionGroups/" + section.sectionGroupId + "/sections", section);
+				return _self.ApiService.post("/api/courseView/sectionGroups/" + section.sectionGroupId + "/sections", section);
 			},
 			deleteSection: function (section) {
 				if (!section) { return; }
 	
-				return self.apiService.delete("/api/courseView/sections/" + section.id);
+				return _self.ApiService.delete("/api/courseView/sections/" + section.id);
 			},
 			getCourseCensus: function (course) {
 				if (!course) { return; }
 	
-				return self.apiService.get("/census?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + dwToken, null, dwUrl);
+				return _self.ApiService.get("/census?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + dwToken, null, dwUrl);
 			},
 			searchCoursesFromIPA: function (workgroupId, year, includePrivate) {
 				var privateParam = includePrivate ? "&private=true" : "";
 	
-				return self.apiService.get("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/queryCourses", includePrivate);
+				return _self.ApiService.get("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/queryCourses", includePrivate);
 			}
 		};
 	}
 }
 
-CourseService.$inject = ['ApiService'];
+CourseService.$inject = ['ApiService', '$q', '$http', '$window'];
 
 export default CourseService;
