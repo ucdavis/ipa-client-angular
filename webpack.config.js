@@ -5,6 +5,37 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ConcatPlugin = require('webpack-concat-plugin');
 
+function injectHashesInLinks (content, path) {
+  var template = content.toString('utf8');
+  var now = Date.now();
+  var cssInjected = "";
+
+  var explodedTemplate = template.split('.css');
+
+  for (var i = 0; i < explodedTemplate.length; i++) {
+    cssInjected += explodedTemplate[i];
+
+    // If this is the last chunk, then we are at the end of file and should not append
+    if (explodedTemplate.length - i > 1) {
+      cssInjected += ".css?v=" + now;
+    }
+  }
+
+  var explodedTemplate = cssInjected.split('.js');
+  var jsAndCssInjected = "";
+
+  for (var i = 0; i < explodedTemplate.length; i++) {
+    jsAndCssInjected += explodedTemplate[i];
+
+    // If this is the last chunk, then we are at the end of file and should not append
+    if (explodedTemplate.length - i > 1) {
+      jsAndCssInjected += ".js?v=" + now;
+    }
+  }
+
+  return jsAndCssInjected;
+}
+
 module.exports = {
   entry: {
     scheduleSummaryReportApp: './app/scheduleSummaryReport/scheduleSummaryReportApp.js',
@@ -61,12 +92,14 @@ module.exports = {
   ],
   },
   plugins: [
+    new CleanWebpackPlugin(['dist']),
     // Copy html to output path (dist)
     new CopyWebpackPlugin([
       {
         from: 'app/**/*.html',
         to: '',
         flatten: true,
+        transform: function (content, path) { return injectHashesInLinks(content, path); }
       }
     ]),
     // Copy json status to output path (dist)
