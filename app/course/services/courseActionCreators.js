@@ -21,7 +21,7 @@ class CourseActionCreators {
 				});
 			},
 			submitMassAssignTags: function (userActions, tagIds, courseIds, workgroupId, year) {
-				massAssignTags = {
+				let massAssignTags = {
 					tagIdsToAdd: [],
 					tagIdsToRemove: [],
 					courseIds: courseIds
