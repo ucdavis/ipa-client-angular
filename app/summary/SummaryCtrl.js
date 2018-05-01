@@ -45,9 +45,10 @@
 			// Otherwise redirect to the default view
 			var currentUser = this.authService.getCurrentUser();
 			var isAdmin = currentUser.isAdmin();
+
 			var isAcademicPlanner = currentUser.hasRole('academicPlanner', this.$scope.workgroupId);
 			var isReviewer = currentUser.hasRole('reviewer', this.$scope.workgroupId);
-			var isInstructor = currentUser.hasRoles(['senateInstructor', 'federationInstructor'], this.$scope.workgroupId);
+			var isInstructor = currentUser.isInstructor(this.$scope.workgroupId);
 			var isInstructionalSupport = currentUser.hasRoles(['studentMasters', 'studentPhd', 'instructionalSupport'], this.$scope.workgroupId);
 
 			if (isAcademicPlanner || isReviewer || isAdmin) {
