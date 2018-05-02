@@ -100,6 +100,11 @@
 				calculated-section-groups="view.state.calculatedSectionGroups"
 				term-nav="view.state.ui.termNav">
 			</instructor-costs>
+			<instructor-list
+				ng-if="view.state.ui.sectionNav.activeTab == 'Instructor List'"
+				state="view.state"
+				selected-budget-scenario="view.state.selectedBudgetScenario">
+			</instructor-list>
 		</div>
 	</div>
 </div>

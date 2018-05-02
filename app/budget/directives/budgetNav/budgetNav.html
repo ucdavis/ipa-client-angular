@@ -1,5 +1,8 @@
 <div class="budget-nav">
 	<div class="budget-nav__nav-container">
+		<div class="budget-nav__nav-item" ng-click="setRoute('Summary')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Summary' }">
+			Summary
+		</div>
 		<div class="budget-nav__nav-item" ng-click="setRoute('Support Costs')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Support Costs' }">
 			Support Costs
 		</div>
@@ -9,8 +12,8 @@
 		<div class="budget-nav__nav-item" ng-click="setRoute('Line Items')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Line Items' }">
 			Line Items
 		</div>
-		<div class="budget-nav__nav-item" ng-click="setRoute('Summary')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Summary' }">
-			Summary
+		<div class="budget-nav__nav-item" ng-click="setRoute('Instructor List')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Instructor List' }">
+			Instructor List
 		</div>
 	</div>
 

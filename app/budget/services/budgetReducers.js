@@ -606,7 +606,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 						},
 						sectionNav: {
 							activeTab: "Support Costs",
-							allTabs: ["Support Costs", "Instructor Costs", "Line Items", "Summary"]
+							allTabs: ["Support Costs", "Instructor Costs", "Line Items", "Summary", "Instructor List"]
 						},
 						termNav: {
 							activeTab: null,
