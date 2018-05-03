@@ -145,6 +145,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					budgetScenarioId: budgetReducers._state.ui.selectedBudgetScenarioId
 				}
 			});
+
+			this.calculateSummaryTotals();
 		},
 		// Find or create a sectionGroupContainer for this sectionGroup
 		calculateSectionGroupContainer: function(sectionGroup, containers) {
@@ -662,6 +664,53 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			});
 
 			return instructorType;
+		},
+		calculateSummaryTotals: function () {
+			var selectedBudgetScenario = budgetReducers._state.budgetScenarios.list[budgetReducers._state.ui.selectedBudgetScenarioId];
+			var sectionGroups = budgetReducers._state.calculatedSectionGroups.byTerm;
+			var terms = budgetReducers._state.calculatedSectionGroups.terms;
+			var activeTerms = selectedBudgetScenario.terms;
+			var readerCost = budgetReducers._state.budget.readerCost;
+			var taCost = budgetReducers._state.budget.taCost;
+
+			var summary = budgetReducers._state.summary = {};
+			summary.terms = terms;
+			summary.byTerm = {};
+			activeTerms.forEach(function(term) {
+				summary.byTerm[term] = {
+					taCount: 0,
+					taCost: 0,
+					readerCount: 0,
+					readerCost: 0,
+					replacementCosts: 0,
+					totalCosts: 0,
+					totalSCH: 0,
+					lowerDivCount: 0,
+					upperDivCount: 0,
+					graduateCount: 0,
+					totalOfferingsCount: 0
+				};
+
+				terms.forEach(function(term) {
+					sectionGroups[term].forEach(function(course) {
+						course.sectionGroups.forEach(function(sectionGroup) {
+							summary.byTerm[term].taCount += sectionGroup.overrideTeachingAssistantAppointments || 0;
+							summary.byTerm[term].taCost += (taCost * summary.byTerm[term].taCount);
+							summary.byTerm[term].readerCount = sectionGroup.overrideReaderAppointments || 0;
+							summary.byTerm[term].readerCost += (readerCost * summary.byTerm[term].readerCount);
+							summary.byTerm[term].replacementCosts += sectionGroup.overrideInstructorCost || 0;
+							summary.byTerm[term].totalCosts += summary.byTerm[term].taCost + summary.byTerm[term].readerCost + summary.byTerm[term].replacementCosts;
+							summary.byTerm[term].totalSCH = 999;
+							summary.byTerm[term].lowerDivCount += (parseInt(course.courseNumber) < 100 ? 1 : 0);
+							summary.byTerm[term].upperDivCount += (parseInt(course.courseNumber) > 100 && parseInt(course.courseNumber) < 200 ? 1 : 0);
+							summary.byTerm[term].graduateCount += (parseInt(course.courseNumber) > 199 ? 1 : 0);
+							summary.byTerm[term].totalOfferingsCount += 1;
+						});
+					});
+				});	
+			});
+
+			// Calculate the 'year' column
 		}
 	};
 });
