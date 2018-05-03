@@ -16,6 +16,22 @@ budgetApp.directive("instructorList", this.instructorList = function (budgetActi
 			scope.setActiveTab = function (activeTab) {
 				scope.view.activeTab = activeTab;
 			};
+
+			scope.updateInstructorCost = function (instructorCost) {
+				if (instructorCost.id > 0) {
+					budgetActions.updateInstructorCost(instructorCost);
+				} else {
+					budgetActions.createInstructorCost(instructorCost);
+				}
+			};
+
+			scope.updateBudget = function (budget) {
+				budgetActions.updateBudget(scope.state.budget);
+			};
+
+			scope.updateInstructorTypeCost = function(instructorTypeCost) {
+				budgetActions.createOrUpdateInstructorTypeCosts(instructorTypeCost);
+			};
 		}
 	};
 });

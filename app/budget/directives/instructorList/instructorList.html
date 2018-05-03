@@ -5,150 +5,124 @@
 		select-tab="setActiveTab"
     slim="true">
 
-		<table class="instructor-costs__table">
-			<colgroup>
-				<col style="width: 10%;">
-				<col style="width: 16%;">
-				<col style="width: 16%;">
-				<col style="width: 16%;">
-				<col style="width: 16%;">
-				<col style="width: 16%;">
-				<col style="width: 10%;">
-			</colgroup>
-			<thead>
-				<tr>
-					<th class="instructor-costs__table-header"></th> <!-- Spacing for sequence number -->
-					<th class="instructor-costs__table-header">
-						<div class="instructor-costs__cell-container">
-							Instructor
-						</div>
-					</th>
-					<th class="instructor-costs__table-header">
-						<div class="instructor-costs__cell-container">
-							Regular Instructor
-						</div>
-					</th>
-					<th class="instructor-costs__table-header">
-						<div class="instructor-costs__cell-container">
-							Reason
-						</div>
-					</th>
-					<th class="instructor-costs__table-header">
-						<div class="instructor-costs__cell-container">
-							Instructor Cost
-						</div>
-					</th>
-					<th class="instructor-costs__table-header instructor-costs__table-header--comments">
-						<div class="instructor-costs__cell-container instructor-costs__cell-container--left">
-							Comment
-						</div>
-					</th>
-					<th class="instructor-costs__table-header">
-						<div class="instructor-costs__cell-container">
-							Total Cost
-						</div>
-					</th>
-				</tr>
-			</thead>
-			<tbody ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
-				<tr>
-					<td colspan="10" class="instructor-costs__course-title">
-						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
-					</td>
-				</tr>
-				<tr ng-repeat="sectionGroup in course.sectionGroups">
-					<!-- Sequence Number -->
-					<td class="instructor-costs__table-cell-sequence">
-						<div class="instructor-costs__sequence-container">
-							{{ sectionGroup.sequencePattern }}
-						</div>
-					</td>
+    <div ng-show="view.activeTab == 'Instructor Costs'">
+      <table class="instructor-costs__table">
+        <thead>
+          <tr>
+            <th class="instructor-costs__table-header">
+              <div class="instructor-costs__cell-container">
+                Instructor
+              </div>
+            </th>
+            <th class="instructor-costs__table-header">
+              <div class="instructor-costs__cell-container">
+                Type
+              </div>
+            </th>
+            <th class="instructor-costs__table-header">
+              <div class="instructor-costs__cell-container">
+                Cost
+              </div>
+            </th>
+          </tr>
+        </thead>
 
-					<!-- Instructor of record -->
-					<td class="instructor-costs__table-cell">
-						<div class="instructor-costs__instructor-container">
-							<div class="instructor-costs__instructor-dropdown-container">
-								<instructor-assignment-dropdown mode="'instructor'"
-								                                section-group="sectionGroup"
-								                                instructors="instructorAssignmentOptions">
-								</instructor-assignment-dropdown>
-							</div>
-							<div class="instructor-costs__instructor-reversion-ui">
-								<div class="glyphicon glyphicon-repeat instructor-costs__revert-ui"
-								     uib-tooltip="Revert to {{ sectionGroup.reversionDisplayName }}"
-								     tooltip-append-to-body="true"
-								     confirm-button="removeInstructor(sectionGroup.sectionGroupCost)"
-								     message="Revert to {{ sectionGroup.reversionDisplayName }}?"
-								     yes="Revert"
-								     no="Cancel"
-								     ng-show="sectionGroup.reversionDisplayName">
-								</div>
-							</div>
-						</div>
-					</td>
+        <tbody>
+          <tr ng-repeat="instructor in state.calculatedInstructors | orderBy: 'lastName'">
+            <td>
+              <div class="instructor-list__cell-container instructor-list__cell-container--left">
+                {{ instructor.lastName }}, {{ instructor.firstName }}
+              </div>
+            </td>
+            <td>
+              <div class="instructor-list__cell-container">
+                  {{ instructor.instructorType.description }}
+              </div>
+            </td>
+            <td>
+              <div class="instructor-list__cell-container instructor-list__cell-container--right">
+                <ipa-input mode="'currency'"
+                            value="instructor.instructorCost.cost"
+                            on-update="updateInstructorCost(instructor.instructorCost)">
+                </ipa-input>
+              </div>
+            </td>
+          </tr>
 
-					<!-- Regular instructor -->
-					<td class="instructor-costs__table-cell">
-						<div class="instructor-costs__instructor-container">
-							<div class="instructor-costs__instructor-dropdown-container">
-								<instructor-assignment-dropdown mode="'originalInstructor'"
-								                                section-group="sectionGroup"
-								                                instructors="regularInstructorAssignmentOptions"
-								                                course="course">
-								</instructor-assignment-dropdown>
-							</div>
-							<div class="instructor-costs__instructor-reversion-ui">
-								<div class="glyphicon glyphicon-remove instructor-costs__revert-ui"
-								     tooltip-append-to-body="true"
-								     uib-tooltip="Remove instructor"
-								     confirm-button="removeOriginalInstructor(sectionGroup.sectionGroupCost)"
-								     message="Are you sure you want to remove this instructor?"
-								     yes="Remove"
-								     no="Cancel"
-								     ng-show="sectionGroup.sectionGroupCost.originalInstructorId > 0">
-								</div>
-							</div>
-						</div>
-					</td>
+        </tbody>
+      </table>
+    </div>
 
-					<!-- Reason -->
-					<td class="instructor-costs__table-cell">
-						<div class="instructor-costs__cost-container">
-							<ipa-input value="sectionGroup.sectionGroupCost.reason"
-							           on-update="updateSectionGroupCost(sectionGroup.sectionGroupCost)">
-							</ipa-input>
-						</div>
-					</td>
+    <div ng-show="view.activeTab == 'Group Costs'">
+      <table class="instructor-costs__table">
+        <thead>
+          <tr>
+            <th class="instructor-costs__table-header">
+              <div class="instructor-costs__cell-container">
+                Type
+              </div>
+            </th>
+            <th class="instructor-costs__table-header">
+              <div class="instructor-costs__cell-container">
+                Cost
+              </div>
+            </th>
+          </tr>
+        </thead>
 
-					<!-- Cost -->
-					<td class="instructor-costs__table-cell">
-						<div class="instructor-costs__cost-container">
-							<ipa-input mode="'currency'"
-							           value="sectionGroup.overrideInstructorCost"
-							           on-update="updateInstructorCost(sectionGroup.sectionGroupCost, sectionGroup.overrideInstructorCost)">
-							</ipa-input>
-						</div>
-					</td>
+        <tbody>
+          <tr>
+            <td>
+              <div class="instructor-list__cell-container instructor-list__cell-container--left">
+                  TA
+              </div>
+            </td>
+            <td>
+              <div class="instructor-list__cell-container instructor-list__cell-container--right">
+                <ipa-input value="state.budget.taCost"
+                  place-holder="'Enter a cost for TAs'"
+                  mode="'currency'"
+                  on-update="updateBudget()">
+                </ipa-input>
+              </div>
+            </td>
+          </tr>
+    
+          <tr>
+            <td>
+              <div class="instructor-list__cell-container instructor-list__cell-container--left">
+                Reader
+              </div>
+            </td>
+            <td>
+              <div class="instructor-list__cell-container instructor-list__cell-container--right">
+                <ipa-input value="state.budget.readerCost"
+                  place-holder="'Enter a cost for Readers'"
+                  mode="'currency'"
+                  on-update="updateBudget()">
+                </ipa-input>
+              </div>
+            </td>
+          </tr>
 
-					<!-- Comments -->
-					<td class="instructor-costs__table-cell">
-						<div class="instructor-costs__cell-container instructor-costs__cell-container--left">
-							<ipa-button text="'Comments' + sectionGroup.sectionGroupCost.commentCountDisplay"
-							            color="'light'"
-							            icon-class="'entypo entypo-chat'"
-							            on-click="openAddCourseCommentsModal(sectionGroup)">
-							</ipa-button>
-						</div>
-					</td>
-					<!-- Total -->
-					<td class="instructor-costs__table-cell-total">
-						<div class="instructor-costs__total-container">
-							{{ toCurrency(sectionGroup.totalCost) }}
-						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+          <tr ng-repeat="instructorTypeCost in state.calculatedInstructorTypeCosts">
+            <td>
+              <div class="instructor-list__cell-container instructor-list__cell-container--left">
+                  {{ instructorTypeCost.description }}
+              </div>
+            </td>
+            <td>
+              <div class="instructor-list__cell-container instructor-list__cell-container--right">
+                  <ipa-input value="instructorTypeCost.cost"
+                             place-holder="'Enter cost'"
+                             mode="'currency'"
+                             on-update="updateInstructorTypeCost(instructorTypeCost)">
+                </ipa-input>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </ipa-tabs>
-
 </div>
