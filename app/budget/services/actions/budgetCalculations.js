@@ -740,7 +740,6 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 						summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroup.instructorType, sectionGroup.overrideInstructorCost);
 						summary.byTerm[term].totalCosts += (sectionGroup.taCost || 0) + (sectionGroup.readerCost || 0) + (sectionGroup.overrideInstructorCost || 0);
 						summary.byTerm[term].totalUnits += (course.unitsLow || course.unitsHigh || 0);
-						if (course.unitsLow > 0 || course.unitsHigh > 0) { debugger; }
 						summary.byTerm[term].totalSCH += (sectionGroup.overrideTotalSeats || 0) * (course.unitsLow || 0);
 						summary.byTerm[term].lowerDivCount += (parseInt(course.courseNumber) < 100 ? 1 : 0);
 						summary.byTerm[term].upperDivCount += (parseInt(course.courseNumber) > 100 && parseInt(course.courseNumber) < 200 ? 1 : 0);
