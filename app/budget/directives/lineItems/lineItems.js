@@ -22,7 +22,7 @@ budgetApp.directive("lineItems", this.lineItems = function ($rootScope, budgetAc
 				if (areAllLineItemsSelected) {
 					budgetActions.deselectAllLineItems();
 				} else {
-					budgetActions.selectAllLineItems(scope.selectedBudgetScenario.lineItems);
+					budgetActions.selectAllLineItems(scope.lineItems);
 				}
 			};
 
