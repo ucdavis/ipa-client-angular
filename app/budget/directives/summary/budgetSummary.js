@@ -1,16 +1,19 @@
-budgetApp.directive("budgetSummary", this.budgetSummary = function ($rootScope) {
+budgetApp.directive("budgetSummary", this.budgetSummary = function ($rootScope, termService) {
 	return {
 		restrict: 'E',
 		templateUrl: 'budgetSummary.html',
 		replace: true,
 		scope: {
-			summary: '<',
-			budget: '<'
+			summary: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.saveBudget = function () {
-				budgetActions.updateBudget(scope.budget);
+			scope.getTermName = function(term) {
+				return termService.getShortTermName(term);
 			};
-		} // end link
+
+			scope.toCurrency = function (value) {
+				return toCurrency(value);
+			};
+		}
 	};
 });

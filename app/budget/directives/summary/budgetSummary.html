@@ -1,110 +1,257 @@
 <div class="budget-summary panel panel-primary" data-collapsed="0">
-	<!--
-	<div class="panel-heading">
-		<div class="panel-title">Summary</div>
-		<div class="panel-title pull-right">Last Modified: 5/18/17</div>
-	</div>
-	<div class="panel-body flex-row">
-		<doughnut-chart params="summary.costs" title-text="summary.graphTitleText"></doughnut-chart>
+	<table class="budget-summary__table">
+		<thead>
+			<tr>
+				<th>
+					<div class="budget-summary__header-cell">
+						<!-- Space for row label -->
+						&nbsp;
+					</div>
+				</th>
+				<th>
+					<div class="budget-summary__header-cell">
+						Year
+					</div>
+				</th>
+				<th ng-repeat="term in summary.terms">
+					<div class="budget-summary__header-cell">
+						{{ getTermName(term) }}
+					</div>
+				</th>
+			</tr>
+		</thead>
 
-		<div class="col-md-7 budget-summary">
-			<table class="table responsive">
-				<thead>
-					<tr>
-						<th class="budget-summary-title">
-							Course Costs
-						</th>
-						<th class="cost-column"></th>
-						<th></th>
-						<th class="sum-total">{{ summary.courseCosts.total }}</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>TA Costs</td>
-						<td>
-							<ipa-currency-input></ipa-currency-input>
-						</td>
-						<td>{{ summary.courseCosts.taCosts.percentage }}%</td>
-						<td class="text-right">{{ summary.courseCosts.taCosts.display }}</td>
-					</tr>
-					<tr>
-						<td>Reader Costs</td>
-						<td class="cost-column">
-							<ipa-currency-input></ipa-currency-input>
-						</td>
-						<td>{{ summary.courseCosts.readerCosts.percentage }}%</td>
-						<td class="text-right">{{ summary.courseCosts.readerCosts.display }}</td>
-					</tr>
-					<tr>
-						<td>Instructor Costs</td>
-						<td class="cost-column">
-							<ipa-currency-input></ipa-currency-input>
-						</td>
-						<td>{{ summary.courseCosts.instructorCosts.percentage }}%</td>
-						<td class="text-right">{{ summary.courseCosts.instructorCosts.display }}</td>
-					</tr>
-				</tbody>
-			</table>
-			<table class="table responsive">
-				<thead>
-					<tr>
-						<th class="budget-summary-title">
-							Intructor Costs
-						</th>
-						<th class="cost-column"></th>
-						<th></th>
-						<th class="sum-total">{{ summary.courseCosts.total }}</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Lecturer Costs</td>
-						<td class="cost-column">
-							<ipa-currency-input></ipa-currency-input>
-						</td>
-						<td>{{ summary.courseCosts.lecturerCosts.percentage }}%</td>
-						<td class="text-right">{{ summary.courseCosts.lecturerCosts.display }}</td>
-					</tr>
-					<tr>
-						<td>Instructor Costs</td>
-						<td class="cost-column"></td>
-						<td>{{ summary.courseCosts.instructorCosts.percentage }}%</td>
-						<td class="text-right">{{ summary.courseCosts.instructorCosts.display }}</td>
-					</tr>
-				</tbody>
-			</table>
-			<table class="table responsive">
-				<thead>
-					<tr>
-						<th class="budget-summary-title">
-							Line Items
-						</th>
-						<th class="cost-column"></th>
-						<th></th>
-						<th class="sum-total">{{ summary.lineItems.total }}</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="lineItemCategory in summary.lineItems.categories">
-						<td>{{ lineItemCategory.description }}</td>
-						<td></td>
-						<td>{{ lineItemCategory.percentage }}%</td>
-						<td class="text-right">{{ lineItemCategory.display }}</td>
-					</tr>
-				</tbody>
-			</table>
-			<table class="table responsive total-balance">
-				<thead>
-					<tr>
-						<th class="budget-summary-title">Balance
-						</th>
-						<th></th>
-						<th class="sum-total">{{ summary.totalBalance }}</th>
-					</tr>
-				</thead>
-			</table>
-		</div>
-	</div>
-	-->
+		<tbody>
+			<!-- TA Count -->
+			<tr>
+				<td>
+					<div class="instructor-list__cell-container budget-summary__cell-container--left">
+						TA Count
+					</div>
+				</td>
+				<td>
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ summary.combinedTerms.taCount }}
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms">
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ summary.byTerm[term].taCount }}
+					</div>
+				</td>
+			</tr>
+
+			<!-- TA Cost -->
+			<tr>
+				<td>
+					<div class="instructor-list__cell-container budget-summary__cell-container--left">
+						TA Cost
+					</div>
+				</td>
+				<td>
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ toCurrency(summary.combinedTerms.taCost) }}
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms">
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ toCurrency(summary.byTerm[term].taCost) }}
+					</div>
+				</td>
+			</tr>
+
+			<!-- Reader Count -->
+			<tr>
+				<td>
+					<div class="instructor-list__cell-container budget-summary__cell-container--left">
+						Reader Count
+					</div>
+				</td>
+				<td>
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ summary.combinedTerms.readerCount }}
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms">
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ summary.byTerm[term].readerCount }}
+					</div>
+				</td>
+			</tr>
+
+			<!-- Reader Cost -->
+			<tr>
+				<td>
+					<div class="instructor-list__cell-container budget-summary__cell-container--left">
+						Reader Cost
+					</div>
+				</td>
+				<td>
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ toCurrency(summary.combinedTerms.readerCost) }}
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms">
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ toCurrency(summary.byTerm[term].readerCost) }}
+					</div>
+				</td>
+			</tr>
+
+			<!-- Replacement Costs -->
+			<tr>
+				<td>
+					<div class="instructor-list__cell-container budget-summary__cell-container--left">
+						Replacement Costs
+					</div>
+				</td>
+				<td>
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ toCurrency(summary.combinedTerms.replacementCosts) }}
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms">
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ toCurrency(summary.byTerm[term].replacementCosts) }}
+					</div>
+				</td>
+			</tr>
+
+			<!-- Total Costs -->
+			<tr>
+				<td>
+					<div class="instructor-list__cell-container budget-summary__cell-container--left">
+						Total Costs
+					</div>
+				</td>
+				<td>
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ toCurrency(summary.combinedTerms.totalCosts) }}
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms">
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ toCurrency(summary.byTerm[term].totalCosts) }}
+					</div>
+				</td>
+			</tr>
+
+				<!-- Total Student Credit Hours -->
+			<tr>
+				<td>
+					<div class="instructor-list__cell-container budget-summary__cell-container--left">
+						Student Credit Hours
+					</div>
+				</td>
+				<td>
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ summary.combinedTerms.totalSCH }}
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms">
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ summary.byTerm[term].totalSCH }}
+					</div>
+				</td>
+			</tr>
+
+			<!-- Lower Div Count -->
+			<tr>
+				<td>
+					<div class="instructor-list__cell-container budget-summary__cell-container--left">
+						Lower Div Count
+					</div>
+				</td>
+				<td>
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ summary.combinedTerms.lowerDivCount }}
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms">
+					<div class="instructor-list__cell-container"
+					     ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ summary.byTerm[term].lowerDivCount }}
+					</div>
+				</td>
+			</tr>
+
+		<!-- Upper Div Count -->
+		<tr>
+			<td>
+				<div class="instructor-list__cell-container budget-summary__cell-container--left">
+					Upper Div Count
+				</div>
+			</td>
+			<td>
+				<div class="instructor-list__cell-container"
+				     ng-class="{ 'instructor-list__cell-container--right': $last }">
+					{{ summary.combinedTerms.upperDivCount }}
+				</div>
+			</td>
+			<td ng-repeat="term in summary.terms">
+				<div class="instructor-list__cell-container"
+				     ng-class="{ 'instructor-list__cell-container--right': $last }">
+					{{ summary.byTerm[term].upperDivCount }}
+				</div>
+			</td>
+		</tr>
+
+		<!-- Graduate Count -->
+		<tr>
+			<td>
+				<div class="instructor-list__cell-container budget-summary__cell-container--left">
+					Upper Div Count
+				</div>
+			</td>
+			<td>
+				<div class="instructor-list__cell-container"
+				     ng-class="{ 'instructor-list__cell-container--right': $last }">
+					{{ summary.combinedTerms.graduateCount }}
+				</div>
+			</td>
+			<td ng-repeat="term in summary.terms">
+				<div class="instructor-list__cell-container"
+				     ng-class="{ 'instructor-list__cell-container--right': $last }">
+					{{ summary.byTerm[term].graduateCount }}
+				</div>
+			</td>
+		</tr>
+
+		<!-- Total Offerings -->
+		<tr>
+			<td>
+				<div class="instructor-list__cell-container budget-summary__cell-container--left">
+					Total Offerings
+				</div>
+			</td>
+			<td>
+				<div class="instructor-list__cell-container"
+				     ng-class="{ 'instructor-list__cell-container--right': $last }">
+					{{ summary.combinedTerms.totalOfferingsCount }}
+				</div>
+			</td>
+			<td ng-repeat="term in summary.terms">
+				<div class="instructor-list__cell-container"
+				     ng-class="{ 'instructor-list__cell-container--right': $last }">
+					{{ summary.byTerm[term].totalOfferingsCount }}
+				</div>
+			</td>
+		</tr>
+	</tbody>
+	</table>
 </div>
