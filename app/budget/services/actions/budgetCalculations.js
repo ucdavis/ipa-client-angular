@@ -694,7 +694,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				lowerDivCount: 0,
 				upperDivCount: 0,
 				graduateCount: 0,
-				totalOfferingsCount: 0
+				totalOfferingsCount: 0,
+				enrollment: 0
 			};
 
 			summary.terms.forEach(function(term) {
@@ -710,6 +711,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					upperDivCount: 0,
 					graduateCount: 0,
 					totalOfferingsCount: 0,
+					enrollment: 0,
 					balance: (lineItemsAmount * -1)
 				};
 
@@ -726,6 +728,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 						summary.byTerm[term].lowerDivCount += (parseInt(course.courseNumber) < 100 ? 1 : 0);
 						summary.byTerm[term].upperDivCount += (parseInt(course.courseNumber) > 100 && parseInt(course.courseNumber) < 200 ? 1 : 0);
 						summary.byTerm[term].graduateCount += (parseInt(course.courseNumber) > 199 ? 1 : 0);
+						summary.byTerm[term].enrollment += sectionGroup.overrideTotalSeats || 0;
 						summary.byTerm[term].totalOfferingsCount += 1;
 					});
 				});
@@ -741,6 +744,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				summary.combinedTerms.upperDivCount += summary.byTerm[term].upperDivCount;
 				summary.combinedTerms.graduateCount += summary.byTerm[term].graduateCount;
 				summary.combinedTerms.totalOfferingsCount += summary.byTerm[term].totalOfferingsCount;
+				summary.combinedTerms.enrollment += summary.byTerm[term].enrollment;
 			});
 
 			budgetReducers.reduce({

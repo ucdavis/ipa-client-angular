@@ -148,7 +148,7 @@
 				</td>
 			</tr>
 
-				<!-- Total Student Credit Hours -->
+			<!-- Total Student Credit Hours -->
 			<tr>
 				<td>
 					<div class="instructor-list__cell-container budget-summary__cell-container--left">
@@ -165,6 +165,27 @@
 					<div class="instructor-list__cell-container"
 					     ng-class="{ 'instructor-list__cell-container--right': $last }">
 						{{ summary.byTerm[term].totalSCH }}
+					</div>
+				</td>
+			</tr>
+
+			<!-- Total Student Credit Hours -->
+			<tr>
+				<td>
+					<div class="instructor-list__cell-container budget-summary__cell-container--left">
+						Enrollment
+					</div>
+				</td>
+				<td>
+					<div class="instructor-list__cell-container"
+								ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ summary.combinedTerms.enrollment }}
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms">
+					<div class="instructor-list__cell-container"
+								ng-class="{ 'instructor-list__cell-container--right': $last }">
+						{{ summary.byTerm[term].enrollment }}
 					</div>
 				</td>
 			</tr>
