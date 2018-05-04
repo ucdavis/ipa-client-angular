@@ -155,7 +155,9 @@
 					<span class="title">Budget</span>
 				</a>
 			</li>
+		</ul>
 
+		<ul id="main-menu" class="main-menu">
 			<li ng-class="{ 'active': currentBaseHref == 'scheduleSummaryReport' || currentBaseHref == 'registrarReconciliationReport' || currentBaseHref == 'teachingCallResponseReport', 'opened': expanded == 'reports'}"
 				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('reports')">
