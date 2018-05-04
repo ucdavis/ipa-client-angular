@@ -18,6 +18,10 @@
 	padding-left: 5px;
 }
 
+/* 
+Shared component ipaToggle style override.
+Might want to add it as a proper customization if the need arises again
+*/
 .general-config .ipa-toggle {
 	display: flex;
 	justify-content: center;
