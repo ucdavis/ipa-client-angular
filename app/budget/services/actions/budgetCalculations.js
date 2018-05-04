@@ -688,6 +688,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				taCost: 0,
 				readerCount: 0,
 				readerCost: 0,
+				supportCosts: 0,
 				replacementCosts: 0,
 				totalCosts: 0,
 				totalSCH: 0,
@@ -704,6 +705,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					taCost: 0,
 					readerCount: 0,
 					readerCost: 0,
+					supportCosts: 0,
 					replacementCosts: 0,
 					totalCosts: 0,
 					totalSCH: 0,
@@ -712,6 +714,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					graduateCount: 0,
 					totalOfferingsCount: 0,
 					enrollment: 0,
+					sectionCount: 0,
 					balance: (lineItemsAmount * -1)
 				};
 
@@ -721,14 +724,17 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 						summary.byTerm[term].taCost += sectionGroup.taCost || 0;
 						summary.byTerm[term].readerCount += sectionGroup.overrideReaderAppointments || 0;
 						summary.byTerm[term].readerCost += sectionGroup.readerCost || 0;
-						summary.byTerm[term].supportCosts += summary.byTerm[term].taCost + summary.byTerm[term].readerCost;
+						summary.byTerm[term].supportCosts += (sectionGroup.taCost || 0) + (sectionGroup.readerCost || 0);
 						summary.byTerm[term].replacementCosts += sectionGroup.overrideInstructorCost || 0;
 						summary.byTerm[term].totalCosts += (sectionGroup.taCost || 0) + (sectionGroup.readerCost || 0) + (sectionGroup.overrideInstructorCost || 0);
+						if (term == "05" && summary.byTerm[term].totalCosts > 0) { debugger; }
+
 						summary.byTerm[term].totalSCH += (sectionGroup.overrideTotalSeats || 0) * (course.unitsLow || 0);
 						summary.byTerm[term].lowerDivCount += (parseInt(course.courseNumber) < 100 ? 1 : 0);
 						summary.byTerm[term].upperDivCount += (parseInt(course.courseNumber) > 100 && parseInt(course.courseNumber) < 200 ? 1 : 0);
 						summary.byTerm[term].graduateCount += (parseInt(course.courseNumber) > 199 ? 1 : 0);
 						summary.byTerm[term].enrollment += sectionGroup.overrideTotalSeats || 0;
+						summary.byTerm[term].sectionCount += sectionGroup.overrideSectionCount || 0;
 						summary.byTerm[term].totalOfferingsCount += 1;
 					});
 				});

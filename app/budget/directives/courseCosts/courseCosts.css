@@ -83,3 +83,13 @@
 .course-costs__table-header--comments {
 	padding-left: 20px;
 }
+
+.course-totals-row {
+	color: #bababa;
+	height: 30px
+}
+
+.course-totals-row__first {
+	padding-left: 20px;
+	text-align: center;
+}

@@ -33,11 +33,57 @@
 				</tr>
 			</thead>
 			<tbody class="course-costs__course-container" ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
+				<!-- Summary row -->
+				<tr ng-if="$first" class="course-totals-row">
+					<td>
+						<div class="course-totals-row__first">
+							Totals
+						</div>
+					</td>
+					<!-- Enrollment -->
+					<td>
+						{{ summary.byTerm[termNav.activeTerm].enrollment }}
+					</td>
+					<!-- Section Count -->
+					<td>
+						{{ summary.byTerm[termNav.activeTerm].sectionCount }}
+					</td>
+					<!-- TA Count -->
+					<td>
+						{{ summary.byTerm[termNav.activeTerm].taCount }}
+					</td>
+					<!-- TA Cost -->
+					<td>
+						{{ toCurrency(summary.byTerm[termNav.activeTerm].taCost) }}
+					</td>
+					<!-- Reader Count -->
+					<td>
+						{{ summary.byTerm[termNav.activeTerm].readerCount }}
+					</td>
+					<!-- Reader Cost -->
+					<td>
+						{{ toCurrency(summary.byTerm[termNav.activeTerm].readerCost) }}
+					</td>
+					<!-- Sub Total -->
+					<td>
+						{{ toCurrency(summary.byTerm[termNav.activeTerm].supportCosts) }}
+					</td>
+					<!-- Comments -->
+					<td>
+						&nbsp;
+					</td>
+					<!-- Total -->
+					<td>
+						{{ toCurrency(summary.byTerm[termNav.activeTerm].totalCosts) }}
+					</td>
+				</tr>
+
 				<tr>
 					<td colspan="10" class="course-costs__course-title">
 						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
 					</td>
 				</tr>
+
 				<tr ng-repeat="sectionGroup in course.sectionGroups">
 					<td class="course-costs__table-cell-sequence">
 						<div class="course-costs__sequence-container">

@@ -84,7 +84,8 @@
 				ng-if="view.state.ui.sectionNav.activeTab == 'Support Costs'"
 				class="budget-view__course-costs-container"
 				calculated-section-groups="view.state.calculatedSectionGroups"
-				term-nav="view.state.ui.termNav">
+				term-nav="view.state.ui.termNav"
+				summary="view.state.summary">
 			</course-costs>
 			<line-items
 				ng-if="view.state.ui.sectionNav.activeTab == 'Line Items'"
@@ -97,7 +98,8 @@
 				instructor-assignment-options="view.state.ui.instructorAssignmentOptions"
 				regular-instructor-assignment-options="view.state.ui.regularInstructorAssignmentOptions"
 				calculated-section-groups="view.state.calculatedSectionGroups"
-				term-nav="view.state.ui.termNav">
+				term-nav="view.state.ui.termNav"
+				summary="view.state.summary">
 			</instructor-costs>
 			<instructor-list
 				ng-if="view.state.ui.sectionNav.activeTab == 'Instructor List'"

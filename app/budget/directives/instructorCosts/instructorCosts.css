@@ -101,3 +101,7 @@
 	cursor: pointer;
 	margin-bottom: 2px;
 }
+
+.instructor-cost-summary__center {
+	text-align: center;
+}
