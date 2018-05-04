@@ -6,7 +6,8 @@ sharedApp.directive("ipaInput", this.ipaInput = function ($timeout) {
 		scope: {
 			onUpdate: '&?', // If set, this callback function will be triggered 500ms after changes stop
 			value: '=',
-			readOnly: '=?', // Boolean
+			readOnly: '=?', // Boolean (displays a disabled input box)
+			labelReadOnly: '=?', // Similar to readOnly, but removes all borders/styles. Displays only number in proper position.
 			placeHolder: '<?', // Default text when empty
 			updateDelay: '<?', // If an update function has been specified it will default to 500ms delay, can override that here
 			mode: '<?' // Options are 'number' (only allow characters 0-9), and 'currency' (currency style formatting and input enforcement)
