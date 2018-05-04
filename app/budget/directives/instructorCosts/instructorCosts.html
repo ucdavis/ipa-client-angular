@@ -52,15 +52,9 @@
 			<tbody ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
 				<!-- Summary row -->
 				<tr ng-if="$first" class="course-totals-row">
-					<td>
-						&nbsp;
-					</td>
-					<td>
-						&nbsp;
-					</td>
-					<td>
-						&nbsp;
-					</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
 					<td class="instructor-cost-summary__center">
 						Totals
 					</td>
@@ -68,9 +62,7 @@
 						{{ toCurrency(summary.byTerm[termNav.activeTerm].replacementCosts.overall) }}
 					</td>
 					<!-- Comments -->
-					<td>
-						&nbsp;
-					</td>
+					<td>&nbsp;</td>
 					<td class="instructor-cost-summary__center">
 						{{ toCurrency(summary.byTerm[termNav.activeTerm].totalCosts) }}
 					</td>
