@@ -666,6 +666,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 			return instructorType;
 		},
 		calculateSummaryTotals: function () {
+			_self = this;
 			var selectedBudgetScenario = budgetReducers._state.budgetScenarios.list[budgetReducers._state.ui.selectedBudgetScenarioId];
 			var sectionGroups = budgetReducers._state.calculatedSectionGroups.byTerm;
 			var lineItems = budgetReducers._state.lineItems;
@@ -689,7 +690,11 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				readerCount: 0,
 				readerCost: 0,
 				supportCosts: 0,
-				replacementCosts: 0,
+				replacementCosts: {
+					overall: 0,
+					instructorTypeIds: [],
+					byInstructorTypeId: {}
+				},
 				totalCosts: 0,
 				totalSCH: 0,
 				lowerDivCount: 0,
@@ -706,7 +711,11 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					readerCount: 0,
 					readerCost: 0,
 					supportCosts: 0,
-					replacementCosts: 0,
+					replacementCosts: {
+						overall: 0,
+						instructorTypeIds: [],
+						byInstructorTypeId: {}
+					},
 					totalCosts: 0,
 					totalSCH: 0,
 					lowerDivCount: 0,
@@ -725,10 +734,9 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 						summary.byTerm[term].readerCount += sectionGroup.overrideReaderAppointments || 0;
 						summary.byTerm[term].readerCost += sectionGroup.readerCost || 0;
 						summary.byTerm[term].supportCosts += (sectionGroup.taCost || 0) + (sectionGroup.readerCost || 0);
-						summary.byTerm[term].replacementCosts += sectionGroup.overrideInstructorCost || 0;
+						summary.byTerm[term].replacementCosts.overall += sectionGroup.overrideInstructorCost || 0;
+						summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroup.instructorType, sectionGroup.overrideInstructorCost);
 						summary.byTerm[term].totalCosts += (sectionGroup.taCost || 0) + (sectionGroup.readerCost || 0) + (sectionGroup.overrideInstructorCost || 0);
-						if (term == "05" && summary.byTerm[term].totalCosts > 0) { debugger; }
-
 						summary.byTerm[term].totalSCH += (sectionGroup.overrideTotalSeats || 0) * (course.unitsLow || 0);
 						summary.byTerm[term].lowerDivCount += (parseInt(course.courseNumber) < 100 ? 1 : 0);
 						summary.byTerm[term].upperDivCount += (parseInt(course.courseNumber) > 100 && parseInt(course.courseNumber) < 200 ? 1 : 0);
@@ -743,7 +751,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				summary.combinedTerms.taCost += summary.byTerm[term].taCost;
 				summary.combinedTerms.readerCount += summary.byTerm[term].readerCount;
 				summary.combinedTerms.readerCost += summary.byTerm[term].readerCost;
-				summary.combinedTerms.replacementCosts += summary.byTerm[term].replacementCosts;
+				summary.combinedTerms.replacementCosts.overall += summary.byTerm[term].replacementCosts.overall;
+				summary.combinedTerms.replacementCosts = _self._combineReplacementCost(summary.combinedTerms.replacementCosts, summary.byTerm[term].replacementCosts);
 				summary.combinedTerms.totalCosts += summary.byTerm[term].totalCosts;
 				summary.combinedTerms.totalSCH += summary.byTerm[term].totalSCH;
 				summary.combinedTerms.lowerDivCount += summary.byTerm[term].lowerDivCount;
@@ -759,6 +768,40 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					summary: summary
 				}
 			});
+		},
+		_calculateReplacementCost: function (replacementCosts, instructorType, replacementCost) {
+			if (!instructorType || !replacementCost) { return replacementCosts; }
+
+			var index = replacementCosts.instructorTypeIds.indexOf(instructorType.id);
+
+			if (index == -1) {
+				replacementCosts.instructorTypeIds.push(instructorType.id);
+			}
+
+			// Ensure not null (un-initialized)
+			replacementCosts.byInstructorTypeId[instructorType.id] = replacementCosts.byInstructorTypeId[instructorType.id] > 0 ? replacementCosts.byInstructorTypeId[instructorType.id] : 0;
+
+			// Add cost
+			replacementCosts.byInstructorTypeId[instructorType.id] += replacementCost;
+
+			return replacementCosts;
+		},
+		_combineReplacementCost: function (replacementCosts, termCosts) {
+			termCosts.instructorTypeIds.forEach(function (instructorTypeId) {
+				// Add any newly identified instructorTypes
+				var index = replacementCosts.instructorTypeIds.indexOf(instructorTypeId);
+				if (index == -1) {
+					replacementCosts.instructorTypeIds.push(instructorTypeId);
+				}
+	
+				// Ensure not null (un-initialized)
+				replacementCosts.byInstructorTypeId[instructorTypeId] = replacementCosts.byInstructorTypeId[instructorTypeId] > 0 ? replacementCosts.byInstructorTypeId[instructorTypeId] : 0;
+
+				// Add costs
+				replacementCosts.byInstructorTypeId[instructorTypeId] += termCosts.byInstructorTypeId[instructorTypeId];
+			});
+
+			return replacementCosts;
 		}
 	};
 });

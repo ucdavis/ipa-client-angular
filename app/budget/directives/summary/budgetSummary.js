@@ -4,7 +4,8 @@ budgetApp.directive("budgetSummary", this.budgetSummary = function ($rootScope, 
 		templateUrl: 'budgetSummary.html',
 		replace: true,
 		scope: {
-			summary: '<'
+			summary: '<',
+			instructorTypes: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.getTermName = function(term) {

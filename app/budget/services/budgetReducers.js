@@ -840,6 +840,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.calculatedInstructors = newState.calculatedInstructors;
 			newPageState.calculatedLineItems = newState.calculatedLineItems;
 			newPageState.summary = newState.summary;
+			newPageState.instructorTypes = newState.instructorTypes;
 
 			$rootScope.$emit('budgetStateChanged', newPageState);
 			console.log(newPageState);

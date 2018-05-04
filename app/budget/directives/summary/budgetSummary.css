@@ -11,7 +11,44 @@
 	table-layout: fixed;
 }
 
+.budget-summary__cell-container {
+  height: 53px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f8f8;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.budget-summary__cell-container--right {
+  margin-right: 20px;
+}
+
 .budget-summary__cell-container--left {
-	font-weight: bold;
 	margin-left: 20px;
+}
+
+.budget-summary__cell-container--replacement-costs-overall {
+	margin-bottom: 0px;
+	height: 58px;
+}
+
+.budget-summary__cell-container--replacement-costs-type {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	height: 63px;
+}
+
+.budget-summary__cell-container--replacement-costs-type--left {
+	margin-left: 20px;
+}
+
+.budget-summary__cell-container--replacement-costs-type--last {
+	margin-bottom: 5px;
+	height: 58px;
+}
+
+.budget-summary__cell--combined-value {
+	font-weight: bold;
 }
