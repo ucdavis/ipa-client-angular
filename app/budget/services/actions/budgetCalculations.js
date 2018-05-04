@@ -690,6 +690,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				readerCount: 0,
 				readerCost: 0,
 				supportCosts: 0,
+				totalUnits: 0,
 				replacementCosts: {
 					overall: 0,
 					instructorTypeIds: [],
@@ -711,6 +712,7 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					readerCount: 0,
 					readerCost: 0,
 					supportCosts: 0,
+					totalUnits: 0,
 					replacementCosts: {
 						overall: 0,
 						instructorTypeIds: [],
@@ -737,6 +739,8 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 						summary.byTerm[term].replacementCosts.overall += sectionGroup.overrideInstructorCost || 0;
 						summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroup.instructorType, sectionGroup.overrideInstructorCost);
 						summary.byTerm[term].totalCosts += (sectionGroup.taCost || 0) + (sectionGroup.readerCost || 0) + (sectionGroup.overrideInstructorCost || 0);
+						summary.byTerm[term].totalUnits += (course.unitsLow || course.unitsHigh || 0);
+						if (course.unitsLow > 0 || course.unitsHigh > 0) { debugger; }
 						summary.byTerm[term].totalSCH += (sectionGroup.overrideTotalSeats || 0) * (course.unitsLow || 0);
 						summary.byTerm[term].lowerDivCount += (parseInt(course.courseNumber) < 100 ? 1 : 0);
 						summary.byTerm[term].upperDivCount += (parseInt(course.courseNumber) > 100 && parseInt(course.courseNumber) < 200 ? 1 : 0);
@@ -751,9 +755,11 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				summary.combinedTerms.taCost += summary.byTerm[term].taCost;
 				summary.combinedTerms.readerCount += summary.byTerm[term].readerCount;
 				summary.combinedTerms.readerCost += summary.byTerm[term].readerCost;
+				summary.combinedTerms.supportCosts += summary.byTerm[term].supportCosts;
 				summary.combinedTerms.replacementCosts.overall += summary.byTerm[term].replacementCosts.overall;
 				summary.combinedTerms.replacementCosts = _self._combineReplacementCost(summary.combinedTerms.replacementCosts, summary.byTerm[term].replacementCosts);
 				summary.combinedTerms.totalCosts += summary.byTerm[term].totalCosts;
+				summary.combinedTerms.totalUnits += summary.byTerm[term].totalUnits;
 				summary.combinedTerms.totalSCH += summary.byTerm[term].totalSCH;
 				summary.combinedTerms.lowerDivCount += summary.byTerm[term].lowerDivCount;
 				summary.combinedTerms.upperDivCount += summary.byTerm[term].upperDivCount;

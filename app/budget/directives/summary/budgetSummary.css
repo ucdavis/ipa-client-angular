@@ -2,7 +2,28 @@
 	padding-top: 15px;
 	padding-bottom: 15px;
 	border-bottom: 1px solid #ddd;
-	text-align: center;
+	text-align: right;
+}
+
+.budget-summary__header-cell--right {
+	padding-right: 25px;
+}
+
+.budget-summary__cell-container {
+  height: 53px;
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f8;
+  justify-content: flex-end;
+}
+
+.budget-summary__cell-container--left {
+	padding-left: 20px;
+	justify-content: flex-start;
+}
+
+.budget-summary__cell-container--last {
+	padding-right: 25px;
 }
 
 .budget-summary__table {
@@ -11,44 +32,18 @@
 	table-layout: fixed;
 }
 
-.budget-summary__cell-container {
-  height: 53px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f8f8f8;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.budget-summary__cell-container--right {
-  margin-right: 20px;
-}
-
-.budget-summary__cell-container--left {
-	margin-left: 20px;
-}
-
-.budget-summary__cell-container--replacement-costs-overall {
-	margin-bottom: 0px;
-	height: 58px;
-}
-
-.budget-summary__cell-container--replacement-costs-type {
-	margin-top: 0px;
-	margin-bottom: 0px;
-	height: 63px;
-}
-
-.budget-summary__cell-container--replacement-costs-type--left {
-	margin-left: 20px;
-}
-
-.budget-summary__cell-container--replacement-costs-type--last {
-	margin-bottom: 5px;
-	height: 58px;
-}
-
 .budget-summary__cell--combined-value {
+}
+
+.budget-summary__cell--bold {
 	font-weight: bold;
+	margin-bottom: 30px;
+}
+
+.budget-summary__cell--total {
+	border-top: 1px solid black;
+}
+
+.budget-summary__cell--total-strong {
+	border-top: 3px double black;
 }

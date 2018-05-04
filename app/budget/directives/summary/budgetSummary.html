@@ -8,14 +8,14 @@
 						&nbsp;
 					</div>
 				</th>
-				<th>
-					<div class="budget-summary__header-cell">
-						Year
-					</div>
-				</th>
 				<th ng-repeat="term in summary.terms">
 					<div class="budget-summary__header-cell">
 						{{ getTermName(term) }}
+					</div>
+				</th>
+				<th>
+					<div class="budget-summary__header-cell budget-summary__header-cell--right">
+						Total
 					</div>
 				</th>
 			</tr>
@@ -29,15 +29,14 @@
 						TA Count
 					</div>
 				</td>
-				<td>
-					<div class="budget-summary__cell-container budget-summary__cell--combined-value">
-						{{ summary.combinedTerms.taCount }}
+				<td ng-repeat="term in summary.terms">
+					<div class="budget-summary__cell-container">
+						{{ summary.byTerm[term].taCount }}
 					</div>
 				</td>
-				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container"
-					     ng-class="{ 'budget-summary__cell-container--right': $last }">
-						{{ summary.byTerm[term].taCount }}
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell-container--last">
+						{{ summary.combinedTerms.taCount }}
 					</div>
 				</td>
 			</tr>
@@ -49,16 +48,15 @@
 						TA Cost
 					</div>
 				</td>
-				<td>
-					<div class="budget-summary__cell-container budget-summary__cell--combined-value">
-						{{ toCurrency(summary.combinedTerms.taCost) }}
-					</div>
-				</td>
 				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container"
-					     ng-class="{ 'budget-summary__cell-container--right': $last }">
+					<div class="budget-summary__cell-container">
 						{{ toCurrency(summary.byTerm[term].taCost) }}
 					</div>
+					<td>
+						<div class="budget-summary__cell-container budget-summary__cell-container--last">
+							{{ toCurrency(summary.combinedTerms.taCost) }}
+						</div>
+					</td>
 				</td>
 			</tr>
 
@@ -69,15 +67,14 @@
 						Reader Count
 					</div>
 				</td>
-				<td>
-					<div class="budget-summary__cell-container budget-summary__cell--combined-value">
-						{{ summary.combinedTerms.readerCount }}
+				<td ng-repeat="term in summary.terms">
+					<div class="budget-summary__cell-container">
+						{{ summary.byTerm[term].readerCount }}
 					</div>
 				</td>
-				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container"
-					     ng-class="{ 'budget-summary__cell-container--right': $last }">
-						{{ summary.byTerm[term].readerCount }}
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell-container--last">
+						{{ summary.combinedTerms.readerCount }}
 					</div>
 				</td>
 			</tr>
@@ -89,74 +86,89 @@
 						Reader Cost
 					</div>
 				</td>
-				<td>
-					<div class="budget-summary__cell-container budget-summary__cell--combined-value">
-						{{ toCurrency(summary.combinedTerms.readerCost) }}
-					</div>
-				</td>
 				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container"
-					     ng-class="{ 'budget-summary__cell-container--right': $last }">
+					<div class="budget-summary__cell-container">
 						{{ toCurrency(summary.byTerm[term].readerCost) }}
 					</div>
 				</td>
-			</tr>
-
-			<!-- Replacement Costs -->
-			<tr>
 				<td>
-					<div class="budget-summary__cell-container budget-summary__cell-container--left budget-summary__cell-container--replacement-costs-overall">
-						Replacement Costs
+					<div class="budget-summary__cell-container budget-summary__cell-container--last">
+						{{ toCurrency(summary.combinedTerms.readerCost) }}
 					</div>
 				</td>
+			</tr>
+
+			<!-- Support Cost -->
+			<tr>
 				<td>
-					<div class="budget-summary__cell-container budget-summary__cell-container--replacement-costs-overall budget-summary__cell--combined-value">
-						{{ toCurrency(summary.combinedTerms.replacementCosts.overall) }}
+					<div class="budget-summary__cell-container budget-summary__cell-container--left budget-summary__cell--bold">
+						Support Costs
 					</div>
 				</td>
 				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container budget-summary__cell-container--replacement-costs-overall"
-					     ng-class="{ 'budget-summary__cell-container--right': $last }">
-						{{ toCurrency(summary.byTerm[term].replacementCosts.overall) }}
+					<div class="budget-summary__cell-container budget-summary__cell--bold budget-summary__cell--total">
+						{{ toCurrency(summary.byTerm[term].supportCosts) }}
+					</div>
+				</td>
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell-container--last budget-summary__cell--bold budget-summary__cell--total">
+						{{ toCurrency(summary.combinedTerms.supportCosts) }}
 					</div>
 				</td>
 			</tr>
+
 			<!-- Replacement Cost sub-types -->
 			<tr ng-repeat="instructorTypeId in summary.combinedTerms.replacementCosts.instructorTypeIds">
 				<td>
-					<div class="budget-summary__cell-container budget-summary__cell-container--replacement-costs-type budget-summary__cell-container--replacement-costs-type--left">
+					<div class="budget-summary__cell-container budget-summary__cell-container--left">
 						{{ instructorTypes.list[instructorTypeId].description }}
 					</div>
 				</td>
-				<td>
-					<div class="budget-summary__cell-container budget-summary__cell-container--replacement-costs-type budget-summary__cell--combined-value">
-						{{ toCurrency(summary.combinedTerms.replacementCosts.byInstructorTypeId[instructorTypeId]) }}
-					</div>
-				</td>
 				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container budget-summary__cell-container--replacement-costs-type"
-					     ng-class="{ 'budget-summary__cell-container--right': $last }">
+					<div class="budget-summary__cell-container">
 						{{ toCurrency(summary.byTerm[term].replacementCosts.byInstructorTypeId[instructorTypeId]) }}
 					</div>
 				</td>
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell-container--last">
+						{{ toCurrency(summary.combinedTerms.replacementCosts.byInstructorTypeId[instructorTypeId]) }}
+					</div>
+				</td>
 			</tr>
 
+				<!-- Replacement Costs -->
+				<tr>
+					<td>
+						<div class="budget-summary__cell-container budget-summary__cell-container--left budget-summary__cell--bold">
+							Replacement Costs
+						</div>
+					</td>
+					<td ng-repeat="term in summary.terms">
+						<div class="budget-summary__cell-container budget-summary__cell--bold budget-summary__cell--total">
+							{{ toCurrency(summary.byTerm[term].replacementCosts.overall) }}
+						</div>
+					</td>
+					<td>
+						<div class="budget-summary__cell-container budget-summary__cell-container--last budget-summary__cell--bold budget-summary__cell--total">
+							{{ toCurrency(summary.combinedTerms.replacementCosts.overall) }}
+						</div>
+					</td>
+				</tr>
 			<!-- Total Costs -->
 			<tr>
 				<td>
-					<div class="budget-summary__cell-container budget-summary__cell-container--left">
+					<div class="budget-summary__cell-container budget-summary__cell-container--left budget-summary__cell--bold">
 						Total Costs
 					</div>
 				</td>
-				<td>
-					<div class="budget-summary__cell-container budget-summary__cell--combined-value">
-						{{ toCurrency(summary.combinedTerms.totalCosts) }}
+				<td ng-repeat="term in summary.terms">
+					<div class="budget-summary__cell-container budget-summary__cell--bold budget-summary__cell--total-strong">
+						{{ toCurrency(summary.byTerm[term].totalCosts) }}
 					</div>
 				</td>
-				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container"
-					     ng-class="{ 'budget-summary__cell-container--right': $last }">
-						{{ toCurrency(summary.byTerm[term].totalCosts) }}
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell-container--last budget-summary__cell--bold budget-summary__cell--total-strong  budget-summary__cell-container--last">
+						{{ toCurrency(summary.combinedTerms.totalCosts) }}
 					</div>
 				</td>
 			</tr>
@@ -165,58 +177,74 @@
 			<tr>
 				<td>
 					<div class="budget-summary__cell-container budget-summary__cell-container--left">
-						Student Credit Hours
-					</div>
-				</td>
-				<td>
-					<div class="budget-summary__cell-container budget-summary__cell--combined-value">
-						{{ summary.combinedTerms.totalSCH }}
+						Units Offered
 					</div>
 				</td>
 				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container"
-					     ng-class="{ 'budget-summary__cell-container--right': $last }">
-						{{ summary.byTerm[term].totalSCH }}
+					<div class="budget-summary__cell-container">
+						{{ summary.byTerm[term].totalUnits }}
+					</div>
+				</td>
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell-container--last">
+						{{ summary.combinedTerms.totalUnits }}
 					</div>
 				</td>
 			</tr>
 
-			<!-- Total Student Credit Hours -->
+			<!-- Enrollment -->
 			<tr>
 				<td>
 					<div class="budget-summary__cell-container budget-summary__cell-container--left">
 						Enrollment
 					</div>
 				</td>
-				<td>
-					<div class="budget-summary__cell-container budget-summary__cell--combined-value">
-						{{ summary.combinedTerms.enrollment }}
+				<td ng-repeat="term in summary.terms">
+					<div class="budget-summary__cell-container">
+						{{ summary.byTerm[term].enrollment }}
 					</div>
 				</td>
-				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container"
-					     ng-class="{ 'budget-summary__cell-container--right': $last }">
-						{{ summary.byTerm[term].enrollment }}
+				<td>
+					<div class="budget-summary__cell-container  budget-summary__cell-container--last">
+						{{ summary.combinedTerms.enrollment }}
 					</div>
 				</td>
 			</tr>
 
-			<!-- Lower Div Count -->
+			<!-- Total Student Credit Hours -->
 			<tr>
 				<td>
-					<div class="budget-summary__cell-container budget-summary__cell-container--left">
-						Lower Div Count
-					</div>
-				</td>
-				<td>
-					<div class="budget-summary__cell-container budget-summary__cell--combined-value">
-						{{ summary.combinedTerms.lowerDivCount }}
+					<div class="budget-summary__cell-container budget-summary__cell-container--left budget-summary__cell--bold">
+						Student Credit Hours
 					</div>
 				</td>
 				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container"
-					     ng-class="{ 'budget-summary__cell-container--right': $last }">
+					<div class="budget-summary__cell-container budget-summary__cell--bold budget-summary__cell--total-strong">
+						{{ summary.byTerm[term].totalSCH }}
+					</div>
+				</td>
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell--bold budget-summary__cell--total-strong  budget-summary__cell-container--last">
+						{{ summary.combinedTerms.totalSCH }}
+					</div>
+				</td>
+			</tr>
+
+							<!-- Lower Div Count -->
+			<tr>
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell-container--left">
+						Lower Div Offerings
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms">
+					<div class="budget-summary__cell-container">
 						{{ summary.byTerm[term].lowerDivCount }}
+					</div>
+				</td>
+				<td>
+					<div class="budget-summary__cell-container  budget-summary__cell-container--last">
+						{{ summary.combinedTerms.lowerDivCount }}
 					</div>
 				</td>
 			</tr>
@@ -225,18 +253,17 @@
 			<tr>
 				<td>
 					<div class="budget-summary__cell-container budget-summary__cell-container--left">
-						Upper Div Count
-					</div>
-				</td>
-				<td>
-					<div class="budget-summary__cell-container budget-summary__cell--combined-value">
-						{{ summary.combinedTerms.upperDivCount }}
+						Upper Div Offerings
 					</div>
 				</td>
 				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container"
-					     ng-class="{ 'budget-summary__cell-container--right': $last }">
+					<div class="budget-summary__cell-container">
 						{{ summary.byTerm[term].upperDivCount }}
+					</div>
+				</td>
+				<td>
+					<div class="budget-summary__cell-container  budget-summary__cell-container--last">
+						{{ summary.combinedTerms.upperDivCount }}
 					</div>
 				</td>
 			</tr>
@@ -245,18 +272,17 @@
 			<tr>
 				<td>
 					<div class="budget-summary__cell-container budget-summary__cell-container--left">
-						Upper Div Count
-					</div>
-				</td>
-				<td>
-					<div class="budget-summary__cell-container budget-summary__cell--combined-value">
-						{{ summary.combinedTerms.graduateCount }}
+						Graduate Offerings
 					</div>
 				</td>
 				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container"
-					     ng-class="{ 'budget-summary__cell-container--right': $last }">
+					<div class="budget-summary__cell-container">
 						{{ summary.byTerm[term].graduateCount }}
+					</div>
+				</td>
+				<td>
+					<div class="budget-summary__cell-container  budget-summary__cell-container--last">
+						{{ summary.combinedTerms.graduateCount }}
 					</div>
 				</td>
 			</tr>
@@ -264,19 +290,18 @@
 			<!-- Total Offerings -->
 			<tr>
 				<td>
-					<div class="budget-summary__cell-container budget-summary__cell-container--left">
+					<div class="budget-summary__cell-container budget-summary__cell-container--left budget-summary__cell--bold">
 						Total Offerings
 					</div>
 				</td>
-				<td>
-					<div class="budget-summary__cell-container budget-summary__cell--combined-value">
-						{{ summary.combinedTerms.totalOfferingsCount }}
+				<td ng-repeat="term in summary.terms">
+					<div class="budget-summary__cell-container budget-summary__cell--bold budget-summary__cell--total-strong">
+						{{ summary.byTerm[term].totalOfferingsCount }}
 					</div>
 				</td>
-				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container"
-					     ng-class="{ 'budget-summary__cell-container--right': $last }">
-						{{ summary.byTerm[term].totalOfferingsCount }}
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell--bold budget-summary__cell--total-strong budget-summary__cell-container--last">
+						{{ summary.combinedTerms.totalOfferingsCount }}
 					</div>
 				</td>
 			</tr>
