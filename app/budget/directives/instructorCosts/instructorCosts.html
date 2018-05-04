@@ -11,39 +11,39 @@
 				<col style="width: 16%;">
 				<col style="width: 16%;">
 				<col style="width: 16%;">
-				<col style="width: 16%;">
-				<col style="width: 10%;">
+				<col style="width: 15%;">
+				<col style="width: 11%;">
 			</colgroup>
 			<thead>
 				<tr>
 					<th class="instructor-costs__table-header"></th> <!-- Spacing for sequence number -->
 					<th class="instructor-costs__table-header">
-						<div class="instructor-costs__cell-container">
+						<div class="instructor-costs__header--instructor">
 							Instructor
 						</div>
 					</th>
 					<th class="instructor-costs__table-header">
-						<div class="instructor-costs__cell-container">
+						<div class="instructor-costs__header--reg-instructor">
 							Regular Instructor
 						</div>
 					</th>
 					<th class="instructor-costs__table-header">
-						<div class="instructor-costs__cell-container">
+						<div class="instructor-costs__header--reason">
 							Reason
 						</div>
 					</th>
 					<th class="instructor-costs__table-header">
-						<div class="instructor-costs__cell-container">
+						<div class="instructor-costs__header--instructor-cost">
 							Instructor Cost
 						</div>
 					</th>
-					<th class="instructor-costs__table-header instructor-costs__table-header--comments">
-						<div class="instructor-costs__cell-container instructor-costs__cell-container--left">
+					<th class="instructor-costs__table-header">
+						<div class="instructor-costs__header--comment">
 							Comment
 						</div>
 					</th>
 					<th class="instructor-costs__table-header">
-						<div class="instructor-costs__cell-container">
+						<div class="instructor-costs__header--total-cost">
 							Total Cost
 						</div>
 					</th>
@@ -52,18 +52,22 @@
 			<tbody ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
 				<!-- Summary row -->
 				<tr ng-if="$first" class="course-totals-row">
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
 					<td class="instructor-cost-summary__center">
 						Totals
 					</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
 					<td class="instructor-cost-summary__center">
-						{{ toCurrency(summary.byTerm[termNav.activeTerm].replacementCosts.overall) }}
+						<div class="instructor-costs__cost-container">
+							<ipa-input value="toCurrency(summary.byTerm[termNav.activeTerm].replacementCosts.overall)"
+							           label-read-only="true">
+							</ipa-input>
+						</div>
 					</td>
 					<!-- Comments -->
 					<td>&nbsp;</td>
-					<td class="instructor-cost-summary__center">
+					<td class="instructor-costs__total-cost--right">
 						{{ toCurrency(summary.byTerm[termNav.activeTerm].totalCosts) }}
 					</td>
 				</tr>

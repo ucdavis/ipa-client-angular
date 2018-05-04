@@ -38,6 +38,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	justify-content: flex-end;
+	padding-right: 5px;
 }
 
 .instructor-costs__instructor-container {
@@ -86,10 +88,6 @@
 	padding-left: 10px;
 }
 
-.instructor-costs__instructor-dropdown-container {
-
-}
-
 .instructor-costs__instructor-dropdown {
 	width: 100px;
 }
@@ -104,4 +102,25 @@
 
 .instructor-cost-summary__center {
 	text-align: center;
+}
+
+.instructor-costs__total-cost--right {
+	text-align: right;
+	padding-right: 25px;
+}
+
+.instructor-costs__header--total-cost {
+	text-align: right;
+	padding-right: 25px;
+}
+
+.instructor-costs__header--reason,
+.instructor-costs__header--instructor-cost {
+	padding-left: 32px;
+}
+
+.instructor-costs__header--instructor,
+.instructor-costs__header--reg-instructor,
+.instructor-costs__header--comment {
+	padding-left: 10px;
 }
