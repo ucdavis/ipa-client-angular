@@ -668,15 +668,36 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 		calculateSummaryTotals: function () {
 			var selectedBudgetScenario = budgetReducers._state.budgetScenarios.list[budgetReducers._state.ui.selectedBudgetScenarioId];
 			var sectionGroups = budgetReducers._state.calculatedSectionGroups.byTerm;
-			var terms = budgetReducers._state.calculatedSectionGroups.terms;
+			var lineItems = budgetReducers._state.lineItems;
 			var activeTerms = selectedBudgetScenario.terms;
 			var readerCost = budgetReducers._state.budget.readerCost;
 			var taCost = budgetReducers._state.budget.taCost;
 
+			// Calculate lineItem 'cost'
+			var lineItemsAmount = 0;
+			lineItems.ids.forEach(function(lineItemId) {
+				var lineItem = lineItems.list[lineItemId];
+				lineItemsAmount += lineItem.amount;
+			});
+
 			var summary = budgetReducers._state.summary = {};
-			summary.terms = terms;
+			summary.terms = activeTerms;
 			summary.byTerm = {};
-			activeTerms.forEach(function(term) {
+			summary.combinedTerms = {
+				taCount: 0,
+				taCost: 0,
+				readerCount: 0,
+				readerCost: 0,
+				replacementCosts: 0,
+				totalCosts: 0,
+				totalSCH: 0,
+				lowerDivCount: 0,
+				upperDivCount: 0,
+				graduateCount: 0,
+				totalOfferingsCount: 0
+			};
+
+			summary.terms.forEach(function(term) {
 				summary.byTerm[term] = {
 					taCount: 0,
 					taCost: 0,
@@ -688,29 +709,46 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 					lowerDivCount: 0,
 					upperDivCount: 0,
 					graduateCount: 0,
-					totalOfferingsCount: 0
+					totalOfferingsCount: 0,
+					balance: (lineItemsAmount * -1)
 				};
 
-				terms.forEach(function(term) {
-					sectionGroups[term].forEach(function(course) {
-						course.sectionGroups.forEach(function(sectionGroup) {
-							summary.byTerm[term].taCount += sectionGroup.overrideTeachingAssistantAppointments || 0;
-							summary.byTerm[term].taCost += (taCost * summary.byTerm[term].taCount);
-							summary.byTerm[term].readerCount = sectionGroup.overrideReaderAppointments || 0;
-							summary.byTerm[term].readerCost += (readerCost * summary.byTerm[term].readerCount);
-							summary.byTerm[term].replacementCosts += sectionGroup.overrideInstructorCost || 0;
-							summary.byTerm[term].totalCosts += summary.byTerm[term].taCost + summary.byTerm[term].readerCost + summary.byTerm[term].replacementCosts;
-							summary.byTerm[term].totalSCH = 999;
-							summary.byTerm[term].lowerDivCount += (parseInt(course.courseNumber) < 100 ? 1 : 0);
-							summary.byTerm[term].upperDivCount += (parseInt(course.courseNumber) > 100 && parseInt(course.courseNumber) < 200 ? 1 : 0);
-							summary.byTerm[term].graduateCount += (parseInt(course.courseNumber) > 199 ? 1 : 0);
-							summary.byTerm[term].totalOfferingsCount += 1;
-						});
+				sectionGroups[term].forEach(function(course) {
+					course.sectionGroups.forEach(function(sectionGroup) {
+						summary.byTerm[term].taCount += sectionGroup.overrideTeachingAssistantAppointments || 0;
+						summary.byTerm[term].taCost += sectionGroup.taCost || 0;
+						summary.byTerm[term].readerCount += sectionGroup.overrideReaderAppointments || 0;
+						summary.byTerm[term].readerCost += sectionGroup.readerCost || 0;
+						summary.byTerm[term].supportCosts += summary.byTerm[term].taCost + summary.byTerm[term].readerCost;
+						summary.byTerm[term].replacementCosts += sectionGroup.overrideInstructorCost || 0;
+						summary.byTerm[term].totalCosts += (sectionGroup.taCost || 0) + (sectionGroup.readerCost || 0) + (sectionGroup.overrideInstructorCost || 0);
+						summary.byTerm[term].totalSCH += (sectionGroup.overrideTotalSeats || 0) * (course.unitsLow || 0);
+						summary.byTerm[term].lowerDivCount += (parseInt(course.courseNumber) < 100 ? 1 : 0);
+						summary.byTerm[term].upperDivCount += (parseInt(course.courseNumber) > 100 && parseInt(course.courseNumber) < 200 ? 1 : 0);
+						summary.byTerm[term].graduateCount += (parseInt(course.courseNumber) > 199 ? 1 : 0);
+						summary.byTerm[term].totalOfferingsCount += 1;
 					});
-				});	
+				});
+
+				summary.combinedTerms.taCount += summary.byTerm[term].taCount;
+				summary.combinedTerms.taCost += summary.byTerm[term].taCost;
+				summary.combinedTerms.readerCount += summary.byTerm[term].readerCount;
+				summary.combinedTerms.readerCost += summary.byTerm[term].readerCost;
+				summary.combinedTerms.replacementCosts += summary.byTerm[term].replacementCosts;
+				summary.combinedTerms.totalCosts += summary.byTerm[term].totalCosts;
+				summary.combinedTerms.totalSCH += summary.byTerm[term].totalSCH;
+				summary.combinedTerms.lowerDivCount += summary.byTerm[term].lowerDivCount;
+				summary.combinedTerms.upperDivCount += summary.byTerm[term].upperDivCount;
+				summary.combinedTerms.graduateCount += summary.byTerm[term].graduateCount;
+				summary.combinedTerms.totalOfferingsCount += summary.byTerm[term].totalOfferingsCount;
 			});
 
-			// Calculate the 'year' column
+			budgetReducers.reduce({
+				type: CALCULATE_SUMMARY_TOTALS,
+				payload: {
+					summary: summary
+				}
+			});
 		}
 	};
 });

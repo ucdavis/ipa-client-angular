@@ -585,6 +585,16 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 					return lineItemComments;
 			}
 		},
+		summaryReducers: function (action, summary) {
+			switch (action.type) {
+				case INIT_STATE:
+					return {};
+				case CALCULATE_SUMMARY_TOTALS:
+					return action.payload.summary;
+				default:
+					return summary;
+			}
+		},
 		uiReducers: function (action, ui) {
 			switch (action.type) {
 				case INIT_STATE:
@@ -605,7 +615,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 							}
 						},
 						sectionNav: {
-							activeTab: "Support Costs",
+							activeTab: "Summary",
 							allTabs: ["Support Costs", "Instructor Costs", "Line Items", "Summary", "Instructor List"]
 						},
 						termNav: {
@@ -811,6 +821,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newState.calculatedInstructorTypeCosts = scope.calculatedInstructorTypeCostReducers(action, scope._state.calculatedInstructorTypeCosts);
 			newState.calculatedInstructors = scope.calculatedInstructorReducers(action, scope._state.calculatedInstructors);
 			newState.calculatedLineItems = scope.calculatedLineItemReducers(action, scope._state.calculatedLineItems);
+			newState.summary = scope.summaryReducers(action, scope._state.summary);
 
 			scope._state = newState;
 
@@ -828,6 +839,7 @@ budgetApp.service('budgetReducers', function ($rootScope, $log, budgetSelectors)
 			newPageState.calculatedInstructorTypeCosts = newState.calculatedInstructorTypeCosts;
 			newPageState.calculatedInstructors = newState.calculatedInstructors;
 			newPageState.calculatedLineItems = newState.calculatedLineItems;
+			newPageState.summary = newState.summary;
 
 			$rootScope.$emit('budgetStateChanged', newPageState);
 			console.log(newPageState);
