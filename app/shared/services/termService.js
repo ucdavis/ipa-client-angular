@@ -5,8 +5,8 @@
  * # termService
  * Service in the ipaClientAngularApp.
  */
-angular.module('sharedApp')
-	.service('termService', function () {
+class TermService {
+	constructor () {
 		return {
 			termCodeDescriptions: {
 				'05': 'Summer Session 1',
@@ -76,4 +76,7 @@ angular.module('sharedApp')
 				}
 			}
 		};
-	});
+	}
+}
+
+export default TermService;

@@ -1,19 +1,23 @@
-budgetApp.directive("groupCostConfig", this.groupCostConfig = function ($rootScope, budgetActions) {
+import './groupCostConfig.css';
+
+let groupCostConfig = function (BudgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'groupCostConfig.html',
+		template: require('./groupCostConfig.html'),
 		replace: true,
 		scope: {
 			state: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.updateBudget = function (budget) {
-				budgetActions.updateBudget(scope.state.budget);
+				BudgetActions.updateBudget(scope.state.budget);
 			};
 
 			scope.updateInstructorTypeCost = function(instructorTypeCost) {
-				budgetActions.createOrUpdateInstructorTypeCosts(instructorTypeCost);
+				BudgetActions.createOrUpdateInstructorTypeCosts(instructorTypeCost);
 			};
 		}
 	};
-});
+};
+
+export default groupCostConfig;

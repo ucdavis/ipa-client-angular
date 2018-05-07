@@ -1,7 +1,9 @@
-workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, workgroupActionCreators, workgroupService) {
+import './rolesTable.css';
+
+let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'rolesTable.html',
+		template: require('./rolesTable.html'),
 		replace: true,
 		scope: {
 			userRoles: '<',
@@ -16,7 +18,7 @@ workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, wor
 			};
 
 			scope.removeUserRole = function (userRole) {
-				workgroupActionCreators.removeRoleFromUser(userRole.userId, userRole.roleId, userRole);
+				WorkgroupActionCreators.removeRoleFromUser(userRole.userId, userRole.roleId, userRole);
 			};
 
 			scope.clearUserSearch = function () {
@@ -31,7 +33,7 @@ workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, wor
 			};
 
 			scope.searchUsers = function (query) {
-				return workgroupService.searchUsers(scope.ui.workgroupId, query).then(function (userSearchResults) {
+				return WorkgroupService.searchUsers(scope.ui.workgroupId, query).then(function (userSearchResults) {
 					return userSearchResults;
 				}, function (err) {
 					$rootScope.$emit('toast', {message: "Could not search users.", type: "ERROR"});
@@ -44,9 +46,11 @@ workgroupApp.directive("rolesTable", this.rolesTable = function ($rootScope, wor
 
 			scope.addUserToWorkgroup = function() {
 				scope.users.newUser;
-				workgroupActionCreators.createUser(scope.ui.workgroupId, scope.users.newUser, scope.activeRoleId);
+				WorkgroupActionCreators.createUser(scope.ui.workgroupId, scope.users.newUser, scope.activeRoleId);
 				scope.clearUserSearch();
 			};
 		}
 	};
-});
+};
+
+export default rolesTable;

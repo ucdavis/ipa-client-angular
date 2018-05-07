@@ -5,187 +5,213 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-supportAssignmentApp.controller('SupportAssignmentCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'supportActions', '$timeout',
-		this.SupportAssignmentCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, supportActions, $timeout) {
-			$window.document.title = "Instructional Support";
-			$scope.workgroupId = $routeParams.workgroupId;
-			$scope.year = $routeParams.year;
-			$scope.termShortCode = $routeParams.termShortCode;
-			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
-			$scope.view = {};
+class SupportAssignmentCtrl {
+	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, SupportActions, $timeout, AuthService) {
+		this.$scope = $scope;
+		this.$rootScope = $rootScope;
+		this.$window = $window;
+		this.$location = $location;
+		this.$route = $route;
+		this.$routeParams = $routeParams;
+		this.$uibModal = $uibModal;
+		this.SupportActions = SupportActions;
+		this.$timeout = $timeout;
+		this.AuthService = AuthService;
 
-			$scope.availabilityModalStyles = {
-				width: "70%"
-			};
+		var here = this;
+		$window.document.title = "Instructional Support";
+		$scope.workgroupId = here.$routeParams.workgroupId;
+		$scope.year = here.$routeParams.year;
+		$scope.termShortCode = here.$routeParams.termShortCode;
+		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
+		$scope.view = {};
 
-			$scope.closeAvailabilityModal = function() {
-				supportActions.closeAvailabilityModal();
-			};
+		$scope.availabilityModalStyles = {
+			width: "70%"
+		};
 
-			$rootScope.$on('sharedStateSet', function (event, sharedStateData) {
-				$rootScope.$on('supportAssignmentStateChanged', function (event, data) {
-					$scope.sharedState = sharedStateData;
-					var isInstructorReviewOpen = $scope.isInstructorSupportCallReviewOpen();
-					var isStudentReviewOpen = $scope.isSupportStaffSupportCallReviewOpen();
-					var userRoles = $scope.sharedState.currentUser.userRoles;
-
-					// Default access to none
-					$scope.isAllowed = false;
-					$scope.readOnlyMode = false;
-
-					// Determine access level
-					userRoles.forEach(function(userRole) {
-						if (userRole.roleName == "academicPlanner" || userRole.roleName == "admin") {
-							$scope.isAllowed = true;
-							$scope.readOnlyMode = false;
-						}
-					});
-
-					// If access has not yet been set
-					if ($scope.isAllowed == false) {
-						// Check if this is an instructor reviewing the support assignments
-						if (isInstructorReviewOpen) {
-							userRoles.forEach(function(userRole) {
-								if (userRole.roleName == "federationInstructor" || userRole.roleName == "senateInstructor") {
-									$scope.isAllowed = true;
-									$scope.readOnlyMode = true;
-								}
-							});
-						}
-
-						// Check if this is a student reviewing the support assignments
-						if (isStudentReviewOpen) {
-							userRoles.forEach(function(userRole) {
-								if (userRole.roleName == "studentPhd" || userRole.roleName == "studentMasters" || userRole.roleName == "instructionalSupport") {
-									$scope.isAllowed = true;
-									$scope.readOnlyMode = true;
-								}
-							});
-						}
-					}
-
-					if ($scope.readOnlyMode == true && $scope.isAllowed == true && $scope.view.state.ui.readOnlyMode == false) {
-						supportActions.setReadOnlyMode();
-					}
-				});
-			});
-
-			$rootScope.$on('supportAssignmentStateChanged', function (event, data) {
-				$scope.view.state = data;
-				console.log($scope.view.state);
-
-				// Resolves occasional discrepancies with view binding, because we're using event listeners
-				$timeout(function() {
-					$scope.$apply();
-				});
-			});
-
-			$scope.isInstructorSupportCallReviewOpen = function () {
-				var index = parseInt($scope.termShortCode) - 1;
-
-				if ( !($scope.view.state.schedule.instructorSupportCallReviewOpen)){
-					return false;
-				}
-
-				var value = $scope.view.state.schedule.instructorSupportCallReviewOpen[index];
-				var results = (value == "1");
-
-				return results;
-			};
-
-			$scope.isSupportStaffSupportCallReviewOpen = function () {
-				var index = parseInt($scope.termShortCode) - 1;
-
-				if ( !($scope.view.state.schedule.supportStaffSupportCallReviewOpen)){
-					return false;
-				}
-
-				var value = $scope.view.state.schedule.supportStaffSupportCallReviewOpen[index];
-				var results = (value == "1");
-
-				return results;
-			};
-
-			$scope.startFilter = function (query) {
-				supportActions.updateTableFilter(query);
-			};
-
-			$scope.setActiveTab = function (tabName) {
-				$location.search({ tab: tabName });
-				switch (tabName) {
-					case "instructionalSupportStaff":
-						//$scope.showInstructors();
-						break;
-					default:
-						//$scope.showCourses();
-						break;
-				}
-			};
-
-			$scope.appointmentTypeToShorthand = function(appointmentType) {
-				switch(appointmentType) {
-					case "teachingAssistant":
-						return "TA";
-					case "reader":
-						return "Reader";
-					case "associateInstructor":
-						return "AI";
-				}
-
-				return "";
-			};
-
-			$scope.isTeachingAssistant = function (instructionalSupportAssignment) {
-				if (instructionalSupportAssignment && instructionalSupportAssignment.appointmentType == "teachingAssistant") {
-					return true;
-				}
-				return false;
-			};
-
-			$scope.isReader = function (instructionalSupportAssignment) {
-				if (instructionalSupportAssignment && instructionalSupportAssignment.appointmentType == "reader") {
-					return true;
-				}
-				return false;
-			};
-
-			$scope.isAssociateInstructor = function (instructionalSupportAssignment) {
-				if (instructionalSupportAssignment && instructionalSupportAssignment.appointmentType == "associateInstructor") {
-					return true;
-				}
-				return false;
-			};
-
-			$scope.isUnassigned = function (instructionalSupportAssignment) {
-				if (instructionalSupportAssignment.instructionalSupportStaffId === 0) {
-					return true;
-				}
-
-				return false;
-			};
-
-			// Will delete an empty assignment
-			$scope.deleteAssignment = function (instructionalSupportAssignment) {
-				supportActions.deleteAssignment(instructionalSupportAssignment);
-			};
-
-			$scope.removeStaffFromSlot = function (supportAssignment) {
-				var supportStaffId = supportAssignment.supportStaffId;
-				supportActions.removeStaffFromSlot(supportAssignment.id, supportStaffId);
-			};
-
-			// Set the active tab according to the URL
-			// Otherwise redirect to the default view
-			$scope.setActiveTab($routeParams.tab || "courses");
-	}]);
-
-SupportAssignmentCtrl.getPayload = function (authService, supportActions, $route, $window) {
-	// Validate params
-	if (!($route.current.params.workgroupId) || !($route.current.params.year)) {
-		$window.location.href = "/summary/";
-	} else {
-		authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-			supportActions.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.termShortCode, $route.current.params.tab);
+		this.getPayload().then( function() {
+			here.initialize();
 		});
 	}
-};
+
+	initialize () {
+		var here = this;
+		here.$scope.closeAvailabilityModal = function() {
+			SupportActions.closeAvailabilityModal();
+		};
+
+		here.$scope.sharedState = here.AuthService.getSharedState();
+
+		here.$rootScope.$on('sharedStateSet', function (event, sharedStateData) {
+			here.$scope.sharedState = here.AuthService.getSharedState();
+		});
+
+		here.$rootScope.$on('supportAssignmentStateChanged', function (event, data) {
+			here.$scope.view.state = data;
+
+			// Resolves occasional discrepancies with view binding, because we're using event listeners
+			here.$timeout(function() {
+				here.$scope.$apply();
+			});
+
+			var isInstructorReviewOpen = here.$scope.isInstructorSupportCallReviewOpen();
+			var isStudentReviewOpen = here.$scope.isSupportStaffSupportCallReviewOpen();
+			var userRoles = here.$scope.sharedState.currentUser.userRoles;
+
+			// Default access to none
+			here.$scope.isAllowed = false;
+			here.$scope.readOnlyMode = false;
+
+			// Determine access level
+			userRoles.forEach(function(userRole) {
+				if (userRole.roleName == "academicPlanner" || userRole.roleName == "admin") {
+					here.$scope.isAllowed = true;
+					here.$scope.readOnlyMode = false;
+				}
+			});
+
+			// If access has not yet been set
+			if (here.$scope.isAllowed == false) {
+				// Check if this is an instructor reviewing the support assignments
+				if (isInstructorReviewOpen) {
+					userRoles.forEach(function(userRole) {
+						if (userRole.roleName == "instructor") {
+							here.$scope.isAllowed = true;
+							here.$scope.readOnlyMode = true;
+						}
+					});
+				}
+
+				// Check if this is a student reviewing the support assignments
+				if (isStudentReviewOpen) {
+					userRoles.forEach(function(userRole) {
+						if (userRole.roleName == "studentPhd" || userRole.roleName == "studentMasters" || userRole.roleName == "instructionalSupport") {
+							here.$scope.isAllowed = true;
+							here.$scope.readOnlyMode = true;
+						}
+					});
+				}
+			}
+
+			if (here.$scope.readOnlyMode == true && here.$scope.isAllowed == true && here.$scope.view.state.ui.readOnlyMode == false) {
+				SupportActions.setReadOnlyMode();
+			}
+		});
+
+		here.$scope.isInstructorSupportCallReviewOpen = function () {
+			var index = parseInt(here.$scope.termShortCode) - 1;
+
+			if ( !(here.$scope.view.state.schedule.instructorSupportCallReviewOpen)){
+				return false;
+			}
+
+			var value = here.$scope.view.state.schedule.instructorSupportCallReviewOpen[index];
+			var results = (value == "1");
+
+			return results;
+		};
+
+		here.$scope.isSupportStaffSupportCallReviewOpen = function () {
+			var index = parseInt(here.$scope.termShortCode) - 1;
+
+			if ( !(here.$scope.view.state.schedule.supportStaffSupportCallReviewOpen)){
+				return false;
+			}
+
+			var value = here.$scope.view.state.schedule.supportStaffSupportCallReviewOpen[index];
+			var results = (value == "1");
+
+			return results;
+		};
+
+		here.$scope.startFilter = function (query) {
+			SupportActions.updateTableFilter(query);
+		};
+
+		here.$scope.setActiveTab = function (tabName) {
+			here.$location.search({ tab: tabName });
+			switch (tabName) {
+				case "instructionalSupportStaff":
+					//$scope.showInstructors();
+					break;
+				default:
+					//$scope.showCourses();
+					break;
+			}
+		};
+
+		here.$scope.appointmentTypeToShorthand = function(appointmentType) {
+			switch(appointmentType) {
+				case "teachingAssistant":
+					return "TA";
+				case "reader":
+					return "Reader";
+				case "associateInstructor":
+					return "AI";
+			}
+
+			return "";
+		};
+
+		here.$scope.isTeachingAssistant = function (instructionalSupportAssignment) {
+			if (instructionalSupportAssignment && instructionalSupportAssignment.appointmentType == "teachingAssistant") {
+				return true;
+			}
+			return false;
+		};
+
+		here.$scope.isReader = function (instructionalSupportAssignment) {
+			if (instructionalSupportAssignment && instructionalSupportAssignment.appointmentType == "reader") {
+				return true;
+			}
+			return false;
+		};
+
+		here.$scope.isAssociateInstructor = function (instructionalSupportAssignment) {
+			if (instructionalSupportAssignment && instructionalSupportAssignment.appointmentType == "associateInstructor") {
+				return true;
+			}
+			return false;
+		};
+
+		here.$scope.isUnassigned = function (instructionalSupportAssignment) {
+			if (instructionalSupportAssignment.instructionalSupportStaffId === 0) {
+				return true;
+			}
+
+			return false;
+		};
+
+		// Will delete an empty assignment
+		here.$scope.deleteAssignment = function (instructionalSupportAssignment) {
+			SupportActions.deleteAssignment(instructionalSupportAssignment);
+		};
+
+		here.$scope.removeStaffFromSlot = function (supportAssignment) {
+			var supportStaffId = supportAssignment.supportStaffId;
+			SupportActions.removeStaffFromSlot(supportAssignment.id, supportStaffId);
+		};
+
+		// Set the active tab according to the URL
+		// Otherwise redirect to the default view
+		here.$scope.setActiveTab(here.$routeParams.tab || "courses");
+	}
+
+	getPayload () {
+		var here = this;
+	// Validate params
+	if (!(here.$route.current.params.workgroupId) || !(here.$route.current.params.year)) {
+		here.$window.location.href = "/summary/";
+	} else {
+		return here.AuthService.validate(localStorage.getItem('JWT'), here.$route.current.params.workgroupId, here.$route.current.params.year).then(function () {
+			here.SupportActions.getInitialState(here.$route.current.params.workgroupId, here.$route.current.params.year, here.$route.current.params.termShortCode, here.$route.current.params.tab);
+		});
+	}
+
+	}
+}
+
+SupportAssignmentCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$uibModal', 'SupportActions', '$timeout', 'AuthService'];
+
+export default SupportAssignmentCtrl;

@@ -8,9 +8,7 @@
 	},
 	"parserOptions": {
 		"ecmaVersion": 6,
-	},
-	"ecmaFeatures": {
-		"arrowFunctions":true
+		"sourceType": "module"
 	},
 	"rules": {
 		// Possible Errors

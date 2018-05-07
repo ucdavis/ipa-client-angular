@@ -1,5 +1,4 @@
-angular.module('userRole', [])
-
+const UserRole = angular.module('UserRole', [])
 .factory('UserRole', ['$http', function($http) {
 	function UserRole(userRoleData) {
 		if (userRoleData) {
@@ -13,3 +12,5 @@ angular.module('userRole', [])
 	};
 	return UserRole;
 }]);
+
+export default UserRole;

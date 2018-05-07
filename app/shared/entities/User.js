@@ -1,4 +1,4 @@
-angular.module('user', [])
+const User = angular.module('User', [])
 
 .factory('User', ['$http', function($http) {
 	function User(userData) {
@@ -13,3 +13,5 @@ angular.module('user', [])
 	};
 	return User;
 }]);
+
+export default User;

@@ -1,4 +1,4 @@
-sharedApp.directive("stickyHeader", this.stickyHeader = function($timeout) {
+let stickyHeader = function($timeout) {
 	return {
 		restrict: 'C',
 		link: function (scope, element, attrs) {
@@ -44,8 +44,8 @@ sharedApp.directive("stickyHeader", this.stickyHeader = function($timeout) {
 					}
 				});
 			}
-
-
 		}
 	};
-});
+};
+
+export default stickyHeader;

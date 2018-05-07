@@ -1,7 +1,9 @@
-supportAssignmentApp.directive("staffHeader", this.staffHeader = function ($rootScope, supportActions) {
+import './staffHeader.css';
+
+let staffHeader = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'staffHeader.html',
+		template: require('./staffHeader.html'),
 		replace: true,
 		scope: {
 			supportStaff: '<',
@@ -10,8 +12,10 @@ supportAssignmentApp.directive("staffHeader", this.staffHeader = function ($root
 		},
 		link: function (scope, element, attrs) {
 			scope.openAvailabilityModal = function(supportStaff) {
-				supportActions.openAvailabilityModal(supportStaff);
+				SupportActions.openAvailabilityModal(supportStaff);
 			};
 		}
 	};
-});
+};
+
+export default staffHeader;

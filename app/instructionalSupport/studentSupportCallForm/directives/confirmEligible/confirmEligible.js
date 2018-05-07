@@ -1,17 +1,22 @@
-instructionalSupportApp.directive("confirmEligible", this.confirmEligible = function ($rootScope, studentActions) {
+import './confirmEligible.css';
+
+let confirmEligible = function ($rootScope, StudentFormActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'confirmEligible.html',
+		template: require('./confirmEligible.html'),
 		replace: true,
 		scope: {
 			supportCallResponse: '<'
 		},
 		link: function (scope, element, attrs) {
+			var _self = this;
 			scope.toggleEligibilityConfirmed = function() {
 				scope.supportCallResponse.eligibilityConfirmed = !scope.supportCallResponse.eligibilityConfirmed;
 
-				studentActions.updateSupportCallResponse(scope.supportCallResponse);
+				_self.StudentFormActions.updateSupportCallResponse(scope.supportCallResponse);
 			};
 		}
 	};
-});
+};
+
+export default confirmEligible;

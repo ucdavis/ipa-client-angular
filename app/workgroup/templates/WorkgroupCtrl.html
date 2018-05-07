@@ -1,6 +1,16 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 
 <div class="workgroup-container">
+		<!-- Modals -->
+		<ipa-modal
+			is-visible="view.isImpersonationModalOpen"
+			header-text="Impersonate">
+				<impersonation-modal
+					ng-if="view.isImpersonationModalOpen"
+					state="view.state"
+					is-visible="view.isImpersonationModalOpen">
+				</impersonation-modal>
+		</ipa-modal>
 
 <ipa-header page-title="Workgroup">
 	<div ng-if="activeWorkgroupTab == 'people'">

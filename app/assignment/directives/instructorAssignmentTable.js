@@ -1,7 +1,7 @@
 /**
  * Provides the main course table in the Courses View
  */
-assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTable = function ($rootScope, assignmentActionCreators) {
+let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 	return {
 		restrict: 'A',
 		link: function (scope, element, attrs) {
@@ -278,6 +278,8 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 												// This teachingAssignment is a buyout/sabb/release
 												if (teachingAssignment.approved == false && (teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.workLifeBalance || teachingAssignment.leaveOfAbsence || teachingAssignment.sabbatical)) {
+													let preferenceDisplayText = "";
+
 													if (teachingAssignment.buyout) {
 														preferenceDisplayText = "Buyout";
 														nonCoursePreferences.buyout = true;
@@ -430,7 +432,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 
 						//Add 'The Staff'
 
-						courseHtml = "";
+						let courseHtml = "";
 						courseHtml += "<div class=\"course-list-row\">";
 						courseHtml += "<div class=\"description-cell\">";
 						courseHtml += "<div>";
@@ -511,7 +513,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 			}); // end on event 'assignmentStateChanged'
 			// Handle Instructor UI events
 			element.click(function (e) {
-				$el = $(e.target);
+				let $el = $(e.target);
 				var teachingAssignment, teachingAssignmentId, instructorId;
 				// Approving a teachingAssignment or creating a new one
 				if ($el.is('a')) {
@@ -531,7 +533,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 					if (teachingAssignmentId) {
 						teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 
-						assignmentActionCreators.approveInstructorAssignment(teachingAssignment, scope.workgroupId, scope.year);
+						AssignmentActionCreators.approveInstructorAssignment(teachingAssignment, scope.workgroupId, scope.year);
 					} else { // Creating a new teachingAssignment, and then approving it
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 						teachingAssignment = {
@@ -548,7 +550,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 							sabbatical: isSabbatical
 						};
 
-						assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment, scope.view.state.userInterface.scheduleId);
+						AssignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment, scope.view.state.userInterface.scheduleId);
 					}
 				}
 				// Open Assignment deletion confirmation popover
@@ -561,7 +563,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 				else if ($el.data('event-type') == 'deleteAssignment') {
 					teachingAssignmentId = $el.data('teaching-assignment-id');
 					teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
-					assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
+					AssignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
 				}
 
 				// Close Assignment deletion confirmation popover
@@ -582,7 +584,7 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 					sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 
 					sectionGroup.showTheStaff = false;
-					assignmentActionCreators.removePlaceholderStaff(sectionGroup);
+					AssignmentActionCreators.removePlaceholderStaff(sectionGroup);
 				}
 
 				// Close Assignment deletion confirmation popover
@@ -609,18 +611,20 @@ assignmentApp.directive("instructorAssignmentTable", this.instructorAssignmentTa
 					if (scheduleInstructorNote) {
 						if ($el.hasClass('glyphicon-unchecked')) {
 							scheduleInstructorNote.assignmentsCompleted = true;
-							assignmentActionCreators.markInstructorComplete(scheduleInstructorNote);
+							AssignmentActionCreators.markInstructorComplete(scheduleInstructorNote);
 						} else {
 							scheduleInstructorNote.assignmentsCompleted = false;
-							assignmentActionCreators.markInstructorIncomplete(scheduleInstructorNote);
+							AssignmentActionCreators.markInstructorIncomplete(scheduleInstructorNote);
 						}
 					}
 					// Make a new scheduleInstructorNote
 					else {
-						assignmentActionCreators.addScheduleInstructorNote(instructorId, scope.year, scope.workgroupId, "", true);
+						AssignmentActionCreators.addScheduleInstructorNote(instructorId, scope.year, scope.workgroupId, "", true);
 					}
 				}
 			}); // end UI event handler
 		} // end link
 	};
-});
+};
+
+export default instructorAssignmentTable;

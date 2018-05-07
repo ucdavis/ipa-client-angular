@@ -1,4 +1,4 @@
-angular.module('teachingCall', [])
+const TeachingCall = angular.module('TeachingCall', [])
 
 .factory('TeachingCall', ['$http', function($http) {
 	function TeachingCall(teachingCallData) {
@@ -13,3 +13,5 @@ angular.module('teachingCall', [])
 	};
 	return TeachingCall;
 }]);
+
+export default TeachingCall;

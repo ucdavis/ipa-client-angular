@@ -1,4 +1,4 @@
-angular.module('scheduleInstructorNote', [])
+const ScheduleInstructorNote = angular.module('ScheduleInstructorNote', [])
 
 .factory('ScheduleInstructorNote', ['$http', function($http) {
 	function ScheduleInstructorNote(scheduleInstructorNoteData) {
@@ -13,3 +13,5 @@ angular.module('scheduleInstructorNote', [])
 	};
 	return ScheduleInstructorNote;
 }]);
+
+export default ScheduleInstructorNote;

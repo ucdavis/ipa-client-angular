@@ -1,15 +1,17 @@
-instructionalSupportApp.directive("studentPreferenceTable", this.studentPreferenceTable = function (studentActions) {
+import './studentPreferenceTable.css';
+
+let studentPreferenceTable = function (StudentFormActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'studentPreferenceTable.html',
+		template: require('./studentPreferenceTable.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.deletePreference = function(preference) {
-				studentActions.deleteStudentPreference(preference);
+				StudentFormActions.deleteStudentPreference(preference);
 			};
 
 			scope.openPreferenceCommentsModal = function(preference) {
-				studentActions.openPreferenceCommentsModal(preference);
+				StudentFormActions.openPreferenceCommentsModal(preference);
 			};
 
 			// Will reorder the preferenceIds
@@ -22,7 +24,7 @@ instructionalSupportApp.directive("studentPreferenceTable", this.studentPreferen
 				preferenceIds = scope.swapPositions(preferenceIds, index, index + changeValue);
 				var termCode = scope.state.supportCallResponse.termCode;
 
-				studentActions.updatePreferencesOrder(preferenceIds, scope.state.misc.scheduleId, termCode);
+				StudentFormActions.updatePreferencesOrder(preferenceIds, scope.state.misc.scheduleId, termCode);
 			};
 
 			scope.swapPositions = function (array, indexA, indexB) {
@@ -34,4 +36,6 @@ instructionalSupportApp.directive("studentPreferenceTable", this.studentPreferen
 			};
 		}
 	};
-});
+};
+
+export default studentPreferenceTable;

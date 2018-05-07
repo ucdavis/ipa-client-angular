@@ -1,7 +1,9 @@
-budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budgetActions) {
+import './courseCosts.css';
+
+let courseCosts = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'courseCosts.html',
+		template: require('./courseCosts.html'),
 		replace: true,
 		scope: {
 			termNav: '<',
@@ -9,16 +11,16 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 		},
 		link: function (scope, element, attrs) {
 			scope.setActiveTerm = function(activeTermTab) {
-				budgetActions.selectTerm(activeTermTab);
+				BudgetActions.selectTerm(activeTermTab);
 			};
 
 			scope.openAddCourseCommentsModal = function(sectionGroup) {
-				budgetActions.openAddCourseCommentsModal(sectionGroup);
+				BudgetActions.openAddCourseCommentsModal(sectionGroup);
 			};
 
 			scope.overrideSectionGroup = function(sectionGroup, property) {
 				sectionGroup = scope.enforceNumericParams(sectionGroup);
-				budgetActions.overrideSectionGroup(sectionGroup, property);
+				BudgetActions.overrideSectionGroup(sectionGroup, property);
 			};
 
 			// Will ensure certain properties are numbers, if they exist on the object.
@@ -51,7 +53,7 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 					sectionGroup.overrideReaderAppointments = null;
 				}
 
-				budgetActions.overrideSectionGroup(sectionGroup, property, isReversion = true);
+				BudgetActions.overrideSectionGroup(sectionGroup, property, true);
 			};
 
 			scope.toCurrency = function (value) {
@@ -59,4 +61,6 @@ budgetApp.directive("courseCosts", this.courseCosts = function ($rootScope, budg
 			};
 		} // end link
 	};
-});
+};
+
+export default courseCosts;

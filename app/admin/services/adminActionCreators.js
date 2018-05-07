@@ -6,60 +6,72 @@
  * Service in the adminApp.
  * Central location for sharedState information.
  */
-adminApp.service('adminActionCreators', function (adminStateService, adminService, $rootScope) {
-	return {
-		getInitialState: function () {
-			adminService.getAdminView().then(function (payload) {
-				var action = {
-					type: INIT_STATE,
-					payload: payload
-				};
-				adminStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not load admin view.", type: "ERROR" });
-			});
-		},
-		updateWorkgroup: function (workgroup) {
-			adminService.updateWorkgroup(workgroup).then(function (updatedWorkgroup) {
-				$rootScope.$emit('toast', { message: "Updated workgroup " + updatedWorkgroup.name, type: "SUCCESS" });
-				var action = {
-					type: UPDATE_WORKGROUP,
-					payload: {
-						workgroup: updatedWorkgroup
-					}
-				};
-				adminStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not update workgroup.", type: "ERROR" });
-			});
-		},
-		removeWorkgroup: function (workgroup) {
-			adminService.removeWorkgroup(workgroup.id).then(function () {
-				$rootScope.$emit('toast', { message: "Removed workgroup " + workgroup.name, type: "SUCCESS" });
-				var action = {
-					type: REMOVE_WORKGROUP,
-					payload: {
-						workgroup: workgroup
-					}
-				};
-				adminStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not remove workgroup.", type: "ERROR" });
-			});
-		},
-		addWorkgroup: function (workgroup) {
-			adminService.addWorkgroup(workgroup).then(function (createdWorkgroup) {
-				$rootScope.$emit('toast', { message: "Created workgroup " + workgroup.name, type: "SUCCESS" });
-				var action = {
-					type: ADD_WORKGROUP,
-					payload: {
-						workgroup: createdWorkgroup
-					}
-				};
-				adminStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not add workgroup.", type: "ERROR" });
-			});
-		}
-	};
-});
+class AdminActionCreators {
+	constructor (AdminStateService, AdminService, $rootScope, ActionTypes) {
+		var self = this;
+		this.adminStateService = AdminStateService;
+		this.adminService = AdminService;
+		this.$rootScope = $rootScope;
+		this.ActionTypes = ActionTypes;
+
+		return {
+			getInitialState: function () {
+				self.adminService.getAdminView().then(function (payload) {
+					var action = {
+						type: ActionTypes.INIT_STATE,
+						payload: payload
+					};
+					self.adminStateService.reduce(action);
+				}, function (err) {
+					self.$rootScope.$emit('toast', { message: "Could not load admin view.", type: "ERROR" });
+				});
+			},
+			updateWorkgroup: function (workgroup) {
+				self.adminService.updateWorkgroup(workgroup).then(function (updatedWorkgroup) {
+					self.$rootScope.$emit('toast', { message: "Updated workgroup " + updatedWorkgroup.name, type: "SUCCESS" });
+					var action = {
+						type: ActionTypes.UPDATE_WORKGROUP,
+						payload: {
+							workgroup: updatedWorkgroup
+						}
+					};
+					self.adminStateService.reduce(action);
+				}, function (err) {
+					self.$rootScope.$emit('toast', { message: "Could not update workgroup.", type: "ERROR" });
+				});
+			},
+			removeWorkgroup: function (workgroup) {
+				self.adminService.removeWorkgroup(workgroup.id).then(function () {
+					self.$rootScope.$emit('toast', { message: "Removed workgroup " + workgroup.name, type: "SUCCESS" });
+					var action = {
+						type: ActionTypes.REMOVE_WORKGROUP,
+						payload: {
+							workgroup: workgroup
+						}
+					};
+					self.adminStateService.reduce(action);
+				}, function (err) {
+					self.$rootScope.$emit('toast', { message: "Could not remove workgroup.", type: "ERROR" });
+				});
+			},
+			addWorkgroup: function (workgroup) {
+				self.adminService.addWorkgroup(workgroup).then(function (createdWorkgroup) {
+					self.$rootScope.$emit('toast', { message: "Created workgroup " + workgroup.name, type: "SUCCESS" });
+					var action = {
+						type: ActionTypes.ADD_WORKGROUP,
+						payload: {
+							workgroup: createdWorkgroup
+						}
+					};
+					self.adminStateService.reduce(action);
+				}, function (err) {
+					self.$rootScope.$emit('toast', { message: "Could not add workgroup.", type: "ERROR" });
+				});
+			}
+		};
+	}
+}
+
+AdminActionCreators.$inject = ['AdminStateService', 'AdminService', '$rootScope', 'ActionTypes'];
+
+export default AdminActionCreators;

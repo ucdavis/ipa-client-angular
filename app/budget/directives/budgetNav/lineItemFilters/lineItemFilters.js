@@ -1,7 +1,9 @@
-sharedApp.directive('lineItemFilters', function(budgetActions) {
+import './lineItemFilters.css';
+
+let lineItemFilters = function(BudgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'lineItemFilters.html',
+		template: require('./lineItemFilters.html'),
 		replace: true,
 		scope: {
 			filters: '<' // Expected to have 'description' and 'selected' properties
@@ -18,8 +20,10 @@ sharedApp.directive('lineItemFilters', function(budgetActions) {
 			};
 
 			scope.toggleLineItemFilter = function(filter) {
-				budgetActions.toggleLineItemFilter(filter);
+				BudgetActions.toggleLineItemFilter(filter);
 			};
 		}
 	};
-});
+};
+
+export default lineItemFilters;

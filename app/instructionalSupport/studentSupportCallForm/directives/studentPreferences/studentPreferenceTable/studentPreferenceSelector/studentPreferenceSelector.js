@@ -1,12 +1,16 @@
-instructionalSupportApp.directive("studentPreferenceSelector", this.studentPreferenceSelector = function (studentActions) {
+import './studentPreferenceSelector.css';
+
+let studentPreferenceSelector = function (StudentFormActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'studentPreferenceSelector.html',
+		template: require('./studentPreferenceSelector.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.addPreference = function(preference, type) {
-				studentActions.addStudentPreference(preference.id, type);
+				StudentFormActions.addStudentPreference(preference.id, type);
 			};
 		}
 	};
-});
+};
+
+export default studentPreferenceSelector;

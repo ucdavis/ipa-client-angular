@@ -1,10 +1,14 @@
-summaryApp.directive("supportCalls", this.supportCalls = function () {
+import './supportCalls.css';
+
+let supportCalls = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'supportCalls.html',
+		template: require('./supportCalls.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			// Do nothing
 		}
 	};
-});
+};
+
+export default supportCalls;

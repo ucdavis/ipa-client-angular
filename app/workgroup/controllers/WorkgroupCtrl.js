@@ -5,9 +5,15 @@
  * # WorkgroupCtrl
  * Controller of the ipaClientAngularApp
  */
-workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$uibModal', 'workgroupActionCreators',
-		this.WorkgroupCtrl = function ($scope, $rootScope, $routeParams, $location, $uibModal, workgroupActionCreators) {
-
+class WorkgroupCtrl {
+	constructor ($scope, $rootScope, $route, $routeParams, $location, WorkgroupActionCreators, AuthService) {
+		this.$scope = $scope;
+		this.AuthService = AuthService;
+		this.$route = $route;
+		this.$routeParams = $routeParams;
+		this.$location = $location;
+		this.WorkgroupActionCreators = WorkgroupActionCreators;
+		this.AuthService = AuthService;
 		$scope.ROWS_PER_HEADER = 20;
 
 		$scope.workgroupId = $routeParams.workgroupId;
@@ -19,16 +25,7 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 		});
 
 		$scope.openImpersonateModal = function() {
-			modalInstance = $uibModal.open({
-				templateUrl: 'ModalImpersonate.html',
-				controller: ModalImpersonateCtrl,
-				size: 'lg',
-				resolve: {
-					state: function () {
-						return $scope.view.state;
-					}
-				}
-			});
+			$scope.view.isImpersonationModalOpen = true;
 		};
 
 		$scope.setActiveTab = function (tabName) {
@@ -53,10 +50,13 @@ workgroupApp.controller('WorkgroupCtrl', ['$scope', '$rootScope', '$routeParams'
 			// Otherwise redirect to the default view
 			$scope.setActiveTab('people');
 		}
-	}]);
 
-WorkgroupCtrl.getPayload = function (authService, workgroupActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		return workgroupActionCreators.getInitialState($route.current.params.workgroupId);
-	});
-};
+		AuthService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
+			WorkgroupActionCreators.getInitialState($route.current.params.workgroupId);
+		});
+	}
+}
+
+WorkgroupCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', '$location', 'WorkgroupActionCreators', 'AuthService'];
+
+export default WorkgroupCtrl;

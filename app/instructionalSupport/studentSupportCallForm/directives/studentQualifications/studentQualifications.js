@@ -1,15 +1,19 @@
-instructionalSupportApp.directive("studentQualifications", this.studentQualifications = function (studentActions) {
+import './studentQualifications.css';
+
+let studentQualifications = function (StudentFormActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'studentQualifications.html',
+		template: require('./studentQualifications.html'),
 		replace: true,
 		scope: {
 			supportCallResponse: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.updateStudentQualifications = function() {
-				studentActions.updateStudentQualifications(scope.supportCallResponse);
+				StudentFormActions.updateStudentQualifications(scope.supportCallResponse);
 			};
 		}
 	};
-});
+};
+
+export default studentQualifications;

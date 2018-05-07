@@ -1,7 +1,9 @@
-supportAssignmentApp.directive("supportCoursesTab", this.supportCoursesTab = function ($rootScope, supportActions) {
+import './supportCoursesTab.css';
+
+let supportCoursesTab = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'supportCoursesTab.html',
+		template: require('./supportCoursesTab.html'),
 		replace: true,
 		scope: {
 			state: '<'
@@ -10,21 +12,21 @@ supportAssignmentApp.directive("supportCoursesTab", this.supportCoursesTab = fun
 			scope.radioNames = ["Teaching Assistants", "Readers"];
 
 			scope.setViewType = function(type) {
-				supportActions.setViewType(type);
+				SupportActions.setViewType(type);
 			};
 
 			scope.deleteAssignment = function(supportAssignment) {
-				supportActions.deleteAssignment(supportAssignment);
+				SupportActions.deleteAssignment(supportAssignment);
 			};
 
 			scope.assignStaffToSectionGroup = function(supportStaffId, sectionGroup) {
 				var type = scope.state.ui.viewType == "Readers" ? "reader" : "teachingAssistant";
-				supportActions.assignStaffToSectionGroup(sectionGroup.id, supportStaffId, type);
+				SupportActions.assignStaffToSectionGroup(sectionGroup.id, supportStaffId, type);
 			};
 
 			scope.assignStaffToSection = function(supportStaffId, section) {
 				var type = scope.state.ui.viewType == "Readers" ? "reader" : "teachingAssistant";
-				supportActions.assignStaffToSection(section.id, supportStaffId, type);
+				SupportActions.assignStaffToSection(section.id, supportStaffId, type);
 			};
 
 			scope.isNumber = function(number) {
@@ -32,4 +34,6 @@ supportAssignmentApp.directive("supportCoursesTab", this.supportCoursesTab = fun
 			};
 		}
 	};
-});
+};
+
+export default supportCoursesTab;

@@ -1,4 +1,4 @@
-sharedApp.directive("teachingCallTooltip", this.confirmButton = function ($document, $timeout) {
+let teachingCallTooltip = function ($document, $timeout) {
 	return {
 		restrict: 'A',
 		scope: {
@@ -29,7 +29,7 @@ sharedApp.directive("teachingCallTooltip", this.confirmButton = function ($docum
 					}
 				});
 				// Convert termCodes to term descriptions
-				allTermDescriptions = {
+				let allTermDescriptions = {
 					'05': 'Summer Session 1',
 					'06': 'Summer Special Session',
 					'07': 'Summer Session 2',
@@ -42,8 +42,8 @@ sharedApp.directive("teachingCallTooltip", this.confirmButton = function ($docum
 				};
 
 				// Comma Separated term descriptions
-				termDescriptions = "";
-				firstTerm = true;
+				let termDescriptions = "";
+				let firstTerm = true;
 				sortedTerms.forEach(function(term) {
 
 					if (firstTerm) {
@@ -135,4 +135,6 @@ sharedApp.directive("teachingCallTooltip", this.confirmButton = function ($docum
 			});
 		}
 	};
-});
+};
+
+export default teachingCallTooltip;

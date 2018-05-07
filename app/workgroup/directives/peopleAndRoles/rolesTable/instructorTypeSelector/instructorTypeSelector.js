@@ -1,7 +1,7 @@
-workgroupApp.directive("instructorTypeSelector", this.instructorTypeSelector = function (workgroupActionCreators) {
+let instructorTypeSelector = function (WorkgroupActionCreators) {
 	return {
 		restrict: 'E',
-		templateUrl: 'instructorTypeSelector.html',
+		template: require('./instructorTypeSelector.html'),
 		replace: true,
 		scope: {
 			instructorTypes: '<',
@@ -9,8 +9,10 @@ workgroupApp.directive("instructorTypeSelector", this.instructorTypeSelector = f
 		},
 		link: function(scope, element, attrs) {
 			scope.setInstructorType = function(instructorType) {
-				workgroupActionCreators.setInstructorType(instructorType, scope.userRole);
+				WorkgroupActionCreators.setInstructorType(instructorType, scope.userRole);
 			};
 		}
 	};
-});
+};
+
+export default instructorTypeSelector;

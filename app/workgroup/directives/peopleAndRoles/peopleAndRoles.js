@@ -1,7 +1,9 @@
-workgroupApp.directive("peopleAndRoles", this.peopleAndRoles = function ($rootScope, workgroupActionCreators) {
+import './peopleAndRoles.css';
+
+let peopleAndRoles = function ($rootScope, WorkgroupActionCreators) {
 	return {
 		restrict: 'E',
-		templateUrl: 'peopleAndRoles.html',
+		template: require('./peopleAndRoles.html'),
 		replace: true,
 		scope: {
 			ui: '<',
@@ -10,8 +12,10 @@ workgroupApp.directive("peopleAndRoles", this.peopleAndRoles = function ($rootSc
 		},
 		link: function(scope, element, attrs) {
 			scope.setRoleTab = function(tabName) {
-				workgroupActionCreators.setRoleTab(tabName);
+				WorkgroupActionCreators.setRoleTab(tabName);
 			};
 		}
 	};
-});
+};
+
+export default peopleAndRoles;

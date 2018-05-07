@@ -1,4 +1,4 @@
-angular.module('tag', [])
+const Tag = angular.module('Tag', [])
 
 .factory('Tag', ['$http', function($http) {
 	function Tag(tagData) {
@@ -26,3 +26,5 @@ angular.module('tag', [])
 	};
 	return Tag;
 }]);
+
+export default Tag;

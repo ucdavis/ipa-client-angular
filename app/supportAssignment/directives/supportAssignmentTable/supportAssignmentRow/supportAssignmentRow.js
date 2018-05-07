@@ -1,7 +1,9 @@
-supportAssignmentApp.directive("supportAssignmentRow", this.supportAssignmentRow = function ($rootScope, supportActions) {
+import './supportAssignmentRow.css';
+
+let supportAssignmentRow = function ($rootScope) {
 	return {
 		restrict: 'E',
-		templateUrl: 'supportAssignmentRow.html',
+		template: require('./supportAssignmentRow.html'),
 		replace: true,
 		scope: {
 			name: '<',
@@ -15,4 +17,6 @@ supportAssignmentApp.directive("supportAssignmentRow", this.supportAssignmentRow
 			};
 		}
 	};
-});
+};
+
+export default supportAssignmentRow;

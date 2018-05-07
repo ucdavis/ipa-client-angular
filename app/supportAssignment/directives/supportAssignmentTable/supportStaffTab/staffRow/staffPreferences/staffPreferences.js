@@ -1,7 +1,9 @@
-supportAssignmentApp.directive("staffPreferences", this.staffPreferences = function ($rootScope, supportActions) {
+import './staffPreferences.css';
+
+let staffPreferences = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'staffPreferences.html',
+		template: require('./staffPreferences.html'),
 		replace: true,
 		scope: {
 			state: '<',
@@ -9,8 +11,10 @@ supportAssignmentApp.directive("staffPreferences", this.staffPreferences = funct
 		},
 		link: function (scope, element, attrs) {
 			scope.deleteAssignment = function(supportAssignment) {
-				supportActions.deleteAssignment(supportAssignment);
+				SupportActions.deleteAssignment(supportAssignment);
 			};
 		}
 	};
-});
+};
+
+export default staffPreferences;

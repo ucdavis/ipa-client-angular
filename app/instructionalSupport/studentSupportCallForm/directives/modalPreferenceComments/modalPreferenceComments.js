@@ -1,7 +1,9 @@
-instructionalSupportApp.directive("modalPreferenceComments", this.modalPreferenceComments = function ($rootScope, studentActions) {
+import './modalPreferenceComments.css';
+
+let modalPreferenceComments = function ($rootScope, StudentFormActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'modalPreferenceComments.html',
+		template: require('./modalPreferenceComments.html'),
 		replace: true,
 		scope: {
 			state: '<',
@@ -11,7 +13,7 @@ instructionalSupportApp.directive("modalPreferenceComments", this.modalPreferenc
 			scope.preference = scope.state.ui.modalPreference;
 
 			scope.submitForm = function () {
-				studentActions.updatePreferenceComment(scope.state.misc.scheduleId, scope.state.ui.modalPreference);
+				StudentFormActions.updatePreferenceComment(scope.state.misc.scheduleId, scope.state.ui.modalPreference);
 			};
 
 			scope.close = function() {
@@ -19,4 +21,6 @@ instructionalSupportApp.directive("modalPreferenceComments", this.modalPreferenc
 			};
 		} // end link
 	};
-});
+};
+
+export default modalPreferenceComments;

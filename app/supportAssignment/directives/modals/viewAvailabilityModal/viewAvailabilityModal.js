@@ -1,7 +1,9 @@
-supportAssignmentApp.directive("viewAvailabilityModal", this.viewAvailabilityModal = function ($rootScope, supportActions) {
+import './viewAvailabilityModal.css';
+
+let viewAvailabilityModal = function ($rootScope, SupportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'viewAvailabilityModal.html',
+		template: require('./viewAvailabilityModal.html'),
 		replace: true,
 		scope: {
 			supportStaff: '<',
@@ -9,9 +11,11 @@ supportAssignmentApp.directive("viewAvailabilityModal", this.viewAvailabilityMod
 		},
 		link: function (scope, element, attrs) {
 			scope.close = function() {
-				supportActions.closeAvailabilityModal();
+				SupportActions.closeAvailabilityModal();
 				scope.isVisible = false;
 			};
 		} // end link
 	};
-});
+};
+
+export default viewAvailabilityModal;

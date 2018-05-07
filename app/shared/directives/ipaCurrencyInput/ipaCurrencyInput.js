@@ -1,7 +1,7 @@
-sharedApp.directive('ipaCurrencyInput', function($window, $location, $rootScope) {
+let ipaCurrencyInput = function($window, $location, $rootScope) {
 	return {
 		restrict: 'E',
-		templateUrl: 'ipaCurrencyInput.html',
+		template: require('./ipaCurrencyInput.html'),
 		replace: true,
 		scope: {},
 		link: function (scope, element, attrs) {
@@ -92,4 +92,6 @@ sharedApp.directive('ipaCurrencyInput', function($window, $location, $rootScope)
 			};
 		}
 	};
-});
+};
+
+export default ipaCurrencyInput;

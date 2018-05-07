@@ -5,63 +5,82 @@
  * # CourseCtrl
  * Controller of the ipaClientAngularApp
  */
-courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$timeout', 'courseActionCreators', 'courseService', 'Term',
-		this.CourseCtrl = function ($scope, $rootScope, $routeParams, $timeout, courseActionCreators, courseService, Term) {
+class CourseCtrl {
+	constructor ($scope, $rootScope, $route, $routeParams, $timeout, CourseActionCreators, CourseService, Term, AuthService) {
+		var self = this;
+		this.$scope = $scope;
+		this.$rootScope = $rootScope;
+		this.$route = $route;
+		this.$routeParams = $routeParams;
+		this.$timeout = $timeout;
+		this.courseActionCreators = CourseActionCreators;
+		this.courseService = CourseService;
+		this.Term = Term;
+		this.authService = AuthService;
+
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.view = { isAssignTagsDropdownOpen: false };
-		$scope.sequencePatterns = sequencePatterns; // constants.js file
-		$scope.subjectCodes = subjectCodes.map(function (subjectCode) { return { code: subjectCode }; }); // constants.js file
-		$scope.massImportSources = [{name: 'IPA'}, {name: 'Banner'}];
+
+		this.getPayload().then( function() {
+			self.initialize();
+		});
+	}
+
+	initialize () {
+		var _self = this;
+		this.$scope.sequencePatterns = sequencePatterns; // constants.js file
+		this.$scope.subjectCodes = subjectCodes.map(function (subjectCode) { return { code: subjectCode }; }); // constants.js file
+		this.$scope.massImportSources = [{name: 'IPA'}, {name: 'Banner'}];
 
 		// Generate a few recent academic years for the mass course import mode
 		var futureYear = new Date().getFullYear() + 2;
 		var recentYears = [];
-		for (i = futureYear; i > futureYear - 12; i--) {
+		for (var i = futureYear; i > futureYear - 12; i--) {
 			recentYears.push({
 				year: i,
 				academicYear: String(i).yearToAcademicYear()
 			});
 		}
 
-		$scope.toggleAssignTagsDropdown = function() {
-			if ($scope.view.isAssignTagsDropdownOpen) {
-				$scope.closeAssignTagsDropdown();
+		this.$scope.toggleAssignTagsDropdown = function() {
+			if (_self.$scope.view.isAssignTagsDropdownOpen) {
+				_self.$scope.closeAssignTagsDropdown();
 			} else {
-				$scope.view.isAssignTagsDropdownOpen = true;
+				_self.$scope.view.isAssignTagsDropdownOpen = true;
 			}
 		};
 
-		$scope.closeAssignTagsDropdown = function() {
-			$scope.view.isAssignTagsDropdownOpen = false;
-			$scope.clearTagUserChoices();
+		this.$scope.closeAssignTagsDropdown = function() {
+			_self.$scope.view.isAssignTagsDropdownOpen = false;
+			_self.$scope.clearTagUserChoices();
 		};
 
-		$scope.clearTagUserChoices = function() {
-			$scope.view.state.tags.availableIds.forEach(function(tagId) {
-				$scope.view.tagOccurences[tagId].userChoice = "none";
-				$scope.view.tagOccurences[tagId].icon = $scope.view.tagOccurences[tagId].presence;
+		this.$scope.clearTagUserChoices = function() {
+			_self.$scope.view.state.tags.availableIds.forEach(function(tagId) {
+				_self.$scope.view.tagOccurences[tagId].userChoice = "none";
+				_self.$scope.view.tagOccurences[tagId].icon = _self.$scope.view.tagOccurences[tagId].presence;
 			});
 		};
 
-		$scope.calculateTagStates = function() {
-			var validTagIds = $scope.view.state.tags.availableIds;
-			var selectedCourseRowIds = $scope.view.state.uiState.selectedCourseRowIds;
+		this.$scope.calculateTagStates = function() {
+			var validTagIds = _self.$scope.view.state.tags.availableIds;
+			var selectedCourseRowIds = _self.$scope.view.state.uiState.selectedCourseRowIds;
 
-			if (!$scope.view.tagOccurences) {
-				$scope.view.tagOccurences = {};
+			if (!_self.$scope.view.tagOccurences) {
+				_self.$scope.view.tagOccurences = {};
 
 				validTagIds.forEach(function(tagId) {
-					$scope.view.tagOccurences[tagId] = {count: 0, presence: "none", userChoice: "none", icon: ""};
+					_self.$scope.view.tagOccurences[tagId] = {count: 0, presence: "none", userChoice: "none", icon: ""};
 				});
 			} else {
 				validTagIds.forEach(function(tagId) {
-					$scope.view.tagOccurences[tagId].count = 0;
+					_self.$scope.view.tagOccurences[tagId].count = 0;
 				});
 			}
 
 			selectedCourseRowIds.forEach(function(courseId) {
-				var course = $scope.view.state.courses.list[courseId];
+				var course = _self.$scope.view.state.courses.list[courseId];
 				if (!course) { return;}
 
 				course.tagIds.forEach(function(tagId) {
@@ -70,22 +89,22 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 						return;
 					}
 
-					$scope.view.tagOccurences[tagId].count = $scope.view.tagOccurences[tagId].count + 1;
+					_self.$scope.view.tagOccurences[tagId].count = _self.$scope.view.tagOccurences[tagId].count + 1;
 				});
 			});
 
 			validTagIds.forEach(function(tagId) {
-				$scope.view.tagOccurences[tagId].presence = $scope.calculateTagPresence(tagId);
-				$scope.view.tagOccurences[tagId].icon = $scope.calculateTagIcon(tagId);
+				_self.$scope.view.tagOccurences[tagId].presence = _self.$scope.calculateTagPresence(tagId);
+				_self.$scope.view.tagOccurences[tagId].icon = _self.$scope.calculateTagIcon(tagId);
 			});
 		};
 
 		// Each tag can be marked by the user to be applied in different ways to all courses, or to have no change.
 		// This method will rotate a tags 'userChoice' through those options, and recalculate the icon to display, each time it is triggered.
-		$scope.applyUserChoiceToTag = function(tagId) {
+		this.$scope.applyUserChoiceToTag = function(tagId) {
 			if (!(tagId)) { return null; }
 
-			var tag = $scope.view.tagOccurences[tagId];
+			var tag = _self.$scope.view.tagOccurences[tagId];
 			if (!(tag)) { return null; }
 
 			if (tag.presence == "all") {
@@ -110,15 +129,15 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 				}
 			}
 
-			tag.icon = $scope.calculateTagIcon(tagId);
+			tag.icon = _self.$scope.calculateTagIcon(tagId);
 		};
 
 		// Will calculate whether this tag is currently 'present' on all, some or none of the selected courses.
-		$scope.calculateTagPresence = function(tagId) {
+		this.$scope.calculateTagPresence = function(tagId) {
 			if (!(tagId)) { return null; }
 
-			var numberOfCourses = $scope.view.state.uiState.selectedCourseRowIds.length;
-			var count = $scope.view.tagOccurences[tagId].count;
+			var numberOfCourses = _self.$scope.view.state.uiState.selectedCourseRowIds.length;
+			var count = _self.$scope.view.tagOccurences[tagId].count;
 
 			if (count == numberOfCourses) {
 				return "all";
@@ -131,10 +150,10 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 			return "some";
 		};
 
-		$scope.calculateTagIcon = function(tagId) {
+		this.$scope.calculateTagIcon = function(tagId) {
 			if (!(tagId)) { return null; }
 
-			var tag = $scope.view.tagOccurences[tagId];
+			var tag = _self.$scope.view.tagOccurences[tagId];
 
 			if (tag.userChoice == "none") {
 				return tag.presence;
@@ -149,24 +168,24 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 			}
 		};
 
-		$scope.submitMassAssignTags = function() {
-			courseActionCreators.submitMassAssignTags(
-				$scope.view.tagOccurences,
-				$scope.view.state.tags.availableIds,
-				$scope.view.state.uiState.selectedCourseRowIds,
-				$scope.workgroupId,
-				$scope.year);
+		this.$scope.submitMassAssignTags = function() {
+			_self.courseActionCreators.submitMassAssignTags(
+				_self.$scope.view.tagOccurences,
+				_self.$scope.view.state.tags.availableIds,
+				_self.$scope.view.state.uiState.selectedCourseRowIds,
+				_self.$scope.workgroupId,
+				_self.$scope.year);
 
-				$scope.closeAssignTagsDropdown();
+				_self.$scope.closeAssignTagsDropdown();
 		};
 
-		$scope.openCourseDeletionModal = function() {
-			courseActionCreators.openCourseDeletionModal();
+		this.$scope.openCourseDeletionModal = function() {
+			_self.courseActionCreators.openCourseDeletionModal();
 		};
 
-		$scope.recentAcademicYears = recentYears;
+		this.$scope.recentAcademicYears = recentYears;
 
-		$scope.tagsSelectConfig = {
+		this.$scope.tagsSelectConfig = {
 			plugins: ['remove_button'],
 			maxItems: 10,
 			valueField: 'id',
@@ -175,79 +194,79 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 			onItemAdd: function (value) {
 				// This method is called for some reason on initialization:
 				// This 'if' is to avoid poking the server multiple times on initialization
-				var tagIdExists = $scope.view.selectedEntity.tagIds.some(function (id) { return id == value; });
+				var tagIdExists = _self.$scope.view.selectedEntity.tagIds.some(function (id) { return id == value; });
 				if (tagIdExists === false) {
-					courseActionCreators.addTagToCourse($scope.view.selectedEntity, $scope.view.state.tags.list[value]);
+					_self.courseActionCreators.addTagToCourse(_self.$scope.view.selectedEntity, _self.$scope.view.state.tags.list[value]);
 				}
 			},
 			onItemRemove: function (value) {
-				courseActionCreators.removeTagFromCourse($scope.view.selectedEntity, $scope.view.state.tags.list[value]);
+				_self.courseActionCreators.removeTagFromCourse(_self.$scope.view.selectedEntity, _self.$scope.view.state.tags.list[value]);
 			}
 		};
 
-		$rootScope.$on('courseStateChanged', function (event, data) {
-			$scope.view.state = data.state;
-			$scope.tagsSelectConfig.options = $scope.view.state.tags.availableIds.map(function (tagId) {
-				return $scope.view.state.tags.list[tagId];
+		this.$rootScope.$on('courseStateChanged', function (event, data) {
+			_self.$scope.view.state = data.state;
+			_self.$scope.tagsSelectConfig.options = _self.$scope.view.state.tags.availableIds.map(function (tagId) {
+				return _self.$scope.view.state.tags.list[tagId];
 			});
 
 			if (data.state.courses.newCourse) {
 				// A new course is being created
-				$scope.view.selectedEntity = $scope.view.state.courses.newCourse;
-				$scope.view.selectedEntityType = "newCourse";
-				$timeout(function () {
-					$scope.$apply();
+				_self.$scope.view.selectedEntity = _self.$scope.view.state.courses.newCourse;
+				_self.$scope.view.selectedEntityType = "newCourse";
+				_self.$timeout(function () {
+					_self.$scope.$apply();
 				});
 			} else if (data.state.uiState.selectedCourseId && !data.state.uiState.selectedTermCode) {
 				// A course is selected
-				$scope.view.selectedEntity = angular.copy($scope.view.state.courses.list[data.state.uiState.selectedCourseId]);
-				$scope.view.selectedEntityType = "course";
+				_self.$scope.view.selectedEntity = angular.copy(_self.$scope.view.state.courses.list[data.state.uiState.selectedCourseId]);
+				_self.$scope.view.selectedEntityType = "course";
 			} else if (data.state.uiState.selectedCourseId && data.state.uiState.selectedTermCode) {
 				// A sectionGroup is selected
-				$scope.view.selectedEntityType = "sectionGroup";
-				var course = $scope.view.state.courses.list[data.state.uiState.selectedCourseId];
-				$scope.view.selectedEntity = $scope.view.state.sectionGroups.selectedSectionGroup || $scope.view.state.sectionGroups.newSectionGroup;
+				_self.$scope.view.selectedEntityType = "sectionGroup";
+				var course = _self.$scope.view.state.courses.list[data.state.uiState.selectedCourseId];
+				_self.$scope.view.selectedEntity = _self.$scope.view.state.sectionGroups.selectedSectionGroup || _self.$scope.view.state.sectionGroups.newSectionGroup;
 
 				// Initialize sectionGroup sections if not done already
-				if ($scope.view.selectedEntity && $scope.view.selectedEntity.id && $scope.view.selectedEntity.sectionIds === undefined && $scope.view.state.uiState.sectionsFetchInProgress == false) {
-					courseActionCreators.getSectionsBySectionGroup($scope.view.selectedEntity);
+				if (_self.$scope.view.selectedEntity && _self.$scope.view.selectedEntity.id && _self.$scope.view.selectedEntity.sectionIds === undefined && _self.$scope.view.state.uiState.sectionsFetchInProgress == false) {
+					_self.courseActionCreators.getSectionsBySectionGroup(_self.$scope.view.selectedEntity);
 				}
 
 				// Initialize course census if not done already
-				if (course.census === undefined && $scope.view.state.uiState.censusFetchInProgress == false) {
-					courseActionCreators.getCourseCensus(course);
+				if (course.census === undefined && _self.$scope.view.state.uiState.censusFetchInProgress == false) {
+					_self.courseActionCreators.getCourseCensus(course);
 				}
 			} else {
-				delete $scope.view.selectedEntity;
+				delete _self.$scope.view.selectedEntity;
 			}
 
 			// Update table write state
-			var hasAuthorizedRole = $scope.sharedState.currentUser.isAdmin() ||
-				$scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id);
+			var hasAuthorizedRole = _self.$scope.sharedState.currentUser.isAdmin() ||
+			_self.$scope.sharedState.currentUser.hasRole('academicPlanner', _self.$scope.sharedState.workgroup.id);
 
-			$scope.view.state.uiState.tableLocked = $scope.view.state.uiState.tableLocked || !(hasAuthorizedRole);
+			_self.$scope.view.state.uiState.tableLocked = _self.$scope.view.state.uiState.tableLocked || !(hasAuthorizedRole);
 
-			$scope.calculateTagStates();
+			_self.$scope.calculateTagStates();
 		});
 
-		$scope.download = function () {
-			courseService.downloadSchedule($scope.workgroupId, $scope.year, $scope.view.state.filters.enableUnpublishedCourses);
+		this.$scope.download = function () {
+			_self.courseService.downloadSchedule(_self.$scope.workgroupId, _self.$scope.year, _self.$scope.view.state.filters.enableUnpublishedCourses);
 		};
 
-		$scope.closeDetails = function () {
-			if ($scope.view.state.courses.newCourse) {
-				courseActionCreators.closeNewCourseDetails();
+		this.$scope.closeDetails = function () {
+			if (_self.$scope.view.state.courses.newCourse) {
+				_self.courseActionCreators.closeNewCourseDetails();
 			} else {
-				courseActionCreators.closeDetails();
+				_self.courseActionCreators.closeDetails();
 			}
 		};
 
-		$scope.termToggled = function (id) {
-			courseActionCreators.toggleTermFilter(id);
+		this.$scope.termToggled = function (id) {
+			_self.courseActionCreators.toggleTermFilter(id);
 		};
 
-		$scope.tagToggled = function (tagId) {
-			var tagFilters = $scope.view.state.filters.enabledTagIds;
+		_self.$scope.tagToggled = function (tagId) {
+			var tagFilters = _self.$scope.view.state.filters.enabledTagIds;
 			var tagIndex = tagFilters.indexOf(tagId);
 
 			if (tagIndex < 0) {
@@ -256,107 +275,107 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 				tagFilters.splice(tagIndex, 1);
 			}
 
-			courseActionCreators.updateTagFilters(tagFilters);
+			_self.courseActionCreators.updateTagFilters(tagFilters);
 		};
 
-		$scope.addTag = function (item, tagId) {
-			courseActionCreators.addTagToCourse($scope.view.selectedEntity, $scope.view.state.tags.list[tagId]);
+		_self.$scope.addTag = function (item, tagId) {
+			_self.courseActionCreators.addTagToCourse(_self.$scope.view.selectedEntity, _self.$scope.view.state.tags.list[tagId]);
 		};
 
-		$scope.removeTag = function (item, tagId) {
-			courseActionCreators.removeTagFromCourse($scope.view.selectedEntity, $scope.view.state.tags.list[tagId]);
+		_self.$scope.removeTag = function (item, tagId) {
+			_self.courseActionCreators.removeTagFromCourse(_self.$scope.view.selectedEntity, _self.$scope.view.state.tags.list[tagId]);
 		};
 
-		$scope.updateCourse = function () {
-			courseActionCreators.updateCourse($scope.view.selectedEntity);
+		_self.$scope.updateCourse = function () {
+			_self.courseActionCreators.updateCourse(_self.$scope.view.selectedEntity);
 		};
 
-		$scope.updateSection = function (section) {
-			courseActionCreators.updateSection(section);
+		_self.$scope.updateSection = function (section) {
+			_self.courseActionCreators.updateSection(section);
 
-			var sectionGroup = $scope.view.state.sectionGroups.list[section.sectionGroupId];
+			var sectionGroup = _self.$scope.view.state.sectionGroups.list[section.sectionGroupId];
 
 			// Will update the sectionGroup plannedSeats using section seats
 			// If the section is numeric based (example: 'PSC 040 - 001')
 			if (isNumber(section.sequenceNumber) == true) {
 				sectionGroup.plannedSeats = section.seats;
-				courseActionCreators.updateSectionGroup(sectionGroup);
+				_self.courseActionCreators.updateSectionGroup(sectionGroup);
 
-				$scope.manuallyUpdatePlannedSeats(sectionGroup);
+				_self.$scope.manuallyUpdatePlannedSeats(sectionGroup);
 			}
 		};
 
-		$scope.manuallyUpdatePlannedSeats = function(sectionGroup) {
+		_self.$scope.manuallyUpdatePlannedSeats = function(sectionGroup) {
 			$('[data-course-id="' + sectionGroup.courseId + '"] [data-term-code="' + sectionGroup.termCode + '"] input').val(sectionGroup.plannedSeats);
 		};
 
-		$scope.deleteSection = function (section) {
-			courseActionCreators.deleteSection(section);
+		_self.$scope.deleteSection = function (section) {
+			_self.courseActionCreators.deleteSection(section);
 		};
 
-		$scope.addSectionGroup = function () {
-			courseActionCreators.addSectionGroup($scope.view.state.sectionGroups.newSectionGroup);
+		_self.$scope.addSectionGroup = function () {
+			_self.courseActionCreators.addSectionGroup(_self.$scope.view.state.sectionGroups.newSectionGroup);
 		};
 
 		// Triggered by global search field, redraws table based on query
-		$scope.filterTable = function (query) {
+		_self.$scope.filterTable = function (query) {
 			clearTimeout($scope.timeout);
-			$scope.timeout = setTimeout(courseActionCreators.updateTableFilter, 700, query);
+			_self.$scope.timeout = setTimeout(_self.courseActionCreators.updateTableFilter, 700, query);
 		};
 
 		// Triggered by global search cancel button
-		$scope.clearSearch = function () {
-			$scope.view.searchQuery = "";
-			$scope.filterTable("");
+		_self.$scope.clearSearch = function () {
+			_self.$scope.view.searchQuery = "";
+			_self.$scope.filterTable("");
 		};
 
 		/**
 		 * Begins import mode, which allows for the mass adding of courses.
 		 * @return {[type]} [description]
 		 */
-		$scope.beginImportMode = function () {
-			courseActionCreators.beginImportMode();
+		_self.$scope.beginImportMode = function () {
+			_self.courseActionCreators.beginImportMode();
 		};
 
 		/**
 		 * Ends import mode, which allows for the mass adding of courses.
 		 * @return {[type]} [description]
 		 */
-		$scope.endImportMode = function () {
-			courseActionCreators.endImportMode();
+		_self.$scope.endImportMode = function () {
+			_self.courseActionCreators.endImportMode();
 		};
 
 		/**
 		 * Triggers the action to pull mass import courses from DW that
 		 * match the selected subjectCode and academicYear
 		 */
-		$scope.searchImportCourses = function () {
-			courseActionCreators.searchImportCourses(
-				$scope.view.state.uiState.massImportCode,
-				$scope.view.state.uiState.massImportYear,
-				$scope.view.state.uiState.massImportPrivate);
+		_self.$scope.searchImportCourses = function () {
+			_self.courseActionCreators.searchImportCourses(
+				_self.$scope.view.state.uiState.massImportCode,
+				_self.$scope.view.state.uiState.massImportYear,
+				_self.$scope.view.state.uiState.massImportPrivate);
 		};
 
 		// Query for courses from IPA to display in the view as options to import
-		$scope.searchCoursesFromIPA = function () {
-			courseActionCreators.searchCoursesFromIPA(
-				$scope.workgroupId,
-				$scope.view.state.uiState.massImportYear,
-				$scope.view.state.uiState.massImportPrivate);
+		_self.$scope.searchCoursesFromIPA = function () {
+			_self.courseActionCreators.searchCoursesFromIPA(
+				_self.$scope.workgroupId,
+				_self.$scope.view.state.uiState.massImportYear,
+				_self.$scope.view.state.uiState.massImportPrivate);
 		};
 
-		$scope.sectionSeatTotal = function (sectionGroup) {
+		_self.$scope.sectionSeatTotal = function (sectionGroup) {
 			return sectionGroup.sectionIds.reduce(function (previousValue, sectionId) {
-				return previousValue + $scope.view.state.sections.list[sectionId].seats;
+				return previousValue + _self.$scope.view.state.sections.list[sectionId].seats;
 			}, 0);
 		};
 
 		// Returns true if the form to query courses is valid based on the course source
-		$scope.importQueryFormValid = function() {
-			var subjectCode = $scope.view.state.uiState.massImportCode;
-			var year = $scope.view.state.uiState.massImportYear;
-			var isSourceBanner = ($scope.view.state.uiState.massImportSource == "Banner");
-			var isSourceIPA = ($scope.view.state.uiState.massImportSource == "IPA");
+		_self.$scope.importQueryFormValid = function() {
+			var subjectCode = _self.$scope.view.state.uiState.massImportCode;
+			var year = _self.$scope.view.state.uiState.massImportYear;
+			var isSourceBanner = (_self.$scope.view.state.uiState.massImportSource == "Banner");
+			var isSourceIPA = (_self.$scope.view.state.uiState.massImportSource == "IPA");
 
 			if (isSourceIPA) {
 				if (year && year.length > 0) {
@@ -373,19 +392,23 @@ courseApp.controller('CourseCtrl', ['$scope', '$rootScope', '$routeParams', '$ti
 			return false;
 		};
 
-		$scope.unpublishedCoursesToggled = function () {
-			courseActionCreators.setUnpublishedCoursesFilter(
-				$scope.workgroupId,
-				$scope.year,
-				!$scope.view.state.filters.enableUnpublishedCourses
+		_self.$scope.unpublishedCoursesToggled = function () {
+			_self.courseActionCreators.setUnpublishedCoursesFilter(
+				_self.$scope.workgroupId,
+				_self.$scope.year,
+				!_self.$scope.view.state.filters.enableUnpublishedCourses
 			);
 		};
+	}
 
-		}
-]);
+	getPayload () {
+		var self = this;
+		return this.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
+			return self.courseActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year);
+		});
+	}
+}
 
-CourseCtrl.getPayload = function (authService, $route, courseActionCreators) {
-	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		return courseActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
-	});
-};
+CourseCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', '$timeout', 'CourseActionCreators', 'CourseService', 'Term', 'AuthService'];
+
+export default CourseCtrl;

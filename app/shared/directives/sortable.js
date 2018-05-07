@@ -1,4 +1,4 @@
-sharedApp.directive("sortable", this.sortable = function () {
+let sortable = function () {
 	return {
 		restrict: "AE",
 		scope: {
@@ -27,4 +27,6 @@ sharedApp.directive("sortable", this.sortable = function () {
 			});
 		}
 	};
-});
+};
+
+export default sortable;

@@ -1,0 +1,31 @@
+<div class="modal-body">
+  <div>
+    <div class="modal-comment-subheader">
+      From Instructor
+    </div>
+
+    <div ng-hide="instructorComment.length > 0" class="gray-text instructor-comment-modal__comment-text">
+      No Instructor comments.
+    </div>
+
+    <div ng-show="instructorComment.length > 0" class="gray-text instructor-comment-modal__comment-text">
+      {{ instructorComment }}
+    </div>
+  </div>
+  <div class="modal-comment-subheader">
+    Staff Notes (Private)
+  </div>
+ 
+  <div>
+    <textarea rows="6" class="form-control wysihtml5" ng-model="privateComment" style="margin-top: 10px;"></textarea>
+  </div>
+  <div class="modal-footer row" style="text-align: center; margin: 0px;">
+    <div style="display:flex;">
+      <div style="flex: 1 1 60%;"></div>
+      <div style="flex: 1 1 40%; display: flex; justify-content: flex-end;">
+        <button class="btn btn-default modal-cancel-btn" ng-click="close()">Cancel</button>
+        <button class="btn btn-primary modal-confirm-btn" ng-click="confirm()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

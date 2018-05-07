@@ -1,7 +1,9 @@
-instructionalSupportApp.directive("gridAvailable", this.gridAvailable = function (studentActions, $timeout) {
+import './gridAvailable.css';
+
+let gridAvailable = function (StudentFormActions, $timeout) {
 	return {
 		restrict: 'E',
-		templateUrl: 'gridAvailable.html',
+		template: require('./gridAvailable.html'),
 		replace: true,
 		scope: {
 			supportCallResponse: '<',
@@ -15,11 +17,13 @@ instructionalSupportApp.directive("gridAvailable", this.gridAvailable = function
 				// Report changes back to server after some delay
 				$timeout.cancel(scope.timeout);
 				scope.timeout = $timeout(function() {
-					studentActions.updateAvailability(scope.supportCallResponse);
+					StudentFormActions.updateAvailability(scope.supportCallResponse);
 				}, delay);
 			};
 
 			scope.timeout = {};
 		}
 	};
-});
+};
+
+export default gridAvailable;

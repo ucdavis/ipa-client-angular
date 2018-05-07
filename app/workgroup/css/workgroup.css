@@ -4,7 +4,7 @@ table th {
 
 .search-input i {
 	position: absolute;
-	z-index: 999;
+	z-index: 99;
 	left: 7px;
 	bottom: 7px;
 }

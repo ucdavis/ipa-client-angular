@@ -1,9 +1,11 @@
-schedulingApp.directive("activityDetails", this.activityDetails = function () {
+let activityDetails = function () {
 	return {
 		restrict: "E",
-		templateUrl: 'activityDetails.html',
+		template: require('./activityDetails.html'),
 		link: function (scope, element, attrs) {
 			// Intentionally blank
 		}
 	};
-});
+};
+
+export default activityDetails;

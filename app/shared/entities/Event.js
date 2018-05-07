@@ -1,4 +1,4 @@
-angular.module('event', [])
+const Event = angular.module('Event', [])
 
 .factory('Event', ['$http', function($http) {
 	function Event(eventData) {
@@ -13,3 +13,5 @@ angular.module('event', [])
 	};
 	return Event;
 }]);
+
+export default Event;

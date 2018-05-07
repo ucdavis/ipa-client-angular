@@ -5,38 +5,58 @@
  * # AdminCtrl
  * Controller of the ipaClientAngularApp
  */
-adminApp.controller('AdminCtrl', ['$scope', '$rootScope', '$routeParams', 'adminActionCreators', 'authService',
-		this.AdminCtrl = function ($scope, $rootScope, $routeParams, adminActionCreators, authService) {
-			$scope.workgroupId = $routeParams.workgroupId;
-			$scope.year = $routeParams.year || moment().year();
-			$scope.view = {};
+class AdminCtrl {
+	constructor ($scope, $rootScope, $route, $routeParams, AdminActionCreators, AuthService) {
+		var self = this;
+		this.$scope = $scope;
+		this.$rootScope = $rootScope;
+		this.$route = $route;
+		this.$routeParams = $routeParams;
+		this.adminActionCreators = AdminActionCreators;
+		this.authService = AuthService;
 
-			$rootScope.$on('adminStateChanged', function (event, data) {
-				$scope.view.state = data.state;
-			});
+		this.$scope.workgroupId = this.$routeParams.workgroupId;
+		this.$scope.year = this.$routeParams.year || moment().year();
+		this.$scope.view = {};
 
-			$scope.updateWorkgroup = function (workgroup) {
-				adminActionCreators.updateWorkgroup(workgroup);
-			};
+		this.getPayload().then( function() {
+			self.initialize();
+		});
+	}
 
-			$scope.removeWorkgroup = function (workgroup) {
-				workgroup.isRemoving = true;
-				adminActionCreators.removeWorkgroup(workgroup);
-			};
+	initialize () {
+		var self = this;
+		this.$rootScope.$on('adminStateChanged', function (event, data) {
+			self.$scope.view.state = data.state;
+		});
 
-			$scope.addWorkgroup = function () {
-				adminActionCreators.addWorkgroup($scope.view.state.workgroups.newWorkgroup);
-			};
+		this.$scope.updateWorkgroup = function (workgroup) {
+			self.adminActionCreators.updateWorkgroup(workgroup);
+		};
 
-			$scope.setActiveWorkgroup = function (workgroupId, year) {
-				authService.setSharedState($scope.view.state.workgroups.list[workgroupId], year);
-			};
-		}
-]);
+		this.$scope.removeWorkgroup = function (workgroup) {
+			workgroup.isRemoving = true;
+			self.adminActionCreators.removeWorkgroup(workgroup);
+		};
 
-AdminCtrl.getPayload = function (authService, $route, adminActionCreators) {
-	var ignoreFallBackUrl = true;
-	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year, ignoreFallBackUrl).then(function () {
-		return adminActionCreators.getInitialState();
-	});
-};
+		this.$scope.addWorkgroup = function () {
+			self.adminActionCreators.addWorkgroup(self.$scope.view.state.workgroups.newWorkgroup);
+		};
+
+		this.$scope.setActiveWorkgroup = function (workgroupId, year) {
+			self.authService.setSharedState(self.$scope.view.state.workgroups.list[workgroupId], year);
+		};
+	}
+
+	getPayload () {
+		var self = this;
+		var ignoreFallBackUrl = true;
+		return self.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year, ignoreFallBackUrl).then(function () {
+			return self.adminActionCreators.getInitialState();
+		});
+	}
+}
+
+AdminCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'AdminActionCreators', 'AuthService'];
+
+export default AdminCtrl;

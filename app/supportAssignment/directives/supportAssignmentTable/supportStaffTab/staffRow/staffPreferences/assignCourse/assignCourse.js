@@ -1,7 +1,9 @@
-supportAssignmentApp.directive("assignCourse", this.assignCourse = function (supportActions) {
+import './assignCourse.css';
+
+let assignCourse = function (SupportActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'assignCourse.html',
+		template: require('./assignCourse.html'),
 		replace: true,
 		scope: {
 			supportStaff: '<',
@@ -23,13 +25,15 @@ supportAssignmentApp.directive("assignCourse", this.assignCourse = function (sup
 				var type = scope.viewType == "Readers" ? "reader" : "teachingAssistant";
 
 				if (assignmentOption.sectionGroupId && assignmentOption.sectionGroupId > 0) {
-					supportActions.assignStaffToSectionGroup(assignmentOption.sectionGroupId, scope.supportStaff.id, type);
+					SupportActions.assignStaffToSectionGroup(assignmentOption.sectionGroupId, scope.supportStaff.id, type);
 				} else if (assignmentOption.sectionId && assignmentOption.sectionId > 0) {
-					supportActions.assignStaffToSection(assignmentOption.sectionId, scope.supportStaff.id, type);
+					SupportActions.assignStaffToSection(assignmentOption.sectionId, scope.supportStaff.id, type);
 				}
 
 				scope.closeDropdown();
 			};
 		}
 	};
-});
+};
+
+export default assignCourse;

@@ -1,0 +1,22 @@
+<div class="modal-body">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="flex-term_title">
+        <div class="flex-term_title-children"  ng-repeat="teachingCallResponse in teachingCallResponses">
+          <h5>{{ termDisplayNames[teachingCallResponse.termCode.slice(-2)] }}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row unavability_chart">
+      <div class="flex-unavability_chart">
+        <div class="flex-unavability_chart-children" ng-repeat="teachingCallResponse in teachingCallResponses">
+          <availability-grid blob="teachingCallResponse.availabilityBlob"
+            on-change="saveUnavailabilities(teachingCallResponse, blob)"
+            read-only="isScheduleTermLocked(term)" style="width: 90%;"></availability-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

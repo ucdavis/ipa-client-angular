@@ -1,0 +1,146 @@
+<div class="add-instructors-modal">
+  <div class="modal-body add-instructors-modal__body">
+    <div class="row flex-box container-fluid">
+      <!-- faculty member info-->
+      <div class="teaching-call--info_style">
+        <h5 style="margin-top: 0px;">Instructors</h5>
+
+        <div class="btn-group instructor-toggle-btn-container">
+          <span ng-repeat="instructorTypeId in instructorTypes.ids">
+            <span ng-if="instructorTypeUsed(instructorTypeId)">
+              <label ng-if="!allInstructorTypeInvited(instructorTypeId)"
+                      class="instructor-toggle-btn btn btn-sm add-instructor-modal__instructor-btn"
+                      id="courses-pivot"
+                      ng-click="inviteInstructorsOfType(instructorTypeId)">
+                Add {{ instructorTypes.list[instructorTypeId].description }}
+              </label>
+              <label ng-if="allInstructorTypeInvited(instructorTypeId)"
+                      disabled class="instructor-toggle-btn btn btn-sm add-instructor-modal__instructor-btn"
+                      uib-tooltip="All Instructors Added"
+                      id="courses-pivot">
+                Add {{ instructorTypes.list[instructorTypeId].description }}
+              </label>
+            </span>
+          </span>
+        </div>
+
+        <div rows="5" class="overflow-auto flex flex-wrap padding-sm instructor-box">
+          <div class="instructor-list">
+            <div ng-repeat="instructor in startTeachingCallConfig.invitedInstructors" 
+                  ng-click="toggleInstructor(instructor)"
+                  class="label label-default instructor-tag"
+                  ng-class="{'label-toggleout': !instructor.invited }">
+              {{ instructor.lastName }}, {{ instructor.firstName }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- faculty member info ends-->
+
+      <!-- select dates&terms section-->
+      <div class="teaching-call--info_style container-fluid">
+        <h5 style="margin-top: 0px;">Due Date</h5>
+        <p class="input-group datepicker-bar">
+          <input type="text"
+                  class="form-control"
+                  uib-datepicker-popup="{{format}}"
+                  ng-model="startTeachingCallConfig.dueDate"
+                  is-open="popup1.opened"
+                  datepicker-options="dateOptions"
+                  ng-required="true"
+                  close-text="Close"
+                  alt-input-formats="altInputFormats" 
+                  popup-placement="bottom-left"
+                  show-button-bar="false"
+                  ng-click="open1()"/>
+          <span class="input-group-btn">
+            <button type="button"
+                    class="btn btn-default"
+                    ng-click="open1()">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </span>
+        </p>
+        <div>
+          <ul style="list-style: none; padding-left: 0px; margin-bottom: 0px;">
+            <li ng-repeat="term in dropDownTerms" role="menuitem" ng-click="toggleTermActive(term)">
+                <div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+                      ng-class="{ 'checked': startTeachingCallConfig.activeTerms[term.slice(-2)] }">
+                  <label class="cb-wrapper">
+                    <div class="checked"></div>
+                  </label>
+                  <label>{{ getTermName(term) }}</label>
+                </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- select dates&terms section ends-->
+    </div>
+  </div>
+
+  <div class="email-style container-fluid add-instructors-modal__lower-section">
+    <div class="checkbox" style="display: flex;">
+      <div ng-click="toggleSendEmail()">
+        <div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+              ng-class="{ 'checked': startTeachingCallConfig.sendEmail }">
+          <label class="cb-wrapper">
+            <div class="checked"></div>
+          </label>
+          <label>Send Email</label>
+        </div>
+      </div>
+      <div ng-click="startTeachingCallConfig.showUnavailabilities = !startTeachingCallConfig.showUnavailabilities" style="padding-left: 20px;">
+        <div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+              ng-class="{ 'checked': startTeachingCallConfig.showUnavailabilities }">
+          <label class="cb-wrapper">
+            <div class="checked"></div>
+          </label>
+          <label>Ask for unavailabilities</label>
+        </div>
+      </div>
+    </div>
+
+    <textarea ng-if="startTeachingCallConfig.sendEmail == true"
+              ng-bind-html="startTeachingCallConfig.message"
+              class="form-control teaching-call-message-input"
+              placeholder=""
+              rows="5"
+              id="comment">
+    </textarea>
+  </div>
+
+
+
+  <div class="add-instructors-modal__footer">
+    <!-- send buttons -->
+    <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == true && startTeachingCallConfig.sendEmail"
+            type="button"
+            class="btn neon-dark-confirm-btn"
+            ng-click="submit()">
+      Send
+    </button>
+    <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false && startTeachingCallConfig.sendEmail"
+            tooltip-placement="left"
+            uib-tooltip="You must select at least one term and one instructor"
+            type="button"
+            class="disabled btn btn-info neon-dark-confirm-btn">
+      Send
+    </button>
+
+    <!-- start buttons (no email) -->
+    <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == true && !startTeachingCallConfig.sendEmail"
+            type="button"
+            class="btn neon-dark-confirm-btn"
+            ng-click="submit()">
+      Start
+    </button>
+    <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false && !startTeachingCallConfig.sendEmail"
+            tooltip-placement="left"
+            uib-tooltip="You must select at least one term and one instructor"
+            type="button"
+            class="disabled btn btn-info neon-dark-confirm-btn">
+      Start
+    </button>
+  </div>
+</div>

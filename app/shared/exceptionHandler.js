@@ -1,4 +1,4 @@
-sharedApp.config(function($provide) {
+function exceptionHandler($provide) {
 	$provide.decorator("$exceptionHandler", function($delegate, $injector) {
 		return function(exception, cause) {
 			$delegate(exception, cause);
@@ -24,4 +24,8 @@ sharedApp.config(function($provide) {
 			}
 		};
 	});
-});
+}
+
+exceptionHandler.$inject = ['$provide'];
+
+export default exceptionHandler;

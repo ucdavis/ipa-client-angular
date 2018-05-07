@@ -1,37 +1,52 @@
-/**
- * @ngdoc function
- * @name ipaClientAngularApp.controller:ReportCtrl
- * @description
- * # ReportCtrl
- * Controller of the ipaClientAngularApp
- */
-teachingCallResponseReportApp.controller('TeachingCallResponseReportCtrl',
-	['$scope', '$rootScope', '$routeParams', 'teachingCallResponseReportActionCreators', 'authService', 'teachingCallResponseReportService', 'termService',
-	this.TeachingCallResponseReportCtrl = function ($scope, $rootScope, $routeParams, scheduleSummaryReportActionCreators, authService, teachingCallResponseReportService, termService) {
-		$scope.workgroupId = $routeParams.workgroupId;
-		$scope.year = $routeParams.year;
+class TeachingCallResponseReportCtrl {
+	constructor ($scope, $rootScope, $route, $routeParams, teachingCallResponseReportActionCreators, AuthService, TeachingCallResponseReportService, TermService) {
+		var self = this;
+		this.$scope = $scope;
+		this.$rootScope = $rootScope;
+		this.$route = $route;
+		this.$routeParams = $routeParams;
+		this.teachingCallResponseReportActionCreators = teachingCallResponseReportActionCreators;
+		this.authService = AuthService;
+		this.teachingCallResponseReportService = TeachingCallResponseReportService;
+		this.thermService = TermService;
 
-		$scope.view = {};
 
-		$rootScope.$on('reportStateChanged', function (event, data) {
-			$scope.view.state = data.state;
-
-			$scope.view.hasAccess = $scope.sharedState.currentUser.isAdmin() ||
-				$scope.sharedState.currentUser.hasRole('academicPlanner', $scope.sharedState.workgroup.id);
+		this.getPayload().then( function(results) {
+			self.initialize();
 		});
-
-		$scope.getTermName = function(term) {
-			return termService.getTermName(term);
-		};
-
-		$scope.download = function () {
-			teachingCallResponseReportService.download($scope.workgroupId, $scope.year);
-		};
 	}
-]);
 
-TeachingCallResponseReportCtrl.getPayload = function (authService, $route, Term, teachingCallResponseReportActionCreators) {
-	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		return teachingCallResponseReportActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
-	});
-};
+	initialize () {
+		var self = this;
+		this.$scope.workgroupId = this.$routeParams.workgroupId;
+		this.$scope.year = this.$routeParams.year;
+
+		this.$scope.view = {};
+
+		this.$rootScope.$on('reportStateChanged', function (event, data) {
+			self.$scope.view.state = data.state;
+
+			self.$scope.view.hasAccess = self.$scope.sharedState.currentUser.isAdmin() ||
+				self.$scope.sharedState.currentUser.hasRole('academicPlanner', self.$scope.sharedState.workgroup.id);
+		});
+	}
+
+	getTermName (term) {
+		return this.termService.getTermName(term);
+	}
+
+	download () {
+		this.teachingCallResponseReportService.download($scope.workgroupId, $scope.year);
+	}
+
+	getPayload () {
+		var self = this;
+		return self.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
+			return self.teachingCallResponseReportActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year);
+		});
+	}
+}
+
+TeachingCallResponseReportCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'TeachingCallResponseReportActionCreators', 'AuthService', 'TeachingCallResponseReportService', 'TermService'];
+
+export default TeachingCallResponseReportCtrl;

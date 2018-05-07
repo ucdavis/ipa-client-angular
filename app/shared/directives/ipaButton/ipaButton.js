@@ -8,10 +8,10 @@
 
 **/
 
-sharedApp.directive("ipaButton", this.ipaButton = function () {
+let ipaButton = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'ipaButton.html',
+		template: require('./ipaButton.html'),
 		replace: true,
 		scope: {
 			onClick: '&?', // On click action
@@ -36,4 +36,6 @@ sharedApp.directive("ipaButton", this.ipaButton = function () {
 			};
 		}
 	};
-});
+};
+
+export default ipaButton;

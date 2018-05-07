@@ -4,11 +4,13 @@
  * Removes the "." from the generic instructor "The Staff"
  */
 
-sharedApp.filter("lastCommaFirst", this.lastCommaFirst = function() {
+let lastCommaFirst = function() {
 	return function (instructor) {
 		if (!(instructor && instructor.firstName && instructor.lastName)) { return; }
 		return [instructor.lastName, instructor.firstName].filter(function(name) {
 			return name.trim() !== ".";
 		}).join(", ");
 	};
-});
+};
+
+export default lastCommaFirst;

@@ -1,7 +1,9 @@
-supportAssignmentApp.directive("staffComments", this.staffComments = function ($rootScope, supportActions) {
+import './staffComments.css';
+
+let staffComments = function ($rootScope) {
 	return {
 		restrict: 'E',
-		templateUrl: 'staffComments.html',
+		template: require('./staffComments.html'),
 		replace: true,
 		scope: {
 			supportStaff: '<'
@@ -10,4 +12,6 @@ supportAssignmentApp.directive("staffComments", this.staffComments = function ($
 			// Intentionally empty
 		}
 	};
-});
+};
+
+export default staffComments;

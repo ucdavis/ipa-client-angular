@@ -1,7 +1,9 @@
-budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootScope, budgetActions) {
+import './instructorCosts.css';
+
+let instructorCosts = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',
-		templateUrl: 'instructorCosts.html',
+		template: require('./instructorCosts.html'),
 		replace: true,
 		scope: {
 			instructorAssignmentOptions: '<',
@@ -11,26 +13,26 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 		},
 		link: function (scope, element, attrs) {
 			scope.toggleCourseCostsSection = function() {
-				budgetActions.toggleCourseCostsSection();
+				BudgetActions.toggleCourseCostsSection();
 			};
 
 			scope.openAddCourseCommentsModal = function(sectionGroup) {
-				budgetActions.openAddCourseCommentsModal(sectionGroup);
+				BudgetActions.openAddCourseCommentsModal(sectionGroup);
 			};
 
 			scope.setActiveTerm = function(activeTermTab) {
-				budgetActions.selectTerm(activeTermTab);
+				BudgetActions.selectTerm(activeTermTab);
 			};
 
 			scope.removeInstructor = function(sectionGroupCost) {
 				sectionGroupCost.instructorId = null;
 				sectionGroupCost.instructorTypeId = null;
-				budgetActions.updateSectionGroupCost(sectionGroupCost);
+				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 
 			scope.removeOriginalInstructor = function(sectionGroupCost) {
 				sectionGroupCost.originalInstructorId = null;
-				budgetActions.updateSectionGroupCost(sectionGroupCost);
+				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 
 			scope.toCurrency = function (value) {
@@ -48,4 +50,6 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 			};
 		} // end link
 	};
-});
+};
+
+export default instructorCosts;

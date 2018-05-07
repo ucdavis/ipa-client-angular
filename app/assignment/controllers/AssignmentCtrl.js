@@ -5,196 +5,175 @@
  * # AssignmentCtrl
  * Controller of the ipaClientAngularApp
  */
-assignmentApp.controller('AssignmentCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$uibModal', 'assignmentActionCreators', 'assignmentService',
-		this.AssignmentCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $uibModal, assignmentActionCreators, assignmentService) {
-			$window.document.title = "Assignments";
-			$scope.workgroupId = $routeParams.workgroupId;
-			$scope.year = $routeParams.year;
-			$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
-			$scope.view = {};
+class AssignmentCtrl {
+	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, AssignmentActionCreators, AssignmentService, AuthService) {
+		var self = this;
+		this.$rootScope = $rootScope;
+		this.$window = $window;
+		this.$location = $location;
+		this.$route = $route;
+		this.$routeParams = $routeParams;
+		this.assignmentActionCreators = AssignmentActionCreators;
+		this.assignmentService = AssignmentService;
+		this.authService = AuthService;
 
-			$rootScope.$on('assignmentStateChanged', function (event, data) {
-				$scope.view.state = data;
-			});
+		$window.document.title = "Assignments";
+		$scope.workgroupId = $routeParams.workgroupId;
+		$scope.year = $routeParams.year;
+		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
+		$scope.view = {
+			workgroupId: $routeParams.workgroupId
+		};
 
-			$scope.showInstructors = function () {
-				assignmentActionCreators.showInstructors();
+		$scope.unavailabilityModalStyles = { "width": "62%" };
+		$scope.isCommentModalOpen = false;
+		$scope.isUnavailabilityModalOpen = false;
+
+		$rootScope.$on('assignmentStateChanged', function (event, data) {
+			$scope.view.state = data;
+		});
+
+		$scope.showInstructors = function () {
+			self.assignmentActionCreators.showInstructors();
+		};
+
+		$scope.showCourses = function () {
+			self.assignmentActionCreators.showCourses();
+		};
+
+		$scope.termToggled = function (id) {
+			self.assignmentActionCreators.toggleTermFilter(id);
+		};
+
+		$scope.toggleDisplayCompletedInstructors = function () {
+			self.assignmentActionCreators.toggleDisplayCompletedInstructors(!$scope.view.state.filters.showCompletedInstructors);
+		};
+
+		$scope.approveInstructorAssignment = function (teachingAssignmentId) {
+			var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
+			self.assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
+		};
+
+		$scope.unapproveInstructorAssignment = function(teachingAssignmentId) {
+			var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
+			self.assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
+		};
+
+		$scope.addAndApproveInstructorAssignment = function(sectionGroupId, instructorId, termCode) {
+			var teachingAssignment = {
+				sectionGroupId: sectionGroupId,
+				instructorId: instructorId,
+				termCode: termCode,
+				priority: 1,
+				approved: true
 			};
 
-			$scope.showCourses = function () {
-				assignmentActionCreators.showCourses();
-			};
+			self.assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
+		};
 
-			$scope.termToggled = function (id) {
-				assignmentActionCreators.toggleTermFilter(id);
-			};
+		// Triggered by global search field, redraws table based on query
+		$scope.filterTable = function (query) {
+			clearTimeout($scope.t);
+			$scope.t = setTimeout($scope.startFilter, 700, query);
+		};
 
-			$scope.toggleDisplayCompletedInstructors = function () {
-				assignmentActionCreators.toggleDisplayCompletedInstructors(!$scope.view.state.filters.showCompletedInstructors);
-			};
+		$scope.startFilter = function (query) {
+			self.assignmentActionCreators.updateTableFilter(query);
+		};
 
-			$scope.approveInstructorAssignment = function (teachingAssignmentId) {
-				var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
-				assignmentActionCreators.approveInstructorAssignment(teachingAssignment);
-			};
+		$scope.toggleTag = function (tagId) {
+			var tagFilters = $scope.view.state.filters.enabledTagIds;
+			var tagIndex = tagFilters.indexOf(tagId);
 
-			$scope.unapproveInstructorAssignment = function(teachingAssignmentId) {
-				var teachingAssignment = $scope.view.state.teachingAssignments.list[teachingAssignmentId];
-				assignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
-			};
+			if (tagIndex < 0) {
+				tagFilters.push(tagId);
+			} else {
+				tagFilters.splice(tagIndex, 1);
+			}
 
-			$scope.addAndApproveInstructorAssignment = function(sectionGroupId, instructorId, termCode) {
-				var teachingAssignment = {
-					sectionGroupId: sectionGroupId,
-					instructorId: instructorId,
-					termCode: termCode,
-					priority: 1,
-					approved: true
-				};
+			self.assignmentActionCreators.updateTagFilters(tagFilters);
+		};
 
-				assignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment);
-			};
+		// Launched from the instructorTable directive UI handler
+		$scope.openCommentModal = function(instructorId) {
+			var instructor = $scope.view.state.instructors.list[instructorId];
+			var scheduleInstructorNote = {};
 
-			// Triggered by global search field, redraws table based on query
-			$scope.filterTable = function (query) {
-				clearTimeout($scope.t);
-				$scope.t = setTimeout($scope.startFilter, 700, query);
-			};
+			// Create new scheduleInstructorNote object if one does not already exist
+			if (instructor.scheduleInstructorNoteId) {
+				scheduleInstructorNote = $scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
+			} else {
+				scheduleInstructorNote = {};
+				scheduleInstructorNote.instructorComment = "";
+			}
 
-			$scope.startFilter = function (query) {
-				assignmentActionCreators.updateTableFilter(query);
-			};
+			// Find a teachingCallReceipt for this instructor and schedule, if one exists.
+			var teachingCallReceipt = null;
 
-			$scope.toggleTag = function (tagId) {
-				var tagFilters = $scope.view.state.filters.enabledTagIds;
-				var tagIndex = tagFilters.indexOf(tagId);
+			for (var i = 0; i < $scope.view.state.teachingCallReceipts.ids.length; i++) {
+				teachingCallReceipt = $scope.view.state.teachingCallReceipts.list[$scope.view.state.teachingCallReceipts.ids[i]];
 
-				if (tagIndex < 0) {
-					tagFilters.push(tagId);
-				} else {
-					tagFilters.splice(tagIndex, 1);
+				if (teachingCallReceipt.instructorId == instructor.id) {
+					break;
 				}
+			}
 
-				assignmentActionCreators.updateTagFilters(tagFilters);
-			};
+			$scope.view.instructor = instructor;
+			$scope.view.privateComment = scheduleInstructorNote.instructorComment;
+			$scope.view.scheduleInstructorNote = scheduleInstructorNote;
 
-			// Launched from the instructorTable directive UI handler
-			$scope.openCommentModal = function(instructorId) {
-				var instructor = $scope.view.state.instructors.list[instructorId];
-				var scheduleInstructorNote = {};
+			if (teachingCallReceipt && teachingCallReceipt.comment) {
+				$scope.view.instructorComment = teachingCallReceipt.comment;
+			} else {
+				$scope.view.instructorComment = "";
+			}
 
-				// Create new scheduleInstructorNote object if one does not already exist
-				if (instructor.scheduleInstructorNoteId) {
-					scheduleInstructorNote = $scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
-				} else {
-					scheduleInstructorNote = {};
-					scheduleInstructorNote.instructorComment = "";
-				}
+			$scope.isCommentModalOpen = true;
+			$scope.$apply();
+		};
 
-				// Find a teachingCallReceipt for this instructor and schedule, if one exists.
-				var teachingCallReceipt = null;
+		$scope.openUnavailabilityModal = function(instructorId) {
+			var instructor = $scope.view.state.instructors.list[instructorId];
 
-				for (var i = 0; i < $scope.view.state.teachingCallReceipts.ids.length; i++) {
-					teachingCallReceipt = $scope.view.state.teachingCallReceipts.list[$scope.view.state.teachingCallReceipts.ids[i]];
+			$scope.view.teachingCallResponses = instructor.teachingCallResponses;
+			$scope.view.termDisplayNames = AssignmentService.allTerms();
+			$scope.view.instructor = instructor;
+			$scope.isUnavailabilityModalOpen = true;
+			$scope.$apply();
+		};
 
-					if (teachingCallReceipt.instructorId == instructor.id) {
-						break;
-					}
-				}
+		$scope.download = function () {
+			self.assignmentService.download($scope.workgroupId, $scope.year);
+		};
 
-				modalInstance = $uibModal.open({
-					templateUrl: 'ModalComment.html',
-					controller: ModalCommentCtrl,
-					size: 'lg',
-					resolve: {
-						instructor: function () {
-							return instructor;
-						},
-						privateComment: function () {
-							return scheduleInstructorNote.instructorComment;
-						},
-						instructorComment: function () {
-							if (teachingCallReceipt && teachingCallReceipt.comment) {
-								return teachingCallReceipt.comment;
-							} else {
-								return "";
-							}
-						}
-					}
-				});
+		$scope.setActiveTab = function (tabName) {
+			$location.search({ tab: tabName });
+			switch (tabName) {
+				case "instructors":
+					$scope.showInstructors();
+					break;
+				default:
+					$scope.showCourses();
+					break;
+			}
+		};
 
-				modalInstance.result.then(function (privateComment) {
-					if (privateComment != scheduleInstructorNote.comment) {
-						// Update the scheduleInstructorNote
-						if (scheduleInstructorNote && scheduleInstructorNote.id) {
-							scheduleInstructorNote.instructorComment = privateComment;
-							assignmentActionCreators.updateScheduleInstructorNote(scheduleInstructorNote);
-						}
-						// Create new scheduleInstructorNote
-						else {
-							assignmentActionCreators.addScheduleInstructorNote(instructor.id, $scope.year, $scope.workgroupId, privateComment);
-						}
-					}
-				},
-				function () {
-					// Modal closed
-				});
-			};
+		// Set the active tab according to the URL
+		// Otherwise redirect to the default view
+		$scope.setActiveTab(this.$routeParams.tab || "courses");
 
-			$scope.openUnavailabilityModal = function(instructorId) {
-				var instructor = $scope.view.state.instructors.list[instructorId];
+		self.getPayload();
+	}
 
-				var termDisplayNames = {};
+	getPayload () {
+		var self = this;
 
-				modalInstance = $uibModal.open({
-					templateUrl: 'ModalUnavailability.html',
-					controller: ModalUnavailabilityCtrl,
-					size: 'lg',
-					resolve: {
-						teachingCallResponses: function () {
-							return instructor.teachingCallResponses;
-						},
-						termDisplayNames: function () {
-							return assignmentService.allTerms();
-						},
-						instructor: function () {
-							return instructor;
-						}
-					}
-				});
+		return this.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
+			self.assignmentActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year, self.$route.current.params.tab);
+		});
+	}
+}
 
-				modalInstance.result.then(function () {
-					// This modal does not 'submit' in a traditional sense.
-				},
-				function () {
-					// Modal closed
-				});
-			};
+AssignmentCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', 'AssignmentActionCreators', 'AssignmentService', 'AuthService'];
 
-			$scope.download = function () {
-				assignmentService.download($scope.workgroupId, $scope.year);
-			};
-
-			$scope.setActiveTab = function (tabName) {
-				$location.search({ tab: tabName });
-				switch (tabName) {
-					case "instructors":
-						$scope.showInstructors();
-						break;
-					default:
-						$scope.showCourses();
-						break;
-				}
-			};
-
-			// Set the active tab according to the URL
-			// Otherwise redirect to the default view
-			$scope.setActiveTab($routeParams.tab || "courses");
-
-	}]);
-
-AssignmentCtrl.validate = function (authService, assignmentActionCreators, $route) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		assignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.tab);
-	});
-};
+export default AssignmentCtrl;

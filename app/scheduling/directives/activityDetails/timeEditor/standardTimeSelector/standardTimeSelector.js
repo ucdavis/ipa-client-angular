@@ -1,7 +1,9 @@
-sharedApp.directive('standardTimeSelector', function($window, $location, $routeParams, $rootScope, schedulingActionCreators, Activity) {
+import './standardTimeSelector.css';
+
+let standardTimeSelector = function($window, $location, $routeParams, $rootScope, SchedulingActionCreators, Activity) {
 	return {
 		restrict: 'E', // Use this via an element selector <time-pattern-selector></time-pattern-selector>
-		templateUrl: 'standardTimeSelector.html', // directive html found here:
+		template: require('./standardTimeSelector.html'), // directive html found here:
 		replace: true, // Replace with the template
 		scope: {
 			activity: '='
@@ -46,18 +48,18 @@ sharedApp.directive('standardTimeSelector', function($window, $location, $routeP
 				scope.timeOfferings = [];
 				scope.dayOfferings = [];
 
-				schedulingActionCreators.updateActivity(scope.activity);
+				SchedulingActionCreators.updateActivity(scope.activity);
 			};
 
 			scope.clearTimeAndDay = function() {
 				scope.setTimeToBlank();
 				scope.setDaysToBlank();
-				schedulingActionCreators.updateActivity(scope.activity);
+				SchedulingActionCreators.updateActivity(scope.activity);
 			};
 
 			scope.clearTime = function() {
 				scope.setTimeToBlank();
-				schedulingActionCreators.updateActivity(scope.activity);
+				SchedulingActionCreators.updateActivity(scope.activity);
 			};
 
 			scope.setDaysToBlank = function() {
@@ -100,7 +102,7 @@ sharedApp.directive('standardTimeSelector', function($window, $location, $routeP
 
 			scope.saveActivity = function () {
 				if (scope.activity.dayIndicator && scope.activity.startTime && scope.activity.endTime) {
-					schedulingActionCreators.updateActivity(scope.activity);
+					SchedulingActionCreators.updateActivity(scope.activity);
 				}
 			};
 
@@ -119,4 +121,6 @@ sharedApp.directive('standardTimeSelector', function($window, $location, $routeP
 			};
 		} // End Link
 	};
-});
+};
+
+export default standardTimeSelector;

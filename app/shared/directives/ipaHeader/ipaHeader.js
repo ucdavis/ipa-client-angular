@@ -1,7 +1,7 @@
-sharedApp.directive('ipaHeader', function($window, $location, $rootScope, authService, $routeParams) {
+let ipaHeader = function ($window, $location, $rootScope, AuthService, $routeParams) {
 	return {
 		restrict: 'E', // Use this via an element selector <dss-modal></dss-modal>
-		templateUrl: 'ipaHeader.html', // directive html found here:
+		template: require('./ipaHeader.html'), // directive html found here:
 		replace: true, // Replace with the template below
 		transclude: true,
 		link: function (scope, element, attrs) {
@@ -10,11 +10,11 @@ sharedApp.directive('ipaHeader', function($window, $location, $rootScope, authSe
 			scope.greeting = scope.greetings[Math.floor(Math.random() * scope.greetings.length)];
 
 			scope.impersonate = function(loginId) {
-				authService.impersonate(loginId);
+				AuthService.impersonate(loginId);
 			};
 
 			scope.unImpersonate = function() {
-				authService.unimpersonate();
+				AuthService.unimpersonate();
 			};
 
 			// Will navigate to the summary page of the specified workgroup, on the same year
@@ -36,4 +36,6 @@ sharedApp.directive('ipaHeader', function($window, $location, $rootScope, authSe
 			};
 		}
 	};
-});
+};
+
+export default ipaHeader;

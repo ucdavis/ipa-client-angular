@@ -1,4 +1,4 @@
-sharedApp.directive("stopEvent", this.stopEvent = function() {
+let stopEvent = function() {
 	return {
 		restrict: 'A',
 		link: function (scope, element, attr) {
@@ -7,4 +7,6 @@ sharedApp.directive("stopEvent", this.stopEvent = function() {
 			});
 		}
 	};
-});
+};
+
+export default stopEvent;

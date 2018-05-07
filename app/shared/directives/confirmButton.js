@@ -1,4 +1,4 @@
-sharedApp.directive("confirmButton", this.confirmButton = function ($document, $timeout) {
+let confirmButton = function ($document, $timeout) {
 	return {
 		restrict: 'A',
 		scope: {
@@ -87,4 +87,6 @@ sharedApp.directive("confirmButton", this.confirmButton = function ($document, $
 			});
 		}
 	};
-});
+};
+
+export default confirmButton;

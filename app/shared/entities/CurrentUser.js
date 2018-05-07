@@ -1,4 +1,4 @@
-angular.module('currentUser', ['userRole'])
+const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 	.factory('CurrentUser', ['$http', 'UserRole', function ($http, UserRole) {
 		function CurrentUser(currentUserData) {
 			if (currentUserData) {
@@ -66,7 +66,7 @@ angular.module('currentUser', ['userRole'])
 			},
 
 			isInstructor: function (workgroupId) {
-				var roleNames = ["federationInstructor", "senateInstructor", "lecturer"];
+				var roleNames = ["instructor"];
 				return this.hasRoles(roleNames, workgroupId);
 			},
 
@@ -99,3 +99,5 @@ angular.module('currentUser', ['userRole'])
 		};
 		return CurrentUser;
 	}]);
+
+export default CurrentUser;

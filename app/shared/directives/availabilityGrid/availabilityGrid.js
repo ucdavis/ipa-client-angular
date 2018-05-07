@@ -1,7 +1,7 @@
-sharedApp.directive("availabilityGrid", this.availabilityGrid = function($timeout) {
+let availabilityGrid = function($timeout) {
 	return {
 		restrict: 'E',
-		templateUrl: 'availabilityGrid.html',
+		template: require('./availabilityGrid.html'),
 		replace: true,
 		scope: {
 			blob: '=',
@@ -15,9 +15,9 @@ sharedApp.directive("availabilityGrid", this.availabilityGrid = function($timeou
 			scope.buildAvailabilityObject = function(blobArray) {
 				var i = 0;
 				scope.availability = {};
-				for ( d = 0; d < scope.days.length; d++) {
+				for (let d = 0; d < scope.days.length; d++) {
 					scope.availability[d] = {};
-					for ( h = 0; h < scope.hours.length; h++) {
+					for (let h = 0; h < scope.hours.length; h++) {
 						if (i < blobArray.length) {
 							scope.availability[d][h] = blobArray[i++];
 						} else {
@@ -50,8 +50,8 @@ sharedApp.directive("availabilityGrid", this.availabilityGrid = function($timeou
 
 				// Translate back into blob
 				var blob = [];
-				for ( d = 0; d < scope.days.length; d++) {
-					for ( h = 0; h < scope.hours.length; h++) {
+				for (let d = 0; d < scope.days.length; d++) {
+					for (let h = 0; h < scope.hours.length; h++) {
 						blob.push(scope.availability[d][h]);
 					}
 				}
@@ -116,4 +116,6 @@ sharedApp.directive("availabilityGrid", this.availabilityGrid = function($timeou
 			}
 		}
 	};
-});
+};
+
+export default availabilityGrid;

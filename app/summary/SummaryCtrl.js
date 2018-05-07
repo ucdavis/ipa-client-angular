@@ -6,74 +6,98 @@
  * Controller of the summaryApp
  */
 
-summaryApp.controller('SummaryCtrl', ['$scope', '$routeParams', '$rootScope', '$location', 'authService', 'summaryActionCreators',
-		this.SummaryCtrl = function ($scope, $routeParams, $rootScope, $location, authService, summaryActionCreators) {
-		$scope.workgroupId = $routeParams.workgroupId;
-		$scope.year = $routeParams.year;
-		$scope.view = {};
+ class SummaryCtrl {
+		constructor ($scope, $route, $routeParams, $rootScope, $location, AuthService, SummaryActionCreators) {
+		var self = this;
+		this.$scope = $scope;
+		this.$route = $route;
+		this.$routeParams = $routeParams;
+		this.$rootScope = $rootScope;
+		this.$location = $location;
+		this.authService = AuthService;
+		this.summaryActionCreators = SummaryActionCreators;
 
+		this.$scope.workgroupId = this.$routeParams.workgroupId;
+		this.$scope.year = this.$routeParams.year;
+		this.$scope.view = {};
+
+		this.getPayload().then( function() {
+			self.initialize();
+		});
+	}
+
+	initialize () {
+		var self = this;
 		// Update the view mode when the url param changes
-		$scope.$on('$routeUpdate', function () {
-			$scope.view.mode = $location.search().mode;
+		this.$scope.$on('$routeUpdate', function () {
+			self.$scope.view.mode = self.$location.search().mode;
 		});
 
-		$scope.setActiveMode = function (mode) {
-			$scope.view.mode = mode;
-			$location.search({ mode: mode });
+		this.$scope.setActiveMode = function (mode) {
+			self.$scope.view.mode = mode;
+			self.$location.search({ mode: mode });
 		};
 
-		if ($routeParams.mode) {
+		if (this.$routeParams.mode) {
 			// Set the active tab according to the URL
-			$scope.view.mode = $routeParams.mode;
+			this.$scope.view.mode = this.$routeParams.mode;
 		} else {
 			// Otherwise redirect to the default view
-			var currentUser = authService.getCurrentUser();
+			var currentUser = this.authService.getCurrentUser();
 			var isAdmin = currentUser.isAdmin();
-			var isAcademicPlanner = currentUser.hasRole('academicPlanner', $scope.workgroupId);
-			var isReviewer = currentUser.hasRole('reviewer', $scope.workgroupId);
-			var isInstructor = currentUser.hasRoles(['senateInstructor', 'federationInstructor'], $scope.workgroupId);
-			var isInstructionalSupport = currentUser.hasRoles(['studentMasters', 'studentPhd', 'instructionalSupport'], $scope.workgroupId);
+
+			var isAcademicPlanner = currentUser.hasRole('academicPlanner', this.$scope.workgroupId);
+			var isReviewer = currentUser.hasRole('reviewer', this.$scope.workgroupId);
+			var isInstructor = currentUser.isInstructor(this.$scope.workgroupId);
+			var isInstructionalSupport = currentUser.hasRoles(['studentMasters', 'studentPhd', 'instructionalSupport'], this.$scope.workgroupId);
 
 			if (isAcademicPlanner || isReviewer || isAdmin) {
-				$scope.setActiveMode("workgroup");
+				this.$scope.setActiveMode("workgroup");
 			}
 			else if (isInstructor) {
-				$scope.setActiveMode("instructor");
+				this.$scope.setActiveMode("instructor");
 			}
 			else if (isInstructionalSupport) {
-				$scope.setActiveMode("instructionalSupport");
+				this.$scope.setActiveMode("instructionalSupport");
 			} else {
-				$scope.setActiveMode("unknown");
+				this.$scope.setActiveMode("unknown");
 			}
 		}
 
-		$scope.getTermDisplayName = function (term) {
+		this.$scope.getTermDisplayName = function (term) {
 			return term.getTermDisplayName(term);
 		};
 
-		$scope.selectTab = function(tab) {
-			$scope.view.state.ui.allTerms.forEach(function(term) {
+		this.$scope.selectTab = function(tab) {
+			self.$scope.view.state.ui.allTerms.forEach(function(term) {
 				if (term.getTermDisplayName() == tab) {
-					$scope.selectTerm(term);
+					self.$scope.selectTerm(term);
 				}
 			});
 		};
 
-		$scope.selectTerm = function (term) {
-			summaryActionCreators.selectTerm(term);
+		this.$scope.selectTerm = function (term) {
+			self.summaryActionCreators.selectTerm(term);
 		};
 
-		$rootScope.$on('summaryStateChanged', function (event, data) {
-			$scope.view.state = data;
+		this.$rootScope.$on('summaryStateChanged', function (event, data) {
+			self.$scope.view.state = data;
 		});
 
-		$rootScope.$on('sharedStateSet', function (event, data) {
-			$scope.sharedState = data;
+		this.$rootScope.$on('sharedStateSet', function (event, data) {
+			self.$scope.sharedState = data;
 		});
-	}]);
+	}
 
-SummaryCtrl.authenticate = function (authService, $route, $window, $location, summaryActionCreators) {
-	return authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		return summaryActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
-	});
-};
+	getPayload () {
+		var self = this;
+		return this.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
+			return self.summaryActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year);
+		});
+	
+	}
+}
+
+ SummaryCtrl.$inject = ['$scope', '$route', '$routeParams', '$rootScope', '$location', 'AuthService', 'SummaryActionCreators'];
+
+ export default SummaryCtrl;

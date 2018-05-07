@@ -1,10 +1,12 @@
-summaryApp.directive("supportSummary", this.supportSummary = function () {
+let supportSummary = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'supportSummary.html',
+		template: require('./supportSummary.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
 			// Do nothing
 		}
 	};
-});
+};
+
+export default supportSummary;

@@ -1,4 +1,4 @@
-sharedApp.directive("preventDefault", this.preventDefault = function() {
+let preventDefault = function() {
 	return {
 		restrict: 'A',
 		link: function (scope, element, attr) {
@@ -7,4 +7,6 @@ sharedApp.directive("preventDefault", this.preventDefault = function() {
 			});
 		}
 	};
-});
+};
+
+export default preventDefault;

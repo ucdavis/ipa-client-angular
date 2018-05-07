@@ -1,7 +1,9 @@
-courseApp.directive("assignTagTooltip", this.assignTagTooltip = function ($rootScope) {
+import './assignTagTooltip.css';
+
+let assignTagTooltip = function ($rootScope) {
 	return {
 		restrict: 'E', // Use this via an element selector <ipa-modal></ipa-modal>
-		templateUrl: 'assignTagTooltip.html',
+		template: require('./assignTagTooltip.html'),
 		replace: true, // Replace with the template below
 		scope: {
 			isVisible: '='
@@ -10,4 +12,6 @@ courseApp.directive("assignTagTooltip", this.assignTagTooltip = function ($rootS
 			// Empty intentionally
 		}
 	};
-});
+};
+
+export default assignTagTooltip;

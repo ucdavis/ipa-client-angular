@@ -6,6 +6,29 @@
 <ipa-header page-title="Assignments"></ipa-header>
 
 <div class="main-content">
+	<ipa-modal is-visible="isCommentModalOpen"
+							header-text="Comments">
+		<comment-modal ng-if="isCommentModalOpen"
+										state="view.state"
+										instructor="view.instructor"
+										instructor-comment="view.instructorComment"
+										schedule-instructor-note="view.scheduleInstructorNote"
+										private-comment="view.scheduleInstructorNote.instructorComment"
+										year="view.state.userInterface.year"
+										workgroup-id="workgroupId"
+										is-visible="isCommentModalOpen">
+		</comment-modal>
+	</ipa-modal>
+	<ipa-modal is-visible="isUnavailabilityModalOpen"
+							styles="unavailabilityModalStyles"
+							header-text="Unavailabilities">
+		<unavailability-modal ng-if="isUnavailabilityModalOpen"
+													instructor="view.instructor"
+													term-display-names="view.termDisplayNames"
+													teaching-call-responses="view.teachingCallResponses"
+													is-visible="isUnavailabilityModalOpen">
+		</unavailability-modal>
+	</ipa-modal>
 	<div class="row hidden-print" style="margin-bottom: 2em;">
 		<div class="col-sm-offset-3 col-sm-6">
 			<input type="search" class="form-control" placeholder="Search" ng-model="searchQuery" ng-change="filterTable(searchQuery)"/>
@@ -77,9 +100,7 @@
 			class="tool-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print"></span>
 		</div> <!-- .table-toolbar -->
 	</div> <!-- .row -->
-
 	<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"></div>
 	<div instructor-assignment-table id="instructors-table" ng-show="view.state.userInterface.showInstructors"></div>
-
 </div>
 </div>

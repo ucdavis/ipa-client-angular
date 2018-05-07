@@ -8,10 +8,10 @@ var activeTab = "food";
 </ipa-tabs>
 */
 
-sharedApp.directive("ipaTabs", this.ipaTabs = function () {
+let ipaTabs = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'ipaTabs.html',
+		template: require('./ipaTabs.html'),
 		replace: true,
 		scope: {
 			tabNames: '<',
@@ -36,4 +36,6 @@ sharedApp.directive("ipaTabs", this.ipaTabs = function () {
 			};
 		}
 	};
-});
+};
+
+export default ipaTabs;

@@ -1,8 +1,4 @@
-/**
- * @author okadri
- * Stores instructor availabilities and comments for a given TeachingCall and TermCode
- */
-angular.module('teachingCallResponse', [])
+const TeachingCallResponse = angular.module('TeachingCallResponse', [])
 
 .factory('TeachingCallResponse', ['$http', function($http) {
 	function TeachingCallResponse(teachingCallResponseData) {
@@ -17,3 +13,5 @@ angular.module('teachingCallResponse', [])
 	};
 	return TeachingCallResponse;
 }]);
+
+export default TeachingCallResponse;

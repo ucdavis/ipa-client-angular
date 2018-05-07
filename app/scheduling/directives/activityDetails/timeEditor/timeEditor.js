@@ -1,9 +1,11 @@
-schedulingApp.directive("timeEditor", this.timeEditor = function () {
+let timeEditor = function () {
 	return {
 		restrict: "E",
-		templateUrl: 'timeEditor.html',
+		template: require('./timeEditor.html'),
 		link: function (scope, element, attrs) {
 			// Intentionally blank
 		}
 	};
-});
+};
+
+export default timeEditor;

@@ -1,5 +1,16 @@
-budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$location', '$routeParams', '$timeout', 'budgetActions', 'authService',
-	this.BudgetCtrl = function ($scope, $rootScope, $window, $location, $routeParams, $timeout, budgetActions, authService) {
+class BudgetCtrl {
+	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $timeout, BudgetActions, AuthService) {
+		this.$scope = $scope;
+		this.$rootScope = $rootScope;
+		this.$window = $window;
+		this.$location = $location;
+		this.$route = $route;
+		this.$routeParams = $routeParams;
+		this.$timeout = $timeout;
+		this.BudgetActions = BudgetActions;
+		this.AuthService = AuthService;
+		var here = this;
+
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 
@@ -7,34 +18,49 @@ budgetApp.controller('BudgetCtrl', ['$scope', '$rootScope', '$window', '$locatio
 
 		$scope.budgetConfigStyles = { "width" : "40%" };
 
-		$scope.currentUser = authService.getCurrentUser();
+		this.getPayload().then( function() {
+			here.initialize();
+		});
+	}
 
-		$rootScope.$on('budgetStateChanged', function (event, data) {
-			$scope.view.state = data;
+	initialize () {
+		var here = this;
+
+		this.$scope.currentUser = here.AuthService.getCurrentUser();
+
+		this.$rootScope.$on('budgetStateChanged', function (event, data) {
+			here.$scope.view.state = data;
 
 			// Set the current active budget scenario id
-			if ($scope.view.state.selectedBudgetScenario) {
-				localStorage.setItem('selectedBudgetScenarioId', $scope.view.state.selectedBudgetScenario.id);
+			if (here.$scope.view.state.selectedBudgetScenario) {
+				localStorage.setItem('selectedBudgetScenarioId', here.$scope.view.state.selectedBudgetScenario.id);
 			} else {
 				localStorage.removeItem('selectedBudgetScenarioId');
 			}
 			// Set the current selected term
-			if ($scope.view.state.selectedBudgetScenario) {
-				localStorage.setItem('selectedTerm', $scope.view.state.selectedBudgetScenario.selectedTerm);
+			if (here.$scope.view.state.selectedBudgetScenario) {
+				localStorage.setItem('selectedTerm', here.$scope.view.state.selectedBudgetScenario.selectedTerm);
 			} else {
 				localStorage.removeItem('selectedTerm');
 			}
 		});
-}]);
+	}
 
-BudgetCtrl.getPayload = function (authService, $route, $window, budgetActions) {
-	authService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-		var selectedBudgetScenarioId = parseInt(localStorage.getItem('selectedBudgetScenarioId')) || null;
+	getPayload () {
+		var here = this;
+	return here.AuthService.validate(localStorage.getItem('JWT'), here.$route.current.params.workgroupId, here.$route.current.params.year).then(function () {
+			var selectedBudgetScenarioId = parseInt(localStorage.getItem('selectedBudgetScenarioId')) || null;
+	
+			here.BudgetActions.getInitialState(
+				here.$route.current.params.workgroupId,
+				here.$route.current.params.year,
+				selectedBudgetScenarioId,
+				localStorage.getItem('selectedTerm'));
+		});
+	
+	}
+}
 
-		budgetActions.getInitialState(
-			$route.current.params.workgroupId,
-			$route.current.params.year,
-			selectedBudgetScenarioId,
-			localStorage.getItem('selectedTerm'));
-	});
-};
+BudgetCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$timeout', 'BudgetActions', 'AuthService'];
+
+export default BudgetCtrl;

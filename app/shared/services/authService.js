@@ -1,12 +1,15 @@
-/**
- * @ngdoc service
- * @name ipaClientAngularApp.authService
- * @description
- * # authService
- * Service in the ipaClientAngularApp.
- */
-angular.module('sharedApp')
-	.service('authService', function ($http, $window, $q, $location, $rootScope, $log, CurrentUser, $route) {
+
+class AuthService {
+	constructor ($http, $window, $q, $location, $rootScope, $log, CurrentUser, $route) {
+		this.$http = $http;
+		this.$window = $window;
+		this.$q = $q;
+		this.$location = $location;
+		this.$rootScope = $rootScope;
+		this.$log = $log;
+		this.CurrentUser = CurrentUser;
+		this.$route = $route;
+
 		return {
 			validateToken: function (token) {
 				var self = this;
@@ -230,7 +233,7 @@ angular.module('sharedApp')
 
 				// Loop over the user roles to look for user workgroups
 				for (var i = 0; i < userRoles.length; i++) {
-					userRole = userRoles[i];
+					let userRole = userRoles[i];
 
 					// Find the first valid workgroup in the roles and do the redirect
 					if (userRole.workgroupId > 0) {
@@ -308,4 +311,9 @@ angular.module('sharedApp')
 				$("form#unknownErrorForm").submit();
 			}
 		};
-	});
+	}
+}
+
+AuthService.$inject = ['$http', '$window', '$q', '$location', '$rootScope', '$log', 'CurrentUser', '$route'];
+
+export default AuthService;

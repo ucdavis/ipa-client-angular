@@ -1,4 +1,4 @@
-angular.module('courseOffering', [])
+const CourseOffering = angular.module('CourseOffering', [])
 
 .factory('CourseOffering', ['$http', function($http) {
 	function CourseOffering(courseOfferingData) {
@@ -13,3 +13,5 @@ angular.module('courseOffering', [])
 	};
 	return CourseOffering;
 }]);
+
+export default CourseOffering;

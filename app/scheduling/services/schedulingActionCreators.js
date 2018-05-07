@@ -6,209 +6,215 @@
  schedulingApp.
  * Central location for sharedState information.
  */
-schedulingApp.service('schedulingActionCreators', function (schedulingStateService, schedulingService, $rootScope, Role) {
-	return {
-		getInitialState: function (workgroupId, year, termCode) {
-			schedulingService.getScheduleByWorkgroupIdAndYearAndTermCode(workgroupId, year, termCode).then(function (payload) {
+class SchedulingActionCreators {
+	constructor (SchedulingStateService, SchedulingService, $rootScope, Role, ActionTypes) {
+		return {
+			getInitialState: function (workgroupId, year, termCode) {
+				SchedulingService.getScheduleByWorkgroupIdAndYearAndTermCode(workgroupId, year, termCode).then(function (payload) {
+					var action = {
+						type: ActionTypes.INIT_STATE,
+						payload: payload
+					};
+					SchedulingStateService.reduce(action);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not load schedule initial state.", type: "ERROR" });
+				});
+			},
+			updateActivity: function (activity) {
+				SchedulingService.updateActivity(activity).then(function (updatedActivity) {
+					$rootScope.$emit('toast', { message: "Updated " + activity.getCodeDescription(), type: "SUCCESS" });
+					var action = {
+						type: ActionTypes.UPDATE_ACTIVITY,
+						payload: {
+							activity: updatedActivity
+						}
+					};
+					SchedulingStateService.reduce(action);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
+				});
+			},
+			removeActivity: function (activity) {
+				SchedulingService.removeActivity(activity.id).then(function () {
+					$rootScope.$emit('toast', { message: "Removed " + activity.getCodeDescription(), type: "SUCCESS" });
+					var action = {
+						type: ActionTypes.REMOVE_ACTIVITY,
+						payload: {
+							activity: activity
+						}
+					};
+					SchedulingStateService.reduce(action);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not remove activity.", type: "ERROR" });
+				});
+			},
+			createSharedActivity: function (activityCode, sectionGroup) {
+				SchedulingService.createSharedActivity(activityCode, sectionGroup.id).then(function (newActivity) {
+					$rootScope.$emit('toast', { message: "Created new shared " + activityCode.getActivityCodeDescription(), type: "SUCCESS" });
+					var action = {
+						type: ActionTypes.CREATE_SHARED_ACTIVITY,
+						payload: {
+							activity: newActivity,
+							sectionGroup: sectionGroup
+						}
+					};
+					SchedulingStateService.reduce(action);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not create shared activity.", type: "ERROR" });
+				});
+			},
+			createActivity: function (activityCode, sectionId, sectionGroup) {
+				SchedulingService.createActivity(activityCode, sectionId).then(function (newActivity) {
+					$rootScope.$emit('toast', { message: "Created new " + activityCode.getActivityCodeDescription(), type: "SUCCESS" });
+					var action = {
+						type: ActionTypes.CREATE_ACTIVITY,
+						payload: {
+							activity: newActivity,
+							sectionGroup: sectionGroup
+						}
+					};
+					SchedulingStateService.reduce(action);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not create activity.", type: "ERROR" });
+				});
+			},
+			setSelectedSectionGroup: function (sectionGroup) {
 				var action = {
-					type: INIT_STATE,
-					payload: payload
-				};
-				schedulingStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not load schedule initial state.", type: "ERROR" });
-			});
-		},
-		updateActivity: function (activity) {
-			schedulingService.updateActivity(activity).then(function (updatedActivity) {
-				$rootScope.$emit('toast', { message: "Updated " + activity.getCodeDescription(), type: "SUCCESS" });
-				var action = {
-					type: UPDATE_ACTIVITY,
+					type: ActionTypes.SECTION_GROUP_SELECTED,
 					payload: {
-						activity: updatedActivity
+						sectionGroup: sectionGroup
 					}
 				};
-				schedulingStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
-			});
-		},
-		removeActivity: function (activity) {
-			schedulingService.removeActivity(activity.id).then(function () {
-				$rootScope.$emit('toast', { message: "Removed " + activity.getCodeDescription(), type: "SUCCESS" });
+				SchedulingStateService.reduce(action);
+			},
+			toggleCheckedSectionGroup: function (sectionGroupId) {
 				var action = {
-					type: REMOVE_ACTIVITY,
+					type: ActionTypes.SECTION_GROUP_TOGGLED,
+					payload: {
+						sectionGroupId: sectionGroupId
+					}
+				};
+				SchedulingStateService.reduce(action);
+			},
+			toggleCheckAll: function (sectionGroupIds) {
+				var action = {
+					type: ActionTypes.CHECK_ALL_TOGGLED,
+					payload: {
+						sectionGroupIds: sectionGroupIds
+					}
+				};
+				SchedulingStateService.reduce(action);
+			},
+			setSelectedActivity: function (activity) {
+				var action = {
+					type: ActionTypes.ACTIVITY_SELECTED,
 					payload: {
 						activity: activity
 					}
 				};
-				schedulingStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not remove activity.", type: "ERROR" });
-			});
-		},
-		createSharedActivity: function (activityCode, sectionGroup) {
-			schedulingService.createSharedActivity(activityCode, sectionGroup.id).then(function (newActivity) {
-				$rootScope.$emit('toast', { message: "Created new shared " + activityCode.getActivityCodeDescription(), type: "SUCCESS" });
+				SchedulingStateService.reduce(action);
+			},
+			getCourseActivityTypes: function (course) {
+				SchedulingService.getCourseActivityTypes(course).then(function (activityTypes) {
+					var action = {
+						type: ActionTypes.FETCH_COURSE_ACTIVITY_TYPES,
+						payload: {
+							activityTypes: activityTypes,
+							course: course
+						}
+					};
+					SchedulingStateService.reduce(action);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not get course activity types.", type: "ERROR" });
+				});
+			},
+			toggleDay: function (dayIndex) {
 				var action = {
-					type: CREATE_SHARED_ACTIVITY,
+					type: ActionTypes.TOGGLE_DAY,
 					payload: {
-						activity: newActivity,
-						sectionGroup: sectionGroup
+						dayIndex: dayIndex
 					}
 				};
-				schedulingStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not create shared activity.", type: "ERROR" });
-			});
-		},
-		createActivity: function (activityCode, sectionId, sectionGroup) {
-			schedulingService.createActivity(activityCode, sectionId).then(function (newActivity) {
-				$rootScope.$emit('toast', { message: "Created new " + activityCode.getActivityCodeDescription(), type: "SUCCESS" });
+				SchedulingStateService.reduce(action);
+			},
+			updateTagFilters: function (tagIds) {
 				var action = {
-					type: CREATE_ACTIVITY,
+					type: ActionTypes.UPDATE_TAG_FILTERS,
 					payload: {
-						activity: newActivity,
-						sectionGroup: sectionGroup
+						tagIds: tagIds
 					}
 				};
-				schedulingStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not create activity.", type: "ERROR" });
-			});
-		},
-		setSelectedSectionGroup: function (sectionGroup) {
-			var action = {
-				type: SECTION_GROUP_SELECTED,
-				payload: {
-					sectionGroup: sectionGroup
-				}
-			};
-			schedulingStateService.reduce(action);
-		},
-		toggleCheckedSectionGroup: function (sectionGroupId) {
-			var action = {
-				type: SECTION_GROUP_TOGGLED,
-				payload: {
-					sectionGroupId: sectionGroupId
-				}
-			};
-			schedulingStateService.reduce(action);
-		},
-		toggleCheckAll: function (sectionGroupIds) {
-			var action = {
-				type: CHECK_ALL_TOGGLED,
-				payload: {
-					sectionGroupIds: sectionGroupIds
-				}
-			};
-			schedulingStateService.reduce(action);
-		},
-		setSelectedActivity: function (activity) {
-			var action = {
-				type: ACTIVITY_SELECTED,
-				payload: {
-					activity: activity
-				}
-			};
-			schedulingStateService.reduce(action);
-		},
-		getCourseActivityTypes: function (course) {
-			schedulingService.getCourseActivityTypes(course).then(function (activityTypes) {
+				SchedulingStateService.reduce(action);
+			},
+			updateLocationFilters: function (locationIds) {
 				var action = {
-					type: FETCH_COURSE_ACTIVITY_TYPES,
+					type: ActionTypes.UPDATE_LOCATION_FILTERS,
 					payload: {
-						activityTypes: activityTypes,
-						course: course
+						locationIds: locationIds
 					}
 				};
-				schedulingStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not get course activity types.", type: "ERROR" });
-			});
-		},
-		toggleDay: function (dayIndex) {
-			var action = {
-				type: TOGGLE_DAY,
-				payload: {
-					dayIndex: dayIndex
-				}
-			};
-			schedulingStateService.reduce(action);
-		},
-		updateTagFilters: function (tagIds) {
-			var action = {
-				type: UPDATE_TAG_FILTERS,
-				payload: {
-					tagIds: tagIds
-				}
-			};
-			schedulingStateService.reduce(action);
-		},
-		updateLocationFilters: function (locationIds) {
-			var action = {
-				type: UPDATE_LOCATION_FILTERS,
-				payload: {
-					locationIds: locationIds
-				}
-			};
-			schedulingStateService.reduce(action);
-		},
-		updateInstructorFilters: function (instructorIds) {
-			var action = {
-				type: UPDATE_INSTRUCTOR_FILTERS,
-				payload: {
-					instructorIds: instructorIds
-				}
-			};
-			schedulingStateService.reduce(action);
-		},
-		createSection: function (section) {
-			var self = this;
-			schedulingService.createSection(section).then(function (section) {
-				$rootScope.$emit('toast', { message: "Created section " + section.sequenceNumber, type: "SUCCESS" });
+				SchedulingStateService.reduce(action);
+			},
+			updateInstructorFilters: function (instructorIds) {
 				var action = {
-					type: CREATE_SECTION,
+					type: ActionTypes.UPDATE_INSTRUCTOR_FILTERS,
 					payload: {
-						section: section
+						instructorIds: instructorIds
 					}
 				};
-				schedulingStateService.reduce(action);
+				SchedulingStateService.reduce(action);
+			},
+			createSection: function (section) {
+				var self = this;
+				SchedulingService.createSection(section).then(function (section) {
+					$rootScope.$emit('toast', { message: "Created section " + section.sequenceNumber, type: "SUCCESS" });
+					var action = {
+						type: ActionTypes.CREATE_SECTION,
+						payload: {
+							section: section
+						}
+					};
+					SchedulingStateService.reduce(action);
 
-				// Server potentially created new activities as well
-				self.getActivities(section);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not create section activities.", type: "ERROR" });
-			});
-		},
-		removeSection: function (section) {
-			var self = this;
-			schedulingService.deleteSection(section).then(function (results) {
-				$rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
-				var action = {
-					type: DELETE_SECTION,
-					payload: {
-						section: section
-					}
-				};
-				schedulingStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not delete section.", type: "ERROR" });
-			});
-		},
-		getActivities: function (section) {
-			schedulingService.getActivities(section).then(function (activities) {
-				var action = {
-					type: GET_ACTIVITIES,
-					payload: {
-						section: section,
-						activities: activities
-					}
-				};
-				schedulingStateService.reduce(action);
-			}, function (err) {
-				$rootScope.$emit('toast', { message: "Could not get activities.", type: "ERROR" });
-			});
-		}
-	};
-});
+					// Server potentially created new activities as well
+					self.getActivities(section);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not create section activities.", type: "ERROR" });
+				});
+			},
+			removeSection: function (section) {
+				var self = this;
+				SchedulingService.deleteSection(section).then(function (results) {
+					$rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
+					var action = {
+						type: ActionTypes.DELETE_SECTION,
+						payload: {
+							section: section
+						}
+					};
+					SchedulingStateService.reduce(action);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not delete section.", type: "ERROR" });
+				});
+			},
+			getActivities: function (section) {
+				SchedulingService.getActivities(section).then(function (activities) {
+					var action = {
+						type: ActionTypes.GET_ACTIVITIES,
+						payload: {
+							section: section,
+							activities: activities
+						}
+					};
+					SchedulingStateService.reduce(action);
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not get activities.", type: "ERROR" });
+				});
+			}
+		};
+	}
+}
+
+SchedulingActionCreators.$inject = ['SchedulingStateService', 'SchedulingService', '$rootScope', 'Role', 'ActionTypes'];
+
+export default SchedulingActionCreators;

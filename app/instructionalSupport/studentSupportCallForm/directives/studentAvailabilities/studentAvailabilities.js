@@ -1,7 +1,9 @@
-instructionalSupportApp.directive("studentAvailabilities", this.studentAvailabilities = function () {
+import './studentAvailabilities.css';
+
+let studentAvailabilities = function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'studentAvailabilities.html',
+		template: require('./studentAvailabilities.html'),
 		replace: true,
 		scope: {
 			state: '<'
@@ -10,4 +12,6 @@ instructionalSupportApp.directive("studentAvailabilities", this.studentAvailabil
 			// Intentionally blank
 		}
 	};
-});
+};
+
+export default studentAvailabilities;

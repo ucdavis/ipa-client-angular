@@ -1,4 +1,4 @@
-angular.module('location', [])
+const Location = angular.module('Location', [])
 
 .factory('Location', ['$http', function($http) {
 	function Location(locationData) {
@@ -13,3 +13,5 @@ angular.module('location', [])
 	};
 	return Location;
 }]);
+
+export default Location;

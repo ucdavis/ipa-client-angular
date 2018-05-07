@@ -1,3 +1,5 @@
+import './timeInput.css';
+
 /**
  * example:
  * <time-input	time="time"
@@ -6,10 +8,10 @@
  *				on-change="saveChanges()"
  * 				link-minute-hour="true"></time-input>
  */
-schedulingApp.directive("timeInput", this.timeInput = function ($timeout) {
+let timeInput = function ($timeout) {
 	return {
 		restrict: "E",
-		templateUrl: 'timeInput.html',
+		template: require('./timeInput.html'),
 		scope: {
 			time: '=',
 			minuteStep: '@',
@@ -223,4 +225,6 @@ schedulingApp.directive("timeInput", this.timeInput = function ($timeout) {
 			};
 		}
 	};
-});
+};
+
+export default timeInput;

@@ -1,7 +1,9 @@
-courseApp.directive("deleteCourseModal", this.deleteCourseModal = function ($rootScope, courseActionCreators, $routeParams) {
+import './deleteCourseModal.css';
+
+let deleteCourseModal = function ($rootScope, CourseActionCreators, $routeParams) {
 	return {
 		restrict: 'E',
-		templateUrl: 'deleteCourseModal.html',
+		template: require('./deleteCourseModal.html'),
 		replace: true,
 		scope: {
 			state: '<',
@@ -12,7 +14,7 @@ courseApp.directive("deleteCourseModal", this.deleteCourseModal = function ($roo
 			scope.year = $routeParams.year;
 
 			scope.confirmDeleteCourses = function () {
-				courseActionCreators.deleteMultipleCourses(scope.state.uiState.selectedCourseRowIds, scope.workgroupId, scope.year);
+				CourseActionCreators.deleteMultipleCourses(scope.state.uiState.selectedCourseRowIds, scope.workgroupId, scope.year);
 			};
 
 			scope.close = function() {
@@ -20,4 +22,6 @@ courseApp.directive("deleteCourseModal", this.deleteCourseModal = function ($roo
 			};
 		} // end link
 	};
-});
+};
+
+export default deleteCourseModal;
