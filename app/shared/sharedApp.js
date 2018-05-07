@@ -1,3 +1,16 @@
+import 'angular/angular.js';
+import 'ng-idle/angular-idle.js';
+import 'angular-sanitize/angular-sanitize.js';
+import 'angular-route/angular-route.min.js';
+import toastr from 'toastr/build/toastr.min.js';
+import 'bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js';
+import 'fullcalendar/dist/fullcalendar.js';
+import 'selectize/dist/js/standalone/selectize.js';
+import 'angular-selectize2/dist/angular-selectize.js';
+import 'ui-select/dist/select.js';
+import 'bootstrap/dist/js/bootstrap.js';
+import 'angular-ui-bootstrap/dist/ui-bootstrap-tpls.js';
+
 // Helpers
 import array from './helpers/array.js';
 import dates from './helpers/dates.js';
@@ -208,19 +221,20 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 	academicPlanner: 2,
 	presence: 9
 })
+/*
 .config(slowConnectionInterceptor)
 .config(tokenValidatorInterceptor)
 .config(exceptionHandler)
 
 // Intercept Ajax traffic
 
-/*
+
 .config(function($httpProvider) {
 	$httpProvider.interceptors.push(slowConnectionInterceptor);
 	$httpProvider.interceptors.push(tokenValidatorInterceptor);
 })
+
 */
-/*
 // Detect route errors
 .run(['$rootScope', 'Idle',
 	function ($rootScope, Idle) {
@@ -245,8 +259,6 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 		Idle.watch();
 	}
 ])
-
-*/
 
 // Listen to toast requests
 .run(['$rootScope',

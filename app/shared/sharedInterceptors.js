@@ -1,4 +1,6 @@
-export function slowConnectionInterceptor () {
+export function slowConnectionInterceptor ($timeout) {
+	this.$timeout = $timeout;
+
 	var reqCount = 0;
 	return {
 		request: function (config) {
@@ -28,7 +30,7 @@ export function slowConnectionInterceptor () {
 
 			return response;
 		},
-		responseError: function (rejection) {
+		responseError: function (rejection, $timeout) {
 			if (--reqCount === 0) {
 				$timeout.cancel($rootScope.slowResTime);
 				$timeout.cancel($rootScope.timeOutTimer);
