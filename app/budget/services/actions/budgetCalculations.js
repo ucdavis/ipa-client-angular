@@ -157,7 +157,10 @@ budgetApp.service('budgetCalculations', function ($rootScope, $window, budgetSer
 				subjectCode: course.subjectCode,
 				courseNumber: course.courseNumber,
 				title: course.title,
+				unitsHigh: course.unitsHigh,
+				unitsLow: course.unitsLow,
 				uniqueKey: course.subjectCode + course.courseNumber,
+				courseId: course.id,
 				sectionGroups: []
 			};
 
