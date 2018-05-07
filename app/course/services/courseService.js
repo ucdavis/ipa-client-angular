@@ -26,8 +26,8 @@ class CourseService {
 
 				_self.$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel" + showDoNotPrintParam, { withCredentials: true })
 					.then(function (payload) {
-						_self.$window.location.href = payload.redirect;
-						deferred.resolve(payload);
+						_self.$window.location.href = payload.data.redirect;
+						deferred.resolve(payload.data);
 					},
 					function () {
 						deferred.reject();
