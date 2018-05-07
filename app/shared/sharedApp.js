@@ -19,11 +19,6 @@ import sections from './helpers/sections.js';
 import string from './helpers/string.js';
 import types from './helpers/types.js';
 
-// Config
-import exceptionHandler from './exceptionHandler.js';
-import { slowConnectionInterceptor } from './sharedInterceptors.js';
-import { tokenValidatorInterceptor } from './sharedInterceptors.js';
-
 // Controllers
 import SharedCtrl from './controllers/SharedCtrl.js';
 
@@ -172,6 +167,103 @@ function config ($httpProvider, $compileProvider, $logProvider, IdleProvider, $l
 
 config.$inject = ['$httpProvider', '$compileProvider', '$logProvider', 'IdleProvider', '$locationProvider'];
 
+function slowConnectionInterceptor ($rootScope, $timeout) {
+	var reqCount = 0;
+	return {
+		request: function (config) {
+			reqCount++;
+			if ($rootScope.slowResTime) { $timeout.cancel($rootScope.slowResTime); }
+			if ($rootScope.timeOutTimer) { $timeout.cancel($rootScope.timeOutTimer); }
+
+			var slowResDelay = 15000; // 8 seconds
+			var timeOutDelay = 45000; // 45 seconds
+
+			$rootScope.slowResTime = $timeout(function () {
+				$rootScope.$emit('toast', { message: "Server appears to be slow. Please standby...", type: "WARNING" });
+			}, slowResDelay);
+
+			$rootScope.timeOutTimer = $timeout(function () {
+				$rootScope.$emit('toast', { message: "Server appears to have failed.", type: "ERROR", options: { timeOut: 0, closeButton: true } });
+			}, timeOutDelay);
+
+			return config;
+		},
+		response: function (response) {
+			if (--reqCount === 0) {
+				$timeout.cancel($rootScope.slowResTime);
+				$timeout.cancel($rootScope.timeOutTimer);
+				toastr.clear();
+			}
+
+			return response;
+		},
+		responseError: function (rejection) {
+			if (--reqCount === 0) {
+				$timeout.cancel($rootScope.slowResTime);
+				$timeout.cancel($rootScope.timeOutTimer);
+				toastr.clear();
+			}
+
+			// Redirect 'Access Denied' responses to /accessDenied
+			if (rejection.status === 403) {
+				$rootScope.loadingError = 403;
+			}
+
+			return $q.reject(rejection);
+		}
+	};
+}
+
+slowConnectionInterceptor.$inject = ['$rootScope', '$timeout'];
+
+function tokenValidatorInterceptor () {
+	return {
+		responseError: function (rejection) {
+			if (rejection.status === 440) {
+				// Delete expired token and revalidate
+				localStorage.removeItem('JWT');
+				var authService = $injector.get('authService');
+				authService.validate().then(function () {
+					// $rootScope.toast.message = "This is inconcieveable";
+					$rootScope.$emit('toast', { message: "Unable to validate authentication.", type: "ERROR" });
+				});
+			}
+
+			return $q.reject(rejection);
+		}
+	};
+}
+
+function exceptionHandler($provide) {
+	$provide.decorator("$exceptionHandler", function($delegate, $injector) {
+		return function(exception, cause) {
+			$delegate(exception, cause);
+
+			var $http = $injector.get("$http");
+			var $location = $injector.get("$location");
+			var $rootScope = $injector.get("$rootScope");
+			$rootScope.errorsSent = $rootScope.errorsSent || [];
+
+			// Make sure an error is sent only once
+			if ($rootScope.errorsSent.indexOf(exception.message) < 0) {
+				$rootScope.errorsSent.push(exception.message);
+				var exceptionObject = {
+						message: exception.message,
+						stack: exception.stack,
+						url: $location.absUrl()
+				};
+				
+				$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("JWT"); // Set proper headers
+				$http.post(serverRoot + "/api/reportJsException", exceptionObject, { withCredentials: true }).then(function(res) {
+					return res.data;
+				});
+			}
+		};
+	});
+}
+
+exceptionHandler.$inject = ['$provide'];
+
 // App declaration
 const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .config(config)
@@ -221,20 +313,16 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 	academicPlanner: 2,
 	presence: 9
 })
-/*
-.config(slowConnectionInterceptor)
+
 .config(tokenValidatorInterceptor)
 .config(exceptionHandler)
 
 // Intercept Ajax traffic
-
-
 .config(function($httpProvider) {
-	$httpProvider.interceptors.push(slowConnectionInterceptor);
+	$httpProvider.interceptors.push(['$rootScope', '$timeout', slowConnectionInterceptor]);
 	$httpProvider.interceptors.push(tokenValidatorInterceptor);
 })
 
-*/
 // Detect route errors
 .run(['$rootScope', 'Idle',
 	function ($rootScope, Idle) {
