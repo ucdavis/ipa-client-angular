@@ -38,6 +38,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	justify-content: flex-end;
+	padding-right: 5px;
 }
 
 .instructor-costs__instructor-container {
@@ -86,10 +88,6 @@
 	padding-left: 10px;
 }
 
-.instructor-costs__instructor-dropdown-container {
-
-}
-
 .instructor-costs__instructor-dropdown {
 	width: 100px;
 }
@@ -100,4 +98,30 @@
 	border-radius: 3px;
 	cursor: pointer;
 	margin-bottom: 2px;
+}
+
+.instructor-cost-summary__text {
+	padding-top: 15px;
+	text-align: center;
+}
+
+.instructor-cost-summary__text--total {
+	text-align: right;
+	padding-right: 26px;
+}
+
+.instructor-costs__header--total-cost {
+	text-align: right;
+	padding-right: 26px;
+}
+
+.instructor-costs__header--reason,
+.instructor-costs__header--instructor-cost {
+	padding-left: 32px;
+}
+
+.instructor-costs__header--instructor,
+.instructor-costs__header--reg-instructor,
+.instructor-costs__header--comment {
+	padding-left: 10px;
 }

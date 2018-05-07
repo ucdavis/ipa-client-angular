@@ -1,0 +1,17 @@
+.instructor-list__cell-container--left {
+  margin-left: 20px;
+}
+
+.instructor-list__cell-container--right {
+  margin-right: 20px;
+}
+
+.instructor-list__cell-container {
+  height: 53px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f8f8;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

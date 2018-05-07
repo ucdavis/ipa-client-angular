@@ -586,6 +586,16 @@ class BudgetReducers {
 						return lineItemComments;
 				}
 			},
+			summaryReducers: function (action, summary) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
+					case ActionTypes.CALCULATE_SUMMARY_TOTALS:
+						return action.payload.summary;
+					default:
+						return summary;
+				}
+			},
 			uiReducers: function (action, ui) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -606,8 +616,8 @@ class BudgetReducers {
 								}
 							},
 							sectionNav: {
-								activeTab: "Course Costs",
-								allTabs: ["Course Costs", "Instructor Costs", "Line Items", "Summary"]
+								activeTab: "Summary",
+								allTabs: ["Support Costs", "Instructor Costs", "Line Items", "Summary", "Instructor List"]
 							},
 							termNav: {
 								activeTab: null,
@@ -812,7 +822,8 @@ class BudgetReducers {
 				newState.calculatedInstructorTypeCosts = scope.calculatedInstructorTypeCostReducers(action, scope._state.calculatedInstructorTypeCosts);
 				newState.calculatedInstructors = scope.calculatedInstructorReducers(action, scope._state.calculatedInstructors);
 				newState.calculatedLineItems = scope.calculatedLineItemReducers(action, scope._state.calculatedLineItems);
-	
+				newState.summary = scope.summaryReducers(action, scope._state.summary);
+
 				scope._state = newState;
 	
 				// Build new 'page state'
@@ -829,7 +840,9 @@ class BudgetReducers {
 				newPageState.calculatedInstructorTypeCosts = newState.calculatedInstructorTypeCosts;
 				newPageState.calculatedInstructors = newState.calculatedInstructors;
 				newPageState.calculatedLineItems = newState.calculatedLineItems;
-	
+				newPageState.summary = newState.summary;
+				newPageState.instructorTypes = newState.instructorTypes;
+
 				$rootScope.$emit('budgetStateChanged', newPageState);
 			}
 		};

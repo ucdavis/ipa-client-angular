@@ -1,19 +1,23 @@
 import './budgetSummary.css';
 
-let budgetSummary = function () {
+let budgetSummary = function ($rootScope, TermService) {
 	return {
 		restrict: 'E',
 		template: require('./budgetSummary.html'),
 		replace: true,
 		scope: {
 			summary: '<',
-			budget: '<'
+			instructorTypes: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.saveBudget = function () {
-				budgetActions.updateBudget(scope.budget);
+			scope.getTermName = function(term) {
+				return TermService.getShortTermName(term);
 			};
-		} // end link
+
+			scope.toCurrency = function (value) {
+				return toCurrency(value);
+			};
+		}
 	};
 };
 

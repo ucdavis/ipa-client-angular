@@ -26,7 +26,7 @@ import instructorAssignmentDropdown from './directives/instructorCosts/instructo
 import lineItems from './directives/lineItems/lineItems.js';
 import lineItemDropdown from './directives/lineItems/lineItemDropdown/lineItemDropdown.js';
 import budgetSummary from './directives/budgetSummary/budgetSummary.js';
-import doughnutChart from './directives/budgetSummary/doughnutChart/doughnutChart.js';
+import instructorList from './directives/instructorList/instructorList.js';
 
 import addBudgetScenario from './directives/modals/addBudgetScenario/addBudgetScenario.js';
 import addCourseComments from './directives/modals/addCourseComments/addCourseComments.js';
@@ -34,8 +34,6 @@ import addLineItem from './directives/modals/addLineItem/addLineItem.js';
 import addLineItemComments from './directives/modals/addLineItemComments/addLineItemComments.js';
 import budgetConfig from './directives/modals/budgetConfig/budgetConfig.js';
 import generalConfig from './directives/modals/budgetConfig/generalConfig/generalConfig.js';
-import groupCostConfig from './directives/modals/budgetConfig/groupCostConfig/groupCostConfig.js';
-import instructorCostConfig from './directives/modals/budgetConfig/instructorCostConfig/instructorCostConfig.js';
 
 // Dependencies
 var dependencies = [
@@ -79,15 +77,13 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .directive('lineItems', lineItems)
 .directive('lineItemDropdown', lineItemDropdown)
 .directive('budgetSummary', budgetSummary)
-.directive('doughnutChart', doughnutChart)
+.directive('instructorList', instructorList)
 .directive('addBudgetScenario', addBudgetScenario)
 .directive('addCourseComments', addCourseComments)
 .directive('addLineItem', addLineItem)
 .directive('addLineItemComments', addLineItemComments)
 .directive('budgetConfig', budgetConfig)
 .directive('generalConfig', generalConfig)
-.directive('groupCostConfig', groupCostConfig)
-.directive('instructorCostConfig', instructorCostConfig)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	CREATE_BUDGET_SCENARIO: "CREATE_BUDGET_SCENARIO",
@@ -126,7 +122,8 @@ const budgetApp = angular.module("budgetApp", dependencies)
 	CALCULATE_TOTAL_COST: "CALCULATE_TOTAL_COST",
 	CALCULATE_INSTRUCTOR_TYPE_COSTS: "CALCULATE_INSTRUCTOR_TYPE_COSTS",
 	CALCULATE_INSTRUCTORS: "CALCULATE_INSTRUCTORS",
-	CALCULATE_LINE_ITEMS: "CALCULATE_LINE_ITEMS"
+	CALCULATE_LINE_ITEMS: "CALCULATE_LINE_ITEMS",
+	CALCULATE_SUMMARY_TOTALS: "CALCULATE_SUMMARY_TOTALS"
 });
 
 export default budgetApp;

@@ -200,6 +200,9 @@ class BudgetActions {
 					BudgetReducers.reduce(action);
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
+					newInstructorCost.instructorTypeId = instructorTypeId;
+
+					self.asignInstructorType(newInstructorCost);
 					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
@@ -810,7 +813,7 @@ class BudgetActions {
 				var actionType = null;
 	
 				if (filter.type == "showHidden") {
-					actionType = TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN;
+					actionType = ActionTypes.TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN;
 				}
 	
 				// No matching filter found

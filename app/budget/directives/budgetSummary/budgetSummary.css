@@ -1,43 +1,49 @@
-.budget-summary {
-	widows: 100%;
-	align-self: center;
-}
-
-.budget-summary .cost-column {
-	width: 15%;
-}
-
-
-.budget-summary .table thead {
-	border-bottom: 1px solid #E5E5E5;
-}
-
-.budget-summary .table thead tr th {
-	font-weight: bold;
-}
-
-.budget-summary .budget-summary-title {
-	width: 35%;
-}
-
-.budget-summary .sum-total {
+.budget-summary__header-cell {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ddd;
 	text-align: right;
-	vertical-align: middle;
 }
 
-.budget-summary .budget-summary-title button {
-	margin-left: 10px;
+.budget-summary__header-cell--right {
+	padding-right: 25px;
 }
 
-.budget-summary .table > tbody > tr > td, .table > tfoot > tr > td {
-	border-top: unset;
+.budget-summary__cell-container {
+  height: 53px;
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f8;
+  justify-content: flex-end;
 }
 
-.budget-summary .total-balance thead{
-	border-top: 1px solid #E5E5E5 !important;
-	border-bottom: unset;
+.budget-summary__cell-container--left {
+	padding-left: 20px;
+	justify-content: flex-start;
 }
 
-.budget-summary table {
-	font-size: 12px;
+.budget-summary__cell-container--last {
+	padding-right: 25px;
+}
+
+.budget-summary__table {
+	width: 100%;
+	margin-bottom: 20px;
+	table-layout: fixed;
+}
+
+.budget-summary__cell--combined-value {
+}
+
+.budget-summary__cell--bold {
+	font-weight: bold;
+	margin-bottom: 30px;
+}
+
+.budget-summary__cell--total {
+	border-top: 1px solid black;
+}
+
+.budget-summary__cell--total-strong {
+	border-top: 3px double black;
 }

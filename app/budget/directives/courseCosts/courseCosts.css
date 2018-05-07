@@ -47,6 +47,8 @@
 	height: 53px;
 	display: flex;
 	align-items: center;
+	justify-content: flex-end;
+	padding-right: 5px;
 }
 
 .course-costs__warning {
@@ -82,4 +84,22 @@
 
 .course-costs__table-header--comments {
 	padding-left: 20px;
+}
+
+.course-totals-row {
+	height: 30px;
+}
+
+.course-totals-row__cell {
+	padding-top: 15px;
+}
+
+.course-totals-row__first {
+	padding-left: 20px;
+	text-align: center;
+}
+
+.course-costs__table-header--total-costs {
+	text-align: right;
+	padding-right: 27px;
 }

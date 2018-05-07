@@ -9,7 +9,8 @@ let instructorCosts = function ($rootScope, BudgetActions) {
 			instructorAssignmentOptions: '<',
 			regularInstructorAssignmentOptions: '<',
 			termNav: '<',
-			calculatedSectionGroups: '<'
+			calculatedSectionGroups: '<',
+			summary: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.toggleCourseCostsSection = function() {
@@ -46,7 +47,7 @@ let instructorCosts = function ($rootScope, BudgetActions) {
 			};
 
 			scope.updateSectionGroupCost = function(sectionGroupCost) {
-				budgetActions.updateSectionGroupCost(sectionGroupCost);
+				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 		} // end link
 	};

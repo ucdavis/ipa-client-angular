@@ -7,7 +7,8 @@ let courseCosts = function ($rootScope, BudgetActions) {
 		replace: true,
 		scope: {
 			termNav: '<',
-			calculatedSectionGroups: '<'
+			calculatedSectionGroups: '<',
+			summary: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.setActiveTerm = function(activeTermTab) {
