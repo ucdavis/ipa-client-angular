@@ -1,48 +1,42 @@
 class TeachingCallResponseReportCtrl {
-	constructor ($scope, $rootScope, $route, $routeParams, teachingCallResponseReportActionCreators, AuthService, TeachingCallResponseReportService, TermService) {
-		var self = this;
+	constructor ($scope, $rootScope, $route, $routeParams, TeachingCallResponseReportActionCreators, AuthService, TeachingCallResponseReportService, TermService) {
+		var _self = this;
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
 		this.$route = $route;
 		this.$routeParams = $routeParams;
-		this.teachingCallResponseReportActionCreators = teachingCallResponseReportActionCreators;
+		this.TeachingCallResponseReportActionCreators = TeachingCallResponseReportActionCreators;
 		this.authService = AuthService;
-		this.teachingCallResponseReportService = TeachingCallResponseReportService;
-		this.thermService = TermService;
+		this.TeachingCallResponseReportService = TeachingCallResponseReportService;
+		this.TermService = TermService;
 
+		$scope.workgroupId = this.$routeParams.workgroupId;
+		$scope.year = this.$routeParams.year;
 
-		this.getPayload().then( function(results) {
-			self.initialize();
+		$scope.view = {};
+
+		$rootScope.$on('reportStateChanged', function (event, data) {
+			_self.$scope.view.state = data.state;
+
+			_self.$scope.view.hasAccess = _self.$scope.sharedState.currentUser.isAdmin() ||
+			_self.$scope.sharedState.currentUser.hasRole('academicPlanner', _self.$scope.sharedState.workgroup.id);
 		});
-	}
 
-	initialize () {
-		var self = this;
-		this.$scope.workgroupId = this.$routeParams.workgroupId;
-		this.$scope.year = this.$routeParams.year;
+		$scope.getTermName = function(term) {
+			return TermService.getTermName(term);
+		};
 
-		this.$scope.view = {};
+		$scope.download = function () {
+			TeachingCallResponseReportService.download($scope.workgroupId, $scope.year);
+		};
 
-		this.$rootScope.$on('reportStateChanged', function (event, data) {
-			self.$scope.view.state = data.state;
-
-			self.$scope.view.hasAccess = self.$scope.sharedState.currentUser.isAdmin() ||
-				self.$scope.sharedState.currentUser.hasRole('academicPlanner', self.$scope.sharedState.workgroup.id);
-		});
-	}
-
-	getTermName (term) {
-		return this.termService.getTermName(term);
-	}
-
-	download () {
-		this.teachingCallResponseReportService.download($scope.workgroupId, $scope.year);
+		this.getPayload();
 	}
 
 	getPayload () {
-		var self = this;
-		return self.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
-			return self.teachingCallResponseReportActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year);
+		var _self = this;
+		return _self.authService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
+			return _self.TeachingCallResponseReportActionCreators.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year);
 		});
 	}
 }
