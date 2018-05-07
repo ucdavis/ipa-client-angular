@@ -52,13 +52,13 @@
 			<tbody ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
 				<!-- Summary row -->
 				<tr ng-if="$first" class="course-totals-row">
-					<td class="instructor-cost-summary__center">
+					<td class="instructor-cost-summary__text">
 						Totals
 					</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-					<td class="instructor-cost-summary__center">
+					<td class="instructor-cost-summary__text">
 						<div class="instructor-costs__cost-container">
 							<ipa-input value="toCurrency(summary.byTerm[termNav.activeTerm].replacementCosts.overall)"
 							           label-read-only="true">
@@ -67,7 +67,7 @@
 					</td>
 					<!-- Comments -->
 					<td>&nbsp;</td>
-					<td class="instructor-costs__total-cost--right">
+					<td class="instructor-cost-summary__text instructor-cost-summary__text--total">
 						{{ toCurrency(summary.byTerm[termNav.activeTerm].totalCosts) }}
 					</td>
 				</tr>

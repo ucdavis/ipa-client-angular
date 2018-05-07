@@ -100,13 +100,14 @@
 	margin-bottom: 2px;
 }
 
-.instructor-cost-summary__center {
+.instructor-cost-summary__text {
+	padding-top: 15px;
 	text-align: center;
 }
 
-.instructor-costs__total-cost--right {
+.instructor-cost-summary__text--total {
 	text-align: right;
-	padding-right: 25px;
+	padding-right: 26px;
 }
 
 .instructor-costs__header--total-cost {
