@@ -17,7 +17,7 @@ input[type=number].ipa-input::-webkit-outer-spin-button {
 	padding: 5px;
 }
 
-.ipa-input:not(.ipa-input--read-only):hover {
+.ipa-input:not(.ipa-input--read-only):not(.ipa-input--label-read-only):hover {
 	border-color: #b9b9b9;
 	border-top-color: #a0a0a0;
 	box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
@@ -35,4 +35,10 @@ input[type=number].ipa-input::-webkit-outer-spin-button {
 .ipa-input.ipa-input--read-only:focus {
 	border: 1px solid #d9d9d9;
 	border-top-color: #c0c0c0;
+}
+
+.ipa-input--label-read-only,
+.ipa-input--label-read-only:hover,
+.ipa-input--label-read-only:focus {
+	border-color: rgba(0,0,0,0);
 }

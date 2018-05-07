@@ -355,7 +355,6 @@ budgetApp.service('budgetActions', function ($rootScope, $window, budgetService,
 					budgetReducers.reduce(action);
 					budgetCalculations.calculateSectionGroups();
 					budgetCalculations.calculateTotalCost();
-
 					newInstructorCost.instructorTypeId = instructorTypeId;
 
 					self.asignInstructorType(newInstructorCost);

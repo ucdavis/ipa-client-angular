@@ -104,7 +104,7 @@
 				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('assignments')">
 					<i class="entypo-user-add"></i>
-					<span class="title">Assignments</span>
+					<span class="title">Instructors</span>
 				</a>
 				<ul ng-class="{ 'visible': expanded == 'assignments' || (!expanded && (currentBaseHref == 'assignments' || currentBaseHref == 'teachingCalls')) }">
 					<li ng-class="{ 'active': currentBaseHref == 'assignments' && currentEndHref != 'teachingCallStatus' }"
@@ -125,14 +125,7 @@
 			<li ng-class="{ 'active': currentBaseHref == 'scheduling' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
 				<a ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}">
 					<i class="entypo-calendar"></i>
-					<span class="title">Scheduling</span>
-				</a>
-			</li>
-
-			<li ng-class="{ 'active': currentBaseHref == 'budget' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
-				<a ng-href="/budget/{{ workgroupId }}/{{ year }}">
-					<i class="entypo-chart-pie"></i>
-					<span class="title">Budget</span>
+					<span class="title">Schedule</span>
 				</a>
 			</li>
 
@@ -140,7 +133,7 @@
 				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('support')">
 					<i class="entypo-users"></i>
-					<span class="title">Support</span>
+					<span class="title">TAs & Readers</span>
 				</a>
 				<ul ng-class="{ 'visible': expanded == 'support' || (!expanded && (currentBaseHref == 'supportCalls' || currentBaseHref == 'supportAssignments')) }">
 					<li ng-class="{ 'active': currentBaseHref == 'supportAssignments' && currentEndHref.length == 2}">
@@ -156,6 +149,15 @@
 				</ul>
 			</li>
 
+			<li ng-class="{ 'active': currentBaseHref == 'budget' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
+				<a ng-href="/budget/{{ workgroupId }}/{{ year }}">
+					<i class="entypo-chart-pie"></i>
+					<span class="title">Budget</span>
+				</a>
+			</li>
+		</ul>
+
+		<ul id="main-menu" class="main-menu">
 			<li ng-class="{ 'active': currentBaseHref == 'scheduleSummaryReport' || currentBaseHref == 'registrarReconciliationReport' || currentBaseHref == 'teachingCallResponseReport', 'opened': expanded == 'reports'}"
 				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('reports')">

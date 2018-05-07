@@ -5,9 +5,9 @@
 		ng-model="value"
 		ng-blur="onBlur()"
 		placeholder="{{placeHolder}}"
-		ng-readonly="readOnly"
+		ng-readonly="readOnly || labelReadOnly"
 		ng-keyup="updateInput()"
-		ng-class="{'ipa-input--read-only': readOnly }">
+		ng-class="{'ipa-input--read-only': readOnly, 'ipa-input--label-read-only': labelReadOnly }">
 
 	<input class="ipa-input"
 		ng-show="mode == 'currency'"
@@ -15,7 +15,7 @@
 		ng-model="value"
 		ng-blur="onBlur()"
 		placeholder="{{placeHolder}}"
-		ng-readonly="readOnly"
+		ng-readonly="readOnly || labelReadOnly"
 		ng-keyup="updateInput()"
-		ng-class="{'ipa-input--read-only': readOnly }">
+		ng-class="{'ipa-input--read-only': readOnly, 'ipa-input--label-read-only': labelReadOnly }">
 </div>

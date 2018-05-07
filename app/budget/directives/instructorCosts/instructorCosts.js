@@ -7,7 +7,8 @@ budgetApp.directive("instructorCosts", this.instructorCosts = function ($rootSco
 			instructorAssignmentOptions: '<',
 			regularInstructorAssignmentOptions: '<',
 			termNav: '<',
-			calculatedSectionGroups: '<'
+			calculatedSectionGroups: '<',
+			summary: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.toggleCourseCostsSection = function() {

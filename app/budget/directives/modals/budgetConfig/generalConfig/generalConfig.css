@@ -3,7 +3,7 @@
 }
 
 .general-config__term {
-	width: 25%;
+	width: 100%;
 	margin-bottom: 5px;
 }
 
@@ -16,4 +16,13 @@
 
 .general-config__term-info {
 	padding-left: 5px;
+}
+
+/*
+Shared component ipaToggle style override.
+Might want to add it as a proper customization if the need arises again
+*/
+.general-config .ipa-toggle {
+	display: flex;
+	justify-content: center;
 }

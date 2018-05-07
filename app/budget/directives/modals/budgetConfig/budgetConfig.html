@@ -1,24 +1,6 @@
 <div class="budget-config">
 	<div class="budget-config__container">
-		<ipa-tabs tab-names="view.allTabs"
-			active-tab="view.activeTab"
-			select-tab="setActiveTab"
-			border-less="true"
-			slim="true"
-			container-class="'budget-config__main-content'">
-			<general-config selected-budget-scenario="selectedBudgetScenario"
-				ng-show="view.activeTab == 'General'">
-			</general-config>
-
-			<group-cost-config ng-show="view.activeTab == 'Group Cost'"
-				state="state">
-			</group-cost-config>
-
-			<instructor-cost-config ng-show="view.activeTab == 'Instructor Cost'"
-			                        instructors="state.calculatedInstructors"
-			                        instructor-types="state.calculatedInstructorTypes">
-			</instructor-cost-config>
-		</ipa-tabs>
+		<general-config selected-budget-scenario="selectedBudgetScenario"></general-config>
 	</div>
 
 	<div class="budget-config__footer">
