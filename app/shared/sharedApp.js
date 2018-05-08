@@ -133,6 +133,8 @@ sharedApp
 		reviewer: 10,
 		instructor: 15,
 		academicPlanner: 2,
-		presence: 9
+		presence: 9,
+		studentPhd: 13,
+		studentMasters: 12,
 	});
 	

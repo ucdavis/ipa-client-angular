@@ -194,6 +194,10 @@ workgroupApp.service('workgroupActionCreators', function (workgroupStateService,
 		},
 		createUser: function (workgroupId, dwUser, roleId) {
 			var self = this;
+			if (roleId == -1) {
+				roleId = Roles.studentPhd;
+			}
+
 			var role = new Role({ name: workgroupStateService._state.roles.list[roleId].name });
 
 			var existingUser = this._userPresent(dwUser);
