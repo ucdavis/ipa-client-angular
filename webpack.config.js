@@ -169,7 +169,9 @@ module.exports = {
         './node_modules/underscore/underscore-min.js',
         './node_modules/moment/min/moment.min.js',
         './app/shared/helpers/*.js',
-        'course/constants.js'
+        'course/constants.js',
+        './node_modules/fullcalendar/dist/fullcalendar.js',
+        './node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js'
       ],
     }),
     // Production Snippets from various 3rd party services

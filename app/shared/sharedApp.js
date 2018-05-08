@@ -3,8 +3,6 @@ import 'ng-idle/angular-idle.js';
 import 'angular-sanitize/angular-sanitize.js';
 import 'angular-route/angular-route.min.js';
 import toastr from 'toastr/build/toastr.min.js';
-import 'bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js';
-import 'fullcalendar/dist/fullcalendar.js';
 import 'selectize/dist/js/standalone/selectize.js';
 import 'angular-selectize2/dist/angular-selectize.js';
 import 'ui-select/dist/select.js';
