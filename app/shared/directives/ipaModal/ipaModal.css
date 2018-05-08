@@ -41,7 +41,8 @@
 
 .ipa-modal .ipa-modal-content {
 	background-color: white;
-	height: 100%;
+	overflow-y: auto;
+	height: 80vh;
 }
 
 .ipa-modal .ipa-modal-dismiss-ui {
