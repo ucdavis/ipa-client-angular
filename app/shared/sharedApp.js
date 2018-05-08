@@ -309,7 +309,9 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 	reviewer: 10,
 	instructor: 15,
 	academicPlanner: 2,
-	presence: 9
+	presence: 9,
+	studentPhd: 13,
+	studentMasters: 12,
 })
 
 .config(tokenValidatorInterceptor)

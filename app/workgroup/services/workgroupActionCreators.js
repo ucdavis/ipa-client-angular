@@ -203,15 +203,18 @@ class WorkgroupActionCreators {
 			},
 			createUser: function (workgroupId, dwUser, roleId) {
 				var self = this;
+				if (roleId == -1) {
+					roleId = Roles.studentPhd;
+				}
 				var role = new Role({ name: WorkgroupStateService._state.roles.list[roleId].name });
-	
+
 				var existingUser = this._userPresent(dwUser);
 				if (!existingUser) {
 					WorkgroupStateService.reduce({
 						type: ActionTypes.ADD_USER_PENDING,
 						payload: {}
 					});
-	
+
 					WorkgroupService.createUser(workgroupId, dwUser).then(function (newUser) {
 						var action = {
 							type: ActionTypes.ADD_USER_COMPLETED,
