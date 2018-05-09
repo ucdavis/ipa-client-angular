@@ -3,10 +3,10 @@ class WorkloadSummaryService {
 		var _self = this;
 		this.ApiService = ApiService;
 		return {
-			getInitialState: function (workgroupId, year, termCode) {
-				return _self.ApiService.get("/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + termCode);
+			getCourses: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/courses");
 			},
-			downloadWorkloadSummary: function (workgroupId, year, shortTermCode) {
+			downloadWorkloadSummary: function (workgroupId, year) {
 				var deferred = $q.defer();
 	
 				$http.get(serverRoot + "/api/workloadSummaryReport/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })

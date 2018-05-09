@@ -42,6 +42,14 @@ class WorkloadSummaryStateService {
 						return teachingAssignments;
 				}
 			},
+			_calculationReducers: function (action, calculations) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return action.payload.calculations;
+					default:
+						return calculations;
+				}
+			},
 			reduce: function (action) {
 				var scope = this;
 
@@ -63,6 +71,6 @@ class WorkloadSummaryStateService {
 	}
 }
 
-ScheduleSummaryReportStateService.$inject = ['$rootScope', 'ActionTypes'];
+WorkloadSummaryStateService.$inject = ['$rootScope', 'ActionTypes'];
 
 export default WorkloadSummaryStateService;
