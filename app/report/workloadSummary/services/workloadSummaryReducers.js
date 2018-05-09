@@ -18,6 +18,14 @@ class WorkloadSummaryStateService {
 						return instructors;
 				}
 			},
+			_instructorTypeReducers: function (action, instructorTypes) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return action.payload.instructorTypes;
+					default:
+						return instructorTypes;
+				}
+			},
 			_courseReducers: function (action, courses) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -26,12 +34,12 @@ class WorkloadSummaryStateService {
 						return courses;
 				}
 			},
-			_calculationReducers: function (action, calculations) {
+			_teachingAssignmentReducers: function (action, teachingAssignments) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
-						return action.payload.courses;
+						return action.payload.teachingAssignments;
 					default:
-						return courses;
+						return teachingAssignments;
 				}
 			},
 			reduce: function (action) {
@@ -41,6 +49,8 @@ class WorkloadSummaryStateService {
 				newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 				newState.courses = scope._courseReducers(action, scope._state.courses);
 				newState.instructors = scope._instructorReducers(action, scope._state.instructors);
+				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
+				newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
 				newState.calculations = scope._calculationReducers(action, scope._state.calculations);
 
 				scope._state = newState;
