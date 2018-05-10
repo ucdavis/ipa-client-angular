@@ -14,14 +14,28 @@ class WorkloadSummaryActions {
 				this._getInstructors(workgroupId, year);
 				this._getTeachingAssignments(workgroupId, year);
 				this._getSectionGroups(workgroupId, year);
+				this._getUsers(workgroupId, year);
+				this._getUserRoles(workgroupId, year);
+
 			},
 			_getCourses: function (workgroupId, year) {
 				var _self = this;
-				WorkloadSummaryService.getCourses(workgroupId, year).then(function (payload) {
+
+				WorkloadSummaryService.getCourses(workgroupId, year).then(function (rawCourses) {
+					let courses = {
+						ids: [],
+						list: {}
+					};
+
+					rawCourses.forEach(function(course) {
+						courses.ids.push(course.id);
+						courses.list[course.id] = course;
+					});
+
 					WorkloadSummaryReducers.reduce({
 						type: ActionTypes.GET_COURSES,
 						payload: {
-							courses: payload
+							courses: courses
 						}
 					});
 
@@ -32,11 +46,22 @@ class WorkloadSummaryActions {
 			},
 			_getUsers: function (workgroupId, year) {
 				var _self = this;
-				WorkloadSummaryService.getUsers(workgroupId, year).then(function (payload) {
+
+				WorkloadSummaryService.getUsers(workgroupId, year).then(function (rawUsers) {
+					let users = {
+						ids: [],
+						list: {}
+					};
+
+					rawUsers.forEach(function(user) {
+						users.ids.push(user.id);
+						users.list[user.id] = user;
+					});
+
 					WorkloadSummaryReducers.reduce({
 						type: ActionTypes.GET_USERS,
 						payload: {
-							courses: payload
+							users: users
 						}
 					});
 
@@ -47,11 +72,22 @@ class WorkloadSummaryActions {
 			},
 			_getUserRoles: function (workgroupId, year) {
 				var _self = this;
-				WorkloadSummaryService.getUserRoles(workgroupId, year).then(function (payload) {
+
+				WorkloadSummaryService.getUserRoles(workgroupId, year).then(function (rawUserRoles) {
+					let userRoles = {
+						ids: [],
+						list: {}
+					};
+
+					rawUserRoles.forEach(function(userRole) {
+						userRoles.ids.push(userRole.id);
+						userRoles.list[userRole.id] = userRole;
+					});
+
 					WorkloadSummaryReducers.reduce({
 						type: ActionTypes.GET_USER_ROLES,
 						payload: {
-							courses: payload
+							userRoles: userRoles
 						}
 					});
 
@@ -63,11 +99,21 @@ class WorkloadSummaryActions {
 			_getInstructorTypes: function (workgroupId, year) {
 				var _self = this;
 
-				WorkloadSummaryService.getInstructorTypes(workgroupId, year).then(function (payload) {
+				WorkloadSummaryService.getInstructorTypes(workgroupId, year).then(function (rawInstructorTypes) {
+					let instructorTypes = {
+						ids: [],
+						list: {}
+					};
+
+					rawInstructorTypes.forEach(function(instructorType) {
+						instructorTypes.ids.push(instructorType.id);
+						instructorTypes.list[instructorType.id] = instructorType;
+					});
+
 					WorkloadSummaryReducers.reduce({
 						type: ActionTypes.GET_INSTRUCTOR_TYPES,
 						payload: {
-							instructorTypes: payload
+							instructorTypes: instructorTypes
 						}
 					});
 
@@ -79,11 +125,21 @@ class WorkloadSummaryActions {
 			_getInstructors: function (workgroupId, year) {
 				var _self = this;
 
-				WorkloadSummaryService.getInstructors(workgroupId, year).then(function (payload) {
+				WorkloadSummaryService.getInstructors(workgroupId, year).then(function (rawInstructors) {
+					let instructors = {
+						ids: [],
+						list: {}
+					};
+
+					rawInstructors.forEach(function(instructor) {
+						instructors.ids.push(instructor.id);
+						instructors.list[instructor.id] = instructor;
+					});
+
 					WorkloadSummaryReducers.reduce({
 						type: ActionTypes.GET_INSTRUCTORS,
 						payload: {
-							instructors: payload
+							instructors: instructors
 						}
 					});
 
@@ -95,11 +151,21 @@ class WorkloadSummaryActions {
 			_getTeachingAssignments: function (workgroupId, year) {
 				var _self = this;
 
-				WorkloadSummaryService.getTeachingAssignments(workgroupId, year).then(function (payload) {
+				WorkloadSummaryService.getTeachingAssignments(workgroupId, year).then(function (rawTeachingAssignments) {
+					let teachingAssignments = {
+						ids: [],
+						list: {}
+					};
+
+					rawTeachingAssignments.forEach(function(teachingAssignment) {
+						teachingAssignments.ids.push(teachingAssignment.id);
+						teachingAssignments.list[teachingAssignment.id] = teachingAssignment;
+					});
+
 					WorkloadSummaryReducers.reduce({
 						type: ActionTypes.GET_TEACHING_ASSIGNMENTS,
 						payload: {
-							teachingAssignments: payload
+							teachingAssignments: teachingAssignments
 						}
 					});
 
@@ -111,11 +177,21 @@ class WorkloadSummaryActions {
 			_getSectionGroups: function (workgroupId, year) {
 				var _self = this;
 
-				WorkloadSummaryService.getSectionGroups(workgroupId, year).then(function (payload) {
+				WorkloadSummaryService.getSectionGroups(workgroupId, year).then(function (rawSectionGroups) {
+					let sectionGroups = {
+						ids: [],
+						list: {}
+					};
+
+					rawSectionGroups.forEach(function(sectionGroup) {
+						sectionGroups.ids.push(sectionGroup.id);
+						sectionGroups.list[sectionGroup.id] = sectionGroup;
+					});
+
 					WorkloadSummaryReducers.reduce({
 						type: ActionTypes.GET_SECTION_GROUPS,
 						payload: {
-							sectionGroups: payload
+							sectionGroups: sectionGroups
 						}
 					});
 
@@ -126,6 +202,10 @@ class WorkloadSummaryActions {
 			},
 			_performCalculations: function () {
 				this._isInitialFetchComplete();
+
+				if (WorkloadSummaryReducers._state.calculations.isInitialFetchComplete) {
+					this._calculateView();
+				}
 			},
 			_isInitialFetchComplete: function () {
 				var sectionGroups = WorkloadSummaryReducers._state.sectionGroups;
@@ -146,6 +226,8 @@ class WorkloadSummaryActions {
 				}
 			},
 			_calculateView: function () {
+				var _self = this;
+
 				var sectionGroups = WorkloadSummaryReducers._state.sectionGroups;
 				var courses = WorkloadSummaryReducers._state.courses;
 				var teachingAssignments = WorkloadSummaryReducers._state.teachingAssignments;
@@ -161,16 +243,15 @@ class WorkloadSummaryActions {
 
 				instructors.ids.forEach(function(instructorId) {
 					var instructor = instructors.list[instructorId];
-					var instructorTypeId = _self._getInstructorType(instructor, teachingAssignments, userRoles);
+					var instructorTypeId = _self._getInstructorTypeId(instructor);
 
 					if (calculatedView.instructorTypeIds.indexOf(instructorTypeId) == -1) {
 						calculatedView.instructorTypeIds.push(instructorTypeId);
 						calculatedView.byInstructorType[instructorTypeId] = [];
 					}
 
-					var instructorAssignments = _getInstructorAssignments(instructorId, sectionGroups);
+					var instructorAssignments = _self._getInstructorAssignments(instructorId, sectionGroups);
 					debugger;
-
 					// Find quarter
 					// Find course (subj/num) (or non-sectionGroup assignment type)
 
@@ -184,8 +265,12 @@ class WorkloadSummaryActions {
 					calculatedView.byInstructorType[instructorTypeId].push(instructor);
 				});
 			},
-			_getInstructorTypeId: function (instructor, teachingAssignments, userRoles) {
-				var user = _getUserByLoginId(loginId);
+			_getInstructorTypeId: function (instructor) {
+				var teachingAssignments = WorkloadSummaryReducers._state.teachingAssignments;
+				var users = WorkloadSummaryReducers._state.users;
+				var userRoles = WorkloadSummaryReducers._state.userRoles;
+
+				var user = this._getUserByLoginId(instructor.loginId, users);
 
 				// Attempt to find via userRole
 				for (var i = 0; i < userRoles.ids.length; i++) {

@@ -81,6 +81,8 @@ class WorkloadSummaryStateService {
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 				newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
 				newState.calculations = scope._calculationReducers(action, scope._state.calculations);
+				newState.users = scope._userReducers(action, scope._state.users);
+				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
 
 				scope._state = newState;
 				$rootScope.$emit('workloadSummaryStateChanged', {

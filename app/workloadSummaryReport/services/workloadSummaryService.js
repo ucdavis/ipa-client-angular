@@ -18,6 +18,12 @@ class WorkloadSummaryService {
 			getSectionGroups: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/sectionGroups");
 			},
+			getUsers: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/users");
+			},
+			getUserRoles: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/userRoles");
+			},
 			downloadWorkloadSummary: function (workgroupId, year) {
 				var deferred = $q.defer();
 	
