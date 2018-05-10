@@ -48,7 +48,14 @@ const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", depe
 .service('ApiService', ApiService)
 .config(config)
 .constant('ActionTypes', {
-	INIT_STATE: "INIT_STATE"
+	GET_COURSES: "GET_COURSES",
+	GET_TEACHING_ASSIGNMENTS: "GET_TEACHING_ASSIGNMENTS",
+	GET_INSTRUCTORS: "GET_INSTRUCTORS",
+	GET_INSTRUCTOR_TYPES: "GET_INSTRUCTOR_TYPES",
+	GET_SECTION_GROUPS: "GET_SECTION_GROUPS",
+	GET_USERS: "GET_USERS",
+	GET_USER_ROLES: "GET_USER_ROLES",
+	GET_CALCULATIONS: "GET_CALCULATIONS"
 });
 
 export default workloadSummaryReportApp;

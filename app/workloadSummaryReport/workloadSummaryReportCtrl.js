@@ -14,6 +14,7 @@ class WorkloadSummaryReportCtrl {
 
 		$rootScope.$on('workloadSummaryStateChanged', function (event, data) {
 			$scope.view.state = data;
+			console.log($scope.view.state);
 		});
 
 		AuthService.validate(localStorage.getItem('JWT'), $scope.workgroupId, $scope.year).then(function() {

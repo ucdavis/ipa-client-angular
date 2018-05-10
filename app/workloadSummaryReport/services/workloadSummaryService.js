@@ -6,6 +6,18 @@ class WorkloadSummaryService {
 			getCourses: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/courses");
 			},
+			getInstructorTypes: function (workgroupId, year) {
+				return _self.ApiService.get("/api/instructorTypes");
+			},
+			getInstructors: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/instructors");
+			},
+			getTeachingAssignments: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/teachingAssignments");
+			},
+			getSectionGroups: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/sectionGroups");
+			},
 			downloadWorkloadSummary: function (workgroupId, year) {
 				var deferred = $q.defer();
 	
