@@ -1,7 +1,6 @@
 // Directives
-import workloadSummary from './directives/workloadSummary/workloadSummary.js';
-import workloadTable from './directives/workloadSummary/workloadTable/workloadTable.js';
-import workloadHeader from './directives/workloadSummary/workloadHeader/workloadHeader.js';
+import workloadTable from './directives/workloadTable/workloadTable.js';
+import workloadHeader from './directives/workloadHeader/workloadHeader.js';
 
 // Services
 import WorkloadSummaryActions from './services/WorkloadSummaryActions.js';
@@ -40,7 +39,6 @@ config.$inject = ['$routeProvider'];
 
 // App declaration
 const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", dependencies)
-.directive('workloadSummary', workloadSummary)
 .directive('workloadHeader', workloadHeader)
 .directive('workloadTable', workloadTable)
 .controller('WorkloadSummaryReportCtrl', WorkloadSummaryReportCtrl)
