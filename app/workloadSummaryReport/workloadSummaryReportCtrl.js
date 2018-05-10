@@ -13,7 +13,7 @@ class WorkloadSummaryReportCtrl {
 		$scope.view = {};
 
 		$rootScope.$on('workloadSummaryStateChanged', function (event, data) {
-			$scope.view.state = data;
+			$scope.view.state = data.state;
 			console.log($scope.view.state);
 		});
 

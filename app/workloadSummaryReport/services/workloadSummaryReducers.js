@@ -66,7 +66,10 @@ class WorkloadSummaryStateService {
 				switch (action.type) {
 					case ActionTypes.INITIAL_FETCH_COMPLETE:
 						calculations.isInitialFetchComplete = action.payload.isInitialFetchComplete;
-					return calculations;
+						return calculations;
+					case ActionTypes.CALCULATE_VIEW:
+						calculations.calculatedView = action.payload.calculatedView;
+						return calculations;
 					default:
 						return calculations;
 				}

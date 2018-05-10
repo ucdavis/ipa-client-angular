@@ -1,5 +1,5 @@
 class WorkloadSummaryActions {
-	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles) {
+	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService) {
 		this.WorkloadSummaryReducers = WorkloadSummaryReducers;
 		this.WorkloadSummaryService = WorkloadSummaryService;
 		this.$rootScope = $rootScope;
@@ -250,20 +250,66 @@ class WorkloadSummaryActions {
 						calculatedView.byInstructorType[instructorTypeId] = [];
 					}
 
-					var instructorAssignments = _self._getInstructorAssignments(instructorId, sectionGroups);
-					debugger;
-					// Find quarter
-					// Find course (subj/num) (or non-sectionGroup assignment type)
+					instructor.assignments = [];
 
-					// If sectionGroup based, also find:
-					// Find sequence pattern
-					// Find Enrollment
-					// Find previous enrollment 
-					// Find units
-					// Find SCH
+					var instructorAssignments = _self._getInstructorAssignments(instructorId, teachingAssignments);
+
+					instructorAssignments.forEach(function(teachingAssignment) {
+						var assignment = {};
+
+						var termCode = teachingAssignment.termCode;
+
+						assignment.term = TermService.getTermName(termCode);
+
+						assignment.description = null;
+
+						if (assignment.buyout) {
+							assignment.description = "Buyout";
+						} else if (assignment.courseRelease) {
+							assignment.description = "Course Release";
+						} else if (assignment.sabbatical) {
+							assignment.description = "Sabbatical";
+						} else if (assignment.inResidence) {
+							assignment.description = "In Residence";
+						} else if (assignment.workLifeBalance) {
+							assignment.description = "Work Life Balance";
+						} else if (assignment.leaveOfAbsence) {
+							assignment.description = "Leave of Absence";
+						}
+
+						if (teachingAssignment.sectionGroupId > 0) {
+							var sectionGroup = sectionGroups.list[teachingAssignment.sectionGroupId];
+							var course = courses.list[sectionGroup.courseId];
+
+							assignment.description = course.subjectCode + " " + course.courseNumber;
+							assignment.sequencePattern = course.sequencePattern;
+							assignment.enrollment = sectionGroup.plannedSeats;
+							assignment.previousEnrollment = null;
+							assignment.units = _self._getUnits(course);
+							assignment.studentCreditHours = assignment.enrollment * assignment.units;
+						}
+
+						instructor.assignments.push(assignment);
+					});
 
 					calculatedView.byInstructorType[instructorTypeId].push(instructor);
 				});
+
+				WorkloadSummaryReducers.reduce({
+					type: ActionTypes.CALCULATE_VIEW,
+					payload: {
+						calculatedView: calculatedView
+					}
+				});
+			},
+			_getUnits: function (course) {
+				if (course.unitsLow > 0) {
+					return course.unitsLow;
+				} else if (course.unitsHigh > 0) {
+					return course.unitsHigh;
+				}
+
+				return 0;
 			},
 			_getInstructorTypeId: function (instructor) {
 				var teachingAssignments = WorkloadSummaryReducers._state.teachingAssignments;
@@ -320,6 +366,6 @@ class WorkloadSummaryActions {
 	}
 }
 
-WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles'];
+WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService'];
 
 export default WorkloadSummaryActions;

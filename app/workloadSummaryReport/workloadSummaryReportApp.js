@@ -8,9 +8,7 @@ import WorkloadSummaryReducers from './services/WorkloadSummaryReducers.js';
 import WorkloadSummaryService from './services/WorkloadSummaryService.js';
 
 // Shared services
-import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
-import AuthService from './../shared/services/AuthService.js';
 
 // Controllers
 import WorkloadSummaryReportCtrl from './workloadSummaryReportCtrl.js';
@@ -45,7 +43,7 @@ const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", depe
 .service('WorkloadSummaryActions', WorkloadSummaryActions)
 .service('WorkloadSummaryReducers', WorkloadSummaryReducers)
 .service('WorkloadSummaryService', WorkloadSummaryService)
-.service('ApiService', ApiService)
+.service('TermService', TermService)
 .config(config)
 .constant('ActionTypes', {
 	GET_COURSES: "GET_COURSES",
@@ -55,7 +53,8 @@ const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", depe
 	GET_SECTION_GROUPS: "GET_SECTION_GROUPS",
 	GET_USERS: "GET_USERS",
 	GET_USER_ROLES: "GET_USER_ROLES",
-	GET_CALCULATIONS: "GET_CALCULATIONS"
+	GET_CALCULATIONS: "GET_CALCULATIONS",
+	CALCULATE_VIEW: "CALCULATE_VIEW"
 });
 
 export default workloadSummaryReportApp;

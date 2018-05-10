@@ -5,7 +5,9 @@ let workloadTable = function () {
 		restrict: 'E',
 		template: require('./workloadTable.html'),
 		replace: true,
-		scope: {},
+		scope: {
+			instructors: '<'
+		},
 		link: function(scope, element, attrs) {
 			// Intentionally blank
 		}
