@@ -16,7 +16,7 @@ class WorkloadSummaryActions {
 				this._getSectionGroups(workgroupId, year);
 				this._getUsers(workgroupId, year);
 				this._getUserRoles(workgroupId, year);
-
+				this._getSections(workgroupId, year);
 			},
 			_getCourses: function (workgroupId, year) {
 				var _self = this;
@@ -36,6 +36,32 @@ class WorkloadSummaryActions {
 						type: ActionTypes.GET_COURSES,
 						payload: {
 							courses: courses
+						}
+					});
+
+					_self._performCalculations();
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+				});
+			},
+			_getSections: function (workgroupId, year) {
+				var _self = this;
+
+				WorkloadSummaryService.getSections(workgroupId, year).then(function (rawSections) {
+					let sections = {
+						ids: [],
+						list: {}
+					};
+
+					rawSections.forEach(function(section) {
+						sections.ids.push(section.id);
+						sections.list[section.id] = section;
+					});
+
+					WorkloadSummaryReducers.reduce({
+						type: ActionTypes.GET_SECTIONS,
+						payload: {
+							sections: sections
 						}
 					});
 
@@ -215,8 +241,9 @@ class WorkloadSummaryActions {
 				var instructorTypes = WorkloadSummaryReducers._state.instructorTypes;
 				var users = WorkloadSummaryReducers._state.users;
 				var userRoles = WorkloadSummaryReducers._state.userRoles;
+				var sections = WorkloadSummaryReducers._state.sections;
 
-				if (sectionGroups && courses && teachingAssignments && instructors && instructorTypes && users && userRoles) {
+				if (sectionGroups && courses && teachingAssignments && instructors && instructorTypes && users && userRoles && sections) {
 					WorkloadSummaryReducers.reduce({
 						type: ActionTypes.INITIAL_FETCH_COMPLETE,
 						payload: {

@@ -54,6 +54,7 @@ const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", depe
 	GET_USERS: "GET_USERS",
 	GET_USER_ROLES: "GET_USER_ROLES",
 	GET_CALCULATIONS: "GET_CALCULATIONS",
+	GET_SECTIONS: "GET_SECTIONS",
 	CALCULATE_VIEW: "CALCULATE_VIEW"
 });
 

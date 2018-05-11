@@ -58,6 +58,14 @@ class WorkloadSummaryStateService {
 						return teachingAssignments;
 				}
 			},
+			_sectionReducers: function (action, sections) {
+				switch (action.type) {
+					case ActionTypes.GET_SECTIONS:
+						return sections || action.payload.sections;
+					default:
+						return sections;
+				}
+			},
 			_calculationReducers: function (action, calculations) {
 				calculations = calculations || {
 					isInitialFetchComplete: false
@@ -79,6 +87,7 @@ class WorkloadSummaryStateService {
 
 				let newState = {};
 				newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
+				newState.sections = scope._sectionReducers(action, scope._state.sections);
 				newState.courses = scope._courseReducers(action, scope._state.courses);
 				newState.instructors = scope._instructorReducers(action, scope._state.instructors);
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
