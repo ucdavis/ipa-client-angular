@@ -263,17 +263,17 @@ class WorkloadSummaryActions {
 
 						assignment.description = null;
 
-						if (assignment.buyout) {
+						if (teachingAssignment.buyout) {
 							assignment.description = "Buyout";
-						} else if (assignment.courseRelease) {
+						} else if (teachingAssignment.courseRelease) {
 							assignment.description = "Course Release";
-						} else if (assignment.sabbatical) {
+						} else if (teachingAssignment.sabbatical) {
 							assignment.description = "Sabbatical";
-						} else if (assignment.inResidence) {
+						} else if (teachingAssignment.inResidence) {
 							assignment.description = "In Residence";
-						} else if (assignment.workLifeBalance) {
+						} else if (teachingAssignment.workLifeBalance) {
 							assignment.description = "Work Life Balance";
-						} else if (assignment.leaveOfAbsence) {
+						} else if (teachingAssignment.leaveOfAbsence) {
 							assignment.description = "Leave of Absence";
 						}
 
