@@ -13,69 +13,69 @@
 			</colgroup>
 			<tbody>
 				<tr>
-					<td>
+					<td class="workload-table__header-cell workload-table__cell-first">
 						Instructor
 					</td>
-					<td>
-						Term
+					<td class="workload-table__header-cell">
+							Term
 					</td>
-					<td>
-						Description
+					<td class="workload-table__header-cell">
+							Description
 					</td>
-					<td>
-						Offering
+					<td class="workload-table__header-cell">
+							Offering
 					</td>
-					<td>
-						Enrollment
+					<td class="workload-table__header-cell">
+							Enrollment
 					</td>
-					<td>
-						Previous Enrollment
+					<td class="workload-table__header-cell">
+							Previous Enrollment
 					</td>
-					<td>
-						Units
+					<td class="workload-table__header-cell">
+							Units
 					</td>
-					<td>
-						SCH
+					<td class="workload-table__header-cell workload-table__cell-last">
+							SCH
 					</td>
 				</tr>
 				<tr ng-repeat="instructor in instructors">
 					<td>
-						<div class="workload-table__cell">
+						<div class="workload-table__cell workload-table__cell-first workload-table__cell-last-row">
 							{{ instructor.fullName }}
 						</div>
 					</td>
 					<td>
-						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments" ng-class="{'workload-table__cell-last-row': $last }">
 							{{ assignment.term }} &nbsp;
 						</div>
 					</td>
 					<td>
-						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments" ng-class="{'workload-table__cell-last-row': $last }">
 							{{ assignment.description }} &nbsp;
 						</div>
 					</td>
 					<td>
-						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments" ng-class="{'workload-table__cell-last-row': $last }">
 							{{ assignment.offering }} &nbsp;
 						</div>
 					</td>
 					<td>
-						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments" ng-class="{'workload-table__cell-last-row': $last }">
 							{{ assignment.enrollment }} &nbsp;
 						</div>
 					</td>
 					<td>
-						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments" ng-class="{'workload-table__cell-last-row': $last }">
 							{{ assignment.previousEnrollment }} &nbsp;
 						</div>
 					</td>
 					<td>
-						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments" ng-class="{'workload-table__cell-last-row': $last }">
 							{{ assignment.units }} &nbsp;
 						</div>
 					</td>
 					<td>
-						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+						<div class="workload-table__value workload-table__cell-last" ng-repeat="assignment in instructor.assignments" ng-class="{'workload-table__cell-last-row': $last }">
 							{{ assignment.studentCreditHours }} &nbsp;
 						</div>
 					</td>
