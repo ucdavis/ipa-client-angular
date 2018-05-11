@@ -20,7 +20,6 @@ class WorkloadSummaryReportCtrl {
 		AuthService.validate(localStorage.getItem('JWT'), $scope.workgroupId, $scope.year).then(function() {
 			WorkloadSummaryActions.getInitialState($scope.workgroupId, $scope.year);
 		});
-
 	}
 }
 

@@ -67,12 +67,13 @@ class WorkloadSummaryStateService {
 				}
 			},
 			_calculationReducers: function (action, calculations) {
-				calculations = calculations || {
-					isInitialFetchComplete: false,
-					censusDataFetchBegun: false
-				};
-
 				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						calculations = {
+							isInitialFetchComplete: false,
+							censusDataFetchBegun: false
+						};
+						return calculations;
 					case ActionTypes.INITIAL_FETCH_COMPLETE:
 						calculations.isInitialFetchComplete = action.payload.isInitialFetchComplete;
 						return calculations;

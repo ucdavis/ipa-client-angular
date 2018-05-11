@@ -10,6 +10,11 @@ class WorkloadSummaryActions {
 		return {
 			getInitialState: function (workgroupId, year) {
 				var _self = this;
+				WorkloadSummaryReducers._state = {};
+				WorkloadSummaryReducers.reduce({
+					type: ActionTypes.INIT_STATE,
+					payload: {}
+				});
 
 				this._getCourses(workgroupId, year);
 				this._getInstructorTypes(workgroupId, year);

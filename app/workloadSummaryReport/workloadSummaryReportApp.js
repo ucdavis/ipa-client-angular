@@ -46,6 +46,7 @@ const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", depe
 .service('DwService', DwService)
 .config(config)
 .constant('ActionTypes', {
+	INIT_STATE: "INIT_STATE",
 	GET_COURSES: "GET_COURSES",
 	GET_TEACHING_ASSIGNMENTS: "GET_TEACHING_ASSIGNMENTS",
 	GET_INSTRUCTORS: "GET_INSTRUCTORS",
