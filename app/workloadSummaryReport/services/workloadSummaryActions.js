@@ -1,9 +1,11 @@
 class WorkloadSummaryActions {
-	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService) {
+	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService) {
 		this.WorkloadSummaryReducers = WorkloadSummaryReducers;
 		this.WorkloadSummaryService = WorkloadSummaryService;
 		this.$rootScope = $rootScope;
 		this.ActionTypes = ActionTypes;
+		this.TermService = TermService;
+		this.DwService = DwService;
 
 		return {
 			getInitialState: function (workgroupId, year) {
@@ -229,6 +231,10 @@ class WorkloadSummaryActions {
 			_performCalculations: function () {
 				this._isInitialFetchComplete();
 
+				if (WorkloadSummaryReducers._state.calculations.isInitialFetchComplete && WorkloadSummaryReducers._state.calculations.censusDataFetchBegun == false) {
+					this._getEnrollmentData();
+				}
+
 				if (WorkloadSummaryReducers._state.calculations.isInitialFetchComplete) {
 					this._calculateView();
 				}
@@ -317,7 +323,16 @@ class WorkloadSummaryActions {
 
 							assignment.description = course.subjectCode + " " + course.courseNumber;
 							assignment.sequencePattern = course.sequencePattern;
-							assignment.enrollment = sectionGroup.plannedSeats;
+
+							if (sectionGroup.actualEnrollment > 0) {
+								assignment.enrollment = sectionGroup.actualEnrollment ;
+							} else if (sectionGroup.maxEnrollment > 0) {
+								assignment.enrollment = sectionGroup.maxEnrollment;
+							} else {
+								assignment.enrollment = sectionGroup.plannedSeats;
+							}
+
+							
 							assignment.previousEnrollment = null;
 							assignment.units = _self._getUnits(course);
 							assignment.studentCreditHours = assignment.enrollment * assignment.units;
@@ -401,11 +416,104 @@ class WorkloadSummaryActions {
 				});
 
 				return instructorAssignments;
+			},
+			_getEnrollmentData: function(year, termCode) {
+				var _self = this;
+
+				WorkloadSummaryReducers.reduce({
+					type: ActionTypes.BEGIN_CENSUS_DATA_FETCH,
+					payload: {
+						censusDataFetchBegun: true
+					}
+				});
+
+				var SNAPSHOT_CODE = "CURRENT";
+				var termCodes = this._getScheduleTermCodes();
+				var subjectCodes = this._getScheduleSubjectCodes();
+
+				termCodes.forEach(function(termCode) {
+					subjectCodes.forEach(function(subjectCode) {
+						DwService.getDwCensusData(subjectCode, null, termCode).then(function(censusSections) {
+							censusSections.forEach(function(censusSection) {
+								if (censusSection.snapshotCode == SNAPSHOT_CODE) {
+									var censusSectionGroupKey = censusSection.subjectCode + censusSection.courseNumber + sequenceNumberToPattern(censusSection.sequenceNumber) + censusSection.termCode;
+
+									WorkloadSummaryReducers._state.sectionGroups.ids.forEach(function(sectionGroupId) {
+										var sectionGroup = WorkloadSummaryReducers._state.sectionGroups.list[sectionGroupId];
+										var course = WorkloadSummaryReducers._state.courses.list[sectionGroup.courseId];
+										var sectionGroupUniqueKey = course.subjectCode + course.courseNumber + course.sequencePattern + sectionGroup.termCode;
+
+										sectionGroup.maxEnrollment = sectionGroup.maxEnrollment || 0;
+										sectionGroup.actualEnrollment = sectionGroup.actualEnrollment || 0;
+
+										if (sectionGroupUniqueKey == censusSectionGroupKey) {
+											_self._getSectionsForSectionGroup(sectionGroup).forEach(function(section) {
+												sectionGroup.maxEnrollment += section.seats;
+
+												if (section.sequenceNumber == censusSection.sequenceNumber) {
+													sectionGroup.actualEnrollment += censusSection.currentEnrolledCount;
+												}
+											});
+										}
+									});
+								}
+							});
+
+							_self._performCalculations();
+						}, function (err) {
+							$rootScope.$emit('toast', { message: "Could not retrieve enrollment data.", type: "ERROR" });
+						});
+					});
+				});
+			},
+			_getScheduleSubjectCodes: function() {
+				var subjectCodes = [];
+				var sectionGroups = WorkloadSummaryReducers._state.sectionGroups;
+				var courses = WorkloadSummaryReducers._state.courses;
+
+				sectionGroups.ids.forEach(function(sectionGroupId) {
+					var sectionGroup = sectionGroups.list[sectionGroupId];
+					var subjectCode = courses.list[sectionGroup.courseId].subjectCode;
+
+					if (subjectCodes.indexOf(subjectCode) == -1) {
+						subjectCodes.push(subjectCode);
+					}
+				});
+
+				return subjectCodes;
+			},
+			_getScheduleTermCodes: function() {
+				var termCodes = [];
+
+				var sectionGroups = WorkloadSummaryReducers._state.sectionGroups;
+
+				sectionGroups.ids.forEach(function(sectionGroupId) {
+					var termCode = sectionGroups.list[sectionGroupId].termCode;
+					if (termCodes.indexOf(termCode) == -1) {
+						termCodes.push(termCode);
+					}
+				});
+
+				return termCodes;
+			},
+			_getSectionsForSectionGroup: function (sectionGroup) {
+				var sectionGroups = WorkloadSummaryReducers._state.sectionGroups;
+				var sections = WorkloadSummaryReducers._state.sections;
+
+				var matchingSections = [];
+				sections.ids.forEach(function(sectionId) {
+					var section = sections.list[sectionId];
+					if (section.sectionGroupId == sectionGroup.id) {
+						matchingSections.push(section);
+					}
+				});
+
+				return matchingSections;
 			}
 		};
 	}
 }
 
-WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService'];
+WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService'];
 
 export default WorkloadSummaryActions;

@@ -1,6 +1,5 @@
 // Directives
 import workloadTable from './directives/workloadTable/workloadTable.js';
-import workloadHeader from './directives/workloadHeader/workloadHeader.js';
 
 // Services
 import WorkloadSummaryActions from './services/WorkloadSummaryActions.js';
@@ -9,6 +8,7 @@ import WorkloadSummaryService from './services/WorkloadSummaryService.js';
 
 // Shared services
 import TermService from './../shared/services/TermService.js';
+import DwService from './../shared/services/DwService.js';
 
 // Controllers
 import WorkloadSummaryReportCtrl from './workloadSummaryReportCtrl.js';
@@ -37,13 +37,13 @@ config.$inject = ['$routeProvider'];
 
 // App declaration
 const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", dependencies)
-.directive('workloadHeader', workloadHeader)
 .directive('workloadTable', workloadTable)
 .controller('WorkloadSummaryReportCtrl', WorkloadSummaryReportCtrl)
 .service('WorkloadSummaryActions', WorkloadSummaryActions)
 .service('WorkloadSummaryReducers', WorkloadSummaryReducers)
 .service('WorkloadSummaryService', WorkloadSummaryService)
 .service('TermService', TermService)
+.service('DwService', DwService)
 .config(config)
 .constant('ActionTypes', {
 	GET_COURSES: "GET_COURSES",
@@ -55,7 +55,9 @@ const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", depe
 	GET_USER_ROLES: "GET_USER_ROLES",
 	GET_CALCULATIONS: "GET_CALCULATIONS",
 	GET_SECTIONS: "GET_SECTIONS",
-	CALCULATE_VIEW: "CALCULATE_VIEW"
+	CALCULATE_VIEW: "CALCULATE_VIEW",
+	BEGIN_CENSUS_DATA_FETCH: "BEGIN_CENSUS_DATA_FETCH",
+	INITIAL_FETCH_COMPLETE: "INITIAL_FETCH_COMPLETE"
 });
 
 export default workloadSummaryReportApp;
