@@ -251,6 +251,13 @@ class WorkloadSummaryActions {
 					}
 
 					instructor.assignments = [];
+					instructor.totals = {
+						units: 0,
+						studentCreditHours: 0,
+						enrollment: 0,
+						previousEnrollment: 0,
+						assignmentCount: 0
+					};
 
 					var instructorAssignments = _self._getInstructorAssignments(instructorId, teachingAssignments);
 
@@ -290,6 +297,12 @@ class WorkloadSummaryActions {
 						}
 
 						instructor.assignments.push(assignment);
+
+						instructor.totals.units += assignment.units || 0;
+						instructor.totals.studentCreditHours += assignment.studentCreditHours || 0;
+						instructor.totals.enrollment += assignment.enrollment || 0;
+						instructor.totals.previousEnrollment += assignment.previousEnrollment || 0;
+						instructor.totals.assignmentCount += 1;
 					});
 
 					calculatedView.byInstructorType[instructorTypeId].push(instructor);

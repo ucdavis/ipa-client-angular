@@ -53,3 +53,12 @@
 .workload-table__last {
 	padding-bottom: 30px;
 }
+
+.workload-table__totals-cell {
+	border-top: 1px solid #979797;
+	border-bottom: 1px solid #ddd;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	font-weight: bold;
+}
