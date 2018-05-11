@@ -355,6 +355,8 @@ class WorkloadSummaryActions {
 					calculatedView.byInstructorType[instructorTypeId].push(instructor);
 				});
 
+				calculatedView.instructorTypeIds = _self._orderInstructorTypeIdsAlphabetically(calculatedView.instructorTypeIds);
+
 				WorkloadSummaryReducers.reduce({
 					type: ActionTypes.CALCULATE_VIEW,
 					payload: {
@@ -514,6 +516,18 @@ class WorkloadSummaryActions {
 				});
 
 				return matchingSections;
+			},
+			_orderInstructorTypeIdsAlphabetically: function (instructorTypeIds) {
+				var alphabeticalOrder = [3, 5, 1, 7, 6, 8, 4, 2];
+				var reorderedTypeIds = [];
+
+				alphabeticalOrder.forEach(function(id) {
+					if (instructorTypeIds.indexOf(id) > -1) {
+						reorderedTypeIds.push(id);
+					}
+				});
+
+				return reorderedTypeIds;
 			}
 		};
 	}
