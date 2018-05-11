@@ -238,6 +238,7 @@ class WorkloadSummaryActions {
 
 				if (WorkloadSummaryReducers._state.calculations.isInitialFetchComplete && WorkloadSummaryReducers._state.calculations.censusDataFetchBegun == false) {
 					this._getEnrollmentData();
+					this._getEnrollmentData(true);
 				}
 
 				if (WorkloadSummaryReducers._state.calculations.isInitialFetchComplete) {
@@ -338,7 +339,7 @@ class WorkloadSummaryActions {
 							}
 
 							
-							assignment.previousEnrollment = null;
+							assignment.previousEnrollment = 0;
 							assignment.units = _self._getUnits(course);
 							assignment.studentCreditHours = assignment.enrollment * assignment.units;
 						}
@@ -424,7 +425,7 @@ class WorkloadSummaryActions {
 
 				return instructorAssignments;
 			},
-			_getEnrollmentData: function(year) {
+			_getEnrollmentData: function(isPreviousYear) {
 				var _self = this;
 
 				WorkloadSummaryReducers.reduce({
@@ -443,22 +444,29 @@ class WorkloadSummaryActions {
 						DwService.getDwCensusData(subjectCode, null, termCode).then(function(censusSections) {
 							censusSections.forEach(function(censusSection) {
 								if (censusSection.snapshotCode == SNAPSHOT_CODE) {
-									var censusSectionGroupKey = censusSection.subjectCode + censusSection.courseNumber + sequenceNumberToPattern(censusSection.sequenceNumber) + censusSection.termCode;
+									var censusSectionGroupKey = censusSection.subjectCode + censusSection.courseNumber + sequenceNumberToPattern(censusSection.sequenceNumber) + TermService.termCodeToTerm(censusSection.termCode);
 
 									WorkloadSummaryReducers._state.sectionGroups.ids.forEach(function(sectionGroupId) {
 										var sectionGroup = WorkloadSummaryReducers._state.sectionGroups.list[sectionGroupId];
 										var course = WorkloadSummaryReducers._state.courses.list[sectionGroup.courseId];
-										var sectionGroupUniqueKey = course.subjectCode + course.courseNumber + course.sequencePattern + sectionGroup.termCode;
+										var sectionGroupUniqueKey = course.subjectCode + course.courseNumber + course.sequencePattern + TermService.termCodeToTerm(sectionGroup.termCode);
 
 										sectionGroup.maxEnrollment = sectionGroup.maxEnrollment || 0;
 										sectionGroup.actualEnrollment = sectionGroup.actualEnrollment || 0;
+										sectionGroup.previousEnrollment = sectionGroup.previousEnrollment || 0;
 
 										if (sectionGroupUniqueKey == censusSectionGroupKey) {
 											_self._getSectionsForSectionGroup(sectionGroup).forEach(function(section) {
-												sectionGroup.maxEnrollment += section.seats;
+												if (isPreviousYear) {
+													if (section.sequenceNumber == censusSection.sequenceNumber) {
+														sectionGroup.previousEnrollment += censusSection.currentEnrolledCount;
+													}
+												} else {
+													sectionGroup.maxEnrollment += section.seats;
 
-												if (section.sequenceNumber == censusSection.sequenceNumber) {
-													sectionGroup.actualEnrollment += censusSection.currentEnrolledCount;
+													if (section.sequenceNumber == censusSection.sequenceNumber) {
+														sectionGroup.actualEnrollment += censusSection.currentEnrolledCount;
+													}
 												}
 											});
 										}
