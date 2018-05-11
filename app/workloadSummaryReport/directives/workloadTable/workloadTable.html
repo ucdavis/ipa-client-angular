@@ -1,6 +1,86 @@
-<div>
-
-	<div style="border: 1px solid black;" ng-repeat="instructor in instructors">
-		{{ instructor }}
+<div class="workload-table">
+	<div class="workload-table__container">
+		<table class="workload-table__table">
+			<colgroup>
+				<col style="width: 16%;">
+				<col style="width: 16%;">
+				<col style="width: 16%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+			</colgroup>
+			<tbody>
+				<tr>
+					<td>
+						Instructor
+					</td>
+					<td>
+						Term
+					</td>
+					<td>
+						Description
+					</td>
+					<td>
+						Offering
+					</td>
+					<td>
+						Enrollment
+					</td>
+					<td>
+						Previous Enrollment
+					</td>
+					<td>
+						Units
+					</td>
+					<td>
+						SCH
+					</td>
+				</tr>
+				<tr ng-repeat="instructor in instructors">
+					<td>
+						<div class="workload-table__cell">
+							{{ instructor.fullName }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+							{{ assignment.term }} &nbsp;
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+							{{ assignment.description }} &nbsp;
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+							{{ assignment.offering }} &nbsp;
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+							{{ assignment.enrollment }} &nbsp;
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+							{{ assignment.previousEnrollment }} &nbsp;
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+							{{ assignment.units }} &nbsp;
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+							{{ assignment.studentCreditHours }} &nbsp;
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>

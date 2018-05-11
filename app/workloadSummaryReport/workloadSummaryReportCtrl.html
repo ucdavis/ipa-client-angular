@@ -4,6 +4,7 @@
 
 <div ng-if="view.state">
 	<div ng-repeat="instructorTypeId in view.state.calculations.calculatedView.instructorTypeIds">
+		<div>{{ view.state.instructorTypes.list[instructorTypeId].description }} </div>
 		<workload-table instructors="view.state.calculations.calculatedView.byInstructorType[instructorTypeId]"></workload-table>
 	</div>
 </div>

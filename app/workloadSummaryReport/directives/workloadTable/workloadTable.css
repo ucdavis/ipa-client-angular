@@ -1,0 +1,22 @@
+.workload-table__table {
+	width: 100%;
+}
+
+.workload-table__container {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.workload-table__value {
+	padding: 5px;
+}
+
+/* Hack to allow the div inside the td to utilize height: 100%. */
+/* The td of 1px is a specified height, but will immediately automatically grow to fit the contents of the div */
+.workload-table td {
+	height: 1px;
+}
+
+.workload-table__cell {
+	height: 100%;
+}
