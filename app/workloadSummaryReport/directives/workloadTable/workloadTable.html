@@ -48,7 +48,7 @@
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
 							{{ assignment.term }} &nbsp;
 						</div>
-						<div class="workload-table__totals-cell">
+						<div class="workload-table__totals-cell" ng-class="{'workload-table__totals-cell-bar': instructor.assignments.length > 0 }">
 							Totals
 						</div>
 					</td>
@@ -56,7 +56,7 @@
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
 							{{ assignment.description }} &nbsp;
 						</div>
-						<div class="workload-table__totals-cell">
+						<div class="workload-table__totals-cell" ng-class="{'workload-table__totals-cell-bar': instructor.assignments.length > 0 }">
 							{{ instructor.totals.assignmentCount }}
 						</div>
 					</td>
@@ -64,7 +64,7 @@
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
 							{{ assignment.sequencePattern }} &nbsp;
 						</div>
-						<div class="workload-table__totals-cell">
+						<div class="workload-table__totals-cell" ng-class="{'workload-table__totals-cell-bar': instructor.assignments.length > 0 }">
 							&nbsp;
 						</div>
 					</td>
@@ -72,7 +72,7 @@
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
 							{{ assignment.enrollment }} &nbsp;
 						</div>
-						<div class="workload-table__totals-cell">
+						<div class="workload-table__totals-cell" ng-class="{'workload-table__totals-cell-bar': instructor.assignments.length > 0 }">
 							{{ instructor.totals.enrollment }}
 						</div>
 					</td>
@@ -80,7 +80,7 @@
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
 							{{ assignment.previousEnrollment }} &nbsp;
 						</div>
-						<div class="workload-table__totals-cell">
+						<div class="workload-table__totals-cell" ng-class="{'workload-table__totals-cell-bar': instructor.assignments.length > 0 }">
 							{{ instructor.totals.previousEnrollment }}
 						</div>
 					</td>
@@ -88,7 +88,7 @@
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
 							{{ assignment.units }} &nbsp;
 						</div>
-						<div class="workload-table__totals-cell">
+						<div class="workload-table__totals-cell" ng-class="{'workload-table__totals-cell-bar': instructor.assignments.length > 0 }">
 							{{ instructor.totals.units }}
 						</div>
 					</td>
@@ -96,7 +96,7 @@
 						<div class="workload-table__value workload-table__cell-last" ng-repeat="assignment in instructor.assignments">
 							{{ assignment.studentCreditHours }} &nbsp;
 						</div>
-						<div class="workload-table__totals-cell workload-table__cell-last">
+						<div class="workload-table__totals-cell workload-table__cell-last" ng-class="{'workload-table__totals-cell-bar': instructor.assignments.length > 0 }">
 							{{ instructor.totals.studentCreditHours }}
 						</div>
 					</td>

@@ -417,7 +417,7 @@ class WorkloadSummaryActions {
 
 				return instructorAssignments;
 			},
-			_getEnrollmentData: function(year, termCode) {
+			_getEnrollmentData: function(year) {
 				var _self = this;
 
 				WorkloadSummaryReducers.reduce({
