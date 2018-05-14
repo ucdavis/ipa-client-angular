@@ -34,6 +34,9 @@ function config ($routeProvider) {
 	.when("/:workgroupId/:year", {
 		template: require('./SummaryCtrl.html'),
 		controller: "SummaryCtrl",
+		resolve: {
+			authenticate: SummaryCtrl.authenticate
+		},
 		reloadOnSearch: false
 	})
 	.when("/", {
