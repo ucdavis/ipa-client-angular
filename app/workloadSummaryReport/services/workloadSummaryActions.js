@@ -234,6 +234,7 @@ class WorkloadSummaryActions {
 				});
 			},
 			_performCalculations: function () {
+				console.log("calculating!");
 				this._isInitialFetchComplete();
 
 				if (WorkloadSummaryReducers._state.calculations.isInitialFetchComplete && WorkloadSummaryReducers._state.calculations.censusDataFetchBegun == false) {
@@ -426,6 +427,7 @@ class WorkloadSummaryActions {
 				return instructorAssignments;
 			},
 			_getEnrollmentData: function(isPreviousYear) {
+				console.log("started getEnrollmentData: " + isPreviousYear);
 				var _self = this;
 
 				WorkloadSummaryReducers.reduce({
@@ -439,8 +441,8 @@ class WorkloadSummaryActions {
 				var termCodes = this._getScheduleTermCodes();
 				var subjectCodes = this._getScheduleSubjectCodes();
 
-				termCodes.forEach(function(termCode) {
-					subjectCodes.forEach(function(subjectCode) {
+				termCodes.forEach(function(termCode, termCodeIndex) {
+					subjectCodes.forEach(function(subjectCode, subjectCodeIndex) {
 						DwService.getDwCensusData(subjectCode, null, termCode).then(function(censusSections) {
 							censusSections.forEach(function(censusSection) {
 								if (censusSection.snapshotCode == SNAPSHOT_CODE) {
@@ -468,13 +470,16 @@ class WorkloadSummaryActions {
 														sectionGroup.actualEnrollment += censusSection.currentEnrolledCount;
 													}
 												}
+												console.log("sectionGroup modified");
 											});
 										}
 									});
 								}
 							});
 
-							_self._performCalculations();
+							if ( (termCodeIndex == (termCodes.length - 1)) && (subjectCodeIndex == (subjectCodes.length - 1)) ) {
+								_self._performCalculations();
+							}
 						}, function (err) {
 							$rootScope.$emit('toast', { message: "Could not retrieve enrollment data.", type: "ERROR" });
 						});
