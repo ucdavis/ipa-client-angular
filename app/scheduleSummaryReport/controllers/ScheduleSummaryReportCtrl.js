@@ -98,20 +98,21 @@ class ScheduleSummaryReportCtrl {
 		var _self = this;
 
 		return _self.AuthService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
-
-			var termShortCode = _self.$route.current.params.termShortCode;
-	
-			if (!termShortCode) {
-				var termStates = AuthService.getTermStates();
-				var termShortCode = _self.calculateCurrentTermShortCode(termStates);
+			if (_self.$route.current.params.workgroupId && _self.$route.current.params.year) {
+				var termShortCode = _self.$route.current.params.termShortCode;
+		
+				if (!termShortCode) {
+					var termStates = AuthService.getTermStates();
+					var termShortCode = _self.calculateCurrentTermShortCode(termStates);
+				}
+		
+				var term = _self.Term.prototype.getTermByTermShortCodeAndYear(termShortCode, _self.$route.current.params.year);
+				return _self.ScheduleSummaryReportActionCreators.getInitialState(
+					_self.$route.current.params.workgroupId,
+					_self.$route.current.params.year,
+					term.code
+				);
 			}
-	
-			var term = _self.Term.prototype.getTermByTermShortCodeAndYear(termShortCode, _self.$route.current.params.year);
-			return _self.ScheduleSummaryReportActionCreators.getInitialState(
-				_self.$route.current.params.workgroupId,
-				_self.$route.current.params.year,
-				term.code
-			);
 		});
 	}
 }

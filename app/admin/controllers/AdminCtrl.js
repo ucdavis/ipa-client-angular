@@ -51,8 +51,11 @@ class AdminCtrl {
 	getPayload () {
 		var self = this;
 		var ignoreFallBackUrl = true;
+
 		return self.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year, ignoreFallBackUrl).then(function () {
-			return self.adminActionCreators.getInitialState();
+			if (self.$route.current.params.workgroupId && self.$route.current.params.year) {
+				return self.adminActionCreators.getInitialState();
+			}
 		});
 	}
 }

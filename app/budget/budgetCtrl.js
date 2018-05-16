@@ -47,15 +47,17 @@ class BudgetCtrl {
 	}
 
 	getPayload () {
-		var here = this;
-	return here.AuthService.validate(localStorage.getItem('JWT'), here.$route.current.params.workgroupId, here.$route.current.params.year).then(function () {
+		var self = this;
+	return self.AuthService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
 			var selectedBudgetScenarioId = parseInt(localStorage.getItem('selectedBudgetScenarioId')) || null;
-	
-			here.BudgetActions.getInitialState(
-				here.$route.current.params.workgroupId,
-				here.$route.current.params.year,
-				selectedBudgetScenarioId,
-				localStorage.getItem('selectedTerm'));
+
+			if (self.$route.current.params.workgroupId && self.$route.current.params.year) {
+				self.BudgetActions.getInitialState(
+					self.$route.current.params.workgroupId,
+					self.$route.current.params.year,
+					selectedBudgetScenarioId,
+					localStorage.getItem('selectedTerm'));
+			}
 		});
 	
 	}

@@ -26,19 +26,21 @@ class registrarReconciliationReportCtrl {
 
 		return this.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
 
-			var termShortCode = self.$route.current.params.termShortCode;
-	
-			if (!termShortCode) {
-				var termStates = authService.getTermStates();
-				var termShortCode = calculateCurrentTermShortCode(termStates);
+			if (self.$route.current.params.workgroupId && self.$route.current.params.year) {
+				var termShortCode = self.$route.current.params.termShortCode;
+		
+				if (!termShortCode) {
+					var termStates = authService.getTermStates();
+					var termShortCode = calculateCurrentTermShortCode(termStates);
+				}
+		
+				var term = self.Term.prototype.getTermByTermShortCodeAndYear(termShortCode, self.$route.current.params.year);
+				return self.registrarReconciliationReportActionCreators.getInitialState(
+					self.$route.current.params.workgroupId,
+					self.$route.current.params.year,
+					term.code
+				);
 			}
-	
-			var term = self.Term.prototype.getTermByTermShortCodeAndYear(termShortCode, self.$route.current.params.year);
-			return self.registrarReconciliationReportActionCreators.getInitialState(
-				self.$route.current.params.workgroupId,
-				self.$route.current.params.year,
-				term.code
-			);
 		});	
 	}
 

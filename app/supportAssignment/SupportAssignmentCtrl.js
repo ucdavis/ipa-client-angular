@@ -199,13 +199,15 @@ class SupportAssignmentCtrl {
 	}
 
 	getPayload () {
-		var here = this;
+		var _self = this;
 	// Validate params
-	if (!(here.$route.current.params.workgroupId) || !(here.$route.current.params.year)) {
-		here.$window.location.href = "/summary/";
+	if (!(_self.$route.current.params.workgroupId) || !(_self.$route.current.params.year)) {
+		_self.$window.location.href = "/summary/";
 	} else {
-		return here.AuthService.validate(localStorage.getItem('JWT'), here.$route.current.params.workgroupId, here.$route.current.params.year).then(function () {
-			here.SupportActions.getInitialState(here.$route.current.params.workgroupId, here.$route.current.params.year, here.$route.current.params.termShortCode, here.$route.current.params.tab);
+		return _self.AuthService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
+			if (_self.$route.current.params.workgroupId && _self.$route.current.params.year) {
+				_self.SupportActions.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year, _self.$route.current.params.termShortCode, _self.$route.current.params.tab);
+			}
 		});
 	}
 

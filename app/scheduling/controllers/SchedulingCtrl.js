@@ -297,11 +297,13 @@ class SchedulingCtrl {
 	getPayload () {
 		var self = this;
 		return self.AuthService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
-			var term = self.Term.prototype.getTermByTermShortCodeAndYear(self.$route.current.params.termShortCode, self.$route.current.params.year);
-			return self.SchedulingActionCreators.getInitialState(
-				self.$route.current.params.workgroupId,
-				self.$route.current.params.year,
-				term.code);
+			if (self.$route.current.params.workgroupId && self.$route.current.params.year) {
+				var term = self.Term.prototype.getTermByTermShortCodeAndYear(self.$route.current.params.termShortCode, self.$route.current.params.year);
+				return self.SchedulingActionCreators.getInitialState(
+					self.$route.current.params.workgroupId,
+					self.$route.current.params.year,
+					term.code);
+			}
 		});
 	}
 }

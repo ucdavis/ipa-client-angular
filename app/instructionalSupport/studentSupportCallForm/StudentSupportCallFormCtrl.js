@@ -100,11 +100,13 @@ class StudentSupportCallFormCtrl {
 	getPayload () {
 		var _self = this;
 		this.AuthService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
-			// validate params
-			if (_self.$route.current.params.year.length != 4 || _self.$route.current.params.termShortCode.length != 2) {
-				_self.$window.location.href = "/summary/" + _self.$route.current.params.workgroupId + "/" + _self.$route.current.params.year + "?mode=instructionalSupport";
-			} else {
-				_self.StudentFormActions.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year, _self.$route.current.params.termShortCode);
+			if (_self.$route.current.params.workgroupId && _self.$route.current.params.year) {
+				// validate params
+				if (_self.$route.current.params.year.length != 4 || _self.$route.current.params.termShortCode.length != 2) {
+					_self.$window.location.href = "/summary/" + _self.$route.current.params.workgroupId + "/" + _self.$route.current.params.year + "?mode=instructionalSupport";
+				} else {
+					_self.StudentFormActions.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year, _self.$route.current.params.termShortCode);
+				}
 			}
 		});
 	}

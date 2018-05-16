@@ -30,7 +30,7 @@ class AuthService {
 						localStorage.removeItem('currentUser');
 						$window.location.href = response.data.redirect + "?ref=" + $location.absUrl();
 
-						deferred.reject();
+						deferred.resolve();
 					}
 				}, function (error) {
 					var message;
@@ -179,7 +179,7 @@ class AuthService {
 						if (scope.validateState(response.data, workgroupId, year, ignoreFallBackUrl)) {
 							deferred.resolve();
 						} else {
-							deferred.reject();
+							deferred.resolve();
 						}
 					},
 					// Failure

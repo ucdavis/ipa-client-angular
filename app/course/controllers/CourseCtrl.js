@@ -404,7 +404,9 @@ class CourseCtrl {
 	getPayload () {
 		var self = this;
 		return this.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
-			return self.courseActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year);
+			if (self.$route.current.params.workgroupId && self.$route.current.params.year) {
+				return self.courseActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year);
+			}
 		});
 	}
 }

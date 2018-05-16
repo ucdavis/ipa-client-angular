@@ -52,7 +52,9 @@ class WorkgroupCtrl {
 		}
 
 		AuthService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-			WorkgroupActionCreators.getInitialState($route.current.params.workgroupId);
+			if ($route.current.params.workgroupId && $route.current.params.year) {
+				WorkgroupActionCreators.getInitialState($route.current.params.workgroupId);
+			}
 		});
 	}
 }

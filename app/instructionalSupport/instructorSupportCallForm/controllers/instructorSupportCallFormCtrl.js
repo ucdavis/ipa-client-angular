@@ -110,9 +110,10 @@ class InstructorSupportCallFormCtrl {
 	getPayload() {
 		var _self = this;
 		return this.AuthService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
-			_self.InstructorFormActions.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year, _self.$route.current.params.termShortCode);
+			if (_self.$route.current.params.workgroupId && _self.$route.current.params.year) {
+				_self.InstructorFormActions.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year, _self.$route.current.params.termShortCode);
+			}
 		});
-	
 	}
 }
 

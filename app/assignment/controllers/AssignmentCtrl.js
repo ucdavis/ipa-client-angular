@@ -169,7 +169,9 @@ class AssignmentCtrl {
 		var self = this;
 
 		return this.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
-			self.assignmentActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year, self.$route.current.params.tab);
+			if (self.$route.current.params.workgroupId && self.$route.current.params.year) {
+				self.assignmentActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year, self.$route.current.params.tab);
+			}
 		});
 	}
 }

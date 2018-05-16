@@ -36,7 +36,9 @@ class TeachingCallResponseReportCtrl {
 	getPayload () {
 		var _self = this;
 		return _self.authService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
+			if (_self.$route.current.params.workgroupId && _self.$route.current.params.year) {
 			return _self.TeachingCallResponseReportActionCreators.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year);
+			}
 		});
 	}
 }
