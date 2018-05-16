@@ -234,7 +234,6 @@ class WorkloadSummaryActions {
 				});
 			},
 			_performCalculations: function () {
-				console.log("calculating!");
 				this._isInitialFetchComplete();
 
 				if (WorkloadSummaryReducers._state.calculations.isInitialFetchComplete && WorkloadSummaryReducers._state.calculations.censusDataFetchBegun == false) {
@@ -330,17 +329,8 @@ class WorkloadSummaryActions {
 
 							assignment.description = course.subjectCode + " " + course.courseNumber;
 							assignment.sequencePattern = course.sequencePattern;
-
-							if (sectionGroup.actualEnrollment > 0) {
-								assignment.enrollment = sectionGroup.actualEnrollment ;
-							} else if (sectionGroup.maxEnrollment > 0) {
-								assignment.enrollment = sectionGroup.maxEnrollment;
-							} else {
-								assignment.enrollment = sectionGroup.plannedSeats;
-							}
-
-							
-							assignment.previousEnrollment = 0;
+							assignment.enrollment = _self._getEnrollment(sectionGroup);
+							assignment.previousEnrollment = sectionGroup.previousEnrollment;
 							assignment.units = _self._getUnits(course);
 							assignment.studentCreditHours = assignment.enrollment * assignment.units;
 						}
@@ -374,6 +364,16 @@ class WorkloadSummaryActions {
 				}
 
 				return 0;
+			},
+			// Return actual (census), seats, or plannedSeats for the enrollment number, depending on what is available
+			_getEnrollment: function (sectionGroup) {
+				if (sectionGroup.actualEnrollment > 0) {
+					return sectionGroup.actualEnrollment ;
+				} else if (sectionGroup.maxEnrollment > 0) {
+					return sectionGroup.maxEnrollment;
+				} else {
+					return sectionGroup.plannedSeats;
+				}
 			},
 			_getInstructorTypeId: function (instructor) {
 				var teachingAssignments = WorkloadSummaryReducers._state.teachingAssignments;
@@ -427,7 +427,6 @@ class WorkloadSummaryActions {
 				return instructorAssignments;
 			},
 			_getEnrollmentData: function(isPreviousYear) {
-				console.log("started getEnrollmentData: " + isPreviousYear);
 				var _self = this;
 
 				WorkloadSummaryReducers.reduce({
@@ -438,11 +437,15 @@ class WorkloadSummaryActions {
 				});
 
 				var SNAPSHOT_CODE = "CURRENT";
-				var termCodes = this._getScheduleTermCodes();
+				var termCodes = this._getScheduleTermCodes(isPreviousYear);
 				var subjectCodes = this._getScheduleSubjectCodes();
+				var openCalls = WorkloadSummaryReducers._state.calculations.dwCallsOpened;
+				var completedCalls = WorkloadSummaryReducers._state.calculations.dwCallsCompleted;
 
-				termCodes.forEach(function(termCode, termCodeIndex) {
-					subjectCodes.forEach(function(subjectCode, subjectCodeIndex) {
+				termCodes.forEach(function(termCode) {
+					subjectCodes.forEach(function(subjectCode) {
+						openCalls += 1;
+
 						DwService.getDwCensusData(subjectCode, null, termCode).then(function(censusSections) {
 							censusSections.forEach(function(censusSection) {
 								if (censusSection.snapshotCode == SNAPSHOT_CODE) {
@@ -458,26 +461,23 @@ class WorkloadSummaryActions {
 										sectionGroup.previousEnrollment = sectionGroup.previousEnrollment || 0;
 
 										if (sectionGroupUniqueKey == censusSectionGroupKey) {
-											_self._getSectionsForSectionGroup(sectionGroup).forEach(function(section) {
-												if (isPreviousYear) {
-													if (section.sequenceNumber == censusSection.sequenceNumber) {
-														sectionGroup.previousEnrollment += censusSection.currentEnrolledCount;
-													}
-												} else {
-													sectionGroup.maxEnrollment += section.seats;
+											if (isPreviousYear) {
+												sectionGroup.previousEnrollment += censusSection.currentEnrolledCount;
+											} else {
+												sectionGroup.actualEnrollment += censusSection.currentEnrolledCount;
 
-													if (section.sequenceNumber == censusSection.sequenceNumber) {
-														sectionGroup.actualEnrollment += censusSection.currentEnrolledCount;
-													}
-												}
-												console.log("sectionGroup modified");
-											});
+												_self._getSectionsForSectionGroup(sectionGroup).forEach(function(section) {
+													sectionGroup.maxEnrollment += section.seats;
+												});
+											}
 										}
 									});
 								}
 							});
 
-							if ( (termCodeIndex == (termCodes.length - 1)) && (subjectCodeIndex == (subjectCodes.length - 1)) ) {
+							completedCalls += 1;
+
+							if (openCalls == completedCalls) {
 								_self._performCalculations();
 							}
 						}, function (err) {
@@ -502,15 +502,26 @@ class WorkloadSummaryActions {
 
 				return subjectCodes;
 			},
-			_getScheduleTermCodes: function() {
+			_getScheduleTermCodes: function(isPreviousYear) {
 				var termCodes = [];
 
 				var sectionGroups = WorkloadSummaryReducers._state.sectionGroups;
 
 				sectionGroups.ids.forEach(function(sectionGroupId) {
 					var termCode = sectionGroups.list[sectionGroupId].termCode;
-					if (termCodes.indexOf(termCode) == -1) {
-						termCodes.push(termCode);
+
+					// Get the previous year's termCode instead
+					if (isPreviousYear) {
+						var year = parseInt(termCode.substring(0,4)) - 1;
+						var term = termCode.substring(4,6);
+						var previousYearTermCode = year + term;
+						if (termCodes.indexOf(previousYearTermCode) == -1) {
+							termCodes.push(previousYearTermCode);
+						}
+					} else {
+						if (termCodes.indexOf(termCode) == -1) {
+							termCodes.push(termCode);
+						}
 					}
 				});
 

@@ -71,7 +71,9 @@ class WorkloadSummaryStateService {
 					case ActionTypes.INIT_STATE:
 						calculations = {
 							isInitialFetchComplete: false,
-							censusDataFetchBegun: false
+							censusDataFetchBegun: false,
+							dwCallsOpened: 0,
+							dwCallsCompleted: 0
 						};
 						return calculations;
 					case ActionTypes.INITIAL_FETCH_COMPLETE:

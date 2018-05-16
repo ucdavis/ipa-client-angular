@@ -14,11 +14,12 @@ class WorkloadSummaryReportCtrl {
 
 		$rootScope.$on('workloadSummaryStateChanged', function (event, data) {
 			$scope.view.state = data.state;
-			console.log($scope.view.state);
 		});
 
 		AuthService.validate(localStorage.getItem('JWT'), $scope.workgroupId, $scope.year).then(function() {
-			WorkloadSummaryActions.getInitialState($scope.workgroupId, $scope.year);
+			if ($scope.workgroupId && $scope.year) {
+				WorkloadSummaryActions.getInitialState($scope.workgroupId, $scope.year);
+			}
 		});
 	}
 }
