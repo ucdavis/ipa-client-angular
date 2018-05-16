@@ -36,7 +36,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param property
 			 */
 			updateSection: function (section, property, uniqueKey) {
-				reportService.updateSection(section).then(function (updatedSection) {
+				RegistrarReconciliationReportService.updateSection(section).then(function (updatedSection) {
 					$rootScope.$emit('toast', { message: "Updated section " + updatedSection.sequenceNumber + " " + property, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_SECTION,
