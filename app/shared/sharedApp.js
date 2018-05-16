@@ -22,6 +22,7 @@ import SharedCtrl from './controllers/SharedCtrl.js';
 
 // Services
 import AuthService from './services/AuthService.js';
+import ApiService from './services/ApiService.js';
 
 // Entities
 import Activity from './entities/Activity.js';
@@ -266,6 +267,7 @@ exceptionHandler.$inject = ['$provide'];
 const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .config(config)
 .controller('SharedCtrl', SharedCtrl)
+.service('ApiService', ApiService)
 .service('AuthService', AuthService)
 .directive('availabilityGrid', availabilityGrid)
 .directive('ipaButton', ipaButton)

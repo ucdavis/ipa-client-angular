@@ -1,0 +1,12 @@
+<nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
+
+<ipa-header page-title="Workgroup Summary Report"></ipa-header>
+
+<div ng-if="view.state">
+	<div ng-repeat="instructorTypeId in view.state.calculations.calculatedView.instructorTypeIds" ng-class="{'workload-table__last':$last }">
+		<div class="workload-summary__table-label">
+			{{ view.state.instructorTypes.list[instructorTypeId].description }}
+		</div>
+		<workload-table instructors="view.state.calculations.calculatedView.byInstructorType[instructorTypeId]"></workload-table>
+	</div>
+</div>

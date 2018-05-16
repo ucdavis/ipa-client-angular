@@ -52,8 +52,8 @@ module.exports = {
     supportAssignmentApp: './app/supportAssignment/supportAssignmentApp.js',
     sharedApp: './app/shared/sharedApp.js',
     teachingCallApp: './app/teachingCall/teachingCallApp.js',
-    workgroupApp: './app/workgroup/workgroupApp.js'
-
+    workgroupApp: './app/workgroup/workgroupApp.js',
+    workloadSummaryReportApp: './app/workloadSummaryReport/workloadSummaryReportApp.js'
   },
   output: {
     filename: 'js/[name].js',
@@ -208,6 +208,7 @@ module.exports = {
           if ((req.url.indexOf("/registrarReconciliationReport") > -1 ) && (req.url != "/registrarReconciliationReport.html")) { return "/registrarReconciliationReport.html"; }
           if ((req.url.indexOf("/teachingCallResponseReport") > -1 ) && (req.url != "/teachingCallResponseReport.html")) { return "/teachingCallResponseReport.html"; }
           if ((req.url.indexOf("/scheduleSummaryReport") > -1 ) && (req.url != "/scheduleSummaryReport.html")) { return "/scheduleSummaryReport.html"; }
+          if ((req.url.indexOf("/workloadSummaryReport") > -1 ) && (req.url != "/workloadSummaryReport.html")) { return "/workloadSummaryReport.html"; }
 
           return req.url;
         }

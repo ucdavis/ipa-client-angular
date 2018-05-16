@@ -58,11 +58,11 @@ let nav = function ($location, $rootScope, AuthService, Term) {
 			};
 
 			scope.logout = function () {
-				authService.logout();
+				AuthService.logout();
 			};
 
 			scope.toggleSidebarState = function () {
-				authService.toggleSidebarState();
+				AuthService.toggleSidebarState();
 			};
 
 			scope.getYearTerms = function () {
