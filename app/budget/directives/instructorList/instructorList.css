@@ -7,11 +7,19 @@
 }
 
 .instructor-list__cell-container {
+  padding-left: 10px;
   height: 53px;
   display: flex;
-  justify-content: center;
   align-items: center;
   background-color: #f8f8f8;
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+.instructor-list__header {
+  padding-left: 10px;
+}
+
+.instructor-list__header--first {
+  margin-left: 20px;
 }
