@@ -19,18 +19,21 @@ let scheduledCourses = function ($rootScope) {
 
 			// Will translate a dayIndicator like '0010100' into 'TR'
 			scope.dayIndicatorToDayCodes = function (dayIndicator) {
-				dayCodes = "";
+				let dayCodes = "";
 				// Handle incorrect data
 				if (dayIndicator.length === 0) {
 					return dayCodes;
 				}
-				dayStrings = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
+
+				let dayStrings = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
+
 				for (var i = 0; i < dayIndicator.length; i++) {
-					char = dayIndicator.charAt(i);
+					let char = dayIndicator.charAt(i);
 					if (Number(char) == 1) {
 						dayCodes += dayStrings[i];
 					}
 				}
+
 				return dayCodes;
 			};
 
@@ -73,9 +76,9 @@ let scheduledCourses = function ($rootScope) {
 
 			// Will generate a list of shared meetings followed by distinct meetings.
 			scope.generateMeetingsInSectionGroup = function(sectionGroup, sections, activities) {
-				lectureMeetings = [];
-				sharedMeetings = [];
-				distinctMeetings = [];
+				let lectureMeetings = [];
+				let sharedMeetings = [];
+				let distinctMeetings = [];
 
 				var sharedActivities = scope.calculateSharedActivitiesInSectionGroup(
 					sectionGroup,
@@ -179,7 +182,7 @@ let scheduledCourses = function ($rootScope) {
 					matchingActivityHash[uniqueKey].push(activity.id);
 				});
 
-				sharedActivities = [];
+				var sharedActivities = [];
 
 				hashKeys.forEach(function(key) {
 					if (matchingActivityHash[key].length == numSectionsInSectionGroup) {
