@@ -84,8 +84,6 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .directive('addCourseComments', addCourseComments)
 .directive('addLineItem', addLineItem)
 .directive('addLineItemComments', addLineItemComments)
-.directive('budgetConfig', budgetConfig)
-.directive('generalConfig', generalConfig)
 .directive('termFilter', termFilter)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
