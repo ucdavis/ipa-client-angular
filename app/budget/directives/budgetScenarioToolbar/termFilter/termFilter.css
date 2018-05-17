@@ -1,43 +1,16 @@
-.assign-tag-tooltip {
-	word-wrap: break-word;
-}
-
-.assign-tag-tooltip .expand-button {
-	display: inline-flex;
-	font-size: 12px;
-	color: #24292e;
-	font-weight: 500;
-	padding: 3px 6px 3px 6px;
+.term-filter {
+	position: relative;
+	font-size: 14px;
 	user-select: none;
 }
 
-.assign-tag-tooltip .expand-button:hover {
-	background-color: #e6ebf1;
-	background-image: linear-gradient(-180deg, #f0f3f6 0%, #e6ebf1 90%);
-	border-color: rgba(27,31,35,0.35);
-}
-
-.assign-tag-tooltip .expand-button.selected {
-	background-color: #e9ecef;
-	background-image: none;
-	border-color: rgba(27,31,35,0.35);
-	box-shadow: inset 0 0.15em 0.3em rgba(27,31,35,0.15);
-}
-
-.assign-tag-tooltip .expand-button-skin {
-	background-color: #eff3f6;
-	background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
-	border: 1px solid rgba(27,31,35,0.2);
-	border-radius: 0.25em;
-	cursor: pointer;
-}
-
-.assign-tag-tooltip .dropdown-container {
+.term-filter__dropdown {
 	position: absolute;
 	z-index: 99;
+	right: 0px;
 }
 
-.assign-tag-tooltip .dropdown {
+.term-filter__dropdown-container {
 	z-index: 30;
 	background-color: white;
 	margin-top: 4px;
@@ -47,21 +20,7 @@
 	min-width: 220px;
 }
 
-.assign-tag-tooltip .item {
-	background-color: #fff;
-	padding-left: 30px;
-	padding-top: 8px;
-	padding-bottom: 8px;
-	padding-right: 8px;
-	border-bottom: 1px solid #eaecef;
-	cursor: pointer;
-}
-
-.assign-tag-tooltip .item:hover {
-	background-color: #f4f4f4;
-}
-
-.assign-tag-tooltip .header-row {
+.term-filter__header {
 	padding: 8px 10px;
 	line-height: 16px;
 	background: #f6f8fa;
@@ -70,91 +29,38 @@
 	justify-content: space-between;
 }
 
-.assign-tag-tooltip .search-row {
-	border-bottom: 1px solid #e1e4e8;
-}
-
-.assign-tag-tooltip .category-row {
-	border-bottom: 1px solid #e1e4e8;
-}
-
-.assign-tag-tooltip .close-ui {
+.term-filter__close-ui {
 	cursor: pointer;
 }
 
-.assign-tag-tooltip .close-ui svg {
+.term-filter__close-ui svg {
 	color: #c6cbd1;
 	fill: #c6cbd1;
 }
 
-.assign-tag-tooltip .close-ui:hover svg {
+.term-filter__close-ui:hover svg {
 	fill: #444d56;
 	color: #444d56;
 }
 
-.assign-tag-tooltip .dropdown-mask {
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 20;
-	display: block;
-	width: 100vw;
-	height: 100vh;
+.term-filter__term-list {
 }
 
-.assign-tag-tooltip .tag-list {
+.term-filter__term {
 	display: flex;
 	align-items: center;
 	cursor: pointer;
 	white-space: nowrap;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
-.assign-tag-tooltip .tag-icon {
-	font-size: 15px;
-	color: #616060;
+.term-filter__term:hover {
+	background-color: #f5f5f5;
 }
 
-.assign-tag-tooltip .tag-icon-container {
-	border: 1px solid #b3b3b3;
-	border-radius: 4px;
-	height: 20px;
-	width: 20px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-right: 10px;
-	white-space: nowrap;
-}
-
-.assign-tag-tooltip .items {
-	padding: 10px;
-}
-
-
-.assign-tag-tooltip .btn-default {
-	background-color: white;
-	margin-right: 10px;
-}
-
-.assign-tag-tooltip .neon-dark-confirm-btn,
-.assign-tag-tooltip .neon-dark-confirm-btn:focus,
-.assign-tag-tooltip .neon-dark-confirm-btn:active,
-.assign-tag-tooltip .neon-dark-confirm-btn {
-	background-color: rgb(48, 54, 65);
-	border-color: rgb(48, 54, 65);
-	color: white;
-}
-
-.assign-tag-tooltip .neon-dark-confirm-btn:hover {
-	background-color: rgb(18, 24, 35); /* Darker Version for hover */
-	color: white;
-}
-
-.assign-tag-tooltip .assign-tag-btn {
-	margin: 5px;
-}
-
-term-filter__active-term {
-	color: red;
-	background-color: red;
+.term-filter__term-text {
+	padding-left: 10px
 }
