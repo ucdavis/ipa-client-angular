@@ -85,7 +85,12 @@ module.exports = {
         // Compiles ES6 and ES7 into ES5 code
         test: /\.js$/,
         use: [
-          'babel-loader',
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['es2015'],
+            }
+          },
           "eslint-loader"
         ],
         exclude: /node_modules/
