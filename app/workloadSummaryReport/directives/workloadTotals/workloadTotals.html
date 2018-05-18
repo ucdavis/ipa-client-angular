@@ -1,0 +1,51 @@
+<div class="workload-totals">
+	<div class="workload-totals__header">
+		Totals
+	</div>
+	<div class="workload-totals__content">
+		<table class="workload-table__table">
+			<colgroup>
+				<col style="width: 16%;">
+				<col style="width: 16%;">
+				<col style="width: 16%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+			</colgroup>
+			<tbody>
+				<tr>
+					<td class="workload-totals__cell workload-totals__cell--first">
+						<div>
+							instructors: {{ state.calculations.calculatedView.totals.instructorCount }}
+						</div>
+					</td>
+					<td class="workload-totals__cell"></td>
+					<td class="workload-totals__cell"></td>
+					<td class="workload-totals__cell"></td>
+					<td class="workload-totals__cell">
+						<div>
+							{{ state.calculations.calculatedView.totals.enrollment }}
+						</div>
+					</td>
+					<td class="workload-totals__cell">
+						<div>
+							{{ state.calculations.calculatedView.totals.previousEnrollment }}
+						</div>
+					</td>
+					<td class="workload-totals__cell">
+						<div>
+							{{ state.calculations.calculatedView.totals.units }}
+						</div>
+					</td>
+					<td class="workload-totals__cell workload-totals__cell--last">
+						<div>
+							{{ state.calculations.calculatedView.totals.studentCreditHours }}
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

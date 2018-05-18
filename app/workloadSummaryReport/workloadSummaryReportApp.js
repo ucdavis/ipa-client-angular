@@ -1,5 +1,6 @@
 // Directives
 import workloadTable from './directives/workloadTable/workloadTable.js';
+import workloadTotals from './directives/workloadTotals/workloadTotals.js';
 
 // Services
 import WorkloadSummaryActions from './services/WorkloadSummaryActions.js';
@@ -38,6 +39,7 @@ config.$inject = ['$routeProvider'];
 // App declaration
 const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", dependencies)
 .directive('workloadTable', workloadTable)
+.directive('workloadTotals', workloadTotals)
 .controller('WorkloadSummaryReportCtrl', WorkloadSummaryReportCtrl)
 .service('WorkloadSummaryActions', WorkloadSummaryActions)
 .service('WorkloadSummaryReducers', WorkloadSummaryReducers)

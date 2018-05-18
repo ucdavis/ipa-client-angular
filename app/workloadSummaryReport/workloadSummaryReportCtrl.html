@@ -2,11 +2,13 @@
 
 <ipa-header page-title="Workgroup Summary Report"></ipa-header>
 
-<div ng-if="view.state">
+<div ng-if="view.state && view.state.calculations.isInitialFetchComplete && view.state.calculations.dwCallsCompleted == view.state.calculations.dwCallsOpened">
 	<div ng-repeat="instructorTypeId in view.state.calculations.calculatedView.instructorTypeIds" ng-class="{'workload-table__last':$last }">
 		<div class="workload-summary__table-label">
 			{{ view.state.instructorTypes.list[instructorTypeId].description }}
 		</div>
 		<workload-table instructors="view.state.calculations.calculatedView.byInstructorType[instructorTypeId]"></workload-table>
 	</div>
+
+	 <workload-totals state="view.state"></workload-totals>
 </div>
