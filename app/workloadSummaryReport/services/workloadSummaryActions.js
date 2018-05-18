@@ -382,12 +382,14 @@ class WorkloadSummaryActions {
 
 				var user = this._getUserByLoginId(instructor.loginId, users);
 
-				// Attempt to find via userRole
-				for (var i = 0; i < userRoles.ids.length; i++) {
-					var userRole = userRoles.list[userRoles.ids[i]];
+				if (user) {
+					// Attempt to find via userRole
+					for (var i = 0; i < userRoles.ids.length; i++) {
+						var userRole = userRoles.list[userRoles.ids[i]];
 
-					if (userRole.roleId == Roles.instructor && userRole.userId == user.id) {
-						return userRole.instructorTypeId;
+						if (userRole.roleId == Roles.instructor && userRole.userId == user.id) {
+							return userRole.instructorTypeId;
+						}
 					}
 				}
 
