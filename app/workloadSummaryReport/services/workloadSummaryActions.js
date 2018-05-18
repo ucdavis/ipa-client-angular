@@ -277,7 +277,14 @@ class WorkloadSummaryActions {
 
 				var calculatedView = {
 					instructorTypeIds: [],
-					byInstructorType: {}
+					byInstructorType: {},
+					totals: {
+						units: 0,
+						studentCreditHours: 0,
+						enrollment: 0,
+						previousEnrollment: 0,
+						instructorCount: 0
+					}
 				};
 
 				instructors.ids.forEach(function(instructorId) {
@@ -333,6 +340,11 @@ class WorkloadSummaryActions {
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
 							assignment.units = _self._getUnits(course);
 							assignment.studentCreditHours = assignment.enrollment * assignment.units;
+
+							calculatedView.totals.enrollment += assignment.enrollment;
+							calculatedView.totals.previousEnrollment += assignment.previousEnrollment;
+							calculatedView.totals.units += assignment.units;
+							calculatedView.totals.studentCreditHours += assignment.studentCreditHours;
 						}
 
 						instructor.assignments.push(assignment);
@@ -345,6 +357,7 @@ class WorkloadSummaryActions {
 					});
 
 					calculatedView.byInstructorType[instructorTypeId].push(instructor);
+					calculatedView.totals.instructorCount += 1;
 				});
 
 				calculatedView.instructorTypeIds = _self._orderInstructorTypeIdsAlphabetically(calculatedView.instructorTypeIds);
