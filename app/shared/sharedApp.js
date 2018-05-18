@@ -3,7 +3,6 @@ import 'ng-idle/angular-idle.js';
 import 'angular-sanitize/angular-sanitize.js';
 import 'angular-route/angular-route.min.js';
 import toastr from 'toastr/build/toastr.min.js';
-import 'selectize/dist/js/standalone/selectize.js';
 import 'angular-selectize2/dist/angular-selectize.js';
 import 'ui-select/dist/select.js';
 import 'bootstrap/dist/js/bootstrap.js';
@@ -100,7 +99,7 @@ var sharedAppDependencies = [
 	'ngIdle',
 	'ngSanitize',
 	'ui.select',
-	'selectize',
+	'selectize', // Angular Selectize2, refers to itself as 'selectize'
 
 	// Local modules
 		'CourseOfferingGroup',

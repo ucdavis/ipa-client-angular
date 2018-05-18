@@ -171,7 +171,8 @@ module.exports = {
         './app/shared/helpers/*.js',
         'course/constants.js',
         './node_modules/fullcalendar/dist/fullcalendar.js',
-        './node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js'
+        './node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
+        'selectize/dist/js/standalone/selectize.js'
       ],
     }),
     // Production Snippets from various 3rd party services
