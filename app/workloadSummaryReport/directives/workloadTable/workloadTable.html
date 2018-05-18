@@ -17,25 +17,25 @@
 						Instructor
 					</td>
 					<td class="workload-table__header-cell">
-							Term
+						Term
 					</td>
 					<td class="workload-table__header-cell">
-							Description
+						Description
 					</td>
 					<td class="workload-table__header-cell">
-							Offering
+						Offering
 					</td>
 					<td class="workload-table__header-cell">
-							Enrollment
+						Enrollment
 					</td>
 					<td class="workload-table__header-cell">
-							Previous Enrollment
+						Previous Enrollment
 					</td>
 					<td class="workload-table__header-cell">
-							Units
+						Units
 					</td>
 					<td class="workload-table__header-cell workload-table__cell-last">
-							SCH
+						SCH
 					</td>
 				</tr>
 				<tr ng-repeat="instructor in instructors">
@@ -70,7 +70,7 @@
 					</td>
 					<td>
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments | orderBy: 'term' ">
-								{{ assignment.enrollment }} &nbsp;
+							{{ assignment.enrollment }} &nbsp;
 						</div>
 						<div class="workload-table__totals-cell" ng-class="{'workload-table__totals-cell-bar': instructor.assignments.length > 0 }">
 							{{ instructor.totals.enrollment }}

@@ -76,9 +76,7 @@ class TermService {
 				}
 			},
 			termCodeToTerm: function (termCode) {
-
 				return termCode.toString().slice(-2);
-
 			}
 		};
 	}
