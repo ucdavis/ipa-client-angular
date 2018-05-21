@@ -65,13 +65,40 @@
 .term-filter__dropdown-toggle {
 	border-radius: 3px;
 	border: 1px solid #ddd;
-	padding: 4px;
+	padding: 3px;
 	margin-left: 8px;
 	cursor: pointer;
 
 }
 
-.term-filter__dropdown-toggle:hover {
+.term-filter__dropdown-toggle:hover,
+.term-filter__dropdown-toggle--open {
 	border-color: #7c7c7c;
 	background-color: #eee;
+}
+
+.term-filter__mask-container {
+	position: relative;
+}
+.term-filter__mask {
+	position: absolute;
+	left:0;
+	right:0;
+}
+
+.term-filter__dropdown-toggle--open::before {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 99;
+	display: block;
+	cursor: default;
+	content: " ";
+	background: transparent;
+}
+
+.term-filter__icon {
+	padding-top: 3px;
 }

@@ -1,8 +1,10 @@
 <div class="term-filter">
-	<span class="term-filter__dropdown-toggle glyphicon glyphicon-filter"
+	<span class="term-filter__dropdown-toggle"
+	      ng-class="{'term-filter__dropdown-toggle--open': isVisible }"
 	      ng-click="toggleDropdown()"
 	      uib-tooltip="Terms"
-	      tooltip-append-to-body="true">
+				tooltip-append-to-body="true">
+				<span class="term-filter__icon glyphicon glyphicon-filter"></span>
 	</span>
 
 	<div ng-if="isVisible" class="term-filter__dropdown">
