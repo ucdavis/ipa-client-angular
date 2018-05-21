@@ -11,6 +11,10 @@
 	background-color: white;
 }
 
+.ipa-header__cog-btn {
+	height: 31px;
+}
+
 .header--work-group .ipa-header__workgroup-button {
 	border: 1px solid #777;
 }

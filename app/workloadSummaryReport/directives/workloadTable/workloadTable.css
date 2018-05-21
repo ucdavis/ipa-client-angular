@@ -1,0 +1,56 @@
+.workload-table__table {
+	width: 100%;
+	font-size: 12px;
+}
+
+.workload-table__container {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.workload-table__row {
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+}
+
+.workload-table__value {
+	padding: 5px;
+	height: 28px;
+}
+
+.workload-table__name-cell {
+	text-align: left;
+	vertical-align: top;
+	padding: 5px;
+}
+
+.workload-table__header-cell {
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	font-size: 12px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.workload-table__header-cell--first {
+	border-left: 1px solid #ddd;
+}
+
+.workload-table__header-cell--last {
+	border-right: 1px solid #ddd;
+}
+
+.workload-table__value--totals {
+	font-weight: bold;
+}
+
+.workload-table__value--totals-bar {
+	border-top: 1px solid #979797;
+}
+
+.workload-table__value--type-totals-bar {
+	border-top: 3px double #979797;
+}

@@ -74,6 +74,9 @@ class TermService {
 				} else {
 					return year + term;
 				}
+			},
+			termCodeToTerm: function (termCode) {
+				return termCode.toString().slice(-2);
 			}
 		};
 	}
