@@ -1,3 +1,4 @@
+// CSS
 import './budget.css';
 
 // Controllers
@@ -32,8 +33,6 @@ import addBudgetScenario from './directives/modals/addBudgetScenario/addBudgetSc
 import addCourseComments from './directives/modals/addCourseComments/addCourseComments.js';
 import addLineItem from './directives/modals/addLineItem/addLineItem.js';
 import addLineItemComments from './directives/modals/addLineItemComments/addLineItemComments.js';
-import budgetConfig from './directives/modals/budgetConfig/budgetConfig.js';
-import generalConfig from './directives/modals/budgetConfig/generalConfig/generalConfig.js';
 
 // Dependencies
 var dependencies = [
@@ -82,8 +81,6 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .directive('addCourseComments', addCourseComments)
 .directive('addLineItem', addLineItem)
 .directive('addLineItemComments', addLineItemComments)
-.directive('budgetConfig', budgetConfig)
-.directive('generalConfig', generalConfig)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	CREATE_BUDGET_SCENARIO: "CREATE_BUDGET_SCENARIO",

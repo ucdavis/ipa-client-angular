@@ -1,0 +1,35 @@
+<div class="term-filter">
+	<span class="term-filter__dropdown-toggle"
+	      ng-class="{'term-filter__dropdown-toggle--open': isVisible }"
+	      ng-click="toggleDropdown()"
+	      uib-tooltip="Terms"
+	      tooltip-append-to-body="true">
+		<span class="term-filter__icon glyphicon glyphicon-filter"></span>
+	</span>
+
+	<div ng-if="isVisible" class="term-filter__dropdown">
+		<div class="term-filter__dropdown-container">
+			<div class="term-filter__header">
+				<div>
+					Active Terms
+				</div>
+				<div class="term-filter__close-ui" ng-click="close()">
+					<svg height="16" role="img" version="1.1" viewBox="0 0 12 16" width="12">
+						<path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"></path>
+					</svg>
+				</div>
+			</div>
+
+			<div class="term-filter__term-list">
+				<div ng-click="clickTerm(term)"
+				     ng-repeat="term in allTerms"
+				     class="term-filter__term">
+					<ipa-checkbox is-checked="(activeTerms.indexOf(term) > -1)"></ipa-checkbox>
+					<div class="term-filter__term-text">
+						{{ getTermName(term) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

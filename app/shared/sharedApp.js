@@ -86,6 +86,7 @@ import sortable from './directives/sortable.js';
 import spinner from './directives/spinner.js';
 import stickyHeader from './directives/stickyHeader.js';
 import stopEvent from './directives/stopEvent.js';
+import termFilter from './directives/termFilter/termFilter.js';
 
 // Filters
 import lastCommaFirst from './filters/lastCommaFirst.js';
@@ -301,6 +302,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .directive('spinner', spinner)
 .directive('stickyHeader', stickyHeader)
 .directive('stopEvent', stopEvent)
+.directive('termFilter', termFilter)
 .filter('lastCommaFirst', lastCommaFirst)
 .filter('lastSpaceInitial', lastSpaceInitial)
 .filter('ordinal', ordinal)

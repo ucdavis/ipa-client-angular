@@ -58,6 +58,13 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 
 				scope.isNewScenarioNameValid = isNamePresent && (isNameInUse == false);
 			};
+
+			scope.selectBudgetScenarioTerm = function(term) {
+				var index = parseInt(term) - 1;
+				var newValue = scope.state.selectedBudgetScenario.activeTermsBlob[index] == "1" ? "0" : "1";
+				scope.state.selectedBudgetScenario.activeTermsBlob = setCharAt(scope.state.selectedBudgetScenario.activeTermsBlob, index, newValue);
+				BudgetActions.updateBudgetScenario(scope.state.selectedBudgetScenario);
+			};
 		} // End Link
 	};
 };
