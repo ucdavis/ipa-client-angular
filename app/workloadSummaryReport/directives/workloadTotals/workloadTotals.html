@@ -16,9 +16,31 @@
 			</colgroup>
 			<tbody>
 				<tr>
+					<td class="workload-table__header-cell workload-table__header-cell--first">
+						Instructors
+					</td>
+					<td class="workload-table__header-cell"></td>
+					<td class="workload-table__header-cell">
+						Assignments
+					</td>
+					<td class="workload-table__header-cell"></td>
+					<td class="workload-table__header-cell">
+						Enrollment
+					</td>
+					<td class="workload-table__header-cell">
+						Previous Enrollment
+					</td>
+					<td class="workload-table__header-cell">
+						Units
+					</td>
+					<td class="workload-table__header-cell workload-table__header-cell--last">
+						SCH
+					</td>
+				</tr>
+				<tr>
 					<td class="workload-totals__cell workload-totals__cell--first">
 						<div>
-							Instructors: {{ state.calculations.calculatedView.totals.instructorCount }}
+							{{ state.calculations.calculatedView.totals.instructorCount }}
 						</div>
 					</td>
 					<td class="workload-totals__cell"></td>
