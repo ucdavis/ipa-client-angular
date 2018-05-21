@@ -38,9 +38,9 @@
 						SCH
 					</td>
 				</tr>
-				<tr ng-repeat="instructor in instructors" class="workload-table__row">
+				<tr ng-repeat="instructor in instructors | orderBy: 'lastName'" class="workload-table__row">
 					<td class="workload-table__name-cell">
-						{{ instructor.fullName }}
+						{{ instructor.lastName }}, {{ instructor.firstName }}
 					</td>
 					<td>
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments | orderBy: 'term' ">
