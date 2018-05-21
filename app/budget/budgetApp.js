@@ -1,3 +1,4 @@
+// CSS
 import './budget.css';
 
 // Controllers
@@ -20,7 +21,6 @@ import budgetNav from './directives/budgetNav/budgetNav.js';
 import lineItemFilters from './directives/budgetNav/lineItemFilters/lineItemFilters.js';
 import budgetScenarioToolbar from './directives/budgetScenarioToolbar/budgetScenarioToolbar.js';
 import budgetScenarioDropdown from './directives/budgetScenarioToolbar/budgetScenarioDropdown/budgetScenarioDropdown.js';
-
 import courseCosts from './directives/courseCosts/courseCosts.js';
 import instructorCosts from './directives/instructorCosts/instructorCosts.js';
 import instructorAssignmentDropdown from './directives/instructorCosts/instructorAssignmentDropdown/instructorAssignmentDropdown.js';
