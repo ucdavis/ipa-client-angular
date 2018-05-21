@@ -1,11 +1,12 @@
 class WorkloadSummaryActions {
-	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService) {
+	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService) {
 		this.WorkloadSummaryReducers = WorkloadSummaryReducers;
 		this.WorkloadSummaryService = WorkloadSummaryService;
 		this.$rootScope = $rootScope;
 		this.ActionTypes = ActionTypes;
 		this.TermService = TermService;
 		this.DwService = DwService;
+		this.TeachingAssignmentService = TeachingAssignmentService;
 
 		return {
 			getInitialState: function (workgroupId, year) {
@@ -309,32 +310,16 @@ class WorkloadSummaryActions {
 
 					instructorAssignments.forEach(function(teachingAssignment) {
 						var assignment = {};
-
 						var termCode = teachingAssignment.termCode;
+
+						var sectionGroup = teachingAssignment.sectionGroupId > 0 ? sectionGroups.list[teachingAssignment.sectionGroupId] : null;
+						var course = sectionGroup ? courses.list[sectionGroup.courseId] : null;
 
 						assignment.term = TermService.getTermName(termCode);
 
-						assignment.description = null;
-
-						if (teachingAssignment.buyout) {
-							assignment.description = "Buyout";
-						} else if (teachingAssignment.courseRelease) {
-							assignment.description = "Course Release";
-						} else if (teachingAssignment.sabbatical) {
-							assignment.description = "Sabbatical";
-						} else if (teachingAssignment.inResidence) {
-							assignment.description = "In Residence";
-						} else if (teachingAssignment.workLifeBalance) {
-							assignment.description = "Work Life Balance";
-						} else if (teachingAssignment.leaveOfAbsence) {
-							assignment.description = "Leave of Absence";
-						}
+						assignment.description = TeachingAssignmentService.getDescription(assignment, course);
 
 						if (teachingAssignment.sectionGroupId > 0) {
-							var sectionGroup = sectionGroups.list[teachingAssignment.sectionGroupId];
-							var course = courses.list[sectionGroup.courseId];
-
-							assignment.description = course.subjectCode + " " + course.courseNumber;
 							assignment.sequencePattern = course.sequencePattern;
 							assignment.enrollment = _self._getEnrollment(sectionGroup);
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
@@ -572,6 +557,6 @@ class WorkloadSummaryActions {
 	}
 }
 
-WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService'];
+WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService'];
 
 export default WorkloadSummaryActions;
