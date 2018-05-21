@@ -20,7 +20,6 @@ import budgetNav from './directives/budgetNav/budgetNav.js';
 import lineItemFilters from './directives/budgetNav/lineItemFilters/lineItemFilters.js';
 import budgetScenarioToolbar from './directives/budgetScenarioToolbar/budgetScenarioToolbar.js';
 import budgetScenarioDropdown from './directives/budgetScenarioToolbar/budgetScenarioDropdown/budgetScenarioDropdown.js';
-import termFilter from './directives/budgetScenarioToolbar/termFilter/termFilter.js';
 
 import courseCosts from './directives/courseCosts/courseCosts.js';
 import instructorCosts from './directives/instructorCosts/instructorCosts.js';
@@ -82,7 +81,6 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .directive('addCourseComments', addCourseComments)
 .directive('addLineItem', addLineItem)
 .directive('addLineItemComments', addLineItemComments)
-.directive('termFilter', termFilter)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	CREATE_BUDGET_SCENARIO: "CREATE_BUDGET_SCENARIO",
