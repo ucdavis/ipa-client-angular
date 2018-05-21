@@ -1,8 +1,8 @@
 /**
  * @ngdoc service
- * @name ipaClientAngularApp.TeachingAssignmentService
+ * @name ipaClientAngularApp.InstructorTypeService
  * @description
- * # TeachingAssignmentService
+ * # InstructorTypeService
  * Service in the ipaClientAngularApp.
  */
 class InstructorTypeService {

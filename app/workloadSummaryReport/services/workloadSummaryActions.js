@@ -318,7 +318,7 @@ class WorkloadSummaryActions {
 
 						assignment.term = TermService.getTermName(termCode);
 
-						assignment.description = TeachingAssignmentService.getDescription(assignment, course);
+						assignment.description = TeachingAssignmentService.getDescription(teachingAssignment, course);
 
 						if (teachingAssignment.sectionGroupId > 0) {
 							assignment.sequencePattern = course.sequencePattern;
