@@ -8,18 +8,20 @@
 	padding-right: 20px;
 }
 
+.workload-table__row {
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+}
+
 .workload-table__value {
 	padding: 5px;
+	height: 28px;
 }
 
-/* Hack to allow the div inside the td to utilize height: 100%. */
-/* The td of 1px is a specified height, but will immediately automatically grow to fit the contents of the div */
-.workload-table td {
-	height: 1px;
-}
-
-.workload-table__cell {
-	height: 100%;
+.workload-table__name-cell {
+	text-align: left;
+	vertical-align: top;
 	padding: 5px;
 }
 
@@ -33,38 +35,18 @@
 	padding-right: 5px;
 }
 
-.workload-table__cell-first {
+.workload-table__header-cell--first {
 	border-left: 1px solid #ddd;
 }
 
-.workload-table__cell-last {
+.workload-table__header-cell--last {
 	border-right: 1px solid #ddd;
 }
 
-.workload-summary__table-label {
-	font-weight: bold;
-	padding-top: 30px;
-	padding-bottom: 5px;
-	padding-left: 20px;
-	font-size: 12px;
-}
-
-.workload-table__cell-last-row {
-	border-bottom: 1px solid #ddd;
-}
-
-.workload-table__last {
-	padding-bottom: 30px;
-}
-
-.workload-table__totals-cell {
-	border-bottom: 1px solid #ddd;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-left: 5px;
+.workload-table__value--totals {
 	font-weight: bold;
 }
 
-.workload-table__totals-cell-bar {
+.workload-table__value--totals-bar {
 	border-top: 1px solid #979797;
 }
