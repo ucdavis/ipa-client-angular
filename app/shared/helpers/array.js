@@ -104,8 +104,8 @@ _array_contains_by_properties = function(array, properties, object) {
 
 	// Loop over the array
 	for (var i = 0; i < array.length; i++) {
-		slotVal = array[i];
-		propertiesMatched = true;
+		let slotVal = array[i];
+		let propertiesMatched = true;
 
 		properties.forEach(function(property) {
 			if (slotVal[property] != object[property]) {
@@ -128,8 +128,8 @@ _array_find_by_properties = function(array, properties, object) {
 
 	// Loop over the array
 	for (var i = 0; i < array.length; i++) {
-		slotVal = array[i];
-		propertiesMatched = true;
+		let slotVal = array[i];
+		let propertiesMatched = true;
 
 		properties.forEach(function(property) {
 			if (slotVal[property] != object[property]) {
