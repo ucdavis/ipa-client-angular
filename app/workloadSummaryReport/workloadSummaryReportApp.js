@@ -10,6 +10,7 @@ import WorkloadSummaryService from './services/WorkloadSummaryService.js';
 // Shared services
 import TermService from './../shared/services/TermService.js';
 import DwService from './../shared/services/DwService.js';
+import InstructorTypeService from './../shared/services/InstructorTypeService.js';
 
 // Controllers
 import WorkloadSummaryReportCtrl from './workloadSummaryReportCtrl.js';
@@ -46,6 +47,7 @@ const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", depe
 .service('WorkloadSummaryService', WorkloadSummaryService)
 .service('TermService', TermService)
 .service('DwService', DwService)
+.service('InstructorTypeService', InstructorTypeService)
 .config(config)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",

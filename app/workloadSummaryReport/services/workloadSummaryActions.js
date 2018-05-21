@@ -1,5 +1,5 @@
 class WorkloadSummaryActions {
-	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService) {
+	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService, InstructorTypeService) {
 		this.WorkloadSummaryReducers = WorkloadSummaryReducers;
 		this.WorkloadSummaryService = WorkloadSummaryService;
 		this.$rootScope = $rootScope;
@@ -7,6 +7,7 @@ class WorkloadSummaryActions {
 		this.TermService = TermService;
 		this.DwService = DwService;
 		this.TeachingAssignmentService = TeachingAssignmentService;
+		this.InstructorTypeService = InstructorTypeService;
 
 		return {
 			getInitialState: function (workgroupId, year) {
@@ -345,7 +346,7 @@ class WorkloadSummaryActions {
 					calculatedView.totals.instructorCount += 1;
 				});
 
-				calculatedView.instructorTypeIds = _self._orderInstructorTypeIdsAlphabetically(calculatedView.instructorTypeIds);
+				calculatedView.instructorTypeIds = InstructorTypeService.orderInstructorTypeIdsAlphabetically(calculatedView.instructorTypeIds, instructorTypes);
 
 				WorkloadSummaryReducers.reduce({
 					type: ActionTypes.CALCULATE_VIEW,
@@ -540,23 +541,11 @@ class WorkloadSummaryActions {
 				});
 
 				return matchingSections;
-			},
-			_orderInstructorTypeIdsAlphabetically: function (instructorTypeIds) {
-				var alphabeticalOrder = [3, 5, 1, 7, 6, 8, 4, 2];
-				var reorderedTypeIds = [];
-
-				alphabeticalOrder.forEach(function(id) {
-					if (instructorTypeIds.indexOf(id) > -1) {
-						reorderedTypeIds.push(id);
-					}
-				});
-
-				return reorderedTypeIds;
 			}
 		};
 	}
 }
 
-WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService'];
+WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService'];
 
 export default WorkloadSummaryActions;
