@@ -1,3 +1,6 @@
+// CSS
+import './workloadSummaryReport.css';
+
 // Directives
 import workloadTable from './directives/workloadTable/workloadTable.js';
 import workloadTotals from './directives/workloadTotals/workloadTotals.js';
