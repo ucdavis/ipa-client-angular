@@ -18,6 +18,8 @@ let ipaCheckbox = function() {
 		replace: true, // Replace with the template below
 		link: function(scope, element, attrs) {
 			scope.onClick = function() {
+				if (angular.isUndefined(scope.selectTab)) { return; }
+
 				scope.clickAction();
 			};
 		}
