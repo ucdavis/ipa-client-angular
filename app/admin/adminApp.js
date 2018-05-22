@@ -21,11 +21,11 @@ var dependencies = [
 function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year", {
-		template: require('./adminCtrl.html'),
+		template: require('./AdminCtrl.html'),
 		controller: "AdminCtrl"
 	})
 	.when("/", {
-		template: require('./adminCtrl.html'),
+		template: require('./AdminCtrl.html'),
 		controller: "AdminCtrl"
 	})
 	.otherwise({
