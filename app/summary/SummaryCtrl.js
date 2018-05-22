@@ -14,8 +14,8 @@
 		this.$routeParams = $routeParams;
 		this.$rootScope = $rootScope;
 		this.$location = $location;
-		this.authService = AuthService;
-		this.summaryActionCreators = SummaryActionCreators;
+		this.AuthService = AuthService;
+		this.SummaryActionCreators = SummaryActionCreators;
 
 		$scope.workgroupId = this.$routeParams.workgroupId;
 		$scope.year = this.$routeParams.year;
@@ -32,14 +32,13 @@
 			self.$location.search({ mode: mode });
 		};
 
-		if (this.$routeParams.mode) {
+		if ($routeParams.mode && $routeParams.mode != "unknown") {
 			// Set the active tab according to the URL
-			$scope.view.mode = this.$routeParams.mode;
+			$scope.view.mode = $routeParams.mode;
 		} else {
 			// Otherwise redirect to the default view
-			var currentUser = this.authService.getCurrentUser();
+			var currentUser = this.AuthService.getCurrentUser();
 			var isAdmin = currentUser.isAdmin();
-
 			var isAcademicPlanner = currentUser.hasRole('academicPlanner', $scope.workgroupId);
 			var isReviewer = currentUser.hasRole('reviewer', $scope.workgroupId);
 			var isInstructor = currentUser.isInstructor($scope.workgroupId);
@@ -71,7 +70,7 @@
 		};
 
 		$scope.selectTerm = function (term) {
-			self.summaryActionCreators.selectTerm(term);
+			self.SummaryActionCreators.selectTerm(term);
 		};
 
 		$rootScope.$on('summaryStateChanged', function (event, data) {
@@ -87,9 +86,9 @@
 
 	getPayload () {
 		var self = this;
-		return this.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
+		return this.AuthService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
 			if (self.$route.current.params.workgroupId && self.$route.current.params.year) {
-				return self.summaryActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year);
+				return self.SummaryActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year);
 			}
 		});
 	}
