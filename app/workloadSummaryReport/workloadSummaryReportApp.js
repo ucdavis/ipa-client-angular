@@ -6,9 +6,9 @@ import workloadTable from './directives/workloadTable/workloadTable.js';
 import workloadTotals from './directives/workloadTotals/workloadTotals.js';
 
 // Services
-import WorkloadSummaryActions from './services/WorkloadSummaryActions.js';
-import WorkloadSummaryReducers from './services/WorkloadSummaryReducers.js';
-import WorkloadSummaryService from './services/WorkloadSummaryService.js';
+import WorkloadSummaryActions from './services/workloadSummaryActions.js';
+import WorkloadSummaryReducers from './services/workloadSummaryReducers.js';
+import WorkloadSummaryService from './services/workloadSummaryService.js';
 
 // Shared services
 import TermService from './../shared/services/TermService.js';

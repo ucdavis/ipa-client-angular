@@ -1,7 +1,7 @@
 import './css/scheduleSummaryReport.css';
 
 // Controllers
-import ScheduleSummaryReportCtrl from './controllers/scheduleSummaryReportCtrl.js';
+import ScheduleSummaryReportCtrl from './controllers/ScheduleSummaryReportCtrl.js';
 
 // Services
 import ScheduleSummaryReportActionCreators from './services/scheduleSummaryReportActionCreators.js';

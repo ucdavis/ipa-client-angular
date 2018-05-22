@@ -1,7 +1,7 @@
 import './css/teachingCallResponseReport.css';
 
 // Controller imports
-import TeachingCallResponseReportCtrl from './controllers/teachingCallResponseReportCtrl.js';
+import TeachingCallResponseReportCtrl from './controllers/TeachingCallResponseReportCtrl.js';
 
 // Service imports
 import TeachingCallResponseReportActionCreators from './services/teachingCallResponseReportActionCreators.js';
@@ -13,7 +13,7 @@ import ApiService from './../shared/services/ApiService.js';
 import DwService from './../shared/services/DwService.js';
 import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
-import StringService from './../shared/services/stringService.js';
+import StringService from './../shared/services/StringService.js';
 
 // Dependencies
 var dependencies = [

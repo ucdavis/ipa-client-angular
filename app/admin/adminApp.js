@@ -1,7 +1,7 @@
 import './css/admin.css';
 
 // Controllers
-import AdminCtrl from './controllers/adminCtrl.js';
+import AdminCtrl from './controllers/AdminCtrl.js';
 
 // Services
 import AdminActionCreators from './services/adminActionCreators.js';
