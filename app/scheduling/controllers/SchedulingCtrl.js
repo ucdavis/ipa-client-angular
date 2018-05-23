@@ -92,7 +92,7 @@ class SchedulingCtrl {
 		};
 
 		self.$scope.toggleCalendarDay = function (index) {
-			SchedulingActionCreators.toggleDay(index);
+			self.SchedulingActionCreators.toggleDay(index);
 		};
 
 		self.$scope.toggleTagFilter = function (tagId) {
@@ -105,7 +105,7 @@ class SchedulingCtrl {
 				tagFilters.splice(tagIndex, 1);
 			}
 
-			SchedulingActionCreators.updateTagFilters(tagFilters);
+			self.SchedulingActionCreators.updateTagFilters(tagFilters);
 		};
 
 		self.$scope.toggleLocationFilter = function (locationId) {
@@ -118,7 +118,7 @@ class SchedulingCtrl {
 				locationFilters.splice(locationIndex, 1);
 			}
 
-			SchedulingActionCreators.updateLocationFilters(locationFilters);
+			self.SchedulingActionCreators.updateLocationFilters(locationFilters);
 		};
 
 		self.$scope.toggleInstructorFilter = function (instructorId) {
@@ -131,7 +131,7 @@ class SchedulingCtrl {
 				instructorFilters.splice(instructorIndex, 1);
 			}
 
-			SchedulingActionCreators.updateInstructorFilters(instructorFilters);
+			self.SchedulingActionCreators.updateInstructorFilters(instructorFilters);
 		};
 
 		self.$scope.setLocation = function (locationId) {
