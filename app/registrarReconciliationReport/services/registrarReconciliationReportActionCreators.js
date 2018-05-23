@@ -135,7 +135,7 @@ class RegistrarReconciliationReportActionCreators {
 	
 					sectionDiff.changes = [];
 					var action = {
-						type: CREATE_SECTION,
+						type: ActionTypes.CREATE_SECTION,
 						payload: {
 							sectionDiff: sectionDiff
 						}
