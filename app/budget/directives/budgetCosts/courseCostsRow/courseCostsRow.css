@@ -1,0 +1,105 @@
+/* new table CSS */
+.course-costs__table {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.course-costs__table-header {
+	width: 10%;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ddd;
+}
+
+.course-costs__course-title {
+	padding-top: 15px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	font-weight: bold;
+}
+
+.course-costs__table-cell {
+	background-color: #f8f8f8;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.course-costs__table-cell-sequence {
+	padding-left: 20px;
+}
+
+.course-costs__sequence-container {
+	width: 100%;
+	background-color: #f8f8f8;
+	height: 53px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.course-costs__table-cell-total {
+	padding-right: 20px;
+}
+
+.course-costs__total-container {
+	width: 100%;
+	background-color: #f8f8f8;
+	height: 53px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding-right: 5px;
+}
+
+.course-costs__warning {
+	color: #ce4844;
+	visibility: hidden;
+}
+
+.course-costs__warning--show {
+	visibility: visible;
+}
+
+.course-costs__number-input {
+	width: 40px;
+}
+
+.course-costs__edit-container {
+	display: flex;
+	align-items: center;
+}
+
+.course-costs__revert-ui {
+	margin-left: 10px;
+	padding: 5px;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	cursor: pointer;
+	margin-bottom: 2px;
+}
+
+.course-costs__revert-ui:hover {
+	background-color: #eee;
+}
+
+.course-costs__table-header--comments {
+	padding-left: 20px;
+}
+
+.course-totals-row {
+	height: 30px;
+}
+
+.course-totals-row__cell {
+	padding-top: 15px;
+}
+
+.course-totals-row__first {
+	padding-left: 20px;
+	text-align: center;
+}
+
+.course-costs__table-header--total-costs {
+	text-align: right;
+	padding-right: 27px;
+}

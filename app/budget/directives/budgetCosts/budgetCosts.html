@@ -1,0 +1,43 @@
+<div class="budget-costs">
+	<ipa-tabs tab-names="termNav.allTabs"
+	          active-tab="termNav.activeTab"
+	          select-tab="setActiveTerm"
+	          slim="true">
+		<div class="budget-costs__container">
+			<div class="budget-costs__offering" ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
+				<div colspan="10" class="budget-costs__course-title">
+					{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
+				</div>
+
+				<div ng-repeat="sectionGroup in course.sectionGroups">
+					<support-costs-row section-group="sectionGroup"></support-costs-row>
+					<instructor-costs-row section-group="sectionGroup"></instructor-costs-row>
+					<table>
+						<theader>
+							<tr>
+								<td>
+									Comments
+								</td>
+								<td>
+									Total Cost
+								</td>
+							</tr>
+						</theader>
+						<tbody>
+							<td>
+								<ipa-button text="'Comments' + sectionGroup.sectionGroupCost.commentCountDisplay"
+														color="'light'"
+														icon-class="'entypo entypo-chat'"
+														on-click="openAddCourseCommentsModal(sectionGroup)">
+								</ipa-button>
+							</td>
+							<td>
+								{{ toCurrency(sectionGroup.totalCost) }}
+							</td>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</ipa-tabs>
+</div>
