@@ -110,11 +110,11 @@
 								</ipa-input>
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
-							     uib-tooltip="Revert to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}"
+							     uib-tooltip="Update to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}"
 							     tooltip-append-to-body="true"
 							     confirm-button="revertOverride(sectionGroup, 'seats')"
-							     message="Revert to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}?"
-							     yes="Revert"
+							     message="Update to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}?"
+							     yes="Update"
 							     no="Cancel"
 							     ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.enrollment !== null && (sectionGroup.totalSeats != sectionGroup.sectionGroupCost.enrollment)">
 							</div>
@@ -130,11 +130,11 @@
 								</ipa-input>
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
-							     uib-tooltip="Revert to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}"
+							     uib-tooltip="Update to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}"
 							     tooltip-append-to-body="true"
 							     confirm-button="revertOverride(sectionGroup, 'sectionCount')"
-							     message="Revert to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}?"
-							     yes="Revert"
+							     message="Update to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}?"
+							     yes="Update"
 							     no="Cancel"
 							     ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.sectionCount !== null && sectionGroup.sectionCount != sectionGroup.sectionGroupCost.sectionCount">
 							</div>
@@ -150,11 +150,11 @@
 								</ipa-input>
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
-							     uib-tooltip="Revert to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}"
+							     uib-tooltip="Update to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}"
 							     tooltip-append-to-body="true"
 							     confirm-button="revertOverride(sectionGroup, 'teachingAssistantAppointments')"
-							     message="Revert to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}?"
-							     yes="Revert"
+							     message="Update to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}?"
+							     yes="Update"
 							     no="Cancel"
 							     ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.taCount !== null && sectionGroup.teachingAssistantAppointments != sectionGroup.sectionGroupCost.taCount">
 							</div>
@@ -174,11 +174,11 @@
 								</ipa-input>
 							</div>
 							<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
-							     uib-tooltip="Revert to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}"
+							     uib-tooltip="Update to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}"
 							     tooltip-append-to-body="true"
 							     confirm-button="revertOverride(sectionGroup, 'readerAppointments')"
-							     message="Revert to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}?"
-							     yes="Revert"
+							     message="Update to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}?"
+							     yes="Update"
 							     no="Cancel"
 							     ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.readerCount !== null && sectionGroup.readerAppointments != sectionGroup.sectionGroupCost.readerCount">
 							</div>
