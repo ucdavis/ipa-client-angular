@@ -26,10 +26,10 @@ import lineItemDropdown from './directives/lineItems/lineItemDropdown/lineItemDr
 import budgetSummary from './directives/budgetSummary/budgetSummary.js';
 import instructorList from './directives/instructorList/instructorList.js';
 
-import budgetCosts from './directives/budgetCosts/courseCostsRow/courseCostsRow.js';
+import budgetCosts from './directives/budgetCosts/budgetCosts.js';
 import courseCostsRow from './directives/budgetCosts/courseCostsRow/courseCostsRow.js';
 import instructorCostsRow from './directives/budgetCosts/instructorCostsRow/instructorCostsRow.js';
-import instructorAssignmentDropdown from './directives/budygetCosts/instructorCostsRow/instructorAssignmentDropdown/instructorAssignmentDropdown.js';
+import instructorAssignmentDropdown from './directives/budgetCosts/instructorCostsRow/instructorAssignmentDropdown/instructorAssignmentDropdown.js';
 
 import addBudgetScenario from './directives/modals/addBudgetScenario/addBudgetScenario.js';
 import addCourseComments from './directives/modals/addCourseComments/addCourseComments.js';
@@ -72,8 +72,9 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .directive('lineItemFilters', lineItemFilters)
 .directive('budgetScenarioToolbar', budgetScenarioToolbar)
 .directive('budgetScenarioDropdown', budgetScenarioDropdown)
-.directive('courseCosts', courseCosts)
-.directive('instructorCosts', instructorCosts)
+.directive('budgetCosts', budgetCosts)
+.directive('courseCostsRow', courseCostsRow)
+.directive('instructorCostsRow', instructorCostsRow)
 .directive('instructorAssignmentDropdown', instructorAssignmentDropdown)
 .directive('lineItems', lineItems)
 .directive('lineItemDropdown', lineItemDropdown)
