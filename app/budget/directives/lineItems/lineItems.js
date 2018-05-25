@@ -24,7 +24,7 @@ let lineItems = function ($rootScope, BudgetActions) {
 				if (areAllLineItemsSelected) {
 					BudgetActions.deselectAllLineItems();
 				} else {
-					budgetActions.selectAllLineItems(scope.lineItems);
+					BudgetActions.selectAllLineItems(scope.lineItems);
 				}
 			};
 
