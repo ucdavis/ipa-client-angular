@@ -1,7 +1,5 @@
-/* new table CSS */
-.course-costs__table {
+.course-costs-row {
 	width: 100%;
-	margin-bottom: 20px;
 }
 
 .course-costs__table-header {

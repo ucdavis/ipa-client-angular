@@ -3,40 +3,89 @@
 	          active-tab="termNav.activeTab"
 	          select-tab="setActiveTerm"
 	          slim="true">
-		<div class="budget-costs__container">
-			<div class="budget-costs__offering" ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
-				<div colspan="10" class="budget-costs__course-title">
-					{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
+		<div class="budget-costs__main-container">
+			<div class="budget-costs__rows-container">
+				<table style="width:100%;">
+					<colgroup>
+						<col style="width: 6%;">
+						<col style="width: 10%;">
+						<col style="width: 10%;">
+						<col style="width: 10%;">
+						<col style="width: 10%;">
+						<col style="width: 10%;">
+						<col style="width: 10%;">
+						<col style="width: 10%;">
+					</colgroup>
+					<thead>
+						<tr>
+							<th class="course-costs__table-header"></th> <!-- Spacing for sequence number -->
+							<th class="course-costs__table-header">Enrollment</th>
+							<th class="course-costs__table-header">Sections</th>
+							<th class="course-costs__table-header">TAs</th>
+							<th class="course-costs__table-header">TA Cost</th>
+							<th class="course-costs__table-header">Readers</th>
+							<th class="course-costs__table-header">Reader Cost</th>
+							<th class="course-costs__table-header">Support Cost</th>
+						</tr>
+					</thead>
+				</table>
+
+				<div ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
+					<div class="budget-costs__course-title">
+						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }}
+					</div>
+					<div ng-repeat="sectionGroup in course.sectionGroups">
+						<course-costs-row section-group="sectionGroup"></course-costs-row>
+						<instructor-costs-row section-group="sectionGroup"
+																	instructor-assignment-options="instructorAssignmentOptions"
+																	regular-instructor-assignment-options="regularInstructorAssignmentOptions">
+						</instructor-costs-row>
+					</div>
+				</div>
+			</div>
+			<div class="budget-costs__shared-container">
+				<table style="width:100%;">
+					<colgroup>
+						<col style="width: 70%;">
+						<col style="width: 30%;">
+					</colgroup>
+					<thead>
+						<tr>
+							<th class="course-costs__table-header">Comments</th>
+							<th class="course-costs__table-header">Total</th>
+						</tr>
+					</thead>
+				</table>
+
+				<div ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
+					<div ng-repeat="sectionGroup in course.sectionGroups">
+						<table style="width:100%;">
+							<colgroup>
+								<col style="width: 70%;">
+								<col style="width: 30%;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<!-- Comments -->
+									<td class="course-costs__table-cell">
+										<ipa-button text="'Comments' + sectionGroup.sectionGroupCost.commentCountDisplay"
+																color="'light'"
+																icon-class="'entypo entypo-chat'"
+																on-click="openAddCourseCommentsModal(sectionGroup)">
+										</ipa-button>
+									</td>
+									<!-- Total -->
+									<td class="course-costs__table-cell-total">
+										<div class="course-costs__total-container">
+											{{ toCurrency(sectionGroup.totalCost) }}
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 
-				<div ng-repeat="sectionGroup in course.sectionGroups">
-					<support-costs-row section-group="sectionGroup"></support-costs-row>
-					<instructor-costs-row section-group="sectionGroup"></instructor-costs-row>
-					<table>
-						<theader>
-							<tr>
-								<td>
-									Comments
-								</td>
-								<td>
-									Total Cost
-								</td>
-							</tr>
-						</theader>
-						<tbody>
-							<td>
-								<ipa-button text="'Comments' + sectionGroup.sectionGroupCost.commentCountDisplay"
-														color="'light'"
-														icon-class="'entypo entypo-chat'"
-														on-click="openAddCourseCommentsModal(sectionGroup)">
-								</ipa-button>
-							</td>
-							<td>
-								{{ toCurrency(sectionGroup.totalCost) }}
-							</td>
-						</tbody>
-					</table>
-				</div>
 			</div>
 		</div>
 	</ipa-tabs>

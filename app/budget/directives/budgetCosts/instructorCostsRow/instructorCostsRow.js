@@ -4,14 +4,12 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 	return {
 		restrict: 'E',
 		template: require('./instructorCostsRow.html'),
-		replace: true,
 		scope: {
 			instructorAssignmentOptions: '<',
 			regularInstructorAssignmentOptions: '<',
-			termNav: '<',
-			calculatedSectionGroups: '<',
-			summary: '<'
+			sectionGroup: '<'
 		},
+		replace: true,
 		link: function (scope, element, attrs) {
 			scope.toggleCourseCostsSection = function() {
 				BudgetActions.toggleCourseCostsSection();

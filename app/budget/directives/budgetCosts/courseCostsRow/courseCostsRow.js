@@ -6,9 +6,7 @@ let courseCostsRow = function ($rootScope, BudgetActions) {
 		template: require('./courseCostsRow.html'),
 		replace: true,
 		scope: {
-			termNav: '<',
-			calculatedSectionGroups: '<',
-			summary: '<'
+			sectionGroup: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.overrideSectionGroup = function(sectionGroup, property) {

@@ -4,3 +4,22 @@
 	padding-left: 20px;
 	font-weight: bold;
 }
+
+.budget-costs__main-container {
+	display: flex;
+}
+
+.budget-costs__rows-container {
+	width: 70%;
+}
+
+.budget-costs__shared-container {
+	width: 30%;
+}
+
+.budget-costs__course-title {
+	padding-top: 15px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	font-weight: bold;
+}

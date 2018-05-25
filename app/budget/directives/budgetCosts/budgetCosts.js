@@ -8,7 +8,9 @@ let budgetCosts = function ($rootScope, BudgetActions) {
 		scope: {
 			termNav: '<',
 			calculatedSectionGroups: '<',
-			summary: '<'
+			summary: '<',
+			instructorAssignmentOptions: '<',
+			regularInstructorAssignmentOptions: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.openAddCourseCommentsModal = function(sectionGroup) {

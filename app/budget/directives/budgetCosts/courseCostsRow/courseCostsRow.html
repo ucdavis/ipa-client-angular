@@ -1,5 +1,4 @@
-<div class="course-costs">
-	<table class="course-costs__table">
+<table class="course-costs-row">
 		<colgroup>
 			<col style="width: 6%;">
 			<col style="width: 10%;">
@@ -10,179 +9,105 @@
 			<col style="width: 10%;">
 			<col style="width: 10%;">
 		</colgroup>
-		<thead>
+		<tbody>
 			<tr>
-				<th class="course-costs__table-header"></th> <!-- Spacing for sequence number -->
-				<th class="course-costs__table-header">Enrollment</th>
-				<th class="course-costs__table-header">Sections</th>
-				<th class="course-costs__table-header">TAs</th>
-				<th class="course-costs__table-header">TA Cost</th>
-				<th class="course-costs__table-header">Readers</th>
-				<th class="course-costs__table-header">Reader Cost</th>
-				<th class="course-costs__table-header">Support Cost</th>
-			</tr>
-		</thead>
-		<tbody class="course-costs__course-container" ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
-			<!-- Summary row -->
-			<tr ng-if="$first" class="course-totals-row">
-				<td class="course-totals-row__cell">
-					<div class="course-totals-row__first">
-						Totals
+			<td class="course-costs__table-cell-sequence">
+				<div class="course-costs__sequence-container">
+					{{ sectionGroup.sequencePattern }}
+				</div>
+			</td>
+			<!-- Enrollment -->
+			<td class="course-costs__table-cell">
+				<div class="course-costs__edit-container">
+					<div class="course-costs__number-input">
+						<ipa-input mode="'number'"
+												value="sectionGroup.overrideTotalSeats"
+												on-update="overrideSectionGroup(sectionGroup, 'seats')">
+						</ipa-input>
 					</div>
-				</td>
-				<!-- Enrollment -->
-				<td class="course-totals-row__cell">
-					<ipa-input value="summary.byTerm[termNav.activeTerm].enrollment"
-											label-read-only="true">
-					</ipa-input>
-				</td>
-				<!-- Section Count -->
-				<td class="course-totals-row__cell">
-					<ipa-input value="summary.byTerm[termNav.activeTerm].sectionCount"
-											label-read-only="true">
-					</ipa-input>
-				</td>
-				<!-- TA Count -->
-				<td class="course-totals-row__cell">
-					<ipa-input value="summary.byTerm[termNav.activeTerm].taCount"
-											label-read-only="true">
-					</ipa-input>
-				</td>
-				<!-- TA Cost -->
-				<td class="course-totals-row__cell">
-					{{ toCurrency(summary.byTerm[termNav.activeTerm].Cost) }}
-				</td>
-				<!-- Reader Count -->
-				<td class="course-totals-row__cell">
-					<ipa-input value="summary.byTerm[termNav.activeTerm].readerCount"
-											label-read-only="true">
-					</ipa-input>
-				</td>
-				<!-- Reader Cost -->
-				<td class="course-totals-row__cell">
-					{{ toCurrency(summary.byTerm[termNav.activeTerm].readerCost) }}
-				</td>
-				<!-- Sub Total -->
-				<td class="course-totals-row__cell">
-					{{ toCurrency(summary.byTerm[termNav.activeTerm].supportCosts) }}
-				</td>
-				<!-- Comments -->
-				<td class="course-totals-row__cell">
-					&nbsp;
-				</td>
-				<!-- Total -->
-				<td class="course-totals-row__cell">
-					<div>
-						{{ toCurrency(summary.byTerm[termNav.activeTerm].totalCosts) }}
+					<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
+								uib-tooltip="Update to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}"
+								tooltip-append-to-body="true"
+								confirm-button="revertOverride(sectionGroup, 'seats')"
+								message="Update to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}?"
+								yes="Update"
+								no="Cancel"
+								ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.enrollment !== null && (sectionGroup.totalSeats != sectionGroup.sectionGroupCost.enrollment)">
 					</div>
-				</td>
-			</tr>
-
-			<tr>
-				<td colspan="10" class="course-costs__course-title">
-					{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }}
-				</td>
-			</tr>
-
-			<tr ng-repeat="sectionGroup in course.sectionGroups">
-				<td class="course-costs__table-cell-sequence">
-					<div class="course-costs__sequence-container">
-						{{ sectionGroup.sequencePattern }}
+				</div>
+			</td>
+			<!-- Section Count -->
+			<td class="course-costs__table-cell">
+				<div class="course-costs__edit-container">
+					<div class="course-costs__number-input">
+						<ipa-input mode="'number'"
+							value="sectionGroup.overrideSectionCount"
+							on-update="overrideSectionGroup(sectionGroup, 'sectionCount')">
+						</ipa-input>
 					</div>
-				</td>
-				<!-- Enrollment -->
-				<td class="course-costs__table-cell">
-					<div class="course-costs__edit-container">
-						<div class="course-costs__number-input">
-							<ipa-input mode="'number'"
-													value="sectionGroup.overrideTotalSeats"
-													on-update="overrideSectionGroup(sectionGroup, 'seats')">
-							</ipa-input>
-						</div>
-						<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
-									uib-tooltip="Update to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}"
-									tooltip-append-to-body="true"
-									confirm-button="revertOverride(sectionGroup, 'seats')"
-									message="Update to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}?"
-									yes="Update"
-									no="Cancel"
-									ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.enrollment !== null && (sectionGroup.totalSeats != sectionGroup.sectionGroupCost.enrollment)">
-						</div>
+					<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
+								uib-tooltip="Update to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}"
+								tooltip-append-to-body="true"
+								confirm-button="revertOverride(sectionGroup, 'sectionCount')"
+								message="Update to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}?"
+								yes="Update"
+								no="Cancel"
+								ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.sectionCount !== null && sectionGroup.sectionCount != sectionGroup.sectionGroupCost.sectionCount">
 					</div>
-				</td>
-				<!-- Section Count -->
-				<td class="course-costs__table-cell">
-					<div class="course-costs__edit-container">
-						<div class="course-costs__number-input">
-							<ipa-input mode="'number'"
-								value="sectionGroup.overrideSectionCount"
-								on-update="overrideSectionGroup(sectionGroup, 'sectionCount')">
-							</ipa-input>
-						</div>
-						<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
-									uib-tooltip="Update to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}"
-									tooltip-append-to-body="true"
-									confirm-button="revertOverride(sectionGroup, 'sectionCount')"
-									message="Update to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}?"
-									yes="Update"
-									no="Cancel"
-									ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.sectionCount !== null && sectionGroup.sectionCount != sectionGroup.sectionGroupCost.sectionCount">
-						</div>
+				</div>
+			</td>
+			<!-- TA Count -->
+			<td class="course-costs__table-cell">
+				<div class="course-costs__edit-container">
+					<div class="course-costs__number-input">
+						<ipa-input mode="'number'"
+												value="sectionGroup.overrideTeachingAssistantAppointments"
+												on-update="overrideSectionGroup(sectionGroup, 'teachingAssistantAppointments')">
+						</ipa-input>
 					</div>
-				</td>
-				<!-- TA Count -->
-				<td class="course-costs__table-cell">
-					<div class="course-costs__edit-container">
-						<div class="course-costs__number-input">
-							<ipa-input mode="'number'"
-													value="sectionGroup.overrideTeachingAssistantAppointments"
-													on-update="overrideSectionGroup(sectionGroup, 'teachingAssistantAppointments')">
-							</ipa-input>
-						</div>
-						<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
-									uib-tooltip="Update to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}"
-									tooltip-append-to-body="true"
-									confirm-button="revertOverride(sectionGroup, 'teachingAssistantAppointments')"
-									message="Update to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}?"
-									yes="Update"
-									no="Cancel"
-									ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.taCount !== null && sectionGroup.teachingAssistantAppointments != sectionGroup.sectionGroupCost.taCount">
-						</div>
+					<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
+								uib-tooltip="Update to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}"
+								tooltip-append-to-body="true"
+								confirm-button="revertOverride(sectionGroup, 'teachingAssistantAppointments')"
+								message="Update to schedule TA count of {{ !!(sectionGroup.teachingAssistantAppointments) ? sectionGroup.teachingAssistantAppointments : 'none' }}?"
+								yes="Update"
+								no="Cancel"
+								ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.taCount !== null && sectionGroup.teachingAssistantAppointments != sectionGroup.sectionGroupCost.taCount">
 					</div>
-				</td>
-				<!-- TA Cost -->
-				<td class="course-costs__table-cell">
-					{{ toCurrency(sectionGroup.taCost) }}
-				</td>
-				<!-- Reader Count -->
-				<td class="course-costs__table-cell">
-					<div class="course-costs__edit-container">
-						<div class="course-costs__number-input">
-							<ipa-input mode="'number'"
-								value="sectionGroup.overrideReaderAppointments"
-								on-update="overrideSectionGroup(sectionGroup, 'readerAppointments')">
-							</ipa-input>
-						</div>
-						<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
-									uib-tooltip="Update to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}"
-									tooltip-append-to-body="true"
-									confirm-button="revertOverride(sectionGroup, 'readerAppointments')"
-									message="Update to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}?"
-									yes="Update"
-									no="Cancel"
-									ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.readerCount !== null && sectionGroup.readerAppointments != sectionGroup.sectionGroupCost.readerCount">
-						</div>
+				</div>
+			</td>
+			<!-- TA Cost -->
+			<td class="course-costs__table-cell">
+				{{ toCurrency(sectionGroup.taCost) }}
+			</td>
+			<!-- Reader Count -->
+			<td class="course-costs__table-cell">
+				<div class="course-costs__edit-container">
+					<div class="course-costs__number-input">
+						<ipa-input mode="'number'"
+							value="sectionGroup.overrideReaderAppointments"
+							on-update="overrideSectionGroup(sectionGroup, 'readerAppointments')">
+						</ipa-input>
 					</div>
-				</td>
-				<!-- Reader Cost -->
-				<td class="course-costs__table-cell">
-					{{ toCurrency(sectionGroup.readerCost) }}
-				</td>
-				<!-- Sub Total -->
-				<td class="course-costs__table-cell">
-					{{ toCurrency(sectionGroup.courseCostSubTotal) }}
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
+					<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
+								uib-tooltip="Update to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}"
+								tooltip-append-to-body="true"
+								confirm-button="revertOverride(sectionGroup, 'readerAppointments')"
+								message="Update to schedule reader count of {{ !!(sectionGroup.readerAppointments) ? sectionGroup.readerAppointments : 'none' }}?"
+								yes="Update"
+								no="Cancel"
+								ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.readerCount !== null && sectionGroup.readerAppointments != sectionGroup.sectionGroupCost.readerCount">
+					</div>
+				</div>
+			</td>
+			<!-- Reader Cost -->
+			<td class="course-costs__table-cell">
+				{{ toCurrency(sectionGroup.readerCost) }}
+			</td>
+			<!-- Sub Total -->
+			<td class="course-costs__table-cell">
+				{{ toCurrency(sectionGroup.courseCostSubTotal) }}
+			</td>
+		</tr>
+	</tbody>
+</table>
