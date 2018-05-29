@@ -23,3 +23,22 @@
 	padding-left: 20px;
 	font-weight: bold;
 }
+
+.budget-costs__course-title-space {
+	height: 42px;
+}
+
+.budget-costs__table-cell-total {
+	padding-right: 20px;
+	height: 106px;
+	background-color: #f8f8f8;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.budget-costs__table-cell-comments {
+	height: 106px;
+	background-color: #f8f8f8;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}

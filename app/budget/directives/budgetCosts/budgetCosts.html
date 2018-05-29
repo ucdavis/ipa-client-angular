@@ -58,6 +58,8 @@
 				</table>
 
 				<div ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
+					<div class="budget-costs__course-title-space"></div>
+
 					<div ng-repeat="sectionGroup in course.sectionGroups">
 						<table style="width:100%;">
 							<colgroup>
@@ -67,7 +69,7 @@
 							<tbody>
 								<tr>
 									<!-- Comments -->
-									<td class="course-costs__table-cell">
+									<td colspan="" class="budget-costs__table-cell-comments">
 										<ipa-button text="'Comments' + sectionGroup.sectionGroupCost.commentCountDisplay"
 																color="'light'"
 																icon-class="'entypo entypo-chat'"
@@ -75,7 +77,7 @@
 										</ipa-button>
 									</td>
 									<!-- Total -->
-									<td class="course-costs__table-cell-total">
+									<td class="budget-costs__table-cell-total">
 										<div class="course-costs__total-container">
 											{{ toCurrency(sectionGroup.totalCost) }}
 										</div>

@@ -35,10 +35,6 @@
 	align-items: center;
 }
 
-.course-costs__table-cell-total {
-	padding-right: 20px;
-}
-
 .course-costs__total-container {
 	width: 100%;
 	background-color: #f8f8f8;
