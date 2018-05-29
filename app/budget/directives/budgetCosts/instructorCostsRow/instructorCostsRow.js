@@ -2,7 +2,7 @@ import './instructorCostsRow.css';
 
 let instructorCostsRow = function ($rootScope, BudgetActions) {
 	return {
-		restrict: 'E',
+		restrict: 'A',
 		template: require('./instructorCostsRow.html'),
 		scope: {
 			instructorAssignmentOptions: '<',

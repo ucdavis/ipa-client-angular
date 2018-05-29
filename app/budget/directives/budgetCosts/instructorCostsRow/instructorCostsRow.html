@@ -1,17 +1,5 @@
 
-<table class="instructor-costs-row">
-	<colgroup>
-		<col style="width: 6%;">
-		<col style="width: 10%;">
-		<col style="width: 10%;">
-		<col style="width: 10%;">
-		<col style="width: 10%;">
-		<col style="width: 10%;">
-		<col style="width: 10%;">
-		<col style="width: 10%;">
-	</colgroup>
-	<tbody>
-		<tr>
+<tr>
 			<!-- Sequence Number -->
 			<td class="instructor-costs__table-cell-sequence">
 				<div class="instructor-costs__sequence-container">
@@ -19,7 +7,7 @@
 			</td>
 
 			<!-- Instructor of record -->
-			<td class="instructor-costs__table-cell">
+			<td colspan="2" class="instructor-costs__table-cell">
 				<div class="instructor-costs__instructor-container">
 					<div class="instructor-costs__instructor-dropdown-container">
 						<instructor-assignment-dropdown mode="'instructor'"
@@ -42,7 +30,7 @@
 			</td>
 		
 			<!-- Regular instructor -->
-			<td class="instructor-costs__table-cell">
+			<td colspan="2" class="instructor-costs__table-cell">
 				<div class="instructor-costs__instructor-container">
 					<div class="instructor-costs__instructor-dropdown-container">
 						<instructor-assignment-dropdown mode="'originalInstructor'"
@@ -64,6 +52,7 @@
 					</div>
 				</div>
 			</td>
+			<td class="instructor-costs__table-cell"></td>
 		
 			<!-- Reason -->
 			<td class="instructor-costs__table-cell">
@@ -83,9 +72,4 @@
 					</ipa-input>
 				</div>
 			</td>
-			<td class="instructor-costs__table-cell"></td>
-			<td class="instructor-costs__table-cell"></td>
-			<td class="instructor-costs__table-cell"></td>
 		</tr>
-	</tbody>
-</table>

@@ -35,11 +35,24 @@
 						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }}
 					</div>
 					<div ng-repeat="sectionGroup in course.sectionGroups">
-						<course-costs-row section-group="sectionGroup"></course-costs-row>
-						<instructor-costs-row section-group="sectionGroup"
-																	instructor-assignment-options="instructorAssignmentOptions"
-																	regular-instructor-assignment-options="regularInstructorAssignmentOptions">
-						</instructor-costs-row>
+						<table style="width: 100%;">
+							<thead>
+								<colgroup>
+									<col style="width: 6%;">
+									<col style="width: 10%;">
+									<col style="width: 10%;">
+									<col style="width: 10%;">
+									<col style="width: 10%;">
+									<col style="width: 10%;">
+									<col style="width: 10%;">
+									<col style="width: 10%;">
+								</colgroup>
+							</thead>
+							<tbody>
+								<tr course-costs-row section-group="sectionGroup"></tr>
+								<tr instructor-costs-row section-group="sectionGroup" instructor-assignment-options="instructorAssignmentOptions" regular-instructor-assignment-options="regularInstructorAssignmentOptions"></tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>

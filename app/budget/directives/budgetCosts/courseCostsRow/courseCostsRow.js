@@ -2,7 +2,7 @@ import './courseCostsRow.css';
 
 let courseCostsRow = function ($rootScope, BudgetActions) {
 	return {
-		restrict: 'E',
+		restrict: 'A',
 		template: require('./courseCostsRow.html'),
 		replace: true,
 		scope: {
