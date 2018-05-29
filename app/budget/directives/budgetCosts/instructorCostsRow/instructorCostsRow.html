@@ -23,7 +23,7 @@
 									message="Update to {{ sectionGroup.reversionDisplayName }}?"
 									yes="Update"
 									no="Cancel"
-									ng-show="sectionGroup.reversionDisplayName">
+									ng-class="{'instructor-costs-row__hidden': !(sectionGroup.reversionDisplayName) }">
 						</div>
 					</div>
 				</div>
@@ -47,15 +47,14 @@
 									message="Are you sure you want to remove this instructor?"
 									yes="Remove"
 									no="Cancel"
-									ng-show="sectionGroup.sectionGroupCost.originalInstructorId > 0">
+									ng-class="{'instructor-costs-row__hidden': (sectionGroup.sectionGroupCost.originalInstructorId > 0) == false }">
 						</div>
 					</div>
 				</div>
 			</td>
-			<td class="instructor-costs__table-cell"></td>
-		
+
 			<!-- Reason -->
-			<td class="instructor-costs__table-cell">
+			<td colspan="2" class="instructor-costs__table-cell">
 				<div class="instructor-costs__cost-container">
 					<ipa-input value="sectionGroup.sectionGroupCost.reason"
 											on-update="updateSectionGroupCost(sectionGroup.sectionGroupCost)">
