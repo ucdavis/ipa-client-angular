@@ -139,7 +139,9 @@ class ScheduleSummaryReportStateService {
 							slotSectionGroup.sections.push(slotSection);
 						});
 
-						slotSectionGroup.sections = _array_sortByProperty(slotSectionGroup.sections, ["sequenceNumber"]);
+						if (slotSectionGroup) {
+							slotSectionGroup.sections = _array_sortByProperty(slotSectionGroup.sections, ["sequenceNumber"]);
+						}
 
 						// Add any shared activities to the appropriate sections
 						action.payload.activities.forEach( function(slotActivity) {
