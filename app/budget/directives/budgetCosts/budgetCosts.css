@@ -62,3 +62,13 @@
 	justify-content: flex-start;
 	padding-right: 5px;
 }
+
+.budget-costs__table {
+	width: 100%;
+	table-layout: fixed;
+}
+
+.budget-costs__divider {
+	border-bottom: 1px solid #ddd;
+	margin-bottom: -1px;
+}

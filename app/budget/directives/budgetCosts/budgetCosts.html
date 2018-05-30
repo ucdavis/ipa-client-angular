@@ -5,7 +5,7 @@
 	          slim="true">
 		<div class="budget-costs__main-container">
 			<div class="budget-costs__rows-container">
-				<table style="width: 100%;">
+				<table class="budget-costs__table">
 					<colgroup>
 						<col style="width: 5%;">
 						<col style="width: 10%;">
@@ -22,7 +22,7 @@
 							<th class="budget-costs__table-header">
 								<div>Enrollment /</div>
 								<div>Instructor</div>
-						</th>
+							</th>
 							<th class="budget-costs__table-header">Sections</th>
 							<th class="budget-costs__table-header">
 								<div>TAs /</div>
@@ -47,7 +47,7 @@
 						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }}
 					</div>
 					<div ng-repeat="sectionGroup in course.sectionGroups">
-						<table style="width: 100%; table-layout:fixed;">
+						<table class="budget-costs__table">
 							<thead>
 								<colgroup>
 									<col style="width: 5%;">
@@ -62,14 +62,14 @@
 							</thead>
 							<tbody>
 								<tr course-costs-row section-group="sectionGroup"></tr>
-								<tr instructor-costs-row section-group="sectionGroup" instructor-assignment-options="instructorAssignmentOptions" regular-instructor-assignment-options="regularInstructorAssignmentOptions"></tr>
+								<tr divider="(course.sectionGroups.length > 1 && $last == false)" instructor-costs-row section-group="sectionGroup" instructor-assignment-options="instructorAssignmentOptions" regular-instructor-assignment-options="regularInstructorAssignmentOptions"></tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
 			<div class="budget-costs__shared-container">
-				<table style="width:100%;">
+				<table class="budget-costs__table">
 					<colgroup>
 						<col style="width: 70%;">
 						<col style="width: 30%;">
@@ -86,7 +86,7 @@
 					<div class="budget-costs__course-title-space"></div>
 
 					<div ng-repeat="sectionGroup in course.sectionGroups">
-						<table style="width:100%;">
+						<table class="budget-costs__table">
 							<colgroup>
 								<col style="width: 70%;">
 								<col style="width: 30%;">
@@ -94,15 +94,15 @@
 							<tbody>
 								<tr>
 									<!-- Comments -->
-									<td class="budget-costs__table-cell-comments">
+									<td class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroups.length > 1 && $last == false) }">
 										<ipa-button text="'Comments' + sectionGroup.sectionGroupCost.commentCountDisplay"
-																color="'light'"
-																icon-class="'entypo entypo-chat'"
-																on-click="openAddCourseCommentsModal(sectionGroup)">
+										            color="'light'"
+										            icon-class="'entypo entypo-chat'"
+										            on-click="openAddCourseCommentsModal(sectionGroup)">
 										</ipa-button>
 									</td>
 									<!-- Total -->
-									<td class="budget-costs__table-cell-total">
+									<td class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': (course.sectionGroups.length > 1 && $last == false) }">
 										<div class="budget-costs__total-container">
 											{{ toCurrency(sectionGroup.totalCost) }}
 										</div>

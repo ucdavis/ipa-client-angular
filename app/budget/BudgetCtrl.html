@@ -9,47 +9,40 @@
 
 	<div ng-if="view.state">
 		<!-- Modals -->
-		<ipa-modal
-			is-visible="view.state.openAddBudgetScenario"
-			header-text="Add New Budget Scenario">
-				<add-budget-scenario
-					ng-if="view.state.openAddBudgetScenario"
-					state="view.state"
-					is-visible="view.state.openAddBudgetScenario">
+		<ipa-modal is-visible="view.state.openAddBudgetScenario"
+		           header-text="Add New Budget Scenario">
+				<add-budget-scenario ng-if="view.state.openAddBudgetScenario"
+				                     state="view.state"
+				                     is-visible="view.state.openAddBudgetScenario">
 				</add-budget-scenario>
 		</ipa-modal>
 
-		<ipa-modal
-			is-visible="view.state.ui.isAddLineItemModalOpen"
-			header-text="Line Item">
-				<add-line-item
-					ng-if="view.state.ui.isAddLineItemModalOpen"
-					state="view.state"
-					is-visible="view.state.ui.isAddLineItemModalOpen"
-					line-item-to-edit="view.state.ui.lineItemToEdit">
+		<ipa-modal is-visible="view.state.ui.isAddLineItemModalOpen"
+		           header-text="Line Item">
+				<add-line-item ng-if="view.state.ui.isAddLineItemModalOpen"
+				               state="view.state"
+				               is-visible="view.state.ui.isAddLineItemModalOpen"
+				               line-item-to-edit="view.state.ui.lineItemToEdit">
 				</add-line-item>
 		</ipa-modal>
 
-		<ipa-modal
-			is-visible="view.state.ui.isBudgetConfigModalOpen"
-			header-text="Terms"
-			styles="budgetConfigStyles">
-				<budget-config
-					ng-if="view.state.ui.isBudgetConfigModalOpen"
-					state="view.state"
-					selected-budget-scenario="view.state.selectedBudgetScenario"
-					is-visible="view.state.ui.isBudgetConfigModalOpen">
+		<ipa-modal is-visible="view.state.ui.isBudgetConfigModalOpen"
+		           header-text="Terms"
+		           styles="budgetConfigStyles">
+				<budget-config ng-if="view.state.ui.isBudgetConfigModalOpen"
+				               state="view.state"
+				               selected-budget-scenario="view.state.selectedBudgetScenario"
+				               is-visible="view.state.ui.isBudgetConfigModalOpen">
 				</budget-config>
 		</ipa-modal>
 
 		<ipa-modal
 			is-visible="view.state.ui.courseCommentsModal.isOpen"
 			header-text="Course Comments">
-				<add-course-comments
-					ng-if="view.state.ui.courseCommentsModal.isOpen"
-					section-group="view.state.ui.courseCommentsModal.sectionGroup"
-					current-user-login-id="currentUser.loginId"
-					is-visible="view.state.ui.courseCommentsModal.isOpen">
+				<add-course-comments ng-if="view.state.ui.courseCommentsModal.isOpen"
+				                     section-group="view.state.ui.courseCommentsModal.sectionGroup"
+				                     current-user-login-id="currentUser.loginId"
+				                     is-visible="view.state.ui.courseCommentsModal.isOpen">
 				</add-course-comments>
 		</ipa-modal>
 

@@ -66,3 +66,8 @@
 .instructor-costs-row__hidden {
 	visibility: hidden;
 }
+
+.instructor-costs-row__divider {
+	border-bottom: 1px solid #ddd;
+	margin-bottom: -1px;
+}
