@@ -30,14 +30,14 @@
 
 .budget-costs__table-cell-total {
 	padding-right: 20px;
-	height: 106px;
+	height: 122px;
 	background-color: #f8f8f8;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
 
 .budget-costs__table-cell-comments {
-	height: 106px;
+	height: 128px;
 	background-color: #f8f8f8;
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -71,4 +71,10 @@
 .budget-costs__divider {
 	border-bottom: 1px solid #ddd;
 	margin-bottom: -1px;
+}
+
+.budget-costs__label {
+	font-size: 10px;
+	padding-bottom: 4px;
+	color: #b1b1b1;
 }

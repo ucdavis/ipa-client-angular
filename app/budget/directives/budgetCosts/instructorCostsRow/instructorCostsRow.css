@@ -39,7 +39,7 @@
 .instructor-costs__sequence-container {
 	width: 100%;
 	background-color: #f8f8f8;
-	height: 53px;
+	height: 59px;
 }
 
 .instructor-costs__instructor-reversion-ui {
@@ -69,5 +69,5 @@
 
 .instructor-costs-row__divider {
 	border-bottom: 1px solid #ddd;
-	margin-bottom: -1px;
+	margin-bottom: -2px;
 }
