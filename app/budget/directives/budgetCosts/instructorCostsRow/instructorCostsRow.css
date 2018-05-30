@@ -9,36 +9,10 @@
 	border-bottom: 1px solid #ddd;
 }
 
-.instructor-costs__table-header--comments {
-    padding-left: 20px;
-}
-
-.instructor-costs__course-title {
-	padding-top: 15px;
-	padding-bottom: 10px;
-	padding-left: 20px;
-	font-weight: bold;
-}
-
 .instructor-costs__table-cell {
 	background-color: #f8f8f8;
 	padding-top: 5px;
 	padding-bottom: 5px;
-}
-
-.instructor-costs__table-cell-total {
-	padding-right: 20px;
-}
-
-.instructor-costs__total-container {
-	width: 100%;
-	background-color: #f8f8f8;
-	height: 53px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	justify-content: flex-end;
-	padding-right: 5px;
 }
 
 .instructor-costs__instructor-container {
@@ -52,22 +26,10 @@
 	padding-right: 20px;
 }
 
-.instructor-costs__remove-assignment-ui {
-	margin-left: 5px;
-}
-
 .instructor-costs__cell-container {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-}
-
-.instructor-costs__cell-container--left {
-	justify-content: flex-start;
-}
-
-.instructor-costs__cell-container--large {
-	padding-left: 20px;
 }
 
 .instructor-costs__table-cell-sequence {
@@ -78,9 +40,6 @@
 	width: 100%;
 	background-color: #f8f8f8;
 	height: 53px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
 .instructor-costs__instructor-reversion-ui {
@@ -99,30 +58,9 @@
 	margin-bottom: 2px;
 }
 
-.instructor-cost-summary__text {
-	padding-top: 15px;
-	text-align: center;
-}
-
-.instructor-cost-summary__text--total {
-	text-align: right;
-	padding-right: 26px;
-}
-
-.instructor-costs__header--total-cost {
-	text-align: right;
-	padding-right: 26px;
-}
-
 .instructor-costs__header--reason,
 .instructor-costs__header--instructor-cost {
 	padding-left: 32px;
-}
-
-.instructor-costs__header--instructor,
-.instructor-costs__header--reg-instructor,
-.instructor-costs__header--comment {
-	padding-left: 10px;
 }
 
 .instructor-costs-row__hidden {

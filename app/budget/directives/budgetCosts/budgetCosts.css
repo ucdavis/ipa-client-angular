@@ -10,11 +10,11 @@
 }
 
 .budget-costs__rows-container {
-	width: 70%;
+	width: 80%;
 }
 
 .budget-costs__shared-container {
-	width: 30%;
+	width: 20%;
 }
 
 .budget-costs__course-title {
@@ -41,4 +41,24 @@
 	background-color: #f8f8f8;
 	padding-top: 10px;
 	padding-bottom: 10px;
+}
+
+.budget-costs__table-header {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ddd;
+}
+
+.budget-costs__table-header--end {
+	height: 64px;
+}
+
+.budget-costs__total-container {
+	width: 100%;
+	background-color: #f8f8f8;
+	height: 53px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	padding-right: 5px;
 }

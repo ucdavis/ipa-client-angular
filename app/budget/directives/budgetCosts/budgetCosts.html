@@ -5,9 +5,9 @@
 	          slim="true">
 		<div class="budget-costs__main-container">
 			<div class="budget-costs__rows-container">
-				<table style="width:100%;">
+				<table style="width: 100%;">
 					<colgroup>
-						<col style="width: 6%;">
+						<col style="width: 5%;">
 						<col style="width: 10%;">
 						<col style="width: 10%;">
 						<col style="width: 10%;">
@@ -18,14 +18,26 @@
 					</colgroup>
 					<thead>
 						<tr>
-							<th class="course-costs__table-header"></th> <!-- Spacing for sequence number -->
-							<th class="course-costs__table-header">Enrollment</th>
-							<th class="course-costs__table-header">Sections</th>
-							<th class="course-costs__table-header">TAs</th>
-							<th class="course-costs__table-header">TA Cost</th>
-							<th class="course-costs__table-header">Readers</th>
-							<th class="course-costs__table-header">Reader Cost</th>
-							<th class="course-costs__table-header">Support Cost</th>
+							<th class="budget-costs__table-header"></th> <!-- Spacing for sequence number -->
+							<th class="budget-costs__table-header">
+								<div>Enrollment /</div>
+								<div>Instructor</div>
+						</th>
+							<th class="budget-costs__table-header">Sections</th>
+							<th class="budget-costs__table-header">
+								<div>TAs /</div>
+								<div>Original Instructor</div>
+							</th>
+							<th class="budget-costs__table-header">TA Cost</th>
+							<th class="budget-costs__table-header">
+								<div>Readers /</div>
+								<div>Reason</div>
+							</th>
+							<th class="budget-costs__table-header">Reader Cost</th>
+							<th class="budget-costs__table-header">
+								<div>Support Cost /</div>
+								<div>Instructor Cost</div>
+							</th>
 						</tr>
 					</thead>
 				</table>
@@ -35,10 +47,10 @@
 						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }}
 					</div>
 					<div ng-repeat="sectionGroup in course.sectionGroups">
-						<table style="width: 100%;">
+						<table style="width: 100%; table-layout:fixed;">
 							<thead>
 								<colgroup>
-									<col style="width: 6%;">
+									<col style="width: 5%;">
 									<col style="width: 10%;">
 									<col style="width: 10%;">
 									<col style="width: 10%;">
@@ -64,8 +76,8 @@
 					</colgroup>
 					<thead>
 						<tr>
-							<th class="course-costs__table-header">Comments</th>
-							<th class="course-costs__table-header">Total</th>
+							<th class="budget-costs__table-header budget-costs__table-header--end">Comments</th>
+							<th class="budget-costs__table-header budget-costs__table-header--end">Total</th>
 						</tr>
 					</thead>
 				</table>
@@ -82,7 +94,7 @@
 							<tbody>
 								<tr>
 									<!-- Comments -->
-									<td colspan="" class="budget-costs__table-cell-comments">
+									<td class="budget-costs__table-cell-comments">
 										<ipa-button text="'Comments' + sectionGroup.sectionGroupCost.commentCountDisplay"
 																color="'light'"
 																icon-class="'entypo entypo-chat'"
@@ -91,7 +103,7 @@
 									</td>
 									<!-- Total -->
 									<td class="budget-costs__table-cell-total">
-										<div class="course-costs__total-container">
+										<div class="budget-costs__total-container">
 											{{ toCurrency(sectionGroup.totalCost) }}
 										</div>
 									</td>
