@@ -1,5 +1,5 @@
 <tr>
-	<td class="course-costs__table-cell-sequence">
+	<td rowspan="2" class="course-costs__table-cell-sequence">
 		<div class="course-costs__sequence-container">
 			{{ sectionGroup.sequencePattern }}
 		</div>
@@ -75,7 +75,12 @@
 	</td>
 	<!-- TA Cost -->
 	<td class="course-costs__table-cell">
-		{{ toCurrency(sectionGroup.taCost) }}
+		<div class="budget-costs__label">
+			TA Cost
+		</div>
+		<div>
+			{{ toCurrency(sectionGroup.taCost) }}
+		</div>
 	</td>
 	<!-- Reader Count -->
 	<td class="course-costs__table-cell">
@@ -102,10 +107,20 @@
 	</td>
 	<!-- Reader Cost -->
 	<td class="course-costs__table-cell">
-		{{ toCurrency(sectionGroup.readerCost) }}
+		<div class="budget-costs__label">
+			Reader Cost
+		</div>
+		<div>
+			{{ toCurrency(sectionGroup.readerCost) }}
+		</div>
 	</td>
 	<!-- Sub Total -->
 	<td class="course-costs__table-cell">
-		{{ toCurrency(sectionGroup.courseCostSubTotal) }}
+		<div class="budget-costs__label">
+			Support Cost
+		</div>
+		<div>
+			{{ toCurrency(sectionGroup.courseCostSubTotal) }}
+		</div>
 	</td>
 </tr>

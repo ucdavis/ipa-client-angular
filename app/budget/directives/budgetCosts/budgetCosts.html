@@ -44,7 +44,7 @@
 
 				<div ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
 					<div class="budget-costs__course-title">
-						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }}
+						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }} {{ course.title }}
 					</div>
 					<div ng-repeat="sectionGroup in course.sectionGroups">
 						<table class="budget-costs__table">
@@ -104,7 +104,12 @@
 									<!-- Total -->
 									<td class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': (course.sectionGroups.length > 1 && $last == false) }">
 										<div class="budget-costs__total-container">
-											{{ toCurrency(sectionGroup.totalCost) }}
+											<div class="budget-costs__label">
+												Total
+											</div>
+											<div>
+												{{ toCurrency(sectionGroup.totalCost) }}
+											</div>
 										</div>
 									</td>
 								</tr>
