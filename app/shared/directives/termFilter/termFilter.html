@@ -21,12 +21,10 @@
 			</div>
 
 			<div class="term-filter__term-list">
-				<div ng-click="onClick(term)"
+				<div ng-click="clickTerm(term)"
 				     ng-repeat="term in allTerms"
 				     class="term-filter__term">
-					<ipa-checkbox is-checked="(activeTerms.indexOf(term) > -1)"
-					              click-action="onClick(term)">
-					</ipa-checkbox>
+					<ipa-checkbox is-checked="(activeTerms.indexOf(term) > -1)"></ipa-checkbox>
 					<div class="term-filter__term-text">
 						{{ getTermName(term) }}
 					</div>
