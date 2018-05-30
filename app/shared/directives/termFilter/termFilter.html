@@ -21,19 +21,12 @@
 			</div>
 
 			<div class="term-filter__term-list">
-<<<<<<< Updated upstream:app/shared/directives/termFilter/termFilter.html
-				<div ng-click="clickTerm(term)"
-				     ng-repeat="term in allTerms"
-				     class="term-filter__term">
-					<ipa-checkbox is-checked="(activeTerms.indexOf(term) > -1)"></ipa-checkbox>
-=======
 				<div ng-click="onClick(term)"
 				     ng-repeat="term in allTerms"
 				     class="term-filter__term">
 					<ipa-checkbox is-checked="(activeTerms.indexOf(term) > -1)"
 					              click-action="onClick(term)">
 					</ipa-checkbox>
->>>>>>> Stashed changes:app/budget/directives/budgetScenarioToolbar/termFilter/termFilter.html
 					<div class="term-filter__term-text">
 						{{ getTermName(term) }}
 					</div>
