@@ -71,10 +71,20 @@
 			Instructor Cost
 		</div>
 		<div class="instructor-costs__cost-container">
-			<ipa-input mode="'currency'"
-			           value="sectionGroup.overrideInstructorCost"
-			           on-update="updateInstructorCost(sectionGroup.sectionGroupCost, sectionGroup.overrideInstructorCost)">
-			</ipa-input>
+			<div ng-show="sectionGroup.overrideInstructorCostSource == course">
+				<ipa-input mode="'currency'"
+				           value="sectionGroup.overrideInstructorCost"
+				           on-update="updateInstructorCost(sectionGroup.sectionGroupCost, sectionGroup.overrideInstructorCost)">
+				</ipa-input>
+			</div>
+
+			<div ng-show="sectionGroup.overrideInstructorCostSource != course">
+				<ipa-input mode="'currency'"
+				           place-holder="'$' + sectionGroup.overrideInstructorCost"
+				           value="sectionGroup.newInstructorCost"
+				           on-update="updateInstructorCost(sectionGroup.sectionGroupCost, sectionGroup.newInstructorCost)">
+				</ipa-input>
+			</div>
 		</div>
 	</td>
 </tr>
