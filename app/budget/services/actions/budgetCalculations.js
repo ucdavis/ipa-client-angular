@@ -177,8 +177,11 @@ class BudgetCalculations {
 				return container;
 			},
 			_calculateSectionGroupInstructors: function(sectionGroup) {
-				var originalInstructor = sectionGroup.sectionGroupCost ? BudgetReducers._state.assignedInstructors.list[sectionGroup.sectionGroupCost.originalInstructorId] : null;
-	
+				var originalAssignedInstructor = sectionGroup.sectionGroupCost ? BudgetReducers._state.assignedInstructors.list[sectionGroup.sectionGroupCost.originalInstructorId] : null;
+				var originalActiveInstructor = sectionGroup.sectionGroupCost ? BudgetReducers._state.activeInstructors.list[sectionGroup.sectionGroupCost.originalInstructorId] : null;
+
+				var originalInstructor = originalAssignedInstructor || originalActiveInstructor;
+
 				sectionGroup.originalInstructorName = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
 	
 				var assignedInstructor = BudgetReducers._state.assignedInstructors.list[sectionGroup.assignedInstructorIds[0]];
