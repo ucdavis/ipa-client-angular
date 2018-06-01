@@ -274,12 +274,13 @@ class BudgetCalculations {
 				// (2nd option) Attempt to use instructor override (either from instructorCost, or the instructor's instructorTypeCost)
 				if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.instructorId > 0) {
 					var instructorCost = BudgetReducers._state.instructorCosts.byInstructorId[sectionGroup.sectionGroupCost.instructorId];
+					var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroup.sectionGroupCost.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroup.sectionGroupCost.instructorId];
 
 					// If an instructorCost was found via override, use it
 					if (instructorCost && instructorCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorCost.cost);
 						sectionGroup.overrideInstructorCostSource = "instructor";
-						sectionGroup.overrideInstructorCostSourceDescription = sectionGroup.instructorName;
+						sectionGroup.overrideInstructorCostSourceDescription = instructor.firstName + " " + instructor.lastName;
 						sectionGroup.newInstructorCost = null;
 						return;
 					} else {
