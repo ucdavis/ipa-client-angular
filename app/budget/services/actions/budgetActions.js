@@ -379,6 +379,7 @@ class BudgetActions {
 	
 					$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
 					BudgetCalculations.calculateInstructorTypeCosts();
+					BudgetCalculations.calculateSectionGroups();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
 				});
@@ -398,6 +399,7 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
 					BudgetCalculations.calculateInstructorTypeCosts();
 					BudgetCalculations.calculateInstructors();
+					BudgetCalculations.calculateSectionGroups();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
 				});
