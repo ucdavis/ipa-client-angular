@@ -40,17 +40,19 @@
 						</td>
 						<td>
 							<div class="instructor-list__cell-container instructor-list__cell-container--right">
-								<div ng-show="instructor.instructorCost.overrideCostSource == 'instructorCost'">
+								<div ng-show="instructor.instructorCost.overrideCostSource == 'instructor'">
 									<ipa-input mode="'currency'"
-														value="instructor.instructorCost.cost"
-														on-update="updateInstructorCost(instructor.instructorCost)">
+									           value="instructor.instructorCost.cost"
+									           on-update="updateInstructorCost(instructor.instructorCost)">
 									</ipa-input>
 								</div>
-								<div ng-show="instructor.instructorCost.overrideCostSource == 'instructorType'">
+								<div ng-show="instructor.instructorCost.overrideCostSource == 'instructor type'"
+								     uib-tooltip="Cost from {{ instructor.instructorCost.overrideCostSource }}"
+								     tooltip-append-to-body="true">
 									<ipa-input mode="'currency'"
-														value="instructor.instructorCost.cost"
-														place-holder="'$' + instructor.instructorCost.overrideCost"
-														on-update="updateInstructorCost(instructor.instructorCost)">
+									           value="instructor.instructorCost.cost"
+									           place-holder="'$' + instructor.instructorCost.overrideCost"
+									           on-update="updateInstructorCost(instructor.instructorCost)">
 									</ipa-input>
 								</div>
 							</div>

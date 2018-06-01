@@ -273,7 +273,6 @@ class BudgetCalculations {
 				// (2nd option) Attempt to use instructor override (either from instructorCost, or the instructor's instructorTypeCost)
 				if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.instructorId > 0) {
 					var instructorCost = BudgetReducers._state.instructorCosts.byInstructorId[sectionGroup.sectionGroupCost.instructorId];
-					if (sectionGroup.id == 180474) { debugger; }
 
 					// If an instructorCost was found via override, use it
 					if (instructorCost && instructorCost.cost != null) {
@@ -578,7 +577,6 @@ class BudgetCalculations {
 					var instructorCost = instructorCosts.list[instructorCostId];
 
 					if (instructorCost.instructorId != instructor.id) { return; }
-					//if (instructorId == 1085) { debugger; }
 					instructor.instructorCost = instructorCost;
 
 					var user = users.byLoginId[instructor.loginId];
@@ -600,12 +598,12 @@ class BudgetCalculations {
 
 					if (instructorCost.cost) {
 						instructorCost.overrideCost = instructorCost.cost;
-						instructorCost.overrideCostSource = "instructorCost";
+						instructorCost.overrideCostSource = "instructor";
 					}
 
 					if (!instructorCost.cost && instructorCost.instructorTypeCost && instructorCost.instructorTypeCost.cost) {
 						instructorCost.overrideCost = instructorCost.instructorTypeCost.cost;
-						instructorCost.overrideCostSource = "instructorType";
+						instructorCost.overrideCostSource = "instructor type";
 					}
 				});
 
