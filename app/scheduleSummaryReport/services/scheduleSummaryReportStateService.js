@@ -18,7 +18,25 @@ class ScheduleSummaryReportStateService {
 							courses.list[slotCourse.id] = slotCourse;
 						});
 
+						let supportStaffList = {
+							ids: [],
+							list: {}
+						};
 
+						action.payload.supportStaffList.forEach( function(supportStaff) {
+							supportStaffList.ids.push(supportStaff.id);
+							supportStaffList.list[supportStaff.id] = supportStaff;
+						});
+
+						let supportAssignments = {
+							ids: [],
+							list: {}
+						};
+
+						action.payload.supportAssignments.forEach( function(supportAssignment) {
+							supportAssignments.ids.push(supportAssignment.id);
+							supportAssignments.list[supportAssignment.id] = supportAssignment;
+						});
 
 						// Build sectionGroups metadata
 						let sectionGroups = {
