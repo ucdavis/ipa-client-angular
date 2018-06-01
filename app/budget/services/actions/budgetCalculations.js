@@ -267,6 +267,7 @@ class BudgetCalculations {
 				if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.cost != null) {
 					sectionGroup.overrideInstructorCost = angular.copy(sectionGroup.sectionGroupCost.cost);
 					sectionGroup.overrideInstructorCostSource = "course";
+					sectionGroup.newInstructorCost = null;
 					return;
 				}
 	
@@ -278,6 +279,7 @@ class BudgetCalculations {
 					if (instructorCost && instructorCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorCost.cost);
 						sectionGroup.overrideInstructorCostSource = "instructor";
+						sectionGroup.newInstructorCost = null;
 						return;
 					} else {
 						var instructorTypeCost = self._findInstructorTypeCostBySectionGroupIdAndInstructorId(sectionGroup.id, sectionGroup.sectionGroupCost.instructorId);
@@ -285,6 +287,7 @@ class BudgetCalculations {
 						if (instructorTypeCost && instructorTypeCost.cost != null) {
 							sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
 							sectionGroup.overrideInstructorCostSource = "instructor type";
+							sectionGroup.newInstructorCost = null;
 							return;
 						}
 					}
@@ -298,6 +301,7 @@ class BudgetCalculations {
 					if (instructorTypeCost != null && instructorTypeCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
 						sectionGroup.overrideInstructorCostSource = "instructor type";
+						sectionGroup.newInstructorCost = null;
 						return;
 					}
 				}
@@ -311,6 +315,7 @@ class BudgetCalculations {
 					if (instructorCost && instructorCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorCost.cost);
 						sectionGroup.overrideInstructorCostSource = "instructor";
+						sectionGroup.newInstructorCost = null;
 						return;
 					}
 				}
@@ -322,6 +327,7 @@ class BudgetCalculations {
 					if (instructorTypeCost != null && instructorTypeCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
 						sectionGroup.overrideInstructorCostSource = "instructor type";
+						sectionGroup.newInstructorCost = null;
 						return;
 					}
 				}

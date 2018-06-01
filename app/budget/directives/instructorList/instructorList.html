@@ -40,13 +40,13 @@
 						</td>
 						<td>
 							<div class="instructor-list__cell-container instructor-list__cell-container--right">
-								<div ng-show="instructor.instructorCost.overrideCostSource == 'instructor'">
+								<div ng-if="instructor.instructorCost.overrideCostSource == 'instructor'">
 									<ipa-input mode="'currency'"
 									           value="instructor.instructorCost.cost"
 									           on-update="updateInstructorCost(instructor.instructorCost)">
 									</ipa-input>
 								</div>
-								<div ng-show="instructor.instructorCost.overrideCostSource == 'instructor type'"
+								<div ng-if="instructor.instructorCost.overrideCostSource != 'instructor'"
 								     uib-tooltip="Cost from {{ instructor.instructorCost.overrideCostSource }}"
 								     tooltip-append-to-body="true">
 									<ipa-input mode="'currency'"
