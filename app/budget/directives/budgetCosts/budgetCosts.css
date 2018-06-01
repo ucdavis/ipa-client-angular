@@ -1,0 +1,77 @@
+.budget-costs__course-title {
+	padding-top: 15px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	font-weight: bold;
+}
+
+.budget-costs__main-container {
+	display: flex;
+}
+
+.budget-costs__rows-container {
+	width: 80%;
+}
+
+.budget-costs__shared-container {
+	width: 20%;
+}
+
+.budget-costs__course-title {
+	padding-top: 15px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	font-weight: bold;
+}
+
+.budget-costs__course-title-space {
+	height: 42px;
+}
+
+.budget-costs__table-cell-total {
+	padding-right: 20px;
+	height: 122px;
+	background-color: #f8f8f8;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.budget-costs__table-cell-comments {
+	height: 128px;
+	background-color: #f8f8f8;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.budget-costs__table-header {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ddd;
+}
+
+.budget-costs__table-header--end {
+	height: 64px;
+}
+
+.budget-costs__total-container {
+	width: 100%;
+	background-color: #f8f8f8;
+	height: 53px;
+	padding-right: 5px;
+}
+
+.budget-costs__table {
+	width: 100%;
+	table-layout: fixed;
+}
+
+.budget-costs__divider {
+	border-bottom: 1px solid #ddd;
+	margin-bottom: -1px;
+}
+
+.budget-costs__label {
+	font-size: 10px;
+	padding-bottom: 4px;
+	color: #b1b1b1;
+}

@@ -1,28 +1,19 @@
-import './instructorCosts.css';
+import './instructorCostsRow.css';
 
-let instructorCosts = function ($rootScope, BudgetActions) {
+let instructorCostsRow = function ($rootScope, BudgetActions) {
 	return {
-		restrict: 'E',
-		template: require('./instructorCosts.html'),
-		replace: true,
+		restrict: 'A',
+		template: require('./instructorCostsRow.html'),
 		scope: {
 			instructorAssignmentOptions: '<',
 			regularInstructorAssignmentOptions: '<',
-			termNav: '<',
-			calculatedSectionGroups: '<',
-			summary: '<'
+			sectionGroup: '<',
+			divider: '<'
 		},
+		replace: true,
 		link: function (scope, element, attrs) {
 			scope.toggleCourseCostsSection = function() {
 				BudgetActions.toggleCourseCostsSection();
-			};
-
-			scope.openAddCourseCommentsModal = function(sectionGroup) {
-				BudgetActions.openAddCourseCommentsModal(sectionGroup);
-			};
-
-			scope.setActiveTerm = function(activeTermTab) {
-				BudgetActions.selectTerm(activeTermTab);
 			};
 
 			scope.removeInstructor = function(sectionGroupCost) {
@@ -53,4 +44,4 @@ let instructorCosts = function ($rootScope, BudgetActions) {
 	};
 };
 
-export default instructorCosts;
+export default instructorCostsRow;

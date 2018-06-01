@@ -21,13 +21,15 @@ import budgetNav from './directives/budgetNav/budgetNav.js';
 import lineItemFilters from './directives/budgetNav/lineItemFilters/lineItemFilters.js';
 import budgetScenarioToolbar from './directives/budgetScenarioToolbar/budgetScenarioToolbar.js';
 import budgetScenarioDropdown from './directives/budgetScenarioToolbar/budgetScenarioDropdown/budgetScenarioDropdown.js';
-import courseCosts from './directives/courseCosts/courseCosts.js';
-import instructorCosts from './directives/instructorCosts/instructorCosts.js';
-import instructorAssignmentDropdown from './directives/instructorCosts/instructorAssignmentDropdown/instructorAssignmentDropdown.js';
 import lineItems from './directives/lineItems/lineItems.js';
 import lineItemDropdown from './directives/lineItems/lineItemDropdown/lineItemDropdown.js';
 import budgetSummary from './directives/budgetSummary/budgetSummary.js';
 import instructorList from './directives/instructorList/instructorList.js';
+
+import budgetCosts from './directives/budgetCosts/budgetCosts.js';
+import courseCostsRow from './directives/budgetCosts/courseCostsRow/courseCostsRow.js';
+import instructorCostsRow from './directives/budgetCosts/instructorCostsRow/instructorCostsRow.js';
+import instructorAssignmentDropdown from './directives/budgetCosts/instructorCostsRow/instructorAssignmentDropdown/instructorAssignmentDropdown.js';
 
 import addBudgetScenario from './directives/modals/addBudgetScenario/addBudgetScenario.js';
 import addCourseComments from './directives/modals/addCourseComments/addCourseComments.js';
@@ -70,8 +72,9 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .directive('lineItemFilters', lineItemFilters)
 .directive('budgetScenarioToolbar', budgetScenarioToolbar)
 .directive('budgetScenarioDropdown', budgetScenarioDropdown)
-.directive('courseCosts', courseCosts)
-.directive('instructorCosts', instructorCosts)
+.directive('budgetCosts', budgetCosts)
+.directive('courseCostsRow', courseCostsRow)
+.directive('instructorCostsRow', instructorCostsRow)
 .directive('instructorAssignmentDropdown', instructorAssignmentDropdown)
 .directive('lineItems', lineItems)
 .directive('lineItemDropdown', lineItemDropdown)

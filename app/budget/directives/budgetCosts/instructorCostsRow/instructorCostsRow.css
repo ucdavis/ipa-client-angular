@@ -1,0 +1,73 @@
+.instructor-costs-row {
+	width: 100%;
+}
+
+.instructor-costs__table-header {
+	width: 10%;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ddd;
+}
+
+.instructor-costs__table-cell {
+	background-color: #f8f8f8;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.instructor-costs__instructor-container {
+	display: flex;
+	align-items: center;
+}
+
+.instructor-costs__cost-container {
+	display: flex;
+	align-items: center;
+	padding-right: 20px;
+}
+
+.instructor-costs__cell-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.instructor-costs__table-cell-sequence {
+	padding-left: 20px;
+}
+
+.instructor-costs__sequence-container {
+	width: 100%;
+	background-color: #f8f8f8;
+	height: 59px;
+}
+
+.instructor-costs__instructor-reversion-ui {
+	padding-left: 10px;
+}
+
+.instructor-costs__instructor-dropdown {
+	width: 120px;
+}
+
+.instructor-costs__revert-ui {
+	padding: 5px;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	cursor: pointer;
+	margin-bottom: 2px;
+}
+
+.instructor-costs__header--reason,
+.instructor-costs__header--instructor-cost {
+	padding-left: 32px;
+}
+
+.instructor-costs-row__hidden {
+	visibility: hidden;
+}
+
+.instructor-costs-row__divider {
+	border-bottom: 1px solid #ddd;
+	margin-bottom: -2px;
+}

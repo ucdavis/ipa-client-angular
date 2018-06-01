@@ -1,24 +1,14 @@
-import './courseCosts.css';
+import './courseCostsRow.css';
 
-let courseCosts = function ($rootScope, BudgetActions) {
+let courseCostsRow = function ($rootScope, BudgetActions) {
 	return {
-		restrict: 'E',
-		template: require('./courseCosts.html'),
+		restrict: 'A',
+		template: require('./courseCostsRow.html'),
 		replace: true,
 		scope: {
-			termNav: '<',
-			calculatedSectionGroups: '<',
-			summary: '<'
+			sectionGroup: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.setActiveTerm = function(activeTermTab) {
-				BudgetActions.selectTerm(activeTermTab);
-			};
-
-			scope.openAddCourseCommentsModal = function(sectionGroup) {
-				BudgetActions.openAddCourseCommentsModal(sectionGroup);
-			};
-
 			scope.overrideSectionGroup = function(sectionGroup, property) {
 				sectionGroup = scope.enforceNumericParams(sectionGroup);
 				BudgetActions.overrideSectionGroup(sectionGroup, property);
@@ -64,4 +54,4 @@ let courseCosts = function ($rootScope, BudgetActions) {
 	};
 };
 
-export default courseCosts;
+export default courseCostsRow;
