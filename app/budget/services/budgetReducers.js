@@ -297,18 +297,6 @@ class BudgetReducers {
 							byInstructorId: {}
 						};
 
-						let instructorTypeCosts = {
-							ids: [],
-							list: [],
-							byInstructorTypeId: {}
-						};
-
-						action.payload.instructorTypeCosts.forEach( function(instructorTypeCost) {
-							instructorTypeCosts.ids.push(instructorTypeCost.id);
-							instructorTypeCosts.list[instructorTypeCost.id] = instructorTypeCost;
-							instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
-						});
-
 						action.payload.instructorCosts.forEach( function(instructorCost) {
 							instructorCosts.ids.push(instructorCost.id);
 							instructorCosts.list[instructorCost.id] = instructorCost;
