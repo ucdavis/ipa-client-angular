@@ -566,11 +566,17 @@ class BudgetCalculations {
 			_generateInstructor: function (instructorId) {
 				var instructorCosts = BudgetReducers._state.instructorCosts;
 				var instructorTypes = BudgetReducers._state.instructorTypes;
+				var instructorTypeCosts = BudgetReducers._state.instructorTypeCosts;
 				var assignedInstructors = BudgetReducers._state.assignedInstructors;
 				var activeInstructors = BudgetReducers._state.activeInstructors;
 				var instructor = assignedInstructors.list[instructorId] || activeInstructors.list[instructorId];
 				var budgetId = BudgetReducers._state.budget.id;
-	
+				var users = BudgetReducers._state.users;
+				var userRoles = BudgetReducers._state.userRoles;
+				var assignedInstructors = BudgetReducers._state.assignedInstructors;
+				var activeInstructors = BudgetReducers._state.activeInstructors;
+				var workgroupId = BudgetReducers._state.ui.workgroupId;
+
 				instructor.instructorCost = null;
 				instructor.description = instructor.lastName + ", " + instructor.firstName;
 	
@@ -578,22 +584,41 @@ class BudgetCalculations {
 				// Attach instructorCost
 				instructorCosts.ids.forEach(function(instructorCostId) {
 					var instructorCost = instructorCosts.list[instructorCostId];
+
+					if (instructorCost.instructorId != instructor.id) { return; }
+
+					instructor.instructorCost = instructorCost;
+
+					var user = users.byLoginId[instructor.loginId];
+					var instructorTypeId = null;
+
+					for (var i = 0; i < userRoles.ids.length; i++) {
+						var userRole = userRoles.list[userRoles.ids[i]];
 	
-					if (instructorCost.id == instructor.instructorCostId) {
-						instructor.instructorCost = instructorCost;
-						instructorCost.instructorType = null;
-					}
-	
-					// Attach instructorType
-					instructorTypes.ids.forEach(function(instructorTypeId) {
-						var instructorType = instructorTypes.list[instructorTypeId];
-	
-						if (instructorType.id == instructorCost.instructorTypeId) {
-							instructorCost.instructorType = instructorType;
+						if (userRole.roleId == Roles.instructor && userRole.userId == user.id && userRole.workgroupId == workgroupId) {
+							instructorTypeId = userRole.instructorTypeId;
+							break;
 						}
-					});
+					}
+
+					instructorCost.instructorTypeId = instructorTypeId;
+					instructorCost.instructorType = instructorTypes.list[instructorTypeId];
+
+					instructorCost.instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorCost.instructorTypeId];
+
+					if (instructorCost.cost) {
+						instructorCost.overrideCost = instructorCost.cost;
+						instructorCost.overrideCostSource = "instructorCost";
+					}
+
+					if (!instructorCost.cost && instructorCost.instructorTypeCost && instructorCost.instructorTypeCost.cost) {
+						instructorCost.overrideCost = instructorCost.instructorTypeCost.cost;
+						instructorCost.overrideCostSource = "instructorType";
+					}
 				});
-	
+
+				if (instructorId == 1085 && !instructor.instructorCost) { debugger; }
+
 				if (instructor.instructorCost == null) {
 					instructor.instructorCost = {
 						id: null,
