@@ -279,6 +279,7 @@ class BudgetCalculations {
 					if (instructorCost && instructorCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorCost.cost);
 						sectionGroup.overrideInstructorCostSource = "instructor";
+						sectionGroup.overrideInstructorCostSourceDescription = sectionGroup.instructorName;
 						sectionGroup.newInstructorCost = null;
 						return;
 					} else {
@@ -287,6 +288,7 @@ class BudgetCalculations {
 						if (instructorTypeCost && instructorTypeCost.cost != null) {
 							sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
 							sectionGroup.overrideInstructorCostSource = "instructor type";
+							sectionGroup.overrideInstructorCostSourceDescription = instructorTypeCost.description;
 							sectionGroup.newInstructorCost = null;
 							return;
 						}
@@ -610,6 +612,7 @@ class BudgetCalculations {
 					if (!instructorCost.cost && instructorCost.instructorTypeCost && instructorCost.instructorTypeCost.cost) {
 						instructorCost.overrideCost = instructorCost.instructorTypeCost.cost;
 						instructorCost.overrideCostSource = "instructor type";
+						instructorCost.overrideCostSourceDescription = instructorCost.instructorType.description;
 					}
 				});
 
