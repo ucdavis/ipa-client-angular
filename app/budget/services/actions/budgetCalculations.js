@@ -602,6 +602,9 @@ class BudgetCalculations {
 
 					instructorCost.instructorTypeId = instructorTypeId;
 					instructorCost.instructorType = instructorTypes.list[instructorTypeId];
+					instructorCost.overrideCost = null;
+					instructorCost.overrideCostSource = null;
+					instructorCost.overrideCostSourceDescription = null;
 
 					instructorCost.instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorCost.instructorTypeId];
 

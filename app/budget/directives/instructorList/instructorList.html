@@ -40,13 +40,19 @@
 						</td>
 						<td>
 							<div class="instructor-list__cell-container instructor-list__cell-container--right">
-								<div ng-if="instructor.instructorCost.overrideCostSource == 'instructor'">
+								<div ng-if="instructor.instructorCost.overrideCostSource == 'instructor' && instructor.instructorCost.overrideCostSource.length > 0">
 									<ipa-input mode="'currency'"
 									           value="instructor.instructorCost.cost"
 									           on-update="updateInstructorCost(instructor.instructorCost)">
 									</ipa-input>
 								</div>
-								<div ng-if="instructor.instructorCost.overrideCostSource != 'instructor'"
+								<div ng-if="!(instructor.instructorCost.overrideCostSource)">
+									<ipa-input mode="'currency'"
+															value="instructor.instructorCost.cost"
+															on-update="updateInstructorCost(instructor.instructorCost)">
+									</ipa-input>
+								</div>
+								<div ng-if="instructor.instructorCost.overrideCostSource != 'instructor' && instructor.instructorCost.overrideCostSource.length > 0"
 								     uib-tooltip="Cost of {{ instructor.instructorCost.overrideCostSourceDescription }}"
 								     tooltip-append-to-body="true">
 									<ipa-input mode="'currency'"
@@ -123,9 +129,9 @@
 						<td>
 							<div class="instructor-list__cell-container instructor-list__cell-container--right">
 								<ipa-input value="instructorTypeCost.cost"
-								           place-holder="'Enter cost'"
-								           mode="'currency'"
-								           on-update="updateInstructorTypeCost(instructorTypeCost)">
+													place-holder="'Enter cost'"
+													mode="'currency'"
+													on-update="updateInstructorTypeCost(instructorTypeCost)">
 								</ipa-input>
 							</div>
 						</td>

@@ -198,6 +198,8 @@ class BudgetActions {
 						}
 					};
 					BudgetReducers.reduce(action);
+					BudgetCalculations.calculateInstructorTypeCosts();
+					BudgetCalculations.calculateInstructors();
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
 
@@ -353,6 +355,7 @@ class BudgetActions {
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
 					BudgetCalculations.calculateInstructors();
+					BudgetCalculations.calculateInstructorTypeCosts();
 					$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
