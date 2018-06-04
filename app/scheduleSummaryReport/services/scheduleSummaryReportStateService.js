@@ -28,16 +28,6 @@ class ScheduleSummaryReportStateService {
 							supportStaffList.list[supportStaff.id] = supportStaff;
 						});
 
-						let supportAssignments = {
-							ids: [],
-							list: {}
-						};
-
-						action.payload.supportAssignments.forEach( function(supportAssignment) {
-							supportAssignments.ids.push(supportAssignment.id);
-							supportAssignments.list[supportAssignment.id] = supportAssignment;
-						});
-
 						// Build sectionGroups metadata
 						let sectionGroups = {
 							ids: [],
@@ -120,6 +110,31 @@ class ScheduleSummaryReportStateService {
 						action.payload.sections.forEach( function(slotSection) {
 							sections.ids.push(slotSection.id);
 							sections.list[slotSection.id] = slotSection;
+						});
+
+
+						action.payload.supportAssignments.forEach( function(supportAssignment) {
+							if (supportAssignment.appointmentType != "teachingAssistant") { return; }
+
+							if (supportAssignment.sectionGroupId > 0) {
+								sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants = sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants || [];
+								var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
+								var displayName = supportStaff.first + " " + supportStaff.last;
+								var index = sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants.indexOf(displayName);
+
+								if (index == -1) {
+									sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants.push(displayName);
+								}
+							} else if (supportAssignment.sectionId > 0) {
+								sections.list[supportAssignment.sectionId].teachingAssistants = sections.list[supportAssignment.sectionId].teachingAssistants || [];
+								var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
+								var displayName = supportStaff.first + " " + supportStaff.last;
+								var index = sections.list[supportAssignment.sectionId].teachingAssistants.indexOf(displayName);
+
+								if (index == -1) {
+									sectionGroups.list[supportAssignment.sectionId].teachingAssistants.push(displayName);
+								}
+							}
 						});
 
 						// Build activities metadata for searching and add metadata to sections
