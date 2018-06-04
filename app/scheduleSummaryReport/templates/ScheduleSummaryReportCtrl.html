@@ -78,28 +78,27 @@
 										Units: {{ sectionGroup.units }}
 									</span>
 								</div>
-								<div class="instructor-details">
+								<div class="instructor-details section-groups__instructors">
 									<span ng-if="sectionGroup.instructors.length > 0">
 											Instructors: 
 									</span>
 									<div ng-repeat="instructor in sectionGroup.instructors"
 									     class="section-diff-element section-instructors">
-										<span class="diff-content">
+										<span>
 											{{ instructor.fullName }}
 										</span>
 										<span ng-if="$first == false">, </span>
 									</div>
 								</div>
-								<div>
+								<div class="section-groups__teaching-assistants">
 									<span ng-if="sectionGroup.teachingAssistants.length > 0">
 										Teaching Assistants: 
 									</span>
 									<div ng-repeat="teachingAssistant in sectionGroup.teachingAssistants"
 									     class="section-diff-element section-instructors">
-										<span class="diff-content">
-											{{ teachingAssistant.fullName }}
+										<span>
+											{{ teachingAssistant }}<span ng-if="sectionGroup.teachingAssistants.length > 1 && $last == false">, </span>
 										</span>
-										<span ng-if="$first == false">, </span>
 									</div>
 								</div>
 							</div>

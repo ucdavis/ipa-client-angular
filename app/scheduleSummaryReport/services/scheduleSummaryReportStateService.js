@@ -114,12 +114,13 @@ class ScheduleSummaryReportStateService {
 
 
 						action.payload.supportAssignments.forEach( function(supportAssignment) {
-							if (supportAssignment.appointmentType != "teachingAssistant") { return; }
+							if (supportAssignment.appointmentType != "teachingAssistant" || !supportAssignment.supportStaffId) { return; }
 
 							if (supportAssignment.sectionGroupId > 0) {
 								sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants = sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants || [];
 								var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
-								var displayName = supportStaff.first + " " + supportStaff.last;
+
+								var displayName = supportStaff.firstName + " " + supportStaff.lastName;
 								var index = sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants.indexOf(displayName);
 
 								if (index == -1) {
@@ -132,7 +133,7 @@ class ScheduleSummaryReportStateService {
 								var index = sections.list[supportAssignment.sectionId].teachingAssistants.indexOf(displayName);
 
 								if (index == -1) {
-									sectionGroups.list[supportAssignment.sectionId].teachingAssistants.push(displayName);
+									sections.list[supportAssignment.sectionId].teachingAssistants.push(displayName);
 								}
 							}
 						});

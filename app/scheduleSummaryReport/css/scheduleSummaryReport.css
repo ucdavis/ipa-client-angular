@@ -347,3 +347,11 @@ table.section-diff-table > tbody > tr.section-diff-row > td.data-cell {
 .schedule-summary-report__location-header {
 	padding-left: 30px;
 }
+
+.section-groups__teaching-assistants {
+	padding-top: 10px;
+}
+
+.section-groups__instructors {
+	padding-top: 10px;
+}
