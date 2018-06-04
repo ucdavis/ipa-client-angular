@@ -55,13 +55,13 @@
 						</td>
 					</tr>
 					<tbody ng-repeat="sectionGroupId in view.state.sectionGroups.ids"
-							ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]">
+					       ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]">
 						<tr ng-repeat="section in sectionGroup.sections"
-								class="section-diff-row">
+						    class="section-diff-row">
 							<!-- SectionGroup Title: Subject Code, Course Number, and Title -->
 							<td>
 								<div ng-show="$index==0"
-									class="section-diff-element section-unique-key">
+								     class="section-diff-element section-unique-key">
 									<b>{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }}</b>
 									{{ sectionGroup.title }}
 
@@ -82,7 +82,7 @@
 												Instructors: 
 										</span>
 										<div ng-repeat="instructor in sectionGroup.instructors"
-												class="section-diff-element section-instructors">
+										     class="section-diff-element section-instructors">
 											<span>
 												{{ instructor.fullName }}
 											</span>
@@ -94,7 +94,7 @@
 											TAs: 
 										</span>
 										<div ng-repeat="teachingAssistant in sectionGroup.teachingAssistants"
-												class="section-diff-element section-instructors">
+										     class="section-diff-element section-instructors">
 											<span>
 												{{ teachingAssistant }}<span ng-if="sectionGroup.teachingAssistants.length > 1 && $last == false">, </span>
 											</span>
@@ -145,7 +145,7 @@
 							<!-- Activities -->
 							<td colspan="5" style="padding: 8px;" class="data-cell">
 								<div ng-repeat="activity in section.activities track by $index"
-										class="section-activity-diff-row">
+								     class="section-activity-diff-row">
 
 									<!-- Activity Type -->
 									<div class="activity-diff-element activity-type-code">
