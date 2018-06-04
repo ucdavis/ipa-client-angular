@@ -129,7 +129,7 @@ class ScheduleSummaryReportStateService {
 							} else if (supportAssignment.sectionId > 0) {
 								sections.list[supportAssignment.sectionId].teachingAssistants = sections.list[supportAssignment.sectionId].teachingAssistants || [];
 								var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
-								var displayName = supportStaff.first + " " + supportStaff.last;
+								var displayName = supportStaff.firstName + " " + supportStaff.lastName;
 								var index = sections.list[supportAssignment.sectionId].teachingAssistants.indexOf(displayName);
 
 								if (index == -1) {

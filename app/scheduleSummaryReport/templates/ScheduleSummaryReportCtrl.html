@@ -1,186 +1,192 @@
 <nav year="{{ year }}" term-short-code="{{ termShortCode }}" workgroup-id="{{ workgroupId }}"></nav>
 <div class="schedule-summary-report-container">
+	<ipa-header class="hidden-print" page-title="Schedule Summary Report"></ipa-header>
 
-<ipa-header class="hidden-print" page-title="Schedule Summary Report"></ipa-header>
+	<div class="main-content">
+		<div class="row hidden-print">
+			<div class="col-sm-12">
+				<div class="table-toolbar">
 
-<div class="main-content">
-	<div class="row hidden-print">
-		<div class="col-sm-12">
-			<div class="table-toolbar">
+					<span class="tool-icon glyphicon glyphicon-download-alt" uib-tooltip="Download as Excel" ng-click="download()"></span>
 
-				<span class="tool-icon glyphicon glyphicon-download-alt" uib-tooltip="Download as Excel" ng-click="download()"></span>
-
-				<span class="tool-icon glyphicon glyphicon-print" uib-tooltip="Print" ng-click="print()"></span>
+					<span class="tool-icon glyphicon glyphicon-print" uib-tooltip="Print" ng-click="print()"></span>
+				</div>
+				<!-- .table-toolbar -->
 			</div>
-			<!-- .table-toolbar -->
+			<!-- .col-sm-12 -->
 		</div>
-		<!-- .col-sm-12 -->
-	</div>
-	<!-- .row -->
+		<!-- .row -->
 
-	<div class="row">
-		<div class="col-sm-12">
-			<table class="table section-diff-table" style="margin-top: 0px;">
-				<colgroup>
-					<col span="1" style="width: 22%;">
-					<col span="1" style="width: 7%;">
-					<col span="1" style="width: 7%;">
-					<col span="1" style="width: 7%;">
-					<col span="1" style="width: 7%;">
-					<col span="1" style="width: 10%;">
-					<col span="1" style="width: 10%;">
-					<col span="1" style="width: 10%;">
-					<col span="1" style="width: 10%;">
-					<col span="1" style="width: 10%;">
-				</colgroup>
-				<thead>
-					<th>Title</th>
-					<th>Section</th>
-					<th>CRN</th>
-					<th>Enrollment</th>
-					<th>Seats</th>
-					<th>Activity</th>
-					<th>Days</th>
-					<th>Start</th>
-					<th>End</th>
-					<th class="schedule-summary-report__location-header">Location</th>
-				</thead>
-				<tr ng-hide="view.state">
-					<td>
-						<spinner></spinner>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="9" style="text-align: center;" ng-if="view.state.sectionGroups.ids.length == 0">
-						No schedule data available.
-					</td>
-				</tr>
-				<tbody ng-repeat="sectionGroupId in view.state.sectionGroups.ids"
-						ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]">
-					<tr ng-repeat="section in sectionGroup.sections"
-							class="section-diff-row">
-						<!-- SectionGroup Title: Subject Code, Course Number, and Title -->
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table section-diff-table" style="margin-top: 0px;">
+					<colgroup>
+						<col span="1" style="width: 18%;">
+						<col span="1" style="width: 11%;">
+						<col span="1" style="width: 7%;">
+						<col span="1" style="width: 7%;">
+						<col span="1" style="width: 7%;">
+						<col span="1" style="width: 10%;">
+						<col span="1" style="width: 10%;">
+						<col span="1" style="width: 10%;">
+						<col span="1" style="width: 10%;">
+						<col span="1" style="width: 10%;">
+					</colgroup>
+					<thead>
+						<th>Title</th>
+						<th>Section</th>
+						<th>CRN</th>
+						<th>Enrollment</th>
+						<th>Seats</th>
+						<th>Activity</th>
+						<th>Days</th>
+						<th>Start</th>
+						<th>End</th>
+						<th class="schedule-summary-report__location-header">Location</th>
+					</thead>
+					<tr ng-hide="view.state">
 						<td>
-							<div ng-show="$index==0"
-								class="section-diff-element section-unique-key">
-								<b>{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }}</b>
-								{{ sectionGroup.title }}
-
-								<span class="planned-seats-label" ng-if="sectionGroup.plannedSeats > 0">
-									({{ sectionGroup.plannedSeats }})
-								</span>
-							</div>
-
-							<!-- Instructors -->
-							<div ng-show="$index==0">
-								<div class="units-details">
-									<span ng-if="sectionGroup.units > 0">
-										Units: {{ sectionGroup.units }}
-									</span>
-								</div>
-								<div class="instructor-details section-groups__instructors">
-									<span ng-if="sectionGroup.instructors.length > 0">
-											Instructors: 
-									</span>
-									<div ng-repeat="instructor in sectionGroup.instructors"
-									     class="section-diff-element section-instructors">
-										<span>
-											{{ instructor.fullName }}
-										</span>
-										<span ng-if="$first == false">, </span>
-									</div>
-								</div>
-								<div class="section-groups__teaching-assistants">
-									<span ng-if="sectionGroup.teachingAssistants.length > 0">
-										Teaching Assistants: 
-									</span>
-									<div ng-repeat="teachingAssistant in sectionGroup.teachingAssistants"
-									     class="section-diff-element section-instructors">
-										<span>
-											{{ teachingAssistant }}<span ng-if="sectionGroup.teachingAssistants.length > 1 && $last == false">, </span>
-										</span>
-									</div>
-								</div>
-							</div>
-						</td>
-
-						<!-- Sequence Number -->
-						<td class="data-cell">
-							<div class="section-diff-element section-unique-key">
-								{{ section.sequenceNumber }}
-							</div>
-						</td>
-
-						<!-- CRN -->
-						<td class="data-cell">
-							<div>
-								{{ section.crn || 'No CRN' }}
-							</div>
-						</td>
-
-						<!-- Enrollment -->
-						<td class="data-cell">
-							<div class="data-cell__value">
-								{{ section.enrollment }}
-							</div>
-						</td>
-
-						<!-- Seats -->
-						<td class="data-cell">
-							<div class="data-cell__value">
-								{{ section.seats }}
-							</div>
-						</td>
-
-						<!-- Activities -->
-						<td colspan="5" style="padding: 8px;" class="data-cell">
-							<div ng-repeat="activity in section.activities track by $index"
-									class="section-activity-diff-row">
-
-								<!-- Activity Type -->
-								<div class="activity-diff-element activity-type-code">
-									{{ activity.activityTypeCode.activityTypeCode.getActivityCodeDescription() }}
-								</div>
-
-								<!-- dayIndicator -->
-								<div class="activity-diff-element activity-day-indicator">
-									<span class="diff-content">
-										{{ activity.dayIndicator.getWeekDays() || 'none' }}
-									</span>
-								</div>
-
-
-								<!-- startTime -->
-								<div class="activity-diff-element activity-start-time">
-									<span class="diff-content">
-										{{ activity.startTime.toStandardTime() || 'none' }}
-									</span>
-								</div>
-
-								<!-- endTime -->
-								<div class="activity-diff-element activity-end-time">
-									<span class="diff-content">
-										{{ activity.endTime.toStandardTime() || 'none' }}
-									</span>
-								</div>
-
-								<!-- location -->
-								<div class="activity-diff-element activity-location">
-									<span class="diff-content">
-										{{ activity.locationDescription || 'none' }}
-									</span>
-								</div>
-
-							</div>
-
+							<spinner></spinner>
 						</td>
 					</tr>
+					<tr>
+						<td colspan="9" style="text-align: center;" ng-if="view.state.sectionGroups.ids.length == 0">
+							No schedule data available.
+						</td>
+					</tr>
+					<tbody ng-repeat="sectionGroupId in view.state.sectionGroups.ids"
+							ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]">
+						<tr ng-repeat="section in sectionGroup.sections"
+								class="section-diff-row">
+							<!-- SectionGroup Title: Subject Code, Course Number, and Title -->
+							<td>
+								<div ng-show="$index==0"
+									class="section-diff-element section-unique-key">
+									<b>{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }}</b>
+									{{ sectionGroup.title }}
 
-				</tbody>
-			</table>
+									<span class="planned-seats-label" ng-if="sectionGroup.plannedSeats > 0">
+										({{ sectionGroup.plannedSeats }})
+									</span>
+								</div>
+
+								<!-- Instructors -->
+								<div ng-show="$index==0">
+									<div class="units-details">
+										<span ng-if="sectionGroup.units > 0">
+											Units: {{ sectionGroup.units }}
+										</span>
+									</div>
+									<div class="instructor-details section-group__instructors">
+										<span ng-if="sectionGroup.instructors.length > 0">
+												Instructors: 
+										</span>
+										<div ng-repeat="instructor in sectionGroup.instructors"
+												class="section-diff-element section-instructors">
+											<span>
+												{{ instructor.fullName }}
+											</span>
+											<span ng-if="$first == false">, </span>
+										</div>
+									</div>
+									<div class="section-group__teaching-assistants">
+										<span ng-if="sectionGroup.teachingAssistants.length > 0">
+											TAs: 
+										</span>
+										<div ng-repeat="teachingAssistant in sectionGroup.teachingAssistants"
+												class="section-diff-element section-instructors">
+											<span>
+												{{ teachingAssistant }}<span ng-if="sectionGroup.teachingAssistants.length > 1 && $last == false">, </span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</td>
+
+							<!-- Sequence Number -->
+							<td class="data-cell">
+								<div class="section-diff-element section-unique-key">
+									<span>{{ section.sequenceNumber }}</span>
+									<div class="section__teaching-assistants">
+										<span ng-if="section.teachingAssistants.length > 0">
+											TAs: 
+										</span>
+										<div ng-repeat="teachingAssistant in section.teachingAssistants"
+												class="section-diff-element section-instructors">
+											<span>
+												{{ teachingAssistant }}<span ng-if="section.teachingAssistants.length > 1 && $last == false">, </span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</td>
+
+							<!-- CRN -->
+							<td class="data-cell">
+								<div>
+									{{ section.crn || 'No CRN' }}
+								</div>
+							</td>
+
+							<!-- Enrollment -->
+							<td class="data-cell">
+								<div class="data-cell__value">
+									{{ section.enrollment }}
+								</div>
+							</td>
+
+							<!-- Seats -->
+							<td class="data-cell">
+								<div class="data-cell__value">
+									{{ section.seats }}
+								</div>
+							</td>
+
+							<!-- Activities -->
+							<td colspan="5" style="padding: 8px;" class="data-cell">
+								<div ng-repeat="activity in section.activities track by $index"
+										class="section-activity-diff-row">
+
+									<!-- Activity Type -->
+									<div class="activity-diff-element activity-type-code">
+										{{ activity.activityTypeCode.activityTypeCode.getActivityCodeDescription() }}
+									</div>
+
+									<!-- dayIndicator -->
+									<div class="activity-diff-element activity-day-indicator">
+										<span class="diff-content">
+											{{ activity.dayIndicator.getWeekDays() || 'none' }}
+										</span>
+									</div>
+
+
+									<!-- startTime -->
+									<div class="activity-diff-element activity-start-time">
+										<span class="diff-content">
+											{{ activity.startTime.toStandardTime() || 'none' }}
+										</span>
+									</div>
+
+									<!-- endTime -->
+									<div class="activity-diff-element activity-end-time">
+										<span class="diff-content">
+											{{ activity.endTime.toStandardTime() || 'none' }}
+										</span>
+									</div>
+
+									<!-- location -->
+									<div class="activity-diff-element activity-location">
+										<span class="diff-content">
+											{{ activity.locationDescription || 'none' }}
+										</span>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
-
-</div>
 </div>
 <div></div>

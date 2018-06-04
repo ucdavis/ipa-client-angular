@@ -348,10 +348,14 @@ table.section-diff-table > tbody > tr.section-diff-row > td.data-cell {
 	padding-left: 30px;
 }
 
-.section-groups__teaching-assistants {
+.section-group__teaching-assistants {
 	padding-top: 10px;
 }
 
-.section-groups__instructors {
+.section-group__instructors {
+	padding-top: 10px;
+}
+
+.section__teaching-assistants {
 	padding-top: 10px;
 }
