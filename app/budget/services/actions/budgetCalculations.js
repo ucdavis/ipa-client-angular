@@ -179,7 +179,6 @@ class BudgetCalculations {
 			_calculateSectionGroupInstructors: function(sectionGroup) {
 				var originalAssignedInstructor = sectionGroup.sectionGroupCost ? BudgetReducers._state.assignedInstructors.list[sectionGroup.sectionGroupCost.originalInstructorId] : null;
 				var originalActiveInstructor = sectionGroup.sectionGroupCost ? BudgetReducers._state.activeInstructors.list[sectionGroup.sectionGroupCost.originalInstructorId] : null;
-
 				var originalInstructor = originalAssignedInstructor || originalActiveInstructor;
 
 				sectionGroup.originalInstructorName = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
