@@ -198,9 +198,10 @@ class BudgetActions {
 						}
 					};
 					BudgetReducers.reduce(action);
+					BudgetCalculations.calculateInstructorTypeCosts();
+					BudgetCalculations.calculateInstructors();
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
-					newInstructorCost.instructorTypeId = instructorTypeId;
 
 					self.asignInstructorType(newInstructorCost);
 					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
@@ -340,39 +341,6 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
 				});
 			},
-			// Will create instructorCost before assigning instructorType if necessary
-			assignInstructorTypeAndCost: function (instructorCost, instructorTypeId) {
-				var self = this;
-	
-				// Ensure cost is passed as a number
-				instructorCost.cost = parseFloat(instructorCost.cost);
-	
-				// Make instructorCost if necessary
-				if (instructorCost.id <= 0) {
-					BudgetService.createInstructorCost(instructorCost).then(function (newInstructorCost) {
-						var action = {
-							type: ActionTypes.CREATE_INSTRUCTOR_COST,
-							payload: {
-								instructorCost: newInstructorCost
-							}
-						};
-						BudgetReducers.reduce(action);
-						BudgetCalculations.calculateSectionGroups();
-						BudgetCalculations.calculateTotalCost();
-	
-						newInstructorCost.instructorTypeId = instructorTypeId;
-	
-						self.asignInstructorType(newInstructorCost);
-						$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
-					}, function (err) {
-						$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
-					});
-	
-				} else {
-					instructorCost.instructorTypeId = instructorTypeId;
-					self.asignInstructorType(instructorCost);
-				}
-			},
 			asignInstructorType: function(instructorCost) {
 				var self = this;
 	
@@ -387,6 +355,7 @@ class BudgetActions {
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
 					BudgetCalculations.calculateInstructors();
+					BudgetCalculations.calculateInstructorTypeCosts();
 					$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
@@ -413,6 +382,7 @@ class BudgetActions {
 	
 					$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
 					BudgetCalculations.calculateInstructorTypeCosts();
+					BudgetCalculations.calculateSectionGroups();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
 				});
@@ -432,6 +402,7 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
 					BudgetCalculations.calculateInstructorTypeCosts();
 					BudgetCalculations.calculateInstructors();
+					BudgetCalculations.calculateSectionGroups();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
 				});

@@ -4,7 +4,7 @@
 	          select-tab="setActiveTab"
 	          slim="true">
 
-		<div ng-show="view.activeTab == 'Instructor Costs'">
+		<div ng-show="view.activeTab == 'Salaries'">
 			<table class="instructor-costs__table">
 				<thead>
 					<tr>
@@ -40,10 +40,27 @@
 						</td>
 						<td>
 							<div class="instructor-list__cell-container instructor-list__cell-container--right">
-								<ipa-input mode="'currency'"
-								           value="instructor.instructorCost.cost"
-								           on-update="updateInstructorCost(instructor.instructorCost)">
-								</ipa-input>
+								<div ng-if="instructor.instructorCost.overrideCostSource == 'instructor' && instructor.instructorCost.overrideCostSource.length > 0">
+									<ipa-input mode="'currency'"
+									           value="instructor.instructorCost.cost"
+									           on-update="updateInstructorCost(instructor.instructorCost)">
+									</ipa-input>
+								</div>
+								<div ng-if="!(instructor.instructorCost.overrideCostSource)">
+									<ipa-input mode="'currency'"
+									           value="instructor.instructorCost.cost"
+									           on-update="updateInstructorCost(instructor.instructorCost)">
+									</ipa-input>
+								</div>
+								<div ng-if="instructor.instructorCost.overrideCostSource != 'instructor' && instructor.instructorCost.overrideCostSource.length > 0"
+								     uib-tooltip="Cost of {{ instructor.instructorCost.overrideCostSourceDescription }}"
+								     tooltip-append-to-body="true">
+									<ipa-input mode="'currency'"
+									           value="instructor.instructorCost.cost"
+									           place-holder="'$' + instructor.instructorCost.overrideCost"
+									           on-update="updateInstructorCost(instructor.instructorCost)">
+									</ipa-input>
+								</div>
 							</div>
 						</td>
 					</tr>
@@ -51,7 +68,7 @@
 			</table>
 		</div>
 
-		<div ng-show="view.activeTab == 'Group Costs'">
+		<div ng-show="view.activeTab == 'Category Costs'">
 			<table class="instructor-costs__table">
 				<thead>
 					<tr>

@@ -42,3 +42,8 @@ input[type=number].ipa-input::-webkit-outer-spin-button {
 .ipa-input--label-read-only:focus {
 	border-color: rgba(0,0,0,0);
 }
+
+.ipa-input::placeholder {
+   color: rgb(170, 166, 166);
+    opacity: .7;
+}
