@@ -76,25 +76,21 @@ class ScheduleSummaryReportStateService {
 							list: {}
 						};
 
-						// Add instructorIds to relevant sectionGroups
+						// Add assigned instructor data to sectionGroups
 						action.payload.teachingAssignments.forEach( function(slotTeachingAssignment) {
-							if (slotTeachingAssignment.sectionGroupId) {
+							// Non-sectiongroup based assignments are irrelevant here.
+							// TeachingAssignments that are unapproved are preferences and not assignments.
+							if (!slotTeachingAssignment.sectionGroupId || slotTeachingAssignment.approved == false) { return; }
 
-								teachingAssignments.ids.push(slotTeachingAssignment.id);
-								teachingAssignments.list[slotTeachingAssignment.id] = slotTeachingAssignment;
-								var slotSectionGroup = sectionGroups.list[slotTeachingAssignment.sectionGroupId];
+							teachingAssignments.ids.push(slotTeachingAssignment.id);
+							teachingAssignments.list[slotTeachingAssignment.id] = slotTeachingAssignment;
 
-								if (slotSectionGroup) {
-									var slotInstructor = instructors.list[slotTeachingAssignment.instructorId];
+							var slotSectionGroup = sectionGroups.list[slotTeachingAssignment.sectionGroupId];
 
-									if (slotSectionGroup.instructors == null) {
-										slotSectionGroup.instructors = [];
-									}
-
-									if (slotTeachingAssignment.approved) {
-										slotSectionGroup.instructors.push(slotInstructor);
-									}
-								}
+							if (slotSectionGroup) {
+								slotSectionGroup.instructors = slotSectionGroup.instructors || [];
+								var slotInstructor = instructors.list[slotTeachingAssignment.instructorId];
+								slotSectionGroup.instructors.push(slotInstructor);
 							}
 						});
 
