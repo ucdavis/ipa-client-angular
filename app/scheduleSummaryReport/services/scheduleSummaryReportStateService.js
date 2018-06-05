@@ -70,8 +70,6 @@ class ScheduleSummaryReportStateService {
 							instructors.list[slotInstructor.id] = slotInstructor;
 						});
 
-
-
 						// Build teachingAssignment metadata for searching
 						let teachingAssignments = {
 							ids: [],
@@ -100,7 +98,6 @@ class ScheduleSummaryReportStateService {
 							}
 						});
 
-
 						// Build sections metadata for searching
 						let sections = {
 							ids: [],
@@ -112,14 +109,16 @@ class ScheduleSummaryReportStateService {
 							sections.list[slotSection.id] = slotSection;
 						});
 
-
+						// Calculate a list of TA names for each sectionGroup/section
 						action.payload.supportAssignments.forEach( function(supportAssignment) {
+							// Ensure supportAssignment is relevant
 							if (supportAssignment.appointmentType != "teachingAssistant" || !supportAssignment.supportStaffId) { return; }
 
+							// Support Assignments can be tied to either a specific section or a sectionGroup
 							if (supportAssignment.sectionGroupId > 0) {
 								sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants = sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants || [];
-								var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
 
+								var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
 								var displayName = supportStaff.firstName + " " + supportStaff.lastName;
 								var index = sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants.indexOf(displayName);
 
@@ -128,6 +127,7 @@ class ScheduleSummaryReportStateService {
 								}
 							} else if (supportAssignment.sectionId > 0) {
 								sections.list[supportAssignment.sectionId].teachingAssistants = sections.list[supportAssignment.sectionId].teachingAssistants || [];
+
 								var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
 								var displayName = supportStaff.firstName + " " + supportStaff.lastName;
 								var index = sections.list[supportAssignment.sectionId].teachingAssistants.indexOf(displayName);
