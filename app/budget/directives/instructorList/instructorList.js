@@ -11,8 +11,8 @@ let instructorList = function (BudgetActions) {
 		},
 		link: function (scope, element, attrs) {
 			scope.view = {
-				activeTab: 'Instructor Costs',
-				allTabs: ['Instructor Costs', 'Group Costs']
+				activeTab: 'Salaries',
+				allTabs: ['Salaries', 'Category Costs']
 			};
 
 			scope.setActiveTab = function (activeTab) {

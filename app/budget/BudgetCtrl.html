@@ -70,12 +70,12 @@
 			                summary="view.state.summary"
 			                instructor-types="view.state.instructorTypes">
 			</budget-summary>
-			<line-items ng-if="view.state.ui.sectionNav.activeTab == 'Line Items'"
+			<line-items ng-if="view.state.ui.sectionNav.activeTab == 'Funds'"
 			            selected-budget-scenario="view.state.selectedBudgetScenario"
 			            line-items="view.state.calculatedLineItems"
 			            ui="view.state.ui">
 			</line-items>
-			<budget-costs ng-if="view.state.ui.sectionNav.activeTab == 'Costs'"
+			<budget-costs ng-if="view.state.ui.sectionNav.activeTab == 'Schedule Costs'"
 			              instructor-assignment-options="view.state.ui.instructorAssignmentOptions"
 			              regular-instructor-assignment-options="view.state.ui.regularInstructorAssignmentOptions"
 			              calculated-section-groups="view.state.calculatedSectionGroups"

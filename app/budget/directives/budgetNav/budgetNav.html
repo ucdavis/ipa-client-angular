@@ -3,11 +3,11 @@
 		<div class="budget-nav__nav-item" ng-click="setRoute('Summary')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Summary' }">
 			Summary
 		</div>
-		<div class="budget-nav__nav-item" ng-click="setRoute('Costs')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Costs' }">
-			Costs
+		<div class="budget-nav__nav-item" ng-click="setRoute('Schedule Costs')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Schedule Costs' }">
+			Schedule Costs
 		</div>
-		<div class="budget-nav__nav-item" ng-click="setRoute('Line Items')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Line Items' }">
-			Line Items
+		<div class="budget-nav__nav-item" ng-click="setRoute('Funds')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Funds' }">
+				Funds
 		</div>
 		<div class="budget-nav__nav-item" ng-click="setRoute('Instructor List')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Instructor List' }">
 			Instructor List
@@ -15,7 +15,7 @@
 	</div>
 
 	<div class="budget-nav__side-bar">
-		<div class="budget-nav__line-item-tools" ng-if="selectedSection == 'Line Items'">
+		<div class="budget-nav__line-item-tools" ng-if="selectedSection == 'Funds'">
 			<div class="budget-nav__tool">
 				<ipa-button icon-class="'glyphicon glyphicon-trash'"
 				            size="'small'"
