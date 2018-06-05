@@ -63,10 +63,13 @@
 
 				<!-- Current preferences -->
 				<li ng-repeat="instructorPreference in sectionGroup.instructorPreferences | orderBy: 'priority'"
-						id="{{ instructorPreference.id }}" class="instructor-preference">
+				    id="{{ instructorPreference.id }}"
+				    class="instructor-preference">
 
 					<div>{{ instructorPreference.priority }}</div>
-					<div><i class="preference-sortable-handle glyphicon glyphicon-option-vertical preference-sortable-handle"><i></div>
+					<div>
+						<i class="preference-sortable-handle glyphicon glyphicon-option-vertical preference-sortable-handle"></i>
+					</div>
 					<div class="preference-box">
 						<div>
 							{{ instructorPreference.fullName}}

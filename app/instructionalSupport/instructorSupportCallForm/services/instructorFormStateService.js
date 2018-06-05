@@ -22,18 +22,18 @@ class InstructorFormStateService {
 							sectionGroups.ids.push(sectionGroup.id);
 							sectionGroups.list[sectionGroup.id] = sectionGroup;
 						});
-	
+
 						return sectionGroups;
 					default:
 						return sectionGroups;
 				}
 			},
-			_courseReducers: function (action, course) {
+			_courseReducers: function (action, courses) {
 				var scope = this;
 	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
-						let courses = {
+					courses = {
 							ids: [],
 							list: {}
 						};
@@ -43,7 +43,7 @@ class InstructorFormStateService {
 							courses.ids.push(course.id);
 							courses.list[course.id] = course;
 						});
-	
+
 						return courses;
 					default:
 						return courses;
@@ -148,7 +148,7 @@ class InstructorFormStateService {
 			},
 			reduce: function (action) {
 				var scope = this;
-	
+
 				let newState = {};
 				newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 				newState.courses = scope._courseReducers(action, scope._state.courses);

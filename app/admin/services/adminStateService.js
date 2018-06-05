@@ -49,15 +49,15 @@ class AdminStateService {
 						}
 	
 						return workgroups;
-					case UPDATE_WORKGROUP:
+					case ActionTypes.UPDATE_WORKGROUP:
 						workgroups.list[action.payload.workgroup.id] = action.payload.workgroup;
 						return workgroups;
-					case REMOVE_WORKGROUP:
+					case ActionTypes.REMOVE_WORKGROUP:
 						var workgroupIndex = workgroups.ids.indexOf(action.payload.workgroup.id);
 						workgroups.ids.splice(workgroupIndex, 1);
 						delete workgroups.list[action.payload.workgroup.id];
 						return workgroups;
-					case ADD_WORKGROUP:
+					case ActionTypes.ADD_WORKGROUP:
 						workgroups.list[action.payload.workgroup.id] = action.payload.workgroup;
 						workgroups.ids.push(action.payload.workgroup.id);
 						workgroups.newWorkgroup = {};
