@@ -359,3 +359,9 @@ table.section-diff-table > tbody > tr.section-diff-row > td.data-cell {
 .section__teaching-assistants {
 	padding-top: 10px;
 }
+
+.schedule-summary-report__table {
+	border-collapse: separate;
+	margin-bottom: 20px;
+	border-spacing: 0;
+}

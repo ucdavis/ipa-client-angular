@@ -19,7 +19,7 @@
 
 		<div class="row">
 			<div class="col-sm-12">
-				<table class="table section-diff-table" style="margin-top: 0px;">
+				<table class="table section-diff-table schedule-summary-report__table">
 					<colgroup>
 						<col span="1" style="width: 18%;">
 						<col span="1" style="width: 11%;">
@@ -83,22 +83,16 @@
 										</span>
 										<div ng-repeat="instructor in sectionGroup.instructors"
 										     class="section-diff-element section-instructors">
-											<span>
-												{{ instructor.fullName }}
-											</span>
-											<span ng-if="$first == false">, </span>
+											{{ instructor.fullName }}<span ng-if="$last == false">, </span>
 										</div>
 									</div>
 									<div class="section-group__teaching-assistants">
-										<span ng-if="sectionGroup.teachingAssistants.length > 0">
+										<span ng-if="sectionGroup.teachingAssistants.length > 0" class="section-instructors">
 											TAs: 
 										</span>
-										<div ng-repeat="teachingAssistant in sectionGroup.teachingAssistants"
-										     class="section-diff-element section-instructors">
-											<span>
-												{{ teachingAssistant }}<span ng-if="sectionGroup.teachingAssistants.length > 1 && $last == false">, </span>
-											</span>
-										</div>
+										<span ng-repeat="teachingAssistant in sectionGroup.teachingAssistants">
+											{{ teachingAssistant }}<span ng-if="$last == false">, </span>
+										</span>
 									</div>
 								</div>
 							</td>
@@ -112,7 +106,7 @@
 											TAs: 
 										</span>
 										<div ng-repeat="teachingAssistant in section.teachingAssistants"
-												class="section-diff-element section-instructors">
+										     class="section-diff-element section-instructors">
 											<span>
 												{{ teachingAssistant }}<span ng-if="section.teachingAssistants.length > 1 && $last == false">, </span>
 											</span>
@@ -189,4 +183,3 @@
 		</div>
 	</div>
 </div>
-<div></div>
