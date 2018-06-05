@@ -100,15 +100,16 @@ class TeachingCallStatusStateService {
 						return calculations;
 				}
 			},
-			_instructorReducers: function (action, originalInstructors, teachingCallReceipts) {
+			_instructorReducers: function (action, instructors, teachingCallReceipts) {
 				var scope = this;
-				let instructors = originalInstructors || {
-					ids: [],
-					list: []
-				};
 
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
+						var instructors = {
+							ids: [],
+							list: []
+						};
+
 						// Hashing user values for calculation
 						let users = {
 							ids: [],
@@ -137,7 +138,10 @@ class TeachingCallStatusStateService {
 	
 							var userRole = userRoles.byUserId[user.id];
 							instructor.instructorTypeId = userRole.instructorTypeId;
-							instructors.ids.push(instructor.id);
+							if (instructors.ids.indexOf(instructor.id) == -1) {
+								instructors.ids.push(instructor.id);
+							}
+
 							instructors.list[instructor.id] = instructor;
 						});
 	
