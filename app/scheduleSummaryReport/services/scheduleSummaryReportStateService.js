@@ -1,5 +1,5 @@
 class ScheduleSummaryReportStateService {
-	constructor ($rootScope, $log, Term, SectionGroup, ActionTypes) {
+	constructor ($rootScope, $log, Term, SectionGroup, ActionTypes, TeachingAssignmentService) {
 		return {
 			_state: {},
 			_sectionGroupReducers: function (action, sectionGroups) {
@@ -26,6 +26,16 @@ class ScheduleSummaryReportStateService {
 						action.payload.supportStaffList.forEach( function(supportStaff) {
 							supportStaffList.ids.push(supportStaff.id);
 							supportStaffList.list[supportStaff.id] = supportStaff;
+						});
+
+						let instructorTypes = {
+							ids: [],
+							list: {}
+						};
+
+						action.payload.instructorTypes.forEach( function(instructorType) {
+							instructorTypes.ids.push(instructorType.id);
+							instructorTypes.list[instructorType.id] = instructorType;
 						});
 
 						// Build sectionGroups metadata
@@ -90,7 +100,10 @@ class ScheduleSummaryReportStateService {
 							if (slotSectionGroup) {
 								slotSectionGroup.instructors = slotSectionGroup.instructors || [];
 								var slotInstructor = instructors.list[slotTeachingAssignment.instructorId];
-								slotSectionGroup.instructors.push(slotInstructor);
+								var slotInstructorType = instructorTypes.list[slotTeachingAssignment.instructorTypeId];
+								var instructorName = TeachingAssignmentService.getInstructorDescription(slotTeachingAssignment, slotInstructor, slotInstructorType);
+
+								slotSectionGroup.instructors.push(instructorName);
 							}
 						});
 
@@ -232,6 +245,6 @@ class ScheduleSummaryReportStateService {
 	}
 }
 
-ScheduleSummaryReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup', 'ActionTypes'];
+ScheduleSummaryReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup', 'ActionTypes', 'TeachingAssignmentService'];
 
 export default ScheduleSummaryReportStateService;
