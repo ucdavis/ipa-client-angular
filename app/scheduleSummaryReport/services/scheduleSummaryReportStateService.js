@@ -1,5 +1,5 @@
 class ScheduleSummaryReportStateService {
-	constructor ($rootScope, $log, Term, SectionGroup, ActionTypes) {
+	constructor ($rootScope, $log, Term, SectionGroup, ActionTypes, TeachingAssignmentService) {
 		return {
 			_state: {},
 			_sectionGroupReducers: function (action, sectionGroups) {
@@ -18,7 +18,25 @@ class ScheduleSummaryReportStateService {
 							courses.list[slotCourse.id] = slotCourse;
 						});
 
+						let supportStaffList = {
+							ids: [],
+							list: {}
+						};
 
+						action.payload.supportStaffList.forEach( function(supportStaff) {
+							supportStaffList.ids.push(supportStaff.id);
+							supportStaffList.list[supportStaff.id] = supportStaff;
+						});
+
+						let instructorTypes = {
+							ids: [],
+							list: {}
+						};
+
+						action.payload.instructorTypes.forEach( function(instructorType) {
+							instructorTypes.ids.push(instructorType.id);
+							instructorTypes.list[instructorType.id] = instructorType;
+						});
 
 						// Build sectionGroups metadata
 						let sectionGroups = {
@@ -62,36 +80,32 @@ class ScheduleSummaryReportStateService {
 							instructors.list[slotInstructor.id] = slotInstructor;
 						});
 
-
-
 						// Build teachingAssignment metadata for searching
 						let teachingAssignments = {
 							ids: [],
 							list: {}
 						};
 
-						// Add instructorIds to relevant sectionGroups
+						// Add assigned instructor data to sectionGroups
 						action.payload.teachingAssignments.forEach( function(slotTeachingAssignment) {
-							if (slotTeachingAssignment.sectionGroupId) {
+							// Non-sectiongroup based assignments are irrelevant here.
+							// TeachingAssignments that are unapproved are preferences and not assignments.
+							if (!slotTeachingAssignment.sectionGroupId || slotTeachingAssignment.approved == false) { return; }
 
-								teachingAssignments.ids.push(slotTeachingAssignment.id);
-								teachingAssignments.list[slotTeachingAssignment.id] = slotTeachingAssignment;
-								var slotSectionGroup = sectionGroups.list[slotTeachingAssignment.sectionGroupId];
+							teachingAssignments.ids.push(slotTeachingAssignment.id);
+							teachingAssignments.list[slotTeachingAssignment.id] = slotTeachingAssignment;
 
-								if (slotSectionGroup) {
-									var slotInstructor = instructors.list[slotTeachingAssignment.instructorId];
+							var slotSectionGroup = sectionGroups.list[slotTeachingAssignment.sectionGroupId];
 
-									if (slotSectionGroup.instructors == null) {
-										slotSectionGroup.instructors = [];
-									}
+							if (slotSectionGroup) {
+								slotSectionGroup.instructors = slotSectionGroup.instructors || [];
+								var slotInstructor = instructors.list[slotTeachingAssignment.instructorId];
+								var slotInstructorType = instructorTypes.list[slotTeachingAssignment.instructorTypeId];
+								var instructorName = TeachingAssignmentService.getInstructorDescription(slotTeachingAssignment, slotInstructor, slotInstructorType);
 
-									if (slotTeachingAssignment.approved) {
-										slotSectionGroup.instructors.push(slotInstructor);
-									}
-								}
+								slotSectionGroup.instructors.push(instructorName);
 							}
 						});
-
 
 						// Build sections metadata for searching
 						let sections = {
@@ -102,6 +116,35 @@ class ScheduleSummaryReportStateService {
 						action.payload.sections.forEach( function(slotSection) {
 							sections.ids.push(slotSection.id);
 							sections.list[slotSection.id] = slotSection;
+						});
+
+						// Calculate a list of TA names for each sectionGroup/section
+						action.payload.supportAssignments.forEach( function(supportAssignment) {
+							// Ensure supportAssignment is relevant
+							if (supportAssignment.appointmentType != "teachingAssistant" || !supportAssignment.supportStaffId) { return; }
+
+							// Support Assignments can be tied to either a specific section or a sectionGroup
+							if (supportAssignment.sectionGroupId > 0) {
+								sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants = sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants || [];
+
+								var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
+								var displayName = supportStaff.firstName + " " + supportStaff.lastName;
+								var index = sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants.indexOf(displayName);
+
+								if (index == -1) {
+									sectionGroups.list[supportAssignment.sectionGroupId].teachingAssistants.push(displayName);
+								}
+							} else if (supportAssignment.sectionId > 0) {
+								sections.list[supportAssignment.sectionId].teachingAssistants = sections.list[supportAssignment.sectionId].teachingAssistants || [];
+
+								var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
+								var displayName = supportStaff.firstName + " " + supportStaff.lastName;
+								var index = sections.list[supportAssignment.sectionId].teachingAssistants.indexOf(displayName);
+
+								if (index == -1) {
+									sections.list[supportAssignment.sectionId].teachingAssistants.push(displayName);
+								}
+							}
 						});
 
 						// Build activities metadata for searching and add metadata to sections
@@ -139,7 +182,9 @@ class ScheduleSummaryReportStateService {
 							slotSectionGroup.sections.push(slotSection);
 						});
 
-						slotSectionGroup.sections = _array_sortByProperty(slotSectionGroup.sections, ["sequenceNumber"]);
+						if (slotSectionGroup) {
+							slotSectionGroup.sections = _array_sortByProperty(slotSectionGroup.sections, ["sequenceNumber"]);
+						}
 
 						// Add any shared activities to the appropriate sections
 						action.payload.activities.forEach( function(slotActivity) {
@@ -200,6 +245,6 @@ class ScheduleSummaryReportStateService {
 	}
 }
 
-ScheduleSummaryReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup', 'ActionTypes'];
+ScheduleSummaryReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup', 'ActionTypes', 'TeachingAssignmentService'];
 
 export default ScheduleSummaryReportStateService;

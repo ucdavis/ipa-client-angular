@@ -26,6 +26,20 @@ class TeachingAssignmentService {
 				}
 
 				return null;
+			},
+			getInstructorDescription: function(teachingAssignment, instructor, instructorType) {
+				// Ensure the proper entities were supplied
+				if (instructor && teachingAssignment.instructorId != instructor.id) { return null; }
+				if (instructorType && teachingAssignment.instructorTypeId != instructorType.id) { return null; }
+
+				if (instructor) {
+					return instructor.firstName + " " + instructor.lastName;
+				} else if (instructorType) {
+					return instructorType.description;
+				}
+
+				// Return null if no source for the name was provided
+				return null;
 			}
 		};
 	}
