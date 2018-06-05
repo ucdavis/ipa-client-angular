@@ -100,15 +100,16 @@ class TeachingCallStatusStateService {
 						return calculations;
 				}
 			},
-			_instructorReducers: function (action, originalInstructors, teachingCallReceipts) {
+			_instructorReducers: function (action, instructors, teachingCallReceipts) {
 				var scope = this;
-				let instructors = originalInstructors || {
-					ids: [],
-					list: []
-				};
 
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
+						var instructors = {
+							ids: [],
+							list: []
+						};
+
 						// Hashing user values for calculation
 						let users = {
 							ids: [],
