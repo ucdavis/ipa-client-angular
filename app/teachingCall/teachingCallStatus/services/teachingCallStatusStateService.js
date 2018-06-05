@@ -137,7 +137,10 @@ class TeachingCallStatusStateService {
 	
 							var userRole = userRoles.byUserId[user.id];
 							instructor.instructorTypeId = userRole.instructorTypeId;
-							instructors.ids.push(instructor.id);
+							if (instructors.ids.indexOf(instructor.id) == -1) {
+								instructors.ids.push(instructor.id);
+							}
+
 							instructors.list[instructor.id] = instructor;
 						});
 	
