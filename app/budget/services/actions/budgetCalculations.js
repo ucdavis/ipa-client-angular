@@ -261,6 +261,7 @@ class BudgetCalculations {
 	
 				// Generate Instructor cost overrides
 				sectionGroup.overrideInstructorCost = null;
+				sectionGroup.overrideInstructorCostSource = "course";
 
 				// (1st option) attempt to use per-course instructor cost
 				if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.cost != null) {
@@ -303,6 +304,7 @@ class BudgetCalculations {
 					if (instructorTypeCost != null && instructorTypeCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
 						sectionGroup.overrideInstructorCostSource = "instructor type";
+						sectionGroup.overrideInstructorCostSourceDescription = instructorTypeCost.description;
 						sectionGroup.newInstructorCost = null;
 						return;
 					}
@@ -317,6 +319,9 @@ class BudgetCalculations {
 					if (instructorCost && instructorCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorCost.cost);
 						sectionGroup.overrideInstructorCostSource = "instructor";
+
+						var instructor = BudgetReducers._state.assignedInstructors.list[instructorCost.instructorId] || BudgetReducers._state.activeInstructors.list[instructorCost.instructorId];
+						sectionGroup.overrideInstructorCostSourceDescription = instructor.firstName + " " + instructor.lastName;
 						sectionGroup.newInstructorCost = null;
 						return;
 					}
@@ -329,6 +334,7 @@ class BudgetCalculations {
 					if (instructorTypeCost != null && instructorTypeCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
 						sectionGroup.overrideInstructorCostSource = "instructor type";
+						sectionGroup.overrideInstructorCostSourceDescription = instructorTypeCost.description;
 						sectionGroup.newInstructorCost = null;
 						return;
 					}

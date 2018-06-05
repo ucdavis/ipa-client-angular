@@ -78,7 +78,7 @@
 				</ipa-input>
 			</div>
 
-			<div ng-if="sectionGroup.overrideInstructorCostSource != 'course'"
+			<div ng-if="sectionGroup.overrideInstructorCostSource != 'course' && sectionGroup.overrideInstructorCostSource.length > 0"
 			     uib-tooltip="Cost of {{ sectionGroup.overrideInstructorCostSourceDescription }}"
 			     tooltip-append-to-body="true">
 				<ipa-input mode="'currency'"
