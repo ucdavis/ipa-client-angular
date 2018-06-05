@@ -289,7 +289,7 @@ class BudgetCalculations {
 						if (instructorTypeCost && instructorTypeCost.cost != null) {
 							sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
 							sectionGroup.overrideInstructorCostSource = "instructor type";
-							sectionGroup.overrideInstructorCostSourceDescription = instructorTypeCost.description;
+							sectionGroup.overrideInstructorCostSourceDescription = instructorTypeCost.description + " category";
 							sectionGroup.newInstructorCost = null;
 							return;
 						}
@@ -304,7 +304,7 @@ class BudgetCalculations {
 					if (instructorTypeCost != null && instructorTypeCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
 						sectionGroup.overrideInstructorCostSource = "instructor type";
-						sectionGroup.overrideInstructorCostSourceDescription = instructorTypeCost.description;
+						sectionGroup.overrideInstructorCostSourceDescription = instructorTypeCost.description + " category";
 						sectionGroup.newInstructorCost = null;
 						return;
 					}
@@ -334,7 +334,7 @@ class BudgetCalculations {
 					if (instructorTypeCost != null && instructorTypeCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
 						sectionGroup.overrideInstructorCostSource = "instructor type";
-						sectionGroup.overrideInstructorCostSourceDescription = instructorTypeCost.description;
+						sectionGroup.overrideInstructorCostSourceDescription = instructorTypeCost.description + " category";
 						sectionGroup.newInstructorCost = null;
 						return;
 					}
@@ -621,7 +621,7 @@ class BudgetCalculations {
 					if (!instructorCost.cost && instructorCost.instructorTypeCost && instructorCost.instructorTypeCost.cost) {
 						instructorCost.overrideCost = instructorCost.instructorTypeCost.cost;
 						instructorCost.overrideCostSource = "instructor type";
-						instructorCost.overrideCostSourceDescription = instructorCost.instructorType.description;
+						instructorCost.overrideCostSourceDescription = instructorCost.instructorType.description + " category"
 					}
 				});
 
