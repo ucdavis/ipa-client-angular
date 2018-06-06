@@ -26,7 +26,7 @@
 
 .budget-nav__side-bar {
 	display: flex;
-	width: 30%;
+	width: 40%;
 	justify-content: flex-end;
 	align-items: center;
 }
@@ -45,8 +45,13 @@
 	padding-right: 15px;
 }
 
-.budget-nav__total {
+.budget-nav__sub-balance {
 	border-left: 1px solid #ddd;
+	padding-left: 10px;
+	padding-right: 5px;
+}
+
+.budget-nav__balance {
 	padding-left: 10px;
 	padding-right: 5px;
 }
