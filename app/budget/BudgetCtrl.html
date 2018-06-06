@@ -67,7 +67,8 @@
 		<div class="page-content">
 			<budget-summary ng-if="view.state.ui.sectionNav.activeTab == 'Summary'"
 			                summary="view.state.summary"
-			                instructor-types="view.state.instructorTypes">
+			                instructor-types="view.state.instructorTypes"
+			                selected-budget-scenario="view.state.selectedBudgetScenario">
 			</budget-summary>
 			<line-items ng-if="view.state.ui.sectionNav.activeTab == 'Funds'"
 			            selected-budget-scenario="view.state.selectedBudgetScenario"

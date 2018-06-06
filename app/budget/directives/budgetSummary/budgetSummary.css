@@ -47,3 +47,7 @@
 .budget-summary__cell--total-strong {
 	border-top: 3px double black;
 }
+
+.budget-summary__cell--funds {
+	font-weight: bold;
+}

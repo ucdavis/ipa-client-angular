@@ -738,6 +738,8 @@ class BudgetCalculations {
 						byInstructorTypeId: {}
 					},
 					totalCosts: 0,
+					funds: 0,
+					balance: 0,
 					totalSCH: 0,
 					lowerDivCount: 0,
 					upperDivCount: 0,
