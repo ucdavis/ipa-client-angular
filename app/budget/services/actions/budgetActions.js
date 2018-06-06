@@ -1,5 +1,5 @@
 class BudgetActions {
-	constructor ($rootScope, $window, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes) {
+	constructor ($rootScope, $window, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles) {
 		return {
 			getInitialState: function (workgroupId, year, selectedBudgetScenarioId, selectedTerm) {
 				var self = this;
@@ -39,7 +39,8 @@ class BudgetActions {
 	
 					// Ensure budgetScenario is properly set
 					self.selectBudgetScenario();
-	
+					self.attachInstructorTypesToInstructors();
+
 					// Perform follow up calculations
 					BudgetCalculations.calculateInstructors();
 					BudgetCalculations.calculateLineItems();
@@ -797,11 +798,37 @@ class BudgetActions {
 	
 				BudgetCalculations.calculateLineItems();
 				BudgetCalculations.calculateTotalCost();
+			},
+			attachInstructorTypesToInstructors: function () {
+				var activeInstructors = BudgetReducers._state.activeInstructors;
+				var assignedInstructors = BudgetReducers._state.assignedInstructors;
+				var teachingAssignments = BudgetReducers._state.teachingAssignments;
+				var users = BudgetReducers._state.users;
+				var userRoles = BudgetReducers._state.userRoles;
+				var instructorTypes = BudgetReducers._state.instructorTypes;
+
+				activeInstructors.ids.forEach(function(instructorId) {
+					var instructor = activeInstructors.list[instructorId];
+					var user = users.byLoginId[instructor.loginId.toLowerCase()];
+					var userRoleId = userRoles.ids.find(id => (userRoles.list[id].roleId == Roles.instructor && userRoles.list[id].userId == user.id));
+					var userRole = userRoles.list[userRoleId];
+					var instructorType = instructorTypes.list[userRole.instructorTypeId];
+					instructor.instructorTypeDescription = instructorType.description;
+				});
+
+				assignedInstructors.ids.forEach(function(instructorId) {
+					var instructor = assignedInstructors.list[instructorId];
+					var user = users.byLoginId[instructor.loginId.toLowerCase()];
+					var userRoleId = userRoles.ids.find(id => (userRoles.list[id].roleId == Roles.instructor && userRoles.list[id].userId == user.id));
+					var userRole = userRoles.list[userRoleId];
+					var instructorType = instructorTypes.list[userRole.instructorTypeId];
+					instructor.instructorTypeDescription = instructorType.description;
+				});
 			}
 		};
 	}
 }
 
-BudgetActions.$inject = ['$rootScope', '$window', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes'];
+BudgetActions.$inject = ['$rootScope', '$window', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes', 'Roles'];
 
 export default BudgetActions;
