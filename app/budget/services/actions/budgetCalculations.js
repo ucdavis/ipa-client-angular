@@ -544,6 +544,8 @@ class BudgetCalculations {
 					usedInstructorIds.push(instructorId);
 				});
 	
+				calculatedInstructors = _array_sortByProperty(calculatedInstructors, ["instructorTypeDescription", "lastName"]);
+
 				let instructorAssignmentOptions = [];
 	
 				instructorTypes.ids.forEach(function(instructorTypeId) {

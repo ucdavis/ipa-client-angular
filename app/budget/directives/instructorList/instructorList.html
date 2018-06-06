@@ -27,7 +27,7 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="instructor in state.calculatedInstructors | orderBy: 'lastName'">
+					<tr ng-repeat="instructor in state.calculatedInstructors">
 						<td>
 							<div class="instructor-list__cell-container instructor-list__cell-container--left">
 								{{ instructor.lastName }}, {{ instructor.firstName }}
