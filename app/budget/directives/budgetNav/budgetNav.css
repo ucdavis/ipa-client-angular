@@ -46,8 +46,9 @@
 }
 
 .budget-nav__total {
-	padding-left: 15px;
 	border-left: 1px solid #ddd;
+	padding-left: 10px;
+	padding-right: 5px;
 }
 
 .budget-nav__line-item-tools {
