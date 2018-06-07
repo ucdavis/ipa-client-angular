@@ -32,31 +32,6 @@
 			self.$location.search({ mode: mode });
 		};
 
-		if ($routeParams.mode && $routeParams.mode != "unknown") {
-			// Set the active tab according to the URL
-			$scope.view.mode = $routeParams.mode;
-		} else {
-			// Otherwise redirect to the default view
-			var currentUser = this.AuthService.getCurrentUser();
-			var isAdmin = currentUser.isAdmin();
-			var isAcademicPlanner = currentUser.hasRole('academicPlanner', $scope.workgroupId);
-			var isReviewer = currentUser.hasRole('reviewer', $scope.workgroupId);
-			var isInstructor = currentUser.isInstructor($scope.workgroupId);
-			var isInstructionalSupport = currentUser.hasRoles(['studentMasters', 'studentPhd', 'instructionalSupport'], $scope.workgroupId);
-
-			if (isAcademicPlanner || isReviewer || isAdmin) {
-				$scope.setActiveMode("workgroup");
-			}
-			else if (isInstructor) {
-				$scope.setActiveMode("instructor");
-			}
-			else if (isInstructionalSupport) {
-				$scope.setActiveMode("instructionalSupport");
-			} else {
-				$scope.setActiveMode("unknown");
-			}
-		}
-
 		$scope.getTermDisplayName = function (term) {
 			return term.getTermDisplayName(term);
 		};
@@ -75,6 +50,8 @@
 
 		$rootScope.$on('summaryStateChanged', function (event, data) {
 			self.$scope.view.state = data;
+
+			self.setMode($scope, $routeParams, AuthService);
 		});
 
 		$rootScope.$on('sharedStateSet', function (event, data) {
@@ -82,6 +59,33 @@
 		});
 
 		this.getPayload();
+	}
+
+	setMode ($scope, $routeParams, AuthService) {
+		if ($routeParams.mode && $routeParams.mode != "unknown") {
+			// Set the active tab according to the URL
+			$scope.view.mode = $routeParams.mode;
+		} else {
+			// Otherwise redirect to the default view
+			var currentUser = AuthService.getCurrentUser();
+			var isAdmin = currentUser.isAdmin();
+			var isAcademicPlanner = currentUser.hasRole('academicPlanner', $scope.workgroupId);
+			var isReviewer = currentUser.hasRole('reviewer', $scope.workgroupId);
+			var isInstructor = currentUser.isInstructor($scope.workgroupId);
+			var isInstructionalSupport = currentUser.hasRoles(['studentMasters', 'studentPhd', 'instructionalSupport'], $scope.workgroupId);
+
+			if (isAcademicPlanner || isReviewer || isAdmin) {
+				$scope.setActiveMode("workgroup");
+			}
+			else if (isInstructor) {
+				$scope.setActiveMode("instructor");
+			}
+			else if (isInstructionalSupport) {
+				$scope.setActiveMode("instructionalSupport");
+			} else {
+				$scope.setActiveMode("unknown");
+			}
+		}
 	}
 
 	getPayload () {
