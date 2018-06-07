@@ -144,6 +144,8 @@ class BudgetCalculations {
 					type: ActionTypes.CALCULATE_TOTAL_COST,
 					payload: {
 						totalCost: totalCost,
+						funds: lineItemFunds,
+						scheduleCost: courseCosts,
 						budgetScenarioId: BudgetReducers._state.ui.selectedBudgetScenarioId
 					}
 				});

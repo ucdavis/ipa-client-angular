@@ -41,8 +41,16 @@
 			</div>
 		</div>
 		<div class="budget-nav__total-container">
-			<div class="budget-nav__total">
+			<div>
+				<span class="budget-nav__balance">
 				Balance: {{ toCurrency(selectedBudgetScenario.totalCost) }}
+				</span>
+				<span class="budget-nav__sub-balance" ng-if="selectedSection == 'Funds'">
+					Funds: {{ toCurrency(selectedBudgetScenario.funds) }}
+				</span>
+				<span class="budget-nav__sub-balance" ng-if="selectedSection == 'Schedule Costs'">
+					Schedule Costs: {{ toCurrency(selectedBudgetScenario.scheduleCost) }}
+				</span>
 			</div>
 		</div>
 	</div>
