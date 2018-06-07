@@ -625,7 +625,7 @@ class BudgetCalculations {
 					if (!instructorCost.cost && instructorCost.instructorTypeCost && instructorCost.instructorTypeCost.cost) {
 						instructorCost.overrideCost = instructorCost.instructorTypeCost.cost;
 						instructorCost.overrideCostSource = "instructor type";
-						instructorCost.overrideCostSourceDescription = instructorCost.instructorType.description + " category"
+						instructorCost.overrideCostSourceDescription = instructorCost.instructorType.description + " category";
 					}
 				});
 
