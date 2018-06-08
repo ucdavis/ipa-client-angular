@@ -242,8 +242,9 @@ class AuthService {
 					if (userRole.workgroupId > 0) {
 						var workgroupId = userRole.workgroupId;
 						var year = new Date().getFullYear();
-						var url = workgroupId + '/' + year;
-						$window.location.href = $window.location.href + url;
+						var url = '/' + workgroupId + '/' + year;
+						$location.path(url);
+
 						return;
 					}
 
