@@ -57,8 +57,6 @@
 		$rootScope.$on('sharedStateSet', function (event, data) {
 			self.$scope.sharedState = data;
 		});
-
-		this.getPayload();
 	}
 
 	setMode ($scope, $routeParams, AuthService) {
@@ -87,17 +85,8 @@
 			}
 		}
 	}
-
-	getPayload () {
-		var self = this;
-		return this.AuthService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
-			if (self.$route.current.params.workgroupId && self.$route.current.params.year) {
-				return self.SummaryActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year);
-			}
-		});
-	}
 }
 
- SummaryCtrl.$inject = ['$scope', '$route', '$routeParams', '$rootScope', '$location', 'AuthService', 'SummaryActionCreators'];
+SummaryCtrl.$inject = ['$scope', '$route', '$routeParams', '$rootScope', '$location', 'AuthService', 'SummaryActionCreators'];
 
- export default SummaryCtrl;
+export default SummaryCtrl;
