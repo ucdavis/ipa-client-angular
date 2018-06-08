@@ -7,14 +7,25 @@
  * Central location for sharedState information.
  */
 class RegistrarReconciliationReportActionCreators {
-	constructor (RegistrarReconciliationReportStateService, RegistrarReconciliationReportService, $rootScope, ActionTypes) {
+	constructor (RegistrarReconciliationReportStateService, RegistrarReconciliationReportService, $rootScope, ActionTypes, AuthService, $route, Term) {
 		this.RegistrarReconciliationReportStateService = RegistrarReconciliationReportStateService;
 		this.RegistrarReconciliationReportService = RegistrarReconciliationReportService;
 		this.$rootScope = $rootScope;
 		this.ActionTypes = ActionTypes;
 
 		return {
-			getInitialState: function (workgroupId, year, termCode) {
+			getInitialState: function () {
+				var termShortCode = $route.current.params.termShortCode;
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
+
+				if (!termShortCode) {
+					var termStates = AuthService.getTermStates();
+					var termShortCode = calculateCurrentTermShortCode(termStates);
+				}
+		
+				var termCode = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, $route.current.params.year).code;
+
 				RegistrarReconciliationReportService.getTermComparisonReport(workgroupId, year, termCode).then(function (sectionDiffs) {
 					var action = {
 						type: ActionTypes.INIT_STATE,
@@ -26,6 +37,24 @@ class RegistrarReconciliationReportActionCreators {
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not load report initial state.", type: "ERROR" });
 				});
+			},
+			calculateCurrentTermShortCode (termStates) {
+				var earliestTermCode = null;
+
+				termStates.forEach( function(termState) {
+					if (termState.state == "ANNUAL_DRAFT") {
+						if ( (earliestTermCode == null) || earliestTermCode > termState.termCode) {
+							earliestTermCode = termState.termCode;
+						}
+					}
+				});
+			
+				// Default to fall quarter if current term cannot be deduced from termStates
+				if (earliestTermCode == null) {
+					return "10";
+				}
+			
+				return earliestTermCode.slice(-2);
 			},
 			/**
 			 * Updates a section and takes a property as an argument
@@ -265,6 +294,6 @@ class RegistrarReconciliationReportActionCreators {
 	}
 }
 
-RegistrarReconciliationReportActionCreators.$inject = ['RegistrarReconciliationReportStateService', 'RegistrarReconciliationReportService', '$rootScope', 'ActionTypes'];
+RegistrarReconciliationReportActionCreators.$inject = ['RegistrarReconciliationReportStateService', 'RegistrarReconciliationReportService', '$rootScope', 'ActionTypes', 'AuthService', '$route', 'Term'];
 
 export default RegistrarReconciliationReportActionCreators;

@@ -44,11 +44,29 @@ function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year/:termShortCode/instructorSupportCallForm", {
 		template: require('./instructorSupportCallForm/InstructorSupportCallForm.html'),
-		controller: "InstructorSupportCallFormCtrl"
+		controller: "InstructorSupportCallFormCtrl",
+		resolve: {
+			validate: function (AuthService, $route, InstructorFormActions) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						InstructorFormActions.getInitialState();
+					}
+				});
+			}
+		}
 	})
 	.when("/:workgroupId/:year/:termShortCode/studentSupportCallForm", {
 		template: require('./studentSupportCallForm/StudentSupportCallForm.html'),
-		controller: "StudentSupportCallFormCtrl"
+		controller: "StudentSupportCallFormCtrl",
+		resolve: {
+			validate: function (AuthService, $route, StudentFormActions) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						StudentFormActions.getInitialState();
+					}
+				});
+			}
+		}
 	})
 	.otherwise({
 		redirectTo: "/"

@@ -7,7 +7,7 @@
  * Central location for sharedState information.
  */
 class WorkgroupActionCreators {
-	constructor (WorkgroupStateService, WorkgroupService, $rootScope, Role, Roles, ActionTypes) {
+	constructor (WorkgroupStateService, WorkgroupService, $rootScope, Role, Roles, ActionTypes, $route) {
 		var self = this;
 		this.WorkgroupStateService = WorkgroupStateService;
 		this.WorkgroupService = WorkgroupService;
@@ -19,7 +19,8 @@ class WorkgroupActionCreators {
 		return {
 			getInitialState: function (workgroupId) {
 				var self = this;
-	
+				var workgroupId = $route.current.params.workgroupId;
+
 				WorkgroupService.getWorkgroupByCode(workgroupId).then(function (payload) {
 					var action = {
 						type: ActionTypes.INIT_WORKGROUP,
@@ -390,6 +391,6 @@ class WorkgroupActionCreators {
 	}
 }
 
-WorkgroupActionCreators.$inject = ['WorkgroupStateService', 'WorkgroupService', '$rootScope', 'Role', 'Roles', 'ActionTypes'];
+WorkgroupActionCreators.$inject = ['WorkgroupStateService', 'WorkgroupService', '$rootScope', 'Role', 'Roles', 'ActionTypes', '$route'];
 
 export default WorkgroupActionCreators;

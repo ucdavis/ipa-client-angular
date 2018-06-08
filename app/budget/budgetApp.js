@@ -47,7 +47,16 @@ function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year", {
 		template: require('./BudgetCtrl.html'),
-		controller: "BudgetCtrl"
+		controller: "BudgetCtrl",
+		resolve: {
+			validate: function (AuthService, $route, BudgetActions) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						BudgetActions.getInitialState();
+					}
+				});
+			}
+		}
 	})
 	.otherwise({
 		redirectTo: "/"

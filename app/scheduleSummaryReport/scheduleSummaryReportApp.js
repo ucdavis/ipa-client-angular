@@ -25,15 +25,34 @@ function config ($routeProvider) {
 	return $routeProvider
 		.when("/:workgroupId/:year", {
 			template: require('./templates/ScheduleSummaryReportCtrl.html'),
-			controller: "ScheduleSummaryReportCtrl"
+			controller: "ScheduleSummaryReportCtrl",
+			resolve: {
+				validate: function (AuthService) {
+					return AuthService.validate();
+				}
+			}
 		})
 		.when("/:workgroupId/:year/:termShortCode", {
 			template: require('./templates/ScheduleSummaryReportCtrl.html'),
-			controller: "ScheduleSummaryReportCtrl"
+			controller: "ScheduleSummaryReportCtrl",
+			resolve: {
+				validate: function (AuthService, $route, ScheduleSummaryReportActionCreators) {
+					return AuthService.validate().then(function () {
+						if ($route.current.params.workgroupId) {
+							return ScheduleSummaryReportActionCreators.getInitialState();
+						}
+					});
+				}
+			}
 		})
 		.when("/", {
 			template: require('./templates/ScheduleSummaryReportCtrl.html'),
-			controller: "ScheduleSummaryReportCtrl"
+			controller: "ScheduleSummaryReportCtrl",
+			resolve: {
+				validate: function (AuthService) {
+					return AuthService.validate();
+				}
+			}
 		})
 		.otherwise({
 			redirectTo: function () {

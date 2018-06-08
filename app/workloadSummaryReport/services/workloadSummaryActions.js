@@ -1,5 +1,5 @@
 class WorkloadSummaryActions {
-	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService, InstructorTypeService) {
+	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService, InstructorTypeService, $route) {
 		this.WorkloadSummaryReducers = WorkloadSummaryReducers;
 		this.WorkloadSummaryService = WorkloadSummaryService;
 		this.$rootScope = $rootScope;
@@ -10,7 +10,10 @@ class WorkloadSummaryActions {
 		this.InstructorTypeService = InstructorTypeService;
 
 		return {
-			getInitialState: function (workgroupId, year) {
+			getInitialState: function () {
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
+
 				var _self = this;
 				WorkloadSummaryReducers._state = {};
 				WorkloadSummaryReducers.reduce({
@@ -563,6 +566,6 @@ class WorkloadSummaryActions {
 	}
 }
 
-WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService'];
+WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService', '$route'];
 
 export default WorkloadSummaryActions;

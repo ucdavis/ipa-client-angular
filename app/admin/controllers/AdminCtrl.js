@@ -19,9 +19,7 @@ class AdminCtrl {
 		this.$scope.year = this.$routeParams.year || moment().year();
 		this.$scope.view = {};
 
-		this.getPayload().then( function() {
-			self.initialize();
-		});
+		self.initialize();
 	}
 
 	initialize () {
@@ -46,17 +44,6 @@ class AdminCtrl {
 		this.$scope.setActiveWorkgroup = function (workgroupId, year) {
 			self.authService.setSharedState(self.$scope.view.state.workgroups.list[workgroupId], year);
 		};
-	}
-
-	getPayload () {
-		var self = this;
-		var ignoreFallBackUrl = true;
-
-		return self.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year, ignoreFallBackUrl).then(function () {
-			if (self.$route.current.params.workgroupId && self.$route.current.params.year) {
-				return self.adminActionCreators.getInitialState();
-			}
-		});
 	}
 }
 

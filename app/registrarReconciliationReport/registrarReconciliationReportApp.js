@@ -35,11 +35,25 @@ function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year/:termShortCode", {
 		template: require('./registrarReconciliationReportCtrl.html'),
-		controller: "RegistrarReconciliationReportCtrl"
+		controller: "RegistrarReconciliationReportCtrl",
+		resolve: {
+			validate: function (AuthService, $route, RegistrarReconciliationReportActionCreators) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						return RegistrarReconciliationReportActionCreators.getInitialState();
+					}
+				});
+			}
+		}
 	})
 	.when("/", {
 		template: require('./registrarReconciliationReportCtrl.html'),
-		controller: "RegistrarReconciliationReportCtrl"
+		controller: "RegistrarReconciliationReportCtrl",
+		resolve: {
+			validate: function (AuthService) {
+				return AuthService.validate();
+			}
+		}
 	})
 	.otherwise({
 		redirectTo: function () {

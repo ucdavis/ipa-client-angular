@@ -1,6 +1,6 @@
 
 class InstructorFormActions {
-	constructor ($rootScope, $window, InstructorFormService, InstructorFormStateService, ActionTypes) {
+	constructor ($rootScope, $window, $route, InstructorFormService, InstructorFormStateService, ActionTypes) {
 		this.$rootScope = $rootScope;
 		this.$window = $window;
 		this.InstructorFormService = InstructorFormService;
@@ -8,7 +8,11 @@ class InstructorFormActions {
 		this.ActionTypes = ActionTypes;
 
 		return {
-			getInitialState: function (workgroupId, year, termShortCode) {
+			getInitialState: function () {
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
+				var termShortCode = $route.current.params.termShortCode;
+
 				InstructorFormService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
 					var action = {
 						type: ActionTypes.INIT_STATE,
@@ -90,6 +94,6 @@ class InstructorFormActions {
 	}
 }
 
-InstructorFormActions.$inject = ['$rootScope', '$window', 'InstructorFormService', 'InstructorFormStateService', 'ActionTypes'];
+InstructorFormActions.$inject = ['$rootScope', '$window', '$route', 'InstructorFormService', 'InstructorFormStateService', 'ActionTypes'];
 
 export default InstructorFormActions;

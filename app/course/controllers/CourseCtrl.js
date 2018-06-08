@@ -21,10 +21,7 @@ class CourseCtrl {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.view = { isAssignTagsDropdownOpen: false };
-
-		this.getPayload().then( function() {
-			self.initialize();
-		});
+		self.initialize();
 	}
 
 	initialize () {
@@ -399,15 +396,6 @@ class CourseCtrl {
 				!_self.$scope.view.state.filters.enableUnpublishedCourses
 			);
 		};
-	}
-
-	getPayload () {
-		var self = this;
-		return this.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
-			if (self.$route.current.params.workgroupId && self.$route.current.params.year) {
-				return self.courseActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year);
-			}
-		});
 	}
 }
 

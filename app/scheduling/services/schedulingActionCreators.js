@@ -7,9 +7,14 @@
  * Central location for sharedState information.
  */
 class SchedulingActionCreators {
-	constructor (SchedulingStateService, SchedulingService, $rootScope, Role, ActionTypes) {
+	constructor (SchedulingStateService, SchedulingService, $rootScope, Role, ActionTypes, $route, Term) {
 		return {
-			getInitialState: function (workgroupId, year, termCode) {
+			getInitialState: function () {
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
+				var termShortCode = $route.current.params.termShortCode;
+				var termCode = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, year).code;
+
 				SchedulingService.getScheduleByWorkgroupIdAndYearAndTermCode(workgroupId, year, termCode).then(function (payload) {
 					var action = {
 						type: ActionTypes.INIT_STATE,
@@ -215,6 +220,6 @@ class SchedulingActionCreators {
 	}
 }
 
-SchedulingActionCreators.$inject = ['SchedulingStateService', 'SchedulingService', '$rootScope', 'Role', 'ActionTypes'];
+SchedulingActionCreators.$inject = ['SchedulingStateService', 'SchedulingService', '$rootScope', 'Role', 'ActionTypes', '$route', 'Term'];
 
 export default SchedulingActionCreators;

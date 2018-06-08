@@ -34,11 +34,24 @@ function config ($routeProvider) {
 	.when("/:workgroupId/:year", {
 		template: require('./SummaryCtrl.html'),
 		controller: "SummaryCtrl",
-		reloadOnSearch: false
+		resolve: {
+			validate: function (AuthService, $route, SummaryActionCreators) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						SummaryActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+					}
+				});
+			}
+		}
 	})
 	.when("/", {
 		template: require('./SummaryCtrl.html'),
-		controller: "SummaryCtrl"
+		controller: "SummaryCtrl",
+		resolve: {
+			validate: function (AuthService) {
+				return AuthService.validate();
+			}
+		}
 	})
 	.otherwise({
 		redirectTo: "/"

@@ -169,7 +169,10 @@ class AuthService {
 			/**
 			 * Validates the given JWT token with the backend.
 			 */
-			validate: function (token, workgroupId, year, ignoreFallBackUrl) {
+			validate: function (ignoreFallBackUrl) {
+				var token = localStorage.getItem('JWT');
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
 				var deferred = $q.defer();
 				var scope = this;
 
@@ -243,7 +246,6 @@ class AuthService {
 						$location.path(url);
 						return;
 					}
-
 				}
 
 				// If no workgroups...

@@ -1,9 +1,13 @@
 class BudgetActions {
-	constructor ($rootScope, $window, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles) {
+	constructor ($rootScope, $window, $route, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles) {
 		return {
-			getInitialState: function (workgroupId, year, selectedBudgetScenarioId, selectedTerm) {
+			getInitialState: function () {
 				var self = this;
-	
+				var selectedBudgetScenarioId = parseInt(localStorage.getItem('selectedBudgetScenarioId')) || null;
+				var selectedTerm = localStorage.getItem('selectedTerm');
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
+
 				BudgetService.getInitialState(workgroupId, year).then(function (results) {
 	
 					// BudgetScenario was set in localStorage, need to sanity check
@@ -829,6 +833,6 @@ class BudgetActions {
 	}
 }
 
-BudgetActions.$inject = ['$rootScope', '$window', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes', 'Roles'];
+BudgetActions.$inject = ['$rootScope', '$window', '$route', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes', 'Roles'];
 
 export default BudgetActions;

@@ -7,7 +7,7 @@
  * Central location for sharedState information.
  */
 class AssignmentActionCreators {
-	constructor (AssignmentStateService, AssignmentService, $rootScope, $window, Role, ActionTypes) {
+	constructor (AssignmentStateService, $route, AssignmentService, $rootScope, $window, Role, ActionTypes) {
 		var _self = this;
 		this.AssignmentStateService = AssignmentStateService;
 		this.AssignmentService = AssignmentService;
@@ -17,7 +17,11 @@ class AssignmentActionCreators {
 		this.ActionTypes = ActionTypes;
 
 		return {
-			getInitialState: function (workgroupId, year, tab) {
+			getInitialState: function () {
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
+				var tab = $route.current.params.tab;
+
 				_self.AssignmentService.getInitialState(workgroupId, year).then(function (payload) {
 					var action = {
 						type: ActionTypes.INIT_ASSIGNMENT_VIEW,
@@ -377,6 +381,6 @@ class AssignmentActionCreators {
 	}
 }
 
-AssignmentActionCreators.$inject = ['AssignmentStateService', 'AssignmentService', '$rootScope', '$window', 'Role', 'ActionTypes'];
+AssignmentActionCreators.$inject = ['AssignmentStateService', '$route', 'AssignmentService', '$rootScope', '$window', 'Role', 'ActionTypes'];
 
 export default AssignmentActionCreators;

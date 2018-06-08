@@ -30,9 +30,7 @@ class SupportAssignmentCtrl {
 			width: "70%"
 		};
 
-		this.getPayload().then( function() {
-			_self.initialize();
-		});
+		_self.initialize();
 	}
 
 	initialize () {
@@ -196,21 +194,6 @@ class SupportAssignmentCtrl {
 		// Set the active tab according to the URL
 		// Otherwise redirect to the default view
 		_self.$scope.setActiveTab(_self.$routeParams.tab || "courses");
-	}
-
-	getPayload () {
-		var _self = this;
-	// Validate params
-	if (!(_self.$route.current.params.workgroupId) || !(_self.$route.current.params.year)) {
-		_self.$window.location.href = "/summary/";
-	} else {
-		return _self.AuthService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
-			if (_self.$route.current.params.workgroupId && _self.$route.current.params.year) {
-				_self.SupportActions.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year, _self.$route.current.params.termShortCode, _self.$route.current.params.tab);
-			}
-		});
-	}
-
 	}
 }
 

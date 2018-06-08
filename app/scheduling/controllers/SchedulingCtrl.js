@@ -34,9 +34,7 @@ class SchedulingCtrl {
 			'P', '7', 'Z'
 		];
 
-		this.getPayload().then( function() {
-			self.initialize();
-		});
+		self.initialize();
 	}
 
 	initialize () {
@@ -292,19 +290,6 @@ class SchedulingCtrl {
 				return sectionGroup.instructorIds.indexOf(instructorId) >= 0;
 			});
 		};
-	}
-
-	getPayload () {
-		var self = this;
-		return self.AuthService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
-			if (self.$route.current.params.workgroupId && self.$route.current.params.year) {
-				var term = self.Term.prototype.getTermByTermShortCodeAndYear(self.$route.current.params.termShortCode, self.$route.current.params.year);
-				return self.SchedulingActionCreators.getInitialState(
-					self.$route.current.params.workgroupId,
-					self.$route.current.params.year,
-					term.code);
-			}
-		});
 	}
 }
 

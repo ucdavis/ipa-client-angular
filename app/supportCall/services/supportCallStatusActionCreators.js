@@ -1,8 +1,12 @@
 class SupportCallStatusActionCreators {
-	constructor ($rootScope, $window, SupportCallStatusService, SupportCallStatusStateService, ActionTypes) {
+	constructor ($rootScope, $window, SupportCallStatusService, SupportCallStatusStateService, ActionTypes, $route) {
 		var self = this;
 		return {
-			getInitialState: function (workgroupId, year, termShortCode) {
+			getInitialState: function () {
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
+				var termShortCode = $route.current.params.termShortCode;
+
 				SupportCallStatusService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
 					var action = {
 						type: ActionTypes.INIT_STATE,
@@ -148,6 +152,6 @@ class SupportCallStatusActionCreators {
 	}
 }
 
-SupportCallStatusActionCreators.$inject = ['$rootScope', '$window', 'SupportCallStatusService', 'SupportCallStatusStateService', 'ActionTypes'];
+SupportCallStatusActionCreators.$inject = ['$rootScope', '$window', 'SupportCallStatusService', 'SupportCallStatusStateService', 'ActionTypes', '$route'];
 
 export default SupportCallStatusActionCreators;

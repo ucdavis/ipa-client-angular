@@ -45,7 +45,20 @@ function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year/:termShortCode", {
 		template: require('./supportAssignmentCtrl.html'),
-		controller: "SupportAssignmentCtrl"
+		controller: "SupportAssignmentCtrl",
+		resolve: {
+			validate: function (AuthService, $route, $window, SupportActions) {
+				if (!$route.current.params.workgroupId) {
+					$window.location.href = "/summary/";
+				} else {
+					return AuthService.validate().then(function () {
+						if ($route.current.params.workgroupId) {
+							SupportActions.getInitialState();
+						}
+					});
+				}
+			}
+		}
 	})
 	.otherwise({
 		redirectTo: "/"

@@ -34,11 +34,25 @@ function config ($routeProvider) {
 	.when("/:workgroupId/:year", {
 		template: require('./templates/WorkgroupCtrl.html'),
 		controller: "WorkgroupCtrl",
-		reloadOnSearch: false
+		reloadOnSearch: false,
+		resolve: {
+			validate: function (AuthService, $route, WorkgroupActionCreators) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						WorkgroupActionCreators.getInitialState();
+					}
+				});
+			}
+		}
 	})
 	.when("/", {
 		template: require('./templates/WorkgroupCtrl.html'),
-		controller: "WorkgroupCtrl"
+		controller: "WorkgroupCtrl",
+		resolve: {
+			validate: function (AuthService) {
+				return AuthService.validate();
+			}
+		}
 	})
 	.otherwise({
 		redirectTo: "/"

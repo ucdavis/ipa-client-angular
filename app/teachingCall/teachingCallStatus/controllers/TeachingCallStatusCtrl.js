@@ -74,17 +74,6 @@ class TeachingCallStatusCtrl {
 		$scope.removeInstructor = function(instructor) {
 			TeachingCallStatusActionCreators.removeInstructorFromTeachingCall($scope.workgroupId, $scope.year, instructor);
 		};
-
-		this.getPayload();
-	}
-
-	getPayload () {
-		var _self = this;
-		return _self.AuthService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
-			if (_self.$route.current.params.workgroupId && _self.$route.current.params.year) {
-			_self.TeachingCallStatusActionCreators.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year);
-			}
-		});
 	}
 }
 

@@ -69,8 +69,6 @@ class ScheduleSummaryReportCtrl {
 			let fullTerm = slotYear + shortTermCode;
 			$scope.fullTerms.push(fullTerm);
 		}
-
-		this.getPayload();
 	}
 
 	calculateCurrentTermShortCode (termStates) {
@@ -92,28 +90,6 @@ class ScheduleSummaryReportCtrl {
 		}
 	
 		return earliestTermCode.slice(-2);
-	}
-
-	getPayload () {
-		var _self = this;
-
-		return _self.AuthService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
-			if (_self.$route.current.params.workgroupId && _self.$route.current.params.year) {
-				var termShortCode = _self.$route.current.params.termShortCode;
-		
-				if (!termShortCode) {
-					var termStates = AuthService.getTermStates();
-					var termShortCode = _self.calculateCurrentTermShortCode(termStates);
-				}
-		
-				var term = _self.Term.prototype.getTermByTermShortCodeAndYear(termShortCode, _self.$route.current.params.year);
-				return _self.ScheduleSummaryReportActionCreators.getInitialState(
-					_self.$route.current.params.workgroupId,
-					_self.$route.current.params.year,
-					term.code
-				);
-			}
-		});
 	}
 }
 

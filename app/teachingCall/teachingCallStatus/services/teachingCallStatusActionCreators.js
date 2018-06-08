@@ -1,8 +1,10 @@
 class TeachingCallStatusActionCreators {
-	constructor (TeachingCallStatusStateService, TeachingCallStatusService, $rootScope, $window, Role, ActionTypes) {
+	constructor (TeachingCallStatusStateService, TeachingCallStatusService, $rootScope, $window, Role, ActionTypes, $route) {
 		return {
-			getInitialState: function (workgroupId, year, tab) {
+			getInitialState: function (tab) {
 				var self = this;
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
 
 				TeachingCallStatusService.getInitialState(workgroupId, year).then(function (payload) {
 					var action = {
