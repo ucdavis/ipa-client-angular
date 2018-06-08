@@ -169,7 +169,10 @@ class AuthService {
 			/**
 			 * Validates the given JWT token with the backend.
 			 */
-			validate: function (token, workgroupId, year, ignoreFallBackUrl) {
+			validate: function (ignoreFallBackUrl) {
+				var token = localStorage.getItem('JWT');
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
 				var deferred = $q.defer();
 				var scope = this;
 
@@ -239,8 +242,8 @@ class AuthService {
 					if (userRole.workgroupId > 0) {
 						var workgroupId = userRole.workgroupId;
 						var year = new Date().getFullYear();
-						var url = '/' + workgroupId + '/' + year;
-						$location.path(url);
+						var url = workgroupId + '/' + year;
+						$window.location.href = $window.location.href + url;
 						return;
 					}
 
