@@ -18,9 +18,7 @@ class BudgetCtrl {
 
 		$scope.budgetConfigStyles = { "width" : "40%" };
 
-		this.getPayload().then( function() {
-			_self.initialize();
-		});
+		_self.initialize();
 	}
 
 	initialize () {
@@ -43,22 +41,6 @@ class BudgetCtrl {
 				localStorage.removeItem('selectedTerm');
 			}
 		});
-	}
-
-	getPayload () {
-		var self = this;
-	return self.AuthService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
-			var selectedBudgetScenarioId = parseInt(localStorage.getItem('selectedBudgetScenarioId')) || null;
-
-			if (self.$route.current.params.workgroupId && self.$route.current.params.year) {
-				self.BudgetActions.getInitialState(
-					self.$route.current.params.workgroupId,
-					self.$route.current.params.year,
-					selectedBudgetScenarioId,
-					localStorage.getItem('selectedTerm'));
-			}
-		});
-	
 	}
 }
 

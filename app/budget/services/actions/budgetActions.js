@@ -1,9 +1,11 @@
 class BudgetActions {
 	constructor ($rootScope, $window, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles) {
 		return {
-			getInitialState: function (workgroupId, year, selectedBudgetScenarioId, selectedTerm) {
+			getInitialState: function (workgroupId, year) {
 				var self = this;
-	
+				var selectedBudgetScenarioId = parseInt(localStorage.getItem('selectedBudgetScenarioId')) || null;
+				var selectedTerm = localStorage.getItem('selectedTerm')
+
 				BudgetService.getInitialState(workgroupId, year).then(function (results) {
 	
 					// BudgetScenario was set in localStorage, need to sanity check
