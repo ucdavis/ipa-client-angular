@@ -244,7 +244,6 @@ class AuthService {
 						var year = new Date().getFullYear();
 						var url = '/' + workgroupId + '/' + year;
 						$location.path(url);
-
 						return;
 					}
 				}
