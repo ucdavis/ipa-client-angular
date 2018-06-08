@@ -31,6 +31,7 @@ class BudgetReducers {
 						var budgetScenario = budgetScenarios.list[budgetScenarioId];
 						budgetScenario.totalCost = action.payload.totalCost;
 						budgetScenario.funds = action.payload.funds;
+						budgetScenario.scheduleCost = action.payload.scheduleCost;
 						return budgetScenarios;
 					case ActionTypes.DELETE_BUDGET_SCENARIO:
 						var budgetScenarioId = action.payload.budgetScenarioId;

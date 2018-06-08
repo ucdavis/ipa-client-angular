@@ -145,6 +145,7 @@ class BudgetCalculations {
 					payload: {
 						totalCost: totalCost,
 						funds: lineItemFunds,
+						scheduleCost: courseCosts,
 						budgetScenarioId: BudgetReducers._state.ui.selectedBudgetScenarioId
 					}
 				});
@@ -545,6 +546,8 @@ class BudgetCalculations {
 					usedInstructorIds.push(instructorId);
 				});
 	
+				calculatedInstructors = _array_sortByProperty(calculatedInstructors, ["instructorTypeDescription", "lastName"]);
+
 				let instructorAssignmentOptions = [];
 	
 				instructorTypes.ids.forEach(function(instructorTypeId) {
@@ -622,7 +625,7 @@ class BudgetCalculations {
 					if (!instructorCost.cost && instructorCost.instructorTypeCost && instructorCost.instructorTypeCost.cost) {
 						instructorCost.overrideCost = instructorCost.instructorTypeCost.cost;
 						instructorCost.overrideCostSource = "instructor type";
-						instructorCost.overrideCostSourceDescription = instructorCost.instructorType.description + " category"
+						instructorCost.overrideCostSourceDescription = instructorCost.instructorType.description + " category";
 					}
 				});
 

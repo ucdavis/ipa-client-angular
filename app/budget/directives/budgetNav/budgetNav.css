@@ -26,7 +26,7 @@
 
 .budget-nav__side-bar {
 	display: flex;
-	width: 30%;
+	width: 40%;
 	justify-content: flex-end;
 	align-items: center;
 }
@@ -45,9 +45,15 @@
 	padding-right: 15px;
 }
 
-.budget-nav__total {
-	padding-left: 15px;
+.budget-nav__sub-balance {
 	border-left: 1px solid #ddd;
+	padding-left: 10px;
+	padding-right: 5px;
+}
+
+.budget-nav__balance {
+	padding-left: 10px;
+	padding-right: 5px;
 }
 
 .budget-nav__line-item-tools {
@@ -56,7 +62,7 @@
 	align-items: center;
 	padding-right: 10px;
 	height: fit-content;
-	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
 }
 
 .budget-nav__tool {
