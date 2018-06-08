@@ -9,11 +9,9 @@ let confirmEligible = function ($rootScope, StudentFormActions) {
 			supportCallResponse: '<'
 		},
 		link: function (scope, element, attrs) {
-			var _self = this;
 			scope.toggleEligibilityConfirmed = function() {
 				scope.supportCallResponse.eligibilityConfirmed = !scope.supportCallResponse.eligibilityConfirmed;
-
-				_self.StudentFormActions.updateSupportCallResponse(scope.supportCallResponse);
+				StudentFormActions.updateSupportCallResponse(scope.supportCallResponse);
 			};
 		}
 	};
