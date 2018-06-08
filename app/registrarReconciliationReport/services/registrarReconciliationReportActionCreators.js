@@ -40,11 +40,9 @@ class RegistrarReconciliationReportActionCreators {
 			},
 			calculateCurrentTermShortCode (termStates) {
 				var earliestTermCode = null;
-			
+
 				termStates.forEach( function(termState) {
-			
 					if (termState.state == "ANNUAL_DRAFT") {
-			
 						if ( (earliestTermCode == null) || earliestTermCode > termState.termCode) {
 							earliestTermCode = termState.termCode;
 						}

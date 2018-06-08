@@ -57,6 +57,9 @@
 		});
 	}
 
+	/**
+	 * Adds a 'mode' url param (if one is not found) for the summary screen based on the user's roles (instructor, academic planner, or student)
+	 */
 	setMode ($scope, $routeParams, AuthService) {
 		if ($routeParams.mode && $routeParams.mode != "unknown") {
 			// Set the active tab according to the URL
