@@ -426,7 +426,7 @@ class BudgetCalculations {
 	
 					if (teachingAssignment.approved == false) { return; }
 	
-					if (teachingAssignment.buyout || teachingAssignment.workLifeBalance) {
+					if (teachingAssignment.buyout || teachingAssignment.workLifeBalance || teachingAssignment.courseRelease) {
 						if (self._matchingLineItemExists(teachingAssignment, BudgetReducers._state.lineItems) == false) {
 							let lineItem = self.scaffoldLineItem(teachingAssignment);
 							calculatedLineItems.push(lineItem);
@@ -505,6 +505,9 @@ class BudgetCalculations {
 				} else if (teachingAssignment.workLifeBalance) {
 					typeDescription = "Work-Life Balance";
 					lineItemCategoryId = 5;
+				} else if (teachingAssignment.courseRelease) {
+					typeDescription = "Course Release";
+					lineItemCategoryId = 6;
 				}
 	
 				var categoryDescription = BudgetReducers._state.lineItemCategories.list[lineItemCategoryId].description;
