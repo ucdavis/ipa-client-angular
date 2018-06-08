@@ -28,7 +28,6 @@
 		});
 
 		$scope.setActiveMode = function (mode) {
-			self.$scope.view.mode = mode;
 			self.$location.search({ mode: mode });
 		};
 
@@ -50,7 +49,6 @@
 
 		$rootScope.$on('summaryStateChanged', function (event, data) {
 			self.$scope.view.state = data;
-
 			self.setMode($scope, $routeParams, AuthService);
 		});
 
