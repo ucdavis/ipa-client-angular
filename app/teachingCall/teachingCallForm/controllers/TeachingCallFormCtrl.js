@@ -250,16 +250,6 @@ class TeachingCallFormCtrl {
 		};
 
 		$scope.timeout = {};
-		this.getPayload();
-	}
-
-	getPayload () {
-		var _self = this;
-		return this.AuthService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
-			if (_self.$route.current.params.workgroupId && _self.$route.current.params.year) {
-				_self.TeachingCallFormActionCreators.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year);
-			}
-		});
 	}
 }
 

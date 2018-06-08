@@ -147,18 +147,6 @@ class SupportCallStatusCtrl {
 			$scope.view.selectedParticipants = selectedParticipants;
 			$scope.view.state.openContactModal = true;
 		};
-
-		this.getPayload();
-	}
-
-
-	getPayload () {
-		var _self = this;
-		return _self.AuthService.validate(localStorage.getItem('JWT'), _self.$route.current.params.workgroupId, _self.$route.current.params.year).then(function () {
-			if (_self.$route.current.params.workgroupId && _self.$route.current.params.year) {
-				_self.SupportCallStatusActionCreators.getInitialState(_self.$route.current.params.workgroupId, _self.$route.current.params.year, _self.$route.current.params.termShortCode);
-			}
-		});	
 	}
 }
 

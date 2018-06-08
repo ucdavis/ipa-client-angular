@@ -1,11 +1,16 @@
 class SupportActions {
-	constructor ($rootScope, $window, SupportService, SupportReducer, ActionTypes) {
+	constructor ($rootScope, $window, SupportService, SupportReducer, ActionTypes, Term, $route) {
 		var here = this;
 
 		return {
-			getInitialState: function (workgroupId, year, shortTermCode, tab) {
+			getInitialState: function () {
 				var self = this;
-	
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
+				var shortTermCode = $route.current.params.termShortCode;
+				var termCode = Term.prototype.getTermByTermShortCodeAndYear(shortTermCode, year).code;
+				var tab = $route.current.params.tab;
+
 				SupportService.getInitialState(workgroupId, year, shortTermCode).then(function (payload) {
 					SupportReducer.reduce({
 						type: ActionTypes.INIT_STATE,
@@ -560,6 +565,6 @@ class SupportActions {
 	}
 }
 
-SupportActions.$inject = ['$rootScope', '$window', 'SupportService', 'SupportReducer', 'ActionTypes'];
+SupportActions.$inject = ['$rootScope', '$window', 'SupportService', 'SupportReducer', 'ActionTypes', 'Term', '$route'];
 
 export default SupportActions;

@@ -33,7 +33,16 @@ function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year/:termShortCode", {
 		template: require('./templates/SupportCallStatus.html'),
-		controller: "SupportCallStatusCtrl"
+		controller: "SupportCallStatusCtrl",
+		resolve: {
+			validate: function (AuthService, $route, SupportCallStatusActionCreators) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						SupportCallStatusActionCreators.getInitialState();
+					}
+				});
+			}
+		}
 	})
 	.otherwise({
 		redirectTo: "/"

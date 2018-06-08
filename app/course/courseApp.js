@@ -39,7 +39,7 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, CourseActionCreators) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						CourseActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+						CourseActionCreators.getInitialState();
 					}
 				});
 			}

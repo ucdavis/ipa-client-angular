@@ -52,7 +52,7 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, BudgetActions) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						BudgetActions.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+						BudgetActions.getInitialState();
 					}
 				});
 			}

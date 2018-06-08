@@ -36,7 +36,7 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, AssignmentActionCreators) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						AssignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.tab);
+						AssignmentActionCreators.getInitialState();
 					}
 				});
 			}

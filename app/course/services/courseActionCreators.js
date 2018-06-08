@@ -7,9 +7,12 @@
  * Central location for sharedState information.
  */
 class CourseActionCreators {
-	constructor (CourseStateService, CourseService, $rootScope, Role, ActionTypes) {
+	constructor (CourseStateService, $route, CourseService, $rootScope, Role, ActionTypes) {
 		return {
-			getInitialState: function (workgroupId, year) {
+			getInitialState: function () {
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
+
 				CourseService.getScheduleByWorkgroupIdAndYear(workgroupId, year).then(function (payload) {
 					var action = {
 						type: ActionTypes.INIT_STATE,
@@ -471,6 +474,6 @@ class CourseActionCreators {
 	}
 }
 
-CourseActionCreators.$inject = ['CourseStateService', 'CourseService', '$rootScope', 'Role', 'ActionTypes'];
+CourseActionCreators.$inject = ['CourseStateService', '$route', 'CourseService', '$rootScope', 'Role', 'ActionTypes'];
 
 export default CourseActionCreators;

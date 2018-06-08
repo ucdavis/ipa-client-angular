@@ -1,8 +1,17 @@
 class StudentFormActions {
-	constructor ($rootScope, $window, StudentFormService, DwService, StudentFormReducers, ActionTypes) {
+	constructor ($rootScope, $window, $route, StudentFormService, DwService, StudentFormReducers, ActionTypes) {
 		return {
-			getInitialState: function (workgroupId, year, termShortCode) {
+			getInitialState: function () {
 				var _self = this;
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
+				var termShortCode = $route.current.params.termShortCode;
+
+				if (year.length != 4 || termShortCode.length != 2) {
+					$window.location.href = "/summary/" + workgroupId + "/" + year + "?mode=instructionalSupport";
+					return;
+				}
+
 				StudentFormService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
 					var action = {
 						type: ActionTypes.INIT_STATE,
@@ -370,6 +379,6 @@ class StudentFormActions {
 	}
 }
 
-StudentFormActions.$inject = ['$rootScope', '$window', 'StudentFormService', 'DwService', 'StudentFormReducers', 'ActionTypes'];
+StudentFormActions.$inject = ['$rootScope', '$window', '$route', 'StudentFormService', 'DwService', 'StudentFormReducers', 'ActionTypes'];
 
 export default StudentFormActions;

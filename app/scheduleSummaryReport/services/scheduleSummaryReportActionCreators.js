@@ -1,5 +1,5 @@
 class ScheduleSummaryReportActionCreators {
-	constructor(scheduleSummaryReportStateService, scheduleSummaryReportService, $rootScope, dwService, termService , ActionTypes) {
+	constructor(scheduleSummaryReportStateService, scheduleSummaryReportService, $rootScope, dwService, termService , ActionTypes, Term, $route, AuthService) {
 		this.scheduleSummaryReportStateService = scheduleSummaryReportStateService;
 		this.scheduleSummaryReportService = scheduleSummaryReportService;
 		this.$rootScope = $rootScope;
@@ -10,6 +10,16 @@ class ScheduleSummaryReportActionCreators {
 		return {
 			getInitialState: function (workgroupId, year, termCode) {
 				var self = this;
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
+				var termShortCode = $route.current.params.termShortCode;
+				
+				if (!termShortCode) {
+					var termStates = AuthService.getTermStates();
+					var termShortCode = calculateCurrentTermShortCode(termStates);
+				}
+				
+				var termCode = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, year).code;
 
 				scheduleSummaryReportService.getInitialState(workgroupId, year, termCode).then(function (payload) {
 					var action = {
@@ -72,6 +82,6 @@ class ScheduleSummaryReportActionCreators {
 	}
 }
 
-ScheduleSummaryReportActionCreators.$inject = ['ScheduleSummaryReportStateService', 'ScheduleSummaryReportService', '$rootScope', 'DwService', 'TermService', 'ActionTypes'];
+ScheduleSummaryReportActionCreators.$inject = ['ScheduleSummaryReportStateService', 'ScheduleSummaryReportService', '$rootScope', 'DwService', 'TermService', 'ActionTypes', 'Term', '$route', 'AuthService'];
 
 export default ScheduleSummaryReportActionCreators;

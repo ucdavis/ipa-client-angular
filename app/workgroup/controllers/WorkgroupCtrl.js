@@ -50,12 +50,6 @@ class WorkgroupCtrl {
 			// Otherwise redirect to the default view
 			$scope.setActiveTab('people');
 		}
-
-		AuthService.validate(localStorage.getItem('JWT'), $route.current.params.workgroupId, $route.current.params.year).then(function () {
-			if ($route.current.params.workgroupId && $route.current.params.year) {
-				WorkgroupActionCreators.getInitialState($route.current.params.workgroupId);
-			}
-		});
 	}
 }
 

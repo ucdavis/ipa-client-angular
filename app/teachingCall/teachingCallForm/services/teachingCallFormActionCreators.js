@@ -1,7 +1,10 @@
 class TeachingCallFormActionCreators {
-	constructor (TeachingCallFormStateService, TeachingCallFormService, $rootScope, $window, Role, ActionTypes) {
+	constructor (TeachingCallFormStateService, TeachingCallFormService, $rootScope, $window, Role, ActionTypes, $route) {
 		return {
 			getInitialState: function (workgroupId, year, tab) {
+				var workgroupId = $route.current.params.workgroupId;
+				var year = $route.current.params.year;
+
 				TeachingCallFormService.getInitialState(workgroupId, year).then(function (payload) {
 					var action = {
 						type: ActionTypes.INIT_STATE,

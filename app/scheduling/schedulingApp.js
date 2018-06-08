@@ -33,11 +33,25 @@ function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year/:termShortCode", {
 		template: require('./templates/SchedulingCtrl.html'),
-		controller: "SchedulingCtrl"
+		controller: "SchedulingCtrl",
+		resolve: {
+			validate: function (AuthService, $route, SchedulingActionCreators) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						return SchedulingActionCreators.getInitialState();
+					}		
+				});
+			}
+		}
 	})
 	.when("/", {
 		template: require('./templates/SchedulingCtrl.html'),
-		controller: "SchedulingCtrl"
+		controller: "SchedulingCtrl",
+		resolve: {
+			validate: function (AuthService) {
+				return AuthService.validate();
+			}
+		}
 	})
 	.otherwise({
 		redirectTo: function () {

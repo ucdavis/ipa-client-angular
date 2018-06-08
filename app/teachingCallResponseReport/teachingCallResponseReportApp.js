@@ -26,7 +26,16 @@ function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year", {
 		template: require('./templates/TeachingCallResponseReportCtrl.html'),
-		controller: "TeachingCallResponseReportCtrl"
+		controller: "TeachingCallResponseReportCtrl",
+		resolve: {
+			validate: function (AuthService, $route, TeachingCallResponseReportActionCreators) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						TeachingCallResponseReportActionCreators.getInitialState();
+					}
+				});
+			}
+		}
 	})
 	.otherwise({
 		redirectTo: function () {

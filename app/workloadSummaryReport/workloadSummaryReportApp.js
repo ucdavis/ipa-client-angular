@@ -29,7 +29,16 @@ function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year", {
 		template: require('./workloadSummaryReportCtrl.html'),
-		controller: 'WorkloadSummaryReportCtrl'
+		controller: 'WorkloadSummaryReportCtrl',
+		resolve: {
+			validate: function (AuthService, $route, WorkloadSummaryActions) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						WorkloadSummaryActions.getInitialState();
+					}
+				});
+			}
+		}
 	})
 	.otherwise({
 		redirectTo: function () {

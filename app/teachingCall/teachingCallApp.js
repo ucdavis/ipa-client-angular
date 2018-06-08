@@ -35,11 +35,29 @@ function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year/teachingCall", {
 		template: require('./teachingCallForm/templates/TeachingCallForm.html'),
-		controller: "TeachingCallFormCtrl"
+		controller: "TeachingCallFormCtrl",
+		resolve: {
+			validate: function (AuthService, $route, TeachingCallFormActionCreators) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						TeachingCallFormActionCreators.getInitialState();
+					}
+				});
+			}
+		}
 	})
 	.when("/:workgroupId/:year/teachingCallStatus", {
 		template: require('./teachingCallStatus/templates/TeachingCallStatus.html'),
-		controller: "TeachingCallStatusCtrl"
+		controller: "TeachingCallStatusCtrl",
+		resolve: {
+			validate: function (AuthService, $route, TeachingCallStatusActionCreators) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						TeachingCallStatusActionCreators.getInitialState();
+					}
+				});
+			}
+		}
 	});
 }
 
