@@ -161,18 +161,6 @@ class AssignmentCtrl {
 		// Set the active tab according to the URL
 		// Otherwise redirect to the default view
 		$scope.setActiveTab(this.$routeParams.tab || "courses");
-
-		self.getPayload();
-	}
-
-	getPayload () {
-		var self = this;
-
-		return this.authService.validate(localStorage.getItem('JWT'), self.$route.current.params.workgroupId, self.$route.current.params.year).then(function () {
-			if (self.$route.current.params.workgroupId && self.$route.current.params.year) {
-				self.assignmentActionCreators.getInitialState(self.$route.current.params.workgroupId, self.$route.current.params.year, self.$route.current.params.tab);
-			}
-		});
 	}
 }
 

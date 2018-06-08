@@ -31,11 +31,25 @@ function config ($routeProvider) {
 	.when("/:workgroupId/:year", {
 		template: require('./templates/AssignmentCtrl.html'),
 		controller: "AssignmentCtrl",
-		reloadOnSearch: false
+		reloadOnSearch: false,
+		resolve: {
+			validate: function (AuthService, $route, AssignmentActionCreators) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						AssignmentActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year, $route.current.params.tab);
+					}
+				});
+			}
+		}
 	})
 	.when("/", {
 		template: require('./templates/AssignmentCtrl.html'),
-		controller: "AssignmentCtrl"
+		controller: "AssignmentCtrl",
+		resolve: {
+			validate: function (AuthService) {
+				return AuthService.validate();
+			}
+		}
 	})
 	.otherwise({
 		redirectTo: "/"
