@@ -161,18 +161,54 @@
 			<!-- Total Costs -->
 			<tr>
 				<td>
-					<div class="budget-summary__cell-container budget-summary__cell-container--left budget-summary__cell--bold">
-						Total Costs
+					<div class="budget-summary__cell-container budget-summary__cell-container--left budget-summary__cell--funds">
+						Total Teaching Costs
 					</div>
 				</td>
 				<td ng-repeat="term in summary.terms">
-					<div class="budget-summary__cell-container budget-summary__cell--bold budget-summary__cell--total-strong">
+					<div class="budget-summary__cell-container budget-summary__cell--funds budget-summary__cell--total-strong">
 						{{ toCurrency(summary.byTerm[term].totalCosts) }}
 					</div>
 				</td>
 				<td>
-					<div class="budget-summary__cell-container budget-summary__cell-container--last budget-summary__cell--bold budget-summary__cell--total-strong  budget-summary__cell-container--last">
+					<div class="budget-summary__cell-container budget-summary__cell-container--last budget-summary__cell--funds budget-summary__cell--total-strong budget-summary__cell-container--last">
 						{{ toCurrency(summary.combinedTerms.totalCosts) }}
+					</div>
+				</td>
+			</tr>
+
+			<!-- Funds Costs -->
+			<tr>
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell-container--left">
+						Funds
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms">
+					<div class="budget-summary__cell-container"></div>
+				</td>
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell-container--last budget-summary__cell-container--last">
+						{{ toCurrency(selectedBudgetScenario.funds) }}
+					</div>
+				</td>
+			</tr>
+
+			<!-- Balance -->
+			<tr>
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell-container--left budget-summary__cell--bold">
+						Balance
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms">
+					<div class="budget-summary__cell-container budget-summary__cell--bold"></div>
+				</td>
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell--bold">
+						<div class="budget-summary--total">
+							{{ toCurrency(selectedBudgetScenario.totalCost) }}
+						</div>
 					</div>
 				</td>
 			</tr>

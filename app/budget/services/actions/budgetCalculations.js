@@ -625,7 +625,7 @@ class BudgetCalculations {
 					if (!instructorCost.cost && instructorCost.instructorTypeCost && instructorCost.instructorTypeCost.cost) {
 						instructorCost.overrideCost = instructorCost.instructorTypeCost.cost;
 						instructorCost.overrideCostSource = "instructor type";
-						instructorCost.overrideCostSourceDescription = instructorCost.instructorType.description + " category"
+						instructorCost.overrideCostSourceDescription = instructorCost.instructorType.description + " category";
 					}
 				});
 
@@ -742,6 +742,8 @@ class BudgetCalculations {
 						byInstructorTypeId: {}
 					},
 					totalCosts: 0,
+					funds: 0,
+					balance: 0,
 					totalSCH: 0,
 					lowerDivCount: 0,
 					upperDivCount: 0,
