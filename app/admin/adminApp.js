@@ -22,11 +22,25 @@ function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year", {
 		template: require('./AdminCtrl.html'),
-		controller: "AdminCtrl"
+		controller: "AdminCtrl",
+		resolve: {
+			validate: function (AuthService, $route, AdminActionCreators) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						AdminActionCreators.getInitialState();
+					}
+				});
+			}
+		}
 	})
 	.when("/", {
 		template: require('./AdminCtrl.html'),
-		controller: "AdminCtrl"
+		controller: "AdminCtrl",
+		resolve: {
+			validate: function (AuthService) {
+				return AuthService.validate();
+			}
+		}
 	})
 	.otherwise({
 		redirectTo: "/"

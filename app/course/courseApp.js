@@ -49,7 +49,7 @@ function config ($routeProvider) {
 		template: require('./templates/CourseCtrl.html'),
 		controller: "CourseCtrl",
 		resolve: {
-			validate: function (AuthService, $route, CourseActionCreators) {
+			validate: function (AuthService) {
 				return AuthService.validate();
 			}
 		}
