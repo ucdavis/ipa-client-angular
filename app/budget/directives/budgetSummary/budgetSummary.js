@@ -7,7 +7,8 @@ let budgetSummary = function ($rootScope, TermService) {
 		replace: true,
 		scope: {
 			summary: '<',
-			instructorTypes: '<'
+			instructorTypes: '<',
+			selectedBudgetScenario: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.getTermName = function(term) {

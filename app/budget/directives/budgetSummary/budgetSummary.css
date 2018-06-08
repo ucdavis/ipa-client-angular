@@ -47,3 +47,18 @@
 .budget-summary__cell--total-strong {
 	border-top: 3px double black;
 }
+
+.budget-summary__cell--funds {
+	font-weight: bold;
+}
+
+.budget-summary--total {
+	border-top: 1px solid black;
+	margin-left: 50%;
+	padding-right: 25px;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
