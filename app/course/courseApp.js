@@ -34,11 +34,25 @@ function config ($routeProvider) {
 	return $routeProvider
 	.when("/:workgroupId/:year", {
 		template: require('./templates/CourseCtrl.html'),
-		controller: "CourseCtrl"
+		controller: "CourseCtrl",
+		resolve: {
+			validate: function (AuthService, $route, CourseActionCreators) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						CourseActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+					}
+				});
+			}
+		}
 	})
 	.when("/", {
 		template: require('./templates/CourseCtrl.html'),
-		controller: "CourseCtrl"
+		controller: "CourseCtrl",
+		resolve: {
+			validate: function (AuthService, $route, CourseActionCreators) {
+				return AuthService.validate();
+			}
+		}
 	})
 	.otherwise({
 		redirectTo: "/"

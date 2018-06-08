@@ -36,9 +36,11 @@ function config ($routeProvider) {
 		controller: "SummaryCtrl",
 		resolve: {
 			validate: function (AuthService, $route, SummaryActionCreators) {
-				return AuthService.validate().then(() =>
-					SummaryActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year)
-				);
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						SummaryActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year);
+					}
+				});
 			}
 		}
 	})
@@ -46,10 +48,8 @@ function config ($routeProvider) {
 		template: require('./SummaryCtrl.html'),
 		controller: "SummaryCtrl",
 		resolve: {
-			validate: function (AuthService, $route, SummaryActionCreators) {
-				return AuthService.validate().then(() =>
-					SummaryActionCreators.getInitialState($route.current.params.workgroupId, $route.current.params.year)
-				);
+			validate: function (AuthService) {
+				return AuthService.validate();
 			}
 		}
 	})

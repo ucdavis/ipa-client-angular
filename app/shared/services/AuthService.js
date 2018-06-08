@@ -247,7 +247,6 @@ class AuthService {
 
 						return;
 					}
-
 				}
 
 				// If no workgroups...
