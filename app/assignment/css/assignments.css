@@ -30,13 +30,6 @@
   padding: 4px 6px;
 }
 
-#instructors-table .tile-assignment {
-  position: relative;
-  height: 45px;
-  line-height: .9em;
-  padding: 4px 6px;
-}
-
 #courses-table .tile-assignment {
   position: relative;
   height: 30px;
