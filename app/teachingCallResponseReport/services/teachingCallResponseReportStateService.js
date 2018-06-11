@@ -109,6 +109,8 @@ class TeachingCallResponseReportStateService {
 										description = "Sabbatical";
 									} else if (teachingAssignment.leaveOfAbsence) {
 										description = "Leave of Absence";
+									} else if (teachingAssignment.sabbaticalInResidence) {
+										description = "Sabbatical In Residence";
 									} else if (teachingAssignment.suggestedSubjectCode != null && teachingAssignment.suggestedCourseNumber != null) {
 										description = teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber;
 									} else {
