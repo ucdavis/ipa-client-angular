@@ -10,14 +10,6 @@ import 'ui-select/dist/select.js';
 import 'bootstrap/dist/js/bootstrap.js';
 import 'angular-ui-bootstrap/dist/ui-bootstrap-tpls.js';
 
-// Helpers
-import array from './helpers/array.js';
-import dates from './helpers/dates.js';
-import object from './helpers/object.js';
-import sections from './helpers/sections.js';
-import string from './helpers/string.js';
-import types from './helpers/types.js';
-
 // Controllers
 import SharedCtrl from './controllers/SharedCtrl.js';
 
@@ -256,7 +248,7 @@ function exceptionHandler($provide) {
 				};
 				
 				$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("JWT"); // Set proper headers
-				$http.post(serverRoot + "/api/reportJsException", exceptionObject, { withCredentials: true }).then(function(res) {
+				$http.post(clientConfig.serverRoot + "/api/reportJsException", exceptionObject, { withCredentials: true }).then(function(res) {
 					return res.data;
 				});
 			}
