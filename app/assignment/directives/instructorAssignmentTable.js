@@ -1,11 +1,12 @@
 /**
  * Provides the main course table in the Courses View
  */
-let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) {
+let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, Roles) {
 	return {
 		restrict: 'A',
 		link: function (scope, element, attrs) {
 			scope.view = {};
+			var instructorTypeId = attrs.instructorTypeId;
 
 			// Filter instructors with assignmentsCompleted if filter is active
 			scope.showCompletedInstructor = function (instructor) {
@@ -88,6 +89,49 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 				|| teachingAssignment.sabbatical);
 			};
 
+			scope.getUserByLoginId = function (loginId) {
+				var users = scope.view.state.users;
+
+				for (var i = 0; i < users.ids.length; i++) {
+					var user = users.list[users.ids[i]];
+
+					if (user.loginId == loginId) {
+						return user;
+					}
+				}
+
+				return null;
+			};
+
+			scope.getInstructorTypeId = function (instructor) {
+				var teachingAssignments = scope.view.state.teachingAssignments;
+				var userRoles = scope.view.state.userRoles;
+
+				var user = scope.getUserByLoginId(instructor.loginId);
+
+
+				if (user) {
+					// Attempt to find via userRole
+					for (var i = 0; i < userRoles.ids.length; i++) {
+						var userRole = userRoles.list[userRoles.ids[i]];
+
+						if (userRole.roleId == Roles.instructor && userRole.userId == user.id) {
+							return userRole.instructorTypeId;
+						}
+					}
+				}
+
+				// Attempt to find via teachingAssignment
+				for (var i = 0; i < teachingAssignments.ids.length; i++) {
+					var teachingAssignment = teachingAssignments.list[teachingAssignments.ids[i]];
+
+					if (teachingAssignment.instructorId == instructor.id) {
+						return teachingAssignment.instructorTypeId;
+					}
+				}
+
+				return null;
+			},
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				scope.view.state = data;
 
@@ -118,6 +162,9 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 						// Loop over instructors
 						$.each(scope.view.state.instructors.ids, function (i, instructorId) {
 							var instructor = scope.view.state.instructors.list[instructorId];
+							var slotInstructorTypeId = scope.getInstructorTypeId(instructor);
+
+							if (scope.instructorTypeId != slotInstructorTypeId) { return; }
 
 							if (instructor.isFiltered === false && scope.showCompletedInstructor(instructor)) {
 								var scheduleInstructorNote = scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
