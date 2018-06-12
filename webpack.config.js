@@ -159,7 +159,6 @@ module.exports = {
     ]),
     // Copy vendor JS
     new CopyWebpackPlugin([
-      { from: 'clientConfig.js', to: 'js', flatten: true },
       { from: 'node_modules/bootstrap/dist/js/*', to: 'js', flatten: true },
       { from: 'node_modules/fuse.js/dist/fuse.min.js', to: 'js', flatten: true },
       { from: 'vendor/js/*', to: 'js', flatten: true },

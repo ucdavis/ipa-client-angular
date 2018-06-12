@@ -1,6 +1,5 @@
-
 class AuthService {
-	constructor ($http, $window, $q, $location, $rootScope, $log, CurrentUser, $route) {
+	constructor ($http, $window, $q, $location, $rootScope, $log, CurrentUser, $route, serverRoot) {
 		this.$http = $http;
 		this.$window = $window;
 		this.$q = $q;
@@ -12,7 +11,6 @@ class AuthService {
 
 		return {
 			validateToken: function (token) {
-				var self = this;
 				var deferred = $q.defer();
 				$http.post(serverRoot + '/login', { token: token }, { withCredentials: true }).then(function (response) {
 					// Token may be null if we are redirecting
@@ -64,7 +62,7 @@ class AuthService {
 						message = "Unknown error occurred while authenticating. Details:";
 						$log.error(message);
 						$log.error(error);
-						self.redirectToErrorPage(error, message, loginId, jwt);
+						redirectToErrorPage(error, message, loginId, jwt);
 					}
 
 					deferred.reject();
@@ -82,7 +80,6 @@ class AuthService {
 			impersonate: function (loginIdToImpersonate) {
 				var token = localStorage.getItem('JWT');
 
-				var self = this;
 				var deferred = $q.defer();
 				$http.post(serverRoot + '/impersonate/' + loginIdToImpersonate, { token: token }, { withCredentials: true }).then(function (response) {
 					var token = response.data.token;
@@ -109,7 +106,6 @@ class AuthService {
 			unimpersonate: function () {
 				var token = localStorage.getItem('JWT');
 
-				var self = this;
 				var deferred = $q.defer();
 				$http.post(serverRoot + '/unimpersonate', { token: token }, { withCredentials: true }).then(function (response) {
 					var token = response.data.token;
@@ -316,6 +312,6 @@ class AuthService {
 	}
 }
 
-AuthService.$inject = ['$http', '$window', '$q', '$location', '$rootScope', '$log', 'CurrentUser', '$route'];
+AuthService.$inject = ['$http', '$window', '$q', '$location', '$rootScope', '$log', 'CurrentUser', '$route', 'serverRoot'];
 
 export default AuthService;

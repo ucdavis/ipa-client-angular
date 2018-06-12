@@ -7,7 +7,7 @@
  * workgroupApp specific api calls.
  */
 class AssignmentService {
-	constructor (ApiService, $q, $http, $window) {
+	constructor (ApiService, $q, $http, $window, serverRoot, dwToken) {
 		return {
 			getInitialState: function(workgroupId, year) {
 				return ApiService.get("/api/assignmentView/" + workgroupId + "/" + year);
@@ -96,6 +96,6 @@ class AssignmentService {
 	}
 }
 
-AssignmentService.$inject = ['ApiService', '$q', '$http', '$window'];
+AssignmentService.$inject = ['ApiService', '$q', '$http', '$window', 'serverRoot', 'dwToken'];
 
 export default AssignmentService;

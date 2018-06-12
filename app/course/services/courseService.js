@@ -7,7 +7,7 @@
  * courseApp specific api calls.
  */
 class CourseService {
-	constructor (ApiService, $q, $http, $window) {
+	constructor (ApiService, $q, $http, $window, serverRoot, dwToken, dwUrl) {
 		this.ApiService = ApiService;
 		this.$q = $q;
 		this.$http = $http;
@@ -128,6 +128,6 @@ class CourseService {
 	}
 }
 
-CourseService.$inject = ['ApiService', '$q', '$http', '$window'];
+CourseService.$inject = ['ApiService', '$q', '$http', '$window', 'serverRoot', 'dwToken', 'dwUrl'];
 
 export default CourseService;

@@ -1,5 +1,5 @@
 class WorkloadSummaryService {
-	constructor(ApiService, $q, $http, $window) {
+	constructor(ApiService, $q, $http, $window, serverRoot) {
 		var _self = this;
 		this.ApiService = ApiService;
 		return {
@@ -45,6 +45,6 @@ class WorkloadSummaryService {
 	}
 }
 
-WorkloadSummaryService.$inject = ['ApiService', '$q', '$http', '$window'];
+WorkloadSummaryService.$inject = ['ApiService', '$q', '$http', '$window', 'serverRoot'];
 
 export default WorkloadSummaryService;

@@ -1,3 +1,5 @@
+import * as clientConfig from './../../clientConfig.js';
+
 import 'angular/angular.js';
 import 'ng-idle/angular-idle.js';
 import 'angular-sanitize/angular-sanitize.js';
@@ -318,6 +320,10 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 	studentPhd: 13,
 	studentMasters: 12,
 })
+.constant('serverRoot', clientConfig.serverRoot)
+.constant('dwUrl', clientConfig.dwUrl)
+.constant('dwToken', clientConfig.dwToken)
+.constant('debuggerEnabled', clientConfig.debuggerEnabled)
 
 .config(tokenValidatorInterceptor)
 .config(exceptionHandler)

@@ -1,5 +1,5 @@
 class TeachingCallResponseReportService {
-	constructor($http, $q, $window, ApiService) {
+	constructor($http, $q, $window, ApiService, serverRoot) {
 		this.$http = $http;
 		this.$q = $q;
 		this.$window = $window;
@@ -27,6 +27,6 @@ class TeachingCallResponseReportService {
 	}
 }
 
-TeachingCallResponseReportService.$inject = ['$http', '$q', '$window', 'ApiService'];
+TeachingCallResponseReportService.$inject = ['$http', '$q', '$window', 'ApiService', 'serverRoot'];
 
 export default TeachingCallResponseReportService;

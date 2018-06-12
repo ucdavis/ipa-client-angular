@@ -6,7 +6,7 @@
  * Service in the ipaClientAngularApp.
  */
 class DwService {
-	constructor(ApiService) {
+	constructor(ApiService, dwToken, dwUrl) {
 		var self = this;
 		this.apiService = ApiService;
 
@@ -57,5 +57,7 @@ class DwService {
 		};
 	}
 }
+
+DwService.$inject = ['ApiService', 'dwToken', 'dwUrl'];
 
 export default DwService;

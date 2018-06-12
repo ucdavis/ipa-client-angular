@@ -9,7 +9,7 @@
 class SchedulingService {
 	constructor (ApiService) {
 		return {
-			getScheduleByWorkgroupIdAndYearAndTermCode: function (workgroupId, year, termCode) {
+			getScheduleByWorkgroupIdAndYearAndTermCode: function (workgroupId, year, termCode, dwToken, dwUrl) {
 				return ApiService.get("/api/schedulingView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termCode);
 			},
 			updateActivity: function (activity) {
@@ -40,6 +40,6 @@ class SchedulingService {
 	}
 }
 
-SchedulingService.$inject = ['ApiService'];
+SchedulingService.$inject = ['ApiService', 'dwToken', 'dwUrl'];
 
 export default SchedulingService;

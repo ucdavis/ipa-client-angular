@@ -7,7 +7,7 @@
  * reportApp specific api calls.
  */
 class ScheduleSummaryReportService {
-	constructor(ApiService, $q, $http, $window) {
+	constructor(ApiService, $q, $http, $window, serverRoot) {
 		var self = this;
 		this.apiService = ApiService;
 		return {
@@ -32,6 +32,6 @@ class ScheduleSummaryReportService {
 	}
 }
 
-ScheduleSummaryReportService.$inject = ['ApiService', '$q', '$http', '$window'];
+ScheduleSummaryReportService.$inject = ['ApiService', '$q', '$http', '$window', 'serverRoot'];
 
 export default ScheduleSummaryReportService;

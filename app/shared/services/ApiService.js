@@ -1,5 +1,5 @@
 class ApiService {
-	constructor ($http, $q) {
+	constructor ($http, $q, serverRoot) {
 		this.$http = $http;
 		this.$q = $q;
 
@@ -68,5 +68,7 @@ class ApiService {
 		};
 	}
 }
+
+ApiService.$inject = ['$http', '$q', 'serverRoot'];
 
 export default ApiService;
