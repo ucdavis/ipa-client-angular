@@ -468,6 +468,42 @@ class AssignmentStateService {
 						return scheduleTermStates;
 				}
 			},
+			_userRoleReducers: function (action, userRoles) {
+				switch (action.type) {
+					case ActionTypes.INIT_ASSIGNMENT_VIEW:
+					var userRoles = {
+							ids: [],
+							list: {}
+						};
+
+						action.payload.userRoles.forEach(function(userRole) {
+							userRoles.ids.push(userRole.id);
+							userRoles.list[userRole.id] = userRole;
+						});
+
+						return userRoles;
+					default:
+						return userRoles;
+				}
+			},
+			_userReducers: function (action, users) {
+				switch (action.type) {
+					case ActionTypes.INIT_ASSIGNMENT_VIEW:
+					var users = {
+							ids: [],
+							list: {}
+						};
+
+						action.payload.users.forEach(function(user) {
+							users.ids.push(user.id);
+							users.list[user.id] = user;
+						});
+
+						return users;
+					default:
+						return users;
+				}
+			},
 			_tagReducers: function (action, tags) {
 				var scope = this;
 	
@@ -787,6 +823,9 @@ class AssignmentStateService {
 				newState.supportStaffList = scope._supportStaffReducers(action, scope._state.supportStaffList);
 				newState.studentPreferences = scope._studentPreferenceReducers(action, scope._state.studentPreferences);
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
+				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
+				newState.users = scope._userReducers(action, scope._state.users);
+
 				scope._state = newState;
 	
 				$rootScope.$emit('assignmentStateChanged', scope._state);
