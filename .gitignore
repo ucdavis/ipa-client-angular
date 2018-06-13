@@ -7,3 +7,4 @@ clientConfig.js
 jsconfig.json
 certs/
 ipa-ucdavis-edu.env
+cypress.env.json
