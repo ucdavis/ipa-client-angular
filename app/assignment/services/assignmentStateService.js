@@ -9,7 +9,8 @@
 class AssignmentStateService {
 	constructor ($rootScope, $log, SectionGroup, Course, ScheduleTermState,
 	ScheduleInstructorNote, Term, Tag, Instructor, TeachingAssignment,
-	TeachingCall, TeachingCallReceipt, TeachingCallResponse, ActionTypes) {
+	TeachingCall, TeachingCallReceipt, TeachingCallResponse, ActionTypes, Roles) {
+		this.Roles = Roles;
 		var _self = this;
 
 		return {
@@ -283,10 +284,41 @@ class AssignmentStateService {
 	
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
+						var users = {
+							ids: [],
+							list: {}
+						};
+
+						action.payload.users.forEach(function(user) {
+							users.ids.push(user.id);
+							users.list[user.id] = user;
+						});
+
+						var userRoles = {
+							ids: [],
+							list: {}
+						};
+
+						action.payload.userRoles.forEach(function(userRole) {
+							userRoles.ids.push(userRole.id);
+							userRoles.list[userRole.id] = userRole;
+						});
+
+						var teachingAssignments = {
+							ids: [],
+							list: {}
+						};
+
+						action.payload.teachingAssignments.forEach(function(teachingAssignment) {
+							teachingAssignments.ids.push(teachingAssignment.id);
+							teachingAssignments.list[teachingAssignment.id] = teachingAssignment;
+						});
+
 						instructors = {
 							ids: [],
 							list: []
 						};
+
 						var instructorsList = {};
 						var length = action.payload.instructors ? action.payload.instructors.length : 0;
 	
@@ -294,7 +326,7 @@ class AssignmentStateService {
 						for (i = 0; i < length; i++) {
 							instructor = new Instructor(action.payload.instructors[i]);
 							instructor.teachingAssignmentTermCodeIds = {};
-	
+							instructor.instructorTypeId = _self.getInstructorTypeId(instructor, teachingAssignments, userRoles, users);
 							// Scaffold all teachingAssignment termCodeId arrays
 							var allTerms = ['01', '02', '03', '04', '06', '07', '08', '09', '10'];
 							allTerms.forEach(function (slotTerm) {
@@ -890,10 +922,48 @@ class AssignmentStateService {
 	
 		return termFiltersArray;
 	}
+
+	getInstructorTypeId (instructor, teachingAssignments, userRoles, users) {
+		var user = this.getUserByLoginId(instructor.loginId, users);
+
+		if (user) {
+			// Attempt to find via userRole
+			for (var i = 0; i < userRoles.ids.length; i++) {
+				var userRole = userRoles.list[userRoles.ids[i]];
+
+				if (userRole.roleId == this.Roles.instructor && userRole.userId == user.id) {
+					return userRole.instructorTypeId;
+				}
+			}
+		}
+
+		// Attempt to find via teachingAssignment
+		for (var i = 0; i < teachingAssignments.ids.length; i++) {
+			var teachingAssignment = teachingAssignments.list[teachingAssignments.ids[i]];
+
+			if (teachingAssignment.instructorId == instructor.id) {
+				return teachingAssignment.instructorTypeId;
+			}
+		}
+
+		return null;
+	}
+
+	getUserByLoginId (loginId, users) {
+		for (var i = 0; i < users.ids.length; i++) {
+			var user = users.list[users.ids[i]];
+
+			if (user.loginId == loginId) {
+				return user;
+			}
+		}
+
+		return null;
+	}
 }
 
 AssignmentStateService.$inject = ['$rootScope', '$log', 'SectionGroup', 'Course', 'ScheduleTermState',
 	'ScheduleInstructorNote', 'Term', 'Tag', 'Instructor', 'TeachingAssignment',
-	'TeachingCall', 'TeachingCallReceipt', 'TeachingCallResponse', 'ActionTypes'];
+	'TeachingCall', 'TeachingCallReceipt', 'TeachingCallResponse', 'ActionTypes', 'Roles'];
 
 export default AssignmentStateService;
