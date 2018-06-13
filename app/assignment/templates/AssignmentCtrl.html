@@ -103,7 +103,7 @@
 		<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"></div>
 
 		<div ng-show="view.state.userInterface.showInstructors" ng-repeat="instructorTypeId in view.state.instructorTypes.ids">
-			<div instructor-assignment-table id="instructors-table" instructor-type-id="instructorTypeId"></div>
+			<div instructor-assignment-table id="instructors-table" instructor-type-id="{{instructorTypeId}}"></div>
 		</div>
 	</div>
 </div>
