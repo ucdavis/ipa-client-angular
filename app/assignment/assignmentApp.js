@@ -12,6 +12,7 @@ import AssignmentStateService from './services/assignmentStateService.js';
 // Shared services
 import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
+import InstructorTypeService from './../shared/services/InstructorTypeService.js';
 
 // Directives
 import courseAssignmentTable from './directives/courseAssignmentTable.js';
@@ -67,6 +68,8 @@ const assignmentApp = angular.module("assignmentApp", dependencies)
 .service('AssignmentStateService', AssignmentStateService)
 .service('ApiService', ApiService)
 .service('TermService', TermService)
+.service('InstructorTypeService', InstructorTypeService)
+
 .directive('courseAssignmentTable', courseAssignmentTable)
 .directive('instructorAssignmentTable', instructorAssignmentTable)
 .directive('commentModal', commentModal)

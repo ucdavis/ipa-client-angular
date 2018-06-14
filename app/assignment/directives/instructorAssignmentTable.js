@@ -485,20 +485,13 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			};
 
 			scope.renderTable = function () {
-				console.log("----------render table------");
-				console.log("instructorTypeId: " + scope.instructorTypeId);
-				console.log(scope.view.state);
-
 				if (!scope.view.state) { return; }
 
 				scope.rowsSinceHeaderWasAdded = 0;
 
 				// If courses is undefined do nothing
 				// The app is in the process of re-routing to a valid url
-				console.log("1");
-
 				if (scope.view.state.courses) {
-					console.log("2");
 					// Clear the table
 					$('.tooltip').remove();
 					element.empty();
@@ -536,14 +529,11 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						if (scope.showTheStaff) {
 							coursesHtml += scope.renderStaffRow();
 						} else {
-							console.log("render instructor rows");
 							coursesHtml += scope.renderInstructorRows();
 						}
 					}
 
 					element.append(coursesHtml);
-					console.log("|||||||||||||||||||||||||||");
-
 					// Manually activate bootstrap tooltip triggers
 					$('body').tooltip({
 						selector: '[data-toggle="tooltip"]'

@@ -8,9 +8,10 @@
  */
 class AssignmentStateService {
 	constructor ($rootScope, $log, SectionGroup, Course, ScheduleTermState,
-	ScheduleInstructorNote, Term, Tag, Instructor, TeachingAssignment,
-	TeachingCall, TeachingCallReceipt, TeachingCallResponse, ActionTypes, Roles) {
+	ScheduleInstructorNote, Term, Tag, Instructor, TeachingAssignment, TeachingCall,
+	TeachingCallReceipt, TeachingCallResponse, ActionTypes, Roles, InstructorTypeService) {
 		this.Roles = Roles;
+		this.InstructorTypeService = InstructorTypeService;
 		var _self = this;
 
 		return {
@@ -96,6 +97,7 @@ class AssignmentStateService {
 							instructorTypes.list[instructorType.id] = instructorType;
 							instructorTypes.ids.push(instructorType.id);
 						});
+						instructorTypes.ids = InstructorTypeService.orderInstructorTypeIdsAlphabetically(instructorTypes.ids, instructorTypes);
 						return instructorTypes;
 					default:
 						return instructorTypes;
@@ -964,6 +966,6 @@ class AssignmentStateService {
 
 AssignmentStateService.$inject = ['$rootScope', '$log', 'SectionGroup', 'Course', 'ScheduleTermState',
 	'ScheduleInstructorNote', 'Term', 'Tag', 'Instructor', 'TeachingAssignment',
-	'TeachingCall', 'TeachingCallReceipt', 'TeachingCallResponse', 'ActionTypes', 'Roles'];
+	'TeachingCall', 'TeachingCallReceipt', 'TeachingCallResponse', 'ActionTypes', 'Roles', 'InstructorTypeService'];
 
 export default AssignmentStateService;
