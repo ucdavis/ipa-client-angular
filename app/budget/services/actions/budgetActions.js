@@ -815,6 +815,9 @@ class BudgetActions {
 					var instructor = activeInstructors.list[instructorId];
 					var user = users.byLoginId[instructor.loginId.toLowerCase()];
 					var userRoleId = userRoles.ids.find(id => (userRoles.list[id].roleId == Roles.instructor && userRoles.list[id].userId == user.id));
+
+					if (!userRoleId) { return; }
+
 					var userRole = userRoles.list[userRoleId];
 					var instructorType = instructorTypes.list[userRole.instructorTypeId];
 					instructor.instructorTypeDescription = instructorType.description;
@@ -824,6 +827,9 @@ class BudgetActions {
 					var instructor = assignedInstructors.list[instructorId];
 					var user = users.byLoginId[instructor.loginId.toLowerCase()];
 					var userRoleId = userRoles.ids.find(id => (userRoles.list[id].roleId == Roles.instructor && userRoles.list[id].userId == user.id));
+
+					if (!userRoleId) { return; }
+
 					var userRole = userRoles.list[userRoleId];
 					var instructorType = instructorTypes.list[userRole.instructorTypeId];
 					instructor.instructorTypeDescription = instructorType.description;
