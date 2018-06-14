@@ -23,11 +23,11 @@
 		</div>
 	</div> <!-- input container -->
 
-	<div ng-repeat="comment in lineItem.comments" class="comment-container">
+	<div ng-repeat="comment in lineItem.comments" class="add-line-item__comment-container" ng-class="{'add-line-item__comment-container--last' : $last }">
 		<div class="comment-header">
 			{{ comment.authorName }}&nbsp;
 			<span class="comment-date" uib-tooltip="{{ dateToCalendar(comment.lastModifiedOn) }}">
-				({{ dateToRelative(comment.lastModifiedOn) }})
+				({{ dateToRelative(comment.lastModifiedOn) }}) - [{{$last}}]
 			</span>
 		</div>
 		<div class="comment-body">

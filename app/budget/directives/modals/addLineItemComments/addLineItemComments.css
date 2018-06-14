@@ -1,12 +1,15 @@
 .add-line-item-comments {
 	padding: 4%;
-	max-height: 500px;
 }
 
-.add-line-item-comments .comment-container {
+.add-line-item__comment-container {
 	border: 1px solid #c1c1c1;
 	border-radius: 4px;
 	margin-bottom: 2%;
+}
+
+.add-line-item__comment-container--last {
+	margin-bottom: 0px;
 }
 
 .add-line-item-comments .comment-header {
