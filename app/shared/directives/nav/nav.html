@@ -158,7 +158,7 @@
 		</ul>
 
 		<ul id="main-menu" class="main-menu">
-			<li ng-class="{ 'active': currentBaseHref == 'scheduleSummaryReport' || currentBaseHref == 'registrarReconciliationReport' || currentBaseHref == 'teachingCallResponseReport' || currentBaseHref == 'workloadSummaryReport', 'opened': expanded == 'reports'}"
+			<li ng-class="{ 'active': currentBaseHref == 'scheduleSummaryReport' || currentBaseHref == 'registrarReconciliationReport' || currentBaseHref == 'teachingCallResponseReport' || currentBaseHref == 'workloadSummaryReport' || currentBaseHref == 'report', 'opened': expanded == 'reports'}"
 				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('reports')">
 					<i class="entypo-doc-text"></i>
@@ -183,6 +183,11 @@
 					<li ng-class="{ 'active': currentBaseHref == 'workloadSummaryReport' }">
 						<a ng-href="/workloadSummaryReport/{{ workgroupId }}/{{ year }}">
 							Workload Summary
+						</a>
+					</li>
+					<li ng-class="{ 'active': currentBaseHref == 'report' }">
+						<a ng-href="/reports/{{ workgroupId }}/{{ year }}/deansOfficeReport">
+							Deans Office
 						</a>
 					</li>
 				</ul>
