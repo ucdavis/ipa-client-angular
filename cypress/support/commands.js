@@ -38,28 +38,6 @@ Cypress.Commands.add('restoreLocalStorage', () => {
   });
 });
 
-Cypress.Commands.add('loginWithUI', () => {
-  cy.visit('https://ipa.ucdavis.edu');
-
-  cy.on('uncaught:exception', (err, runnable) => {
-    expect(err.message).to.include('hide_sidebar_menu is not defined');
-
-    // using mocha's async done callback to finish
-    // this test so we prove that an uncaught exception
-    // was thrown
-    done();
-
-    // return false to prevent the error from
-    // failing this test
-    return false;
-  });
-
-  cy.contains('Log in').click();
-  cy.get('#username').type(Cypress.env('username'));
-  cy.get('#password').type(Cypress.env('password'));
-  cy.get('#submit').click();
-});
-
 Cypress.Commands.add('loginAndVisit', optionalPath => {
   const username = Cypress.env('username');
   const password = Cypress.env('password');
@@ -83,9 +61,6 @@ Cypress.Commands.add('loginAndVisit', optionalPath => {
       }
     });
   });
-  // .then(res => {
-  //   console.log(res);
-  // });
 
   if (optionalPath) {
     cy.visit(optionalPath);

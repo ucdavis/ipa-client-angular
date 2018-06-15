@@ -31,7 +31,7 @@ describe('instructors page', () => {
       .get('@row')
       .contains('Jarold Wong');
 
-    // cy.get('.toast').contains('Assigned instructor to course');
+    cy.get('.toast').contains('Assigned instructor to course');
   });
 
   it('removes assigned instructor from ECS10', () => {
@@ -47,7 +47,5 @@ describe('instructors page', () => {
       .click();
 
     cy.get('[data-event-type=deleteAssignment]').click();
-
-    // cy.get('.toast').contains('Removed instructor from course');
   });
 });

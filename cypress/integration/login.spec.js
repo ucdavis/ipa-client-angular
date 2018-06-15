@@ -1,5 +1,5 @@
-describe('Summary Page', function() {
-  it('connects to ipa', function() {
+describe('Summary Page', () => {
+  it('connects to ipa', () => {
     cy.visit('https://ipa.ucdavis.edu');
 
     cy.on('uncaught:exception', (err, runnable) => {

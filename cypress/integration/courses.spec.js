@@ -53,20 +53,17 @@ describe('courses page', () => {
         cy.get('[data-value=2015]').click();
       });
 
-    //https://dw.dss.ucdavis.edu/sections/search?subjectCode=ECS&academicYear=2015&token=dssit
     cy.server();
     cy.route('GET', '**/sections/**').as('getSections');
     cy.contains('Search Banner').click();
     cy.wait('@getSections');
 
     cy.server();
-    //https://api.ipa.ucdavis.edu/api/courseView/workgroups/20/years/2018/sectionGroups?importTimes=false&importAssignments=false
     cy.route('POST', '**/courseView/**').as('postCourses');
 
     cy.contains('Import courses').click();
     cy.wait('@postCourses', { timeout: 60000 });
 
-    // div.toast-title
     cy.get('.toast-title').contains('Created');
 
     cy.contains('ECS 010 - A');

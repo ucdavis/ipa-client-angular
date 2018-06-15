@@ -60,7 +60,6 @@ describe('instructor can respond to a teaching call', () => {
     cy.get('@list').should('have.length', 3);
   });
 
-  // TODO: Combine Add and Remove into one test?
   it('should be able to add a preference', () => {
     cy.visit('teachingCalls/20/2019/teachingCall');
     cy.get('.search-course-container').click();
@@ -312,10 +311,6 @@ describe('instructor can respond to a teaching call', () => {
     cy.wait('@autoUpdate');
 
     // FIXME: Don't hardcode id...
-    // cy.get('.toast-success').then(() => {
-
-    // });
-
     cy.get('.remove-preference-btn')
       .first()
       .click();
@@ -421,7 +416,6 @@ describe('instructor can respond to a teaching call', () => {
 
   it('should be able to see on the instructor summary screen that they have responded to a teaching call', () => {
     cy.visit('summary/20/2019?mode=instructor');
-    // cy.contains('Teaching preferences have been submitted');
     cy.get('.glyphicon-ok');
   });
 });
