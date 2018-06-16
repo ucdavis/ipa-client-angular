@@ -1,4 +1,6 @@
 describe('workgroup page', () => {
+  const INSTRUCTOR_NAME = 'Wong, Jarold';
+
   before(() => {
     cy.loginAndVisit();
   });
@@ -13,14 +15,12 @@ describe('workgroup page', () => {
 
   after(() => {
     // reset to generic instructor
-    cy
-      .contains('Wong, Jarold')
+    cy.contains(INSTRUCTOR_NAME)
       .parents('tr')
       .within($tr => {
         cy.get('div.instructor-type-selector').click();
 
-        cy
-          .get('div.dropdown-container')
+        cy.get('div.dropdown-container')
           .within($dropdown => {
             cy.get('.item').contains('Instructor');
           })
@@ -37,18 +37,16 @@ describe('workgroup page', () => {
       cy.contains('Instructor').click();
     });
 
-    cy.contains('Wong, Jarold');
+    cy.contains(INSTRUCTOR_NAME);
   });
 
   it('changes instructor type to Pre-Six using dropdown', () => {
-    cy
-      .contains('Wong, Jarold')
+    cy.contains(INSTRUCTOR_NAME)
       .parents('tr')
       .within($tr => {
         cy.get('div.instructor-type-selector').click();
 
-        cy
-          .get('div.dropdown-container')
+        cy.get('div.dropdown-container')
           .within($dropdown => {
             cy.get('.item').contains('Pre-Six');
           })
@@ -59,18 +57,15 @@ describe('workgroup page', () => {
   it('shows instructor type as Pre-Six after reload', () => {
     cy.reload();
 
-    cy
-      .get('.ipa-tabs__tab')
+    cy.get('.ipa-tabs__tab')
       .contains('Staff')
       .click();
 
-    cy
-      .get('.ipa-tabs__tab')
+    cy.get('.ipa-tabs__tab')
       .contains('Instructor')
       .click();
 
-    cy
-      .contains('Wong, Jarold')
+    cy.contains(INSTRUCTOR_NAME)
       .parents('tr')
       .within($tr => {
         cy.contains('Pre-Six');

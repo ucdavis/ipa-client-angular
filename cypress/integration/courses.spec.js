@@ -1,4 +1,6 @@
 describe('courses page', () => {
+  const COURSE_NUMBER = 'ECS 010 - A';
+
   before(() => {
     cy.loginAndVisit();
   });
@@ -29,24 +31,21 @@ describe('courses page', () => {
     cy.get('.glyphicon-plus').click();
     cy.contains('Add Multiple Courses');
 
-    cy
-      .contains('Source')
+    cy.contains('Source')
       .next('.col-sm-4')
       .within($col => {
         cy.get('.selectize-control').click();
         cy.get('[data-value=Banner]').click();
       });
 
-    cy
-      .contains('Subject Code')
+    cy.contains('Subject Code')
       .next('.col-sm-4')
       .within($col => {
         cy.get('.selectize-control').click();
         cy.get('[data-value=ECS]').click();
       });
 
-    cy
-      .contains('Academic Year')
+    cy.contains('Academic Year')
       .next('.col-sm-4')
       .within($col => {
         cy.get('.selectize-control').click();
@@ -66,6 +65,6 @@ describe('courses page', () => {
 
     cy.get('.toast-title').contains('Created');
 
-    cy.contains('ECS 010 - A');
+    cy.contains(COURSE_NUMBER);
   });
 });

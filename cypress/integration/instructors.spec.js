@@ -1,4 +1,7 @@
 describe('instructors page', () => {
+  const INSTRUCTOR_NAME = 'Jarold Wong';
+  const COURSE_NUMBER = 'ECS 010';
+
   before(() => {
     cy.loginAndVisit();
   });
@@ -13,8 +16,7 @@ describe('instructors page', () => {
   });
 
   it('assigns instructor to ECS10', () => {
-    cy
-      .contains('ECS 010')
+    cy.contains(COURSE_NUMBER)
       .parents('div.course-list-row')
       .as('row')
       .within($row => {
@@ -23,26 +25,23 @@ describe('instructors page', () => {
         cy.server();
         cy.route('POST', '**/assignmentView/**').as('postInstructor');
 
-        cy.contains('Jarold Wong').click();
+        cy.contains(INSTRUCTOR_NAME).click();
       });
 
-    cy
-      .wait('@postInstructor')
+    cy.wait('@postInstructor')
       .get('@row')
-      .contains('Jarold Wong');
+      .contains(INSTRUCTOR_NAME);
 
     cy.get('.toast').contains('Assigned instructor to course');
   });
 
   it('removes assigned instructor from ECS10', () => {
-    cy
-      .contains('ECS 010')
+    cy.contains(COURSE_NUMBER)
       .parents('div.course-list-row')
       .as('row');
 
-    cy
-      .get('@row')
-      .contains('Jarold Wong')
+    cy.get('@row')
+      .contains(INSTRUCTOR_NAME)
       .find('[data-event-type=deleteAssignmentPop]')
       .click();
 

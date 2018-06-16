@@ -1,4 +1,6 @@
 describe('create teaching calls as staff', () => {
+  const INSTRUCTOR_NAME = 'Wong, Jarold';
+
   before(() => {
     cy.loginAndVisit('teachingCalls/20/2019/teachingCallStatus');
     cy.get('.teaching-call-status__submission-container > .btn').click();
@@ -9,20 +11,18 @@ describe('create teaching calls as staff', () => {
   });
 
   it('adds instructors', () => {
-    cy.contains('Wong, Jarold').click();
-    cy.contains('Wong, Jarold').should('not.have.class', 'label-toggleout');
+    cy.contains(INSTRUCTOR_NAME).click();
+    cy.contains(INSTRUCTOR_NAME).should('not.have.class', 'label-toggleout');
   });
 
   it('configures terms', () => {
-    cy.contains('Winter Quarter 2020').click();
-    cy.contains('Spring Quarter 2020').click();
+    cy.contains('Winter Quarter').click();
+    cy.contains('Spring Quarter').click();
 
-    cy
-      .contains('Winter Quarter')
+    cy.contains('Winter Quarter')
       .closest('div.checkbox')
       .should('not.have.class', 'checked');
-    cy
-      .contains('Spring Quarter')
+    cy.contains('Spring Quarter')
       .closest('div.checkbox')
       .should('not.have.class', 'checked');
   });
