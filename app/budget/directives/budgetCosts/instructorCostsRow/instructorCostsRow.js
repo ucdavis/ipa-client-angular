@@ -37,8 +37,8 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 				scope.updateSectionGroupCost(sectionGroupCost);
 			};
 
-			scope.updateSectionGroupCost = function(sectionGroupCost) {
-				BudgetActions.updateSectionGroupCost(sectionGroupCost);
+			scope.updateReason = function(sectionGroup) {
+				BudgetActions.overrideSectionGroup(sectionGroup, "reason");
 			};
 		} // end link
 	};
