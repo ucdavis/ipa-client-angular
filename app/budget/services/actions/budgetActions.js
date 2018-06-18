@@ -91,6 +91,10 @@ class BudgetActions {
 					oldValue = savedOverride || sectionGroup.readerAppointments;
 					newValue = this._calculateNewValue(sectionGroup.overrideReaderAppointments, isReversion);
 					newSectionGroupCost.readerCount = sectionGroup.overrideReaderAppointments;
+				} else if (property == "reason") {
+					oldValue = null;
+					newValue = sectionGroup.sectionGroupCost.reason;
+					newSectionGroupCost.reason = sectionGroup.sectionGroupCost.reason;
 				}
 	
 				var isOverriden = oldValue != newValue;
@@ -98,7 +102,7 @@ class BudgetActions {
 	
 				if (isOverriden) {
 					// Create or update sectionGroupCost
-					if (sectionGroup.sectionGroupCost) {
+					if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.id) {
 						sectionGroup.sectionGroupCost = this.applyOverrideToProperty(sectionGroup.sectionGroupCost, newValue, property);
 						this.updateSectionGroupCost(sectionGroup.sectionGroupCost);
 					} else {
@@ -131,6 +135,8 @@ class BudgetActions {
 					sectionGroupCost.taCount = value;
 				} else if (property == "readerAppointments") {
 					sectionGroupCost.readerCount = value;
+				} else if (property == "reason") {
+					sectionGroupCost.reason = value;
 				}
 	
 				return sectionGroupCost;
@@ -166,6 +172,13 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Created budget scenario", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
 					self.selectBudgetScenario(results.budgetScenario.id);
+					self.attachInstructorTypesToInstructors();
+
+					// Perform follow up calculations
+					BudgetCalculations.calculateInstructors();
+					BudgetCalculations.calculateLineItems();
+					BudgetCalculations.calculateInstructorTypeCosts();
+
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not create budget scenario.", type: "ERROR" });
 				});
@@ -312,7 +325,6 @@ class BudgetActions {
 			},
 			updateSectionGroupCost: function (sectionGroupCost) {
 				var self = this;
-	
 				BudgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
 					var action = {
 						type: ActionTypes.UPDATE_SECTION_GROUP_COST,
@@ -432,7 +444,7 @@ class BudgetActions {
 			setOriginalInstructorFromSectionGroup: function (sectionGroup, originalInstructorId) {
 				var self = this;
 				var sectionGroupCost = sectionGroup.sectionGroupCost;
-	
+
 				// Create sectionGroupCost if necessary
 				if (sectionGroupCost == false || sectionGroupCost == null) {
 					var sectionGroupCostDTO = {
