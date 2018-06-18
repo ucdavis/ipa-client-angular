@@ -91,10 +91,18 @@ class BudgetActions {
 					oldValue = savedOverride || sectionGroup.readerAppointments;
 					newValue = this._calculateNewValue(sectionGroup.overrideReaderAppointments, isReversion);
 					newSectionGroupCost.readerCount = sectionGroup.overrideReaderAppointments;
-				} else if (property == "reason") {
+				}
+
+				else if (property == "reason") {
 					oldValue = null;
 					newValue = sectionGroup.sectionGroupCost.reason;
 					newSectionGroupCost.reason = sectionGroup.sectionGroupCost.reason;
+				}
+
+				else if (property == "instructorCost") {
+					oldValue = null;
+					newValue = savedOverride || sectionGroup.overrideInstructorCost;
+					newSectionGroupCost.cost = sectionGroup.cost;
 				}
 	
 				var isOverriden = oldValue != newValue;
@@ -102,6 +110,7 @@ class BudgetActions {
 	
 				if (isOverriden) {
 					// Create or update sectionGroupCost
+					debugger;
 					if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.id) {
 						sectionGroup.sectionGroupCost = this.applyOverrideToProperty(sectionGroup.sectionGroupCost, newValue, property);
 						this.updateSectionGroupCost(sectionGroup.sectionGroupCost);
@@ -137,6 +146,8 @@ class BudgetActions {
 					sectionGroupCost.readerCount = value;
 				} else if (property == "reason") {
 					sectionGroupCost.reason = value;
+				} else if (property == "instructorCost") {
+					sectionGroupCost.cost = parseFloat(value);
 				}
 	
 				return sectionGroupCost;
