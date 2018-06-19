@@ -139,14 +139,6 @@ class SchedulingCtrl {
 			self.$scope.saveActivity();
 		};
 
-		self.$scope.toggleActivityDay = function (index) {
-			var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
-			var dayArr = activity.dayIndicator.split('');
-			dayArr[index] = Math.abs(1 - parseInt(dayArr[index])).toString();
-			activity.dayIndicator = dayArr.join('');
-			self.$scope.saveActivity();
-		};
-
 		self.$scope.setActivityStandardTime = function (time) {
 			var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
 			activity.frequency = 1;
