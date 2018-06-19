@@ -19,7 +19,7 @@ import timeInput from './directives/timeInput/timeInput.js';
 import activityDetails from './directives/activityDetails/activityDetails.js';
 import locationEditor from './directives/activityDetails/locationEditor/locationEditor.js';
 import timeEditor from './directives/activityDetails/timeEditor/timeEditor.js';
-import freeformTimeInput from './directives/activityDetails/timeEditor/freeformTimeSelector/freeformTimeSelector.js';
+import freeformTimeSelector from './directives/activityDetails/timeEditor/freeformTimeSelector/freeformTimeSelector.js';
 import standardTimeSelector from './directives/activityDetails/timeEditor/standardTimeSelector/standardTimeSelector.js';
 
 // Dependencies
@@ -78,7 +78,7 @@ const schedulingApp = angular.module("schedulingApp", dependencies)
 .directive('activityDetails', activityDetails)
 .directive('locationEditor', locationEditor)
 .directive('timeEditor', timeEditor)
-.directive('freeformTimeInput', freeformTimeInput)
+.directive('freeformTimeSelector', freeformTimeSelector)
 .directive('standardTimeSelector', standardTimeSelector)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
