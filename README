@@ -7,6 +7,19 @@ Dev Machine Instructions
 1. yarn install
 2. yarn start
 
+Running the tests
+-----------------
+1. Set environmental variables inside cypress.env.json in root folder
+
+// cypress.env.json
+{
+    "baseUrl": "https://ipa.ucdavis.edu",
+    "username": "",
+    "password": ""
+}
+
+2. yarn cypress to open the Cypress Test Runner
+
 Docker Notes
 ------------
 1. Customize ipa-ucdavis-edu.env
