@@ -24,9 +24,9 @@ let freeformTimeSelector = function (SchedulingActionCreators) {
 			};
 
 			scope.toggleActivityDay = function (index) {
-				var dayArr = activity.dayIndicator.split('');
+				var dayArr = scope.activity.dayIndicator.split('');
 				dayArr[index] = Math.abs(1 - parseInt(dayArr[index])).toString();
-				activity.dayIndicator = dayArr.join('');
+				scope.activity.dayIndicator = dayArr.join('');
 				scope.saveActivity();
 			};
 		}
