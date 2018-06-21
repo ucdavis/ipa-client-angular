@@ -42,11 +42,11 @@ Cypress.Commands.add('loginAndVisit', optionalPath => {
   const username = Cypress.env('username');
   const password = Cypress.env('password');
 
-  cy.visit('https://cas.ucdavis.edu/cas/login')
+  cy.visit('https://cas.ucdavis.edu/cas/login');
 
   // grab execution value from cas login page
   cy.get("input[name='execution']").then($input => {
-    const executionValue = $input.val()
+    const executionValue = $input.val();
 
     cy.request({
       method: 'POST',
@@ -57,7 +57,7 @@ Cypress.Commands.add('loginAndVisit', optionalPath => {
         password,
         _eventId: 'submit',
         submit: 'LOGIN',
-        execution: executionValue,
+        execution: executionValue
       }
     });
   });
@@ -65,6 +65,6 @@ Cypress.Commands.add('loginAndVisit', optionalPath => {
   if (optionalPath) {
     cy.visit(optionalPath);
   } else {
-    cy.visit('/summary');
+    cy.visit('summary');
   }
 });
