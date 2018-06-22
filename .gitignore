@@ -8,3 +8,5 @@ jsconfig.json
 certs/
 ipa-ucdavis-edu.env
 cypress.env.json
+cypress/videos
+cypress/screenshots
