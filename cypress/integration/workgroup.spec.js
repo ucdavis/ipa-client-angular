@@ -29,6 +29,11 @@ describe('workgroup page', () => {
   });
 
   it('loads the workgroup page using the cog icon', () => {
+    cy.visit('summary');
+    cy.server();
+    cy.route('GET', '**/summaryView/**').as('getSummary');
+    cy.wait('@getSummary').wait('@getSummary');
+
     cy.get('.ipa-header__cog-btn').click();
   });
 

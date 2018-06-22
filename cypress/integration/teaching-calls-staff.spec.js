@@ -1,9 +1,22 @@
 describe('create teaching calls as staff', () => {
-  const INSTRUCTOR_NAME = 'Wong, Jarold';
+  const INSTRUCTOR_NAME = 'Apps, DSS';
 
   before(() => {
     cy.loginAndVisit('teachingCalls/20/2019/teachingCallStatus');
-    cy.get('.teaching-call-status__submission-container > .btn').click();
+
+    // If Teaching Call for Instructor exists, delete it before running tests
+    cy.server();
+    cy.route('DELETE', '**/teachingCallReceipts/*').as('removeTeachingCall');
+
+    cy.get('.instructor-section').then($section => {
+      if ($section.find('.remove-instructor-ui').length) {
+        cy.get('.remove-instructor-ui')
+          .trigger('mouseover', { force: true })
+          .click({ force: true });
+        cy.get('.confirmbutton-yes').click();
+        cy.wait('@removeTeachingCall');
+      }
+    });
   });
 
   it('starts with no teaching calls', () => {
@@ -11,20 +24,29 @@ describe('create teaching calls as staff', () => {
   });
 
   it('adds instructors', () => {
+    cy.get('.teaching-call-status__submission-container > .btn').click();
     cy.contains(INSTRUCTOR_NAME).click();
     cy.contains(INSTRUCTOR_NAME).should('not.have.class', 'label-toggleout');
   });
 
   it('configures terms', () => {
+    cy.contains('Fall Quarter').click();
     cy.contains('Winter Quarter').click();
     cy.contains('Spring Quarter').click();
 
+    cy.contains('Fall Quarter')
+      .closest('div.checkbox')
+      .should('not.have.class', 'checked');
     cy.contains('Winter Quarter')
       .closest('div.checkbox')
       .should('not.have.class', 'checked');
     cy.contains('Spring Quarter')
       .closest('div.checkbox')
       .should('not.have.class', 'checked');
+
+    cy.contains('Fall Quarter').click();
+    cy.contains('Winter Quarter').click();
+    cy.contains('Spring Quarter').click();
   });
 
   it('toggles Send Email text input', () => {
@@ -40,8 +62,12 @@ describe('create teaching calls as staff', () => {
     cy.get('textarea').should('have.value', 'Hello, World!');
   });
 
-  it('access teaching call as an instructor', () => {
-    cy.loginAndVisit('/teachingCalls/20/2019/teachingCall');
-    cy.contains('Teaching Preferences');
+  it('can access teaching call as an instructor', () => {
+    cy.get('button')
+      .contains('Send')
+      .click();
+
+    cy.loginAndVisit('summary/20/2019?mode=instructor');
+    cy.contains('View Teaching Call Form');
   });
 });

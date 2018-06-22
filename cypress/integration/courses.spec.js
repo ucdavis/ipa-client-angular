@@ -5,7 +5,21 @@ describe('courses page', () => {
     cy.loginAndVisit();
   });
 
+  beforeEach(() => {
+    cy.restoreLocalStorage();
+  });
+
+  afterEach(() => {
+    cy.saveLocalStorage();
+  });
+
   it('navigates to Courses page from Summary', () => {
+    cy.visit('summary');
+    // wait for all the backend calls to finish before continuing
+    cy.server();
+    cy.route('GET', '**/summaryView/**').as('getSummary');
+    cy.wait('@getSummary').wait('@getSummary');
+
     cy.contains('Courses').click();
     cy.location().should(loc => {
       expect(loc.pathname).to.contain('courses');
@@ -17,6 +31,7 @@ describe('courses page', () => {
   });
 
   it('removes ECS courses from 2018-19', () => {
+    cy.visit('courses/20/2018');
     cy.get('[data-event-type=selectAllCourseRows].checkbox-container').click();
     cy.get('span.tool-icon.glyphicon.glyphicon-trash').click();
     cy.get('.delete-course-modal-footer').within($modal => {
@@ -28,7 +43,9 @@ describe('courses page', () => {
   });
 
   it('adds ECS courses from 2015-16', () => {
-    cy.get('.glyphicon-plus').click();
+    cy.get('.table-toolbar')
+      .find('.glyphicon-plus')
+      .click();
     cy.contains('Add Multiple Courses');
 
     cy.contains('Source')
@@ -62,8 +79,6 @@ describe('courses page', () => {
 
     cy.contains('Import courses').click();
     cy.wait('@postCourses', { timeout: 60000 });
-
-    cy.get('.toast-title').contains('Created');
 
     cy.contains(COURSE_NUMBER);
   });

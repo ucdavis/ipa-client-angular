@@ -6,7 +6,22 @@ describe('instructors page', () => {
     cy.loginAndVisit();
   });
 
+  beforeEach(() => {
+    cy.restoreLocalStorage();
+  });
+
+  afterEach(() => {
+    cy.saveLocalStorage();
+  });
+
   it('navigates to the Assign Instructors page', () => {
+    cy.visit('summary');
+
+    // waits for all the backend calls to finish
+    cy.server();
+    cy.route('GET', '**/summaryView/**').as('getSummary');
+    cy.wait('@getSummary').wait('@getSummary');
+
     cy.contains('Instructors').click();
     cy.contains('Assign Instructors').click();
     cy.location().should(loc => {
