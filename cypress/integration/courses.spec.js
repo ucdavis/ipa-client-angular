@@ -14,10 +14,10 @@ describe('courses page', () => {
   });
 
   it('navigates to Courses page from Summary', () => {
-    cy.visit('summary');
-    // wait for all the backend calls to finish before continuing
+    // waits for all the backend calls to finish when loading summary page
     cy.server();
     cy.route('GET', '**/summaryView/**').as('getSummary');
+    cy.visit('summary');
     cy.wait('@getSummary').wait('@getSummary');
 
     cy.contains('Courses').click();

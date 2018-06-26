@@ -15,11 +15,10 @@ describe('instructors page', () => {
   });
 
   it('navigates to the Assign Instructors page', () => {
-    cy.visit('summary');
-
-    // waits for all the backend calls to finish
+    // waits for all the backend calls to finish when loading summary page
     cy.server();
     cy.route('GET', '**/summaryView/**').as('getSummary');
+    cy.visit('summary');
     cy.wait('@getSummary').wait('@getSummary');
 
     cy.contains('Instructors').click();
