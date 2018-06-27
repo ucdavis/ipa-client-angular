@@ -42,11 +42,10 @@ Cypress.Commands.add('loginAndVisit', optionalPath => {
   const username = Cypress.env('username');
   const password = Cypress.env('password');
 
-  cy.visit('https://cas.ucdavis.edu/cas/login');
-
   // grab execution value from cas login page
-  cy.get("input[name='execution']").then($input => {
-    const executionValue = $input.val();
+  cy.request('GET', 'https://cas.ucdavis.edu/cas/login').then(res => {
+    const doc = new DOMParser().parseFromString(res.body, 'text/html');
+    const executionValue = doc.querySelector("input[name='execution']").value;
 
     cy.request({
       method: 'POST',
