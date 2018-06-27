@@ -64,6 +64,10 @@ Cypress.Commands.add('loginAndVisit', optionalPath => {
   if (optionalPath) {
     cy.visit(optionalPath);
   } else {
+    // need to wait for all backend calls to finish when loading Summary page
+    cy.server();
+    cy.route('GET', '**/summaryView/**').as('getSummary');
     cy.visit('summary');
+    cy.wait('@getSummary').wait('@getSummary');
   }
 });

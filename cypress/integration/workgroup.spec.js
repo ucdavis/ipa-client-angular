@@ -29,12 +29,6 @@ describe('workgroup page', () => {
   });
 
   it('loads the workgroup page using the cog icon', () => {
-    // waits for all the backend calls to finish when loading summary page
-    cy.server();
-    cy.route('GET', '**/summaryView/**').as('getSummary');
-    cy.visit('summary');
-    cy.wait('@getSummary').wait('@getSummary');
-
     cy.get('.ipa-header__cog-btn').click();
   });
 

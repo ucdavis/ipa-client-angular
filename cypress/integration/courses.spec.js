@@ -14,12 +14,6 @@ describe('courses page', () => {
   });
 
   it('navigates to Courses page from Summary', () => {
-    // waits for all the backend calls to finish when loading summary page
-    cy.server();
-    cy.route('GET', '**/summaryView/**').as('getSummary');
-    cy.visit('summary');
-    cy.wait('@getSummary').wait('@getSummary');
-
     cy.contains('Courses').click();
     cy.location().should(loc => {
       expect(loc.pathname).to.contain('courses');
