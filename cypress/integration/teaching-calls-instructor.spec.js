@@ -204,26 +204,6 @@ describe('instructor can respond to a teaching call', () => {
       'contain',
       'ECS 020 Discrete Math for CS'
     );
-
-    // remove courses after
-    cy.server();
-    cy.route('DELETE', '**/preferences/**').as('deletePref');
-    cy.get('.remove-preference-btn')
-      .first()
-      .click();
-    cy.get('.confirmbutton-yes').click({ force: true });
-    cy.wait('@deletePref');
-
-    cy.get('.remove-preference-btn')
-      .first()
-      .click();
-    cy.get('.confirmbutton-yes').click({ force: true });
-    cy.wait('@deletePref');
-
-    cy.get('.remove-preference-btn')
-      .first()
-      .click();
-    cy.get('.confirmbutton-yes').click({ force: true });
   });
 
   it('should be able to indicate unavailabilities', () => {
@@ -368,25 +348,6 @@ describe('instructor can respond to a teaching call', () => {
   });
 
   it('should be able to reload the page and see all information saved', () => {
-    cy.visit('/teachingCalls/20/2019/teachingCall');
-
-    cy.get('.search-course-container').click();
-    cy.contains('ECS 010 Intro to Programming').click();
-
-    cy.get('.teaching-call--academic-term-sidebar')
-      .contains('Winter Quarter')
-      .click();
-
-    cy.get('.search-course-container').click();
-    cy.contains('ECS 015 Intro to Computers').click();
-
-    cy.get('.teaching-call--academic-term-sidebar')
-      .contains('Spring Quarter')
-      .click();
-
-    cy.get('.search-course-container').click();
-    cy.contains('ECS 120 Theory Computation').click();
-
     cy.reload();
 
     cy.get('.preference-cell.outline > div').should(
@@ -400,7 +361,7 @@ describe('instructor can respond to a teaching call', () => {
 
     cy.get('.preference-cell.outline > div').should(
       'contain',
-      'ECS 015 Intro to Computers'
+      'ECS 122A Algorithm Design'
     );
 
     cy.get('.teaching-call--academic-term-sidebar')
@@ -409,7 +370,7 @@ describe('instructor can respond to a teaching call', () => {
 
     cy.get('.preference-cell.outline > div').should(
       'contain',
-      'ECS 120 Theory Computation'
+      'ECS 122B Algorithm Design'
     );
   });
 
