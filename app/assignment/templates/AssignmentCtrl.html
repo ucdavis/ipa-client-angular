@@ -104,10 +104,10 @@
 
 		<div ng-if="view.state" ng-show="view.state.userInterface.showInstructors">
 			<div ng-repeat="instructorTypeId in view.state.instructorTypes.ids">
-				<div instructor-assignment-table id="instructors-table" shared-state="sharedState" state="view.state" instructor-type-id="instructorTypeId"></div>
+				<div instructor-assignment-table id="instructors-table" state="view.state" shared-state="view.sharedState" instructor-type-id="instructorTypeId"></div>
 			</div>
 
-			<div instructor-assignment-table state="view.state" id="instructors-table" instructor-type-id="instructorTypeId" show-the-staff="true"></div>
+			<div instructor-assignment-table id="instructors-table" state="view.state" shared-state="view.sharedState" instructor-type-id="instructorTypeId" show-the-staff="true"></div>
 		</div>
 	</div>
 </div>
