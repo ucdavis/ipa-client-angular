@@ -966,6 +966,9 @@ li.active-term .dropdown-term-row {
 	color: rgb(123, 123, 123);
 }
 
-#instructors-table .tile-assignment .instructors-table__preference-title {
-	line-height: 1em;
+.instructor-type-header {
+	font-weight: bold;
+	padding-top: 30px;
+	padding-bottom: 5px;
+	color: #616060;
 }

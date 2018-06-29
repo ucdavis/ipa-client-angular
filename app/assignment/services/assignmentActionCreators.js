@@ -264,7 +264,7 @@ class AssignmentActionCreators {
 				_self.AssignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
 					_self.$rootScope.$emit('toast', { message: "Assigned The Staff", type: "SUCCESS" });
 						var action = {
-							type: CREATE_PLACEHOLDER_STAFF,
+							type: ActionTypes.CREATE_PLACEHOLDER_STAFF,
 							payload: {
 								sectionGroup: sectionGroup
 							}

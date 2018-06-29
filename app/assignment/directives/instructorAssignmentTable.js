@@ -1,11 +1,25 @@
 /**
  * Provides the main course table in the Courses View
  */
-let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) {
+let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, AuthService) {
 	return {
 		restrict: 'A',
+		scope: {
+			state: '=',
+			showTheStaff: '=',
+			instructorTypeId: '=',
+			sharedState: '='
+		},
 		link: function (scope, element, attrs) {
+			scope.sharedState = scope.sharedState || AuthService.getSharedState();
+
 			scope.view = {};
+			scope.view.state = scope.state;
+
+			$rootScope.$on('assignmentStateChanged', function (event, data) {
+				scope.view.state = data;
+				scope.renderTable();
+			});
 
 			// Filter instructors with assignmentsCompleted if filter is active
 			scope.showCompletedInstructor = function (instructor) {
@@ -90,9 +104,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 				|| teachingAssignment.sabbatical);
 			};
 
-			$rootScope.$on('assignmentStateChanged', function (event, data) {
-				scope.view.state = data;
-
+			scope.renderTable = function () {
 				// If courses is undefined do nothing
 				// The app is in the process of re-routing to a valid url
 				if (scope.view.state.courses) {
@@ -524,7 +536,10 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 						selector: '[data-toggle="tooltip"]'
 					});
 				}
-			}); // end on event 'assignmentStateChanged'
+			}
+
+			// end on event 'assignmentStateChanged'
+
 			// Handle Instructor UI events
 			element.click(function (e) {
 				let $el = $(e.target);
@@ -639,6 +654,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 					}
 				}
 			}); // end UI event handler
+
+			scope.renderTable();
 		} // end link
 	};
 };
