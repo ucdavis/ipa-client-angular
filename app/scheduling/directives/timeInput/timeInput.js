@@ -34,8 +34,8 @@ let timeInput = function ($timeout) {
 				scope.canIncrementMinutes = true;
 
 				var selectedTime = moment(scope.time, "HH:mm:ss");
-				selectedMinutes = selectedTime.minutes();
-				selectedHours = selectedTime.hours();
+				var selectedMinutes = selectedTime.minutes();
+				var selectedHours = selectedTime.hours();
 
 				if (selectedMinutes == "55") {
 					scope.canIncrementMinutes = false;
@@ -49,8 +49,8 @@ let timeInput = function ($timeout) {
 					var floorTime = moment(scope.floor, "HH:mm:ss");
 					floorTime = floorTime.add(5, "minutes");
 
-					floorMinutes = floorTime.minutes();
-					floorHours = floorTime.hours();
+					var floorMinutes = floorTime.minutes();
+					var floorHours = floorTime.hours();
 
 
 					if (floorHours == selectedHours && floorMinutes == selectedMinutes) {
@@ -70,8 +70,8 @@ let timeInput = function ($timeout) {
 					var ceilingTime = moment(scope.ceiling, "HH:mm:ss");
 					ceilingTime = ceilingTime.subtract(5, "minutes");
 
-					ceilingMinutes = ceilingTime.minutes();
-					ceilingHours = ceilingTime.hours();
+					var ceilingMinutes = ceilingTime.minutes();
+					var ceilingHours = ceilingTime.hours();
 
 					if (ceilingHours == selectedHours && ceilingMinutes == selectedMinutes) {
 						scope.canIncrementMinutes = false;
