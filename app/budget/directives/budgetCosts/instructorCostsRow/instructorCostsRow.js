@@ -31,14 +31,14 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 				return toCurrency(value);
 			};
 
-			scope.updateInstructorCost = function(sectionGroupCost, overrideInstructorCost) {
-				sectionGroupCost.cost = angular.copy(parseFloat(overrideInstructorCost));
+			scope.updateInstructorCost = function(sectionGroup, overrideInstructorCost) {
+				sectionGroup.cost = angular.copy(parseFloat(sectionGroup.overrideInstructorCost));
 
-				scope.updateSectionGroupCost(sectionGroupCost);
+				scope.overrideSectionGroup(sectionGroup, 'instructorCost');
 			};
 
-			scope.updateSectionGroupCost = function(sectionGroupCost) {
-				BudgetActions.updateSectionGroupCost(sectionGroupCost);
+			scope.overrideSectionGroup = function(sectionGroup, property) {
+				BudgetActions.overrideSectionGroup(sectionGroup, property);
 			};
 		} // end link
 	};

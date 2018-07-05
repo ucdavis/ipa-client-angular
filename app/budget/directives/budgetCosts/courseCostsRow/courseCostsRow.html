@@ -23,7 +23,7 @@
 			     message="Update to schedule total seats of {{ !!(sectionGroup.totalSeats) ? sectionGroup.totalSeats : 'none' }}?"
 			     yes="Update"
 			     no="Cancel"
-			     ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.enrollment !== null && (sectionGroup.totalSeats != sectionGroup.sectionGroupCost.enrollment)">
+			     ng-show="!!(sectionGroup.sectionGroupCost) && !!(sectionGroup.sectionGroupCost.enrollment) && (sectionGroup.totalSeats != sectionGroup.sectionGroupCost.enrollment)">
 			</div>
 		</div>
 	</td>
@@ -46,7 +46,7 @@
 			     message="Update to schedule section count of {{ !!(sectionGroup.sectionCount) ? sectionGroup.sectionCount : 'none' }}?"
 			     yes="Update"
 			     no="Cancel"
-			     ng-show="!!(sectionGroup.sectionGroupCost) && sectionGroup.sectionGroupCost.sectionCount !== null && sectionGroup.sectionCount != sectionGroup.sectionGroupCost.sectionCount">
+			     ng-show="!!(sectionGroup.sectionGroupCost) && !!(sectionGroup.sectionGroupCost.sectionCount) && sectionGroup.sectionCount != sectionGroup.sectionGroupCost.sectionCount">
 			</div>
 		</div>
 	</td>

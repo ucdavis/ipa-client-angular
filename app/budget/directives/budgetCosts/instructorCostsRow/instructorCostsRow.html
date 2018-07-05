@@ -59,7 +59,7 @@
 		</div>
 		<div class="instructor-costs__cost-container">
 			<ipa-input value="sectionGroup.sectionGroupCost.reason"
-			           on-update="updateSectionGroupCost(sectionGroup.sectionGroupCost)">
+			           on-update="overrideSectionGroup(sectionGroup, 'reason')">
 			</ipa-input>
 		</div>
 	</td>
@@ -73,7 +73,7 @@
 			<div ng-if="sectionGroup.overrideInstructorCostSource == 'course'">
 				<ipa-input mode="'currency'"
 				           value="sectionGroup.overrideInstructorCost"
-				           on-update="updateInstructorCost(sectionGroup.sectionGroupCost, sectionGroup.overrideInstructorCost)">
+				           on-update="updateInstructorCost(sectionGroup)">
 				</ipa-input>
 			</div>
 
