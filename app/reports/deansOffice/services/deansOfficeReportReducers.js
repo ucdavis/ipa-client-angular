@@ -104,7 +104,7 @@ class DeansOfficeReportReducers {
 				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
 
 				scope._state = newState;
-				$rootScope.$emit('workloadSummaryStateChanged', {
+				$rootScope.$emit('deansOfficeReportStateChanged', {
 					state: scope._state,
 					action: action
 				});

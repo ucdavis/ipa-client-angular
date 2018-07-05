@@ -1,11 +1,5 @@
 class DeansOfficeReportActions {
 	constructor(DeansOfficeReportReducers, DeansOfficeReportService, $rootScope, ActionTypes, Roles, $route) {
-		this.DeansOfficeReportReducers = DeansOfficeReportReducers;
-		this.DeansOfficeReportService = DeansOfficeReportService;
-		this.$rootScope = $rootScope;
-		this.ActionTypes = ActionTypes;
-		this.TermService = TermService;
-
 		return {
 			getInitialState: function () {
 				var workgroupId = $route.current.params.workgroupId;
@@ -238,11 +232,6 @@ class DeansOfficeReportActions {
 			_performCalculations: function () {
 				this._isInitialFetchComplete();
 
-				if (DeansOfficeReportReducers._state.calculations.isInitialFetchComplete && DeansOfficeReportReducers._state.calculations.censusDataFetchBegun == false) {
-					this._getEnrollmentData();
-					this._getEnrollmentData(true);
-				}
-
 				if (DeansOfficeReportReducers._state.calculations.isInitialFetchComplete) {
 					this._calculateView();
 				}
@@ -267,297 +256,38 @@ class DeansOfficeReportActions {
 				}
 			},
 			_calculateView: function () {
-				var _self = this;
+				return {};
 
-				var sectionGroups = DeansOfficeReportReducers._state.sectionGroups;
-				var courses = DeansOfficeReportReducers._state.courses;
-				var teachingAssignments = DeansOfficeReportReducers._state.teachingAssignments;
-				var instructors = DeansOfficeReportReducers._state.instructors;
-				var instructorTypes = DeansOfficeReportReducers._state.instructorTypes;
-				var users = DeansOfficeReportReducers._state.users;
-				var userRoles = DeansOfficeReportReducers._state.userRoles;
+				// var _self = this;
 
-				var calculatedView = {
-					instructorTypeIds: [],
-					byInstructorType: {},
-					totals: {
-						byInstructorTypeId: {},
-						units: 0,
-						studentCreditHours: 0,
-						enrollment: 0,
-						previousEnrollment: 0,
-						instructorCount: 0,
-						assignmentCount: 0
-					}
-				};
+				// var sectionGroups = DeansOfficeReportReducers._state.sectionGroups;
+				// var courses = DeansOfficeReportReducers._state.courses;
+				// var teachingAssignments = DeansOfficeReportReducers._state.teachingAssignments;
+				// var instructors = DeansOfficeReportReducers._state.instructors;
+				// var instructorTypes = DeansOfficeReportReducers._state.instructorTypes;
+				// var users = DeansOfficeReportReducers._state.users;
+				// var userRoles = DeansOfficeReportReducers._state.userRoles;
 
-				instructors.ids.forEach(function(instructorId) {
-					var instructor = instructors.list[instructorId];
-					var instructorTypeId = _self._getInstructorTypeId(instructor);
+				// var calculatedView = {
+				// 	instructorTypeIds: [],
+				// 	byInstructorType: {},
+				// 	totals: {
+				// 		byInstructorTypeId: {},
+				// 		units: 0,
+				// 		studentCreditHours: 0,
+				// 		enrollment: 0,
+				// 		previousEnrollment: 0,
+				// 		instructorCount: 0,
+				// 		assignmentCount: 0
+				// 	}
+				// };
 
-					if (calculatedView.instructorTypeIds.indexOf(instructorTypeId) == -1) {
-						calculatedView.instructorTypeIds.push(instructorTypeId);
-						calculatedView.byInstructorType[instructorTypeId] = [];
-					}
-
-					instructor.assignments = [];
-					instructor.totals = {
-						units: 0,
-						studentCreditHours: 0,
-						enrollment: 0,
-						previousEnrollment: 0,
-						assignmentCount: 0
-					};
-
-					calculatedView.totals.byInstructorTypeId[instructorTypeId] = calculatedView.totals.byInstructorTypeId[instructorTypeId] || {
-						units: 0,
-						studentCreditHours: 0,
-						enrollment: 0,
-						previousEnrollment: 0,
-						assignmentCount: 0
-					};
-
-					var instructorAssignments = _self._getInstructorAssignments(instructorId, teachingAssignments);
-
-					instructorAssignments.forEach(function(teachingAssignment) {
-						var assignment = {};
-						var termCode = teachingAssignment.termCode;
-
-						var sectionGroup = teachingAssignment.sectionGroupId > 0 ? sectionGroups.list[teachingAssignment.sectionGroupId] : null;
-						var course = sectionGroup ? courses.list[sectionGroup.courseId] : null;
-
-						assignment.term = TermService.getTermName(termCode);
-
-						assignment.description = TeachingAssignmentService.getDescription(teachingAssignment, course);
-
-						if (teachingAssignment.sectionGroupId > 0) {
-							assignment.sequencePattern = course.sequencePattern;
-							assignment.enrollment = _self._getEnrollment(sectionGroup);
-							assignment.previousEnrollment = sectionGroup.previousEnrollment;
-							assignment.units = _self._getUnits(course);
-							assignment.studentCreditHours = assignment.enrollment * assignment.units;
-
-							calculatedView.totals.assignmentCount += 1;
-							calculatedView.totals.enrollment += assignment.enrollment;
-							calculatedView.totals.previousEnrollment += assignment.previousEnrollment;
-							calculatedView.totals.units += assignment.units;
-							calculatedView.totals.studentCreditHours += assignment.studentCreditHours;
-
-							calculatedView.totals.byInstructorTypeId[instructorTypeId].assignmentCount += 1;
-							calculatedView.totals.byInstructorTypeId[instructorTypeId].enrollment += assignment.enrollment;
-							calculatedView.totals.byInstructorTypeId[instructorTypeId].previousEnrollment += assignment.previousEnrollment;
-							calculatedView.totals.byInstructorTypeId[instructorTypeId].units += assignment.units;
-							calculatedView.totals.byInstructorTypeId[instructorTypeId].studentCreditHours += assignment.studentCreditHours;
-						}
-
-						instructor.assignments.push(assignment);
-
-						instructor.totals.units += assignment.units || 0;
-						instructor.totals.studentCreditHours += assignment.studentCreditHours || 0;
-						instructor.totals.enrollment += assignment.enrollment || 0;
-						instructor.totals.previousEnrollment += assignment.previousEnrollment || 0;
-						instructor.totals.assignmentCount += 1;
-					});
-
-					calculatedView.byInstructorType[instructorTypeId].push(instructor);
-					calculatedView.totals.instructorCount += 1;
-				});
-
-				calculatedView.instructorTypeIds = InstructorTypeService.orderInstructorTypeIdsAlphabetically(calculatedView.instructorTypeIds, instructorTypes);
-
-				DeansOfficeReportReducers.reduce({
-					type: ActionTypes.CALCULATE_VIEW,
-					payload: {
-						calculatedView: calculatedView
-					}
-				});
-			},
-			_getUnits: function (course) {
-				if (course.unitsLow > 0) {
-					return course.unitsLow;
-				} else if (course.unitsHigh > 0) {
-					return course.unitsHigh;
-				}
-
-				return 0;
-			},
-			// Return actual (census), seats, or plannedSeats for the enrollment number, depending on what is available
-			_getEnrollment: function (sectionGroup) {
-				if (sectionGroup.actualEnrollment > 0) {
-					return sectionGroup.actualEnrollment ;
-				} else if (sectionGroup.maxEnrollment > 0) {
-					return sectionGroup.maxEnrollment;
-				} else {
-					return sectionGroup.plannedSeats;
-				}
-			},
-			_getInstructorTypeId: function (instructor) {
-				var teachingAssignments = DeansOfficeReportReducers._state.teachingAssignments;
-				var users = DeansOfficeReportReducers._state.users;
-				var userRoles = DeansOfficeReportReducers._state.userRoles;
-
-				var user = this._getUserByLoginId(instructor.loginId, users);
-
-				if (user) {
-					// Attempt to find via userRole
-					for (var i = 0; i < userRoles.ids.length; i++) {
-						var userRole = userRoles.list[userRoles.ids[i]];
-
-						if (userRole.roleId == Roles.instructor && userRole.userId == user.id) {
-							return userRole.instructorTypeId;
-						}
-					}
-				}
-
-				// Attempt to find via teachingAssignment
-				for (var i = 0; i < teachingAssignments.ids.length; i++) {
-					var teachingAssignment = teachingAssignments.list[teachingAssignments.ids[i]];
-
-					if (teachingAssignment.instructorId == instructor.id) {
-						return teachingAssignment.instructorTypeId;
-					}
-				}
-
-				return null;
-			},
-			_getUserByLoginId: function (loginId, users) {
-				for (var i = 0; i < users.ids.length; i++) {
-					var user = users.list[users.ids[i]];
-
-					if (user.loginId == loginId) {
-						return user;
-					}
-				}
-
-				return null;
-			},
-			_getInstructorAssignments: function (instructorId, teachingAssignments) {
-				var instructorAssignments = [];
-
-				teachingAssignments.ids.forEach(function(teachingAssignmentId) {
-					var teachingAssignment = teachingAssignments.list[teachingAssignmentId];
-
-					if (teachingAssignment.instructorId == instructorId) {
-						instructorAssignments.push(teachingAssignment);
-					}
-				});
-
-				return instructorAssignments;
-			},
-			_getEnrollmentData: function(isPreviousYear) {
-				var _self = this;
-
-				DeansOfficeReportReducers.reduce({
-					type: ActionTypes.BEGIN_CENSUS_DATA_FETCH,
-					payload: {
-						censusDataFetchBegun: true
-					}
-				});
-
-				var SNAPSHOT_CODE = "CURRENT";
-				var termCodes = this._getScheduleTermCodes(isPreviousYear);
-				var subjectCodes = this._getScheduleSubjectCodes();
-				var openCalls = DeansOfficeReportReducers._state.calculations.dwCallsOpened;
-				var completedCalls = DeansOfficeReportReducers._state.calculations.dwCallsCompleted;
-
-				termCodes.forEach(function(termCode) {
-					subjectCodes.forEach(function(subjectCode) {
-						openCalls += 1;
-
-						DwService.getDwCensusData(subjectCode, null, termCode).then(function(censusSections) {
-							censusSections.forEach(function(censusSection) {
-								if (censusSection.snapshotCode == SNAPSHOT_CODE) {
-									var censusSectionGroupKey = censusSection.subjectCode + censusSection.courseNumber + sequenceNumberToPattern(censusSection.sequenceNumber) + TermService.termCodeToTerm(censusSection.termCode);
-
-									DeansOfficeReportReducers._state.sectionGroups.ids.forEach(function(sectionGroupId) {
-										var sectionGroup = DeansOfficeReportReducers._state.sectionGroups.list[sectionGroupId];
-										var course = DeansOfficeReportReducers._state.courses.list[sectionGroup.courseId];
-										var sectionGroupUniqueKey = course.subjectCode + course.courseNumber + course.sequencePattern + TermService.termCodeToTerm(sectionGroup.termCode);
-
-										sectionGroup.maxEnrollment = sectionGroup.maxEnrollment || 0;
-										sectionGroup.actualEnrollment = sectionGroup.actualEnrollment || 0;
-										sectionGroup.previousEnrollment = sectionGroup.previousEnrollment || 0;
-
-										if (sectionGroupUniqueKey == censusSectionGroupKey) {
-											if (isPreviousYear) {
-												sectionGroup.previousEnrollment += censusSection.currentEnrolledCount;
-											} else {
-												sectionGroup.actualEnrollment += censusSection.currentEnrolledCount;
-
-												_self._getSectionsForSectionGroup(sectionGroup).forEach(function(section) {
-													sectionGroup.maxEnrollment += section.seats;
-												});
-											}
-										}
-									});
-								}
-							});
-
-							completedCalls += 1;
-
-							if (openCalls == completedCalls) {
-								_self._performCalculations();
-							}
-						}, function (err) {
-							$rootScope.$emit('toast', { message: "Could not retrieve enrollment data.", type: "ERROR" });
-						});
-					});
-				});
-			},
-			_getScheduleSubjectCodes: function() {
-				var subjectCodes = [];
-				var sectionGroups = DeansOfficeReportReducers._state.sectionGroups;
-				var courses = DeansOfficeReportReducers._state.courses;
-
-				sectionGroups.ids.forEach(function(sectionGroupId) {
-					var sectionGroup = sectionGroups.list[sectionGroupId];
-					var subjectCode = courses.list[sectionGroup.courseId].subjectCode;
-
-					if (subjectCodes.indexOf(subjectCode) == -1) {
-						subjectCodes.push(subjectCode);
-					}
-				});
-
-				return subjectCodes;
-			},
-			_getScheduleTermCodes: function(isPreviousYear) {
-				var termCodes = [];
-
-				var sectionGroups = DeansOfficeReportReducers._state.sectionGroups;
-
-				sectionGroups.ids.forEach(function(sectionGroupId) {
-					var termCode = sectionGroups.list[sectionGroupId].termCode;
-
-					// Get the previous year's termCode instead
-					if (isPreviousYear) {
-						var year = parseInt(termCode.substring(0,4)) - 1;
-						var term = termCode.substring(4,6);
-						var previousYearTermCode = year + term;
-						if (termCodes.indexOf(previousYearTermCode) == -1) {
-							termCodes.push(previousYearTermCode);
-						}
-					} else {
-						if (termCodes.indexOf(termCode) == -1) {
-							termCodes.push(termCode);
-						}
-					}
-				});
-
-				return termCodes;
-			},
-			_getSectionsForSectionGroup: function (sectionGroup) {
-				var sectionGroups = DeansOfficeReportReducers._state.sectionGroups;
-				var sections = DeansOfficeReportReducers._state.sections;
-
-				var matchingSections = [];
-				sections.ids.forEach(function(sectionId) {
-					var section = sections.list[sectionId];
-					if (section.sectionGroupId == sectionGroup.id) {
-						matchingSections.push(section);
-					}
-				});
-
-				return matchingSections;
+				// DeansOfficeReportReducers.reduce({
+				// 	type: ActionTypes.CALCULATE_VIEW,
+				// 	payload: {
+				// 		calculatedView: calculatedView
+				// 	}
+				// });
 			}
 		};
 	}

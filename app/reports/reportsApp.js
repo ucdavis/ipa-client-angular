@@ -1,12 +1,10 @@
-// Services
-//import DeansOfficeReportActions from './deansOffice/services/deansOfficeReportActions.js';
-//import DeansOfficeReportReducers from './deansOffice/services/deansOfficeReportReducers.js';
-//import DeansOfficeReportService from './deansOffice/services/deansOfficeReportService.js';
-
 // Controllers
 import DeansOfficeReportCtrl from './deansOffice/deansOfficeReportCtrl.js';
 
-// Shared services
+// Services
+import DeansOfficeReportActions from './deansOffice/services/deansOfficeReportActions.js';
+import DeansOfficeReportReducers from './deansOffice/services/deansOfficeReportReducers.js';
+import DeansOfficeReportService from './deansOffice/services/deansOfficeReportService.js';
 
 // Dependencies
 var dependencies = [
@@ -21,19 +19,17 @@ function config ($routeProvider) {
 		template: require('./deansOffice/deansOfficeReportCtrl.html'),
 		controller: 'DeansOfficeReportCtrl',
 		resolve: {
-			validate: function (AuthService, $route) {
+			validate: function (AuthService, $route, DeansOfficeReportActions) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						//DeansOfficeReportActions.getInitialState();
+						DeansOfficeReportActions.getInitialState();
 					}
 				});
 			}
 		}
 	})
 	.otherwise({
-		redirectTo: function () {
-			window.location = "/not-found.html";
-		}
+		redirectTo: "/"
 	});
 }
 
@@ -42,9 +38,9 @@ config.$inject = ['$routeProvider'];
 // App declaration
 const reportsApp = angular.module("reportsApp", dependencies)
 .controller('DeansOfficeReportCtrl', DeansOfficeReportCtrl)
-//.service('DeansOfficeReportActions', DeansOfficeReportActions)
-//.service('DeansOfficeReportReducers', DeansOfficeReportReducers)
-//.service('DeansOfficeReportService', DeansOfficeReportService)
+.service('DeansOfficeReportActions', DeansOfficeReportActions)
+.service('DeansOfficeReportReducers', DeansOfficeReportReducers)
+.service('DeansOfficeReportService', DeansOfficeReportService)
 .config(config)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE"

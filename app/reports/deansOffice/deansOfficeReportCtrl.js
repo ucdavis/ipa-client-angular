@@ -10,9 +10,9 @@ class DeansOfficeReportCtrl {
 
 		$scope.view = {};
 
-		// $rootScope.$on('workloadSummaryStateChanged', function (event, data) {
-		// 	$scope.view.state = data.state;
-		// });
+		$rootScope.$on('deansOfficeReportStateChanged', function (event, data) {
+			$scope.view.state = data.state;
+		});
 	}
 }
 
