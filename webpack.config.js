@@ -54,7 +54,7 @@ module.exports = {
     teachingCallApp: './app/teachingCall/teachingCallApp.js',
     workgroupApp: './app/workgroup/workgroupApp.js',
     workloadSummaryReportApp: './app/workloadSummaryReport/workloadSummaryReportApp.js',
-    newScheduling: './app/newScheduling/scheduling.module.ts'
+    newScheduling: './app/newScheduling/main.ts'
   },
   output: {
     filename: 'js/[name].js',
