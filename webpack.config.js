@@ -190,6 +190,11 @@ module.exports = {
         './vendor/js/userEcho.js',
         './vendor/js/googleAnalytics.js'
       ],
+    }),
+    new HtmlWebpackPlugin({
+      "template": "./app/newScheduling/newScheduling.html",
+      "filename": "./newScheduling.html",
+      "chunks": ['newScheduling']
     })
   ],
   devServer: {
