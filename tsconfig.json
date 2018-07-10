@@ -1,6 +1,10 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": ["app/*"]
+    },
     "outDir": "dist",
     "sourceMap": true,
     "declaration": false,
