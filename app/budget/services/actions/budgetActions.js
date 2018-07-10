@@ -9,7 +9,7 @@ class BudgetActions {
 				var year = $route.current.params.year;
 
 				BudgetService.getInitialState(workgroupId, year).then(function (results) {
-	
+
 					// BudgetScenario was set in localStorage, need to sanity check
 					if (selectedBudgetScenarioId) {
 						var scenarioFound = false;
@@ -18,12 +18,12 @@ class BudgetActions {
 								scenarioFound = true;
 							}
 						});
-	
+
 						if (scenarioFound == false) {
 							selectedBudgetScenarioId = null;
 						}
 					}
-	
+
 					// BudgetScenario was not set in localStorage, or it didn't correspond to an existing scenario
 					if (!selectedBudgetScenarioId) {
 						if (results.budgetScenarios && results.budgetScenarios.length > 0) {
@@ -31,7 +31,7 @@ class BudgetActions {
 							localStorage.setItem('selectedBudgetScenarioId', selectedBudgetScenarioId);
 						}
 					}
-	
+
 					BudgetReducers.reduce({
 						type: ActionTypes.INIT_STATE,
 						payload: results,
@@ -40,7 +40,7 @@ class BudgetActions {
 						selectedBudgetScenarioId: selectedBudgetScenarioId,
 						selectedTerm: selectedTerm
 					});
-	
+
 					// Ensure budgetScenario is properly set
 					self.selectBudgetScenario();
 					self.attachInstructorTypesToInstructors();
@@ -59,19 +59,19 @@ class BudgetActions {
 				var oldValue = null;
 				var newValue = null;
 				var savedOverride = null;
-	
+
 				var newSectionGroupCost = {
 					sectionGroupId: sectionGroup.id,
 					budgetScenarioId: BudgetReducers._state.ui.selectedBudgetScenarioId
 				};
-	
+
 				if (property == "seats") {
 					savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.enrollment : null;
 					oldValue = savedOverride || sectionGroup.totalSeats;
 					newValue = this._calculateNewValue(sectionGroup.overrideTotalSeats, isReversion);
 					newSectionGroupCost.enrollment = sectionGroup.overrideTotalSeats;
 				}
-	
+
 				else if (property == "sectionCount") {
 					savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.sectionCount : null;
 					oldValue = savedOverride || sectionGroup.sectionCount;
@@ -92,13 +92,25 @@ class BudgetActions {
 					newValue = this._calculateNewValue(sectionGroup.overrideReaderAppointments, isReversion);
 					newSectionGroupCost.readerCount = sectionGroup.overrideReaderAppointments;
 				}
-	
+
+				else if (property == "reason") {
+					oldValue = null;
+					newValue = sectionGroup.sectionGroupCost.reason;
+					newSectionGroupCost.reason = sectionGroup.sectionGroupCost.reason;
+				}
+
+				else if (property == "instructorCost") {
+					oldValue = null;
+					newValue = savedOverride || sectionGroup.overrideInstructorCost;
+					newSectionGroupCost.cost = sectionGroup.cost;
+				}
+
 				var isOverriden = oldValue != newValue;
 				var wasOverriden = !!(savedOverride);
-	
+
 				if (isOverriden) {
 					// Create or update sectionGroupCost
-					if (sectionGroup.sectionGroupCost) {
+					if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.id) {
 						sectionGroup.sectionGroupCost = this.applyOverrideToProperty(sectionGroup.sectionGroupCost, newValue, property);
 						this.updateSectionGroupCost(sectionGroup.sectionGroupCost);
 					} else {
@@ -131,16 +143,20 @@ class BudgetActions {
 					sectionGroupCost.taCount = value;
 				} else if (property == "readerAppointments") {
 					sectionGroupCost.readerCount = value;
+				} else if (property == "reason") {
+					sectionGroupCost.reason = value;
+				} else if (property == "instructorCost") {
+					sectionGroupCost.cost = parseFloat(value);
 				}
 	
 				return sectionGroupCost;
 			},
 			updateBudgetScenario: function (budgetScenario) {
 				var self = this;
-	
+
 				BudgetService.updateBudgetScenario(budgetScenario).then(function (results) {
 					$rootScope.$emit('toast', { message: "Updated budget scenario", type: "SUCCESS" });
-	
+
 					BudgetReducers.reduce({
 						type: ActionTypes.UPDATE_BUDGET_SCENARIO,
 						payload: {
@@ -166,13 +182,20 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Created budget scenario", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
 					self.selectBudgetScenario(results.budgetScenario.id);
+					self.attachInstructorTypesToInstructors();
+
+					// Perform follow up calculations
+					BudgetCalculations.calculateInstructors();
+					BudgetCalculations.calculateLineItems();
+					BudgetCalculations.calculateInstructorTypeCosts();
+
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not create budget scenario.", type: "ERROR" });
 				});
 			},
 			deleteBudgetScenario: function (budgetScenarioId) {
 				var self = this;
-	
+
 				BudgetService.deleteBudgetScenario(budgetScenarioId).then(function (budgetScenarioId) {
 					var action = {
 						type: ActionTypes.DELETE_BUDGET_SCENARIO,
@@ -180,7 +203,7 @@ class BudgetActions {
 							budgetScenarioId: budgetScenarioId
 						}
 					};
-	
+
 					$rootScope.$emit('toast', { message: "Deleted budget scenario", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
 					self.selectBudgetScenario();
@@ -191,10 +214,10 @@ class BudgetActions {
 			updateInstructorCost: function (instructorCostDto) {
 				var self = this;
 				var instructorCost = Object.assign({}, instructorCostDto);
-	
+
 				// Ensure cost is passed as a number
 				instructorCost.cost = parseFloat(instructorCost.cost);
-	
+
 				BudgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
 					var action = {
 						type: ActionTypes.UPDATE_INSTRUCTOR_COST,
@@ -287,14 +310,14 @@ class BudgetActions {
 			},
 			deleteLineItem: function(lineItem) {
 				var self = this;
-	
+
 				// If the lineItem is based on a teachingAssignment, do not delete it, instead mark it as hidden
 				if (lineItem.teachingAssignmentId > 0) {
 					lineItem.hidden = true;
 					this.updateLineItem(lineItem);
 					return;
 				}
-	
+
 				BudgetService.deleteLineItem(lineItem).then(function (lineItemId) {
 					var action = {
 						type: ActionTypes.DELETE_LINE_ITEM,
@@ -302,7 +325,7 @@ class BudgetActions {
 							lineItemId: lineItemId
 						}
 					};
-	
+
 					$rootScope.$emit('toast', { message: "Deleted line item", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
 					BudgetCalculations.calculateLineItems();
@@ -312,7 +335,6 @@ class BudgetActions {
 			},
 			updateSectionGroupCost: function (sectionGroupCost) {
 				var self = this;
-	
 				BudgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
 					var action = {
 						type: ActionTypes.UPDATE_SECTION_GROUP_COST,
@@ -330,7 +352,7 @@ class BudgetActions {
 			},
 			createSectionGroupCost: function (sectionGroupCost) {
 				var self = this;
-	
+
 				BudgetService.createSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
 					var action = {
 						type: ActionTypes.CREATE_SECTION_GROUP_COST,
@@ -348,7 +370,7 @@ class BudgetActions {
 			},
 			asignInstructorType: function(instructorCost) {
 				var self = this;
-	
+
 				BudgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
 					var action = {
 						type: ActionTypes.UPDATE_INSTRUCTOR_COST,
@@ -376,7 +398,7 @@ class BudgetActions {
 			_createInstructorTypeCost: function (instructorTypeCostDTO) {
 				var self = this;
 				instructorTypeCostDTO.cost = parseFloat(instructorTypeCostDTO.cost);
-	
+
 				BudgetService.createInstructorTypeCost(instructorTypeCostDTO).then(function (instructorTypeCost) {
 					BudgetReducers.reduce({
 						type: ActionTypes.CREATE_INSTRUCTOR_TYPE_COST,
@@ -384,7 +406,7 @@ class BudgetActions {
 							instructorTypeCost: instructorTypeCost
 						}
 					});
-	
+
 					$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
 					BudgetCalculations.calculateInstructorTypeCosts();
 					BudgetCalculations.calculateSectionGroups();
@@ -432,7 +454,7 @@ class BudgetActions {
 			setOriginalInstructorFromSectionGroup: function (sectionGroup, originalInstructorId) {
 				var self = this;
 				var sectionGroupCost = sectionGroup.sectionGroupCost;
-	
+
 				// Create sectionGroupCost if necessary
 				if (sectionGroupCost == false || sectionGroupCost == null) {
 					var sectionGroupCostDTO = {
@@ -804,30 +826,38 @@ class BudgetActions {
 				BudgetCalculations.calculateTotalCost();
 			},
 			attachInstructorTypesToInstructors: function () {
+				var self = this;
 				var activeInstructors = BudgetReducers._state.activeInstructors;
 				var assignedInstructors = BudgetReducers._state.assignedInstructors;
-				var teachingAssignments = BudgetReducers._state.teachingAssignments;
+
+				activeInstructors.ids.forEach(function(instructorId) {
+					var instructor = activeInstructors.list[instructorId] || assignedInstructors.list[instructorId];
+					var instructorType = self._getInstructorType(instructor);
+
+					instructor.instructorTypeDescription = instructorType ? instructorType.description : null;
+				});
+
+				assignedInstructors.ids.forEach(function(instructorId) {
+					var instructor = activeInstructors.list[instructorId] || assignedInstructors.list[instructorId];
+					var instructorType = self._getInstructorType(instructor);
+
+					instructor.instructorTypeDescription = instructorType ? instructorType.description : null;
+				});
+			},
+			_getInstructorType: function(instructor) {
 				var users = BudgetReducers._state.users;
 				var userRoles = BudgetReducers._state.userRoles;
 				var instructorTypes = BudgetReducers._state.instructorTypes;
 
-				activeInstructors.ids.forEach(function(instructorId) {
-					var instructor = activeInstructors.list[instructorId];
-					var user = users.byLoginId[instructor.loginId.toLowerCase()];
-					var userRoleId = userRoles.ids.find(id => (userRoles.list[id].roleId == Roles.instructor && userRoles.list[id].userId == user.id));
-					var userRole = userRoles.list[userRoleId];
-					var instructorType = instructorTypes.list[userRole.instructorTypeId];
-					instructor.instructorTypeDescription = instructorType.description;
-				});
+				var user = users.byLoginId[instructor.loginId.toLowerCase()];
+				var userRoleId = userRoles.ids.find(id => (userRoles.list[id].roleId == Roles.instructor && userRoles.list[id].userId == user.id));
 
-				assignedInstructors.ids.forEach(function(instructorId) {
-					var instructor = assignedInstructors.list[instructorId];
-					var user = users.byLoginId[instructor.loginId.toLowerCase()];
-					var userRoleId = userRoles.ids.find(id => (userRoles.list[id].roleId == Roles.instructor && userRoles.list[id].userId == user.id));
-					var userRole = userRoles.list[userRoleId];
-					var instructorType = instructorTypes.list[userRole.instructorTypeId];
-					instructor.instructorTypeDescription = instructorType.description;
-				});
+				if (!userRoleId) { return null; }
+
+				var userRole = userRoles.list[userRoleId];
+				var instructorType = instructorTypes.list[userRole.instructorTypeId];
+
+				return instructorType;
 			}
 		};
 	}

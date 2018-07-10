@@ -22,7 +22,8 @@ class AssignmentCtrl {
 		$scope.year = $routeParams.year;
 		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 		$scope.view = {
-			workgroupId: $routeParams.workgroupId
+			workgroupId: $routeParams.workgroupId,
+			sharedState: AuthService.getSharedState()
 		};
 
 		$scope.unavailabilityModalStyles = { "width": "62%" };
@@ -31,6 +32,10 @@ class AssignmentCtrl {
 
 		$rootScope.$on('assignmentStateChanged', function (event, data) {
 			$scope.view.state = data;
+		});
+
+		$rootScope.$on('sharedStateSet', function (event, data) {
+			$scope.view.sharedState = data;
 		});
 
 		$scope.showInstructors = function () {

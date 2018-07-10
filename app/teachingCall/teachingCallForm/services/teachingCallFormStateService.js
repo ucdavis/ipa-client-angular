@@ -392,7 +392,7 @@ class TeachingCallFormStateService {
 					}
 	
 					// If this is a Non-course preference
-					else if (slotAssignment.inResidence || slotAssignment.workLifeBalance || slotAssignment.leaveOfAbsence || slotAssignment.sabbatical || slotAssignment.courseRelease || slotAssignment.buyout) {
+					else if (slotAssignment.inResidence || slotAssignment.workLifeBalance || slotAssignment.leaveOfAbsence || slotAssignment.sabbaticalInResidence || slotAssignment.sabbatical || slotAssignment.courseRelease || slotAssignment.buyout) {
 						if (slotAssignment.inResidence) {
 							newPreference.description = "In Residence";
 							newPreference.inResidence = true;
@@ -402,6 +402,9 @@ class TeachingCallFormStateService {
 						} else if (slotAssignment.leaveOfAbsence) {
 							newPreference.description = "Leave of Absence";
 							newPreference.leaveOfAbsence = true;
+						} else if (slotAssignment.sabbaticalInResidence) {
+							newPreference.description = "Sabbatical In Residence";
+							newPreference.sabbaticalInResidence = true;
 						} else if (slotAssignment.sabbatical) {
 							newPreference.description = "Sabbatical";
 							newPreference.sabbatical = true;
@@ -548,6 +551,13 @@ class TeachingCallFormStateService {
 				preferenceOptions.push({
 					leaveOfAbsence: true,
 					description: "Leave of Absence",
+					scheduleId: scheduleId,
+					instructorId: instructorId,
+					termCode: termCode
+				});
+				preferenceOptions.push({
+					sabbaticalInResidence: true,
+					description: "Sabbatical In Residence",
 					scheduleId: scheduleId,
 					instructorId: instructorId,
 					termCode: termCode

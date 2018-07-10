@@ -2,105 +2,112 @@
 <div></div>
 
 <div class="assignments-container">
+	<ipa-header page-title="Assignments"></ipa-header>
 
-<ipa-header page-title="Assignments"></ipa-header>
-
-<div class="main-content">
-	<ipa-modal is-visible="isCommentModalOpen"
-							header-text="Comments">
-		<comment-modal ng-if="isCommentModalOpen"
-										state="view.state"
-										instructor="view.instructor"
-										instructor-comment="view.instructorComment"
-										schedule-instructor-note="view.scheduleInstructorNote"
-										private-comment="view.scheduleInstructorNote.instructorComment"
-										year="view.state.userInterface.year"
-										workgroup-id="workgroupId"
-										is-visible="isCommentModalOpen">
-		</comment-modal>
-	</ipa-modal>
-	<ipa-modal is-visible="isUnavailabilityModalOpen"
-							styles="unavailabilityModalStyles"
-							header-text="Unavailabilities">
-		<unavailability-modal ng-if="isUnavailabilityModalOpen"
-													instructor="view.instructor"
-													term-display-names="view.termDisplayNames"
-													teaching-call-responses="view.teachingCallResponses"
-													is-visible="isUnavailabilityModalOpen">
-		</unavailability-modal>
-	</ipa-modal>
-	<div class="row hidden-print" style="margin-bottom: 2em;">
-		<div class="col-sm-offset-3 col-sm-6">
-			<input type="search" class="form-control" placeholder="Search" ng-model="searchQuery" ng-change="filterTable(searchQuery)"/>
+	<div class="main-content">
+		<ipa-modal is-visible="isCommentModalOpen"
+		           header-text="Comments">
+			<comment-modal ng-if="isCommentModalOpen"
+			               state="view.state"
+			               instructor="view.instructor"
+			               instructor-comment="view.instructorComment"
+			               schedule-instructor-note="view.scheduleInstructorNote"
+			               private-comment="view.scheduleInstructorNote.instructorComment"
+			               year="view.state.userInterface.year"
+			               workgroup-id="workgroupId"
+			               is-visible="isCommentModalOpen">
+			</comment-modal>
+		</ipa-modal>
+		<ipa-modal is-visible="isUnavailabilityModalOpen"
+		           styles="unavailabilityModalStyles"
+		           header-text="Unavailabilities">
+			<unavailability-modal ng-if="isUnavailabilityModalOpen"
+			                      instructor="view.instructor"
+			                      term-display-names="view.termDisplayNames"
+			                      teaching-call-responses="view.teachingCallResponses"
+			                      is-visible="isUnavailabilityModalOpen">
+			</unavailability-modal>
+		</ipa-modal>
+		<div class="row hidden-print" style="margin-bottom: 2em;">
+			<div class="col-sm-offset-3 col-sm-6">
+				<input type="search" class="form-control" placeholder="Search" ng-model="searchQuery" ng-change="filterTable(searchQuery)"/>
+			</div>
 		</div>
-	</div>
 
-	<div ng-class="{'invisible': !view.state}" style="margin-bottom: 1em;" class="hidden-print">
+		<div ng-class="{'invisible': !view.state}" style="margin-bottom: 1em;" class="hidden-print">
 			<div class="btn-group" data-toggle="buttons">
 				<label class="btn btn-white btn-sm view-pivot-btn" id="courses-pivot" ng-click="setActiveTab('courses')"
-					ng-class="{ 'active': view.state.userInterface.showCourses }">
+				       ng-class="{ 'active': view.state.userInterface.showCourses }">
 					<input type="radio" name="options">
 					<span class="glyphicon glyphicon-education"></span>
 					<span class="view-state-toggle">By Course</span>
 				</label>
 				<label class="btn btn-white btn-sm view-pivot-btn" id="instructors-pivot" ng-click="setActiveTab('instructors')"
-					ng-class="{ 'active': view.state.userInterface.showInstructors }">
+				       ng-class="{ 'active': view.state.userInterface.showInstructors }">
 					<input type="radio" name="options">
 					<span class="glyphicon glyphicon-user"></span>
 					<span class="view-state-toggle">By Instructor</span>
 				</label>
 			</div>
+		</div>
+
+		<div class="row hidden-print">
+			<div class="table-toolbar">
+
+				<div class="btn-group">
+					<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+					<ul class="dropdown-menu dropdown-menu-right" multiselect-dropdown items="termDefinitions" active-ids="view.state.userInterface.enabledTerms.ids" toggle-item="termToggled(id)" ></ul>
+				</div> <!-- .btn-group -->
+
+				<div class="btn-group" uib-tooltip="Filters">
+					<span class="tool-icon glyphicon glyphicon-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+					<ul class="dropdown-menu dropdown-menu-right filter-container">
+						<li ng-repeat="tagId in view.state.tags.ids track by $index" class="clickable filter-item" ng-click="toggleTag(tagId)" stop-event="click">
+							<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+							     ng-class="{ 'checked': view.state.filters.enabledTagIds.indexOf(tagId) >= 0 }">
+								<label class="cb-wrapper">
+									<div class="checked"></div>
+								</label>
+								<label class="filter-item-text">{{ view.state.tags.list[tagId].name }}</label>
+							</div>
+						</li>
+
+						<li role="separator" class="divider"></li>
+						<li class="clickable filter-item" ng-click="toggleDisplayCompletedInstructors()" stop-event="click">
+							<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+							     ng-class="{ 'checked': view.state.filters.showCompletedInstructors }">
+								<label class="cb-wrapper">
+									<div class="checked"></div>
+								</label>
+								<label class="filter-item-text">Hide Completed</label>
+							</div>
+						</li>
+
+					</ul>
+				</div> <!-- .btn-group -->
+
+				<div class="btn-group">
+					<span data-toggle="tooltip" data-placement="top" data-original-title="Download as Excel" data-container="body" ng-click="download()"
+					      class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+					<ul class="dropdown-menu">
+						<li><a href="#" class="small">as Excel</a></li>
+						<li><a href="#" class="small">as CSV</a></li>
+					</ul>
+				</div> <!-- .btn-group -->
+
+				<span data-toggle="tooltip" data-placement="top" data-original-title="Print" ng-click="print()"
+				      class="tool-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print"></span>
+			</div> <!-- .table-toolbar -->
+		</div> <!-- .row -->
+
+		<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"></div>
+
+		<div ng-if="view.state" ng-show="view.state.userInterface.showInstructors">
+			<div ng-repeat="instructorTypeId in view.state.instructorTypes.ids">
+				<div instructor-assignment-table id="instructors-table" state="view.state" shared-state="view.sharedState" instructor-type-id="instructorTypeId"></div>
+			</div>
+
+			<div instructor-assignment-table id="instructors-table" state="view.state" shared-state="view.sharedState" instructor-type-id="instructorTypeId" show-the-staff="true"></div>
+		</div>
 	</div>
-
-	<div class="row hidden-print">
-		<div class="table-toolbar">
-
-			<div class="btn-group">
-				<span class="tool-icon glyphicon glyphicon-list-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-				<ul class="dropdown-menu dropdown-menu-right" multiselect-dropdown items="termDefinitions" active-ids="view.state.userInterface.enabledTerms.ids" toggle-item="termToggled(id)" ></ul>
-			</div> <!-- .btn-group -->
-
-			<div class="btn-group" uib-tooltip="Filters">
-				<span class="tool-icon glyphicon glyphicon-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-				<ul class="dropdown-menu dropdown-menu-right filter-container">
-					<li ng-repeat="tagId in view.state.tags.ids track by $index" class="clickable filter-item" ng-click="toggleTag(tagId)" stop-event="click">
-						<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-							ng-class="{ 'checked': view.state.filters.enabledTagIds.indexOf(tagId) >= 0 }">
-							<label class="cb-wrapper">
-								<div class="checked"></div>
-							</label>
-							<label class="filter-item-text">{{ view.state.tags.list[tagId].name }}</label>
-						</div>
-					</li>
-
-					<li role="separator" class="divider"></li>
-					<li class="clickable filter-item" ng-click="toggleDisplayCompletedInstructors()" stop-event="click">
-						<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-							ng-class="{ 'checked': view.state.filters.showCompletedInstructors }">
-							<label class="cb-wrapper">
-								<div class="checked"></div>
-							</label>
-							<label class="filter-item-text">Hide Completed</label>
-						</div>
-					</li>
-
-				</ul>
-			</div> <!-- .btn-group -->
-
-			<div class="btn-group">
-				<span data-toggle="tooltip" data-placement="top" data-original-title="Download as Excel" data-container="body" ng-click="download()"
-				class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-				<ul class="dropdown-menu">
-					<li><a href="#" class="small">as Excel</a></li>
-					<li><a href="#" class="small">as CSV</a></li>
-				</ul>
-			</div> <!-- .btn-group -->
-
-			<span data-toggle="tooltip" data-placement="top" data-original-title="Print" ng-click="print()"
-			class="tool-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print"></span>
-		</div> <!-- .table-toolbar -->
-	</div> <!-- .row -->
-	<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"></div>
-	<div instructor-assignment-table id="instructors-table" ng-show="view.state.userInterface.showInstructors"></div>
-</div>
 </div>

@@ -316,7 +316,7 @@ class CourseCtrl {
 
 		// Triggered by global search field, redraws table based on query
 		_self.$scope.filterTable = function (query) {
-			clearTimeout($scope.timeout);
+			clearTimeout(_self.$scope.timeout);
 			_self.$scope.timeout = setTimeout(_self.courseActionCreators.updateTableFilter, 700, query);
 		};
 
