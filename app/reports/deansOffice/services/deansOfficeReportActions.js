@@ -12,14 +12,29 @@ class DeansOfficeReportActions {
 					payload: {}
 				});
 
+				this._getBudget(workgroupId, year);
 				this._getCourses(workgroupId, year);
-				this._getInstructorTypes(workgroupId, year);
-				this._getInstructors(workgroupId, year);
-				this._getTeachingAssignments(workgroupId, year);
 				this._getSectionGroups(workgroupId, year);
-				this._getUsers(workgroupId, year);
-				this._getUserRoles(workgroupId, year);
 				this._getSections(workgroupId, year);
+
+				this._getInstructorTypes(workgroupId, year);
+				this._getTeachingAssignments(workgroupId, year);
+			},
+			_getBudget: function (workgroupId, year) {
+				var _self = this;
+
+				DeansOfficeReportService.getBudget(workgroupId, year).then(function (budget) {
+					DeansOfficeReportReducers.reduce({
+						type: ActionTypes.GET_BUDGET,
+						payload: {
+							budget: budget
+						}
+					});
+
+					_self._performCalculations();
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+				});
 			},
 			_getCourses: function (workgroupId, year) {
 				var _self = this;
@@ -73,58 +88,6 @@ class DeansOfficeReportActions {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
-			_getUsers: function (workgroupId, year) {
-				var _self = this;
-
-				DeansOfficeReportService.getUsers(workgroupId, year).then(function (rawUsers) {
-					let users = {
-						ids: [],
-						list: {}
-					};
-
-					rawUsers.forEach(function(user) {
-						users.ids.push(user.id);
-						users.list[user.id] = user;
-					});
-
-					DeansOfficeReportReducers.reduce({
-						type: ActionTypes.GET_USERS,
-						payload: {
-							users: users
-						}
-					});
-
-					_self._performCalculations();
-				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
-				});
-			},
-			_getUserRoles: function (workgroupId, year) {
-				var _self = this;
-
-				DeansOfficeReportService.getUserRoles(workgroupId, year).then(function (rawUserRoles) {
-					let userRoles = {
-						ids: [],
-						list: {}
-					};
-
-					rawUserRoles.forEach(function(userRole) {
-						userRoles.ids.push(userRole.id);
-						userRoles.list[userRole.id] = userRole;
-					});
-
-					DeansOfficeReportReducers.reduce({
-						type: ActionTypes.GET_USER_ROLES,
-						payload: {
-							userRoles: userRoles
-						}
-					});
-
-					_self._performCalculations();
-				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
-				});
-			},
 			_getInstructorTypes: function (workgroupId, year) {
 				var _self = this;
 
@@ -143,32 +106,6 @@ class DeansOfficeReportActions {
 						type: ActionTypes.GET_INSTRUCTOR_TYPES,
 						payload: {
 							instructorTypes: instructorTypes
-						}
-					});
-
-					_self._performCalculations();
-				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
-				});
-			},
-			_getInstructors: function (workgroupId, year) {
-				var _self = this;
-
-				DeansOfficeReportService.getInstructors(workgroupId, year).then(function (rawInstructors) {
-					let instructors = {
-						ids: [],
-						list: {}
-					};
-
-					rawInstructors.forEach(function(instructor) {
-						instructors.ids.push(instructor.id);
-						instructors.list[instructor.id] = instructor;
-					});
-
-					DeansOfficeReportReducers.reduce({
-						type: ActionTypes.GET_INSTRUCTORS,
-						payload: {
-							instructors: instructors
 						}
 					});
 
@@ -233,20 +170,19 @@ class DeansOfficeReportActions {
 				this._isInitialFetchComplete();
 
 				if (DeansOfficeReportReducers._state.calculations.isInitialFetchComplete) {
+					debugger;
 					this._calculateView();
 				}
 			},
 			_isInitialFetchComplete: function () {
+				var budget = DeansOfficeReportReducers._state.budget;
 				var sectionGroups = DeansOfficeReportReducers._state.sectionGroups;
 				var courses = DeansOfficeReportReducers._state.courses;
 				var teachingAssignments = DeansOfficeReportReducers._state.teachingAssignments;
-				var instructors = DeansOfficeReportReducers._state.instructors;
 				var instructorTypes = DeansOfficeReportReducers._state.instructorTypes;
-				var users = DeansOfficeReportReducers._state.users;
-				var userRoles = DeansOfficeReportReducers._state.userRoles;
 				var sections = DeansOfficeReportReducers._state.sections;
 
-				if (sectionGroups && courses && teachingAssignments && instructors && instructorTypes && users && userRoles && sections) {
+				if (budget && sectionGroups && courses && teachingAssignments && instructorTypes && sections) {
 					DeansOfficeReportReducers.reduce({
 						type: ActionTypes.INITIAL_FETCH_COMPLETE,
 						payload: {

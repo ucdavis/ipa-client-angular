@@ -2,28 +2,12 @@ class DeansOfficeReportReducers {
 	constructor ($rootScope, ActionTypes) {
 		return {
 			_state: {},
-			_sectionGroupReducers: function (action, sectionGroups) {
+			_budgetReducer: function (action, budget) {
 				switch (action.type) {
-					case ActionTypes.GET_SECTION_GROUPS:
-						return sectionGroups || action.payload.sectionGroups;
+					case ActionTypes.GET_BUDGET:
+						return budget || action.payload.budget;
 					default:
-						return sectionGroups;
-				}
-			},
-			_instructorReducers: function (action, instructors) {
-				switch (action.type) {
-					case ActionTypes.GET_INSTRUCTORS:
-						return instructors || action.payload.instructors;
-					default:
-						return instructors;
-				}
-			},
-			_instructorTypeReducers: function (action, instructorTypes) {
-				switch (action.type) {
-					case ActionTypes.GET_INSTRUCTOR_TYPES:
-						return instructorTypes || action.payload.instructorTypes;
-					default:
-						return instructorTypes;
+						return budget;
 				}
 			},
 			_courseReducers: function (action, courses) {
@@ -34,28 +18,12 @@ class DeansOfficeReportReducers {
 						return courses;
 				}
 			},
-			_userReducers: function (action, users) {
+			_sectionGroupReducers: function (action, sectionGroups) {
 				switch (action.type) {
-					case ActionTypes.GET_USERS:
-						return users || action.payload.users;
+					case ActionTypes.GET_SECTION_GROUPS:
+						return sectionGroups || action.payload.sectionGroups;
 					default:
-						return users;
-				}
-			},
-			_userRoleReducers: function (action, userRoles) {
-				switch (action.type) {
-					case ActionTypes.GET_USER_ROLES:
-						return userRoles || action.payload.userRoles;
-					default:
-						return userRoles;
-				}
-			},
-			_teachingAssignmentReducers: function (action, teachingAssignments) {
-				switch (action.type) {
-					case ActionTypes.GET_TEACHING_ASSIGNMENTS:
-						return teachingAssignments || action.payload.teachingAssignments;
-					default:
-						return teachingAssignments;
+						return sectionGroups;
 				}
 			},
 			_sectionReducers: function (action, sections) {
@@ -66,24 +34,34 @@ class DeansOfficeReportReducers {
 						return sections;
 				}
 			},
+			_instructorTypeReducers: function (action, instructorTypes) {
+				switch (action.type) {
+					case ActionTypes.GET_INSTRUCTOR_TYPES:
+						return instructorTypes || action.payload.instructorTypes;
+					default:
+						return instructorTypes;
+				}
+			},
+			_teachingAssignmentReducers: function (action, teachingAssignments) {
+				switch (action.type) {
+					case ActionTypes.GET_TEACHING_ASSIGNMENTS:
+						return teachingAssignments || action.payload.teachingAssignments;
+					default:
+						return teachingAssignments;
+				}
+			},
 			_calculationReducers: function (action, calculations) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						calculations = {
-							isInitialFetchComplete: false,
-							censusDataFetchBegun: false,
-							dwCallsOpened: 0,
-							dwCallsCompleted: 0
+							isInitialFetchComplete: false
 						};
+						return calculations;
+					case ActionTypes.CALCULATE_VIEW:
+						calculations.calculatedView = action.payload.calculatedView;
 						return calculations;
 					case ActionTypes.INITIAL_FETCH_COMPLETE:
 						calculations.isInitialFetchComplete = action.payload.isInitialFetchComplete;
-						return calculations;
-					case ActionTypes.BEGIN_CENSUS_DATA_FETCH:
-						calculations.censusDataFetchBegun = true;
-						return calculations;
-						case ActionTypes.CALCULATE_VIEW:
-						calculations.calculatedView = action.payload.calculatedView;
 						return calculations;
 					default:
 						return calculations;
@@ -93,15 +71,14 @@ class DeansOfficeReportReducers {
 				var scope = this;
 
 				let newState = {};
+				newState.budget = scope._budgetReducer(action, scope._state.budget);
+				newState.courses = scope._courseReducers(action, scope._state.courses);
 				newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 				newState.sections = scope._sectionReducers(action, scope._state.sections);
-				newState.courses = scope._courseReducers(action, scope._state.courses);
-				newState.instructors = scope._instructorReducers(action, scope._state.instructors);
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 				newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
+
 				newState.calculations = scope._calculationReducers(action, scope._state.calculations);
-				newState.users = scope._userReducers(action, scope._state.users);
-				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
 
 				scope._state = newState;
 				$rootScope.$emit('deansOfficeReportStateChanged', {
