@@ -2,30 +2,38 @@ class DeansOfficeReportActions {
 	constructor(DeansOfficeReportReducers, DeansOfficeReportService, $rootScope, ActionTypes, Roles, $route) {
 		return {
 			getInitialState: function () {
+				var _self = this;
 				var workgroupId = $route.current.params.workgroupId;
 				var year = $route.current.params.year;
+				var previousYear = String(parseInt($route.current.params.year) - 1);
 
-				var _self = this;
 				DeansOfficeReportReducers._state = {};
+
 				DeansOfficeReportReducers.reduce({
 					type: ActionTypes.INIT_STATE,
 					payload: {}
 				});
 
-				this._getBudget(workgroupId, year);
-				this._getCourses(workgroupId, year);
-				this._getSectionGroups(workgroupId, year);
-				this._getSections(workgroupId, year);
+				this._getBudget(workgroupId, year, ActionTypes.GET_CURRENT_BUDGET);
+				this._getCourses(workgroupId, year, ActionTypes.GET_CURRENT_COURSES);
+				this._getSectionGroups(workgroupId, year), ActionTypes.GET_CURRENT_COURSES;
+				this._getSections(workgroupId, year, ActionTypes.GET_CURRENT_SECTIONS);
+				this._getInstructorTypes(workgroupId, year, ActionTypes.GET_CURRENT_INSTRUCTOR_TYPES);
+				this._getTeachingAssignments(workgroupId, year, ActionTypes.GET_CURRENT_TEACHING_ASSIGNMENTS);
 
-				this._getInstructorTypes(workgroupId, year);
-				this._getTeachingAssignments(workgroupId, year);
+				this._getBudget(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_BUDGET);
+				this._getCourses(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_COURSES);
+				this._getSectionGroups(workgroupId, previousYear), ActionTypes.GET_PREVIOUS_COURSES;
+				this._getSections(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_SECTIONS);
+				this._getInstructorTypes(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_TYPES);
+				this._getTeachingAssignments(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_TEACHING_ASSIGNMENTS);
 			},
-			_getBudget: function (workgroupId, year) {
+			_getBudget: function (workgroupId, year, action) {
 				var _self = this;
 
 				DeansOfficeReportService.getBudget(workgroupId, year).then(function (budget) {
 					DeansOfficeReportReducers.reduce({
-						type: ActionTypes.GET_BUDGET,
+						type: action,
 						payload: {
 							budget: budget
 						}
@@ -36,7 +44,7 @@ class DeansOfficeReportActions {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
-			_getCourses: function (workgroupId, year) {
+			_getCourses: function (workgroupId, year, action) {
 				var _self = this;
 
 				DeansOfficeReportService.getCourses(workgroupId, year).then(function (rawCourses) {
@@ -51,7 +59,7 @@ class DeansOfficeReportActions {
 					});
 
 					DeansOfficeReportReducers.reduce({
-						type: ActionTypes.GET_COURSES,
+						type: action,
 						payload: {
 							courses: courses
 						}
@@ -62,7 +70,7 @@ class DeansOfficeReportActions {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
-			_getSections: function (workgroupId, year) {
+			_getSections: function (workgroupId, year, action) {
 				var _self = this;
 
 				DeansOfficeReportService.getSections(workgroupId, year).then(function (rawSections) {
@@ -77,7 +85,7 @@ class DeansOfficeReportActions {
 					});
 
 					DeansOfficeReportReducers.reduce({
-						type: ActionTypes.GET_SECTIONS,
+						type: action,
 						payload: {
 							sections: sections
 						}
@@ -88,7 +96,7 @@ class DeansOfficeReportActions {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
-			_getInstructorTypes: function (workgroupId, year) {
+			_getInstructorTypes: function (workgroupId, year, action) {
 				var _self = this;
 
 				DeansOfficeReportService.getInstructorTypes(workgroupId, year).then(function (rawInstructorTypes) {
@@ -103,7 +111,7 @@ class DeansOfficeReportActions {
 					});
 
 					DeansOfficeReportReducers.reduce({
-						type: ActionTypes.GET_INSTRUCTOR_TYPES,
+						type: action,
 						payload: {
 							instructorTypes: instructorTypes
 						}
@@ -114,7 +122,7 @@ class DeansOfficeReportActions {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
-			_getTeachingAssignments: function (workgroupId, year) {
+			_getTeachingAssignments: function (workgroupId, year, action) {
 				var _self = this;
 
 				DeansOfficeReportService.getTeachingAssignments(workgroupId, year).then(function (rawTeachingAssignments) {
@@ -129,7 +137,7 @@ class DeansOfficeReportActions {
 					});
 
 					DeansOfficeReportReducers.reduce({
-						type: ActionTypes.GET_TEACHING_ASSIGNMENTS,
+						type: action,
 						payload: {
 							teachingAssignments: teachingAssignments
 						}
@@ -140,7 +148,7 @@ class DeansOfficeReportActions {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
-			_getSectionGroups: function (workgroupId, year) {
+			_getSectionGroups: function (workgroupId, year, action) {
 				var _self = this;
 
 				DeansOfficeReportService.getSectionGroups(workgroupId, year).then(function (rawSectionGroups) {
@@ -155,7 +163,7 @@ class DeansOfficeReportActions {
 					});
 
 					DeansOfficeReportReducers.reduce({
-						type: ActionTypes.GET_SECTION_GROUPS,
+						type: action,
 						payload: {
 							sectionGroups: sectionGroups
 						}
@@ -167,26 +175,44 @@ class DeansOfficeReportActions {
 				});
 			},
 			_performCalculations: function () {
-				this._isInitialFetchComplete();
+				this._isCurrentYearFetchComplete();
+				this._isPreviousYearFetchComplete();
 
-				if (DeansOfficeReportReducers._state.calculations.isInitialFetchComplete) {
+				if (DeansOfficeReportReducers._state.calculations.isCurrentYearFetchComplete && DeansOfficeReportReducers._state.calculations.isPreviousYearFetchComplete) {
 					debugger;
 					this._calculateView();
 				}
 			},
-			_isInitialFetchComplete: function () {
-				var budget = DeansOfficeReportReducers._state.budget;
-				var sectionGroups = DeansOfficeReportReducers._state.sectionGroups;
-				var courses = DeansOfficeReportReducers._state.courses;
-				var teachingAssignments = DeansOfficeReportReducers._state.teachingAssignments;
-				var instructorTypes = DeansOfficeReportReducers._state.instructorTypes;
-				var sections = DeansOfficeReportReducers._state.sections;
+			_isCurrentYearFetchComplete: function () {
+				var budget = DeansOfficeReportReducers._state.budget.current;
+				var sectionGroups = DeansOfficeReportReducers._state.sectionGroups.current;
+				var courses = DeansOfficeReportReducers._state.courses.current;
+				var teachingAssignments = DeansOfficeReportReducers._state.teachingAssignments.current;
+				var instructorTypes = DeansOfficeReportReducers._state.instructorTypes.current;
+				var sections = DeansOfficeReportReducers._state.sections.current;
 
 				if (budget && sectionGroups && courses && teachingAssignments && instructorTypes && sections) {
 					DeansOfficeReportReducers.reduce({
-						type: ActionTypes.INITIAL_FETCH_COMPLETE,
+						type: ActionTypes.CURRENT_YEAR_FETCH_COMPLETE,
 						payload: {
-							isInitialFetchComplete: true
+							isCurrentYearFetchComplete: true
+						}
+					});
+				}
+			},
+			_isPreviousYearFetchComplete: function () {
+				var budget = DeansOfficeReportReducers._state.budget.previous;
+				var sectionGroups = DeansOfficeReportReducers._state.sectionGroups.previous;
+				var courses = DeansOfficeReportReducers._state.courses.previous;
+				var teachingAssignments = DeansOfficeReportReducers._state.teachingAssignments.previous;
+				var instructorTypes = DeansOfficeReportReducers._state.instructorTypes.previous;
+				var sections = DeansOfficeReportReducers._state.sections.previous;
+
+				if (budget && sectionGroups && courses && teachingAssignments && instructorTypes && sections) {
+					DeansOfficeReportReducers.reduce({
+						type: ActionTypes.PREVIOUS_YEAR_FETCH_COMPLETE,
+						payload: {
+							isPreviousYearFetchComplete: true
 						}
 					});
 				}
