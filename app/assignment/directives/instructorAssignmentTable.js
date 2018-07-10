@@ -536,7 +536,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						selector: '[data-toggle="tooltip"]'
 					});
 				}
-			}
+			};
 
 			// end on event 'assignmentStateChanged'
 
