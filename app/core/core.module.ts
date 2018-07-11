@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthService } from './auth/auth.service';
@@ -8,10 +8,7 @@ import { ApiService } from './api/api.service';
 
 @NgModule({
   // Injected modules
-  imports: [
-    BrowserModule,
-    HttpClientModule
-  ],
+  imports: [CommonModule],
   // Injected components and directives
   declarations: [],
   // Injected services
