@@ -5,6 +5,7 @@ import DeansOfficeReportCtrl from './deansOffice/deansOfficeReportCtrl.js';
 import DeansOfficeReportActions from './deansOffice/services/deansOfficeReportActions.js';
 import DeansOfficeReportReducers from './deansOffice/services/deansOfficeReportReducers.js';
 import DeansOfficeReportService from './deansOffice/services/deansOfficeReportService.js';
+import DeansOfficeReportCalculations from './deansOffice/services/deansOfficeReportCalculations.js';
 
 // Dependencies
 var dependencies = [
@@ -41,6 +42,7 @@ const reportsApp = angular.module("reportsApp", dependencies)
 .service('DeansOfficeReportActions', DeansOfficeReportActions)
 .service('DeansOfficeReportReducers', DeansOfficeReportReducers)
 .service('DeansOfficeReportService', DeansOfficeReportService)
+.service('DeansOfficeReportCalculations', DeansOfficeReportCalculations)
 .config(config)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
@@ -57,7 +59,8 @@ const reportsApp = angular.module("reportsApp", dependencies)
 	GET_PREVIOUS_INSTRUCTOR_TYPES: "GET_PREVIOUS_INSTRUCTOR_TYPES",
 	GET_PREVIOUS_TEACHING_ASSIGNMENTS: "GET_PREVIOUS_TEACHING_ASSIGNMENTS",
 	CALCULATE_VIEW: "CALCULATE_VIEW",
-	INITIAL_FETCH_COMPLETE: "INITIAL_FETCH_COMPLETE"
+	CURRENT_YEAR_FETCH_COMPLETE: "CURRENT_YEAR_FETCH_COMPLETE",
+	PREVIOUS_YEAR_FETCH_COMPLETE: "PREVIOUS_YEAR_FETCH_COMPLETE"
 });
 
 export default reportsApp;

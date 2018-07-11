@@ -1,5 +1,5 @@
 class DeansOfficeReportActions {
-	constructor(DeansOfficeReportReducers, DeansOfficeReportService, $rootScope, ActionTypes, Roles, $route) {
+	constructor(DeansOfficeReportReducers, DeansOfficeReportService, DeansOfficeReportCalculations, $rootScope, ActionTypes, Roles, $route) {
 		return {
 			getInitialState: function () {
 				var _self = this;
@@ -16,14 +16,14 @@ class DeansOfficeReportActions {
 
 				this._getBudget(workgroupId, year, ActionTypes.GET_CURRENT_BUDGET);
 				this._getCourses(workgroupId, year, ActionTypes.GET_CURRENT_COURSES);
-				this._getSectionGroups(workgroupId, year), ActionTypes.GET_CURRENT_COURSES;
+				this._getSectionGroups(workgroupId, year, ActionTypes.GET_CURRENT_SECTION_GROUPS);
 				this._getSections(workgroupId, year, ActionTypes.GET_CURRENT_SECTIONS);
 				this._getInstructorTypes(workgroupId, year, ActionTypes.GET_CURRENT_INSTRUCTOR_TYPES);
 				this._getTeachingAssignments(workgroupId, year, ActionTypes.GET_CURRENT_TEACHING_ASSIGNMENTS);
 
 				this._getBudget(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_BUDGET);
 				this._getCourses(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_COURSES);
-				this._getSectionGroups(workgroupId, previousYear), ActionTypes.GET_PREVIOUS_COURSES;
+				this._getSectionGroups(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_SECTION_GROUPS);
 				this._getSections(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_SECTIONS);
 				this._getInstructorTypes(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_TYPES);
 				this._getTeachingAssignments(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_TEACHING_ASSIGNMENTS);
@@ -179,8 +179,7 @@ class DeansOfficeReportActions {
 				this._isPreviousYearFetchComplete();
 
 				if (DeansOfficeReportReducers._state.calculations.isCurrentYearFetchComplete && DeansOfficeReportReducers._state.calculations.isPreviousYearFetchComplete) {
-					debugger;
-					this._calculateView();
+					DeansOfficeReportCalculations.calculateView();
 				}
 			},
 			_isCurrentYearFetchComplete: function () {
@@ -216,45 +215,11 @@ class DeansOfficeReportActions {
 						}
 					});
 				}
-			},
-			_calculateView: function () {
-				return {};
-
-				// var _self = this;
-
-				// var sectionGroups = DeansOfficeReportReducers._state.sectionGroups;
-				// var courses = DeansOfficeReportReducers._state.courses;
-				// var teachingAssignments = DeansOfficeReportReducers._state.teachingAssignments;
-				// var instructors = DeansOfficeReportReducers._state.instructors;
-				// var instructorTypes = DeansOfficeReportReducers._state.instructorTypes;
-				// var users = DeansOfficeReportReducers._state.users;
-				// var userRoles = DeansOfficeReportReducers._state.userRoles;
-
-				// var calculatedView = {
-				// 	instructorTypeIds: [],
-				// 	byInstructorType: {},
-				// 	totals: {
-				// 		byInstructorTypeId: {},
-				// 		units: 0,
-				// 		studentCreditHours: 0,
-				// 		enrollment: 0,
-				// 		previousEnrollment: 0,
-				// 		instructorCount: 0,
-				// 		assignmentCount: 0
-				// 	}
-				// };
-
-				// DeansOfficeReportReducers.reduce({
-				// 	type: ActionTypes.CALCULATE_VIEW,
-				// 	payload: {
-				// 		calculatedView: calculatedView
-				// 	}
-				// });
 			}
 		};
 	}
 }
 
-DeansOfficeReportActions.$inject = ['DeansOfficeReportReducers', 'DeansOfficeReportService', '$rootScope', 'ActionTypes', 'Roles', '$route'];
+DeansOfficeReportActions.$inject = ['DeansOfficeReportReducers', 'DeansOfficeReportService', 'DeansOfficeReportCalculations', '$rootScope', 'ActionTypes', 'Roles', '$route'];
 
 export default DeansOfficeReportActions;

@@ -11,60 +11,84 @@ class DeansOfficeReportReducers {
 			},
 			_budgetReducer: function (action, budget) {
 				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
 					case ActionTypes.GET_CURRENT_BUDGET:
-						return budget.current || action.payload.budget;
+						budget.current = action.payload.budget;
+						return budget;
 					case ActionTypes.GET_PREVIOUS_BUDGET:
-						return budget.previous || action.payload.budget;
+						budget.previous = action.payload.budget;
+						return budget;
 					default:
 						return budget;
 				}
 			},
 			_courseReducers: function (action, courses) {
 				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
 					case ActionTypes.GET_CURRENT_COURSES:
-						return courses.current || action.payload.courses;
+						courses.current = action.payload.courses;
+						return courses;
 					case ActionTypes.GET_PREVIOUS_COURSES:
-						return courses.previous || action.payload.courses;
+						courses.previous = action.payload.courses;
+						return courses;
 					default:
 						return courses;
 				}
 			},
 			_sectionGroupReducers: function (action, sectionGroups) {
 				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
 					case ActionTypes.GET_CURRENT_SECTION_GROUPS:
-						return sectionGroups.current || action.payload.sectionGroups;
+						sectionGroups.current = action.payload.sectionGroups;
+						return sectionGroups;
 					case ActionTypes.GET_PREVIOUS_SECTION_GROUPS:
-						return sectionGroups.previous || action.payload.sectionGroups;
+						sectionGroups.previous = action.payload.sectionGroups;
+						return sectionGroups;
 					default:
 						return sectionGroups;
 				}
 			},
 			_sectionReducers: function (action, sections) {
 				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
 					case ActionTypes.GET_CURRENT_SECTIONS:
-						return sections.current || action.payload.sections;
+						sections.current = action.payload.sections;
+						return sections;
 					case ActionTypes.GET_PREVIOUS_SECTIONS:
-						return sections.previous || action.payload.sections;
+						sections.previous = action.payload.sections;
+						return sections;
 					default:
 						return sections;
 				}
 			},
 			_instructorTypeReducers: function (action, instructorTypes) {
 				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
 					case ActionTypes.GET_CURRENT_INSTRUCTOR_TYPES:
-						return instructorTypes.current || action.payload.instructorTypes;
+						instructorTypes.current = action.payload.instructorTypes;
+						return instructorTypes;
 					case ActionTypes.GET_PREVIOUS_INSTRUCTOR_TYPES:
-						return instructorTypes.previous || action.payload.instructorTypes;
+						instructorTypes.previous = action.payload.instructorTypes;
+						return instructorTypes;
 					default:
 						return instructorTypes;
 				}
 			},
 			_teachingAssignmentReducers: function (action, teachingAssignments) {
 				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
 					case ActionTypes.GET_CURRENT_TEACHING_ASSIGNMENTS:
-						return teachingAssignments.current || action.payload.teachingAssignments;
+						teachingAssignments.current = action.payload.teachingAssignments;
+						return teachingAssignments;
 					case ActionTypes.GET_PREVIOUS_TEACHING_ASSIGNMENTS:
-						return teachingAssignments.previous || action.payload.teachingAssignments;
+						teachingAssignments.previous = action.payload.teachingAssignments;
+						return teachingAssignments;
 					default:
 						return teachingAssignments;
 				}
@@ -73,7 +97,8 @@ class DeansOfficeReportReducers {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						calculations = {
-							isInitialFetchComplete: false
+							isCurrentYearFetchComplete: false,
+							isPreviousYearFetchComplete: false
 						};
 						return calculations;
 					case ActionTypes.CALCULATE_VIEW:
