@@ -7,14 +7,11 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  getCourses(url): any {
-		const jwtToken = localStorage.getItem('JWT');
+  get(url): any {
     let options: any = {
       withCredentials: true
     };
 
-    this.http
-      .get(this.apiRoot + url, options)
-      .subscribe(res => console.log(res));
+    return this.http.get(this.apiRoot + url, options);
   }
 }

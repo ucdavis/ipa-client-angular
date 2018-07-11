@@ -16,9 +16,9 @@ export class AppComponent {
   ) {}
 
   validateToken() {
-    const jwt = localStorage.getItem('JWT');
-    this.authService.validateToken(jwt);
+    //const jwt = localStorage.getItem('JWT');
+    // this.authService.validateToken(jwt);
 
-    this.apiService.getCourses(this.url);
+    this.apiService.get(this.url).subscribe((data: any) => console.log(data));
   }
 }
