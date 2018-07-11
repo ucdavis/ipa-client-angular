@@ -11,24 +11,23 @@ class DeansOfficeReportCalculations {
 				var teachingAssignments = DeansOfficeReportReducers._state.teachingAssignments;
 				var instructorTypes = DeansOfficeReportReducers._state.instructorTypes;
 
-				debugger;
 				var calculatedView = {
 					current: {
-						costs: _generateCosts(),
-						funding: _generateFunding(),
-						miscStats: _generateMiscStats(courses.current, sectionGroups.current, sections.current)
+						costs: this._generateCosts(),
+						funding: this._generateFunding(),
+						miscStats: this._generateMiscStats(courses.current, sectionGroups.current, sections.current)
 					},
 					previous: {
-						costs: _generateCosts(),
-						funding: _generateFunding(),
-						miscStats: _generateMiscStats(courses.previous, sectionGroups.previous, sections.previous)
+						costs: this._generateCosts(),
+						funding: this._generateFunding(),
+						miscStats: this._generateMiscStats(courses.previous, sectionGroups.previous, sections.previous)
 					}
 				};
 
 				calculatedView.change = {
-					costs: _generateCostChange(),
-					funding: _generatefundingChange(),
-					miscStats: _generateMiscStatsChange(calculatedView.current.miscStats, calculatedView.previous.miscStats)
+					costs: this._generateCostChange(),
+					funding: this._generatefundingChange(),
+					miscStats: this._generateMiscStatsChange(calculatedView.current.miscStats, calculatedView.previous.miscStats)
 				};
 
 				// TODO: Add instructorTypeCosts, instructorCosts and sectionGroupCosts to figure out what cost to use per course/instructor
@@ -52,19 +51,6 @@ class DeansOfficeReportCalculations {
 				// -lecturer funding (we don't currently have a way of tracking this)
 				// -AI funding (we don't currently have a way of tracking this)
 
-				// section 3: (misc stats)
-				// total courses:
-				// -lower
-				// -upper
-				// -total
-
-				// total seats: (excluding grad)
-				// -lower
-				// -upper
-				// -total
-
-
-
 				DeansOfficeReportReducers.reduce({
 					type: ActionTypes.CALCULATE_VIEW,
 					payload: {
@@ -73,6 +59,62 @@ class DeansOfficeReportCalculations {
 				});
 			},
 			_generateMiscStats(courses, sectionGroups, sections) {
+				var miscStats = {
+					lower: {
+						courses: 0,
+						seats: 0
+					},
+					upper: {
+						courses: 0,
+						seats: 0
+					},
+					grad: {
+						courses: 0,
+						seats: 0
+					},
+					total: {
+						courses: 0,
+						seats: 0
+					}
+				};
+
+				sections.ids.forEach((sectionId) => {
+					var section = sections.list[sectionId];
+					var sectionGroup = sectionGroups.list[section.sectionGroupId];
+					var course = courses.list[sectionGroup.courseId];
+
+					var courseNumber = parseInt(course.courseNumber);
+					var seats = section.seats;
+
+					if (courseNumber < 100) {
+						miscStats.lower.courses += 1;
+						miscStats.lower.seats += seats;
+					} else if (courseNumber >= 200) {
+						miscStats.grad.courses += 1;
+						miscStats.grad.seats += seats;
+					} else {
+						miscStats.upper.courses += 1;
+						miscStats.upper.seats += seats;
+					}
+				});
+
+				miscStats.total.courses = miscStats.lower.courses + miscStats.grad.courses + miscStats.upper.courses;
+				miscStats.total.seats = miscStats.lower.courses + miscStats.upper.courses;
+
+			},
+			_generateCosts() {
+
+			},
+			_generateFunding() {
+
+			},
+			_generateCostChange() {
+
+			},
+			_generatefundingChange() {
+
+			},
+			_generateMiscStatsChange() {
 
 			}
 		};
