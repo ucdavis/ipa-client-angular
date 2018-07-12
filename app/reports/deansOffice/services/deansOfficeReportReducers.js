@@ -43,10 +43,12 @@ class DeansOfficeReportReducers {
 						return {};
 					case ActionTypes.GET_CURRENT_BUDGET_SCENARIOS:
 					budgetScenarios.current = action.payload.budgetScenarios;
+					budgetScenarios.currentSelectedScenarioId = action.payload.budgetScenarios[0].id;
 						return budgetScenarios;
 					case ActionTypes.GET_PREVIOUS_BUDGET_SCENARIOS:
 					budgetScenarios.previous = action.payload.budgetScenarios;
-						return budgetScenarios;
+					budgetScenarios.previousSelectedScenarioId = action.payload.budgetScenarios[0].id;
+					return budgetScenarios;
 					default:
 						return budgetScenarios;
 				}

@@ -5,6 +5,9 @@ class DeansOfficeReportCalculations {
 				var _self = this;
 
 				var budget = DeansOfficeReportReducers._state.budget;
+				var budgetScenarios = DeansOfficeReportReducers._state.budgetScenarios;
+				var lineItems = DeansOfficeReportReducers._state.lineItems;
+
 				var courses = DeansOfficeReportReducers._state.courses;
 				var sectionGroups = DeansOfficeReportReducers._state.sectionGroups;
 				var sections = DeansOfficeReportReducers._state.sections;
@@ -14,12 +17,12 @@ class DeansOfficeReportCalculations {
 				var calculatedView = {
 					current: {
 						costs: this._generateCosts(),
-						funding: this._generateFunding(),
+						funding: this._generateFunding(lineItems.current, budgetScenarios.currentSelectedScenarioId),
 						miscStats: this._generateMiscStats(courses.current, sectionGroups.current, sections.current)
 					},
 					previous: {
 						costs: this._generateCosts(),
-						funding: this._generateFunding(),
+						funding: this._generateFunding(lineItems.previous, budgetScenarios.previousSelectedScenarioId),
 						miscStats: this._generateMiscStats(courses.previous, sectionGroups.previous, sections.previous)
 					}
 				};
@@ -31,7 +34,6 @@ class DeansOfficeReportCalculations {
 				};
 
 				// TODO: Add instructorTypeCosts, instructorCosts and sectionGroupCosts to figure out what cost to use per course/instructor
-				// TODO: Add lineItems for funding
 
 				// section 1: (costs)
 				// A) instructors:
@@ -106,8 +108,9 @@ class DeansOfficeReportCalculations {
 			_generateCosts() {
 
 			},
-			_generateFunding() {
-
+			_generateFunding(lineItems, selectedScenarioId) {
+				var lineItemCategories = DeansOfficeReportReducers._state.lineItemCategories;
+				debugger;
 			},
 			_generateCostChange() {
 
