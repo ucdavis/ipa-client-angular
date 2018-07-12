@@ -1,0 +1,13 @@
+Hello, {{name}}
+
+<button (click)="getCourses()">Get courses</button>
+
+<button (click)="toggleMessage()">Toggle Message</button>
+
+<div *ngIf="schedulingShow">{{schedulingName}}</div>
+
+<ul>
+  <li *ngFor="let course of courses">
+    {{ course }}
+  </li>
+</ul>

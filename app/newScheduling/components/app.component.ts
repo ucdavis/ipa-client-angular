@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { AuthService } from '@app/core';
-import { ApiService } from '@app/core';
+import { AuthService } from '@core';
 
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
+import { AppState } from '@scheduling/models/app.model';
+import { SchedulingState } from '@scheduling/models/scheduling.model';
+import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 
 @Component({
   selector: 'app-main',
@@ -11,22 +13,17 @@ import { Store, select } from '@ngrx/store';
 })
 export class AppComponent {
   name: String = 'Taco taco taco';
-  url: String = "/api/workgroups/" + 20 + "/years/" + 2018 + "/courses";
-  scheduling: Observable<any>;
+  scheduling: Observable<SchedulingState>;
   schedulingName: String;
   schedulingShow: boolean;
+  courses: Array<any>;
 
   constructor(
-    private store: Store<any>,
+    private store: Store<AppState>,
     private authService: AuthService,
-    private apiService: ApiService,
-  ) {
-    // this.store.pipe(select('scheduling')).subscribe(
-    //   scheduling => {
-    //     this.schedulingName = scheduling.name
-    //   }
-    // );
-    this.scheduling = this.store.select('scheduling');
+    private schedulingActions: SchedulingActions) {
+
+      this.scheduling = this.store.select('scheduling');
   }
 
   ngOnInit() {
@@ -34,14 +31,17 @@ export class AppComponent {
       console.log(state);
       this.schedulingName = state.name;
       this.schedulingShow = state.showName;
+      this.courses = state.courses.list;
     })
   }
 
   validateToken() {
     //const jwt = localStorage.getItem('JWT');
     // this.authService.validateToken(jwt);
+  }
 
-    this.apiService.get(this.url).subscribe((data: any) => console.log(data));
+  getCourses() {
+    this.schedulingActions.getCourses();
   }
 
   toggleMessage() {
