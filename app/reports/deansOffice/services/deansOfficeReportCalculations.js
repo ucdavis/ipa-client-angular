@@ -101,6 +101,7 @@ class DeansOfficeReportCalculations {
 				miscStats.total.courses = miscStats.lower.courses + miscStats.grad.courses + miscStats.upper.courses;
 				miscStats.total.seats = miscStats.lower.courses + miscStats.upper.courses;
 
+				return miscStats;
 			},
 			_generateCosts() {
 
