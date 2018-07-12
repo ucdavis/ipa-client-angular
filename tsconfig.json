@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@app/*": ["app/*"]
+      "@core/*": ["app/core/*"],
+      "@scheduling/*": ["app/newScheduling/*"]
     },
     "outDir": "dist",
     "sourceMap": true,

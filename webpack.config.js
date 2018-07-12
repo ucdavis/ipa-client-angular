@@ -69,7 +69,8 @@ module.exports = {
     alias: {
       Workgroup: path.resolve(__dirname, 'app/workgroup/'),
       TeachingCall: path.resolve(__dirname, 'app/teachingCall/'),
-      '@app/core': path.resolve(__dirname, 'app/core')
+      '@core': path.resolve(__dirname, 'app/core'),
+      '@scheduling': path.resolve(__dirname, 'app/newScheduling')
     }
     
   },
