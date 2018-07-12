@@ -4,10 +4,17 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { CoreModule } from './../core/core.module';
 
+// ngrx store
+import { StoreModule } from '@ngrx/store';
+import { schedulingReducer } from './reducers/scheduling.reducers';
+
 @NgModule({
   imports: [
     BrowserModule,
-    CoreModule
+    CoreModule,
+    StoreModule.forRoot({
+      scheduling: schedulingReducer,
+    })
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent]
