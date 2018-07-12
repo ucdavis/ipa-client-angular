@@ -23,6 +23,34 @@ class DeansOfficeReportReducers {
 						return budget;
 				}
 			},
+			_lineItemReducers: function (action, lineItems) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
+					case ActionTypes.GET_CURRENT_LINE_ITEMS:
+					lineItems.current = action.payload.lineItems;
+						return lineItems;
+					case ActionTypes.GET_PREVIOUS_LINE_ITEMS:
+					lineItems.previous = action.payload.lineItems;
+						return lineItems;
+					default:
+						return lineItems;
+				}
+			},
+			_budgetScenarioReducers: function (action, budgetScenarios) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
+					case ActionTypes.GET_CURRENT_BUDGET_SCENARIOS:
+					budgetScenarios.current = action.payload.budgetScenarios;
+						return budgetScenarios;
+					case ActionTypes.GET_PREVIOUS_BUDGET_SCENARIOS:
+					budgetScenarios.previous = action.payload.budgetScenarios;
+						return budgetScenarios;
+					default:
+						return budgetScenarios;
+				}
+			},
 			_courseReducers: function (action, courses) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -124,6 +152,8 @@ class DeansOfficeReportReducers {
 				newState.sections = scope._sectionReducers(action, scope._state.sections);
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 				newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
+				newState.lineItems = scope._lineItemReducers(action, scope._state.lineItems);
+				newState.budgetScenarios = scope._budgetScenarioReducers(action, scope._state.budgetScenarios);
 
 				newState.calculations = scope._calculationReducers(action, scope._state.calculations);
 

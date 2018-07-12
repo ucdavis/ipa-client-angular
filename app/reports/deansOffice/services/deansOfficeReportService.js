@@ -20,6 +20,12 @@ class DeansOfficeReportService {
 			},
 			getSections: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/sections");
+			},
+			getLineItems: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/lineItems");
+			},
+			getBudgetScenarios: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/budgetScenarios");
 			}
 		};
 	}

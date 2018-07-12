@@ -20,6 +20,8 @@ class DeansOfficeReportActions {
 				this._getSections(workgroupId, year, ActionTypes.GET_CURRENT_SECTIONS);
 				this._getInstructorTypes(workgroupId, year, ActionTypes.GET_CURRENT_INSTRUCTOR_TYPES);
 				this._getTeachingAssignments(workgroupId, year, ActionTypes.GET_CURRENT_TEACHING_ASSIGNMENTS);
+				this._getLineItems(workgroupId, year, ActionTypes.GET_CURRENT_LINE_ITEMS);
+				this._getBudgetScenarios(workgroupId, year, ActionTypes.GET_CURRENT_BUDGET_SCENARIOS);
 
 				this._getBudget(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_BUDGET);
 				this._getCourses(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_COURSES);
@@ -27,6 +29,9 @@ class DeansOfficeReportActions {
 				this._getSections(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_SECTIONS);
 				this._getInstructorTypes(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_TYPES);
 				this._getTeachingAssignments(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_TEACHING_ASSIGNMENTS);
+				this._getLineItems(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_LINE_ITEMS);
+				this._getBudgetScenarios(workgroupId, year, ActionTypes.GET_PREVIOUS_BUDGET_SCENARIOS);
+
 			},
 			_getBudget: function (workgroupId, year, action) {
 				var _self = this;
@@ -62,6 +67,58 @@ class DeansOfficeReportActions {
 						type: action,
 						payload: {
 							courses: courses
+						}
+					});
+
+					_self._performCalculations();
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+				});
+			},
+			_getLineItems: function (workgroupId, year, action) {
+				var _self = this;
+
+				DeansOfficeReportService.getLineItems(workgroupId, year).then(function (rawLineItems) {
+					let lineItems = {
+						ids: [],
+						list: {}
+					};
+
+					rawLineItems.forEach(function(lineItem) {
+						lineItems.ids.push(lineItem.id);
+						lineItems.list[lineItem.id] = lineItem;
+					});
+
+					DeansOfficeReportReducers.reduce({
+						type: action,
+						payload: {
+							lineItems: lineItems
+						}
+					});
+
+					_self._performCalculations();
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+				});
+			},
+			_getBudgetScenarios: function (workgroupId, year, action) {
+				var _self = this;
+
+				DeansOfficeReportService.getBudgetScenarios(workgroupId, year).then(function (rawBudgetScenarios) {
+					let budgetScenarios = {
+						ids: [],
+						list: {}
+					};
+
+					rawBudgetScenarios.forEach(function(budgetScenario) {
+						budgetScenarios.ids.push(budgetScenario.id);
+						budgetScenarios.list[budgetScenario.id] = budgetScenario;
+					});
+
+					DeansOfficeReportReducers.reduce({
+						type: action,
+						payload: {
+							budgetScenarios: budgetScenarios
 						}
 					});
 
