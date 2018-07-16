@@ -109,7 +109,7 @@ class DeansOfficeReportCalculations {
 				return costs;
 			},
 			// Returns the cost associated with an assignment's instructor, based on the selected budget scenario
-			_calculateAssignmentCost(sectionGroupCost, teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts) {
+			_calculateAssignmentCost(sectionGroupCost, teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts, teachingAssignments) {
 				var cost = null;
 				var instructorTypeId = null;
 
@@ -118,12 +118,14 @@ class DeansOfficeReportCalculations {
 				var courseCost = sectionGroupCost.cost;
 
 				if (sectionGroupCost.instructorId) {
-					var instructorCostId = instructorCosts.byInstructorId[sectionGroupCost.instructorId]
-					instructorCost = instructorCosts.list[instructorCostId].cost;
-					var instructorId = instructorCost.instructorId;
+					var instructorCostId = instructorCosts.byInstructorId[sectionGroupCost.instructorId];
+					instructorCost = instructorCosts.list[instructorCostId] ? instructorCosts.list[instructorCostId].cost : instructorCost;
 
-					debugger;
-					// TODO figure out instructorType from instructorId
+					var instructorType = this._calculateInstructorType(sectionGroupCost.instructorId, teachingAssignments);
+					if (!instructorType) { return null; }
+
+					instructorTypeId = instructorType.id;
+					instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
 				} else if (sectionGroupCost.instructorTypeId) {
 					instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
 					instructorTypeId = teachingAssignment.instructorTypeId;
@@ -172,7 +174,7 @@ class DeansOfficeReportCalculations {
 					if (sectionGroupCost.budgetScenarioId != selectedScenarioId) { return; }
 
 					var teachingAssignment = _self._getTeachingAssignment(sectionGroupCost.sectionGroupId);
-					var assignmentCosts = _self._calculateAssignmentCost(sectionGroupCost, teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts);
+					var assignmentCosts = _self._calculateAssignmentCost(sectionGroupCost, teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts, teachingAssignments);
 
 					if (!assignmentCosts) { return; }
 
@@ -417,22 +419,22 @@ class DeansOfficeReportCalculations {
 				}
 			},
 			// Will first look at userRoles for a match, and then teachingAssignments as a fallback.
-			_calculateInstructorType: function(instructorId) {
+			_calculateInstructorType: function(instructorId, teachingAssignments) {
 				var instructorType = null;
 	
-				var assignedInstructors = BudgetReducers._state.assignedInstructors;
-				var activeInstructors = BudgetReducers._state.activeInstructors;
+				var instructors = DeansOfficeReportReducers._state.instructors;
 	
-				var users = BudgetReducers._state.users;
-				var userRoles = BudgetReducers._state.userRoles;
-				var teachingAssignments = BudgetReducers._state.teachingAssignments;
-				var instructorTypes = BudgetReducers._state.instructorTypes;
-	
-				var instructor = assignedInstructors.list[instructorId] || activeInstructors.list[instructorId];
+				var users = DeansOfficeReportReducers._state.users;
+				var userRoles = DeansOfficeReportReducers._state.userRoles;
+				var instructorTypes = DeansOfficeReportReducers._state.instructorTypes.current;
+
+				var instructor = instructors.list[instructorId];
+				if (!instructor) { return null; }
+
 				var user = users.byLoginId[instructor.loginId.toLowerCase()];
-	
+
 				if (!user) { return; }
-	
+
 				if (userRoles.byUserId[user.id]) {
 					userRoles.byUserId[user.id].forEach(function(userRole) {
 						if (userRole.roleId != Roles.instructor) { return; }

@@ -42,7 +42,7 @@ class DeansOfficeReportActions {
 
 				this._getUsers(workgroupId, year);
 				this._getUserRoles(workgroupId);
-				this._getInstructors(workgroupId);
+				this._getInstructors(workgroupId, year);
 			},
 			_getBudget: function (workgroupId, year, action) {
 				var _self = this;
@@ -66,12 +66,14 @@ class DeansOfficeReportActions {
 				DeansOfficeReportService.getUsers(workgroupId, year).then(function (rawUsers) {
 					let users = {
 						ids: [],
-						list: {}
+						list: {},
+						byLoginId: {}
 					};
 
 					rawUsers.forEach(function(user) {
 						users.ids.push(user.id);
 						users.list[user.id] = user;
+						users.byLoginId[user.loginId.toLowerCase()] = user;
 					});
 
 					DeansOfficeReportReducers.reduce({
@@ -92,13 +94,16 @@ class DeansOfficeReportActions {
 				DeansOfficeReportService.getUserRoles(workgroupId).then(function (rawUserRoles) {
 					let userRoles = {
 						ids: [],
-						list: {}
+						list: {},
+						byUserId: {}
 					};
 
 					rawUserRoles.forEach(function(userRole) {
 						userRoles.ids.push(userRole.id);
 						userRoles.list[userRole.id] = userRole;
-					});
+						userRoles.byUserId[userRole.userId] = userRoles.byUserId[userRole.userId] || [];
+						userRoles.byUserId[userRole.userId].push(userRole);
+				});
 
 					DeansOfficeReportReducers.reduce({
 						type: ActionTypes.GET_USER_ROLES,
@@ -112,10 +117,10 @@ class DeansOfficeReportActions {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
-			_getInstructors: function (workgroupId) {
+			_getInstructors: function (workgroupId, year) {
 				var _self = this;
 
-				DeansOfficeReportService.getInstructors(workgroupId).then(function (rawInstructors) {
+				DeansOfficeReportService.getInstructors(workgroupId, year).then(function (rawInstructors) {
 					let instructors = {
 						ids: [],
 						list: {}

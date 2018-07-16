@@ -45,8 +45,8 @@ class DeansOfficeReportService {
 			getUserRoles: function (workgroupId) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/userRoles");
 			},
-			getInstructors: function (workgroupId) {
-				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/instructors");
+			getInstructors: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/instructors");
 			},
 
 		};
