@@ -76,7 +76,7 @@ class DeansOfficeReportCalculations {
 						miscStats.lower.seats += seats;
 					} else if (courseNumber >= 200) {
 						miscStats.grad.courses += 1;
-						miscStats.grad.seats += seats;
+						miscStats.grad.seats = 0; // Intentionally always zero, as this total is not relevant
 					} else {
 						miscStats.upper.courses += 1;
 						miscStats.upper.seats += seats;
@@ -84,7 +84,7 @@ class DeansOfficeReportCalculations {
 				});
 
 				miscStats.total.courses = miscStats.lower.courses + miscStats.grad.courses + miscStats.upper.courses;
-				miscStats.total.seats = miscStats.lower.courses + miscStats.upper.courses;
+				miscStats.total.seats = miscStats.lower.seats + miscStats.grad.seats + miscStats.upper.seats;
 
 				return miscStats;
 			},

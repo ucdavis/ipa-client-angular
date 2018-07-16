@@ -1,7 +1,7 @@
 <div class="change-table panel panel-primary">
   <table class="dean-report__table">
     <colgroup>
-      <col style="width: 35%;">
+      <col style="width: 30%;">
       <col style="width: 20%;">
       <col style="width: 20%;">
       <col style="width: 25%;">
@@ -34,7 +34,7 @@
     <tbody>
       <tr ng-repeat="instructorTypeId in instructorTypes.current.ids">
         <td>
-          <div class="dean-report__cell-container dean-report__cell-container--left">
+          <div class="dean-report__cell-container">
             {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].rawCost) }}
           </div>
         </td>
@@ -97,7 +97,7 @@
     <tbody>
       <tr>
         <td>
-          <div class="dean-report__cell-container dean-report__cell-container--left">
+          <div class="dean-report__cell-container">
             {{ toCurrency(costs.supportCosts.ta.rawCost) }}
           </div>
         </td>
@@ -119,7 +119,7 @@
       </tr>
       <tr>
         <td>
-          <div class="dean-report__cell-container dean-report__cell-container--left">
+          <div class="dean-report__cell-container">
             {{ toCurrency(costs.supportCosts.reader.rawCost) }}
           </div>
         </td>
@@ -210,7 +210,7 @@
       <tr>
         <td>
           <div class="dean-report__cell-container dean-report__cell-container--left">
-            Total
+            &nbsp;
           </div>
         </td>
         <td>
@@ -291,7 +291,7 @@
       <tr>
         <th colspan="4">
           <div class="dean-report__header-cell dean-report__header-cell--collapse-centered">
-            Total Seats Offered
+            Total Seats Offered (excluding Grad)
           </div>
         </th>
       </tr>
