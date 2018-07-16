@@ -126,3 +126,9 @@
 	text-overflow: ellipsis;
 	padding: 2px;
 }
+
+.ipa-dropdown__caret-container {
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+}
