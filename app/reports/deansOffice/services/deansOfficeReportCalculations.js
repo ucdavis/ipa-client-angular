@@ -284,6 +284,7 @@ class DeansOfficeReportCalculations {
 			},
 			// Generates previous -> current change values for funds
 			_generatefundingChange(currentFunding, previousFunding) {
+				var _self = this;
 				var lineItemCategories = DeansOfficeReportReducers._state.lineItemCategories;
 
 				var fundingChange = {
@@ -298,13 +299,13 @@ class DeansOfficeReportCalculations {
 					
 					fundingChange.types[lineItemCategoryId] = {
 						raw: currentRaw - previousRaw,
-						percentage: (parseFloat(currentRaw - previousRaw) / previousRaw) * 100
+						percentage: _self._percentageChange(previousRaw, currentRaw)
 					};
 
 					fundingChange.rawTotal += fundingChange.types[lineItemCategoryId].raw;
 				});
 
-				fundingChange.percentageTotal = (parseFloat(currentFunding.total - previousFunding.total) / previousFunding.total) * 100;
+				fundingChange.percentageTotal = this._percentageChange(previousFunding.total, currentFunding.total);
 
 				return fundingChange;
 			},

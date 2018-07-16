@@ -174,7 +174,7 @@
           <div class="dean-report__header-cell">Amount</div>
         </th>
         <th>
-          <div class="dean-report__header-cell">&nbsp;</div>
+          <div class="dean-report__header-cell">% Change</div>
         </th>
         <th>
           <div class="dean-report__header-cell dean-report__header-cell--right">
@@ -193,12 +193,12 @@
         </td>
         <td>
           <div class="dean-report__cell-container">
-              {{ toCurrency(funding.types[lineItemCategoryId]) }}
+              {{ toCurrency(funding.types[lineItemCategoryId].raw) }}
             </div>
         </td>
         <td>
           <div class="dean-report__cell-container">
-              &nbsp;
+              {{ funding.types[lineItemCategoryId].percentage }}
           </div>
         </td>
         <td>
