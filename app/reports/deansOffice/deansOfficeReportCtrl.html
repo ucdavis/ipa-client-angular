@@ -1,8 +1,25 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 
-<ipa-header page-title="Deans Office Report"></ipa-header>
+<div ng-if="!view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="overlay">
+  <spinner class="vertical-center"></spinner>
+</div>
+  
+<ipa-header ng-show="view.state.calculations.calculatedView.ui.currentBudgetScenarios" page-title="Deans Office Report"></ipa-header>
 
-<div class="deans-office-report">
+
+<div ng-show="view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="deans-office-report__scenario-selector-tray">
+  <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.currentBudgetScenarios"
+    selected-budget-scenario="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario"
+    is-current="true"
+    ng-if="view.state.calculations.calculatedView.ui.currentBudgetScenarios">
+  </budget-scenario-selector>
+  <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.previousBudgetScenarios"
+    selected-budget-scenario="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario"
+    is-current="false"
+    ng-if="view.state.calculations.calculatedView.ui.previousBudgetScenarios">
+  </budget-scenario-selector>
+</div>
+<div ng-show="view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="deans-office-report">
   <year-table costs="view.state.calculations.calculatedView.previous.costs"
               funding="view.state.calculations.calculatedView.previous.funding"
               misc-stats="view.state.calculations.calculatedView.previous.miscStats"

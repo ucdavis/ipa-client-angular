@@ -17,6 +17,12 @@ class DeansOfficeReportCalculations {
 				var sectionGroupCosts = DeansOfficeReportReducers._state.sectionGroupCosts;
 
 				var calculatedView = {
+					ui: {
+						currentSelectedBudgetScenario: this._getBudgetScenario(budgetScenarios.currentSelectedScenarioId, DeansOfficeReportReducers._state.budgetScenarios.current),
+						previousSelectedBudgetScenario: this._getBudgetScenario(budgetScenarios.previousSelectedScenarioId, DeansOfficeReportReducers._state.budgetScenarios.previous),
+						currentBudgetScenarios: this._getBudgetScenarios(DeansOfficeReportReducers._state.budgetScenarios.current),
+						previousBudgetScenarios: this._getBudgetScenarios(DeansOfficeReportReducers._state.budgetScenarios.previous)
+					},
 					current: {
 						costs: this._generateCosts(teachingAssignments.current, instructorTypeCosts.current, instructorCosts.current, sectionGroupCosts.current, budget.current, budgetScenarios.currentSelectedScenarioId, sectionGroups.current),
 						funding: this._generateFunding(lineItems.current, budgetScenarios.currentSelectedScenarioId),
@@ -341,6 +347,29 @@ class DeansOfficeReportCalculations {
 				var roundTo = degreesOfPrecision || 2;
 
 				return ((parseFloat(newValue - oldValue) / oldValue) * 100).toFixed(roundTo) + "%";
+			},
+			_getBudgetScenario(budgetScenarioId, budgetScenarios) {
+				var budgetScenario = null;
+
+				budgetScenarios.ids.forEach(function(slotScenarioId) {
+					if (budgetScenarioId == slotScenarioId) {
+						budgetScenario = budgetScenarios.list[slotScenarioId];
+						budgetScenario.description = budgetScenario.name;
+					}
+				});
+
+				return budgetScenario;
+			},
+			_getBudgetScenarios(budgetScenarios) {
+				var scenarios = [];
+
+				budgetScenarios.ids.forEach(function(budgetScenarioId) {
+					var budgetScenario = budgetScenarios.list[budgetScenarioId];
+					budgetScenario.description = budgetScenario.name;
+					scenarios.push(budgetScenarios.list[budgetScenarioId]);
+				});
+
+				return scenarios;
 			}
 		};
 	}

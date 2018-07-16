@@ -406,7 +406,27 @@ class DeansOfficeReportActions {
 						}
 					});
 				}
-			}
+			},
+			selectCurrentBudgetScenario: function(selectedScenarioId) {
+				DeansOfficeReportReducers.reduce({
+					type: ActionTypes.SELECT_CURRENT_BUDGET_SCENARIO,
+					payload: {
+						budgetScenarioId: selectedScenarioId
+					}
+				});
+	
+				this._performCalculations();
+			},
+			selectPreviousBudgetScenario: function(selectedScenarioId) {
+				DeansOfficeReportReducers.reduce({
+					type: ActionTypes.SELECT_PREVIOUS_BUDGET_SCENARIO,
+					payload: {
+						budgetScenarioId: selectedScenarioId
+					}
+				});
+	
+				this._performCalculations();
+			},
 		};
 	}
 }

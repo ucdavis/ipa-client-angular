@@ -105,13 +105,19 @@ class DeansOfficeReportReducers {
 					case ActionTypes.INIT_STATE:
 						return {};
 					case ActionTypes.GET_CURRENT_BUDGET_SCENARIOS:
-					budgetScenarios.current = action.payload.budgetScenarios;
-					budgetScenarios.currentSelectedScenarioId = action.payload.budgetScenarios.ids[0];
+						budgetScenarios.current = action.payload.budgetScenarios;
+						budgetScenarios.currentSelectedScenarioId = action.payload.budgetScenarios.ids[0];
 						return budgetScenarios;
 					case ActionTypes.GET_PREVIOUS_BUDGET_SCENARIOS:
-					budgetScenarios.previous = action.payload.budgetScenarios;
-					budgetScenarios.previousSelectedScenarioId = action.payload.budgetScenarios.ids[0];
-					return budgetScenarios;
+						budgetScenarios.previous = action.payload.budgetScenarios;
+						budgetScenarios.previousSelectedScenarioId = action.payload.budgetScenarios.ids[0];
+						return budgetScenarios;
+					case ActionTypes.SELECT_CURRENT_BUDGET_SCENARIO:
+						budgetScenarios.currentSelectedScenarioId = action.payload.budgetScenarioId;
+						return budgetScenarios;
+					case ActionTypes.SELECT_PREVIOUS_BUDGET_SCENARIO:
+						budgetScenarios.previousSelectedScenarioId = action.payload.budgetScenarioId;
+						return budgetScenarios;
 					default:
 						return budgetScenarios;
 				}

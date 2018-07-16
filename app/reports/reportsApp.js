@@ -13,6 +13,7 @@ import DeansOfficeReportCalculations from './deansOffice/services/deansOfficeRep
 // Directives
 import changeTable from './deansOffice/directives/changeTable/changeTable.js';
 import yearTable from './deansOffice/directives/yearTable/yearTable.js';
+import budgetScenarioSelector from './deansOffice/directives/budgetScenarioSelector/budgetScenarioSelector.js';
 
 // Dependencies
 var dependencies = [
@@ -53,6 +54,7 @@ const reportsApp = angular.module("reportsApp", dependencies)
 .service('StringService', StringService)
 .directive('yearTable', yearTable)
 .directive('changeTable', changeTable)
+.directive('budgetScenarioSelector', budgetScenarioSelector)
 .config(config)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
@@ -82,7 +84,9 @@ const reportsApp = angular.module("reportsApp", dependencies)
 	GET_CURRENT_SECTION_GROUP_COSTS: "GET_CURRENT_SECTION_GROUP_COSTS",
 	CALCULATE_VIEW: "CALCULATE_VIEW",
 	CURRENT_YEAR_FETCH_COMPLETE: "CURRENT_YEAR_FETCH_COMPLETE",
-	PREVIOUS_YEAR_FETCH_COMPLETE: "PREVIOUS_YEAR_FETCH_COMPLETE"
+	PREVIOUS_YEAR_FETCH_COMPLETE: "PREVIOUS_YEAR_FETCH_COMPLETE",
+	SELECT_CURRENT_BUDGET_SCENARIO: "SELECT_CURRENT_BUDGET_SCENARIO",
+	SELECT_PREVIOUS_BUDGET_SCENARIO: "SELECT_PREVIOUS_BUDGET_SCENARIO"
 });
 
 export default reportsApp;

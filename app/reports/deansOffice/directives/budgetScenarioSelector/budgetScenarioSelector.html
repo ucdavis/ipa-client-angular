@@ -1,0 +1,12 @@
+<div class="budget-scenario-selector">
+  <ipa-dropdown ng-if="budgetScenarios.length > 0"
+                expanded="isOpen"
+                button-text="selectedBudgetScenario.description"
+                items="budgetScenarios"
+                style="'minimal'"
+                select-item="selectBudgetScenario(item)">
+  </ipa-dropdown>
+  <div class="budget-scenario-selector__no-scenarios" ng-if="budgetScenarios.length == 0">
+    No scenarios available
+  </div>
+</div>
