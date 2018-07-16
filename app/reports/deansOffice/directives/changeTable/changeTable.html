@@ -1,0 +1,346 @@
+<div class="change-table panel panel-primary">
+  <table class="dean-report__table">
+    <colgroup>
+      <col style="width: 25%;">
+      <col style="width: 25%;">
+      <col style="width: 25%;">
+      <col style="width: 25%;">
+    </colgroup>
+    <thead>
+      <tr>
+        <th colspan="4">
+          <div class="dean-report__header-cell dean-report__header-cell--collapse-centered">
+            Changes
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th>
+          <div class="dean-report__header-cell">Cost</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell"># Courses</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell">% Cost</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell dean-report__header-cell--right">% Courses</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="instructorTypeId in instructorTypes.current.ids">
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--left">
+            {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].rawCost) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].rawCourses) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].percentageCost) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last">
+            {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].percentageCourses) }}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+              {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].total.cost) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+              {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].total.courses) }}
+            </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+              {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].percentageCost) }}
+            </div>
+       </td>
+       <td>
+        <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last">
+            {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].percentageCourses) }}
+        </div>
+       </td>
+      </tr>
+    </tbody>
+    <!-- TAs and readers -->
+    <thead>
+      <tr>
+        <th>
+          <div class="dean-report__header-cell">Cost</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell">Count</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell">% Cost</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell dean-report__header-cell--right">% Count</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--left">
+            {{ toCurrency(costs.supportCosts.ta.rawCost) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ toCurrency(costs.supportCosts.ta.rawCount) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ toCurrency(costs.supportCosts.ta.percentageCost) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last">
+            {{ toCurrency(costs.supportCosts.ta.percentageCount) }}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--left">
+            {{ toCurrency(costs.supportCosts.reader.rawCost) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ toCurrency(costs.supportCosts.reader.rawCount) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ toCurrency(costs.supportCosts.reader.percentageCost) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last">
+            {{ toCurrency(costs.supportCosts.reader.percentageCount) }}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+            {{ toCurrency(costs.supportCosts.rawTotalCost) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+            &nbsp;
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+             {{ toCurrency(costs.supportCosts.percentageTotalCost) }}
+          </div>
+        </td>
+        <td>
+         <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last">
+            &nbsp;
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <!-- Funding -->
+    <thead>
+      <tr>
+        <th>
+          <div class="dean-report__header-cell">
+            Funding
+          </div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell">Amount</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell">&nbsp;</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell dean-report__header-cell--right">
+            <!-- Space for row label -->
+            &nbsp;
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="lineItemCategoryId in lineItemCategories.current.ids">
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--left">
+            {{ lineItemCategories.current.list[lineItemCategoryId].description }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+              {{ toCurrency(funding.types[lineItemCategoryId]) }}
+            </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+              &nbsp;
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last">
+            &nbsp;
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--left">
+            Total
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+            {{ toCurrency(funding.total) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+            &nbsp;
+          </div>
+        </td>
+        <td>
+         <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last">
+            &nbsp;
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <!-- Misc stats (courses) -->
+    <thead>
+      <tr>
+        <th colspan="4">
+          <div class="dean-report__header-cell dean-report__header-cell--collapse">
+            Courses Offered
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container">
+            # Lower div.
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            # Upper div.
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            # Grad.
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last dean-report__cell--bold">
+            Total
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ miscStats.lower.courses }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ miscStats.upper.courses }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ miscStats.grad.courses }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last dean-report__cell--bold">
+            {{ miscStats.total.courses }}
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <!-- Misc stats (seats) -->
+    <thead>
+      <tr>
+        <th colspan="4">
+          <div class="dean-report__header-cell dean-report__header-cell--collapse">
+            Total Seats Offered
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container">
+            # Lower div.
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            # Upper div.
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            # Grad.
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last dean-report__cell--bold">
+            Total
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container">
+            {{ miscStats.lower.seats }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ miscStats.upper.seats }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ miscStats.grad.seats }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last dean-report__cell--bold">
+            {{ miscStats.total.seats }}
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
