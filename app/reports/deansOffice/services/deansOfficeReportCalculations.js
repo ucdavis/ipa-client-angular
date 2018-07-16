@@ -244,18 +244,18 @@ class DeansOfficeReportCalculations {
 					supportCosts: {
 						ta: {
 							rawCount: currentCosts.supportCosts.taCount - previousCosts.supportCosts.taCount,
-							percentageCount: (parseFloat(currentCosts.supportCosts.taCount - previousCosts.supportCosts.taCount) / previousCosts.supportCosts.taCount) * 100,
+							percentageCount: this._percentageChange(previousCosts.supportCosts.taCount, currentCosts.supportCosts.taCount),
 							rawCost: currentCosts.supportCosts.taCost - previousCosts.supportCosts.taCost,
-							percentageCost: (parseFloat(currentCosts.supportCosts.taCost - previousCosts.supportCosts.taCost) / previousCosts.supportCosts.taCost) * 100
+							percentageCost: this._percentageChange(previousCosts.supportCosts.taCost, currentCosts.supportCosts.taCost)
 						},
 						reader: {
 							rawCount: currentCosts.supportCosts.readerCount - previousCosts.supportCosts.readerCount,
-							percentageCount: (parseFloat(currentCosts.supportCosts.readerCount - previousCosts.supportCosts.readerCount) / previousCosts.supportCosts.readerCount) * 100,
+							percentageCount: this._percentageChange(previousCosts.supportCosts.readerCount, currentCosts.supportCosts.readerCount),
 							rawCost: currentCosts.supportCosts.readerCost - previousCosts.supportCosts.readerCost,
-							percentageCost: (parseFloat(currentCosts.supportCosts.readerCost - previousCosts.supportCosts.readerCost) / previousCosts.supportCosts.readerCost) * 100,
+							percentageCost: this._percentageChange(previousCosts.supportCosts.readerCost, currentCosts.supportCosts.readerCost),
 						},
 						rawTotalCost: currentCosts.total - previousCosts.total,
-						percentageTotalCost: (parseFloat(currentCosts.total - previousCosts.total) / previousCosts.total) * 100
+						percentageTotalCost: this._percentageChange(previousCosts.total, currentCosts.total)
 					}
 				};
 
@@ -328,6 +328,14 @@ class DeansOfficeReportCalculations {
 						seats: currentMiscStats.total.seats - previousMiscStats.total.seats
 					}
 				};
+			},
+			// Will return null if oldValue is zero, otherwise returns percentage change
+			_percentageChange(oldValue, newValue, degreesOfPrecision) {
+				if (!oldValue) { return null; }
+
+				var roundTo = degreesOfPrecision || 2;
+
+				return ((parseFloat(newValue - oldValue) / oldValue) * 100).toFixed(roundTo) + "%";
 			}
 		};
 	}
