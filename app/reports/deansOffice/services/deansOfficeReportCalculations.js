@@ -233,6 +233,8 @@ class DeansOfficeReportCalculations {
 			},
 			// Generates previous -> current change values for costs
 			_generateCostChange(currentCosts, previousCosts) {
+				var _self = this;
+
 				var costs = {
 					instructorCosts: {
 						byType: {},
@@ -274,9 +276,9 @@ class DeansOfficeReportCalculations {
 
 					costs.instructorCosts.byType[instructorTypeId] = {
 						rawCourses: currentCourses - previousCourses,
-						percentageCourses: (parseFloat(currentCourses - previousCourses) / previousCourses) * 100,
+						percentageCourses: _self._percentageChange(previousCourses, currentCourses),
 						rawCost: currentCost - previousCost,
-						percentageCost: (parseFloat(currentCost - previousCost) / previousCost) * 100
+						percentageCost: _self._percentageChange(previousCost, currentCost)
 					};
 				});
 
@@ -332,6 +334,8 @@ class DeansOfficeReportCalculations {
 			},
 			// Will return null if oldValue is zero, otherwise returns percentage change
 			_percentageChange(oldValue, newValue, degreesOfPrecision) {
+				if (!oldValue && !newValue) { return "0%"; }
+
 				if (!oldValue) { return null; }
 
 				var roundTo = degreesOfPrecision || 2;
