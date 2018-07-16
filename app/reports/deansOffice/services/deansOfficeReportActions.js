@@ -40,7 +40,7 @@ class DeansOfficeReportActions {
 				this._getInstructorCosts(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_COSTS);
 				this._getSectionGroupCosts(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_SECTION_GROUP_COSTS);
 
-				this._getUsers(workgroupId);
+				this._getUsers(workgroupId, year);
 				this._getUserRoles(workgroupId);
 				this._getInstructors(workgroupId);
 			},
@@ -60,10 +60,10 @@ class DeansOfficeReportActions {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
-			_getUsers: function (workgroupId) {
+			_getUsers: function (workgroupId, year) {
 				var _self = this;
 
-				DeansOfficeReportService.getUsers(workgroupId).then(function (rawUsers) {
+				DeansOfficeReportService.getUsers(workgroupId, year).then(function (rawUsers) {
 					let users = {
 						ids: [],
 						list: {}
