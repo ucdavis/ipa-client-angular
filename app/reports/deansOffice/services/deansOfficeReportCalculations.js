@@ -29,7 +29,7 @@ class DeansOfficeReportCalculations {
 						miscStats: this._generateMiscStats(courses.current, sectionGroups.current, sections.current)
 					},
 					previous: {
-						costs: this._generateCosts(teachingAssignments.previous, instructorTypeCosts.previous, instructorCosts.previous, sectionGroupCosts.previous, budget.previous, budgetScenarios.previousSelectedScenarioId, sectionGroups.current),
+						costs: this._generateCosts(teachingAssignments.previous, instructorTypeCosts.previous, instructorCosts.previous, sectionGroupCosts.previous, budget.previous, budgetScenarios.previousSelectedScenarioId, sectionGroups.previous),
 						funding: this._generateFunding(lineItems.previous, budgetScenarios.previousSelectedScenarioId),
 						miscStats: this._generateMiscStats(courses.previous, sectionGroups.previous, sections.previous)
 					}
@@ -100,7 +100,7 @@ class DeansOfficeReportCalculations {
 
 				var costs = {
 					instructorCosts: this._generateInstructionCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, selectedScenarioId),
-					supportCosts:this. _generateSupportCosts(budget, sectionGroups),
+					supportCosts:this. _generateSupportCosts(budget, sectionGroups, selectedScenarioId),
 					total: null
 				};
 
@@ -183,7 +183,9 @@ class DeansOfficeReportCalculations {
 				return instructionCosts;
 			},
 			// Generates support (reader and TA) based costs and course count
-			_generateSupportCosts(budget, sectionGroups) {
+			_generateSupportCosts(budget, sectionGroups, selectedScenarioId) {
+				var _self = this;
+
 				var supportCosts = {
 					taCount: 0,
 					readerCount: 0,
@@ -198,8 +200,15 @@ class DeansOfficeReportCalculations {
 					var taCount = sectionGroup.teachingAssistantAppointments || 0;
 					var readerCount = sectionGroup.readerAppointments || 0;
 
+					var sectionGroupCost = _self._getSectionGroupCost(sectionGroupId, selectedScenarioId);
+
+					if (sectionGroupCost) {
+						taCount = sectionGroupCost.taCount > 0 ? sectionGroupCost.taCount : taCount; 
+						readerCount = sectionGroupCost.readerCount > 0 ? sectionGroupCost.readerCount : readerCount; 
+					}
+
 					supportCosts.taCount += taCount;
-					supportCosts.readerCount += readerCount;
+					supportCosts.readerCount += readerCount;	
 				});
 
 				supportCosts.taCost = supportCosts.taCount * budget.taCost;
@@ -370,6 +379,23 @@ class DeansOfficeReportCalculations {
 				});
 
 				return scenarios;
+			},
+			_getSectionGroupCost(sectionGroupId, selectedScenarioId) {
+				var budgetScenarios = DeansOfficeReportReducers._state.budgetScenarios;
+				var sectionGroupCostIds = DeansOfficeReportReducers._state.sectionGroupCosts.current.bySectionGroupId[sectionGroupId] || DeansOfficeReportReducers._state.sectionGroupCosts.previous.bySectionGroupId[sectionGroupId];
+				var sectionGroupCost = null;
+
+				if (!sectionGroupCostIds) { return null; }
+
+				sectionGroupCostIds.forEach(function(sectionGroupCostId) {
+					var slotSectionGroupCost = DeansOfficeReportReducers._state.sectionGroupCosts.current.list[sectionGroupCostId] || DeansOfficeReportReducers._state.sectionGroupCosts.previous.list[sectionGroupCostId];
+
+					if (slotSectionGroupCost.budgetScenarioId == selectedScenarioId) {
+						sectionGroupCost = slotSectionGroupCost;
+					}
+				});
+
+				return sectionGroupCost;
 			}
 		};
 	}
