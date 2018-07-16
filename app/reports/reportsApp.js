@@ -13,11 +13,6 @@ import DeansOfficeReportCalculations from './deansOffice/services/deansOfficeRep
 // Directives
 import changeTable from './deansOffice/directives/changeTable/changeTable.js';
 import yearTable from './deansOffice/directives/yearTable/yearTable.js';
-import yearFunds from './deansOffice/directives/yearTable/yearFunds/yearFunds.js';
-import yearStats from './deansOffice/directives/yearTable/yearStats/yearStats.js';
-import yearCosts from './deansOffice/directives/yearTable/yearCosts/yearCosts.js';
-import instructorTable from './deansOffice/directives/yearTable/yearCosts/instructorTable/instructorTable.js';
-import supportTable from './deansOffice/directives/yearTable/yearCosts/supportTable/supportTable.js';
 
 // Dependencies
 var dependencies = [
@@ -57,11 +52,6 @@ const reportsApp = angular.module("reportsApp", dependencies)
 .service('DeansOfficeReportCalculations', DeansOfficeReportCalculations)
 .service('StringService', StringService)
 .directive('yearTable', yearTable)
-.directive('yearFunds', yearFunds)
-.directive('yearStats', yearStats)
-.directive('yearCosts', yearCosts)
-.directive('instructorTable', instructorTable)
-.directive('supportTable', supportTable)
 .directive('changeTable', changeTable)
 .config(config)
 .constant('ActionTypes', {
