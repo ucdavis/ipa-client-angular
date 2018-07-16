@@ -1,0 +1,38 @@
+.deans-office-report {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  font-size: 12px;
+}
+
+.deans-office-report table {
+  font-size: 12px;
+}
+
+/* Bootstrap overrides */
+.form-horizontal .form-group {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.table > thead > tr > th {
+	border-bottom:unset;
+}
+
+.text-left {
+	text-align: left !important;
+}
+
+.panel-heading {
+	padding:0px !important;
+	background-color: white !important;
+}
+
+.panel-heading .panel-title {
+	font-size: 14px !important;
+	font-weight: bold !important;
+}
+
+.panel-group .panel > .panel-heading > .panel-title > a {
+	font-size: 14px !important;
+}

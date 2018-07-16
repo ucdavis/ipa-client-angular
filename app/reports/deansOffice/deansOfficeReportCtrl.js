@@ -1,3 +1,5 @@
+import './deansOfficeReport.css';
+
 class DeansOfficeReportCtrl {
 	constructor ($scope, $rootScope, $routeParams) {
 		this.$scope = $scope;
