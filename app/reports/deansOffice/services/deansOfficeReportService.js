@@ -26,6 +26,18 @@ class DeansOfficeReportService {
 			},
 			getBudgetScenarios: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/budgetScenarios");
+			},
+			getLineItemCategories: function (workgroupId, year) {
+				return _self.ApiService.get("/api/lineItemCategories");
+			},
+			getInstructorTypeCosts: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/instructorTypeCosts");
+			},
+			getInstructorCosts: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/instructorCosts");
+			},
+			getSectionGroupCosts: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/sectionGroupCosts");
 			}
 		};
 	}

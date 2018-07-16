@@ -30,8 +30,8 @@ class StringService {
   }
 
   // Converts a 4-digit year to academic year format. Example: 2015 -> 2015-16
-  yearToAcademicYear () {
-    return this + "-" + (Number(this) + 1).toString().slice(-2);
+  yearToAcademicYear (year) {
+    return year + "-" + (Number(year) + 1).toString().slice(-2);
   }
 
   /**

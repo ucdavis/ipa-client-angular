@@ -7,7 +7,13 @@ class DeansOfficeReportReducers {
 				sectionGroups: {},
 				sections: {},
 				instructorTypes: {},
-				teachingAssignments: {}
+				teachingAssignments: {},
+				budgetScenarios: {},
+				lineItems: {},
+				lineItemCategories: {},
+				instructorTypeCosts: {},
+				instructorCosts: {},
+				sectionGroupCosts: {}
 			},
 			_budgetReducer: function (action, budget) {
 				switch (action.type) {
@@ -37,17 +43,74 @@ class DeansOfficeReportReducers {
 						return lineItems;
 				}
 			},
+			_lineItemCategoryReducers: function (action, lineItemCategories) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
+					case ActionTypes.GET_CURRENT_LINE_ITEM_CATEGORIES:
+					lineItemCategories.current = action.payload.lineItemCategories;
+						return lineItemCategories;
+					case ActionTypes.GET_PREVIOUS_LINE_ITEM_CATEGORIES:
+					lineItemCategories.previous = action.payload.lineItemCategories;
+						return lineItemCategories;
+					default:
+						return lineItemCategories;
+				}
+			},
+			_instructorTypeCostReducers: function (action, instructorTypeCosts) {//
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
+					case ActionTypes.GET_CURRENT_INSTRUCTOR_TYPE_COSTS:
+					instructorTypeCosts.current = action.payload.instructorTypeCosts;
+						return instructorTypeCosts;
+					case ActionTypes.GET_PREVIOUS_INSTRUCTOR_TYPE_COSTS:
+					instructorTypeCosts.previous = action.payload.instructorTypeCosts;
+						return instructorTypeCosts;
+					default:
+						return instructorTypeCosts;
+				}
+			},
+
+			_instructorCostReducers: function (action, instructorCosts) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
+					case ActionTypes.GET_CURRENT_INSTRUCTOR_COSTS:
+					instructorCosts.current = action.payload.instructorCosts;
+						return instructorCosts;
+					case ActionTypes.GET_PREVIOUS_INSTRUCTOR_COSTS:
+					instructorCosts.previous = action.payload.instructorCosts;
+						return instructorCosts;
+					default:
+						return instructorCosts;
+				}
+			},
+			_sectionGroupCostReducers: function (action, sectionGroupCosts) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
+					case ActionTypes.GET_CURRENT_SECTION_GROUP_COSTS:
+						sectionGroupCosts.current = action.payload.sectionGroupCosts;
+						return sectionGroupCosts;
+					case ActionTypes.GET_PREVIOUS_SECTION_GROUP_COSTS:
+						sectionGroupCosts.previous = action.payload.sectionGroupCosts;
+						return sectionGroupCosts;
+					default:
+						return sectionGroupCosts;
+				}
+			},
 			_budgetScenarioReducers: function (action, budgetScenarios) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						return {};
 					case ActionTypes.GET_CURRENT_BUDGET_SCENARIOS:
 					budgetScenarios.current = action.payload.budgetScenarios;
-					budgetScenarios.currentSelectedScenarioId = action.payload.budgetScenarios[0].id;
+					budgetScenarios.currentSelectedScenarioId = action.payload.budgetScenarios.ids[0];
 						return budgetScenarios;
 					case ActionTypes.GET_PREVIOUS_BUDGET_SCENARIOS:
 					budgetScenarios.previous = action.payload.budgetScenarios;
-					budgetScenarios.previousSelectedScenarioId = action.payload.budgetScenarios[0].id;
+					budgetScenarios.previousSelectedScenarioId = action.payload.budgetScenarios.ids[0];
 					return budgetScenarios;
 					default:
 						return budgetScenarios;
@@ -156,6 +219,10 @@ class DeansOfficeReportReducers {
 				newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
 				newState.lineItems = scope._lineItemReducers(action, scope._state.lineItems);
 				newState.budgetScenarios = scope._budgetScenarioReducers(action, scope._state.budgetScenarios);
+				newState.lineItemCategories = scope._lineItemCategoryReducers(action, scope._state.lineItemCategories);
+				newState.instructorTypeCosts = scope._instructorTypeCostReducers(action, scope._state.instructorTypeCosts);
+				newState.instructorCosts = scope._instructorCostReducers(action, scope._state.instructorCosts);
+				newState.sectionGroupCosts = scope._sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
 
 				newState.calculations = scope._calculationReducers(action, scope._state.calculations);
 
