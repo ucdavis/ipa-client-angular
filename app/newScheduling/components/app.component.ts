@@ -12,7 +12,6 @@ import { SchedulingActions } from '@scheduling/scheduling-actions.service';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  name: String = 'Taco taco taco';
   scheduling: Observable<SchedulingState>;
   schedulingName: String;
   schedulingShow: boolean;
