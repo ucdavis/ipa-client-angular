@@ -40,7 +40,7 @@
         </td>
         <td>
           <div class="dean-report__cell-container">
-            {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].rawCourses) }}
+            {{ costs.instructorCosts.byType[instructorTypeId].rawCourses }}
           </div>
         </td>
         <td>
@@ -50,7 +50,7 @@
         </td>
         <td>
           <div class="dean-report__cell-container dean-report__cell-container--last">
-            {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].percentageCourses) }}
+            {{ costs.instructorCosts.byType[instructorTypeId].percentageCourses }}
           </div>
         </td>
       </tr>
@@ -62,7 +62,7 @@
         </td>
         <td>
           <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
-              {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].total.courses) }}
+              {{ costs.instructorCosts.byType[instructorTypeId].total.courses }}
             </div>
         </td>
         <td>
@@ -72,7 +72,7 @@
        </td>
        <td>
         <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last">
-            {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].percentageCourses) }}
+            {{ costs.instructorCosts.byType[instructorTypeId].percentageCourses }}
         </div>
        </td>
       </tr>
@@ -103,7 +103,7 @@
         </td>
         <td>
           <div class="dean-report__cell-container">
-            {{ toCurrency(costs.supportCosts.ta.rawCount) }}
+            {{ costs.supportCosts.ta.rawCount }}
           </div>
         </td>
         <td>
@@ -113,7 +113,7 @@
         </td>
         <td>
           <div class="dean-report__cell-container dean-report__cell-container--last">
-            {{ toCurrency(costs.supportCosts.ta.percentageCount) }}
+            {{ costs.supportCosts.ta.percentageCount }}
           </div>
         </td>
       </tr>
@@ -125,7 +125,7 @@
         </td>
         <td>
           <div class="dean-report__cell-container">
-            {{ toCurrency(costs.supportCosts.reader.rawCount) }}
+            {{ costs.supportCosts.reader.rawCount }}
           </div>
         </td>
         <td>
@@ -135,7 +135,7 @@
         </td>
         <td>
           <div class="dean-report__cell-container dean-report__cell-container--last">
-            {{ toCurrency(costs.supportCosts.reader.percentageCount) }}
+            {{ costs.supportCosts.reader.percentageCount }}
           </div>
         </td>
       </tr>
