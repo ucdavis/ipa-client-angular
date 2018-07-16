@@ -43,6 +43,39 @@ class DeansOfficeReportReducers {
 						return lineItems;
 				}
 			},
+			_userReducers: function (action, users) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
+					case ActionTypes.GET_USERS:
+						users = action.payload.users;
+						return users;
+					default:
+						return users;
+				}
+			},
+			_userRoleReducers: function (action, userRoles) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
+					case ActionTypes.GET_USER_ROLES:
+					userRoles = action.payload.userRoles;
+						return userRoles;
+					default:
+						return userRoles;
+				}
+			},
+			_instructorReducers: function (action, instructors) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
+					case ActionTypes.GET_INSTRUCTORS:
+					instructors = action.payload.instructors;
+						return instructors;
+					default:
+						return instructors;
+				}
+			},
 			_lineItemCategoryReducers: function (action, lineItemCategories) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -229,7 +262,9 @@ class DeansOfficeReportReducers {
 				newState.instructorTypeCosts = scope._instructorTypeCostReducers(action, scope._state.instructorTypeCosts);
 				newState.instructorCosts = scope._instructorCostReducers(action, scope._state.instructorCosts);
 				newState.sectionGroupCosts = scope._sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
-
+				newState.users = scope._userReducers(action, scope._state.users);
+				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
+				newState.instructors = scope._instructorReducers(action, scope._state.instructors);
 				newState.calculations = scope._calculationReducers(action, scope._state.calculations);
 
 				scope._state = newState;

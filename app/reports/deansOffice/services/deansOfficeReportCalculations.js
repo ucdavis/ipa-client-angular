@@ -109,50 +109,56 @@ class DeansOfficeReportCalculations {
 				return costs;
 			},
 			// Returns the cost associated with an assignment's instructor, based on the selected budget scenario
-			_calculateAssignmentCost(teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts) {
-				var instructorTypeCostId = instructorTypeCosts.byInstructorTypeId[teachingAssignment.instructorTypeId];
-				var instructorTypeCost = instructorTypeCosts.list[instructorTypeCostId] ? instructorTypeCosts.list[instructorTypeCostId].cost : null;
-				var instructorCostId = instructorCosts.byInstructorId[teachingAssignment.instructorId];
-				var instructorCost = instructorCosts.list[instructorCostId] ? instructorCosts.list[instructorCostId].cost : null;
+			_calculateAssignmentCost(sectionGroupCost, teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts) {
+				var cost = null;
+				var instructorTypeId = null;
 
-				instructorTypeCost;
-				instructorCost;
-				var courseCost = this._getCourseCostByBudgetScenario(selectedScenarioId, teachingAssignment.sectionGroupId, sectionGroupCosts);
+				var instructorTypeCost = null;
+				var instructorCost = null;
+				var courseCost = sectionGroupCost.cost;
 
-				// Prioritizes overrides in course -> instructor -> instructorType order
-				if (courseCost) {
-					return courseCost;
-				} else if (instructorCost) {
-					return instructorCost;
-				} else if (instructorTypeCost) {
-					return instructorTypeCost;
+				if (sectionGroupCost.instructorId) {
+					var instructorCostId = instructorCosts.byInstructorId[sectionGroupCost.instructorId]
+					instructorCost = instructorCosts.list[instructorCostId].cost;
+					var instructorId = instructorCost.instructorId;
+
+					debugger;
+					// TODO figure out instructorType from instructorId
+				} else if (sectionGroupCost.instructorTypeId) {
+					instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+					instructorTypeId = teachingAssignment.instructorTypeId;
+				} else if (teachingAssignment) {
+					if (teachingAssignment.instructorId) {
+						instructorTypeId = teachingAssignment.instructorTypeId;
+						instructorCost = instructorCosts.byInstructorId[teachingAssignment.instructorId] ? instructorCosts.byInstructorId[teachingAssignment.instructorId].cost : null;
+						instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId] ? instructorTypeCosts.byInstructorTypeId[instructorTypeId].cost : null;
+					} else if (teachingAssignment.instructorTypeId) {
+						instructorTypeId = teachingAssignment.instructorTypeId;
+						instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId] ? instructorTypeCosts.byInstructorTypeId[instructorTypeId].cost : null;
+					}
+				} else {
+					return null;
 				}
 
-				return 0;
+				if (courseCost) {
+					cost = courseCost;
+				} else if (instructorCost) {
+					cost = instructorCost;
+				} else if (instructorTypeCost) {
+					cost = instructorTypeCost;
+				} else {
+					return null;
+				}
+
+				return {
+					cost: cost,
+					instructorTypeId: instructorTypeId
+				};
 			},
-			// based on a sectionGroup and budgetScenario, returns the course instructor cost override (if one was set)
-			_getCourseCostByBudgetScenario(selectedScenarioId, sectionGroupId, sectionGroupCosts) {
-				var sectionGroupCostIds = sectionGroupCosts.bySectionGroupId[sectionGroupId];
-
-				if (!sectionGroupCostIds) { return null; }
-
-				var cost = null;
-
-				sectionGroupCostIds.forEach(function(sectionGroupCostId) {
-					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
-
-					if (sectionGroupCost.budgetScenarioId != selectedScenarioId) { return; }
-
-					cost = sectionGroupCost.cost;
-				});
-
-				return cost;
-			},
-			// Generates instructor costs (based on assignments, and the selected budget scenario)
+			// Generates instructor costs (based on sectionGroupCosts, and the selected budget scenario)
 			_generateInstructionCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, selectedScenarioId) {
 				var _self = this;
 				var instructionCosts = {
-					typeIds: [],
 					byType: {},
 					total: {
 						cost: 0,
@@ -160,14 +166,18 @@ class DeansOfficeReportCalculations {
 					}
 				};
 
-				teachingAssignments.ids.forEach(function(teachingAssignmentId) {
-					var teachingAssignment = teachingAssignments.list[teachingAssignmentId];
+				sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
+					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
-					var instructorTypeId = teachingAssignment.instructorTypeId;
-					var assignmentCost = _self._calculateAssignmentCost(teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts);
+					if (sectionGroupCost.budgetScenarioId != selectedScenarioId) { return; }
 
-					// Ensure instructorTypeId is on the list
-					if (instructionCosts.typeIds.indexOf(instructorTypeId) == -1) { instructionCosts.typeIds.push(instructorTypeId); }
+					var teachingAssignment = _self._getTeachingAssignment(sectionGroupCost.sectionGroupId);
+					var assignmentCosts = _self._calculateAssignmentCost(sectionGroupCost, teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts);
+
+					if (!assignmentCosts) { return; }
+
+					var instructorTypeId = assignmentCosts.instructorTypeId;
+					var assignmentCost = assignmentCosts.cost;
 
 					instructionCosts.byType[instructorTypeId] = instructorCosts[instructorTypeId] || {
 						cost: 0,
@@ -396,6 +406,53 @@ class DeansOfficeReportCalculations {
 				});
 
 				return sectionGroupCost;
+			},
+			_getTeachingAssignment(sectionGroupId) {
+				var teachingAssignmentIds = DeansOfficeReportReducers._state.teachingAssignments.current.bySectionGroupId[sectionGroupId] || DeansOfficeReportReducers._state.teachingAssignments.previous.bySectionGroupId[sectionGroupId];
+
+				if (teachingAssignmentIds) {
+					return DeansOfficeReportReducers._state.teachingAssignments.current.list[teachingAssignmentIds[0]] || DeansOfficeReportReducers._state.teachingAssignments.previous.list[teachingAssignmentIds[0]];
+				} else {
+					return null;
+				}
+			},
+			// Will first look at userRoles for a match, and then teachingAssignments as a fallback.
+			_calculateInstructorType: function(instructorId) {
+				var instructorType = null;
+	
+				var assignedInstructors = BudgetReducers._state.assignedInstructors;
+				var activeInstructors = BudgetReducers._state.activeInstructors;
+	
+				var users = BudgetReducers._state.users;
+				var userRoles = BudgetReducers._state.userRoles;
+				var teachingAssignments = BudgetReducers._state.teachingAssignments;
+				var instructorTypes = BudgetReducers._state.instructorTypes;
+	
+				var instructor = assignedInstructors.list[instructorId] || activeInstructors.list[instructorId];
+				var user = users.byLoginId[instructor.loginId.toLowerCase()];
+	
+				if (!user) { return; }
+	
+				if (userRoles.byUserId[user.id]) {
+					userRoles.byUserId[user.id].forEach(function(userRole) {
+						if (userRole.roleId != Roles.instructor) { return; }
+	
+						instructorType = instructorTypes.list[userRole.instructorTypeId];
+					});
+				}
+	
+				if (instructorType) { return instructorType; }
+	
+				// Find instructorType by teachingAssignment
+				teachingAssignments.ids.forEach(function(teachingAssignmentId) {
+					var teachingAssignment = teachingAssignments.list[teachingAssignmentId];
+	
+					if (teachingAssignment.instructorId == instructor.id) {
+						instructorType = instructorTypes.list[teachingAssignment.instructorTypeId];
+					}
+				});
+	
+				return instructorType;
 			}
 		};
 	}

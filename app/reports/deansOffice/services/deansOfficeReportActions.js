@@ -39,6 +39,10 @@ class DeansOfficeReportActions {
 				this._getInstructorTypeCosts(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_TYPE_COSTS);
 				this._getInstructorCosts(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_COSTS);
 				this._getSectionGroupCosts(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_SECTION_GROUP_COSTS);
+
+				this._getUsers(workgroupId);
+				this._getUserRoles(workgroupId);
+				this._getInstructors(workgroupId);
 			},
 			_getBudget: function (workgroupId, year, action) {
 				var _self = this;
@@ -48,6 +52,84 @@ class DeansOfficeReportActions {
 						type: action,
 						payload: {
 							budget: budget
+						}
+					});
+
+					_self._performCalculations();
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+				});
+			},
+			_getUsers: function (workgroupId) {
+				var _self = this;
+
+				DeansOfficeReportService.getUsers(workgroupId).then(function (rawUsers) {
+					let users = {
+						ids: [],
+						list: {}
+					};
+
+					rawUsers.forEach(function(user) {
+						users.ids.push(user.id);
+						users.list[user.id] = user;
+					});
+
+					DeansOfficeReportReducers.reduce({
+						type: ActionTypes.GET_USERS,
+						payload: {
+							users: users
+						}
+					});
+
+					_self._performCalculations();
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+				});
+			},
+			_getUserRoles: function (workgroupId) {
+				var _self = this;
+
+				DeansOfficeReportService.getUserRoles(workgroupId).then(function (rawUserRoles) {
+					let userRoles = {
+						ids: [],
+						list: {}
+					};
+
+					rawUserRoles.forEach(function(userRole) {
+						userRoles.ids.push(userRole.id);
+						userRoles.list[userRole.id] = userRole;
+					});
+
+					DeansOfficeReportReducers.reduce({
+						type: ActionTypes.GET_USER_ROLES,
+						payload: {
+							userRoles: userRoles
+						}
+					});
+
+					_self._performCalculations();
+				}, function (err) {
+					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+				});
+			},
+			_getInstructors: function (workgroupId) {
+				var _self = this;
+
+				DeansOfficeReportService.getInstructors(workgroupId).then(function (rawInstructors) {
+					let instructors = {
+						ids: [],
+						list: {}
+					};
+
+					rawInstructors.forEach(function(instructor) {
+						instructors.ids.push(instructor.id);
+						instructors.list[instructor.id] = instructor;
+					});
+
+					DeansOfficeReportReducers.reduce({
+						type: ActionTypes.GET_INSTRUCTORS,
+						payload: {
+							instructors: instructors
 						}
 					});
 
@@ -303,12 +385,17 @@ class DeansOfficeReportActions {
 				DeansOfficeReportService.getTeachingAssignments(workgroupId, year).then(function (rawTeachingAssignments) {
 					let teachingAssignments = {
 						ids: [],
-						list: {}
+						list: {},
+						bySectionGroupId: []
 					};
 
 					rawTeachingAssignments.forEach(function(teachingAssignment) {
 						teachingAssignments.ids.push(teachingAssignment.id);
 						teachingAssignments.list[teachingAssignment.id] = teachingAssignment;
+						if (teachingAssignment.sectionGroupId) {
+							teachingAssignments.bySectionGroupId[teachingAssignment.sectionGroupId] = teachingAssignments.bySectionGroupId[teachingAssignment.sectionGroupId] || [];
+							teachingAssignments.bySectionGroupId[teachingAssignment.sectionGroupId].push(teachingAssignment.id);
+						}
 					});
 
 					DeansOfficeReportReducers.reduce({
@@ -353,7 +440,8 @@ class DeansOfficeReportActions {
 				this._isCurrentYearFetchComplete();
 				this._isPreviousYearFetchComplete();
 
-				if (DeansOfficeReportReducers._state.calculations.isCurrentYearFetchComplete && DeansOfficeReportReducers._state.calculations.isPreviousYearFetchComplete) {
+				if (DeansOfficeReportReducers._state.calculations.isCurrentYearFetchComplete && DeansOfficeReportReducers._state.calculations.isPreviousYearFetchComplete
+				&& DeansOfficeReportReducers._state.userRoles.ids && DeansOfficeReportReducers._state.users.ids && DeansOfficeReportReducers._state.instructors.ids) {
 					DeansOfficeReportCalculations.calculateView();
 				}
 			},
