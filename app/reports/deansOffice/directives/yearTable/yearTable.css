@@ -1,30 +1,30 @@
 .year-table {
-	width: 30%;
-	margin-right: 10px;
+  width: 30%;
+  margin-right: 10px;
 }
 
 .dean-report__header-cell {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	border-bottom: 1px solid #ddd;
-	text-align: right;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: right;
 }
 
 .dean-report__header-cell--right {
-	padding-right: 10px;
+  padding-right: 10px;
 }
 
 .dean-report__header-cell--large-header {
-	font-size: 14px;
+  font-size: 14px;
 }
 
 .dean-report__header-cell--collapse {
-	text-align: left;
-	padding-left: 10px;
+  text-align: left;
+  padding-left: 10px;
 }
 
 .dean-report__header-cell--collapse-centered {
-	text-align: center;
+  text-align: center;
 
 }
 
@@ -37,42 +37,42 @@
 }
 
 .dean-report__cell-container--left {
-	padding-left: 20px;
-	justify-content: flex-start;
+  padding-left: 20px;
+  justify-content: flex-start;
 }
 
 .dean-report__cell-container--last {
-	padding-right: 10px;
+  padding-right: 10px;
 }
 
 .dean-report__table {
   width: 100%;
-	table-layout: fixed;
+  table-layout: fixed;
 }
 
 .dean-report__cell--bold {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .dean-report__cell--total {
-	border-top: 1px solid black;
+  border-top: 1px solid black;
 }
 
 .dean-report__cell--total-strong {
-	border-top: 3px double black;
+  border-top: 3px double black;
 }
 
 .dean-report__cell--funds {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .dean-report--total {
-	border-top: 1px solid black;
-	margin-left: 50%;
-	padding-right: 25px;
-	height: 100%;
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
+  border-top: 1px solid black;
+  margin-left: 50%;
+  padding-right: 25px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }

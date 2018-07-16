@@ -420,14 +420,12 @@ class DeansOfficeReportCalculations {
 			},
 			// Will first look at userRoles for a match, and then teachingAssignments as a fallback.
 			_calculateInstructorType: function(instructorId, teachingAssignments) {
-				var instructorType = null;
-	
 				var instructors = DeansOfficeReportReducers._state.instructors;
-	
 				var users = DeansOfficeReportReducers._state.users;
 				var userRoles = DeansOfficeReportReducers._state.userRoles;
 				var instructorTypes = DeansOfficeReportReducers._state.instructorTypes.current;
 
+				var instructorType = null;
 				var instructor = instructors.list[instructorId];
 				if (!instructor) { return null; }
 

@@ -18,8 +18,8 @@ let yearTable = function (StringService) {
 				return toCurrency(value);
 			};
 
-			scope.yearToAcademicYear = function (year) {
-				return StringService.yearToAcademicYear(year);
+			scope.toAcademicYear = function (year) {
+				return StringService.toAcademicYear(year);
 			};
 		}
 	};
