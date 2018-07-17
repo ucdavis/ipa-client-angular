@@ -283,8 +283,8 @@ class DeansOfficeReportCalculations {
 							rawCost: currentCosts.supportCosts.readerCost - previousCosts.supportCosts.readerCost,
 							percentageCost: this._percentageChange(previousCosts.supportCosts.readerCost, currentCosts.supportCosts.readerCost),
 						},
-						rawTotalCost: currentCosts.total - previousCosts.total,
-						percentageTotalCost: this._percentageChange(previousCosts.total, currentCosts.total)
+						rawTotalCost: currentCosts.supportCosts.totalCost - previousCosts.supportCosts.totalCost,
+						percentageTotalCost: this._percentageChange(previousCosts.supportCosts.totalCost, currentCosts.supportCosts.totalCost)
 					}
 				};
 
