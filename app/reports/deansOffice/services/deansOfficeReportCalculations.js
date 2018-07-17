@@ -181,7 +181,7 @@ class DeansOfficeReportCalculations {
 					var instructorTypeId = assignmentCosts.instructorTypeId;
 					var assignmentCost = assignmentCosts.cost;
 
-					instructionCosts.byType[instructorTypeId] = instructorCosts[instructorTypeId] || {
+					instructionCosts.byType[instructorTypeId] = instructionCosts.byType[instructorTypeId] || {
 						cost: 0,
 						courses: 0
 					};
@@ -191,7 +191,6 @@ class DeansOfficeReportCalculations {
 					instructionCosts.total.cost += assignmentCost;
 					instructionCosts.total.courses += 1;
 				});
-
 				return instructionCosts;
 			},
 			// Generates support (reader and TA) based costs and course count
