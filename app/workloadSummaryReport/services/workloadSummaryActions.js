@@ -92,6 +92,7 @@ class WorkloadSummaryActions {
 					};
 
 					rawUsers.forEach(function(user) {
+						user.loginId = user.loginId.toLowerCase();
 						users.ids.push(user.id);
 						users.list[user.id] = user;
 					});
@@ -170,6 +171,7 @@ class WorkloadSummaryActions {
 					};
 
 					rawInstructors.forEach(function(instructor) {
+						instructor.loginId = instructor.loginId.toLowerCase();
 						instructors.ids.push(instructor.id);
 						instructors.list[instructor.id] = instructor;
 					});
