@@ -57,22 +57,22 @@
       <tr>
         <td>
           <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
-              {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].total.cost) }}
+              {{ toCurrency(costs.instructorCosts.total.rawCost) }}
           </div>
         </td>
         <td>
           <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
-              {{ costs.instructorCosts.byType[instructorTypeId].total.courses }}
+              {{ costs.instructorCosts.total.rawCourses }}
             </div>
         </td>
         <td>
           <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
-              {{ costs.instructorCosts.byType[instructorTypeId].percentageCost }}
+              {{ costs.instructorCosts.percentageCost }}
             </div>
        </td>
        <td>
         <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last">
-            {{ costs.instructorCosts.byType[instructorTypeId].percentageCourses }}
+            {{ costs.instructorCosts.percentageCourses }}
         </div>
        </td>
       </tr>

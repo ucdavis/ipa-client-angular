@@ -308,6 +308,13 @@ class DeansOfficeReportCalculations {
 					};
 				});
 
+				costs.instructorCosts.total = {
+					rawCost: previousCosts.instructorCosts.total.cost - currentCosts.instructorCosts.total.cost,
+					rawCourses: previousCosts.instructorCosts.total.courses - currentCosts.instructorCosts.total.courses,
+					percentageCost: _self._percentageChange(previousCosts.instructorCosts.total.cost, currentCosts.instructorCosts.total.cost),
+					percentageCourses: _self._percentageChange(previousCosts.instructorCosts.total.courses, currentCosts.instructorCosts.total.courses)
+				};
+
 				return costs;
 			},
 			// Generates previous -> current change values for funds
