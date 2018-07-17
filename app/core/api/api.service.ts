@@ -14,4 +14,12 @@ export class ApiService {
 
     return this.http.get(this.apiRoot + url, options);
   }
+
+  delete(url): any {
+    let options: any = {
+      withCredentials: true
+    };
+
+    return this.http.delete(this.apiRoot + url, options);
+  }
 }
