@@ -18,8 +18,5 @@ export class AuthService {
         { token: token },
         { withCredentials: true }
       );
-    // .subscribe((res) => {
-    //    console.log(res);
-    //  });
   }
 }
