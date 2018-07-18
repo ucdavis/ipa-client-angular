@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -7,14 +8,18 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  validateToken(token): void {
+  validateToken(): Observable<any> {
+    var token = localStorage.getItem('JWT');
+
     console.log('POST with token:  ' + token);
-    this.http
+    return this.http
       .post(
         this.apiRoot + '/login',
         { token: token },
         { withCredentials: true }
-      )
-      .subscribe(res => console.log(res));
+      );
+    // .subscribe((res) => {
+    //    console.log(res);
+    //  });
   }
 }
