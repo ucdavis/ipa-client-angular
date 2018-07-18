@@ -8,10 +8,10 @@ import { SchedulingState } from '@scheduling/models/scheduling.model';
 import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './app.component.html'
+  selector: 'main',
+  templateUrl: './main.component.html'
 })
-export class AppComponent {
+export class MainComponent {
   scheduling: Observable<SchedulingState>;
   schedulingName: String;
   schedulingShow: boolean;
@@ -26,6 +26,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    console.log("[DEBUG] main");
     this.scheduling.subscribe((state) => {
       console.log(state);
       this.schedulingName = state.name;
