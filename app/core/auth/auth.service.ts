@@ -12,7 +12,6 @@ export class AuthService {
   validateToken(): Observable<any> {
     var token = localStorage.getItem('JWT');
 
-    console.log('POST with token:  ' + token);
     return this.http
       .post(
         this.apiRoot + '/login',

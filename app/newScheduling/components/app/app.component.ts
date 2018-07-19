@@ -11,7 +11,9 @@ export class AppComponent {
     private router: Router
   ) {}
   ngOnInit() {
-    console.log("[DEBUG] app");
-//    this.router.navigate(['newScheduling/18/2018']);
+    console.log("[DEBUG] app component");
+    //let id = this.route.paramMap.get('id');
+
+    //    this.router.navigate(['newScheduling/18/2018']);
   }
 }

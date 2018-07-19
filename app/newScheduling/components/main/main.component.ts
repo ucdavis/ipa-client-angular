@@ -26,7 +26,7 @@ export class MainComponent {
   }
 
   ngOnInit() {
-    console.log("[DEBUG] main");
+    console.log("[DEBUG] main component");
     this.scheduling.subscribe((state) => {
       console.log(state);
       this.schedulingName = state.name;

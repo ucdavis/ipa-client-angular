@@ -5,8 +5,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthService } from './auth/auth.service';
 import { ApiService } from './api/api.service';
-import { AuthGuard } from '@core/auth/auth-guard.service.ts';
-import { AuthResolver } from '@core/auth/auth-resolver.service.ts';
 
 @NgModule({
   // Injected modules
@@ -17,8 +15,6 @@ import { AuthResolver } from '@core/auth/auth-resolver.service.ts';
   providers: [
     AuthService,
     ApiService,
-    AuthGuard,
-    AuthResolver,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 })
