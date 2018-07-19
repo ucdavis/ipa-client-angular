@@ -12,6 +12,6 @@ export class AppComponent {
   ) {}
   ngOnInit() {
     console.log("[DEBUG] app");
-    this.router.navigate(['newScheduling/18/2018']);
+//    this.router.navigate(['newScheduling/18/2018']);
   }
 }
