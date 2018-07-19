@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthService } from './auth/auth.service';
 import { ApiService } from './api/api.service';
+import { SharedStateService } from '@core/shared-state/shared-state.service';
 
 @NgModule({
   // Injected modules
@@ -15,6 +16,7 @@ import { ApiService } from './api/api.service';
   providers: [
     AuthService,
     ApiService,
+    SharedStateService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 })
