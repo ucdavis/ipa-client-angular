@@ -14,8 +14,8 @@ export class UrlGenerationResolver implements Resolve<any> {
     let year = route.params.year;
 
     return this.authService.validate(workgroupId, year).pipe(map((res: any) => {
-      debugger;
-      // TODO: figures out if url is ok, and if not, fix it and use router to change
+      // TODO: redirect to summary if the url isn't correct
+      return true;
     }));
   }
 }

@@ -5,13 +5,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes }  from '@angular/router';
 
-import { CoreModule } from '@core/core.module';
-
-// ngrx store
 import { StoreModule } from '@ngrx/store';
 import { schedulingReducer } from './reducers/scheduling.reducers';
 import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 
+// Core imports
+import { CoreModule } from '@core/core.module';
 import { AuthGuard } from '@core/auth/auth-guard.service';
 import { SectionGroupResolver } from '@core/resolvers/section-group-resolver.service';
 import { UrlGenerationResolver } from '@core/resolvers/url-generation-resolver.service';
