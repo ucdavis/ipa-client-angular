@@ -14,6 +14,7 @@ export class AuthService {
     private router: Router,
     private sharedStateService: SharedStateService) {}
 
+    // Triggers a call to login, and then determines when to set/purge state and redirect to cas
   validate(workgroupId, year): Observable<any> {
     return this.validateToken().pipe(map((res: any) => {
       if (res.token) {
@@ -21,8 +22,9 @@ export class AuthService {
         res.year = year;
         this.sharedStateService.setSharedState(res);
       } else {
+        debugger;
         this.sharedStateService.purgeSharedState();
-        this.redirectToCas();
+        this.redirectToCas(res.redirectUrl);
       }
 
       return res;
@@ -39,11 +41,13 @@ export class AuthService {
       );
   }
 
-  redirectToCas(): void {
+  redirectToCas(casUrl:String): void {
     this.router.dispose();
-    let casUrl:String = "https://ssodev.ucdavis.edu/cas/login";
     let currentFrontEndUrl:String = window.location.href;
+
+    // TODO: FIXME: Should pull backendUrl from clientConfig
     let backendUrl:String = "http://localhost:8080/";
+
     let url:any = casUrl + "?service=" + backendUrl + "/post-login?ref=" + currentFrontEndUrl;
     window.location.href = url;
   }

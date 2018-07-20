@@ -1,13 +1,24 @@
-<div>
   <button (click)="getCourses()">Get courses</button>
 
   <button (click)="toggleMessage()">Toggle Message</button>
-
   <div *ngIf="schedulingShow">{{schedulingName}}</div>
 
-  <ul>
-    <li *ngFor="let course of courses">
-      {{ course }}
-    </li>
-  </ul>
-</div>
+  <div style="width: 100%; display: flex;">
+    <div style="min-width: 40%;">
+      <div>Courses: (via get courses button)</div>
+      <ul>
+        <li *ngFor="let course of courses">
+            id: {{ course.id }}, description: {{ course.title }}
+        </li>
+      </ul>
+    </div>
+
+    <div style="min-width: 40%;">
+      <div>SectionGroups (via route resolve)</div>
+      <ul>
+        <li *ngFor="let sectionGroup of sectionGroups">
+          id: {{ sectionGroup.id }}, termCode: {{ sectionGroup.termCode }}
+        </li>
+      </ul>
+    </div>
+  </div>

@@ -208,6 +208,7 @@ module.exports = {
       "/*": {
         target: "http://localhost:9000",
         bypass: function(req, res, proxyOptions) {
+          if ((req.url.indexOf("/newScheduling") > -1 ) && (req.url != "/newScheduling.html")) { return "/newScheduling.html"; }
           if ((req.url.indexOf("/summary") > -1 ) && (req.url != "/summary.html")) { return "/summary.html"; }
           if ((req.url.indexOf("/admin") > -1 ) && (req.url != "/admin.html")) { return "/admin.html"; }
           if ((req.url.indexOf("/budget") > -1 ) && (req.url != "/budget.html")) { return "/budget.html"; }
@@ -223,7 +224,6 @@ module.exports = {
           if ((req.url.indexOf("/teachingCallResponseReport") > -1 ) && (req.url != "/teachingCallResponseReport.html")) { return "/teachingCallResponseReport.html"; }
           if ((req.url.indexOf("/scheduleSummaryReport") > -1 ) && (req.url != "/scheduleSummaryReport.html")) { return "/scheduleSummaryReport.html"; }
           if ((req.url.indexOf("/workloadSummaryReport") > -1 ) && (req.url != "/workloadSummaryReport.html")) { return "/workloadSummaryReport.html"; }
-          if ((req.url.indexOf("/newScheduling") > -1 ) && (req.url != "/newScheduling.html")) { return "/newScheduling.html"; }
           return req.url;
         }
       }

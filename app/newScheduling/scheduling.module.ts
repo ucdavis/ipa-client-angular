@@ -14,6 +14,7 @@ import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 
 import { AuthGuard } from '@core/auth/auth-guard.service';
 import { SectionGroupResolver } from '@core/resolvers/section-group-resolver.service';
+import { UrlGenerationResolver } from '@core/resolvers/url-generation-resolver.service';
 
 const appRoutes: Routes = [
   {
@@ -25,12 +26,11 @@ const appRoutes: Routes = [
     }
   },
   {
-    path: 'newScheduling',
-    component: AppComponent
-  },
-  {
     path: '**',
-    redirectTo: 'newScheduling'
+    component: AppComponent,
+    resolve: {
+      validate: UrlGenerationResolver
+    }
   }
 ];
 
@@ -47,7 +47,7 @@ const appRoutes: Routes = [
     )
   ],
   declarations: [AppComponent, MainComponent],
-  providers: [SchedulingActions, AuthGuard, SectionGroupResolver],
+  providers: [SchedulingActions, AuthGuard, SectionGroupResolver, UrlGenerationResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

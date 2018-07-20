@@ -3,17 +3,19 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
-import { ApiService }  from '@core/api/api.service';
+import { AuthService } from '@core/auth/auth.service';
 
 @Injectable()
-export class SectionGroupResolver implements Resolve<any> {
-  constructor(private apiService: ApiService, private router: Router) {}
+export class UrlGenerationResolver implements Resolve<any> {
+  constructor(private authService: AuthService, private router: Router) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    // TODO: FIXME: Should pull backendUrl from clientConfig
     let workgroupId = route.params.workgroupId;
     let year = route.params.year;
-    let url = "/api/workgroups/" + workgroupId + "/years/" + year + "/sectionGroups";
-    return this.apiService.get(url)
+
+    return this.authService.validate(workgroupId, year).pipe(map((res: any) => {
+      debugger;
+      // TODO: figures out if url is ok, and if not, fix it and use router to change
+    }));
   }
 }

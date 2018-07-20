@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { AuthService } from './auth.service';
+import { AuthService } from '@core/auth/auth.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SharedStateService } from '@core/shared-state/shared-state.service';
@@ -21,12 +21,7 @@ export class AuthGuard implements CanActivate {
     let year = route.params.year;
 
     return this.authService.validate(workgroupId, year).pipe(map((res: any) => {
-      debugger;
-      if (res.token) {
-        return true;
-      } else {
-        return false;
-      }
+      return !!(res.token);
     }));
   }
 }
