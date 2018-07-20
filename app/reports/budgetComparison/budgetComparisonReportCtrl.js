@@ -2,7 +2,6 @@ import './budgetComparisonReport.css';
 
 class BudgetComparisonReportCtrl {
 	constructor ($scope, $rootScope, $routeParams) {
-    console.log("controller here!!!!!!!!!!!!!!");
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
 		this.$routeParams = $routeParams;
