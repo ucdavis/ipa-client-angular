@@ -45,12 +45,12 @@
         </td>
         <td>
           <div class="dean-report__cell-container">
-            {{ costs.instructorCosts.byType[instructorTypeId].percentageCost }}
+            {{ costs.instructorCosts.byType[instructorTypeId].percentageCost || 'N/A' }}
           </div>
         </td>
         <td>
           <div class="dean-report__cell-container dean-report__cell-container--last">
-            {{ costs.instructorCosts.byType[instructorTypeId].percentageCourses }}
+            {{ costs.instructorCosts.byType[instructorTypeId].percentageCourses || 'N/A' }}
           </div>
         </td>
       </tr>
@@ -67,12 +67,12 @@
         </td>
         <td>
           <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
-              {{ costs.instructorCosts.total.percentageCost }}
+              {{ costs.instructorCosts.total.percentageCost || 'N/A' }}
             </div>
        </td>
        <td>
         <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last">
-            {{ costs.instructorCosts.total.percentageCourses }}
+            {{ costs.instructorCosts.total.percentageCourses || 'N/A' }}
         </div>
        </td>
       </tr>
@@ -108,12 +108,12 @@
         </td>
         <td>
           <div class="dean-report__cell-container">
-            {{ costs.supportCosts.ta.percentageCost }}
+            {{ costs.supportCosts.ta.percentageCost || 'N/A' }}
           </div>
         </td>
         <td>
           <div class="dean-report__cell-container dean-report__cell-container--last">
-            {{ costs.supportCosts.ta.percentageCount }}
+            {{ costs.supportCosts.ta.percentageCount || 'N/A' }}
           </div>
         </td>
       </tr>
@@ -130,12 +130,12 @@
         </td>
         <td>
           <div class="dean-report__cell-container">
-            {{ costs.supportCosts.reader.percentageCost }}
+            {{ costs.supportCosts.reader.percentageCost || 'N/A' }}
           </div>
         </td>
         <td>
           <div class="dean-report__cell-container dean-report__cell-container--last">
-            {{ costs.supportCosts.reader.percentageCount }}
+            {{ costs.supportCosts.reader.percentageCount || 'N/A' }}
           </div>
         </td>
       </tr>
@@ -150,7 +150,7 @@
         </td>
         <td>
           <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
-             {{ costs.supportCosts.percentageTotalCost }}
+             {{ costs.supportCosts.percentageTotalCost || 'N/A' }}
           </div>
         </td>
         <td>
@@ -191,7 +191,7 @@
         </td>
         <td>
           <div class="dean-report__cell-container">
-              {{ funding.types[lineItemCategoryId].percentage }}
+              {{ funding.types[lineItemCategoryId].percentage || 'N/A' }}
           </div>
         </td>
         <td>
