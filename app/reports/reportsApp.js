@@ -2,18 +2,18 @@
 import StringService from './../shared/services/StringService.js';
 
 // Controllers
-import DeansOfficeReportCtrl from './deansOffice/deansOfficeReportCtrl.js';
+import BudgetComparisonReportCtrl from './budgetComparison/budgetComparisonReportCtrl.js';
 
 // Services
-import DeansOfficeReportActions from './deansOffice/services/deansOfficeReportActions.js';
-import DeansOfficeReportReducers from './deansOffice/services/deansOfficeReportReducers.js';
-import DeansOfficeReportService from './deansOffice/services/deansOfficeReportService.js';
-import DeansOfficeReportCalculations from './deansOffice/services/deansOfficeReportCalculations.js';
+import BudgetComparisonReportActions from './budgetComparison/services/budgetComparisonReportActions.js';
+import BudgetComparisonReportReducers from './budgetComparison/services/budgetComparisonReportReducers.js';
+import BudgetComparisonReportService from './budgetComparison/services/budgetComparisonReportService.js';
+import BudgetComparisonReportCalculations from './budgetComparison/services/budgetComparisonReportCalculations.js';
 
 // Directives
-import changeTable from './deansOffice/directives/changeTable/changeTable.js';
-import yearTable from './deansOffice/directives/yearTable/yearTable.js';
-import budgetScenarioSelector from './deansOffice/directives/budgetScenarioSelector/budgetScenarioSelector.js';
+import changeTable from './budgetComparison/directives/changeTable/changeTable.js';
+import yearTable from './budgetComparison/directives/yearTable/yearTable.js';
+import budgetScenarioSelector from './budgetComparison/directives/budgetScenarioSelector/budgetScenarioSelector.js';
 
 // Dependencies
 var dependencies = [
@@ -24,21 +24,18 @@ var dependencies = [
 // Config
 function config ($routeProvider) {
 	return $routeProvider
-	.when("/:workgroupId/:year/deansOfficeReport", {
-		template: require('./deansOffice/deansOfficeReportCtrl.html'),
-		controller: 'DeansOfficeReportCtrl',
+	.when("/:workgroupId/:year/budgetComparisonReport", {
+		template: require('./budgetComparison/budgetComparisonReportCtrl.html'),
+		controller: 'BudgetComparisonReportCtrl',
 		resolve: {
-			validate: function (AuthService, $route, DeansOfficeReportActions) {
+			validate: function (AuthService, $route, BudgetComparisonReportActions) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						DeansOfficeReportActions.getInitialState();
+						BudgetComparisonReportActions.getInitialState();
 					}
 				});
 			}
 		}
-	})
-	.otherwise({
-		redirectTo: "/"
 	});
 }
 
@@ -46,11 +43,11 @@ config.$inject = ['$routeProvider'];
 
 // App declaration
 const reportsApp = angular.module("reportsApp", dependencies)
-                          .controller('DeansOfficeReportCtrl', DeansOfficeReportCtrl)
-                          .service('DeansOfficeReportActions', DeansOfficeReportActions)
-                          .service('DeansOfficeReportReducers', DeansOfficeReportReducers)
-                          .service('DeansOfficeReportService', DeansOfficeReportService)
-                          .service('DeansOfficeReportCalculations', DeansOfficeReportCalculations)
+                          .controller('BudgetComparisonReportCtrl', BudgetComparisonReportCtrl)
+                          .service('BudgetComparisonReportActions', BudgetComparisonReportActions)
+                          .service('BudgetComparisonReportReducers', BudgetComparisonReportReducers)
+                          .service('BudgetComparisonReportService', BudgetComparisonReportService)
+                          .service('BudgetComparisonReportCalculations', BudgetComparisonReportCalculations)
                           .service('StringService', StringService)
                           .directive('yearTable', yearTable)
                           .directive('changeTable', changeTable)

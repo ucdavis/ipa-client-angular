@@ -1,27 +1,27 @@
-class DeansOfficeReportCalculations {
-	constructor(DeansOfficeReportReducers, ActionTypes, Roles) {
+class BudgetComparisonReportCalculations {
+	constructor(BudgetComparisonReportReducers, ActionTypes, Roles) {
 		return {
 			calculateView: function () {
 				var _self = this;
 
-				var budget = DeansOfficeReportReducers._state.budget;
-				var budgetScenarios = DeansOfficeReportReducers._state.budgetScenarios;
-				var lineItems = DeansOfficeReportReducers._state.lineItems;
-				var courses = DeansOfficeReportReducers._state.courses;
-				var sectionGroups = DeansOfficeReportReducers._state.sectionGroups;
-				var sections = DeansOfficeReportReducers._state.sections;
-				var teachingAssignments = DeansOfficeReportReducers._state.teachingAssignments;
-				var instructorTypes = DeansOfficeReportReducers._state.instructorTypes;
-				var instructorTypeCosts = DeansOfficeReportReducers._state.instructorTypeCosts;
-				var instructorCosts = DeansOfficeReportReducers._state.instructorCosts;
-				var sectionGroupCosts = DeansOfficeReportReducers._state.sectionGroupCosts;
+				var budget = BudgetComparisonReportReducers._state.budget;
+				var budgetScenarios = BudgetComparisonReportReducers._state.budgetScenarios;
+				var lineItems = BudgetComparisonReportReducers._state.lineItems;
+				var courses = BudgetComparisonReportReducers._state.courses;
+				var sectionGroups = BudgetComparisonReportReducers._state.sectionGroups;
+				var sections = BudgetComparisonReportReducers._state.sections;
+				var teachingAssignments = BudgetComparisonReportReducers._state.teachingAssignments;
+				var instructorTypes = BudgetComparisonReportReducers._state.instructorTypes;
+				var instructorTypeCosts = BudgetComparisonReportReducers._state.instructorTypeCosts;
+				var instructorCosts = BudgetComparisonReportReducers._state.instructorCosts;
+				var sectionGroupCosts = BudgetComparisonReportReducers._state.sectionGroupCosts;
 
 				var calculatedView = {
 					ui: {
-						currentSelectedBudgetScenario: this._getBudgetScenario(budgetScenarios.currentSelectedScenarioId, DeansOfficeReportReducers._state.budgetScenarios.current),
-						previousSelectedBudgetScenario: this._getBudgetScenario(budgetScenarios.previousSelectedScenarioId, DeansOfficeReportReducers._state.budgetScenarios.previous),
-						currentBudgetScenarios: this._getBudgetScenarios(DeansOfficeReportReducers._state.budgetScenarios.current),
-						previousBudgetScenarios: this._getBudgetScenarios(DeansOfficeReportReducers._state.budgetScenarios.previous)
+						currentSelectedBudgetScenario: this._getBudgetScenario(budgetScenarios.currentSelectedScenarioId, BudgetComparisonReportReducers._state.budgetScenarios.current),
+						previousSelectedBudgetScenario: this._getBudgetScenario(budgetScenarios.previousSelectedScenarioId, BudgetComparisonReportReducers._state.budgetScenarios.previous),
+						currentBudgetScenarios: this._getBudgetScenarios(BudgetComparisonReportReducers._state.budgetScenarios.current),
+						previousBudgetScenarios: this._getBudgetScenarios(BudgetComparisonReportReducers._state.budgetScenarios.previous)
 					},
 					current: {
 						costs: this._generateCosts(teachingAssignments.current, instructorTypeCosts.current, instructorCosts.current, sectionGroupCosts.current, budget.current, budgetScenarios.currentSelectedScenarioId, sectionGroups.current),
@@ -41,7 +41,7 @@ class DeansOfficeReportCalculations {
 					miscStats: this._generateMiscStatsChange(calculatedView.current.miscStats, calculatedView.previous.miscStats)
 				};
 
-				DeansOfficeReportReducers.reduce({
+				BudgetComparisonReportReducers.reduce({
 					type: ActionTypes.CALCULATE_VIEW,
 					payload: {
 						calculatedView: calculatedView
@@ -232,7 +232,7 @@ class DeansOfficeReportCalculations {
 			},
 			// Generates funding values based on the selected budget scenario
 			_generateFunding(lineItems, selectedScenarioId) {
-				var lineItemCategories = DeansOfficeReportReducers._state.lineItemCategories;
+				var lineItemCategories = BudgetComparisonReportReducers._state.lineItemCategories;
 
 				var funding = {
 					typeIds: [],
@@ -287,7 +287,7 @@ class DeansOfficeReportCalculations {
 					}
 				};
 
-				var instructorTypes = DeansOfficeReportReducers._state.instructorTypes;
+				var instructorTypes = BudgetComparisonReportReducers._state.instructorTypes;
 
 				instructorTypes.current.ids.forEach(function(instructorTypeId) {
 					var instructorType = instructorTypes.current.list[instructorTypeId];
@@ -320,7 +320,7 @@ class DeansOfficeReportCalculations {
 			// Generates previous -> current change values for funds
 			_generatefundingChange(currentFunding, previousFunding) {
 				var _self = this;
-				var lineItemCategories = DeansOfficeReportReducers._state.lineItemCategories;
+				var lineItemCategories = BudgetComparisonReportReducers._state.lineItemCategories;
 
 				var fundingChange = {
 					types: {},
@@ -399,14 +399,14 @@ class DeansOfficeReportCalculations {
 				return scenarios;
 			},
 			_getSectionGroupCost(sectionGroupId, selectedScenarioId) {
-				var budgetScenarios = DeansOfficeReportReducers._state.budgetScenarios;
-				var sectionGroupCostIds = DeansOfficeReportReducers._state.sectionGroupCosts.current.bySectionGroupId[sectionGroupId] || DeansOfficeReportReducers._state.sectionGroupCosts.previous.bySectionGroupId[sectionGroupId];
+				var budgetScenarios = BudgetComparisonReportReducers._state.budgetScenarios;
+				var sectionGroupCostIds = BudgetComparisonReportReducers._state.sectionGroupCosts.current.bySectionGroupId[sectionGroupId] || BudgetComparisonReportReducers._state.sectionGroupCosts.previous.bySectionGroupId[sectionGroupId];
 				var sectionGroupCost = null;
 
 				if (!sectionGroupCostIds) { return null; }
 
 				sectionGroupCostIds.forEach(function(sectionGroupCostId) {
-					var slotSectionGroupCost = DeansOfficeReportReducers._state.sectionGroupCosts.current.list[sectionGroupCostId] || DeansOfficeReportReducers._state.sectionGroupCosts.previous.list[sectionGroupCostId];
+					var slotSectionGroupCost = BudgetComparisonReportReducers._state.sectionGroupCosts.current.list[sectionGroupCostId] || BudgetComparisonReportReducers._state.sectionGroupCosts.previous.list[sectionGroupCostId];
 
 					if (slotSectionGroupCost.budgetScenarioId == selectedScenarioId) {
 						sectionGroupCost = slotSectionGroupCost;
@@ -416,20 +416,20 @@ class DeansOfficeReportCalculations {
 				return sectionGroupCost;
 			},
 			_getTeachingAssignment(sectionGroupId) {
-				var teachingAssignmentIds = DeansOfficeReportReducers._state.teachingAssignments.current.bySectionGroupId[sectionGroupId] || DeansOfficeReportReducers._state.teachingAssignments.previous.bySectionGroupId[sectionGroupId];
+				var teachingAssignmentIds = BudgetComparisonReportReducers._state.teachingAssignments.current.bySectionGroupId[sectionGroupId] || BudgetComparisonReportReducers._state.teachingAssignments.previous.bySectionGroupId[sectionGroupId];
 
 				if (teachingAssignmentIds) {
-					return DeansOfficeReportReducers._state.teachingAssignments.current.list[teachingAssignmentIds[0]] || DeansOfficeReportReducers._state.teachingAssignments.previous.list[teachingAssignmentIds[0]];
+					return BudgetComparisonReportReducers._state.teachingAssignments.current.list[teachingAssignmentIds[0]] || BudgetComparisonReportReducers._state.teachingAssignments.previous.list[teachingAssignmentIds[0]];
 				} else {
 					return null;
 				}
 			},
 			// Will first look at userRoles for a match, and then teachingAssignments as a fallback.
 			_calculateInstructorType: function(instructorId, teachingAssignments) {
-				var instructors = DeansOfficeReportReducers._state.instructors;
-				var users = DeansOfficeReportReducers._state.users;
-				var userRoles = DeansOfficeReportReducers._state.userRoles;
-				var instructorTypes = DeansOfficeReportReducers._state.instructorTypes.current;
+				var instructors = BudgetComparisonReportReducers._state.instructors;
+				var users = BudgetComparisonReportReducers._state.users;
+				var userRoles = BudgetComparisonReportReducers._state.userRoles;
+				var instructorTypes = BudgetComparisonReportReducers._state.instructorTypes.current;
 
 				var instructorType = null;
 				var instructor = instructors.list[instructorId];
@@ -464,6 +464,6 @@ class DeansOfficeReportCalculations {
 	}
 }
 
-DeansOfficeReportCalculations.$inject = ['DeansOfficeReportReducers', 'ActionTypes', 'Roles'];
+BudgetComparisonReportCalculations.$inject = ['BudgetComparisonReportReducers', 'ActionTypes', 'Roles'];
 
-export default DeansOfficeReportCalculations;
+export default BudgetComparisonReportCalculations;

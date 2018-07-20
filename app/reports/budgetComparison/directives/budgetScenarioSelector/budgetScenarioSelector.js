@@ -1,6 +1,6 @@
 import './budgetScenarioSelector.css';
 
-let budgetScenarioSelector = function (DeansOfficeReportActions) {
+let budgetScenarioSelector = function (BudgetComparisonReportActions) {
 	return {
 		restrict: 'E',
 		template: require('./budgetScenarioSelector.html'),
@@ -15,9 +15,9 @@ let budgetScenarioSelector = function (DeansOfficeReportActions) {
 
 			scope.selectBudgetScenario = function(budgetScenario) {
 				if (scope.isCurrent) {
-					DeansOfficeReportActions.selectCurrentBudgetScenario(budgetScenario.id);
+					BudgetComparisonReportActions.selectCurrentBudgetScenario(budgetScenario.id);
 				} else {
-					DeansOfficeReportActions.selectPreviousBudgetScenario(budgetScenario.id);
+					BudgetComparisonReportActions.selectPreviousBudgetScenario(budgetScenario.id);
 				}
 			};
 		}

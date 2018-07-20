@@ -1,11 +1,11 @@
-.deans-office-report {
+.budget-comparison-report {
   display: flex;
   width: 100%;
   padding: 20px;
   font-size: 12px;
 }
 
-.deans-office-report table {
+.budget-comparison-report table {
   font-size: 12px;
 }
 
@@ -19,7 +19,7 @@
 	border-bottom:unset;
 }
 
-.deans-office-report__scenario-selector-tray {
+.budget-comparison-report__scenario-selector-tray {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;

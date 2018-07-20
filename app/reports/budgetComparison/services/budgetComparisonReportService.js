@@ -1,4 +1,4 @@
-class DeansOfficeReportService {
+class BudgetComparisonReportService {
 	constructor(ApiService, $q, $http, $window) {
 		var _self = this;
 		this.ApiService = ApiService;
@@ -53,6 +53,6 @@ class DeansOfficeReportService {
 	}
 }
 
-DeansOfficeReportService.$inject = ['ApiService', '$q', '$http', '$window'];
+BudgetComparisonReportService.$inject = ['ApiService', '$q', '$http', '$window'];
 
-export default DeansOfficeReportService;
+export default BudgetComparisonReportService;

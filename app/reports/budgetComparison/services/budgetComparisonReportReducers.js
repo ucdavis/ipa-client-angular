@@ -1,4 +1,4 @@
-class DeansOfficeReportReducers {
+class BudgetComparisonReportReducers {
 	constructor ($rootScope, ActionTypes) {
 		return {
 			_state: {
@@ -268,7 +268,7 @@ class DeansOfficeReportReducers {
 				newState.calculations = scope._calculationReducers(action, scope._state.calculations);
 
 				scope._state = newState;
-				$rootScope.$emit('deansOfficeReportStateChanged', {
+				$rootScope.$emit('budgetComparisonReportStateChanged', {
 					state: scope._state,
 					action: action
 				});
@@ -277,6 +277,6 @@ class DeansOfficeReportReducers {
 	}
 }
 
-DeansOfficeReportReducers.$inject = ['$rootScope', 'ActionTypes'];
+BudgetComparisonReportReducers.$inject = ['$rootScope', 'ActionTypes'];
 
-export default DeansOfficeReportReducers;
+export default BudgetComparisonReportReducers;

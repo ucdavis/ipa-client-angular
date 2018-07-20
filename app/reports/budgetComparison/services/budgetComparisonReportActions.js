@@ -1,5 +1,5 @@
-class DeansOfficeReportActions {
-	constructor(DeansOfficeReportReducers, DeansOfficeReportService, DeansOfficeReportCalculations, $rootScope, ActionTypes, Roles, $route) {
+class BudgetComparisonReportActions {
+	constructor(BudgetComparisonReportReducers, BudgetComparisonReportService, BudgetComparisonReportCalculations, $rootScope, ActionTypes, Roles, $route) {
 		return {
 			getInitialState: function () {
 				var _self = this;
@@ -7,9 +7,9 @@ class DeansOfficeReportActions {
 				var year = $route.current.params.year;
 				var previousYear = String(parseInt($route.current.params.year) - 1);
 
-				DeansOfficeReportReducers._state = {};
+				BudgetComparisonReportReducers._state = {};
 
-				DeansOfficeReportReducers.reduce({
+				BudgetComparisonReportReducers.reduce({
 					type: ActionTypes.INIT_STATE,
 					payload: {}
 				});
@@ -47,8 +47,8 @@ class DeansOfficeReportActions {
 			_getBudget: function (workgroupId, year, action) {
 				var _self = this;
 
-				DeansOfficeReportService.getBudget(workgroupId, year).then(function (budget) {
-					DeansOfficeReportReducers.reduce({
+				BudgetComparisonReportService.getBudget(workgroupId, year).then(function (budget) {
+					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							budget: budget
@@ -57,13 +57,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getUsers: function (workgroupId, year) {
 				var _self = this;
 
-				DeansOfficeReportService.getUsers(workgroupId, year).then(function (rawUsers) {
+				BudgetComparisonReportService.getUsers(workgroupId, year).then(function (rawUsers) {
 					let users = {
 						ids: [],
 						list: {},
@@ -76,7 +76,7 @@ class DeansOfficeReportActions {
 						users.byLoginId[user.loginId.toLowerCase()] = user;
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: ActionTypes.GET_USERS,
 						payload: {
 							users: users
@@ -85,13 +85,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getUserRoles: function (workgroupId) {
 				var _self = this;
 
-				DeansOfficeReportService.getUserRoles(workgroupId).then(function (rawUserRoles) {
+				BudgetComparisonReportService.getUserRoles(workgroupId).then(function (rawUserRoles) {
 					let userRoles = {
 						ids: [],
 						list: {},
@@ -105,7 +105,7 @@ class DeansOfficeReportActions {
 						userRoles.byUserId[userRole.userId].push(userRole);
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: ActionTypes.GET_USER_ROLES,
 						payload: {
 							userRoles: userRoles
@@ -114,13 +114,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getInstructors: function (workgroupId, year) {
 				var _self = this;
 
-				DeansOfficeReportService.getInstructors(workgroupId, year).then(function (rawInstructors) {
+				BudgetComparisonReportService.getInstructors(workgroupId, year).then(function (rawInstructors) {
 					let instructors = {
 						ids: [],
 						list: {}
@@ -131,7 +131,7 @@ class DeansOfficeReportActions {
 						instructors.list[instructor.id] = instructor;
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: ActionTypes.GET_INSTRUCTORS,
 						payload: {
 							instructors: instructors
@@ -140,13 +140,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getCourses: function (workgroupId, year, action) {
 				var _self = this;
 
-				DeansOfficeReportService.getCourses(workgroupId, year).then(function (rawCourses) {
+				BudgetComparisonReportService.getCourses(workgroupId, year).then(function (rawCourses) {
 					let courses = {
 						ids: [],
 						list: {}
@@ -157,7 +157,7 @@ class DeansOfficeReportActions {
 						courses.list[course.id] = course;
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							courses: courses
@@ -166,13 +166,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getInstructorTypeCosts: function (workgroupId, year, action) {
 				var _self = this;
 
-				DeansOfficeReportService.getInstructorTypeCosts(workgroupId, year).then(function (rawInstructorTypeCosts) {
+				BudgetComparisonReportService.getInstructorTypeCosts(workgroupId, year).then(function (rawInstructorTypeCosts) {
 					let instructorTypeCosts = {
 						ids: [],
 						list: {},
@@ -185,7 +185,7 @@ class DeansOfficeReportActions {
 						instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost.id;
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							instructorTypeCosts: instructorTypeCosts
@@ -194,13 +194,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getInstructorCosts: function (workgroupId, year, action) {
 				var _self = this;
 
-				DeansOfficeReportService.getInstructorCosts(workgroupId, year).then(function (rawInstructorCosts) {
+				BudgetComparisonReportService.getInstructorCosts(workgroupId, year).then(function (rawInstructorCosts) {
 					let instructorCosts = {
 						ids: [],
 						list: {},
@@ -213,7 +213,7 @@ class DeansOfficeReportActions {
 						instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost.id;
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							instructorCosts: instructorCosts
@@ -222,13 +222,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getSectionGroupCosts: function (workgroupId, year, action) {
 				var _self = this;
 
-				DeansOfficeReportService.getSectionGroupCosts(workgroupId, year).then(function (rawSectionGroupCosts) {
+				BudgetComparisonReportService.getSectionGroupCosts(workgroupId, year).then(function (rawSectionGroupCosts) {
 					let sectionGroupCosts = {
 						ids: [],
 						list: {},
@@ -242,7 +242,7 @@ class DeansOfficeReportActions {
 						sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId].push(sectionGroupCost.id);
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							sectionGroupCosts: sectionGroupCosts
@@ -251,13 +251,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getLineItemCategories: function (workgroupId, year, action) {
 				var _self = this;
 
-				DeansOfficeReportService.getLineItemCategories(workgroupId, year).then(function (rawLineItemCategories) {
+				BudgetComparisonReportService.getLineItemCategories(workgroupId, year).then(function (rawLineItemCategories) {
 					let lineItemCategories = {
 						ids: [],
 						list: {}
@@ -268,7 +268,7 @@ class DeansOfficeReportActions {
 						lineItemCategories.list[lineItemCategory.id] = lineItemCategory;
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							lineItemCategories: lineItemCategories
@@ -277,13 +277,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getLineItems: function (workgroupId, year, action) {
 				var _self = this;
 
-				DeansOfficeReportService.getLineItems(workgroupId, year).then(function (rawLineItems) {
+				BudgetComparisonReportService.getLineItems(workgroupId, year).then(function (rawLineItems) {
 					let lineItems = {
 						ids: [],
 						list: {}
@@ -294,7 +294,7 @@ class DeansOfficeReportActions {
 						lineItems.list[lineItem.id] = lineItem;
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							lineItems: lineItems
@@ -303,13 +303,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getBudgetScenarios: function (workgroupId, year, action) {
 				var _self = this;
 
-				DeansOfficeReportService.getBudgetScenarios(workgroupId, year).then(function (rawBudgetScenarios) {
+				BudgetComparisonReportService.getBudgetScenarios(workgroupId, year).then(function (rawBudgetScenarios) {
 					let budgetScenarios = {
 						ids: [],
 						list: {}
@@ -320,7 +320,7 @@ class DeansOfficeReportActions {
 						budgetScenarios.list[budgetScenario.id] = budgetScenario;
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							budgetScenarios: budgetScenarios
@@ -329,13 +329,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getSections: function (workgroupId, year, action) {
 				var _self = this;
 
-				DeansOfficeReportService.getSections(workgroupId, year).then(function (rawSections) {
+				BudgetComparisonReportService.getSections(workgroupId, year).then(function (rawSections) {
 					let sections = {
 						ids: [],
 						list: {}
@@ -346,7 +346,7 @@ class DeansOfficeReportActions {
 						sections.list[section.id] = section;
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							sections: sections
@@ -355,13 +355,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getInstructorTypes: function (workgroupId, year, action) {
 				var _self = this;
 
-				DeansOfficeReportService.getInstructorTypes(workgroupId, year).then(function (rawInstructorTypes) {
+				BudgetComparisonReportService.getInstructorTypes(workgroupId, year).then(function (rawInstructorTypes) {
 					let instructorTypes = {
 						ids: [],
 						list: {}
@@ -372,7 +372,7 @@ class DeansOfficeReportActions {
 						instructorTypes.list[instructorType.id] = instructorType;
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							instructorTypes: instructorTypes
@@ -381,13 +381,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getTeachingAssignments: function (workgroupId, year, action) {
 				var _self = this;
 
-				DeansOfficeReportService.getTeachingAssignments(workgroupId, year).then(function (rawTeachingAssignments) {
+				BudgetComparisonReportService.getTeachingAssignments(workgroupId, year).then(function (rawTeachingAssignments) {
 					let teachingAssignments = {
 						ids: [],
 						list: {},
@@ -403,7 +403,7 @@ class DeansOfficeReportActions {
 						}
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							teachingAssignments: teachingAssignments
@@ -412,13 +412,13 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_getSectionGroups: function (workgroupId, year, action) {
 				var _self = this;
 
-				DeansOfficeReportService.getSectionGroups(workgroupId, year).then(function (rawSectionGroups) {
+				BudgetComparisonReportService.getSectionGroups(workgroupId, year).then(function (rawSectionGroups) {
 					let sectionGroups = {
 						ids: [],
 						list: {}
@@ -429,7 +429,7 @@ class DeansOfficeReportActions {
 						sectionGroups.list[sectionGroup.id] = sectionGroup;
 					});
 
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							sectionGroups: sectionGroups
@@ -438,36 +438,36 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
 			_performCalculations: function () {
 				this._isCurrentYearFetchComplete();
 				this._isPreviousYearFetchComplete();
 
-				if (DeansOfficeReportReducers._state.calculations.isCurrentYearFetchComplete && DeansOfficeReportReducers._state.calculations.isPreviousYearFetchComplete
-				&& DeansOfficeReportReducers._state.userRoles.ids && DeansOfficeReportReducers._state.users.ids && DeansOfficeReportReducers._state.instructors.ids) {
-					DeansOfficeReportCalculations.calculateView();
+				if (BudgetComparisonReportReducers._state.calculations.isCurrentYearFetchComplete && BudgetComparisonReportReducers._state.calculations.isPreviousYearFetchComplete
+				&& BudgetComparisonReportReducers._state.userRoles.ids && BudgetComparisonReportReducers._state.users.ids && BudgetComparisonReportReducers._state.instructors.ids) {
+					BudgetComparisonReportCalculations.calculateView();
 				}
 			},
 			_isCurrentYearFetchComplete: function () {
-				var budget = DeansOfficeReportReducers._state.budget.current;
-				var sectionGroups = DeansOfficeReportReducers._state.sectionGroups.current;
-				var courses = DeansOfficeReportReducers._state.courses.current;
-				var teachingAssignments = DeansOfficeReportReducers._state.teachingAssignments.current;
-				var instructorTypes = DeansOfficeReportReducers._state.instructorTypes.current;
-				var sections = DeansOfficeReportReducers._state.sections.current;
-				var budgetScenarios = DeansOfficeReportReducers._state.budgetScenarios.current;
-				var lineItems = DeansOfficeReportReducers._state.lineItems.current;
-				var lineItemCategories = DeansOfficeReportReducers._state.lineItemCategories.current;
-				var instructorTypeCosts = DeansOfficeReportReducers._state.instructorTypeCosts.current;
-				var instructorCosts = DeansOfficeReportReducers._state.instructorCosts.current;
-				var sectionGroupCosts = DeansOfficeReportReducers._state.sectionGroupCosts.current;
+				var budget = BudgetComparisonReportReducers._state.budget.current;
+				var sectionGroups = BudgetComparisonReportReducers._state.sectionGroups.current;
+				var courses = BudgetComparisonReportReducers._state.courses.current;
+				var teachingAssignments = BudgetComparisonReportReducers._state.teachingAssignments.current;
+				var instructorTypes = BudgetComparisonReportReducers._state.instructorTypes.current;
+				var sections = BudgetComparisonReportReducers._state.sections.current;
+				var budgetScenarios = BudgetComparisonReportReducers._state.budgetScenarios.current;
+				var lineItems = BudgetComparisonReportReducers._state.lineItems.current;
+				var lineItemCategories = BudgetComparisonReportReducers._state.lineItemCategories.current;
+				var instructorTypeCosts = BudgetComparisonReportReducers._state.instructorTypeCosts.current;
+				var instructorCosts = BudgetComparisonReportReducers._state.instructorCosts.current;
+				var sectionGroupCosts = BudgetComparisonReportReducers._state.sectionGroupCosts.current;
 
 				if (budget && sectionGroups && courses && teachingAssignments && instructorTypes
 					&& sections && budgetScenarios && lineItems && lineItemCategories
 					&& instructorTypeCosts && instructorCosts && sectionGroupCosts) {
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: ActionTypes.CURRENT_YEAR_FETCH_COMPLETE,
 						payload: {
 							isCurrentYearFetchComplete: true
@@ -476,23 +476,23 @@ class DeansOfficeReportActions {
 				}
 			},
 			_isPreviousYearFetchComplete: function () {
-				var budget = DeansOfficeReportReducers._state.budget.previous;
-				var sectionGroups = DeansOfficeReportReducers._state.sectionGroups.previous;
-				var courses = DeansOfficeReportReducers._state.courses.previous;
-				var teachingAssignments = DeansOfficeReportReducers._state.teachingAssignments.previous;
-				var instructorTypes = DeansOfficeReportReducers._state.instructorTypes.previous;
-				var sections = DeansOfficeReportReducers._state.sections.previous;
-				var budgetScenarios = DeansOfficeReportReducers._state.budgetScenarios.previous;
-				var lineItems = DeansOfficeReportReducers._state.lineItems.previous;
-				var lineItemCategories = DeansOfficeReportReducers._state.lineItemCategories.previous;
-				var instructorTypeCosts = DeansOfficeReportReducers._state.instructorTypeCosts.previous;
-				var instructorCosts = DeansOfficeReportReducers._state.instructorCosts.previous;
-				var sectionGroupCosts = DeansOfficeReportReducers._state.sectionGroupCosts.previous;
+				var budget = BudgetComparisonReportReducers._state.budget.previous;
+				var sectionGroups = BudgetComparisonReportReducers._state.sectionGroups.previous;
+				var courses = BudgetComparisonReportReducers._state.courses.previous;
+				var teachingAssignments = BudgetComparisonReportReducers._state.teachingAssignments.previous;
+				var instructorTypes = BudgetComparisonReportReducers._state.instructorTypes.previous;
+				var sections = BudgetComparisonReportReducers._state.sections.previous;
+				var budgetScenarios = BudgetComparisonReportReducers._state.budgetScenarios.previous;
+				var lineItems = BudgetComparisonReportReducers._state.lineItems.previous;
+				var lineItemCategories = BudgetComparisonReportReducers._state.lineItemCategories.previous;
+				var instructorTypeCosts = BudgetComparisonReportReducers._state.instructorTypeCosts.previous;
+				var instructorCosts = BudgetComparisonReportReducers._state.instructorCosts.previous;
+				var sectionGroupCosts = BudgetComparisonReportReducers._state.sectionGroupCosts.previous;
 
 				if (budget && sectionGroups && courses && teachingAssignments && instructorTypes
 				&& sections && budgetScenarios && lineItems && lineItemCategories
 				&& instructorTypeCosts && instructorCosts && sectionGroupCosts) {
-					DeansOfficeReportReducers.reduce({
+					BudgetComparisonReportReducers.reduce({
 						type: ActionTypes.PREVIOUS_YEAR_FETCH_COMPLETE,
 						payload: {
 							isPreviousYearFetchComplete: true
@@ -501,7 +501,7 @@ class DeansOfficeReportActions {
 				}
 			},
 			selectCurrentBudgetScenario: function(selectedScenarioId) {
-				DeansOfficeReportReducers.reduce({
+				BudgetComparisonReportReducers.reduce({
 					type: ActionTypes.SELECT_CURRENT_BUDGET_SCENARIO,
 					payload: {
 						budgetScenarioId: selectedScenarioId
@@ -511,7 +511,7 @@ class DeansOfficeReportActions {
 				this._performCalculations();
 			},
 			selectPreviousBudgetScenario: function(selectedScenarioId) {
-				DeansOfficeReportReducers.reduce({
+				BudgetComparisonReportReducers.reduce({
 					type: ActionTypes.SELECT_PREVIOUS_BUDGET_SCENARIO,
 					payload: {
 						budgetScenarioId: selectedScenarioId
@@ -524,6 +524,6 @@ class DeansOfficeReportActions {
 	}
 }
 
-DeansOfficeReportActions.$inject = ['DeansOfficeReportReducers', 'DeansOfficeReportService', 'DeansOfficeReportCalculations', '$rootScope', 'ActionTypes', 'Roles', '$route'];
+BudgetComparisonReportActions.$inject = ['BudgetComparisonReportReducers', 'BudgetComparisonReportService', 'BudgetComparisonReportCalculations', '$rootScope', 'ActionTypes', 'Roles', '$route'];
 
-export default DeansOfficeReportActions;
+export default BudgetComparisonReportActions;
