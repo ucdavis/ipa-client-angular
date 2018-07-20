@@ -57,7 +57,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getUsers: function (workgroupId, year) {
@@ -85,7 +85,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getUserRoles: function (workgroupId) {
@@ -103,7 +103,7 @@ class DeansOfficeReportActions {
 						userRoles.list[userRole.id] = userRole;
 						userRoles.byUserId[userRole.userId] = userRoles.byUserId[userRole.userId] || [];
 						userRoles.byUserId[userRole.userId].push(userRole);
-				});
+					});
 
 					DeansOfficeReportReducers.reduce({
 						type: ActionTypes.GET_USER_ROLES,
@@ -114,7 +114,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getInstructors: function (workgroupId, year) {
@@ -140,7 +140,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getCourses: function (workgroupId, year, action) {
@@ -166,7 +166,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getInstructorTypeCosts: function (workgroupId, year, action) {
@@ -194,7 +194,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getInstructorCosts: function (workgroupId, year, action) {
@@ -222,7 +222,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getSectionGroupCosts: function (workgroupId, year, action) {
@@ -251,7 +251,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getLineItemCategories: function (workgroupId, year, action) {
@@ -277,7 +277,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getLineItems: function (workgroupId, year, action) {
@@ -303,7 +303,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getBudgetScenarios: function (workgroupId, year, action) {
@@ -329,7 +329,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getSections: function (workgroupId, year, action) {
@@ -355,7 +355,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getInstructorTypes: function (workgroupId, year, action) {
@@ -381,7 +381,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getTeachingAssignments: function (workgroupId, year, action) {
@@ -412,7 +412,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_getSectionGroups: function (workgroupId, year, action) {
@@ -438,7 +438,7 @@ class DeansOfficeReportActions {
 
 					_self._performCalculations();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not load Deans Office Report information.", type: "ERROR" });
 				});
 			},
 			_performCalculations: function () {

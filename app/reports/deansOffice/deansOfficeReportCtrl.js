@@ -14,7 +14,6 @@ class DeansOfficeReportCtrl {
 
 		$rootScope.$on('deansOfficeReportStateChanged', function (event, data) {
 			$scope.view.state = data.state;
-			console.log($scope.view.state);
 		});
 	}
 }
