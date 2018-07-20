@@ -7,16 +7,21 @@
 <ipa-header ng-show="view.state.calculations.calculatedView.ui.currentBudgetScenarios" page-title="Budget Comparison Report"></ipa-header>
 
 <div ng-show="view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="budget-comparison-report__scenario-selector-tray">
-  <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.previousBudgetScenarios"
-                            selected-budget-scenario="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario"
-                            is-current="false"
-                            ng-if="view.state.calculations.calculatedView.ui.previousBudgetScenarios">
-  </budget-scenario-selector>
-  <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.currentBudgetScenarios"
-                            selected-budget-scenario="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario"
-                            is-current="true"
-                            ng-if="view.state.calculations.calculatedView.ui.currentBudgetScenarios">
-  </budget-scenario-selector>
+  <div class="budget-comparison-report__scenario-selector-container">
+    <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.previousBudgetScenarios"
+                              selected-budget-scenario="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario"
+                              is-current="false"
+                              ng-if="view.state.calculations.calculatedView.ui.previousBudgetScenarios">
+    </budget-scenario-selector>
+  </div>
+  <div class="budget-comparison-report__scenario-selector-container">
+    <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.currentBudgetScenarios"
+                              selected-budget-scenario="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario"
+                              is-current="true"
+                              ng-if="view.state.calculations.calculatedView.ui.currentBudgetScenarios">
+    </budget-scenario-selector>
+  </div>
+  <div class="budget-comparison-report__scenario-selector-container"></div>
 </div>
 <div ng-show="view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="budget-comparison-report">
   <year-table costs="view.state.calculations.calculatedView.previous.costs"
