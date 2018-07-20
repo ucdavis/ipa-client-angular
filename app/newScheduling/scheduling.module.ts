@@ -12,7 +12,6 @@ import { StoreModule } from '@ngrx/store';
 import { schedulingReducer } from './reducers/scheduling.reducers';
 import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 import { AuthGuard } from '@core/auth/auth-guard.service.ts';
-import { AuthResolver } from '@core/auth/auth-resolver.service.ts';
 
 const appRoutes: Routes = [
   {
@@ -20,7 +19,7 @@ const appRoutes: Routes = [
     component: MainComponent,
     canActivate: [AuthGuard],
     resolve: {
-      importantData: AuthResolver
+      sectionGroups: SectionGroupResolver
     }
   },
   {
@@ -46,7 +45,7 @@ const appRoutes: Routes = [
     )
   ],
   declarations: [AppComponent, MainComponent],
-  providers: [SchedulingActions, AuthGuard, AuthResolver],
+  providers: [SchedulingActions, AuthGuard, SectionGroupResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
