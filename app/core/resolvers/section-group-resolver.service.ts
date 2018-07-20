@@ -4,10 +4,9 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { AuthService }  from '@core/auth/auth.service';
-import { SharedStateService }  from '@core/shared-state/shared-state.service';
 
 @Injectable()
-export class AuthResolver implements Resolve<any> {
+export class SectionGroupResolver implements Resolve<any> {
   constructor(private authService: AuthService, private router: Router) {}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     debugger;

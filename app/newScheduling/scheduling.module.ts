@@ -11,7 +11,9 @@ import { CoreModule } from '@core/core.module';
 import { StoreModule } from '@ngrx/store';
 import { schedulingReducer } from './reducers/scheduling.reducers';
 import { SchedulingActions } from '@scheduling/scheduling-actions.service';
-import { AuthGuard } from '@core/auth/auth-guard.service.ts';
+
+import { AuthGuard } from '@core/auth/auth-guard.service';
+import { SectionGroupResolver } from '@core/resolvers/section-group-resolver.service';
 
 const appRoutes: Routes = [
   {

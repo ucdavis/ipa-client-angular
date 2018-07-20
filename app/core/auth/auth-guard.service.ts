@@ -17,18 +17,14 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean|Observable<boolean> {
-    return this.authService.validateToken().pipe(map((res: any) => {
-      if (res.token) {
-        let workgroupId = route.params.workgroupId;
-        let year = route.params.year;
-        res.workgroupId = workgroupId;
-        res.year = year;
+    let workgroupId = route.params.workgroupId;
+    let year = route.params.year;
 
-        this.sharedStateService.setSharedState(res);
+    return this.authService.validate(workgroupId, year).pipe(map((res: any) => {
+      debugger;
+      if (res.token) {
         return true;
       } else {
-        this.sharedStateService.purgeSharedState();
-        this.authService.redirectToCas();
         return false;
       }
     }));
