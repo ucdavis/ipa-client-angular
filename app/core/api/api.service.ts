@@ -5,7 +5,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ApiService {
   private apiRoot = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+//    private configService: ConfigService
+  ) {
+//    this.apiRoot = configService.getApiRoot();
+  }
 
   get(url): any {
     let options: any = {
