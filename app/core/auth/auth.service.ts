@@ -75,7 +75,7 @@ export class AuthService {
     // TODO: FIXME: Should pull backendUrl from clientConfig
     let backendUrl:String = "http://localhost:8080/";
 
-    let url:any = casUrl + "?service=" + backendUrl + "/post-login?ref=" + currentFrontEndUrl;
+    let url:string = casUrl + "?service=" + backendUrl + "/post-login?ref=" + currentFrontEndUrl;
     window.location.href = url;
   }
 }
