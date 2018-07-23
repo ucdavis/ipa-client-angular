@@ -1,3 +1,5 @@
+var env = require('./webpack.env');
+
 const path = require('path');
 var webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -70,7 +72,8 @@ module.exports = {
       Workgroup: path.resolve(__dirname, 'app/workgroup/'),
       TeachingCall: path.resolve(__dirname, 'app/teachingCall/'),
       '@core': path.resolve(__dirname, 'app/core'),
-      '@scheduling': path.resolve(__dirname, 'app/newScheduling')
+      '@scheduling': path.resolve(__dirname, 'app/newScheduling'),
+      '@project': path.resolve(__dirname, '')
     }
     
   },
@@ -197,6 +200,10 @@ module.exports = {
       "template": "./app/newScheduling/newScheduling.html",
       "filename": "./newScheduling.html",
       "chunks": ['newScheduling']
+    }),
+    new webpack.DefinePlugin({
+      'process.env.API_URL': JSON.stringify(env.apiUrl)
+      // Good to namespace 'process.env' even though this is a key for text replacement, also avoids typescript from attempting to process it
     })
   ],
   devServer: {

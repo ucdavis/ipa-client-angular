@@ -3,21 +3,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  private apiRoot = 'http://localhost:8080';
+  // 'apiUrl' value is injected via webpack
+  private apiUrl: string = process.env.API_URL;
 
-  constructor(
-    private http: HttpClient,
-//    private configService: ConfigService
-  ) {
-//    this.apiRoot = configService.getApiRoot();
-  }
+  constructor(private http: HttpClient) {}
 
   get(url): any {
     let options: any = {
       withCredentials: true
     };
 
-    return this.http.get(this.apiRoot + url, options);
+    return this.http.get(this.apiUrl + url, options);
   }
 
   delete(url): any {
@@ -25,6 +21,6 @@ export class ApiService {
       withCredentials: true
     };
 
-    return this.http.delete(this.apiRoot + url, options);
+    return this.http.delete(this.apiUrl + url, options);
   }
 }
