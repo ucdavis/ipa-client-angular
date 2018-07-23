@@ -7,7 +7,8 @@ import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiRoot = 'http://localhost:8080'; //TODO: FIXME: Should come from clientConfig
+  // 'apiUrl' value is injected via webpack
+  private apiUrl: string = process.env.API_URL;
 
   constructor(
     private http: HttpClient,
@@ -28,7 +29,7 @@ export class AuthService {
           this.sharedStateService.setSharedState(data);
         } else {
           this.sharedStateService.purgeSharedState();
-          this.redirectToCas(data.redirectUrl);
+          this.redirectToCas(data.redirect);
         }
         return data;
       } else if (res.status == 403) {
@@ -62,20 +63,14 @@ export class AuthService {
 
     return this.http
       .post(
-        this.apiRoot + '/login',
+        this.apiUrl + '/login',
         { token: token },
         { withCredentials: true, observe: 'response' }
       );
   }
 
-  redirectToCas(casUrl:String): void {
+  redirectToCas(casUrl:string): void {
     this.router.dispose();
-    let currentFrontEndUrl:String = window.location.href;
-
-    // TODO: FIXME: Should pull backendUrl from clientConfig
-    let backendUrl:String = "http://localhost:8080/";
-
-    let url:string = casUrl + "?service=" + backendUrl + "/post-login?ref=" + currentFrontEndUrl;
-    window.location.href = url;
+    window.location.href = casUrl;
   }
 }
