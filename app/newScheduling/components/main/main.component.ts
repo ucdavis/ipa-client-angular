@@ -50,4 +50,12 @@ export class MainComponent {
   toggleMessage() {
     this.store.dispatch({ type: 'TOGGLE_MESSAGE' });
   }
+
+  impersonateJarold() {
+    this.schedulingActions.impersonateJarold();
+  }
+
+  unimpersonateJarold() {
+    this.schedulingActions.unimpersonateJarold();
+  }
 }
