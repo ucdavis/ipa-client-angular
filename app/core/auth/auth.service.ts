@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { SharedStateService } from '@core/shared-state/shared-state.service';
 import { map } from 'rxjs/operators';
+import { ApiService } from '@core/api/api.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -13,7 +14,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private sharedStateService: SharedStateService) {}
+    private sharedStateService: SharedStateService,
+    private apiService: ApiService) {}
 
   // Triggers a call to login,
   // Determines when to set/purge state and redirect to cas,
@@ -72,5 +74,31 @@ export class AuthService {
   redirectToCas(casUrl:string): void {
     this.router.dispose();
     window.location.href = casUrl;
+  }
+
+  impersonate (loginId: string): void {
+    let token = this.sharedStateService.getSharedState().JWT;
+
+    this.apiService.post('/impersonate/' + loginId, { token: token }).subscribe((response) => {
+      let jwt = response.token;
+      this.sharedStateService.setJWT(jwt);
+      let explodedUrl = window.location.href.split('/');
+      let workgroupIndex = explodedUrl.indexOf("workgroups");
+      let workgroupId = explodedUrl[workgroupIndex + 1];
+      let year = explodedUrl[workgroupIndex + 2];
+
+      window.location.href = "/summary/" + workgroupId + "/" + year;
+    });
+  }
+
+  unimpersonate (): void {
+    let token = this.sharedStateService.getSharedState().JWT;
+
+    this.apiService.post('/unimpersonate', { token: token }).subscribe((response) => {
+      let jwt = response.token;
+      this.sharedStateService.setJWT(jwt);
+
+      window.location.href = "/summary";
+    });
   }
 }
