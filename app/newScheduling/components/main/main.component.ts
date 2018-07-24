@@ -21,27 +21,33 @@ export class MainComponent {
   constructor(
     private store: Store<AppState>,
     private schedulingActions: SchedulingActions,
-    private activatedRoute: ActivatedRoute) {
-
-      this.scheduling = this.store.select('scheduling');
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.scheduling = this.store.select('scheduling');
   }
 
   ngOnInit() {
     this.sectionGroups = this.activatedRoute.snapshot.data.sectionGroups;
 
-    this.scheduling.subscribe((state) => {
+    this.scheduling.subscribe(state => {
       console.log(state);
       this.schedulingName = state.name;
       this.schedulingShow = state.showName;
       this.courses = state.courses.list;
-    })
+    });
   }
 
   getCourses() {
     this.schedulingActions.getCourses();
   }
 
+  errorTest() {
+    let list: any[] = [1, 2, 3];
+
+    list[0].substr(1);
+  }
+
   toggleMessage() {
-    this.store.dispatch({type: 'TOGGLE_MESSAGE'})
+    this.store.dispatch({ type: 'TOGGLE_MESSAGE' });
   }
 }
