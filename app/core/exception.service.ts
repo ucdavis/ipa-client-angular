@@ -2,12 +2,15 @@ import { Injectable, ErrorHandler } from '@angular/core';
 import { ApiService } from './api/api.service';
 
 @Injectable({ providedIn: 'root' })
-export class ExceptionHandler implements ErrorHandler {
+export class ExceptionHandler extends ErrorHandler {
   private errors = [];
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) {
+    super();
+  }
 
   handleError(error) {
+    // Make sure an error is sent only once
     this.errors.push(error);
 
     if (this.errors.length < 2) {
@@ -22,7 +25,7 @@ export class ExceptionHandler implements ErrorHandler {
         .subscribe();
     }
 
-    // does properly replicate default Angular error handling behavior, but unsure if this is the proper way to do it.
-    new ErrorHandler().handleError(error);
+    // Delegate to the default handler
+    super.handleError(error);
   }
 }
