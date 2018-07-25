@@ -8,30 +8,19 @@ let newCourse = function (CourseActionCreators, CourseService) {
 		link: function (scope, element, attrs) {
 			scope.sequenceNumberPlaceholder = "Example: '001' or 'A02'";
 			scope.newCourseValidation = {
-				isValid: false,
-				errorMessage: null,
-				tooltipErrorMessage: null
+				tooltipErrorMessage: "Select a course and enter a sequence number"
 			};
 
-			scope.newCourseIsValid = function () {
+			scope.isCourseUnique = function () {
 				var newCourse = scope.view.state.courses.newCourse;
-
-				// If new course is incomplete, don't attempt to validate
-				if (!newCourse.title || !newCourse.sequencePattern) { return false; }
-
-				// Sequence pattern is malformed
-				if (scope.isSequencePatternFormatValid(newCourse.sequencePattern) == false) {
-					return false;
-				}
-
-				var courseDescription = newCourse.subjectCode + " " + newCourse.courseNumber + " " + newCourse.formattedSequencePattern;
+				var courseDescription = newCourse.subjectCode + " " + newCourse.courseNumber + " - " + newCourse.sequencePattern;
 
 				for (var i = 0; i < scope.view.state.courses.ids.length; i++) {
 					var slotCourseId = scope.view.state.courses.ids[i];
 					var slotCourse = scope.view.state.courses.list[slotCourseId];
 
 					if (slotCourse) {
-						var slotCourseDescription = slotCourse.subjectCode + " " + slotCourse.courseNumber + " " + slotCourse.sequencePattern;
+						var slotCourseDescription = slotCourse.subjectCode + " " + slotCourse.courseNumber + " - " + slotCourse.sequencePattern;
 
 						// Proposed course already exists
 						if (courseDescription == slotCourseDescription) {
@@ -74,7 +63,7 @@ let newCourse = function (CourseActionCreators, CourseService) {
 				if (isNumber(stringSequencePattern[1]) == false) { return false; }
 
 				// Third character must be a number
-				if (isNumber(stringSequencePattern[1]) == false) { return false; }
+				if (isNumber(stringSequencePattern[2]) == false) { return false; }
 
 				return true;
 			};
@@ -121,80 +110,53 @@ let newCourse = function (CourseActionCreators, CourseService) {
 			};
 
 			scope.createCourse = function () {
-				if (scope.newCourseValidation.isValid) {
+				if (!scope.newCourseValidation.tooltipErrorMessage) {
 					CourseActionCreators.createCourse(scope.view.state.courses.newCourse, scope.workgroupId, scope.year);
-					scope.resetNewCourseValidation();
+					scope.newCourseValidation.tooltipErrorMessage = "Select a course and enter a sequence number";
 				}
 			};
-
-
-			// Will only 'positively' validate, not reject (while user is editing the sequence pattern)
-			scope.validateCourseDuringEdit = function () {
+			// returns false if either course of sequenceNumber is missing, and sets relevant validation
+			scope.isCourseComplete = function () {
 				var newCourse = scope.view.state.courses.newCourse;
-				var courseDescription = newCourse.subjectCode + " " + newCourse.courseNumber + " " + newCourse.formattedSequencePattern;
 
-				// Automatically perform zero padding for user
-				newCourse.sequencePattern = scope.zeroPadSequencePatttern(newCourse.rawSequencePattern);
+				if (newCourse.title && newCourse.sequencePattern) { return true; }
 
-				// Cannot validate sequencePattern without a course
-				if (!newCourse.title) {
-					scope.newCourseValidation.isValid = false;
-					scope.tooltipErrorMessage = "Please select a course.";
-					return;
+				// Select appropriate error message
+				if (!newCourse.title && newCourse.sequencePattern) {
+					scope.newCourseValidation.tooltipErrorMessage = "Select a course";
+				} else if (newCourse.title && !newCourse.sequencePattern) {
+					scope.newCourseValidation.tooltipErrorMessage = "Enter a sequence number";
+				} else if (!newCourse.title && !newCourse.sequencePattern) {
+					scope.newCourseValidation.tooltipErrorMessage = "Select a course and enter a sequence number";
 				}
 
-				if (scope.isSequencePatternFormatValid(newCourse.sequencePattern) == false) {
-					scope.newCourseValidation.isValid = false;
-					scope.newCourseValidation.tooltipErrorMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or 'a letter and 2 numbers' ('ex: 'A05'.";
-					return;
-				}
-
-				if (scope.newCourseIsValid() == false) {
-					scope.newCourseSearchQuery.isValid = false;
-					scope.newCourseValidation.tooltipErrorMessage = "Course " + courseDescription + " is already present on this schedule.";
-				} else {
-					scope.newCourseValidation.isValid = true;
-					scope.newCourseValidation.errorMessage = null;
-					scope.newCourseValidation.tooltipErrorMessage = null;
-				}
+				return false;
 			};
 
 			// Will validate the course and set an error message if needed
 			scope.validateCourse = function () {
-				debugger;
+				var newCourse = scope.view.state.courses.newCourse;
 
-				// Incomplete course is invalid
-				if (!newCourse.title || !newCourse.sequencePattern) {
-					scope.resetNewCourseValidation();
-					return;
-				}
+				// Automatically perform zero padding for user
+				newCourse.sequencePattern = scope.zeroPadSequencePatttern(newCourse.rawSequencePattern);
+
+				var courseDescription = newCourse.subjectCode + " " + newCourse.courseNumber + " - " + newCourse.sequencePattern;
+
+				// Ensure both course and sequence number have been filled out
+				if (scope.isCourseComplete() == false) { return; }
 
 				if (scope.isSequencePatternFormatValid(newCourse.sequencePattern) == false) {
-					scope.newCourseValidation.isValid = false;
-					scope.newCourseValidation.errorMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or 'a letter and 2 numbers' ('ex: 'A05'.";
-					scope.newCourseValidation.tooltipErrorMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or 'a letter and 2 numbers' ('ex: 'A05'.";
-
+					scope.newCourseValidation.tooltipErrorMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or 'a letter and 2 numbers' ('ex: 'A05').";
 					return;
 				}
 
-				if (scope.newCourseIsValid() == false) {
-					scope.newCourseSearchQuery.isValid = false;
-					scope.newCourseValidation.errorMessage = "Course " + courseDescription + " is already present on this schedule.";
+				if (scope.isCourseUnique() == false) {
 					scope.newCourseValidation.tooltipErrorMessage = "Course " + courseDescription + " is already present on this schedule.";
+					return;
 				}
 
 				// Is valid
-				scope.newCourseValidation.isValid = true;
-				scope.newCourseValidation.errorMessage = null;
 				scope.newCourseValidation.tooltipErrorMessage = null;
-			};
-
-			scope.resetNewCourseValidation = function () {
-				scope.newCourseValidation = {
-					isValid: false,
-					errorMessage: null,
-					tooltipErrorMessage: null
-				};
 			};
 		}
 	};
