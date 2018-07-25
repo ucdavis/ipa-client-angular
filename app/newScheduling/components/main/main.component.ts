@@ -7,6 +7,8 @@ import { AppState } from '@scheduling/models/app.model';
 import { SchedulingState } from '@scheduling/models/scheduling.model';
 import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 
+import * as toastr from 'toastr';
+
 @Component({
   selector: 'main',
   templateUrl: './main.component.html'
@@ -57,5 +59,9 @@ export class MainComponent {
 
   unimpersonateJarold() {
     this.schedulingActions.unimpersonateJarold();
+  }
+
+  makeToast() {
+    toastr.warning('My name is Jarold. You killed my father, prepare to die!');
   }
 }
