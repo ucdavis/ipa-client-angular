@@ -39,7 +39,7 @@
 							<strong>Sequence Pattern</strong>
 							<br />
 							<ipa-input value="view.state.courses.newCourse.rawSequencePattern"
-							           on-update="approveSequencePattern()"
+							           on-update="validateCourseDuringEdit()"
 							           on-blur="validateCourse()"
 							           place-holder="sequenceNumberPlaceholder">
 							</ipa-input>
@@ -47,15 +47,13 @@
 						</div>
 					</div>
 				</div>
-				<div class="right-details-group">
-					<div class="row">
-						<div class="col-sm-10 col-sm-offset-1 ">
-							<button type="button" class="btn btn-white" ng-click="closeDetails()">Cancel</button>
-							<button type="button" class="btn btn-blue pull-right" ng-click="createCourse()" ng-class="{ 'disabled': !newCourseIsValid() }"
-								uib-tooltip="All fields are required and sequence pattern must be unique" tooltip-enable="!newCourseIsValid()">
-									Create
-							</button>
-						</div>
+
+				<div class="new-course__submit-tray">
+					<button type="button" class="btn btn-white" ng-click="closeDetails()">Cancel</button>
+					<div class="new-course__create-btn" uib-tooltip="{{newCourseValidation.tooltipErrorMessage}}">
+						<button type="button" class="btn btn-blue pull-right" ng-click="createCourse()" ng-class="{ 'disabled': newCourseValidation.isValid == false }">
+							Create
+						</button>
 					</div>
 				</div>
 
