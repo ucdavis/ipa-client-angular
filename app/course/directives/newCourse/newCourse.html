@@ -39,25 +39,30 @@
 							<strong>Sequence Pattern</strong>
 							<br />
 							<ipa-input value="view.state.courses.newCourse.rawSequencePattern"
-							           on-update="validateCourseDuringEdit()"
+							           on-update="validateCourse()"
 							           on-blur="validateCourse()"
 							           update-delay="50"
 							           place-holder="sequenceNumberPlaceholder">
 							</ipa-input>
-							<div>{{ newCourseValidation.errorMessage }} </div>
 						</div>
 					</div>
 				</div>
-
 				<div class="new-course__submit-tray">
-					<button type="button" class="btn btn-white" ng-click="closeDetails()">Cancel</button>
-					<div class="new-course__create-btn" uib-tooltip="{{newCourseValidation.tooltipErrorMessage}}">
-						<button type="button" class="btn btn-blue pull-right" ng-click="createCourse()" ng-class="{ 'disabled': newCourseValidation.isValid == false }">
-							Create
-						</button>
+					<ipa-button text="'Cancel'"
+					            on-click="closeDetails()">
+					</ipa-button>
+					<div class="new-course__create-btn"
+					     tooltip-append-to-body="true"
+					     tooltip-placement="left"
+					     uib-tooltip="{{ newCourseValidation.tooltipErrorMessage }}"
+					     ng-class="{ 'disabled': newCourseValidation.tooltipErrorMessage }">
+						<ipa-button text="'Create'"
+						            is-disabled="newCourseValidation.tooltipErrorMessage"
+						            skin="'dark'"
+						            on-click="createCourse()">
+						</ipa-button>
 					</div>
 				</div>
-
 			</form>
 		</div>
 	</div>
