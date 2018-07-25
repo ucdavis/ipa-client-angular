@@ -210,6 +210,11 @@ class StringService {
 
     return str.substr(0,index) + chr + str.substr(index + 1);
   }
+
+  toAcademicYear(year) {
+    var nextYearShort = (Number(year) + 1).toString().slice(-2);
+    return year + "-" + nextYearShort;
+  }
 }
 
 export default StringService;
