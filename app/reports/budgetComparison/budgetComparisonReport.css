@@ -11,12 +11,12 @@
 
 /* Bootstrap overrides */
 .form-horizontal .form-group {
-	margin-left: 0px;
-	margin-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .table > thead > tr > th {
-	border-bottom:unset;
+  border-bottom:unset;
 }
 
 .budget-comparison-report__scenario-selector-tray {
