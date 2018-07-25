@@ -1,3 +1,5 @@
+import './newCourse.css';
+
 let newCourse = function (CourseActionCreators, CourseService) {
 	return {
 		restrict: 'E',
@@ -7,7 +9,8 @@ let newCourse = function (CourseActionCreators, CourseService) {
 			scope.sequenceNumberPlaceholder = "Example: '001' or 'A02'";
 			scope.newCourseValidation = {
 				isValid: false,
-				errorMessage: null
+				errorMessage: null,
+				tooltipErrorMessage: null
 			};
 
 			scope.newCourseIsValid = function () {
@@ -18,8 +21,6 @@ let newCourse = function (CourseActionCreators, CourseService) {
 
 				// Sequence pattern is malformed
 				if (scope.isSequencePatternFormatValid(newCourse.sequencePattern) == false) {
-					scope.newCourseValidation.isValid = false;
-					scope.newCourseValidation.errorMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or 'a letter and 2 numbers' ('ex: 'A05'.";
 					return false;
 				}
 
@@ -43,20 +44,18 @@ let newCourse = function (CourseActionCreators, CourseService) {
 			};
 
 			scope.zeroPadSequencePatttern = function (sequencePattern) {
-				if (isNumber(sequencePattern)) {
-					var zeroPadding = 3 - sequencePattern.length;
+				// Can't help with formatting of letter based sequence numbers
+				if (isNumber(sequencePattern) == false) { return sequencePattern; }
 
-					if (zeroPadding == 1) {
-						return "0" + sequencePattern;
-					}
-
-					if (zeroPadding == 2) {
-						return "00" + sequencePattern;
-					}
-				} else {
-					// Can't help with formatting of letter based sequence numbers
-					return sequencePattern;
+				if (sequencePattern.toString().length == 2) {
+					return "0" + sequencePattern;
 				}
+
+				if (sequencePattern.toString().length == 1) {
+					return "00" + sequencePattern;
+				}
+
+				return sequencePattern;
 			};
 
 			scope.isSequencePatternFormatValid = function (sequencePattern) {
@@ -122,7 +121,7 @@ let newCourse = function (CourseActionCreators, CourseService) {
 			};
 
 			scope.createCourse = function () {
-				if (scope.newCourseIsValid()) {
+				if (scope.newCourseValidation.isValid) {
 					CourseActionCreators.createCourse(scope.view.state.courses.newCourse, scope.workgroupId, scope.year);
 					scope.resetNewCourseValidation();
 				}
@@ -130,43 +129,71 @@ let newCourse = function (CourseActionCreators, CourseService) {
 
 
 			// Will only 'positively' validate, not reject (while user is editing the sequence pattern)
-			scope.approveSequencePattern = function () {
+			scope.validateCourseDuringEdit = function () {
 				var newCourse = scope.view.state.courses.newCourse;
+				var courseDescription = newCourse.subjectCode + " " + newCourse.courseNumber + " " + newCourse.formattedSequencePattern;
+
 				// Automatically perform zero padding for user
 				newCourse.sequencePattern = scope.zeroPadSequencePatttern(newCourse.rawSequencePattern);
 
 				// Cannot validate sequencePattern without a course
-				if (!newCourse.courseNumber) { return; }
+				if (!newCourse.title) {
+					scope.newCourseValidation.isValid = false;
+					scope.tooltipErrorMessage = "Please select a course.";
+					return;
+				}
 
-				if (scope.newCourseIsValid()) {
+				if (scope.isSequencePatternFormatValid(newCourse.sequencePattern) == false) {
+					scope.newCourseValidation.isValid = false;
+					scope.newCourseValidation.tooltipErrorMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or 'a letter and 2 numbers' ('ex: 'A05'.";
+					return;
+				}
+
+				if (scope.newCourseIsValid() == false) {
+					scope.newCourseSearchQuery.isValid = false;
+					scope.newCourseValidation.tooltipErrorMessage = "Course " + courseDescription + " is already present on this schedule.";
+				} else {
 					scope.newCourseValidation.isValid = true;
 					scope.newCourseValidation.errorMessage = null;
-				} else {
-					scope.newCourseValidation.isValid = false;
+					scope.newCourseValidation.tooltipErrorMessage = null;
 				}
 			};
 
 			// Will validate the course and set an error message if needed
 			scope.validateCourse = function () {
-				// if new course is incomplete, reset to initial state
+				debugger;
+
+				// Incomplete course is invalid
 				if (!newCourse.title || !newCourse.sequencePattern) {
-					scope.newCourseValidation.isValid = false;
-					scope.newCourseValidation.errorMessage = null;
+					scope.resetNewCourseValidation();
+					return;
 				}
 
-				if (scope.newCourseIsValid()) {
-					scope.newCourseValidation.isValid = true;
-					scope.newCourseValidation.errorMessage = null;
-				} else {
+				if (scope.isSequencePatternFormatValid(newCourse.sequencePattern) == false) {
+					scope.newCourseValidation.isValid = false;
+					scope.newCourseValidation.errorMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or 'a letter and 2 numbers' ('ex: 'A05'.";
+					scope.newCourseValidation.tooltipErrorMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or 'a letter and 2 numbers' ('ex: 'A05'.";
+
+					return;
+				}
+
+				if (scope.newCourseIsValid() == false) {
 					scope.newCourseSearchQuery.isValid = false;
 					scope.newCourseValidation.errorMessage = "Course " + courseDescription + " is already present on this schedule.";
+					scope.newCourseValidation.tooltipErrorMessage = "Course " + courseDescription + " is already present on this schedule.";
 				}
+
+				// Is valid
+				scope.newCourseValidation.isValid = true;
+				scope.newCourseValidation.errorMessage = null;
+				scope.newCourseValidation.tooltipErrorMessage = null;
 			};
 
 			scope.resetNewCourseValidation = function () {
 				scope.newCourseValidation = {
 					isValid: false,
-					errorMessage: null
+					errorMessage: null,
+					tooltipErrorMessage: null
 				};
 			};
 		}
