@@ -10,6 +10,7 @@ import { AuthService } from './auth/auth.service';
 import { ApiService } from './api/api.service';
 import { SharedStateService } from '@core/shared-state/shared-state.service';
 import { ExceptionHandler } from './exception.service';
+import { SlowConnectionInterceptor } from './api/slow-connection.interceptor';
 
 @NgModule({
   // Injected modules
@@ -22,7 +23,9 @@ import { ExceptionHandler } from './exception.service';
     ApiService,
     SharedStateService,
     { provide: ErrorHandler, useClass: ExceptionHandler },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: SlowConnectionInterceptor, multi: true }
+
   ]
 })
 export class CoreModule {}
