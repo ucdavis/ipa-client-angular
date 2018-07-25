@@ -23,9 +23,9 @@ import { SlowConnectionInterceptor } from './api/slow-connection.interceptor';
     ApiService,
     SharedStateService,
     { provide: ErrorHandler, useClass: ExceptionHandler },
+    // Interceptors are fired in the sequence listed here
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: SlowConnectionInterceptor, multi: true }
-
   ]
 })
 export class CoreModule {}

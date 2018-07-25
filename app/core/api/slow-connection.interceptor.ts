@@ -3,68 +3,48 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, Htt
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 
+import * as toastr from 'toastr';
+
 @Injectable()
 export class SlowConnectionInterceptor implements HttpInterceptor {
-  requestCount: number = 0;
+  private requestCount: number = 0;
+  private timeUntilWarn: number = 15000; // 15 seconds
+  private timeUntilError: number = 45000; // 45 seconds
+  private warnTimeout: any;
+  private errorTimeout: any;
 
-  constructor(){}
+  constructor() {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Record request went out
     this.requestCount += 1;
 
-    // Reset warn and error timers
+    // Stop timers in case they are already running
+    clearTimeout(this.warnTimeout);
+    clearTimeout(this.errorTimeout);
 
-    // TODO: start timers for warn and error
+    // Start/restart timers for warn/error
+    this.warnTimeout = setTimeout(this.warn, this.timeUntilWarn);
+    this.errorTimeout = setTimeout(this.error, this.timeUntilError);
 
     return next.handle(request).pipe(tap((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {
-        debugger;
-        // do stuff with response if you want
+        // Record request successful
+        this.requestCount -= 1;
+
+        if (this.requestCount == 0) {
+          clearTimeout(this.warnTimeout);
+          clearTimeout(this.errorTimeout);
+        }
       }
     }));
+  }
+
+  warn() {
+    toastr.warning('Server appears to be slow. Please standby...');
+  }
+
+  error() {
+    toastr.error('Server appears to have failed.');
+  }
 }
-
-// var reqCount = 0;
-// return {
-//   request: function (config) {
-//     reqCount++;
-//     if ($rootScope.slowResTime) { $timeout.cancel($rootScope.slowResTime); }
-//     if ($rootScope.timeOutTimer) { $timeout.cancel($rootScope.timeOutTimer); }
-
-//     var slowResDelay = 15000; // 8 seconds
-//     var timeOutDelay = 45000; // 45 seconds
-
-//     $rootScope.slowResTime = $timeout(function () {
-//       $rootScope.$emit('toast', { message: "Server appears to be slow. Please standby...", type: "WARNING" });
-//     }, slowResDelay);
-
-//     $rootScope.timeOutTimer = $timeout(function () {
-//       $rootScope.$emit('toast', { message: "Server appears to have failed.", type: "ERROR", options: { timeOut: 0, closeButton: true } });
-//     }, timeOutDelay);
-
-//     return config;
-//   },
-//   response: function (response) {
-//     if (--reqCount === 0) {
-//       $timeout.cancel($rootScope.slowResTime);
-//       $timeout.cancel($rootScope.timeOutTimer);
-//       toastr.clear();
-//     }
-
-//     return response;
-//   },
-//   responseError: function (rejection) {
-//     if (--reqCount === 0) {
-//       $timeout.cancel($rootScope.slowResTime);
-//       $timeout.cancel($rootScope.timeOutTimer);
-//       toastr.clear();
-//     }
-
-//     // Redirect 'Access Denied' responses to /accessDenied
-//     if (rejection.status === 403) {
-//       $rootScope.loadingError = 403;
-//     }
-
-//     return $q.reject(rejection);
-//   }
