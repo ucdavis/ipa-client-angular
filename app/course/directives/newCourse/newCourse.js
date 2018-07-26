@@ -32,8 +32,8 @@ let newCourse = function (CourseActionCreators, CourseService, SectionService) {
 				return true;
 			};
 
-			scope.isSequencePatternFormatValid = function (sequencePattern) {
-				return SectionService.isSequencePatternFormatValid(sequencePattern);
+			scope.isSequenceNumberFormatValid = function (sequenceNumber) {
+				return SectionService.isSequenceNumberFormatValid(sequenceNumber);
 			};
 
 			scope.searchCourses = function (query) {
@@ -106,14 +106,14 @@ let newCourse = function (CourseActionCreators, CourseService, SectionService) {
 				var newCourse = scope.view.state.courses.newCourse;
 
 				// Automatically perform zero padding and letter capitalizing for user
-				newCourse.sequencePattern = SectionService.formatSequencePattern(newCourse.rawSequencePattern);
+				newCourse.sequencePattern = SectionService.formatSequenceNumber(newCourse.rawSequencePattern);
 
 				var courseDescription = newCourse.subjectCode + " " + newCourse.courseNumber + " - " + newCourse.sequencePattern;
 
 				// Ensure both course and sequence number have been filled out
 				if (scope.isCourseComplete() == false) { return; }
 
-				if (scope.isSequencePatternFormatValid(newCourse.sequencePattern) == false) {
+				if (SectionService.isSequenceNumberFormatValid(newCourse.sequencePattern) == false) {
 					scope.newCourseValidation.tooltipErrorMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or 'a letter and 2 numbers' ('ex: 'A05').";
 					return;
 				}
