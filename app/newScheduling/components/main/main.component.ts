@@ -14,6 +14,7 @@ import * as toastr from 'toastr';
   templateUrl: './main.component.html'
 })
 export class MainComponent {
+  tooltip: string = 'Taco';
   scheduling: Observable<SchedulingState>;
   schedulingName: String;
   schedulingShow: boolean;
