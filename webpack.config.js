@@ -131,6 +131,10 @@ module.exports = {
       { from: 'vendor/css/**/*.css', to: 'css', flatten: true },
       { from: 'node_modules/bootstrap/dist/css/**/*.css', to: 'css', flatten: true }
     ]),
+    // Copy css from newScheduling to dist root
+    new CopyWebpackPlugin([
+      { from: 'app/newScheduling/**/*.css', to: '', flatten: true }
+    ]),
     // Concat lib CSS
     new ConcatPlugin({
       sourceMap: false,
