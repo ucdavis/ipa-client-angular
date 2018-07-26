@@ -256,6 +256,9 @@ class CourseCtrl {
 			} else {
 				_self.courseActionCreators.closeDetails();
 			}
+
+			_self.$scope.view.newCourseSearchQuery = null;
+			_self.$scope.view.state.courses.newCourse = null;
 		};
 
 		this.$scope.termToggled = function (id) {
