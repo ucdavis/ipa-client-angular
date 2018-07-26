@@ -81,6 +81,8 @@ let newCourse = function (CourseActionCreators, CourseService, SectionService) {
 				if (!scope.newCourseValidation.tooltipErrorMessage) {
 					CourseActionCreators.createCourse(scope.view.state.courses.newCourse, scope.workgroupId, scope.year);
 					scope.newCourseValidation.tooltipErrorMessage = "Select a course and enter a sequence number";
+					scope.view.newCourseSearchQuery = null;
+					scope.view.state.courses.newCourse = null;
 				}
 			};
 			// returns false if either course of sequenceNumber is missing, and sets relevant validation
