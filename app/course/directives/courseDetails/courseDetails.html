@@ -49,14 +49,14 @@
 							<div class="new-course__create-btn"
 							     tooltip-append-to-body="true"
 							     tooltip-placement="left"
-							     uib-tooltip="{{ courseDetails.sequencePatternTooltipMessage }}"
-							     ng-class="{ 'course-details__validation-error': courseDetails.sequencePatternTooltipMessage }">
+							     uib-tooltip="{{ courseDetails.sequencePatternTooltipMessage }}">
 								<ipa-input value="view.selectedEntity.sequencePattern"
 								           on-update="updateSequencePattern()"
 								           on-blur="updateSequencePattern()"
 								           update-delay="50"
 								           place-holder="sequenceNumberPlaceholder"
-								           ng-if="!view.state.uiState.tableLocked">
+								           ng-if="!view.state.uiState.tableLocked"
+								           is-invalid="courseDetails.sequencePatternTooltipMessage">
 								</ipa-input>
 							</div>
 							<p ng-if="view.state.uiState.tableLocked" ng-bind="view.selectedEntity.sequencePattern" class="form-control-static"></p>
