@@ -1,6 +1,6 @@
 import './newCourse.css';
 
-let newCourse = function (CourseActionCreators, CourseService) {
+let newCourse = function (CourseActionCreators, CourseService, SectionService) {
 	return {
 		restrict: 'E',
 		template: require('./newCourse.html'),
@@ -32,40 +32,8 @@ let newCourse = function (CourseActionCreators, CourseService) {
 				return true;
 			};
 
-			scope.zeroPadSequencePatttern = function (sequencePattern) {
-				// Can't help with formatting of letter based sequence numbers
-				if (isNumber(sequencePattern) == false) { return sequencePattern; }
-
-				if (sequencePattern.toString().length == 2) {
-					return "0" + sequencePattern;
-				}
-
-				if (sequencePattern.toString().length == 1) {
-					return "00" + sequencePattern;
-				}
-
-				return sequencePattern;
-			};
-
 			scope.isSequencePatternFormatValid = function (sequencePattern) {
-				// Must exist to be valid
-				if (!sequencePattern) { return false; }
-
-				var stringSequencePattern = String(sequencePattern);
-
-				// Sequence pattern must be 3 characters
-				if (stringSequencePattern.length != 3) { return false; }
-
-				// First character must be a letter or number
-				if (isNumber(stringSequencePattern[0]) == false && isLetter(stringSequencePattern[0]) == false) { return false; }
-
-				// Second character must be a number
-				if (isNumber(stringSequencePattern[1]) == false) { return false; }
-
-				// Third character must be a number
-				if (isNumber(stringSequencePattern[2]) == false) { return false; }
-
-				return true;
+				return SectionService.isSequencePatternFormatValid(sequencePattern);
 			};
 
 			scope.searchCourses = function (query) {
@@ -137,8 +105,8 @@ let newCourse = function (CourseActionCreators, CourseService) {
 			scope.validateCourse = function () {
 				var newCourse = scope.view.state.courses.newCourse;
 
-				// Automatically perform zero padding for user
-				newCourse.sequencePattern = scope.zeroPadSequencePatttern(newCourse.rawSequencePattern);
+				// Automatically perform zero padding and letter capitalizing for user
+				newCourse.sequencePattern = SectionService.formatSequencePattern(newCourse.rawSequencePattern);
 
 				var courseDescription = newCourse.subjectCode + " " + newCourse.courseNumber + " - " + newCourse.sequencePattern;
 
