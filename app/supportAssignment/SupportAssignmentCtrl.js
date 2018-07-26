@@ -123,10 +123,6 @@ class SupportAssignmentCtrl {
 			return results;
 		};
 
-		_self.$scope.startFilter = function (query) {
-			SupportActions.updateTableFilter(query);
-		};
-
 		_self.$scope.setActiveTab = function (tabName) {
 			_self.$location.search({ tab: tabName });
 			switch (tabName) {
@@ -179,16 +175,6 @@ class SupportAssignmentCtrl {
 			}
 
 			return false;
-		};
-
-		// Will delete an empty assignment
-		_self.$scope.deleteAssignment = function (instructionalSupportAssignment) {
-			SupportActions.deleteAssignment(instructionalSupportAssignment);
-		};
-
-		_self.$scope.removeStaffFromSlot = function (supportAssignment) {
-			var supportStaffId = supportAssignment.supportStaffId;
-			SupportActions.removeStaffFromSlot(supportAssignment.id, supportStaffId);
 		};
 
 		// Set the active tab according to the URL

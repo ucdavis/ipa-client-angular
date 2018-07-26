@@ -1,0 +1,33 @@
+.budget-comparison-report {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  font-size: 12px;
+}
+
+.budget-comparison-report table {
+  font-size: 12px;
+}
+
+/* Bootstrap overrides */
+.form-horizontal .form-group {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.table > thead > tr > th {
+  border-bottom:unset;
+}
+
+.budget-comparison-report__scenario-selector-tray {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+}
+
+.budget-comparison-report__scenario-selector-container {
+  width: 30%;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+}

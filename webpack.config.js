@@ -53,7 +53,8 @@ module.exports = {
     sharedApp: './app/shared/sharedApp.js',
     teachingCallApp: './app/teachingCall/teachingCallApp.js',
     workgroupApp: './app/workgroup/workgroupApp.js',
-    workloadSummaryReportApp: './app/workloadSummaryReport/workloadSummaryReportApp.js'
+    workloadSummaryReportApp: './app/workloadSummaryReport/workloadSummaryReportApp.js',
+    reportsApp: './app/reports/reportsApp.js'
   },
   output: {
     filename: 'js/[name].js',
@@ -200,6 +201,7 @@ module.exports = {
       "/*": {
         target: "http://localhost:9000",
         bypass: function(req, res, proxyOptions) {
+          if ((req.url.indexOf("/reports") > -1 ) && (req.url != "/reports.html")) { return "/reports.html"; }
           if ((req.url.indexOf("/summary") > -1 ) && (req.url != "/summary.html")) { return "/summary.html"; }
           if ((req.url.indexOf("/admin") > -1 ) && (req.url != "/admin.html")) { return "/admin.html"; }
           if ((req.url.indexOf("/budget") > -1 ) && (req.url != "/budget.html")) { return "/budget.html"; }

@@ -1,0 +1,10 @@
+.new-course__submit-tray {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 25px;
+  margin-top: 35px;
+}
+
+.new-course__create-btn {
+  padding-left: 10px;
+}

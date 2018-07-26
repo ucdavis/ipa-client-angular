@@ -21,6 +21,8 @@ class TeachingAssignmentService {
 					return "Work Life Balance";
 				} else if (teachingAssignment.leaveOfAbsence) {
 					return "Leave of Absence";
+				} else if (teachingAssignment.sabbaticalInResidence) {
+					return "Sabbatical In Residence";
 				} else if (course) {
 					return course.subjectCode + " " + course.courseNumber;
 				}

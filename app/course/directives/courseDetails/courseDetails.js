@@ -1,9 +1,17 @@
-let courseDetails = function () {
+import './courseDetails.css';
+
+let courseDetails = function (CourseActionCreators, SectionService) {
 	return {
 		restrict: 'E',
 		template: require('./courseDetails.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
+			scope.originalSequencePattern = angular.copy(scope.view.selectedEntity.sequencePattern);
+			scope.sequenceNumberPlaceholder = "Example: '001' or 'A02'";
+			scope.courseDetails = {
+				sequencePatternTooltipMessage: null
+			};
+
 			/**
 			 * Filters out sequencePatterns based on the current course.
 			 * It also filters out patterns that are already used for
@@ -37,6 +45,47 @@ let courseDetails = function () {
 				}
 			};
 
+			scope.updateSequencePattern = function () {
+				let sequencePattern = scope.view.selectedEntity.sequencePattern;
+
+				// Do nothing if sequencePattern is unchanged
+				if (sequencePattern == scope.originalSequencePattern) {
+					scope.courseDetails.sequencePatternTooltipMessage = null;
+					return true;
+				}
+
+				if (SectionService.isSequencePatternValid(sequencePattern) == false) {
+					scope.courseDetails.sequencePatternTooltipMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or '1 letter' (ex: 'A').";
+					return;
+				}
+
+				if (scope.isSequencePatternUnique(sequencePattern) == false ) {
+					scope.courseDetails.sequencePatternTooltipMessage = "Sequence pattern already in use";
+					return;
+				}
+
+				scope.courseDetails.sequencePatternTooltipMessage = null;
+				scope.view.selectedEntity.sequencePattern = sequencePattern;
+
+				scope.originalSequencePattern = sequencePattern;
+				CourseActionCreators.updateCourse(scope.view.selectedEntity);
+			};
+
+			scope.isSequencePatternUnique = function (sequencePattern) {
+				let courseDescription = scope.view.selectedEntity.subjectCode + "-" + scope.view.selectedEntity.courseNumber + "-" + sequencePattern;
+				let isUnique = true;
+
+				scope.view.state.courses.ids.forEach(function(courseId) {
+					let course = scope.view.state.courses.list[courseId];
+					let slotCourseDescription = course.subjectCode + "-" + course.courseNumber + "-" + course.sequencePattern;
+
+					if (courseDescription == slotCourseDescription) {
+						isUnique = false;
+					}
+				});
+
+				return isUnique;
+			};
 		}
 	};
 };

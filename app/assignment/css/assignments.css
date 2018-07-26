@@ -965,3 +965,10 @@ li.active-term .dropdown-term-row {
 	background-color: #f0f0f0;
 	color: rgb(123, 123, 123);
 }
+
+.instructor-type-header {
+	font-weight: bold;
+	padding-top: 30px;
+	padding-bottom: 5px;
+	color: #616060;
+}

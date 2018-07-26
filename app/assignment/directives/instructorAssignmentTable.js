@@ -1,11 +1,25 @@
 /**
  * Provides the main course table in the Courses View
  */
-let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) {
+let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, AuthService) {
 	return {
 		restrict: 'A',
+		scope: {
+			state: '=',
+			showTheStaff: '=',
+			instructorTypeId: '=',
+			sharedState: '='
+		},
 		link: function (scope, element, attrs) {
+			scope.sharedState = scope.sharedState || AuthService.getSharedState();
+
 			scope.view = {};
+			scope.view.state = scope.state;
+
+			$rootScope.$on('assignmentStateChanged', function (event, data) {
+				scope.view.state = data;
+				scope.renderTable();
+			});
 
 			// Filter instructors with assignmentsCompleted if filter is active
 			scope.showCompletedInstructor = function (instructor) {
@@ -53,6 +67,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 				|| teachingAssignment.courseRelease == true
 				|| teachingAssignment.workLifeBalance == true
 				|| teachingAssignment.leaveOfAbsence == true
+				|| teachingAssignment.sabbaticalInResidence == true
 				|| teachingAssignment.inResidence == true) {
 					return true;
 				}
@@ -85,12 +100,11 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 				|| teachingAssignment.inResidence
 				|| teachingAssignment.workLifeBalance
 				|| teachingAssignment.leaveOfAbsence
+				|| teachingAssignment.sabbaticalInResidence
 				|| teachingAssignment.sabbatical);
 			};
 
-			$rootScope.$on('assignmentStateChanged', function (event, data) {
-				scope.view.state = data;
-
+			scope.renderTable = function () {
 				// If courses is undefined do nothing
 				// The app is in the process of re-routing to a valid url
 				if (scope.view.state.courses) {
@@ -215,6 +229,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 													displayTitle += "WORK LIFE BALANCE";
 												} else if (teachingAssignment.leaveOfAbsence) {
 													displayTitle += "LEAVE OF ABSENCE";
+												} else if (teachingAssignment.sabbaticalInResidence) {
+													displayTitle += "SABBATICAL IN RESIDENCE";
 												} else if (teachingAssignment.sabbatical) {
 													displayTitle += "SABBATICAL";
 												}
@@ -232,7 +248,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 											}
 
 											courseHtml += "\">";
-											courseHtml += "<p>" + displayTitle + "</p>";
+											courseHtml += "<p class='instructors-table__preference-title'>" + displayTitle + "</p>";
 											courseHtml += "<div class=\"tile-assignment-details\">";
 											courseHtml += plannedSeatsHtml;
 											courseHtml += "<br />";
@@ -267,7 +283,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 										// Track courses that were already present in 'interested', and should be filtered from 'other'
 										var interestedCourseIds = [];
 										var firstInterestedCourseAdded = false;
-										var nonCoursePreferences = {buyout: false, sabbatical: false, inResidence: false, workLifeBalance: false, leaveOfAbsence: false, courseRelease: false};
+										var nonCoursePreferences = {buyout: false, sabbatical: false, inResidence: false, workLifeBalance: false, leaveOfAbsence: false, courseRelease: false, sabbaticalInResidence: false};
 
 										// If the instructor has teachingAssignments in this term, show them first
 										if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
@@ -277,7 +293,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 												var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
 												// This teachingAssignment is a buyout/sabb/release
-												if (teachingAssignment.approved == false && (teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.workLifeBalance || teachingAssignment.leaveOfAbsence || teachingAssignment.sabbatical)) {
+												if (teachingAssignment.approved == false && (teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.workLifeBalance || teachingAssignment.leaveOfAbsence || teachingAssignment.sabbaticalInResidence || teachingAssignment.sabbatical)) {
 													let preferenceDisplayText = "";
 
 													if (teachingAssignment.buyout) {
@@ -295,6 +311,9 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 													} else if (teachingAssignment.leaveOfAbsence) {
 														preferenceDisplayText = "Leave of Absence";
 														nonCoursePreferences.leaveOfAbsence = true;
+													} else if (teachingAssignment.sabbaticalInResidence) {
+														preferenceDisplayText = "Sabbatical In Residence";
+														nonCoursePreferences.sabbaticalInResidence = true;
 													} else if (teachingAssignment.sabbatical) {
 														preferenceDisplayText = "Sabbatical";
 														nonCoursePreferences.sabbatical = true;
@@ -387,6 +406,13 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 											courseHtml += " data-term-code=\"" + termCode + "\"";
 											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
 											courseHtml += " href=\"#\">Leave of Absence</a></li>";
+										}
+										if (nonCoursePreferences.sabbaticalInResidence == false) {
+											courseHtml += "<li><a";
+											courseHtml += " data-is-sabbatical-in-residence=\"true\"";
+											courseHtml += " data-term-code=\"" + termCode + "\"";
+											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+											courseHtml += " href=\"#\">Sabbatical In Residence</a></li>";
 										}
 										if (nonCoursePreferences.courseRelease == false) {
 											courseHtml += "<li><a";
@@ -510,7 +536,10 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 						selector: '[data-toggle="tooltip"]'
 					});
 				}
-			}); // end on event 'assignmentStateChanged'
+			};
+
+			// end on event 'assignmentStateChanged'
+
 			// Handle Instructor UI events
 			element.click(function (e) {
 				let $el = $(e.target);
@@ -523,6 +552,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 					var isInResidence = $el.data('is-in-residence');
 					var isWorkLifeBalance = $el.data('is-work-life-balance');
 					var isLeaveOfAbsence = $el.data('is-leave-of-absence');
+					var isSabbaticalInResidence = $el.data('is-sabbatical-in-residence');
 					var isBuyout = $el.data('is-buyout');
 					var termCode = $el.data('term-code');
 
@@ -547,6 +577,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 							inResidence: isInResidence,
 							workLifeBalance: isWorkLifeBalance,
 							leaveOfAbsence: isLeaveOfAbsence,
+							sabbaticalInResidence: isSabbaticalInResidence,
 							sabbatical: isSabbatical
 						};
 
@@ -623,6 +654,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators) 
 					}
 				}
 			}); // end UI event handler
+
+			scope.renderTable();
 		} // end link
 	};
 };

@@ -79,7 +79,14 @@
 	color: #24292e;
 }
 
-.ipa-button--disabled {
+.ipa-button--dark-skin-disabled {
+	cursor: default;
+	background-color: #f0f1f1;
+	border-color: #f0f1f1;
+	color: rgb(177, 177, 177);
+}
+
+.ipa-button--light-skin-disabled {
 	cursor: default;
 	background-color: #f0f1f1;
 }

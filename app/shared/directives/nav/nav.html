@@ -158,13 +158,13 @@
 		</ul>
 
 		<ul id="main-menu" class="main-menu">
-			<li ng-class="{ 'active': currentBaseHref == 'scheduleSummaryReport' || currentBaseHref == 'registrarReconciliationReport' || currentBaseHref == 'teachingCallResponseReport' || currentBaseHref == 'workloadSummaryReport', 'opened': expanded == 'reports'}"
+			<li ng-class="{ 'active': currentBaseHref == 'scheduleSummaryReport' || currentBaseHref == 'registrarReconciliationReport' || currentBaseHref == 'teachingCallResponseReport' || currentBaseHref == 'workloadSummaryReport' || currentBaseHref == 'reports', 'opened': expanded == 'reports'}"
 				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('reports')">
 					<i class="entypo-doc-text"></i>
 					<span class="title">Reports</span>
 				</a>
-				<ul ng-class="{ 'visible': expanded == 'reports' || (!expanded && (currentBaseHref == 'registrarReconciliationReport' || currentBaseHref == 'scheduleSummaryReport' || currentBaseHref == 'teachingCallResponseReport' || currentBaseHref == 'workloadSummaryReport') ) }">
+				<ul ng-class="{ 'visible': expanded == 'reports' || (!expanded && (currentBaseHref == 'registrarReconciliationReport' || currentBaseHref == 'scheduleSummaryReport' || currentBaseHref == 'teachingCallResponseReport' || currentBaseHref == 'workloadSummaryReport' || currentBaseHref == 'reports') ) }">
 					<li ng-class="{ 'active': currentBaseHref == 'registrarReconciliationReport' }">
 						<a ng-href="/registrarReconciliationReport/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03' }}">
 						Registrar Reconciliation
@@ -183,6 +183,11 @@
 					<li ng-class="{ 'active': currentBaseHref == 'workloadSummaryReport' }">
 						<a ng-href="/workloadSummaryReport/{{ workgroupId }}/{{ year }}">
 							Workload Summary
+						</a>
+					</li>
+					<li ng-class="{ 'active': currentBaseHref == 'reports' }">
+						<a ng-href="/reports/{{ workgroupId }}/{{ year }}/budgetComparisonReport">
+							Budget Comparison
 						</a>
 					</li>
 				</ul>
