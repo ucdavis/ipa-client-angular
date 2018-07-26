@@ -3,7 +3,8 @@ import { MainComponent } from './components/main/main.component';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes }  from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { StoreModule } from '@ngrx/store';
 import { schedulingReducer } from './reducers/scheduling.reducers';
@@ -14,6 +15,10 @@ import { CoreModule } from '@core/core.module';
 import { AuthGuard } from '@core/auth/auth-guard.service';
 import { SectionGroupResolver } from '@core/resolvers/section-group-resolver.service';
 import { UrlGenerationResolver } from '@core/resolvers/url-generation-resolver.service';
+
+// Angular Material Component imports
+import '@angular/material/prebuilt-themes/indigo-pink.css'; // might want to create a vendor.ts file for all third-party imports
+import { MatButtonModule, MatTooltipModule } from '@angular/material';
 
 const appRoutes: Routes = [
   {
@@ -38,12 +43,15 @@ const appRoutes: Routes = [
     BrowserModule,
     CoreModule,
     StoreModule.forRoot({
-      scheduling: schedulingReducer,
+      scheduling: schedulingReducer
     }),
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
-    )
+    ),
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatTooltipModule
   ],
   declarations: [AppComponent, MainComponent],
   providers: [SchedulingActions, AuthGuard, SectionGroupResolver, UrlGenerationResolver],
