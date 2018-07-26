@@ -7,7 +7,7 @@
 		placeholder="{{placeHolder}}"
 		ng-readonly="readOnly || labelReadOnly"
 		ng-keyup="updateInput()"
-		ng-class="{'ipa-input--read-only': readOnly, 'ipa-input--label-read-only': labelReadOnly }">
+		ng-class="{'ipa-input--read-only': readOnly, 'ipa-input--label-read-only': labelReadOnly, 'ipa-input--invalid': isInvalid }">
 
 	<input class="ipa-input"
 		ng-show="mode == 'currency'"
