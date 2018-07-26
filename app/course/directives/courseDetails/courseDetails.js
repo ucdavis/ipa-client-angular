@@ -1,9 +1,16 @@
-let courseDetails = function () {
+import './courseDetails.css';
+
+let courseDetails = function (CourseActionCreators) {
 	return {
 		restrict: 'E',
 		template: require('./courseDetails.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
+			scope.sequenceNumberPlaceholder = "Example: '001' or 'A02'";
+			scope.courseDetails = {
+				sequencePatternTooltipMessage: null
+			};
+
 			/**
 			 * Filters out sequencePatterns based on the current course.
 			 * It also filters out patterns that are already used for
@@ -37,6 +44,28 @@ let courseDetails = function () {
 				}
 			};
 
+			scope.updateSequencePattern = function () {
+
+				if (SectionService.isSequencePatternFormatValid(scope.view.selectedEntity.sequencePattern) == false) {
+					scope.courseDetails.sequencePatternTooltipMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or 'a letter and 2 numbers' ('ex: 'A05').";
+					return;
+				}
+
+				if (scope.isSequencePatternUnique() == false ) {
+					scope.courseDetails.sequencePatternTooltipMessage = "Sequence pattern already in use";
+					return;
+				}
+
+				scope.courseDetails.sequencePatternTooltipMessage = null;
+				// Otherwise save
+				// This is the route we need to fire, assuming sequence pattern was valid
+				CourseActionCreators.updateCourse(scope.view.selectedEntity);
+			};
+
+			scope.isSequencePatternUnique = function () {
+//			var taco = scope.sequencePatternsScopedByCurrentType();
+				debugger;
+			}
 		}
 	};
 };
