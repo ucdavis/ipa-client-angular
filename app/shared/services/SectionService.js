@@ -77,6 +77,9 @@ class SectionService {
 
 					// Third character must be a number
 					if (isNumber(stringSequenceNumber[2]) == false) { return false; }
+
+					// Should not be longer than 3 characters
+					if (stringSequenceNumber.length > 3) { return false; }
 				}
 
 				return true;

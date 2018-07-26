@@ -6,6 +6,7 @@ let courseDetails = function (CourseActionCreators, SectionService) {
 		template: require('./courseDetails.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
+			scope.originalSequencePattern = angular.copy(scope.view.selectedEntity.sequencePattern);
 			scope.sequenceNumberPlaceholder = "Example: '001' or 'A02'";
 			scope.courseDetails = {
 				sequencePatternTooltipMessage: null
@@ -45,28 +46,33 @@ let courseDetails = function (CourseActionCreators, SectionService) {
 			};
 
 			scope.updateSequencePattern = function () {
-        let formattedSequencePattern = SectionService.formatSequenceNumber(scope.view.selectedEntity.sequencePattern);
+				let sequencePattern = scope.view.selectedEntity.sequencePattern;
 
-        if (SectionService.isSequencePatternValid(formattedSequencePattern) == false) {
+				// Do nothing if sequencePattern is unchanged
+				if (sequencePattern == scope.originalSequencePattern) {
+					scope.courseDetails.sequencePatternTooltipMessage = null;
+					return true;
+				}
+
+				if (SectionService.isSequencePatternValid(sequencePattern) == false) {
 					scope.courseDetails.sequencePatternTooltipMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or '1 letter' (ex: 'A').";
 					return;
 				}
 
-				if (scope.isSequencePatternUnique(formattedSequencePattern) == false ) {
+				if (scope.isSequencePatternUnique(sequencePattern) == false ) {
 					scope.courseDetails.sequencePatternTooltipMessage = "Sequence pattern already in use";
 					return;
 				}
 
 				scope.courseDetails.sequencePatternTooltipMessage = null;
-        scope.view.selectedEntity.sequencePattern = formattedSequencePattern;
-        // Otherwise save
-				// This is the route we need to fire, assuming sequence pattern was valid
-				debugger;
+				scope.view.selectedEntity.sequencePattern = sequencePattern;
+
+				scope.originalSequencePattern = sequencePattern;
 				CourseActionCreators.updateCourse(scope.view.selectedEntity);
 			};
 
-			scope.isSequencePatternUnique = function (formattedSequencePattern) {
-				let courseDescription = scope.view.selectedEntity.subjectCode + "-" + scope.view.selectedEntity.courseNumber + "-" + formattedSequencePattern;
+			scope.isSequencePatternUnique = function (sequencePattern) {
+				let courseDescription = scope.view.selectedEntity.subjectCode + "-" + scope.view.selectedEntity.courseNumber + "-" + sequencePattern;
 				let isUnique = true;
 
 				scope.view.state.courses.ids.forEach(function(courseId) {
