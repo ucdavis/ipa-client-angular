@@ -1,28 +1,29 @@
-  <button (click)="getCourses()" matTooltip={{tooltip}} mat-raised-button>Get courses</button>
-  <button (click)="errorTest()" mat-button color="accent">Log error</button>
-  <button (click)="impersonateJarold()" matTooltip="Impersonate a user" mat-stroked-button color="primary">IMPERSONATE THE JAROLD</button>
-  <button (click)="unimpersonateJarold()" mat-flat-button color="warn">UNIMPERSONATE THE JAROLD</button>
-  <button (click)="makeToast()" mat-button disabled>make toast</button>
+<ipa-header></ipa-header>
+<button (click)="getCourses()" matTooltip={{tooltip}} mat-raised-button>Get courses</button>
+<button (click)="errorTest()" mat-button color="accent">Log error</button>
+<button (click)="impersonateJarold()" matTooltip="Impersonate a user" mat-stroked-button color="primary">IMPERSONATE THE JAROLD</button>
+<button (click)="unimpersonateJarold()" mat-flat-button color="warn">UNIMPERSONATE THE JAROLD</button>
+<button (click)="makeToast()" mat-button disabled>make toast</button>
 
-  <button (click)="toggleMessage()">Toggle Message</button>
-  <div *ngIf="schedulingShow">{{schedulingName}}</div>
+<button (click)="toggleMessage()">Toggle Message</button>
+<div *ngIf="schedulingShow">{{schedulingName}}</div>
 
-  <div style="width: 100%; display: flex;">
-    <div style="min-width: 40%;">
-      <div>Courses: (via get courses button)</div>
-      <ul>
-        <li *ngFor="let course of courses">
-            id: {{ course.id }}, description: {{ course.title }}
-        </li>
-      </ul>
-    </div>
+<div style="width: 100%; display: flex;">
+	<div style="min-width: 40%;">
+		<div>Courses: (via get courses button)</div>
+		<ul>
+			<li *ngFor="let course of courses">
+					id: {{ course.id }}, description: {{ course.title }}
+			</li>
+		</ul>
+	</div>
 
-    <div style="min-width: 40%;">
-      <div>SectionGroups (via route resolve)</div>
-      <ul>
-        <li *ngFor="let sectionGroup of sectionGroups">
-          id: {{ sectionGroup.id }}, termCode: {{ sectionGroup.termCode }}
-        </li>
-      </ul>
-    </div>
-  </div>
+	<div style="min-width: 40%;">
+		<div>SectionGroups (via route resolve)</div>
+		<ul>
+			<li *ngFor="let sectionGroup of sectionGroups">
+				id: {{ sectionGroup.id }}, termCode: {{ sectionGroup.termCode }}
+			</li>
+		</ul>
+	</div>
+</div>

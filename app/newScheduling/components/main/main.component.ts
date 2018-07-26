@@ -9,6 +9,8 @@ import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 
 import * as toastr from 'toastr';
 
+import { IpaHeader } from '@core/components/ipa-header/ipa-header.component';
+
 @Component({
   selector: 'main',
   templateUrl: './main.component.html'
