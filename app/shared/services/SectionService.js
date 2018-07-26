@@ -34,7 +34,7 @@ class SectionService {
 			// Designed to flexibly handle incomplete sequence patterns when possible
 			formatSequencePattern: function (sequencePattern) {
 				// Sequence pattern is invalid and unfixable
-				if (sequencePattern.length > 3) { return sequencePattern; }
+				if (!sequencePattern || sequencePattern.length > 3) { return sequencePattern; }
 
 				// Handle numeric patterns
 				if (isNumber(sequencePattern)) {
