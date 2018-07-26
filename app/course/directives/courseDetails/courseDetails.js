@@ -5,7 +5,7 @@ let courseDetails = function (CourseActionCreators, SectionService) {
 		replace: true,
 		link: function (scope, element, attrs) {
 			scope.originalSequencePattern = angular.copy(scope.view.selectedEntity.sequencePattern);
-			scope.sequenceNumberPlaceholder = "Example: '001' or 'A02'";
+			scope.sequenceNumberPlaceholder = "Example: '001' or 'A'";
 			scope.courseDetails = {
 				sequencePatternTooltipMessage: null
 			};
