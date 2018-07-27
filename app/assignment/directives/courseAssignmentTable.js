@@ -91,8 +91,6 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 								// Add input for course notes
 								courseHtml += "<div class='course-assignments__course-note'>";
 								courseHtml += '<input type="search" class="form-control" placeholder="Add Note" value="' + (course.note || "") + '" data-course-id="' + course.id + '" data-event-type="setCourseNote"/>';
-
-
 								courseHtml += "</div>";
 
 								courseHtml += "</div></div>"; // End course-description-cell

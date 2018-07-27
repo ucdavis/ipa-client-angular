@@ -75,6 +75,18 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				return false;
 			};
 
+			scope.findOrCreateInstructorNote = function (instructorId) {
+				let instructorNote = scope.view.state.instructorNotes.byInstructorId[instructorId];
+
+				if (instructorNote) { return instructorNote; }
+
+				return {
+					scheduleId: scope.view.state.userInterface.scheduleId,
+					instructorId: instructorId,
+					note: ""
+				};
+			};
+
 			// Build a string of html to display a column header (course, terms, etc.)
 			scope.renderHeader = function () {
 				// Render the header
@@ -191,6 +203,12 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 									courseHtml += "Preferences Submitted";
 									courseHtml += "</div>";
 								}
+
+								var instructorNote = scope.findOrCreateInstructorNote(instructorId);
+								// Add input for instructor notes
+								courseHtml += "<div class='course-assignments__course-note'>";
+								courseHtml += '<input type="search" class="form-control" placeholder="Add Note" value="' + (instructorNote.note) + '" data-instructor-id="' + instructor.id + '" data-schedule-id="' + scope.view.state.userInterface.scheduleId + '" data-event-type="setInstructorNote"/>';
+								courseHtml += "</div>";
 
 								courseHtml += "</div>"; // end description-cell
 
@@ -539,6 +557,34 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			};
 
 			// end on event 'assignmentStateChanged'
+
+			// Handle input box edits
+			element.on("keydown", function(e) {
+				let $el = $(e.target);
+				if ($el.data('event-type') != 'setInstructorNote') { return; }
+
+				if (e.key == 	"Enter") {
+					var instructorId = $el.data('instructor-id');
+					var scheduleId = $el.data('schedule-id');
+
+					var note = e.target.value;
+
+					AssignmentActionCreators.createOrUpdateInstructorNote(scheduleId, instructorId, note);
+				}
+			});
+
+			// Handle input box edits
+			element.on("change", function(e) {
+				var $el = $(e.target);
+				if ($el.data('event-type') != 'setInstructorNote') { return; }
+
+				var instructorId = $el.data('instructor-id');
+				var scheduleId = $el.data('schedule-id');
+
+				var note = e.target.value;
+
+				AssignmentActionCreators.createOrUpdateInstructorNote(scheduleId, instructorId, note);
+			});
 
 			// Handle Instructor UI events
 			element.click(function (e) {
