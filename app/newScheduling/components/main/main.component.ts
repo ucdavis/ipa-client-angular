@@ -21,8 +21,15 @@ export class MainComponent {
   schedulingShow: boolean;
   courses: Array<any>;
   sectionGroups: Array<any>;
+  selectedValue: string;
 
-  constructor(
+  foods: any[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'}
+  ];
+
+	constructor(
     private store: Store<AppState>,
     private schedulingActions: SchedulingActions,
     private activatedRoute: ActivatedRoute

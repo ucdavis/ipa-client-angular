@@ -27,3 +27,13 @@
 		</ul>
 	</div>
 </div>
+
+<mat-form-field>
+	<mat-select placeholder="Favorite food" [(ngModel)]="selectedValue" name="food">
+		<mat-option *ngFor="let food of foods" [value]="food.value">
+			{{food.viewValue}}
+		</mat-option>
+	</mat-select>
+</mat-form-field>
+
+<p> Selected value: {{selectedValue}} </p>

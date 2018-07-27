@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+
 
 import { StoreModule } from '@ngrx/store';
 import { schedulingReducer } from './reducers/scheduling.reducers';
@@ -19,6 +21,7 @@ import { UrlGenerationResolver } from '@core/resolvers/url-generation-resolver.s
 // Angular Material Component imports
 import '@angular/material/prebuilt-themes/indigo-pink.css'; // might want to create a vendor.ts file for all third-party imports
 import { MatButtonModule, MatTooltipModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material/select';
 
 const appRoutes: Routes = [
   {
@@ -51,7 +54,9 @@ const appRoutes: Routes = [
     ),
     BrowserAnimationsModule,
     MatButtonModule,
-    MatTooltipModule
+		MatTooltipModule,
+		MatSelectModule,
+		FormsModule
   ],
   declarations: [AppComponent, MainComponent],
   providers: [SchedulingActions, AuthGuard, SectionGroupResolver, UrlGenerationResolver],
