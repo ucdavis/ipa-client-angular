@@ -122,7 +122,7 @@ class AssignmentStateService {
 						if (instructorNotes.ids.indexOf(action.payload.instructorNote.id) == -1) {
 							instructorNotes.ids.push(action.payload.instructorNote.id);
 						}
-						instructorNotes.byInstructorId[instructorNote.instructorId] = instructorNote;
+						instructorNotes.byInstructorId[action.payload.instructorNote.instructorId] = action.payload.instructorNote;
 						return instructorNotes;
 					default:
 						return instructorNotes;
