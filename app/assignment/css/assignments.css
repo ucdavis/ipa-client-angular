@@ -972,3 +972,13 @@ li.active-term .dropdown-term-row {
 	padding-bottom: 5px;
 	color: #616060;
 }
+
+.course-assignments__course-note {
+	margin-top: 5px;
+	margin-right: 100px;
+}
+
+/* Improper BEM styling to override bootstrap */
+.course-assignments__course-note input {
+	height: 30px;
+}

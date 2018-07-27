@@ -34,6 +34,22 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Could not load assignment view.", type: "ERROR" });
 				});
 			},
+			updateCourseNote: function (courseId, note) {
+				var course = AssignmentStateService._state.courses.list[courseId];
+				course.note = note;
+				_self.AssignmentService.updateCourse(course).then(function (newCourse) {
+					_self.$rootScope.$emit('toast', { message: "Updated course note", type: "SUCCESS" });
+					var action = {
+						type: ActionTypes.UPDATE_COURSE_NOTE,
+						payload: {
+							course: newCourse
+						}
+					};
+					_self.AssignmentStateService.reduce(action);
+				}, function (err) {
+					_self.$rootScope.$emit('toast', { message: "Could not update course note.", type: "ERROR" });
+				});
+			},
 			updateTagFilters: function (tagIds) {
 				var action = {
 					type: ActionTypes.UPDATE_TAG_FILTERS,

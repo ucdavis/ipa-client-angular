@@ -26,6 +26,9 @@ class AssignmentService {
 	
 				return deferred.promise;
 			},
+			updateCourse: function (course) {
+				return ApiService.put("/api/courseView/courses/" + course.id, course);
+			},
 			updateSectionGroup: function (sectionGroup) {
 				return ApiService.put("/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup);
 			},
