@@ -29,6 +29,9 @@ class AssignmentService {
 			updateCourse: function (course) {
 				return ApiService.put("/api/courseView/courses/" + course.id, course);
 			},
+			updateInstructorNote: function (instructorNote) {
+				return ApiService.put("/api/schedules/" + instructorNote.scheduleId + "/instructors/" + instructor.id + "/instructorNotes", instructorNote);
+			},
 			updateSectionGroup: function (sectionGroup) {
 				return ApiService.put("/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup);
 			},

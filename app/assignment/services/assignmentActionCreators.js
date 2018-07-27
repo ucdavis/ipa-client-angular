@@ -50,6 +50,29 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Could not update course note.", type: "ERROR" });
 				});
 			},
+			createOrUpdateInstructorNote: function (scheduleId, instructorId, note) {
+				var instructorNote = AssignmentStateService._state.instructorNotes.byInstructorId[instructorId];
+
+				instructorNote = instructorNote ? instructorNote : {
+					scheduleId: scheduleId,
+					instructorId: instructorId
+				};
+
+				instructorNote.note = note;
+
+				_self.AssignmentService.updateInstructorNote(instructorNote).then(function (newInstructorNote) {
+					_self.$rootScope.$emit('toast', { message: "Updated course note", type: "SUCCESS" });
+					var action = {
+						type: ActionTypes.UPDATE_INSTRUCTOR_NOTE,
+						payload: {
+							instructorNote: newInstructorNote
+						}
+					};
+					_self.AssignmentStateService.reduce(action);
+				}, function (err) {
+					_self.$rootScope.$emit('toast', { message: "Could not update course note.", type: "ERROR" });
+				});
+			},
 			updateTagFilters: function (tagIds) {
 				var action = {
 					type: ActionTypes.UPDATE_TAG_FILTERS,
