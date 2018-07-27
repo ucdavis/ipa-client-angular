@@ -19,7 +19,7 @@ import { SectionGroupResolver } from '@core/resolvers/section-group-resolver.ser
 import { UrlGenerationResolver } from '@core/resolvers/url-generation-resolver.service';
 
 // Angular Material Component imports
-import '@angular/material/prebuilt-themes/indigo-pink.css'; // might want to create a vendor.ts file for all third-party imports
+
 import { MatButtonModule, MatTooltipModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -54,9 +54,9 @@ const appRoutes: Routes = [
     ),
     BrowserAnimationsModule,
     MatButtonModule,
-		MatTooltipModule,
-		MatSelectModule,
-		FormsModule
+    MatTooltipModule,
+    MatSelectModule,
+    FormsModule
   ],
   declarations: [AppComponent, MainComponent],
   providers: [SchedulingActions, AuthGuard, SectionGroupResolver, UrlGenerationResolver],

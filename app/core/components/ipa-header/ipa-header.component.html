@@ -1,6 +1,135 @@
-<div>
-	I am the header now
-	<div class="example-style">
-		I am also example style
-	</div>
-</div>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav mode="side" [(opened)]="sideNavOpened" class="ipa-header__sidenav">
+    <div class="ipa-header__side-nav-header">
+      IPA
+    </div>
+
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Home
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-action-row>
+      <mat-list class="ipa-header__mat-list">
+        <mat-list-item class="ipa-header__nav-option">
+          Staff
+        </mat-list-item>
+        <mat-list-item class="ipa-header__nav-option">
+          Instructor
+        </mat-list-item>
+        <mat-list-item class="ipa-header__nav-option">
+          Support Staff
+        </mat-list-item>
+      </mat-list>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <div>
+    Administration
+  </div>
+  <div>
+    Courses
+  </div>
+
+  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Instructors
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-action-row>
+      <mat-list>
+        <mat-list-item class="ipa-header__nav-option">
+          Assign Instructors
+        </mat-list-item>
+        <mat-list-item class="ipa-header__nav-option">
+          Teaching Call
+        </mat-list-item>
+      </mat-list>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-list class="ipa-header__mat-list">
+    <mat-list-item class="ipa-header__nav-option">
+      Schedule
+    </mat-list-item>
+  </mat-list>
+
+  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        TAs and Readers
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-action-row>
+      <mat-list>
+        <mat-list-item class="ipa-header__nav-option">
+          Support Assignments
+        </mat-list-item>
+        <mat-list-item class="ipa-header__nav-option">
+          Support Calls
+        </mat-list-item>
+      </mat-list>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-list class="ipa-header__mat-list">
+    <mat-list-item class="ipa-header__nav-option">
+      Budget
+    </mat-list-item>
+  </mat-list>
+
+  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Reports
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-action-row>
+      <mat-list>
+        <mat-list-item class="ipa-header__nav-option">
+          Registrar Reconciliation
+        </mat-list-item>
+        <mat-list-item class="ipa-header__nav-option">
+          Schedule Summary
+        </mat-list-item>
+        <mat-list-item class="ipa-header__nav-option">
+          Teaching Call Response
+        </mat-list-item>
+        <mat-list-item class="ipa-header__nav-option">
+          Workload Summary
+        </mat-list-item>
+      </mat-list>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+</mat-accordion>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar class="ipa-header">
+      <div class="ipa-header__left">
+        <div>
+          <button (click)="toggleSideNav()" matTooltip="Toggle Sidebar" mat-stroked-button color="basic">
+          <i  class="material-icons ipa-header__side-nav-ui">menu</i>
+          </button>
+        </div>
+        <span>Scheduling</span>
+      </div>
+      
+      <div class="ipa-header__right">
+        <span class="mat-subhead-1">Hello, Jarold & Lloyd</span>
+        <button class="ipa-header__logout"
+                (click)="impersonateJarold()"
+                matTooltip="Logout"
+                mat-stroked-button color="basic">
+          Logout
+        </button>
+      </div>
+    </mat-toolbar>
+  <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

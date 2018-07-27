@@ -1,0 +1,25 @@
+body {
+  margin: 0px;
+}
+
+.core__font-xs {
+  font-size: 12px;
+}
+
+.core__font-md {
+
+}
+
+.core__font-large {
+
+}
+
+/* button.mat-button.mat-warn,
+button.mat-raised-button.mat-warn,
+button.mat-icon-button.mat-warn,
+button.mat-fab.mat-warn,
+button.mat-mini-fab.mat-warn,
+button.mat-stroked-button.mat-warn,
+button.mat-flat-button.mat-warn {
+  background-color: green;
+} */
