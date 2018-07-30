@@ -1,5 +1,5 @@
 import { Injectable, ErrorHandler } from '@angular/core';
-import { ApiService } from './api/api.service';
+import { ApiService } from '@core/api/api.service';
 
 @Injectable({ providedIn: 'root' })
 export class ExceptionHandler extends ErrorHandler {

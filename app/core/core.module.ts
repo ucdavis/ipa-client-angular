@@ -6,12 +6,12 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
-import { AuthInterceptor } from './auth/auth.interceptor';
-import { AuthService } from './auth/auth.service';
-import { ApiService } from './api/api.service';
+import { AuthInterceptor } from '@core/auth/auth.interceptor';
+import { AuthService } from '@core/auth/auth.service';
+import { ApiService } from '@core/api/api.service';
 import { SharedStateService } from '@core/shared-state/shared-state.service';
-import { ExceptionHandler } from './exception.service';
-import { SlowConnectionInterceptor } from './api/slow-connection.interceptor';
+import { ExceptionHandler } from '@core/exception.service';
+import { SlowConnectionInterceptor } from '@core/api/slow-connection.interceptor';
 import { MatIconRegistry } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 
