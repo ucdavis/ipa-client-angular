@@ -7,16 +7,23 @@
   color: white;
 }
 
-/* need to refactor below CSS */
-
-.ipa-nav__category {
-  display: flex;
+.link {
   color: #aaabae;
 }
 
-.ipa-nav__category--selected {
+.accordion {
+  color: #aaabae;
+}
+
+.accordion-item {
+  color: #aaabae;
+}
+
+.ipa-nav .selected {
   color:white;
 }
+
+/* need to refactor below CSS */
 
 .example-container {
   position: absolute;
