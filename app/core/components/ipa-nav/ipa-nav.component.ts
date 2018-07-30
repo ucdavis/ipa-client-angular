@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavAccordion } from '@core/components/ipa-nav/nav-accordion.model';
 
 @Component({
   selector: 'ipa-nav',
@@ -9,10 +10,26 @@ export class IpaNav {
   isNavExpanded: boolean = false;
   expandedAccordion: string;
   activePage: string;
-
+  summary: NavAccordion;
+  instructor: NavAccordion;
+  schedule: NavAccordion;
+  report: NavAccordion;
   constructor() {
   }
 
+  ngOnInit() {
+    this.summary = {
+      description: "Summary",
+      key: "summary",
+      icon: "home",
+      links: []
+    }
+
+  this.summary.links.push({ description: 'Staff', key: 'staff'})
+  this.summary.links.push({ description: 'Instructor', key: 'instructor'})
+  this.summary.links.push({ description: 'Support Staff', key: 'support staff'})
+
+  }
   toggleSideNav () {
     this.isNavExpanded = !this.isNavExpanded;
   }

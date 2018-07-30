@@ -13,27 +13,11 @@
     </div>
 
     <mat-accordion>
-      <mat-expansion-panel [expanded]="expandedAccordion === 'summary'"
-                           (opened)="expandedAccordion = 'summary'"
-                           [hideToggle]="!(isNavExpanded)">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <i class="material-icons ipa-header__side-nav-ui">home</i>
-            <div *ngIf="isNavExpanded">Home</div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-nav-list class="ipa-header__mat-list" dense>
-          <mat-list-item class="ipa-header__nav-option">
-            <div *ngIf="isNavExpanded">Staff</div>
-          </mat-list-item>
-          <mat-list-item class="ipa-header__nav-option">
-            <div *ngIf="isNavExpanded">Instructor</div>
-          </mat-list-item>
-          <mat-list-item class="ipa-header__nav-option">
-            <div *ngIf="isNavExpanded">Support Staff</div>
-          </mat-list-item>
-        </mat-nav-list>
-      </mat-expansion-panel>
+      <ipa-nav-accordion categoryName="summary.description"
+                         categoryIconName="summary.icon"
+                         isNavExpanded="isNavExpanded"
+                         links="summary.links">
+      </ipa-nav-accordion>
 
       <mat-nav-list class="ipa-header__mat-list">
         <mat-list-item class="ipa-header__nav-option">
