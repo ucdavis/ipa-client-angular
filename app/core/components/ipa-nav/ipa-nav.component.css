@@ -1,0 +1,55 @@
+.header {
+  font-size: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  color: white;
+}
+
+/* need to refactor below CSS */
+
+.ipa-nav__category {
+  display: flex;
+  color: #aaabae;
+}
+
+.ipa-nav__category--selected {
+  color:white;
+}
+
+.example-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #eee;
+}
+
+.ipa-header__sidenav {
+  background-color: #303641;
+  padding: 10px;
+}
+.ipa-header__nav-option {
+  cursor: pointer;
+}
+
+.ipa-header__nav-option:hover {
+  background-color: #373c46;
+}
+
+.mat-expansion-panel {
+  background-color: #303641;
+}
+.mat-expansion-panel-spacing {
+  margin: 0px !important;
+}
+
+.ipa-header__mat-list {
+  padding-top: 0px;
+}
+
+.ipa-header__side-nav-ui {
+  font-size: 18px;
+}

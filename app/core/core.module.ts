@@ -25,6 +25,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 // Components
 import { IpaHeader } from '@core/components/ipa-header/ipa-header.component';
+import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
 
 @NgModule({
   // Injected modules
@@ -39,10 +40,10 @@ import { IpaHeader } from '@core/components/ipa-header/ipa-header.component';
     MatExpansionModule
   ],
   // Injected components and directives
-  declarations: [IpaHeader],
+  declarations: [IpaHeader, IpaNav],
   // Exports made available to modules that import core
   // You can't export unless you've wired into yourself
-  exports: [IpaHeader],
+  exports: [IpaNav],
   // Injected services
   providers: [
     AuthService,
