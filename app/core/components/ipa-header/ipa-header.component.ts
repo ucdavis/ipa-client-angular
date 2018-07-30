@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material';
 
 @Component({
   selector: 'ipa-header',
@@ -9,9 +7,5 @@ import { MatIconRegistry } from '@angular/material';
 })
 export class IpaHeader {
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon(
-      'thumbs-up',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg'));
-  }
+  constructor() {}
 }
