@@ -1,5 +1,5 @@
-import { AppComponent } from './components/app/app.component';
-import { MainComponent } from './components/main/main.component';
+import { AppComponent } from '@scheduling/components/app/app.component';
+import { MainComponent } from '@scheduling/components/main/main.component';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 
 
 import { StoreModule } from '@ngrx/store';
-import { schedulingReducer } from './reducers/scheduling.reducers';
+import { schedulingReducer } from '@scheduling/reducers/scheduling.reducers';
 import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 
 // Core imports
