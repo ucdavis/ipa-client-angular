@@ -9,3 +9,19 @@
 .icon {
   font-size: 18px;
 }
+
+mat-expansion-panel.ipa-nav-accordion {
+  box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+  padding-left: 16px;
+}
+
+.mat-expansion-indicator {
+  color: #aaabae;
+}
+
+.mat-expansion-panel-content {
+  padding: 0;
+}

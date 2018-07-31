@@ -36,6 +36,8 @@
 
 .mat-expansion-panel {
   background-color: #303641;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 .mat-expansion-panel-spacing {
   margin: 0px !important;
@@ -44,4 +46,3 @@
 .ipa-header__mat-list {
   padding-top: 0px;
 }
-
