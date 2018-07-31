@@ -30,3 +30,12 @@ button.mat-flat-button.mat-warn {
 .mat-expansion-indicator:after {
   color: #aaabae !important;
 }
+
+.core__sm-btn .mat-button-wrapper { /* Ensures button text will be sized accordingly */
+  font-size: 12px;
+  line-height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+}

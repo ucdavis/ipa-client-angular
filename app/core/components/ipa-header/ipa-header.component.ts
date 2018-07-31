@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./ipa-header.component.css']
 })
 export class IpaHeader {
+  selectedWorkgroup = 'dss_it';
 
   constructor() {}
 }

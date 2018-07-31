@@ -6,7 +6,7 @@
 
     <div class="ipa-header__right">
       <span class="core__font-xs">Hello, Jarold & Lloyd</span>
-      <button class="ipa-header__logout"
+      <button class="logout core__sm-btn"
               (click)="impersonateJarold()"
               matTooltip="Logout"
               mat-stroked-button color="basic">
@@ -14,17 +14,35 @@
       </button>
     </div>
   </mat-toolbar-row>
-  <mat-toolbar-row class="bottom-row core__font-xs">
+  <mat-toolbar-row class="bottom-row">
+    <!-- Year selector -->
     <div class="ipa-header__year">
       <button mat-button class="chevron-button">
         <mat-icon class="chevron">chevron_left</mat-icon>
       </button>
-      <div class="current-year">
+      <div class="current-year core__font-xs">
           2018-19
       </div>
       <button mat-button class="chevron-button">
         <mat-icon class="chevron">chevron_right</mat-icon>
       </button>
     </div>
+
+    <!-- Workgroup selector -->
+    <button mat-stroked-button [matMenuTriggerFor]="menu" class="workgroup-selector">DSS IT</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Jarold Studies</button>
+      <button mat-menu-item>American Taco Studies</button>
+      <button mat-menu-item>Psychology</button>
+      <button mat-menu-item>DSS IT</button>
+    </mat-menu>
+
+    <!-- Term selector -->
+    <button mat-stroked-button [matMenuTriggerFor]="menu">Fall Quarter</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Fall Quarter</button>
+      <button mat-menu-item>Winter Quarter</button>
+      <button mat-menu-item>Spring Quarter</button>
+    </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>

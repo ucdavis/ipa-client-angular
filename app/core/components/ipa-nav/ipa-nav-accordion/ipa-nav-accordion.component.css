@@ -18,6 +18,10 @@ mat-expansion-panel.ipa-nav-accordion {
   padding-left: 16px;
 }
 
+.collapsed {
+  padding-right: 0px;
+}
+
 .mat-expansion-panel-content {
   padding: 0;
 }

@@ -3,7 +3,8 @@
                      (opened)="activeAccordion = categoryName"
                      [hideToggle]="!(isNavExpanded)">
   <mat-expansion-panel-header expandedHeight="48px"
-                              collapsedHeight="48px">
+                              collapsedHeight="48px"
+                              [class.collapsed]="!isNavExpanded">
     <mat-panel-title class="accordion-header">
       <mat-icon class="icon">{{ navAccordion.icon }}</mat-icon>
       <div *ngIf="isNavExpanded">{{ navAccordion.description }}</div>

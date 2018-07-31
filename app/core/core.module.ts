@@ -22,6 +22,8 @@ import '@angular/material/prebuilt-themes/indigo-pink.css'; // might want to cre
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
 
 // Components
 import { IpaHeader } from '@core/components/ipa-header/ipa-header.component';
@@ -36,11 +38,12 @@ import { IpaNavAccordion } from '@core/components/ipa-nav/ipa-nav-accordion/ipa-
     MatToolbarModule,
     FormsModule,
     MatButtonModule,
-    MatIconModule,
     MatSidenavModule,
     MatListModule,
     MatExpansionModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule,
+    MatMenuModule
   ],
   // Injected components and directives
   declarations: [IpaHeader, IpaNav, IpaNavAccordion],
