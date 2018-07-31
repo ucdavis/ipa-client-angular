@@ -1,0 +1,11 @@
+.accordion-header,
+.accordion-item,
+.ipa-nav-accordion {
+  background-color: #303641;
+  box-shadow: none;
+  color: #aaabae;
+}
+
+.icon {
+  font-size: 18px;
+}

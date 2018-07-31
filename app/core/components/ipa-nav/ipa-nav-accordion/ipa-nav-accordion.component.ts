@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NavAccordion } from '@core/components/ipa-nav/nav-accordion.model';
+import { INavAccordion } from '@core/components/ipa-nav/nav-accordion.model';
 
 @Component({
   selector: 'ipa-nav-accordion',
@@ -7,8 +7,8 @@ import { NavAccordion } from '@core/components/ipa-nav/nav-accordion.model';
   styleUrls: ['./ipa-nav-accordion.component.css']
 })
 export class IpaNavAccordion {
-  @Input() navAccordion: NavAccordion;
+  @Input() navAccordion: INavAccordion;
   @Input() isNavExpanded: boolean;
-
-  constructor() {}
+  @Input() activeAccordion: boolean;
+  @Input() activePage: string;
 }

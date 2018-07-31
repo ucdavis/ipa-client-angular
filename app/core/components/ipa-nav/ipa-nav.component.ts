@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavAccordion } from '@core/components/ipa-nav/nav-accordion.model';
+import { INavAccordion } from '@core/components/ipa-nav/nav-accordion.model';
 
 @Component({
   selector: 'ipa-nav',
@@ -8,33 +8,59 @@ import { NavAccordion } from '@core/components/ipa-nav/nav-accordion.model';
 })
 export class IpaNav {
   isNavExpanded: boolean = false;
-  expandedAccordion: string;
+  activeAccordion: string;
   activePage: string;
-  summary: NavAccordion;
-  instructor: NavAccordion;
-  schedule: NavAccordion;
-  report: NavAccordion;
-  constructor() {
-  }
+  summary: INavAccordion;
+  instructor: INavAccordion;
+  taAndReader: INavAccordion;
+  report: INavAccordion;
 
-  ngOnInit() {
+  constructor() {
     this.summary = {
       description: "Summary",
       key: "summary",
       icon: "home",
-      links: []
-    }
+      links: [
+        { description: 'Staff', key: 'staff'},
+        { description: 'Support Staff', key: 'support staff'}
+      ]
+    };
+    this.instructor = {
+      description: "Instructor",
+      key: "summary",
+      icon: "person_add",
+      links: [
+        { description: 'Staff', key: 'staff'},
+        { description: 'Support Staff', key: 'support staff'}
+      ]
+    };
+    this.taAndReader = {
+      description: "TAs and Readers",
+      key: "summary",
+      icon: "people",
+      links: [
+        { description: 'Staff', key: 'staff'},
+        { description: 'Support Staff', key: 'support staff'}
+      ]
+    };
 
-  this.summary.links.push({ description: 'Staff', key: 'staff'})
-  this.summary.links.push({ description: 'Instructor', key: 'instructor'})
-  this.summary.links.push({ description: 'Support Staff', key: 'support staff'})
-
+    this.report = {
+      description: "Report",
+      key: "summary",
+      icon: "assignment",
+      links: [
+        { description: 'Staff', key: 'staff'},
+        { description: 'Support Staff', key: 'support staff'}
+      ]
+    };
   }
+
+  ngOnInit() {
+  }
+
   toggleSideNav () {
     this.isNavExpanded = !this.isNavExpanded;
   }
-
-
 }
 
 // scope.year = $routeParams.year;

@@ -1,0 +1,16 @@
+<mat-expansion-panel class="ipa-nav-accordion"
+                     [expanded]="expandedAccordion === categoryName"
+                     (opened)="expandedAccordion = categoryName"
+                     [hideToggle]="!(isNavExpanded)">
+  <mat-expansion-panel-header>
+    <mat-panel-title class="accordion-header">
+      <i class="material-icons icon">{{ navAccordion.icon }}</i>
+      <div *ngIf="isNavExpanded">{{ navAccordion.description }}</div>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <mat-nav-list dense>
+    <mat-list-item class="accordion-item" *ngFor="let link of navAccordion.links">
+      <div *ngIf="isNavExpanded">{{ link.description }}</div>
+    </mat-list-item>
+  </mat-nav-list>
+</mat-expansion-panel>

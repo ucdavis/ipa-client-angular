@@ -11,12 +11,9 @@
   color: #aaabae;
 }
 
-.accordion {
-  color: #aaabae;
-}
-
-.accordion-item {
-  color: #aaabae;
+.sidenav {
+  background-color: #303641;
+  padding: 10px;
 }
 
 .ipa-nav .selected {
@@ -25,21 +22,12 @@
 
 /* need to refactor below CSS */
 
-.example-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #eee;
-}
-
-.ipa-header__sidenav {
-  background-color: #303641;
-  padding: 10px;
-}
 .ipa-header__nav-option {
   cursor: pointer;
+}
+
+.icon {
+  font-size: 18px;
 }
 
 .ipa-header__nav-option:hover {
@@ -57,6 +45,3 @@
   padding-top: 0px;
 }
 
-.ipa-header__side-nav-ui {
-  font-size: 18px;
-}

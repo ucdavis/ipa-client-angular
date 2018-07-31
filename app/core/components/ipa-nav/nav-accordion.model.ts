@@ -1,8 +1,8 @@
-import { NavLink } from './nav-link.model';
+import { INavLink } from '@core/components/ipa-nav/nav-link.model';
 
-export interface NavAccordion {
+export interface INavAccordion {
   description: string;
   key: string;
   icon: string;
-  links: NavLink[];
+  links: INavLink[];
 }

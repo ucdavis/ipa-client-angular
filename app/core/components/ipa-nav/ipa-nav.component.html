@@ -1,121 +1,72 @@
-<mat-sidenav-container class="example-container" hasBackdrop="false">
+<mat-sidenav-container hasBackdrop="false">
   <mat-sidenav mode="over"
                opened="true"
-               class="ipa-header__sidenav"
+               class="sidenav"
                (mouseenter)="toggleSideNav()"
                (mouseleave)="toggleSideNav()">
-
     <div class="header">
-      <div *ngIf="isNavExpanded">
-        IPA
-      </div>
-     <i class="material-icons ipa-header__side-nav-ui">menu</i>
+    <div *ngIf="isNavExpanded">IPA</div>
+     <i class="material-icons icon">menu</i>
     </div>
 
     <mat-accordion>
-      <ipa-nav-accordion categoryName="summary.description"
-                         categoryIconName="summary.icon"
-                         isNavExpanded="isNavExpanded"
-                         links="summary.links">
+      <ipa-nav-accordion *ngIf="summary"
+                         [isNavExpanded]="isNavExpanded"
+                         [activeAccordion]="activeAccordion"
+                         [activePage]="activePage"
+                         [navAccordion]="summary">
       </ipa-nav-accordion>
 
       <mat-nav-list class="ipa-header__mat-list">
         <mat-list-item class="ipa-header__nav-option">
-          <i class="material-icons ipa-header__side-nav-ui">settings</i>
+          <i class="material-icons icon">settings</i>
           <div *ngIf="isNavExpanded">Admin</div>
         </mat-list-item>
       </mat-nav-list>
 
       <mat-nav-list class="ipa-header__mat-list">
         <mat-list-item class="ipa-header__nav-option">
-          <i class="material-icons ipa-header__side-nav-ui">book</i>
+          <i class="material-icons icon">book</i>
           <div *ngIf="isNavExpanded">Courses</div>
         </mat-list-item>
       </mat-nav-list>
 
-      <mat-expansion-panel [expanded]="expandedAccordion === 'instructors'"
-                           (opened)="expandedAccordion = 'instructors'"
-                           [hideToggle]="!(isNavExpanded)">
-
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <i class="material-icons ipa-header__side-nav-ui">person_add</i>
-            <div *ngIf="isNavExpanded">Instructors</div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-          <mat-nav-list class="ipa-header__mat-list">
-            <mat-list-item class="ipa-header__nav-option">
-              <div *ngIf="isNavExpanded">Assign Instructors</div>
-            </mat-list-item>
-            <mat-list-item class="ipa-header__nav-option">
-              <div *ngIf="isNavExpanded">Teaching Calls</div>
-            </mat-list-item>
-          </mat-nav-list>
-      </mat-expansion-panel>
+      <ipa-nav-accordion *ngIf="summary"
+                         [isNavExpanded]="isNavExpanded"
+                         [activeAccordion]="activeAccordion"
+                         [activePage]="activePage"
+                         [navAccordion]="instructor">
+      </ipa-nav-accordion>
 
       <mat-nav-list class="ipa-header__mat-list">
         <mat-list-item class="ipa-header__nav-option">
-          <i class="material-icons ipa-header__side-nav-ui">calendar_today</i>
+          <i class="material-icons icon">calendar_today</i>
           <div *ngIf="isNavExpanded">Schedule</div>
         </mat-list-item>
       </mat-nav-list>
 
-      <mat-expansion-panel [expanded]="expandedAccordion === 'tareaders'"
-                           (opened)="expandedAccordion = 'tareaders'"
-                           [hideToggle]="!(isNavExpanded)">
-
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <i class="material-icons ipa-header__side-nav-ui">people</i>
-            <div *ngIf="isNavExpanded">TAs & Readers</div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-          <mat-nav-list class="ipa-header__mat-list">
-            <mat-list-item class="ipa-header__nav-option">
-              <div *ngIf="isNavExpanded">Support Assignments</div>
-            </mat-list-item>
-            <mat-list-item class="ipa-header__nav-option">
-              <div *ngIf="isNavExpanded">Support Calls</div>
-            </mat-list-item>
-          </mat-nav-list>
-      </mat-expansion-panel>
+      <ipa-nav-accordion *ngIf="summary"
+                         [isNavExpanded]="isNavExpanded"
+                         [activeAccordion]="activeAccordion"
+                         [activePage]="activePage"
+                         [navAccordion]="taAndReader">
+      </ipa-nav-accordion>
 
      <mat-nav-list class="ipa-header__mat-list">
         <mat-list-item class="ipa-header__nav-option">
-          <i class="material-icons ipa-header__side-nav-ui">pie_chart</i>
+          <i class="material-icons icon">pie_chart</i>
           <div *ngIf="isNavExpanded">Budget</div>
         </mat-list-item>
       </mat-nav-list>
 
-      <mat-expansion-panel [expanded]="expandedAccordion === 'reports'"
-                           (opened)="expandedAccordion = 'reports'"
-                           [hideToggle]="!(isNavExpanded)">
-
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <i class="material-icons ipa-header__side-nav-ui">assignment</i>
-            <div *ngIf="isNavExpanded">Reports</div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-          <mat-nav-list class="ipa-header__mat-list">
-            <mat-list-item class="ipa-header__nav-option">
-              <div *ngIf="isNavExpanded">Registrar Reconciliation</div>
-            </mat-list-item>
-            <mat-list-item class="ipa-header__nav-option">
-              <div *ngIf="isNavExpanded">Schedule Summary</div>
-            </mat-list-item>
-            <mat-list-item class="ipa-header__nav-option">
-              <div *ngIf="isNavExpanded">Teaching Call Response</div>
-            </mat-list-item>
-            <mat-list-item class="ipa-header__nav-option">
-              <div *ngIf="isNavExpanded">Workload Summary</div>
-            </mat-list-item>
-          </mat-nav-list>
-      </mat-expansion-panel>
+      <ipa-nav-accordion *ngIf="summary"
+                         [isNavExpanded]="isNavExpanded"
+                         [activeAccordion]="activeAccordion"
+                         [activePage]="activePage"
+                         [navAccordion]="report">
+      </ipa-nav-accordion>
     </mat-accordion>
   </mat-sidenav>
-
-
 <!-- toolbar and page contents -->
   <mat-sidenav-content>
     <ipa-header></ipa-header>  
