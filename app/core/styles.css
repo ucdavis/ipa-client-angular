@@ -23,3 +23,10 @@ button.mat-stroked-button.mat-warn,
 button.mat-flat-button.mat-warn {
   background-color: green;
 } */
+
+/* override caret color on nav accordion */
+/* Needs to be moved to the ipa-nav-accordion component, as a wrapper component with view encapsulation turned off */
+/* Leaving overrides here will get cluttered/confusing over time */
+.mat-expansion-indicator:after {
+  color: #aaabae !important;
+}
