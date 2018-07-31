@@ -1,4 +1,4 @@
-.ipa-header {
+.top-row {
   display: flex;
   justify-content: space-between;
 }
@@ -15,6 +15,36 @@
   margin-left: 10px;
 }
 
-.ipa-header__side-nav-ui {
-  font-size: 18px;
+.ipa-header__year {
+	border: 1px solid #333;
+	display: flex;
+	margin: 0px 20px 0px 0px;
+	background-color: white;
+	border-radius: 4px;
+}
+
+.bottom-row {
+  border-bottom: 1px solid #E5E5E5;
+  background-color: white;
+}
+
+.greeting-text {
+  font-size: 14px;
+}
+.chevron {
+  padding-left: 3px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  margin-right: -5px;
+}
+
+.chevron-button {
+  min-width: 0px;
+  padding: 0px;
+}
+
+.current-year {
+  margin-left: 5px;
+  margin-right: 5px;
 }

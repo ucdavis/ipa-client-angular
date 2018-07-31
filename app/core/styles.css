@@ -7,11 +7,11 @@ body {
 }
 
 .core__font-md {
-
+  font-size: 16px;
 }
 
 .core__font-large {
-
+  font-size: 20px;
 }
 
 /* button.mat-button.mat-warn,

@@ -19,15 +19,20 @@
   color:white;
 }
 
+.page-content {
+  padding-left: 80px; /* Current width of nav when collapsed */
+}
+
+.icon {
+  font-size: 18px;
+}
+
 /* need to refactor below CSS */
 
 .ipa-header__nav-option {
   cursor: pointer;
 }
 
-.icon {
-  font-size: 18px;
-}
 
 .ipa-header__nav-option:hover {
   background-color: #373c46;

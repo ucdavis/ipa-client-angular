@@ -1,15 +1,30 @@
-<mat-toolbar class="ipa-header">
-  <div class="ipa-header__left">
-    <span>Scheduling</span>
-  </div>
-  
-  <div class="ipa-header__right">
-    <span class="mat-subhead-1">Hello, Jarold & Lloyd</span>
-    <button class="ipa-header__logout"
-            (click)="impersonateJarold()"
-            matTooltip="Logout"
-            mat-stroked-button color="basic">
-      Logout
-    </button>
-  </div>
+<mat-toolbar>
+  <mat-toolbar-row class="top-row">
+    <div class="ipa-header__left">
+      <span>Scheduling</span>
+    </div>
+
+    <div class="ipa-header__right">
+      <span class="core__font-xs">Hello, Jarold & Lloyd</span>
+      <button class="ipa-header__logout"
+              (click)="impersonateJarold()"
+              matTooltip="Logout"
+              mat-stroked-button color="basic">
+        Logout
+      </button>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row class="bottom-row core__font-xs">
+    <div class="ipa-header__year">
+      <button mat-button class="chevron-button">
+        <mat-icon class="chevron">chevron_left</mat-icon>
+      </button>
+      <div class="current-year">
+          2018-19
+      </div>
+      <button mat-button class="chevron-button">
+        <mat-icon class="chevron">chevron_right</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
 </mat-toolbar>
