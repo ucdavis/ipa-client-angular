@@ -206,8 +206,12 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 								var instructorNote = scope.findOrCreateInstructorNote(instructorId);
 								// Add input for instructor notes
-								courseHtml += "<div class='course-assignments__course-note'>";
+								courseHtml += "<div class='course-assignments__course-note hidden-print'>";
 								courseHtml += '<input type="search" class="form-control" placeholder="Add Note" value="' + (instructorNote.note) + '" data-instructor-id="' + instructor.id + '" data-schedule-id="' + scope.view.state.userInterface.scheduleId + '" data-event-type="setInstructorNote"/>';
+								courseHtml += "</div>";
+
+								courseHtml += "<div class='visible-print'>";
+								courseHtml += instructorNote.note || "";
 								courseHtml += "</div>";
 
 								courseHtml += "</div>"; // end description-cell
