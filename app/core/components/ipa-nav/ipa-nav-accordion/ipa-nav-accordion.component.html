@@ -1,6 +1,6 @@
 <mat-expansion-panel class="ipa-nav-accordion"
-                     [expanded]="expandedAccordion === categoryName"
-                     (opened)="expandedAccordion = categoryName"
+                     [expanded]="activeAccordion === categoryName"
+                     (opened)="activeAccordion = categoryName"
                      [hideToggle]="!(isNavExpanded)">
   <mat-expansion-panel-header>
     <mat-panel-title class="accordion-header">

@@ -8,14 +8,16 @@ import { INavAccordion } from '@core/components/ipa-nav/nav-accordion.model';
 })
 export class IpaNav {
   isNavExpanded: boolean = false;
-  activeAccordion: string;
-  activePage: string;
+  activeAccordion: string = "";
+  activePage: string = "";
   summary: INavAccordion;
   instructor: INavAccordion;
   taAndReader: INavAccordion;
   report: INavAccordion;
 
-  constructor() {
+  constructor() {}
+
+  ngOnInit() {
     this.summary = {
       description: "Summary",
       key: "summary",
@@ -25,18 +27,20 @@ export class IpaNav {
         { description: 'Support Staff', key: 'support staff'}
       ]
     };
+
     this.instructor = {
       description: "Instructor",
-      key: "summary",
+      key: "instructor",
       icon: "person_add",
       links: [
         { description: 'Staff', key: 'staff'},
         { description: 'Support Staff', key: 'support staff'}
       ]
     };
+
     this.taAndReader = {
       description: "TAs and Readers",
-      key: "summary",
+      key: "taAndReader",
       icon: "people",
       links: [
         { description: 'Staff', key: 'staff'},
@@ -46,16 +50,13 @@ export class IpaNav {
 
     this.report = {
       description: "Report",
-      key: "summary",
+      key: "report",
       icon: "assignment",
       links: [
         { description: 'Staff', key: 'staff'},
         { description: 'Support Staff', key: 'support staff'}
       ]
     };
-  }
-
-  ngOnInit() {
   }
 
   toggleSideNav () {

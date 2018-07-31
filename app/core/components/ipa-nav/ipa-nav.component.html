@@ -10,8 +10,7 @@
     </div>
 
     <mat-accordion>
-      <ipa-nav-accordion *ngIf="summary"
-                         [isNavExpanded]="isNavExpanded"
+      <ipa-nav-accordion [isNavExpanded]="isNavExpanded"
                          [activeAccordion]="activeAccordion"
                          [activePage]="activePage"
                          [navAccordion]="summary">
@@ -31,8 +30,7 @@
         </mat-list-item>
       </mat-nav-list>
 
-      <ipa-nav-accordion *ngIf="summary"
-                         [isNavExpanded]="isNavExpanded"
+      <ipa-nav-accordion [isNavExpanded]="isNavExpanded"
                          [activeAccordion]="activeAccordion"
                          [activePage]="activePage"
                          [navAccordion]="instructor">
@@ -45,29 +43,27 @@
         </mat-list-item>
       </mat-nav-list>
 
-      <ipa-nav-accordion *ngIf="summary"
-                         [isNavExpanded]="isNavExpanded"
+      <ipa-nav-accordion [isNavExpanded]="isNavExpanded"
                          [activeAccordion]="activeAccordion"
                          [activePage]="activePage"
                          [navAccordion]="taAndReader">
       </ipa-nav-accordion>
-
-     <mat-nav-list class="ipa-header__mat-list">
+      <mat-nav-list class="ipa-header__mat-list">
         <mat-list-item class="ipa-header__nav-option">
           <i class="material-icons icon">pie_chart</i>
           <div *ngIf="isNavExpanded">Budget</div>
         </mat-list-item>
       </mat-nav-list>
 
-      <ipa-nav-accordion *ngIf="summary"
-                         [isNavExpanded]="isNavExpanded"
+      <ipa-nav-accordion [isNavExpanded]="isNavExpanded"
                          [activeAccordion]="activeAccordion"
                          [activePage]="activePage"
                          [navAccordion]="report">
       </ipa-nav-accordion>
     </mat-accordion>
   </mat-sidenav>
-<!-- toolbar and page contents -->
+
+  <!-- toolbar and page contents -->
   <mat-sidenav-content>
     <ipa-header></ipa-header>  
     <ng-content></ng-content>
