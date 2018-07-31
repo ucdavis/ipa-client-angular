@@ -6,7 +6,7 @@
                (mouseleave)="toggleSideNav()">
     <div class="header">
     <div *ngIf="isNavExpanded">IPA</div>
-     <i class="material-icons icon">menu</i>
+     <mat-icon>menu</mat-icon>
     </div>
 
     <mat-accordion>
@@ -18,14 +18,14 @@
 
       <mat-nav-list class="ipa-header__mat-list">
         <mat-list-item class="ipa-header__nav-option">
-          <i class="material-icons icon">settings</i>
+          <mat-icon>settings</mat-icon>
           <div *ngIf="isNavExpanded">Admin</div>
         </mat-list-item>
       </mat-nav-list>
 
       <mat-nav-list class="ipa-header__mat-list">
         <mat-list-item class="ipa-header__nav-option">
-          <i class="material-icons icon">book</i>
+          <mat-icon>book</mat-icon>
           <div *ngIf="isNavExpanded">Courses</div>
         </mat-list-item>
       </mat-nav-list>
@@ -38,7 +38,7 @@
 
       <mat-nav-list class="ipa-header__mat-list">
         <mat-list-item class="ipa-header__nav-option">
-          <i class="material-icons icon">calendar_today</i>
+          <mat-icon>calendar_today</mat-icon>
           <div *ngIf="isNavExpanded">Schedule</div>
         </mat-list-item>
       </mat-nav-list>
@@ -50,7 +50,7 @@
       </ipa-nav-accordion>
       <mat-nav-list class="ipa-header__mat-list">
         <mat-list-item class="ipa-header__nav-option">
-          <i class="material-icons icon">pie_chart</i>
+          <mat-icon>pie_chart</mat-icon>
           <div *ngIf="isNavExpanded">Budget</div>
         </mat-list-item>
       </mat-nav-list>
@@ -65,7 +65,7 @@
 
   <!-- toolbar and page contents -->
   <mat-sidenav-content>
-    <ipa-header></ipa-header>  
+    <ipa-header></ipa-header>
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

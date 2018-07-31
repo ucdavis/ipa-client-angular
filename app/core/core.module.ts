@@ -30,7 +30,8 @@ import { IpaNavAccordion } from '@core/components/ipa-nav/ipa-nav-accordion/ipa-
 
 @NgModule({
   // Injected modules
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     HttpClientModule,
     MatToolbarModule,
     FormsModule,
@@ -38,14 +39,11 @@ import { IpaNavAccordion } from '@core/components/ipa-nav/ipa-nav-accordion/ipa-
     MatIconModule,
     MatSidenavModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatIconModule
   ],
   // Injected components and directives
-  declarations: [
-    IpaHeader,
-    IpaNav,
-    IpaNavAccordion
-  ],
+  declarations: [IpaHeader, IpaNav, IpaNavAccordion],
   // Exports made available to modules that import core
   // You can't export unless you've wired into yourself
   exports: [IpaNav],

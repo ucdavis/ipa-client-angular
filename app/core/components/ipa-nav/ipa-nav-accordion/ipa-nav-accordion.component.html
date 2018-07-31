@@ -4,7 +4,7 @@
                      [hideToggle]="!(isNavExpanded)">
   <mat-expansion-panel-header>
     <mat-panel-title class="accordion-header">
-      <i class="material-icons icon">{{ navAccordion.icon }}</i>
+      <mat-icon>{{ navAccordion.icon }}</mat-icon>
       <div *ngIf="isNavExpanded">{{ navAccordion.description }}</div>
     </mat-panel-title>
   </mat-expansion-panel-header>
