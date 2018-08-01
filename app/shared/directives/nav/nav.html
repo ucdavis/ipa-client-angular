@@ -129,6 +129,13 @@
 				</a>
 			</li>
 
+			<li ng-class="{ 'active': currentBaseHref == 'scheduling' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
+				<a ng-href="/newScheduling/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}">
+					<i class="entypo-calendar"></i>
+					<span class="title">(New) Schedule</span>
+				</a>
+			</li>
+
 			<li ng-class="{ 'active': currentBaseHref == 'supportCalls' || currentBaseHref == 'supportAssignments', 'opened': expanded == 'support' || (!expanded && (currentBaseHref == 'supportCalls' || currentBaseHref == 'supportAssignments')) }" 
 				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('support')">

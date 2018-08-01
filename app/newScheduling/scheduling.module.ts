@@ -15,6 +15,8 @@ import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 // Core imports
 import { CoreModule } from '@core/core.module';
 import { AuthGuard } from '@core/auth/auth-guard.service';
+import { RedirectGuard } from '@core/api/redirect-guard.service';
+
 import { SectionGroupResolver } from '@core/resolvers/section-group-resolver.service';
 import { UrlGenerationResolver } from '@core/resolvers/url-generation-resolver.service';
 
@@ -25,7 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 const appRoutes: Routes = [
   {
-    path: 'newScheduling/:workgroupId/:year',
+    path: 'newScheduling/:workgroupId/:year/:termCode',
     component: MainComponent,
     canActivate: [AuthGuard],
     resolve: {
@@ -35,9 +37,7 @@ const appRoutes: Routes = [
   {
     path: '**',
     component: AppComponent,
-    resolve: {
-      validate: UrlGenerationResolver
-    }
+    canActivate: [RedirectGuard]
   }
 ];
 
