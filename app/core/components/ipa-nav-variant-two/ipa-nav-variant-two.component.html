@@ -1,0 +1,70 @@
+<mat-sidenav-container hasBackdrop="false" class="ipa-nav-variant-two">
+  <mat-sidenav mode="over"
+               fixedInViewport="true"
+               opened="true"
+               class="sidenav"
+               (mouseenter)="toggleSideNav()"
+               (mouseleave)="toggleSideNav()">
+    <div class="header">
+    <div *ngIf="isNavExpanded">IPA</div>
+     <mat-icon class="icon">menu</mat-icon>
+    </div>
+
+    <mat-nav-list class="ipa-header__mat-list">
+      <div [class.collapsed-nav-container]="!isNavExpanded">
+        <mat-accordion>
+          <ipa-nav-accordion [isNavExpanded]="isNavExpanded"
+                            [activeAccordion]="activeAccordion"
+                            [activePage]="activePage"
+                            [navAccordion]="summary">
+          </ipa-nav-accordion>
+
+          <mat-list-item class="ipa-header__nav-option link">
+            <mat-icon class="icon">settings</mat-icon>
+            <div *ngIf="isNavExpanded">Admin</div>
+          </mat-list-item>
+
+          <mat-list-item class="ipa-header__nav-option link">
+            <mat-icon class="icon">book</mat-icon>
+            <div *ngIf="isNavExpanded">Courses</div>
+          </mat-list-item>
+
+          <ipa-nav-accordion [isNavExpanded]="isNavExpanded"
+                            [activeAccordion]="activeAccordion"
+                            [activePage]="activePage"
+                            [navAccordion]="instructor">
+          </ipa-nav-accordion>
+
+
+          <mat-list-item class="ipa-header__nav-option link">
+            <mat-icon class="icon">calendar_today</mat-icon>
+            <div *ngIf="isNavExpanded">Schedule</div>
+          </mat-list-item>
+
+          <ipa-nav-accordion [isNavExpanded]="isNavExpanded"
+                            [activeAccordion]="activeAccordion"
+                            [activePage]="activePage"
+                            [navAccordion]="taAndReader">
+          </ipa-nav-accordion>
+
+          <mat-list-item class="ipa-header__nav-option link">
+            <mat-icon class="icon">pie_chart</mat-icon>
+            <div *ngIf="isNavExpanded">Budget</div>
+          </mat-list-item>
+
+          <ipa-nav-accordion [isNavExpanded]="isNavExpanded"
+                              [activeAccordion]="activeAccordion"
+                              [activePage]="activePage"
+                              [navAccordion]="report">
+          </ipa-nav-accordion>
+        </mat-accordion>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- toolbar and page contents -->
+  <mat-sidenav-content class="page-content">
+    <ipa-header></ipa-header>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

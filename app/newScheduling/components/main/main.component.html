@@ -5,6 +5,15 @@
   <button (click)="unimpersonateJarold()" mat-flat-button color="warn">UNIMPERSONATE THE JAROLD</button>
   <button (click)="makeToast()" mat-button disabled>make toast</button>
 
+<div stlye="display: flex;">
+  <button mat-raised-button color="background">background</button>
+  <button mat-raised-button color="foreground">foreground</button>
+  <button mat-raised-button color="primary">primary</button>
+  <button mat-raised-button color="accent">accent</button>
+  <button mat-raised-button color="warn">warn</button>
+  <button mat-raised-button color="basic">Basic</button>
+
+</div>
   <button (click)="toggleMessage()">Toggle Message</button>
   <div *ngIf="schedulingShow">{{schedulingName}}</div>
 

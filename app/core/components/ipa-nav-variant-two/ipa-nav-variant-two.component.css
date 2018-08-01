@@ -1,0 +1,57 @@
+.header {
+  font-size: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  color: white;
+}
+
+.link {
+  color: #aaabae;
+}
+
+.sidenav {
+  background-color: #303641;
+  overflow-y: hidden;
+}
+
+.ipa-nav .selected {
+  color:white;
+}
+
+.page-content {
+  padding-left: 55px; /* Current width of nav when collapsed */
+}
+
+.icon {
+  font-size: 18px;
+}
+
+/* need to refactor below CSS */
+
+.ipa-header__nav-option {
+  cursor: pointer;
+}
+
+
+.ipa-header__nav-option:hover {
+  background-color: #373c46;
+}
+
+.mat-expansion-panel {
+  background-color: #303641;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.mat-expansion-panel-spacing {
+  margin: 0px !important;
+}
+
+.ipa-header__mat-list {
+  padding-top: 0px;
+}
+
+.collapsed-nav-container {
+  width: 55px;
+}

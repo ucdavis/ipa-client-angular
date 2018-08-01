@@ -16,8 +16,6 @@ export class RedirectGuard implements CanActivate {
   ): boolean|Observable<boolean> {
     window.location.href = "/summary";
 
-    return this.authService.validate(null, null).pipe(map((res: any) => {
-      return !!(res.token);
-    }));
+    return false;
   }
 }

@@ -18,12 +18,12 @@ import { AuthGuard } from '@core/auth/auth-guard.service';
 import { RedirectGuard } from '@core/api/redirect-guard.service';
 
 import { SectionGroupResolver } from '@core/resolvers/section-group-resolver.service';
-import { UrlGenerationResolver } from '@core/resolvers/url-generation-resolver.service';
 
 // Angular Material Component imports
 
 import { MatButtonModule, MatTooltipModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
+//import { SharedStateResolver } from '@core/shared-state/shared-state.resolver';
 
 const appRoutes: Routes = [
   {
@@ -59,7 +59,7 @@ const appRoutes: Routes = [
     FormsModule
   ],
   declarations: [AppComponent, MainComponent],
-  providers: [SchedulingActions, AuthGuard, SectionGroupResolver, UrlGenerationResolver],
+  providers: [SchedulingActions, AuthGuard, SectionGroupResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

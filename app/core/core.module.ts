@@ -10,8 +10,9 @@ import { AuthInterceptor } from '@core/auth/auth.interceptor';
 import { AuthService } from '@core/auth/auth.service';
 import { ApiService } from '@core/api/api.service';
 import { RedirectGuard } from '@core/api/redirect-guard.service';
-
+import { SharedStateResolver } from '@core/shared-state/shared-state.resolver';
 import { SharedStateService } from '@core/shared-state/shared-state.service';
+
 import { ExceptionHandler } from '@core/exception.service';
 import { SlowConnectionInterceptor } from '@core/api/slow-connection.interceptor';
 import { MatIconRegistry } from '@angular/material';
@@ -59,6 +60,7 @@ import { IpaNavAccordion } from '@core/components/ipa-nav/ipa-nav-accordion/ipa-
     SharedStateService,
     MatIconRegistry,
     RedirectGuard,
+    SharedStateResolver,
     { provide: ErrorHandler, useClass: ExceptionHandler },
     // Interceptors are fired in the sequence listed here
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
