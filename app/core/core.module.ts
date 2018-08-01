@@ -1,3 +1,5 @@
+import './custom-theme.scss';
+
 // CSS imports for non-module
 import '@project/node_modules/toastr/build/toastr.css';
 
@@ -19,9 +21,9 @@ import { MatIconRegistry } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 
 // Material
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import '@angular/material/prebuilt-themes/indigo-pink.css'; // might want to create a vendor.ts file for all third-party imports
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -31,7 +33,6 @@ import { MatMenuModule } from '@angular/material/menu';
 // Components
 import { IpaHeader } from '@core/components/ipa-header/ipa-header.component';
 import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
-import { IpaNavAccordion } from '@core/components/ipa-nav/ipa-nav-accordion/ipa-nav-accordion.component';
 
 @NgModule({
   // Injected modules
@@ -49,7 +50,7 @@ import { IpaNavAccordion } from '@core/components/ipa-nav/ipa-nav-accordion/ipa-
     MatMenuModule
   ],
   // Injected components and directives
-  declarations: [IpaHeader, IpaNav, IpaNavAccordion],
+  declarations: [IpaHeader, IpaNav],
   // Exports made available to modules that import core
   // You can't export unless you've wired into yourself
   exports: [IpaNav],
