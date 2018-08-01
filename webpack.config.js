@@ -6,6 +6,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ConcatPlugin = require('webpack-concat-plugin');
+//const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 function injectHashesInLinks (content, path) {
   var template = content.toString('utf8');
@@ -112,6 +113,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
+            //MiniCssExtractPlugin.loader,
             "style-loader",
             "css-loader", // translates CSS into CommonJS
             "sass-loader" // compiles Sass to CSS, using Node Sass by default
@@ -218,7 +220,12 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify(env.apiUrl)
       // Good to namespace 'process.env' even though this is a key for text replacement, also avoids typescript from attempting to process it
-    })
+    }),
+    // new MiniCssExtractPlugin({
+    //   // Options similar to the same options in webpackOptions.output
+    //   // both options are optional
+    //   filename: "custom-theme.css"
+    // })
   ],
   devServer: {
     contentBase: path.join(__dirname, "dist"),

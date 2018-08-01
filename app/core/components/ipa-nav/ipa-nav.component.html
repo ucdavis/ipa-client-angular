@@ -1,5 +1,35 @@
-<div>
-  <ipa-header></ipa-header>
-  ipa nav
-  <ng-content></ng-content>
-</div>
+<mat-sidenav-container hasBackdrop="false">
+  <mat-sidenav mode="over"
+               fixedInViewport="true"
+               opened="true"
+               (mouseenter)="toggleSideNav()"
+               (mouseleave)="toggleSideNav()">
+
+    <mat-nav-list>
+      <a mat-list-item>
+        <mat-icon>home</mat-icon>
+        <span *ngIf="isNavExpanded">Summary</span>
+      </a>
+      <a mat-list-item>
+        <mat-icon>person_add</mat-icon>
+        <span *ngIf="isNavExpanded">Instructor</span>
+      </a>
+
+      <a mat-list-item>
+        <mat-icon>people</mat-icon>
+        <span *ngIf="isNavExpanded">TAs and Readers</span>
+      </a>
+      <a mat-list-item>
+        <mat-icon>assignment</mat-icon>
+        <span *ngIf="isNavExpanded">Report</span>
+      </a>
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <!-- toolbar and page contents -->
+  <mat-sidenav-content class="page-content">
+    <ipa-header></ipa-header>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
