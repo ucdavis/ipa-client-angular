@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { INavAccordion } from '@core/components/ipa-nav/nav-accordion.model';
+import { INavAccordion } from './nav-accordion.model';
 
 @Component({
-  selector: 'ipa-nav',
-  templateUrl: './ipa-nav.component.html',
-  styleUrls: ['./ipa-nav.component.css']
+  selector: 'ipa-nav-variant-two',
+  templateUrl: './ipa-nav-variant-two.component.html',
+  styleUrls: ['./ipa-nav-variant-two.component.css']
 })
 export class IpaNav {
   isNavExpanded: boolean = false;

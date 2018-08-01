@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { INavAccordion } from '@core/components/ipa-nav/nav-accordion.model';
+import { INavAccordion } from './../nav-accordion.model';
 
 @Component({
   selector: 'ipa-nav-accordion',

@@ -1,4 +1,4 @@
-import { INavLink } from '@core/components/ipa-nav/nav-link.model';
+import { INavLink } from './nav-link.model';
 
 export interface INavAccordion {
   description: string;
