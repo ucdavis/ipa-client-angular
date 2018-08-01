@@ -95,6 +95,8 @@ class SupportSelectors {
 						sectionGroup.teachingAssistantAssignmentOptions.other.push(supportStaff);
 					});
 	
+					sectionGroup.teachingAssistantAssignmentOptions.other = _array_sortByProperty(sectionGroup.teachingAssistantAssignmentOptions.other, ["lastName"]);
+
 					// Add readerAssignmentOptions
 					var processedSupportStaffIds = [];
 	
@@ -132,6 +134,7 @@ class SupportSelectors {
 						sectionGroup.readerAssignmentOptions.other.push(supportStaff);
 					});
 	
+
 					// Add instructor preference comment to sectionGroup by following the relationship
 					// sectionGroups -> instructorPreferences -> instructorSupportCallResponses
 					instructorPreferences.ids.forEach(function(preferenceId) {
