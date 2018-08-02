@@ -6,9 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./ipa-nav.component.css']
 })
 export class IpaNav {
-  isNavExpanded: boolean = false;
-  activeAccordion: string = "";
-  activePage: string = "";
+  isNavExpanded: boolean = true;
+  activeAccordion: string = '';
+  activePage: string = '';
   summary: any;
   instructor: any;
   taAndReader: any;
@@ -16,7 +16,7 @@ export class IpaNav {
 
   constructor() {}
 
-  toggleSideNav () {
+  toggleSideNav() {
     this.isNavExpanded = !this.isNavExpanded;
   }
 }

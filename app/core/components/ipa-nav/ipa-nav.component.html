@@ -1,4 +1,75 @@
-<mat-sidenav-container hasBackdrop="false">
+<mat-sidenav-container class="example-container" autosize>
+  <mat-sidenav #sidenav class="theme-primary" mode="side" opened="true" [ngClass]="{collapsed: !isNavExpanded}">
+    <mat-nav-list>
+      <mat-list-item>
+        <p matLine style="font-size: 32px" *ngIf="isNavExpanded">
+          <strong>IPA</strong>
+        </p>
+        <button mat-icon-button>
+          <mat-icon class="icon--white" *ngIf="!isNavExpanded" (click)="toggleSideNav()">chevron_right</mat-icon>
+          <mat-icon class="icon--white" *ngIf="isNavExpanded" (click)="toggleSideNav()">chevron_left</mat-icon>
+        </button>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon mat-list-icon class="icon--white">home</mat-icon>
+        <!-- <mat-icon mat-list-icon *ngIf="!isNavExpanded">arrow_drop_down</mat-icon> -->
+        <p matLine *ngIf="isNavExpanded">Home</p>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon mat-list-icon class="icon--white">book</mat-icon>
+        <p matLine *ngIf="isNavExpanded">Courses</p>
+      </mat-list-item>
+
+      <mat-list-item [matMenuTriggerFor]="instructorsMenu">
+        <mat-icon mat-list-icon class="icon--white">person_add</mat-icon>
+        <!-- <mat-icon *ngIf="!isNavExpanded">arrow_drop_down</mat-icon> -->
+        <p matLine *ngIf="isNavExpanded">Instructors</p>
+        <mat-menu #instructorsMenu="matMenu" yPosition="below" [overlapTrigger]="false">
+          <button mat-menu-item>Teaching Call</button>
+          <button mat-menu-item>Support Something</button>
+        </mat-menu>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon mat-list-icon class="icon--white">calendar_today</mat-icon>
+        <p matLine *ngIf="isNavExpanded">Schedule</p>
+      </mat-list-item>
+
+      <mat-list-item [matMenuTriggerFor]="tasMenu">
+        <mat-icon mat-list-icon class="icon--white">people</mat-icon>
+        <!-- <mat-icon mat-list-icon *ngIf="!isNavExpanded">arrow_drop_down</mat-icon> -->
+        <p matLine *ngIf="isNavExpanded">TAs & Readers</p>
+        <mat-menu #tasMenu="matMenu" yPosition="below" [overlapTrigger]="false">
+          <button mat-menu-item>Item 1</button>
+          <button mat-menu-item>Item 2</button>
+        </mat-menu>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon mat-list-icon class="icon--white">pie_chart</mat-icon>
+        <p matLine *ngIf="isNavExpanded">Budget</p>
+      </mat-list-item>
+
+      <mat-list-item [matMenuTriggerFor]="reportsMenu">
+        <mat-icon mat-list-icon class="icon--white">assessment</mat-icon>
+        <mat-icon mat-list-icon *ngIf="!isNavExpanded">arrow_drop_down</mat-icon>
+        <p matLine *ngIf="isNavExpanded">Reports</p>
+        <mat-menu #reportsMenu="matMenu" yPosition="below" [overlapTrigger]="false">
+          <button mat-menu-item>Item 1</button>
+          <button mat-menu-item>Item 2</button>
+        </mat-menu>
+      </mat-list-item>
+
+
+
+
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- <mat-sidenav-container hasBackdrop="false">
   <mat-sidenav mode="over"
                class="theme-primary"
                fixedInViewport="true"
@@ -34,10 +105,10 @@
       </mat-list-item>
     </mat-nav-list>
 
-  </mat-sidenav>
+  </mat-sidenav> -->
 
   <!-- toolbar and page contents -->
-  <mat-sidenav-content class="page-content">
+  <mat-sidenav-content>
     <ipa-header></ipa-header>
     <ng-content></ng-content>
   </mat-sidenav-content>

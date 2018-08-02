@@ -1,3 +1,53 @@
-<div>
-  ipa header
-</div>
+<mat-toolbar>
+  <mat-toolbar-row class="top-bar">
+    <span>Instructors</span>
+    <!-- Drop down nav
+      <button mat-icon-button [matMenuTriggerFor]="pageMenu">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #pageMenu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item>Assign Instructors</button>
+        <button mat-menu-item>Teaching Calls</button>
+      </mat-menu> 
+    -->
+
+    <span style="flex: 1 1 auto"></span>
+
+    <button mat-mini-fab>CT</button>
+    <button mat-raised-button style="margin-left: 16px;">Logout</button>
+  </mat-toolbar-row>
+  <mat-divider></mat-divider>
+  <mat-toolbar-row class="bottom-bar">
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link>Assign Instructors</a>
+      <a mat-tab-link active="true">Teaching Calls</a>
+    </nav>
+
+    <span style="flex: 1 1 auto"></span>
+
+    <!-- Year Selector -->
+    <button mat-icon-button>
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button mat-button>2018-19</button>
+    <button mat-icon-button>
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+
+    <!-- Workgroup Selector -->
+    <button mat-button [matMenuTriggerFor]="workgroupMenu">"WORKGROUP"</button>
+    <mat-menu #workgroupMenu="matMenu">
+      <button mat-menu-item>DSSIT</button>
+      <button mat-menu-item>Admin</button>
+    </mat-menu>
+
+    <!-- Term Selector -->
+    <button mat-button [matMenuTriggerFor]="termsMenu">Annual</button>
+    <mat-menu #termsMenu="matMenu">
+      <button mat-menu-item>Fall</button>
+      <button mat-menu-item>Winter</button>
+      <button mat-menu-item>Spring</button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-divider></mat-divider>

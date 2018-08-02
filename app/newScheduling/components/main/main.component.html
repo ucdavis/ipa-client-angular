@@ -1,50 +1,52 @@
 <ipa-nav>
-  <button (click)="getCourses()" matTooltip={{tooltip}} mat-raised-button>Get courses</button>
-  <button (click)="errorTest()" mat-button color="accent">Log error</button>
-  <button (click)="impersonateJarold()" matTooltip="Impersonate a user" mat-stroked-button color="primary">IMPERSONATE THE JAROLD</button>
-  <button (click)="unimpersonateJarold()" mat-flat-button color="warn">UNIMPERSONATE THE JAROLD</button>
-  <button (click)="makeToast()" mat-button disabled>make toast</button>
-
-<div stlye="display: flex;">
-  <button mat-raised-button color="background">background</button>
-  <button mat-raised-button color="foreground">foreground</button>
-  <button mat-raised-button color="primary">primary</button>
-  <button mat-raised-button color="accent">accent</button>
-  <button mat-raised-button color="warn">warn</button>
-  <button mat-raised-button color="basic">Basic</button>
-  <button mat-raised-button color="basic">A much longer example of a button</button>
-
-</div>
-  <button (click)="toggleMessage()">Toggle Message</button>
-  <div *ngIf="schedulingShow">{{schedulingName}}</div>
-
-  <div class="example-style">
-    <div style="min-width: 40%;">
-      <div>Courses: (via get courses button)</div>
-      <ul>
-        <li *ngFor="let course of courses">
+  <div class="page-content">
+    <button (click)="getCourses()" matTooltip={{tooltip}} mat-raised-button>Get courses</button>
+    <button (click)="errorTest()" mat-button color="accent">Log error</button>
+    <button (click)="impersonateJarold()" matTooltip="Impersonate a user" mat-stroked-button color="primary">IMPERSONATE THE JAROLD</button>
+    <button (click)="unimpersonateJarold()" mat-flat-button color="warn">UNIMPERSONATE THE JAROLD</button>
+    <button (click)="makeToast()" mat-button disabled>make toast</button>
+    
+    <div stlye="display: flex;">
+      <button mat-raised-button color="background">background</button>
+      <button mat-raised-button color="foreground">foreground</button>
+      <button mat-raised-button color="primary">primary</button>
+      <button mat-raised-button color="accent">accent</button>
+      <button mat-raised-button color="warn">warn</button>
+      <button mat-raised-button color="basic">Basic</button>
+      <button mat-raised-button color="basic">A much longer example of a button</button>
+      
+    </div>
+    <button (click)="toggleMessage()">Toggle Message</button>
+    <div *ngIf="schedulingShow">{{schedulingName}}</div>
+    
+    <div class="example-style">
+      <div style="min-width: 40%;">
+        <div>Courses: (via get courses button)</div>
+        <ul>
+          <li *ngFor="let course of courses">
             id: {{ course.id }}, description: {{ course.title }}
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
+      
+      <div style="min-width: 40%;">
+        <div>SectionGroups (via route resolve)</div>
+        <ul>
+          <li *ngFor="let sectionGroup of sectionGroups">
+            id: {{ sectionGroup.id }}, termCode: {{ sectionGroup.termCode }}
+          </li>
+        </ul>
+      </div>
     </div>
-
-    <div style="min-width: 40%;">
-      <div>SectionGroups (via route resolve)</div>
-      <ul>
-        <li *ngFor="let sectionGroup of sectionGroups">
-          id: {{ sectionGroup.id }}, termCode: {{ sectionGroup.termCode }}
-        </li>
-      </ul>
-    </div>
+    
+    <mat-form-field>
+      <mat-select placeholder="Favorite food" [(ngModel)]="selectedValue" name="food">
+        <mat-option *ngFor="let food of foods" [value]="food.value">
+          {{food.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <p> Selected value: {{selectedValue}} </p>
   </div>
-
-  <mat-form-field>
-    <mat-select placeholder="Favorite food" [(ngModel)]="selectedValue" name="food">
-      <mat-option *ngFor="let food of foods" [value]="food.value">
-        {{food.viewValue}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <p> Selected value: {{selectedValue}} </p>
 </ipa-nav>

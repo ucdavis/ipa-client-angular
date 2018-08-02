@@ -29,6 +29,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
 
 // Components
 import { IpaHeader } from '@core/components/ipa-header/ipa-header.component';
@@ -47,7 +48,8 @@ import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
     MatExpansionModule,
     MatIconModule,
     MatSelectModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTabsModule
   ],
   // Injected components and directives
   declarations: [IpaHeader, IpaNav],
