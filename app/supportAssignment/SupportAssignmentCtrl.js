@@ -93,7 +93,7 @@ class SupportAssignmentCtrl {
 			}
 
 			if (_self.$scope.readOnlyMode == true && _self.$scope.isAllowed == true && _self.$scope.view.state.ui.readOnlyMode == false) {
-				SupportActions.setReadOnlyMode();
+				_self.SupportActions.setReadOnlyMode();
 			}
 		});
 
