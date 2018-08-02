@@ -51,12 +51,12 @@
 			No available support calls.
 		</div>
 
-		<div ng-if="view.state.schedule.studentSupportCallReviewOpen" style="margin-top: 10px; margin-left: 15px">
-			<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) || '03' }}">
-				Schedule {{ year.yearToAcademicYear() }} is open for review
-			</a>
+		<div ng-repeat="term in orderedTerms">
+			<div ng-if="isReviewOpenForTerm(term, view.state.schedule.supportStaffSupportCallReviewOpen)" style="margin-top: 10px; margin-left: 15px">
+				<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/ {{ term }}">
+					Schedule {{ year.yearToAcademicYear() }} is open for review in {{ termDescription(term) }}
+				</a>
+			</div>
 		</div>
-
-
 	</div>
 </div>
