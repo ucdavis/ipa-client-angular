@@ -5,7 +5,8 @@
     <button (click)="impersonateJarold()" matTooltip="Impersonate a user" mat-stroked-button color="primary">IMPERSONATE THE JAROLD</button>
     <button (click)="unimpersonateJarold()" mat-flat-button color="warn">UNIMPERSONATE THE JAROLD</button>
     <button (click)="makeToast()" mat-button disabled>make toast</button>
-    
+    <button (click)="initializeSectionGroups()" mat-button color="accent">initialize observableDataServices sectionGroups</button>
+
     <div stlye="display: flex;">
       <button mat-raised-button color="background">background</button>
       <button mat-raised-button color="foreground">foreground</button>
@@ -14,7 +15,6 @@
       <button mat-raised-button color="warn">warn</button>
       <button mat-raised-button color="basic">Basic</button>
       <button mat-raised-button color="basic">A much longer example of a button</button>
-      
     </div>
     <button (click)="toggleMessage()">Toggle Message</button>
     <div *ngIf="schedulingShow">{{schedulingName}}</div>

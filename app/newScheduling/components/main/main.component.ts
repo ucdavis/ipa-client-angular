@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Store, select } from '@ngrx/store';
 
 import { AppState } from '@scheduling/models/app.model';
 import { SchedulingState } from '@scheduling/models/scheduling.model';
@@ -30,22 +29,29 @@ export class MainComponent {
   ];
 
 	constructor(
-    private store: Store<AppState>,
+    //private store: Store<AppState>,
     private schedulingActions: SchedulingActions,
     private activatedRoute: ActivatedRoute
   ) {
-    this.scheduling = this.store.select('scheduling');
+    //this.scheduling = this.store.select('scheduling');
+
   }
 
   ngOnInit() {
-    this.sectionGroups = this.activatedRoute.snapshot.data.sectionGroups;
-
-    this.scheduling.subscribe(state => {
-      console.log(state);
-      this.schedulingName = state.name;
-      this.schedulingShow = state.showName;
-      this.courses = state.courses.list;
+    this.schedulingActions.sectionGroups.subscribe(sectionGroups => {
+      this.sectionGroups = sectionGroups;
     });
+
+    // this.scheduling.subscribe(state => {
+    //   console.log(state);
+    //   this.schedulingName = state.name;
+    //   this.schedulingShow = state.showName;
+    //   this.courses = state.courses.list;
+    // });
+  }
+
+  initializeSectionGroups() {
+    this.schedulingActions.initializeData(this.activatedRoute.snapshot.data.sectionGroups);
   }
 
   getCourses() {
@@ -59,7 +65,7 @@ export class MainComponent {
   }
 
   toggleMessage() {
-    this.store.dispatch({ type: 'TOGGLE_MESSAGE' });
+    //this.store.dispatch({ type: 'TOGGLE_MESSAGE' });
   }
 
   impersonateJarold() {

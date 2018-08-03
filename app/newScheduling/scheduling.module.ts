@@ -8,8 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 
-import { StoreModule } from '@ngrx/store';
-import { schedulingReducer } from '@scheduling/reducers/scheduling.reducers';
 import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 
 // Core imports
@@ -45,9 +43,6 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     CoreModule,
-    StoreModule.forRoot({
-      scheduling: schedulingReducer
-    }),
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
