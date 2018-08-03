@@ -193,23 +193,29 @@ class StudentFormActions {
 
 				var preferenceCommentsComplete = true;
 
-				StudentFormReducers._state.preferences.ids.forEach(function(preferenceId) {
-					var preference = StudentFormReducers._state.preferences.list[preferenceId];
-					if (!(preference.comment) || preference.comment.length == 0) { preferenceCommentsComplete = false; }
-				});
+				// Disabled if preference comments are required, there is a min number of preferences required, and no preferences have been made
+				var preferenceCommentsDisabled = (StudentFormReducers._state.ui.review.requirePreferenceComments.required && StudentFormReducers._state.ui.review.requirePreferenceAmount.required && StudentFormReducers._state.preferences.ids.length == 0);
+
+				if (StudentFormReducers._state.preferences.ids.length > 0) {
+					StudentFormReducers._state.preferences.ids.forEach(function(preferenceId) {
+						var preference = StudentFormReducers._state.preferences.list[preferenceId];
+						if (!(preference.comment) || preference.comment.length == 0) { preferenceCommentsComplete = false; }
+					});
+				}
 
 				StudentFormReducers.reduce({
-					type: ActionTypes.PREFERENCE_COMMENTS_COMPLETE,
+					type: ActionTypes.UPDATE_PREFERENCE_COMMENT_VALIDATION,
 					payload: {
-						preferenceCommentsComplete: preferenceCommentsComplete
+						preferenceCommentsComplete: preferenceCommentsComplete,
+						preferenceCommentsDisabled: preferenceCommentsDisabled
 					}
 				});
 
 
-				var isFormValid = !(
-					review.requirePreferenceAmount.required && review.requirePreferenceAmount.complete == false
-					|| review.requireEligible.required && review.requireEligible.complete == false
-					|| review.requirePreferenceComments.required && preferenceCommentsComplete);
+				var isFormValid = !(review.requirePreferenceAmount.required && review.requirePreferenceAmount.complete == false
+												|| review.requireEligible.required && review.requireEligible.complete == false
+												|| review.requirePreferenceComments.required && preferenceCommentsComplete == false);
+
 					if (review.requirePreferenceAmount.required && review.requirePreferenceAmount.complete == false) {
 						validationErrorMessage += "You must provide at least " + StudentFormReducers._state.supportCallResponse.minimumNumberOfPreferences + " preferences";
 					}
