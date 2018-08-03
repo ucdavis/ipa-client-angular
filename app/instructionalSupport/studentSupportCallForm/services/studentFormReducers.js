@@ -222,7 +222,7 @@ class StudentFormReducers {
 					case ActionTypes.DELETE_STUDENT_PREFERENCE:
 						ui.review.requirePreferenceAmount.complete = action.preferences.ids.length >= action.supportCallResponse.minimumNumberOfPreferences;
 						return ui;
-					case ActionTypes.UPDATE_PREFERENCE:
+					case ActionTypes.UPDATE_PREFERENCE_COMMENT_VALIDATION:
 						ui.review.requirePreferenceComments.complete = action.preferenceCommentsComplete;
 						return ui;
 					case ActionTypes.UPDATE_SUPPORT_CALL_RESPONSE:

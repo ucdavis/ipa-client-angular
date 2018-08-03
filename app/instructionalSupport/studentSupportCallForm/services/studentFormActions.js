@@ -160,16 +160,9 @@ class StudentFormActions {
 					$rootScope.$emit('toast', { message: "Updated preference comments", type: "SUCCESS" });
 	
 					StudentFormReducers._state.preferences.list[payload.id] = payload;
-					var preferenceCommentsComplete = true;
-					StudentFormReducers._state.preferences.ids.forEach(function(preferenceId) {
-						var preference = StudentFormReducers._state.preferences.list[preferenceId];
-						if (!(preference.comment) || preference.comment.length == 0) { preferenceCommentsComplete = false; }
-					});
-	
 					var action = {
 						type: ActionTypes.UPDATE_PREFERENCE,
-						payload: payload,
-						preferenceCommentsComplete: preferenceCommentsComplete
+						payload: payload
 					};
 					StudentFormReducers.reduce(action);
 					self.calculateFormValid();
@@ -197,11 +190,26 @@ class StudentFormActions {
 			calculateFormValid : function() {
 				var review = StudentFormReducers._state.ui.review;
 				var validationErrorMessage = "";
-	
+
+				var preferenceCommentsComplete = true;
+
+				StudentFormReducers._state.preferences.ids.forEach(function(preferenceId) {
+					var preference = StudentFormReducers._state.preferences.list[preferenceId];
+					if (!(preference.comment) || preference.comment.length == 0) { preferenceCommentsComplete = false; }
+				});
+
+				StudentFormReducers.reduce({
+					type: ActionTypes.PREFERENCE_COMMENTS_COMPLETE,
+					payload: {
+						preferenceCommentsComplete: preferenceCommentsComplete
+					}
+				});
+
+
 				var isFormValid = !(
 					review.requirePreferenceAmount.required && review.requirePreferenceAmount.complete == false
 					|| review.requireEligible.required && review.requireEligible.complete == false
-					|| review.requirePreferenceComments.required && review.requirePreferenceComments.complete == false);
+					|| review.requirePreferenceComments.required && preferenceCommentsComplete);
 					if (review.requirePreferenceAmount.required && review.requirePreferenceAmount.complete == false) {
 						validationErrorMessage += "You must provide at least " + StudentFormReducers._state.supportCallResponse.minimumNumberOfPreferences + " preferences";
 					}
