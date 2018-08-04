@@ -44,7 +44,6 @@
     "@angular/platform-browser": "^6.0.7",
     "@angular/platform-browser-dynamic": "^6.0.7",
     "@angular/router": "^6.0.9",
-    "@ngrx/store": "^6.0.1",
     "@types/angular": "1.6.43",
     "@types/node": "10.0.0",
     "@types/toastr": "^2.1.35",
