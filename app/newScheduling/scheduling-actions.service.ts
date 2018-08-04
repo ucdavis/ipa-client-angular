@@ -11,7 +11,6 @@ export class SchedulingActions {
 
   constructor(
     private apiService: ApiService,
-    //private store: Store<SchedulingState>,
     private authService: AuthService) {}
 
   initializeData(data: any): void {
@@ -19,8 +18,6 @@ export class SchedulingActions {
   }
 
   getCourses(): void {
-    //this.store.dispatch({type: 'GET_COURSES'});
-
     let url: String = "/api/workgroups/" + 20 + "/years/" + 2018 + "/courses";
 
     this.apiService.get(url).subscribe((data: any) => {

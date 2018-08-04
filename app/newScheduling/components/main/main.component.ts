@@ -29,29 +29,14 @@ export class MainComponent {
   ];
 
 	constructor(
-    //private store: Store<AppState>,
     private schedulingActions: SchedulingActions,
     private activatedRoute: ActivatedRoute
-  ) {
-    //this.scheduling = this.store.select('scheduling');
-
-  }
+  ) {}
 
   ngOnInit() {
     this.schedulingActions.sectionGroups.subscribe(sectionGroups => {
       this.sectionGroups = sectionGroups;
     });
-
-    // this.scheduling.subscribe(state => {
-    //   console.log(state);
-    //   this.schedulingName = state.name;
-    //   this.schedulingShow = state.showName;
-    //   this.courses = state.courses.list;
-    // });
-  }
-
-  initializeSectionGroups() {
-    this.schedulingActions.initializeData(this.activatedRoute.snapshot.data.sectionGroups);
   }
 
   getCourses() {
