@@ -54,7 +54,15 @@ $warn: map-get($custom-theme, warn);
 $background: map-get($custom-theme, background);
 $foreground: map-get($custom-theme, foreground);
 
+/* Can place class exports of theme colors here */
+
+/* Exports the primary 'background-color', and contrast 'color' */
 .theme-primary {
   background-color: mat-color($primary, 500);
   color: mat-contrast($primary, 500);
+}
+
+.theme-white {
+  background-color: white;
+  color: rgba(0, 0, 0, 0.87);
 }

@@ -1,3 +1,5 @@
+/* Styling here will be applied to all modules */
+
 body {
   margin: 0px;
 }
@@ -6,28 +8,6 @@ body {
   font-size: 12px;
 }
 
-.core__font-md {
-  font-size: 16px;
-}
-
-.core__font-large {
-  font-size: 20px;
-}
-
-
-
-/* override caret color on nav accordion */
-/* Needs to be moved to the ipa-nav-accordion component, as a wrapper component with view encapsulation turned off */
-/* Leaving overrides here will get cluttered/confusing over time */
-.ipa-nav-variant-two .mat-expansion-indicator:after {
-  color: #aaabae !important;
-}
-
-.ipa-header-variant-two .core__sm-btn .mat-button-wrapper { /* Ensures button text will be sized accordingly */
-  font-size: 12px;
-  line-height: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0px;
+.core__font-xl {
+  font-size: 32px;
 }
