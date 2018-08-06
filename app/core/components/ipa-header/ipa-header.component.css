@@ -1,7 +1,10 @@
 .top-bar {
-  background-color: #f7f7f7;
+  display: flex;
+  justify-content: space-between;
 }
 
-.bottom-bar {
-  background-color: #ffffff;
+.top-right-bar {
+  width: 12%;
+  display: flex;
+  justify-content: space-between;
 }

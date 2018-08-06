@@ -1,23 +1,14 @@
 <mat-toolbar>
   <mat-toolbar-row class="top-bar">
     <span>Instructors</span>
-    <!-- Drop down nav
-      <button mat-icon-button [matMenuTriggerFor]="pageMenu">
-        <mat-icon>keyboard_arrow_down</mat-icon>
-      </button>
-      <mat-menu #pageMenu="matMenu" [overlapTrigger]="false">
-        <button mat-menu-item>Assign Instructors</button>
-        <button mat-menu-item>Teaching Calls</button>
-      </mat-menu> 
-    -->
 
-    <span style="flex: 1 1 auto"></span>
-
-    <button mat-mini-fab>CT</button>
-    <button mat-raised-button style="margin-left: 16px;">Logout</button>
+    <span class="top-right-bar">
+      <button mat-mini-fab>CT</button>
+      <button mat-raised-button class="logout-btn">Logout</button>
+    </span>
   </mat-toolbar-row>
   <mat-divider></mat-divider>
-  <mat-toolbar-row class="bottom-bar">
+  <mat-toolbar-row class="theme-white">
     <nav mat-tab-nav-bar>
       <a mat-tab-link>Assign Instructors</a>
       <a mat-tab-link active="true">Teaching Calls</a>
