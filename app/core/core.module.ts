@@ -21,15 +21,17 @@ import { MatIconRegistry } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 
 // Material
-
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatSelectModule } from '@angular/material/select';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTabsModule } from '@angular/material/tabs';
+import {
+  MatExpansionModule,
+  MatButtonModule,
+  MatTooltipModule,
+  MatToolbarModule,
+  MatSidenavModule,
+  MatListModule,
+  MatSelectModule,
+  MatMenuModule,
+  MatTabsModule
+} from '@angular/material';
 
 // Components
 import { IpaHeader } from '@core/components/ipa-header/ipa-header.component';
@@ -49,7 +51,8 @@ import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
     MatIconModule,
     MatSelectModule,
     MatMenuModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTooltipModule
   ],
   // Injected components and directives
   declarations: [IpaHeader, IpaNav],
