@@ -1,11 +1,9 @@
 <ipa-nav>
   <div class="page-content">
-    <button (click)="getCourses()" matTooltip={{tooltip}} mat-raised-button>Get courses</button>
     <button (click)="errorTest()" mat-button color="accent">Log error</button>
     <button (click)="impersonateJarold()" matTooltip="Impersonate a user" mat-stroked-button color="primary">IMPERSONATE THE JAROLD</button>
     <button (click)="unimpersonateJarold()" mat-flat-button color="warn">UNIMPERSONATE THE JAROLD</button>
     <button (click)="makeToast()" mat-button disabled>make toast</button>
-    <button (click)="logSectionGroups()" mat-button>log sectionGroups</button>
 
     <button (click)="toggleMessage()">Toggle Message</button>
     <div *ngIf="schedulingShow">{{ schedulingName }}</div>

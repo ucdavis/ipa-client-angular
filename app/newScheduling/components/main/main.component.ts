@@ -42,14 +42,6 @@ export class MainComponent {
     });
   }
 
-  logSectionGroups() {
-    console.log(this.sectionGroups);
-  }
-
-  getCourses() {
-    this.schedulingActions.getCourses();
-  }
-
   errorTest() {
     let list: any[] = [1, 2, 3];
 
