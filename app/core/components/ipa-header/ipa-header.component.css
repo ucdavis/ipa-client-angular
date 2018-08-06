@@ -17,7 +17,7 @@
   justify-content: space-between;
 }
 
-.year {
-  padding-left: 16px;
-  padding-right: 16px;
+.greeting {
+  display: flex;
+  align-items: center;
 }
