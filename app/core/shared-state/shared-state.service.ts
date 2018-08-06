@@ -3,7 +3,7 @@ import { SharedState } from '@core/shared-state/shared-state.model';
 
 @Injectable({ providedIn: 'root' })
 export class SharedStateService {
-  getSharedState():SharedState {
+  getSharedState(): SharedState {
     return {
       workgroupId: parseInt(localStorage.getItem('workgroupId')),
       year: parseInt(localStorage.getItem('year')),
@@ -15,7 +15,7 @@ export class SharedStateService {
     };
   }
 
-  setSharedState(data:any): void {
+  setSharedState(data: any): void {
     localStorage.setItem('workgroupId', data.workgroupId);
     localStorage.setItem('year', data.year);
     localStorage.setItem('JWT', data.token);

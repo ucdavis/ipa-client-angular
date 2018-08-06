@@ -3,12 +3,13 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 import { Observable } from 'rxjs';
 
 import { ApiService }  from '@core/api/api.service';
+import { SectionGroup } from '@core/models/section-group.model';
 
 @Injectable()
-export class SectionGroupResolver implements Resolve<any> {
+export class SectionGroupResolver implements Resolve<SectionGroup[]> {
   constructor(private apiService: ApiService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<SectionGroup[]> {
     let workgroupId = route.params.workgroupId;
     let year = route.params.year;
 
