@@ -1,13 +1,13 @@
 <mat-sidenav-container class="sidenav" autosize>
   <mat-sidenav #sidenav class="theme-primary" mode="side" opened="true" [ngClass]="{collapsed: !isNavExpanded}">
     <mat-nav-list>
-      <mat-list-item>
+      <mat-list-item (click)="toggleSideNav()">
         <p matLine *ngIf="isNavExpanded">
           <strong class="theme-primary core__font-xl">IPA</strong>
         </p>
         <button mat-icon-button>
-          <mat-icon class="theme-primary" *ngIf="!isNavExpanded" (click)="toggleSideNav()">chevron_right</mat-icon>
-          <mat-icon class="theme-primary" *ngIf="isNavExpanded" (click)="toggleSideNav()">chevron_left</mat-icon>
+          <mat-icon class="theme-primary" *ngIf="!isNavExpanded" >chevron_right</mat-icon>
+          <mat-icon class="theme-primary" *ngIf="isNavExpanded" >chevron_left</mat-icon>
         </button>
       </mat-list-item>
 
