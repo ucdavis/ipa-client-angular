@@ -7,6 +7,7 @@ import { SchedulingState } from '@scheduling/models/scheduling.model';
 import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 
 import * as toastr from 'toastr';
+import { SectionGroup } from '@core/models/section-group.model';
 
 @Component({
   selector: 'main',
@@ -16,10 +17,10 @@ import * as toastr from 'toastr';
 export class MainComponent {
   tooltip: string = 'Taco';
   scheduling: Observable<SchedulingState>;
-  schedulingName: String;
+  schedulingName: string;
   schedulingShow: boolean;
   courses: Array<any>;
-  sectionGroups: Array<any>;
+  sectionGroups: Array<SectionGroup>;
   selectedValue: string;
 
   foods: any[] = [
@@ -34,9 +35,15 @@ export class MainComponent {
   ) {}
 
   ngOnInit() {
+    this.schedulingActions.initializeData(this.activatedRoute.snapshot.data);
+
     this.schedulingActions.sectionGroups.subscribe(sectionGroups => {
       this.sectionGroups = sectionGroups;
     });
+  }
+
+  logSectionGroups() {
+    console.log(this.sectionGroups);
   }
 
   getCourses() {
