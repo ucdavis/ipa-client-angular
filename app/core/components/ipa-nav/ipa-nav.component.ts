@@ -7,12 +7,7 @@ import { Component } from '@angular/core';
 })
 export class IpaNav {
   isNavExpanded: boolean = true;
-  activeAccordion: string = '';
-  activePage: string = '';
-  summary: any;
-  instructor: any;
-  taAndReader: any;
-  report: any;
+  activePage: string = 'schedule';
 
   constructor() {}
 
