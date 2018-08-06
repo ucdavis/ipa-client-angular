@@ -4,7 +4,20 @@
 }
 
 .top-right-bar {
-  width: 12%;
   display: flex;
   justify-content: space-between;
+}
+
+.logout-btn {
+  margin-left: 16px;
+}
+
+.bottom-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.year {
+  padding-left: 16px;
+  padding-right: 16px;
 }

@@ -3,42 +3,42 @@
     <span>Instructors</span>
 
     <span class="top-right-bar">
-      <button mat-mini-fab>CT</button>
+      <span class="muted typo-caption">Bob Smith</span>
       <button mat-raised-button class="logout-btn">Logout</button>
     </span>
   </mat-toolbar-row>
   <mat-divider></mat-divider>
-  <mat-toolbar-row class="theme-white">
+  <mat-toolbar-row class="theme-white bottom-bar">
     <nav mat-tab-nav-bar>
       <a mat-tab-link>Assign Instructors</a>
       <a mat-tab-link active="true">Teaching Calls</a>
     </nav>
 
-    <span style="flex: 1 1 auto"></span>
-
     <!-- Year Selector -->
-    <button mat-icon-button>
-      <mat-icon>chevron_left</mat-icon>
-    </button>
-    <button mat-button>2018-19</button>
-    <button mat-icon-button>
-      <mat-icon>chevron_right</mat-icon>
-    </button>
+    <span>
+      <button mat-icon-button>
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <span class="year">2018-19</span>
+      <button mat-icon-button>
+        <mat-icon>chevron_right</mat-icon>
+      </button>
 
-    <!-- Workgroup Selector -->
-    <button mat-button [matMenuTriggerFor]="workgroupMenu">"WORKGROUP"</button>
-    <mat-menu #workgroupMenu="matMenu">
-      <button mat-menu-item>DSSIT</button>
-      <button mat-menu-item>Admin</button>
-    </mat-menu>
+      <!-- Workgroup Selector -->
+      <button mat-button [matMenuTriggerFor]="workgroupMenu">DSS IT</button>
+      <mat-menu #workgroupMenu="matMenu">
+        <button mat-menu-item>DSSIT</button>
+        <button mat-menu-item>Admin</button>
+      </mat-menu>
 
-    <!-- Term Selector -->
-    <button mat-button [matMenuTriggerFor]="termsMenu">Annual</button>
-    <mat-menu #termsMenu="matMenu">
-      <button mat-menu-item>Fall</button>
-      <button mat-menu-item>Winter</button>
-      <button mat-menu-item>Spring</button>
-    </mat-menu>
+      <!-- Term Selector -->
+      <button mat-button [matMenuTriggerFor]="termsMenu">Fall</button>
+      <mat-menu #termsMenu="matMenu">
+        <button mat-menu-item>Fall</button>
+        <button mat-menu-item>Winter</button>
+        <button mat-menu-item>Spring</button>
+      </mat-menu>
+    </span>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-divider></mat-divider>
