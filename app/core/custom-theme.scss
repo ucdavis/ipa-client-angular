@@ -66,3 +66,64 @@ $foreground: map-get($custom-theme, foreground);
   background-color: white;
   color: rgba(0, 0, 0, 0.87);
 }
+
+.muted {
+  opacity: .6;
+}
+
+// --------------------- Typography exports -----------------------------------------------
+// Custom title that uses all of the typography styles from the `title` level.
+// Create a config with the default typography levels.
+$config: mat-typography-config();
+
+.typo-caption {
+  @include mat-typography-level-to-styles($config, caption);
+}
+
+.typo-input {
+  @include mat-typography-level-to-styles($config, input);
+}
+
+.typo-button {
+  @include mat-typography-level-to-styles($config, button);
+}
+
+.typo-body-1 {
+  @include mat-typography-level-to-styles($config, body-1);
+}
+
+.typo-body-2 {
+  @include mat-typography-level-to-styles($config, body-2);
+}
+
+.typo-display-4 {
+  @include mat-typography-level-to-styles($config, display-4);
+}
+
+.typo-display-3 {
+  @include mat-typography-level-to-styles($config, display-3);
+}
+
+.typo-display-2 {
+  @include mat-typography-level-to-styles($config, display-2);
+}
+
+.typo-display-1 {
+  @include mat-typography-level-to-styles($config, display-1);
+}
+
+.typo-headline {
+  @include mat-typography-level-to-styles($config, headline);
+}
+
+.typo-title {
+  @include mat-typography-level-to-styles($config, title);
+}
+
+.typo-subheading-2 {
+  @include mat-typography-level-to-styles($config, subheading-2);
+}
+
+.typo-subheading-1 {
+  @include mat-typography-level-to-styles($config, subheading-1);
+}
