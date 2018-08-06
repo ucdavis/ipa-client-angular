@@ -1,4 +1,4 @@
-<mat-sidenav-container class="example-container" autosize>
+<mat-sidenav-container class="sidenav" autosize>
   <mat-sidenav #sidenav class="theme-primary" mode="side" opened="true" [ngClass]="{collapsed: !isNavExpanded}">
     <mat-nav-list>
       <mat-list-item>
@@ -61,53 +61,8 @@
           <button mat-menu-item>Item 2</button>
         </mat-menu>
       </mat-list-item>
-
-
-
-
-
     </mat-nav-list>
   </mat-sidenav>
-
-  <!-- <mat-sidenav-container hasBackdrop="false">
-  <mat-sidenav mode="over"
-               class="theme-primary"
-               fixedInViewport="true"
-               opened="true"
-               (mouseenter)="toggleSideNav()"
-               (mouseleave)="toggleSideNav()">
-
-    <mat-nav-list>
-      <mat-list-item>
-        <mat-icon class="theme-primary">home</mat-icon>
-        <span *ngIf="isNavExpanded" class="theme-primary">Summary</span>
-      </mat-list-item>
-
-      <mat-divider></mat-divider>
-
-      <mat-list-item>
-        <mat-icon class="theme-primary">person_add</mat-icon>
-        <span *ngIf="isNavExpanded" class="theme-primary">Instructor</span>
-      </mat-list-item>
-
-      <mat-divider></mat-divider>
-
-      <mat-list-item>
-        <mat-icon class="theme-primary">people</mat-icon>
-        <span *ngIf="isNavExpanded" class="theme-primary">TAs and Readers</span>
-      </mat-list-item>
-
-      <mat-divider></mat-divider>
-
-      <mat-list-item>
-        <mat-icon class="theme-primary">assignment</mat-icon>
-        <span *ngIf="isNavExpanded" class="theme-primary">Report</span>
-      </mat-list-item>
-    </mat-nav-list>
-
-  </mat-sidenav> -->
-
-  <!-- toolbar and page contents -->
   <mat-sidenav-content>
     <ipa-header></ipa-header>
     <ng-content></ng-content>
