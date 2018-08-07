@@ -13,19 +13,19 @@ export class SchedulingActions {
   private _year: number = null;
 
   // Normalized entity lists
-  private _sectionGroups: BehaviorSubject<Array<SectionGroup>> = new BehaviorSubject([]);
-  public readonly sectionGroups: Observable<Array<SectionGroup>> = this._sectionGroups.asObservable();
+  private _sectionGroups: BehaviorSubject<SectionGroup[]> = new BehaviorSubject([]);
+  public readonly sectionGroups: Observable<SectionGroup[]> = this._sectionGroups.asObservable();
 
-  private _courses: BehaviorSubject<Array<Course>> = new BehaviorSubject([]);
-  public readonly courses: Observable<Array<Course>> = this._courses.asObservable();
+  private _courses: BehaviorSubject<Course[]> = new BehaviorSubject([]);
+  public readonly courses: Observable<Course[]> = this._courses.asObservable();
 
   // UI state tracking (ui state that has global significance)
   private _uiState: BehaviorSubject<any> = new BehaviorSubject([]);
   public readonly uiState: Observable<any> = this._uiState.asObservable();
 
   // Calculations
-  private _calculations: BehaviorSubject<Array<Course>> = new BehaviorSubject([]);
-  public readonly calculations: Observable<Array<Course>> = this._calculations.asObservable();
+  private _calculations: BehaviorSubject<Course[]> = new BehaviorSubject([]);
+  public readonly calculations: Observable<Course[]> = this._calculations.asObservable();
 
   constructor(
     private apiService: ApiService,
@@ -35,30 +35,34 @@ export class SchedulingActions {
 
   // This is a required step - the 'main' component of the app should feed resolved data here, so it can be made easily available via observables
   initializeData(): void {
-    this._workgroupId = this.activatedRoute.snapshot.params.workgroupId;
-    this._year = this.activatedRoute.snapshot.params.year;
+    this.activatedRoute.firstChild.params.subscribe(params => {
+      this._workgroupId = params.workgroupId;
+      this._year = params.year;
+    });
 
-    this._sectionGroups.next(this.activatedRoute.snapshot.data.sectionGroups);
-    this._courses.next(this.activatedRoute.snapshot.data.courses);
-  }
-
-  addCourse(course: Course): void {
-    this.apiService.post('/workgroups/' + this._workgroupId + '/years/' + this._year + '/courses', course).subscribe((response) => {
-      response;
-      debugger;
+    this.activatedRoute.firstChild.data.subscribe(data => {
+      this._sectionGroups.next(data.sectionGroups);
+      this._courses.next(data.courses);
     });
   }
 
-  updateCourse(course: Course) {
-
+  addCourse(course: Course): void {
+    this.apiService
+      .post('/api/workgroups/' + this._workgroupId + '/years/' + this._year + '/courses', course)
+      .subscribe(response => {
+        response;
+        debugger;
+      });
   }
+
+  updateCourse(course: Course) {}
 
   deleteCourse(course: Course) {
     //this.apiService()
   }
 
   impersonateJarold() {
-    this.authService.impersonate("JIWUNG");
+    this.authService.impersonate('JIWUNG');
   }
 
   unimpersonateJarold() {

@@ -12,8 +12,8 @@ import { Course } from '@core/models/course.model';
 
 @Component({
   selector: 'main',
-	templateUrl: './main.component.html',
-	styleUrls: ['main.component.css'],
+  templateUrl: './main.component.html',
+  styleUrls: ['main.component.css']
 })
 export class MainComponent {
   tooltip: string = 'Taco';
@@ -25,12 +25,12 @@ export class MainComponent {
   selectedValue: string;
 
   foods: any[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
+    { value: 'steak-0', viewValue: 'Steak' },
+    { value: 'pizza-1', viewValue: 'Pizza' },
+    { value: 'tacos-2', viewValue: 'Tacos' }
   ];
 
-	constructor(
+  constructor(
     private schedulingActions: SchedulingActions,
     private activatedRoute: ActivatedRoute
   ) {}
@@ -51,16 +51,16 @@ export class MainComponent {
 
   addCourse() {
     let course: Course = {
-      subjectCode: "ABC",
-      courseNumber: "123",
-      title: "Example course",
+      subjectCode: 'ABC',
+      courseNumber: '123',
+      title: 'Example course',
       unitsHigh: 4,
       unitsLow: 4,
-      effectiveTermCode: "201003",
-      sequencePattern: "A"
-    }
+      effectiveTermCode: '201003',
+      sequencePattern: 'A'
+    };
 
-    //this.schedulingActions.addCourse(course);
+    this.schedulingActions.addCourse(course);
   }
 
   toggleMessage() {
