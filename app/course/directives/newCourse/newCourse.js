@@ -6,9 +6,9 @@ let newCourse = function (CourseActionCreators, CourseService, SectionService) {
 		template: require('./newCourse.html'),
 		replace: true,
 		link: function (scope, element, attrs) {
-			scope.sequenceNumberPlaceholder = "Example: '001' or 'A02'";
+			scope.sequenceNumberPlaceholder = "Example: '001' or 'A'";
 			scope.newCourseValidation = {
-				tooltipErrorMessage: "Select a course and enter a sequence number"
+				tooltipErrorMessage: "Select a course and enter a sequence pattern"
 			};
 
 			scope.isCourseUnique = function () {
@@ -30,10 +30,6 @@ let newCourse = function (CourseActionCreators, CourseService, SectionService) {
 				}
 
 				return true;
-			};
-
-			scope.isSequenceNumberFormatValid = function (sequenceNumber) {
-				return SectionService.isSequenceNumberFormatValid(sequenceNumber);
 			};
 
 			scope.searchCourses = function (query) {
@@ -80,7 +76,7 @@ let newCourse = function (CourseActionCreators, CourseService, SectionService) {
 			scope.createCourse = function () {
 				if (!scope.newCourseValidation.tooltipErrorMessage) {
 					CourseActionCreators.createCourse(scope.view.state.courses.newCourse, scope.workgroupId, scope.year);
-					scope.newCourseValidation.tooltipErrorMessage = "Select a course and enter a sequence number";
+					scope.newCourseValidation.tooltipErrorMessage = "Select a course and enter a sequence pattern";
 					scope.view.newCourseSearchQuery = null;
 					scope.view.state.courses.newCourse = null;
 				}
@@ -95,9 +91,9 @@ let newCourse = function (CourseActionCreators, CourseService, SectionService) {
 				if (!newCourse.title && newCourse.sequencePattern) {
 					scope.newCourseValidation.tooltipErrorMessage = "Select a course";
 				} else if (newCourse.title && !newCourse.sequencePattern) {
-					scope.newCourseValidation.tooltipErrorMessage = "Enter a sequence number";
+					scope.newCourseValidation.tooltipErrorMessage = "Enter a sequence pattern";
 				} else if (!newCourse.title && !newCourse.sequencePattern) {
-					scope.newCourseValidation.tooltipErrorMessage = "Select a course and enter a sequence number";
+					scope.newCourseValidation.tooltipErrorMessage = "Select a course and enter a sequence pattern";
 				}
 
 				return false;
@@ -115,8 +111,8 @@ let newCourse = function (CourseActionCreators, CourseService, SectionService) {
 				// Ensure both course and sequence number have been filled out
 				if (scope.isCourseComplete() == false) { return; }
 
-				if (SectionService.isSequenceNumberFormatValid(newCourse.sequencePattern) == false) {
-					scope.newCourseValidation.tooltipErrorMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or 'a letter and 2 numbers' ('ex: 'A05').";
+				if (SectionService.isSequencePatternValid(newCourse.sequencePattern) == false) {
+					scope.newCourseValidation.tooltipErrorMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or 'a letter' ('ex: 'A').";
 					return;
 				}
 
