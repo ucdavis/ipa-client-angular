@@ -3,6 +3,7 @@ node_modules/
 dist/
 .DS_STORE
 clientConfig.js
+webpack.env.js
 .vscode/
 jsconfig.json
 certs/
