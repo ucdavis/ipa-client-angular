@@ -30,11 +30,10 @@ class AuthService {
 						localStorage.removeItem('currentUser');
 						$window.location.href = response.data.redirect + "?ref=" + $location.absUrl();
 
-						deferred.resolve();
+						deferred.reject(response);
 					}
 				}, function (error) {
 					var message;
-
 					var jwt = localStorage.getItem('JWT');
 					var loginId = null;
 
