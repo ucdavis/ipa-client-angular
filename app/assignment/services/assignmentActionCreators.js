@@ -61,7 +61,7 @@ class AssignmentActionCreators {
 				instructorNote.note = note;
 
 				_self.AssignmentService.updateInstructorNote(instructorNote).then(function (newInstructorNote) {
-					_self.$rootScope.$emit('toast', { message: "Updated course note", type: "SUCCESS" });
+					_self.$rootScope.$emit('toast', { message: "Updated instructor note", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_INSTRUCTOR_NOTE,
 						payload: {
@@ -70,7 +70,7 @@ class AssignmentActionCreators {
 					};
 					_self.AssignmentStateService.reduce(action);
 				}, function (err) {
-					_self.$rootScope.$emit('toast', { message: "Could not update course note.", type: "ERROR" });
+					_self.$rootScope.$emit('toast', { message: "Could not update instructor note.", type: "ERROR" });
 				});
 			},
 			updateTagFilters: function (tagIds) {
