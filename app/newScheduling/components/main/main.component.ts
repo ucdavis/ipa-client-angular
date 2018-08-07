@@ -8,6 +8,7 @@ import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 
 import * as toastr from 'toastr';
 import { SectionGroup } from '@core/models/section-group.model';
+import { Course } from '@core/models/course.model';
 
 @Component({
   selector: 'main',
@@ -35,7 +36,7 @@ export class MainComponent {
   ) {}
 
   ngOnInit() {
-    this.schedulingActions.initializeData(this.activatedRoute.snapshot.data);
+    this.schedulingActions.initializeData();
 
     this.schedulingActions.sectionGroups.subscribe(sectionGroups => {
       this.sectionGroups = sectionGroups;
@@ -46,6 +47,20 @@ export class MainComponent {
     let list: any[] = [1, 2, 3];
 
     list[0].substr(1);
+  }
+
+  addCourse() {
+    let course: Course = {
+      subjectCode: "ABC",
+      courseNumber: "123",
+      title: "Example course",
+      unitsHigh: 4,
+      unitsLow: 4,
+      effectiveTermCode: "201003",
+      sequencePattern: "A"
+    }
+
+    //this.schedulingActions.addCourse(course);
   }
 
   toggleMessage() {
