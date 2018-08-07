@@ -567,7 +567,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				let $el = $(e.target);
 				if ($el.data('event-type') != 'setInstructorNote') { return; }
 
-				if (e.key == 	"Enter") {
+				if (e.key == "Enter") {
 					var instructorId = $el.data('instructor-id');
 					var scheduleId = $el.data('schedule-id');
 
