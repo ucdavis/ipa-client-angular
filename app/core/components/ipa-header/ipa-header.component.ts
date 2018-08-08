@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { SharedStateService } from '@core/shared-state/shared-state.service';
 
@@ -7,8 +7,10 @@ import { SharedStateService } from '@core/shared-state/shared-state.service';
   templateUrl: './ipa-header.component.html',
   styleUrls: ['./ipa-header.component.css']
 })
-export class IpaHeader {
+export class IpaHeader implements OnInit {
   year: string;
+  currentWorkgroup: string;
+  filteredWorkgroups: string[];
 
   constructor(
     private route: ActivatedRoute,
@@ -17,7 +19,13 @@ export class IpaHeader {
   ) {}
 
   ngOnInit() {
+    const roles = this.sharedState.getSharedState().userRoles;
+
     this.year = this.route.snapshot.url[2].path;
+    this.currentWorkgroup = JSON.parse(localStorage.getItem('workgroup')).name;
+    this.filteredWorkgroups = Array.from(
+      new Set(roles.filter(role => role.workgroupId > 0).map(role => role.workgroupName))
+    ).sort();
   }
 
   offsetYearInUrl(offset: number) {

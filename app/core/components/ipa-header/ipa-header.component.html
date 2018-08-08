@@ -27,8 +27,10 @@
       <!-- Workgroup Selector -->
       <button mat-button [matMenuTriggerFor]="workgroupMenu">DSS IT</button>
       <mat-menu #workgroupMenu="matMenu">
-        <button mat-menu-item>DSSIT</button>
-        <button mat-menu-item>Admin</button>
+        <button *ngFor="let workgroupName of filteredWorkgroups" mat-menu-item>
+          <mat-icon *ngIf="workgroupName === currentWorkgroup">check</mat-icon>          
+          {{ workgroupName }}
+        </button>
       </mat-menu>
 
       <!-- Term Selector -->
