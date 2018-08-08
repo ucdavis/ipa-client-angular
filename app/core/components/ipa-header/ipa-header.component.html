@@ -16,11 +16,11 @@
 
     <!-- Year Selector -->
     <span>
-      <button mat-icon-button>
+      <button mat-icon-button (click)="offsetYearInUrl(-1)">
         <mat-icon>chevron_left</mat-icon>
       </button>
-      <span class="typo-button">2018-19</span>
-      <button mat-icon-button>
+      <span class="typo-button">{{ yearToAcademicYear() }}</span>
+      <button mat-icon-button (click)="offsetYearInUrl(1)">
         <mat-icon>chevron_right</mat-icon>
       </button>
 
