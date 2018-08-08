@@ -52,7 +52,7 @@ let courseDetails = function (CourseActionCreators, SectionService) {
 					return true;
 				}
 
-				if (SectionService.isSequencePatternValid(sequencePattern) == false) {
+				if (SectionService.isSequencePatternValid(sequencePattern.toUpperCase()) == false) {
 					scope.courseDetails.sequencePatternTooltipMessage = "Sequence pattern format is incorrect. Valid formats are '3 numbers' (ex: '002') or '1 letter' (ex: 'A').";
 					return;
 				}
@@ -65,7 +65,8 @@ let courseDetails = function (CourseActionCreators, SectionService) {
 				scope.courseDetails.sequencePatternTooltipMessage = null;
 				scope.view.selectedEntity.sequencePattern = sequencePattern;
 
-				scope.originalSequencePattern = sequencePattern;
+				scope.originalSequencePattern = sequencePattern.toUpperCase();
+				scope.view.selectedEntity.sequencePattern = scope.view.selectedEntity.sequencePattern.toUpperCase();
 				CourseActionCreators.updateCourse(scope.view.selectedEntity);
 			};
 
