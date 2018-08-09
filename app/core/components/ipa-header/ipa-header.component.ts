@@ -35,12 +35,8 @@ export class IpaHeader implements OnInit {
   }
 
   offsetYearInUrl(offset: number) {
-    const currentYear = this.year;
-    const currentPath = this.router.url.split(currentYear);
     this.year = (parseInt(this.year) + offset).toString();
-
-    const updatedPath = currentPath[0] + this.year + currentPath[1];
-    this.router.navigate([updatedPath]);
+    this.router.navigate(['../../', this.year, this.termCode], { relativeTo: this.route });
   }
 
   yearToAcademicYear() {
