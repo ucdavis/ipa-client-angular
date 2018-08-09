@@ -34,11 +34,9 @@
       </mat-menu>
 
       <!-- Term Selector -->
-      <button mat-button [matMenuTriggerFor]="termsMenu">Fall</button>
+      <button mat-button [matMenuTriggerFor]="termsMenu">{{ getTermDisplayName() }}</button>
       <mat-menu #termsMenu="matMenu">
-        <button mat-menu-item>Fall</button>
-        <button mat-menu-item>Winter</button>
-        <button mat-menu-item>Spring</button>
+        <button *ngFor="let term of termsTable" mat-menu-item (click)="goToTerm(term.shortCode)">{{ term.description }}</button>
       </mat-menu>
     </span>
   </mat-toolbar-row>
