@@ -76,10 +76,10 @@
 				<!-- Comments -->
 				<td class="line-items__table-cell line-items__table-cell--comments" ng-class-odd="'line-items__table-cell--dark'">
 					<div class="line-items__comment-container">
-						<ipa-button text="'Comments' + lineItem.commentCountDisplay"
+						<ipa-button superscript="lineItem.commentCountDisplay"
+												icon-color="lineItem.commentCountDisplay ? '' : 'gray'"
 						            tooltip-message="'View Comments'"
-						            color="'light'"
-						            icon-class="'entypo entypo-chat'"
+												icon-class="'entypo entypo-chat'"
 						            on-click="openAddLineItemCommentsModal(lineItem)">
 						</ipa-button>
 					</div>

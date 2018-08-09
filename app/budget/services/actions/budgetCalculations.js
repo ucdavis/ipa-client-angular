@@ -466,7 +466,7 @@ class BudgetCalculations {
 					}
 				});
 	
-				lineItem.commentCountDisplay = lineItem.commentCount > 0 ? " (" + lineItem.commentCount + ")" : '';
+				lineItem.commentCountDisplay = lineItem.commentCount > 0 ? lineItem.commentCount : '';
 	
 				// Sort sectionGroupCostComments
 				var reverseOrder = true;
