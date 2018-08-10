@@ -1,7 +1,7 @@
 /**
  * Provides the main course table in the Courses View
  */
-let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, AuthService) {
+let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, AuthService, $routeParams) {
 	return {
 		restrict: 'A',
 		scope: {
@@ -14,6 +14,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 		},
 		link: function (scope, element, attrs) {
 			scope.sharedState = scope.sharedState || AuthService.getSharedState();
+			scope.workgroupId = $routeParams.workgroupId;
+			scope.year = $routeParams.year;
 
 			scope.view = {};
 			scope.view.state = scope.state;

@@ -185,7 +185,7 @@ class AssignmentActionCreators {
 				scheduleInstructorNote.instructorId = instructorId;
 				scheduleInstructorNote.comment = comment;
 	
-				_self.AssignmentService.addScheduleInstructorNote(scheduleInstructorNote).then(function (scheduleInstructorNote) {
+				_self.AssignmentService.addScheduleInstructorNote(instructorId, year, workgroupId, comment).then(function (scheduleInstructorNote) {
 					_self.$rootScope.$emit('toast', { message: "Added instructor comment", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ADD_SCHEDULE_INSTRUCTOR_NOTE,
