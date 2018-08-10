@@ -28,14 +28,17 @@
 	</div>
 
 	<div class="student-form-review__row" ng-if="state.ui.review.requirePreferenceComments.required">
-		<div class="student-form-review__icon"  ng-if="state.ui.review.requirePreferenceComments.complete">
+		<div class="student-form-review__icon"  ng-if="state.ui.review.requirePreferenceComments.complete && state.ui.review.requirePreferenceComments.disabled == false">
 			<i class="student-form-review__check glyphicon glyphicon-ok"></i>
 		</div>
-		<div class="student-form-review__icon"  ng-if="state.ui.review.requirePreferenceComments.complete == false">
+		<div class="student-form-review__icon student-form-review__disabled" ng-if="state.ui.review.requirePreferenceComments.complete && state.ui.review.requirePreferenceComments.disabled">
 			<i class="glyphicon glyphicon-unchecked"></i>
 		</div>
-		<div>
-			Preference Comments
+		<div class="student-form-review__icon" ng-if="state.ui.review.requirePreferenceComments.complete == false">
+			<i class="glyphicon glyphicon-unchecked"></i>
+		</div>
+		<div ng-class="{ 'student-form-review__disabled': state.ui.review.requirePreferenceComments.disabled }">
+			All Preferences have Comments
 		</div>
 	</div>
 
