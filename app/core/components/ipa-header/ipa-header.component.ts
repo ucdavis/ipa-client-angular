@@ -19,11 +19,13 @@ export class IpaHeader implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sharedState: SharedStateService
-  ) {}
+  ) { }
 
   ngOnInit() {
     const roles = this.sharedState.getSharedState().userRoles;
-    this.termCode = this.route.snapshot.params['termCode'];
+    this.route.params.subscribe(params => {
+      this.termCode = params.termCode;
+    })
     this.year = this.route.snapshot.params['year'];
     this.workgroupId = this.route.snapshot.params['workgroupId'];
     this.currentWorkgroup = JSON.parse(localStorage.getItem('workgroup')).name;
