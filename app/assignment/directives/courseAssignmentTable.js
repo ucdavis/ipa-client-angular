@@ -90,7 +90,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 								// Add input for course notes
 								courseHtml += "<div class='course-assignments__course-note hidden-print'>";
-								courseHtml += '<input type="search" class="form-control" placeholder="Add Note" value="' + (course.note || "") + '" data-course-id="' + course.id + '" data-event-type="setCourseNote"/>';
+								courseHtml += '<textarea class="form-control add-note__text-area" placeholder="Add Note" data-course-id="' + course.id + '" data-event-type="setCourseNote">' + (course.note || "")+ '</textarea>';
 								courseHtml += "</div>";
 								courseHtml += "<div class='visible-print'>";
 								courseHtml += course.note || "";
