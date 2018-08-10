@@ -23,6 +23,7 @@ import SharedCtrl from './controllers/SharedCtrl.js';
 import AuthService from './services/AuthService.js';
 import ApiService from './services/ApiService.js';
 import TeachingAssignmentService from './services/TeachingAssignmentService.js';
+import SectionService from './services/SectionService.js';
 
 // Entities
 import Activity from './entities/Activity.js';
@@ -167,7 +168,7 @@ function config ($httpProvider, $compileProvider, $logProvider, IdleProvider, $l
 
 config.$inject = ['$httpProvider', '$compileProvider', '$logProvider', 'IdleProvider', '$locationProvider'];
 
-function slowConnectionInterceptor ($rootScope, $timeout) {
+function slowConnectionInterceptor ($rootScope, $timeout, $q) {
 	var reqCount = 0;
 	return {
 		request: function (config) {
@@ -216,24 +217,6 @@ function slowConnectionInterceptor ($rootScope, $timeout) {
 
 slowConnectionInterceptor.$inject = ['$rootScope', '$timeout'];
 
-function tokenValidatorInterceptor () {
-	return {
-		responseError: function (rejection) {
-			if (rejection.status === 440) {
-				// Delete expired token and revalidate
-				localStorage.removeItem('JWT');
-				var authService = $injector.get('authService');
-				authService.validate().then(function () {
-					// $rootScope.toast.message = "This is inconcieveable";
-					$rootScope.$emit('toast', { message: "Unable to validate authentication.", type: "ERROR" });
-				});
-			}
-
-			return $q.reject(rejection);
-		}
-	};
-}
-
 function exceptionHandler($provide) {
 	$provide.decorator("$exceptionHandler", function($delegate, $injector) {
 		return function(exception, cause) {
@@ -271,6 +254,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .service('ApiService', ApiService)
 .service('AuthService', AuthService)
 .service('TeachingAssignmentService', TeachingAssignmentService)
+.service('SectionService', SectionService)
 .directive('availabilityGrid', availabilityGrid)
 .directive('ipaButton', ipaButton)
 .directive('ipaCheckbox', ipaCheckbox)
@@ -319,13 +303,11 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 	studentMasters: 12,
 })
 
-.config(tokenValidatorInterceptor)
 .config(exceptionHandler)
 
 // Intercept Ajax traffic
-.config(function($httpProvider) {
-	$httpProvider.interceptors.push(['$rootScope', '$timeout', slowConnectionInterceptor]);
-	$httpProvider.interceptors.push(tokenValidatorInterceptor);
+ .config(function($httpProvider) {
+	$httpProvider.interceptors.push(['$rootScope', '$timeout', '$q', slowConnectionInterceptor]);
 })
 
 // Detect route errors

@@ -143,15 +143,23 @@ class StudentFormReducers {
 									},
 									requirePreferenceComments: {
 										required: false,
-										complete: false
+										complete: false,
+										disabled: false
 									}
 								}
 							};
 						}
 						var preferenceCommentsComplete = true;
-						action.payload.studentSupportPreferences.forEach(function(preference) {
-							if (!(preference.comment) || preference.comment.length == 0) { preferenceCommentsComplete = false; }
-						});
+						var preferenceCommentsDisabled = false;
+
+						if (action.payload.studentSupportPreferences.length > 0) {
+							action.payload.studentSupportPreferences.forEach(function(preference) {
+								if (!(preference.comment) || preference.comment.length == 0) { preferenceCommentsComplete = false; }
+							});
+						} else {
+							preferenceCommentsComplete = false;
+							preferenceCommentsDisabled = true;
+						}
 	
 						ui = {
 							isPreferenceCommentModalOpen: false,
@@ -174,11 +182,11 @@ class StudentFormReducers {
 								},
 								requirePreferenceComments: {
 									required: action.payload.studentSupportCallResponse.requirePreferenceComments,
-									complete: preferenceCommentsComplete
+									complete: preferenceCommentsComplete,
+									disabled: preferenceCommentsDisabled
 								}
 							}
 						};
-	
 	
 						// Determine if form should be locked (due date is enforced and has passed)
 						var dueDate = action.payload.studentSupportCallResponse.dueDate;
@@ -222,8 +230,9 @@ class StudentFormReducers {
 					case ActionTypes.DELETE_STUDENT_PREFERENCE:
 						ui.review.requirePreferenceAmount.complete = action.preferences.ids.length >= action.supportCallResponse.minimumNumberOfPreferences;
 						return ui;
-					case ActionTypes.UPDATE_PREFERENCE:
-						ui.review.requirePreferenceComments.complete = action.preferenceCommentsComplete;
+					case ActionTypes.UPDATE_PREFERENCE_COMMENT_VALIDATION:
+						ui.review.requirePreferenceComments.complete = action.payload.preferenceCommentsComplete;
+						ui.review.requirePreferenceComments.disabled = action.payload.preferenceCommentsDisabled;
 						return ui;
 					case ActionTypes.UPDATE_SUPPORT_CALL_RESPONSE:
 						ui.review.requireEligible.complete = action.payload.eligibilityConfirmed;

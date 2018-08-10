@@ -47,3 +47,9 @@ input[type=number].ipa-input::-webkit-outer-spin-button {
    color: rgb(170, 166, 166);
     opacity: .7;
 }
+
+.ipa-input--invalid,
+.ipa-input--invalid:not(.ipa-input--read-only):not(.ipa-input--label-read-only):hover,
+.ipa-input--invalid:focus {
+	border-color: red;
+}

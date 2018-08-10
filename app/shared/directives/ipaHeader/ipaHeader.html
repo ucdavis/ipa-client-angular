@@ -46,7 +46,7 @@
 							</span>
 						</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							<li ng-repeat="workgroup in userWorkgroups" style="cursor: pointer;">
+							<li ng-repeat="workgroup in userWorkgroups | orderBy:'name'" style="cursor: pointer;">
 								<a ng-click="changeWorkgroup(sharedState.workgroup.id, workgroup.id)">
 									<i class="entypo-check active-workgroup-icon" ng-class="{'invisible': sharedState.workgroup.id != workgroup.id}"></i>
 									<span>{{ workgroup.name }}</span>

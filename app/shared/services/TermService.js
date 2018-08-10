@@ -39,11 +39,16 @@ class TermService {
 			},
 			// Example: '10' -> 'Fall Quarter'
 			getShortTermName: function(term) {
-				if (!term || term.length != 2) {
-					return null;
+				var shortTerm = null;
+
+				if (!term || term.toString().length > 2) { return null; }
+				if (term.toString().length == 1) {
+					shortTerm = "0" + term;
+				} else {
+					shortTerm = term;
 				}
 
-				return this.termCodeDescriptions[term];
+				return this.termCodeDescriptions[shortTerm];
 			},
 			getTermFromDescription: function(description) {
 				var descriptionTerms = {

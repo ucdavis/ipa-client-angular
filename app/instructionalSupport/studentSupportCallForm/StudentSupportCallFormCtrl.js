@@ -62,37 +62,7 @@ class StudentSupportCallFormCtrl {
 		};
 	
 		$scope.termCode = $scope.termShortCodeToTermCode($scope.termShortCode);
-	
-		$scope.studentSupportCallFormIsValid = function () {
-			// Validate dueDate
-			if ($scope.view.state.ui.isFormLocked) {
-				$scope.validationError = "The due date for this support call has passed.";
-				return false;
-			}
-	
-			// Validate min # of preferences
-			var currentNumPreferences = $scope.view.state.preferences.length;
-			var minNumPreferences = $scope.view.state.supportCallResponse ? $scope.view.state.supportCallResponse.minimumNumberOfPreferences : 0;
-	
-			if (currentNumPreferences < minNumPreferences) {
-				$scope.validationError = "You must provide at least " + minNumPreferences + " preferences";
-				return false;
-			}
-	
-			if ($scope.view.state.supportCallResponse.requirePreferenceComments == true) {
-				for (var i = 0; i < $scope.view.state.preferences.length; i++) {
-					var preference = $scope.view.state.preferences[i];
-	
-					if (preference.comment.length == 0) {
-						$scope.validationError = "You must provide a comment for each preference";
-						return false;
-					}
-				}
-			}
-	
-			$scope.validationError = "";
-			return true;
-		};
+
 	}
 }
 
