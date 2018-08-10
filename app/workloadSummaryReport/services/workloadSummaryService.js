@@ -22,7 +22,7 @@ class WorkloadSummaryService {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/users");
 			},
 			getUserRoles: function (workgroupId, year) {
-				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/userRoles");
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/userRoles");
 			},
 			getSections: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/sections");
