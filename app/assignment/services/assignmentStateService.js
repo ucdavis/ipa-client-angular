@@ -103,6 +103,31 @@ class AssignmentStateService {
 						return instructorTypes;
 				}
 			},
+			_instructorNoteReducers: function (action, instructorNotes) {
+				switch (action.type) {
+					case ActionTypes.INIT_ASSIGNMENT_VIEW:
+						var instructorNotes = {
+							ids: [],
+							list: {},
+							byInstructorId: {}
+						};
+						action.payload.instructorNotes.forEach( function(instructorNote) {
+							instructorNotes.list[instructorNote.id] = instructorNote;
+							instructorNotes.ids.push(instructorNote.id);
+							instructorNotes.byInstructorId[instructorNote.instructorId] = instructorNote;
+						});
+						return instructorNotes;
+					case ActionTypes.UPDATE_INSTRUCTOR_NOTE:
+						instructorNotes.list[action.payload.instructorNote.id] = action.payload.instructorNote;
+						if (instructorNotes.ids.indexOf(action.payload.instructorNote.id) == -1) {
+							instructorNotes.ids.push(action.payload.instructorNote.id);
+						}
+						instructorNotes.byInstructorId[action.payload.instructorNote.instructorId] = action.payload.instructorNote;
+						return instructorNotes;
+					default:
+						return instructorNotes;
+				}
+			},
 			_supportStaffReducers: function (action, supportStaffList) {
 				var scope = this;
 	
@@ -859,6 +884,7 @@ class AssignmentStateService {
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
 				newState.users = scope._userReducers(action, scope._state.users);
+				newState.instructorNotes = scope._instructorNoteReducers(action, scope._state.instructorNotes);
 
 				scope._state = newState;
 	
