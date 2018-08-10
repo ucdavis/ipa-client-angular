@@ -3,7 +3,7 @@
 	tooltip-placement="bottom"
 	tooltip-append-to-body="true"
 	ng-style="{ color: iconColor ? iconColor : '' }"
-	ng-class="{ buttonClass, 'ipa-button--disabled': isDisabled , 'ipa-button--wide': isWide, 'ipa-button--dark-skin': skin == 'dark', 'ipa-button--light-skin': skin == 'light' || !skin }">
+	ng-class="{ buttonClass, 'ipa-button--disabled': isDisabled, 'ipa-button--light-skin-disabled': isDisabled && (skin == 'light' || !skin), 'ipa-button--dark-skin-disabled': isDisabled && skin == 'dark', 'ipa-button--wide': isWide, 'ipa-button--dark-skin': skin == 'dark', 'ipa-button--light-skin': skin == 'light' || !skin }">
 	<div class="ipa-button__container"
 		ng-class="{'ipa-button__container--wide': isWide }"
 		ng-show="!(isDisabled)">
