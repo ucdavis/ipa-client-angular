@@ -9,7 +9,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			showTheStaff: '=',
 			instructorTypeId: '=',
 			sharedState: '=',
-			openCommentModal: '&?'
+			openCommentModal: '&?',
+			openUnavailabilityModal: '&?'
 		},
 		link: function (scope, element, attrs) {
 			scope.sharedState = scope.sharedState || AuthService.getSharedState();
@@ -682,7 +683,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				}
 				else if ($el.hasClass('avail-btn')) {
 					instructorId = $el.data('instructor-id');
-					scope.openUnavailabilityModal(instructorId);
+					scope.openUnavailability(instructorId);
 				}
 
 				else if ($el.hasClass('assignments-complete')) {
@@ -709,6 +710,10 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 			scope.openComment = function (instructorId) {
 				scope.openCommentModal({ instructorId: instructorId });
+			};
+
+			scope.openUnavailability = function (instructorId) {
+				scope.openUnavailabilityModal({ instructorId: instructorId });
 			};
 
 			scope.renderTable();

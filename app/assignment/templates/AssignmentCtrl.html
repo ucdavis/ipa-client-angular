@@ -5,9 +5,9 @@
 	<ipa-header page-title="Assignments"></ipa-header>
 
 	<div class="main-content">
-		<ipa-modal is-visible="isCommentModalOpen"
+		<ipa-modal is-visible="modals.isCommentModalOpen"
 		           header-text="Comments">
-			<comment-modal ng-if="isCommentModalOpen"
+			<comment-modal ng-if="modals.isCommentModalOpen"
 			               state="view.state"
 			               instructor="view.instructor"
 			               instructor-comment="view.instructorComment"
@@ -15,17 +15,17 @@
 			               private-comment="view.scheduleInstructorNote.instructorComment"
 			               year="view.state.userInterface.year"
 			               workgroup-id="workgroupId"
-			               is-visible="isCommentModalOpen">
+			               is-visible="modals.isCommentModalOpen">
 			</comment-modal>
 		</ipa-modal>
-		<ipa-modal is-visible="isUnavailabilityModalOpen"
+		<ipa-modal is-visible="modals.isUnavailabilityModalOpen"
 		           styles="unavailabilityModalStyles"
 		           header-text="Unavailabilities">
-			<unavailability-modal ng-if="isUnavailabilityModalOpen"
+			<unavailability-modal ng-if="modals.isUnavailabilityModalOpen"
 			                      instructor="view.instructor"
 			                      term-display-names="view.termDisplayNames"
 			                      teaching-call-responses="view.teachingCallResponses"
-			                      is-visible="isUnavailabilityModalOpen">
+			                      is-visible="modals.isUnavailabilityModalOpen">
 			</unavailability-modal>
 		</ipa-modal>
 		<div class="row hidden-print" style="margin-bottom: 2em;">
@@ -35,6 +35,7 @@
 		</div>
 
 		<div ng-class="{'invisible': !view.state}" style="margin-bottom: 1em;" class="hidden-print">
+			[{{ isCommentModalOpen }}]
 			<div class="btn-group" data-toggle="buttons">
 				<label class="btn btn-white btn-sm view-pivot-btn" id="courses-pivot" ng-click="setActiveTab('courses')"
 				       ng-class="{ 'active': view.state.userInterface.showCourses }">
@@ -104,7 +105,12 @@
 
 		<div ng-if="view.state" ng-show="view.state.userInterface.showInstructors">
 			<div ng-repeat="instructorTypeId in view.state.instructorTypes.ids">
-				<div instructor-assignment-table id="instructors-table" state="view.state" shared-state="view.sharedState" instructor-type-id="instructorTypeId" open-comment-modal="openCommentModal(instructorId)"></div>
+				<div instructor-assignment-table id="instructors-table"
+				     state="view.state"
+				     shared-state="view.sharedState"
+				     instructor-type-id="instructorTypeId"
+				     open-comment-modal="openCommentModal(instructorId)"
+				     open-unavailability-modal="openUnavailabilityModal(instructorId)"></div>
 			</div>
 
 			<div instructor-assignment-table id="instructors-table" state="view.state" shared-state="view.sharedState" instructor-type-id="instructorTypeId" show-the-staff="true"></div>
