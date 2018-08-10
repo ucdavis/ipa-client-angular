@@ -27,8 +27,10 @@ class AssignmentCtrl {
 		};
 
 		$scope.unavailabilityModalStyles = { "width": "62%" };
-		$scope.isCommentModalOpen = false;
-		$scope.isUnavailabilityModalOpen = false;
+		$scope.modals = {
+			isCommentModalOpen: false,
+			isUnavailabilityModalOpen: false
+		};
 
 		$rootScope.$on('assignmentStateChanged', function (event, data) {
 			$scope.view.state = data;
@@ -133,7 +135,7 @@ class AssignmentCtrl {
 				$scope.view.instructorComment = "";
 			}
 
-			$scope.isCommentModalOpen = true;
+			$scope.modals.isCommentModalOpen = true;
 			$scope.$apply();
 		};
 
@@ -143,7 +145,7 @@ class AssignmentCtrl {
 			$scope.view.teachingCallResponses = instructor.teachingCallResponses;
 			$scope.view.termDisplayNames = AssignmentService.allTerms();
 			$scope.view.instructor = instructor;
-			$scope.isUnavailabilityModalOpen = true;
+			$scope.modals.isUnavailabilityModalOpen = true;
 			$scope.$apply();
 		};
 
