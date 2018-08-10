@@ -20,7 +20,7 @@
 							<br />
 							<input type="text" ng-model="view.newCourseSearchQuery" placeholder="Search courses" uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchCourses($viewValue)"
 								typeahead-loading="view.loadingCourses" typeahead-no-results="view.noResults" typeahead-wait-ms="400"
-								typeahead-min-length="2" typeahead-on-select="searchCoursesResultSelected($item, $model, $label, $event)"
+								typeahead-min-length="2" typeahead-editable="false" typeahead-on-select="searchCoursesResultSelected($item, $model, $label, $event)"
 								class="form-control">
 							<div class="new-course-typeahead-status" ng-show="view.noResults">
 								<ul class="dropdown-menu">
@@ -38,24 +38,31 @@
 						<div class="col-sm-10 col-sm-offset-1">
 							<strong>Sequence Pattern</strong>
 							<br />
-							<input type="text" ng-model="view.state.courses.newCourse.sequencePattern" uib-typeahead="sequencePattern for sequencePattern in unoccupiedSequencePatterns() | filter:$viewValue | limitTo:10"
-								typeahead-loading="loadingSequences" typeahead-no-results="noResults" typeahead-editable="false"
-								class="form-control course-sequence-pattern">
+							<ipa-input value="view.state.courses.newCourse.rawSequencePattern"
+							           on-update="validateCourse()"
+							           on-blur="validateCourse()"
+							           update-delay="50"
+							           place-holder="sequenceNumberPlaceholder">
+							</ipa-input>
 						</div>
 					</div>
 				</div>
-				<div class="right-details-group">
-					<div class="row">
-						<div class="col-sm-10 col-sm-offset-1 ">
-							<button type="button" class="btn btn-white" ng-click="closeDetails()">Cancel</button>
-							<button type="button" class="btn btn-blue pull-right" ng-click="createCourse()" ng-class="{ 'disabled': !newCourseIsValid() }"
-								uib-tooltip="All fields are required and sequence pattern must be unique" tooltip-enable="!newCourseIsValid()">
-									Create
-							</button>
-						</div>
+				<div class="new-course__submit-tray">
+					<ipa-button text="'Cancel'"
+					            on-click="closeDetails()">
+					</ipa-button>
+					<div class="new-course__create-btn"
+					     tooltip-append-to-body="true"
+					     tooltip-placement="left"
+					     uib-tooltip="{{ newCourseValidation.tooltipErrorMessage }}"
+					     ng-class="{ 'disabled': newCourseValidation.tooltipErrorMessage }">
+						<ipa-button text="'Create'"
+						            is-disabled="newCourseValidation.tooltipErrorMessage"
+						            skin="'dark'"
+						            on-click="createCourse()">
+						</ipa-button>
 					</div>
 				</div>
-
 			</form>
 		</div>
 	</div>
