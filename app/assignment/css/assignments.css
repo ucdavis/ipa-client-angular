@@ -988,10 +988,10 @@ li.active-term .dropdown-term-row {
 }
 
 .assignment__divider {
-  height: 1px;
-  width:100%;
-  display:block;
-  margin: 9px 0;
-  overflow: hidden;
-  background-color: #e5e5e5;
+	height: 1px;
+	width:100%;
+	display:block;
+	margin: 9px 0;
+	overflow: hidden;
+	background-color: #e5e5e5;
 }

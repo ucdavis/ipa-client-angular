@@ -336,7 +336,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				let $el = $(e.target);
 				if ($el.data('event-type') != 'setCourseNote') { return; }
 
-				if (e.key == 	"Enter") {
+				if (e.key == "Enter") {
 					var courseId = $el.data('course-id');
 					var note = e.target.value;
 
