@@ -10,8 +10,8 @@ import { SharedStateService } from '@core/shared-state/shared-state.service';
 export class IpaHeader implements OnInit {
   year: string;
   workgroupId: string;
-  currentWorkgroup: string;
-  filteredWorkgroups: string[];
+  currentWorkgroup: { workgroupId: number; roleName: string; workgroupName: string };
+  filteredWorkgroups: { workgroupId: number; roleName: string; workgroupName: string }[];
   termCode: string;
   termsTable: { id: number; description: string; shortCode: string }[];
 
@@ -19,21 +19,20 @@ export class IpaHeader implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sharedState: SharedStateService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    const roles = this.sharedState.getSharedState().userRoles;
+    this.filteredWorkgroups = this.getSortedWorkgroups();
+    this.termsTable = this.getTermTable();
+
     this.route.params.subscribe(params => {
       this.termCode = params.termCode;
-    })
-    this.year = this.route.snapshot.params['year'];
-    this.workgroupId = this.route.snapshot.params['workgroupId'];
-    this.currentWorkgroup = JSON.parse(localStorage.getItem('workgroup')).name;
-    this.filteredWorkgroups = Array.from(
-      new Set(roles.filter(role => role.workgroupId > 0).map(role => role.workgroupName))
-    ).sort();
-
-    this.termsTable = this.getTermTable();
+      this.workgroupId = params.workgroupId;
+      this.year = params.year;
+      this.currentWorkgroup = this.filteredWorkgroups.find(
+        workgroup => workgroup.workgroupId === +this.workgroupId
+      );
+    });
   }
 
   offsetYearInUrl(offset: number) {
@@ -43,6 +42,36 @@ export class IpaHeader implements OnInit {
 
   yearToAcademicYear() {
     return `${this.year} - ${(parseInt(this.year) + 1).toString().slice(-2)}`;
+  }
+
+  getWorkgroups() {
+    const roles = this.sharedState.getSharedState().userRoles;
+
+    return roles
+      .filter(role => role.workgroupId > 0)
+      .filter(
+        (role, index, arr) => arr.findIndex(r => r.workgroupId === role.workgroupId) === index
+      );
+  }
+
+  getSortedWorkgroups() {
+    const sortedWorkgroups = [...this.getWorkgroups()];
+
+    return sortedWorkgroups.sort((a, b) => {
+      if (a.workgroupName < b.workgroupName) {
+        return -1;
+      }
+      if (a.workgroupName > b.workgroupName) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+  changeWorkgroup(workgroupId) {
+    this.router.navigate(['../../../', workgroupId, this.year, this.termCode], {
+      relativeTo: this.route
+    });
   }
 
   getTermDisplayName() {
