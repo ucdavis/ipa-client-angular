@@ -1,7 +1,7 @@
 /**
  * Provides the main course table in the Courses View
  */
-let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, AuthService, $routeParams) {
+let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, AuthService, $routeParams, Roles) {
 	return {
 		restrict: 'A',
 		scope: {
@@ -91,6 +91,40 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				};
 			};
 
+			scope.getUserByLoginId = function (loginId) {
+				var users = scope.view.state.users;
+ 				for (var i = 0; i < users.ids.length; i++) {
+					var user = users.list[users.ids[i]];
+ 					if (user.loginId == loginId) {
+						return user;
+					}
+				}
+ 				return null;
+			};
+
+ 			scope.getInstructorTypeId = function (instructor) {
+				var teachingAssignments = scope.view.state.teachingAssignments;
+				var userRoles = scope.view.state.userRoles;
+ 				var user = scope.getUserByLoginId(instructor.loginId);
+ 				if (user) {
+					// Attempt to find via userRole
+					for (var i = 0; i < userRoles.ids.length; i++) {
+						var userRole = userRoles.list[userRoles.ids[i]];
+ 						if (userRole.roleId == Roles.instructor && userRole.userId == user.id) {
+							return userRole.instructorTypeId;
+						}
+					}
+				}
+ 				// Attempt to find via teachingAssignment
+				for (var i = 0; i < teachingAssignments.ids.length; i++) {
+					var teachingAssignment = teachingAssignments.list[teachingAssignments.ids[i]];
+ 					if (teachingAssignment.instructorId == instructor.id) {
+						return teachingAssignment.instructorTypeId;
+					}
+				}
+ 				return null;
+			},
+
 			// Build a string of html to display a column header (course, terms, etc.)
 			scope.renderHeader = function () {
 				// Render the header
@@ -129,6 +163,21 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 					$('.tooltip').remove();
 					element.empty();
 
+					var relevantInstructors = 0;
+
+ 					$.each(scope.view.state.instructors.ids, function (i, instructorId) {
+						var instructor = scope.view.state.instructors.list[instructorId];
+
+ 						if (scope.instructorTypeId == instructor.instructorTypeId) {
+							relevantInstructors += 1;
+						}
+					});
+
+ 					if (relevantInstructors == 0) { return; }
+
+ 					var instructorTypeHeader = '<div class="instructor-type-header">' + scope.view.state.instructorTypes.list[scope.instructorTypeId].description + '</div>';
+					element.append(instructorTypeHeader);
+
 					// Render the header
 					var header = scope.renderHeader();
 					element.append(header);
@@ -148,6 +197,9 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						// Loop over instructors
 						$.each(scope.view.state.instructors.ids, function (i, instructorId) {
 							var instructor = scope.view.state.instructors.list[instructorId];
+							var slotInstructorTypeId = scope.getInstructorTypeId(instructor);
+
+							if (scope.instructorTypeId != slotInstructorTypeId) { return; }
 
 							if (instructor.isFiltered === false && scope.showCompletedInstructor(instructor)) {
 								var scheduleInstructorNote = scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
