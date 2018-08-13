@@ -498,9 +498,9 @@ class SupportReducer {
 				// Build new 'page state'
 				// This is the 'view friendly' version of the store
 				let newPageState = {};
-				newPageState.schedule = angular.copy(scope._state.schedule);
-				newPageState.ui = angular.copy(scope._state.ui);
-				newPageState.staffAssignmentOptions = angular.copy(scope._state.staffAssignmentOptions);
+				newPageState.schedule = JSON.parse(JSON.stringify(scope._state.schedule));
+        newPageState.ui = JSON.parse(JSON.stringify(scope._state.ui));
+        newPageState.staffAssignmentOptions = JSON.parse(JSON.stringify(scope._state.staffAssignmentOptions));
 				newPageState.supportAssignmentsUnique = SupportSelectors.generateSupportAssignmentsUnique(scope._state.supportAssignments, scope._state.sectionGroups, scope._state.courses);
 				newPageState.supportAssignments = SupportSelectors.generateSupportAssignments(
 																																				scope._state.supportAssignments,
