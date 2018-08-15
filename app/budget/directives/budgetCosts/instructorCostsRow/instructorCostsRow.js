@@ -7,7 +7,7 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 		scope: {
 			instructorAssignmentOptions: '<',
 			regularInstructorAssignmentOptions: '<',
-			sectionGroup: '<',
+			sectionGroupCost: '<',
 			divider: '<'
 		},
 		replace: true,

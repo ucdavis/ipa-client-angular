@@ -5,20 +5,20 @@ let instructorAssignmentDropdown = function ($rootScope, BudgetActions) {
 		replace: true,
 		scope: {
 			mode: '<',
-			sectionGroup: '<',
+			sectionGroupCost: '<',
 			instructors: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.setInstructor = function(instructor) {
 				if (instructor.isInstructorType) {
-					BudgetActions.setInstructorTypeFromSectionGroup(scope.sectionGroup, instructor);
+					BudgetActions.setInstructorTypeFromSectionGroup(scope.sectionGroupCost, instructor);
 				} else {
-					BudgetActions.setInstructorFromSectionGroup(scope.sectionGroup, instructor);
+					BudgetActions.setInstructorFromSectionGroup(scope.sectionGroupCost, instructor);
 				}
 			};
 
 			scope.setOriginalInstructor = function(originalInstructor) {
-				BudgetActions.setOriginalInstructorFromSectionGroup(scope.sectionGroup, originalInstructor.id);
+				BudgetActions.setOriginalInstructorFromSectionGroup(scope.sectionGroupCost, originalInstructor.id);
 			};
 		} // end link
 	};
