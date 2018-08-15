@@ -118,25 +118,16 @@ class ScheduleCostCalculations {
         var budget = BudgetReducers._state.budget;
         debugger;
         // Support Costs
-        if (sectionGroup.overrideReaderAppointments == null) {
-          sectionGroup.readerCost = 0;
-        } else {
-          sectionGroup.readerCost = sectionGroup.overrideReaderAppointments * budget.readerCost;
-        }
+        sectionGroupCost.readerCost = sectionGroupCost.readerCount > 0 ? sectionGroupCost.readerCount * budget.readerCost : 0;
+        sectionGroupCost.taCost = sectionGroupCost.taCount > 0 ? sectionGroupCost.taCount * budget.taCost : 0;
 
-        if (sectionGroup.overrideTeachingAssistantAppointments == null) {
-          sectionGroup.taCost = 0;
-        } else {
-          sectionGroup.taCost = sectionGroup.overrideTeachingAssistantAppointments * budget.taCost;
-        }
-
-        sectionGroup.courseCostSubTotal = sectionGroup.taCost + sectionGroup.readerCost;
+        sectionGroupCost.courseCostSubTotal = sectionGroupCost.taCost + sectionGroupCost.readerCost;
 
         // Instructor Costs
-        sectionGroup.instructorCostSubTotal = sectionGroup.overrideInstructorCost || 0;
+        sectionGroupCost.instructorCostSubTotal = sectionGroupCost.overrideInstructorCost || 0;
 
-        sectionGroup.totalCost = sectionGroup.courseCostSubTotal + sectionGroup.instructorCostSubTotal;
-      },
+        sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal + sectionGroupCost.instructorCostSubTotal;
+      }
     };
   }
 }
