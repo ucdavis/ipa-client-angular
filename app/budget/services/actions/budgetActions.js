@@ -758,7 +758,6 @@ class BudgetActions {
 				BudgetCalculations.calculateScenarioTerms();
 				BudgetCalculations.calculateLineItems();
 				ScheduleCostCalculations.calculateScheduleCosts();
-
 				BudgetCalculations.calculateSectionGroups();
 				BudgetCalculations.calculateTotalCost();
 			},

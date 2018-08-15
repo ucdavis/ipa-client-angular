@@ -13,7 +13,8 @@ class ScheduleCostCalculations {
 
         var scheduleCosts = {
           terms: selectedBudgetScenario.terms,
-          byTerm: {}
+          byTerm: {},
+          byUniqueKey: {}
         };
 
         activeTerms.forEach(function(term) {
@@ -41,23 +42,22 @@ class ScheduleCostCalculations {
           _this._calculateSectionGroupFinancialCosts(sectionGroupCost);
 
           // Generate container if one does not already exist
-          var container = self.calculateSectionGroupContainer(sectionGroup, scheduleCosts.byTerm[shortTerm]);
-          container.sectionGroups.push(sectionGroup);
+          var container = _this._findOrAddSectionGroupContainer(sectionGroupCost, scheduleCosts.byTerm[shortTerm]);
+          container.sectionGroupCosts.push(sectionGroupCost);
+          scheduleCosts.byUniqueKey[container.uniqueKey] = container;
         });
 
-        // // Sort termCourses
-        // activeTerms.forEach(function(term) {
-        // 	scheduleCosts.byTerm[term] = _array_sortByProperty(scheduleCosts.byTerm[term], "uniqueKey");
-        // });
+        // Sort termCourses
+        activeTerms.forEach(function(term) {
+        	scheduleCosts.byTerm[term] = _array_sortByProperty(scheduleCosts.byTerm[term], "uniqueKey");
+        });
 
-        // BudgetReducers.reduce({
-        // 	type: ActionTypes.CALCULATE_SECTION_GROUPS,
-        // 	payload: {
-        // 		scheduleCosts: scheduleCosts
-        // 	}
-        // });
-
-        // this.calculateTotalCost();
+        BudgetReducers.reduce({
+        	type: ActionTypes.CALCULATE_SCHEDULE_COSTS,
+        	payload: {
+        		scheduleCosts: scheduleCosts
+        	}
+        });
       },
       _calculateInstructorCost: function(sectionGroupCost) {
         var _this = this;
@@ -116,7 +116,7 @@ class ScheduleCostCalculations {
       // Calculate sectionGroup costs
       _calculateSectionGroupFinancialCosts: function(sectionGroupCost) {
         var budget = BudgetReducers._state.budget;
-        debugger;
+
         // Support Costs
         sectionGroupCost.readerCost = sectionGroupCost.readerCount > 0 ? sectionGroupCost.readerCount * budget.readerCost : 0;
         sectionGroupCost.taCost = sectionGroupCost.taCount > 0 ? sectionGroupCost.taCount * budget.taCost : 0;
@@ -127,6 +127,27 @@ class ScheduleCostCalculations {
         sectionGroupCost.instructorCostSubTotal = sectionGroupCost.overrideInstructorCost || 0;
 
         sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal + sectionGroupCost.instructorCostSubTotal;
+      },
+      // Find or create a container for this sectionGroupCost
+      _findOrAddSectionGroupContainer: function(sectionGroupCost, containers) {
+        let newContainer = {
+          subjectCode: sectionGroupCost.subjectCode,
+          courseNumber: sectionGroupCost.courseNumber,
+          title: sectionGroupCost.title,
+          unitsHigh: sectionGroupCost.unitsHigh,
+          unitsLow: sectionGroupCost.unitsLow,
+          uniqueKey: sectionGroupCost.subjectCode + sectionGroupCost.courseNumber,
+          sectionGroupCosts: []
+        };
+
+        var container = _array_find_by_properties(containers, ["uniqueKey"], newContainer);
+
+        if (container == false || container == undefined) {
+          containers.push(newContainer);
+          container = newContainer;
+        }
+
+        return container;
       }
     };
   }
@@ -167,32 +188,7 @@ class ScheduleCostCalculations {
 
 		// 		this.calculateSummaryTotals();
 		// 	},
-		// 	// Find or create a sectionGroupContainer for this sectionGroup
-		// 	calculateSectionGroupContainer: function(sectionGroup, containers) {
-		// 		var course = BudgetReducers._state.courses.list[sectionGroup.courseId];
-		// 		var uniqueKey = course.subjectCode + course.courseNumber;
-	
-		// 		let newContainer = {
-		// 			subjectCode: course.subjectCode,
-		// 			courseNumber: course.courseNumber,
-		// 			title: course.title,
-		// 			unitsHigh: course.unitsHigh,
-		// 			unitsLow: course.unitsLow,
-		// 			courseId: course.id,
-		// 			uniqueKey: course.subjectCode + course.courseNumber,
-		// 			sectionGroups: []
-		// 		};
-	
-		// 		var properties = ["uniqueKey"];
-		// 		var container = _array_find_by_properties(containers, properties, newContainer);
-	
-		// 		if(container == false || container == undefined) {
-		// 			containers.push(newContainer);
-		// 			container = newContainer;
-		// 		}
-	
-		// 		return container;
-		// 	},
+
 		// 	_findInstructorTypeCostBySectionGroupIdAndInstructorId: function (sectionGroupId, instructorId) {
 		// 		var teachingAssignments = BudgetReducers._state.teachingAssignments;
 		// 		var instructorTypeCosts = BudgetReducers._state.instructorTypeCosts;

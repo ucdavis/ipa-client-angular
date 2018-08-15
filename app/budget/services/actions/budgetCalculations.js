@@ -1,5 +1,5 @@
 class BudgetCalculations {
-	constructor (BudgetReducers, TermService, Roles, ActionTypes) {
+	constructor (BudgetReducers, TermService, Roles, ActionTypes, ScheduleCostCalculations) {
 		return {
 			calculateScenarioTerms: function() {
 				var allTermTabs = [];
@@ -23,76 +23,79 @@ class BudgetCalculations {
 				});
 			},
 			calculateSectionGroups: function() {
-				var self = this;
-	
-				var selectedBudgetScenario = BudgetReducers._state.budgetScenarios.list[BudgetReducers._state.ui.selectedBudgetScenarioId];
-				var sectionGroups = BudgetReducers._state.scheduleSectionGroups;
-				var activeTerms = selectedBudgetScenario.terms;
-	
-				// A 'sectionGroupContainer' contains all sectionGroups for that term/subjectCode/courseNumber
-				var calculatedSectionGroups = {
-					terms: selectedBudgetScenario.terms,
-					byTerm: {}
-				};
-	
-				activeTerms.forEach(function(term) {
-					calculatedSectionGroups.byTerm[term] = [];
-				});
-	
-				sectionGroups.uniqueKeys.forEach(function(uniqueKey) {
-					var sectionGroup = sectionGroups.list[uniqueKey];
-					var shortTerm = sectionGroup.termCode.slice(-2);
-	
-					// Ensure sectionGroup belongs to an active term in this scenario
-					if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) {
-						return;
-					}
-	
-					var instructorId = sectionGroup.assignedInstructorIds[0];
-					if (instructorId) {
-						sectionGroup.instructorType = self._calculateInstructorType(instructorId);
-					}
-					// Find the sectionGroupCost for this sectionGroupCost/Scenario combo
-					sectionGroup.sectionGroupCost = null;
-					var sectionGroupCostIds = BudgetReducers._state.sectionGroupCosts.bySectionGroupId[sectionGroup.id] || [];
-	
-					sectionGroupCostIds.forEach(function(sectionGroupCostId) {
-						var sectionGroupCost = BudgetReducers._state.sectionGroupCosts.list[sectionGroupCostId];
-	
-						if (sectionGroupCost.budgetScenarioId == selectedBudgetScenario.id) {
-							sectionGroup.sectionGroupCost = sectionGroupCost;
-						}
-					});
-	
-					// Generate the placeholders used while editing by cascading values from the relevant sources
-					self.calculateSectionGroupOverrides(sectionGroup);
-	
-					// Attach comments data
-					self._calculateSectionGroupCostComments(sectionGroup.sectionGroupCost);
-	
-					// Attach instructors
-					self._calculateSectionGroupInstructors(sectionGroup);
-	
-					// Attach cost data
-					self._calculateSectionGroupFinancialCosts(sectionGroup);
-	
-					// Generate container if one does not already exist
-					var container = self.calculateSectionGroupContainer(sectionGroup, calculatedSectionGroups.byTerm[shortTerm]);
-					container.sectionGroups.push(sectionGroup);
-				});
-	
-				activeTerms.forEach(function(term) {
-					calculatedSectionGroups.byTerm[term] = _array_sortByProperty(calculatedSectionGroups.byTerm[term], "uniqueKey");
-				});
-	
-				BudgetReducers.reduce({
-					type: ActionTypes.CALCULATE_SECTION_GROUPS,
-					payload: {
-						calculatedSectionGroups: calculatedSectionGroups
-					}
-				});
-	
+				ScheduleCostCalculations.calculateScheduleCosts();
 				this.calculateTotalCost();
+
+				// var self = this;
+	
+				// var selectedBudgetScenario = BudgetReducers._state.budgetScenarios.list[BudgetReducers._state.ui.selectedBudgetScenarioId];
+				// var sectionGroups = BudgetReducers._state.scheduleSectionGroups;
+				// var activeTerms = selectedBudgetScenario.terms;
+	
+				// // A 'sectionGroupContainer' contains all sectionGroups for that term/subjectCode/courseNumber
+				// var calculatedSectionGroups = {
+				// 	terms: selectedBudgetScenario.terms,
+				// 	byTerm: {}
+				// };
+	
+				// activeTerms.forEach(function(term) {
+				// 	calculatedSectionGroups.byTerm[term] = [];
+				// });
+	
+				// sectionGroups.uniqueKeys.forEach(function(uniqueKey) {
+				// 	var sectionGroup = sectionGroups.list[uniqueKey];
+				// 	var shortTerm = sectionGroup.termCode.slice(-2);
+	
+				// 	// Ensure sectionGroup belongs to an active term in this scenario
+				// 	if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) {
+				// 		return;
+				// 	}
+	
+				// 	var instructorId = sectionGroup.assignedInstructorIds[0];
+				// 	if (instructorId) {
+				// 		sectionGroup.instructorType = self._calculateInstructorType(instructorId);
+				// 	}
+				// 	// Find the sectionGroupCost for this sectionGroupCost/Scenario combo
+				// 	sectionGroup.sectionGroupCost = null;
+
+				// 	var sectionGroupCostIds = BudgetReducers._state.sectionGroupCosts.bySectionGroupId[sectionGroup.id] || [];
+	
+				// 	sectionGroupCostIds.forEach(function(sectionGroupCostId) {
+				// 		var sectionGroupCost = BudgetReducers._state.sectionGroupCosts.list[sectionGroupCostId];
+	
+				// 		if (sectionGroupCost.budgetScenarioId == selectedBudgetScenario.id) {
+				// 			sectionGroup.sectionGroupCost = sectionGroupCost;
+				// 		}
+				// 	});
+	
+				// 	// Generate the placeholders used while editing by cascading values from the relevant sources
+				// 	self.calculateSectionGroupOverrides(sectionGroup);
+	
+				// 	// Attach comments data
+				// 	self._calculateSectionGroupCostComments(sectionGroup.sectionGroupCost);
+	
+				// 	// Attach instructors
+				// 	self._calculateSectionGroupInstructors(sectionGroup);
+	
+				// 	// Attach cost data
+				// 	self._calculateSectionGroupFinancialCosts(sectionGroup);
+	
+				// 	// Generate container if one does not already exist
+				// 	var container = self.calculateSectionGroupContainer(sectionGroup, calculatedSectionGroups.byTerm[shortTerm]);
+				// 	container.sectionGroups.push(sectionGroup);
+				// });
+	
+				// activeTerms.forEach(function(term) {
+				// 	calculatedSectionGroups.byTerm[term] = _array_sortByProperty(calculatedSectionGroups.byTerm[term], "uniqueKey");
+				// });
+	
+				// BudgetReducers.reduce({
+				// 	type: ActionTypes.CALCULATE_SECTION_GROUPS,
+				// 	payload: {
+				// 		calculatedSectionGroups: calculatedSectionGroups
+				// 	}
+				// });
+
 			},
 			// Calculate sectionGroup costs
 			_calculateSectionGroupFinancialCosts: function(sectionGroup) {
@@ -121,18 +124,17 @@ class BudgetCalculations {
 			calculateTotalCost: function() {
 				var courseCosts = 0;
 				var lineItemFunds = 0;
-				var terms = BudgetReducers._state.calculatedSectionGroups.terms;
-				var sectionGroups = BudgetReducers._state.calculatedSectionGroups.byTerm;
-	
+				var scheduleCosts = BudgetReducers._state.calculatedScheduleCosts;
+
 				// Add sectionGroup costs
-				terms.forEach(function(term) {
-					sectionGroups[term].forEach(function(course) {
-						course.sectionGroups.forEach(function(sectionGroup) {
-							courseCosts += sectionGroup.totalCost;
+				scheduleCosts.terms.forEach(function(term) {
+					scheduleCosts.byTerm[term].forEach(function(container) {
+						container.sectionGroupCosts.forEach(function(sectionGroupCost) {
+							courseCosts += sectionGroupCost.totalCost;
 						});
 					});
 				});
-	
+
 				// Add line item costs
 				BudgetReducers._state.calculatedLineItems.forEach(function(lineItem) {
 					lineItemFunds += lineItem.amount ? lineItem.amount : 0;
@@ -716,7 +718,7 @@ class BudgetCalculations {
 			calculateSummaryTotals: function () {
 				let _self = this;
 				var selectedBudgetScenario = BudgetReducers._state.budgetScenarios.list[BudgetReducers._state.ui.selectedBudgetScenarioId];
-				var sectionGroups = BudgetReducers._state.calculatedSectionGroups.byTerm;
+				var scheduleCosts = BudgetReducers._state.calculatedScheduleCosts;
 				var lineItems = BudgetReducers._state.lineItems;
 				var activeTerms = selectedBudgetScenario.terms;
 				var readerCost = BudgetReducers._state.budget.readerCost;
@@ -779,23 +781,23 @@ class BudgetCalculations {
 						balance: (lineItemsAmount * -1)
 					};
 	
-					sectionGroups[term].forEach(function(course) {
-						course.sectionGroups.forEach(function(sectionGroup) {
-							summary.byTerm[term].taCount += sectionGroup.overrideTeachingAssistantAppointments || 0;
-							summary.byTerm[term].taCost += sectionGroup.taCost || 0;
-							summary.byTerm[term].readerCount += sectionGroup.overrideReaderAppointments || 0;
-							summary.byTerm[term].readerCost += sectionGroup.readerCost || 0;
-							summary.byTerm[term].supportCosts += (sectionGroup.taCost || 0) + (sectionGroup.readerCost || 0);
-							summary.byTerm[term].replacementCosts.overall += sectionGroup.overrideInstructorCost || 0;
-							summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroup.instructorType, sectionGroup.overrideInstructorCost);
-							summary.byTerm[term].totalCosts += (sectionGroup.taCost || 0) + (sectionGroup.readerCost || 0) + (sectionGroup.overrideInstructorCost || 0);
-							summary.byTerm[term].totalUnits += (course.unitsLow || course.unitsHigh || 0);
-							summary.byTerm[term].totalSCH += (sectionGroup.overrideTotalSeats || 0) * (course.unitsLow || 0);
-							summary.byTerm[term].lowerDivCount += (parseInt(course.courseNumber) < 100 ? 1 : 0);
-							summary.byTerm[term].upperDivCount += (parseInt(course.courseNumber) > 100 && parseInt(course.courseNumber) < 200 ? 1 : 0);
-							summary.byTerm[term].graduateCount += (parseInt(course.courseNumber) > 199 ? 1 : 0);
-							summary.byTerm[term].enrollment += sectionGroup.overrideTotalSeats || 0;
-							summary.byTerm[term].sectionCount += sectionGroup.overrideSectionCount || 0;
+					scheduleCosts.byTerm[term].forEach(function(container) {
+						container.sectionGroupCosts.forEach(function(sectionGroupCost) {
+							summary.byTerm[term].taCount += sectionGroupCost.taCount || 0;
+							summary.byTerm[term].taCost += sectionGroupCost.taCost || 0;
+							summary.byTerm[term].readerCount += sectionGroupCost.readerCount || 0;
+							summary.byTerm[term].readerCost += sectionGroupCost.readerCost || 0;
+							summary.byTerm[term].supportCosts += (sectionGroupCost.taCost || 0) + (sectionGroupCost.readerCost || 0);
+							summary.byTerm[term].replacementCosts.overall += sectionGroupCost.overrideInstructorCost || 0;
+							summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroupCost.instructorType, sectionGroupCost.overrideInstructorCost);
+							summary.byTerm[term].totalCosts += (sectionGroupCost.taCost || 0) + (sectionGroupCost.readerCost || 0) + (sectionGroupCost.overrideInstructorCost || 0);
+							summary.byTerm[term].totalUnits += (sectionGroupCost.unitsLow || sectionGroupCost.unitsHigh || 0);
+							summary.byTerm[term].totalSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
+							summary.byTerm[term].lowerDivCount += (parseInt(sectionGroupCost.courseNumber) < 100 ? 1 : 0);
+							summary.byTerm[term].upperDivCount += (parseInt(sectionGroupCost.courseNumber) > 100 && parseInt(sectionGroupCost.courseNumber) < 200 ? 1 : 0);
+							summary.byTerm[term].graduateCount += (parseInt(sectionGroupCost.courseNumber) > 199 ? 1 : 0);
+							summary.byTerm[term].enrollment += sectionGroupCost.enrollment || 0;
+							summary.byTerm[term].sectionCount += sectionGroupCost.sectionCount || 0;
 							summary.byTerm[term].totalOfferingsCount += 1;
 						});
 					});
@@ -862,6 +864,6 @@ class BudgetCalculations {
 	}
 }
 
-BudgetCalculations.$inject = ['BudgetReducers', 'TermService', 'Roles', 'ActionTypes'];
+BudgetCalculations.$inject = ['BudgetReducers', 'TermService', 'Roles', 'ActionTypes', 'ScheduleCostCalculations'];
 
 export default BudgetCalculations;

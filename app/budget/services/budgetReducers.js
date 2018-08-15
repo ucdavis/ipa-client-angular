@@ -338,12 +338,14 @@ class BudgetReducers {
 					case ActionTypes.INIT_STATE:
 						courses = {
 							ids: [],
-							list: []
+							list: [],
+              bySubjAndNumber: {}
 						};
 	
 						action.payload.courses.forEach( function(course) {
 							courses.ids.push(course.id);
 							courses.list[course.id] = course;
+              courses.bySubjAndNumber[course.subjectCode + course.courseNumber] = course;
 						});
 						return courses;
 					default:
@@ -364,6 +366,22 @@ class BudgetReducers {
 						return teachingAssignments;
 					default:
 						return teachingAssignments;
+				}
+			},
+			calculatedScheduleCostReducers: function (action, calculatedScheduleCosts) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						calculatedScheduleCosts = {
+							terms: [],
+							byTerm: {},
+							byUniqueKey: {}
+						};
+						return calculatedScheduleCosts;
+					case ActionTypes.CALCULATE_SCHEDULE_COSTS:
+						calculatedScheduleCosts = action.payload.scheduleCosts;
+						return calculatedScheduleCosts;
+					default:
+						return calculatedScheduleCosts;
 				}
 			},
 			calculatedSectionGroupReducers: function (action, calculatedSectionGroups) {
@@ -832,6 +850,7 @@ class BudgetReducers {
 				newState.instructorTypeCosts = scope.instructorTypeCostReducers(action, scope._state.instructorTypeCosts);
 				newState.teachingAssignments = scope.teachingAssignmentReducers(action, scope._state.teachingAssignments);
 	
+				newState.calculatedScheduleCosts = scope.calculatedScheduleCostReducers(action, scope._state.calculatedScheduleCosts);
 				newState.calculatedSectionGroups = scope.calculatedSectionGroupReducers(action, scope._state.calculatedSectionGroups);
 				newState.calculatedInstructorTypeCosts = scope.calculatedInstructorTypeCostReducers(action, scope._state.calculatedInstructorTypeCosts);
 				newState.calculatedInstructors = scope.calculatedInstructorReducers(action, scope._state.calculatedInstructors);
@@ -850,6 +869,7 @@ class BudgetReducers {
 				newPageState.ui = newState.ui;
 				newPageState.lineItemCategories = BudgetSelectors.generateLineItemCategories(newState.lineItemCategories);
 	
+				newPageState.calculatedScheduleCosts = newState.calculatedScheduleCosts;
 				newPageState.calculatedSectionGroups = newState.calculatedSectionGroups;
 				newPageState.calculatedInstructorTypeCosts = newState.calculatedInstructorTypeCosts;
 				newPageState.calculatedInstructors = newState.calculatedInstructors;
