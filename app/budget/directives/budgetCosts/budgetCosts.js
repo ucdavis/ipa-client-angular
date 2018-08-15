@@ -7,7 +7,7 @@ let budgetCosts = function ($rootScope, BudgetActions) {
 		replace: true,
 		scope: {
 			termNav: '<',
-			calculatedSectionGroups: '<',
+			scheduleCosts: '<',
 			summary: '<',
 			instructorAssignmentOptions: '<',
 			regularInstructorAssignmentOptions: '<'

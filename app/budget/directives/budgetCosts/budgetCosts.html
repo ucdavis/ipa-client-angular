@@ -42,7 +42,7 @@
 					</thead>
 				</table>
 
-				<div ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
+				<div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
 					<div class="budget-costs__course-title">
 						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }} {{ course.title }}
 					</div>
