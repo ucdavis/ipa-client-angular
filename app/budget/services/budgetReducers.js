@@ -191,19 +191,29 @@ class BudgetReducers {
 						sectionGroupCosts = {
 							ids: [],
 							list: [],
-							bySectionGroupId: {}
+							idsByUniqueKey: {},
+							uniqueKeys: []
 						};
-	
+
 						action.payload.sectionGroupCosts.forEach( function(sectionGroupCost) {
 							sectionGroupCosts.ids.push(sectionGroupCost.id);
 							sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
-							sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] = sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] || [];
-							sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId].push(sectionGroupCost.id);
+							var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
+							sectionGroupCost.uniqueKey = uniqueKey;
+							sectionGroupCosts.idsByUniqueKey[uniqueKey] = sectionGroupCost.id;
+
+							if (sectionGroupCosts.uniqueKeys.indexOf(uniqueKey) == -1) {
+								sectionGroupCosts.uniqueKeys.push(uniqueKey);
+							}
 						});
 						return sectionGroupCosts;
 					case ActionTypes.CREATE_BUDGET_SCENARIO:
 						action.payload.sectionGroupCosts.forEach( function(sectionGroupCost) {
-							sectionGroupCosts.ids.push(sectionGroupCost.id);
+							if (sectionGroupCosts.ids.indexOf(sectionGroupCost.id) == -1) {
+								sectionGroupCosts.ids.push(sectionGroupCost.id);
+							}
+							var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
+							sectionGroupCosts.idsByUniqueKey[uniqueKey] = sectionGroupCost.id;
 							sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
 						});
 						return sectionGroupCosts;
@@ -216,9 +226,9 @@ class BudgetReducers {
 						if (sectionGroupCosts.ids.indexOf(sectionGroupCost.id) == -1) {
 							sectionGroupCosts.ids.push(sectionGroupCost.id);
 						}
+						var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
+						sectionGroupCosts.idsByUniqueKey[uniqueKey] = sectionGroupCost.id;
 						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
-						sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] = sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] || [];
-						sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId].push(sectionGroupCost.id);
 						return sectionGroupCosts;
 					default:
 						return sectionGroupCosts;
@@ -361,7 +371,8 @@ class BudgetReducers {
 					case ActionTypes.INIT_STATE:
 						calculatedSectionGroups = {
 							terms: [],
-							byTerm: {}
+							byTerm: {},
+							byUniqueKey: {}
 						};
 						return calculatedSectionGroups;
 					case ActionTypes.CALCULATE_SECTION_GROUPS:

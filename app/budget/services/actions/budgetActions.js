@@ -1,5 +1,5 @@
 class BudgetActions {
-	constructor ($rootScope, $window, $route, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles) {
+	constructor ($rootScope, $window, $route, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles, ScheduleCostCalculations) {
 		return {
 			getInitialState: function () {
 				var self = this;
@@ -757,6 +757,8 @@ class BudgetActions {
 				BudgetReducers.reduce(action);
 				BudgetCalculations.calculateScenarioTerms();
 				BudgetCalculations.calculateLineItems();
+				ScheduleCostCalculations.calculateScheduleCosts();
+
 				BudgetCalculations.calculateSectionGroups();
 				BudgetCalculations.calculateTotalCost();
 			},
@@ -863,6 +865,6 @@ class BudgetActions {
 	}
 }
 
-BudgetActions.$inject = ['$rootScope', '$window', '$route', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes', 'Roles'];
+BudgetActions.$inject = ['$rootScope', '$window', '$route', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes', 'Roles', 'ScheduleCostCalculations'];
 
 export default BudgetActions;
