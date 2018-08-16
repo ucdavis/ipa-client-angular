@@ -6,7 +6,8 @@
   <!-- Title Column -->
   <ng-container matColumnDef="title">
     <th mat-header-cell *matHeaderCellDef> Title </th>
-    <td mat-cell *matCellDef="let section; let i = index"  [attr.rowspan]="getRowSpan('title', i)" [style.display]="getRowSpan('title', i) ? '' : 'none'"> {{section.title}} </td>
+    <td mat-cell *matCellDef="let section; let i = index" [attr.rowspan]="getRowSpan('title', i)" [style.display]="getRowSpan('title', i) ? '' : 'none'">
+      {{section.title}} </td>
   </ng-container>
 
   <!-- Section Column -->
@@ -34,33 +35,43 @@
   </ng-container>
 
   <!-- Activity Column -->
-  <ng-container matColumnDef="activity">
+  <ng-container matColumnDef="activities">
     <th mat-header-cell *matHeaderCellDef> Activity </th>
-    <td mat-cell *matCellDef="let section"> {{section.activity}} </td>
+    <td mat-cell *matCellDef="let section">
+      <div *ngFor="let activity of section.activities" style="margin-top: 10px; margin-bottom: 10px;">{{activity.type}}</div>
+    </td>
   </ng-container>
 
   <!-- Days Column -->
   <ng-container matColumnDef="days">
     <th mat-header-cell *matHeaderCellDef> Days </th>
-    <td mat-cell *matCellDef="let section"> {{section.days}} </td>
+    <td mat-cell *matCellDef="let section">
+      <div *ngFor="let activity of section.activities" style="margin-top: 10px; margin-bottom: 10px;">{{activity.days}}</div>
+    </td>
   </ng-container>
 
   <!-- Start Column -->
   <ng-container matColumnDef="start">
     <th mat-header-cell *matHeaderCellDef> Start </th>
-    <td mat-cell *matCellDef="let section"> {{section.start}} </td>
+    <td mat-cell *matCellDef="let section">
+      <div *ngFor="let activity of section.activities" style="margin-top: 10px; margin-bottom: 10px;">{{activity.start}}</div>
+    </td>
   </ng-container>
 
   <!-- End Column -->
   <ng-container matColumnDef="end">
     <th mat-header-cell *matHeaderCellDef> End </th>
-    <td mat-cell *matCellDef="let section"> {{section.end}} </td>
+    <td mat-cell *matCellDef="let section">
+      <div *ngFor="let activity of section.activities" style="margin-top: 10px; margin-bottom: 10px;">{{activity.end}}</div>
+    </td>
   </ng-container>
 
   <!-- Location Column -->
   <ng-container matColumnDef="location">
     <th mat-header-cell *matHeaderCellDef> Location </th>
-    <td mat-cell *matCellDef="let section"> {{section.location}} </td>
+    <td mat-cell *matCellDef="let section">
+      <div *ngFor="let activity of section.activities" style="margin-top: 10px; margin-bottom: 10px;">{{activity.location}}</div>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
