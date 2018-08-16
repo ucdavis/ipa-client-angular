@@ -1,12 +1,12 @@
 import { AppComponent } from '@scheduling/components/app/app.component';
 import { MainComponent } from '@scheduling/components/main/main.component';
+import { ScheduleSummaryComponent } from '@scheduling/components/schedule-summary/schedule-summary.component';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-
 
 import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 
@@ -21,6 +21,7 @@ import { CourseResolver } from '@core/resolvers/course-resolver.service';
 // Angular Material Component imports
 import { MatButtonModule, MatTooltipModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 //import { SharedStateResolver } from '@core/shared-state/shared-state.resolver';
 
 const appRoutes: Routes = [
@@ -52,15 +53,11 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatTooltipModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    MatTableModule
   ],
-  declarations: [AppComponent, MainComponent],
-  providers: [
-    SchedulingActions,
-    AuthGuard,
-    SectionGroupResolver,
-    CourseResolver
-  ],
+  declarations: [AppComponent, MainComponent, ScheduleSummaryComponent],
+  providers: [SchedulingActions, AuthGuard, SectionGroupResolver, CourseResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

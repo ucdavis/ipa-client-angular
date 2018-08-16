@@ -9,6 +9,8 @@
     <button (click)="toggleMessage()">Toggle Message</button>
     <div *ngIf="schedulingShow">{{ schedulingName }}</div>
     
+    <schedule-summary></schedule-summary>
+    
     <div class="example-style">
       <div style="min-width: 40%;">
         <div>Courses: (via get courses button)</div>
