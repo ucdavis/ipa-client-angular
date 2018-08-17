@@ -1,59 +1,66 @@
 <ipa-nav>
   <div class="page-content">
-    <button (click)="errorTest()" mat-button color="accent">Log error</button>
-    <button (click)="impersonateJarold()" matTooltip="Impersonate a user" mat-stroked-button color="primary">IMPERSONATE THE JAROLD</button>
-    <button (click)="unimpersonateJarold()" mat-flat-button color="warn">UNIMPERSONATE THE JAROLD</button>
-    <button (click)="addCourse()" mat-flat-button color="accent">Add Course Example</button>
-    <button (click)="makeToast()" mat-button disabled>make toast</button>
+    <schedule-summary *ngIf="activeTab === 'summary'"></schedule-summary>
 
-    <button (click)="toggleMessage()">Toggle Message</button>
-    <div *ngIf="schedulingShow">{{ schedulingName }}</div>
-    
-    <schedule-summary></schedule-summary>
-    
-    <div class="example-style">
-      <div style="min-width: 40%;">
-        <div>Courses: (via get courses button)</div>
-        <ul>
-          <li *ngFor="let course of courses">
-            id: {{ course.id }}, description: {{ course.title }}
-          </li>
-        </ul>
+    <ng-container *ngIf="activeTab === 'assign'">
+      <button (click)="errorTest()" mat-button color="accent">Log error</button>
+      <button (click)="impersonateJarold()" matTooltip="Impersonate a user" mat-stroked-button color="primary">IMPERSONATE
+        THE JAROLD
+      </button>
+      <button (click)="unimpersonateJarold()" mat-flat-button color="warn">UNIMPERSONATE THE JAROLD</button>
+      <button (click)="addCourse()" mat-flat-button color="accent">Add Course Example</button>
+      <button (click)="makeToast()" mat-button disabled>make toast</button>
+
+      <button (click)="toggleMessage()">Toggle Message</button>
+      <div *ngIf="schedulingShow">{{ schedulingName }}</div>
+
+      <div class="example-style">
+        <div style="min-width: 40%;">
+          <div>Courses: (via get courses button)</div>
+          <ul>
+            <li *ngFor="let course of courses">
+              id: {{ course.id }}, description: {{ course.title }}
+            </li>
+          </ul>
+        </div>
+
+        <div style="min-width: 40%;">
+          <div>SectionGroups (via route resolve)</div>
+          <ul>
+            <li *ngFor="let sectionGroup of sectionGroups">
+              id: {{ sectionGroup.id }}, termCode: {{ sectionGroup.termCode }}
+            </li>
+          </ul>
+        </div>
       </div>
-      
-      <div style="min-width: 40%;">
-        <div>SectionGroups (via route resolve)</div>
-        <ul>
-          <li *ngFor="let sectionGroup of sectionGroups">
-            id: {{ sectionGroup.id }}, termCode: {{ sectionGroup.termCode }}
-          </li>
-        </ul>
-      </div>
-    </div>
-    
-    <mat-form-field>
-      <mat-select placeholder="Favorite food" [(ngModel)]="selectedValue" name="food">
-        <mat-option *ngFor="let food of foods" [value]="food.value">
-          {{food.viewValue}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    
-    <p> Selected value: {{selectedValue}} </p>
+
+      <mat-form-field>
+        <mat-select placeholder="Favorite food" [(ngModel)]="selectedValue" name="food">
+          <mat-option *ngFor="let food of foods" [value]="food.value">
+            {{food.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <p> Selected value: {{selectedValue}} </p>
+
+      <!-- <div>
+        <div class="typo-display-1">I am typo-body-2. Hello there!</div>
+        <div class="typo-display-2">I am typo-body-2. Hello there!</div>
+        <div class="typo-display-3">I am typo-body-2. Hello there!</div>
+        <div class="typo-display-4">I am typo-body-2. Hello there!</div>
+        <div class="typo-headline">I am typo-body-2. Hello there!</div>
+        <div class="typo-title">I am typo-body-2. Hello there!</div>
+        <div class="typo-subheading-2">I am typo-body-2. Hello there!</div>
+        <div class="typo-subheading-1">I am typo-body-2. Hello there!</div>
+        <div class="typo-body-1">I am typo-body-1. Hello there!</div>
+        <div class="typo-body-2">I am typo-body-2. Hello there!</div>
+        <div class="typo-caption">I am typo-caption. Hello there!</div>
+        <div class="typo-button">I am typo-buton. Hello there!</div>
+        <div class="typo-input">I am typo-input. Hello there!</div>
+      </div> -->
+    </ng-container>
+
   </div>
-  <!-- <div>
-    <div class="typo-display-1">I am typo-body-2. Hello there!</div>
-    <div class="typo-display-2">I am typo-body-2. Hello there!</div>
-    <div class="typo-display-3">I am typo-body-2. Hello there!</div>
-    <div class="typo-display-4">I am typo-body-2. Hello there!</div>
-    <div class="typo-headline">I am typo-body-2. Hello there!</div>
-    <div class="typo-title">I am typo-body-2. Hello there!</div>
-    <div class="typo-subheading-2">I am typo-body-2. Hello there!</div>
-    <div class="typo-subheading-1">I am typo-body-2. Hello there!</div>
-    <div class="typo-body-1">I am typo-body-1. Hello there!</div>
-    <div class="typo-body-2">I am typo-body-2. Hello there!</div>
-    <div class="typo-caption">I am typo-caption. Hello there!</div>
-    <div class="typo-button">I am typo-buton. Hello there!</div>
-    <div class="typo-input">I am typo-input. Hello there!</div>
-  </div> -->
+
 </ipa-nav>

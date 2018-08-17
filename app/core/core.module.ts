@@ -14,6 +14,7 @@ import { ApiService } from '@core/api/api.service';
 import { RedirectGuard } from '@core/api/redirect-guard.service';
 import { SharedStateResolver } from '@core/shared-state/shared-state.resolver';
 import { SharedStateService } from '@core/shared-state/shared-state.service';
+import { SchedulingUIService } from '@scheduling/scheduling-ui.service';
 
 import { ExceptionHandler } from '@core/exception.service';
 import { SlowConnectionInterceptor } from '@core/api/slow-connection.interceptor';
@@ -64,6 +65,7 @@ import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
     AuthService,
     ApiService,
     SharedStateService,
+    SchedulingUIService,
     MatIconRegistry,
     RedirectGuard,
     SharedStateResolver,

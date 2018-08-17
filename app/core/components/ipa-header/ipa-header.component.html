@@ -1,6 +1,6 @@
 <mat-toolbar>
   <mat-toolbar-row class="top-bar">
-    <span>Instructors</span>
+    <span>Scheduling</span>
 
     <span class="top-right-bar">
       <span class="greeting typo-muted typo-caption">Hello, Bob Smith</span>
@@ -9,9 +9,9 @@
   </mat-toolbar-row>
   <mat-divider></mat-divider>
   <mat-toolbar-row class="theme-white bottom-bar">
-    <nav mat-tab-nav-bar>
-      <a mat-tab-link>Assign Instructors</a>
-      <a mat-tab-link active="true">Teaching Calls</a>
+    <nav mat-tab-nav-bar *ngIf="uiState$ | async as stateObject">
+      <a mat-tab-link [active]="stateObject.activeTab === 'assign'" (click)="setState('activeTab', 'assign')">Assign Sections</a>
+      <a mat-tab-link [active]="stateObject.activeTab === 'summary'" (click)="setState('activeTab', 'summary')">Summary Report</a>
     </nav>
 
     <!-- Year Selector -->

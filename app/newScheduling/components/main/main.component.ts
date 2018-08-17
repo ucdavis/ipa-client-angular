@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AppState } from '@scheduling/models/app.model';
 import { SchedulingState } from '@scheduling/models/scheduling.model';
 import { SchedulingActions } from '@scheduling/scheduling-actions.service';
+import { SchedulingUIService } from '@scheduling//scheduling-ui.service.ts';
 
 import * as toastr from 'toastr';
 import { SectionGroup } from '@core/models/section-group.model';
@@ -23,6 +24,7 @@ export class MainComponent {
   courses: Array<any>;
   sectionGroups: Array<SectionGroup>;
   selectedValue: string;
+  activeTab: string;
 
   foods: any[] = [
     { value: 'steak-0', viewValue: 'Steak' },
@@ -32,6 +34,7 @@ export class MainComponent {
 
   constructor(
     private schedulingActions: SchedulingActions,
+    private schedulingUIService: SchedulingUIService,
     private activatedRoute: ActivatedRoute
   ) {}
 
@@ -40,6 +43,10 @@ export class MainComponent {
 
     this.schedulingActions.sectionGroups.subscribe(sectionGroups => {
       this.sectionGroups = sectionGroups;
+    });
+
+    this.schedulingUIService.getState().subscribe(state => {
+      this.activeTab = state.activeTab;
     });
   }
 

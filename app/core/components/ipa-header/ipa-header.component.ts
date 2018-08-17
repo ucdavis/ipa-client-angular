@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { SharedStateService } from '@core/shared-state/shared-state.service';
-
+import { SchedulingUIService } from '../../../newScheduling/scheduling-ui.service';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'ipa-header',
   templateUrl: './ipa-header.component.html',
   styleUrls: ['./ipa-header.component.css']
 })
 export class IpaHeader implements OnInit {
+  uiState$: Observable<any>;
   year: string;
   workgroupId: string;
   currentWorkgroup: { workgroupId: number; roleName: string; workgroupName: string };
@@ -18,7 +20,8 @@ export class IpaHeader implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private sharedState: SharedStateService
+    private sharedState: SharedStateService,
+    private schedulingUIService: SchedulingUIService
   ) {}
 
   ngOnInit() {
@@ -33,6 +36,12 @@ export class IpaHeader implements OnInit {
         workgroup => workgroup.workgroupId === +this.workgroupId
       );
     });
+
+    this.uiState$ = this.schedulingUIService.getState();
+  }
+
+  setState(key, payload) {
+    this.schedulingUIService.setState(key, payload);
   }
 
   offsetYearInUrl(offset: number) {
