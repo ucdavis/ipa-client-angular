@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { SchedulingActions } from '../../scheduling-actions.service';
-import { DATA } from './schedule-summary.model';
 
 @Component({
   selector: 'schedule-summary',
@@ -8,7 +7,7 @@ import { DATA } from './schedule-summary.model';
   styleUrls: ['schedule-summary.component.css']
 })
 export class ScheduleSummaryComponent {
-  dataSource = DATA;
+  dataSource;
   displayedColumns: string[] = [
     'title',
     'section',
@@ -24,9 +23,7 @@ export class ScheduleSummaryComponent {
   spanningColumns = ['title']; // unused?
   spans = [];
 
-  constructor(private schedulingActions: SchedulingActions) {
-    this.cacheSpan('title', d => d.title);
-  }
+  constructor(private schedulingActions: SchedulingActions) {}
 
   /**
    * Evaluated and store an evaluation of the rowspan for each row.
@@ -34,14 +31,14 @@ export class ScheduleSummaryComponent {
    * value that should be checked for spanning.
    */
   cacheSpan(key, accessor) {
-    for (let i = 0; i < DATA.length; ) {
-      let currentValue = accessor(DATA[i]);
+    for (let i = 0; i < this.dataSource.length; ) {
+      let currentValue = accessor(this.dataSource[i]);
       let count = 1;
 
       // Iterate through the remaining rows to see how many match
       // the current value as retrieved through the accessor.
-      for (let j = i + 1; j < DATA.length; j++) {
-        if (currentValue != accessor(DATA[j])) {
+      for (let j = i + 1; j < this.dataSource.length; j++) {
+        if (currentValue != accessor(this.dataSource[j])) {
           break;
         }
 
@@ -67,5 +64,10 @@ export class ScheduleSummaryComponent {
     // this.schedulingActions.sectionGroups.subscribe(sectionGroups => {
     //   this.dataSource = sectionGroups;
     // });
+
+    this.schedulingActions.getReportState().subscribe(data => {
+      this.dataSource = data;
+      this.cacheSpan('title', d => d.title);
+    });
   }
 }

@@ -6,11 +6,14 @@ import { BehaviorSubject, Observable } from '../../node_modules/rxjs';
 import { Course } from '@core/models/course.model';
 import { SectionGroup } from '@core/models/section-group.model';
 import { ActivatedRoute } from '@angular/router';
+import { ScheduleSummary } from '@scheduling/components/schedule-summary/schedule-summary.model';
 
 @Injectable({ providedIn: 'root' })
 export class SchedulingActions {
   private _workgroupId: number = null;
   private _year: number = null;
+  private _termCode: number;
+  private _reportState: BehaviorSubject<ScheduleSummary[]> = new BehaviorSubject([]);
 
   // Normalized entity lists
   private _sectionGroups: BehaviorSubject<SectionGroup[]> = new BehaviorSubject([]);
@@ -38,12 +41,56 @@ export class SchedulingActions {
     this.activatedRoute.firstChild.params.subscribe(params => {
       this._workgroupId = params.workgroupId;
       this._year = params.year;
+      this._termCode = params.termCode;
+
+      this.formatReportData();
     });
 
     this.activatedRoute.firstChild.data.subscribe(data => {
       this._sectionGroups.next(data.sectionGroups);
       this._courses.next(data.courses);
     });
+  }
+
+  getScheduleSummaryReport(): Observable<any> {
+    let url = `/api/scheduleSummaryReportView/workgroups/${this._workgroupId}/years/${
+      this._year
+    }/terms/${this._year + this._termCode}`;
+
+    return this.apiService.get(url);
+  }
+
+  formatReportData() {
+    this.getScheduleSummaryReport().subscribe(data => {
+      // Get course title for each section group
+      let courseArray = data.sectionGroups.map(sectionGroup => {
+        let matchedCourse = data.courses.find(course => {
+          return course.id === sectionGroup.courseId;
+        });
+        return { sectionGroupId: sectionGroup.id, title: matchedCourse.title };
+      });
+
+      // Transform to object with { sectionGroupId: courseTitle }
+      const courseTable = courseArray.reduce(
+        (acc, course) => ((acc[course.sectionGroupId] = course.title), acc),
+        {}
+      );
+
+      let state = data.sections.map(section => ({
+        title: courseTable[section.sectionGroupId],
+        section: section.sequenceNumber,
+        CRN: section.crn,
+        enrollment: '0',
+        seats: section.seats,
+        activities: [{ type: 'none', days: 'none', start: 'none', end: 'none', location: 'none' }]
+      }));
+
+      this._reportState.next(state);
+    });
+  }
+
+  getReportState() {
+    return this._reportState.asObservable();
   }
 
   addCourse(course: Course): void {
