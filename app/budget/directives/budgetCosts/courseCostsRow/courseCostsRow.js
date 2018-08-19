@@ -9,18 +9,18 @@ let courseCostsRow = function ($rootScope, BudgetActions) {
 			sectionGroupCost: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.overrideSectionGroup = function(sectionGroup, property) {
-				sectionGroup = scope.enforceNumericParams(sectionGroup);
-				BudgetActions.overrideSectionGroup(sectionGroup, property);
+			scope.updateSectionGroupCost = function (sectionGroupCost) {
+				scope.enforceNumericParams(sectionGroupCost);
+				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 
 			// Will ensure certain properties are numbers, if they exist on the object.
 			scope.enforceNumericParams = function(obj) {
 				var propertiesShouldBeNumber = [
-					"overrideTeachingAssistantAppointments",
-					"overrideSectionCount",
-					"overrideReaderAppointments",
-					"overrideTotalSeats"
+					"taCount",
+					"sectionCount",
+					"readerCount",
+					"enrollment"
 				];
 
 				propertiesShouldBeNumber.forEach(function(property) {
@@ -32,25 +32,30 @@ let courseCostsRow = function ($rootScope, BudgetActions) {
 				return obj;
 			};
 
-			// Reverts the specified override value
-			scope.revertOverride = function(sectionGroup, property) {
-				if (property == "seats") {
-					sectionGroup.overrideTotalSeats = null;
-				} else if (property == "sectionCount") {
-					sectionGroup.overrideSectionCount = null;
-				} else if (property == "teachingAssistantAppointments") {
-					sectionGroup.overrideTeachingAssistantAppointments = null;
-				} else if (property == "readerAppointments") {
-					sectionGroup.overrideReaderAppointments = null;
-				}
+			scope.syncEnrollment = function (sectionGroupCost) {
+				sectionGroupCost.enrollment = sectionGroupCost.sectionGroup.totalSeats;
+				scope.updateSectionGroupCost(sectionGroupCost);
+			};
 
-				BudgetActions.overrideSectionGroup(sectionGroup, property, true);
+			scope.syncSectionCount = function (sectionGroupCost) {
+				sectionGroupCost.sectionCount = sectionGroupCost.sectionGroup.sectionCount;
+				scope.updateSectionGroupCost(sectionGroupCost);
+			};
+
+			scope.syncTaCount = function (sectionGroupCost) {
+				sectionGroupCost.taCount = sectionGroupCost.sectionGroup.teachingAssistantAppointments;
+				scope.updateSectionGroupCost(sectionGroupCost);
+			};
+
+			scope.syncReaderCount = function (sectionGroupCost) {
+				sectionGroupCost.readerCount = sectionGroupCost.sectionGroup.readerAppointments;
+				scope.updateSectionGroupCost(sectionGroupCost);
 			};
 
 			scope.toCurrency = function (value) {
 				return toCurrency(value);
 			};
-		} // end link
+		}
 	};
 };
 
