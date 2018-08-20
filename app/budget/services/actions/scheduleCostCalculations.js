@@ -32,6 +32,35 @@ class ScheduleCostCalculations {
 
           sectionGroupCost.sectionGroup = sectionGroups.list[uniqueKey];
 
+          // Set sectionGroupCost instructor descriptions
+          var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.instructorId];
+          var instructorType = BudgetReducers._state.instructorTypes.list[sectionGroupCost.instructorTypeId];
+
+          sectionGroupCost.instructorDescription = null;
+
+          if (instructor) {
+            sectionGroupCost.instructorDescription = instructor.lastName + ", " + instructor.firstName;
+          } else if (instructorType) {
+            sectionGroupCost.instructorDescription = instructorType.description;
+          }
+
+          var originalInstructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.originalInstructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.originalInstructorId];
+          sectionGroupCost.originalInstructorDescription = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
+
+          var assignedInstructorId = sectionGroupCost.sectionGroup.assignedInstructorIds[0];
+          var assignedInstructorTypeId = sectionGroupCost.sectionGroup.assignedInstructorTypeIds[0];
+
+          // Set sectionGroup instructor descriptions
+          sectionGroupCost.sectionGroup.instructorDescription = null;
+
+          if (assignedInstructorId > 0) {
+            var assignedInstructor = BudgetReducers._state.assignedInstructors.list[assignedInstructorId];
+            sectionGroupCost.sectionGroup.instructorDescription = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : null;
+          } else if (assignedInstructorTypeId > 0) {
+            var assignedInstructorType = BudgetReducers._state.instructorTypes.list[assignedInstructorTypeId];
+            sectionGroupCost.sectionGroup.instructorDescription = assignedInstructorType ? assignedInstructorType.description : null;
+          }
+
           // Calculate instructor cost
           _this._calculateInstructorCost(sectionGroupCost);
 
