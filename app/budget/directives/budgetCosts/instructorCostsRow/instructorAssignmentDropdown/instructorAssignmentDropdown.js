@@ -16,6 +16,7 @@ let instructorAssignmentDropdown = function ($rootScope, BudgetActions) {
 					BudgetActions.updateSectionGroupCost(scope.sectionGroupCost);
 				} else {
 					scope.sectionGroupCost.instructorId = instructor.id;
+					scope.sectionGroupCost.instructorTypeId = instructor.instructorType.id;
 					BudgetActions.updateSectionGroupCost(scope.sectionGroupCost);
 				}
 			};

@@ -33,7 +33,7 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 			};
 
 			scope.updateInstructorCost = function(sectionGroupCost) {
-				sectionGroupCost.cost = angular.copy(parseFloat(sectionGroupCost.cost));
+				sectionGroupCost.cost = angular.copy(parseFloat(sectionGroupCost.overrideInstructorCost));
 				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 
