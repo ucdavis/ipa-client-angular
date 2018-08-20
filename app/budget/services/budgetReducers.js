@@ -212,9 +212,13 @@ class BudgetReducers {
 							if (sectionGroupCosts.ids.indexOf(sectionGroupCost.id) == -1) {
 								sectionGroupCosts.ids.push(sectionGroupCost.id);
 							}
-							var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
-							sectionGroupCosts.idsByUniqueKey[uniqueKey] = sectionGroupCost.id;
 							sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
+							var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
+							sectionGroupCost.uniqueKey = uniqueKey;
+							sectionGroupCosts.idsByUniqueKey[uniqueKey] = sectionGroupCost.id;
+							if (sectionGroupCosts.uniqueKeys.indexOf(uniqueKey) == -1) {
+								sectionGroupCosts.uniqueKeys.push(uniqueKey);
+							}
 						});
 						return sectionGroupCosts;
 					case ActionTypes.UPDATE_SECTION_GROUP_COST:
