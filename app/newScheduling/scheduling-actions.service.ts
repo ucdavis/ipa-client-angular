@@ -8,6 +8,9 @@ import { SectionGroup } from '@core/models/section-group.model';
 import { ActivatedRoute } from '@angular/router';
 import { ScheduleSummary } from '@scheduling/components/schedule-summary/schedule-summary.model';
 
+import { sortBy } from 'lodash';
+import * as moment from 'moment';
+
 @Injectable({ providedIn: 'root' })
 export class SchedulingActions {
   private _workgroupId: number = null;
@@ -43,7 +46,7 @@ export class SchedulingActions {
       this._year = params.year;
       this._termCode = params.termCode;
 
-      this.formatReportData();
+      this.generateReportData();
     });
 
     this.activatedRoute.firstChild.data.subscribe(data => {
@@ -60,32 +63,57 @@ export class SchedulingActions {
     return this.apiService.get(url);
   }
 
-  formatReportData() {
+  generateReportData() {
     this.getScheduleSummaryReport().subscribe(data => {
       // Get course title for each section group
       let courseArray = data.sectionGroups.map(sectionGroup => {
         let matchedCourse = data.courses.find(course => {
           return course.id === sectionGroup.courseId;
         });
-        return { sectionGroupId: sectionGroup.id, title: matchedCourse.title };
+        return {
+          sectionGroupId: sectionGroup.id,
+          title: `${matchedCourse.subjectCode} ${matchedCourse.courseNumber} ${matchedCourse.title}`
+        };
       });
-
       // Transform to object with { sectionGroupId: courseTitle }
       const courseTable = courseArray.reduce(
         (acc, course) => ((acc[course.sectionGroupId] = course.title), acc),
         {}
       );
 
-      let state = data.sections.map(section => ({
-        title: courseTable[section.sectionGroupId],
-        section: section.sequenceNumber,
-        CRN: section.crn,
-        enrollment: '0',
-        seats: section.seats,
-        activities: [{ type: 'none', days: 'none', start: 'none', end: 'none', location: 'none' }]
-      }));
+      let state = data.sections.map(section => {
+        // each section has activities common to the section group as well as it's own activities
+        let sectionActivities = data.activities.filter(activity => {
+          // activity common to the section group has no section id
+          if (activity.sectionGroupId === section.sectionGroupId && activity.sectionId === 0) {
+            return true;
+          }
+          // activity for individual section has section id
+          if (activity.sectionId === section.id) {
+            return true;
+          }
+        });
 
-      this._reportState.next(state);
+        let formattedActivities = sectionActivities.map(activity => ({
+          type: this.getActivityCodeDescription(activity.activityTypeCode.activityTypeCode),
+          days: this.getWeekDays(activity.dayIndicator),
+          start: this.toStandardTime(activity.startTime),
+          end: this.toStandardTime(activity.endTime),
+          location: activity.locationDescription
+        }));
+
+        return {
+          title: courseTable[section.sectionGroupId],
+          section: section.sequenceNumber,
+          CRN: section.crn,
+          enrollment: '0',
+          seats: section.seats,
+          activities: formattedActivities
+        };
+      });
+
+      let sortedState = sortBy(state, ['title', 'section']);
+      this._reportState.next(sortedState);
     });
   }
 
@@ -114,5 +142,88 @@ export class SchedulingActions {
 
   unimpersonateJarold() {
     this.authService.unimpersonate();
+  }
+
+  // Helper Functions
+  // TODO: Move to helper/utils service
+
+  // Turns 'D' into 'Discussion'
+  getActivityCodeDescription(code) {
+    let codeDescriptions = {
+      '%': 'World Wide Web Electronic Discussion',
+      '0': 'World Wide Web Virtual Lecture',
+      '1': 'Conference',
+      '2': 'Term Paper/Discussion',
+      '3': 'Film Viewing',
+      '6': 'Dummy Course',
+      '7': 'Combined Schedule',
+      '8': 'Project',
+      '9': 'Extensive Writing or Discussion',
+      A: 'Lecture',
+      B: 'Lecture/Discussion',
+      C: 'Laboratory',
+      D: 'Discussion',
+      E: 'Seminar',
+      F: 'Fieldwork',
+      G: 'Discussion/Laboratory',
+      H: 'Laboratory/Discussion',
+      I: 'Internship',
+      J: 'Independent Study',
+      K: 'Workshop',
+      L: 'Lecture/Lab',
+      O: 'Clinic',
+      P: 'PE Activity',
+      Q: 'Listening',
+      R: 'Recitation',
+      S: 'Studio',
+      T: 'Tutorial',
+      U: 'Auto Tutorial',
+      V: 'Variable',
+      W: 'Practice',
+      X: 'Performance Instruction',
+      Y: 'Rehearsal',
+      Z: 'Term Paper'
+    };
+    return codeDescriptions[code];
+  }
+
+  // Turns 0101010 into MWF
+  getWeekDays(dayIndicator) {
+    if (!dayIndicator || dayIndicator.length == 0) {
+      return '';
+    }
+
+    let days = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
+    let dayArr = dayIndicator.split('');
+
+    let dayStr = '';
+    dayArr.forEach((day, i) => {
+      if (day === '1') {
+        dayStr = dayStr + days[i];
+      }
+    });
+
+    return dayStr;
+  }
+
+  /**
+   * Converts 24 'military time' to 12 hour am/pm time
+   * handled cases:
+   * - "13:00:00"
+   * - "13:00"
+   * - "1300"
+   */
+  toStandardTime(time) {
+    let returnFormat = 'h:mm A';
+    if (/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-9][0-9]$/.test(time)) {
+      // Case "13:00:00"
+      return moment(time, 'HH:mm:ss').format(returnFormat);
+    } else if (/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(time)) {
+      // Case "13:00"
+      return moment(time, 'HH:mm').format(returnFormat);
+    } else if (/^([0-9]|0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/.test(time)) {
+      // Case "1300"
+      return moment(time, 'HHmm').format(returnFormat);
+    }
   }
 }
