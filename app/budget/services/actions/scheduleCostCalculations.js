@@ -35,7 +35,8 @@ class ScheduleCostCalculations {
           // Set sectionGroupCost instructor descriptions
           var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.instructorId];
           var instructorType = BudgetReducers._state.instructorTypes.list[sectionGroupCost.instructorTypeId];
-
+          sectionGroupCost.instructor = instructor;
+          sectionGroupCost.instructorType = instructorType;
           sectionGroupCost.instructorDescription = null;
 
           if (instructor) {
