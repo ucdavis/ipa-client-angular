@@ -22,6 +22,7 @@
 .line-items__table-cell {
 	padding-left: 15px;
 	padding-right: 15px;
+	height: 43px;
 }
 
 .line-items__table--type {

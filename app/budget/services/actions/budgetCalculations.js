@@ -149,6 +149,7 @@ class BudgetCalculations {
 				});
 	
 				// Calculate implicit lineItems
+				var implicitLineItems = 0;
 				BudgetReducers._state.teachingAssignments.ids.forEach(function(teachingAssignmentId) {
 					var teachingAssignment = BudgetReducers._state.teachingAssignments.list[teachingAssignmentId];
 	
@@ -158,10 +159,12 @@ class BudgetCalculations {
 						if (self._matchingLineItemExists(teachingAssignment, BudgetReducers._state.lineItems) == false) {
 							let lineItem = self.scaffoldLineItem(teachingAssignment);
 							calculatedLineItems.push(lineItem);
+							implicitLineItems += 1;
 						}
 					}
 				});
-	
+
+				BudgetReducers._state.ui.fundsNav.tabOverrides["Suggested"] = implicitLineItems > 0 ? "Suggested (" + implicitLineItems + ")" : null;
 				calculatedLineItems = _array_sortByProperty(calculatedLineItems, "lineItemCategoryId");
 	
 				BudgetReducers.reduce({
