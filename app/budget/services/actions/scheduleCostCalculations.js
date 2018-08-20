@@ -49,16 +49,37 @@ class ScheduleCostCalculations {
 
           var assignedInstructorId = sectionGroupCost.sectionGroup.assignedInstructorIds[0];
           var assignedInstructorTypeId = sectionGroupCost.sectionGroup.assignedInstructorTypeIds[0];
+          var assignedInstructor = BudgetReducers._state.assignedInstructors.list[assignedInstructorId];
+          var assignedInstructorType = BudgetReducers._state.instructorTypes.list[assignedInstructorTypeId];
+          sectionGroupCost.sectionGroup.assignedInstructor = assignedInstructor;
+          sectionGroupCost.sectionGroup.assignedInstructorType = assignedInstructorType;
 
           // Set sectionGroup instructor descriptions
           sectionGroupCost.sectionGroup.instructorDescription = null;
 
           if (assignedInstructorId > 0) {
-            var assignedInstructor = BudgetReducers._state.assignedInstructors.list[assignedInstructorId];
             sectionGroupCost.sectionGroup.instructorDescription = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : null;
           } else if (assignedInstructorTypeId > 0) {
-            var assignedInstructorType = BudgetReducers._state.instructorTypes.list[assignedInstructorTypeId];
             sectionGroupCost.sectionGroup.instructorDescription = assignedInstructorType ? assignedInstructorType.description : null;
+          }
+
+          // Calculate reversion
+          // Identify a difference
+          if (sectionGroupCost.instructorId != assignedInstructorId || sectionGroupCost.instructorTypeId != assignedInstructorTypeId) {
+            // Schedule has no assignment
+            if (!assignedInstructorId && !assignedInstructorTypeId) {
+              sectionGroupCost.reversionDisplayName = "no instructor";
+            }
+
+            // Schedule has an instructor assignment
+            else if (assignedInstructorId) {
+              sectionGroupCost.reversionDisplayName = assignedInstructor.lastName + ", " + assignedInstructor.firstName;
+            }
+
+            // Schedule has an instructorType assignment
+            else if (assignedInstructorTypeId) {
+              sectionGroupCost.reversionDisplayName = assignedInstructorType.description;
+            }
           }
 
           // Calculate instructor cost

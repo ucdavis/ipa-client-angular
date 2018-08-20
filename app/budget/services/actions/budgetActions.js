@@ -466,34 +466,7 @@ class BudgetActions {
 				}
 			},
 			// Will also create sectionGroupCost if it does not already exist.
-			createSectionGroupCostCommentFromSectionGroup: function (comment, sectionGroup, currentUserLoginId) {
-				var self = this;
-				var sectionGroupCost = sectionGroup.sectionGroupCost;
-	
-				// Create sectionGroupCost if necessary
-				if (sectionGroupCost == false || sectionGroupCost == null) {
-					var sectionGroupCostDTO = {
-						sectionGroupId: sectionGroup.id,
-						budgetScenarioId: BudgetReducers._state.ui.selectedBudgetScenarioId
-					};
-	
-					BudgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
-						BudgetReducers.reduce({
-							type: ActionTypes.CREATE_SECTION_GROUP_COST,
-							payload: {
-								sectionGroupCost: newSectionGroupCost
-							}
-						});
-						$rootScope.$emit('toast', { message: "Saved course", type: "SUCCESS" });
-						self._createSectionGroupCostComment(comment, newSectionGroupCost, currentUserLoginId);
-					}, function (err) {
-						$rootScope.$emit('toast', { message: "Could not save course.", type: "ERROR" });
-					});
-				} else {
-					self._createSectionGroupCostComment(comment, sectionGroupCost, currentUserLoginId);
-				}
-			},
-			_createSectionGroupCostComment: function (comment, sectionGroupCost, currentUserLoginId) {
+			createSectionGroupCostCommentFromSectionGroup: function (comment, sectionGroupCost, currentUserLoginId) {	
 				var self = this;
 				var sectionGroupCostComment = {};
 				sectionGroupCostComment.comment = comment;
@@ -608,11 +581,11 @@ class BudgetActions {
 	
 				BudgetReducers.reduce(action);
 			},
-			openAddCourseCommentsModal: function(sectionGroup) {
+			openAddCourseCommentsModal: function(sectionGroupCost) {
 				var action = {
 					type: ActionTypes.OPEN_ADD_COURSE_COMMENT_MODAL,
 					payload: {
-						sectionGroup: sectionGroup
+						sectionGroupCost: sectionGroupCost
 					}
 				};
 	

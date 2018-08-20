@@ -13,8 +13,8 @@ let budgetCosts = function ($rootScope, BudgetActions) {
 			regularInstructorAssignmentOptions: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.openAddCourseCommentsModal = function(sectionGroup) {
-				BudgetActions.openAddCourseCommentsModal(sectionGroup);
+			scope.openAddCourseCommentsModal = function(sectionGroupCost) {
+				BudgetActions.openAddCourseCommentsModal(sectionGroupCost);
 			};
 
 			scope.setActiveTerm = function(activeTermTab) {

@@ -779,7 +779,7 @@ class BudgetReducers {
 						return ui;
 					case ActionTypes.OPEN_ADD_COURSE_COMMENT_MODAL:
 						ui.courseCommentsModal.isOpen = true;
-						ui.courseCommentsModal.sectionGroup = action.payload.sectionGroup;
+						ui.courseCommentsModal.sectionGroupCost = action.payload.sectionGroupCost;
 						return ui;
 					case ActionTypes.OPEN_ADD_LINE_ITEM_COMMENT_MODAL:
 						ui.lineItemCommentsModal.isOpen = true;

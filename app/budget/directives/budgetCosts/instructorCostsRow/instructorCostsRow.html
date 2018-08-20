@@ -15,7 +15,7 @@
 				<div class="glyphicon glyphicon-repeat instructor-costs__revert-ui"
 				     uib-tooltip="Update to {{ sectionGroupCost.reversionDisplayName }}"
 				     tooltip-append-to-body="true"
-				     confirm-button="removeInstructor(sectionGroupCost)"
+				     confirm-button="syncInstructor()"
 				     message="Update to {{ sectionGroupCost.reversionDisplayName }}?"
 				     yes="Update"
 				     no="Cancel"
@@ -59,7 +59,7 @@
 		</div>
 		<div class="instructor-costs__cost-container">
 			<ipa-input value="sectionGroupCost.reason"
-			           on-update="overrideSectionGroup(sectionGroupCost, 'reason')">
+			           on-update="updateSectionGroupCost(sectionGroupCost)">
 			</ipa-input>
 		</div>
 	</td>
@@ -81,9 +81,9 @@
 			     uib-tooltip="Cost of {{ sectionGroupCost.overrideInstructorCostSourceDescription }}"
 			     tooltip-append-to-body="true">
 				<ipa-input mode="'currency'"
-				           place-holder="'$' + (sectionGroupCost.overrideInstructorCost || 0)"
-				           value="sectionGroupCost.newInstructorCost"
-				           on-update="updateInstructorCost(sectionGroupCost, sectionGroupCost.newInstructorCost)">
+				           place-holder="'$' + (sectionGroupCost.cost || 0)"
+				           value="sectionGroupCost.cost"
+				           on-update="updateInstructorCost(sectionGroupCost)">
 				</ipa-input>
 			</div>
 		</div>

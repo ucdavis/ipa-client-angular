@@ -16,13 +16,14 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 				BudgetActions.toggleCourseCostsSection();
 			};
 
-			scope.removeInstructor = function(sectionGroupCost) {
-				sectionGroupCost.instructorId = null;
-				sectionGroupCost.instructorTypeId = null;
-				BudgetActions.updateSectionGroupCost(sectionGroupCost);
+			scope.syncInstructor = function() {
+				scope.sectionGroupCost.instructorId = scope.sectionGroupCost.sectionGroup.assignedInstructor ? scope.sectionGroupCost.sectionGroup.assignedInstructor.id : null;
+				scope.sectionGroupCost.instructorTypeId = scope.sectionGroupCost.sectionGroup.assignedInstructorType ? scope.sectionGroupCost.sectionGroup.assignedInstructorType.id : null;
+				BudgetActions.updateSectionGroupCost(scope.sectionGroupCost);
 			};
 
 			scope.removeOriginalInstructor = function(sectionGroupCost) {
+				sectionGroupCost.originalInstructorTypeId = null;
 				sectionGroupCost.originalInstructorId = null;
 				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
@@ -31,15 +32,15 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 				return toCurrency(value);
 			};
 
-			scope.updateInstructorCost = function(sectionGroup, overrideInstructorCost) {
-				sectionGroup.cost = angular.copy(parseFloat(sectionGroup.overrideInstructorCost));
-
-				scope.overrideSectionGroup(sectionGroup, 'instructorCost');
+			scope.updateInstructorCost = function(sectionGroupCost) {
+				sectionGroupCost.cost = angular.copy(parseFloat(sectionGroupCost.cost));
+				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 
-			scope.overrideSectionGroup = function(sectionGroup, property) {
-				BudgetActions.overrideSectionGroup(sectionGroup, property);
+			scope.updateSectionGroupCost = function(sectionGroupCost) {
+				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
+
 		} // end link
 	};
 };
