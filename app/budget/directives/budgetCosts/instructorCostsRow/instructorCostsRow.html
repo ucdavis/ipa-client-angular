@@ -72,7 +72,7 @@
 		<div class="instructor-costs__cost-container">
 			<div ng-if="sectionGroupCost.overrideInstructorCostSource == 'course'">
 				<ipa-input mode="'currency'"
-				           value="sectionGroupCost.overrideInstructorCost"
+				           value="sectionGroupCost.cost"
 				           on-update="updateInstructorCost(sectionGroupCost)">
 				</ipa-input>
 			</div>
@@ -81,7 +81,7 @@
 			     uib-tooltip="Cost of {{ sectionGroupCost.overrideInstructorCostSourceDescription }}"
 			     tooltip-append-to-body="true">
 				<ipa-input mode="'currency'"
-				           place-holder="'$' + (sectionGroupCost.cost || 0)"
+				           place-holder="'$' + (sectionGroupCost.overrideInstructorCost || 0)"
 				           value="sectionGroupCost.cost"
 				           on-update="updateInstructorCost(sectionGroupCost)">
 				</ipa-input>
