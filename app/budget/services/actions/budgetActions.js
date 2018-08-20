@@ -635,6 +635,7 @@ class BudgetActions {
 				ScheduleCostCalculations.calculateScheduleCosts();
 				BudgetCalculations.calculateSectionGroups();
 				BudgetCalculations.calculateTotalCost();
+				BudgetCalculations.calculateCourseList();
 			},
 			selectTerm: function(termTab) {
 				BudgetReducers.reduce({

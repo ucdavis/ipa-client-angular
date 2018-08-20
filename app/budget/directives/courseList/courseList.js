@@ -6,9 +6,9 @@ let courseList = function ($rootScope, TermService) {
     template: require('./courseList.html'),
     replace: true,
     scope: {
-      sectionGroupCosts: '<',
+      scheduledCosts: '<',
       sectionGroups: '<',
-      courses: '<'
+      selectedBudgetScenario: '<'
     },
     link: function (scope, element, attrs) {
       // Intentionally Empty

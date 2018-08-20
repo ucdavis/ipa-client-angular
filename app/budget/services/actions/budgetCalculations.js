@@ -585,6 +585,36 @@ class BudgetCalculations {
 				});
 	
 				return replacementCosts;
+			},
+			calculateCourseList: function () {
+				var sectionGroups = BudgetReducers._state.sectionGroups;
+				var sectionGroupCosts = BudgetReducers._state.sectionGroupCosts;
+				var selectedBudgetScenarioId = BudgetReducers._state.ui.selectedBudgetScenarioId;
+
+				// List of sectionGroupCosts, sorted by subj/course/sequence
+				// template will filter by isBudgeted, isScheduled, termCode
+				var courseList = [];
+
+				// Find sectionGroupCosts that aren't scheduled
+				sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
+					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+
+					// Ensure they are part of current scenario
+					if (sectionGroupCost.budgetScenarioId != selectedBudgetScenarioId) { return; }
+
+					sectionGroupCost.isBudgeted = true;
+					var key = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
+					sectionGroupCost.isScheduled = sectionGroups.idsByUniqueKey[key] > 0;
+				});
+
+				// Find sectionGroups that aren't budgeted (and create scaffold sectionGroupCosts for them)
+				sectionGroups.ids.forEach(function(sectionGroupId) {
+					var sectionGroup = sectionGroups.list[sectionGroupId];
+					var uniqueKey = sectionGroup.subjectCode + "-" + sectionGroup.courseNumber + "-" + sectionGroup.sequencePattern + "-" + sectionGroup.termCode + selectedBudgetScenarioId;
+
+					var sectionGroupCostIds = sectionGroupCosts.idsByUniqueKey[uniqueKey];
+					//debugger;
+				});
 			}
 		};
 	}
