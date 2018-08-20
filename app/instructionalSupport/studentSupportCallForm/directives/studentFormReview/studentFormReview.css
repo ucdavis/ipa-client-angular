@@ -34,3 +34,7 @@
 .student-form-review__check {
 	color: green;
 }
+
+.student-form-review__disabled {
+	color: #c2c2c3;
+}

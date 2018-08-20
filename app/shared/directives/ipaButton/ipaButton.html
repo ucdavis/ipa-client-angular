@@ -2,7 +2,8 @@
 	uib-tooltip="{{ calculateTooltip() }}"
 	tooltip-placement="bottom"
 	tooltip-append-to-body="true"
-	ng-class="{ buttonClass, 'ipa-button--disabled': isDisabled , 'ipa-button--wide': isWide, 'ipa-button--dark-skin': skin == 'dark', 'ipa-button--light-skin': skin == 'light' || !skin }">
+	ng-style="{ color: iconColor ? iconColor : '' }"
+	ng-class="{ buttonClass, 'ipa-button--disabled': isDisabled, 'ipa-button--light-skin-disabled': isDisabled && (skin == 'light' || !skin), 'ipa-button--dark-skin-disabled': isDisabled && skin == 'dark', 'ipa-button--wide': isWide, 'ipa-button--dark-skin': skin == 'dark', 'ipa-button--light-skin': skin == 'light' || !skin }">
 	<div class="ipa-button__container"
 		ng-class="{'ipa-button__container--wide': isWide }"
 		ng-show="!(isDisabled)">
@@ -20,6 +21,7 @@
 			</div>
 			<div class="ipa-button__spacer" ng-show="text.length > 0 && iconClass.length > 0"></div>
 			<div ng-class="iconClass"></div>
+			<sup>{{ superscript }}</sup>
 		</div>
 
 		<!-- without confirmation -->
@@ -33,6 +35,7 @@
 		</div>
 		<div class="ipa-button__spacer" ng-show="text.length > 0 && iconClass.length > 0"></div>
 			<div ng-class="iconClass"></div>
+			<sup>{{ superscript }}</sup>
 		</div>
 	</div>
 
@@ -47,6 +50,7 @@
 			</div>
 			<div class="ipa-button__spacer" ng-show="text.length > 0 && iconClass.length > 0"></div>
 			<div ng-class="iconClass"></div>
+			<sup>{{ superscript }}</sup>
 		</div>
 	</div>
 </div>

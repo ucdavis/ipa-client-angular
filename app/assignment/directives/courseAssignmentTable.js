@@ -88,6 +88,15 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 								courseHtml += "</div>"; // End tags
 
+								// Add input for course notes
+								courseHtml += '<hr />';
+								courseHtml += "<div class='course-assignments__course-note hidden-print'>";
+								courseHtml += '<textarea class="form-control add-note__text-area" placeholder="Add Note" data-course-id="' + course.id + '" data-event-type="setCourseNote">' + (course.note || "")+ '</textarea>';
+								courseHtml += "</div>";
+								courseHtml += "<div class='visible-print'>";
+								courseHtml += course.note || "";
+								courseHtml += "</div>";
+
 								courseHtml += "</div></div>"; // End course-description-cell
 
 								// Loop over active terms
@@ -321,6 +330,30 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					});
 				}
 			}); // end on event 'assignmentStateChanged'
+
+			// Handle input box edits
+			element.on("keydown", function(e) {
+				let $el = $(e.target);
+				if ($el.data('event-type') != 'setCourseNote') { return; }
+
+				if (e.key == "Enter") {
+					var courseId = $el.data('course-id');
+					var note = e.target.value;
+
+					AssignmentActionCreators.updateCourseNote(courseId, note);
+				}
+			});
+
+			// Handle input box edits
+			element.on("change", function(e) {
+				var $el = $(e.target);
+				if ($el.data('event-type') != 'setCourseNote') { return; }
+
+				var courseId = $el.data('course-id');
+				var note = e.target.value;
+
+				AssignmentActionCreators.updateCourseNote(courseId, note);
+			});
 
 			// Handle Instructor UI events
 			element.click(function (e) {

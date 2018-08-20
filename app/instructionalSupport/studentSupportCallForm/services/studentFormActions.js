@@ -160,16 +160,9 @@ class StudentFormActions {
 					$rootScope.$emit('toast', { message: "Updated preference comments", type: "SUCCESS" });
 	
 					StudentFormReducers._state.preferences.list[payload.id] = payload;
-					var preferenceCommentsComplete = true;
-					StudentFormReducers._state.preferences.ids.forEach(function(preferenceId) {
-						var preference = StudentFormReducers._state.preferences.list[preferenceId];
-						if (!(preference.comment) || preference.comment.length == 0) { preferenceCommentsComplete = false; }
-					});
-	
 					var action = {
 						type: ActionTypes.UPDATE_PREFERENCE,
-						payload: payload,
-						preferenceCommentsComplete: preferenceCommentsComplete
+						payload: payload
 					};
 					StudentFormReducers.reduce(action);
 					self.calculateFormValid();
@@ -197,11 +190,32 @@ class StudentFormActions {
 			calculateFormValid : function() {
 				var review = StudentFormReducers._state.ui.review;
 				var validationErrorMessage = "";
-	
-				var isFormValid = !(
-					review.requirePreferenceAmount.required && review.requirePreferenceAmount.complete == false
-					|| review.requireEligible.required && review.requireEligible.complete == false
-					|| review.requirePreferenceComments.required && review.requirePreferenceComments.complete == false);
+
+				var preferenceCommentsComplete = true;
+
+				// Disabled if preference comments are required, there is a min number of preferences required, and no preferences have been made
+				var preferenceCommentsDisabled = (StudentFormReducers._state.ui.review.requirePreferenceComments.required && StudentFormReducers._state.ui.review.requirePreferenceAmount.required && StudentFormReducers._state.preferences.ids.length == 0);
+
+				if (StudentFormReducers._state.preferences.ids.length > 0) {
+					StudentFormReducers._state.preferences.ids.forEach(function(preferenceId) {
+						var preference = StudentFormReducers._state.preferences.list[preferenceId];
+						if (!(preference.comment) || preference.comment.length == 0) { preferenceCommentsComplete = false; }
+					});
+				}
+
+				StudentFormReducers.reduce({
+					type: ActionTypes.UPDATE_PREFERENCE_COMMENT_VALIDATION,
+					payload: {
+						preferenceCommentsComplete: preferenceCommentsComplete,
+						preferenceCommentsDisabled: preferenceCommentsDisabled
+					}
+				});
+
+
+				var isFormValid = !(review.requirePreferenceAmount.required && review.requirePreferenceAmount.complete == false
+												|| review.requireEligible.required && review.requireEligible.complete == false
+												|| review.requirePreferenceComments.required && preferenceCommentsComplete == false);
+
 					if (review.requirePreferenceAmount.required && review.requirePreferenceAmount.complete == false) {
 						validationErrorMessage += "You must provide at least " + StudentFormReducers._state.supportCallResponse.minimumNumberOfPreferences + " preferences";
 					}

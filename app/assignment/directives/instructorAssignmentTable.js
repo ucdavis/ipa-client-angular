@@ -1,17 +1,21 @@
 /**
  * Provides the main course table in the Courses View
  */
-let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, AuthService) {
+let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, AuthService, $routeParams, Roles) {
 	return {
 		restrict: 'A',
 		scope: {
 			state: '=',
 			showTheStaff: '=',
 			instructorTypeId: '=',
-			sharedState: '='
+			sharedState: '=',
+			openCommentModal: '&?',
+			openUnavailabilityModal: '&?'
 		},
 		link: function (scope, element, attrs) {
 			scope.sharedState = scope.sharedState || AuthService.getSharedState();
+			scope.workgroupId = $routeParams.workgroupId;
+			scope.year = $routeParams.year;
 
 			scope.view = {};
 			scope.view.state = scope.state;
@@ -75,6 +79,52 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				return false;
 			};
 
+			scope.findOrCreateInstructorNote = function (instructorId) {
+				let instructorNote = scope.view.state.instructorNotes.byInstructorId[instructorId];
+
+				if (instructorNote) { return instructorNote; }
+
+				return {
+					scheduleId: scope.view.state.userInterface.scheduleId,
+					instructorId: instructorId,
+					note: ""
+				};
+			};
+
+			scope.getUserByLoginId = function (loginId) {
+				var users = scope.view.state.users;
+ 				for (var i = 0; i < users.ids.length; i++) {
+					var user = users.list[users.ids[i]];
+ 					if (user.loginId == loginId) {
+						return user;
+					}
+				}
+ 				return null;
+			};
+
+ 			scope.getInstructorTypeId = function (instructor) {
+				var teachingAssignments = scope.view.state.teachingAssignments;
+				var userRoles = scope.view.state.userRoles;
+ 				var user = scope.getUserByLoginId(instructor.loginId);
+ 				if (user) {
+					// Attempt to find via userRole
+					for (var i = 0; i < userRoles.ids.length; i++) {
+						var userRole = userRoles.list[userRoles.ids[i]];
+ 						if (userRole.roleId == Roles.instructor && userRole.userId == user.id) {
+							return userRole.instructorTypeId;
+						}
+					}
+				}
+ 				// Attempt to find via teachingAssignment
+				for (var i = 0; i < teachingAssignments.ids.length; i++) {
+					var teachingAssignment = teachingAssignments.list[teachingAssignments.ids[i]];
+ 					if (teachingAssignment.instructorId == instructor.id) {
+						return teachingAssignment.instructorTypeId;
+					}
+				}
+ 				return null;
+			},
+
 			// Build a string of html to display a column header (course, terms, etc.)
 			scope.renderHeader = function () {
 				// Render the header
@@ -113,6 +163,21 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 					$('.tooltip').remove();
 					element.empty();
 
+					var relevantInstructors = 0;
+
+ 					$.each(scope.view.state.instructors.ids, function (i, instructorId) {
+						var instructor = scope.view.state.instructors.list[instructorId];
+
+ 						if (scope.instructorTypeId == instructor.instructorTypeId) {
+							relevantInstructors += 1;
+						}
+					});
+
+ 					if (relevantInstructors == 0) { return; }
+
+ 					var instructorTypeHeader = '<div class="instructor-type-header">' + scope.view.state.instructorTypes.list[scope.instructorTypeId].description + '</div>';
+					element.append(instructorTypeHeader);
+
 					// Render the header
 					var header = scope.renderHeader();
 					element.append(header);
@@ -132,6 +197,9 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						// Loop over instructors
 						$.each(scope.view.state.instructors.ids, function (i, instructorId) {
 							var instructor = scope.view.state.instructors.list[instructorId];
+							var slotInstructorTypeId = scope.getInstructorTypeId(instructor);
+
+							if (scope.instructorTypeId != slotInstructorTypeId) { return; }
 
 							if (instructor.isFiltered === false && scope.showCompletedInstructor(instructor)) {
 								var scheduleInstructorNote = scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
@@ -191,6 +259,17 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 									courseHtml += "Preferences Submitted";
 									courseHtml += "</div>";
 								}
+
+								var instructorNote = scope.findOrCreateInstructorNote(instructorId);
+								// Add input for instructor notes
+								courseHtml += '<hr />';
+								courseHtml += "<div class='course-assignments__course-note hidden-print'>";
+								courseHtml += '<textarea class="form-control add-note__text-area" placeholder="Add Note" data-instructor-id="' + instructor.id + '" data-schedule-id="' + scope.view.state.userInterface.scheduleId + '" data-event-type="setInstructorNote">' + instructorNote.note + '</textarea>';
+								courseHtml += "</div>";
+
+								courseHtml += "<div class='visible-print'>";
+								courseHtml += instructorNote.note || "";
+								courseHtml += "</div>";
 
 								courseHtml += "</div>"; // end description-cell
 
@@ -540,6 +619,34 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 			// end on event 'assignmentStateChanged'
 
+			// Handle input box edits
+			element.on("keydown", function(e) {
+				let $el = $(e.target);
+				if ($el.data('event-type') != 'setInstructorNote') { return; }
+
+				if (e.key == "Enter") {
+					var instructorId = $el.data('instructor-id');
+					var scheduleId = $el.data('schedule-id');
+
+					var note = e.target.value;
+
+					AssignmentActionCreators.createOrUpdateInstructorNote(scheduleId, instructorId, note);
+				}
+			});
+
+			// Handle input box edits
+			element.on("change", function(e) {
+				var $el = $(e.target);
+				if ($el.data('event-type') != 'setInstructorNote') { return; }
+
+				var instructorId = $el.data('instructor-id');
+				var scheduleId = $el.data('schedule-id');
+
+				var note = e.target.value;
+
+				AssignmentActionCreators.createOrUpdateInstructorNote(scheduleId, instructorId, note);
+			});
+
 			// Handle Instructor UI events
 			element.click(function (e) {
 				let $el = $(e.target);
@@ -626,11 +733,11 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 				else if ($el.hasClass('comment-btn')) {
 					instructorId = $el.data('instructor-id');
-					scope.openCommentModal(instructorId);
+					scope.openComment(instructorId);
 				}
 				else if ($el.hasClass('avail-btn')) {
 					instructorId = $el.data('instructor-id');
-					scope.openUnavailabilityModal(instructorId);
+					scope.openUnavailability(instructorId);
 				}
 
 				else if ($el.hasClass('assignments-complete')) {
@@ -654,6 +761,14 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 					}
 				}
 			}); // end UI event handler
+
+			scope.openComment = function (instructorId) {
+				scope.openCommentModal({ instructorId: instructorId });
+			};
+
+			scope.openUnavailability = function (instructorId) {
+				scope.openUnavailabilityModal({ instructorId: instructorId });
+			};
 
 			scope.renderTable();
 		} // end link

@@ -24,11 +24,19 @@
 	padding-right: 15px;
 }
 
-.line-items__table--amount {
+.line-items__table--type {
 	width: 3%;
 }
 
+.line-items__table--amount {
+	width: 1%;
+}
+
 .line-items__table--checkbox {
+	width: 1%;
+}
+
+.line-items__table--comments {
 	width: 1%;
 }
 
