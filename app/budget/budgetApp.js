@@ -26,6 +26,7 @@ import lineItems from './directives/lineItems/lineItems.js';
 import lineItemDropdown from './directives/lineItems/lineItemDropdown/lineItemDropdown.js';
 import budgetSummary from './directives/budgetSummary/budgetSummary.js';
 import instructorList from './directives/instructorList/instructorList.js';
+import courseList from './directives/courseList/courseList.js';
 
 import budgetCosts from './directives/budgetCosts/budgetCosts.js';
 import courseCostsRow from './directives/budgetCosts/courseCostsRow/courseCostsRow.js';
@@ -95,6 +96,7 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .directive('addCourseComments', addCourseComments)
 .directive('addLineItem', addLineItem)
 .directive('addLineItemComments', addLineItemComments)
+.directive('courseList', courseList)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	CREATE_BUDGET_SCENARIO: "CREATE_BUDGET_SCENARIO",

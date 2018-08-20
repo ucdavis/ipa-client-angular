@@ -86,6 +86,11 @@
 			                 state="view.state"
 			                 selected-budget-scenario="view.state.selectedBudgetScenario">
 			</instructor-list>
+			<course-list ng-if="view.state.ui.sectionNav.activeTab == 'Course List'"
+			                 scheduled-costs="view.state.calculatedScheduleCosts"
+			                 section-groups="view.state.selectedBudgetScenario"
+                       courses="view.state.courses">
+			</instructor-list>
 		</div>
 	</div>
 </div>
