@@ -6,7 +6,7 @@ let addCourseComments = function ($rootScope, BudgetActions) {
 		template: require('./addCourseComments.html'),
 		replace: true,
 		scope: {
-			sectionGroup: '<',
+			sectionGroupCost: '<',
 			currentUserLoginId: '<'
 		},
 		link: function (scope, element, attrs) {
@@ -29,7 +29,7 @@ let addCourseComments = function ($rootScope, BudgetActions) {
 			};
 
 			scope.submit = function() {
-				BudgetActions.createSectionGroupCostCommentFromSectionGroup(scope.newComment, scope.sectionGroup, scope.currentUserLoginId);
+				BudgetActions.createSectionGroupCostCommentFromSectionGroup(scope.newComment, scope.sectionGroupCost, scope.currentUserLoginId);
 				scope.newComment = "";
 			};
 		} // end link

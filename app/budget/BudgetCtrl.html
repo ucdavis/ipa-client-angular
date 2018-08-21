@@ -39,7 +39,7 @@
 		<ipa-modal is-visible="view.state.ui.courseCommentsModal.isOpen"
 		           header-text="Course Comments">
 			<add-course-comments ng-if="view.state.ui.courseCommentsModal.isOpen"
-			                     section-group="view.state.ui.courseCommentsModal.sectionGroup"
+			                     section-group-cost="view.state.ui.courseCommentsModal.sectionGroupCost"
 			                     current-user-login-id="currentUser.loginId"
 			                     is-visible="view.state.ui.courseCommentsModal.isOpen">
 			</add-course-comments>
@@ -78,7 +78,7 @@
 			<budget-costs ng-if="view.state.ui.sectionNav.activeTab == 'Schedule Costs'"
 			              instructor-assignment-options="view.state.ui.instructorAssignmentOptions"
 			              regular-instructor-assignment-options="view.state.ui.regularInstructorAssignmentOptions"
-			              calculated-section-groups="view.state.calculatedSectionGroups"
+			              schedule-costs="view.state.calculatedScheduleCosts"
 			              term-nav="view.state.ui.termNav"
 			              summary="view.state.summary">
 			</budget-costs>

@@ -16,7 +16,7 @@
 		</div>
 	</div> <!-- input container -->
 
-	<div ng-repeat="comment in sectionGroup.sectionGroupCost.comments" class="comment-container">
+	<div ng-repeat="comment in sectionGroupCost.comments" class="comment-container">
 		<div class="comment-header">
 			{{ comment.authorName }}&nbsp;
 			<span class="comment-date" uib-tooltip="{{ dateToCalendar(comment.lastModifiedOn) }}">

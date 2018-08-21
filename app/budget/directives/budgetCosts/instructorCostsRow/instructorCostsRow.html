@@ -7,19 +7,19 @@
 		<div class="instructor-costs__instructor-container">
 			<div class="instructor-costs__instructor-dropdown-container">
 				<instructor-assignment-dropdown mode="'instructor'"
-				                                section-group="sectionGroup"
+				                                section-group-cost="sectionGroupCost"
 				                                instructors="instructorAssignmentOptions">
 				</instructor-assignment-dropdown>
 			</div>
 			<div class="instructor-costs__instructor-reversion-ui">
 				<div class="glyphicon glyphicon-repeat instructor-costs__revert-ui"
-				     uib-tooltip="Update to {{ sectionGroup.reversionDisplayName }}"
+				     uib-tooltip="Update to {{ sectionGroupCost.reversionDisplayName }}"
 				     tooltip-append-to-body="true"
-				     confirm-button="removeInstructor(sectionGroup.sectionGroupCost)"
-				     message="Update to {{ sectionGroup.reversionDisplayName }}?"
+				     confirm-button="syncInstructor()"
+				     message="Update to {{ sectionGroupCost.reversionDisplayName }}?"
 				     yes="Update"
 				     no="Cancel"
-				     ng-class="{'instructor-costs-row__hidden': !(sectionGroup.reversionDisplayName) }">
+				     ng-class="{'instructor-costs-row__hidden': !(sectionGroupCost.reversionDisplayName) }">
 				</div>
 			</div>
 		</div>
@@ -33,7 +33,7 @@
 		<div class="instructor-costs__instructor-container">
 			<div class="instructor-costs__instructor-dropdown-container">
 				<instructor-assignment-dropdown mode="'originalInstructor'"
-				                                section-group="sectionGroup"
+				                                section-group-cost="sectionGroupCost"
 				                                instructors="regularInstructorAssignmentOptions"
 				                                course="course">
 				</instructor-assignment-dropdown>
@@ -42,11 +42,11 @@
 				<div class="glyphicon glyphicon-remove instructor-costs__revert-ui"
 				     tooltip-append-to-body="true"
 				     uib-tooltip="Remove instructor"
-				     confirm-button="removeOriginalInstructor(sectionGroup.sectionGroupCost)"
+				     confirm-button="removeOriginalInstructor(sectionGroupCost)"
 				     message="Are you sure you want to remove this instructor?"
 				     yes="Remove"
 				     no="Cancel"
-				     ng-class="{'instructor-costs-row__hidden': (sectionGroup.sectionGroupCost.originalInstructorId > 0) == false }">
+				     ng-class="{'instructor-costs-row__hidden': (sectionGroupCost.originalInstructorId > 0) == false }">
 				</div>
 			</div>
 		</div>
@@ -58,8 +58,8 @@
 			Reason
 		</div>
 		<div class="instructor-costs__cost-container">
-			<ipa-input value="sectionGroup.sectionGroupCost.reason"
-			           on-update="overrideSectionGroup(sectionGroup, 'reason')">
+			<ipa-input value="sectionGroupCost.reason"
+			           on-update="updateSectionGroupCost(sectionGroupCost)">
 			</ipa-input>
 		</div>
 	</td>
@@ -70,20 +70,20 @@
 			Instructor Cost
 		</div>
 		<div class="instructor-costs__cost-container">
-			<div ng-if="sectionGroup.overrideInstructorCostSource == 'course'">
+			<div ng-if="sectionGroupCost.overrideInstructorCostSource == 'course'">
 				<ipa-input mode="'currency'"
-				           value="sectionGroup.overrideInstructorCost"
-				           on-update="updateInstructorCost(sectionGroup)">
+				           value="sectionGroupCost.cost"
+				           on-update="updateInstructorCost(sectionGroupCost)">
 				</ipa-input>
 			</div>
 
-			<div ng-if="sectionGroup.overrideInstructorCostSource != 'course' && sectionGroup.overrideInstructorCostSource.length > 0"
-			     uib-tooltip="Cost of {{ sectionGroup.overrideInstructorCostSourceDescription }}"
+			<div ng-if="sectionGroupCost.overrideInstructorCostSource != 'course' && sectionGroupCost.overrideInstructorCostSource.length > 0"
+			     uib-tooltip="Cost of {{ sectionGroupCost.overrideInstructorCostSourceDescription }}"
 			     tooltip-append-to-body="true">
 				<ipa-input mode="'currency'"
-				           place-holder="'$' + (sectionGroup.overrideInstructorCost || 0)"
-				           value="sectionGroup.newInstructorCost"
-				           on-update="updateInstructorCost(sectionGroup.sectionGroupCost, sectionGroup.newInstructorCost)">
+				           place-holder="'$' + (sectionGroupCost.overrideInstructorCost || 0)"
+				           value="sectionGroupCost.cost"
+				           on-update="updateInstructorCost(sectionGroupCost)">
 				</ipa-input>
 			</div>
 		</div>
