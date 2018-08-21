@@ -11,8 +11,8 @@
 					<th class="line-items__table-header line-items__table--checkbox">
 						<div class="line-items__table-header-container line-items__table-container--checkbox">
 							<ipa-checkbox style="'muted'"
-														is-checked="ui.areAllLineItemsSelected"
-														click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
+							              is-checked="ui.areAllLineItemsSelected"
+							              click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
 							</ipa-checkbox>
 						</div>
 					</th>
@@ -45,9 +45,9 @@
 					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
 						<div class="line-items__table-container--checkbox">
 							<ipa-checkbox style="'muted'"
-														is-disabled="!(lineItem.id)"
-														is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
-														click-action="selectLineItem(lineItem)">
+							              is-disabled="!(lineItem.id)"
+							              is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
+							              click-action="selectLineItem(lineItem)">
 							</ipa-checkbox>
 						</div>
 					</td>
@@ -57,8 +57,8 @@
 						{{ lineItem.categoryDescription }}
 						<span ng-if="lineItem.isOrphaned">
 							<i class="entypo-attention line-items__orphan-warn"
-								tooltip-append-to-body="true"
-								uib-tooltip="The assignment this line item was based on no longer exists on the schedule">
+							   tooltip-append-to-body="true"
+							   uib-tooltip="The assignment this line item was based on no longer exists on the schedule">
 							</i>
 						</span>
 						<span ng-if="lineItem.hidden">
@@ -67,9 +67,9 @@
 								uib-tooltip="This line item is being hidden, but the assignment its based on still exists.">
 							</i>
 							<ipa-button icon-class="'glyphicon glyphicon-plus'"
-													size="'small'"
-													on-click="unHideLineItem(lineItem)"
-													tooltip-message="'Restore line item'">
+							            size="'small'"
+							            on-click="unHideLineItem(lineItem)"
+							            tooltip-message="'Restore line item'">
 							</ipa-button>
 						</span>
 					</td>
@@ -83,10 +83,10 @@
 					<td class="line-items__table-cell line-items__table-cell--comments" ng-class-odd="'line-items__table-cell--dark'">
 						<div class="line-items__comment-container">
 							<ipa-button superscript="lineItem.commentCountDisplay"
-													icon-color="lineItem.commentCountDisplay ? '' : 'gray'"
-													tooltip-message="'View Comments'"
-													icon-class="'entypo entypo-chat'"
-													on-click="openAddLineItemCommentsModal(lineItem)">
+							            icon-color="lineItem.commentCountDisplay ? '' : 'gray'"
+							            tooltip-message="'View Comments'"
+							            icon-class="'entypo entypo-chat'"
+							            on-click="openAddLineItemCommentsModal(lineItem)">
 							</ipa-button>
 						</div>
 					</td>
@@ -112,8 +112,8 @@
 					<th class="line-items__table-header line-items__table--checkbox">
 						<div class="line-items__table-header-container line-items__table-container--checkbox">
 							<ipa-checkbox style="'muted'"
-														is-checked="ui.areAllLineItemsSelected"
-														click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
+							              is-checked="ui.areAllLineItemsSelected"
+							              click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
 							</ipa-checkbox>
 						</div>
 					</th>
@@ -146,9 +146,9 @@
 					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
 						<div class="line-items__table-container--checkbox">
 							<ipa-checkbox style="'muted'"
-														is-disabled="!(lineItem.id)"
-														is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
-														click-action="selectLineItem(lineItem)">
+							              is-disabled="!(lineItem.id)"
+							              is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
+							              click-action="selectLineItem(lineItem)">
 							</ipa-checkbox>
 						</div>
 					</td>
@@ -158,8 +158,8 @@
 						{{ lineItem.categoryDescription }}
 						<span ng-if="lineItem.isOrphaned">
 							<i class="entypo-attention line-items__orphan-warn"
-								tooltip-append-to-body="true"
-								uib-tooltip="The assignment this line item was based on no longer exists on the schedule">
+							   tooltip-append-to-body="true"
+							   uib-tooltip="The assignment this line item was based on no longer exists on the schedule">
 							</i>
 						</span>
 					</td>
@@ -173,21 +173,21 @@
 					<td class="line-items__table-cell line-items__table-cell--comments" ng-class-odd="'line-items__table-cell--dark'">
 							<span ng-if="lineItem.id">
 								<ipa-button icon-class="'glyphicon glyphicon-plus'"
-														size="'small'"
-														on-click="unHideLineItem(lineItem)"
-														tooltip-message="'Add line item'">
+								            size="'small'"
+								            on-click="unHideLineItem(lineItem)"
+								            tooltip-message="'Add line item'">
 								</ipa-button>
 							</span>
 							<span ng-if="!lineItem.id">
 								<ipa-button icon-class="'glyphicon glyphicon-plus'"
-														size="'small'"
-														on-click="addLineItem(lineItem)"
-														tooltip-message="'Add line item'">
+								            size="'small'"
+								            on-click="addLineItem(lineItem)"
+								            tooltip-message="'Add line item'">
 								</ipa-button>
 								<ipa-button icon-class="'glyphicon glyphicon-minus'"
-														size="'small'"
-														on-click="hideLineItem(lineItem)"
-														tooltip-message="'Hide line item'">
+								            size="'small'"
+								            on-click="hideLineItem(lineItem)"
+								            tooltip-message="'Hide line item'">
 								</ipa-button>
 							</span>
 					</td>
