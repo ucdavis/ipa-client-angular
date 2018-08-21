@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { SchedulingActions } from '../../scheduling-actions.service';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'schedule-summary',
@@ -7,6 +8,8 @@ import { SchedulingActions } from '../../scheduling-actions.service';
   styleUrls: ['schedule-summary.component.css']
 })
 export class ScheduleSummaryComponent {
+  @ViewChild(MatSort)
+  sort: MatSort;
   dataSource;
   displayedColumns: string[] = [
     'title',
@@ -31,14 +34,16 @@ export class ScheduleSummaryComponent {
    * value that should be checked for spanning.
    */
   cacheSpan(key, accessor) {
-    for (let i = 0; i < this.dataSource.length; ) {
-      let currentValue = accessor(this.dataSource[i]);
+    this.spans = [];
+
+    for (let i = 0; i < this.dataSource.data.length; ) {
+      let currentValue = accessor(this.dataSource.data[i]);
       let count = 1;
 
       // Iterate through the remaining rows to see how many match
       // the current value as retrieved through the accessor.
-      for (let j = i + 1; j < this.dataSource.length; j++) {
-        if (currentValue != accessor(this.dataSource[j])) {
+      for (let j = i + 1; j < this.dataSource.data.length; j++) {
+        if (currentValue != accessor(this.dataSource.data[j])) {
           break;
         }
 
@@ -65,9 +70,15 @@ export class ScheduleSummaryComponent {
     //   this.dataSource = sectionGroups;
     // });
 
-    this.schedulingActions.getReportState().subscribe(data => {
-      this.dataSource = data;
+    this.schedulingActions.reportState$.subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.sort = this.sort;
+
       this.cacheSpan('title', d => d.title);
     });
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

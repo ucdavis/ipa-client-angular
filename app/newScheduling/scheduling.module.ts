@@ -19,7 +19,12 @@ import { SectionGroupResolver } from '@core/resolvers/section-group-resolver.ser
 import { CourseResolver } from '@core/resolvers/course-resolver.service';
 
 // Angular Material Component imports
-import { MatButtonModule, MatTooltipModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatTooltipModule,
+  MatSortModule,
+  MatInputModule
+} from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 //import { SharedStateResolver } from '@core/shared-state/shared-state.resolver';
@@ -54,7 +59,9 @@ const appRoutes: Routes = [
     MatTooltipModule,
     MatSelectModule,
     FormsModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule,
+    MatInputModule
   ],
   declarations: [AppComponent, MainComponent, ScheduleSummaryComponent],
   providers: [SchedulingActions, AuthGuard, SectionGroupResolver, CourseResolver],

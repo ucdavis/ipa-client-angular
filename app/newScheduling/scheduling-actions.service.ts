@@ -17,6 +17,7 @@ export class SchedulingActions {
   private _year: number = null;
   private _termCode: number;
   private _reportState: BehaviorSubject<ScheduleSummary[]> = new BehaviorSubject([]);
+  public readonly reportState$: Observable<ScheduleSummary[]> = this._reportState.asObservable();
 
   // Normalized entity lists
   private _sectionGroups: BehaviorSubject<SectionGroup[]> = new BehaviorSubject([]);
@@ -115,10 +116,6 @@ export class SchedulingActions {
       let sortedState = sortBy(state, ['title', 'section']);
       this._reportState.next(sortedState);
     });
-  }
-
-  getReportState() {
-    return this._reportState.asObservable();
   }
 
   addCourse(course: Course): void {
