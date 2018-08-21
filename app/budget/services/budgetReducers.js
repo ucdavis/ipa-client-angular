@@ -343,13 +343,13 @@ class BudgetReducers {
 						courses = {
 							ids: [],
 							list: [],
-              bySubjAndNumber: {}
+							bySubjAndNumber: {}
 						};
-	
+
 						action.payload.courses.forEach( function(course) {
 							courses.ids.push(course.id);
 							courses.list[course.id] = course;
-              courses.bySubjAndNumber[course.subjectCode + course.courseNumber] = course;
+							courses.bySubjAndNumber[course.subjectCode + course.courseNumber] = course;
 						});
 						return courses;
 					default:

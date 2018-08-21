@@ -170,8 +170,6 @@ class ScheduleCostCalculations {
             sectionGroupCost.newInstructorCost = null;
             return;
           }
-
-
         }
 
         // If instructorType => use instructorType cost
