@@ -150,6 +150,7 @@ class BudgetCalculations {
 	
 				// Calculate implicit lineItems
 				var implicitLineItems = 0;
+
 				BudgetReducers._state.teachingAssignments.ids.forEach(function(teachingAssignmentId) {
 					var teachingAssignment = BudgetReducers._state.teachingAssignments.list[teachingAssignmentId];
 	
