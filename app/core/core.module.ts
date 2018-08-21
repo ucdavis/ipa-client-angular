@@ -18,7 +18,7 @@ import { SchedulingUIService } from '@scheduling/scheduling-ui.service';
 
 import { ExceptionHandler } from '@core/exception.service';
 import { SlowConnectionInterceptor } from '@core/api/slow-connection.interceptor';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry, MatDialogModule } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 
 // Material
@@ -35,7 +35,7 @@ import {
 } from '@angular/material';
 
 // Components
-import { IpaHeader } from '@core/components/ipa-header/ipa-header.component';
+import { IpaHeader, ImpersonateModal } from '@core/components/ipa-header/ipa-header.component';
 import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
 
 @NgModule({
@@ -48,6 +48,7 @@ import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
+    MatDialogModule,
     MatExpansionModule,
     MatIconModule,
     MatSelectModule,
@@ -55,8 +56,10 @@ import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
     MatTabsModule,
     MatTooltipModule
   ],
+  // Required for displaying components not referneced via selector
+  entryComponents: [IpaHeader, ImpersonateModal],
   // Injected components and directives
-  declarations: [IpaHeader, IpaNav],
+  declarations: [IpaHeader, IpaNav, ImpersonateModal],
   // Exports made available to modules that import core
   // You can't export unless you've wired into yourself
   exports: [IpaNav],

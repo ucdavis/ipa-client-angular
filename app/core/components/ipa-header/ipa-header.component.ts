@@ -1,8 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { SharedStateService } from '@core/shared-state/shared-state.service';
 import { SchedulingUIService } from '../../../newScheduling/scheduling-ui.service';
 import { Observable } from 'rxjs';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ApiService } from '@core/api/api.service';
+import { AuthService } from '@core/auth/auth.service';
+
+// export interface DialogData {
+//   animal: string;
+//   name: string;
+// }
+
+// Modal Dialog Component
+@Component({
+  selector: 'impersonate-modal',
+  templateUrl: 'impersonate-modal.html'
+})
+export class ImpersonateModal {
+  constructor(
+    public dialogRef: MatDialogRef<ImpersonateModal>,
+    @Inject(MAT_DIALOG_DATA) public data
+  ) {}
+
+  onClick(loginId): void {
+    this.dialogRef.close(loginId); // optional result to return to dialog opener
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
 @Component({
   selector: 'ipa-header',
   templateUrl: './ipa-header.component.html',
@@ -16,12 +44,16 @@ export class IpaHeader implements OnInit {
   filteredWorkgroups: { workgroupId: number; roleName: string; workgroupName: string }[];
   termCode: string;
   termsTable: { id: number; description: string; shortCode: string }[];
+  workgroupUsers;
 
   constructor(
+    private apiService: ApiService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private sharedState: SharedStateService,
-    private schedulingUIService: SchedulingUIService
+    private schedulingUIService: SchedulingUIService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -38,6 +70,24 @@ export class IpaHeader implements OnInit {
     });
 
     this.uiState$ = this.schedulingUIService.getState();
+
+    this.apiService.get(`/api/workgroupView/${this.workgroupId}`).subscribe(res => {
+      this.workgroupUsers = res.users;
+    });
+  }
+
+  openImpersonateModal(): void {
+    const dialogRef = this.dialog.open(ImpersonateModal, {
+      width: '500px',
+      data: this.workgroupUsers
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      debugger;
+      console.log(result);
+      this.authService.impersonate(result);
+    });
   }
 
   setState(key, payload) {
