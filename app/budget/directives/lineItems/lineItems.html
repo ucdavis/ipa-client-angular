@@ -107,14 +107,18 @@
 		</table>
 
 		<table class="line-items__table" ng-show="ui.fundsNav.activeTab == 'Suggested'">
+      <colgroup>
+        <col style="width: 8%;">
+        <col style="width: 20%;">
+        <col style="width: 35%;">
+        <col style="width: 27%;">
+        <col style="width: 10%;">
+      </colgroup>
 			<thead>
 				<tr>
 					<th class="line-items__table-header line-items__table--checkbox">
 						<div class="line-items__table-header-container line-items__table-container--checkbox">
-							<ipa-checkbox style="'muted'"
-							              is-checked="ui.areAllLineItemsSelected"
-							              click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
-							</ipa-checkbox>
+
 						</div>
 					</th>
 					<th class="line-items__table-header line-items__table--type">
@@ -128,14 +132,8 @@
 						</div>
 					</th>
 					<th class="line-items__table-header line-items__table--comments">
-						<div class="line-items__table-header-container">
-							Comments
-						</div>
 					</th>
 					<th class="line-items__table-header line-items__table--amount">
-						<div class="line-items__table-header-amount-container">
-							Amount
-						</div>
 					</th>
 				</tr>
 			</thead>
@@ -145,11 +143,6 @@
 					<!-- Checkbox -->
 					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
 						<div class="line-items__table-container--checkbox">
-							<ipa-checkbox style="'muted'"
-							              is-disabled="!(lineItem.id)"
-							              is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
-							              click-action="selectLineItem(lineItem)">
-							</ipa-checkbox>
 						</div>
 					</td>
 
@@ -172,22 +165,22 @@
 					<!-- Comments -->
 					<td class="line-items__table-cell line-items__table-cell--comments" ng-class-odd="'line-items__table-cell--dark'">
 							<span ng-if="lineItem.id">
-								<ipa-button icon-class="'glyphicon glyphicon-plus'"
-								            size="'small'"
+								<ipa-button size="'small'"
+								            skin="'dark'"
 								            on-click="unHideLineItem(lineItem)"
-								            tooltip-message="'Add line item'">
+								            text="'Add'">
 								</ipa-button>
 							</span>
 							<span ng-if="!lineItem.id">
-								<ipa-button icon-class="'glyphicon glyphicon-plus'"
-								            size="'small'"
+								<ipa-button size="'small'"
+								            skin="'dark'"
 								            on-click="addLineItem(lineItem)"
-								            tooltip-message="'Add line item'">
+								            text="'Add'">
 								</ipa-button>
-								<ipa-button icon-class="'glyphicon glyphicon-minus'"
-								            size="'small'"
+								<ipa-button size="'small'"
 								            on-click="hideLineItem(lineItem)"
-								            tooltip-message="'Hide line item'">
+								            text="'Hide'"
+							              class="line-items__hide-item-ui">
 								</ipa-button>
 							</span>
 					</td>

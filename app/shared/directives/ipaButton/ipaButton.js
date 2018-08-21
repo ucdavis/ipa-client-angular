@@ -24,7 +24,7 @@ let ipaButton = function () {
 			size: '<?', // Current options are 'slim', 'short'
 			isWide: '<?', // Boolean: makes button attempt to take 100% width, default is to only take as much width as needed
 			buttonClass: '<?', // Provide additional classes for context specific styling
-      skin: '<?', // Options are 'light' and 'dark' (default light)
+			skin: '<?', // Options are 'light' and 'dark' (default light)
 			superscript: '<?', // Superscript text displayed to the right of the icon
 			iconColor: '<?'  // Accepts optional color value to override default styling
 		},
