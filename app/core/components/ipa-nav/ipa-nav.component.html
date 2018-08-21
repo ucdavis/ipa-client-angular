@@ -2,7 +2,7 @@
   <mat-sidenav #sidenav class="theme-primary" mode="side" opened="true" [ngClass]="{collapsed: !isNavExpanded}">
     <mat-nav-list>
       <mat-list-item (click)="toggleSideNav()">
-        <p matLine *ngIf="isNavExpanded">
+        <p matLine *ngIf="isNavExpanded" class="title">
           <strong class="theme-primary typo-display-1">IPA</strong>
         </p>
         <button mat-icon-button>
