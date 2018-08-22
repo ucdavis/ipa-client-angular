@@ -23,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 // Material
 import {
+  MatChipsModule,
   MatExpansionModule,
   MatButtonModule,
   MatTooltipModule,
@@ -46,6 +47,7 @@ import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
     MatToolbarModule,
     FormsModule,
     MatButtonModule,
+    MatChipsModule,
     MatSidenavModule,
     MatListModule,
     MatDialogModule,

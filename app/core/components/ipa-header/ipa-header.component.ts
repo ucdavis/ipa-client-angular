@@ -7,11 +7,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ApiService } from '@core/api/api.service';
 import { AuthService } from '@core/auth/auth.service';
 
-// export interface DialogData {
-//   animal: string;
-//   name: string;
-// }
-
 // Modal Dialog Component
 @Component({
   selector: 'impersonate-modal',
@@ -23,8 +18,8 @@ export class ImpersonateModal {
     @Inject(MAT_DIALOG_DATA) public data
   ) {}
 
-  onClick(loginId): void {
-    this.dialogRef.close(loginId); // optional result to return to dialog opener
+  onClick(userToImpersonate): void {
+    this.dialogRef.close(userToImpersonate); // optional result to return to dialog opener
   }
 
   onNoClick(): void {
@@ -45,6 +40,8 @@ export class IpaHeader implements OnInit {
   termCode: string;
   termsTable: { id: number; description: string; shortCode: string }[];
   workgroupUsers;
+  isImpersonating: boolean;
+  currentUser;
 
   constructor(
     private apiService: ApiService,
@@ -57,6 +54,15 @@ export class IpaHeader implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser')) || {
+      displayName: localStorage.getItem('displayName'),
+      loginId: localStorage.getItem('loginId')
+    };
+
+    // A user is impersonating when it has a realLoginId that is different than the loginId
+    this.isImpersonating = this.currentUser.realLoginId
+      ? this.currentUser.loginId !== this.currentUser.realLoginId
+      : false;
     this.filteredWorkgroups = this.getSortedWorkgroups();
     this.termsTable = this.getTermTable();
 
@@ -82,12 +88,23 @@ export class IpaHeader implements OnInit {
       data: this.workgroupUsers
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      debugger;
-      console.log(result);
-      this.authService.impersonate(result);
+    dialogRef.afterClosed().subscribe(userToImpersonate => {
+      this.authService.impersonate(userToImpersonate.loginId);
+
+      // TODO: currentUser localStorage operations should be done inside of sharedState service
+      let currentUserObj = {
+        loginId: userToImpersonate.loginId,
+        displayName: userToImpersonate.displayName,
+        realLoginId: localStorage.getItem('loginId'),
+        realDisplayName: localStorage.getItem('displayName')
+      };
+      localStorage.setItem('currentUser', JSON.stringify(currentUserObj));
     });
+  }
+
+  unimpersonate(): void {
+    this.authService.unimpersonate();
+    localStorage.removeItem('currentUser');
   }
 
   setState(key, payload) {

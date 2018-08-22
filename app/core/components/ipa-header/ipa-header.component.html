@@ -3,12 +3,22 @@
     <span>Scheduling</span>
 
     <span class="top-right-bar">
-      <span class="greeting typo-muted typo-caption">Hello, Bob Smith</span>
-      <button mat-icon-button [matMenuTriggerFor]="settingsMenu"><mat-icon matTooltip="User Settings">more_vert</mat-icon></button>
+      <ng-container *ngIf="!isImpersonating">
+        <span class="greeting typo-muted typo-caption">Hello, {{ currentUser.displayName }}</span>
+        <button mat-icon-button [matMenuTriggerFor]="settingsMenu"><mat-icon matTooltip="User Settings">account_circle</mat-icon></button>
         <mat-menu #settingsMenu="matMenu" xPosition="before" overlapTrigger="false">
           <button mat-button (click)="openImpersonateModal()">Impersonate</button>
         </mat-menu>
-        
+      </ng-container>
+
+      <mat-chip-list *ngIf="isImpersonating">
+        <mat-chip (removed)="unimpersonate()">
+          <mat-icon>supervisor_account</mat-icon>
+          {{ this.currentUser.displayName }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+
       <button mat-raised-button class="logout-btn">Logout</button>
     </span>
   </mat-toolbar-row>
