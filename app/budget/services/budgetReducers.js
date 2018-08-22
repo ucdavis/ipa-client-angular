@@ -243,8 +243,10 @@ class BudgetReducers {
 							if (instructorCost) {
 								instructor.instructorCostId = instructorCost.id;
 							}
-	
-							assignedInstructors.ids.push(instructor.id);
+
+							if (assignedInstructors.ids.indexOf(instructor.id) == -1) {
+								assignedInstructors.ids.push(instructor.id);
+							}
 							assignedInstructors.list[instructor.id] = instructor;
 						});
 						return assignedInstructors;
