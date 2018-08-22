@@ -27,8 +27,10 @@ class ScheduleCostCalculations {
 
           // Ensure sectionGroupCost belongs to an active term in this scenario
           var shortTerm = sectionGroupCost.termCode.slice(-2);
-
           if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) { return; }
+
+          // Ensure sectionGroupCost belongs to the scenario
+          if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return; }
 
           sectionGroupCost.sectionGroup = sectionGroups.list[uniqueKey];
 
@@ -48,15 +50,17 @@ class ScheduleCostCalculations {
           var originalInstructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.originalInstructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.originalInstructorId];
           sectionGroupCost.originalInstructorDescription = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
 
-          var assignedInstructorId = sectionGroupCost.sectionGroup.assignedInstructorIds[0];
-          var assignedInstructorTypeId = sectionGroupCost.sectionGroup.assignedInstructorTypeIds[0];
+          var assignedInstructorId = sectionGroupCost.sectionGroup ? sectionGroupCost.sectionGroup.assignedInstructorIds[0] : null;
+          var assignedInstructorTypeId = sectionGroupCost.sectionGroup ? sectionGroupCost.sectionGroup.assignedInstructorTypeIds[0] : null;
           var assignedInstructor = BudgetReducers._state.assignedInstructors.list[assignedInstructorId];
           var assignedInstructorType = BudgetReducers._state.instructorTypes.list[assignedInstructorTypeId];
           assignedInstructorId = assignedInstructor ? assignedInstructor.id : null;
           assignedInstructorTypeId = assignedInstructorType ? assignedInstructorType.id : null;
 
-          sectionGroupCost.sectionGroup.assignedInstructor = assignedInstructor;
-          sectionGroupCost.sectionGroup.assignedInstructorType = assignedInstructorType;
+          if (sectionGroupCost.sectionGroup) {
+            sectionGroupCost.sectionGroup.assignedInstructor = assignedInstructor;
+            sectionGroupCost.sectionGroup.assignedInstructorType = assignedInstructorType;
+          }
 
           if (assignedInstructor) {
             sectionGroupCost.sectionGroup.assignedInstructorType = _this._getInstructorType(assignedInstructor);
@@ -65,12 +69,13 @@ class ScheduleCostCalculations {
           }
 
           // Set sectionGroup instructor descriptions
-          sectionGroupCost.sectionGroup.instructorDescription = null;
-
-          if (assignedInstructor) {
-            sectionGroupCost.sectionGroup.instructorDescription = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : null;
-          } else if (assignedInstructorType) {
-            sectionGroupCost.sectionGroup.instructorDescription = assignedInstructorType ? assignedInstructorType.description : null;
+          if (sectionGroupCost.sectionGroup) {
+            sectionGroupCost.sectionGroup.instructorDescription = null;
+            if (assignedInstructor) {
+              sectionGroupCost.sectionGroup.instructorDescription = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : null;
+            } else if (assignedInstructorType) {
+              sectionGroupCost.sectionGroup.instructorDescription = assignedInstructorType ? assignedInstructorType.description : null;
+            }
           }
 
           // Calculate reversion
@@ -109,14 +114,14 @@ class ScheduleCostCalculations {
 
         // Sort termCourses
         activeTerms.forEach(function(term) {
-        	scheduleCosts.byTerm[term] = _array_sortByProperty(scheduleCosts.byTerm[term], "uniqueKey");
+          scheduleCosts.byTerm[term] = _array_sortByProperty(scheduleCosts.byTerm[term], "uniqueKey");
         });
 
         BudgetReducers.reduce({
-        	type: ActionTypes.CALCULATE_SCHEDULE_COSTS,
-        	payload: {
-        		scheduleCosts: scheduleCosts
-        	}
+          type: ActionTypes.CALCULATE_SCHEDULE_COSTS,
+          payload: {
+            scheduleCosts: scheduleCosts
+          }
         });
       },
       _getInstructorType: function(instructor) {

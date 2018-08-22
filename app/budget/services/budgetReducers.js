@@ -198,7 +198,7 @@ class BudgetReducers {
 						action.payload.sectionGroupCosts.forEach( function(sectionGroupCost) {
 							sectionGroupCosts.ids.push(sectionGroupCost.id);
 							sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
-							var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
+							var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode + "-" + sectionGroupCost.budgetScenarioId;
 							sectionGroupCost.uniqueKey = uniqueKey;
 							sectionGroupCosts.idsByUniqueKey[uniqueKey] = sectionGroupCost.id;
 
