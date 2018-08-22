@@ -336,8 +336,8 @@ class BudgetCalculations {
 				}
 	
 				// (5th option) Attempt to use assigned instructorType
-				if (sectionGroup.instructorType && sectionGroup.instructorType.id > 0) {
-					instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroup.instructorType.id];
+				if (sectionGroup.assignedInstructorTypeIds.length > 0) {
+					instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroup.assignedInstructorTypeIds[0]];
 	
 					if (instructorTypeCost != null && instructorTypeCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
@@ -822,7 +822,7 @@ class BudgetCalculations {
 					summary.combinedTerms.totalOfferingsCount += summary.byTerm[term].totalOfferingsCount;
 					summary.combinedTerms.enrollment += summary.byTerm[term].enrollment;
 				});
-	
+
 				BudgetReducers.reduce({
 					type: ActionTypes.CALCULATE_SUMMARY_TOTALS,
 					payload: {
@@ -835,7 +835,7 @@ class BudgetCalculations {
 
 				if (!replacementCost) { return replacementCosts; }
 
-				var instructorTypeId = sectionGroup.overrideInstructorTypeId;
+				var instructorTypeId = sectionGroup.overrideInstructorTypeId || sectionGroup.instructorTypeId;
 				var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroup.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroup.instructorId];
 
 				// Course has a cost but no instructor
@@ -845,9 +845,6 @@ class BudgetCalculations {
 					instructorTypeId = instructor.instructorType.id;
 				}
 
-				if (!(instructorTypeId)) { debugger; }
-
-				if (instructorTypeId == 200) {debugger;}
 				var index = replacementCosts.instructorTypeIds.indexOf(instructorTypeId);
 	
 				if (index == -1) {
