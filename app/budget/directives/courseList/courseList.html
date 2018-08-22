@@ -1,6 +1,12 @@
-<div>
-  <div>sectionGroupCost</div>
-  <div ng-repeat="sectionGroup in sectionGroups">
-    
-  </div>
+  <div class="budget-costs">
+  <ipa-tabs tab-names="termNav.allTabs"
+            active-tab="termNav.activeTab"
+            select-tab="setActiveTerm"
+            slim="true">
+    <div class="budget-costs__main-container">
+      <div class="budget-costs__rows-container">
+        sectionGroupCosts
+      </div>
+    </div>
+  </ipa-tabs>
 </div>

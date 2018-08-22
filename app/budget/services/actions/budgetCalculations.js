@@ -613,7 +613,7 @@ class BudgetCalculations {
 					var uniqueKey = sectionGroup.subjectCode + "-" + sectionGroup.courseNumber + "-" + sectionGroup.sequencePattern + "-" + sectionGroup.termCode + selectedBudgetScenarioId;
 
 					var sectionGroupCostIds = sectionGroupCosts.idsByUniqueKey[uniqueKey];
-					//debugger;
+					debugger;
 				});
 			}
 		};

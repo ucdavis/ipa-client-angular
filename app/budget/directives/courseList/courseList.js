@@ -6,8 +6,7 @@ let courseList = function ($rootScope, TermService) {
     template: require('./courseList.html'),
     replace: true,
     scope: {
-      scheduledCosts: '<',
-      sectionGroups: '<',
+      courseList: '<',
       selectedBudgetScenario: '<'
     },
     link: function (scope, element, attrs) {
