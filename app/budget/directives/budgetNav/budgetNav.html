@@ -43,6 +43,23 @@
 				</ipa-button>
 			</div>
 		</div>
+
+		<div class="budget-nav__line-item-tools" ng-if="selectedSection == 'Course List'">
+					<div class="budget-nav__tool">
+						<course-list-filters filters="filters.courseList">
+						</course-list-filters>
+					</div>
+
+					<div class="budget-nav__tool">
+						<ipa-button class=""
+						            icon-class="'glyphicon glyphicon-plus course-list__plus-padding'"
+						            size="'small'"
+						            on-click="openAddCourseModal()"
+						            tooltip-message="'Add Course'">
+						</ipa-button>
+					</div>
+				</div>
+
 		<div class="budget-nav__total-container">
 			<div>
 				<span class="budget-nav__balance">

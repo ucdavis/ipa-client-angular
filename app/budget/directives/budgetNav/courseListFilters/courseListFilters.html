@@ -1,25 +1,25 @@
 <div class="line-item-filters">
-	<ipa-button icon-class="'glyphicon glyphicon-filter course-list__plus-padding'"
+	<ipa-button icon-class="'glyphicon glyphicon-filter'"
 	            size="'small'"
-	            on-click="toggleLineItemFilterDropdown()"
+	            on-click="toggleCourseListFilterDropdown()"
 	            tooltip-message="'Filters'">
 	</ipa-button>
 
 	<div class="line-item-filters__dropdown-container" ng-show="isDropdownOpen">
 		<!-- Mask to catch input -->
-		<div class="line-item-filters__dropdown-mask" ng-click="closeLineItemFilterDropdown()"></div>
+		<div class="line-item-filters__dropdown-mask" ng-click="closeCourseListFilterDropdown()"></div>
 
 		<!-- Dropdown -->
 		<div class="line-item-filters__dropdown">
 			<div class="line-item-filters__filter-container">
 				<div class="line-item-filters__filter"
 				     ng-repeat="filter in filters"
-				     ng-click="toggleLineItemFilter(filter)"
+				     ng-click="toggleCourseListFilter(filter)"
 				     stop-event="click">
 				     <div class="line-item-filters__checkbox-container" stop-event="click">
 				       <ipa-checkbox style="'muted'"
 				                     is-checked="filter.selected"
-				                     click-action="toggleLineItemFilter(filter)">
+				                     click-action="toggleCourseListFilter(filter)">
 				       </ipa-checkbox>
 				     </div>
 				     {{ filter.description }}

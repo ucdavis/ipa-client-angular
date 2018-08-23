@@ -21,6 +21,11 @@ let budgetNav = function ($rootScope, BudgetActions) {
 				BudgetActions.openAddLineItemModal();
 			};
 
+			scope.openAddCourseModal = function() {
+				debugger;
+				BudgetActions.openAddCourseModal();
+			};
+
 			scope.deleteLineItems = function() {
 				BudgetActions.deleteLineItems(scope.selectedBudgetScenario, scope.selectedLineItems);
 			};
