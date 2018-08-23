@@ -11,7 +11,8 @@ let ipaInput = function ($timeout) {
 			placeHolder: '<?', // Default text when empty
 			updateDelay: '<?', // If an update function has been specified it will default to 500ms delay, can override that here
 			isInvalid: '<?',
-			mode: '<?' // Options are 'number' (only allow characters 0-9), and 'currency' (currency style formatting and input enforcement)
+			mode: '<?', // Options are 'number' (only allow characters 0-9), and 'currency' (currency style formatting and input enforcement)
+			maxChars: '<?'
 		},
 		link: function(scope, element, attrs) {
 			scope.$watch('mode',function() {
