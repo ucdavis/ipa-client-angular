@@ -71,10 +71,6 @@
 	height: 28px;
 }
 
-.line-items__cell--orphaned {
-	 text-decoration: line-through;
-}
-
 .line-items__orphan-warn {
 	color: #21A9E1;
 	margin-right: 5px;
