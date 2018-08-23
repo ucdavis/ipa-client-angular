@@ -48,25 +48,24 @@ class ScheduleCostCalculations {
           var originalInstructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.originalInstructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.originalInstructorId];
           sectionGroupCost.originalInstructorDescription = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
 
-          var assignedInstructorId = sectionGroupCost.sectionGroup.assignedInstructorIds[0];
-          var assignedInstructorTypeId = sectionGroupCost.sectionGroup.assignedInstructorTypeIds[0];
+          var assignedInstructorId = sectionGroupCost.sectionGroup ? sectionGroupCost.sectionGroup.assignedInstructorIds[0] : null;
+          var assignedInstructorTypeId = sectionGroupCost.sectionGroup ? sectionGroupCost.sectionGroup.assignedInstructorTypeIds[0] : null;
           var assignedInstructor = BudgetReducers._state.assignedInstructors.list[assignedInstructorId];
           var assignedInstructorType = BudgetReducers._state.instructorTypes.list[assignedInstructorTypeId];
           assignedInstructorId = assignedInstructor ? assignedInstructor.id : null;
           assignedInstructorTypeId = assignedInstructorType ? assignedInstructorType.id : null;
 
-          sectionGroupCost.sectionGroup.assignedInstructor = assignedInstructor;
-          sectionGroupCost.sectionGroup.assignedInstructorType = assignedInstructorType;
+          if (sectionGroupCost.sectionGroup) {
+            sectionGroupCost.sectionGroup.assignedInstructor = assignedInstructor;
+            sectionGroupCost.sectionGroup.assignedInstructorType = assignedInstructorType;
+            sectionGroupCost.sectionGroup.instructorDescription = null;
+          }
 
           if (assignedInstructor) {
             sectionGroupCost.sectionGroup.assignedInstructorType = _this._getInstructorType(assignedInstructor);
-            assignedInstructorType = sectionGroupCost.sectionGroup.assignedInstructorType;
-            assignedInstructorTypeId = assignedInstructorType ? assignedInstructorType.id : null;
           }
 
           // Set sectionGroup instructor descriptions
-          sectionGroupCost.sectionGroup.instructorDescription = null;
-
           if (assignedInstructor) {
             sectionGroupCost.sectionGroup.instructorDescription = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : null;
           } else if (assignedInstructorType) {
