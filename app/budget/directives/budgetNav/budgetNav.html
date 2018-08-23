@@ -16,7 +16,7 @@
 
 	<div class="budget-nav__side-bar">
 		<div class="budget-nav__line-item-tools" ng-if="selectedSection == 'Funds'">
-			<div class="budget-nav__tool">
+			<div class="budget-nav__tool" ng-if="fundsNav == 'Funds'">
 				<ipa-button icon-class="'glyphicon glyphicon-trash'"
 				            size="'small'"
 				            is-disabled="selectedLineItems.length == 0"
@@ -27,12 +27,12 @@
 				</ipa-button>
 			</div>
 
-			<div class="budget-nav__tool">
+			<div class="budget-nav__tool" ng-if="fundsNav == 'Suggested'">
 				<line-item-filters filters="filters.lineItems">
 				</line-item-filters>
 			</div>
 
-			<div class="budget-nav__tool">
+			<div class="budget-nav__tool" ng-if="fundsNav == 'Funds'">
 				<ipa-button icon-class="'glyphicon glyphicon-plus'"
 				            size="'small'"
 				            on-click="openAddLineItemModal()"

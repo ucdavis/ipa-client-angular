@@ -22,6 +22,7 @@
 .line-items__table-cell {
 	padding-left: 15px;
 	padding-right: 15px;
+	height: 43px;
 }
 
 .line-items__table--type {
@@ -67,13 +68,18 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-.line-items__cell--orphaned {
-	 text-decoration: line-through;
+	height: 28px;
 }
 
 .line-items__orphan-warn {
 	color: #21A9E1;
 	margin-right: 5px;
+}
+
+.line-items_-table-header-narrow {
+  width: 3%;
+}
+
+.line-items__hide-item-ui {
+  margin-left: 10px;
 }
