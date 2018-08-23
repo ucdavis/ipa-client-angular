@@ -1,15 +1,15 @@
 <div class="instructor-assignment-dropdown">
 	<ipa-dropdown ng-show="mode == 'originalInstructor'"
-	              expanded="sectionGroup.originalInstructorDropdown"
+	              expanded="sectionGroupCost.originalInstructorDropdown"
 	              style="'minimal'"
-	              button-text="sectionGroup.originalInstructorName || 'Assign instructor'"
+	              button-text="sectionGroupCost.originalInstructorDescription || 'Assign instructor'"
 	              items="instructors"
 	              select-item="setOriginalInstructor(item)">
 	</ipa-dropdown>
 	<ipa-dropdown ng-show="mode == 'instructor'"
-	              expanded="sectionGroup.instructorDropdown"
+	              expanded="sectionGroupCost.instructorDropdown"
 	              style="'minimal'"
-	              button-text="sectionGroup.instructorName || 'Assign instructor'"
+	              button-text="sectionGroupCost.instructorDescription || 'Assign instructor'"
 	              items="instructors"
 	              select-item="setInstructor(item)">
 	</ipa-dropdown>

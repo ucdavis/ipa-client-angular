@@ -42,11 +42,11 @@
 					</thead>
 				</table>
 
-				<div ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
+				<div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
 					<div class="budget-costs__course-title">
 						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }} {{ course.title }}
 					</div>
-					<div ng-repeat="sectionGroup in course.sectionGroups">
+					<div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
 						<table class="budget-costs__table">
 							<thead>
 								<colgroup>
@@ -61,8 +61,13 @@
 								</colgroup>
 							</thead>
 							<tbody>
-								<tr course-costs-row section-group="sectionGroup"></tr>
-								<tr divider="(course.sectionGroups.length > 1 && $last == false)" instructor-costs-row section-group="sectionGroup" instructor-assignment-options="instructorAssignmentOptions" regular-instructor-assignment-options="regularInstructorAssignmentOptions"></tr>
+								<tr course-costs-row section-group-cost="sectionGroupCost"></tr>
+								<tr divider="(course.sectionGroupCosts.length > 1 && $last == false)"
+								    instructor-costs-row
+								    section-group-cost="sectionGroupCost"
+								    instructor-assignment-options="instructorAssignmentOptions"
+								    regular-instructor-assignment-options="regularInstructorAssignmentOptions">
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -82,10 +87,10 @@
 					</thead>
 				</table>
 
-				<div ng-repeat="course in calculatedSectionGroups.byTerm[termNav.activeTerm] track by course.uniqueKey">
+				<div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
 					<div class="budget-costs__course-title-space"></div>
 
-					<div ng-repeat="sectionGroup in course.sectionGroups">
+					<div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
 						<table class="budget-costs__table">
 							<colgroup>
 								<col style="width: 70%;">
@@ -94,21 +99,21 @@
 							<tbody>
 								<tr>
 									<!-- Comments -->
-									<td class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroups.length > 1 && $last == false) }">
-										<ipa-button text="'Comments' + sectionGroup.sectionGroupCost.commentCountDisplay"
+									<td class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
+										<ipa-button text="'Comments' + sectionGroupCost.commentCountDisplay"
 										            color="'light'"
 										            icon-class="'entypo entypo-chat'"
-										            on-click="openAddCourseCommentsModal(sectionGroup)">
+										            on-click="openAddCourseCommentsModal(sectionGroupCost)">
 										</ipa-button>
 									</td>
 									<!-- Total -->
-									<td class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': (course.sectionGroups.length > 1 && $last == false) }">
+									<td class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
 										<div class="budget-costs__total-container">
 											<div class="budget-costs__label">
 												Total
 											</div>
 											<div>
-												{{ toCurrency(sectionGroup.totalCost) }}
+												{{ toCurrency(sectionGroupCost.totalCost) }}
 											</div>
 										</div>
 									</td>

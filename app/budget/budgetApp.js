@@ -10,6 +10,7 @@ import BudgetCalculations from './services/actions/budgetCalculations.js';
 import BudgetReducers from './services/budgetReducers.js';
 import BudgetSelectors from './services/budgetSelectors.js';
 import BudgetService from './services/budgetService.js';
+import ScheduleCostCalculations from './services/actions/scheduleCostCalculations';
 
 // Shared services
 import ApiService from './../shared/services/ApiService.js';
@@ -77,6 +78,7 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .service('ApiService', ApiService)
 .service('TermService', TermService)
 .service('AuthService', AuthService)
+.service('ScheduleCostCalculations', ScheduleCostCalculations)
 .directive('budgetNav', budgetNav)
 .directive('lineItemFilters', lineItemFilters)
 .directive('budgetScenarioToolbar', budgetScenarioToolbar)
@@ -132,7 +134,8 @@ const budgetApp = angular.module("budgetApp", dependencies)
 	CALCULATE_INSTRUCTOR_TYPE_COSTS: "CALCULATE_INSTRUCTOR_TYPE_COSTS",
 	CALCULATE_INSTRUCTORS: "CALCULATE_INSTRUCTORS",
 	CALCULATE_LINE_ITEMS: "CALCULATE_LINE_ITEMS",
-	CALCULATE_SUMMARY_TOTALS: "CALCULATE_SUMMARY_TOTALS"
+	CALCULATE_SUMMARY_TOTALS: "CALCULATE_SUMMARY_TOTALS",
+	CALCULATE_SCHEDULE_COSTS: "CALCULATE_SCHEDULE_COSTS"
 });
 
 export default budgetApp;

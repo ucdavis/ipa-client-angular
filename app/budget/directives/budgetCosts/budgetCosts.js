@@ -7,14 +7,14 @@ let budgetCosts = function ($rootScope, BudgetActions) {
 		replace: true,
 		scope: {
 			termNav: '<',
-			calculatedSectionGroups: '<',
+			scheduleCosts: '<',
 			summary: '<',
 			instructorAssignmentOptions: '<',
 			regularInstructorAssignmentOptions: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.openAddCourseCommentsModal = function(sectionGroup) {
-				BudgetActions.openAddCourseCommentsModal(sectionGroup);
+			scope.openAddCourseCommentsModal = function(sectionGroupCost) {
+				BudgetActions.openAddCourseCommentsModal(sectionGroupCost);
 			};
 
 			scope.setActiveTerm = function(activeTermTab) {

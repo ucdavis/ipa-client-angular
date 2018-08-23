@@ -1,5 +1,5 @@
 class BudgetActions {
-	constructor ($rootScope, $window, $route, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles) {
+	constructor ($rootScope, $window, $route, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles, ScheduleCostCalculations) {
 		return {
 			getInitialState: function () {
 				var self = this;
@@ -52,104 +52,6 @@ class BudgetActions {
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
 				});
-			},
-			// Compares sectionGroup values, the updated override value, and the sectionGroupCost to determine what action to take.
-			// Will potentially create, delete, or update a sectionGroupCost
-			overrideSectionGroup: function (sectionGroup, property, isReversion) {
-				var oldValue = null;
-				var newValue = null;
-				var savedOverride = null;
-
-				var newSectionGroupCost = {
-					sectionGroupId: sectionGroup.id,
-					budgetScenarioId: BudgetReducers._state.ui.selectedBudgetScenarioId
-				};
-
-				if (property == "seats") {
-					savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.enrollment : null;
-					oldValue = savedOverride || sectionGroup.totalSeats;
-					newValue = this._calculateNewValue(sectionGroup.overrideTotalSeats, isReversion);
-					newSectionGroupCost.enrollment = sectionGroup.overrideTotalSeats;
-				}
-
-				else if (property == "sectionCount") {
-					savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.sectionCount : null;
-					oldValue = savedOverride || sectionGroup.sectionCount;
-					newValue = this._calculateNewValue(sectionGroup.overrideSectionCount, isReversion);
-					newSectionGroupCost.sectionCount = sectionGroup.overrideSectionCount;
-				}
-	
-				else if (property == "teachingAssistantAppointments") {
-					savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.taCount : null;
-					oldValue = savedOverride || sectionGroup.teachingAssistantAppointments;
-					newValue = this._calculateNewValue(sectionGroup.overrideTeachingAssistantAppointments, isReversion);
-					newSectionGroupCost.taCount = sectionGroup.overrideTeachingAssistantAppointments;
-				}
-	
-				else if (property == "readerAppointments") {
-					savedOverride = sectionGroup.sectionGroupCost ? sectionGroup.sectionGroupCost.readerCount : null;
-					oldValue = savedOverride || sectionGroup.readerAppointments;
-					newValue = this._calculateNewValue(sectionGroup.overrideReaderAppointments, isReversion);
-					newSectionGroupCost.readerCount = sectionGroup.overrideReaderAppointments;
-				}
-
-				else if (property == "reason") {
-					oldValue = null;
-					newValue = sectionGroup.sectionGroupCost.reason;
-					newSectionGroupCost.reason = sectionGroup.sectionGroupCost.reason;
-				}
-
-				else if (property == "instructorCost") {
-					oldValue = null;
-					newValue = savedOverride || sectionGroup.overrideInstructorCost;
-					newSectionGroupCost.cost = sectionGroup.cost;
-				}
-
-				var isOverriden = oldValue != newValue;
-				var wasOverriden = !!(savedOverride);
-
-				if (isOverriden) {
-					// Create or update sectionGroupCost
-					if (sectionGroup.sectionGroupCost && sectionGroup.sectionGroupCost.id) {
-						sectionGroup.sectionGroupCost = this.applyOverrideToProperty(sectionGroup.sectionGroupCost, newValue, property);
-						this.updateSectionGroupCost(sectionGroup.sectionGroupCost);
-					} else {
-						newSectionGroupCost = this.applyOverrideToProperty(newSectionGroupCost, newValue, property);
-						this.createSectionGroupCost(newSectionGroupCost);
-					}
-				}
-	
-				if (isOverriden == false && wasOverriden) {
-					// Update sectionGroupCost
-					this.updateSectionGroupCost(sectionGroup.sectionGroupCost);
-				}
-	
-				if (isOverriden == false && wasOverriden == false) {
-					// Do nothing
-					return;
-				}
-			},
-			// When reverting to schedule data, null should be sent to backend.
-			// However, if user emptied the input it should be treated as explicitly setting an override of 0.
-			_calculateNewValue: function (newValue, isReversion) {
-				return isReversion ? newValue : newValue || 0;
-			},
-			applyOverrideToProperty: function (sectionGroupCost, value, property) {
-				if (property == "seats") {
-					sectionGroupCost.enrollment = value;
-				} else if (property == "sectionCount") {
-					sectionGroupCost.sectionCount = value;
-				} else if (property == "teachingAssistantAppointments") {
-					sectionGroupCost.taCount = value;
-				} else if (property == "readerAppointments") {
-					sectionGroupCost.readerCount = value;
-				} else if (property == "reason") {
-					sectionGroupCost.reason = value;
-				} else if (property == "instructorCost") {
-					sectionGroupCost.cost = parseFloat(value);
-				}
-	
-				return sectionGroupCost;
 			},
 			updateBudgetScenario: function (budgetScenario) {
 				var self = this;
@@ -564,34 +466,7 @@ class BudgetActions {
 				}
 			},
 			// Will also create sectionGroupCost if it does not already exist.
-			createSectionGroupCostCommentFromSectionGroup: function (comment, sectionGroup, currentUserLoginId) {
-				var self = this;
-				var sectionGroupCost = sectionGroup.sectionGroupCost;
-	
-				// Create sectionGroupCost if necessary
-				if (sectionGroupCost == false || sectionGroupCost == null) {
-					var sectionGroupCostDTO = {
-						sectionGroupId: sectionGroup.id,
-						budgetScenarioId: BudgetReducers._state.ui.selectedBudgetScenarioId
-					};
-	
-					BudgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
-						BudgetReducers.reduce({
-							type: ActionTypes.CREATE_SECTION_GROUP_COST,
-							payload: {
-								sectionGroupCost: newSectionGroupCost
-							}
-						});
-						$rootScope.$emit('toast', { message: "Saved course", type: "SUCCESS" });
-						self._createSectionGroupCostComment(comment, newSectionGroupCost, currentUserLoginId);
-					}, function (err) {
-						$rootScope.$emit('toast', { message: "Could not save course.", type: "ERROR" });
-					});
-				} else {
-					self._createSectionGroupCostComment(comment, sectionGroupCost, currentUserLoginId);
-				}
-			},
-			_createSectionGroupCostComment: function (comment, sectionGroupCost, currentUserLoginId) {
+			createSectionGroupCostCommentFromSectionGroup: function (comment, sectionGroupCost, currentUserLoginId) {	
 				var self = this;
 				var sectionGroupCostComment = {};
 				sectionGroupCostComment.comment = comment;
@@ -706,11 +581,11 @@ class BudgetActions {
 	
 				BudgetReducers.reduce(action);
 			},
-			openAddCourseCommentsModal: function(sectionGroup) {
+			openAddCourseCommentsModal: function(sectionGroupCost) {
 				var action = {
 					type: ActionTypes.OPEN_ADD_COURSE_COMMENT_MODAL,
 					payload: {
-						sectionGroup: sectionGroup
+						sectionGroupCost: sectionGroupCost
 					}
 				};
 	
@@ -757,6 +632,7 @@ class BudgetActions {
 				BudgetReducers.reduce(action);
 				BudgetCalculations.calculateScenarioTerms();
 				BudgetCalculations.calculateLineItems();
+				ScheduleCostCalculations.calculateScheduleCosts();
 				BudgetCalculations.calculateSectionGroups();
 				BudgetCalculations.calculateTotalCost();
 			},
@@ -863,6 +739,6 @@ class BudgetActions {
 	}
 }
 
-BudgetActions.$inject = ['$rootScope', '$window', '$route', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes', 'Roles'];
+BudgetActions.$inject = ['$rootScope', '$window', '$route', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes', 'Roles', 'ScheduleCostCalculations'];
 
 export default BudgetActions;
