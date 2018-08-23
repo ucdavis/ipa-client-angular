@@ -1,16 +1,19 @@
 import './courseList.css';
 
-let courseList = function ($rootScope, TermService) {
+let courseList = function (BudgetActions) {
   return {
     restrict: 'E',
     template: require('./courseList.html'),
     replace: true,
     scope: {
       courseList: '<',
-      selectedBudgetScenario: '<'
+      selectedBudgetScenario: '<',
+      termNav: '<'
     },
     link: function (scope, element, attrs) {
-      // Intentionally Empty
+      scope.setActiveTerm = function(activeTermTab) {
+        BudgetActions.selectTerm(activeTermTab);
+      };
     }
   };
 };
