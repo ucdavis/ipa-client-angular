@@ -13,13 +13,19 @@
               <span ng-show="sectionGroupCost.isScheduled == false">
                 <i class="entypo-attention line-items__orphan-warn"
                   tooltip-append-to-body="true"
-                  uib-tooltip="This course is not present on the schedule">
+                  uib-tooltip="This course has not been scheduled">
                 </i>
               </span>
               <span ng-if="sectionGroupCost.isBudgeted">
+                <ipa-button text="'Remove Course'"
+                            size="'small'"
+                            on-click="hide(sectionGroupCost)">
+                </ipa-button>
+              </span>
+              <span ng-if="sectionGroupCost.isBudgeted == false">
                 <i class="entypo-attention line-items__orphan-warn"
-                  tooltip-append-to-body="true"
-                  uib-tooltip="This course is scheduled, but not budgeted for in this scenario.">
+                   tooltip-append-to-body="true"
+                   uib-tooltip="This course is scheduled, but not budgeted for in this scenario.">
                 </i>
                 <ipa-button text="'Add Course'"
                             size="'small'"

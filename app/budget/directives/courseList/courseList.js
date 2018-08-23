@@ -23,7 +23,7 @@ let courseList = function (BudgetActions) {
       };
 
       scope.hide = function (sectionGroupCost) {
-        sectionGroupCost.hidden = true;
+        sectionGroupCost.disabled = true;
         BudgetActions.updateSectionGroupCost(sectionGroupCost);
       };
     }

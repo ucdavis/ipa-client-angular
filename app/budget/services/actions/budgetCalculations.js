@@ -591,18 +591,19 @@ class BudgetCalculations {
 				var sectionGroupCosts = BudgetReducers._state.sectionGroupCosts;
 				var selectedBudgetScenario = BudgetReducers._state.budgetScenarios.list[BudgetReducers._state.ui.selectedBudgetScenarioId];
 				var showHidden = BudgetReducers._state.ui.filters.courseList.showHidden.selected;
+				var activeTerm = BudgetReducers._state.ui.termNav.activeTerm;
 
 				// List of sectionGroupCosts, sorted by subj/course/sequence
 				// template will filter by isBudgeted, isScheduled, termCode
 				var courseList = [];
 
-				// Find sectionGroupCosts that aren't scheduled
+				// Find sectionGroupCosts
 				sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
 					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
 					// Ensure sectionGroupCost belongs to an active term in this scenario
 					var shortTermCode = sectionGroupCost.termCode.slice(-2);
-					if (selectedBudgetScenario.terms.indexOf(shortTermCode) == -1) { return; }
+					if (activeTerm !=shortTermCode) { return; }
 
 					// Ensure sectionGroupCost is part of current scenario
 					if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return; }
@@ -613,7 +614,7 @@ class BudgetCalculations {
 					var key = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
 					sectionGroupCost.isScheduled = sectionGroups.idsByUniqueKey[key] > 0;
 
-					if (sectionGroupCost.hidden && showHidden == false) { return; }
+					if (sectionGroupCost.disabled && showHidden == false) { return; }
 					courseList.push(sectionGroupCost);
 				});
 
