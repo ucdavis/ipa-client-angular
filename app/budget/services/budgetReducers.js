@@ -382,7 +382,7 @@ class BudgetReducers {
 							list: [],
 							bySubjAndNumber: {}
 						};
-	
+
 						action.payload.courses.forEach( function(course) {
 							courses.ids.push(course.id);
 							courses.list[course.id] = course;

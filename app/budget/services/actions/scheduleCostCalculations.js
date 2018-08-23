@@ -32,8 +32,7 @@ class ScheduleCostCalculations {
           var shortTerm = sectionGroupCost.termCode.slice(-2);
           if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) { return; }
 
-          var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
-          sectionGroupCost.sectionGroup = sectionGroups.list[sectionGroupKey];
+          sectionGroupCost.sectionGroup = sectionGroups.list[uniqueKey];
 
           // Set sectionGroupCost instructor descriptions
           var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.instructorId];
@@ -51,28 +50,32 @@ class ScheduleCostCalculations {
           var originalInstructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.originalInstructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.originalInstructorId];
           sectionGroupCost.originalInstructorDescription = originalInstructor ? originalInstructor.lastName + ", " + originalInstructor.firstName : null;
 
-          var assignedInstructor = null;
-          var assignedInstructorType = null;
-          var assignedInstructorId = null;
-          var assignedInstructorTypeId = null;
+          var assignedInstructorId = sectionGroupCost.sectionGroup ? sectionGroupCost.sectionGroup.assignedInstructorIds[0] : null;
+          var assignedInstructorTypeId = sectionGroupCost.sectionGroup ? sectionGroupCost.sectionGroup.assignedInstructorTypeIds[0] : null;
+          var assignedInstructor = BudgetReducers._state.assignedInstructors.list[assignedInstructorId];
+          var assignedInstructorType = BudgetReducers._state.instructorTypes.list[assignedInstructorTypeId];
+          assignedInstructorId = assignedInstructor ? assignedInstructor.id : null;
+          assignedInstructorTypeId = assignedInstructorType ? assignedInstructorType.id : null;
 
           if (sectionGroupCost.sectionGroup) {
-            assignedInstructorId = sectionGroupCost.sectionGroup.assignedInstructorIds[0];
-            assignedInstructorTypeId = sectionGroupCost.sectionGroup.assignedInstructorTypeIds[0];
-            assignedInstructor = BudgetReducers._state.assignedInstructors.list[assignedInstructorId];
-            assignedInstructorType = BudgetReducers._state.instructorTypes.list[assignedInstructorTypeId];
             sectionGroupCost.sectionGroup.assignedInstructor = assignedInstructor;
-            sectionGroupCost.sectionGroup.assignedInstructorType = _this._getInstructorType(assignedInstructor);
-            sectionGroupCost.sectionGroup.instructorDescription = null;
+            sectionGroupCost.sectionGroup.assignedInstructorType = assignedInstructorType;
           }
 
           if (assignedInstructor) {
             sectionGroupCost.sectionGroup.assignedInstructorType = _this._getInstructorType(assignedInstructor);
             assignedInstructorType = sectionGroupCost.sectionGroup.assignedInstructorType;
             assignedInstructorTypeId = assignedInstructorType ? assignedInstructorType.id : null;
-            sectionGroupCost.sectionGroup.instructorDescription = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : null;
-          } else if (assignedInstructorType) {
-            sectionGroupCost.sectionGroup.instructorDescription = assignedInstructorType ? assignedInstructorType.description : null;
+          }
+
+          // Set sectionGroup instructor descriptions
+          if (sectionGroupCost.sectionGroup) {
+            sectionGroupCost.sectionGroup.instructorDescription = null;
+            if (assignedInstructor) {
+              sectionGroupCost.sectionGroup.instructorDescription = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : null;
+            } else if (assignedInstructorType) {
+              sectionGroupCost.sectionGroup.instructorDescription = assignedInstructorType ? assignedInstructorType.description : null;
+            }
           }
 
           // Calculate reversion
@@ -174,8 +177,6 @@ class ScheduleCostCalculations {
             sectionGroupCost.newInstructorCost = null;
             return;
           }
-
-
         }
 
         // If instructorType => use instructorType cost
