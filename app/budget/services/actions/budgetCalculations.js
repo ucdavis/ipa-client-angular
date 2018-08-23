@@ -590,6 +590,8 @@ class BudgetCalculations {
 				var sectionGroups = BudgetReducers._state.sectionGroups;
 				var sectionGroupCosts = BudgetReducers._state.sectionGroupCosts;
 				var selectedBudgetScenario = BudgetReducers._state.budgetScenarios.list[BudgetReducers._state.ui.selectedBudgetScenarioId];
+				var showHidden = BudgetReducers._state.ui.filters.courseList.showHidden.selected;
+
 				// List of sectionGroupCosts, sorted by subj/course/sequence
 				// template will filter by isBudgeted, isScheduled, termCode
 				var courseList = [];
@@ -598,7 +600,11 @@ class BudgetCalculations {
 				sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
 					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
-					// Ensure they are part of current scenario
+					// Ensure sectionGroupCost belongs to an active term in this scenario
+					var shortTermCode = sectionGroupCost.termCode.slice(-2);
+					if (selectedBudgetScenario.terms.indexOf(shortTermCode) == -1) { return; }
+
+					// Ensure sectionGroupCost is part of current scenario
 					if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return; }
 
 					sectionGroupCost.shortTermCode = sectionGroupCost.termCode.slice(-2);
@@ -607,40 +613,43 @@ class BudgetCalculations {
 					var key = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
 					sectionGroupCost.isScheduled = sectionGroups.idsByUniqueKey[key] > 0;
 
+					if (sectionGroupCost.hidden && showHidden == false) { return; }
 					courseList.push(sectionGroupCost);
 				});
 
-				// Find sectionGroups that aren't budgeted (and create scaffold sectionGroupCosts for them)
-				sectionGroups.ids.forEach(function(sectionGroupId) {
-					var sectionGroup = sectionGroups.list[sectionGroupId];
+				if (showHidden) {
+					// Find sectionGroups that aren't budgeted (and create scaffold sectionGroupCosts for them)
+					sectionGroups.ids.forEach(function(sectionGroupId) {
+						var sectionGroup = sectionGroups.list[sectionGroupId];
 
-					// Ensure sectionGroup belongs to an active term in this scenario
-					var shortTermCode = sectionGroup.termCode.slice(-2);
-					if (selectedBudgetScenario.terms.indexOf(shortTermCode) == -1) { return; }
+						// Ensure sectionGroup belongs to an active term in this scenario
+						var shortTermCode = sectionGroup.termCode.slice(-2);
+						if (selectedBudgetScenario.terms.indexOf(shortTermCode) == -1) { return; }
 
-					var uniqueKey = sectionGroup.subjectCode + "-" + sectionGroup.courseNumber + "-" + sectionGroup.sequencePattern + "-" + sectionGroup.termCode + "-" + selectedBudgetScenario.id;
-					var sectionGroupCostId = sectionGroupCosts.idsByUniqueKey[uniqueKey];
+						var uniqueKey = sectionGroup.subjectCode + "-" + sectionGroup.courseNumber + "-" + sectionGroup.sequencePattern + "-" + sectionGroup.termCode + "-" + selectedBudgetScenario.id;
+						var sectionGroupCostId = sectionGroupCosts.idsByUniqueKey[uniqueKey];
 
-					if (sectionGroupCostId) { return; }
+						// Already persisted in a sectionGroupCost
+						if (sectionGroupCostId) { return; }
 
-					var scaffoldedSectionGroupCost = {
-						title: sectionGroup.title,
-						subjectCode: sectionGroup.subjectCode,
-						courseNumber: sectionGroup.courseNumber,
-						sequencePattern: sectionGroup.sequencePattern,
-						termCode: sectionGroup.termCode,
-						shortTermCode: shortTerm,
-						sectionCount: sectionGroup.sectionCount,
-						enrollment: sectionGroup.totalSeats,
-						sectionGroupId: sectionGroup.id,
-						isBudgeted: false,
-						isScheduled: true,
-						isPersisted: false
-					};
+						var scaffoldedSectionGroupCost = {
+							title: sectionGroup.title,
+							subjectCode: sectionGroup.subjectCode,
+							courseNumber: sectionGroup.courseNumber,
+							sequencePattern: sectionGroup.sequencePattern,
+							termCode: sectionGroup.termCode,
+							shortTermCode: shortTerm,
+							sectionCount: sectionGroup.sectionCount,
+							enrollment: sectionGroup.totalSeats,
+							sectionGroupId: sectionGroup.id,
+							isBudgeted: false,
+							isScheduled: true,
+							isPersisted: false
+						};
 
-					courseList.push(scaffoldedSectionGroupCost);
-				});
-
+						courseList.push(scaffoldedSectionGroupCost);
+					});
+				}
 				courseList = _array_sortByProperty(courseList, ["subjectCode", "courseNumber", "sequencePattern"]);
 
 				BudgetReducers.reduce({

@@ -6,9 +6,9 @@
     <div class="line-items">
       <table class="line-items__table">
         <tbody>
-          <tr ng-repeat="sectionGroupCost in courseList" ng-if="sectionGroupCost.shortTermCode == termNav.activeTerm">
+          <tr ng-repeat="sectionGroupCost in courseList">
             <!-- Category -->
-            <td class="line-items__table-cell" ng-class-odd="'course-cost__cell--dark'">
+            <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
               {{ sectionGroupCost.subjectCode }} {{ sectionGroupCost.courseNumber }} - {{ sectionGroupCost.sequencePattern }} - {{ sectionGroupCost.title }}
               <span ng-show="sectionGroupCost.isScheduled == false">
                 <i class="entypo-attention line-items__orphan-warn"
@@ -16,7 +16,7 @@
                   uib-tooltip="This course is not present on the schedule">
                 </i>
               </span>
-              <span ng-if="sectionGroupCost.hidden">
+              <span ng-if="sectionGroupCost.isBudgeted">
                 <i class="entypo-attention line-items__orphan-warn"
                   tooltip-append-to-body="true"
                   uib-tooltip="This course is scheduled, but not budgeted for in this scenario.">

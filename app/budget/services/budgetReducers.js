@@ -703,7 +703,7 @@ class BudgetReducers {
 								courseList: {
 									showHidden: {
 										type: "showHidden",
-										description: "Show Hidden line items",
+										description: "Show non budgeted courses",
 										selected: false
 									}
 								}

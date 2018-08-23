@@ -1,3 +1,9 @@
-.course-cost__cell--dark {
+.course-list__cell--dark {
+  background-color: #fafafa;
+}
 
+.course-list__cell {
+	padding-left: 15px;
+	padding-right: 15px;
+	height: 44px;
 }
