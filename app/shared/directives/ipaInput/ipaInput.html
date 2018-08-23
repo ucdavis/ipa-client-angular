@@ -7,6 +7,7 @@
 		placeholder="{{placeHolder}}"
 		ng-readonly="readOnly || labelReadOnly"
 		ng-keyup="updateInput()"
+		maxlength="{{maxChars}}"
 		ng-class="{'ipa-input--read-only': readOnly, 'ipa-input--label-read-only': labelReadOnly, 'ipa-input--invalid': isInvalid }">
 
 	<input class="ipa-input"
@@ -17,5 +18,6 @@
 		placeholder="{{placeHolder}}"
 		ng-readonly="readOnly || labelReadOnly"
 		ng-keyup="updateInput()"
+		maxlength="{{maxChars}}"
 		ng-class="{'ipa-input--read-only': readOnly, 'ipa-input--label-read-only': labelReadOnly }">
 </div>

@@ -27,8 +27,10 @@ class ScheduleCostCalculations {
 
           // Ensure sectionGroupCost belongs to an active term in this scenario
           var shortTerm = sectionGroupCost.termCode.slice(-2);
-
           if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) { return; }
+
+          // Ensure sectionGroupCost belongs to the scenario
+          if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return; }
 
           sectionGroupCost.sectionGroup = sectionGroups.list[uniqueKey];
 
@@ -58,7 +60,6 @@ class ScheduleCostCalculations {
           if (sectionGroupCost.sectionGroup) {
             sectionGroupCost.sectionGroup.assignedInstructor = assignedInstructor;
             sectionGroupCost.sectionGroup.assignedInstructorType = assignedInstructorType;
-            sectionGroupCost.sectionGroup.instructorDescription = null;
           }
 
           if (assignedInstructor) {
@@ -66,10 +67,13 @@ class ScheduleCostCalculations {
           }
 
           // Set sectionGroup instructor descriptions
-          if (assignedInstructor) {
-            sectionGroupCost.sectionGroup.instructorDescription = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : null;
-          } else if (assignedInstructorType) {
-            sectionGroupCost.sectionGroup.instructorDescription = assignedInstructorType ? assignedInstructorType.description : null;
+          if (sectionGroupCost.sectionGroup) {
+            sectionGroupCost.sectionGroup.instructorDescription = null;
+            if (assignedInstructor) {
+              sectionGroupCost.sectionGroup.instructorDescription = assignedInstructor ? assignedInstructor.lastName + ", " + assignedInstructor.firstName : null;
+            } else if (assignedInstructorType) {
+              sectionGroupCost.sectionGroup.instructorDescription = assignedInstructorType ? assignedInstructorType.description : null;
+            }
           }
 
           // Calculate reversion
@@ -108,14 +112,14 @@ class ScheduleCostCalculations {
 
         // Sort termCourses
         activeTerms.forEach(function(term) {
-        	scheduleCosts.byTerm[term] = _array_sortByProperty(scheduleCosts.byTerm[term], "uniqueKey");
+          scheduleCosts.byTerm[term] = _array_sortByProperty(scheduleCosts.byTerm[term], "uniqueKey");
         });
 
         BudgetReducers.reduce({
-        	type: ActionTypes.CALCULATE_SCHEDULE_COSTS,
-        	payload: {
-        		scheduleCosts: scheduleCosts
-        	}
+          type: ActionTypes.CALCULATE_SCHEDULE_COSTS,
+          payload: {
+            scheduleCosts: scheduleCosts
+          }
         });
       },
       _getInstructorType: function(instructor) {
