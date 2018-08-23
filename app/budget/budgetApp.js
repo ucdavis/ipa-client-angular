@@ -20,6 +20,8 @@ import AuthService from './../shared/services/AuthService.js';
 // Directives
 import budgetNav from './directives/budgetNav/budgetNav.js';
 import lineItemFilters from './directives/budgetNav/lineItemFilters/lineItemFilters.js';
+import courseListFilters from './directives/budgetNav/courseListFilters/courseListFilters.js';
+
 import budgetScenarioToolbar from './directives/budgetScenarioToolbar/budgetScenarioToolbar.js';
 import budgetScenarioDropdown from './directives/budgetScenarioToolbar/budgetScenarioDropdown/budgetScenarioDropdown.js';
 import lineItems from './directives/lineItems/lineItems.js';
@@ -82,6 +84,7 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .service('ScheduleCostCalculations', ScheduleCostCalculations)
 .directive('budgetNav', budgetNav)
 .directive('lineItemFilters', lineItemFilters)
+.directive('courseListFilters', courseListFilters)
 .directive('budgetScenarioToolbar', budgetScenarioToolbar)
 .directive('budgetScenarioDropdown', budgetScenarioDropdown)
 .directive('budgetCosts', budgetCosts)
@@ -138,7 +141,8 @@ const budgetApp = angular.module("budgetApp", dependencies)
 	CALCULATE_LINE_ITEMS: "CALCULATE_LINE_ITEMS",
 	CALCULATE_SUMMARY_TOTALS: "CALCULATE_SUMMARY_TOTALS",
 	CALCULATE_SCHEDULE_COSTS: "CALCULATE_SCHEDULE_COSTS",
-	CALCULATE_COURSE_LIST: "CALCULATE_COURSE_LIST"
+	CALCULATE_COURSE_LIST: "CALCULATE_COURSE_LIST",
+	TOGGLE_FILTER_SHOW_HIDDEN_COURSES: "TOGGLE_FILTER_SHOW_HIDDEN_COURSES"
 });
 
 export default budgetApp;

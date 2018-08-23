@@ -601,7 +601,7 @@ class BudgetCalculations {
 					// Ensure they are part of current scenario
 					if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return; }
 
-					sectionGroupCost.shortTerm = sectionGroupCost.termCode.slice(-2);
+					sectionGroupCost.shortTermCode = sectionGroupCost.termCode.slice(-2);
 					sectionGroupCost.isPersisted = true;
 					sectionGroupCost.isBudgeted = true;
 					var key = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
@@ -615,8 +615,8 @@ class BudgetCalculations {
 					var sectionGroup = sectionGroups.list[sectionGroupId];
 
 					// Ensure sectionGroup belongs to an active term in this scenario
-					var shortTerm = sectionGroup.termCode.slice(-2);
-					if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) { return; }
+					var shortTermCode = sectionGroup.termCode.slice(-2);
+					if (selectedBudgetScenario.terms.indexOf(shortTermCode) == -1) { return; }
 
 					var uniqueKey = sectionGroup.subjectCode + "-" + sectionGroup.courseNumber + "-" + sectionGroup.sequencePattern + "-" + sectionGroup.termCode + "-" + selectedBudgetScenario.id;
 					var sectionGroupCostId = sectionGroupCosts.idsByUniqueKey[uniqueKey];
@@ -627,8 +627,9 @@ class BudgetCalculations {
 						title: sectionGroup.title,
 						subjectCode: sectionGroup.subjectCode,
 						courseNumber: sectionGroup.courseNumber,
+						sequencePattern: sectionGroup.sequencePattern,
 						termCode: sectionGroup.termCode,
-						shortTerm: shortTerm,
+						shortTermCode: shortTerm,
 						sectionCount: sectionGroup.sectionCount,
 						enrollment: sectionGroup.totalSeats,
 						sectionGroupId: sectionGroup.id,
@@ -639,6 +640,8 @@ class BudgetCalculations {
 
 					courseList.push(scaffoldedSectionGroupCost);
 				});
+
+				courseList = _array_sortByProperty(courseList, ["subjectCode", "courseNumber", "sequencePattern"]);
 
 				BudgetReducers.reduce({
 					type: ActionTypes.CALCULATE_COURSE_LIST,

@@ -702,6 +702,23 @@ class BudgetActions {
 				BudgetCalculations.calculateLineItems();
 				BudgetCalculations.calculateTotalCost();
 			},
+			toggleCourseListFilter: function(filter) {
+				var actionType = null;
+
+				if (filter.type == "showHidden") {
+					actionType = ActionTypes.TOGGLE_FILTER_SHOW_HIDDEN_COURSES;
+				}
+
+				// No matching filter found
+				if (actionType == null) { return; }
+
+				BudgetReducers.reduce({
+					type: actionType,
+					payload: {}
+				});
+
+				BudgetCalculations.calculateCourseList();
+			},
 			attachInstructorTypesToInstructors: function () {
 				var self = this;
 				var activeInstructors = BudgetReducers._state.activeInstructors;

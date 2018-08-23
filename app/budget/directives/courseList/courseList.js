@@ -14,6 +14,18 @@ let courseList = function (BudgetActions) {
       scope.setActiveTerm = function(activeTermTab) {
         BudgetActions.selectTerm(activeTermTab);
       };
+
+      scope.unHide = function (sectionGroupCost) {
+        debugger;
+        // TODO: do we need to create? look for id
+
+        // or toggle the hide property?
+      };
+
+      scope.hide = function (sectionGroupCost) {
+        sectionGroupCost.hidden = true;
+        BudgetActions.updateSectionGroupCost(sectionGroupCost);
+      };
     }
   };
 };

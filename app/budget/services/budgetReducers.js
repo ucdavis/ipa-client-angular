@@ -699,6 +699,13 @@ class BudgetReducers {
 										description: "Show Hidden line items",
 										selected: false
 									}
+								},
+								courseList: {
+									showHidden: {
+										type: "showHidden",
+										description: "Show Hidden line items",
+										selected: false
+									}
 								}
 							},
 							sectionNav: {
@@ -762,6 +769,9 @@ class BudgetReducers {
 						return ui;
 					case ActionTypes.TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN:
 						ui.filters.lineItems.showHidden.selected = !ui.filters.lineItems.showHidden.selected;
+						return ui;
+					case ActionTypes.TOGGLE_FILTER_SHOW_HIDDEN_COURSES:
+						ui.filters.courseList.showHidden.selected = !ui.filters.courseList.showHidden.selected;
 						return ui;
 					case ActionTypes.CREATE_BUDGET_SCENARIO:
 						// Set initial lineItemDetail UI states
@@ -911,6 +921,7 @@ class BudgetReducers {
 				newState.calculatedInstructors = scope.calculatedInstructorReducers(action, scope._state.calculatedInstructors);
 				newState.calculatedLineItems = scope.calculatedLineItemReducers(action, scope._state.calculatedLineItems);
 				newState.summary = scope.summaryReducers(action, scope._state.summary);
+				newState.calculatedCourseList = scope.calculatedCourseListReducers(action, scope._state.calculatedCourseList);
 
 				scope._state = newState;
 	
@@ -926,7 +937,7 @@ class BudgetReducers {
 				newPageState.courses = newState.courses;
 				newPageState.sectionGroups = newState.sectionGroups;
 
-				newState.calculatedCourseList = scope.calculatedCourseListReducers(action, scope._state.calculatedCourseList);
+				newPageState.calculatedCourseList = newState.calculatedCourseList;
 				newPageState.calculatedScheduleCosts = newState.calculatedScheduleCosts;
 				newPageState.calculatedSectionGroups = newState.calculatedSectionGroups;
 				newPageState.calculatedInstructorTypeCosts = newState.calculatedInstructorTypeCosts;
