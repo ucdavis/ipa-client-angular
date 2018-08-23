@@ -1,3 +1,31 @@
 table {
   width: 100%;
 }
+
+.toolbar-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.toolbar-left {
+  flex: 1;
+}
+
+.toolbar-center {
+  flex: 1;
+}
+
+.toolbar-right {
+  display: flex;
+  flex: 1;
+  align-self: center;
+  justify-content: flex-end;
+}
+
+.fill-field {
+  width: 100%;
+}
+
+.toolbar-btn {
+  margin-left: 0.5em;
+}

@@ -1,9 +1,18 @@
-<mat-form-field>
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-</mat-form-field>
+<!-- Scheduling Report Table Toolbar -->
+<div class="toolbar-container">
+  <span class="toolbar-left"></span>
+  <span class="toolbar-center">
+    <mat-form-field class="fill-field">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </span>
+  <span class="toolbar-right">
+    <mat-icon class="toolbar-btn" matTooltip="Download Excel">save_alt</mat-icon>
+    <mat-icon class="toolbar-btn"matTooltip="Print">print</mat-icon>
+  </span>
+</div>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 

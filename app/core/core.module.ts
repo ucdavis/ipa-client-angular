@@ -39,6 +39,7 @@ import {
 import { IpaHeader, ImpersonateModal } from '@core/components/ipa-header/ipa-header.component';
 import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
 
+// TODO: Bundle up Material module imports
 @NgModule({
   // Injected modules
   imports: [
@@ -64,7 +65,7 @@ import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
   declarations: [IpaHeader, IpaNav, ImpersonateModal],
   // Exports made available to modules that import core
   // You can't export unless you've wired into yourself
-  exports: [IpaNav],
+  exports: [IpaNav, MatIconModule],
   // Injected services
   providers: [
     AuthService,
