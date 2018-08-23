@@ -208,13 +208,17 @@ class BudgetCalculations {
 				if (overrideInstructor == null && overrideInstructorType == null) {
 					if (assignedInstructor) {
 						sectionGroup.instructorName = assignedInstructor.lastName + ", " + assignedInstructor.firstName;
+						sectionGroup.instructorId = assignedInstructor.id;
 					} else if (assignedInstructorType) {
 						sectionGroup.instructorName = assignedInstructorType.description;
+						sectionGroup.instructorTypeId = assignedInstructorType.id;
 					}
 				} else if (overrideInstructor) {
 					sectionGroup.instructorName = overrideInstructor.lastName + ", " + overrideInstructor.firstName;
+					sectionGroup.instructorId = overrideInstructor.id;
 				} else if (overrideInstructorType) {
 					sectionGroup.instructorName = overrideInstructorType.description;
+					sectionGroup.instructorTypeId = overrideInstructorType.id;
 				}
 	
 				// Calculate reversion
@@ -290,6 +294,7 @@ class BudgetCalculations {
 	
 						if (instructorTypeCost && instructorTypeCost.cost != null) {
 							sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
+							sectionGroup.overrideInstructorTypeId = instructorTypeCost.instructorTypeId;
 							sectionGroup.overrideInstructorCostSource = "instructor type";
 							sectionGroup.overrideInstructorCostSourceDescription = instructorTypeCost.description + " category";
 							sectionGroup.newInstructorCost = null;
@@ -306,6 +311,7 @@ class BudgetCalculations {
 					if (instructorTypeCost != null && instructorTypeCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
 						sectionGroup.overrideInstructorCostSource = "instructor type";
+						sectionGroup.overrideInstructorTypeId = instructorTypeCost.instructorTypeId;
 						sectionGroup.overrideInstructorCostSourceDescription = instructorTypeCost.description + " category";
 						sectionGroup.newInstructorCost = null;
 						return;
@@ -330,8 +336,8 @@ class BudgetCalculations {
 				}
 	
 				// (5th option) Attempt to use assigned instructorType
-				if (sectionGroup.instructorType && sectionGroup.instructorType.id > 0) {
-					instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroup.instructorType.id];
+				if (sectionGroup.assignedInstructorTypeIds.length > 0) {
+					instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroup.assignedInstructorTypeIds[0]];
 	
 					if (instructorTypeCost != null && instructorTypeCost.cost != null) {
 						sectionGroup.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
@@ -787,7 +793,7 @@ class BudgetCalculations {
 							summary.byTerm[term].readerCost += sectionGroup.readerCost || 0;
 							summary.byTerm[term].supportCosts += (sectionGroup.taCost || 0) + (sectionGroup.readerCost || 0);
 							summary.byTerm[term].replacementCosts.overall += sectionGroup.overrideInstructorCost || 0;
-							summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroup.instructorType, sectionGroup.overrideInstructorCost);
+							summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroup);
 							summary.byTerm[term].totalCosts += (sectionGroup.taCost || 0) + (sectionGroup.readerCost || 0) + (sectionGroup.overrideInstructorCost || 0);
 							summary.byTerm[term].totalUnits += (course.unitsLow || course.unitsHigh || 0);
 							summary.byTerm[term].totalSCH += (sectionGroup.overrideTotalSeats || 0) * (course.unitsLow || 0);
@@ -816,7 +822,7 @@ class BudgetCalculations {
 					summary.combinedTerms.totalOfferingsCount += summary.byTerm[term].totalOfferingsCount;
 					summary.combinedTerms.enrollment += summary.byTerm[term].enrollment;
 				});
-	
+
 				BudgetReducers.reduce({
 					type: ActionTypes.CALCULATE_SUMMARY_TOTALS,
 					payload: {
@@ -824,20 +830,31 @@ class BudgetCalculations {
 					}
 				});
 			},
-			_calculateReplacementCost: function (replacementCosts, instructorType, replacementCost) {
-				if (!instructorType || !replacementCost) { return replacementCosts; }
-	
-				var index = replacementCosts.instructorTypeIds.indexOf(instructorType.id);
+			_calculateReplacementCost: function (replacementCosts, sectionGroup) {
+				var replacementCost = sectionGroup.overrideInstructorCost;
+
+				if (!replacementCost) { return replacementCosts; }
+
+				var instructorTypeId = sectionGroup.overrideInstructorTypeId || sectionGroup.instructorTypeId;
+				var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroup.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroup.instructorId];
+
+				// Course has a cost but no instructor
+				if (!instructorTypeId && !instructor) { return replacementCosts; }
+
+				if (!instructorTypeId) {
+					instructorTypeId = instructor.instructorType.id;
+				}
+
+				var index = replacementCosts.instructorTypeIds.indexOf(instructorTypeId);
 	
 				if (index == -1) {
-					replacementCosts.instructorTypeIds.push(instructorType.id);
+					replacementCosts.instructorTypeIds.push(instructorTypeId);
 				}
 	
-				// Ensure not null (un-initialized)
-				replacementCosts.byInstructorTypeId[instructorType.id] = replacementCosts.byInstructorTypeId[instructorType.id] > 0 ? replacementCosts.byInstructorTypeId[instructorType.id] : 0;
+				replacementCosts.byInstructorTypeId[instructorTypeId] = replacementCosts.byInstructorTypeId[instructorTypeId] || 0;
 	
 				// Add cost
-				replacementCosts.byInstructorTypeId[instructorType.id] += replacementCost;
+				replacementCosts.byInstructorTypeId[instructorTypeId] += replacementCost;
 	
 				return replacementCosts;
 			},
