@@ -1,6 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { SchedulingActions } from '../../scheduling-actions.service';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, Sort } from '@angular/material';
+
+import { orderBy } from 'lodash';
 
 @Component({
   selector: 'schedule-summary',
@@ -8,8 +10,6 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['schedule-summary.component.css']
 })
 export class ScheduleSummaryComponent {
-  @ViewChild(MatSort)
-  sort: MatSort;
   dataSource;
   displayedColumns: string[] = [
     'title',
@@ -72,13 +72,20 @@ export class ScheduleSummaryComponent {
 
     this.schedulingActions.reportState$.subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
-      this.dataSource.sort = this.sort;
-
       this.cacheSpan('title', d => d.title);
     });
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  sortData(sort: Sort) {
+    // sort = {active: "title", direction "asc | desc"}
+    const data = this.dataSource.data.slice();
+    let orderedData = orderBy(data, ['title', 'section'], [sort.direction, 'asc']);
+
+    this.dataSource = new MatTableDataSource(orderedData);
+    this.cacheSpan('title', d => d.title);
   }
 }

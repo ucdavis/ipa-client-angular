@@ -12,13 +12,13 @@
   </span>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="sortData($event)">
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
   <!-- Title Column -->
   <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header start="desc"> Title </th>
     <td mat-cell *matCellDef="let section; let i = index" [attr.rowspan]="getRowSpan('title', i)" [style.display]="getRowSpan('title', i) ? '' : 'none'">
       {{section.title}} </td>
   </ng-container>
@@ -31,7 +31,7 @@
 
   <!-- CRN Column -->
   <ng-container matColumnDef="CRN">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> CRN </th>
+    <th mat-header-cell *matHeaderCellDef> CRN </th>
     <td mat-cell *matCellDef="let section"> {{section.CRN}} </td>
   </ng-container>
 

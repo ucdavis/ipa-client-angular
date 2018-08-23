@@ -106,7 +106,7 @@ export class SchedulingActions {
         return {
           title: courseTable[section.sectionGroupId],
           section: section.sequenceNumber,
-          CRN: section.crn,
+          CRN: section.crn ? section.crn : '-',
           enrollment: '0',
           seats: section.seats,
           activities: formattedActivities
