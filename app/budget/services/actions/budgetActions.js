@@ -645,6 +645,8 @@ class BudgetActions {
 						activeTermTab: termTab
 					}
 				});
+
+				BudgetCalculations.calculateCourseList();
 			},
 			toggleSelectLineItem: function(lineItem) {
 				BudgetReducers.reduce({
