@@ -5,28 +5,48 @@
             slim="true">
     <div class="line-items">
       <table class="line-items__table">
+        <colgroup>
+          <col style="width: 25%;">
+          <col style="width: 75%;">
+        </colgroup>
         <tbody>
           <tr ng-repeat="sectionGroupCost in courseList">
             <!-- Category -->
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
-              {{ sectionGroupCost.subjectCode }} {{ sectionGroupCost.courseNumber }} - {{ sectionGroupCost.sequencePattern }} - {{ sectionGroupCost.title }}
-              <span ng-show="sectionGroupCost.isScheduled == false">
+              <span ng-if="sectionGroupCost.isBudgeted == true && sectionGroupCost.isScheduled == false">
                 <i class="entypo-attention line-items__orphan-warn"
                   tooltip-append-to-body="true"
-                  uib-tooltip="This course has not been scheduled">
+                  uib-tooltip="This course is budgeted for in this scenario, but has not been scheduled">
                 </i>
               </span>
-              <span ng-if="sectionGroupCost.isBudgeted">
-                <ipa-button text="'Remove Course'"
-                            size="'small'"
-                            on-click="hide(sectionGroupCost)">
-                </ipa-button>
-              </span>
-              <span ng-if="sectionGroupCost.isBudgeted == false">
+
+              <span ng-if="sectionGroupCost.isBudgeted == false && sectionGroupCost.isScheduled == true">
                 <i class="entypo-attention line-items__orphan-warn"
                    tooltip-append-to-body="true"
                    uib-tooltip="This course is scheduled, but not budgeted for in this scenario.">
                 </i>
+              </span>
+
+              <span ng-if="sectionGroupCost.isBudgeted == false && sectionGroupCost.isScheduled == false">
+                <i class="entypo-attention line-items__orphan-warn"
+                   tooltip-append-to-body="true"
+                   uib-tooltip="This course is not scheduled or budgeted for in this scenario.">
+                </i>
+              </span>
+              <span ng-class="{'course-list__cell-disabled': sectionGroupCost.isBudgeted == false }">
+                <strong>{{ sectionGroupCost.subjectCode }} {{ sectionGroupCost.courseNumber }} {{ sectionGroupCost.title }}</strong> - {{ sectionGroupCost.sequencePattern }}
+              </span>
+            </td>
+            <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
+
+              <span ng-if="sectionGroupCost.isBudgeted">
+                <ipa-button text="'Remove Course'"
+                            size="'small'"
+                            skin="'dark'"
+                            on-click="hide(sectionGroupCost)">
+                </ipa-button>
+              </span>
+              <span ng-if="sectionGroupCost.isBudgeted == false">
                 <ipa-button text="'Add Course'"
                             size="'small'"
                             on-click="unHide(sectionGroupCost)">

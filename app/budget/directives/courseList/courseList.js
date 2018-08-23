@@ -16,10 +16,12 @@ let courseList = function (BudgetActions) {
       };
 
       scope.unHide = function (sectionGroupCost) {
-        debugger;
-        // TODO: do we need to create? look for id
-
-        // or toggle the hide property?
+        if (sectionGroupCost.id) {
+          sectionGroupCost.disabled = false;
+          BudgetActions.updateSectionGroupCost(sectionGroupCost);
+        } else {
+          BudgetActions.createSectionGroupCost(sectionGroupCost);
+        }
       };
 
       scope.hide = function (sectionGroupCost) {

@@ -48,7 +48,7 @@ class BudgetService {
 				return ApiService.put("/api/budgetView/sectionGroupCosts/" + sectionGroupCost.id, sectionGroupCost);
 			},
 			createSectionGroupCost: function (sectionGroupCost) {
-				return ApiService.post("/api/budgetView/budgetScenarios/" + sectionGroupCost.budgetScenarioId + "/sectionGroupCosts", sectionGroupCost);
+				return ApiService.post("/api/budgetView/budgetScenarios/" + sectionGroupCost.budgetScenarioId + "/sectionGroups/" + sectionGroupCost.sectionGroupId + "/sectionGroupCosts");
 			},
 	
 			// InstructorCost

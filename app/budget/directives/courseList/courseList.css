@@ -3,7 +3,11 @@
 }
 
 .course-list__cell {
-	padding-left: 15px;
-	padding-right: 15px;
-	height: 44px;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 44px;
+}
+
+.course-list__cell-disabled {
+  text-decoration: line-through;
 }

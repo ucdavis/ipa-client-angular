@@ -248,6 +248,7 @@ class BudgetActions {
 					BudgetReducers.reduce(action);
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
+					BudgetCalculations.calculateCourseList();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
 				});
@@ -266,6 +267,7 @@ class BudgetActions {
 					BudgetReducers.reduce(action);
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
+					BudgetCalculations.calculateCourseList();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
 				});

@@ -603,14 +603,14 @@ class BudgetCalculations {
 
 					// Ensure sectionGroupCost belongs to an active term in this scenario
 					var shortTermCode = sectionGroupCost.termCode.slice(-2);
-					if (activeTerm !=shortTermCode) { return; }
+					if (activeTerm != shortTermCode) { return; }
 
 					// Ensure sectionGroupCost is part of current scenario
 					if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return; }
 
 					sectionGroupCost.shortTermCode = sectionGroupCost.termCode.slice(-2);
 					sectionGroupCost.isPersisted = true;
-					sectionGroupCost.isBudgeted = true;
+					sectionGroupCost.isBudgeted = !sectionGroupCost.disabled;
 					var key = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
 					sectionGroupCost.isScheduled = sectionGroups.idsByUniqueKey[key] > 0;
 
@@ -625,7 +625,7 @@ class BudgetCalculations {
 
 						// Ensure sectionGroup belongs to an active term in this scenario
 						var shortTermCode = sectionGroup.termCode.slice(-2);
-						if (selectedBudgetScenario.terms.indexOf(shortTermCode) == -1) { return; }
+						if (activeTerm != shortTermCode) { return; }
 
 						var uniqueKey = sectionGroup.subjectCode + "-" + sectionGroup.courseNumber + "-" + sectionGroup.sequencePattern + "-" + sectionGroup.termCode + "-" + selectedBudgetScenario.id;
 						var sectionGroupCostId = sectionGroupCosts.idsByUniqueKey[uniqueKey];
@@ -634,12 +634,13 @@ class BudgetCalculations {
 						if (sectionGroupCostId) { return; }
 
 						var scaffoldedSectionGroupCost = {
+							budgetScenarioId: selectedBudgetScenario.id,
 							title: sectionGroup.title,
 							subjectCode: sectionGroup.subjectCode,
 							courseNumber: sectionGroup.courseNumber,
 							sequencePattern: sectionGroup.sequencePattern,
 							termCode: sectionGroup.termCode,
-							shortTermCode: shortTerm,
+							shortTermCode: shortTermCode,
 							sectionCount: sectionGroup.sectionCount,
 							enrollment: sectionGroup.totalSeats,
 							sectionGroupId: sectionGroup.id,
