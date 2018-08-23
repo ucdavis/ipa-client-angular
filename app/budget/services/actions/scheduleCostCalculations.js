@@ -111,14 +111,14 @@ class ScheduleCostCalculations {
 
         // Sort termCourses
         activeTerms.forEach(function(term) {
-        	scheduleCosts.byTerm[term] = _array_sortByProperty(scheduleCosts.byTerm[term], "uniqueKey");
+          scheduleCosts.byTerm[term] = _array_sortByProperty(scheduleCosts.byTerm[term], "uniqueKey");
         });
 
         BudgetReducers.reduce({
-        	type: ActionTypes.CALCULATE_SCHEDULE_COSTS,
-        	payload: {
-        		scheduleCosts: scheduleCosts
-        	}
+          type: ActionTypes.CALCULATE_SCHEDULE_COSTS,
+          payload: {
+            scheduleCosts: scheduleCosts
+          }
         });
       },
       _getInstructorType: function(instructor) {
