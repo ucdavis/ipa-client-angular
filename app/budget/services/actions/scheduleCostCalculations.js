@@ -32,7 +32,8 @@ class ScheduleCostCalculations {
           var shortTerm = sectionGroupCost.termCode.slice(-2);
           if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) { return; }
 
-          sectionGroupCost.sectionGroup = sectionGroups.list[uniqueKey];
+          var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
+          sectionGroupCost.sectionGroup = sectionGroups.list[sectionGroupKey];
 
           // Set sectionGroupCost instructor descriptions
           var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.instructorId];
