@@ -60,8 +60,8 @@ export class IpaHeader implements OnInit {
     };
 
     // A user is impersonating when it has a realLoginId that is different than the loginId
-    this.isImpersonating = this.currentUser.realLoginId
-      ? this.currentUser.loginId !== this.currentUser.realLoginId
+    this.isImpersonating = this.currentUser.realUserLoginId
+      ? this.currentUser.loginId !== this.currentUser.realUserLoginId
       : false;
     this.filteredWorkgroups = this.getSortedWorkgroups();
     this.termsTable = this.getTermTable();
@@ -95,8 +95,8 @@ export class IpaHeader implements OnInit {
       let currentUserObj = {
         loginId: userToImpersonate.loginId,
         displayName: userToImpersonate.displayName,
-        realLoginId: localStorage.getItem('loginId'),
-        realDisplayName: localStorage.getItem('displayName')
+        realUserLoginId: localStorage.getItem('loginId'),
+        realUserDisplayName: localStorage.getItem('displayName')
       };
       localStorage.setItem('currentUser', JSON.stringify(currentUserObj));
     });
