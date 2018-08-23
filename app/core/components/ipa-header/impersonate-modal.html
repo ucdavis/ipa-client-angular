@@ -1,8 +1,8 @@
 <h1 mat-dialog-title>Impersonate <mat-icon>supervisor_account</mat-icon></h1>
 <div mat-dialog-content>
   <mat-nav-list>
-    <mat-list-item *ngFor="let user of data">
-      <mat-icon matListIcon>person_outline</mat-icon><p matLine (click)="onClick(user)">{{user.displayName}} - {{user.email}}</p>
+    <mat-list-item *ngFor="let user of data" (click)="onClick(user)">
+      <mat-icon matListIcon>person_outline</mat-icon><p matLine>{{user.displayName}} - {{user.email}}</p>
     </mat-list-item>
   </mat-nav-list>
 </div>
