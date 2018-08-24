@@ -118,6 +118,14 @@ export class SchedulingActions {
     });
   }
 
+  generateExcel() {
+    return this.apiService.get(
+      `/api/scheduleSummaryReportView/workgroups/${this._workgroupId}/years/${this._year}/terms/${
+        this._termCode
+      }/generateExcel`
+    );
+  }
+
   addCourse(course: Course): void {
     this.apiService
       .post('/api/workgroups/' + this._workgroupId + '/years/' + this._year + '/courses', course)

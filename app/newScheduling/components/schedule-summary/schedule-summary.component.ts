@@ -88,4 +88,15 @@ export class ScheduleSummaryComponent {
     this.dataSource = new MatTableDataSource(orderedData);
     this.cacheSpan('title', d => d.title);
   }
+
+  downloadSchedule(): void {
+    this.schedulingActions.generateExcel().subscribe(data => {
+      window.location.href = data.redirect;
+    });
+  }
+
+  print(): void {
+    // FIXME: Need a printer-friendly version
+    window.print();
+  }
 }

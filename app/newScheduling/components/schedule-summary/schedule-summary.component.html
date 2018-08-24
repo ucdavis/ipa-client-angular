@@ -7,12 +7,16 @@
     </mat-form-field>
   </span>
   <span class="toolbar-right">
-    <mat-icon class="toolbar-btn" matTooltip="Download Excel">save_alt</mat-icon>
-    <mat-icon class="toolbar-btn"matTooltip="Print">print</mat-icon>
+    <button mat-icon-button (click)="downloadSchedule()">
+      <mat-icon matTooltip="Download Excel">save_alt</mat-icon>
+    </button>
+    <button mat-icon-button (click)="print()">
+      <mat-icon matTooltip="Print">print</mat-icon>
+    </button>
   </span>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="sortData($event)">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="sortData($event)" id="printTable">
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
