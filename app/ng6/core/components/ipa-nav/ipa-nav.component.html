@@ -16,20 +16,20 @@
         <p matLine *ngIf="isNavExpanded" class="theme-primary" [class.typo-muted]="activePage != 'home'">Home</p>
       </mat-list-item>
 
-      <mat-list-item matTooltip="Courses" matTooltipPosition="right" [matTooltipDisabled]="isNavExpanded">
-        <mat-icon mat-list-icon class="theme-primary" [class.typo-muted]="activePage != 'course'">book</mat-icon>
-        <p matLine *ngIf="isNavExpanded" class="theme-primary" [class.typo-muted]="activePage != 'course'">Courses</p>
-      </mat-list-item>
+      <a href="/newCourses/20/2018/10" mat-list-item matTooltip="Courses" matTooltipPosition="right" [matTooltipDisabled]="isNavExpanded">
+        <mat-icon mat-list-icon class="theme-primary" [class.typo-muted]="activePage != 'newCourses'">book</mat-icon>
+        <p matLine *ngIf="isNavExpanded" class="theme-primary" [class.typo-muted]="activePage != 'newCourses'">Courses</p>
+      </a>
 
       <mat-list-item matTooltip="Instructors" matTooltipPosition="right" [matTooltipDisabled]="isNavExpanded">
         <mat-icon mat-list-icon class="theme-primary" [class.typo-muted]="activePage != 'instructor'">person_add</mat-icon>
         <p matLine *ngIf="isNavExpanded" class="theme-primary" [class.typo-muted]="activePage != 'instructor'">Instructors</p>
       </mat-list-item>
 
-      <mat-list-item matTooltip="Schedule" matTooltipPosition="right" [matTooltipDisabled]="isNavExpanded">
+      <a href="/newScheduling/20/2018/10" mat-list-item matTooltip="Schedule" matTooltipPosition="right" [matTooltipDisabled]="isNavExpanded">
         <mat-icon mat-list-icon class="theme-primary" [class.typo-muted]="activePage != 'newScheduling'">calendar_today</mat-icon>
         <p matLine *ngIf="isNavExpanded" class="theme-primary" [class.typo-muted]="activePage != 'newScheduling'">Schedule</p>
-      </mat-list-item>
+      </a>
 
       <mat-list-item matTooltip="TAs & Readers" matTooltipPosition="right" [matTooltipDisabled]="isNavExpanded">
         <mat-icon mat-list-icon class="theme-primary" [class.typo-muted]="activePage != 'tareader'">people</mat-icon>

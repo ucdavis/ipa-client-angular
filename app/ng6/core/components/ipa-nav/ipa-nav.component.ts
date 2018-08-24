@@ -13,7 +13,9 @@ export class IpaNav implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.activePage = this.route.snapshot.url[0].path;
+    // snapshot returned empty on new courses page. using location instead.
+    // this.activePage = this.route.snapshot.url[0].path;
+    this.activePage = location.pathname.split('/')[1];
   }
 
   toggleSideNav() {

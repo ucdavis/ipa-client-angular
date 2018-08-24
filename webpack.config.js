@@ -57,7 +57,8 @@ module.exports = {
     teachingCallApp: './app/teachingCall/teachingCallApp.js',
     workgroupApp: './app/workgroup/workgroupApp.js',
     workloadSummaryReportApp: './app/workloadSummaryReport/workloadSummaryReportApp.js',
-    newScheduling: './app/ng6/newScheduling/main.ts'
+    newScheduling: './app/ng6/newScheduling/main.ts',
+    newCourses: './app/ng6/course/main.ts'
   },
   output: {
     filename: 'js/[name].js',
@@ -74,6 +75,7 @@ module.exports = {
       TeachingCall: path.resolve(__dirname, 'app/teachingCall/'),
       '@core': path.resolve(__dirname, 'app/ng6/core'),
       '@scheduling': path.resolve(__dirname, 'app/ng6/newScheduling'),
+      '@course': path.resolve(__dirname, 'app/ng6/course'),
       '@project': path.resolve(__dirname, '')
     }
     
@@ -144,6 +146,7 @@ module.exports = {
     // Copy css from Angular modules to dist root
     new CopyWebpackPlugin([
       { from: 'app/ng6/newScheduling/**/*.css', to: '', flatten: true },
+      { from: 'app/ng6/course/**/*.css', to: '', flatten: true },
       { from: 'app/ng6/core/**/*.css', to: '', flatten: true }
 
     ]),
@@ -217,6 +220,11 @@ module.exports = {
       "filename": "./newScheduling.html",
       "chunks": ['newScheduling']
     }),
+    new HtmlWebpackPlugin({
+      "template": "./app/ng6/course/main.html",
+      "filename": "./newCourses.html",
+      "chunks": ['newCourses']
+    }),
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify(env.apiUrl)
       // Good to namespace 'process.env' even though this is a key for text replacement, also avoids typescript from attempting to process it
@@ -237,6 +245,7 @@ module.exports = {
         target: "http://localhost:9000",
         bypass: function(req, res, proxyOptions) {
           if ((req.url.indexOf("/newScheduling") > -1 ) && (req.url != "/newScheduling.html")) { return "/newScheduling.html"; }
+          if ((req.url.indexOf("/newCourses") > -1 ) && (req.url != "/newCourses.html")) { return "/newCourses.html"; }
           if ((req.url.indexOf("/summary") > -1 ) && (req.url != "/summary.html")) { return "/summary.html"; }
           if ((req.url.indexOf("/admin") > -1 ) && (req.url != "/admin.html")) { return "/admin.html"; }
           if ((req.url.indexOf("/budget") > -1 ) && (req.url != "/budget.html")) { return "/budget.html"; }

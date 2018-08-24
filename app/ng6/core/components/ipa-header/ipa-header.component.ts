@@ -24,6 +24,7 @@ export class IpaHeader implements OnInit {
   workgroupUsers;
   isImpersonating: boolean;
   currentUser;
+  activePageTitle: string;
 
   constructor(
     private apiService: ApiService,
@@ -36,6 +37,8 @@ export class IpaHeader implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.activePageTitle = location.pathname.split('/')[1].split('new')[1];
+
     this.currentUser = JSON.parse(localStorage.getItem('currentUser')) || {
       displayName: localStorage.getItem('displayName'),
       loginId: localStorage.getItem('loginId')
