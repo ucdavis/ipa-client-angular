@@ -30,7 +30,11 @@ class StudentSupportCallFormCtrl {
 		$rootScope.$on('studentStateChanged', function (event, data) {
 			$scope.view.state = data;
 		});
-	
+
+		$scope.closeCommentModal = function() {
+			StudentFormActions.closePreferenceCommentsModal();
+		};
+
 		$scope.updatePreferencesOrder = function(preferenceIds) {
 			StudentFormActions.updatePreferencesOrder(preferenceIds, $scope.view.state.userInterface.scheduleId, $scope.termCode);
 		};
