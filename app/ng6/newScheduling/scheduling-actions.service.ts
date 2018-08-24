@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '@core/api/api.service';
 import { SchedulingState } from '@scheduling/models/scheduling.model';
 import { AuthService } from '@core/auth/auth.service';
-import { BehaviorSubject, Observable } from '../../node_modules/rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Course } from '@core/models/course.model';
 import { SectionGroup } from '@core/models/section-group.model';
 import { ActivatedRoute } from '@angular/router';

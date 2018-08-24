@@ -57,7 +57,7 @@ module.exports = {
     teachingCallApp: './app/teachingCall/teachingCallApp.js',
     workgroupApp: './app/workgroup/workgroupApp.js',
     workloadSummaryReportApp: './app/workloadSummaryReport/workloadSummaryReportApp.js',
-    newScheduling: './app/newScheduling/main.ts'
+    newScheduling: './app/ng6/newScheduling/main.ts'
   },
   output: {
     filename: 'js/[name].js',
@@ -72,8 +72,8 @@ module.exports = {
     alias: {
       Workgroup: path.resolve(__dirname, 'app/workgroup/'),
       TeachingCall: path.resolve(__dirname, 'app/teachingCall/'),
-      '@core': path.resolve(__dirname, 'app/core'),
-      '@scheduling': path.resolve(__dirname, 'app/newScheduling'),
+      '@core': path.resolve(__dirname, 'app/ng6/core'),
+      '@scheduling': path.resolve(__dirname, 'app/ng6/newScheduling'),
       '@project': path.resolve(__dirname, '')
     }
     
@@ -143,8 +143,8 @@ module.exports = {
     ]),
     // Copy css from Angular modules to dist root
     new CopyWebpackPlugin([
-      { from: 'app/newScheduling/**/*.css', to: '', flatten: true },
-      { from: 'app/core/**/*.css', to: '', flatten: true }
+      { from: 'app/ng6/newScheduling/**/*.css', to: '', flatten: true },
+      { from: 'app/ng6/core/**/*.css', to: '', flatten: true }
 
     ]),
     // Concat lib CSS
@@ -213,7 +213,7 @@ module.exports = {
       ],
     }),
     new HtmlWebpackPlugin({
-      "template": "./app/newScheduling/newScheduling.html",
+      "template": "./app/ng6/newScheduling/newScheduling.html",
       "filename": "./newScheduling.html",
       "chunks": ['newScheduling']
     }),
