@@ -1,31 +1,13 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedStateService } from '@core/shared-state/shared-state.service';
 import { SchedulingUIService } from '../../../newScheduling/scheduling-ui.service';
 import { Observable } from 'rxjs';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ApiService } from '@core/api/api.service';
 import { AuthService } from '@core/auth/auth.service';
+import { ImpersonateModal } from '@core/components/impersonate-modal/impersonate-modal.component';
 
-// Modal Dialog Component
-@Component({
-  selector: 'impersonate-modal',
-  templateUrl: 'impersonate-modal.html'
-})
-export class ImpersonateModal {
-  constructor(
-    public dialogRef: MatDialogRef<ImpersonateModal>,
-    @Inject(MAT_DIALOG_DATA) public data
-  ) {}
-
-  onClick(userToImpersonate): void {
-    this.dialogRef.close(userToImpersonate); // optional result to return to dialog opener
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
 @Component({
   selector: 'ipa-header',
   templateUrl: './ipa-header.component.html',

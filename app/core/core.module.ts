@@ -36,8 +36,9 @@ import {
 } from '@angular/material';
 
 // Components
-import { IpaHeader, ImpersonateModal } from '@core/components/ipa-header/ipa-header.component';
+import { IpaHeader } from '@core/components/ipa-header/ipa-header.component';
 import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
+import { ImpersonateModal } from '@core/components/impersonate-modal/impersonate-modal.component';
 
 // TODO: Bundle up Material module imports
 @NgModule({
