@@ -1,102 +1,196 @@
 <div class="line-items">
-	<table class="line-items__table">
-		<thead>
-			<tr>
-				<th class="line-items__table-header line-items__table--checkbox">
-					<div class="line-items__table-header-container line-items__table-container--checkbox">
-						<ipa-checkbox style="'muted'"
-						              is-checked="ui.areAllLineItemsSelected"
-						              click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
-						</ipa-checkbox>
-					</div>
-				</th>
-				<th class="line-items__table-header line-items__table--type">
-					<div class="line-items__table-header-container">
-						Type
-					</div>
-				</th>
-				<th class="line-items__table-header">
-					<div class="line-items__table-header-container">
-						Description
-					</div>
-				</th>
-				<th class="line-items__table-header line-items__table--comments">
-					<div class="line-items__table-header-container">
-						Comments
-					</div>
-				</th>
-				<th class="line-items__table-header line-items__table--amount">
-					<div class="line-items__table-header-amount-container">
-						Amount
-					</div>
-				</th>
-			</tr>
-		</thead>
+	<ipa-tabs tab-names="ui.fundsNav.allTabs"
+	          active-tab="ui.fundsNav.activeTab"
+	          select-tab="setActiveTab"
+	          tab-overrides="ui.fundsNav.tabOverrides"
+	          slim="true">
 
-		<tbody>
-			<tr ng-repeat="lineItem in lineItems track by $index">
-				<!-- Checkbox -->
-				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
-					<div class="line-items__table-container--checkbox">
-						<ipa-checkbox style="'muted'"
-						              is-disabled="!(lineItem.id)"
-						              is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
-						              click-action="selectLineItem(lineItem)">
-						</ipa-checkbox>
-					</div>
-				</td>
-
-				<!-- Category -->
-				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'" ng-class="{'line-items__cell--orphaned' : lineItem.isOrphaned}">
-					{{ lineItem.categoryDescription }}
-					<span ng-if="lineItem.isOrphaned">
-						<i class="entypo-attention line-items__orphan-warn"
-						   tooltip-append-to-body="true"
-						   uib-tooltip="The assignment this line item was based on no longer exists on the schedule">
-						</i>
-					</span>
-					<span ng-if="lineItem.hidden">
-						<i class="entypo-attention line-items__orphan-warn"
-						   tooltip-append-to-body="true"
-						   uib-tooltip="This line item is being hidden, but the assignment its based on still exists.">
-						</i>
-						<ipa-button icon-class="'glyphicon glyphicon-plus'"
-						            size="'small'"
-						            on-click="unHideLineItem(lineItem)"
-						            tooltip-message="'Restore line item'">
-						</ipa-button>
-					</span>
-				</td>
-
-				<!-- Description -->
-				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'" ng-class="{'line-items__cell--orphaned' : lineItem.isOrphaned}">
-					{{ lineItem.description }}
-				</td>
-
-				<!-- Comments -->
-				<td class="line-items__table-cell line-items__table-cell--comments" ng-class-odd="'line-items__table-cell--dark'">
-					<div class="line-items__comment-container">
-						<ipa-button superscript="lineItem.commentCountDisplay"
-												icon-color="lineItem.commentCountDisplay ? '' : 'gray'"
-						            tooltip-message="'View Comments'"
-												icon-class="'entypo entypo-chat'"
-						            on-click="openAddLineItemCommentsModal(lineItem)">
-						</ipa-button>
-					</div>
-				</td>
-
-				<!-- Amount -->
-				<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
-					<div class="line-items__amount-container">
-						<div>
-							{{ toCurrency(lineItem.amount) }}
+		<table class="line-items__table" ng-show="ui.fundsNav.activeTab == 'Funds'">
+			<thead>
+				<tr>
+					<th class="line-items__table-header line-items__table--checkbox">
+						<div class="line-items__table-header-container line-items__table-container--checkbox">
+							<ipa-checkbox style="'muted'"
+							              is-checked="ui.areAllLineItemsSelected"
+							              click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
+							</ipa-checkbox>
 						</div>
-						<div>
-							<line-item-dropdown line-item="lineItem"></line-item-dropdown>
+					</th>
+					<th class="line-items__table-header line-items__table--type">
+						<div class="line-items__table-header-container">
+							Type
 						</div>
-					</div>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+					</th>
+					<th class="line-items__table-header">
+						<div class="line-items__table-header-container">
+							Description
+						</div>
+					</th>
+					<th class="line-items__table-header line-items__table--comments">
+						<div class="line-items__table-header-container">
+							Comments
+						</div>
+					</th>
+					<th class="line-items__table-header line-items__table--amount">
+						<div class="line-items__table-header-amount-container">
+							Amount
+						</div>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr ng-repeat="lineItem in lineItems track by $index" ng-show="lineItem.id > 0 && lineItem.hidden == false">
+					<!-- Checkbox -->
+					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+						<div class="line-items__table-container--checkbox">
+							<ipa-checkbox style="'muted'"
+							              is-disabled="!(lineItem.id)"
+							              is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
+							              click-action="selectLineItem(lineItem)">
+							</ipa-checkbox>
+						</div>
+					</td>
+
+					<!-- Category -->
+					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+						{{ lineItem.categoryDescription }}
+						<span ng-if="lineItem.isOrphaned">
+							<i class="entypo-attention line-items__orphan-warn"
+							   tooltip-append-to-body="true"
+							   uib-tooltip="The assignment this line item was based on no longer exists on the schedule">
+							</i>
+						</span>
+						<span ng-if="lineItem.hidden">
+							<i class="entypo-attention line-items__orphan-warn"
+							   tooltip-append-to-body="true"
+							   uib-tooltip="This line item is being hidden, but the assignment its based on still exists.">
+							</i>
+							<ipa-button icon-class="'glyphicon glyphicon-plus'"
+							            size="'small'"
+							            on-click="unHideLineItem(lineItem)"
+							            tooltip-message="'Restore line item'">
+							</ipa-button>
+						</span>
+					</td>
+
+					<!-- Description -->
+					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+						{{ lineItem.description }}
+					</td>
+
+					<!-- Comments -->
+					<td class="line-items__table-cell line-items__table-cell--comments" ng-class-odd="'line-items__table-cell--dark'">
+						<div class="line-items__comment-container">
+							<ipa-button superscript="lineItem.commentCountDisplay"
+							            icon-color="lineItem.commentCountDisplay ? '' : 'gray'"
+							            tooltip-message="'View Comments'"
+							            icon-class="'entypo entypo-chat'"
+							            on-click="openAddLineItemCommentsModal(lineItem)">
+							</ipa-button>
+						</div>
+					</td>
+
+					<!-- Amount -->
+					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+						<div class="line-items__amount-container">
+							<div>
+								{{ toCurrency(lineItem.amount) }}
+							</div>
+							<div>
+								<line-item-dropdown line-item="lineItem"></line-item-dropdown>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table class="line-items__table" ng-show="ui.fundsNav.activeTab == 'Suggested'">
+			<colgroup>
+				<col style="width: 8%;">
+				<col style="width: 20%;">
+				<col style="width: 35%;">
+				<col style="width: 27%;">
+				<col style="width: 10%;">
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="line-items__table-header line-items__table--checkbox">
+						<div class="line-items__table-header-container line-items__table-container--checkbox">
+
+						</div>
+					</th>
+					<th class="line-items__table-header line-items__table--type">
+						<div class="line-items__table-header-container">
+							Type
+						</div>
+					</th>
+					<th class="line-items__table-header">
+						<div class="line-items__table-header-container">
+							Description
+						</div>
+					</th>
+					<th class="line-items__table-header line-items__table--comments">
+					</th>
+					<th class="line-items__table-header line-items__table--amount">
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr ng-repeat="lineItem in lineItems track by $index" ng-show="!lineItem.id || lineItem.hidden">
+					<!-- Checkbox -->
+					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+						<div class="line-items__table-container--checkbox">
+						</div>
+					</td>
+
+					<!-- Category -->
+					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+						{{ lineItem.categoryDescription }}
+						<span ng-if="lineItem.isOrphaned">
+							<i class="entypo-attention line-items__orphan-warn"
+							   tooltip-append-to-body="true"
+							   uib-tooltip="The assignment this line item was based on no longer exists on the schedule">
+							</i>
+						</span>
+					</td>
+
+					<!-- Description -->
+					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+						{{ lineItem.description }}
+					</td>
+
+					<!-- Comments -->
+					<td class="line-items__table-cell line-items__table-cell--comments" ng-class-odd="'line-items__table-cell--dark'">
+							<span ng-if="lineItem.id">
+								<ipa-button size="'small'"
+								            skin="'dark'"
+								            on-click="unHideLineItem(lineItem)"
+								            text="'Add'">
+								</ipa-button>
+							</span>
+							<span ng-if="!lineItem.id">
+								<ipa-button size="'small'"
+								            skin="'dark'"
+								            on-click="addLineItem(lineItem)"
+								            text="'Add'">
+								</ipa-button>
+								<ipa-button size="'small'"
+								            on-click="hideLineItem(lineItem)"
+								            text="'Hide'"
+							              class="line-items__hide-item-ui">
+								</ipa-button>
+							</span>
+					</td>
+
+					<!-- Amount -->
+					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</ipa-tabs>
 </div>

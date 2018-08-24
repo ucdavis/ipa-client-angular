@@ -650,6 +650,14 @@ class BudgetActions {
 
 				BudgetCalculations.calculateCourseList();
 			},
+			selectFundsNav: function(tab) {
+				BudgetReducers.reduce({
+					type: ActionTypes.SELECT_FUNDS_NAV,
+					payload: {
+						activeTab: tab
+					}
+				});
+			},
 			toggleSelectLineItem: function(lineItem) {
 				BudgetReducers.reduce({
 					type: ActionTypes.TOGGLE_SELECT_LINE_ITEM,

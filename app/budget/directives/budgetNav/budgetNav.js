@@ -10,7 +10,8 @@ let budgetNav = function ($rootScope, BudgetActions) {
 			selectedSection: '<',
 			selectedBudgetScenario: '<',
 			selectedLineItems: '<',
-			filters: '<'
+			filters: '<',
+			fundsNav: '<'
 		},
 		link: function(scope, element, attrs) {
 			scope.setRoute = function(selectedRoute) {

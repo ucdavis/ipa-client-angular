@@ -717,6 +717,11 @@ class BudgetReducers {
 								activeTerm: null,
 								allTabs: null
 							},
+							fundsNav: {
+								allTabs: ['Funds', 'Suggested'],
+								activeTab: 'Funds',
+								tabOverrides: {}
+							},
 							isAddBudgetScenarioModalOpen: false,
 							isAddLineItemModalOpen: false,
 							isBudgetConfigModalOpen: false,
@@ -801,6 +806,9 @@ class BudgetReducers {
 						ui.selectedTerm = action.payload.term;
 						ui.termNav.activeTab = action.payload.activeTermTab;
 						ui.termNav.activeTerm = action.payload.term;
+						return ui;
+					case ActionTypes.SELECT_FUNDS_NAV:
+						ui.fundsNav.activeTab = action.payload.activeTab;
 						return ui;
 					case ActionTypes.SET_ROUTE:
 						ui.sectionNav.activeTab = action.payload.selectedRoute;
