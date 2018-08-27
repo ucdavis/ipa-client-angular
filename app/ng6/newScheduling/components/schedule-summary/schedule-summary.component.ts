@@ -23,7 +23,6 @@ export class ScheduleSummaryComponent {
     'end',
     'location'
   ];
-  spanningColumns = ['title']; // unused?
   spans = [];
 
   constructor(private schedulingActions: SchedulingActions) {}
