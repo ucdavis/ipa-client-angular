@@ -1,3 +1,5 @@
+import '@core/styles.css';
+
 import { Component } from '@angular/core';
 
 @Component({
