@@ -66,10 +66,6 @@ export class ScheduleSummaryComponent {
   }
 
   ngOnInit() {
-    // this.schedulingActions.sectionGroups.subscribe(sectionGroups => {
-    //   this.dataSource = sectionGroups;
-    // });
-
     this.schedulingActions.reportState$.subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.cacheSpan('title', d => d.title);
@@ -81,7 +77,6 @@ export class ScheduleSummaryComponent {
   }
 
   sortData(sort: Sort) {
-    // sort = {active: "title", direction "asc | desc"}
     const data = this.dataSource.data.slice();
     let orderedData = orderBy(data, ['title', 'section'], [sort.direction, 'asc']);
 

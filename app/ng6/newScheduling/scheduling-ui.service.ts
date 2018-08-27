@@ -2,13 +2,11 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 interface uiState {
   activeTab: string;
-  sortBy: string;
 }
 
 export class SchedulingUIService {
   private uiState: BehaviorSubject<uiState> = new BehaviorSubject({
-    activeTab: 'summary',
-    sortBy: 'Title'
+    activeTab: 'summary'
   });
 
   getState(): Observable<uiState> {

@@ -16,6 +16,7 @@ export class SchedulingActions {
   private _workgroupId: number = null;
   private _year: number = null;
   private _termCode: number;
+
   private _reportState: BehaviorSubject<ScheduleSummary[]> = new BehaviorSubject([]);
   public readonly reportState$: Observable<ScheduleSummary[]> = this._reportState.asObservable();
 

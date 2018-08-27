@@ -44,7 +44,6 @@ export class IpaHeader implements OnInit {
       loginId: localStorage.getItem('loginId')
     };
 
-    // A user is impersonating when it has a realLoginId that is different than the loginId
     this.isImpersonating = this.currentUser.realUserLoginId
       ? this.currentUser.loginId !== this.currentUser.realUserLoginId
       : false;
@@ -155,7 +154,6 @@ export class IpaHeader implements OnInit {
     return termDescriptions[this.termCode];
   }
 
-  // TODO: Bring over generateTermTable()?
   getTermTable() {
     let termTable = [
       { id: 5, description: 'Summer Session 1', shortCode: '05' },
@@ -173,7 +171,6 @@ export class IpaHeader implements OnInit {
   }
 
   goToTerm(shortCode) {
-    // path goes up one level from '/newScheduling/20/2010/03' and replaces :termCode portion
     this.router.navigate(['../', shortCode], { relativeTo: this.route });
   }
 }
