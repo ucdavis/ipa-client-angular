@@ -42,7 +42,7 @@
 			<div class="col-sm-5">
 				<div class="input-group form-input">
 					<ipa-input value="newLineItem.description"
-					           max-chars="100"
+					           max-chars="500"
 					           placeholder="Description">
 					</ipa-input>
 				</div>
@@ -53,10 +53,7 @@
 			<label class="col-sm-4 control-label">Notes</label>
 			<div class="col-sm-5">
 				<div class="input-group form-input">
-					<ipa-input
-						value="newLineItem.notes"
-						placeholder="Notes">
-					</ipa-input>
+					<textarea placeholder="Add a note" rows="3" class="add-line-item__notes" ng-model="newLineItem.notes"></textarea>
 				</div>
 			</div>
 		</div>
