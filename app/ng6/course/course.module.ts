@@ -4,15 +4,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { CoreModule } from '@core/core.module';
 
-import { MainComponent } from './components/main/main.component';
-import { CourseComponent } from './components/course/course.component';
+import { CourseMainComponent } from './components/course-main/course-main.component';
+import { CourseViewComponent } from './components/course-view/course-view.component';
 
 // import { AuthGuard } from '@core/auth/auth-guard.service';
 
 const courseRoutes: Routes = [
   {
     path: 'newCourses/:workgroupId/:year/:termCode',
-    component: CourseComponent
+    component: CourseViewComponent
     // canActivate: [AuthGuard],
     // resolve: {
     // sectionGroups: SectionGroupResolver,
@@ -21,7 +21,7 @@ const courseRoutes: Routes = [
   },
   {
     path: '**',
-    component: MainComponent
+    component: CourseMainComponent
     // canActivate: [RedirectGuard]
   }
 ];
@@ -33,8 +33,8 @@ const courseRoutes: Routes = [
     CoreModule,
     RouterModule.forRoot(courseRoutes, { enableTracing: true })
   ],
-  declarations: [MainComponent, CourseComponent],
+  declarations: [CourseMainComponent, CourseViewComponent],
   providers: [],
-  bootstrap: [MainComponent]
+  bootstrap: [CourseMainComponent]
 })
 export class CourseModule {}

@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'course',
-  templateUrl: './course.component.html',
-  styleUrls: ['course.component.css']
+  selector: 'course-view',
+  templateUrl: './course-view.component.html',
+  styleUrls: ['course-view.component.css']
 })
-export class CourseComponent {
+export class CourseViewComponent {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
