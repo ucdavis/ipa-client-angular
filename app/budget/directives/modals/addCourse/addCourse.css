@@ -1,7 +1,10 @@
+.sequence-pattern,
 .new-course-search {
   position: relative;
   padding-left: 15px;
-  width: 400px;
+  width: 100%;
+  padding-top: 15px;
+  padding-right: 40px;
 }
 
 .new-course-search i {
@@ -12,6 +15,17 @@
   transform: translateX(50%);
 }
 
+.sequence-pattern input,
 .new-course-search input {
-    padding-left: 30px;
+  padding-left: 30px;
+}
+
+.add-course__footer {
+  margin-top: 20px;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  background-color: rgb(248, 248, 248);
 }

@@ -1,4 +1,4 @@
-<div class="add-line-item">
+<div class="add-line-item add-course">
   <div class="new-course-search">
     <strong>Course</strong>
     <br />
@@ -16,7 +16,7 @@
     <i ng-show="view.newCourseSearchQuery && !view.loadingCourses" class="entypo-cancel" ng-click="clearNewCourseSearch()"></i>
   </div>
 
-  <div>
+  <div class="sequence-pattern">
     <strong>Sequence Pattern</strong>
     <br />
     <ipa-input value="newCourse.rawSequencePattern"
@@ -27,7 +27,7 @@
     </ipa-input>
   </div>
 
-  <div class="add-line-item-footer">
+  <div class="add-course__footer">
     <button ng-click="close()"
             type="button"
             class="btn btn-default modal-button">

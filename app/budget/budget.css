@@ -124,3 +124,7 @@
 	margin-left: 0px;
 	margin-right: 0px;
 }
+
+.add-course__modal .ipa-modal-content {
+  overflow-y: visible;
+}
