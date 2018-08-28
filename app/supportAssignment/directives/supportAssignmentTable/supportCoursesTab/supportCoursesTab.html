@@ -1,5 +1,5 @@
 <div class="support-courses-tab"
-	ng-show="state.ui.tabPivot == 'By Course'">
+	ng-if="state.ui.tabPivot == 'By Course'">
 	<div class="ipa-table__header">
 		<div class="support-courses-tab__header-small">
 			Course
@@ -36,7 +36,6 @@
 					<support-assignment-row
 						read-only="state.ui.readOnlyMode"
 						name="supportAssignment.fullName"
-						on-delete="deleteAssignment"
 						support-assignment="supportAssignment">
 					</support-assignment-row>
 				</div>
@@ -45,7 +44,6 @@
 						ng-hide="state.ui.readOnlyMode"
 						view-type="state.ui.viewType"
 						section-group="sectionGroup"
-						on-select="assignStaffToSectionGroup"
 						assignment-options="sectionGroup.teachingAssistantAssignmentOptions">
 					</assign-support-staff>
 				</div>
@@ -67,7 +65,6 @@
 					<support-assignment-row
 						read-only="state.ui.readOnlyMode"
 						name="supportAssignment.fullName"
-						on-delete="deleteAssignment"
 						support-assignment="supportAssignment">
 					</support-assignment-row>
 				</div>
@@ -76,7 +73,6 @@
 						ng-hide="state.ui.readOnlyMode"
 						view-type="state.ui.viewType"
 						section="section"
-						on-select="assignStaffToSection"
 						assignment-options="section.teachingAssistantAssignmentOptions">
 					</assign-support-staff>
 				</div>

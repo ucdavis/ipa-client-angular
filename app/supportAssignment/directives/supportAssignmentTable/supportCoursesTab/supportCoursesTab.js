@@ -15,20 +15,6 @@ let supportCoursesTab = function ($rootScope, SupportActions) {
 				SupportActions.setViewType(type);
 			};
 
-			scope.deleteAssignment = function(supportAssignment) {
-				SupportActions.deleteAssignment(supportAssignment);
-			};
-
-			scope.assignStaffToSectionGroup = function(supportStaffId, sectionGroup) {
-				var type = scope.state.ui.viewType == "Readers" ? "reader" : "teachingAssistant";
-				SupportActions.assignStaffToSectionGroup(sectionGroup.id, supportStaffId, type);
-			};
-
-			scope.assignStaffToSection = function(supportStaffId, section) {
-				var type = scope.state.ui.viewType == "Readers" ? "reader" : "teachingAssistant";
-				SupportActions.assignStaffToSection(section.id, supportStaffId, type);
-			};
-
 			scope.isNumber = function(number) {
 				return isNumber(number);
 			};
