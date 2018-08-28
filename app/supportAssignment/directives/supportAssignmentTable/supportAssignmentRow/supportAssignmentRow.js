@@ -1,6 +1,6 @@
 import './supportAssignmentRow.css';
 
-let supportAssignmentRow = function ($rootScope) {
+let supportAssignmentRow = function (SupportActions) {
 	return {
 		restrict: 'E',
 		template: require('./supportAssignmentRow.html'),
@@ -12,8 +12,8 @@ let supportAssignmentRow = function ($rootScope) {
 			readOnly: '<?'
 		},
 		link: function (scope, element, attrs) {
-			scope.deleteAssignment = function() {
-				scope.onDelete()(scope.supportAssignment);
+			scope.deleteAssignment = function(supportAssignment) {
+				SupportActions.deleteAssignment(supportAssignment);
 			};
 		}
 	};
