@@ -12,6 +12,7 @@ let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionServi
     link: function (scope, element, attrs) {
       scope.newCourse = {};
       scope.view = {};
+			scope.sequenceNumberPlaceholder = "Example: '001' or 'A'";
 
       scope.newCourseValidation = {
         tooltipErrorMessage: "Select a course and enter a sequence pattern"
