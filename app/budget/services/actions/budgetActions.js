@@ -273,6 +273,7 @@ class BudgetActions {
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
 					BudgetCalculations.calculateCourseList();
+					ScheduleCostCalculations.calculateScheduleCosts();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not add course.", type: "ERROR" });
 				});

@@ -28,6 +28,9 @@ class ScheduleCostCalculations {
           // Ensure sectionGroupCost belongs to this scenario
           if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return; }
 
+          // Ensure sectionGroupCost isn't disabled
+          if (sectionGroupCost.disabled) { return; }
+
           // Ensure sectionGroupCost belongs to an active term in this scenario
           var shortTerm = sectionGroupCost.termCode.slice(-2);
           if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) { return; }
