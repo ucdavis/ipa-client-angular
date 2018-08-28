@@ -28,7 +28,6 @@ class BudgetCtrl {
 
 		this.$rootScope.$on('budgetStateChanged', function (event, data) {
 			_self.$scope.view.state = data;
-			console.log(_self.$scope.view.state);
 
 			// Set the current active budget scenario id
 			if (_self.$scope.view.state.selectedBudgetScenario) {
