@@ -18,6 +18,7 @@ let modalPreferenceComments = function ($rootScope, StudentFormActions) {
 
 			scope.close = function() {
 				scope.isVisible = false;
+				StudentFormActions.closePreferenceCommentsModal();
 			};
 		} // end link
 	};
