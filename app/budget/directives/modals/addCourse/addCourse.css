@@ -1,0 +1,17 @@
+.new-course-search {
+  position: relative;
+  padding-left: 15px;
+  width: 400px;
+}
+
+.new-course-search i {
+  position: absolute;
+  z-index: 1;
+  bottom: 7px;
+  left: 15px;
+  transform: translateX(50%);
+}
+
+.new-course-search input {
+    padding-left: 30px;
+}

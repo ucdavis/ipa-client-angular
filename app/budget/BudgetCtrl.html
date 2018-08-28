@@ -45,6 +45,14 @@
 			</add-course-comments>
 		</ipa-modal>
 
+		<ipa-modal is-visible="view.state.ui.addCourseModal.isOpen"
+		           header-text="Add Course">
+			<add-course ng-if="view.state.ui.addCourseModal.isOpen"
+			                     state="view.state"
+			                     is-visible="view.state.ui.addCourseModal.isOpen">
+			</add-course>
+		</ipa-modal>
+
 		<ipa-modal is-visible="view.state.ui.lineItemCommentsModal.isOpen"
 		           header-text="Line Item Comments">
 			<add-line-item-comments ng-if="view.state.ui.lineItemCommentsModal.isOpen"

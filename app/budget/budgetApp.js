@@ -16,6 +16,7 @@ import ScheduleCostCalculations from './services/actions/scheduleCostCalculation
 import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
+import SectionService from './../shared/services/SectionService.js';
 
 // Directives
 import budgetNav from './directives/budgetNav/budgetNav.js';
@@ -39,6 +40,8 @@ import addBudgetScenario from './directives/modals/addBudgetScenario/addBudgetSc
 import addCourseComments from './directives/modals/addCourseComments/addCourseComments.js';
 import addLineItem from './directives/modals/addLineItem/addLineItem.js';
 import addLineItemComments from './directives/modals/addLineItemComments/addLineItemComments.js';
+
+import addCourse from './directives/modals/addCourse/addCourse.js';
 
 // Dependencies
 var dependencies = [
@@ -82,6 +85,7 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .service('TermService', TermService)
 .service('AuthService', AuthService)
 .service('ScheduleCostCalculations', ScheduleCostCalculations)
+.service('SectionService', SectionService)
 .directive('budgetNav', budgetNav)
 .directive('lineItemFilters', lineItemFilters)
 .directive('courseListFilters', courseListFilters)
@@ -97,6 +101,7 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .directive('instructorList', instructorList)
 .directive('addBudgetScenario', addBudgetScenario)
 .directive('addCourseComments', addCourseComments)
+.directive('addCourse', addCourse)
 .directive('addLineItem', addLineItem)
 .directive('addLineItemComments', addLineItemComments)
 .directive('courseList', courseList)
@@ -143,7 +148,8 @@ const budgetApp = angular.module("budgetApp", dependencies)
 	CALCULATE_SCHEDULE_COSTS: "CALCULATE_SCHEDULE_COSTS",
 	CALCULATE_COURSE_LIST: "CALCULATE_COURSE_LIST",
 	TOGGLE_FILTER_SHOW_HIDDEN_COURSES: "TOGGLE_FILTER_SHOW_HIDDEN_COURSES",
-	SELECT_FUNDS_NAV: "SELECT_FUNDS_NAV"
+	SELECT_FUNDS_NAV: "SELECT_FUNDS_NAV",
+  OPEN_ADD_COURSE_MODAL: "OPEN_ADD_COURSE_MODAL"
 });
 
 export default budgetApp;

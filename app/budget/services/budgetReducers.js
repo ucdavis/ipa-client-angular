@@ -686,6 +686,9 @@ class BudgetReducers {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						ui = {
+              addCourseModal: {
+                isOpen: false
+              },
 							courseCommentsModal: {
 								isOpen: false
 							},
@@ -852,6 +855,12 @@ class BudgetReducers {
 					case ActionTypes.OPEN_ADD_COURSE_COMMENT_MODAL:
 						ui.courseCommentsModal.isOpen = true;
 						ui.courseCommentsModal.sectionGroupCost = action.payload.sectionGroupCost;
+						return ui;
+					case ActionTypes.OPEN_ADD_COURSE_MODAL:
+						ui.addCourseModal.isOpen = true;
+						return ui;
+					case ActionTypes.CLOSE_ADD_COURSE_MODAL:
+						ui.addCourseModal.isOpen = false;
 						return ui;
 					case ActionTypes.OPEN_ADD_LINE_ITEM_COMMENT_MODAL:
 						ui.lineItemCommentsModal.isOpen = true;

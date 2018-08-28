@@ -23,7 +23,6 @@ let budgetNav = function ($rootScope, BudgetActions) {
 			};
 
 			scope.openAddCourseModal = function() {
-				debugger;
 				BudgetActions.openAddCourseModal();
 			};
 

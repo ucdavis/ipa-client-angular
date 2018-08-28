@@ -48,7 +48,7 @@ class BudgetService {
 				return ApiService.put("/api/budgetView/sectionGroupCosts/" + sectionGroupCost.id, sectionGroupCost);
 			},
 			createSectionGroupCost: function (sectionGroupCost) {
-				return ApiService.post("/api/budgetView/budgetScenarios/" + sectionGroupCost.budgetScenarioId + "/sectionGroups/" + sectionGroupCost.sectionGroupId + "/sectionGroupCosts");
+				return ApiService.post("/api/budgetView/budgetScenarios/" + sectionGroupCost.budgetScenarioId + "/sectionGroupCosts", sectionGroupCost);
 			},
 	
 			// InstructorCost
@@ -67,6 +67,10 @@ class BudgetService {
 			// LineItemComment
 			createLineItemComment: function(lineItemComment) {
 				return ApiService.post("/api/budgetView/lineItems/" + lineItemComment.lineItemId + "/lineItemComments", lineItemComment);
+			},
+
+			searchCourses: function (query) {
+				return ApiService.get("/courses/search?q=" + query + "&token=" + dwToken, null, dwUrl);
 			},
 		};
 	}
