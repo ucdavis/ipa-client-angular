@@ -6,9 +6,38 @@
     <div class="line-items">
       <table class="line-items__table">
         <colgroup>
-          <col style="width: 25%;">
-          <col style="width: 75%;">
+          <col style="width: 8%;">
+          <col style="width: 8%;">
+          <col style="width: 14%;">
+          <col style="width: 6%;">
+          <col style="width: 64%;">
         </colgroup>
+        <thead>
+          <tr>
+            <th class="line-items__table-header">
+              <div class="line-items__table-header-container">
+                Subject Code
+              </div>
+            </th>
+            <th class="line-items__table-header">
+              <div class="line-items__table-header-container">
+                Course Number
+              </div>
+            </th>
+            <th class="line-items__table-header">
+              <div class="line-items__table-header-container">
+                Title
+              </div>
+            </th>
+            <th class="line-items__table-header line-items__table--amount">
+              <div class="line-items__table-header-amount-container">
+                Sequence Number
+              </div>
+            </th>
+            <th class="line-items__table-header"></th>
+          </tr>
+        </thead>
+
         <tbody>
           <tr ng-repeat="sectionGroupCost in courseList">
             <!-- Category -->
@@ -34,8 +63,17 @@
                 </i>
               </span>
               <span ng-class="{'course-list__cell-disabled': sectionGroupCost.isBudgeted == false }">
-                <strong>{{ sectionGroupCost.subjectCode }} {{ sectionGroupCost.courseNumber }} {{ sectionGroupCost.title }}</strong> - {{ sectionGroupCost.sequencePattern }}
+                {{ sectionGroupCost.subjectCode }}
               </span>
+            </td>
+            <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
+              {{ sectionGroupCost.courseNumber }}
+            </td>
+            <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
+              {{ sectionGroupCost.title }}
+            </td>
+            <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
+              {{ sectionGroupCost.sequencePattern }}
             </td>
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
 
