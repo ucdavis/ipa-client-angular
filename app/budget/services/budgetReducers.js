@@ -702,13 +702,6 @@ class BudgetReducers {
 										description: "Show Hidden line items",
 										selected: false
 									}
-								},
-								courseList: {
-									showHidden: {
-										type: "showHidden",
-										description: "Show non budgeted courses",
-										selected: false
-									}
 								}
 							},
 							sectionNav: {
@@ -777,9 +770,6 @@ class BudgetReducers {
 						return ui;
 					case ActionTypes.TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN:
 						ui.filters.lineItems.showHidden.selected = !ui.filters.lineItems.showHidden.selected;
-						return ui;
-					case ActionTypes.TOGGLE_FILTER_SHOW_HIDDEN_COURSES:
-						ui.filters.courseList.showHidden.selected = !ui.filters.courseList.showHidden.selected;
 						return ui;
 					case ActionTypes.CREATE_BUDGET_SCENARIO:
 						// Set initial lineItemDetail UI states

@@ -21,7 +21,6 @@ import SectionService from './../shared/services/SectionService.js';
 // Directives
 import budgetNav from './directives/budgetNav/budgetNav.js';
 import lineItemFilters from './directives/budgetNav/lineItemFilters/lineItemFilters.js';
-import courseListFilters from './directives/budgetNav/courseListFilters/courseListFilters.js';
 
 import budgetScenarioToolbar from './directives/budgetScenarioToolbar/budgetScenarioToolbar.js';
 import budgetScenarioDropdown from './directives/budgetScenarioToolbar/budgetScenarioDropdown/budgetScenarioDropdown.js';
@@ -88,7 +87,6 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .service('SectionService', SectionService)
 .directive('budgetNav', budgetNav)
 .directive('lineItemFilters', lineItemFilters)
-.directive('courseListFilters', courseListFilters)
 .directive('budgetScenarioToolbar', budgetScenarioToolbar)
 .directive('budgetScenarioDropdown', budgetScenarioDropdown)
 .directive('budgetCosts', budgetCosts)
@@ -147,7 +145,6 @@ const budgetApp = angular.module("budgetApp", dependencies)
 	CALCULATE_SUMMARY_TOTALS: "CALCULATE_SUMMARY_TOTALS",
 	CALCULATE_SCHEDULE_COSTS: "CALCULATE_SCHEDULE_COSTS",
 	CALCULATE_COURSE_LIST: "CALCULATE_COURSE_LIST",
-	TOGGLE_FILTER_SHOW_HIDDEN_COURSES: "TOGGLE_FILTER_SHOW_HIDDEN_COURSES",
 	SELECT_FUNDS_NAV: "SELECT_FUNDS_NAV",
   OPEN_ADD_COURSE_MODAL: "OPEN_ADD_COURSE_MODAL"
 });
