@@ -130,7 +130,7 @@
 			</li>
 
 			<li ng-class="{ 'active': currentBaseHref == 'scheduling' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
-				<a ng-href="/newScheduling/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}">
+				<a ng-href="/reports/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}">
 					<i class="entypo-calendar"></i>
 					<span class="title">(New) Schedule</span>
 				</a>

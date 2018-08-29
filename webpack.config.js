@@ -57,7 +57,7 @@ module.exports = {
     teachingCallApp: './app/teachingCall/teachingCallApp.js',
     workgroupApp: './app/workgroup/workgroupApp.js',
     workloadSummaryReportApp: './app/workloadSummaryReport/workloadSummaryReportApp.js',
-    newScheduling: './app/ng6/newScheduling/main.ts',
+    reports: './app/ng6/reports/main.ts',
     newCourses: './app/ng6/course/main.ts'
   },
   output: {
@@ -74,7 +74,7 @@ module.exports = {
       Workgroup: path.resolve(__dirname, 'app/workgroup/'),
       TeachingCall: path.resolve(__dirname, 'app/teachingCall/'),
       '@core': path.resolve(__dirname, 'app/ng6/core'),
-      '@scheduling': path.resolve(__dirname, 'app/ng6/newScheduling'),
+      '@scheduling': path.resolve(__dirname, 'app/ng6/reports'),
       '@course': path.resolve(__dirname, 'app/ng6/course'),
       '@project': path.resolve(__dirname, '')
     }
@@ -145,7 +145,7 @@ module.exports = {
     ]),
     // Copy css from Angular modules to dist root
     new CopyWebpackPlugin([
-      { from: 'app/ng6/newScheduling/**/*.css', to: '', flatten: true },
+      { from: 'app/ng6/reports/**/*.css', to: '', flatten: true },
       { from: 'app/ng6/course/**/*.css', to: '', flatten: true },
       { from: 'app/ng6/core/**/*.css', to: '', flatten: true }
 
@@ -216,9 +216,9 @@ module.exports = {
       ],
     }),
     new HtmlWebpackPlugin({
-      "template": "./app/ng6/newScheduling/newScheduling.html",
-      "filename": "./newScheduling.html",
-      "chunks": ['newScheduling']
+      "template": "./app/ng6/reports/reports.html",
+      "filename": "./reports.html",
+      "chunks": ['reports']
     }),
     new HtmlWebpackPlugin({
       "template": "./app/ng6/course/main.html",
@@ -244,7 +244,7 @@ module.exports = {
       "/*": {
         target: "http://localhost:9000",
         bypass: function(req, res, proxyOptions) {
-          if ((req.url.indexOf("/newScheduling") > -1 ) && (req.url != "/newScheduling.html")) { return "/newScheduling.html"; }
+          if ((req.url.indexOf("/reports") > -1 ) && (req.url != "/reports.html")) { return "/reports.html"; }
           if ((req.url.indexOf("/newCourses") > -1 ) && (req.url != "/newCourses.html")) { return "/newCourses.html"; }
           if ((req.url.indexOf("/summary") > -1 ) && (req.url != "/summary.html")) { return "/summary.html"; }
           if ((req.url.indexOf("/admin") > -1 ) && (req.url != "/admin.html")) { return "/admin.html"; }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '@core/api/api.service';
-import { SchedulingState } from '@scheduling/models/scheduling.model';
 import { AuthService } from '@core/auth/auth.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Course } from '@core/models/course.model';
@@ -58,18 +57,16 @@ export class SchedulingActions {
   }
 
   getScheduleSummaryReport(): Observable<any> {
-    let url = `/api/scheduleSummaryReportView/workgroups/${this._workgroupId}/years/${
-      this._year
-    }/terms/${this._year + this._termCode}`;
-
-    return this.apiService.get(url);
+    return this.apiService.get(
+      `/api/scheduleSummaryReportView/workgroups/${this._workgroupId}/years/${this._year}/terms/${this._year + this._termCode}`
+    );
   }
 
   generateReportData() {
     this.getScheduleSummaryReport().subscribe(data => {
       // Get course title for each section group
-      let courseArray = data.sectionGroups.map(sectionGroup => {
-        let matchedCourse = data.courses.find(course => {
+      const courseArray = data.sectionGroups.map(sectionGroup => {
+        const matchedCourse = data.courses.find(course => {
           return course.id === sectionGroup.courseId;
         });
         return {
@@ -83,9 +80,9 @@ export class SchedulingActions {
         {}
       );
 
-      let state = data.sections.map(section => {
+      const state = data.sections.map(section => {
         // each section has activities common to the section group as well as it's own activities
-        let sectionActivities = data.activities.filter(activity => {
+        const sectionActivities = data.activities.filter(activity => {
           // activity common to the section group has no section id
           if (activity.sectionGroupId === section.sectionGroupId && activity.sectionId === 0) {
             return true;

@@ -1,6 +1,6 @@
 <ipa-nav>
   <div class="page-content">
-    <schedule-summary *ngIf="activeTab === 'summary'"></schedule-summary>
+    <app-schedule-summary-report *ngIf="activeTab === 'summary'"></app-schedule-summary-report>
 
     <ng-container *ngIf="activeTab === 'assign'">
       <button (click)="errorTest()" mat-button color="accent">Log error</button>
@@ -43,23 +43,7 @@
       </mat-form-field>
 
       <p> Selected value: {{selectedValue}} </p>
-
-      <!-- <div>
-        <div class="typo-display-1">I am typo-body-2. Hello there!</div>
-        <div class="typo-display-2">I am typo-body-2. Hello there!</div>
-        <div class="typo-display-3">I am typo-body-2. Hello there!</div>
-        <div class="typo-display-4">I am typo-body-2. Hello there!</div>
-        <div class="typo-headline">I am typo-body-2. Hello there!</div>
-        <div class="typo-title">I am typo-body-2. Hello there!</div>
-        <div class="typo-subheading-2">I am typo-body-2. Hello there!</div>
-        <div class="typo-subheading-1">I am typo-body-2. Hello there!</div>
-        <div class="typo-body-1">I am typo-body-1. Hello there!</div>
-        <div class="typo-body-2">I am typo-body-2. Hello there!</div>
-        <div class="typo-caption">I am typo-caption. Hello there!</div>
-        <div class="typo-button">I am typo-buton. Hello there!</div>
-        <div class="typo-input">I am typo-input. Hello there!</div>
-      </div> -->
-    </ng-container>
+   </ng-container>
 
   </div>
 

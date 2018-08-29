@@ -36,7 +36,7 @@ import {
 } from '@angular/material';
 
 // Components
-import { IpaHeader } from '@core/components/ipa-header/ipa-header.component';
+import { IpaHeaderComponent } from '@core/components/ipa-header/ipa-header.component';
 import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
 import { ImpersonateModal } from '@core/components/impersonate-modal/impersonate-modal.component';
 
@@ -61,9 +61,9 @@ import { ImpersonateModal } from '@core/components/impersonate-modal/impersonate
     MatTooltipModule
   ],
   // Required for displaying components not referneced via selector
-  entryComponents: [IpaHeader, ImpersonateModal],
+  entryComponents: [IpaHeaderComponent, ImpersonateModal],
   // Injected components and directives
-  declarations: [IpaHeader, IpaNav, ImpersonateModal],
+  declarations: [IpaHeaderComponent, IpaNav, ImpersonateModal],
   // Exports made available to modules that import core
   // You can't export unless you've wired into yourself
   exports: [IpaNav, MatIconModule],

@@ -10,15 +10,18 @@ import { FormsModule } from '@angular/forms';
 
 import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 
-// Core imports
+// Core
 import { CoreModule } from '@core/core.module';
 import { AuthGuard } from '@core/auth/auth-guard.service';
 import { RedirectGuard } from '@core/api/redirect-guard.service';
 
-import { SectionGroupResolver } from '@core/resolvers/section-group-resolver.service';
-import { CourseResolver } from '@core/resolvers/course-resolver.service';
+import { ApiService } from '@core/api/api.service';
 
-// Angular Material Component imports
+import { ReportsService } from '@scheduling/services/reports.service';
+
+import { UrlParameterResolver } from '@core/resolvers/param-resolver.service';
+
+// Angular Material components
 import {
   MatButtonModule,
   MatTooltipModule,
@@ -27,16 +30,14 @@ import {
 } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-//import { SharedStateResolver } from '@core/shared-state/shared-state.resolver';
 
 const appRoutes: Routes = [
   {
-    path: 'newScheduling/:workgroupId/:year/:termCode',
+    path: 'reports/:workgroupId/:year/:termCode',
     component: MainComponent,
     canActivate: [AuthGuard],
     resolve: {
-      sectionGroups: SectionGroupResolver,
-      courses: CourseResolver
+      params: UrlParameterResolver
     }
   },
   {
@@ -64,7 +65,7 @@ const appRoutes: Routes = [
     MatInputModule
   ],
   declarations: [AppComponent, MainComponent, ScheduleSummaryComponent],
-  providers: [SchedulingActions, AuthGuard, SectionGroupResolver, CourseResolver],
+  providers: [ApiService, SchedulingActions, AuthGuard, UrlParameterResolver, ReportsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

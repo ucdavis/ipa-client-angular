@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { SchedulingActions } from '../../scheduling-actions.service';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, Sort } from '@angular/material';
-
 import { orderBy } from 'lodash';
 
+import { ReportsService } from '../../services/reports.service';
+
 @Component({
-  selector: 'schedule-summary',
+  selector: 'app-schedule-summary-report',
   templateUrl: './schedule-summary.component.html',
   styleUrls: ['schedule-summary.component.css']
 })
-export class ScheduleSummaryComponent {
+export class ScheduleSummaryComponent implements OnInit {
   dataSource;
   displayedColumns: string[] = [
     'title',
@@ -25,7 +25,14 @@ export class ScheduleSummaryComponent {
   ];
   spans = [];
 
-  constructor(private schedulingActions: SchedulingActions) {}
+  constructor(private reportsService: ReportsService) {}
+
+  ngOnInit() {
+    // this.reportsService.getScheduleSummaryReport().subscribe(data => {
+    //   this.dataSource = new MatTableDataSource(data);
+    //   this.cacheSpan('title', d => d.title);
+    // });
+  }
 
   /**
    * Evaluated and store an evaluation of the rowspan for each row.
@@ -36,13 +43,13 @@ export class ScheduleSummaryComponent {
     this.spans = [];
 
     for (let i = 0; i < this.dataSource.data.length; ) {
-      let currentValue = accessor(this.dataSource.data[i]);
+      const currentValue = accessor(this.dataSource.data[i]);
       let count = 1;
 
       // Iterate through the remaining rows to see how many match
       // the current value as retrieved through the accessor.
       for (let j = i + 1; j < this.dataSource.data.length; j++) {
-        if (currentValue != accessor(this.dataSource.data[j])) {
+        if (currentValue !== accessor(this.dataSource.data[j])) {
           break;
         }
 
@@ -64,29 +71,22 @@ export class ScheduleSummaryComponent {
     return this.spans[index] && this.spans[index][col];
   }
 
-  ngOnInit() {
-    this.schedulingActions.reportState$.subscribe(data => {
-      this.dataSource = new MatTableDataSource(data);
-      this.cacheSpan('title', d => d.title);
-    });
-  }
-
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   sortData(sort: Sort) {
     const data = this.dataSource.data.slice();
-    let orderedData = orderBy(data, ['title', 'section'], [sort.direction, 'asc']);
+    const orderedData = orderBy(data, ['title', 'section'], [sort.direction, 'asc']);
 
     this.dataSource = new MatTableDataSource(orderedData);
     this.cacheSpan('title', d => d.title);
   }
 
   downloadSchedule(): void {
-    this.schedulingActions.generateExcel().subscribe(data => {
-      window.location.href = data.redirect;
-    });
+    // this.schedulingActions.generateExcel().subscribe(data => {
+    //   window.location.href = data.redirect;
+    // });
   }
 
   print(): void {

@@ -4,7 +4,7 @@
     "baseUrl": "./",
     "paths": {
       "@core/*": ["app/ng6/core/*"],
-      "@scheduling/*": ["app/ng6/newScheduling/*"],
+      "@scheduling/*": ["app/ng6/reports/*"],
       "@project/*": ["*"]
     },
     "outDir": "dist",

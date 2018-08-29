@@ -17,7 +17,7 @@ import { Course } from '@core/models/course.model';
   styleUrls: ['main.component.css']
 })
 export class MainComponent {
-  tooltip: string = 'Taco';
+  tooltip = 'Taco';
   scheduling: Observable<SchedulingState>;
   schedulingName: string;
   schedulingShow: boolean;
@@ -71,7 +71,7 @@ export class MainComponent {
   }
 
   toggleMessage() {
-    //this.store.dispatch({ type: 'TOGGLE_MESSAGE' });
+    // this.store.dispatch({ type: 'TOGGLE_MESSAGE' });
   }
 
   impersonateJarold() {

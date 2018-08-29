@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedStateService } from '@core/shared-state/shared-state.service';
-import { SchedulingUIService } from '../../../newScheduling/scheduling-ui.service';
+import { SchedulingUIService } from '../../../reports/scheduling-ui.service';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { ApiService } from '@core/api/api.service';
@@ -9,11 +9,11 @@ import { AuthService } from '@core/auth/auth.service';
 import { ImpersonateModal } from '@core/components/impersonate-modal/impersonate-modal.component';
 
 @Component({
-  selector: 'ipa-header',
+  selector: 'app-ipa-header',
   templateUrl: './ipa-header.component.html',
   styleUrls: ['./ipa-header.component.css']
 })
-export class IpaHeader implements OnInit {
+export class IpaHeaderComponent implements OnInit {
   uiState$: Observable<any>;
   year: string;
   workgroupId: string;
@@ -37,7 +37,7 @@ export class IpaHeader implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.activePageTitle = location.pathname.split('/')[1].split('new')[1];
+    this.activePageTitle = 'Reports'; // location.pathname.split('/')[1].split('new')[1];
 
     this.currentUser = JSON.parse(localStorage.getItem('currentUser')) || {
       displayName: localStorage.getItem('displayName'),
@@ -76,7 +76,7 @@ export class IpaHeader implements OnInit {
       this.authService.impersonate(userToImpersonate.loginId);
 
       // TODO: currentUser localStorage operations should be done inside of sharedState service
-      let currentUserObj = {
+      const currentUserObj = {
         loginId: userToImpersonate.loginId,
         displayName: userToImpersonate.displayName,
         realUserLoginId: localStorage.getItem('loginId'),
@@ -135,11 +135,11 @@ export class IpaHeader implements OnInit {
   }
 
   getTermDisplayName() {
-    if (this.termCode.length != 2) {
+    if (this.termCode.length !== 2) {
       return '';
     }
 
-    var termDescriptions = {
+    const termDescriptions = {
       '05': 'Summer Session 1',
       '06': 'Summer Special Session',
       '07': 'Summer Session 2',
@@ -155,7 +155,7 @@ export class IpaHeader implements OnInit {
   }
 
   getTermTable() {
-    let termTable = [
+    const termTable = [
       { id: 5, description: 'Summer Session 1', shortCode: '05' },
       { id: 6, description: 'Summer Special Session', shortCode: '06' },
       { id: 7, description: 'Summer Session 2', shortCode: '07' },

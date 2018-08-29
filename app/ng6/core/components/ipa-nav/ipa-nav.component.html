@@ -26,9 +26,9 @@
         <p matLine *ngIf="isNavExpanded" class="theme-primary" [class.typo-muted]="activePage != 'instructor'">Instructors</p>
       </mat-list-item>
 
-      <a href="/newScheduling/20/2018/10" mat-list-item matTooltip="Schedule" matTooltipPosition="right" [matTooltipDisabled]="isNavExpanded">
-        <mat-icon mat-list-icon class="theme-primary" [class.typo-muted]="activePage != 'newScheduling'">calendar_today</mat-icon>
-        <p matLine *ngIf="isNavExpanded" class="theme-primary" [class.typo-muted]="activePage != 'newScheduling'">Schedule</p>
+      <a href="/reports/20/2018/10" mat-list-item matTooltip="Schedule" matTooltipPosition="right" [matTooltipDisabled]="isNavExpanded">
+        <mat-icon mat-list-icon class="theme-primary" [class.typo-muted]="activePage != 'reports'">calendar_today</mat-icon>
+        <p matLine *ngIf="isNavExpanded" class="theme-primary" [class.typo-muted]="activePage != 'reports'">Schedule</p>
       </a>
 
       <mat-list-item matTooltip="TAs & Readers" matTooltipPosition="right" [matTooltipDisabled]="isNavExpanded">
@@ -48,7 +48,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <ipa-header></ipa-header>
+    <app-ipa-header></app-ipa-header>
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

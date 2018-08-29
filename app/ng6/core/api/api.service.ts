@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { Observable } from 'rxjs';
+
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   // 'apiUrl' value is injected via webpack
@@ -8,23 +10,15 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  get(url): any {
-    let options: any = {
-      withCredentials: true
-    };
-
-    return this.http.get(this.apiUrl + url, options);
+  get(url): Observable<any> {
+    return this.http.get(this.apiUrl + url, { withCredentials: true });
   }
 
-  post(url, data): any {
+  post(url, data): Observable<any> {
     return this.http.post(this.apiUrl + url, data);
   }
 
-  delete(url): any {
-    let options: any = {
-      withCredentials: true
-    };
-
-    return this.http.delete(this.apiUrl + url, options);
+  delete(url): Observable<any> {
+    return this.http.delete(this.apiUrl + url, { withCredentials: true });
   }
 }
