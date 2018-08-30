@@ -17,61 +17,34 @@ import { SharedStateService } from '@core/shared-state/shared-state.service';
 
 import { ExceptionHandler } from '@core/exception.service';
 import { SlowConnectionInterceptor } from '@core/api/slow-connection.interceptor';
-import { MatIconRegistry, MatDialogModule } from '@angular/material';
-import { MatIconModule } from '@angular/material/icon';
 
 // Material
-import {
-  MatChipsModule,
-  MatExpansionModule,
-  MatButtonModule,
-  MatTooltipModule,
-  MatToolbarModule,
-  MatSidenavModule,
-  MatListModule,
-  MatSelectModule,
-  MatMenuModule,
-  MatTabsModule
-} from '@angular/material';
+import { AppMaterialModule } from '@shared/app-material.module';
 
 // Components
 import { IpaHeaderComponent } from '@core/components/ipa-header/ipa-header.component';
-import { IpaLayoutComponent } from '@core/components/ipa-layout/ipa-layout.component';
 import { ImpersonateModal } from '@core/components/impersonate-modal/impersonate-modal.component';
 
-// TODO: Bundle up Material module imports
 @NgModule({
   // Injected modules
   imports: [
+    AppMaterialModule,
     CommonModule,
     HttpClientModule,
-    MatToolbarModule,
-    FormsModule,
-    MatButtonModule,
-    MatChipsModule,
-    MatSidenavModule,
-    MatListModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatTabsModule,
-    MatTooltipModule
+    FormsModule
   ],
   // Required for displaying components not referneced via selector
-  entryComponents: [IpaHeaderComponent, ImpersonateModal],
+  entryComponents: [ImpersonateModal],
   // Injected components and directives
-  declarations: [IpaHeaderComponent, IpaLayoutComponent, ImpersonateModal],
+  declarations: [IpaHeaderComponent, ImpersonateModal],
   // Exports made available to modules that import core
   // You can't export unless you've wired into yourself
-  exports: [IpaLayoutComponent, MatIconModule],
+  exports: [AppMaterialModule, IpaHeaderComponent],
   // Injected services
   providers: [
     AuthService,
     ApiService,
     SharedStateService,
-    MatIconRegistry,
     RedirectGuard,
     SharedStateResolver,
     { provide: ErrorHandler, useClass: ExceptionHandler },

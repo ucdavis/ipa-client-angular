@@ -40,11 +40,11 @@
       </button>
 
       <!-- Workgroup Selector -->
-      <button mat-button [matMenuTriggerFor]="workgroupMenu">{{ currentWorkgroup.workgroupName }}</button>
+      <button mat-button [matMenuTriggerFor]="workgroupMenu">{{ "Computer Science" || currentWorkgroup.workgroupName }}</button>
       <mat-menu #workgroupMenu="matMenu">
         <button *ngFor="let workgroup of filteredWorkgroups" mat-menu-item (click)="changeWorkgroup(workgroup.workgroupId)">
           <!-- <mat-icon *ngIf="workgroup.workgroupName === currentWorkgroup.workgroupName">check</mat-icon> -->
-          {{ workgroup.workgroupName }}
+          {{ "Computer Science" || workgroup.workgroupName }}
         </button>
       </mat-menu>
 

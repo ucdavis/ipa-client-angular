@@ -1,68 +1,28 @@
-import { AppComponent } from '@reports/components/app/app.component';
-import { ScheduleSummaryComponent } from '@reports/components/schedule-summary/schedule-summary.component';
-
+// Angular
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 // Core
-import { CoreModule } from '@core/core.module';
 import { AuthGuard } from '@core/auth/auth-guard.service';
-import { RedirectGuard } from '@core/api/redirect-guard.service';
-
 import { ApiService } from '@core/api/api.service';
-
-import { ReportsService } from '@reports/services/reports.service';
-
+import { CoreModule } from '@core/core.module';
 import { UrlParameterResolver } from '@core/resolvers/param-resolver.service';
 
-// Angular Material components
-import {
-  MatButtonModule,
-  MatTooltipModule,
-  MatSortModule,
-  MatInputModule
-} from '@angular/material';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTableModule } from '@angular/material/table';
-
-const appRoutes: Routes = [
-  {
-    path: 'reports/:workgroupId/:year/:termCode',
-    component: ScheduleSummaryComponent,
-    canActivate: [AuthGuard],
-    resolve: {
-      params: UrlParameterResolver
-    }
-  },
-  {
-    path: '**',
-    component: AppComponent,
-    canActivate: [RedirectGuard]
-  }
-];
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     CoreModule,
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    ),
     BrowserAnimationsModule,
-    MatButtonModule,
-    MatTooltipModule,
-    MatSelectModule,
     FormsModule,
-    MatTableModule,
-    MatSortModule,
-    MatInputModule
+    AppRoutingModule // routing modules are always imported last
   ],
-  declarations: [AppComponent, ScheduleSummaryComponent],
-  providers: [ApiService, AuthGuard, UrlParameterResolver, ReportsService],
+  declarations: [AppComponent],
+  providers: [ApiService, AuthGuard, UrlParameterResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

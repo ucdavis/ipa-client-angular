@@ -5,7 +5,8 @@
     "paths": {
       "@core/*": ["app/ng6/app/core/*"],
       "@reports/*": ["app/ng6/app/reports/*"],
-      "@project/*": ["*"]
+      "@project/*": ["*"],
+      "@shared/*": ["app/ng6/app/shared/*"],
     },
     "outDir": "dist",
     "sourceMap": true,

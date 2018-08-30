@@ -14,11 +14,11 @@ import { ImpersonateModal } from '@core/components/impersonate-modal/impersonate
 })
 export class IpaHeaderComponent implements OnInit {
   uiState$: Observable<any>;
-  year: string;
+  year = '2018';
   workgroupId: string;
   currentWorkgroup: { workgroupId: number; roleName: string; workgroupName: string };
   filteredWorkgroups: { workgroupId: number; roleName: string; workgroupName: string }[];
-  termCode: string;
+  termCode = '10';
   termsTable: { id: number; description: string; shortCode: string }[];
   workgroupUsers;
   isImpersonating: boolean;
@@ -133,6 +133,8 @@ export class IpaHeaderComponent implements OnInit {
   }
 
   getTermDisplayName() {
+    this.termCode = '10';
+    
     if (this.termCode.length !== 2) {
       return '';
     }

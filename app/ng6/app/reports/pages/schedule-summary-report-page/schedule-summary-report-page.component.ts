@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, Sort } from '@angular/material';
 import { orderBy } from 'lodash';
 
-import { ReportsService } from '../../services/reports.service';
+import { ReportsService } from '../../shared/reports.service';
 
 @Component({
-  selector: 'app-schedule-summary-report',
-  templateUrl: './schedule-summary.component.html',
-  styleUrls: ['schedule-summary.component.css']
+  selector: 'app-schedule-summary-report-page',
+  templateUrl: './schedule-summary-report-page.component.html',
+  styleUrls: ['schedule-summary-report-page.component.css']
 })
-export class ScheduleSummaryComponent implements OnInit {
+export class ScheduleSummaryReportPageComponent implements OnInit {
   dataSource;
   displayedColumns: string[] = [
     'title',

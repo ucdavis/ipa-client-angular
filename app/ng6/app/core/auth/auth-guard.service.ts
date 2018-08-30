@@ -17,8 +17,8 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean|Observable<boolean> {
-    let workgroupId = route.params.workgroupId;
-    let year = route.params.year;
+    const workgroupId = route.params.workgroupId;
+    const year = route.params.year;
 
     return this.authService.validate(workgroupId, year).pipe(map((res: any) => {
       return !!(res.token);

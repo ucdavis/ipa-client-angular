@@ -74,7 +74,8 @@ module.exports = {
       '@core': path.resolve(__dirname, 'app/ng6/app/core'),
       '@reports': path.resolve(__dirname, 'app/ng6/app/reports'),
       '@course': path.resolve(__dirname, 'app/ng6/app/course'),
-      '@project': path.resolve(__dirname, '')
+      '@project': path.resolve(__dirname, ''),
+      '@shared': path.resolve(__dirname, 'app/ng6/app/shared'),
     }
     
   },
@@ -136,17 +137,17 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'app/**/*.json', to: '', flatten: true }
     ]),
-    // Copy css to output /css inside output path (dist)
+    // Copy CSS to output /css inside output path (dist)
     new CopyWebpackPlugin([
       { from: 'vendor/css/**/*.css', to: 'css', flatten: true },
       { from: 'node_modules/bootstrap/dist/css/**/*.css', to: 'css', flatten: true }
     ]),
-    // Copy css from Angular modules to dist root
+    // Copy CSS from Angular modules to dist root
     new CopyWebpackPlugin([
       { from: 'app/ng6/app/reports/**/*.css', to: '', flatten: true },
       { from: 'app/ng6/app/course/**/*.css', to: '', flatten: true },
-      { from: 'app/ng6/app/core/**/*.css', to: '', flatten: true }
-
+      { from: 'app/ng6/app/core/**/*.css', to: '', flatten: true },
+      { from: 'app/ng6/app/*.css', to: '', flatten: true }
     ]),
     // Concat lib CSS
     new ConcatPlugin({
