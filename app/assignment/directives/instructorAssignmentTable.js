@@ -367,34 +367,42 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										// If the instructor has teachingAssignments in this term, show them first
 										if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
 
+											// Create array of teaching assisgnments by instructor
+											var instructorTeachingAssignments = [];
 											$.each(instructor.teachingAssignmentTermCodeIds[termCode], function (i, teachingAssignmentId) {
 												var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+												instructorTeachingAssignments.push(teachingAssignment);
+											});
+											var instructorTeachingAssignmentsByPriority = _array_sortByProperty(instructorTeachingAssignments, "priority");
+											
+											$.each(instructorTeachingAssignmentsByPriority, function (i, teachingAssignment) {
+												var teachingAssignmentId = teachingAssignment.id;
 												var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
 												// This teachingAssignment is a buyout/sabb/release
 												if (teachingAssignment.approved == false && (teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.workLifeBalance || teachingAssignment.leaveOfAbsence || teachingAssignment.sabbaticalInResidence || teachingAssignment.sabbatical)) {
-													let preferenceDisplayText = "";
+													let preferenceDisplayText = teachingAssignment.priority + '. ';
 
 													if (teachingAssignment.buyout) {
-														preferenceDisplayText = "Buyout";
+														preferenceDisplayText += "Buyout";
 														nonCoursePreferences.buyout = true;
 													} else if (teachingAssignment.courseRelease) {
-														preferenceDisplayText = "Course Release";
+														preferenceDisplayText += "Course Release";
 														nonCoursePreferences.courseRelease = true;
 													} else if (teachingAssignment.inResidence) {
-														preferenceDisplayText = "In Residence";
+														preferenceDisplayText += "In Residence";
 														nonCoursePreferences.inResidence = true;
 													} else if (teachingAssignment.workLifeBalance) {
-														preferenceDisplayText = "Work Life Balance";
+														preferenceDisplayText += "Work Life Balance";
 														nonCoursePreferences.workLifeBalance = true;
 													} else if (teachingAssignment.leaveOfAbsence) {
-														preferenceDisplayText = "Leave of Absence";
+														preferenceDisplayText += "Leave of Absence";
 														nonCoursePreferences.leaveOfAbsence = true;
 													} else if (teachingAssignment.sabbaticalInResidence) {
-														preferenceDisplayText = "Sabbatical In Residence";
+														preferenceDisplayText += "Sabbatical In Residence";
 														nonCoursePreferences.sabbaticalInResidence = true;
 													} else if (teachingAssignment.sabbatical) {
-														preferenceDisplayText = "Sabbatical";
+														preferenceDisplayText += "Sabbatical";
 														nonCoursePreferences.sabbatical = true;
 													}
 
@@ -430,18 +438,19 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 														}
 													}
 												}
-
-												// Show option if the TeachingAssignment is not already approved
-												if (teachingAssignment.approved === false && course) {
+												// Show disabled option if the TeachingAssignment is already approved
+												if (course) {
 													if (firstInterestedCourseAdded === false) {
 														courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
 														firstInterestedCourseAdded = true;
 													}
-
 													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 													courseHtml += "<li><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
-													courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
+													if (teachingAssignment.approved === true) {
+														courseHtml += " class=disabled ";
+													}
+													courseHtml += " href=\"#\">" + teachingAssignment.priority + ". " + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
 												}
 											});
 											if (firstInterestedCourseAdded) {
