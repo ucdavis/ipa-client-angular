@@ -927,7 +927,7 @@ li.active-term .dropdown-term-row {
 }
 
 .assign-instructor-dropdown {
-	width: 100%;
+	min-width: 100%;
 }
 
 .assignments-container {
