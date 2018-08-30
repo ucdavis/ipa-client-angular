@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedStateService } from '@core/shared-state/shared-state.service';
-import { SchedulingUIService } from '../../../reports/scheduling-ui.service';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { ApiService } from '@core/api/api.service';
@@ -32,7 +31,6 @@ export class IpaHeaderComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sharedState: SharedStateService,
-    private schedulingUIService: SchedulingUIService,
     public dialog: MatDialog
   ) {}
 
@@ -59,7 +57,7 @@ export class IpaHeaderComponent implements OnInit {
       );
     });
 
-    this.uiState$ = this.schedulingUIService.getState();
+    // this.uiState$ = this.schedulingUIService.getState();
 
     this.apiService.get(`/api/workgroupView/${this.workgroupId}`).subscribe(res => {
       this.workgroupUsers = res.users;
@@ -92,16 +90,16 @@ export class IpaHeaderComponent implements OnInit {
   }
 
   setState(key, payload) {
-    this.schedulingUIService.setState(key, payload);
+    // this.schedulingUIService.setState(key, payload);
   }
 
   offsetYearInUrl(offset: number) {
-    this.year = (parseInt(this.year) + offset).toString();
+    this.year = (parseInt(this.year, 10) + offset).toString();
     this.router.navigate(['../../', this.year, this.termCode], { relativeTo: this.route });
   }
 
   yearToAcademicYear() {
-    return `${this.year} - ${(parseInt(this.year) + 1).toString().slice(-2)}`;
+    return `${this.year} - ${(parseInt(this.year, 10) + 1).toString().slice(-2)}`;
   }
 
   getWorkgroups() {

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'ipa-nav',
-  templateUrl: './ipa-nav.component.html',
-  styleUrls: ['./ipa-nav.component.css']
+  selector: 'app-ipa-layout',
+  templateUrl: './ipa-layout.component.html',
+  styleUrls: ['./ipa-layout.component.css']
 })
-export class IpaNav implements OnInit {
-  isNavExpanded: boolean = true;
+export class IpaLayoutComponent implements OnInit {
+  isNavExpanded = true;
   activePage: string;
 
   constructor(private route: ActivatedRoute) {}

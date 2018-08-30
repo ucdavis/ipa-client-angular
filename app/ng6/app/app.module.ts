@@ -1,14 +1,11 @@
-import { AppComponent } from '@scheduling/components/app/app.component';
-import { MainComponent } from '@scheduling/components/main/main.component';
-import { ScheduleSummaryComponent } from '@scheduling/components/schedule-summary/schedule-summary.component';
+import { AppComponent } from '@reports/components/app/app.component';
+import { ScheduleSummaryComponent } from '@reports/components/schedule-summary/schedule-summary.component';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-
-import { SchedulingActions } from '@scheduling/scheduling-actions.service';
 
 // Core
 import { CoreModule } from '@core/core.module';
@@ -17,7 +14,7 @@ import { RedirectGuard } from '@core/api/redirect-guard.service';
 
 import { ApiService } from '@core/api/api.service';
 
-import { ReportsService } from '@scheduling/services/reports.service';
+import { ReportsService } from '@reports/services/reports.service';
 
 import { UrlParameterResolver } from '@core/resolvers/param-resolver.service';
 
@@ -34,7 +31,7 @@ import { MatTableModule } from '@angular/material/table';
 const appRoutes: Routes = [
   {
     path: 'reports/:workgroupId/:year/:termCode',
-    component: MainComponent,
+    component: ScheduleSummaryComponent,
     canActivate: [AuthGuard],
     resolve: {
       params: UrlParameterResolver
@@ -64,8 +61,8 @@ const appRoutes: Routes = [
     MatSortModule,
     MatInputModule
   ],
-  declarations: [AppComponent, MainComponent, ScheduleSummaryComponent],
-  providers: [ApiService, SchedulingActions, AuthGuard, UrlParameterResolver, ReportsService],
+  declarations: [AppComponent, ScheduleSummaryComponent],
+  providers: [ApiService, AuthGuard, UrlParameterResolver, ReportsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

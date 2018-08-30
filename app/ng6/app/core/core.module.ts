@@ -14,7 +14,6 @@ import { ApiService } from '@core/api/api.service';
 import { RedirectGuard } from '@core/api/redirect-guard.service';
 import { SharedStateResolver } from '@core/shared-state/shared-state.resolver';
 import { SharedStateService } from '@core/shared-state/shared-state.service';
-import { SchedulingUIService } from '@scheduling/scheduling-ui.service';
 
 import { ExceptionHandler } from '@core/exception.service';
 import { SlowConnectionInterceptor } from '@core/api/slow-connection.interceptor';
@@ -37,7 +36,7 @@ import {
 
 // Components
 import { IpaHeaderComponent } from '@core/components/ipa-header/ipa-header.component';
-import { IpaNav } from '@core/components/ipa-nav/ipa-nav.component';
+import { IpaLayoutComponent } from '@core/components/ipa-layout/ipa-layout.component';
 import { ImpersonateModal } from '@core/components/impersonate-modal/impersonate-modal.component';
 
 // TODO: Bundle up Material module imports
@@ -63,16 +62,15 @@ import { ImpersonateModal } from '@core/components/impersonate-modal/impersonate
   // Required for displaying components not referneced via selector
   entryComponents: [IpaHeaderComponent, ImpersonateModal],
   // Injected components and directives
-  declarations: [IpaHeaderComponent, IpaNav, ImpersonateModal],
+  declarations: [IpaHeaderComponent, IpaLayoutComponent, ImpersonateModal],
   // Exports made available to modules that import core
   // You can't export unless you've wired into yourself
-  exports: [IpaNav, MatIconModule],
+  exports: [IpaLayoutComponent, MatIconModule],
   // Injected services
   providers: [
     AuthService,
     ApiService,
     SharedStateService,
-    SchedulingUIService,
     MatIconRegistry,
     RedirectGuard,
     SharedStateResolver,

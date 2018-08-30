@@ -3,8 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@core/*": ["app/ng6/core/*"],
-      "@scheduling/*": ["app/ng6/reports/*"],
+      "@core/*": ["app/ng6/app/core/*"],
+      "@reports/*": ["app/ng6/app/reports/*"],
       "@project/*": ["*"]
     },
     "outDir": "dist",

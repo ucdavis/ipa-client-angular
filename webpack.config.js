@@ -6,7 +6,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ConcatPlugin = require('webpack-concat-plugin');
-//const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 function injectHashesInLinks (content, path) {
   var template = content.toString('utf8');
@@ -57,8 +56,7 @@ module.exports = {
     teachingCallApp: './app/teachingCall/teachingCallApp.js',
     workgroupApp: './app/workgroup/workgroupApp.js',
     workloadSummaryReportApp: './app/workloadSummaryReport/workloadSummaryReportApp.js',
-    reports: './app/ng6/reports/main.ts',
-    newCourses: './app/ng6/course/main.ts'
+    angularApp: './app/ng6/main.ts'
   },
   output: {
     filename: 'js/[name].js',
@@ -73,9 +71,9 @@ module.exports = {
     alias: {
       Workgroup: path.resolve(__dirname, 'app/workgroup/'),
       TeachingCall: path.resolve(__dirname, 'app/teachingCall/'),
-      '@core': path.resolve(__dirname, 'app/ng6/core'),
-      '@scheduling': path.resolve(__dirname, 'app/ng6/reports'),
-      '@course': path.resolve(__dirname, 'app/ng6/course'),
+      '@core': path.resolve(__dirname, 'app/ng6/app/core'),
+      '@reports': path.resolve(__dirname, 'app/ng6/app/reports'),
+      '@course': path.resolve(__dirname, 'app/ng6/app/course'),
       '@project': path.resolve(__dirname, '')
     }
     
@@ -145,9 +143,9 @@ module.exports = {
     ]),
     // Copy css from Angular modules to dist root
     new CopyWebpackPlugin([
-      { from: 'app/ng6/reports/**/*.css', to: '', flatten: true },
-      { from: 'app/ng6/course/**/*.css', to: '', flatten: true },
-      { from: 'app/ng6/core/**/*.css', to: '', flatten: true }
+      { from: 'app/ng6/app/reports/**/*.css', to: '', flatten: true },
+      { from: 'app/ng6/app/course/**/*.css', to: '', flatten: true },
+      { from: 'app/ng6/app/core/**/*.css', to: '', flatten: true }
 
     ]),
     // Concat lib CSS
@@ -216,12 +214,12 @@ module.exports = {
       ],
     }),
     new HtmlWebpackPlugin({
-      "template": "./app/ng6/reports/reports.html",
-      "filename": "./reports.html",
-      "chunks": ['reports']
+      "template": "./app/ng6/index.html",
+      "filename": "./index.html",
+      "chunks": ['angularApp']
     }),
     new HtmlWebpackPlugin({
-      "template": "./app/ng6/course/main.html",
+      "template": "./app/ng6/app/course/main.html",
       "filename": "./newCourses.html",
       "chunks": ['newCourses']
     }),
@@ -244,7 +242,7 @@ module.exports = {
       "/*": {
         target: "http://localhost:9000",
         bypass: function(req, res, proxyOptions) {
-          if ((req.url.indexOf("/reports") > -1 ) && (req.url != "/reports.html")) { return "/reports.html"; }
+          if ((req.url.indexOf("/reports") > -1 ) && (req.url != "/index.html")) { return "/index.html"; }
           if ((req.url.indexOf("/newCourses") > -1 ) && (req.url != "/newCourses.html")) { return "/newCourses.html"; }
           if ((req.url.indexOf("/summary") > -1 ) && (req.url != "/summary.html")) { return "/summary.html"; }
           if ((req.url.indexOf("/admin") > -1 ) && (req.url != "/admin.html")) { return "/admin.html"; }

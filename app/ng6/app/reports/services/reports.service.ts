@@ -1,7 +1,12 @@
+import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs';
 
 import { ApiService } from '@core/api/api.service';
 
+@Injectable({
+  providedIn: 'root',
+})
 export class ReportsService {
   private scheduleSummaryPath = '/api/scheduleSummaryReportView/workgroups';
 
