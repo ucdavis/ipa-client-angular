@@ -292,7 +292,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 											if (sectionGroup) {
 												var course = scope.view.state.courses.list[sectionGroup.courseId];
 												if (course) {
-													displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
+													displayTitle += course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + " - " + course.title;
 													var plannedSeats = sectionGroup.plannedSeats || "0";
 													plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
 													unitsLow = "<small>Units: " + course.unitsLow + "</small>";
@@ -445,7 +445,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													if (teachingAssignment.approved === true) {
 														courseHtml += " class=disabled ";
 													}
-													courseHtml += " href=\"#\">" + teachingAssignment.priority + ". " + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
+													courseHtml += " href=\"#\">" + teachingAssignment.priority + ". " + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + " - " + course.title + "</a></li>";
 												}
 											});
 											if (firstInterestedCourseAdded) {
@@ -518,7 +518,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 												courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
 												courseHtml += " data-term-code=\"" + termCode + "\"";
 												courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-												courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
+												courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + " - " + course.title + "</a></li>";
 											}
 										});
 

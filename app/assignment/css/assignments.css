@@ -25,9 +25,12 @@
 
 #instructors-table .tile-assignment {
   position: relative;
-  height: 45px;
   line-height: .9em;
   padding: 4px 6px;
+}
+
+.instructors-table__preference-title {
+	line-height: 1.2em;
 }
 
 #courses-table .tile-assignment {
