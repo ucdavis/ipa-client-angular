@@ -7,7 +7,3 @@
   padding-right: 15px;
   height: 44px;
 }
-
-.course-list__cell-disabled {
-  text-decoration: line-through;
-}
