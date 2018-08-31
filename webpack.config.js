@@ -219,11 +219,6 @@ module.exports = {
       "filename": "./index.html",
       "chunks": ['angularApp']
     }),
-    new HtmlWebpackPlugin({
-      "template": "./app/ng6/app/course/main.html",
-      "filename": "./newCourses.html",
-      "chunks": ['newCourses']
-    }),
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify(env.apiUrl)
       // Good to namespace 'process.env' even though this is a key for text replacement, also avoids typescript from attempting to process it
@@ -244,7 +239,7 @@ module.exports = {
         target: "http://localhost:9000",
         bypass: function(req, res, proxyOptions) {
           if ((req.url.indexOf("/reports") > -1 ) && (req.url != "/index.html")) { return "/index.html"; }
-          if ((req.url.indexOf("/newCourses") > -1 ) && (req.url != "/newCourses.html")) { return "/newCourses.html"; }
+          if ((req.url.indexOf("/courseApp") > -1 ) && (req.url != "/index.html")) { return "/index.html"; }
           if ((req.url.indexOf("/summary") > -1 ) && (req.url != "/summary.html")) { return "/summary.html"; }
           if ((req.url.indexOf("/admin") > -1 ) && (req.url != "/admin.html")) { return "/admin.html"; }
           if ((req.url.indexOf("/budget") > -1 ) && (req.url != "/budget.html")) { return "/budget.html"; }
