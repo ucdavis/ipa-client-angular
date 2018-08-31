@@ -63,8 +63,9 @@ let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionServi
         scope.newCourse.unitsHigh = $item.creditHoursHigh;
         scope.newCourse.unitsLow = $item.creditHoursLow;
 
-        // Empty the sequencePattern to force checking for conflicts
         delete scope.newCourse.sequencePattern;
+
+        scope.setDefaultSequencePattern();
       };
 
       scope.clearNewCourseSearch = function () {
@@ -86,6 +87,41 @@ let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionServi
         return sequencePatterns.filter(function (pattern) {
           return occupiedSequencePatterns.indexOf(pattern) < 0;
         });
+      };
+
+      scope.setDefaultSequencePattern = function () {
+        debugger;
+        var key = scope.newCourse.subjectCode + scope.newCourse.courseNumber;
+        var usedSequencePatterns = [];
+
+        scope.state.courses.ids.forEach(function(courseId) {
+          var course = scope.state.courses.list[courseId];
+          var slotKey = course.subjectCode + course.courseNumber;
+          if (key == slotKey) {
+            usedSequencePatterns.push(course.sequencePattern);
+          }
+        });
+
+        if (usedSequencePatterns.length == 0) {
+          scope.newCourse.sequencePattern == "001";
+        } else {
+            scope.newCourse.sequencePattern = scope.generateNextSequencePattern(usedSequencePatterns);
+        }
+      };
+
+      scope.generateNextSequencePattern = function (usedSequencePatterns) {
+        debugger;
+        if (!usedSequencePatterns || usedSequencePatterns.length == 0) { return "001"; }
+
+        if (isNumber(usedSequencePatterns[0])) {
+          var newSequencePattern = SectionService.formatSequenceNumber(usedSequencePatterns[0] + 1);
+
+          for (var i = 0; usedSequencePatterns.indexOf(newSequencePattern) != -1; i++) {
+            newSequencePattern = SectionService.formatSequenceNumber(usedSequencePatterns[i] + 1);
+          }
+        } else {
+          debugger;
+        }
       };
 
       scope.createCourse = function () {
