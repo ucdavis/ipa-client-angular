@@ -1,6 +1,6 @@
 import './addCourse.css';
 
-let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionService) {
+let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionService, TermService) {
   return {
     restrict: 'E',
     template: require('./addCourse.html'),
@@ -12,7 +12,8 @@ let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionServi
     link: function (scope, element, attrs) {
       scope.newCourse = {};
       scope.view = {};
-			scope.sequenceNumberPlaceholder = "Example: '001' or 'A'";
+      scope.sequenceNumberPlaceholder = "Example: '001' or 'A'";
+      scope.termCode = TermService.termToTermCode(scope.state.ui.termNav.activeTerm, scope.state.ui.year);
 
       scope.newCourseValidation = {
         tooltipErrorMessage: "Select a course and enter a sequence pattern"
@@ -36,14 +37,14 @@ let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionServi
 
       scope.isCourseUnique = function () {
         var newCourse = scope.newCourse;
-        var courseDescription = newCourse.subjectCode + " " + newCourse.courseNumber + " - " + newCourse.sequencePattern;
+        var courseDescription = newCourse.subjectCode + newCourse.courseNumber + newCourse.sequencePattern + scope.termCode;
 
-        for (var i = 0; i < scope.state.courses.ids.length; i++) {
+        for (var i = 0; i < scope.state.calculatedCourseList.length; i++) {
           var slotCourseId = scope.state.courses.ids[i];
           var slotCourse = scope.state.courses.list[slotCourseId];
 
           if (slotCourse) {
-            var slotCourseDescription = slotCourse.subjectCode + " " + slotCourse.courseNumber + " - " + slotCourse.sequencePattern;
+            var slotCourseDescription = slotCourse.subjectCode + slotCourse.courseNumber + slotCourse.sequencePattern + slotCourse.termCode;
 
             // Proposed course already exists
             if (courseDescription == slotCourseDescription) {
@@ -64,7 +65,7 @@ let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionServi
         scope.newCourse.unitsLow = $item.creditHoursLow;
 
         delete scope.newCourse.sequencePattern;
-
+        delete scope.newCourse.rawSequencePattern;
         scope.setDefaultSequencePattern();
       };
 
@@ -90,13 +91,12 @@ let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionServi
       };
 
       scope.setDefaultSequencePattern = function () {
-        debugger;
-        var key = scope.newCourse.subjectCode + scope.newCourse.courseNumber;
+        var key = scope.newCourse.subjectCode + scope.newCourse.courseNumber + scope.termCode;
         var usedSequencePatterns = [];
 
-        scope.state.courses.ids.forEach(function(courseId) {
-          var course = scope.state.courses.list[courseId];
-          var slotKey = course.subjectCode + course.courseNumber;
+        scope.state.calculatedCourseList.forEach(function(course) {
+          var slotKey = course.subjectCode + course.courseNumber + course.termCode;
+
           if (key == slotKey) {
             usedSequencePatterns.push(course.sequencePattern);
           }
@@ -104,24 +104,33 @@ let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionServi
 
         if (usedSequencePatterns.length == 0) {
           scope.newCourse.sequencePattern == "001";
+          scope.newCourse.rawSequencePattern = "001";
         } else {
-            scope.newCourse.sequencePattern = scope.generateNextSequencePattern(usedSequencePatterns);
+          scope.newCourse.sequencePattern = scope.generateNextSequencePattern(usedSequencePatterns);
+          scope.newCourse.rawSequencePattern = angular.copy(scope.newCourse.sequencePattern);
         }
+
+        scope.validateCourse();
       };
 
       scope.generateNextSequencePattern = function (usedSequencePatterns) {
-        debugger;
         if (!usedSequencePatterns || usedSequencePatterns.length == 0) { return "001"; }
 
         if (isNumber(usedSequencePatterns[0])) {
-          var newSequencePattern = SectionService.formatSequenceNumber(usedSequencePatterns[0] + 1);
+          var newSequencePattern = SectionService.formatSequenceNumber(parseInt(usedSequencePatterns[0]) + 1);
 
-          for (var i = 0; usedSequencePatterns.indexOf(newSequencePattern) != -1; i++) {
-            newSequencePattern = SectionService.formatSequenceNumber(usedSequencePatterns[i] + 1);
+          for (var i = 1; usedSequencePatterns.indexOf(newSequencePattern) != -1; i++) {
+            newSequencePattern = SectionService.formatSequenceNumber(parseInt(usedSequencePatterns[i]) + 1);
           }
         } else {
-          debugger;
+          var newSequencePattern = SectionService.formatSequenceNumber(String.fromCharCode(usedSequencePatterns[0] + 1));
+
+          for (var i = 1; usedSequencePatterns.indexOf(newSequencePattern) != -1; i++) {
+            newSequencePattern = SectionService.formatSequenceNumber(String.fromCharCode(usedSequencePatterns[i] + 1));
+          }
         }
+
+        return newSequencePattern;
       };
 
       scope.createCourse = function () {
