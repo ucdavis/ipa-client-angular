@@ -51,6 +51,7 @@ class SchedulingCtrl {
 
 		self.$rootScope.$on('schedulingStateChanged', function (event, data) {
 			self.$scope.view.state = data.state;
+			console.log(data.state);
 		});
 
 		this.$scope.setSelectedSectionGroup = function (sectionGroupId) {
