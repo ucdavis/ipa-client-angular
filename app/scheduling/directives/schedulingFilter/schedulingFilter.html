@@ -1,0 +1,75 @@
+<div class="scheduling-filters">
+  <div class="btn-group pull-right">
+
+    <button class="scheduling-filters__dropdown-btn btn btn-default dropdown-toggle"
+            type="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false">
+      <span class="scheduling-filters__btn-text">Filters</span>
+      <span class="caret scheduling-filters__caret"></span>
+    </button>
+
+    <div class="dropdown-menu scheduling-filters__dropdown-window">
+      <div class="filters-container" stop-event="click">
+        <div class="days-filter">
+          <h3>Days</h3>
+          <ul>
+            <li ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] track by $index"
+              ng-click="toggleCalendarDay($index)">
+              <div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': filters.hiddenDays.indexOf($index) < 0 }">
+                <label class="cb-wrapper filter-checkbox">
+                  <div class="checked"></div>
+                </label>
+                <label class="filter-label">{{ day }}</label>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="locations-filter">
+          <h3>Locations</h3>
+          <ul>
+            <li ng-repeat="locationId in locations.ids track by $index" ng-click="toggleLocationFilter(locationId)">
+              <div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': filters.enabledLocationIds.indexOf(locationId) >= 0 }">
+                <label class="cb-wrapper filter-checkbox">
+                  <div class="checked"></div>
+                </label>
+                <label class="filter-label" ng-bind="locations.list[locationId].description"></label>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="tags-filter">
+          <h3>Tags</h3>
+          <ul>
+            <li ng-repeat="tagId in tags.ids track by $index" ng-click="toggleTagFilter(tagId)">
+              <div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': filters.enabledTagIds.indexOf(tagId) >= 0 }">
+                <label class="cb-wrapper filter-checkbox" ng-style="{ 'border-color': tags.list[tagId].color }">
+                  <div class="checked" ng-style="{ 'background': tags.list[tagId].color }"></div>
+                </label>
+                <label class="filter-label" ng-bind="tags.list[tagId].name"></label>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="instructors-filter">
+          <h3>Instructors</h3>
+          <ul>
+            <li ng-repeat="instructorId in instructors.ids track by instructorId"
+              ng-click="toggleInstructorFilter(instructorId)">
+              <div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': filters.enabledInstructorIds.indexOf(instructorId) >= 0 }">
+                <label class="cb-wrapper filter-checkbox">
+                  <div class="checked"></div>
+                </label>
+                <label class="filter-label">{{ instructors.list[instructorId].fullName }}</label>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

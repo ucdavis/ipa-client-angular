@@ -1,0 +1,58 @@
+.scheduling-filters__dropdown-window {
+  width: 800px;
+  padding: 5px;
+}
+
+.scheduling-filters__btn-text {
+  font-size: 12px;
+}
+
+.scheduling-filters .scheduling-filters__caret {
+  margin-left: 5px;
+}
+
+.ipa-header .scheduling-filters .btn-group .scheduling-filters__dropdown-btn {
+  padding: 6px 12px 6px 12px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #777;
+  background-color: white;
+  height: 31px;
+}
+
+/* Violates BEM styles to override bootstrap and neon */
+.scheduling-filters__dropdown-btn,
+.btn.btn-default.scheduling-filters__dropdown-btn,
+.ipa-term-selector-dropdown .open > .dropdown-toggle.btn-default.scheduling-filters__dropdown-btn {
+  border: 1px solid #777;
+}
+
+/* Violates BEM styles to override bootstrap and neon */
+.ipa-term-selector-dropdown .btn-default.scheduling-filters__dropdown-btn:active,
+.btn.btn-default.scheduling-filters__dropdown-btn:focus,
+.ipa-term-selector-dropdown .btn-default.scheduling-filters__dropdown-btn.focus,
+.ipa-term-selector-dropdown .open > .dropdown-toggle.btn-default.scheduling-filters__dropdown-btn:focus {
+  border: 1px solid #777;
+}
+
+/* Violates BEM styles to override bootstrap and neon */
+.btn.btn-default.scheduling-filters__dropdown-btn:hover {
+  border: 1px solid #777;
+}
+
+.tags-filter {
+  flex: 0 0 25%;
+  padding-right: 0.5em;
+}
+.instructors-filter {
+  flex: 0 0 25%;
+  padding-left: 0.5em;
+}
+.days-filter {
+  flex: 0 0 25%;
+  padding-right: 0.5em;
+}
+.locations-filter {
+  flex: 0 0 25%;
+  padding-left: 0.5em;
+}

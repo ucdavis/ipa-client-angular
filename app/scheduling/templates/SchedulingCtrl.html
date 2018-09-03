@@ -1,6 +1,12 @@
 <nav year="{{ year }}" term-short-code="{{ termShortCode }}" workgroup-id="{{ workgroupId }}"></nav>
 
-<ipa-header page-title="Scheduling"></ipa-header>
+<ipa-header page-title="Scheduling">
+	<scheduling-filter filters="view.state.filters"
+	                   tags="view.state.tags"
+	                   instructors="view.state.instructors"
+	                   locations="view.state.locations">
+	</scheduling-filter>
+</ipa-header>
 
 <div>
 	<div>

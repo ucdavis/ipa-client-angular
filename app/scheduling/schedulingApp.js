@@ -21,6 +21,7 @@ import locationEditor from './directives/activityDetails/locationEditor/location
 import timeEditor from './directives/activityDetails/timeEditor/timeEditor.js';
 import freeformTimeSelector from './directives/activityDetails/timeEditor/freeformTimeSelector/freeformTimeSelector.js';
 import standardTimeSelector from './directives/activityDetails/timeEditor/standardTimeSelector/standardTimeSelector.js';
+import schedulingFilter from './directives/schedulingFilter/schedulingFilter.js';
 
 // Dependencies
 var dependencies = [
@@ -80,6 +81,7 @@ const schedulingApp = angular.module("schedulingApp", dependencies)
 .directive('timeEditor', timeEditor)
 .directive('freeformTimeSelector', freeformTimeSelector)
 .directive('standardTimeSelector', standardTimeSelector)
+.directive('schedulingFilter', schedulingFilter)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	SECTION_GROUP_SELECTED: "SECTION_GROUP_SELECTED",

@@ -289,22 +289,7 @@ a.activity-event i.activity-remove,
 .filters-container ul li:hover {
 	background-color: #ebebeb;
 }
-.tags-filter {
-	flex: 0 0 50%;
-	padding-right: 0.5em;
-}
-.instructors-filter {
-	flex: 0 0 50%;
-	padding-left: 0.5em;
-}
-.days-filter {
-	flex: 0 0 50%;
-	padding-right: 0.5em;
-}
-.locations-filter {
-	flex: 0 0 50%;
-	padding-left: 0.5em;
-}
+
 ul.activity-group {
 	position: relative;
 	margin: 10px 15px;
