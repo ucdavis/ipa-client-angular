@@ -22,43 +22,6 @@
 							</span>
 						</div>
 					</div>
-					<div class="btn-group pull-right">
-						<button class="btn btn-white btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false">
-							Filters <span class="caret"></span>
-						</button>
-						<div class="dropdown-menu" style="width: 400px; padding: 0;">
-							<div class="filters-container" stop-event="click">
-								<div class="tags-filter">
-									<h3>Tags</h3>
-									<ul>
-										<li ng-repeat="tagId in view.state.tags.ids track by $index" ng-click="toggleTagFilter(tagId)">
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.enabledTagIds.indexOf(tagId) >= 0 }">
-												<label class="cb-wrapper filter-checkbox" ng-style="{ 'border-color': view.state.tags.list[tagId].color }">
-													<div class="checked" ng-style="{ 'background': view.state.tags.list[tagId].color }"></div>
-												</label>
-												<label class="filter-label" ng-bind="view.state.tags.list[tagId].name"></label>
-											</div>
-										</li>
-									</ul>
-								</div>
-								<div class="instructors-filter">
-									<h3>Instructors</h3>
-									<ul>
-										<li ng-repeat="instructorId in view.state.instructors.ids track by instructorId"
-											ng-click="toggleInstructorFilter(instructorId)">
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.enabledInstructorIds.indexOf(instructorId) >= 0 }">
-												<label class="cb-wrapper filter-checkbox">
-													<div class="checked"></div>
-												</label>
-												<label class="filter-label">{{ view.state.instructors.list[instructorId].fullName }}</label>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 				<div class="calendar-filter-header">
 					<div class="activity-filter-tokens text-center">
@@ -84,45 +47,6 @@
 							{{ course.courseNumber }} -
 							{{ course.sequencePattern }}
 							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleCheckedSectionGroup(sectionGroupId, $event)"></i>
-						</div>
-					</div>
-					<div class="calendar-filter-menu">
-						<div class="btn-group pull-right">
-							<button class="btn btn-white btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">
-								Filters <span class="caret"></span>
-							</button>
-							<div class="dropdown-menu" style="width: 400px; padding: 0;">
-								<div class="filters-container" stop-event="click">
-									<div class="days-filter">
-										<h3>Days</h3>
-										<ul>
-											<li ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] track by $index"
-												ng-click="toggleCalendarDay($index)">
-												<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.hiddenDays.indexOf($index) < 0 }">
-													<label class="cb-wrapper filter-checkbox">
-														<div class="checked"></div>
-													</label>
-													<label class="filter-label">{{ day }}</label>
-												</div>
-											</li>
-										</ul>
-									</div>
-									<div class="locations-filter">
-										<h3>Locations</h3>
-										<ul>
-											<li ng-repeat="locationId in view.state.locations.ids track by $index" ng-click="toggleLocationFilter(locationId)">
-												<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.enabledLocationIds.indexOf(locationId) >= 0 }">
-													<label class="cb-wrapper filter-checkbox">
-														<div class="checked"></div>
-													</label>
-													<label class="filter-label" ng-bind="view.state.locations.list[locationId].description"></label>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
