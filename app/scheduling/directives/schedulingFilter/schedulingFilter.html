@@ -1,4 +1,21 @@
 <div class="scheduling-filters">
+  <div class="calendar-filter-header">
+    <div class="activity-filter-tokens text-center">
+      <div class="label label-selected-section-group" ng-repeat="tagId in filters.enabledTagIds track by $index">
+        {{ tags.list[tagId].name }}
+        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleTagFilter(tagId)"></i>
+      </div>
+      <div class="label label-selected-section-group" ng-repeat="locationId in filters.enabledLocationIds track by $index">
+        {{ locations.list[locationId].description }}
+        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleLocationFilter(locationId)"></i>
+      </div>
+      <div class="label label-selected-section-group" ng-repeat="instructorId in filters.enabledInstructorIds track by $index">
+        {{ instructors.list[instructorId].fullName }}
+        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleInstructorFilter(instructorId)"></i>
+      </div>
+    </div>
+  </div>
+
   <div class="btn-group pull-right">
 
     <button class="scheduling-filters__dropdown-btn btn btn-default dropdown-toggle"
