@@ -20,14 +20,14 @@
 							{{ view.state.uiState.checkedSectionGroupIds.length ? "Unselect" : "Select" }} all
 						</span>
 					</div>
+				</div>
 
-					<div>
-						<ipa-tabs tab-names="view.state.uiState.calendarMode.allTabs"
-						active-tab="view.state.uiState.calendarMode.activeTab"
-						select-tab="setCalendarMode"
-						slim="true">
-						</ipa-tabs>
-					</div>
+				<div class="schedule-mode__nav">
+					<ipa-tabs tab-names="view.state.uiState.calendarMode.allTabs"
+					active-tab="view.state.uiState.calendarMode.activeTab"
+					select-tab="setCalendarMode"
+					slim="true">
+					</ipa-tabs>
 				</div>
 			</div>
 		</div>
