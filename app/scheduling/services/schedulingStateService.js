@@ -481,7 +481,11 @@ class SchedulingStateService {
 							selectedActivityId: null,
 							checkedSectionGroupIds: [],
 							allSectionGroupsDetailsCached: false,
-							term: new Term(action.payload.term)
+							term: new Term(action.payload.term),
+							calendarMode: {
+								activeTab: "Main",
+								allTabs: ["Main", "Departmental Rooms"]
+							},
 						};
 						return uiState;
 					case ActionTypes.SECTION_GROUP_SELECTED:
@@ -494,6 +498,9 @@ class SchedulingStateService {
 							uiState.selectedCourseId = null;
 						}
 						return uiState;
+					case ActionTypes.SELECT_CALENDAR_MODE:
+						uiState.calendarMode.activeTab = action.payload.tab;
+						return ui;
 					case ActionTypes.SECTION_GROUP_TOGGLED:
 						var sectionGroupCheckedIndex = uiState.checkedSectionGroupIds.indexOf(action.payload.sectionGroupId);
 						if (sectionGroupCheckedIndex < 0) {
