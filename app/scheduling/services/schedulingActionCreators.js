@@ -39,6 +39,14 @@ class SchedulingActionCreators {
 					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
 				});
 			},
+			selectCalendarMode: function(tab) {
+				BudgetReducers.reduce({
+					type: ActionTypes.SELECT_CALENDAR_MODE,
+					payload: {
+						activeTermTab: tab
+					}
+				});
+			},
 			removeActivity: function (activity) {
 				SchedulingService.removeActivity(activity.id).then(function () {
 					$rootScope.$emit('toast', { message: "Removed " + activity.getCodeDescription(), type: "SUCCESS" });
