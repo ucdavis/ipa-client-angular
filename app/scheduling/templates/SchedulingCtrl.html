@@ -37,17 +37,6 @@
 							{{ view.state.instructors.list[instructorId].fullName }}
 							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleInstructorFilter(instructorId)"></i>
 						</div>
-						<div
-						class="label label-selected-section-group"
-						ng-init="course=view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId]"
-						ng-repeat="sectionGroupId in view.state.uiState.checkedSectionGroupIds track by $index"
-						ng-style="{'background-color': view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].tagColor}"
-						ng-class="{'filter-course--tag': view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].tagColor }">
-							{{ course.subjectCode }}
-							{{ course.courseNumber }} -
-							{{ course.sequencePattern }}
-							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleCheckedSectionGroup(sectionGroupId, $event)"></i>
-						</div>
 					</div>
 				</div>
 			</div>
