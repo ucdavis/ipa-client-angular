@@ -451,3 +451,9 @@ i.selected-section-group-remove {
 	padding: 3px;
 	margin-left: 3px;
 }
+
+.schedule-mode__nav {
+	display: flex;
+	width: 60%;
+	align-items: flex-end;
+}
