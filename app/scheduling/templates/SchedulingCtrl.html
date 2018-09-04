@@ -13,30 +13,20 @@
 		<div class="activity-page-header">
 			<div class="activity-filters">
 				<div class="activity-filter-menu">
-					<div class="btn-group pull-left">
-						<div class="btn" ng-click="toggleCheckAll()">
-							<i ng-show="view.state.uiState.checkedSectionGroupIds.length" class="sg-checkbox fa fa-check-square-o"></i>
-							<i ng-hide="view.state.uiState.checkedSectionGroupIds.length" class="sg-checkbox fa fa-square-o"></i>
-							<span style="margin-left: 0.3em;">
-								{{ view.state.uiState.checkedSectionGroupIds.length ? "Unselect" : "Select" }} all
-							</span>
-						</div>
+					<div class="btn" ng-click="toggleCheckAll()">
+						<i ng-show="view.state.uiState.checkedSectionGroupIds.length" class="sg-checkbox fa fa-check-square-o"></i>
+						<i ng-hide="view.state.uiState.checkedSectionGroupIds.length" class="sg-checkbox fa fa-square-o"></i>
+						<span style="margin-left: 0.3em;">
+							{{ view.state.uiState.checkedSectionGroupIds.length ? "Unselect" : "Select" }} all
+						</span>
 					</div>
-				</div>
-				<div class="calendar-filter-header">
-					<div class="activity-filter-tokens text-center">
-						<div class="label label-selected-section-group" ng-repeat="tagId in view.state.filters.enabledTagIds track by $index">
-							{{ view.state.tags.list[tagId].name }}
-							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleTagFilter(tagId)"></i>
-						</div>
-						<div class="label label-selected-section-group" ng-repeat="locationId in view.state.filters.enabledLocationIds track by $index">
-							{{ view.state.locations.list[locationId].description }}
-							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleLocationFilter(locationId)"></i>
-						</div>
-						<div class="label label-selected-section-group" ng-repeat="instructorId in view.state.filters.enabledInstructorIds track by $index">
-							{{ view.state.instructors.list[instructorId].fullName }}
-							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleInstructorFilter(instructorId)"></i>
-						</div>
+
+					<div>
+						<ipa-tabs tab-names="view.state.uiState.calendarMode.allTabs"
+						active-tab="view.state.uiState.calendarMode.activeTab"
+						select-tab="setCalendarMode"
+						slim="true">
+						</ipa-tabs>
 					</div>
 				</div>
 			</div>
@@ -218,7 +208,12 @@
 				<div ng-hide="view.state.sectionGroups.ids" class="loading-center">
 					<spinner></spinner>
 				</div>
-				<term-calendar></term-calendar>
+					<div ng-if="view.state.uiState.calendarMode.activeTab =='Main'">
+						<term-calendar></term-calendar>
+					</div>
+					<div ng-if="view.state.uiState.calendarMode.activeTab =='Departmental Rooms'">
+						<departmental-room-calendar></departmental-room-calendar>
+					</div>
 			</div>
 		</div>
 
