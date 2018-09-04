@@ -99,7 +99,8 @@ const schedulingApp = angular.module("schedulingApp", dependencies)
 	FETCH_COURSE_ACTIVITY_TYPES: "FETCH_COURSE_ACTIVITY_TYPES",
 	CREATE_SECTION: "CREATE_SECTION",
 	DELETE_SECTION: "DELETE_SECTION",
-	GET_ACTIVITIES: "GET_ACTIVITIES"
+	GET_ACTIVITIES: "GET_ACTIVITIES",
+	SELECT_CALENDAR_MODE: "SELECT_CALENDAR_MODE"
 });
 
 // Injecting these templates into schedulingApp so uib-popover-template can see them
