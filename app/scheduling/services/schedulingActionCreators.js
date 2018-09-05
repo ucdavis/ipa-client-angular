@@ -39,11 +39,11 @@ class SchedulingActionCreators {
 					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
 				});
 			},
-			selectCalendarMode: function(tab) {
-				BudgetReducers.reduce({
+			setCalendarMode: function(tab) {
+				SchedulingStateService.reduce({
 					type: ActionTypes.SELECT_CALENDAR_MODE,
 					payload: {
-						activeTermTab: tab
+						tab: tab
 					}
 				});
 			},
