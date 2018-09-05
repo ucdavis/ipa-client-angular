@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { SAMPLE_DATA } from './course-page.model';
+
 @Component({
   selector: 'app-course-page',
   templateUrl: './course-page.component.html',
@@ -9,6 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 export class CoursePageComponent implements OnInit {
   workgroupId: string;
   year: string;
+  dataSource = SAMPLE_DATA;
+  displayedColumns: string[] = ['selected', 'course', 'fall', 'winter', 'spring'];
 
   constructor(private route: ActivatedRoute) {}
 
