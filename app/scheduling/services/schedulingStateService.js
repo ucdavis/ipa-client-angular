@@ -500,7 +500,7 @@ class SchedulingStateService {
 						return uiState;
 					case ActionTypes.SELECT_CALENDAR_MODE:
 						uiState.calendarMode.activeTab = action.payload.tab;
-						return ui;
+						return uiState;
 					case ActionTypes.SECTION_GROUP_TOGGLED:
 						var sectionGroupCheckedIndex = uiState.checkedSectionGroupIds.indexOf(action.payload.sectionGroupId);
 						if (sectionGroupCheckedIndex < 0) {
