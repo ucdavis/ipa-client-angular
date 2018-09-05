@@ -54,6 +54,10 @@ class SchedulingCtrl {
 			console.log(data.state);
 		});
 
+		this.$scope.setCalendarMode = function (tab) {
+			self.SchedulingActionCreators.setCalendarMode(tab);
+		};
+
 		this.$scope.setSelectedSectionGroup = function (sectionGroupId) {
 			var sectionGroup = self.$scope.view.state.sectionGroups.list[sectionGroupId];
 			self.SchedulingActionCreators.setSelectedSectionGroup(sectionGroup);
