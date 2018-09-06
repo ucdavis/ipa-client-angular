@@ -16,7 +16,7 @@
         <p matLine *ngIf="isNavExpanded" class="theme-primary" [class.typo-muted]="activePage != 'home'">Home</p>
       </mat-list-item>
 
-      <a href="/newCourses/20/2018/10" mat-list-item matTooltip="Courses" matTooltipPosition="right" [matTooltipDisabled]="isNavExpanded">
+      <a [routerLink]="['/courses/20/2018/10']" mat-list-item matTooltip="Courses" matTooltipPosition="right" [matTooltipDisabled]="isNavExpanded">
         <mat-icon mat-list-icon class="theme-primary" [class.typo-muted]="activePage != 'newCourses'">book</mat-icon>
         <p matLine *ngIf="isNavExpanded" class="theme-primary" [class.typo-muted]="activePage != 'newCourses'">Courses</p>
       </a>

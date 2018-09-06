@@ -239,7 +239,6 @@ module.exports = {
         target: "http://localhost:9000",
         bypass: function(req, res, proxyOptions) {
           if ((req.url.indexOf("/reports") > -1 ) && (req.url != "/index.html")) { return "/index.html"; }
-          if ((req.url.indexOf("/courseApp") > -1 ) && (req.url != "/index.html")) { return "/index.html"; }
           if ((req.url.indexOf("/summary") > -1 ) && (req.url != "/summary.html")) { return "/summary.html"; }
           if ((req.url.indexOf("/admin") > -1 ) && (req.url != "/admin.html")) { return "/admin.html"; }
           if ((req.url.indexOf("/budget") > -1 ) && (req.url != "/budget.html")) { return "/budget.html"; }

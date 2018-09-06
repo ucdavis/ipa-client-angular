@@ -6,7 +6,7 @@ import { CourseModule } from './course/course.module';
 
 const routes: Routes = [
   {
-    path: 'courseApp',
+    path: 'courses',
     loadChildren: () => CourseModule
   },
   {
