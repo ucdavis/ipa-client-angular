@@ -3,6 +3,9 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 		restrict: 'E',
 		template: '<div id="calendar"></div>',
 		replace: true,
+		scope: {
+			state: '='
+		},
 		link: function (scope, element, attrs) {
 			scope.isResizeListenerActive = false;
 
@@ -26,7 +29,11 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 			};
 
 			scope.listenForResize();
-			scope.view = {};
+
+			scope.view = {
+				state: scope.state
+			};
+
 			// color for calnder
 			// Default color: Other (checked) courses
 			var defaultEventBackgroundColor = "#DEDEDE";
@@ -381,6 +388,8 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 			
 				return $(window).height() - 178;
 			};
+
+			refreshCalendar();
 		}
 	};
 };
