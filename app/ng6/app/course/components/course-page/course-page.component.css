@@ -1,5 +1,15 @@
-table {
-  width: 75%;
+.course-section-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.table-section{
+  flex: 4;
+  margin-right: 16px;
+}
+
+.detail-section {
+  flex: 1;
 }
 
 .toolbar-container {
