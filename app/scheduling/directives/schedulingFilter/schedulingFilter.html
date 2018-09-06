@@ -18,10 +18,20 @@
 
   <div class="btn-group pull-right">
 
+    <button class="disabled scheduling-filters__dropdown-btn btn btn-default dropdown-toggle"
+            type="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            ng-if="schedulingMode == 'Departmental Rooms'"
+            aria-expanded="false">
+      <span class="scheduling-filters__btn-text">Filters</span>
+      <span class="caret scheduling-filters__caret"></span>
+    </button>
     <button class="scheduling-filters__dropdown-btn btn btn-default dropdown-toggle"
             type="button"
             data-toggle="dropdown"
             aria-haspopup="true"
+            ng-if="schedulingMode != 'Departmental Rooms'"
             aria-expanded="false">
       <span class="scheduling-filters__btn-text">Filters</span>
       <span class="caret scheduling-filters__caret"></span>

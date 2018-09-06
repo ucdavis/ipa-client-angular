@@ -8,7 +8,8 @@ let schedulingFilter = function (SchedulingActionCreators) {
       filters: '<',
       tags: '<',
       instructors: '<',
-      locations: '<'
+      locations: '<',
+      schedulingMode: '<'
     },
     link: function (scope, element, attrs) {
       scope.dayDescriptions = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
