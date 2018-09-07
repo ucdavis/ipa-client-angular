@@ -5,11 +5,10 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 		replace: true,
 		scope: {
 			state: '=',
-			selectedRooms: '<'
+			locations: '=',
+			selectedDay: '='
 		},
 		link: function (scope, element, attrs) {
-      scope.selectedRooms = ["SSH 1300", "Coffee House", "Taco Bell", "Radio SHack", "PSYLAB 003"];
-
 			scope.isResizeListenerActive = false;
 
 			scope.listenForResize = function() {
@@ -77,17 +76,19 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					slotEventOverlap: false,
 					visibleRange: {
 						start: moment().startOf('week').format('YYYY-MM-DD'),
-						end: moment().startOf('week').add(scope.selectedRooms.length, 'days')
+						end: moment().startOf('week').add(scope.locations.ids.length, 'days')
 					},
 					columnHeaderText: function(mom) {
-						return scope.selectedRooms[mom.weekday()];
+						var locationIndex = mom.weekday();
+						var locationId = scope.locations.ids[locationIndex];
+						var location = scope.locations.list[locationId];
+						return location.description;
 					},
 					eventColor: defaultEventBackgroundColor,
 					eventBorderColor: defaultEventBorderColor,
 					eventTextColor: defaultEventTextColor,
 					eventSources: [
-						getActivities(),
-						getUnavailabilities()
+						getActivities()
 					],
 					eventClick: function (calEvent, jsEvent, view) {
 						var closeTarget = angular.element(jsEvent.target).hasClass('activity-remove');
@@ -207,81 +208,49 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 				return calendarActivities;
 			};
 
+			// TODO: alter the activity day to match the index of the locationId
 			var activityToEvents = function (activity, courseTitle) {
 				var calendarActivities = [];
 
-				if (activity.startTime && activity.endTime && activity.dayIndicator) {
+				if (activity.startTime && activity.endTime) {
 					var dayArray = activity.dayIndicator.split('');
 
 					var start = activity.startTime.split(':').map(Number);
 					var end = activity.endTime.split(':').map(Number);
 					var location = activity.locationDescription || '';
+					var locationIndex = scope.locations.ids.indexOf(activity.locationId);
+					var activityStart = moment().day(locationIndex).hour(start[0]).minute(start[1]).second(0).format('llll');
+					var activityEnd = moment().day(locationIndex).hour(end[0]).minute(end[1]).second(0).format('llll');
 
-					dayArray.forEach(function (d, i) {
-						if (d === '1') {
-							var activityStart = moment().day(i).hour(start[0]).minute(start[1]).second(0).format('llll');
-							var activityEnd = moment().day(i).hour(end[0]).minute(end[1]).second(0).format('llll');
 
-							// Add classes to group events that belong to the same activity
-							var activityClasses = [
-								'activity-event',
-								'activity-' + activity.id,
-								'section-group-' + activity.sectionGroupId
-							];
+					// Add classes to group events that belong to the same activity
+					var activityClasses = [
+						'activity-event',
+						'activity-' + activity.id,
+						'section-group-' + activity.sectionGroupId
+					];
 
-							// Add a class to selected activity's meetings
-							if (scope.view.state.uiState.selectedActivityId == activity.id) {
-								activityClasses.push('selected-activity');
-							}
+					// Add a class to selected activity's meetings
+					if (scope.view.state.uiState.selectedActivityId == activity.id) {
+						activityClasses.push('selected-activity');
+					}
 
-							// Add a class to selected sectionGroup's meetings
-							if (scope.view.state.uiState.selectedSectionGroupId == activity.sectionGroupId) {
-								activityClasses.push('selected-section-group');
-							}
+					// Add a class to selected sectionGroup's meetings
+					if (scope.view.state.uiState.selectedSectionGroupId == activity.sectionGroupId) {
+						activityClasses.push('selected-section-group');
+					}
 
-							calendarActivities.push({
-								title: courseTitle + ' (' + activity.activityTypeCode.activityTypeCode + ') ' + location,
-								start: activityStart,
-								end: activityEnd,
-								activityId: activity.id,
-								sectionGroupId: activity.sectionGroupId,
-								className: activityClasses
-							});
-						}
+					calendarActivities.push({
+						title: courseTitle + ' (' + activity.activityTypeCode.activityTypeCode + ') ' + location,
+						start: activityStart,
+						end: activityEnd,
+						activityId: activity.id,
+						sectionGroupId: activity.sectionGroupId,
+						className: activityClasses
 					});
 				}
+
 				return calendarActivities;
-			};
-
-			var teachingCallResponseToEvents = function (teachingCallResponse, title) {
-				var calendarUnavailabilities = [];
-				var unavailabilitiesArr = teachingCallResponse.availabilityBlob.split(',');
-
-				for (var d = 1; d < 6; d++) { // Blob starts on Monday and ends on Friday by definition
-					var unavailabilityStart = null;
-					for (var h = 7; h < 22; h++) { // Blob starts at 7am and ends at 10pm by definition
-						var slotUnavailable = unavailabilitiesArr[15 * (d - 1) + (h - 7)] === '0';
-						if (unavailabilityStart === null && slotUnavailable) {
-							unavailabilityStart = moment().day(d).hour(h).minute(0).second(0);
-						}
-
-						// If unavailability slot is ending or day is ending...
-						if (unavailabilityStart !== null && (slotUnavailable === false || h === 21)) {
-							if (h === 21) { h++; } // Unavailabilities must end at 22:00
-							var unavailabilityEnd = moment().day(d).hour(h).minute(0).second(0);
-							calendarUnavailabilities.push({
-								title: title,
-								start: unavailabilityStart,
-								end: unavailabilityEnd,
-								teachingCallResponseId: teachingCallResponse.id,
-								className: ['unavailability-event']
-							});
-							unavailabilityStart = null;
-						}
-					}
-				}
-
-				return calendarUnavailabilities;
 			};
 
 			var sectionGroupToActivityEvents = function (sectionGroup) {
@@ -290,7 +259,8 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 
 				if (sectionGroup.sharedActivityIds) {
 					sectionGroup.sharedActivityIds.forEach(function (sharedActivityId) {
-						if (activityMatchesLocationFilters(sharedActivityId)) {
+
+						if (activityMatchesFilters(sharedActivityId)) {
 							calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[sharedActivityId], title));
 						}
 					});
@@ -301,26 +271,11 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						var section = scope.view.state.sections.list[sectionId];
 						if (section.activityIds) {
 							section.activityIds.forEach(function (activityId) {
-								if (activityMatchesLocationFilters(activityId)) {
+								if (activityMatchesFilters(activityId)) {
 									calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[activityId], title));
 								}
 							});
 						}
-					});
-				}
-
-				return calendarActivities;
-			};
-
-			var sectionGroupToUnavailabilityEvents = function (sectionGroup) {
-				var calendarActivities = [];
-
-				if (sectionGroup.teachingCallResponseIds) {
-					sectionGroup.teachingCallResponseIds.forEach(function (trId) {
-						var teachingCallResponse = scope.view.state.teachingCallResponses.list[trId];
-						var instructor = scope.view.state.instructors.list[teachingCallResponse.instructorId];
-						var instructorName = instructor ? instructor.fullName : "Unknown Instructor";
-						calendarActivities = calendarActivities.concat(teachingCallResponseToEvents(teachingCallResponse, instructorName));
 					});
 				}
 
@@ -355,26 +310,11 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 				return course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern;
 			};
 
-			var getUnavailabilities = function () {
-				var calendarActivities = [];
+			// Ensure the activity has a customRoom assignment, and that it matches the selected day
+			var activityMatchesFilters = function(activityId) {
+				var activity = scope.view.state.activities.list[activityId];
 
-				// Add Selected sectionGroup unavailabilities
-				if (scope.view.state.uiState.selectedSectionGroupId) {
-					var unstyledEvents = sectionGroupToUnavailabilityEvents(scope.view.state.sectionGroups.list[scope.view.state.uiState.selectedSectionGroupId]);
-					calendarActivities = styleCalendarEvents(unstyledEvents, unavailabilityEventBackgroundColor, unavailabilityEventBorderColor, unavailabilityEventTextColor);
-				}
-
-				return calendarActivities;
-			};
-
-			var activityMatchesLocationFilters = function(activityId) {
-				if (scope.view.state.filters.enabledLocationIds.length === 0) {
-					return true;
-				}
-
-				var locationId = scope.view.state.activities.list[activityId].locationId;
-
-				return (scope.view.state.filters.enabledLocationIds.indexOf(locationId) >= 0);
+				return ( (activity.locationId > 0) && (activity.dayIndicator[scope.selectedDay] == 1) );
 			};
 
 			$rootScope.$on("schedulingStateChanged", function (event, data) {
