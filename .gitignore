@@ -11,3 +11,4 @@ ipa-ucdavis-edu.env
 cypress.env.json
 cypress/videos
 cypress/screenshots
+yarn-error.log
