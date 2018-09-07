@@ -322,6 +322,10 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 				refreshCalendar();
 			});
 
+			scope.$watch("selectedDay", function () {
+				refreshCalendar();
+			});
+
 			var neonCalendar = neonCalendar || {};
 
 			neonCalendar.$container = $(".calendar-env");
