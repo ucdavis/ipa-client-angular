@@ -22,6 +22,7 @@ import timeEditor from './directives/activityDetails/timeEditor/timeEditor.js';
 import freeformTimeSelector from './directives/activityDetails/timeEditor/freeformTimeSelector/freeformTimeSelector.js';
 import standardTimeSelector from './directives/activityDetails/timeEditor/standardTimeSelector/standardTimeSelector.js';
 import schedulingFilter from './directives/schedulingFilter/schedulingFilter.js';
+import departmentalRoomCalendar from './directives/departmentalRoomCalendar/departmentalRoomCalendar';
 
 // Dependencies
 var dependencies = [
@@ -75,6 +76,7 @@ const schedulingApp = angular.module("schedulingApp", dependencies)
 .service('TermService', TermService)
 .service('AuthService', AuthService)
 .directive('termCalendar', termCalendar)
+.directive('departmentalRoomCalendar', departmentalRoomCalendar)
 .directive('timeInput', timeInput)
 .directive('activityDetails', activityDetails)
 .directive('locationEditor', locationEditor)
