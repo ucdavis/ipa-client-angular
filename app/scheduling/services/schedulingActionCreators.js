@@ -25,6 +25,14 @@ class SchedulingActionCreators {
 					$rootScope.$emit('toast', { message: "Could not load schedule initial state.", type: "ERROR" });
 				});
 			},
+			setDepartmentalRoomsDay: function (day) {
+				SchedulingStateService.reduce({
+					type: ActionTypes.SET_DEPARTMENTAL_ROOMS_DAY,
+					payload: {
+						day: day
+					}
+				});
+			},
 			updateActivity: function (activity) {
 				SchedulingService.updateActivity(activity).then(function (updatedActivity) {
 					$rootScope.$emit('toast', { message: "Updated " + activity.getCodeDescription(), type: "SUCCESS" });

@@ -22,7 +22,8 @@ import timeEditor from './directives/activityDetails/timeEditor/timeEditor.js';
 import freeformTimeSelector from './directives/activityDetails/timeEditor/freeformTimeSelector/freeformTimeSelector.js';
 import standardTimeSelector from './directives/activityDetails/timeEditor/standardTimeSelector/standardTimeSelector.js';
 import schedulingFilter from './directives/schedulingFilter/schedulingFilter.js';
-import departmentalRoomCalendar from './directives/departmentalRoomCalendar/departmentalRoomCalendar';
+import departmentalRoomCalendar from './directives/departmentalRoomCalendar/departmentalRoomCalendar.js';
+import daySelector from './directives/daySelector/daySelector.js';
 
 // Dependencies
 var dependencies = [
@@ -84,6 +85,7 @@ const schedulingApp = angular.module("schedulingApp", dependencies)
 .directive('freeformTimeSelector', freeformTimeSelector)
 .directive('standardTimeSelector', standardTimeSelector)
 .directive('schedulingFilter', schedulingFilter)
+.directive('daySelector', daySelector)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	SECTION_GROUP_SELECTED: "SECTION_GROUP_SELECTED",
@@ -102,7 +104,8 @@ const schedulingApp = angular.module("schedulingApp", dependencies)
 	CREATE_SECTION: "CREATE_SECTION",
 	DELETE_SECTION: "DELETE_SECTION",
 	GET_ACTIVITIES: "GET_ACTIVITIES",
-	SELECT_CALENDAR_MODE: "SELECT_CALENDAR_MODE"
+	SELECT_CALENDAR_MODE: "SELECT_CALENDAR_MODE",
+	SET_DEPARTMENTAL_ROOMS_DAY: "SET_DEPARTMENTAL_ROOMS_DAY"
 });
 
 // Injecting these templates into schedulingApp so uib-popover-template can see them
