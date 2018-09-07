@@ -25,11 +25,15 @@
 
 				<div class="schedule-mode__nav">
 					<ipa-tabs tab-names="view.state.uiState.calendarMode.allTabs"
-					active-tab="view.state.uiState.calendarMode.activeTab"
-					select-tab="setCalendarMode"
-					border-less="true"
-					slim="true">
+					          active-tab="view.state.uiState.calendarMode.activeTab"
+					          select-tab="setCalendarMode"
+					          border-less="true"
+					          slim="true">
 					</ipa-tabs>
+
+					<day-selector calendar-mode="view.state.uiState.calendarMode.activeTab"
+					              selected-day="view.state.filters.departmentalRoomDay">
+					</day-selector>
 				</div>
 			</div>
 		</div>
@@ -214,7 +218,10 @@
 						<term-calendar state="view.state"></term-calendar>
 					</div>
 					<div ng-if="view.state.uiState.calendarMode.activeTab =='Departmental Rooms'">
-						<departmental-room-calendar state="view.state" locations="view.state.locations" selected-day="1"></departmental-room-calendar>
+						<departmental-room-calendar state="view.state"
+						                            locations="view.state.locations"
+						                            selected-day="view.state.filters.departmentalRoomDay.number">
+						</departmental-room-calendar>
 					</div>
 			</div>
 		</div>

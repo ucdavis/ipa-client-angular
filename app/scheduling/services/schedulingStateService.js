@@ -444,10 +444,14 @@ class SchedulingStateService {
 							enabledLocationIds: [],
 							enabledInstructorIds: [],
 							hiddenDays: [0, 6], // Default hidden days: Sat and Sun
-							enableUnpublishedCourses: false
+							enableUnpublishedCourses: false,
+							departmentalRoomDay: { number: 1, description: "Monday" }
 						};
 						// Here is where we might load stored data about what filters
 						// were left on last time.
+						return filters;
+					case ActionTypes.SET_DEPARTMENTAL_ROOMS_DAY:
+						filters.departmentalRoomDay = action.payload.day;
 						return filters;
 					case ActionTypes.TOGGLE_DAY:
 						var tagIndex = filters.hiddenDays.indexOf(action.payload.dayIndex);
