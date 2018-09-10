@@ -11,7 +11,7 @@ import { SAMPLE_DATA } from './course-page.model';
 export class CoursePageComponent implements OnInit {
   workgroupId: string;
   year: string;
-  dataSource = SAMPLE_DATA;
+  dataSource: any = SAMPLE_DATA;
   displayedColumns: string[] = ['selected', 'course', 'fall', 'winter', 'spring'];
 
   constructor(private route: ActivatedRoute) {}
@@ -19,5 +19,44 @@ export class CoursePageComponent implements OnInit {
   ngOnInit() {
     this.workgroupId = this.route.snapshot.data.params['workgroupId'];
     this.year = this.route.snapshot.data.params['year'];
+  }
+
+  selectedCount() {
+    return this.dataSource.reduce((acc, currentVal) => {
+      return acc + (currentVal.selected ? 1 : 0);
+    }, 0);
+  }
+
+  toggleSelectAll() {
+    const count = this.selectedCount();
+
+    if (count > 0) {
+      // deselect all
+      this.dataSource = this.dataSource.map(course => {
+        course.selected = false;
+        return course;
+      });
+    } else {
+      this.dataSource = this.dataSource.map(course => {
+        course.selected = true;
+        return course;
+      });
+    }
+  }
+
+  toggleSelect(index) {
+    this.dataSource[index].selected = !this.dataSource[index].selected;
+  }
+
+  checkboxStatus() {
+    const count = this.selectedCount();
+
+    if (count === this.dataSource.length) {
+      return 'check_box';
+    } else if (count > 0) {
+      return 'indeterminate_check_box';
+    } else {
+      return 'check_box_outline_blank';
+    }
   }
 }
