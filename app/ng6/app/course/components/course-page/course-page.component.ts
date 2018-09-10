@@ -21,14 +21,14 @@ export class CoursePageComponent implements OnInit {
     this.year = this.route.snapshot.data.params['year'];
   }
 
-  selectedCount() {
+  getSelectedCount() {
     return this.dataSource.reduce((acc, currentVal) => {
       return acc + (currentVal.selected ? 1 : 0);
     }, 0);
   }
 
   toggleSelectAll() {
-    const count = this.selectedCount();
+    const count = this.getSelectedCount();
 
     if (count > 0) {
       // deselect all
@@ -48,8 +48,8 @@ export class CoursePageComponent implements OnInit {
     this.dataSource[index].selected = !this.dataSource[index].selected;
   }
 
-  checkboxStatus() {
-    const count = this.selectedCount();
+  getCheckboxStatus() {
+    const count = this.getSelectedCount();
 
     if (count === this.dataSource.length) {
       return 'check_box';
