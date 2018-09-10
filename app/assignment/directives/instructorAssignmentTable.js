@@ -165,17 +165,22 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 					var relevantInstructors = 0;
 
- 					$.each(scope.view.state.instructors.ids, function (i, instructorId) {
+					$.each(scope.view.state.instructors.ids, function (i, instructorId) {
 						var instructor = scope.view.state.instructors.list[instructorId];
 
- 						if (scope.instructorTypeId == instructor.instructorTypeId) {
+						if (scope.instructorTypeId == instructor.instructorTypeId) {
 							relevantInstructors += 1;
 						}
 					});
 
- 					if (relevantInstructors == 0) { return; }
+					if (relevantInstructors == 0) { return; }
 
- 					var instructorTypeHeader = '<div class="instructor-type-header">' + scope.view.state.instructorTypes.list[scope.instructorTypeId].description + '</div>';
+					var instructorTypeHeader = "";
+
+					if (scope.view.state.instructorTypes.list[scope.instructorTypeId]) {
+						instructorTypeHeader = '<div class="instructor-type-header">' + scope.view.state.instructorTypes.list[scope.instructorTypeId].description + '</div>';
+					}
+
 					element.append(instructorTypeHeader);
 
 					// Render the header
