@@ -30,13 +30,17 @@ let ipaInput = function ($timeout) {
 					var LEFT_ARROW = 37;
 					var RIGHT_ARROW = 39;
 					var MINUS = 189;
+					var NUMPAD_MINUS = 109;
+					var ALT_MINUS = 173;
 
 					var acceptableMiscValues = [
 						PERIOD,
 						BACK_SPACE,
 						LEFT_ARROW,
 						RIGHT_ARROW,
-						MINUS
+						MINUS,
+						NUMPAD_MINUS,
+						ALT_MINUS
 					];
 
 					if (scope.isNumericKeyCode(e.keyCode) == false
