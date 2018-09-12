@@ -13,6 +13,7 @@ export class CoursePageComponent implements OnInit {
   year: string;
   dataSource: any = SAMPLE_DATA;
   displayedColumns: string[] = ['selected', 'course', 'fall', 'winter', 'spring'];
+  displayedDetails = 'none';
 
   constructor(private route: ActivatedRoute) {}
 
@@ -58,5 +59,13 @@ export class CoursePageComponent implements OnInit {
     } else {
       return 'check_box_outline_blank';
     }
+  }
+
+  toggleCourseDetails(course) {
+    this.displayedDetails = 'course';
+  }
+
+  toggleSectionGroupDetails(course) {
+    this.displayedDetails = 'sectionGroup';
   }
 }

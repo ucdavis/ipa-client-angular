@@ -48,7 +48,7 @@
     <!-- Course Info Column -->
     <ng-container matColumnDef="course">
       <th mat-header-cell *matHeaderCellDef> Course </th>
-      <td mat-cell *matCellDef="let course"> {{course.course}} </td>
+      <td mat-cell *matCellDef="let course" (click)="toggleCourseDetails(course)"> {{course.course}} </td>
     </ng-container>
 
     <!-- Fall Quarter Column -->
@@ -56,7 +56,7 @@
       <th mat-header-cell *matHeaderCellDef> Fall Quarter </th>
       <td mat-cell *matCellDef="let course">
         <mat-form-field>
-          <input matInput value={{course.fall}}>
+          <input matInput value={{course.fall}} (click)="toggleSectionGroupDetails(course)">
         </mat-form-field>
       </td>
     </ng-container>
@@ -85,5 +85,5 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <app-course-detail class="detail-section"></app-course-detail>
+  <app-course-detail class="detail-section" displayedDetails={{displayedDetails}}></app-course-detail>
 </div>

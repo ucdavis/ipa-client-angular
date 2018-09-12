@@ -1,19 +1,58 @@
 <mat-card class="course-detail-card">
-  <mat-card-header>
-    <mat-card-title>AAS 010</mat-card-title>
-    <mat-card-subtitle>African-Am Culture & Soc</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <form class="form">
-      <mat-form-field class="full-width">
-        <input matInput placeholder="Title" value="">
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <input matInput placeholder="Tags" value="">
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <input matInput placeholder="Sequence Pattern" value="">
-      </mat-form-field>
-    </form>
-  </mat-card-content>
+  <span *ngIf="displayedDetails === 'none'">Select a Course to Edit</span>
+  <ng-container *ngIf="displayedDetails === 'course'">
+    <mat-card-header>
+      <mat-card-title>AAS 010</mat-card-title>
+      <mat-card-subtitle>African-Am Culture & Soc</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="form">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Title" value="">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Tags" value="">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Sequence Pattern" value="">
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+  </ng-container>
+
+  <!-- Section Group -->
+  <ng-container *ngIf="displayedDetails === 'sectionGroup'">
+    <mat-card-header>
+      <mat-card-title>AAS 010</mat-card-title>
+      <mat-card-subtitle>African-Am Culture & Soc</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <canvas width="372" height="186" style="display: block; width: 372px; height: 186px;"></canvas>
+
+      <div>Section</div>
+      <mat-divider></mat-divider>
+      <form class="form">
+        <label class="section-label">A01</label>
+        <mat-form-field class="half-width">
+          <input matInput placeholder="Seats" value="">
+        </mat-form-field>
+      </form>
+
+      <mat-divider></mat-divider>
+      <form class="form">
+        <label class="section-label">A02</label>
+        <mat-form-field class="half-width">
+          <input matInput placeholder="Seats" value="">
+        </mat-form-field>
+      </form>
+
+      <mat-divider></mat-divider>
+      <form class="form">
+        <label class="section-label">A03</label>
+        <mat-form-field class="half-width">
+          <input matInput placeholder="Seats" value="">
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+  </ng-container>
 </mat-card>
