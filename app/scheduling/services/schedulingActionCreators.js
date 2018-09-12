@@ -146,8 +146,12 @@ class SchedulingActionCreators {
 
 				sectionGroup.sectionIds.forEach(function(sectionId) {
 					var section = SchedulingStateService._state.sections.list[sectionId];
-					debugger;
-					// TODO: find all activities for section, determine if activity matches the location
+					section.activityIds.forEach(function(activityId) {
+						var activity = SchedulingStateService._state.activities.list[activityId];
+						if (activity.locationId == locationId) {
+							passesFilter = true;
+						}
+					});
 				});
 
 				return passesFilter;
