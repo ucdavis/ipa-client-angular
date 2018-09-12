@@ -1,3 +1,9 @@
+.scheduling-filters {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .scheduling-filters__dropdown-window {
   width: 800px;
   padding: 5px;

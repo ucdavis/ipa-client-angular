@@ -43,6 +43,8 @@ body {
 	display: flex;
 	-webkit-justify-content: flex-end;
 	justify-content: flex-end;
+	max-width: 600px;
+	margin-right: 10px;
 }
 .activity-filter-tokens {
 	overflow-x: auto;
