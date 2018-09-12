@@ -532,12 +532,12 @@ class SchedulingStateService {
 					case ActionTypes.UPDATE_TAG_FILTERS:
 					case ActionTypes.UPDATE_LOCATION_FILTERS:
 					case ActionTypes.UPDATE_INSTRUCTOR_FILTERS:
-						// TODO: needs re-visiting, ultimately this should clear
-						// checkedSectionGroupIds, selectedSectionGroupId, selectedCourseId,
-						// and selectedActivityId ONLY if they don't match the filters
-						uiState.selectedSectionGroupId = action.payload.selectedSectionGroupId;
-						uiState.selectedCourseId = action.payload.selectedCourseId;
-						uiState.selectedActivityId = action.payload.selectedActivityId;
+						if (action.payload.shouldClearSelection) {
+							uiState.selectedSectionGroupId = null;
+							uiState.selectedCourseId = null;
+							uiState.selectedActivityId = null;
+						}
+
 						uiState.checkedSectionGroupIds = action.payload.checkedSectionGroupIds;
 						return uiState;
 					case ActionTypes.REMOVE_ACTIVITY:

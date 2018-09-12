@@ -52,21 +52,105 @@ class SchedulingActionCreators {
 				var selectedCourseId = SchedulingStateService._state.uiState.selectedCourseId;
 				var selectedSectionGroupId = SchedulingStateService._state.uiState.selectedSectionGroupId;
 				var selectedActivityId = SchedulingStateService._state.uiState.selectedActivityId;
-				var checkedSectionGroupIds = SchedulingStateService._state.uiState.checkedSectionGroupIds;
 
 				var selectedCourse = selectedCourseId ? SchedulingStateService._state.courses.list[selectedCourseId] : null;
 				var selectedSectionGroup = selectedSectionGroupId ? SchedulingStateService._state.sectionGroups.list[selectedSectionGroupId] : null;
 				var selectedActivity = selectedActivityId ? SchedulingStateService._state.activities.list[selectedActivityId] : null;
 
-				debugger;
+				var tagFilterIds = tagIds || SchedulingStateService._state.filters.enabledTagIds;
+				var locationFilterIds = locationIds || SchedulingStateService._state.filters.enabledLocationIds;
+				var instructorFilterIds = instructorIds || SchedulingStateService._state.filters.enabledInstructorIds;
+
+				if (selectedCourse && tagFilterIds && tagFilterIds.length > 0) {
+					var passesFilter = false;
+
+					tagFilterIds.forEach(function(tagId) {
+						if (selectedCourse.tagIds.indexOf(tagId) > -1) {
+							passesFilter = true;
+						}
+					});
+
+					if (passesFilter == false) { return false; }
+				}
+
+				if (selectedSectionGroup && instructorFilterIds && instructorFilterIds.length > 0) {
+					var passesFilter = false;
+
+					instructorFilterIds.forEach(function(instructorId) {
+						if (selectedSectionGroup.instructorIds.indexOf(instructorId) > -1) {
+							passesFilter = true;
+						}
+					});
+
+					if (passesFilter == false) { return false; }
+				}
+
+				if (selectedActivity && locationFilterIds && locationFilterIds.length > 0) {
+					var passesFilter = false;
+
+					locationFilterIds.forEach(function(locationId) {
+						if (selectedActivity.locationId == locationId) {
+							passesFilter = true;
+						}
+					});
+
+					if (passesFilter == false) { return false; }
+				}
+
+				return true;
+			},
+			filterCheckedSectionGroups: function (tagIds, locationIds, instructorIds) {
+				var _this = this;
+
+				var checkedSectionGroupIds = SchedulingStateService._state.uiState.checkedSectionGroupIds;
+
+				var tagFilterIds = tagIds || SchedulingStateService._state.filters.enabledTagIds;
+				var instructorFilterIds = instructorIds || SchedulingStateService._state.filters.enabledInstructorIds;
+				var locationFilterIds = locationIds || SchedulingStateService._state.filters.enabledLocationIds;
+
+				var filteredCheckedSectionGroupIds = [];
 
 				checkedSectionGroupIds.forEach(function(sectionGroupId) {
+					var passesFilter = false;
+
 					var sectionGroup = SchedulingStateService._state.sectionGroups.list[sectionGroupId];
 					var course = SchedulingStateService._state.courses.list[sectionGroup.courseId];
-					debugger;
+
+					instructorFilterIds.forEach(function(instructorId) {
+						if (sectionGroup.instructorIds.indexOf(instructorId) > -1) {
+							passesFilter = true;
+						}
+					});
+
+					tagFilterIds.forEach(function(tagId) {
+						if (course.tagIds.indexOf(tagId) > -1) {
+							passesFilter = true;
+						}
+					});
+
+					locationFilterIds.forEach(function(locationId) {
+						if (_this.sectionGroupHasLocation(sectionGroup, locationId)) {
+							passesFilter = true;
+						}
+					});
+
+					if (passesFilter) {
+						filteredCheckedSectionGroupIds.push(sectionGroupId);
+					}
 				});
 
-				debugger;
+				return filteredCheckedSectionGroupIds;
+			},
+			sectionGroupHasLocation: function(sectionGroup, locationId) {
+				var passesFilter = false;
+
+				sectionGroup.sectionIds.forEach(function(sectionId) {
+					var section = SchedulingStateService._state.sections.list[sectionId];
+					debugger;
+					// TODO: find all activities for section, determine if activity matches the location
+				});
+
+				return passesFilter;
 			},
 			setCalendarMode: function(tab) {
 				SchedulingStateService.reduce({
@@ -186,7 +270,8 @@ class SchedulingActionCreators {
 					type: ActionTypes.UPDATE_TAG_FILTERS,
 					payload: {
 						tagIds: tagIds,
-						shouldClearSelection: _this.shouldClearSelection(tagIds, null, null)
+						shouldClearSelection: _this.shouldClearSelection(tagIds, null, null),
+						checkedSectionGroupIds: _this.filterCheckedSectionGroups(tagIds, null, null)
 					}
 				};
 				SchedulingStateService.reduce(action);
@@ -198,7 +283,8 @@ class SchedulingActionCreators {
 					type: ActionTypes.UPDATE_LOCATION_FILTERS,
 					payload: {
 						locationIds: locationIds,
-						shouldClearSelection: _this.shouldClearSelection(null, locationIds, null)
+						shouldClearSelection: _this.shouldClearSelection(null, locationIds, null),
+						checkedSectionGroupIds: _this.filterCheckedSectionGroups(null, locationIds, null)
 					}
 				};
 				SchedulingStateService.reduce(action);
@@ -210,7 +296,8 @@ class SchedulingActionCreators {
 					type: ActionTypes.UPDATE_INSTRUCTOR_FILTERS,
 					payload: {
 						instructorIds: instructorIds,
-						shouldClearSelection: _this.shouldClearSelection(null, null, instructorIds)
+						shouldClearSelection: _this.shouldClearSelection(null, null, instructorIds),
+						checkedSectionGroupIds: _this.filterCheckedSectionGroups(null, null, instructorIds)
 					}
 				};
 				SchedulingStateService.reduce(action);
