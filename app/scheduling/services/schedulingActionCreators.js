@@ -34,6 +34,7 @@ class SchedulingActionCreators {
 				});
 			},
 			updateActivity: function (activity) {
+				var _this = this;
 				SchedulingService.updateActivity(activity).then(function (updatedActivity) {
 					$rootScope.$emit('toast', { message: "Updated " + activity.getCodeDescription(), type: "SUCCESS" });
 					var action = {
@@ -46,6 +47,26 @@ class SchedulingActionCreators {
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
 				});
+			},
+			shouldClearSelection: function (tagIds, locationIds, instructorIds) {
+				var selectedCourseId = SchedulingStateService._state.uiState.selectedCourseId;
+				var selectedSectionGroupId = SchedulingStateService._state.uiState.selectedSectionGroupId;
+				var selectedActivityId = SchedulingStateService._state.uiState.selectedActivityId;
+				var checkedSectionGroupIds = SchedulingStateService._state.uiState.checkedSectionGroupIds;
+
+				var selectedCourse = selectedCourseId ? SchedulingStateService._state.courses.list[selectedCourseId] : null;
+				var selectedSectionGroup = selectedSectionGroupId ? SchedulingStateService._state.sectionGroups.list[selectedSectionGroupId] : null;
+				var selectedActivity = selectedActivityId ? SchedulingStateService._state.activities.list[selectedActivityId] : null;
+
+				debugger;
+
+				checkedSectionGroupIds.forEach(function(sectionGroupId) {
+					var sectionGroup = SchedulingStateService._state.sectionGroups.list[sectionGroupId];
+					var course = SchedulingStateService._state.courses.list[sectionGroup.courseId];
+					debugger;
+				});
+
+				debugger;
 			},
 			setCalendarMode: function(tab) {
 				SchedulingStateService.reduce({
@@ -159,28 +180,37 @@ class SchedulingActionCreators {
 				SchedulingStateService.reduce(action);
 			},
 			updateTagFilters: function (tagIds) {
+				var _this = this;
+
 				var action = {
 					type: ActionTypes.UPDATE_TAG_FILTERS,
 					payload: {
-						tagIds: tagIds
+						tagIds: tagIds,
+						shouldClearSelection: _this.shouldClearSelection(tagIds, null, null)
 					}
 				};
 				SchedulingStateService.reduce(action);
 			},
 			updateLocationFilters: function (locationIds) {
+				var _this = this;
+
 				var action = {
 					type: ActionTypes.UPDATE_LOCATION_FILTERS,
 					payload: {
-						locationIds: locationIds
+						locationIds: locationIds,
+						shouldClearSelection: _this.shouldClearSelection(null, locationIds, null)
 					}
 				};
 				SchedulingStateService.reduce(action);
 			},
 			updateInstructorFilters: function (instructorIds) {
+				var _this = this;
+
 				var action = {
 					type: ActionTypes.UPDATE_INSTRUCTOR_FILTERS,
 					payload: {
-						instructorIds: instructorIds
+						instructorIds: instructorIds,
+						shouldClearSelection: _this.shouldClearSelection(null, null, instructorIds)
 					}
 				};
 				SchedulingStateService.reduce(action);
