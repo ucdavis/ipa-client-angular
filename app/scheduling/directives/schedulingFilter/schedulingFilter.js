@@ -4,6 +4,7 @@ let schedulingFilter = function (SchedulingActionCreators) {
   return {
     restrict: "E",
     template: require('./schedulingFilter.html'),
+		replace: true,
     scope: {
       filters: '<',
       tags: '<',
