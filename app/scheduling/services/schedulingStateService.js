@@ -487,8 +487,8 @@ class SchedulingStateService {
 							allSectionGroupsDetailsCached: false,
 							term: new Term(action.payload.term),
 							calendarMode: {
-								activeTab: "Main",
-								allTabs: ["Main", "Departmental Rooms"]
+								activeTab: "By Day",
+								allTabs: ["By Day", "By Room"]
 							},
 						};
 						return uiState;

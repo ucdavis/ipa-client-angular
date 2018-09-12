@@ -1,7 +1,8 @@
 <div class="scheduling-filters">
   <div class="calendar-filter-header">
     <div class="activity-filter-tokens text-center">
-      <div class="label label-selected-section-group" ng-repeat="tagId in filters.enabledTagIds track by $index">
+      <div class="label label-selected-section-group" ng-repeat="tagId in filters.enabledTagIds track by $index"
+           ng-style="{ 'background-color': tags.list[tagId].color || '#333', 'color': tags.list[tagId].getTextColor() }">
         {{ tags.list[tagId].name }}
         <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleTagFilter(tagId)"></i>
       </div>
@@ -22,7 +23,7 @@
             type="button"
             data-toggle="dropdown"
             aria-haspopup="true"
-            ng-if="schedulingMode == 'Departmental Rooms'"
+            ng-if="schedulingMode == 'By Room'"
             aria-expanded="false">
       <span class="scheduling-filters__btn-text">Filters</span>
       <span class="caret scheduling-filters__caret"></span>
@@ -31,7 +32,7 @@
             type="button"
             data-toggle="dropdown"
             aria-haspopup="true"
-            ng-if="schedulingMode != 'Departmental Rooms'"
+            ng-if="schedulingMode != 'By Room'"
             aria-expanded="false">
       <span class="scheduling-filters__btn-text">Filters</span>
       <span class="caret scheduling-filters__caret"></span>
