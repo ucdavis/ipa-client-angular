@@ -46,12 +46,7 @@ body {
 	max-width: 600px;
 	margin-right: 10px;
 }
-.activity-filter-tokens {
-	overflow-x: auto;
-	overflow-y: hidden;
-	white-space: nowrap;
-	line-height: 35px;
-}
+
 .calendar-filter-menu {
 	padding: 0.5em;
 }

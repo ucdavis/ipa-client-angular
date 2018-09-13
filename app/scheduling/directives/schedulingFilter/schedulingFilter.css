@@ -50,3 +50,11 @@
   flex: 0 0 20%;
   padding-right: 0.5em;
 }
+
+.activity-filter-tokens {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
