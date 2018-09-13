@@ -54,6 +54,10 @@ let schedulingFilter = function (SchedulingActionCreators) {
 
         SchedulingActionCreators.updateInstructorFilters(scope.filters.enabledInstructorIds);
       };
+
+      scope.toggleShowOnlyPrimaryActivityFilter = function() {
+        SchedulingActionCreators.toggleShowOnlyPrimaryActivityFilter();
+      };
     }
   };
 };
