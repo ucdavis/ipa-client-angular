@@ -352,6 +352,12 @@ class SchedulingActionCreators {
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not get activities.", type: "ERROR" });
 				});
+			},
+			toggleShowOnlyPrimaryActivityFilter: function() {
+				SchedulingStateService.reduce({
+					type: ActionTypes.TOGGLE_SHOW_ONLY_PRIMARY_ACTIVITY,
+					payload: {}
+				});
 			}
 		};
 	}

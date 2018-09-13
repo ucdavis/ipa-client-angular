@@ -445,7 +445,8 @@ class SchedulingStateService {
 							enabledInstructorIds: [],
 							hiddenDays: [0, 6], // Default hidden days: Sat and Sun
 							enableUnpublishedCourses: false,
-							departmentalRoomDay: { number: 1, description: "Monday" }
+							departmentalRoomDay: { number: 1, description: "Monday" },
+							showOnlyPrimaryActivity: true
 						};
 						// Here is where we might load stored data about what filters
 						// were left on last time.
@@ -469,6 +470,9 @@ class SchedulingStateService {
 						return filters;
 					case ActionTypes.UPDATE_INSTRUCTOR_FILTERS:
 						filters.enabledInstructorIds = action.payload.instructorIds;
+						return filters;
+					case ActionTypes.TOGGLE_SHOW_ONLY_PRIMARY_ACTIVITY:
+						filters.showOnlyPrimaryActivity = !filters.showOnlyPrimaryActivity;
 						return filters;
 					default:
 						return filters;
