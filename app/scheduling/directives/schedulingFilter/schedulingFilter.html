@@ -18,7 +18,6 @@
   </div>
 
   <div class="btn-group pull-right">
-
     <button class="disabled scheduling-filters__dropdown-btn btn btn-default dropdown-toggle"
             type="button"
             data-toggle="dropdown"
@@ -40,7 +39,8 @@
 
     <div class="dropdown-menu scheduling-filters__dropdown-window">
       <div class="filters-container" stop-event="click">
-        <div class="days-filter">
+
+        <div class="filter-category">
           <h3>Days</h3>
           <ul>
             <li ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] track by $index"
@@ -55,7 +55,7 @@
           </ul>
         </div>
 
-        <div class="locations-filter">
+        <div class="filter-category">
           <h3>Locations</h3>
           <ul>
             <li ng-repeat="locationId in locations.ids track by $index" ng-click="toggleLocationFilter(locationId)">
@@ -69,7 +69,7 @@
           </ul>
         </div>
 
-        <div class="tags-filter">
+        <div class="filter-category">
           <h3>Tags</h3>
           <ul>
             <li ng-repeat="tagId in tags.ids track by $index" ng-click="toggleTagFilter(tagId)">
@@ -83,7 +83,7 @@
           </ul>
         </div>
 
-        <div class="instructors-filter">
+        <div class="filter-category">
           <h3>Instructors</h3>
           <ul>
             <li ng-repeat="instructorId in instructors.ids track by instructorId"
@@ -97,6 +97,21 @@
             </li>
           </ul>
         </div>
+
+        <div class="filter-category">
+          <h3>Activity Type</h3>
+          <ul>
+            <li ng-click="toggleShowOnlyPrimaryActivityFilter()">
+              <div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': filters.showOnlyPrimaryActivity }">
+                <label class="cb-wrapper filter-checkbox">
+                  <div class="checked"></div>
+                </label>
+                <label class="filter-label">Only Primary</label>
+              </div>
+            </li>
+          </ul>
+        </div>
+
       </div>
     </div>
   </div>
