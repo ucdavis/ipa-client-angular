@@ -38,14 +38,6 @@ body {
 	width: 40%;
 	padding: 0.5em;
 }
-.calendar-filter-header {
-	width: 60%;
-	display: flex;
-	-webkit-justify-content: flex-end;
-	justify-content: flex-end;
-	max-width: 600px;
-	margin-right: 10px;
-}
 
 .calendar-filter-menu {
 	padding: 0.5em;
