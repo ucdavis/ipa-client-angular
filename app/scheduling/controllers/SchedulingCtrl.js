@@ -132,13 +132,6 @@ class SchedulingCtrl {
 			self.SchedulingActionCreators.updateInstructorFilters(instructorFilters);
 		};
 
-		self.$scope.setLocation = function (locationId) {
-			if (!self.$scope.view.state.uiState.selectedActivityId) { return; }
-			var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
-			activity.locationId = locationId;
-			self.$scope.saveActivity();
-		};
-
 		self.$scope.toggleActivityDay = function (index) {
 			var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
 			var dayArr = activity.dayIndicator.split('');
