@@ -1,43 +1,11 @@
-<div>
-	<strong>Location</strong>
-	<hr style="margin: 0 0 5px 0;" />
-	<div class="form-group">
-		<div class="col-sm-12 text-center">
-			<uib-tabset active="view.state.activities.list[view.state.uiState.selectedActivityId].locationType" justified="true">
-				<uib-tab index="'registrar'" heading="Registrar Provided" classes="location-tab" ng-click="setLocation(0)">
+<div class="location-editor">
+  <strong>Location</strong>
+  <hr style="margin: 0 0 5px 0;" />
 
-					{{ view.state.activities.list[view.state.uiState.selectedActivityId].bannerLocation || 'Not yet set in
-					Banner' }}
-
-				</uib-tab>
-				<uib-tab index="'custom'" heading="Custom" classes="location-tab">
-
-					<!-- Show the locations dropdown only if the current workgroup has at least a location set -->
-					<div ng-if="view.state.locations.ids.length > 0">
-
-						<div class="btn-group btn-group-justified">
-							<div class="btn-group" uib-dropdown>
-								<button type="button" class="btn btn-default dropdown-location" uib-dropdown-toggle>
-									{{ view.state.locations.list[view.state.activities.list[view.state.uiState.selectedActivityId].locationId].description || "Select Custom Location"}}
-									<span class="caret pull-right"></span>
-								</button>
-								<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-									<li class="clickable" ng-repeat="locationId in view.state.locations.ids track by locationId" ng-class="{ 'active': view.state.activities.list[view.state.uiState.selectedActivityId].locationId == locationId }">
-										<a ng-bind="view.state.locations.list[locationId].description" ng-click="setLocation(locationId)"></a>
-									</li>
-								</ul>
-							</div>
-						</div>
-
-					</div>
-
-					<!-- IF the workgroup does not have any custom locations -->
-					<div ng-if="view.state.locations.ids.length === 0">
-						<small>No custom locations are available, <br />please add some in the workgroup configuration</small>
-					</div>
-
-				</uib-tab>
-			</uib-tabset>
-		</div>
-	</div>
+  <ipa-dropdown expanded="expanded"
+                style="'minimal'"
+                button-text="currentLocationDescription"
+                items="dropdownLocations"
+                select-item="setLocation(item)">
+  </ipa-dropdown>
 </div>

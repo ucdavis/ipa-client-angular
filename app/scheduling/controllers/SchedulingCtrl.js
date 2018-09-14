@@ -99,14 +99,9 @@ class SchedulingCtrl {
 			var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
 			activity.locationId = locationId;
 			self.$scope.saveActivity();
-		};
 
-		self.$scope.toggleActivityDay = function (index) {
-			var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
-			var dayArr = activity.dayIndicator.split('');
-			dayArr[index] = Math.abs(1 - parseInt(dayArr[index])).toString();
-			activity.dayIndicator = dayArr.join('');
-			self.$scope.saveActivity();
+		self.$scope.toggleCalendarDay = function (index) {
+			self.SchedulingActionCreators.toggleDay(index);
 		};
 
 		self.$scope.setActivityStandardTime = function (time) {
@@ -258,4 +253,3 @@ class SchedulingCtrl {
 SchedulingCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Activity', 'Term', 'SchedulingActionCreators', 'AuthService'];
 
 export default SchedulingCtrl;
-
