@@ -443,7 +443,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													courseHtml += "<li><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 													if (teachingAssignment.approved === true) {
-														courseHtml += " class=disabled ";
+														courseHtml += ' class=assign-instructor-dropdown__item--disabled ';
 													}
 													courseHtml += " href=\"#\">" + teachingAssignment.priority + ". " + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + " - " + course.title + "</a></li>";
 												}
