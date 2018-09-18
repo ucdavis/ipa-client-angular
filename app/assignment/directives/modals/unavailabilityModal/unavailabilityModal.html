@@ -3,7 +3,7 @@
     <div class="row">
       <div class="flex-term_title">
         <div class="flex-term_title-children"  ng-repeat="teachingCallResponse in teachingCallResponses">
-          <h5>{{ termDisplayNames[teachingCallResponse.termCode.slice(-2)] }}</h4>
+          <h5>{{ termDisplayNames[teachingCallResponse.termCode.slice(-2)] }}</h5>
         </div>
       </div>
     </div>
@@ -14,7 +14,7 @@
         <div class="flex-unavability_chart-children" ng-repeat="teachingCallResponse in teachingCallResponses">
           <availability-grid blob="teachingCallResponse.availabilityBlob"
             on-change="saveUnavailabilities(teachingCallResponse, blob)"
-            read-only="isScheduleTermLocked(term)" style="width: 90%;"></availability-grid>
+            read-only="true" style="width: 90%;"></availability-grid>
         </div>
       </div>
     </div>
