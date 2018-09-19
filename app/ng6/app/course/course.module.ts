@@ -31,7 +31,7 @@ const courseRoutes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
-    RouterModule.forRoot(courseRoutes, { enableTracing: true })
+    RouterModule.forRoot(courseRoutes, { enableTracing: false })
   ],
   declarations: [CourseMainComponent, CourseViewComponent],
   providers: [],

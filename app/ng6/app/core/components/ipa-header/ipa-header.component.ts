@@ -134,7 +134,7 @@ export class IpaHeaderComponent implements OnInit {
 
   getTermDisplayName() {
     this.termCode = '10';
-    
+
     if (this.termCode.length !== 2) {
       return '';
     }

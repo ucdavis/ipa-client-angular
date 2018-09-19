@@ -3,14 +3,12 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angul
 import { AuthService } from '@core/auth/auth.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SharedStateService } from '@core/shared-state/shared-state.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
   constructor(
-    private authService: AuthService,
-    private sharedStateService: SharedStateService
+    private authService: AuthService
   ) {}
 
   canActivate(
