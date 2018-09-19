@@ -292,7 +292,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 											if (sectionGroup) {
 												var course = scope.view.state.courses.list[sectionGroup.courseId];
 												if (course) {
-													displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
+													displayTitle += course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + " - " + course.title;
 													var plannedSeats = sectionGroup.plannedSeats || "0";
 													plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
 													unitsLow = "<small>Units: " + course.unitsLow + "</small>";
@@ -342,11 +342,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 												courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
 												courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\" data-event-type=\"deleteAssignmentPop\" " +
 													"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
-
-
-
-
-
 											}
 											courseHtml += "</div>";
 										}
@@ -357,7 +352,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										courseHtml += "<div class=\"dropdown assign-dropdown hidden-print\">";
 										courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
 										courseHtml += "Assign..<span class=\"caret\"></span></button>";
-										courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
+										courseHtml += '<ul class="dropdown-menu assign-instructor-dropdown scrollable-menu" aria-labelledby="dropdownMenu1">';
 
 										// Track courses that were already present in 'interested', and should be filtered from 'other'
 										var interestedCourseIds = [];
@@ -367,34 +362,42 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										// If the instructor has teachingAssignments in this term, show them first
 										if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
 
+											// Create array of teaching assisgnments by instructor
+											var instructorTeachingAssignments = [];
 											$.each(instructor.teachingAssignmentTermCodeIds[termCode], function (i, teachingAssignmentId) {
 												var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+												instructorTeachingAssignments.push(teachingAssignment);
+											});
+											var instructorTeachingAssignmentsByPriority = _array_sortByProperty(instructorTeachingAssignments, "priority");
+											
+											$.each(instructorTeachingAssignmentsByPriority, function (i, teachingAssignment) {
+												var teachingAssignmentId = teachingAssignment.id;
 												var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
 												// This teachingAssignment is a buyout/sabb/release
 												if (teachingAssignment.approved == false && (teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.workLifeBalance || teachingAssignment.leaveOfAbsence || teachingAssignment.sabbaticalInResidence || teachingAssignment.sabbatical)) {
-													let preferenceDisplayText = "";
+													let preferenceDisplayText = teachingAssignment.priority + '. ';
 
 													if (teachingAssignment.buyout) {
-														preferenceDisplayText = "Buyout";
+														preferenceDisplayText += "Buyout";
 														nonCoursePreferences.buyout = true;
 													} else if (teachingAssignment.courseRelease) {
-														preferenceDisplayText = "Course Release";
+														preferenceDisplayText += "Course Release";
 														nonCoursePreferences.courseRelease = true;
 													} else if (teachingAssignment.inResidence) {
-														preferenceDisplayText = "In Residence";
+														preferenceDisplayText += "In Residence";
 														nonCoursePreferences.inResidence = true;
 													} else if (teachingAssignment.workLifeBalance) {
-														preferenceDisplayText = "Work Life Balance";
+														preferenceDisplayText += "Work Life Balance";
 														nonCoursePreferences.workLifeBalance = true;
 													} else if (teachingAssignment.leaveOfAbsence) {
-														preferenceDisplayText = "Leave of Absence";
+														preferenceDisplayText += "Leave of Absence";
 														nonCoursePreferences.leaveOfAbsence = true;
 													} else if (teachingAssignment.sabbaticalInResidence) {
-														preferenceDisplayText = "Sabbatical In Residence";
+														preferenceDisplayText += "Sabbatical In Residence";
 														nonCoursePreferences.sabbaticalInResidence = true;
 													} else if (teachingAssignment.sabbatical) {
-														preferenceDisplayText = "Sabbatical";
+														preferenceDisplayText += "Sabbatical";
 														nonCoursePreferences.sabbatical = true;
 													}
 
@@ -430,18 +433,19 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 														}
 													}
 												}
-
-												// Show option if the TeachingAssignment is not already approved
-												if (teachingAssignment.approved === false && course) {
+												// Show disabled option if the TeachingAssignment is already approved
+												if (course) {
 													if (firstInterestedCourseAdded === false) {
 														courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
 														firstInterestedCourseAdded = true;
 													}
-
 													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 													courseHtml += "<li><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
-													courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
+													if (teachingAssignment.approved === true) {
+														courseHtml += ' class=assign-instructor-dropdown__item--disabled ';
+													}
+													courseHtml += " href=\"#\">" + teachingAssignment.priority + ". " + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + " - " + course.title + "</a></li>";
 												}
 											});
 											if (firstInterestedCourseAdded) {
@@ -514,7 +518,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 												courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
 												courseHtml += " data-term-code=\"" + termCode + "\"";
 												courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-												courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
+												courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + " - " + course.title + "</a></li>";
 											}
 										});
 
