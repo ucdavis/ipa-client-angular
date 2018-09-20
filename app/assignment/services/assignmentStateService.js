@@ -9,7 +9,7 @@
 class AssignmentStateService {
 	constructor ($rootScope, $log, SectionGroup, Course, ScheduleTermState,
 	ScheduleInstructorNote, Term, Tag, Instructor, TeachingAssignment, TeachingCall,
-	TeachingCallReceipt, TeachingCallResponse, ActionTypes, Roles, InstructorTypeService) {
+	TeachingCallReceipt, TeachingCallResponse, ActionTypes, Roles, InstructorTypeService, TermService) {
 		this.Roles = Roles;
 		this.InstructorTypeService = InstructorTypeService;
 		var _self = this;
@@ -18,14 +18,14 @@ class AssignmentStateService {
 			_state: {},
 			_courseReducers: function (action, courses) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						courses = {
 							ids: [],
 							list: []
 						};
-	
+
 						// Create courses
 						var coursesList = {};
 						var length = action.payload.courses ? action.payload.courses.length : 0;
@@ -36,10 +36,10 @@ class AssignmentStateService {
 							coursesList[course.id].isHidden = false;
 							// Set all courses to true initially as no tag filters are set
 							coursesList[course.id].matchesTagFilters = true;
-	
+
 							// Add the termCode:sectionGroupId pairs
 							coursesList[course.id].sectionGroupTermCodeIds = {};
-	
+
 							action.payload.sectionGroups
 								.filter(function (sectionGroup) {
 									return sectionGroup.courseId === course.id;
@@ -53,19 +53,19 @@ class AssignmentStateService {
 						return courses;
 					case ActionTypes.UPDATE_TABLE_FILTER:
 						var query = action.payload.query;
-	
+
 						// Apply search filters
 						if (query.length > 0) {
 							// Specify the properties that we are interested in searching
 							var courseKeyList = ['courseNumber', 'sequencePattern', 'subjectCode', 'title'];
-	
+
 							_object_search_properties(query, courses, courseKeyList);
 						} else {
 							courses.ids.forEach(function(courseId) {
 								courses.list[courseId].isFiltered = false;
 							});
 						}
-	
+
 						return courses;
 					case ActionTypes.UPDATE_TAG_FILTERS:
 						// Set the course.isFiltered flag to false if any tag matches the filters
@@ -92,7 +92,7 @@ class AssignmentStateService {
 							ids: [],
 							list: {}
 						};
-	
+
 						action.payload.instructorTypes.forEach( function(instructorType) {
 							instructorTypes.list[instructorType.id] = instructorType;
 							instructorTypes.ids.push(instructorType.id);
@@ -130,14 +130,14 @@ class AssignmentStateService {
 			},
 			_supportStaffReducers: function (action, supportStaffList) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						var supportStaffList = {
 							ids: [],
 							list: {}
 						};
-	
+
 						action.payload.supportStaffList.forEach( function(supportStaff) {
 							supportStaffList.list[supportStaff.id] = supportStaff;
 							supportStaffList.ids.push(supportStaff.id);
@@ -149,27 +149,27 @@ class AssignmentStateService {
 			},
 			_studentPreferenceReducers: function (action, studentPreferences) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						var studentPreferences = {
 							ids: [],
 							list: {}
 						};
-	
+
 						var supportStaffList = {
 							ids: [],
 							list: {}
 						};
-	
+
 						action.payload.supportStaffList.forEach( function(supportStaff) {
 							supportStaffList.list[supportStaff.id] = supportStaff;
 							supportStaffList.ids.push(supportStaff.id);
 						});
-	
+
 						action.payload.studentSupportPreferences.forEach( function(preference) {
 							var supportStaff = supportStaffList.list[preference.supportStaffId];
-	
+
 							if (supportStaff) {
 								preference.description = supportStaff.firstName + " " + supportStaff.lastName;
 								studentPreferences.list[preference.id] = preference;
@@ -184,7 +184,7 @@ class AssignmentStateService {
 			_teachingAssignmentReducers: function (action, teachingAssignments) {
 				var scope = this;
 				var i, payloadTeachingAssignments, slotTeachingAssignment, index;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						teachingAssignments = {
@@ -220,7 +220,7 @@ class AssignmentStateService {
 			_teachingCallReducers: function (action, teachingCalls) {
 				var scope = this;
 				var teachingCall;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						teachingCalls = {
@@ -230,13 +230,13 @@ class AssignmentStateService {
 						};
 						teachingCalls.eligibleGroups.senateInstructors = true;
 						teachingCalls.eligibleGroups.federationInstructors = true;
-	
+
 						var teachingCallsList = {};
 						var length = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
 						for (var i = 0; i < length; i++) {
 							teachingCall = new TeachingCall(action.payload.teachingCalls[i]);
 							teachingCallsList[teachingCall.id] = teachingCall;
-	
+
 							// Gather eligible group data
 							if (teachingCall.sentToSenate) {
 								teachingCalls.eligibleGroups.senateInstructors = false;
@@ -244,7 +244,7 @@ class AssignmentStateService {
 							if (teachingCall.sentToFederation) {
 								teachingCalls.eligibleGroups.federationInstructors = false;
 							}
-	
+
 						}
 						teachingCalls.ids = _array_sortIdsByProperty(teachingCallsList, ["id"]);
 						teachingCalls.list = teachingCallsList;
@@ -255,14 +255,14 @@ class AssignmentStateService {
 			},
 			_teachingCallReceiptReducers: function (action, teachingCallReceipts) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						teachingCallReceipts = {
 							ids: [],
 							list: []
 						};
-	
+
 						var teachingCallReceiptsList = {};
 						var length = action.payload.teachingCallReceipts ? action.payload.teachingCallReceipts.length : 0;
 						for (var i = 0; i < length; i++) {
@@ -281,14 +281,14 @@ class AssignmentStateService {
 			},
 			_teachingCallResponseReducers: function (action, teachingCallResponses) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						teachingCallResponses = {
 							ids: [],
 							list: []
 						};
-	
+
 						var teachingCallResponsesList = {};
 						var length = action.payload.teachingCallResponses ? action.payload.teachingCallResponses.length : 0;
 						for (var i = 0; i < length; i++) {
@@ -308,7 +308,7 @@ class AssignmentStateService {
 			_instructorReducers: function (action, instructors) {
 				var scope = this;
 				var i, j, scheduleInstructorNote, instructor, teachingAssignments, termCode, slotTeachingAssignment, teachingAssignment;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						var users = {
@@ -348,26 +348,28 @@ class AssignmentStateService {
 
 						var instructorsList = {};
 						var length = action.payload.instructors ? action.payload.instructors.length : 0;
-	
+
 						// Loop over instructors
 						for (i = 0; i < length; i++) {
 							instructor = new Instructor(action.payload.instructors[i]);
 							instructor.teachingAssignmentTermCodeIds = {};
 							instructor.instructorTypeId = _self.getInstructorTypeId(instructor, teachingAssignments, userRoles, users);
 							// Scaffold all teachingAssignment termCodeId arrays
-							var allTerms = ['01', '02', '03', '04', '06', '07', '08', '09', '10'];
+							var termStates = [];
+							var allTerms = ['01', '02', '03', '04', '05','06', '07', '08', '09', '10'];
 							allTerms.forEach(function (slotTerm) {
 								var generatedTermCode = _self.generateTermCode(action.year, slotTerm);
+								termStates.push(generatedTermCode);
 								instructor.teachingAssignmentTermCodeIds[generatedTermCode] = [];
 							});
-	
+
 							instructor.isFiltered = false;
-	
+
 							// Create arrays of teachingAssignmentIds for each termCode
-							for (j = 0; j < action.payload.scheduleTermStates.length; j++) {
-								let termCode = action.payload.scheduleTermStates[j].termCode;
+							for (j = 0; j < termStates.length; j++) {
+								let termCode = termStates[j];
 								instructor.teachingAssignmentTermCodeIds[termCode] = [];
-	
+
 								// Create array of teachingAssignmentIds that are associated to this termCode and instructor
 								action.payload.teachingAssignments
 									.filter(function (teachingAssignment) {
@@ -377,17 +379,17 @@ class AssignmentStateService {
 										instructor.teachingAssignmentTermCodeIds[termCode].push(teachingAssignment.id);
 									});
 							}
-	
+
 							// Create arrays of teachingCallResponseIds
 							instructor.teachingCallResponses = [];
-	
+
 							for (j = 0; j < action.payload.teachingCallResponses.length; j++) {
 								var teachingCallResponse = action.payload.teachingCallResponses[j];
 								if (teachingCallResponse.instructorId == instructor.id) {
 									instructor.teachingCallResponses.push(teachingCallResponse);
 								}
 							}
-	
+
 							// Find scheduleInstructorNote associated to this instructor, if it exists
 							instructor.scheduleInstructorNoteId = null;
 							for (j = 0; j < action.payload.scheduleInstructorNotes.length; j++) {
@@ -396,7 +398,7 @@ class AssignmentStateService {
 									instructor.scheduleInstructorNoteId = scheduleInstructorNote.id;
 								}
 							}
-	
+
 							// Find teachingCallReceipt associated to this instructor, if it exists
 							instructor.teachingCallReceiptId = null;
 							for (j = 0; j < action.payload.teachingCallReceipts.length; j++) {
@@ -405,7 +407,7 @@ class AssignmentStateService {
 									instructor.teachingCallReceiptId = teachingCallReceipt.id;
 								}
 							}
-	
+
 							instructorsList[instructor.id] = instructor;
 						}
 						instructors.ids = _array_sortIdsByProperty(instructorsList, ["lastName"]);
@@ -413,41 +415,41 @@ class AssignmentStateService {
 						return instructors;
 					case ActionTypes.UPDATE_TABLE_FILTER:
 						var query = action.payload.query;
-	
+
 						if (query.length > 0) {
 							// Specify the properties that we are interested in searching
 							var instructorKeyList = ['emailAddress', 'firstName', 'lastName', 'fullName', 'loginId', 'ucdStudentSID'];
-	
+
 							_object_search_properties(query, instructors, instructorKeyList);
 						} else {
 							instructors.ids.forEach(function (instructorId) {
 								instructors.list[instructorId].isFiltered = false;
 							});
 						}
-	
+
 						return instructors;
 					case ActionTypes.ASSIGN_ASSOCIATE_INSTRUCTOR:
 						var instructor = action.payload.instructor;
 						var teachingAssignment = action.payload.teachingAssignment;
-	
+
 						if (instructors.ids.indexOf(instructor.id) == -1) {
 							instructor.teachingCallResponses = [];
 							instructor.teachingAssignmentTermCodeIds = {};
-	
+
 							// Scaffold all teachingAssignment termCodeId arrays
 							var allTerms = ['01', '02', '03', '04', '06', '07', '08', '09', '10'];
 							allTerms.forEach(function (slotTerm) {
 								var generatedTermCode = generateTermCode(action.payload.year, slotTerm);
 								instructor.teachingAssignmentTermCodeIds[generatedTermCode] = [];
 							});
-	
+
 							instructor.isFiltered = false;
-	
+
 							instructors.ids.push(instructor.id);
 							instructors.list[instructor.id] = instructor;
 						}
-	
-	
+
+
 						return instructors;
 					case ActionTypes.ADD_SCHEDULE_INSTRUCTOR_NOTE:
 						let scheduleInstructorNote = action.payload.scheduleInstructorNote;
@@ -468,18 +470,18 @@ class AssignmentStateService {
 					case ActionTypes.REMOVE_TEACHING_ASSIGNMENT:
 						teachingAssignment = action.payload.teachingAssignment;
 						instructor = instructors.list[teachingAssignment.instructorId];
-	
+
 						if (!instructor) {
 							return instructors;
 						}
-	
+
 						let termCode = teachingAssignment.termCode;
 						let index = instructor.teachingAssignmentTermCodeIds[termCode].indexOf(teachingAssignment.id);
-	
+
 						if (index > -1) {
 							instructor.teachingAssignmentTermCodeIds[action.payload.teachingAssignment.termCode].splice(index, 1);
 						}
-	
+
 						return instructors;
 					default:
 						return instructors;
@@ -487,19 +489,19 @@ class AssignmentStateService {
 			},
 			_instructorMasterListReducers: function (action, instructorMasterList) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						instructorMasterList = {
 							ids: [],
 							list: []
 						};
-	
+
 						action.payload.instructorMasterList.forEach( function (slotInstructor) {
 							instructorMasterList.ids.push(slotInstructor.id);
 							instructorMasterList.list[slotInstructor.id] = slotInstructor;
 						});
-	
+
 						return instructorMasterList;
 					default:
 						return instructorMasterList;
@@ -507,7 +509,7 @@ class AssignmentStateService {
 			},
 			_scheduleTermStateReducers: function (action, scheduleTermStates) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						scheduleTermStates = {
@@ -565,7 +567,7 @@ class AssignmentStateService {
 			},
 			_tagReducers: function (action, tags) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						tags = {
@@ -587,7 +589,7 @@ class AssignmentStateService {
 			},
 			_scheduleInstructorNoteReducers: function (action, scheduleInstructorNotes) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						scheduleInstructorNotes = {
@@ -617,43 +619,43 @@ class AssignmentStateService {
 			_sectionGroupReducers: function (action, sectionGroups) {
 				var scope = this;
 				var sectionGroup, i, slotTeachingAssignment, teachingAssignment, index;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						sectionGroups = {
 							newSectionGroup: {},
 							ids: []
 						};
-	
+
 						// Hash supportStaff and studentPreferences for AI calculations
 						var supportStaffList = {
 							ids: [],
 							list: {}
 						};
-	
+
 						action.payload.supportStaffList.forEach( function(supportStaff) {
 							supportStaffList.list[supportStaff.id] = supportStaff;
 							supportStaffList.ids.push(supportStaff.id);
 						});
-	
+
 						var studentPreferences = {
 							ids: [],
 							list: {}
 						};
-	
+
 						action.payload.studentSupportPreferences.forEach( function(preference) {
 							studentPreferences.list[preference.id] = preference;
 							studentPreferences.ids.push(preference.id);
 						});
-	
+
 						var sectionGroupsList = {};
-	
+
 						var length = action.payload.sectionGroups ? action.payload.sectionGroups.length : 0;
 						for (i = 0; i < length; i++) {
 							sectionGroup = new SectionGroup(action.payload.sectionGroups[i]);
 							sectionGroupsList[sectionGroup.id] = sectionGroup;
 							sectionGroups.ids.push(sectionGroup.id);
-	
+
 							// Create a list of teachingAssignmentIds that are associated to this sectionGroup
 							sectionGroupsList[sectionGroup.id].teachingAssignmentIds = [];
 							action.payload.teachingAssignments
@@ -663,39 +665,39 @@ class AssignmentStateService {
 								.forEach(function (teachingAssignment) {
 									sectionGroupsList[sectionGroup.id].teachingAssignmentIds.push(teachingAssignment.id);
 								});
-	
+
 							// Add AI preference data
 							sectionGroupsList[sectionGroup.id].aiAssignmentOptions = {
 								preferences: [],
 								other: []
 							};
-	
+
 							var preferredSupportStaffIds = [];
-	
+
 							action.payload.studentSupportPreferences
 								.filter(function (preference) {
 									return (preference.type === "associateInstructor" && preference.sectionGroupId == sectionGroup.id);
 								})
 								.forEach(function (preference) {
 									var supportStaffDTO = angular.copy(supportStaffList.list[preference.supportStaffId]);
-	
+
 									if (supportStaffDTO) {
 										supportStaffDTO.priority = preference.priority;
-	
+
 										sectionGroupsList[sectionGroup.id].aiAssignmentOptions.preferences.push(supportStaffDTO);
 										preferredSupportStaffIds.push(supportStaffDTO.id);
 									}
 								});
-	
+
 								var otherSupportStaffIds = supportStaffList.ids.slice();
 								otherSupportStaffIds = otherSupportStaffIds.filter(function(id) { return preferredSupportStaffIds.indexOf(id) == -1;});
-	
+
 								otherSupportStaffIds.forEach(function(supportStaffId) {
 									var supportStaffDTO = angular.copy(supportStaffList.list[supportStaffId]);
 									sectionGroupsList[sectionGroup.id].aiAssignmentOptions.other.push(supportStaffDTO);
 								});
 						}
-	
+
 						sectionGroups.list = sectionGroupsList;
 						return sectionGroups;
 					case ActionTypes.ADD_TEACHING_ASSIGNMENT:
@@ -722,7 +724,7 @@ class AssignmentStateService {
 			},
 			_filterReducers: function (action, filters) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						// A filter is 'enabled' if it is checked, i.e. the category it represents
@@ -750,18 +752,18 @@ class AssignmentStateService {
 			},
 			_theStaffReducers: function(action, theStaff) {
 				switch (action.type) {
-	
+
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						var theStaff = {};
 						theStaff.termCodes = {};
-	
+
 						action.payload.sectionGroups.forEach(function(sectionGroup) {
 							if (sectionGroup.showTheStaff) {
 								// Scaffold assignments array if this is the first in the termCode
 								if (!theStaff.termCodes[sectionGroup.termCode]) {
 									theStaff.termCodes[sectionGroup.termCode] = [];
 								}
-	
+
 								theStaff.termCodes[sectionGroup.termCode].push(sectionGroup.id);
 							}
 						});
@@ -785,20 +787,20 @@ class AssignmentStateService {
 			_userInterfaceReducers: function (action, userInterface) {
 				var scope = this;
 				var i;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						userInterface = {};
-	
+
 						userInterface.instructorId = action.payload.instructorId;
 						userInterface.userId = action.payload.userId;
-	
+
 						userInterface.scheduleId = action.payload.scheduleId;
 						userInterface.year = action.year;
-	
+
 						userInterface.showInstructors = (action.tab == "instructors");
 						userInterface.showCourses = (action.tab != "instructors");
-	
+
 						// Set default enabledTerms based on scheduleTermState data
 						var enabledTerms = {};
 						enabledTerms.list = {};
@@ -809,9 +811,9 @@ class AssignmentStateService {
 							var id = Number(term.slice(-2));
 							enabledTerms.ids.push(id);
 						}
-	
+
 						enabledTerms.ids = _self.orderTermsChronologically(enabledTerms.ids);
-	
+
 						// Generate termCode list entries
 						for (i = 1; i < 11; i++) {
 							// 4 is not used as a termCode
@@ -820,21 +822,21 @@ class AssignmentStateService {
 								enabledTerms.list[i] = termCode;
 							}
 						}
-	
+
 						userInterface.enabledTerms = enabledTerms;
-	
+
 						// Check localStorage for saved termFilter settings
 						var termFiltersBlob = localStorage.getItem("termFilters");
 						if (termFiltersBlob) {
 							userInterface.enabledTerms.ids = _self.deserializeTermFiltersBlob(termFiltersBlob);
 						}
-	
+
 						return userInterface;
 					case ActionTypes.SWITCH_MAIN_VIEW:
 						if (userInterface === undefined) {
 							userInterface = {};
 						}
-	
+
 						userInterface.showCourses = action.payload.showCourses;
 						userInterface.showInstructors = action.payload.showInstructors;
 						return userInterface;
@@ -859,11 +861,11 @@ class AssignmentStateService {
 			},
 			reduce: function (action) {
 				var scope = this;
-	
+
 				if (!action || !action.type) {
 					return;
 				}
-	
+
 				let newState = {};
 				newState.scheduleTermStates = scope._scheduleTermStateReducers(action, scope._state.scheduleTermStates);
 				newState.courses = scope._courseReducers(action, scope._state.courses);
@@ -887,7 +889,7 @@ class AssignmentStateService {
 				newState.instructorNotes = scope._instructorNoteReducers(action, scope._state.instructorNotes);
 
 				scope._state = newState;
-	
+
 				$rootScope.$emit('assignmentStateChanged', scope._state);
 				console.log(scope._state);
 				$log.debug("Assignment state updated:");
@@ -900,13 +902,13 @@ class AssignmentStateService {
 		if (term.toString().length == 1) {
 			term = "0" + Number(term);
 		}
-	
+
 		if (["01", "02", "03"].indexOf(term) >= 0) { year++; }
 		var termCode = year + term;
-	
+
 		return termCode;
 	}
-	
+
 	// Sorts a list of termIds into chronological order
 	orderTermsChronologically (terms) {
 		var orderedTermsReference = [5, 6, 7, 8, 9, 10, 1, 2, 3];
@@ -916,17 +918,17 @@ class AssignmentStateService {
 			}
 			return -1;
 		});
-	
+
 		return terms;
 	}
-	
+
 	// Creates a buildfield to store enabled term filters
 	// Always 9 digits (skips 4th unused term), and in chronologic order
 	// Example: "101010001"
 	serializeTermFilters (termFilters) {
 		var termsBlob = "";
 		var orderedTerms = [5, 6, 7, 8, 9, 10, 1, 2, 3];
-	
+
 		orderedTerms.forEach(function (term) {
 			if (termFilters.indexOf(term) > -1) {
 				termsBlob += "1";
@@ -936,18 +938,18 @@ class AssignmentStateService {
 		});
 		return termsBlob;
 	}
-	
+
 	deserializeTermFiltersBlob (termFiltersBlob) {
 		var termFiltersArray = [];
 		var orderedTerms = [5, 6, 7, 8, 9, 10, 1, 2, 3];
-	
+
 		for (var i = 0; i < orderedTerms.length; i++) {
-	
+
 			if (termFiltersBlob[i] == "1") {
 				termFiltersArray.push(orderedTerms[i]);
 			}
 		}
-	
+
 		return termFiltersArray;
 	}
 
@@ -992,6 +994,6 @@ class AssignmentStateService {
 
 AssignmentStateService.$inject = ['$rootScope', '$log', 'SectionGroup', 'Course', 'ScheduleTermState',
 	'ScheduleInstructorNote', 'Term', 'Tag', 'Instructor', 'TeachingAssignment',
-	'TeachingCall', 'TeachingCallReceipt', 'TeachingCallResponse', 'ActionTypes', 'Roles', 'InstructorTypeService'];
+	'TeachingCall', 'TeachingCallReceipt', 'TeachingCallResponse', 'ActionTypes', 'Roles', 'InstructorTypeService', 'TermService'];
 
 export default AssignmentStateService;
