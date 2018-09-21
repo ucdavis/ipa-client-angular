@@ -155,6 +155,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			};
 
 			scope.renderTable = function () {
+				if (!scope.instructorTypeId) { return; }
+
 				// If courses is undefined do nothing
 				// The app is in the process of re-routing to a valid url
 				if (scope.view.state.courses) {
