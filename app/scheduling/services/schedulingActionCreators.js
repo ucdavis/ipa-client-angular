@@ -48,47 +48,53 @@ class SchedulingActionCreators {
 					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
 				});
 			},
-			filterCheckedSectionGroups: function (tagIds, locationIds, instructorIds) {
+			// The subset of the supplied sectionGroups that are visible
+			calculateVisibleSectionGroupIds: function (sectionGroupIds) {
 				var _this = this;
 
-				var checkedSectionGroupIds = SchedulingStateService._state.uiState.checkedSectionGroupIds;
+				var tagFilterIds = SchedulingStateService._state.filters.enabledTagIds;
+				var instructorFilterIds = SchedulingStateService._state.filters.enabledInstructorIds;
+				var locationFilterIds = SchedulingStateService._state.filters.enabledLocationIds;
 
-				var tagFilterIds = tagIds || SchedulingStateService._state.filters.enabledTagIds;
-				var instructorFilterIds = instructorIds || SchedulingStateService._state.filters.enabledInstructorIds;
-				var locationFilterIds = locationIds || SchedulingStateService._state.filters.enabledLocationIds;
+				var filteredSectionGroupIds = [];
 
-				var filteredCheckedSectionGroupIds = [];
-
-				checkedSectionGroupIds.forEach(function(sectionGroupId) {
-					var passesFilter = false;
+				sectionGroupIds.forEach(function(sectionGroupId) {
+					var passLocationFilter = false;
+					var passInstructorFilter = false;
+					var passTagFilter = false;
 
 					var sectionGroup = SchedulingStateService._state.sectionGroups.list[sectionGroupId];
 					var course = SchedulingStateService._state.courses.list[sectionGroup.courseId];
 
 					instructorFilterIds.forEach(function(instructorId) {
 						if (sectionGroup.instructorIds.indexOf(instructorId) > -1) {
-							passesFilter = true;
+							passInstructorFilter = true;
 						}
 					});
 
 					tagFilterIds.forEach(function(tagId) {
 						if (course.tagIds.indexOf(tagId) > -1) {
-							passesFilter = true;
+							passTagFilter = true;
 						}
 					});
 
 					locationFilterIds.forEach(function(locationId) {
 						if (_this.sectionGroupHasLocation(sectionGroup, locationId)) {
-							passesFilter = true;
+							passLocationFilter = true;
 						}
 					});
 
-					if (passesFilter) {
-						filteredCheckedSectionGroupIds.push(sectionGroupId);
+					// Empty filters should default to be 'passed'
+					passLocationFilter = locationFilterIds.length > 0 ? passLocationFilter : true;
+					passTagFilter = passTagFilter.length > 0 ? passTagFilter : true;
+					passInstructorFilter = passInstructorFilter.length > 0 ? passInstructorFilter : true;
+
+					if (passLocationFilter && passInstructorFilter && passTagFilter) {
+						filteredSectionGroupIds.push(sectionGroupId);
 					}
 				});
 
-				return filteredCheckedSectionGroupIds;
+				return filteredSectionGroupIds;
 			},
 			sectionGroupHasLocation: function(sectionGroup, locationId) {
 				var passesFilter = false;
@@ -127,6 +133,17 @@ class SchedulingActionCreators {
 					$rootScope.$emit('toast', { message: "Could not remove activity.", type: "ERROR" });
 				});
 			},
+			calculateSectionGroups: function () {
+				var _this = this;
+
+				SchedulingStateService.reduce({
+					type: ActionTypes.CALCULATE_SECTION_GROUPS,
+					payload: {
+						activeSectionGroupIds: _this.calculateVisibleSectionGroupIds(_this.SchedulingStateService._state.uiState.checkedSectionGroupIds),
+						visibleSectionGroupIds: _this.calculateVisibleSectionGroupIds(_this.SchedulingStateService._state.sectionGroups.ids)
+					}
+				});
+			},
 			createSharedActivity: function (activityCode, sectionGroup) {
 				SchedulingService.createSharedActivity(activityCode, sectionGroup.id).then(function (newActivity) {
 					$rootScope.$emit('toast', { message: "Created new shared " + activityCode.getActivityCodeDescription(), type: "SUCCESS" });
@@ -161,10 +178,11 @@ class SchedulingActionCreators {
 				var action = {
 					type: ActionTypes.SECTION_GROUP_SELECTED,
 					payload: {
-						sectionGroup: sectionGroup
+						sectionGroup: sectionGroup,
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			toggleCheckedSectionGroup: function (sectionGroupId) {
 				var action = {
@@ -174,6 +192,7 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			toggleCheckAll: function (sectionGroupIds) {
 				var action = {
@@ -183,6 +202,7 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			setSelectedActivity: function (activity) {
 				var action = {
@@ -215,6 +235,7 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			updateTagFilters: function (tagIds) {
 				var _this = this;
@@ -222,12 +243,11 @@ class SchedulingActionCreators {
 				var action = {
 					type: ActionTypes.UPDATE_TAG_FILTERS,
 					payload: {
-						tagIds: tagIds,
-						shouldClearSelection: _this.shouldClearSelection(tagIds, null, null),
-						activeSectionGroupIds: _this.filterCheckedSectionGroups(tagIds, null, null)
+						tagIds: tagIds
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			updateLocationFilters: function (locationIds) {
 				var _this = this;
@@ -235,12 +255,11 @@ class SchedulingActionCreators {
 				var action = {
 					type: ActionTypes.UPDATE_LOCATION_FILTERS,
 					payload: {
-						locationIds: locationIds,
-						shouldClearSelection: _this.shouldClearSelection(null, locationIds, null),
-						activeSectionGroupIds: _this.filterCheckedSectionGroups(null, locationIds, null)
+						locationIds: locationIds
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			updateInstructorFilters: function (instructorIds) {
 				var _this = this;
@@ -248,12 +267,11 @@ class SchedulingActionCreators {
 				var action = {
 					type: ActionTypes.UPDATE_INSTRUCTOR_FILTERS,
 					payload: {
-						instructorIds: instructorIds,
-						shouldClearSelection: _this.shouldClearSelection(null, null, instructorIds),
-						activeSectionGroupIds: _this.filterCheckedSectionGroups(null, null, instructorIds)
+						instructorIds: instructorIds
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			createSection: function (section) {
 				var self = this;
