@@ -174,8 +174,8 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				}
 
 				// Add checked sectionGroups activities
-				if (scope.view.state.uiState.checkedSectionGroupIds.length > 0) {
-					scope.view.state.uiState.checkedSectionGroupIds.forEach(function (sgId) {
+				if (scope.view.state.uiState.activeSectionGroupIds.length > 0) {
+					scope.view.state.uiState.activeSectionGroupIds.forEach(function (sgId) {
 						if (sgId !== scope.view.state.uiState.selectedSectionGroupId) {
 							var sectionGroup = scope.view.state.sectionGroups.list[sgId];
 							var course = scope.view.state.courses.list[sectionGroup.courseId];
