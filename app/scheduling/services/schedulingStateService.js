@@ -489,7 +489,7 @@ class SchedulingStateService {
 							selectedActivityId: null,
 							checkedSectionGroupIds: [],
 							activeSectionGroupIds: [],
-							listedSectionGroupIds: [],
+							visibleSectionGroupIds: [],
 							allSectionGroupsDetailsCached: false,
 							term: new Term(action.payload.term),
 							calendarMode: {
@@ -535,15 +535,8 @@ class SchedulingStateService {
 							uiState.selectedActivityId = null;
 						}
 						return uiState;
-					case ActionTypes.UPDATE_TAG_FILTERS:
-					case ActionTypes.UPDATE_LOCATION_FILTERS:
-					case ActionTypes.UPDATE_INSTRUCTOR_FILTERS:
-						if (action.payload.shouldClearSelection) {
-							uiState.selectedSectionGroupId = null;
-							uiState.selectedCourseId = null;
-							uiState.selectedActivityId = null;
-						}
-
+					case ActionTypes.CALCULATE_SECTION_GROUPS:
+						uiState.visibleSectionGroupIds = action.payload.visibleSectionGroupIds;
 						uiState.activeSectionGroupIds = action.payload.activeSectionGroupIds;
 						return uiState;
 					case ActionTypes.REMOVE_ACTIVITY:
