@@ -14,6 +14,7 @@ let schedulingFilter = function (SchedulingActionCreators) {
     },
     link: function (scope, element, attrs) {
       scope.dayDescriptions = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      scope.filterDescriptionMax = 19;
 
       scope.toggleCalendarDay = function (index) {
         SchedulingActionCreators.toggleDay(index);

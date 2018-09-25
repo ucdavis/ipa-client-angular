@@ -63,7 +63,14 @@
                 <label class="cb-wrapper filter-checkbox">
                   <div class="checked"></div>
                 </label>
-                <label class="filter-label" ng-bind="locations.list[locationId].description"></label>
+                <label class="filter-label"
+                       ng-if="locations.list[locationId].description.length > filterDescriptionMax"
+                       uib-tooltip="{{locations.list[locationId].description}}">
+                  {{ locations.list[locationId].description | limitTo: filterDescriptionMax }}...
+                </label>
+                <label class="filter-label" ng-if="locations.list[locationId].description.length <= filterDescriptionMax">
+                  {{ locations.list[locationId].description }}
+                </label>
               </div>
             </li>
           </ul>
