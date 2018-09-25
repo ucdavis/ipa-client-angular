@@ -488,6 +488,8 @@ class SchedulingStateService {
 							selectedCourseId: null,
 							selectedActivityId: null,
 							checkedSectionGroupIds: [],
+							activeSectionGroupIds: [],
+							listedSectionGroupIds: [],
 							allSectionGroupsDetailsCached: false,
 							term: new Term(action.payload.term),
 							calendarMode: {
@@ -542,7 +544,7 @@ class SchedulingStateService {
 							uiState.selectedActivityId = null;
 						}
 
-						uiState.checkedSectionGroupIds = action.payload.checkedSectionGroupIds;
+						uiState.activeSectionGroupIds = action.payload.activeSectionGroupIds;
 						return uiState;
 					case ActionTypes.REMOVE_ACTIVITY:
 						if (uiState.selectedActivityId == action.payload.activity.id) {
