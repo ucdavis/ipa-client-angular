@@ -70,7 +70,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 								courseHtml += "<div class=\"course-description-cell\"><div>";
 
 								courseHtml += "<div class=\"course-title\">";
-								courseHtml += course.subjectCode + " " + course.courseNumber + " " + course.title + " " + course.sequencePattern;
+								courseHtml += course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + " - " + course.title;
 								courseHtml += "</div>";
 
 								courseHtml += "<div class=\"course-units\">";

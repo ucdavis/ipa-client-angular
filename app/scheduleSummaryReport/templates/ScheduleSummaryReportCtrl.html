@@ -82,8 +82,9 @@
 												Instructors: 
 										</span>
 										<div ng-repeat="instructor in sectionGroup.instructors"
-										     class="section-diff-element section-instructors">
-											{{ instructor }}<span ng-if="$last == false">, </span>
+												 class="section-diff-element section-instructors">
+											{{ instructor.instructorName === instructor.instructorType ? "Unassigned" : instructor.instructorName }}
+											({{ instructor.instructorType }})<span ng-if="$last == false">, </span>
 										</div>
 									</div>
 									<div class="section-group__teaching-assistants">

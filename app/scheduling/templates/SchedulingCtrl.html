@@ -107,7 +107,6 @@
 						<spinner></spinner>
 					</div>
 					<div ng-show="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds">
-
 						<p class="activity-list-header">
 							{{ view.state.courses.list[view.state.uiState.selectedCourseId].subjectCode }} {{ view.state.courses.list[view.state.uiState.selectedCourseId].courseNumber
 							}} - {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
@@ -122,6 +121,7 @@
 							<div class="section-pattern section-is-numeric" ng-hide="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">
 								<div class="section-label">
 									Section {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
+									(CRN: {{view.state.sections.list[view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds[0]].crn}})
 								</div>
 								<div class="delete-section-ui"
 									ng-init="sectionId = view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds[0]">
@@ -164,7 +164,7 @@
 										ng-init="section = view.state.sections.list[sectionId];">
 									<div class="section-pattern section-in-series">
 										<div class="section-label">
-											Section {{ view.state.sections.list[sectionId].sequenceNumber }}
+											Section {{ view.state.sections.list[sectionId].sequenceNumber }} (CRN: {{view.state.sections.list[sectionId].crn}})
 										</div>
 										<div class="delete-section-ui">
 											<i class="entypo-minus-squared delete-section-ui clickable" uib-tooltip="Remove section {{ section.sequenceNumber }}"

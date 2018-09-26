@@ -22,6 +22,7 @@
 			class="dropdown-menu" style="width: 250px;" aria-labelledby="dropdownMenu1">
 		<li ng-repeat="term in scheduleTerms" style="cursor: pointer;">
 			<a ng-click="gotoTerm(term.shortCode)">
+				<i class="entypo-check" ng-class="{'invisible': term.shortCode !== termShortCode}"></i>
 				{{ term.description }}
 			</a>
 		</li>

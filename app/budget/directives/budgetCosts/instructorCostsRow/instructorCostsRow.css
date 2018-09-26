@@ -26,6 +26,15 @@
 	padding-right: 20px;
 }
 
+.instructor-costs__cost-container input::placeholder{
+	color: #5f6368;
+}
+
+/* MS Edge Support */
+.instructor-costs__cost-container input::-webkit-input-placeholder {
+	color: #5f6368;
+}
+
 .instructor-costs__cell-container {
 	display: flex;
 	align-items: center;
