@@ -9,6 +9,7 @@ let ipaDropdown = function() {
 			searchable: '<',
 			selectItem: '&',
 			buttonClass: '<?',
+			isWide: '<?',
 			style: '<?' // Current options are 'minimal'
 		},
 		replace: true, // Replace with the template below

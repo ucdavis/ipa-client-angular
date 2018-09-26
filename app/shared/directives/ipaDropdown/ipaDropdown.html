@@ -1,10 +1,11 @@
 <div class="ipa-dropdown">
 	<div class="expand-button"
-			ng-class="{'ipa-dropdown__expand-button-skin--default': !style, 'ipa-dropdown__expand-button-skin--minimal': style == 'minimal'}"
+			ng-class="{'ipa-dropdown__expand-button-skin--default': !style, 'ipa-dropdown__expand-button-skin--minimal': style == 'minimal', 'ipa-dropdown__wide': isWide}"
 			ng-click="openDropdown()"
 			ng-class="{ 'selected': expanded == true }">
 
-			<div class="ipa-dropdown__button-text" ng-class="buttonClass">
+			<div class="ipa-dropdown__button-text"
+			     ng-class="{ buttonClass, 'ipa-dropdown__wide': isWide }">
 				{{ buttonText }}
 			</div>
 			<div class="ipa-dropdown__caret-container">

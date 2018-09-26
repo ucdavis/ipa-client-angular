@@ -42,6 +42,7 @@
 
 .ipa-dropdown .dropdown-container {
 	position: absolute;
+	width: 100%;
 }
 
 .ipa-dropdown .dropdown {
@@ -55,7 +56,7 @@
 
 .ipa-dropdown .item {
 	background-color: #fff;
-	padding-left: 30px;
+	padding-left: 10px;
 	padding-top: 8px;
 	padding-bottom: 8px;
 	padding-right: 8px;
@@ -132,4 +133,8 @@
 	display: flex;
 	flex-flow: column;
 	justify-content: center;
+}
+
+.ipa-dropdown__wide {
+	width: 100%;
 }
