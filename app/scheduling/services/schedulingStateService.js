@@ -480,16 +480,18 @@ class SchedulingStateService {
 			},
 			_uiStateReducers: function (action, uiState) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
+						var sectionGroupIds = action.payload.sectionGroups.map( sectionGroup => sectionGroup.id);
+
 						uiState = {
 							selectedSectionGroupId: null,
 							selectedCourseId: null,
 							selectedActivityId: null,
-							checkedSectionGroupIds: [],
-							activeSectionGroupIds: [],
-							visibleSectionGroupIds: [],
+							checkedSectionGroupIds: sectionGroupIds,
+							activeSectionGroupIds: sectionGroupIds,
+							visibleSectionGroupIds: sectionGroupIds,
 							allSectionGroupsDetailsCached: false,
 							term: new Term(action.payload.term),
 							calendarMode: {
