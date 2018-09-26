@@ -44,7 +44,7 @@
 				</div>
 				<ul ng-show="view.state.sectionGroups.ids">
 					<li class="section-group-item" ng-repeat="sectionGroupId in view.state.sectionGroups.ids track by $index"
-						ng-show="matchesFilters(view.state.sectionGroups.list[sectionGroupId])"
+						ng-show="view.state.uiState.visibleSectionGroupIds.indexOf(sectionGroupId) > -1"
 						ng-class="{ 'active': view.state.uiState.selectedSectionGroupId == sectionGroupId }"
 						ng-click="setSelectedSectionGroup(sectionGroupId)">
 
