@@ -71,6 +71,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 					minTime: '07:00',
 					maxTime: '22:00',
 					header: false,
+					columnHeaderFormat: 'ddd',
 					slotEventOverlap: false,
 					hiddenDays: scope.view.state.filters.hiddenDays,
 					eventColor: defaultEventBackgroundColor,
