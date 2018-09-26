@@ -133,17 +133,6 @@ class SchedulingActionCreators {
 					$rootScope.$emit('toast', { message: "Could not remove activity.", type: "ERROR" });
 				});
 			},
-			calculateSectionGroups: function () {
-				var _this = this;
-
-				SchedulingStateService.reduce({
-					type: ActionTypes.CALCULATE_SECTION_GROUPS,
-					payload: {
-						activeSectionGroupIds: _this.calculateVisibleSectionGroupIds(_this.SchedulingStateService._state.uiState.checkedSectionGroupIds),
-						visibleSectionGroupIds: _this.calculateVisibleSectionGroupIds(_this.SchedulingStateService._state.sectionGroups.ids)
-					}
-				});
-			},
 			createSharedActivity: function (activityCode, sectionGroup) {
 				SchedulingService.createSharedActivity(activityCode, sectionGroup.id).then(function (newActivity) {
 					$rootScope.$emit('toast', { message: "Created new shared " + activityCode.getActivityCodeDescription(), type: "SUCCESS" });
@@ -325,7 +314,20 @@ class SchedulingActionCreators {
 					type: ActionTypes.TOGGLE_SHOW_ONLY_PRIMARY_ACTIVITY,
 					payload: {}
 				});
-			}
+			},
+			calculateSectionGroups: function () {
+				var _this = this;
+				var checkedSectionGroupIds = SchedulingStateService._state.uiState.checkedSectionGroupIds;
+				var sectionGroupIds = SchedulingStateService._state.sectionGroups.ids;
+
+				SchedulingStateService.reduce({
+					type: ActionTypes.CALCULATE_SECTION_GROUPS,
+					payload: {
+						activeSectionGroupIds: _this.calculateVisibleSectionGroupIds(checkedSectionGroupIds),
+						visibleSectionGroupIds: _this.calculateVisibleSectionGroupIds(sectionGroupIds)
+					}
+				});
+			},
 		};
 	}
 }
