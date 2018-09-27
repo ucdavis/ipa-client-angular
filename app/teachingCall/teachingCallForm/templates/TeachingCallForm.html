@@ -118,8 +118,27 @@
 									class="form-control search-course-input">
 								<i ng-show="view.loadingCourses[term]"><spinner size="20"></spinner></i>
 							</div>
+							<button
+								class="btn btn-white" style="margin-right: auto;" uib-tooltip="Suggest a course"
+								ng-click="toggleSuggestCourseInput()">
+								<i class="entypo-list-add"></i>
+							</button>
+							<input type="text" ng-model="view.courseSuggestQuery"
+								style="width: 380px"
+								ng-show="viewState.showSuggestCourse"
+								ng-init="courseSuggestPlaceHolder = 'Suggest a Course'"
+								placeholder="{{ courseSuggestPlaceHolder }}"
+								ng-focus="courseSuggestPlaceHolder = 'Suggest a Course'"
+								ng-blur="courseSuggestPlaceHolder = 'Suggest a Course'; view.courseSuggestQuery = undefined;"
+								uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchDWCourses($viewValue)"
+								typeahead-loading="view.loadingCourses"
+								typeahead-no-results="noResults"
+								typeahead-wait-ms="400"
+								typeahead-focus-first="false"
+								typeahead-min-length="2"
+								typeahead-on-select="addPreference($item, term.termCode, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isSabbaticalInResidence, isCourseRelease)"
+								class="form-control search-course-input">
 						</div>
-
 						<div class="seats-cell outline">
 						</div>
 

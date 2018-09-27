@@ -22,7 +22,21 @@ class TeachingCallFormCtrl {
 			$scope.view.state = data;
 		});
 
-		$scope.viewState = {};
+		$scope.viewState = {
+			showSuggestCourse: false
+		};
+
+		$scope.toggleSuggestCourseInput = function () {
+			$scope.viewState.showSuggestCourse = !$scope.viewState.showSuggestCourse;
+		};
+
+		$scope.searchDWCourses = function (query) {
+			return TeachingCallFormService.searchDWCourses(query).then(function (results) {
+				return results.slice(0, 20);
+			}, function (err) {
+				console.log(err);
+			});
+		};
 
 		$scope.searchCourses = function (termContainer, query) {
 			termContainer.preferenceOptions.forEach(function(course) {
