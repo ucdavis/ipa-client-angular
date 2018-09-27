@@ -24,6 +24,7 @@ import AuthService from './services/AuthService.js';
 import ApiService from './services/ApiService.js';
 import TeachingAssignmentService from './services/TeachingAssignmentService.js';
 import SectionService from './services/SectionService.js';
+import ActivityService from './services/ActivityService.js';
 
 // Entities
 import Activity from './entities/Activity.js';
@@ -255,6 +256,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 .service('AuthService', AuthService)
 .service('TeachingAssignmentService', TeachingAssignmentService)
 .service('SectionService', SectionService)
+.service('ActivityService', ActivityService)
 .directive('availabilityGrid', availabilityGrid)
 .directive('ipaButton', ipaButton)
 .directive('ipaCheckbox', ipaCheckbox)
