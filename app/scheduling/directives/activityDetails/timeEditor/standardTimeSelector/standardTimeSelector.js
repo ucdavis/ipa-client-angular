@@ -78,8 +78,6 @@ let standardTimeSelector = function($window, $location, $routeParams, $rootScope
 				scope.selectedDuration = duration;
 				scope.activity.selectedDuration = duration;
 
-				scope.clearTimeAndDay();
-
 				scope.dayOfferings = scope.standardPatterns[duration].dayIndicators;
 				scope.timeOfferings = scope.standardPatterns[duration].times;
 			};
