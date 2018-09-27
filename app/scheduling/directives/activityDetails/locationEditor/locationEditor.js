@@ -18,7 +18,7 @@ let locationEditor = function (SchedulingActionCreators) {
 
       scope.convertParams = function () {
         // Set initial location description display
-        scope.currentLocationDescription = scope.activity.locationId > 0 ? scope.locations.list[scope.activity.locationId].description : (scope.activity.bannerLocation || "Banner Location TBD");
+        scope.currentLocationDescription = scope.activity.locationId > 0 ? scope.locations.list[scope.activity.locationId].description : (scope.activity.bannerLocation || "Location from Banner TBD");
 
         // Convert location params to props
         scope.bannerLocation = [
