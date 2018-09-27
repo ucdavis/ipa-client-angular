@@ -1,9 +1,11 @@
-let timeEditor = function () {
+let timeEditor = function (ActivityService) {
 	return {
 		restrict: "E",
 		template: require('./timeEditor.html'),
 		link: function (scope, element, attrs) {
-			// Intentionally blank
+			scope.dayIndicatorToDayCodes = function (dayIndicator) {
+				return ActivityService.dayIndicatorToDayCodes(dayIndicator);
+			};
 		}
 	};
 };

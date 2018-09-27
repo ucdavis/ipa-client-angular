@@ -12,6 +12,7 @@ import SchedulingStateService from './services/schedulingStateService.js';
 import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
+import ActivityService from './../shared/services/ActivityService.js';
 
 // Directives
 import termCalendar from './directives/termCalendar/termCalendar.js';
@@ -73,6 +74,7 @@ const schedulingApp = angular.module("schedulingApp", dependencies)
 .service('ApiService', ApiService)
 .service('TermService', TermService)
 .service('AuthService', AuthService)
+.service('ActivityService', ActivityService)
 .directive('termCalendar', termCalendar)
 .directive('timeInput', timeInput)
 .directive('activityDetails', activityDetails)
