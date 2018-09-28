@@ -1,4 +1,4 @@
-let timeEditor = function (ActivityService) {
+let timeEditor = function (ActivityService, Activity) {
 	return {
 		restrict: "E",
 		template: require('./timeEditor.html'),
@@ -6,6 +6,36 @@ let timeEditor = function (ActivityService) {
 			scope.dayIndicatorToDayCodes = function (dayIndicator) {
 				return ActivityService.dayIndicatorToDayCodes(dayIndicator);
 			};
+
+			scope.isBannerApprovedTimePattern = function (activity) {
+				if (!activity) { return false; }
+
+				var standardPatterns = Activity.prototype.getStandardTimes();
+				var activityDuration = activity.selectedDuration;
+
+				var isDurationApproved = !!standardPatterns[activityDuration];
+				var isDayPatternApproved = standardPatterns[activityDuration].dayIndicators.indexOf(activity.dayIndicator) > -1;
+				var isTimeBannerApproved = scope.isTimeBannerApproved(activity);
+
+				if (!isDurationApproved || !isDayPatternApproved || !isTimeBannerApproved) {
+					return false;
+				}
+
+				return true;
+			};
+
+			scope.isTimeBannerApproved = function (activity) {
+				var standardPatterns = Activity.prototype.getStandardTimes();
+				var isTimeBannerApproved = false;
+
+				standardPatterns[activity.selectedDuration].times.forEach(function(time) {
+					if (activity.startTime == time.start && activity.endTime == time.end) {
+						isTimeBannerApproved = true;
+					}
+				});
+			
+				return isTimeBannerApproved;
+			}
 		}
 	};
 };
