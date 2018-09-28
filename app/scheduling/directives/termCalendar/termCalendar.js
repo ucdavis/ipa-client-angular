@@ -282,7 +282,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 				if (sectionGroup.sharedActivityIds) {
 					sectionGroup.sharedActivityIds.forEach(function (sharedActivityId) {
-						if (activityMatchesLocationFilters(sharedActivityId)) {
+						if (activityMatchesFilters(sharedActivityId)) {
 							calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[sharedActivityId], title));
 						}
 					});
@@ -293,7 +293,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 						var section = scope.view.state.sections.list[sectionId];
 						if (section.activityIds) {
 							section.activityIds.forEach(function (activityId) {
-								if (activityMatchesLocationFilters(activityId)) {
+								if (activityMatchesFilters(activityId)) {
 									calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[activityId], title));
 								}
 							});
@@ -359,14 +359,19 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				return calendarActivities;
 			};
 
-			var activityMatchesLocationFilters = function(activityId) {
-				if (scope.view.state.filters.enabledLocationIds.length === 0) {
-					return true;
+			var activityMatchesFilters = function(activityId) {
+				var passesLocationFilter = false;
+
+				var activity = scope.view.state.activities.list[activityId];
+
+				if (scope.view.state.filters.enabledLocationIds.indexOf(activity.locationId) >= 0 || scope.view.state.filters.enabledLocationIds.length === 0) {
+					passesLocationFilter = true;
 				}
 
-				var locationId = scope.view.state.activities.list[activityId].locationId;
+				var primaryFilter = scope.state.filters.showOnlyPrimaryActivity;
+				var passesPrimaryFilter = (primaryFilter == false || (primaryFilter && activity.primary));
 
-				return (scope.view.state.filters.enabledLocationIds.indexOf(locationId) >= 0);
+				return (passesLocationFilter && passesPrimaryFilter);
 			};
 
 			$rootScope.$on("schedulingStateChanged", function (event, data) {

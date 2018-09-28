@@ -314,6 +314,8 @@ class SchedulingActionCreators {
 					type: ActionTypes.TOGGLE_SHOW_ONLY_PRIMARY_ACTIVITY,
 					payload: {}
 				});
+
+				this.calculateSectionGroups();
 			},
 			calculateSectionGroups: function () {
 				var _this = this;
