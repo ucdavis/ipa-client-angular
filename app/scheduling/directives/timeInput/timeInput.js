@@ -27,6 +27,14 @@ let timeInput = function ($timeout) {
 			scope.canIncrementHours = true;
 			scope.canIncrementMinutes = true;
 
+			scope.$watch("ceiling", function () {
+				scope.updateUI();
+			});
+
+			scope.$watch("floor", function () {
+				scope.updateUI();
+			});
+
 			scope.updateUI = function() {
 				scope.canDecrementHours = true;
 				scope.canDecrementMinutes = true;
