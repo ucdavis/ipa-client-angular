@@ -258,8 +258,12 @@ class BudgetActions {
 
 				let term = BudgetReducers._state.ui.termNav.activeTerm;
 				let year = BudgetReducers._state.ui.year;
+				var sectionGroup = BudgetReducers._state.sectionGroups.list[sectionGroupCost.sectionGroupId];
+				var course = BudgetReducers._state.courses.list[sectionGroup.courseId];
+
 				sectionGroupCost.termCode = TermService.termToTermCode(term, year);
 				sectionGroupCost.budgetScenarioId = BudgetReducers._state.ui.selectedBudgetScenarioId;
+				sectionGroupCost.effectiveTermCode = course.effectiveTermCode;
 
 				BudgetService.createSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
 					var action = {

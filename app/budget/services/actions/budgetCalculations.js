@@ -613,6 +613,7 @@ class BudgetCalculations {
 
 					sectionGroupCost.shortTermCode = sectionGroupCost.termCode.slice(-2);
 					sectionGroupCost.isPersisted = true;
+
 					sectionGroupCost.isBudgeted = !sectionGroupCost.disabled;
 					var key = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
 					sectionGroupCost.isScheduled = sectionGroups.idsByUniqueKey[key] > 0;
