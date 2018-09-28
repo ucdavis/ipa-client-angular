@@ -363,6 +363,14 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				var passesLocationFilter = false;
 
 				var activity = scope.view.state.activities.list[activityId];
+				var sectionGroup = null;
+
+				if (activity.sectionGroupId) {
+					sectionGroup = scope.view.state.sectionGroups.list[activity.sectionGroupId];
+				} else {
+					var section = scope.view.state.sections.list[activity.sectionId];
+					sectionGroup = scope.view.state.sectionGroups.list[activity.sectionGroupId];
+				}
 
 				if (scope.view.state.filters.enabledLocationIds.indexOf(activity.locationId) >= 0 || scope.view.state.filters.enabledLocationIds.length === 0) {
 					passesLocationFilter = true;
@@ -370,6 +378,14 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 				var primaryFilter = scope.state.filters.showOnlyPrimaryActivity;
 				var passesPrimaryFilter = (primaryFilter == false || (primaryFilter && activity.primary));
+
+				var selectedSectionGroupId = scope.state.uiState.selectedSectionGroupId;
+				var selectedSectionGroup = scope.state.sectionGroups.list[selectedSectionGroupId];
+
+				// If activity is selected, bypass primary filter
+				if (selectedSectionGroup == sectionGroup) {
+					passesPrimaryFilter = true;
+				}
 
 				return (passesLocationFilter && passesPrimaryFilter);
 			};
