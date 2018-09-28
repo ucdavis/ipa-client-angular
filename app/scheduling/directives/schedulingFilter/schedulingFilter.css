@@ -1,0 +1,69 @@
+.scheduling-filters {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.scheduling-filters__dropdown-window {
+  width: 1000px;
+  padding: 5px;
+}
+
+.scheduling-filters__btn-text {
+  font-size: 12px;
+}
+
+.scheduling-filters .scheduling-filters__caret {
+  margin-left: 5px;
+}
+
+.ipa-header .scheduling-filters .btn-group .scheduling-filters__dropdown-btn {
+  padding: 6px 12px 6px 12px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #777;
+  background-color: white;
+  height: 31px;
+}
+
+/* Violates BEM styles to override bootstrap and neon */
+.scheduling-filters__dropdown-btn,
+.btn.btn-default.scheduling-filters__dropdown-btn,
+.ipa-term-selector-dropdown .open > .dropdown-toggle.btn-default.scheduling-filters__dropdown-btn {
+  border: 1px solid #777;
+}
+
+/* Violates BEM styles to override bootstrap and neon */
+.ipa-term-selector-dropdown .btn-default.scheduling-filters__dropdown-btn:active,
+.btn.btn-default.scheduling-filters__dropdown-btn:focus,
+.ipa-term-selector-dropdown .btn-default.scheduling-filters__dropdown-btn.focus,
+.ipa-term-selector-dropdown .open > .dropdown-toggle.btn-default.scheduling-filters__dropdown-btn:focus {
+  border: 1px solid #777;
+}
+
+/* Violates BEM styles to override bootstrap and neon */
+.btn.btn-default.scheduling-filters__dropdown-btn:hover {
+  border: 1px solid #777;
+}
+
+.filter-category {
+  flex: 0 0 20%;
+  padding-right: 0.5em;
+}
+
+.activity-filter-tokens {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.calendar-filter-header {
+  width: 100%;
+  display: flex;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+  width: 400px;
+  margin-right: 10px;
+}

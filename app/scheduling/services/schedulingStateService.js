@@ -444,10 +444,15 @@ class SchedulingStateService {
 							enabledLocationIds: [],
 							enabledInstructorIds: [],
 							hiddenDays: [0, 6], // Default hidden days: Sat and Sun
-							enableUnpublishedCourses: false
+							enableUnpublishedCourses: false,
+							departmentalRoomDay: { number: 1, description: "Monday" },
+							showOnlyPrimaryActivity: true
 						};
 						// Here is where we might load stored data about what filters
 						// were left on last time.
+						return filters;
+					case ActionTypes.SET_DEPARTMENTAL_ROOMS_DAY:
+						filters.departmentalRoomDay = action.payload.day;
 						return filters;
 					case ActionTypes.TOGGLE_DAY:
 						var tagIndex = filters.hiddenDays.indexOf(action.payload.dayIndex);
@@ -466,22 +471,33 @@ class SchedulingStateService {
 					case ActionTypes.UPDATE_INSTRUCTOR_FILTERS:
 						filters.enabledInstructorIds = action.payload.instructorIds;
 						return filters;
+					case ActionTypes.TOGGLE_SHOW_ONLY_PRIMARY_ACTIVITY:
+						filters.showOnlyPrimaryActivity = !filters.showOnlyPrimaryActivity;
+						return filters;
 					default:
 						return filters;
 				}
 			},
 			_uiStateReducers: function (action, uiState) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
+						var sectionGroupIds = action.payload.sectionGroups.map( sectionGroup => sectionGroup.id);
+
 						uiState = {
 							selectedSectionGroupId: null,
 							selectedCourseId: null,
 							selectedActivityId: null,
-							checkedSectionGroupIds: [],
+							checkedSectionGroupIds: sectionGroupIds,
+							activeSectionGroupIds: sectionGroupIds,
+							visibleSectionGroupIds: sectionGroupIds,
 							allSectionGroupsDetailsCached: false,
-							term: new Term(action.payload.term)
+							term: new Term(action.payload.term),
+							calendarMode: {
+								activeTab: "By Day",
+								allTabs: ["By Day", "By Room"]
+							},
 						};
 						return uiState;
 					case ActionTypes.SECTION_GROUP_SELECTED:
@@ -493,6 +509,9 @@ class SchedulingStateService {
 							uiState.selectedSectionGroupId = null;
 							uiState.selectedCourseId = null;
 						}
+						return uiState;
+					case ActionTypes.SELECT_CALENDAR_MODE:
+						uiState.calendarMode.activeTab = action.payload.tab;
 						return uiState;
 					case ActionTypes.SECTION_GROUP_TOGGLED:
 						var sectionGroupCheckedIndex = uiState.checkedSectionGroupIds.indexOf(action.payload.sectionGroupId);
@@ -518,16 +537,9 @@ class SchedulingStateService {
 							uiState.selectedActivityId = null;
 						}
 						return uiState;
-					case ActionTypes.UPDATE_TAG_FILTERS:
-					case ActionTypes.UPDATE_LOCATION_FILTERS:
-					case ActionTypes.UPDATE_INSTRUCTOR_FILTERS:
-						// TODO: needs re-visiting, ultimately this should clear
-						// checkedSectionGroupIds, selectedSectionGroupId, selectedCourseId,
-						// and selectedActivityId ONLY if they don't match the filters
-						uiState.selectedSectionGroupId = null;
-						uiState.selectedCourseId = null;
-						uiState.selectedActivityId = null;
-						uiState.checkedSectionGroupIds = [];
+					case ActionTypes.CALCULATE_SECTION_GROUPS:
+						uiState.visibleSectionGroupIds = action.payload.visibleSectionGroupIds;
+						uiState.activeSectionGroupIds = action.payload.activeSectionGroupIds;
 						return uiState;
 					case ActionTypes.REMOVE_ACTIVITY:
 						if (uiState.selectedActivityId == action.payload.activity.id) {

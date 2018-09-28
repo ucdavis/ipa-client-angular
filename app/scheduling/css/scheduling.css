@@ -38,18 +38,7 @@ body {
 	width: 40%;
 	padding: 0.5em;
 }
-.calendar-filter-header {
-	width: 60%;
-	display: flex;
-	-webkit-justify-content: flex-end;
-	justify-content: flex-end;
-}
-.activity-filter-tokens {
-	overflow-x: auto;
-	overflow-y: hidden;
-	white-space: nowrap;
-	line-height: 35px;
-}
+
 .calendar-filter-menu {
 	padding: 0.5em;
 }
@@ -289,22 +278,7 @@ a.activity-event i.activity-remove,
 .filters-container ul li:hover {
 	background-color: #ebebeb;
 }
-.tags-filter {
-	flex: 0 0 50%;
-	padding-right: 0.5em;
-}
-.instructors-filter {
-	flex: 0 0 50%;
-	padding-left: 0.5em;
-}
-.days-filter {
-	flex: 0 0 50%;
-	padding-right: 0.5em;
-}
-.locations-filter {
-	flex: 0 0 50%;
-	padding-left: 0.5em;
-}
+
 ul.activity-group {
 	position: relative;
 	margin: 10px 15px;
@@ -465,4 +439,10 @@ i.selected-section-group-remove {
 .courses__metadata-container {
 	padding: 3px;
 	margin-left: 3px;
+}
+
+.schedule-mode__nav {
+	display: flex;
+	width: 60%;
+	align-items: flex-end;
 }

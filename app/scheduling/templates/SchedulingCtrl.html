@@ -1,124 +1,39 @@
 <nav year="{{ year }}" term-short-code="{{ termShortCode }}" workgroup-id="{{ workgroupId }}"></nav>
 
-<ipa-header page-title="Scheduling"></ipa-header>
+<ipa-header page-title="Scheduling">
+	<scheduling-filter filters="view.state.filters"
+	                   tags="view.state.tags"
+	                   instructors="view.state.instructors"
+	                   scheduling-mode="view.state.uiState.calendarMode.activeTab"
+	                   locations="view.state.locations">
+	</scheduling-filter>
+</ipa-header>
 
 <div>
 	<div>
 		<div class="activity-page-header">
 			<div class="activity-filters">
 				<div class="activity-filter-menu">
-					<div class="btn-group pull-left">
-						<div class="btn" ng-click="toggleCheckAll()">
-							<i ng-show="view.state.uiState.checkedSectionGroupIds.length" class="sg-checkbox fa fa-check-square-o"></i>
-							<i ng-hide="view.state.uiState.checkedSectionGroupIds.length" class="sg-checkbox fa fa-square-o"></i>
-							<span style="margin-left: 0.3em;">
-								{{ view.state.uiState.checkedSectionGroupIds.length ? "Unselect" : "Select" }} all
-							</span>
-						</div>
-					</div>
-					<div class="btn-group pull-right">
-						<button class="btn btn-white btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false">
-							Filters <span class="caret"></span>
-						</button>
-						<div class="dropdown-menu" style="width: 400px; padding: 0;">
-							<div class="filters-container" stop-event="click">
-								<div class="tags-filter">
-									<h3>Tags</h3>
-									<ul>
-										<li ng-repeat="tagId in view.state.tags.ids track by $index" ng-click="toggleTagFilter(tagId)">
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.enabledTagIds.indexOf(tagId) >= 0 }">
-												<label class="cb-wrapper filter-checkbox" ng-style="{ 'border-color': view.state.tags.list[tagId].color }">
-													<div class="checked" ng-style="{ 'background': view.state.tags.list[tagId].color }"></div>
-												</label>
-												<label class="filter-label" ng-bind="view.state.tags.list[tagId].name"></label>
-											</div>
-										</li>
-									</ul>
-								</div>
-								<div class="instructors-filter">
-									<h3>Instructors</h3>
-									<ul>
-										<li ng-repeat="instructorId in view.state.instructors.ids track by instructorId"
-											ng-click="toggleInstructorFilter(instructorId)">
-											<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.enabledInstructorIds.indexOf(instructorId) >= 0 }">
-												<label class="cb-wrapper filter-checkbox">
-													<div class="checked"></div>
-												</label>
-												<label class="filter-label">{{ view.state.instructors.list[instructorId].fullName }}</label>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
+					<div class="btn" ng-click="toggleCheckAll()">
+						<i ng-show="view.state.uiState.checkedSectionGroupIds.length" class="sg-checkbox fa fa-check-square-o"></i>
+						<i ng-hide="view.state.uiState.checkedSectionGroupIds.length" class="sg-checkbox fa fa-square-o"></i>
+						<span style="margin-left: 0.3em;">
+							{{ view.state.uiState.checkedSectionGroupIds.length ? "Unselect" : "Select" }} all
+						</span>
 					</div>
 				</div>
-				<div class="calendar-filter-header">
-					<div class="activity-filter-tokens text-center">
-						<div class="label label-selected-section-group" ng-repeat="tagId in view.state.filters.enabledTagIds track by $index">
-							{{ view.state.tags.list[tagId].name }}
-							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleTagFilter(tagId)"></i>
-						</div>
-						<div class="label label-selected-section-group" ng-repeat="locationId in view.state.filters.enabledLocationIds track by $index">
-							{{ view.state.locations.list[locationId].description }}
-							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleLocationFilter(locationId)"></i>
-						</div>
-						<div class="label label-selected-section-group" ng-repeat="instructorId in view.state.filters.enabledInstructorIds track by $index">
-							{{ view.state.instructors.list[instructorId].fullName }}
-							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleInstructorFilter(instructorId)"></i>
-						</div>
-						<div
-						class="label label-selected-section-group"
-						ng-init="course=view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId]"
-						ng-repeat="sectionGroupId in view.state.uiState.checkedSectionGroupIds track by $index"
-						ng-style="{'background-color': view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].tagColor}"
-						ng-class="{'filter-course--tag': view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].tagColor }">
-							{{ course.subjectCode }}
-							{{ course.courseNumber }} -
-							{{ course.sequencePattern }}
-							<i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleCheckedSectionGroup(sectionGroupId, $event)"></i>
-						</div>
-					</div>
-					<div class="calendar-filter-menu">
-						<div class="btn-group pull-right">
-							<button class="btn btn-white btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">
-								Filters <span class="caret"></span>
-							</button>
-							<div class="dropdown-menu" style="width: 400px; padding: 0;">
-								<div class="filters-container" stop-event="click">
-									<div class="days-filter">
-										<h3>Days</h3>
-										<ul>
-											<li ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] track by $index"
-												ng-click="toggleCalendarDay($index)">
-												<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.hiddenDays.indexOf($index) < 0 }">
-													<label class="cb-wrapper filter-checkbox">
-														<div class="checked"></div>
-													</label>
-													<label class="filter-label">{{ day }}</label>
-												</div>
-											</li>
-										</ul>
-									</div>
-									<div class="locations-filter">
-										<h3>Locations</h3>
-										<ul>
-											<li ng-repeat="locationId in view.state.locations.ids track by $index" ng-click="toggleLocationFilter(locationId)">
-												<div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': view.state.filters.enabledLocationIds.indexOf(locationId) >= 0 }">
-													<label class="cb-wrapper filter-checkbox">
-														<div class="checked"></div>
-													</label>
-													<label class="filter-label" ng-bind="view.state.locations.list[locationId].description"></label>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+
+				<div class="schedule-mode__nav">
+					<ipa-tabs tab-names="view.state.uiState.calendarMode.allTabs"
+					          active-tab="view.state.uiState.calendarMode.activeTab"
+					          select-tab="setCalendarMode"
+					          border-less="true"
+					          slim="true">
+					</ipa-tabs>
+
+					<day-selector calendar-mode="view.state.uiState.calendarMode.activeTab"
+					              selected-day="view.state.filters.departmentalRoomDay">
+					</day-selector>
 				</div>
 			</div>
 		</div>
@@ -129,7 +44,7 @@
 				</div>
 				<ul ng-show="view.state.sectionGroups.ids">
 					<li class="section-group-item" ng-repeat="sectionGroupId in view.state.sectionGroups.ids track by $index"
-						ng-show="matchesFilters(view.state.sectionGroups.list[sectionGroupId])"
+						ng-show="view.state.uiState.visibleSectionGroupIds.indexOf(sectionGroupId) > -1"
 						ng-class="{ 'active': view.state.uiState.selectedSectionGroupId == sectionGroupId }"
 						ng-click="setSelectedSectionGroup(sectionGroupId)">
 
@@ -192,7 +107,6 @@
 						<spinner></spinner>
 					</div>
 					<div ng-show="view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds">
-
 						<p class="activity-list-header">
 							{{ view.state.courses.list[view.state.uiState.selectedCourseId].subjectCode }} {{ view.state.courses.list[view.state.uiState.selectedCourseId].courseNumber
 							}} - {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
@@ -207,6 +121,7 @@
 							<div class="section-pattern section-is-numeric" ng-hide="view.state.courses.list[view.state.uiState.selectedCourseId].isSeries()">
 								<div class="section-label">
 									Section {{ view.state.courses.list[view.state.uiState.selectedCourseId].sequencePattern }}
+									(CRN: {{view.state.sections.list[view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds[0]].crn}})
 								</div>
 								<div class="delete-section-ui"
 									ng-init="sectionId = view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sectionIds[0]">
@@ -249,7 +164,7 @@
 										ng-init="section = view.state.sections.list[sectionId];">
 									<div class="section-pattern section-in-series">
 										<div class="section-label">
-											Section {{ view.state.sections.list[sectionId].sequenceNumber }}
+											Section {{ view.state.sections.list[sectionId].sequenceNumber }} (CRN: {{view.state.sections.list[sectionId].crn}})
 										</div>
 										<div class="delete-section-ui">
 											<i class="entypo-minus-squared delete-section-ui clickable" uib-tooltip="Remove section {{ section.sequenceNumber }}"
@@ -299,7 +214,15 @@
 				<div ng-hide="view.state.sectionGroups.ids" class="loading-center">
 					<spinner></spinner>
 				</div>
-				<term-calendar></term-calendar>
+					<div ng-if="view.state.uiState.calendarMode.activeTab =='By Day'">
+						<term-calendar state="view.state"></term-calendar>
+					</div>
+					<div ng-if="view.state.uiState.calendarMode.activeTab =='By Room'">
+						<departmental-room-calendar state="view.state"
+						                            locations="view.state.locations"
+						                            selected-day="view.state.filters.departmentalRoomDay.number">
+						</departmental-room-calendar>
+					</div>
 			</div>
 		</div>
 

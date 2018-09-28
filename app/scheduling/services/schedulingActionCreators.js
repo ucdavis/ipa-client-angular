@@ -25,7 +25,16 @@ class SchedulingActionCreators {
 					$rootScope.$emit('toast', { message: "Could not load schedule initial state.", type: "ERROR" });
 				});
 			},
+			setDepartmentalRoomsDay: function (day) {
+				SchedulingStateService.reduce({
+					type: ActionTypes.SET_DEPARTMENTAL_ROOMS_DAY,
+					payload: {
+						day: day
+					}
+				});
+			},
 			updateActivity: function (activity) {
+				var _this = this;
 				SchedulingService.updateActivity(activity).then(function (updatedActivity) {
 					$rootScope.$emit('toast', { message: "Updated " + activity.getCodeDescription(), type: "SUCCESS" });
 					var action = {
@@ -37,6 +46,77 @@ class SchedulingActionCreators {
 					SchedulingStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
+				});
+			},
+			// The subset of the supplied sectionGroups that are visible
+			calculateVisibleSectionGroupIds: function (sectionGroupIds) {
+				var _this = this;
+
+				var tagFilterIds = SchedulingStateService._state.filters.enabledTagIds;
+				var instructorFilterIds = SchedulingStateService._state.filters.enabledInstructorIds;
+				var locationFilterIds = SchedulingStateService._state.filters.enabledLocationIds;
+
+				var filteredSectionGroupIds = [];
+
+				sectionGroupIds.forEach(function(sectionGroupId) {
+					var passLocationFilter = false;
+					var passInstructorFilter = false;
+					var passTagFilter = false;
+
+					var sectionGroup = SchedulingStateService._state.sectionGroups.list[sectionGroupId];
+					var course = SchedulingStateService._state.courses.list[sectionGroup.courseId];
+
+					instructorFilterIds.forEach(function(instructorId) {
+						if (sectionGroup.instructorIds.indexOf(instructorId) > -1) {
+							passInstructorFilter = true;
+						}
+					});
+
+					tagFilterIds.forEach(function(tagId) {
+						if (course.tagIds.indexOf(tagId) > -1) {
+							passTagFilter = true;
+						}
+					});
+
+					locationFilterIds.forEach(function(locationId) {
+						if (_this.sectionGroupHasLocation(sectionGroup, locationId)) {
+							passLocationFilter = true;
+						}
+					});
+
+					// Empty filters should default to be 'passed'
+					passLocationFilter = locationFilterIds.length > 0 ? passLocationFilter : true;
+					passTagFilter = passTagFilter.length > 0 ? passTagFilter : true;
+					passInstructorFilter = passInstructorFilter.length > 0 ? passInstructorFilter : true;
+
+					if (passLocationFilter && passInstructorFilter && passTagFilter) {
+						filteredSectionGroupIds.push(sectionGroupId);
+					}
+				});
+
+				return filteredSectionGroupIds;
+			},
+			sectionGroupHasLocation: function(sectionGroup, locationId) {
+				var passesFilter = false;
+
+				sectionGroup.sectionIds.forEach(function(sectionId) {
+					var section = SchedulingStateService._state.sections.list[sectionId];
+					section.activityIds.forEach(function(activityId) {
+						var activity = SchedulingStateService._state.activities.list[activityId];
+						if (activity.locationId == locationId) {
+							passesFilter = true;
+						}
+					});
+				});
+
+				return passesFilter;
+			},
+			setCalendarMode: function(tab) {
+				SchedulingStateService.reduce({
+					type: ActionTypes.SELECT_CALENDAR_MODE,
+					payload: {
+						tab: tab
+					}
 				});
 			},
 			removeActivity: function (activity) {
@@ -87,10 +167,11 @@ class SchedulingActionCreators {
 				var action = {
 					type: ActionTypes.SECTION_GROUP_SELECTED,
 					payload: {
-						sectionGroup: sectionGroup
+						sectionGroup: sectionGroup,
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			toggleCheckedSectionGroup: function (sectionGroupId) {
 				var action = {
@@ -100,6 +181,7 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			toggleCheckAll: function (sectionGroupIds) {
 				var action = {
@@ -109,6 +191,7 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			setSelectedActivity: function (activity) {
 				var action = {
@@ -141,8 +224,11 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			updateTagFilters: function (tagIds) {
+				var _this = this;
+
 				var action = {
 					type: ActionTypes.UPDATE_TAG_FILTERS,
 					payload: {
@@ -150,8 +236,11 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			updateLocationFilters: function (locationIds) {
+				var _this = this;
+
 				var action = {
 					type: ActionTypes.UPDATE_LOCATION_FILTERS,
 					payload: {
@@ -159,8 +248,11 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			updateInstructorFilters: function (instructorIds) {
+				var _this = this;
+
 				var action = {
 					type: ActionTypes.UPDATE_INSTRUCTOR_FILTERS,
 					payload: {
@@ -168,6 +260,7 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			createSection: function (section) {
 				var self = this;
@@ -215,7 +308,28 @@ class SchedulingActionCreators {
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not get activities.", type: "ERROR" });
 				});
-			}
+			},
+			toggleShowOnlyPrimaryActivityFilter: function() {
+				SchedulingStateService.reduce({
+					type: ActionTypes.TOGGLE_SHOW_ONLY_PRIMARY_ACTIVITY,
+					payload: {}
+				});
+
+				this.calculateSectionGroups();
+			},
+			calculateSectionGroups: function () {
+				var _this = this;
+				var checkedSectionGroupIds = SchedulingStateService._state.uiState.checkedSectionGroupIds;
+				var sectionGroupIds = SchedulingStateService._state.sectionGroups.ids;
+
+				SchedulingStateService.reduce({
+					type: ActionTypes.CALCULATE_SECTION_GROUPS,
+					payload: {
+						activeSectionGroupIds: _this.calculateVisibleSectionGroupIds(checkedSectionGroupIds),
+						visibleSectionGroupIds: _this.calculateVisibleSectionGroupIds(sectionGroupIds)
+					}
+				});
+			},
 		};
 	}
 }
