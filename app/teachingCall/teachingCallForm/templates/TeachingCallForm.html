@@ -113,6 +113,7 @@
 									typeahead-focus-first="false"
 									typeahead-min-length="0"
 									typeahead-focus-on-select="false"
+									typeahead-template-url="typeahead-item.html"
 									auto-close="always"
 									typeahead-on-select="addPreference($item, term.termCode, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isSabbaticalInResidence, isCourseRelease)"
 									class="form-control search-course-input">
@@ -243,3 +244,18 @@
 		</aside>
 	</div>
 </div>
+
+<style>
+	.typeahead-group-header {
+		padding: 3px 20px;
+		border-bottom: 1px solid black;
+		font-weight: bold;
+	}
+</style>
+
+<script type="text/ng-template" id="typeahead-item.html">
+	<div class="typeahead-group-header" ng-if="match.model.firstInGroup">{{match.model.subjectCode}}</div>
+	<a>
+		<span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+	</a>
+</script>

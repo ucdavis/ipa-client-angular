@@ -69,7 +69,11 @@ class TeachingCallFormCtrl {
 				var fuse = new Fuse(termContainer.preferenceOptions, options);
 				var results = fuse.search(optimizedQuery);
 
-				return results;
+				var groupedResults = _.chain(results)
+					.groupBy(function(result) {return result.subjectCode;})
+					.map(function(g) {g[0].firstInGroup = true; return g;}).flatten().value();
+
+				return groupedResults;
 			}
 		};
 
