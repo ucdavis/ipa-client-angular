@@ -8,13 +8,12 @@ let timeEditor = function (ActivityService, Activity) {
 			};
 
 			scope.isBannerApprovedTimePattern = function (activity) {
-				if (!activity) { return false; }
+				if (!activity || !activity.selectedDuration) { return false; }
 
 				var standardPatterns = Activity.prototype.getStandardTimes();
-				var activityDuration = activity.selectedDuration;
 
-				var isDurationApproved = !!standardPatterns[activityDuration];
-				var isDayPatternApproved = standardPatterns[activityDuration].dayIndicators.indexOf(activity.dayIndicator) > -1;
+				var isDurationApproved = !!standardPatterns[activity.selectedDuration];
+				var isDayPatternApproved = standardPatterns[activity.selectedDuration].dayIndicators.indexOf(activity.dayIndicator) > -1;
 				var isTimeBannerApproved = scope.isTimeBannerApproved(activity);
 
 				if (!isDurationApproved || !isDayPatternApproved || !isTimeBannerApproved) {
