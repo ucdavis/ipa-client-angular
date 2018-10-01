@@ -114,12 +114,12 @@ class SchedulingActionCreators {
 				if (StringService.isDay(tab) ) {
 					var days = {
 						"Sunday": { number: 0, description: "Sunday"},
-						"Monday": { number: 0, description: "Monday"},
-						"Tuesday": { number: 0, description: "Tuesday"},
-						"Wednesday": { number: 0, description: "Wednesday"},
-						"Thursday": { number: 0, description: "Thursday"},
-						"Friday": { number: 0, description: "Friday"},
-						"Saturday": { number: 0, description: "Saturday"}
+						"Monday": { number: 1, description: "Monday"},
+						"Tuesday": { number: 2, description: "Tuesday"},
+						"Wednesday": { number: 3, description: "Wednesday"},
+						"Thursday": { number: 4, description: "Thursday"},
+						"Friday": { number: 5, description: "Friday"},
+						"Saturday": { number: 6, description: "Saturday"}
 					};
 
 					var roomDay = days[tab];
