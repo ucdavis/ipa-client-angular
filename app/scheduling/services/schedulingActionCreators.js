@@ -7,7 +7,7 @@
  * Central location for sharedState information.
  */
 class SchedulingActionCreators {
-	constructor (SchedulingStateService, SchedulingService, $rootScope, Role, ActionTypes, $route, Term) {
+	constructor (SchedulingStateService, SchedulingService, $rootScope, Role, ActionTypes, $route, Term, StringService) {
 		return {
 			getInitialState: function () {
 				var workgroupId = $route.current.params.workgroupId;
@@ -23,14 +23,6 @@ class SchedulingActionCreators {
 					SchedulingStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not load schedule initial state.", type: "ERROR" });
-				});
-			},
-			setDepartmentalRoomsDay: function (day) {
-				SchedulingStateService.reduce({
-					type: ActionTypes.SET_DEPARTMENTAL_ROOMS_DAY,
-					payload: {
-						day: day
-					}
 				});
 			},
 			updateActivity: function (activity) {
@@ -118,6 +110,27 @@ class SchedulingActionCreators {
 						tab: tab
 					}
 				});
+
+				if (StringService.isDay(tab) ) {
+					var days = {
+						"Sunday": { number: 0, description: "Sunday"},
+						"Monday": { number: 0, description: "Monday"},
+						"Tuesday": { number: 0, description: "Tuesday"},
+						"Wednesday": { number: 0, description: "Wednesday"},
+						"Thursday": { number: 0, description: "Thursday"},
+						"Friday": { number: 0, description: "Friday"},
+						"Saturday": { number: 0, description: "Saturday"}
+					};
+
+					var roomDay = days[tab];
+
+					SchedulingStateService.reduce({
+						type: ActionTypes.SET_DEPARTMENTAL_ROOMS_DAY,
+						payload: {
+							day: roomDay
+						}
+					});
+				}
 			},
 			removeActivity: function (activity) {
 				SchedulingService.removeActivity(activity.id).then(function () {
@@ -334,6 +347,6 @@ class SchedulingActionCreators {
 	}
 }
 
-SchedulingActionCreators.$inject = ['SchedulingStateService', 'SchedulingService', '$rootScope', 'Role', 'ActionTypes', '$route', 'Term'];
+SchedulingActionCreators.$inject = ['SchedulingStateService', 'SchedulingService', '$rootScope', 'Role', 'ActionTypes', '$route', 'Term', 'StringService'];
 
 export default SchedulingActionCreators;

@@ -13,6 +13,7 @@ import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
 import ActivityService from './../shared/services/ActivityService.js';
+import StringService from './../shared/services/StringService.js';
 
 // Directives
 import termCalendar from './directives/termCalendar/termCalendar.js';
@@ -24,7 +25,6 @@ import freeformTimeSelector from './directives/activityDetails/timeEditor/freefo
 import standardTimeSelector from './directives/activityDetails/timeEditor/standardTimeSelector/standardTimeSelector.js';
 import schedulingFilter from './directives/schedulingFilter/schedulingFilter.js';
 import departmentalRoomCalendar from './directives/departmentalRoomCalendar/departmentalRoomCalendar.js';
-import daySelector from './directives/daySelector/daySelector.js';
 
 // Dependencies
 var dependencies = [
@@ -78,6 +78,7 @@ const schedulingApp = angular.module("schedulingApp", dependencies)
 .service('TermService', TermService)
 .service('AuthService', AuthService)
 .service('ActivityService', ActivityService)
+.service('StringService', StringService)
 .directive('termCalendar', termCalendar)
 .directive('departmentalRoomCalendar', departmentalRoomCalendar)
 .directive('timeInput', timeInput)
@@ -87,7 +88,6 @@ const schedulingApp = angular.module("schedulingApp", dependencies)
 .directive('freeformTimeSelector', freeformTimeSelector)
 .directive('standardTimeSelector', standardTimeSelector)
 .directive('schedulingFilter', schedulingFilter)
-.directive('daySelector', daySelector)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	SECTION_GROUP_SELECTED: "SECTION_GROUP_SELECTED",
