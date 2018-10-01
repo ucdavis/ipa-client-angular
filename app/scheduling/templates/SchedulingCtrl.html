@@ -48,12 +48,10 @@
 						ng-class="{ 'active': view.state.uiState.selectedSectionGroupId == sectionGroupId }"
 						ng-click="setSelectedSectionGroup(sectionGroupId)">
 
-						<div class="section-group-check" ng-if="view.state.uiState.selectedSectionGroupId != sectionGroupId"
+						<div class="section-group-check"
 							ng-click="toggleCheckedSectionGroup(sectionGroupId, $event)" stop-event="click">
-							<i ng-show="view.state.uiState.checkedSectionGroupIds.indexOf(sectionGroupId) >= 0" class="sg-checkbox fa fa-check-square-o"></i>
-							<i ng-hide="view.state.uiState.checkedSectionGroupIds.indexOf(sectionGroupId) >= 0" class="sg-checkbox fa fa-square-o"></i>
-						</div>
-						<div class="section-group-check" ng-if="view.state.uiState.selectedSectionGroupId == sectionGroupId">
+							<i ng-show="isChecked(sectionGroupId)" class="sg-checkbox fa fa-check-square-o"></i>
+							<i ng-hide="isChecked(sectionGroupId)" class="sg-checkbox fa fa-square-o"></i>
 						</div>
 						<div class="section-group-description">
 							<span>

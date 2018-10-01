@@ -247,6 +247,13 @@ class SchedulingCtrl {
 				return sectionGroup.instructorIds.indexOf(instructorId) >= 0;
 			});
 		};
+
+		self.$scope.isChecked = function (sectionGroupId) {
+			var isChecked = self.$scope.view.state.uiState.checkedSectionGroupIds.indexOf(sectionGroupId) >= 0;
+			var isSelected = self.$scope.view.state.uiState.selectedSectionGroupId == sectionGroupId;
+
+			return isChecked || isSelected;
+		};
 	}
 }
 
