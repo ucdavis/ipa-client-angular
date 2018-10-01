@@ -60,10 +60,10 @@
 }
 
 .calendar-filter-header {
-  width: 100%;
+  flex: 1 1 0px;
+  width: 0px;
   display: flex;
   -webkit-justify-content: flex-end;
   justify-content: flex-end;
-  width: 400px;
   margin-right: 10px;
 }
