@@ -254,6 +254,21 @@ class SchedulingCtrl {
 
 			return isChecked || isSelected;
 		};
+
+		self.$scope.isDayTab = function (tab) {
+			switch (tab) {
+				case "Sunday":
+				case "Monday":
+				case "Tuesday":
+				case "Wednesday":
+				case "Thursday":
+				case "Friday":
+				case "Saturday":
+					return true;
+				default:
+					return false;
+			}
+		};
 	}
 }
 

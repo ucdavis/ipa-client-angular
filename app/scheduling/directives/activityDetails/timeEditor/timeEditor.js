@@ -35,7 +35,7 @@ let timeEditor = function (ActivityService, Activity) {
 				});
 			
 				return isTimeBannerApproved;
-			}
+			};
 		}
 	};
 };

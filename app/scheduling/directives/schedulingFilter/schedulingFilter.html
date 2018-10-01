@@ -22,7 +22,7 @@
             type="button"
             data-toggle="dropdown"
             aria-haspopup="true"
-            ng-if="schedulingMode == 'By Room'"
+            ng-if="isDayTab(schedulingMode)"
             aria-expanded="false">
       <span class="scheduling-filters__btn-text">Filters</span>
       <span class="caret scheduling-filters__caret"></span>
@@ -31,7 +31,7 @@
             type="button"
             data-toggle="dropdown"
             aria-haspopup="true"
-            ng-if="schedulingMode != 'By Room'"
+            ng-if="isDayTab(schedulingMode) == false"
             aria-expanded="false">
       <span class="scheduling-filters__btn-text">Filters</span>
       <span class="caret scheduling-filters__caret"></span>

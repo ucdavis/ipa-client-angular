@@ -495,8 +495,8 @@ class SchedulingStateService {
 							allSectionGroupsDetailsCached: false,
 							term: new Term(action.payload.term),
 							calendarMode: {
-								activeTab: "By Day",
-								allTabs: ["By Day", "By Room"]
+								activeTab: "Weekly",
+								allTabs: ["Weekly", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 							},
 						};
 						return uiState;

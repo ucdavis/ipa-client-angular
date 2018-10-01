@@ -212,10 +212,10 @@
 				<div ng-hide="view.state.sectionGroups.ids" class="loading-center">
 					<spinner></spinner>
 				</div>
-					<div ng-if="view.state.uiState.calendarMode.activeTab =='By Day'">
+					<div ng-if="view.state.uiState.calendarMode.activeTab =='Weekly'">
 						<term-calendar state="view.state"></term-calendar>
 					</div>
-					<div ng-if="view.state.uiState.calendarMode.activeTab =='By Room'">
+					<div ng-if="isDayTab(view.state.uiState.calendarMode.activeTab)">
 						<departmental-room-calendar state="view.state"
 						                            locations="view.state.locations"
 						                            selected-day="view.state.filters.departmentalRoomDay.number">
