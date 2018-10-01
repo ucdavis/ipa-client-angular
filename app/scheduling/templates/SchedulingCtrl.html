@@ -172,11 +172,21 @@
 												ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }"
 											ng-click="setSelectedActivity(activityId)">
 											<span>{{ activity.getCodeDescription() }}</span>
-											<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove {{ activity.getCodeDescription() }}"
-												tooltip-append-to-body="true" confirm-button="removeActivity(activity)" message="Are you sure you want to remove this {{ activity.getCodeDescription() }}"
-												yes="Delete" no="Cancel" placement="right"></i>
-											<i class="glyphicon glyphicon-warning-sign pull-right text-warning" uib-tooltip="Activity no longer matches standard pattern"
-												ng-show="activityId == view.state.uiState.selectedActivityId && view.state.uiState.selectedActivity.hasWarning"></i>
+											<span class="activity__day-time">
+												<span class="meeting-days" ng-if="dayIndicatorToDayCodes(activity.dayIndicator).length > 0">
+													({{ dayIndicatorToDayCodes(activity.dayIndicator) }})&nbsp;
+												</span>
+												<span class="meeting-time" ng-if="activity.startTime.toStandardTime() && activity.endTime.toStandardTime()">
+													{{ activity.startTime.toStandardTime() }}-{{ activity.endTime.toStandardTime() }}
+												</span>
+											</span>
+											<span>
+												<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove {{ activity.getCodeDescription() }}"
+													tooltip-append-to-body="true" confirm-button="removeActivity(activity)" message="Are you sure you want to remove this {{ activity.getCodeDescription() }}"
+													yes="Delete" no="Cancel" placement="right"></i>
+												<i class="glyphicon glyphicon-warning-sign pull-right text-warning" uib-tooltip="Activity no longer matches standard pattern"
+													ng-show="activityId == view.state.uiState.selectedActivityId && view.state.uiState.selectedActivity.hasWarning"></i>
+											</span>
 										</li>
 
 										<!-- muted version when activity doesn't match filter -->

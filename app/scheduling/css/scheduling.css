@@ -176,7 +176,9 @@ p.activity-list-header {
 	color: #333;
 	border: 1px solid #EEEEEE;
 	border-bottom: 1px solid #6AA4C1;
+	display: flex;
 }
+
 .activity-item.active {
 	background: #6AA4C1;
 	color: white;
@@ -445,4 +447,9 @@ i.selected-section-group-remove {
 	display: flex;
 	width: 60%;
 	align-items: flex-end;
+}
+
+.activity__day-time {
+	padding-left: 5px;
+	padding-right: 5px;
 }

@@ -6,7 +6,7 @@
  * Controller of the ipaClientAngularApp
  */
 class SchedulingCtrl {
-	constructor ($scope, $rootScope, $route, $routeParams, Activity, Term, SchedulingActionCreators, AuthService) {
+	constructor ($scope, $rootScope, $route, $routeParams, Activity, Term, SchedulingActionCreators, AuthService, ActivityService) {
 		var self = this;
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
@@ -269,9 +269,13 @@ class SchedulingCtrl {
 					return false;
 			}
 		};
+
+		self.$scope.dayIndicatorToDayCodes = function (dayIndicator) {
+			return ActivityService.dayIndicatorToDayCodes(dayIndicator);
+		};
 	}
 }
 
-SchedulingCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Activity', 'Term', 'SchedulingActionCreators', 'AuthService'];
+SchedulingCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Activity', 'Term', 'SchedulingActionCreators', 'AuthService', 'ActivityService'];
 
 export default SchedulingCtrl;
