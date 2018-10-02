@@ -439,8 +439,6 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 			};
 
 			$rootScope.$on("schedulingStateChanged", function (event, data) {
-				console.log(data.action.type);
-
 				scope.view.state = data.state;
 				var actionTypesOfInterest = [
 					"CALCULATE_SECTION_GROUPS",
