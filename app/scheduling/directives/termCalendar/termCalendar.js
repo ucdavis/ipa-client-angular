@@ -34,11 +34,28 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				state: scope.state
 			};
 
+			// Supply a color and amount to shift the color (out of 255)
+			// Example to lighten: lightenOrDarkenColor("#F06D06", 1.2);
+			// Example to darken: lightenOrDarkenColor("#F06D06", .6);
+			var lightenOrDarkenColor = function(hexColor, amt) {
+				var rgbValues = hexToRgb(hexColor);
+
+				var r = parseInt(rgbValues.r * amt);
+				var g = parseInt(rgbValues.g * amt);
+				var b = parseInt(rgbValues.b * amt);
+
+				return rgbToHex(r, g, b);
+			};
+
 			// color for calnder
 			// Default color: Other (checked) courses
 			var defaultEventBackgroundColor = "#DEDEDE";
 			var defaultEventBorderColor = "#DEDEDE";
 			var defaultEventTextColor = "#333333";
+
+			var mutedDefaultEventBackgroundColor = lightenOrDarkenColor(defaultEventBackgroundColor, unselectedActivityTintingMultiplier);
+			var mutedDefaultEventBorderColor = lightenOrDarkenColor(defaultEventBorderColor, unselectedActivityTintingMultiplier);
+			var mutedDefaultEventTextColor =lightenOrDarkenColor(defaultEventTextColor, unselectedActivityTintingMultiplier);
 
 			// Active (selected) course activities
 			var activeEventBackgroundColor = "#DEDEDE";
@@ -57,9 +74,13 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 			var tagEventTextColor = "#FFFFFF";
 			// This will be used to 'darken' the color of a card on the calendar if it has a user specified 'tag' color
-			var selectedActivityTintingMultiplier = .6;
+			var unselectedActivityTintingMultiplier = .6;
 
 			var refreshCalendar = function () {
+				var eventColor = anyActivitySelected() ? mutedDefaultEventBackgroundColor : defaultEventBackgroundColor;
+				var eventBorderColor = anyActivitySelected() ? mutedDefaultEventBorderColor : defaultEventBorderColor;
+				var eventTextColor = anyActivitySelected() ? mutedDefaultEventTextColor : defaultEventTextColor;
+
 				var parentAspectRatio = element.parent().width() / element.parent().height();
 				element.fullCalendar('destroy');
 				element.fullCalendar({
@@ -74,9 +95,9 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 					columnHeaderFormat: 'ddd',
 					slotEventOverlap: false,
 					hiddenDays: scope.view.state.filters.hiddenDays,
-					eventColor: defaultEventBackgroundColor,
-					eventBorderColor: defaultEventBorderColor,
-					eventTextColor: defaultEventTextColor,
+					eventColor: eventColor,
+					eventBorderColor: eventBorderColor,
+					eventTextColor: eventTextColor,
 					eventSources: [
 						getActivities(),
 						getUnavailabilities()
@@ -114,19 +135,6 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 						element.find('a.activity-event:not(.selected-activity):not(.selected-section-group) .fc-content').append(eventRemove);
 					}
 				});
-			};
-
-			// Supply a color and amount to shift the color (out of 255)
-			// Example to lighten: lightenOrDarkenColor("#F06D06", 1.2);
-			// Example to darken: lightenOrDarkenColor("#F06D06", .6);
-			var lightenOrDarkenColor = function(hexColor, amt) {
-				var rgbValues = hexToRgb(hexColor);
-
-				var r = parseInt(rgbValues.r * amt);
-				var g = parseInt(rgbValues.g * amt);
-				var b = parseInt(rgbValues.b * amt);
-
-				return rgbToHex(r, g, b);
 			};
 
 			// Converts a piece of the rgb value to its hex equivalent
@@ -325,8 +333,8 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				calendarActivities.forEach(function (event) {
 					if (scope.view.state.uiState.selectedActivityId === event.activityId) {
 						if (tagColor) {
-							event.color = lightenOrDarkenColor(tagColor, selectedActivityTintingMultiplier);
-							event.borderColor = lightenOrDarkenColor(tagColor, selectedActivityTintingMultiplier);
+							event.color = tagColor;
+							event.borderColor = tagColor;
 							event.textColor = textColor;
 						} else {
 							event.color = highlightedEventBackgroundColor;
@@ -357,6 +365,10 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				}
 
 				return calendarActivities;
+			};
+
+			var anyActivitySelected = function () {
+				return (scope.view.state.uiState.selectedSectionGroupId || scope.view.state.uiState.selectedActivityId || scope.view.state.uiState.selectedCourseId);
 			};
 
 			var activityMatchesFilters = function(activityId) {
