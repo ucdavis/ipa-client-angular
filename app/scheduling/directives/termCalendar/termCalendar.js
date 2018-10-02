@@ -59,7 +59,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 			// This will be used to 'darken' the color of a card on the calendar if it has a user specified 'tag' color
 			var selectedActivityTintingMultiplier = .6;
 
-			var drawCalendar = function () {
+			var refreshCalendar = function () {
 				var parentAspectRatio = element.parent().width() / element.parent().height();
 				element.fullCalendar('destroy');
 				element.fullCalendar({
@@ -114,10 +114,6 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 						element.find('a.activity-event:not(.selected-activity):not(.selected-section-group) .fc-content').append(eventRemove);
 					}
 				});
-			};
-
-			var refreshCalendar = function () {
-				element.fullCalendar('rerenderEvents');
 			};
 
 			// Supply a color and amount to shift the color (out of 255)
@@ -395,6 +391,8 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 			};
 
 			$rootScope.$on("schedulingStateChanged", function (event, data) {
+				console.log(data.action.type);
+
 				scope.view.state = data.state;
 				var actionTypesOfInterest = [
 					"CALCULATE_SECTION_GROUPS",
@@ -402,7 +400,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 					"UPDATE_ACTIVITY"
 				];
 
-				if (actionTypesOfInterest.indexOf(data.action) > -1) {
+				if (actionTypesOfInterest.indexOf(data.action.type) > -1) {
 					refreshCalendar();
 				}
 			});
@@ -423,7 +421,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				return $(window).height() - 178;
 			};
 
-			drawCalendar();
+			refreshCalendar();
 		}
 	};
 };

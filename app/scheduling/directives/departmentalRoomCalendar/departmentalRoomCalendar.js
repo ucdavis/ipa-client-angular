@@ -325,7 +325,7 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					"UPDATE_ACTIVITY"
 				];
 
-				if (actionTypesOfInterest.indexOf(data.action) > -1) {
+				if (actionTypesOfInterest.indexOf(data.action.type) > -1) {
 					refreshCalendar();
 				}
 			});
