@@ -319,7 +319,15 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 
 			$rootScope.$on("schedulingStateChanged", function (event, data) {
 				scope.view.state = data.state;
-				refreshCalendar();
+				var actionTypesOfInterest = [
+					"CALCULATE_SECTION_GROUPS",
+					"ACTIVITY_SELECTED",
+					"UPDATE_ACTIVITY"
+				];
+
+				if (actionTypesOfInterest.indexOf(data.action) > -1) {
+					refreshCalendar();
+				}
 			});
 
 			scope.$watch("selectedDay", function () {
