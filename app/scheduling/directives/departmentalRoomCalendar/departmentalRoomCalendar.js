@@ -36,11 +36,30 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 				state: scope.state
 			};
 
+			// Supply a color and amount to shift the color (out of 255)
+			// Example to lighten: lightenOrDarkenColor("#F06D06", 1.2);
+			// Example to darken: lightenOrDarkenColor("#F06D06", .6);
+			var lightenOrDarkenColor = function(hexColor, amt) {
+				var rgbValues = hexToRgb(hexColor);
+
+				var r = parseInt(rgbValues.r * amt);
+				var g = parseInt(rgbValues.g * amt);
+				var b = parseInt(rgbValues.b * amt);
+
+				return rgbToHex(r, g, b);
+			};
+
+			var unselectedActivityTintingMultiplier = .6;
+
 			// color for calnder
 			// Default color: Other (checked) courses
 			var defaultEventBackgroundColor = "#DEDEDE";
 			var defaultEventBorderColor = "#DEDEDE";
 			var defaultEventTextColor = "#333333";
+
+			var mutedDefaultEventBackgroundColor = lightenOrDarkenColor(defaultEventBackgroundColor, unselectedActivityTintingMultiplier);
+			var mutedDefaultEventBorderColor = lightenOrDarkenColor(defaultEventBorderColor, unselectedActivityTintingMultiplier);
+			var mutedDefaultEventTextColor ="#fff";
 
 			// Active (selected) course activities
 			var activeEventBackgroundColor = "#DEDEDE";
@@ -52,16 +71,13 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 			var highlightedEventBorderColor = "#3A87AD";
 			var highlightedEventTextColor = "#FFFFFF";
 
-			// instructor unavailabilities
-			var unavailabilityEventBackgroundColor = "#DFEBEF";
-			var unavailabilityEventBorderColor = "#C6D2D6";
-			var unavailabilityEventTextColor = "#555555";
-
 			var tagEventTextColor = "#FFFFFF";
-			// This will be used to 'darken' the color of a card on the calendar if it has a user specified 'tag' color
-			var selectedActivityTintingMultiplier = .6;
 
 			var refreshCalendar = function () {
+				var eventBorderColor = anyActivitySelected() ? mutedDefaultEventBorderColor : defaultEventBorderColor;
+				var eventTextColor = anyActivitySelected() ? mutedDefaultEventTextColor : defaultEventTextColor;
+				var eventColor = anyActivitySelected() ? mutedDefaultEventBackgroundColor : defaultEventBackgroundColor;
+
 				var parentAspectRatio = element.parent().width() / element.parent().height();
 				element.fullCalendar('destroy');
 				element.fullCalendar({
@@ -73,6 +89,9 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					minTime: '07:00',
 					maxTime: '22:00',
 					header: false,
+					eventColor: eventColor,
+					eventBorderColor: eventBorderColor,
+					eventTextColor: eventTextColor,
 					slotEventOverlap: false,
 					visibleRange: {
 						start: moment().startOf('week').format('YYYY-MM-DD'),
@@ -84,9 +103,6 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						var location = scope.locations.list[locationId];
 						return location.description;
 					},
-					eventColor: defaultEventBackgroundColor,
-					eventBorderColor: defaultEventBorderColor,
-					eventTextColor: defaultEventTextColor,
 					eventSources: [
 						getActivities()
 					],
@@ -123,19 +139,6 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						element.find('a.activity-event:not(.selected-activity):not(.selected-section-group) .fc-content').append(eventRemove);
 					}
 				});
-			};
-
-			// Supply a color and amount to shift the color (out of 255)
-			// Example to lighten: lightenOrDarkenColor("#F06D06", 1.2);
-			// Example to darken: lightenOrDarkenColor("#F06D06", .6);
-			var lightenOrDarkenColor = function(hexColor, amt) {
-				var rgbValues = hexToRgb(hexColor);
-
-				var r = parseInt(rgbValues.r * amt);
-				var g = parseInt(rgbValues.g * amt);
-				var b = parseInt(rgbValues.b * amt);
-
-				return rgbToHex(r, g, b);
 			};
 
 			// Converts a piece of the rgb value to its hex equivalent
@@ -286,23 +289,30 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 			// Considers the selectedActivity in the UI, and supplied tag colors
 			var styleCalendarEvents = function (calendarActivities, backgroundColor, borderColor, textColor, tagColor) {
 				calendarActivities.forEach(function (event) {
-					if (scope.view.state.uiState.selectedActivityId === event.activityId) {
+					if (activityMatchesSelection(event.activityId)) {
 						if (tagColor) {
-							event.color = lightenOrDarkenColor(tagColor, selectedActivityTintingMultiplier);
-							event.borderColor = lightenOrDarkenColor(tagColor, selectedActivityTintingMultiplier);
+						// Selected activity with tag coloring
+							event.color = tagColor;
+							event.borderColor = tagColor;
 							event.textColor = textColor;
 						} else {
+							// Selected activity, no tag coloring
 							event.color = highlightedEventBackgroundColor;
 							event.borderColor = highlightedEventBorderColor;
 							event.textColor = highlightedEventTextColor;
 						}
 					} else {
-						event.color = angular.copy(backgroundColor);
-						event.borderColor = angular.copy(borderColor);
-						event.textColor = angular.copy(textColor);
+						// Not a selected activity
+						event.color = backgroundColor && anyActivitySelected() ? lightenOrDarkenColor(backgroundColor, .6) : backgroundColor;
+						event.borderColor = borderColor && anyActivitySelected() ? lightenOrDarkenColor(borderColor, .6) : borderColor;
+						event.textColor = textColor && anyActivitySelected() ? "#fff" : textColor;
 					}
 				});
 				return calendarActivities;
+			};
+
+			var anyActivitySelected = function () {
+				return (scope.view.state.uiState.selectedSectionGroupId || scope.view.state.uiState.selectedActivityId || scope.view.state.uiState.selectedCourseId);
 			};
 
 			var getCourseTitleByCourseId = function (courseId) {
@@ -315,6 +325,32 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 				var activity = scope.view.state.activities.list[activityId];
 
 				return ( (activity.locationId > 0) && (activity.dayIndicator[scope.selectedDay] == 1) );
+			};
+
+			var activityMatchesSelection = function (activityId) {
+				if (!activityId) { return false; }
+
+				if (activityId == scope.view.state.uiState.selectedActivityId) { return true; }
+
+				var activity = scope.view.state.activities.list[activityId];
+				var section = null;
+				var sectionGroup = null;
+				var course = null;
+
+				if (activity.sectionId) {
+					section = scope.view.state.sections.list[activity.sectionId];
+					sectionGroup = scope.view.state.sectionGroups.list[section.sectionGroupId];
+				} else {
+					sectionGroup = scope.view.state.sectionGroups.list[activity.sectionGroupId];
+				}
+
+				if (sectionGroup.id == scope.view.state.uiState.selectedSectionGroupId) { return true; }
+
+				course = scope.view.state.courses.list[sectionGroup.courseId];
+
+				if (course.id == scope.view.state.uiState.selectedCourseId) { return true; }
+
+				return false;
 			};
 
 			$rootScope.$on("schedulingStateChanged", function (event, data) {

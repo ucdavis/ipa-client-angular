@@ -47,7 +47,9 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				return rgbToHex(r, g, b);
 			};
 
-			// color for calnder
+			var unselectedActivityTintingMultiplier = .6;
+
+			// color for calender
 			// Default color: Other (checked) courses
 			var defaultEventBackgroundColor = "#DEDEDE";
 			var defaultEventBorderColor = "#DEDEDE";
@@ -55,7 +57,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 			var mutedDefaultEventBackgroundColor = lightenOrDarkenColor(defaultEventBackgroundColor, unselectedActivityTintingMultiplier);
 			var mutedDefaultEventBorderColor = lightenOrDarkenColor(defaultEventBorderColor, unselectedActivityTintingMultiplier);
-			var mutedDefaultEventTextColor =lightenOrDarkenColor(defaultEventTextColor, unselectedActivityTintingMultiplier);
+			var mutedDefaultEventTextColor ="#fff";
 
 			// Active (selected) course activities
 			var activeEventBackgroundColor = "#DEDEDE";
@@ -74,12 +76,17 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 			var tagEventTextColor = "#FFFFFF";
 			// This will be used to 'darken' the color of a card on the calendar if it has a user specified 'tag' color
-			var unselectedActivityTintingMultiplier = .6;
 
 			var refreshCalendar = function () {
-				var eventColor = anyActivitySelected() ? mutedDefaultEventBackgroundColor : defaultEventBackgroundColor;
 				var eventBorderColor = anyActivitySelected() ? mutedDefaultEventBorderColor : defaultEventBorderColor;
 				var eventTextColor = anyActivitySelected() ? mutedDefaultEventTextColor : defaultEventTextColor;
+				var eventColor = anyActivitySelected() ? mutedDefaultEventBackgroundColor : defaultEventBackgroundColor;
+
+				// var newColor = anyActivitySelected() ? mutedDefaultEventBackgroundColor : defaultEventBackgroundColor;
+
+				// var eventColor = defaultEventBackgroundColor;
+				// var eventBorderColor =  defaultEventBorderColor;
+				// var eventTextColor =  defaultEventTextColor;
 
 				var parentAspectRatio = element.parent().width() / element.parent().height();
 				element.fullCalendar('destroy');
@@ -193,7 +200,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 							if (tagColor) {
 								calendarActivities = calendarActivities.concat(
-									styleCalendarEvents(unstyledEvents, tagColor, tagColor, "white")
+									styleCalendarEvents(unstyledEvents, tagColor, tagColor, "#ffffff")
 								);
 							} else {
 								calendarActivities = calendarActivities.concat(
@@ -331,20 +338,23 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 			// Considers the selectedActivity in the UI, and supplied tag colors
 			var styleCalendarEvents = function (calendarActivities, backgroundColor, borderColor, textColor, tagColor) {
 				calendarActivities.forEach(function (event) {
-					if (scope.view.state.uiState.selectedActivityId === event.activityId) {
+					if (activityMatchesSelection(event.activityId)) {
+						// Selected activity with tag coloring
 						if (tagColor) {
 							event.color = tagColor;
 							event.borderColor = tagColor;
 							event.textColor = textColor;
 						} else {
+							// Selected activity, no tag coloring
 							event.color = highlightedEventBackgroundColor;
 							event.borderColor = highlightedEventBorderColor;
 							event.textColor = highlightedEventTextColor;
 						}
 					} else {
-						event.color = angular.copy(backgroundColor);
-						event.borderColor = angular.copy(borderColor);
-						event.textColor = angular.copy(textColor);
+						// Not a selected activity
+						event.color = backgroundColor && anyActivitySelected() ? lightenOrDarkenColor(backgroundColor, .6) : backgroundColor;
+						event.borderColor = borderColor && anyActivitySelected() ? lightenOrDarkenColor(borderColor, .6) : borderColor;
+						event.textColor = textColor && anyActivitySelected() ? "#fff" : textColor;
 					}
 				});
 				return calendarActivities;
@@ -369,6 +379,32 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 			var anyActivitySelected = function () {
 				return (scope.view.state.uiState.selectedSectionGroupId || scope.view.state.uiState.selectedActivityId || scope.view.state.uiState.selectedCourseId);
+			};
+
+			var activityMatchesSelection = function (activityId) {
+				if (!activityId) { return false; }
+
+				if (activityId == scope.view.state.uiState.selectedActivityId) { return true; }
+
+				var activity = scope.view.state.activities.list[activityId];
+				var section = null;
+				var sectionGroup = null;
+				var course = null;
+
+				if (activity.sectionId) {
+					section = scope.view.state.sections.list[activity.sectionId];
+					sectionGroup = scope.view.state.sectionGroups.list[section.sectionGroupId];
+				} else {
+					sectionGroup = scope.view.state.sectionGroups.list[activity.sectionGroupId];
+				}
+
+				if (sectionGroup.id == scope.view.state.uiState.selectedSectionGroupId) { return true; }
+
+				course = scope.view.state.courses.list[sectionGroup.courseId];
+
+				if (course.id == scope.view.state.uiState.selectedCourseId) { return true; }
+
+				return false;
 			};
 
 			var activityMatchesFilters = function(activityId) {
