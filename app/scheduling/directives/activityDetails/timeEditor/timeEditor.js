@@ -8,9 +8,9 @@ let timeEditor = function (ActivityService, Activity) {
 			};
 
 			scope.isBannerApprovedTimePattern = function (activity) {
-				if (!activity || !activity.selectedDuration) { return false; }
-
 				var standardPatterns = Activity.prototype.getStandardTimes();
+
+				if (!activity || !activity.selectedDuration || !standardPatterns[activity.selectedDuration]) { return false; }
 
 				var isDurationApproved = !!standardPatterns[activity.selectedDuration];
 				var isDayPatternApproved = standardPatterns[activity.selectedDuration].dayIndicators.indexOf(activity.dayIndicator) > -1;
