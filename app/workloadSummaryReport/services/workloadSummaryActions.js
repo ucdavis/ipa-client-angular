@@ -171,7 +171,7 @@ class WorkloadSummaryActions {
 					};
 
 					rawInstructors.forEach(function(instructor) {
-						instructor.loginId = instructor.loginId.toLowerCase();
+						instructor.loginId = instructor.loginId ? instructor.loginId.toLowerCase() : null;
 						instructors.ids.push(instructor.id);
 						instructors.list[instructor.id] = instructor;
 					});
