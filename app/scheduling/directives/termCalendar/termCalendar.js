@@ -59,7 +59,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 			// This will be used to 'darken' the color of a card on the calendar if it has a user specified 'tag' color
 			var selectedActivityTintingMultiplier = .6;
 
-			var refreshCalendar = function () {
+			var drawCalendar = function () {
 				var parentAspectRatio = element.parent().width() / element.parent().height();
 				element.fullCalendar('destroy');
 				element.fullCalendar({
@@ -114,6 +114,10 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 						element.find('a.activity-event:not(.selected-activity):not(.selected-section-group) .fc-content').append(eventRemove);
 					}
 				});
+			};
+
+			var refreshCalendar = function () {
+				element.fullCalendar('rerenderEvents');
 			};
 
 			// Supply a color and amount to shift the color (out of 255)
@@ -392,7 +396,15 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 			$rootScope.$on("schedulingStateChanged", function (event, data) {
 				scope.view.state = data.state;
-				refreshCalendar();
+				var actionTypesOfInterest = [
+					"CALCULATE_SECTION_GROUPS",
+					"ACTIVITY_SELECTED",
+					"UPDATE_ACTIVITY"
+				];
+
+				if (actionTypesOfInterest.indexOf(data.action) > -1) {
+					refreshCalendar();
+				}
 			});
 
 			var neonCalendar = neonCalendar || {};
@@ -411,7 +423,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				return $(window).height() - 178;
 			};
 
-			refreshCalendar();
+			drawCalendar();
 		}
 	};
 };
