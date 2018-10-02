@@ -129,8 +129,9 @@ class BudgetComparisonReportCalculations {
 					instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
 				// If an instructorType is set
 				} else if (sectionGroupCost.instructorTypeId) {
-					instructorTypeCost = instructorTypeCosts.byInstructorTypeId[sectionGroupCost.instructorTypeId];
-					instructorTypeId = teachingAssignment.instructorTypeId;
+					var instructorTypeCostId = instructorTypeCosts.byInstructorTypeId[sectionGroupCost.instructorTypeId];
+					instructorTypeCost = instructorTypeCosts.list[instructorTypeCostId];
+					instructorTypeId = instructorTypeCost.instructorTypeId;
 				// If there is an assignment
 				} else if (teachingAssignment) {
 					if (teachingAssignment.instructorId) {
