@@ -437,7 +437,7 @@ class AssignmentStateService {
 							// Scaffold all teachingAssignment termCodeId arrays
 							var allTerms = ['01', '02', '03', '04', '06', '07', '08', '09', '10'];
 							allTerms.forEach(function (slotTerm) {
-								var generatedTermCode = generateTermCode(action.payload.year, slotTerm);
+								var generatedTermCode = _self.generateTermCode(action.payload.year, slotTerm);
 								instructor.teachingAssignmentTermCodeIds[generatedTermCode] = [];
 							});
 	
