@@ -117,6 +117,7 @@ class BudgetComparisonReportCalculations {
 				var instructorCost = null;
 				var courseCost = sectionGroupCost.cost;
 
+				// If an instructor is set
 				if (sectionGroupCost.instructorId) {
 					var instructorCostId = instructorCosts.byInstructorId[sectionGroupCost.instructorId];
 					instructorCost = instructorCosts.list[instructorCostId] ? instructorCosts.list[instructorCostId].cost : instructorCost;
@@ -126,9 +127,12 @@ class BudgetComparisonReportCalculations {
 
 					instructorTypeId = instructorType.id;
 					instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+				// If an instructorType is set
 				} else if (sectionGroupCost.instructorTypeId) {
-					instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
-					instructorTypeId = teachingAssignment.instructorTypeId;
+					var instructorTypeCostId = instructorTypeCosts.byInstructorTypeId[sectionGroupCost.instructorTypeId];
+					instructorTypeCost = instructorTypeCosts.list[instructorTypeCostId];
+					instructorTypeId = instructorTypeCost.instructorTypeId;
+				// If there is an assignment
 				} else if (teachingAssignment) {
 					if (teachingAssignment.instructorId) {
 						instructorTypeId = teachingAssignment.instructorTypeId;
