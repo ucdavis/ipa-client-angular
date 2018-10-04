@@ -41,7 +41,7 @@ class SchedulingActionCreators {
 				});
 			},
 			// The subset of the supplied sectionGroups that are visible
-			calculateVisibleSectionGroupIds: function (sectionGroupIds) {
+			_calculateVisibleSectionGroupIds: function (sectionGroupIds) {
 				var _this = this;
 
 				var tagFilterIds = SchedulingStateService._state.filters.enabledTagIds;
@@ -78,8 +78,8 @@ class SchedulingActionCreators {
 
 					// Empty filters should default to be 'passed'
 					passLocationFilter = locationFilterIds.length > 0 ? passLocationFilter : true;
-					passTagFilter = passTagFilter.length > 0 ? passTagFilter : true;
-					passInstructorFilter = passInstructorFilter.length > 0 ? passInstructorFilter : true;
+					passTagFilter = tagFilterIds.length > 0 ? passTagFilter : true;
+					passInstructorFilter = instructorFilterIds.length > 0 ? passInstructorFilter : true;
 
 					if (passLocationFilter && passInstructorFilter && passTagFilter) {
 						filteredSectionGroupIds.push(sectionGroupId);
@@ -89,19 +89,19 @@ class SchedulingActionCreators {
 				return filteredSectionGroupIds;
 			},
 			sectionGroupHasLocation: function(sectionGroup, locationId) {
-				var passesFilter = false;
+				var hasLocation = false;
 
 				sectionGroup.sectionIds.forEach(function(sectionId) {
 					var section = SchedulingStateService._state.sections.list[sectionId];
 					section.activityIds.forEach(function(activityId) {
 						var activity = SchedulingStateService._state.activities.list[activityId];
 						if (activity.locationId == locationId) {
-							passesFilter = true;
+							hasLocation = true;
 						}
 					});
 				});
 
-				return passesFilter;
+				return hasLocation;
 			},
 			setCalendarMode: function(tab) {
 				SchedulingStateService.reduce({
@@ -338,8 +338,8 @@ class SchedulingActionCreators {
 				SchedulingStateService.reduce({
 					type: ActionTypes.CALCULATE_SECTION_GROUPS,
 					payload: {
-						activeSectionGroupIds: _this.calculateVisibleSectionGroupIds(checkedSectionGroupIds),
-						visibleSectionGroupIds: _this.calculateVisibleSectionGroupIds(sectionGroupIds)
+						activeSectionGroupIds: _this._calculateVisibleSectionGroupIds(checkedSectionGroupIds),
+						visibleSectionGroupIds: _this._calculateVisibleSectionGroupIds(sectionGroupIds)
 					}
 				});
 			},
