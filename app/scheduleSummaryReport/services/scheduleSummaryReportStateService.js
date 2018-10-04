@@ -102,8 +102,7 @@ class ScheduleSummaryReportStateService {
 								var slotInstructor = instructors.list[slotTeachingAssignment.instructorId];
 								var slotInstructorType = instructorTypes.list[slotTeachingAssignment.instructorTypeId];
 								var instructorName = TeachingAssignmentService.getInstructorDescription(slotTeachingAssignment, slotInstructor, slotInstructorType);
-
-								slotSectionGroup.instructors.push(instructorName);
+								slotSectionGroup.instructors.push({instructorName: instructorName, instructorType: slotInstructorType.description});
 							}
 						});
 

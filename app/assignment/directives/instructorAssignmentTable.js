@@ -92,36 +92,36 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 			scope.getUserByLoginId = function (loginId) {
 				var users = scope.view.state.users;
- 				for (var i = 0; i < users.ids.length; i++) {
+				for (var i = 0; i < users.ids.length; i++) {
 					var user = users.list[users.ids[i]];
- 					if (user.loginId == loginId) {
+					if (user.loginId == loginId) {
 						return user;
 					}
 				}
- 				return null;
+				return null;
 			};
 
- 			scope.getInstructorTypeId = function (instructor) {
+			scope.getInstructorTypeId = function (instructor) {
 				var teachingAssignments = scope.view.state.teachingAssignments;
 				var userRoles = scope.view.state.userRoles;
- 				var user = scope.getUserByLoginId(instructor.loginId);
- 				if (user) {
+				var user = scope.getUserByLoginId(instructor.loginId);
+				if (user) {
 					// Attempt to find via userRole
 					for (var i = 0; i < userRoles.ids.length; i++) {
 						var userRole = userRoles.list[userRoles.ids[i]];
- 						if (userRole.roleId == Roles.instructor && userRole.userId == user.id) {
+						if (userRole.roleId == Roles.instructor && userRole.userId == user.id) {
 							return userRole.instructorTypeId;
 						}
 					}
 				}
- 				// Attempt to find via teachingAssignment
+				// Attempt to find via teachingAssignment
 				for (var i = 0; i < teachingAssignments.ids.length; i++) {
 					var teachingAssignment = teachingAssignments.list[teachingAssignments.ids[i]];
- 					if (teachingAssignment.instructorId == instructor.id) {
+					if (teachingAssignment.instructorId == instructor.id) {
 						return teachingAssignment.instructorTypeId;
 					}
 				}
- 				return null;
+				return null;
 			},
 
 			// Build a string of html to display a column header (course, terms, etc.)
@@ -154,6 +154,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			};
 
 			scope.renderTable = function () {
+				if (!scope.instructorTypeId) { return; }
+
 				// If courses is undefined do nothing
 				// The app is in the process of re-routing to a valid url
 				if (scope.view.state.courses) {
@@ -164,17 +166,17 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 					var relevantInstructors = 0;
 
- 					$.each(scope.view.state.instructors.ids, function (i, instructorId) {
+					$.each(scope.view.state.instructors.ids, function (i, instructorId) {
 						var instructor = scope.view.state.instructors.list[instructorId];
 
- 						if (scope.instructorTypeId == instructor.instructorTypeId) {
+						if (scope.instructorTypeId == instructor.instructorTypeId) {
 							relevantInstructors += 1;
 						}
 					});
 
- 					if (relevantInstructors == 0) { return; }
+					if (relevantInstructors == 0) { return; }
 
- 					var instructorTypeHeader = '<div class="instructor-type-header">' + scope.view.state.instructorTypes.list[scope.instructorTypeId].description + '</div>';
+					var instructorTypeHeader = '<div class="instructor-type-header">' + scope.view.state.instructorTypes.list[scope.instructorTypeId].description + '</div>';
 					element.append(instructorTypeHeader);
 
 					// Render the header
@@ -282,7 +284,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										if (sectionGroup) {
 											var course = scope.view.state.courses.list[sectionGroup.courseId];
 											if (course) {
-												displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
+												displayTitle += course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + " - " + course.title;
 												var plannedSeats = sectionGroup.plannedSeats || "0";
 												plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
 												unitsLow = "<small>Units: " + course.unitsLow + "</small>";
@@ -342,7 +344,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 									courseHtml += "<div class=\"dropdown assign-dropdown hidden-print\">";
 									courseHtml += "<button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
 									courseHtml += "Assign..<span class=\"caret\"></span></button>";
-									courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right scrollable-menu\" aria-labelledby=\"dropdownMenu1\">";
+									courseHtml += '<ul class="dropdown-menu assign-instructor-dropdown scrollable-menu" aria-labelledby="dropdownMenu1">';
 
 									// Track courses that were already present in 'interested', and should be filtered from 'other'
 									var interestedCourseIds = [];
@@ -352,34 +354,44 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 									// If the instructor has teachingAssignments in this term, show them first
 									if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
 
+										// Create array of teaching assisgnments by instructor
+										var instructorTeachingAssignments = [];
+
 										$.each(instructor.teachingAssignmentTermCodeIds[termCode], function (i, teachingAssignmentId) {
 											var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+											instructorTeachingAssignments.push(teachingAssignment);
+										});
+
+										var instructorTeachingAssignmentsByPriority = _array_sortByProperty(instructorTeachingAssignments, "priority");
+
+										$.each(instructorTeachingAssignmentsByPriority, function (i, teachingAssignment) {
+											var teachingAssignmentId = teachingAssignment.id;
 											var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
 											// This teachingAssignment is a buyout/sabb/release
 											if (teachingAssignment.approved == false && (teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.workLifeBalance || teachingAssignment.leaveOfAbsence || teachingAssignment.sabbaticalInResidence || teachingAssignment.sabbatical)) {
-												let preferenceDisplayText = "";
+												let preferenceDisplayText = teachingAssignment.priority + '. ';
 
 												if (teachingAssignment.buyout) {
-													preferenceDisplayText = "Buyout";
+													preferenceDisplayText += "Buyout";
 													nonCoursePreferences.buyout = true;
 												} else if (teachingAssignment.courseRelease) {
-													preferenceDisplayText = "Course Release";
+													preferenceDisplayText += "Course Release";
 													nonCoursePreferences.courseRelease = true;
 												} else if (teachingAssignment.inResidence) {
-													preferenceDisplayText = "In Residence";
+													preferenceDisplayText += "In Residence";
 													nonCoursePreferences.inResidence = true;
 												} else if (teachingAssignment.workLifeBalance) {
-													preferenceDisplayText = "Work Life Balance";
+													preferenceDisplayText += "Work Life Balance";
 													nonCoursePreferences.workLifeBalance = true;
 												} else if (teachingAssignment.leaveOfAbsence) {
-													preferenceDisplayText = "Leave of Absence";
+													preferenceDisplayText += "Leave of Absence";
 													nonCoursePreferences.leaveOfAbsence = true;
 												} else if (teachingAssignment.sabbaticalInResidence) {
-													preferenceDisplayText = "Sabbatical In Residence";
+													preferenceDisplayText += "Sabbatical In Residence";
 													nonCoursePreferences.sabbaticalInResidence = true;
 												} else if (teachingAssignment.sabbatical) {
-													preferenceDisplayText = "Sabbatical";
+													preferenceDisplayText += "Sabbatical";
 													nonCoursePreferences.sabbatical = true;
 												}
 
@@ -415,18 +427,19 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													}
 												}
 											}
-
-											// Show option if the TeachingAssignment is not already approved
-											if (teachingAssignment.approved === false && course) {
+											// Show disabled option if the TeachingAssignment is already approved
+											if (course) {
 												if (firstInterestedCourseAdded === false) {
 													courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
 													firstInterestedCourseAdded = true;
 												}
-
 												var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 												courseHtml += "<li><a";
 												courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
-												courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
+												if (teachingAssignment.approved === true) {
+													courseHtml += ' class=assign-instructor-dropdown__item--disabled ';
+												}
+												courseHtml += " href=\"#\">" + teachingAssignment.priority + ". " + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + " - " + course.title + "</a></li>";
 											}
 										});
 										if (firstInterestedCourseAdded) {
@@ -486,9 +499,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										courseHtml += " href=\"#\">Course Release</a></li>";
 									}
 
-									if (scope.view.state.courses.ids != 0) {
-										courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
-									}
+									courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
 
 									// Loop over all other courses
 									$.each(scope.view.state.courses.ids, function (i, courseId) {
@@ -501,7 +512,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 											courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
 											courseHtml += " data-term-code=\"" + termCode + "\"";
 											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-											courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
+											courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + " - " + course.title + "</a></li>";
 										}
 									});
 
@@ -509,8 +520,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 								} // end userCanEdit
 								courseHtml += "</div>"; // Ending term-cell div
 							});
-							courseHtml += "</div>"; // Ending course-row div
 
+							courseHtml += "</div>"; // Ending course-row div
 							coursesHtml += courseHtml;
 
 							// Add a header after each 10 displayed instructor rows
@@ -518,12 +529,12 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 								coursesHtml += scope.renderHeader();
 								rowsSinceHeaderWasAdded = 0;
 							}
+
 							rowsSinceHeaderWasAdded++;
 						}
 					}); // Ending loop over courses
 
 					//Add 'The Staff'
-
 					let courseHtml = "";
 					courseHtml += "<div class=\"course-list-row\">";
 					courseHtml += "<div class=\"description-cell\">";
@@ -561,7 +572,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 								var displayTitle = "";
 								var plannedSeatsHtml = "";
 								var unitsLow = "";
-
 								var course = scope.view.state.courses.list[sectionGroup.courseId];
 
 								displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
@@ -588,10 +598,11 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 								courseHtml += "</div>";
 							});
 						}
+
 						courseHtml += "</div>"; // Ending term-cell div
 					});
-					courseHtml += "</div>"; // Ending course-row div
 
+					courseHtml += "</div>"; // Ending course-row div
 					coursesHtml += courseHtml;
 					element.append(coursesHtml);
 

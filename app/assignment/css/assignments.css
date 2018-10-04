@@ -25,9 +25,12 @@
 
 #instructors-table .tile-assignment {
   position: relative;
-  height: 45px;
   line-height: .9em;
   padding: 4px 6px;
+}
+
+.instructors-table__preference-title {
+	line-height: 1.2em;
 }
 
 #courses-table .tile-assignment {
@@ -148,6 +151,11 @@ ul.dropdown-menu li div {
 ul.dropdown-menu li a {
 	color: rgb(153, 153, 153);
 	font-size: 12px;
+}
+
+ul.dropdown-menu li a.assign-instructor-dropdown__item--disabled {
+	color: #ccc;
+	pointer-events: none;
 }
 
 div.dropdown button.dropdown-toggle {
@@ -919,7 +927,7 @@ li.active-term .dropdown-term-row {
 }
 
 .assign-instructor-dropdown {
-	width: 100%;
+	min-width: 100%;
 }
 
 .assignments-container {

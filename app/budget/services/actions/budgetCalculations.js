@@ -280,8 +280,9 @@ class BudgetCalculations {
 					calculatedInstructors.push(self._generateInstructor(instructorId));
 					usedInstructorIds.push(instructorId);
 				});
-	
-				calculatedInstructors = _array_sortByProperty(calculatedInstructors, ["instructorTypeDescription", "lastName"]);
+
+				calculatedInstructors = _array_sortByProperty(calculatedInstructors, ["lastName"]);
+				calculatedActiveInstructors = _array_sortByProperty(calculatedActiveInstructors, ["lastName"]);
 
 				let instructorAssignmentOptions = [];
 	
