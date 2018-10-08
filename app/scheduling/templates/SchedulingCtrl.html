@@ -222,10 +222,14 @@
 						<term-calendar state="view.state"></term-calendar>
 					</div>
 					<div ng-if="isDayTab(view.state.uiState.calendarMode.activeTab)">
-						<departmental-room-calendar state="view.state"
+						<departmental-room-calendar ng-if="view.state.locations.ids.length > 0"
+						                            state="view.state"
 						                            locations="view.state.locations"
 						                            selected-day="view.state.filters.departmentalRoomDay.number">
 						</departmental-room-calendar>
+						<div class="schedluing__no-location" ng-if="view.state.locations.ids.length == 0">
+							No custom locations
+						</div>
 					</div>
 			</div>
 		</div>

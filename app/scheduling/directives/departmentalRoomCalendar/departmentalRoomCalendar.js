@@ -80,6 +80,7 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 
 				var parentAspectRatio = element.parent().width() / element.parent().height();
 				element.fullCalendar('destroy');
+
 				element.fullCalendar({
 					defaultView: 'agenda',
 					allDaySlot: false,
@@ -95,7 +96,7 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					slotEventOverlap: false,
 					visibleRange: {
 						start: moment().startOf('week').format('YYYY-MM-DD'),
-						end: moment().startOf('week').add(scope.locations.ids.length, 'days')
+						end: moment().startOf('week').add(scope.locations.ids.length, 'days').format('YYYY-MM-DD')
 					},
 					columnHeaderText: function(mom) {
 						var locationIndex = mom.weekday();
