@@ -47,7 +47,10 @@ class TeachingCallFormCtrl {
 
 			// Display courses already on the schedule
 			if (!query || query.length == 0) {
-				return termContainer.preferenceOptions;
+				var courses = angular.copy(termContainer.preferenceOptions);
+				var groupedResults = _.chain(courses).groupBy(function(course) {return course.subjectCode;}).map(function(g) {g[0].firstInGroup = true; return g;}).flatten().value();
+				// return termContainer.preferenceOptions;
+				return groupedResults;
 			}
 
 			var optimizedQuery = $scope.optimizeQueryFormat(query);
@@ -69,10 +72,13 @@ class TeachingCallFormCtrl {
 				var fuse = new Fuse(termContainer.preferenceOptions, options);
 				var results = fuse.search(optimizedQuery);
 
+				results = angular.copy(results);
 				var groupedResults = _.chain(results)
 					.groupBy(function(result) {return result.subjectCode;})
 					.map(function(g) {g[0].firstInGroup = true; return g;}).flatten().value();
 
+				// Append Suggest a Course option
+				groupedResults.push({description: "Suggest another Course", suggestCourse: true});
 				return groupedResults;
 			}
 		};

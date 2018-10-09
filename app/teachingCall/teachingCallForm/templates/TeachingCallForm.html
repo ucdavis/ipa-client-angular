@@ -119,11 +119,7 @@
 									class="form-control search-course-input">
 								<i ng-show="view.loadingCourses[term]"><spinner size="20"></spinner></i>
 							</div>
-							<button
-								class="btn btn-white" style="margin-right: auto;" uib-tooltip="Suggest a course"
-								ng-click="toggleSuggestCourseInput()">
-								<i class="entypo-list-add"></i>
-							</button>
+							<!-- Suggest Course dropdown-->
 							<input type="text" ng-model="view.courseSuggestQuery"
 								style="width: 380px"
 								ng-show="viewState.showSuggestCourse"
@@ -248,13 +244,14 @@
 <style>
 	.typeahead-group-header {
 		padding: 3px 20px;
-		border-bottom: 1px solid black;
+		border-bottom: 1px solid #999;
 		font-weight: bold;
 	}
 </style>
 
 <script type="text/ng-template" id="typeahead-item.html">
-	<div class="typeahead-group-header" ng-if="match.model.firstInGroup">{{match.model.subjectCode}}</div>
+	<div class="typeahead-group-header" ng-if="match.model.firstInGroup">{{match.model.subjectCode ? "Courses" : "Non-Courses"}} </div>
+	<div ng-if="match.model.suggestCourse" class="typeahead-group-header"></div>
 	<a>
 		<span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
 	</a>
