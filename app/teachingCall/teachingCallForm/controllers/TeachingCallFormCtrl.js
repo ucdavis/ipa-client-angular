@@ -148,11 +148,14 @@ class TeachingCallFormCtrl {
 			var scheduleId = $scope.view.state.scheduleId;
 
 			// Preference is based off a new course (from Data Warehouse)
-			if (preference && preference.isSuggested == true) {
+			if (preference && preference.courseId === undefined) {
 				preference.suggestedEffectiveTermCode = preference.effectiveTermCode;
 				preference.suggestedSubjectCode = preference.subjectCode;
 				preference.suggestedCourseNumber = preference.courseNumber;
 				preference.suggestedTitle = preference.title;
+				preference.scheduleId = $scope.view.state.scheduleId;
+				preference.instructorId = $scope.view.state.instructorId;
+				preference.termCode = term;
 			}
 
 			TeachingCallFormActionCreators.addPreference(preference, term);
