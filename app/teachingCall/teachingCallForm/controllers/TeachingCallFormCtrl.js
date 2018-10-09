@@ -23,11 +23,11 @@ class TeachingCallFormCtrl {
 		});
 
 		$scope.viewState = {
-			showSuggestCourse: false
+			showSuggestCourseRow: false
 		};
 
-		$scope.toggleSuggestCourseInput = function () {
-			$scope.viewState.showSuggestCourse = !$scope.viewState.showSuggestCourse;
+		$scope.toggleSuggestCourseRow = function () {
+			$scope.viewState.showSuggestCourseRow = !$scope.viewState.showSuggestCourseRow;
 		};
 
 		$scope.searchDWCourses = function (query) {
@@ -78,7 +78,7 @@ class TeachingCallFormCtrl {
 					.map(function(g) {g[0].firstInGroup = true; return g;}).flatten().value();
 
 				// Append Suggest a Course option
-				groupedResults.push({description: "Suggest another Course", suggestCourse: true});
+				groupedResults.push({description: "Suggest A Course", suggestACourse: true});
 				return groupedResults;
 			}
 		};
@@ -138,6 +138,11 @@ class TeachingCallFormCtrl {
 			var elements = $('.search-course-input');
 			elements[0].focus();
 			elements[0].blur();
+
+			if (preference.suggestACourse) {
+				$scope.toggleSuggestCourseRow();
+				return;
+			}
 
 			var courseNumber, subjectCode, sectionGroup;
 			var scheduleId = $scope.view.state.scheduleId;

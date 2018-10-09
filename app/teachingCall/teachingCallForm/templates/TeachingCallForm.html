@@ -94,6 +94,36 @@
 
 					</div> <!-- end preferences -->
 
+					<!-- suggest a course -->
+					<div class="preference-row" ng-if="viewState.showSuggestCourseRow">
+						<div class="priority-cell outline"></div>
+
+						<div class="preference-cell outline">
+							<div class="scrollable-dropdown-menu search-course-container">
+								<input type="text" ng-model="view.courseSuggestQuery"
+									style="width: 380px"
+									ng-init="courseSuggestPlaceHolder = 'Suggest a Course'"
+									placeholder="{{ courseSuggestPlaceHolder }}"
+									ng-focus="courseSuggestPlaceHolder = 'Suggest a Course'"
+									ng-blur="courseSuggestPlaceHolder = 'Suggest a Course'; view.courseSuggestQuery = undefined;"
+									uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchDWCourses($viewValue)"
+									typeahead-loading="view.loadingCourses"
+									typeahead-no-results="noResults"
+									typeahead-wait-ms="400"
+									typeahead-focus-first="false"
+									typeahead-min-length="2"
+									typeahead-on-select="addPreference($item, term.termCode, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isSabbaticalInResidence, isCourseRelease)"
+									class="form-control search-course-input">
+								<i ng-show="view.loadingCourses[term]"><spinner size="20"></spinner></i>
+							</div>
+							<button type="button" class="btn btn-white remove-preference-btn">
+								Remove
+							</button>
+						</div>
+
+						<div class="seats-cell outline"></div>
+					</div> <!-- suggest a course -->
+					
 					<!-- add preference -->
 					<div class="preference-row">
 						<div class="priority-cell outline">
@@ -119,22 +149,6 @@
 									class="form-control search-course-input">
 								<i ng-show="view.loadingCourses[term]"><spinner size="20"></spinner></i>
 							</div>
-							<!-- Suggest Course dropdown-->
-							<input type="text" ng-model="view.courseSuggestQuery"
-								style="width: 380px"
-								ng-show="viewState.showSuggestCourse"
-								ng-init="courseSuggestPlaceHolder = 'Suggest a Course'"
-								placeholder="{{ courseSuggestPlaceHolder }}"
-								ng-focus="courseSuggestPlaceHolder = 'Suggest a Course'"
-								ng-blur="courseSuggestPlaceHolder = 'Suggest a Course'; view.courseSuggestQuery = undefined;"
-								uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchDWCourses($viewValue)"
-								typeahead-loading="view.loadingCourses"
-								typeahead-no-results="noResults"
-								typeahead-wait-ms="400"
-								typeahead-focus-first="false"
-								typeahead-min-length="2"
-								typeahead-on-select="addPreference($item, term.termCode, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isSabbaticalInResidence, isCourseRelease)"
-								class="form-control search-course-input">
 						</div>
 						<div class="seats-cell outline">
 						</div>
@@ -247,11 +261,18 @@
 		border-bottom: 1px solid #999;
 		font-weight: bold;
 	}
+
+	.typeahead--suggest-course {
+		padding: 3px 20px;
+		border-top: 1px solid #999;
+		font-weight: bold;
+	}
 </style>
 
 <script type="text/ng-template" id="typeahead-item.html">
 	<div class="typeahead-group-header" ng-if="match.model.firstInGroup">{{match.model.subjectCode ? "Courses" : "Non-Courses"}} </div>
-	<div ng-if="match.model.suggestCourse" class="typeahead-group-header"></div>
+	<div class="typeahead--suggest-course" ng-if="match.model.suggestACourse"></div>
+	
 	<a>
 		<span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
 	</a>
