@@ -100,21 +100,20 @@
 
 						<div class="preference-cell outline">
 							<div class="scrollable-dropdown-menu search-course-container">
-								<input type="text" ng-model="view.courseSuggestQuery"
-									style="width: 380px"
+								<input type="text" ng-model="view.courseSuggestQuery[term.termCode]"
 									ng-init="courseSuggestPlaceHolder = 'Suggest a Course'"
 									placeholder="{{ courseSuggestPlaceHolder }}"
 									ng-focus="courseSuggestPlaceHolder = 'Suggest a Course'"
 									ng-blur="courseSuggestPlaceHolder = 'Suggest a Course'; view.courseSuggestQuery = undefined;"
 									uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchDWCourses($viewValue)"
-									typeahead-loading="view.loadingCourses"
+									typeahead-loading="view.loadingSuggestCourses[term.termCode]"
 									typeahead-no-results="noResults"
 									typeahead-wait-ms="400"
 									typeahead-focus-first="false"
 									typeahead-min-length="2"
 									typeahead-on-select="addPreference($item, term.termCode, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isSabbaticalInResidence, isCourseRelease)"
 									class="form-control search-course-input">
-								<i ng-show="view.loadingCourses[term]"><spinner size="20"></spinner></i>
+								<i ng-show="view.loadingSuggestCourses[term]"><spinner size="20"></spinner></i>
 							</div>
 							<button type="button" class="btn btn-white remove-preference-btn">
 								Remove
