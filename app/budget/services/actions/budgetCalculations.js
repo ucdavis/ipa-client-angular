@@ -618,6 +618,9 @@ class BudgetCalculations {
 					var key = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
 					sectionGroupCost.isScheduled = sectionGroups.idsByUniqueKey[key] > 0;
 
+					// These sectionGroupCosts were once apart of the schedule and budget, but have since been removed
+					if (sectionGroupCost.isScheduled == false && sectionGroupCost.isBudgeted == false) { return; }
+
 					courseList.push(sectionGroupCost);
 				});
 
