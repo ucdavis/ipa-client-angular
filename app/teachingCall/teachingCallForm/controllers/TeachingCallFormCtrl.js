@@ -156,6 +156,8 @@ class TeachingCallFormCtrl {
 				preference.scheduleId = $scope.view.state.scheduleId;
 				preference.instructorId = $scope.view.state.instructorId;
 				preference.termCode = term;
+
+				$scope.toggleSuggestCourseRow();
 			}
 
 			TeachingCallFormActionCreators.addPreference(preference, term);
