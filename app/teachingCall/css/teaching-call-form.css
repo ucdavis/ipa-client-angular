@@ -890,6 +890,12 @@ li.active-term .dropdown-term-row {
 	width: auto;
 }
 
+.suggest-course-container {
+	flex: 1;
+	display: flex;
+	justify-content: space-between;
+}
+
 #modal-1 {
 	height: 100vh;
 }
