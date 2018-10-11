@@ -45,6 +45,15 @@
 			</add-course-comments>
 		</ipa-modal>
 
+
+		<ipa-modal class="add-course__modal" is-visible="view.state.ui.addCourseModal.isOpen"
+		           header-text="Add Course">
+			<add-course ng-if="view.state.ui.addCourseModal.isOpen"
+			            state="view.state"
+			            is-visible="view.state.ui.addCourseModal.isOpen">
+			</add-course>
+		</ipa-modal>
+
 		<ipa-modal is-visible="view.state.ui.lineItemCommentsModal.isOpen"
 		           header-text="Line Item Comments">
 			<add-line-item-comments ng-if="view.state.ui.lineItemCommentsModal.isOpen"
@@ -86,6 +95,11 @@
 			<instructor-list ng-if="view.state.ui.sectionNav.activeTab == 'Instructor List'"
 			                 state="view.state"
 			                 selected-budget-scenario="view.state.selectedBudgetScenario">
+			</instructor-list>
+			<course-list ng-if="view.state.ui.sectionNav.activeTab == 'Course List'"
+			             course-list="view.state.calculatedCourseList"
+			             term-nav="view.state.ui.termNav"
+			             selected-budget-scenario="view.state.selectedBudgetScenario">
 			</instructor-list>
 		</div>
 	</div>

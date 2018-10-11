@@ -12,6 +12,9 @@
 		<div class="budget-nav__nav-item" ng-click="setRoute('Instructor List')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Instructor List' }">
 			Instructor List
 		</div>
+		<div class="budget-nav__nav-item" ng-click="setRoute('Course List')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Course List' }">
+			Course List
+		</div>
 	</div>
 
 	<div class="budget-nav__side-bar">
@@ -40,6 +43,17 @@
 				</ipa-button>
 			</div>
 		</div>
+
+		<div class="budget-nav__line-item-tools" ng-if="selectedSection == 'Course List'">
+					<div class="budget-nav__tool">
+						<ipa-button icon-class="'glyphicon glyphicon-plus course-list__plus-padding'"
+						            size="'small'"
+						            on-click="openAddCourseModal()"
+						            tooltip-message="'Add Course'">
+						</ipa-button>
+					</div>
+				</div>
+
 		<div class="budget-nav__total-container">
 			<div>
 				<span class="budget-nav__balance">
