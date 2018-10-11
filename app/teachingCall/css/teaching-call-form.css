@@ -869,6 +869,7 @@ li.active-term .dropdown-term-row {
 	text-align: left;
 	cursor: text;
 }
+
 .search-course-container {
 	display: flex;
 	align-items: center;
@@ -891,9 +892,20 @@ li.active-term .dropdown-term-row {
 }
 
 .suggest-course-container {
-	flex: 1;
+	flex: auto;
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
+}
+
+.suggest-course-searchbox {
+	margin-left: 7px;
+	margin-right: auto;
+}
+
+.suggest-course-searchbox i {
+	position: static;
+	margin-left: 5px;
 }
 
 #modal-1 {
