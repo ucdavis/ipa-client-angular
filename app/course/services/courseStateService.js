@@ -14,7 +14,7 @@ class CourseStateService {
 			_state: {},
 			_termReducers: function (action, terms) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						terms = {
@@ -37,7 +37,7 @@ class CourseStateService {
 			_courseReducers: function (action, courses) {
 				var scope = this;
 				var newCourseIndex;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 					case ActionTypes.IMPORT_COURSES:
@@ -62,11 +62,11 @@ class CourseStateService {
 					case ActionTypes.SEARCH_IMPORT_COURSES:
 						var importList = [];
 						action.payload.sectionGroups.forEach(function (sg) {
-	
+
 							if (action.payload.subjectCode && action.payload.subjectCode.length > 0) {
 								sg.subjectCode = action.payload.subjectCode;
 							}
-	
+
 							// Find any duplicate in existing courses
 							var matchingCourse = _.find(courses.list, function (course) {
 								return (course.courseNumber == sg.courseNumber)
@@ -79,7 +79,7 @@ class CourseStateService {
 							});
 							// Add only non-duplicates
 							if (matchingCourse === undefined && matchingImportCourse === undefined) {
-	
+
 								importList.push(new Course({
 									subjectCode: sg.subjectCode,
 									courseNumber: sg.courseNumber,
@@ -144,10 +144,10 @@ class CourseStateService {
 						var courseIds = action.massAssignTags.courseIds;
 						var tagIdsToAdd = action.massAssignTags.tagIdsToAdd;
 						var tagIdsToRemove = action.massAssignTags.tagIdsToRemove;
-	
+
 						courseIds.forEach( function(courseId) {
 							var course = courses.list[courseId];
-	
+
 							tagIdsToAdd.forEach( function(tagId) {
 								if (course.tagIds.indexOf(tagId) == -1) {
 									course.tagIds.push(tagId);
@@ -160,16 +160,16 @@ class CourseStateService {
 								}
 							});
 						});
-	
+
 						return courses;
 					case ActionTypes.UPDATE_TABLE_FILTER:
 						var query = action.payload.query;
-	
+
 						// Specify the properties that we are interested in searching
 						var courseKeyList = ['courseNumber', 'sequencePattern', 'subjectCode', 'title'];
-	
+
 						_object_search_properties(query, courses, courseKeyList);
-	
+
 						return courses;
 					case ActionTypes.UPDATE_TAG_FILTERS:
 						// Set the course.isFiltered flag to false if any tag matches the filters
@@ -199,7 +199,7 @@ class CourseStateService {
 			_sectionGroupReducers: function (action, sectionGroups) {
 				var scope = this;
 				var sectionGroupData;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 					case ActionTypes.IMPORT_COURSES:
@@ -308,7 +308,7 @@ class CourseStateService {
 			},
 			_sectionReducers: function (action, sections) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						sections = {
@@ -340,7 +340,7 @@ class CourseStateService {
 			},
 			_tagReducers: function (action, tags) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						tags = {
@@ -357,7 +357,7 @@ class CourseStateService {
 						tags.ids = _array_sortIdsByProperty(tagsList, "name");
 						tags.availableIds = tags.ids.filter(function (tagId) { return tagsList[tagId].archived === false; });
 						tags.list = tagsList;
-	
+
 						return tags;
 					default:
 						return tags;
@@ -365,7 +365,7 @@ class CourseStateService {
 			},
 			_filterReducers: function (action, filters) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						// A filter is 'enabled' if it is checked, i.e. the category it represents
@@ -377,7 +377,7 @@ class CourseStateService {
 						};
 						// Here is where we might load stored data about what filters
 						// were left on last time.
-	
+
 						// Check localStorage for saved termFilter settings
 						var termFiltersBlob = localStorage.getItem("termFilters");
 						if (termFiltersBlob) {
@@ -411,7 +411,7 @@ class CourseStateService {
 			},
 			_uiStateReducers: function (action, uiState) {
 				var scope = this;
-	
+
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 					case ActionTypes.IMPORT_COURSES:
@@ -423,6 +423,8 @@ class CourseStateService {
 							massImportMode: false,
 							massImportCode: null,
 							massImportYear: null,
+							massImportTimes: true,
+							massImportInstructors: true,
 							massImportPrivate: false,
 							massImportInProgress: false,
 							censusFetchInProgress: false,
@@ -431,7 +433,7 @@ class CourseStateService {
 							selectedCourseRowIds: [],
 							isCourseDeleteModalOpen: false
 						};
-	
+
 						uiState.tableLocked = false;
 						return uiState;
 					case ActionTypes.BEGIN_FETCH_SECTIONS:
@@ -494,25 +496,25 @@ class CourseStateService {
 						if (uiState.selectedCourseId == courseId) {
 							uiState.selectedCourseId = null;
 						}
-	
+
 						// Ensure deleted course is not selected
 						var index = uiState.selectedCourseRowIds.indexOf(courseId);
-	
+
 						if (index > -1) {
 							uiState.selectedCourseRowIds.splice(index, 1);
 						}
-	
+
 						return uiState;
 					case ActionTypes.TOGGLE_SELECT_COURSE_ROW:
 						var courseId = action.payload.courseId;
 						var index = uiState.selectedCourseRowIds.indexOf(courseId);
-	
+
 						if (index > -1) {
 							uiState.selectedCourseRowIds.splice(index, 1);
 						} else {
 							uiState.selectedCourseRowIds.push(courseId);
 						}
-	
+
 						return uiState;
 					case ActionTypes.SELECT_ALL_COURSE_ROWS:
 						var courseIds = action.payload.courseIds;
@@ -538,11 +540,11 @@ class CourseStateService {
 			},
 			reduce: function (action) {
 				var scope = this;
-	
+
 				if (!action || !action.type) {
 					return;
 				}
-	
+
 				let newState = {};
 				newState.terms = scope._termReducers(action, scope._state.terms);
 				newState.courses = scope._courseReducers(action, scope._state.courses);
@@ -551,13 +553,13 @@ class CourseStateService {
 				newState.tags = scope._tagReducers(action, scope._state.tags);
 				newState.filters = scope._filterReducers(action, scope._state.filters);
 				newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
-	
+
 				scope._state = newState;
 				$rootScope.$emit('courseStateChanged', {
 					state: scope._state,
 					action: action
 				});
-	
+
 				$log.debug("Course state updated:");
 				$log.debug(scope._state, action.type);
 			}
