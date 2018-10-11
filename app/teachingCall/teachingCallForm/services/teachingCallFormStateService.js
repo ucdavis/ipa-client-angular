@@ -188,8 +188,6 @@ class TeachingCallFormStateService {
 						});
 	
 						preferences.splice(removePreferenceIndex, 1);
-						preferenceOptions.push(preferenceOfInterest);
-						preferenceOptions = self.sortCourses(preferenceOptions);
 	
 						// Calculate Checklist values
 						this.calculateChecklist(pageState);
@@ -428,7 +426,7 @@ class TeachingCallFormStateService {
 						newPreference.subjectCode = slotAssignment.suggestedSubjectCode;
 						newPreference.effectiveTermCode = slotAssignment.suggestedEffectiveTermCode;
 						newPreference.description = newPreference.subjectCode + " " + newPreference.courseNumber;
-	
+						// newPreference.title = 'Suggested Course Gets no Title?';
 						newPreference.suggestedCourseNumber = slotAssignment.suggestedCourseNumber;
 						newPreference.suggestedSubjectCode = slotAssignment.suggestedSubjectCode;
 						newPreference.suggestedEffectiveTermCode = slotAssignment.suggestedEffectiveTermCode;
