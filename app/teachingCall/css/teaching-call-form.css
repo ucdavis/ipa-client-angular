@@ -898,6 +898,10 @@ li.active-term .dropdown-term-row {
 	justify-content: space-between;
 }
 
+.suggest-course-container .search-course-input {
+	width: auto;
+}
+
 .suggest-course-input {
 	display: flex;
 	align-items: center;

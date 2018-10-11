@@ -134,7 +134,7 @@
 										typeahead-focus-first="false"
 										typeahead-min-length="2"
 										typeahead-on-select="addPreference($item, term.termCode, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isSabbaticalInResidence, isCourseRelease)"
-										class="form-control">
+										class="form-control search-course-input">
 									<i ng-if="view.loadingSuggestCourses[term.termCode]"><spinner size="20"></spinner></i>
 								</div>
 								<button type="button" class="btn btn-danger" ng-click="toggleSuggestCourse()">
