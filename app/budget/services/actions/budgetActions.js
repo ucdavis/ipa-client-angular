@@ -573,12 +573,12 @@ class BudgetActions {
 	
 				BudgetReducers.reduce(action);
 			},
-      openAddCourseModal: function () {
-        BudgetReducers.reduce({
-          type: ActionTypes.OPEN_ADD_COURSE_MODAL,
-          payload: {}
-        });
-      },
+			openAddCourseModal: function () {
+				BudgetReducers.reduce({
+					type: ActionTypes.OPEN_ADD_COURSE_MODAL,
+					payload: {}
+				});
+			},
 			closeBudgetConfigModal: function() {
 				BudgetReducers.reduce({
 					type: ActionTypes.CLOSE_BUDGET_CONFIG_MODAL,

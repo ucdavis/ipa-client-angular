@@ -357,6 +357,7 @@ class BudgetReducers {
 							courses.list[course.id] = course;
 						});
 
+						// Adding useful metadata to sectionGroups
 						action.payload.sectionGroups.forEach(function(sectionGroup) {
 							var course = courses.list[sectionGroup.courseId];
 							sectionGroup.subjectCode = course.subjectCode;
@@ -686,9 +687,9 @@ class BudgetReducers {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						ui = {
-              addCourseModal: {
-                isOpen: false
-              },
+							addCourseModal: {
+								isOpen: false
+							},
 							courseCommentsModal: {
 								isOpen: false
 							},

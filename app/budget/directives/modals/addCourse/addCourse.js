@@ -103,7 +103,7 @@ let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionServi
         });
 
         if (usedSequencePatterns.length == 0) {
-          scope.newCourse.sequencePattern == "001";
+          scope.newCourse.sequencePattern = "001";
           scope.newCourse.rawSequencePattern = "001";
         } else {
           scope.newCourse.sequencePattern = scope.generateNextSequencePattern(usedSequencePatterns);
