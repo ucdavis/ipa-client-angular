@@ -898,14 +898,17 @@ li.active-term .dropdown-term-row {
 	justify-content: space-between;
 }
 
-.suggest-course-searchbox {
-	margin-left: 7px;
+.suggest-course-input {
+	display: flex;
+	align-items: center;
+	margin-left: 5px;
 	margin-right: auto;
 }
 
-.suggest-course-searchbox i {
-	position: static;
-	margin-left: 5px;
+.suggest-course-input i {
+	position: relative;
+	bottom: auto;
+	right: 28px;
 }
 
 #modal-1 {

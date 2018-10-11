@@ -121,7 +121,7 @@
 							</div>
 							<div ng-if="viewState.showSuggestCourseRow" class="suggest-course-container">
 								<strong>Search for a Course:</strong>
-								<div class="scrollable-dropdown-menu search-course-container suggest-course-searchbox">
+								<div class="suggest-course-input">
 									<input type="text" ng-model="view.courseSuggestQuery[term.termCode]"
 										ng-init="courseSuggestPlaceHolder = 'Suggest a Course ...'"
 										placeholder="{{ courseSuggestPlaceHolder }}"
@@ -134,8 +134,8 @@
 										typeahead-focus-first="false"
 										typeahead-min-length="2"
 										typeahead-on-select="addPreference($item, term.termCode, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isSabbaticalInResidence, isCourseRelease)"
-										class="form-control search-course-input">
-										<i ng-if="view.loadingSuggestCourses"><spinner size="20"></spinner></i>
+										class="form-control">
+									<i ng-if="view.loadingSuggestCourses"><spinner size="20"></spinner></i>
 								</div>
 								<button type="button" class="btn btn-danger" ng-click="toggleSuggestCourseRow()">
 									Cancel
