@@ -2,12 +2,11 @@
  * Provides the main course table in the Courses View
  */
 let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, AuthService, $routeParams, Roles) {
-	var instructorTypesCount = 0;
-
 	return {
 		restrict: 'A',
 		scope: {
 			state: '=',
+			showStaffTable: '=',
 			showTheStaff: '=',
 			instructorTypeId: '=',
 			sharedState: '=',
@@ -25,6 +24,10 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				scope.view.state = data;
 				scope.renderTable();
+
+				if (scope.showStaffTable == true) {
+					scope.renderStaffTable();
+				}
 			});
 
 			// Filter instructors with assignmentsCompleted if filter is active
@@ -543,7 +546,11 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			};
 
 			scope.renderStaffTable = function () {
-				var instructorTypeHeader = '<div class="instructor-type-header">' + "TBA Instructor" + '</div>';
+				// Clear the table
+				$('.tooltip').remove();
+				element.empty();
+
+				var instructorTypeHeader = '<div class="instructor-type-header">' + "Instructor TBA" + '</div>';
 				element.append(instructorTypeHeader);
 
 				var header = scope.renderHeader();
@@ -628,6 +635,11 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 					}
 
 					element.append(courseHtml);
+
+					// Manually activate bootstrap tooltip triggers
+					$('body').tooltip({
+						selector: '[data-toggle="tooltip"]'
+					});
 			};
 
 			// end on event 'assignmentStateChanged'
@@ -785,12 +797,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 			scope.renderTable();
 
-			if (instructorTypesCount == scope.view.state.instructorTypes.ids.length) {
+			if (scope.showStaffTable == true) {
 				scope.renderStaffTable();
-				instructorTypesCount = 0;
-			}
-			else {
-				instructorTypesCount += 1;
 			}
 		} // end link
 	};
