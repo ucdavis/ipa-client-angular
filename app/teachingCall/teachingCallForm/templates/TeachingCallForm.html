@@ -100,7 +100,7 @@
 						</div>
 
 						<div class="preference-cell outline">
-							<div ng-if="!viewState.showSuggestCourseRow" class="scrollable-dropdown-menu search-course-container">
+							<div ng-if="!viewState.showSuggestCourse" class="scrollable-dropdown-menu search-course-container">
 								<input type="text" ng-model="view.courseSearchQuery[term.termCode]"
 									ng-init="courseSearchPlaceHolder = 'Add Preference ...'"
 									placeholder="{{ courseSearchPlaceHolder }}"
@@ -119,7 +119,7 @@
 									class="form-control search-course-input">
 								<i ng-show="view.loadingCourses[term]"><spinner size="20"></spinner></i>
 							</div>
-							<div ng-if="viewState.showSuggestCourseRow" class="suggest-course-container">
+							<div ng-if="viewState.showSuggestCourse" class="suggest-course-container">
 								<strong>Search for a Course:</strong>
 								<div class="suggest-course-input">
 									<input type="text" ng-model="view.courseSuggestQuery[term.termCode]"
@@ -128,16 +128,16 @@
 										ng-focus="courseSuggestPlaceHolder = 'Suggest a Course ...'"
 										ng-blur="courseSuggestPlaceHolder = 'Suggest a Course ...'; view.courseSuggestQuery = undefined;"
 										uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchDWCourses($viewValue)"
-										typeahead-loading="view.loadingSuggestCourses"
+										typeahead-loading="view.loadingSuggestCourses[term.termCode]"
 										typeahead-no-results="noResults"
 										typeahead-wait-ms="400"
 										typeahead-focus-first="false"
 										typeahead-min-length="2"
 										typeahead-on-select="addPreference($item, term.termCode, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isSabbaticalInResidence, isCourseRelease)"
 										class="form-control">
-									<i ng-if="view.loadingSuggestCourses"><spinner size="20"></spinner></i>
+									<i ng-if="view.loadingSuggestCourses[term.termCode]"><spinner size="20"></spinner></i>
 								</div>
-								<button type="button" class="btn btn-danger" ng-click="toggleSuggestCourseRow()">
+								<button type="button" class="btn btn-danger" ng-click="toggleSuggestCourse()">
 									Cancel
 								</button>
 							</div>

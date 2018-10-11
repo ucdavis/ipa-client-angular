@@ -23,11 +23,11 @@ class TeachingCallFormCtrl {
 		});
 
 		$scope.viewState = {
-			showSuggestCourseRow: false
+			showSuggestCourse: false
 		};
 
-		$scope.toggleSuggestCourseRow = function () {
-			$scope.viewState.showSuggestCourseRow = !$scope.viewState.showSuggestCourseRow;
+		$scope.toggleSuggestCourse = function () {
+			$scope.viewState.showSuggestCourse = !$scope.viewState.showSuggestCourse;
 		};
 
 		$scope.searchDWCourses = function (query) {
@@ -141,7 +141,7 @@ class TeachingCallFormCtrl {
 			elements[0].blur();
 
 			if (preference.suggestACourse) {
-				$scope.toggleSuggestCourseRow();
+				$scope.toggleSuggestCourse();
 				return;
 			}
 
@@ -158,7 +158,7 @@ class TeachingCallFormCtrl {
 				preference.instructorId = $scope.view.state.instructorId;
 				preference.termCode = term;
 
-				$scope.toggleSuggestCourseRow();
+				$scope.toggleSuggestCourse();
 			}
 
 			TeachingCallFormActionCreators.addPreference(preference, term);
