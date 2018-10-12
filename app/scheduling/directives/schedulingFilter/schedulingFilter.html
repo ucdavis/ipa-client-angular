@@ -1,6 +1,6 @@
 <div class="scheduling-filters">
   <div class="calendar-filter-header">
-    <div class="activity-filter-tokens text-center" ng-show="schedulingMode != 'By Room'">
+    <div class="activity-filter-tokens text-center" ng-show="schedulingMode == 'Weekly'">
       <div class="label label-selected-section-group" ng-repeat="tagId in filters.enabledTagIds track by $index"
            ng-style="{ 'background-color': tags.list[tagId].color || '#333', 'color': tags.list[tagId].getTextColor() }">
         {{ tags.list[tagId].name }}
