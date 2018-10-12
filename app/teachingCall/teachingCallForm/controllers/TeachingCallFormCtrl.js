@@ -50,7 +50,7 @@ class TeachingCallFormCtrl {
 				var courses = angular.copy(termContainer.preferenceOptions);
 				var groupedResults = _.chain(courses).groupBy(function(course) {return course.subjectCode;}).map(function(g) {g[0].firstInGroup = true; return g;}).flatten().value();
 				// return termContainer.preferenceOptions;
-				groupedResults.push({ description: "Suggest A Course", suggestACourse: true });
+				groupedResults.push({ description: "Suggest a Course", suggestACourse: true });
 				return groupedResults;
 			}
 

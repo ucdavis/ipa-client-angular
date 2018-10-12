@@ -263,7 +263,7 @@
 </style>
 
 <script type="text/ng-template" id="typeahead-item.html">
-	<div class="typeahead-group-header" ng-if="match.model.firstInGroup">{{match.model.subjectCode ? "Courses" : "Non-Courses"}} </div>
+	<div class="typeahead-group-header" ng-if="match.model.firstInGroup">{{match.model.subjectCode ? match.model.subjectCode + " Courses" : "Non-Courses"}} </div>
 	<div class="typeahead--suggest-course" ng-if="match.model.suggestACourse"></div>
 	
 	<a>
