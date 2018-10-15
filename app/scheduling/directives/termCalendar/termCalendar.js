@@ -425,7 +425,19 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				}
 
 				var primaryFilter = scope.state.filters.showOnlyPrimaryActivity;
-				var passesPrimaryFilter = (primaryFilter == false || (primaryFilter && activity.primary));
+				var passesPrimaryFilter = false;
+
+				if (primaryFilter == false) {
+					passesPrimaryFilter = true;
+				} else {
+					if (activity.category == "01") {
+						passesPrimaryFilter = true;
+					} else if (activity.sectionGroupId > 0) {
+						passesPrimaryFilter = true;
+					} else if (activity.activityTypeCode.activityTypeCode == "A") {
+						//passesPriimaryFilter = true;
+					}
+				}
 
 				var selectedSectionGroupId = scope.state.uiState.selectedSectionGroupId;
 				var selectedSectionGroup = scope.state.sectionGroups.list[selectedSectionGroupId];
