@@ -200,43 +200,43 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 								$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) {
 									var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
 
-										courseHtml += "<div class=\"term-cell\">";
+									courseHtml += "<div class=\"term-cell\">";
 
-										// Loop over sectionGroups within a term
-										if (scope.view.state.theStaff.termCodes[termCode]) {
-											scope.view.state.theStaff.termCodes[termCode].forEach(function(sectionGroupId) {
-												var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
-												var displayTitle = "";
-												var plannedSeatsHtml = "";
-												var unitsLow = "";
+									// Loop over sectionGroups within a term
+									if (scope.view.state.theStaff.termCodes[termCode]) {
+										scope.view.state.theStaff.termCodes[termCode].forEach(function(sectionGroupId) {
+											var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+											var displayTitle = "";
+											var plannedSeatsHtml = "";
+											var unitsLow = "";
 
-												var course = scope.view.state.courses.list[sectionGroup.courseId];
+											var course = scope.view.state.courses.list[sectionGroup.courseId];
 
-												displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
-												var plannedSeats = sectionGroup.plannedSeats || "0";
-												plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
-												unitsLow = "<small>Units: " + course.unitsLow + "</small>";
+											displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
+											var plannedSeats = sectionGroup.plannedSeats || "0";
+											plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
+											unitsLow = "<small>Units: " + course.unitsLow + "</small>";
 
-												courseHtml += "<div class=\"alert alert-info tile-assignment\">";
-												courseHtml += "<p>" + displayTitle + "</p>";
-												courseHtml += "<div class=\"tile-assignment-details\">";
-												courseHtml += plannedSeatsHtml;
-												courseHtml += "<br />";
-												courseHtml += unitsLow;
-												courseHtml += "</div>";
+											courseHtml += "<div class=\"alert alert-info tile-assignment\">";
+											courseHtml += "<p>" + displayTitle + "</p>";
+											courseHtml += "<div class=\"tile-assignment-details\">";
+											courseHtml += plannedSeatsHtml;
+											courseHtml += "<br />";
+											courseHtml += unitsLow;
+											courseHtml += "</div>";
 
-												var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
-													"<div class='text-center'><button class='btn btn-red' data-event-type='removeTheStaff' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
-													"<button class='btn btn-white' data-event-type='dismissRemoveTheStaffPop'>Cancel</button></div>";
+											var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
+												"<div class='text-center'><button class='btn btn-red' data-event-type='removeTheStaff' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
+												"<button class='btn btn-white' data-event-type='dismissRemoveTheStaffPop'>Cancel</button></div>";
 
-												courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
-												courseHtml += " data-section-group-id=\"" + sectionGroup.id + "\" data-event-type=\"removeTheStaffPop\" " +
-													"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
+											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
+											courseHtml += " data-section-group-id=\"" + sectionGroup.id + "\" data-event-type=\"removeTheStaffPop\" " +
+												"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
 
-												courseHtml += "</div>";
-											});
-										}
-										courseHtml += "</div>"; // Ending term-cell div
+											courseHtml += "</div>";
+										});
+									}
+									courseHtml += "</div>"; // Ending term-cell div
 								});
 							courseHtml += "</div>"; // Ending course-row div
 						}
