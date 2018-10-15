@@ -455,7 +455,8 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				var actionTypesOfInterest = [
 					"CALCULATE_SECTION_GROUPS",
 					"ACTIVITY_SELECTED",
-					"UPDATE_ACTIVITY"
+					"UPDATE_ACTIVITY",
+					"APPLY_FILTER_TO_SELECTION"
 				];
 
 				if (actionTypesOfInterest.indexOf(data.action.type) > -1) {
