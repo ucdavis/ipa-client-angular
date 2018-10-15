@@ -11,7 +11,7 @@
         <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleLocationFilter(locationId)"></i>
       </div>
       <div class="label label-selected-section-group" ng-repeat="instructorId in filters.enabledInstructorIds track by $index">
-        {{ instructors.list[instructorId].fullName }}
+        {{ instructors.list[instructorId] | lastSpaceInitial }}
         <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleInstructorFilter(instructorId)"></i>
       </div>
     </div>
@@ -102,7 +102,7 @@
                 <label class="cb-wrapper filter-checkbox">
                   <div class="checked"></div>
                 </label>
-                <label class="filter-label">{{ instructors.list[instructorId].fullName }}</label>
+                <label class="filter-label">{{ instructors.list[instructorId] | lastSpaceInitial }}</label>
               </div>
             </li>
           </ul>
