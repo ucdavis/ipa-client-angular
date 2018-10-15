@@ -24,10 +24,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				scope.view.state = data;
 				scope.renderTable();
-
-				if (scope.showStaffTable == true) {
-					scope.renderStaffTable();
-				}
 			});
 
 			// Filter instructors with assignmentsCompleted if filter is active
@@ -51,7 +47,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 					return hasAuthorizedRole;
 			};
 
-			//
 			scope.isValidCourseBased = function(teachingAssignment) {
 				if (!teachingAssignment) {
 					return false;
@@ -167,6 +162,88 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 					// Clear the table
 					$('.tooltip').remove();
 					element.empty();
+
+					if (scope.showStaffTable == true) {
+						var instructorTypeHeader = '<div class="instructor-type-header">' + "Instructor TBA" + '</div>';
+						element.append(instructorTypeHeader);
+
+						var header = scope.renderHeader();
+						element.append(header);
+
+						// Add 'The Staff'
+						var courseHtml = "";
+
+						// Display message if table is empty
+						if (scope.view.state.courses.ids == 0) {
+							courseHtml += "<div class=\"course-list-row\">";
+							courseHtml += "<div class=\"course-description-cell empty-table-message\">";
+							courseHtml += "No courses have been added to the schedule";
+							courseHtml += "</div>";
+						} else {
+							courseHtml += "<div class=\"course-list-row\">";
+							courseHtml += "<div class=\"description-cell\">";
+							courseHtml += "<div>";
+							courseHtml += "<span style=\"margin-right:5px;\"></span>";
+
+							// Instructor assignmentCompleted UI
+							courseHtml += "<div><strong>The Staff</strong></div>";
+
+							// Instructor Comment UI
+							courseHtml += "<div class=\"description-cell__comment-btn-container hidden-print\"></div>";
+
+							// If they don't have any teachingCallResponses, there won't be any unavailabilities to show
+							courseHtml += "<div class=\"description-cell__avail-btn-container\"></div>";
+							courseHtml += "</div>";
+							courseHtml += "</div>"; // end description-cell
+
+								// Loop over active terms
+								$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) {
+									var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
+
+										courseHtml += "<div class=\"term-cell\">";
+
+										// Loop over sectionGroups within a term
+										if (scope.view.state.theStaff.termCodes[termCode]) {
+											scope.view.state.theStaff.termCodes[termCode].forEach(function(sectionGroupId) {
+												var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+												var displayTitle = "";
+												var plannedSeatsHtml = "";
+												var unitsLow = "";
+
+												var course = scope.view.state.courses.list[sectionGroup.courseId];
+
+												displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
+												var plannedSeats = sectionGroup.plannedSeats || "0";
+												plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
+												unitsLow = "<small>Units: " + course.unitsLow + "</small>";
+
+												courseHtml += "<div class=\"alert alert-info tile-assignment\">";
+												courseHtml += "<p>" + displayTitle + "</p>";
+												courseHtml += "<div class=\"tile-assignment-details\">";
+												courseHtml += plannedSeatsHtml;
+												courseHtml += "<br />";
+												courseHtml += unitsLow;
+												courseHtml += "</div>";
+
+												var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
+													"<div class='text-center'><button class='btn btn-red' data-event-type='removeTheStaff' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
+													"<button class='btn btn-white' data-event-type='dismissRemoveTheStaffPop'>Cancel</button></div>";
+
+												courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
+												courseHtml += " data-section-group-id=\"" + sectionGroup.id + "\" data-event-type=\"removeTheStaffPop\" " +
+													"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
+
+												courseHtml += "</div>";
+											});
+										}
+										courseHtml += "</div>"; // Ending term-cell div
+								});
+							courseHtml += "</div>"; // Ending course-row div
+						}
+
+						element.append(courseHtml);
+						return;
+					}
 
 					var relevantInstructors = 0;
 
@@ -545,103 +622,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				}
 			};
 
-			scope.renderStaffTable = function () {
-				// Clear the table
-				$('.tooltip').remove();
-				element.empty();
-
-				var instructorTypeHeader = '<div class="instructor-type-header">' + "Instructor TBA" + '</div>';
-				element.append(instructorTypeHeader);
-
-				var header = scope.renderHeader();
-				element.append(header);
-
-				//Add 'The Staff'
-				var courseHtml = "";
-
-				// Display message if table is empty
-				if (scope.view.state.courses.ids == 0) {
-					courseHtml += "<div class=\"course-list-row\">";
-					courseHtml += "<div class=\"course-description-cell empty-table-message\">";
-					courseHtml += "No courses have been added to the schedule";
-					courseHtml += "</div>";
-				}
-				else {
-					courseHtml += "<div class=\"course-list-row\">";
-					courseHtml += "<div class=\"description-cell\">";
-					courseHtml += "<div>";
-					courseHtml += "<span style=\"margin-right:5px;\">";
-
-					// Instructor assignmentCompleted UI
-					courseHtml += "</span>";
-					courseHtml += "<div><strong>";
-					courseHtml += "The Staff";
-					courseHtml += "</strong>";
-					courseHtml += "</div>";
-
-					// Instructor Comment UI
-					courseHtml += "<div class=\"description-cell__comment-btn-container hidden-print\">";
-					courseHtml += "</div>";
-
-					// If they don't have any teachingCallResponses, there won't be any unavailabilities to show
-					courseHtml += "<div class=\"description-cell__avail-btn-container\">";
-					courseHtml += "</div>";
-					courseHtml += "</div>";
-					courseHtml += "</div>"; // end description-cell
-
-							// Loop over active terms
-						$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) {
-							var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
-
-								courseHtml += "<div class=\"term-cell\">";
-
-								// Loop over sectionGroups within a term
-								if (scope.view.state.theStaff.termCodes[termCode]) {
-									scope.view.state.theStaff.termCodes[termCode].forEach(function(sectionGroupId) {
-										var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
-										var displayTitle = "";
-										var plannedSeatsHtml = "";
-										var unitsLow = "";
-
-										var course = scope.view.state.courses.list[sectionGroup.courseId];
-
-										displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
-										var plannedSeats = sectionGroup.plannedSeats || "0";
-										plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
-										unitsLow = "<small>Units: " + course.unitsLow + "</small>";
-
-										courseHtml += "<div class=\"alert alert-info tile-assignment\">";
-										courseHtml += "<p>" + displayTitle + "</p>";
-										courseHtml += "<div class=\"tile-assignment-details\">";
-										courseHtml += plannedSeatsHtml;
-										courseHtml += "<br />";
-										courseHtml += unitsLow;
-										courseHtml += "</div>";
-
-										var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
-											"<div class='text-center'><button class='btn btn-red' data-event-type='removeTheStaff' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
-											"<button class='btn btn-white' data-event-type='dismissRemoveTheStaffPop'>Cancel</button></div>";
-
-										courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
-										courseHtml += " data-section-group-id=\"" + sectionGroup.id + "\" data-event-type=\"removeTheStaffPop\" " +
-											"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
-
-										courseHtml += "</div>";
-									});
-								}
-								courseHtml += "</div>"; // Ending term-cell div
-						});
-						courseHtml += "</div>"; // Ending course-row div
-					}
-
-					element.append(courseHtml);
-
-					// Manually activate bootstrap tooltip triggers
-					$('body').tooltip({
-						selector: '[data-toggle="tooltip"]'
-					});
-			};
-
 			// end on event 'assignmentStateChanged'
 
 			// Handle input box edits
@@ -796,10 +776,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			};
 
 			scope.renderTable();
-
-			if (scope.showStaffTable == true) {
-				scope.renderStaffTable();
-			}
 		} // end link
 	};
 };
