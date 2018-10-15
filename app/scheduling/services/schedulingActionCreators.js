@@ -342,7 +342,23 @@ class SchedulingActionCreators {
 						visibleSectionGroupIds: _this._calculateVisibleSectionGroupIds(sectionGroupIds)
 					}
 				});
+
+				this.applyFiltersToSelection();
 			},
+			applyFiltersToSelection: function () {
+				var visibleSectionGroupIds = SchedulingStateService._state.uiState.visibleSectionGroupIds;
+				var selectionIsVisible = (visibleSectionGroupIds.indexOf(SchedulingStateService._state.uiState.selectedSectionGroupId) > -1);
+
+
+				SchedulingStateService.reduce({
+					type: ActionTypes.APPLY_FILTER_TO_SELECTION,
+					payload: {
+						selectedCourseId: selectionIsVisible ? SchedulingStateService._state.uiState.selectedCourseId : null,
+						selectedSectionGroupId: selectionIsVisible ? SchedulingStateService._state.uiState.selectedSectionGroupId : null,
+						selectedActivityId: selectionIsVisible ? SchedulingStateService._state.uiState.selectedActivityId : null
+					}
+				});
+			}
 		};
 	}
 }

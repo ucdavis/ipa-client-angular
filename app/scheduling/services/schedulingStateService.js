@@ -541,6 +541,11 @@ class SchedulingStateService {
 						uiState.visibleSectionGroupIds = action.payload.visibleSectionGroupIds;
 						uiState.activeSectionGroupIds = action.payload.activeSectionGroupIds;
 						return uiState;
+					case ActionTypes.APPLY_FILTER_TO_SELECTION:
+						uiState.selectedCourseId = action.payload.selectedCourseId;
+						uiState.selectedSectionGroupId = action.payload.selectedSectionGroupId;
+						uiState.selectedActivityId = action.payload.selectedActivityId;
+						return uiState;
 					case ActionTypes.REMOVE_ACTIVITY:
 						if (uiState.selectedActivityId == action.payload.activity.id) {
 							uiState.selectedActivityId = null;
