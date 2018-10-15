@@ -359,7 +359,8 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 				var actionTypesOfInterest = [
 					"CALCULATE_SECTION_GROUPS",
 					"ACTIVITY_SELECTED",
-					"UPDATE_ACTIVITY"
+					"UPDATE_ACTIVITY",
+					"RENDER_CALENDAR"
 				];
 
 				if (actionTypesOfInterest.indexOf(data.action.type) > -1) {

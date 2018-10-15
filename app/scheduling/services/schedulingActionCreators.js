@@ -44,6 +44,8 @@ class SchedulingActionCreators {
 			_calculateVisibleSectionGroupIds: function (sectionGroupIds) {
 				var _this = this;
 
+				if (_this.filtersAreActive() == false) { return sectionGroupIds; }
+
 				var tagFilterIds = SchedulingStateService._state.filters.enabledTagIds;
 				var instructorFilterIds = SchedulingStateService._state.filters.enabledInstructorIds;
 				var locationFilterIds = SchedulingStateService._state.filters.enabledLocationIds;
@@ -131,6 +133,13 @@ class SchedulingActionCreators {
 						}
 					});
 				}
+
+				this.calculateSectionGroups();
+
+				SchedulingStateService.reduce({
+					type: ActionTypes.RENDER_CALENDAR,
+					payload: {}
+				});
 			},
 			removeActivity: function (activity) {
 				SchedulingService.removeActivity(activity.id).then(function () {
@@ -344,6 +353,9 @@ class SchedulingActionCreators {
 				});
 
 				this.applyFiltersToSelection();
+			},
+			filtersAreActive: function () {
+				return (SchedulingStateService._state.uiState.calendarMode.activeTab == "Weekly");
 			},
 			applyFiltersToSelection: function () {
 				var visibleSectionGroupIds = SchedulingStateService._state.uiState.visibleSectionGroupIds;
