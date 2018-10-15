@@ -432,10 +432,10 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				} else {
 					if (activity.category == "01") {
 						passesPrimaryFilter = true;
-					} else if (activity.sectionGroupId > 0) {
+					} else if (activity.shared) {
 						passesPrimaryFilter = true;
 					} else if (activity.activityTypeCode.activityTypeCode == "A") {
-						//passesPriimaryFilter = true;
+						passesPrimaryFilter = true;
 					}
 				}
 
