@@ -244,6 +244,11 @@ a.activity-event i.activity-remove,
 	justify-content: center;
 	align-items: center;
 }
+
+.cursor-default {
+	cursor: default;
+}
+
 .section-group-description {
 	flex: 1 0 50%;
 }
