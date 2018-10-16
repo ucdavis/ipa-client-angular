@@ -102,7 +102,7 @@
                 <label class="cb-wrapper filter-checkbox">
                   <div class="checked"></div>
                 </label>
-                <label class="filter-label">{{ instructors.list[instructorId] | lastSpaceInitial }}</label>
+                <label class="filter-label">{{ instructors.list[instructorId] | lastSpaceInitial }} ({{ instructors.list[instructorId].assignmentCount || 0 }})</label>
               </div>
             </li>
           </ul>

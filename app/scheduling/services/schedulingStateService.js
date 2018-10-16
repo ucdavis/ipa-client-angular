@@ -63,10 +63,20 @@ class SchedulingStateService {
 							list: {},
 							ids: []
 						};
+
+						let instructorAssignmentCounts = {};
+						action.payload.teachingAssignments.forEach(function(assignment) {
+							if (!assignment.sectionGroupId || assignment.approved == false) { return; }
+
+							instructorAssignmentCounts[assignment.instructorId] = instructorAssignmentCounts[assignment.instructorId] || 0;
+							instructorAssignmentCounts[assignment.instructorId] += 1;
+						});
+
 						var instructorsList = {};
 						var length = action.payload.instructors ? action.payload.instructors.length : 0;
 						for (var i = 0; i < length; i++) {
 							var instructorData = action.payload.instructors[i];
+							instructorData.assignmentCount = instructorAssignmentCounts[instructorData.id];
 							instructorsList[instructorData.id] = new Instructor(instructorData);
 						}
 						instructors.ids = _array_sortIdsByProperty(instructorsList, ["lastName", "firstName"]);
