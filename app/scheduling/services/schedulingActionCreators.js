@@ -95,12 +95,21 @@ class SchedulingActionCreators {
 
 				sectionGroup.sectionIds.forEach(function(sectionId) {
 					var section = SchedulingStateService._state.sections.list[sectionId];
+
 					section.activityIds.forEach(function(activityId) {
 						var activity = SchedulingStateService._state.activities.list[activityId];
 						if (activity.locationId == locationId) {
 							hasLocation = true;
 						}
 					});
+				});
+
+				sectionGroup.sharedActivityIds.forEach(function(activityId) {
+					var activity = SchedulingStateService._state.activities.list[activityId];
+
+					if (activity.locationId == locationId) {
+						hasLocation = true;
+					}
 				});
 
 				return hasLocation;
