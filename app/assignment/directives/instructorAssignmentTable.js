@@ -242,7 +242,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						}
 
 						element.append(courseHtml);
-						return;
 					}
 
 					var relevantInstructors = 0;
