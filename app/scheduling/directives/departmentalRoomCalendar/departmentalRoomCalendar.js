@@ -304,8 +304,8 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						}
 					} else {
 						// Not a selected activity
-						event.color = backgroundColor && anyActivitySelected() ? lightenOrDarkenColor(backgroundColor, .6) : backgroundColor;
-						event.borderColor = borderColor && anyActivitySelected() ? lightenOrDarkenColor(borderColor, .6) : borderColor;
+						event.color = backgroundColor && anyActivitySelected() ? lightenOrDarkenColor(backgroundColor, unselectedActivityTintingMultiplier) : backgroundColor;
+						event.borderColor = borderColor && anyActivitySelected() ? lightenOrDarkenColor(borderColor, unselectedActivityTintingMultiplier) : borderColor;
 						event.textColor = textColor && anyActivitySelected() ? "#fff" : textColor;
 					}
 				});
