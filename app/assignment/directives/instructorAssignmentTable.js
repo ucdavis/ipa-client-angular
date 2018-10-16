@@ -259,7 +259,12 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 				if (relevantInstructors == 0) { return; }
 
-				var instructorTypeHeader = '<div class="instructor-type-header">' + scope.view.state.instructorTypes.list[scope.instructorTypeId].description + '</div>';
+				var instructorTypeHeader = "";
+
+				if (scope.view.state.instructorTypes.list[scope.instructorTypeId]) {
+					instructorTypeHeader = '<div class="instructor-type-header">' + scope.view.state.instructorTypes.list[scope.instructorTypeId].description + '</div>';
+				}
+
 				element.append(instructorTypeHeader);
 
 				// Render the header
@@ -345,7 +350,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 							// Add input for instructor notes
 							courseHtml += '<hr />';
 							courseHtml += "<div class='course-assignments__course-note hidden-print'>";
-							courseHtml += '<textarea class="form-control add-note__text-area" placeholder="Add Note" data-instructor-id="' + instructor.id + '" data-schedule-id="' + scope.view.state.userInterface.scheduleId + '" data-event-type="setInstructorNote">' + instructorNote.note + '</textarea>';
+							courseHtml += '<textarea maxlength="750" class="form-control add-note__text-area" placeholder="Add Note" data-instructor-id="' + instructor.id + '" data-schedule-id="' + scope.view.state.userInterface.scheduleId + '" data-event-type="setInstructorNote">' + instructorNote.note + '</textarea>';
 							courseHtml += "</div>";
 
 							courseHtml += "<div class='visible-print'>";
