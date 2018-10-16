@@ -12,17 +12,16 @@ let locationEditor = function (SchedulingActionCreators) {
       scope.setLocation = function (location) {
         scope.activity.locationId = location.id;
         SchedulingActionCreators.updateActivity(scope.activity);
-
         scope.currentLocationDescription = location.description;
       };
 
       scope.convertParams = function () {
         // Set initial location description display
-        scope.currentLocationDescription = scope.activity.locationId > 0 ? scope.locations.list[scope.activity.locationId].description : (scope.activity.bannerLocation || "Location from Banner TBD");
+        scope.currentLocationDescription = scope.activity.locationId > 0 ? scope.locations.list[scope.activity.locationId].description : "Registrar Location";
 
         // Convert location params to props
         scope.bannerLocation = [
-          {id: 0, description: scope.activity.bannerLocation || "Location from Banner TBD" }
+          {id: 0, description: "Registrar Location" }
         ];
 
         scope.dropdownLocations = scope.locations.ids.map((locationId) => {
