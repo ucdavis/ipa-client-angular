@@ -68,6 +68,10 @@ class BudgetService {
 			createLineItemComment: function(lineItemComment) {
 				return ApiService.post("/api/budgetView/lineItems/" + lineItemComment.lineItemId + "/lineItemComments", lineItemComment);
 			},
+
+			searchCourses: function (query) {
+				return ApiService.get("/courses/search?q=" + query + "&token=" + dwToken, null, dwUrl);
+			},
 		};
 	}
 }

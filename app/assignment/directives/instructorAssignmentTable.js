@@ -93,36 +93,36 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 			scope.getUserByLoginId = function (loginId) {
 				var users = scope.view.state.users;
- 				for (var i = 0; i < users.ids.length; i++) {
+				for (var i = 0; i < users.ids.length; i++) {
 					var user = users.list[users.ids[i]];
- 					if (user.loginId == loginId) {
+					if (user.loginId == loginId) {
 						return user;
 					}
 				}
- 				return null;
+				return null;
 			};
 
- 			scope.getInstructorTypeId = function (instructor) {
+			scope.getInstructorTypeId = function (instructor) {
 				var teachingAssignments = scope.view.state.teachingAssignments;
 				var userRoles = scope.view.state.userRoles;
- 				var user = scope.getUserByLoginId(instructor.loginId);
- 				if (user) {
+				var user = scope.getUserByLoginId(instructor.loginId);
+				if (user) {
 					// Attempt to find via userRole
 					for (var i = 0; i < userRoles.ids.length; i++) {
 						var userRole = userRoles.list[userRoles.ids[i]];
- 						if (userRole.roleId == Roles.instructor && userRole.userId == user.id) {
+						if (userRole.roleId == Roles.instructor && userRole.userId == user.id) {
 							return userRole.instructorTypeId;
 						}
 					}
 				}
- 				// Attempt to find via teachingAssignment
+				// Attempt to find via teachingAssignment
 				for (var i = 0; i < teachingAssignments.ids.length; i++) {
 					var teachingAssignment = teachingAssignments.list[teachingAssignments.ids[i]];
- 					if (teachingAssignment.instructorId == instructor.id) {
+					if (teachingAssignment.instructorId == instructor.id) {
 						return teachingAssignment.instructorTypeId;
 					}
 				}
- 				return null;
+				return null;
 			},
 
 			// Build a string of html to display a column header (course, terms, etc.)
@@ -155,6 +155,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			};
 
 			scope.renderTable = function () {
+				if (!scope.instructorTypeId) { return; }
+
 				// If courses is undefined do nothing
 				// The app is in the process of re-routing to a valid url
 				if (!scope.view.state.courses) { return; }
@@ -399,6 +401,9 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 											} else if (teachingAssignment.sabbatical) {
 												displayTitle += "SABBATICAL";
 											}
+										});
+										if (firstInterestedCourseAdded) {
+											courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
 										}
 
 										if (displayTitle.replace(/ /g, '').length == 0) {

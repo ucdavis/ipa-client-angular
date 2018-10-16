@@ -25,14 +25,18 @@ class ScheduleCostCalculations {
           var sectionGroupCostId = sectionGroupCosts.idsByUniqueKey[uniqueKey];
           var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
+          // Ensure sectionGroupCost belongs to this scenario
+          if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return; }
+
+          // Ensure sectionGroupCost isn't disabled
+          if (sectionGroupCost.disabled) { return; }
+
           // Ensure sectionGroupCost belongs to an active term in this scenario
           var shortTerm = sectionGroupCost.termCode.slice(-2);
           if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) { return; }
 
-          // Ensure sectionGroupCost belongs to the scenario
-          if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return; }
-
-          sectionGroupCost.sectionGroup = sectionGroups.list[uniqueKey];
+          var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
+          sectionGroupCost.sectionGroup = sectionGroups.list[sectionGroupKey];
 
           // Set sectionGroupCost instructor descriptions
           var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.instructorId];
@@ -78,7 +82,7 @@ class ScheduleCostCalculations {
 
           // Calculate reversion
           // Identify a difference
-          if (sectionGroupCost.instructorId != assignedInstructorId || sectionGroupCost.instructorTypeId != assignedInstructorTypeId) {
+          if (sectionGroupCost.instructorId != assignedInstructorId || (assignedInstructorTypeId && sectionGroupCost.instructorTypeId != assignedInstructorTypeId)) {
             // Schedule has no assignment
             if (!assignedInstructorId && !assignedInstructorTypeId) {
               sectionGroupCost.reversionDisplayName = "no instructor";
@@ -123,6 +127,8 @@ class ScheduleCostCalculations {
         });
       },
       _getInstructorType: function(instructor) {
+        if (!instructor) { return null; }
+
         var users = BudgetReducers._state.users;
         var userRoles = BudgetReducers._state.userRoles;
         var instructorTypes = BudgetReducers._state.instructorTypes;

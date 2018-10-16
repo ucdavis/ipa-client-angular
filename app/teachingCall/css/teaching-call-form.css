@@ -886,7 +886,8 @@ li.active-term .dropdown-term-row {
 }
 
 .search-course-container .dropdown-menu {
-	width: 26%;
+	min-width: 26%;
+	width: auto;
 }
 
 #modal-1 {

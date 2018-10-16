@@ -16,16 +16,19 @@ import ScheduleCostCalculations from './services/actions/scheduleCostCalculation
 import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
+import SectionService from './../shared/services/SectionService.js';
 
 // Directives
 import budgetNav from './directives/budgetNav/budgetNav.js';
 import lineItemFilters from './directives/budgetNav/lineItemFilters/lineItemFilters.js';
+
 import budgetScenarioToolbar from './directives/budgetScenarioToolbar/budgetScenarioToolbar.js';
 import budgetScenarioDropdown from './directives/budgetScenarioToolbar/budgetScenarioDropdown/budgetScenarioDropdown.js';
 import lineItems from './directives/lineItems/lineItems.js';
 import lineItemDropdown from './directives/lineItems/lineItemDropdown/lineItemDropdown.js';
 import budgetSummary from './directives/budgetSummary/budgetSummary.js';
 import instructorList from './directives/instructorList/instructorList.js';
+import courseList from './directives/courseList/courseList.js';
 
 import budgetCosts from './directives/budgetCosts/budgetCosts.js';
 import courseCostsRow from './directives/budgetCosts/courseCostsRow/courseCostsRow.js';
@@ -36,6 +39,8 @@ import addBudgetScenario from './directives/modals/addBudgetScenario/addBudgetSc
 import addCourseComments from './directives/modals/addCourseComments/addCourseComments.js';
 import addLineItem from './directives/modals/addLineItem/addLineItem.js';
 import addLineItemComments from './directives/modals/addLineItemComments/addLineItemComments.js';
+
+import addCourse from './directives/modals/addCourse/addCourse.js';
 
 // Dependencies
 var dependencies = [
@@ -79,6 +84,7 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .service('TermService', TermService)
 .service('AuthService', AuthService)
 .service('ScheduleCostCalculations', ScheduleCostCalculations)
+.service('SectionService', SectionService)
 .directive('budgetNav', budgetNav)
 .directive('lineItemFilters', lineItemFilters)
 .directive('budgetScenarioToolbar', budgetScenarioToolbar)
@@ -93,8 +99,10 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .directive('instructorList', instructorList)
 .directive('addBudgetScenario', addBudgetScenario)
 .directive('addCourseComments', addCourseComments)
+.directive('addCourse', addCourse)
 .directive('addLineItem', addLineItem)
 .directive('addLineItemComments', addLineItemComments)
+.directive('courseList', courseList)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	CREATE_BUDGET_SCENARIO: "CREATE_BUDGET_SCENARIO",
@@ -136,7 +144,9 @@ const budgetApp = angular.module("budgetApp", dependencies)
 	CALCULATE_LINE_ITEMS: "CALCULATE_LINE_ITEMS",
 	CALCULATE_SUMMARY_TOTALS: "CALCULATE_SUMMARY_TOTALS",
 	CALCULATE_SCHEDULE_COSTS: "CALCULATE_SCHEDULE_COSTS",
-	SELECT_FUNDS_NAV: "SELECT_FUNDS_NAV"
+	CALCULATE_COURSE_LIST: "CALCULATE_COURSE_LIST",
+	SELECT_FUNDS_NAV: "SELECT_FUNDS_NAV",
+  OPEN_ADD_COURSE_MODAL: "OPEN_ADD_COURSE_MODAL"
 });
 
 export default budgetApp;

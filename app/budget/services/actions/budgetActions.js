@@ -248,12 +248,22 @@ class BudgetActions {
 					BudgetReducers.reduce(action);
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
+					BudgetCalculations.calculateCourseList();
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
 				});
 			},
 			createSectionGroupCost: function (sectionGroupCost) {
 				var self = this;
+
+				let term = BudgetReducers._state.ui.termNav.activeTerm;
+				let year = BudgetReducers._state.ui.year;
+				var sectionGroup = BudgetReducers._state.sectionGroups.list[sectionGroupCost.sectionGroupId];
+				var course = BudgetReducers._state.courses.list[sectionGroup.courseId];
+
+				sectionGroupCost.termCode = TermService.termToTermCode(term, year);
+				sectionGroupCost.budgetScenarioId = BudgetReducers._state.ui.selectedBudgetScenarioId;
+				sectionGroupCost.effectiveTermCode = course.effectiveTermCode;
 
 				BudgetService.createSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
 					var action = {
@@ -262,12 +272,14 @@ class BudgetActions {
 							sectionGroupCost: newSectionGroupCost
 						}
 					};
-					$rootScope.$emit('toast', { message: "Updated course", type: "SUCCESS" });
+					$rootScope.$emit('toast', { message: "Added course", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
+					BudgetCalculations.calculateCourseList();
+					ScheduleCostCalculations.calculateScheduleCosts();
 				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not add course.", type: "ERROR" });
 				});
 			},
 			asignInstructorType: function(instructorCost) {
@@ -561,6 +573,12 @@ class BudgetActions {
 	
 				BudgetReducers.reduce(action);
 			},
+			openAddCourseModal: function () {
+				BudgetReducers.reduce({
+					type: ActionTypes.OPEN_ADD_COURSE_MODAL,
+					payload: {}
+				});
+			},
 			closeBudgetConfigModal: function() {
 				BudgetReducers.reduce({
 					type: ActionTypes.CLOSE_BUDGET_CONFIG_MODAL,
@@ -635,6 +653,7 @@ class BudgetActions {
 				ScheduleCostCalculations.calculateScheduleCosts();
 				BudgetCalculations.calculateSectionGroups();
 				BudgetCalculations.calculateTotalCost();
+				BudgetCalculations.calculateCourseList();
 			},
 			selectTerm: function(termTab) {
 				BudgetReducers.reduce({
@@ -644,6 +663,8 @@ class BudgetActions {
 						activeTermTab: termTab
 					}
 				});
+
+				BudgetCalculations.calculateCourseList();
 			},
 			selectFundsNav: function(tab) {
 				BudgetReducers.reduce({
@@ -708,6 +729,23 @@ class BudgetActions {
 	
 				BudgetCalculations.calculateLineItems();
 				BudgetCalculations.calculateTotalCost();
+			},
+			toggleCourseListFilter: function(filter) {
+				var actionType = null;
+
+				if (filter.type == "showHidden") {
+					actionType = ActionTypes.TOGGLE_FILTER_SHOW_HIDDEN_COURSES;
+				}
+
+				// No matching filter found
+				if (actionType == null) { return; }
+
+				BudgetReducers.reduce({
+					type: actionType,
+					payload: {}
+				});
+
+				BudgetCalculations.calculateCourseList();
 			},
 			attachInstructorTypesToInstructors: function () {
 				var self = this;

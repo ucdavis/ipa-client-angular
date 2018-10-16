@@ -1,18 +1,26 @@
 <div class="review-tools" ng-hide="readOnly">
-	<div class="review-tools__button">
-		<ipa-toggle
-			is-active="supportReview.supportStaff.isOpen"
-			active-text="'Close Student Review'"
-			inactive-text="'Open Student Review'"
-			on-click="toggleStudentSupportCallReview()">
-		</ipa-toggle>
-	</div>
-	<div class="review-tools__button">
-		<ipa-toggle
-			is-active="supportReview.instructor.isOpen"
-			active-text="'Close Instructor Review'"
-			inactive-text="'Open Instructor Review'"
-			on-click="toggleInstructorSupportCallReview()">
-		</ipa-toggle>
-	</div>
+  <div class="review-tools__button">
+    <ipa-toggle is-active="supportReview.supportStaff.isOpen"
+                active-text="'Student Review Opened'"
+                inactive-text="'Student Review Closed'"
+                inactive-confirm-message="'Close Student Review?'"
+                active-confirm-message="'Open Student Review?'"
+                yes="'Confirm'"
+                no="'Cancel'"
+                confirm-class="'btn-primary'"
+                on-click="toggleStudentSupportCallReview()">
+    </ipa-toggle>
+  </div>
+  <div class="review-tools__button">
+    <ipa-toggle is-active="supportReview.instructor.isOpen"
+                active-text="'Instructor Review Opened'"
+                inactive-text="'Instructor Review Closed'"
+                inactive-confirm-message="'Close Instructor Review?'"
+                active-confirm-message="'Open Instructor Review?'"
+                yes="'Confirm'"
+                no="'Cancel'"
+                confirm-class="'btn-primary'"
+                on-click="toggleInstructorSupportCallReview()">
+    </ipa-toggle>
+  </div>
 </div>

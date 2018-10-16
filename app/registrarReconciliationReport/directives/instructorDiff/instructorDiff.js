@@ -1,3 +1,5 @@
+import './instructorDiff.css';
+
 /**
  * example:
  * <instructor-diff></instructor-diff>

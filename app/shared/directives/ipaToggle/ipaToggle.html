@@ -1,10 +1,45 @@
-<div class="ipa-toggle"
-	ng-click="onClick()"
-	ng-class="{ 'ipa-toggle--active': isActive }">
-	<div class="ipa-toggle__text" ng-show="isActive">
-		{{ activeText || text }}
-	</div>
-	<div class="ipa-toggle__text" ng-show="!(isActive)">
-		{{ inactiveText || text }}
-	</div>
+<div>
+  <div ng-if="!activeConfirmMessage"
+       class="ipa-toggle"
+       ng-click="onClick()"
+       ng-class="{ 'ipa-toggle--active': isActive }">
+    <div class="ipa-toggle__text" ng-show="isActive">
+      {{ activeText || text }}
+    </div>
+    <div class="ipa-toggle__text" ng-show="!(isActive)">
+      {{ inactiveText || text }}
+    </div>
+  </div>
+
+  <div ng-if="activeConfirmMessage && isActive"
+       class="ipa-toggle"
+       confirm-button="onClick()"
+       message="{{ inactiveConfirmMessage }}"
+       yes="{{yes}}"
+       no="{{no}}"
+       btn-class="{{confirmClass}}"
+       ng-class="{ 'ipa-toggle--active': isActive }">
+    <div class="ipa-toggle__text" ng-show="isActive">
+      {{ activeText || text }}
+    </div>
+    <div class="ipa-toggle__text" ng-show="!(isActive)">
+      {{ inactiveText || text }}
+    </div>
+  </div>
+
+  <div ng-if="activeConfirmMessage && !isActive"
+       class="ipa-toggle"
+       confirm-button="onClick()"
+       message="{{ activeConfirmMessage }}"
+       yes="{{yes}}"
+       no="{{no}}"
+       btn-class="{{confirmClass}}"
+       ng-class="{ 'ipa-toggle--active': isActive }">
+    <div class="ipa-toggle__text" ng-show="isActive">
+      {{ activeText || text }}
+    </div>
+    <div class="ipa-toggle__text" ng-show="!(isActive)">
+      {{ inactiveText || text }}
+    </div>
+  </div>
 </div>

@@ -50,3 +50,9 @@
 .add-line-item .form-input {
 	width: 100%;
 }
+
+.add-line-item__notes {
+	resize: none;
+	border-color: #e2e2e2;
+	width: 100%;
+}
