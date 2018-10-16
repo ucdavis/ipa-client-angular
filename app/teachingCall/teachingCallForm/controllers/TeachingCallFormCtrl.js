@@ -39,7 +39,15 @@ class TeachingCallFormCtrl {
 		};
 
 		$scope.searchCourses = function (termContainer, query) {
-			termContainer.preferenceOptions.forEach(function(course) {
+			// Filter out existing options from list
+			var optionsToFilter = termContainer.preferences.map(function(option) {
+				return option.description;
+			});
+			var uniquePreferenceOptions= termContainer.preferenceOptions.filter(function (option) {
+				return (optionsToFilter.indexOf(option.description) === -1);
+			});
+
+			uniquePreferenceOptions.forEach(function(course) {
 				if (course.subjectCode) {
 					course.description = course.subjectCode + " " + course.courseNumber + " " + course.title;
 				}
@@ -47,9 +55,8 @@ class TeachingCallFormCtrl {
 
 			// Display courses already on the schedule
 			if (!query || query.length == 0) {
-				var courses = angular.copy(termContainer.preferenceOptions);
+				var courses = angular.copy(uniquePreferenceOptions);
 				var groupedResults = _.chain(courses).groupBy(function(course) {return course.subjectCode;}).map(function(g) {g[0].firstInGroup = true; return g;}).flatten().value();
-				// return termContainer.preferenceOptions;
 				groupedResults.push({ description: "Suggest a Course", suggestACourse: true });
 				return groupedResults;
 			}
@@ -70,7 +77,7 @@ class TeachingCallFormCtrl {
 					]
 				};
 
-				var fuse = new Fuse(termContainer.preferenceOptions, options);
+				var fuse = new Fuse(uniquePreferenceOptions, options);
 				var results = fuse.search(optimizedQuery);
 
 				results = angular.copy(results);
