@@ -99,6 +99,7 @@ class SchedulingCtrl {
 			var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
 			activity.locationId = locationId;
 			self.$scope.saveActivity();
+		};
 
 		self.$scope.toggleCalendarDay = function (index) {
 			self.SchedulingActionCreators.toggleDay(index);
