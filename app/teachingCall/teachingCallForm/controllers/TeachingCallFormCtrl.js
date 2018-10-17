@@ -63,7 +63,7 @@ class TeachingCallFormCtrl {
 				var groupedResults = _.chain(courses)
 					.groupBy(function(course) {return course.subjectCode;})
 					.map(function(g) {g[0].firstInGroup = true; return g;}).flatten().value();
-				groupedResults.push({ description: "Suggest a Course", suggestACourse: true });
+				groupedResults.push({ description: "Suggest a Course ...", suggestACourse: true });
 				return groupedResults;
 			}
 
@@ -92,7 +92,7 @@ class TeachingCallFormCtrl {
 					.map(function(g) {g[0].firstInGroup = true; return g;}).flatten().value();
 
 				// Append Suggest a Course option
-				groupedResults.push({description: "Suggest A Course", suggestACourse: true});
+				groupedResults.push({ description: "Suggest a Course ...", suggestACourse: true });
 				return groupedResults;
 			}
 		};
