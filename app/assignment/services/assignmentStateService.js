@@ -891,7 +891,6 @@ class AssignmentStateService {
 				scope._state = newState;
 
 				$rootScope.$emit('assignmentStateChanged', scope._state);
-				console.log(scope._state);
 				$log.debug("Assignment state updated:");
 				$log.debug(scope._state, action.type);
 			}
