@@ -34,7 +34,7 @@ class TeachingCallFormCtrl {
 			return TeachingCallFormService.searchDWCourses(query).then(function (results) {
 				return results.slice(0, 20);
 			}, function (err) {
-				console.log(err);
+				$rootScope.$emit('toast', { message: "Could not search courses.", type: "ERROR" });
 			});
 		};
 
