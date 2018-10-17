@@ -105,6 +105,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 					eventColor: eventColor,
 					eventBorderColor: eventBorderColor,
 					eventTextColor: eventTextColor,
+					displayEventTime: false,
 					eventSources: [
 						getActivities(),
 						getUnavailabilities()

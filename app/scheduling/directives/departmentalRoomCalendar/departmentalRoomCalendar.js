@@ -94,6 +94,7 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					eventBorderColor: eventBorderColor,
 					eventTextColor: eventTextColor,
 					slotEventOverlap: false,
+					displayEventTime: false,
 					visibleRange: {
 						start: moment().startOf('week').format('YYYY-MM-DD'),
 						end: moment().startOf('week').add(scope.locations.ids.length, 'days').format('YYYY-MM-DD')
@@ -245,7 +246,7 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					}
 
 					calendarActivities.push({
-						title: courseTitle + ' (' + activity.activityTypeCode.activityTypeCode + ') ' + location,
+						title: courseTitle + ' (' + activity.activityTypeCode.activityTypeCode + ') ',
 						start: activityStart,
 						end: activityEnd,
 						activityId: activity.id,
