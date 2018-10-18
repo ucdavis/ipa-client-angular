@@ -257,9 +257,10 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					});
 
 					var instructorText = instructors.join(', ');
+					var typeCodeText = activity.activityTypeCode.activityTypeCode.getActivityCodeDescription() ? ' (' + activity.activityTypeCode.activityTypeCode + ') ' : ' ';
 
 					calendarActivities.push({
-						title: courseTitle + ' (' + activity.activityTypeCode.activityTypeCode + ') ' + instructorText,
+						title: courseTitle + typeCodeText + instructorText,
 						start: activityStart,
 						end: activityEnd,
 						activityId: activity.id,
