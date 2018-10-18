@@ -127,7 +127,7 @@
 										placeholder="{{ courseSuggestPlaceHolder }}"
 										ng-focus="courseSuggestPlaceHolder = 'Search courses ...'"
 										ng-blur="courseSuggestPlaceHolder = 'Search courses ...'; view.courseSuggestQuery = undefined;"
-										uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchDWCourses($viewValue)"
+										uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchDWCourses(term, $viewValue)"
 										typeahead-loading="view.loadingSuggestCourses[term.termCode]"
 										typeahead-no-results="noResults"
 										typeahead-wait-ms="400"

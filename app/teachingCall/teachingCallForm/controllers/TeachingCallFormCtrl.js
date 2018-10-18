@@ -30,9 +30,17 @@ class TeachingCallFormCtrl {
 			$scope.viewState.showSuggestCourse = !$scope.viewState.showSuggestCourse;
 		};
 
-		$scope.searchDWCourses = function (query) {
+		$scope.searchDWCourses = function (termContainer, query) {
 			return TeachingCallFormService.searchDWCourses(query).then(function (results) {
-				return results.slice(0, 20);
+				// Filter out existing preferences from returned results
+				var preferencesToFilter = termContainer.preferences.map(function(option) {
+					return option.description;
+				});
+				var filteredResults = results.filter(function (option) {
+					return preferencesToFilter.indexOf(option.subjectCode + " " + option.courseNumber) === -1;
+				});
+
+				return filteredResults.slice(0, 20);
 			}, function (err) {
 				$rootScope.$emit('toast', { message: "Could not search courses.", type: "ERROR" });
 			});
