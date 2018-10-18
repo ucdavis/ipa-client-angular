@@ -464,3 +464,8 @@ i.selected-section-group-remove {
 	display: flex;
 	justify-content: center;
 }
+
+.fc-day-header {
+	color: gray;
+	font-weight: bold;
+}
