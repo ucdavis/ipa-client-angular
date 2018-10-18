@@ -10,6 +10,7 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 		},
 		link: function (scope, element, attrs) {
 			scope.isResizeListenerActive = false;
+			scope.startOfWeek = moment().startOf('week').startOf('day');
 
 			scope.listenForResize = function() {
 				if (scope.isResizeListenerActive) {
@@ -100,7 +101,11 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						end: moment().startOf('week').add(scope.locations.ids.length, 'days').format('YYYY-MM-DD')
 					},
 					columnHeaderText: function(mom) {
-						var locationIndex = mom.weekday();
+						var day = mom.startOf('day');
+
+						// The third param 'true' avoids moments timezone conversion errors and instead gives the raw exact difference in days
+						var locationIndex = Math.ceil(day.diff(scope.startOfWeek, 'days', true));
+
 						var locationId = scope.locations.ids[locationIndex];
 						var location = scope.locations.list[locationId];
 						return location.description;
