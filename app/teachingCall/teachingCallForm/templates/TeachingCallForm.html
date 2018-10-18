@@ -13,7 +13,7 @@
 			<div class="col-md-12">
 
 				<div class="sub-header-container">
-					<h5 class="inline-block">Teaching Preferences </h5>
+					<h5 class="inline-block">Teaching Preferences</h5>
 					<div tooltip-placement="left" uib-tooltip="Clicking the Add button will show you a list of all courses currently in the schedule (Use the comment box below
 					to request courses not on the list). Preferences can be ranked by clicking the up and down arrows to the left of your preferences.">
 						<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
@@ -120,13 +120,13 @@
 								<i ng-show="view.loadingCourses[term]"><spinner size="20"></spinner></i>
 							</div>
 							<div ng-if="viewState.showSuggestCourse" class="suggest-course-container">
-								<strong>Search for a Course:</strong>
+								<label><strong>Suggest a Course:</strong></label>
 								<div class="suggest-course-input">
 									<input type="text" ng-model="view.courseSuggestQuery[term.termCode]"
-										ng-init="courseSuggestPlaceHolder = 'Suggest a Course ...'"
+										ng-init="courseSuggestPlaceHolder = 'Search courses ...'"
 										placeholder="{{ courseSuggestPlaceHolder }}"
-										ng-focus="courseSuggestPlaceHolder = 'Suggest a Course ...'"
-										ng-blur="courseSuggestPlaceHolder = 'Suggest a Course ...'; view.courseSuggestQuery = undefined;"
+										ng-focus="courseSuggestPlaceHolder = 'Search courses ...'"
+										ng-blur="courseSuggestPlaceHolder = 'Search courses ...'; view.courseSuggestQuery = undefined;"
 										uib-typeahead="course as (course.subjectCode + ' ' + course.courseNumber + ' ' + course.title) for course in searchDWCourses($viewValue)"
 										typeahead-loading="view.loadingSuggestCourses[term.termCode]"
 										typeahead-no-results="noResults"
