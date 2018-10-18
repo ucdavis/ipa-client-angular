@@ -901,19 +901,20 @@ li.active-term .dropdown-term-row {
 }
 
 .suggest-course-container .search-course-input {
-	width: 284px;
+	max-width: 255px;
 	text-align: left;
 }
 
 .suggest-course-input {
 	display: flex;
+	flex: 2;
 	align-items: center;
 	margin-left: 5px;
-	margin-right: auto;
 }
 
 .suggest-course-input .dropdown-menu {
-	min-width: 20%;
+	width: auto;
+	min-width: 255px;
 }
 
 .suggest-course-input i {
@@ -923,6 +924,7 @@ li.active-term .dropdown-term-row {
 }
 
 .cancel-suggest-course-btn {
+	margin-left: auto;
 	width: 77.59px;
 }
 
