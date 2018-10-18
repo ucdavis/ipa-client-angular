@@ -901,7 +901,7 @@ li.active-term .dropdown-term-row {
 }
 
 .suggest-course-container .search-course-input {
-	width: auto;
+	width: 284px;
 	text-align: left;
 }
 
@@ -912,10 +912,18 @@ li.active-term .dropdown-term-row {
 	margin-right: auto;
 }
 
+.suggest-course-input .dropdown-menu {
+	min-width: 20%;
+}
+
 .suggest-course-input i {
 	position: relative;
 	bottom: auto;
 	right: 28px;
+}
+
+.cancel-suggest-course-btn {
+	width: 77.59px;
 }
 
 #modal-1 {
