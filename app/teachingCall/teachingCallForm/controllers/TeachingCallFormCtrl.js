@@ -19,6 +19,18 @@ class TeachingCallFormCtrl {
 
 
 		$rootScope.$on('teachingCallFormStateChanged', function (event, data) {
+			// append Course titles for suggested courses
+			data.terms.forEach(function (term) {
+				term.preferences.forEach(function (preference) {
+					if (preference.suggestedCourseNumber) {
+						TeachingCallFormService.searchDWCourses(preference.description)
+							.then(function (results) {
+								preference.title = results[0].title;
+							});
+					}
+				});
+			});
+
 			$scope.view.state = data;
 		});
 

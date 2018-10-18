@@ -426,7 +426,6 @@ class TeachingCallFormStateService {
 						newPreference.subjectCode = slotAssignment.suggestedSubjectCode;
 						newPreference.effectiveTermCode = slotAssignment.suggestedEffectiveTermCode;
 						newPreference.description = newPreference.subjectCode + " " + newPreference.courseNumber;
-						// newPreference.title = 'Suggested Course Gets no Title?';
 						newPreference.suggestedCourseNumber = slotAssignment.suggestedCourseNumber;
 						newPreference.suggestedSubjectCode = slotAssignment.suggestedSubjectCode;
 						newPreference.suggestedEffectiveTermCode = slotAssignment.suggestedEffectiveTermCode;
