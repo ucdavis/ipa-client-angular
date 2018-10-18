@@ -469,3 +469,7 @@ i.selected-section-group-remove {
 	color: gray;
 	font-weight: bold;
 }
+
+.selected-activity {
+	border: 1px solid black !important;
+}
