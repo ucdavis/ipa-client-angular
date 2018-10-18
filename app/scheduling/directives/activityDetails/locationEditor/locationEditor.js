@@ -31,6 +31,10 @@ let locationEditor = function (SchedulingActionCreators) {
         scope.dropdownLocations = scope.bannerLocation.concat(scope.dropdownLocations);
       };
 
+      scope.$watch("activity", function () {
+        scope.convertParams();
+      });
+
       scope.convertParams();
     }
   };

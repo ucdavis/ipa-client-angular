@@ -545,6 +545,8 @@ class SchedulingStateService {
 							uiState.selectedCourseId = action.payload.activity.courseId;
 						} else {
 							uiState.selectedActivityId = null;
+							uiState.selectedSectionGroupId = null;
+							uiState.selectedCourseId = null;
 						}
 						return uiState;
 					case ActionTypes.CALCULATE_SECTION_GROUPS:

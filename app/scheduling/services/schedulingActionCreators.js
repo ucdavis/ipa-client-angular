@@ -224,7 +224,14 @@ class SchedulingActionCreators {
 				SchedulingStateService.reduce(action);
 				this.calculateSectionGroups();
 			},
+			clearSelectedActivity: function () {
+				SchedulingStateService.reduce({
+					type: ActionTypes.ACTIVITY_SELECTED,
+					payload: {}
+				});
+			},
 			setSelectedActivity: function (activity) {
+				this.clearSelectedActivity();
 				var action = {
 					type: ActionTypes.ACTIVITY_SELECTED,
 					payload: {
