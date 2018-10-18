@@ -81,7 +81,7 @@
 
         <div class="filter-category">
           <h3>Tags</h3>
-          <ul>
+          <ul ng-if="tags.ids.length > 0">
             <li ng-repeat="tagId in tags.ids track by $index" ng-click="toggleTagFilter(tagId)">
               <div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': filters.enabledTagIds.indexOf(tagId) >= 0 }">
                 <label class="cb-wrapper filter-checkbox" ng-style="{ 'border-color': tags.list[tagId].color }">
@@ -91,6 +91,9 @@
               </div>
             </li>
           </ul>
+          <div class="scheduling-filter__no-tags" ng-if="tags.ids.length == 0">
+            No Tags
+          </div>
         </div>
 
         <div class="filter-category">

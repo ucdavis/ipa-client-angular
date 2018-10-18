@@ -68,9 +68,12 @@
   margin-right: 10px;
 }
 
+.scheduling-filter__no-tags,
 .scheduling-filter__no-location {
   padding-left: 5px;
   border-top: 1px solid #ebebeb;
   display: flex;
   justify-content: center;
+  padding-top: 10px;
+  color: gray;
 }
