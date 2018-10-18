@@ -138,7 +138,7 @@
 								<li ng-show="activityMatchesFilters(sharedActivityId)" 
 									class="activity-item clickable" ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
 									ng-click="setSelectedActivity(sharedActivityId)">
-									<span>{{ view.state.activities.list[sharedActivityId].getCodeDescription() }}</span>
+									<span>{{ view.state.activities.list[sharedActivityId].activityTypeCode.activityTypeCode.getActivityCodeDescription().length > 0 ? view.state.activities.list[sharedActivityId].activityTypeCode.activityTypeCode.getActivityCodeDescription() : 'Unknown Activity' }}</span>
 									<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove shared {{ view.state.activities.list[sharedActivityId].getCodeDescription() }}"
 										tooltip-append-to-body="true" confirm-button="removeActivity(view.state.activities.list[sharedActivityId])" message="Are you sure you want to remove this {{ view.state.activities.list[sharedActivityId].getCodeDescription() }}"
 										yes="Delete" no="Cancel" placement="right"></i>
@@ -179,7 +179,7 @@
 												class="activity-item clickable"
 												ng-class="{ 'active': view.state.uiState.selectedActivityId == activityId }"
 											ng-click="setSelectedActivity(activityId)">
-											<span>{{ activity.getCodeDescription() }}</span>
+											<span>{{ activity.activityTypeCode.activityTypeCode.getActivityCodeDescription().length > 0 ? activity.activityTypeCode.activityTypeCode.getActivityCodeDescription() : 'Unknown Activity' }}</span>
 											<span class="activity__day-time">
 												<span class="meeting-days" ng-if="dayIndicatorToDayCodes(activity.dayIndicator).length > 0">
 													({{ dayIndicatorToDayCodes(activity.dayIndicator) }})&nbsp;
