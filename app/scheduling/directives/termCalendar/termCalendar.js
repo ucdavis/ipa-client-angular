@@ -247,8 +247,10 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 								activityClasses.push('selected-section-group');
 							}
 
+							var typeCodeText = activity.activityTypeCode.activityTypeCode.getActivityCodeDescription() ? ' (' + activity.activityTypeCode.activityTypeCode + ') ' : ' ';
+
 							calendarActivities.push({
-								title: courseTitle + ' (' + activity.activityTypeCode.activityTypeCode + ') ' + location,
+								title: courseTitle + typeCodeText + location,
 								start: activityStart,
 								end: activityEnd,
 								activityId: activity.id,
