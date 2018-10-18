@@ -245,8 +245,16 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						activityClasses.push('selected-section-group');
 					}
 
+					var instructorIds = scope.state.sectionGroups.list[activity.sectionGroupId].instructorIds;
+
+					var instructors = instructorIds.map(function(instructorId) {
+						return scope.state.instructors.list[instructorId].firstName + ' ' + scope.state.instructors.list[instructorId].lastName[0];
+					});
+
+					var instructorText = instructors.join(', ');
+
 					calendarActivities.push({
-						title: courseTitle + ' (' + activity.activityTypeCode.activityTypeCode + ') ',
+						title: courseTitle + ' (' + activity.activityTypeCode.activityTypeCode + ') ' + instructorText,
 						start: activityStart,
 						end: activityEnd,
 						activityId: activity.id,
