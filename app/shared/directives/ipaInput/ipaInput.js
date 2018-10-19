@@ -11,8 +11,9 @@ let ipaInput = function ($timeout) {
 			placeHolder: '<?', // Default text when empty
 			updateDelay: '<?', // If an update function has been specified it will default to 500ms delay, can override that here
 			isInvalid: '<?',
-			mode: '<?', // Options are 'number' (only allow characters 0-9), and 'currency' (currency style formatting and input enforcement)
-			maxChars: '<?'
+			maxChars: '<?',
+			allowNegative: '<?',
+			mode: '<?' // Options are 'number' (only allow characters 0-9), and 'currency' (currency style formatting and input enforcement)
 		},
 		link: function(scope, element, attrs) {
 			scope.$watch('mode',function() {
@@ -29,16 +30,26 @@ let ipaInput = function ($timeout) {
 					var BACK_SPACE = 8;
 					var LEFT_ARROW = 37;
 					var RIGHT_ARROW = 39;
+					var MINUS = 189;
+					var NUMPAD_MINUS = 109;
+					var ALT_MINUS = 173;
 
 					var acceptableMiscValues = [
 						PERIOD,
 						BACK_SPACE,
 						LEFT_ARROW,
-						RIGHT_ARROW
+						RIGHT_ARROW,
+						MINUS,
+						NUMPAD_MINUS,
+						ALT_MINUS
 					];
 
 					if (scope.isNumericKeyCode(e.keyCode) == false
 					&& (acceptableMiscValues.indexOf(e.keyCode) == -1)) {
+						e.preventDefault();
+					}
+
+					if (!scope.allowNegative && e.keyCode == MINUS) {
 						e.preventDefault();
 					}
 				});
@@ -57,6 +68,19 @@ let ipaInput = function ($timeout) {
 				var isNumpadNumber = (keyCode >= MIN_NUMBER_PAD_KEYCODE && keyCode <= MAX_NUMBER_PAD_KEYCODE);
 
 				return (isTopRowNumber || isNumpadNumber);
+			};
+
+			scope.enforceNegative = function() {
+				if (!scope.allowNegative || !scope.value) { return; }
+
+				var isNegative = (scope.value[0] == "-");
+
+				// Remove all instances of '-' from the input value
+				scope.value = scope.value.replace(/-/g, "");
+
+				if (isNegative) {
+					scope.value = "-" + scope.value;
+				}
 			};
 
 			// Main method triggered by template, handles filtering/update callback

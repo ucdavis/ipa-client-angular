@@ -42,8 +42,8 @@ class BudgetActions {
 					});
 
 					// Ensure budgetScenario is properly set
-					self.selectBudgetScenario();
 					self.attachInstructorTypesToInstructors();
+					self.selectBudgetScenario();
 
 					// Perform follow up calculations
 					BudgetCalculations.calculateInstructors();
@@ -753,17 +753,19 @@ class BudgetActions {
 				var assignedInstructors = BudgetReducers._state.assignedInstructors;
 
 				activeInstructors.ids.forEach(function(instructorId) {
-					var instructor = activeInstructors.list[instructorId] || assignedInstructors.list[instructorId];
+					var instructor = activeInstructors.list[instructorId];
 					var instructorType = self._getInstructorType(instructor);
 
 					instructor.instructorTypeDescription = instructorType ? instructorType.description : null;
+					instructor.instructorType = instructorType;
 				});
 
 				assignedInstructors.ids.forEach(function(instructorId) {
-					var instructor = activeInstructors.list[instructorId] || assignedInstructors.list[instructorId];
+					var instructor = assignedInstructors.list[instructorId];
 					var instructorType = self._getInstructorType(instructor);
 
 					instructor.instructorTypeDescription = instructorType ? instructorType.description : null;
+					instructor.instructorType = instructorType;
 				});
 			},
 			_getInstructorType: function(instructor) {

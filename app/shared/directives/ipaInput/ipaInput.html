@@ -6,6 +6,7 @@
 		ng-blur="onBlur()"
 		placeholder="{{placeHolder}}"
 		ng-readonly="readOnly || labelReadOnly"
+		ng-change="enforceNegative()"
 		ng-keyup="updateInput()"
 		maxlength="{{maxChars}}"
 		ng-class="{'ipa-input--read-only': readOnly, 'ipa-input--label-read-only': labelReadOnly, 'ipa-input--invalid': isInvalid }">

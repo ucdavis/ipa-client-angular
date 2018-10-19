@@ -74,7 +74,12 @@
 												<colorpicker type="text" color="view.state.tags.newTag.color"></colorpicker>
 											</div>
 											<div class="col-sm-3">
-												<button type="button" class="btn btn-blue btn-block" ng-click="addTag()" ng-disabled="!view.state.tags.newTag.name">Add</button>
+												<button type="button" class="btn btn-blue btn-block" ng-click="addTag()" ng-if="isNewTagValid()">Add</button>
+												<span ng-if="!isNewTagValid()"
+												      uib-tooltip="Please enter a unique tag name"
+												      tooltip-append-to-body="true">
+													<button type="button" class="btn btn-blue btn-block disabled">Add</button>
+												</span>
 											</div>
 										</div>
 									</li>
