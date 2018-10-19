@@ -432,7 +432,8 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				scope.view.state = data.state;
 				var actionTypesOfInterest = [
 					"CALCULATE_SECTION_GROUPS",
-					"ACTIVITY_SELECTED",
+					"ACTIVITY_TOGGLED",
+					"ACTIVITY_UNSELECTED",
 					"UPDATE_ACTIVITY",
 					"APPLY_FILTER_TO_SELECTION",
 					"RENDER_CALENDAR"

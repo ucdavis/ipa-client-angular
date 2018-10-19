@@ -9,7 +9,6 @@ let standardTimeSelector = function($window, $location, $routeParams, $rootScope
 			activity: '='
 		},
 		link: function (scope, element, attrs) {
-
 			scope.initializeSelector = function() {
 				scope.standardPatterns = Activity.prototype.getStandardTimes();
 				scope.selectedDuration = scope.activity.selectedDuration;
@@ -35,7 +34,7 @@ let standardTimeSelector = function($window, $location, $routeParams, $rootScope
 
 			scope.initializeSelector();
 
-			$rootScope.$on('schedulingStateChanged', function (event, data) {
+			scope.$watch('activity', function () {
 				scope.initializeSelector();
 			});
 

@@ -541,7 +541,7 @@ class SchedulingStateService {
 							uiState.checkedSectionGroupIds = [];
 						}
 						return uiState;
-					case ActionTypes.ACTIVITY_SELECTED:
+					case ActionTypes.ACTIVITY_TOGGLED:
 						if (action.payload.activity && uiState.selectedActivityId != action.payload.activity.id) {
 							uiState.selectedActivityId = action.payload.activity.id;
 							uiState.selectedSectionGroupId = action.payload.activity.sectionGroupId;
@@ -551,6 +551,11 @@ class SchedulingStateService {
 							uiState.selectedSectionGroupId = null;
 							uiState.selectedCourseId = null;
 						}
+						return uiState;
+					case ActionTypes.ACTIVITY_UNSELECTED:
+						uiState.selectedActivityId = null;
+						uiState.selectedSectionGroupId = null;
+						uiState.selectedCourseId = null;
 						return uiState;
 					case ActionTypes.CALCULATE_SECTION_GROUPS:
 						uiState.visibleSectionGroupIds = action.payload.visibleSectionGroupIds;
@@ -596,7 +601,7 @@ class SchedulingStateService {
 					state: scope._state,
 					action: action
 				});
-	
+
 				$log.debug("Scheduling state updated:");
 				$log.debug(scope._state);
 			}

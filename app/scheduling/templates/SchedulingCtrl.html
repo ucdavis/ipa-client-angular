@@ -220,7 +220,7 @@
 						</div>
 					</div>
 				</div>
-				<activity-details></activity-details>
+				<activity-details ng-if="view.state.activities.list[view.state.uiState.selectedActivityId]" activity="view.state.activities.list[view.state.uiState.selectedActivityId]"></activity-details>
 			</div>
 			<div class="activity-calendar" ng-class="{'calendar-with-selection': view.state.uiState.selectedSectionGroupId > 0 }">
 				<div ng-hide="view.state.sectionGroups.ids" class="loading-center">

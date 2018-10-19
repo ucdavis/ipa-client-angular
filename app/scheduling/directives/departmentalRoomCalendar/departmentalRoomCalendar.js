@@ -354,7 +354,8 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 				scope.view.state = data.state;
 				var actionTypesOfInterest = [
 					"CALCULATE_SECTION_GROUPS",
-					"ACTIVITY_SELECTED",
+					"ACTIVITY_TOGGLED",
+					"ACTIVITY_UNSELECTED",
 					"UPDATE_ACTIVITY",
 					"RENDER_CALENDAR"
 				];
