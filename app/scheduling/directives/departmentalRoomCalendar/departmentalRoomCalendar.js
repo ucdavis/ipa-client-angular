@@ -37,30 +37,11 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 				state: scope.state
 			};
 
-			// Supply a color and amount to shift the color (out of 255)
-			// Example to lighten: lightenOrDarkenColor("#F06D06", 1.2);
-			// Example to darken: lightenOrDarkenColor("#F06D06", .6);
-			var lightenOrDarkenColor = function(hexColor, amt) {
-				var rgbValues = hexToRgb(hexColor);
-
-				var r = parseInt(rgbValues.r * amt);
-				var g = parseInt(rgbValues.g * amt);
-				var b = parseInt(rgbValues.b * amt);
-
-				return rgbToHex(r, g, b);
-			};
-
-			var unselectedActivityTintingMultiplier = .6;
-
 			// color for calnder
 			// Default color: Other (checked) courses
 			var defaultEventBackgroundColor = "#DEDEDE";
 			var defaultEventBorderColor = "#DEDEDE";
 			var defaultEventTextColor = "#333333";
-
-			var mutedDefaultEventBackgroundColor = lightenOrDarkenColor(defaultEventBackgroundColor, unselectedActivityTintingMultiplier);
-			var mutedDefaultEventBorderColor = lightenOrDarkenColor(defaultEventBorderColor, unselectedActivityTintingMultiplier);
-			var mutedDefaultEventTextColor ="#fff";
 
 			// Active (selected) course activities
 			var activeEventBackgroundColor = "#DEDEDE";
@@ -75,9 +56,9 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 			var tagEventTextColor = "#FFFFFF";
 
 			var refreshCalendar = function () {
-				var eventBorderColor = anyActivitySelected() ? mutedDefaultEventBorderColor : defaultEventBorderColor;
-				var eventTextColor = anyActivitySelected() ? mutedDefaultEventTextColor : defaultEventTextColor;
-				var eventColor = anyActivitySelected() ? mutedDefaultEventBackgroundColor : defaultEventBackgroundColor;
+				var eventBorderColor = defaultEventBorderColor;
+				var eventTextColor = defaultEventTextColor;
+				var eventColor = defaultEventBackgroundColor;
 
 				var parentAspectRatio = element.parent().width() / element.parent().height();
 				element.fullCalendar('destroy');
@@ -319,9 +300,9 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						}
 					} else {
 						// Not a selected activity
-						event.color = backgroundColor && anyActivitySelected() ? lightenOrDarkenColor(backgroundColor, unselectedActivityTintingMultiplier) : backgroundColor;
-						event.borderColor = borderColor && anyActivitySelected() ? lightenOrDarkenColor(borderColor, unselectedActivityTintingMultiplier) : borderColor;
-						event.textColor = textColor && anyActivitySelected() ? "#fff" : textColor;
+						event.color = backgroundColor;
+						event.borderColor = borderColor;
+						event.textColor = textColor;
 					}
 				});
 				return calendarActivities;

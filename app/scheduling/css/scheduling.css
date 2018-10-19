@@ -473,3 +473,7 @@ i.selected-section-group-remove {
 .selected-activity {
 	border: 1px solid black !important;
 }
+
+.calendar-with-selection .fc-event-container a:not(.selected-activity):not(.selected-section-group) {
+	opacity: .4;
+}
