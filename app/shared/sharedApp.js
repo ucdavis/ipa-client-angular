@@ -177,8 +177,8 @@ function slowConnectionInterceptor ($rootScope, $timeout, $q) {
 			if ($rootScope.slowResTime) { $timeout.cancel($rootScope.slowResTime); }
 			if ($rootScope.timeOutTimer) { $timeout.cancel($rootScope.timeOutTimer); }
 
-			var slowResDelay = 15000; // 8 seconds
-			var timeOutDelay = 45000; // 45 seconds
+			var slowResDelay = 15000; // 15 seconds
+			var timeOutDelay = 90000; // 90 seconds
 
 			$rootScope.slowResTime = $timeout(function () {
 				$rootScope.$emit('toast', { message: "Server appears to be slow. Please standby...", type: "WARNING" });
