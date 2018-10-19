@@ -34,11 +34,6 @@ class SchedulingCtrl {
 			'P', '7', 'Z'
 		];
 
-		self.initialize();
-	}
-
-	initialize () {
-		var self = this;
 		this.$scope.getWeekDays = function(dayIndicator) {
 			if (!dayIndicator) {
 				return "";
