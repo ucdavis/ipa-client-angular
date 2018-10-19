@@ -334,6 +334,9 @@ class SchedulingStateService {
 						activities.ids.splice(activityIndex, 1);
 						delete activities.list[action.payload.activity.id];
 						return activities;
+					case ActionTypes.UPDATE_ACTIVITY:
+						activities.list[action.payload.activity.id] = new Activity(action.payload.activity);
+						return activities;
 					case ActionTypes.DELETE_SECTION:
 						action.payload.section.activityIds.forEach(function(activityId) {
 							var activityIndex = activities.ids.indexOf(activityId);
