@@ -424,11 +424,13 @@ class TeachingCallFormStateService {
 						newPreference.isSuggested = true;
 						newPreference.courseNumber = slotAssignment.suggestedCourseNumber;
 						newPreference.subjectCode = slotAssignment.suggestedSubjectCode;
+						newPreference.title = slotAssignment.suggestedTitle;
 						newPreference.effectiveTermCode = slotAssignment.suggestedEffectiveTermCode;
 						newPreference.description = newPreference.subjectCode + " " + newPreference.courseNumber;
 						newPreference.suggestedCourseNumber = slotAssignment.suggestedCourseNumber;
 						newPreference.suggestedSubjectCode = slotAssignment.suggestedSubjectCode;
 						newPreference.suggestedEffectiveTermCode = slotAssignment.suggestedEffectiveTermCode;
+						newPreference.suggestedTitle = slotAssignment.suggestedTitle;
 	
 						preferences.push(newPreference);
 					}
