@@ -78,10 +78,14 @@ let standardTimeSelector = function($window, $location, $routeParams, $rootScope
 				scope.selectedDuration = duration;
 				scope.activity.selectedDuration = duration;
 
-				scope.clearTimeAndDay();
-
 				scope.dayOfferings = scope.standardPatterns[duration].dayIndicators;
 				scope.timeOfferings = scope.standardPatterns[duration].times;
+
+				var endTimeObject = moment(scope.activity.startTime, 'hh:mm:ss');
+				endTimeObject.add(scope.selectedDuration, 'minutes');
+
+				scope.activity.endTime = moment(endTimeObject).format('hh:mm:ss');
+				scope.saveActivity();
 			};
 
 			scope.selectDays = function(days) {

@@ -100,9 +100,11 @@
 								<tr>
 									<!-- Comments -->
 									<td class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
-										<ipa-button text="'Comments' + sectionGroupCost.commentCountDisplay"
-										            color="'light'"
+										<ipa-button superscript="sectionGroupCost.commentCount > 0 ? sectionGroupCost.commentCount : ''"
+										            icon-color="sectionGroupCost.commentCount > 0 ? '' : 'gray'"
+										            tooltip-message="'View Comments'"
 										            icon-class="'entypo entypo-chat'"
+										            text="'Comments'"
 										            on-click="openAddCourseCommentsModal(sectionGroupCost)">
 										</ipa-button>
 									</td>

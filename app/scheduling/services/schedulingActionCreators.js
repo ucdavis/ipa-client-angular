@@ -7,7 +7,7 @@
  * Central location for sharedState information.
  */
 class SchedulingActionCreators {
-	constructor (SchedulingStateService, SchedulingService, $rootScope, Role, ActionTypes, $route, Term) {
+	constructor (SchedulingStateService, SchedulingService, $rootScope, Role, ActionTypes, $route, Term, StringService) {
 		return {
 			getInitialState: function () {
 				var workgroupId = $route.current.params.workgroupId;
@@ -26,6 +26,7 @@ class SchedulingActionCreators {
 				});
 			},
 			updateActivity: function (activity) {
+				var _this = this;
 				SchedulingService.updateActivity(activity).then(function (updatedActivity) {
 					$rootScope.$emit('toast', { message: "Updated " + activity.getCodeDescription(), type: "SUCCESS" });
 					var action = {
@@ -37,6 +38,116 @@ class SchedulingActionCreators {
 					SchedulingStateService.reduce(action);
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
+				});
+			},
+			// The subset of the supplied sectionGroups that are visible
+			_calculateVisibleSectionGroupIds: function (sectionGroupIds) {
+				var _this = this;
+
+				if (_this.filtersAreActive() == false) { return sectionGroupIds; }
+
+				var tagFilterIds = SchedulingStateService._state.filters.enabledTagIds;
+				var instructorFilterIds = SchedulingStateService._state.filters.enabledInstructorIds;
+				var locationFilterIds = SchedulingStateService._state.filters.enabledLocationIds;
+
+				var filteredSectionGroupIds = [];
+
+				sectionGroupIds.forEach(function(sectionGroupId) {
+					var passLocationFilter = false;
+					var passInstructorFilter = false;
+					var passTagFilter = false;
+
+					var sectionGroup = SchedulingStateService._state.sectionGroups.list[sectionGroupId];
+					var course = SchedulingStateService._state.courses.list[sectionGroup.courseId];
+
+					instructorFilterIds.forEach(function(instructorId) {
+						if (sectionGroup.instructorIds.indexOf(instructorId) > -1) {
+							passInstructorFilter = true;
+						}
+					});
+
+					tagFilterIds.forEach(function(tagId) {
+						if (course.tagIds.indexOf(tagId) > -1) {
+							passTagFilter = true;
+						}
+					});
+
+					locationFilterIds.forEach(function(locationId) {
+						if (_this.sectionGroupHasLocation(sectionGroup, locationId)) {
+							passLocationFilter = true;
+						}
+					});
+
+					// Empty filters should default to be 'passed'
+					passLocationFilter = locationFilterIds.length > 0 ? passLocationFilter : true;
+					passTagFilter = tagFilterIds.length > 0 ? passTagFilter : true;
+					passInstructorFilter = instructorFilterIds.length > 0 ? passInstructorFilter : true;
+
+					if (passLocationFilter && passInstructorFilter && passTagFilter) {
+						filteredSectionGroupIds.push(sectionGroupId);
+					}
+				});
+
+				return filteredSectionGroupIds;
+			},
+			sectionGroupHasLocation: function(sectionGroup, locationId) {
+				var hasLocation = false;
+
+				sectionGroup.sectionIds.forEach(function(sectionId) {
+					var section = SchedulingStateService._state.sections.list[sectionId];
+
+					section.activityIds.forEach(function(activityId) {
+						var activity = SchedulingStateService._state.activities.list[activityId];
+						if (activity.locationId == locationId) {
+							hasLocation = true;
+						}
+					});
+				});
+
+				sectionGroup.sharedActivityIds.forEach(function(activityId) {
+					var activity = SchedulingStateService._state.activities.list[activityId];
+
+					if (activity.locationId == locationId) {
+						hasLocation = true;
+					}
+				});
+
+				return hasLocation;
+			},
+			setCalendarMode: function(tab) {
+				SchedulingStateService.reduce({
+					type: ActionTypes.SELECT_CALENDAR_MODE,
+					payload: {
+						tab: tab
+					}
+				});
+
+				if (StringService.isDay(tab) ) {
+					var days = {
+						"Sunday": { number: 0, description: "Sunday"},
+						"Monday": { number: 1, description: "Monday"},
+						"Tuesday": { number: 2, description: "Tuesday"},
+						"Wednesday": { number: 3, description: "Wednesday"},
+						"Thursday": { number: 4, description: "Thursday"},
+						"Friday": { number: 5, description: "Friday"},
+						"Saturday": { number: 6, description: "Saturday"}
+					};
+
+					var roomDay = days[tab];
+
+					SchedulingStateService.reduce({
+						type: ActionTypes.SET_DEPARTMENTAL_ROOMS_DAY,
+						payload: {
+							day: roomDay
+						}
+					});
+				}
+
+				this.calculateSectionGroups();
+
+				SchedulingStateService.reduce({
+					type: ActionTypes.RENDER_CALENDAR,
+					payload: {}
 				});
 			},
 			removeActivity: function (activity) {
@@ -87,10 +198,11 @@ class SchedulingActionCreators {
 				var action = {
 					type: ActionTypes.SECTION_GROUP_SELECTED,
 					payload: {
-						sectionGroup: sectionGroup
+						sectionGroup: sectionGroup,
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			toggleCheckedSectionGroup: function (sectionGroupId) {
 				var action = {
@@ -100,6 +212,7 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			toggleCheckAll: function (sectionGroupIds) {
 				var action = {
@@ -109,8 +222,16 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
+			},
+			clearSelectedActivity: function () {
+				SchedulingStateService.reduce({
+					type: ActionTypes.ACTIVITY_SELECTED,
+					payload: {}
+				});
 			},
 			setSelectedActivity: function (activity) {
+				this.clearSelectedActivity();
 				var action = {
 					type: ActionTypes.ACTIVITY_SELECTED,
 					payload: {
@@ -141,8 +262,11 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			updateTagFilters: function (tagIds) {
+				var _this = this;
+
 				var action = {
 					type: ActionTypes.UPDATE_TAG_FILTERS,
 					payload: {
@@ -150,8 +274,11 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			updateLocationFilters: function (locationIds) {
+				var _this = this;
+
 				var action = {
 					type: ActionTypes.UPDATE_LOCATION_FILTERS,
 					payload: {
@@ -159,8 +286,11 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			updateInstructorFilters: function (instructorIds) {
+				var _this = this;
+
 				var action = {
 					type: ActionTypes.UPDATE_INSTRUCTOR_FILTERS,
 					payload: {
@@ -168,6 +298,7 @@ class SchedulingActionCreators {
 					}
 				};
 				SchedulingStateService.reduce(action);
+				this.calculateSectionGroups();
 			},
 			createSection: function (section) {
 				var self = this;
@@ -215,11 +346,51 @@ class SchedulingActionCreators {
 				}, function (err) {
 					$rootScope.$emit('toast', { message: "Could not get activities.", type: "ERROR" });
 				});
+			},
+			toggleShowOnlyPrimaryActivityFilter: function() {
+				SchedulingStateService.reduce({
+					type: ActionTypes.TOGGLE_SHOW_ONLY_PRIMARY_ACTIVITY,
+					payload: {}
+				});
+
+				this.calculateSectionGroups();
+			},
+			calculateSectionGroups: function () {
+				var _this = this;
+				var checkedSectionGroupIds = SchedulingStateService._state.uiState.checkedSectionGroupIds;
+				var sectionGroupIds = SchedulingStateService._state.sectionGroups.ids;
+
+				SchedulingStateService.reduce({
+					type: ActionTypes.CALCULATE_SECTION_GROUPS,
+					payload: {
+						activeSectionGroupIds: _this._calculateVisibleSectionGroupIds(checkedSectionGroupIds),
+						visibleSectionGroupIds: _this._calculateVisibleSectionGroupIds(sectionGroupIds)
+					}
+				});
+
+				this.applyFiltersToSelection();
+			},
+			filtersAreActive: function () {
+				return (SchedulingStateService._state.uiState.calendarMode.activeTab == "Weekly");
+			},
+			applyFiltersToSelection: function () {
+				var visibleSectionGroupIds = SchedulingStateService._state.uiState.visibleSectionGroupIds;
+				var selectionIsVisible = (visibleSectionGroupIds.indexOf(SchedulingStateService._state.uiState.selectedSectionGroupId) > -1);
+
+
+				SchedulingStateService.reduce({
+					type: ActionTypes.APPLY_FILTER_TO_SELECTION,
+					payload: {
+						selectedCourseId: selectionIsVisible ? SchedulingStateService._state.uiState.selectedCourseId : null,
+						selectedSectionGroupId: selectionIsVisible ? SchedulingStateService._state.uiState.selectedSectionGroupId : null,
+						selectedActivityId: selectionIsVisible ? SchedulingStateService._state.uiState.selectedActivityId : null
+					}
+				});
 			}
 		};
 	}
 }
 
-SchedulingActionCreators.$inject = ['SchedulingStateService', 'SchedulingService', '$rootScope', 'Role', 'ActionTypes', '$route', 'Term'];
+SchedulingActionCreators.$inject = ['SchedulingStateService', 'SchedulingService', '$rootScope', 'Role', 'ActionTypes', '$route', 'Term', 'StringService'];
 
 export default SchedulingActionCreators;

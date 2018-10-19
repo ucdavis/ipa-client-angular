@@ -6,7 +6,7 @@
  * Controller of the ipaClientAngularApp
  */
 class SchedulingCtrl {
-	constructor ($scope, $rootScope, $route, $routeParams, Activity, Term, SchedulingActionCreators, AuthService) {
+	constructor ($scope, $rootScope, $route, $routeParams, Activity, Term, SchedulingActionCreators, AuthService, ActivityService) {
 		var self = this;
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
@@ -51,7 +51,12 @@ class SchedulingCtrl {
 
 		self.$rootScope.$on('schedulingStateChanged', function (event, data) {
 			self.$scope.view.state = data.state;
+			console.log(data.state);
 		});
+
+		this.$scope.setCalendarMode = function (tab) {
+			self.SchedulingActionCreators.setCalendarMode(tab);
+		};
 
 		this.$scope.setSelectedSectionGroup = function (sectionGroupId) {
 			var sectionGroup = self.$scope.view.state.sectionGroups.list[sectionGroupId];
@@ -89,49 +94,6 @@ class SchedulingCtrl {
 			return ('0' + time.hours).slice(-2) + ':' + ('0' + time.minutes).slice(-2) + ' ' + time.meridian;
 		};
 
-		self.$scope.toggleCalendarDay = function (index) {
-			self.SchedulingActionCreators.toggleDay(index);
-		};
-
-		self.$scope.toggleTagFilter = function (tagId) {
-			var tagFilters = self.$scope.view.state.filters.enabledTagIds;
-			var tagIndex = tagFilters.indexOf(tagId);
-
-			if (tagIndex < 0) {
-				tagFilters.push(tagId);
-			} else {
-				tagFilters.splice(tagIndex, 1);
-			}
-
-			self.SchedulingActionCreators.updateTagFilters(tagFilters);
-		};
-
-		self.$scope.toggleLocationFilter = function (locationId) {
-			var locationFilters = self.$scope.view.state.filters.enabledLocationIds;
-			var locationIndex = locationFilters.indexOf(locationId);
-
-			if (locationIndex < 0) {
-				locationFilters.push(locationId);
-			} else {
-				locationFilters.splice(locationIndex, 1);
-			}
-
-			self.SchedulingActionCreators.updateLocationFilters(locationFilters);
-		};
-
-		self.$scope.toggleInstructorFilter = function (instructorId) {
-			var instructorFilters = self.$scope.view.state.filters.enabledInstructorIds;
-			var instructorIndex = instructorFilters.indexOf(instructorId);
-
-			if (instructorIndex < 0) {
-				instructorFilters.push(instructorId);
-			} else {
-				instructorFilters.splice(instructorIndex, 1);
-			}
-
-			self.SchedulingActionCreators.updateInstructorFilters(instructorFilters);
-		};
-
 		self.$scope.setLocation = function (locationId) {
 			if (!self.$scope.view.state.uiState.selectedActivityId) { return; }
 			var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
@@ -139,12 +101,8 @@ class SchedulingCtrl {
 			self.$scope.saveActivity();
 		};
 
-		self.$scope.toggleActivityDay = function (index) {
-			var activity = self.$scope.view.state.activities.list[self.$scope.view.state.uiState.selectedActivityId];
-			var dayArr = activity.dayIndicator.split('');
-			dayArr[index] = Math.abs(1 - parseInt(dayArr[index])).toString();
-			activity.dayIndicator = dayArr.join('');
-			self.$scope.saveActivity();
+		self.$scope.toggleCalendarDay = function (index) {
+			self.SchedulingActionCreators.toggleDay(index);
 		};
 
 		self.$scope.setActivityStandardTime = function (time) {
@@ -290,10 +248,35 @@ class SchedulingCtrl {
 				return sectionGroup.instructorIds.indexOf(instructorId) >= 0;
 			});
 		};
+
+		self.$scope.isChecked = function (sectionGroupId) {
+			var isChecked = self.$scope.view.state.uiState.checkedSectionGroupIds.indexOf(sectionGroupId) >= 0;
+			var isSelected = self.$scope.view.state.uiState.selectedSectionGroupId == sectionGroupId;
+
+			return isChecked || isSelected;
+		};
+
+		self.$scope.isDayTab = function (tab) {
+			switch (tab) {
+				case "Sunday":
+				case "Monday":
+				case "Tuesday":
+				case "Wednesday":
+				case "Thursday":
+				case "Friday":
+				case "Saturday":
+					return true;
+				default:
+					return false;
+			}
+		};
+
+		self.$scope.dayIndicatorToDayCodes = function (dayIndicator) {
+			return ActivityService.dayIndicatorToDayCodes(dayIndicator);
+		};
 	}
 }
 
-SchedulingCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Activity', 'Term', 'SchedulingActionCreators', 'AuthService'];
+SchedulingCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Activity', 'Term', 'SchedulingActionCreators', 'AuthService', 'ActivityService'];
 
 export default SchedulingCtrl;
-

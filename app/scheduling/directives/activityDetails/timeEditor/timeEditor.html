@@ -1,5 +1,20 @@
 <div>
 	<strong>Time</strong>
+	<div></div>
+	<span class="meeting-days">
+		{{ dayIndicatorToDayCodes(view.state.activities.list[view.state.uiState.selectedActivityId].dayIndicator) }}&nbsp;
+	</span>
+	<span class="meeting-time">
+		{{ view.state.activities.list[view.state.uiState.selectedActivityId].startTime.toStandardTime() }}-{{ view.state.activities.list[view.state.uiState.selectedActivityId].endTime.toStandardTime() }}
+	</span>
+	<span ng-if="isBannerApprovedTimePattern(view.state.activities.list[view.state.uiState.selectedActivityId])">
+		(Standard)
+	</span>
+	<span ng-if="!isBannerApprovedTimePattern(view.state.activities.list[view.state.uiState.selectedActivityId])">
+		(Non-Standard)
+	</span>
+
+
 	<hr style="margin: 0 0 5px 0;" />
 	<div class="form-group">
 		<div class="col-sm-12">

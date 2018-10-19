@@ -38,18 +38,7 @@ body {
 	width: 40%;
 	padding: 0.5em;
 }
-.calendar-filter-header {
-	width: 60%;
-	display: flex;
-	-webkit-justify-content: flex-end;
-	justify-content: flex-end;
-}
-.activity-filter-tokens {
-	overflow-x: auto;
-	overflow-y: hidden;
-	white-space: nowrap;
-	line-height: 35px;
-}
+
 .calendar-filter-menu {
 	padding: 0.5em;
 }
@@ -187,7 +176,9 @@ p.activity-list-header {
 	color: #333;
 	border: 1px solid #EEEEEE;
 	border-bottom: 1px solid #6AA4C1;
+	display: flex;
 }
+
 .activity-item.active {
 	background: #6AA4C1;
 	color: white;
@@ -253,6 +244,11 @@ a.activity-event i.activity-remove,
 	justify-content: center;
 	align-items: center;
 }
+
+.cursor-default {
+	cursor: default;
+}
+
 .section-group-description {
 	flex: 1 0 50%;
 }
@@ -289,22 +285,7 @@ a.activity-event i.activity-remove,
 .filters-container ul li:hover {
 	background-color: #ebebeb;
 }
-.tags-filter {
-	flex: 0 0 50%;
-	padding-right: 0.5em;
-}
-.instructors-filter {
-	flex: 0 0 50%;
-	padding-left: 0.5em;
-}
-.days-filter {
-	flex: 0 0 50%;
-	padding-right: 0.5em;
-}
-.locations-filter {
-	flex: 0 0 50%;
-	padding-left: 0.5em;
-}
+
 ul.activity-group {
 	position: relative;
 	margin: 10px 15px;
@@ -465,4 +446,34 @@ i.selected-section-group-remove {
 .courses__metadata-container {
 	padding: 3px;
 	margin-left: 3px;
+}
+
+.schedule-mode__nav {
+	display: flex;
+	width: 60%;
+	align-items: flex-end;
+}
+
+.activity__day-time {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.schedluing__no-location {
+	padding-top: 20px;
+	display: flex;
+	justify-content: center;
+}
+
+.fc-day-header {
+	color: gray;
+	font-weight: bold;
+}
+
+.selected-activity {
+	border: 1px solid black !important;
+}
+
+.calendar-with-selection .fc-event-container a:not(.selected-activity):not(.selected-section-group) {
+	opacity: .4;
 }

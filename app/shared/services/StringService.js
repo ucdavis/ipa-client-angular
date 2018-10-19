@@ -172,14 +172,6 @@ class StringService {
     return dayStr;
   }
 
-  setCharAt(str,index,newChar) {
-    if (index > str.length-1) {
-      return str;
-    }
-
-    return str.substr(0,index) + newChar + str.substr(index+1);
-  }
-
   getRoleDisplayName(roleString) {
     if (typeof roleString !== 'string') { return ""; }
 
@@ -214,6 +206,23 @@ class StringService {
   toAcademicYear(year) {
     var nextYearShort = (Number(year) + 1).toString().slice(-2);
     return year + "-" + nextYearShort;
+  }
+
+  isDay(tab) {
+    if (!tab || tab.length == 0) { return false; }
+
+    switch (tab.toLowerCase()) {
+      case "sunday":
+      case "monday":
+      case "tuesday":
+      case "wednesday":
+      case "thursday":
+      case "friday":
+      case "saturday":
+        return true;
+      default:
+        return false;
+    }
   }
 }
 

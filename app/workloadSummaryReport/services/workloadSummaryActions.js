@@ -300,6 +300,8 @@ class WorkloadSummaryActions {
 					var instructor = instructors.list[instructorId];
 					var instructorTypeId = _self._getInstructorTypeId(instructor);
 
+					if (instructorTypeId == null) { return; }
+
 					if (calculatedView.instructorTypeIds.indexOf(instructorTypeId) == -1) {
 						calculatedView.instructorTypeIds.push(instructorTypeId);
 						calculatedView.byInstructorType[instructorTypeId] = [];

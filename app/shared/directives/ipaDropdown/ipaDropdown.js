@@ -9,6 +9,7 @@ let ipaDropdown = function() {
 			searchable: '<',
 			selectItem: '&',
 			buttonClass: '<?',
+			isWide: '<?',
 			style: '<?' // Current options are 'minimal'
 		},
 		replace: true, // Replace with the template below
@@ -35,18 +36,11 @@ let ipaDropdown = function() {
 			// Default values
 			scope.expanded = false;
 			scope.searchable = false;
-
-			scope.attrStyles = {
-				dropdownWidth: { width: 300 }
-			};
+			scope.overrideStyles = {};
 
 			// Load attributes
-			if (attrs.dropdownWidth) {
-				scope.attrStyles.dropdownWidth;
-			}
-
-			if (attrs.searchable) {
-				scope.searchable = attrs.searchable;
+			if (attrs.overrideStyles) {
+				scope.overrideStyles = attrs.overrideStyles;
 			}
 
 			// Methods

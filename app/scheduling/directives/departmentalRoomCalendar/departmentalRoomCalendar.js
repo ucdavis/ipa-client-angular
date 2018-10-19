@@ -1,13 +1,16 @@
-let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
+let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 	return {
 		restrict: 'E',
-		template: '<div id="calendar"></div>',
+		template: '<div id="room-calendar"></div>',
 		replace: true,
 		scope: {
-			state: '='
+			state: '=',
+			locations: '=',
+			selectedDay: '='
 		},
 		link: function (scope, element, attrs) {
 			scope.isResizeListenerActive = false;
+			scope.startOfWeek = moment().startOf('week').startOf('day');
 
 			scope.listenForResize = function() {
 				if (scope.isResizeListenerActive) {
@@ -18,11 +21,11 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 				setTimeout(function() {
 					$(window).resize(function() {
-						$('#calendar').fullCalendar('option', 'height', scope.get_calendar_height());
+						$('#room-calendar').fullCalendar('option', 'height', scope.get_calendar_height());
 						$('.section-group-container').height(scope.get_calendar_height());
 					});
 
-					$('#calendar').fullCalendar({
+					$('#room-calendar').fullCalendar({
 						height: scope.get_calendar_height()
 					});
 				}, 500);
@@ -34,7 +37,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				state: scope.state
 			};
 
-			// color for calender
+			// color for calnder
 			// Default color: Other (checked) courses
 			var defaultEventBackgroundColor = "#DEDEDE";
 			var defaultEventBorderColor = "#DEDEDE";
@@ -50,13 +53,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 			var highlightedEventBorderColor = "#3A87AD";
 			var highlightedEventTextColor = "#FFFFFF";
 
-			// instructor unavailabilities
-			var unavailabilityEventBackgroundColor = "#DFEBEF";
-			var unavailabilityEventBorderColor = "#C6D2D6";
-			var unavailabilityEventTextColor = "#555555";
-
 			var tagEventTextColor = "#FFFFFF";
-			// This will be used to 'darken' the color of a card on the calendar if it has a user specified 'tag' color
 
 			var refreshCalendar = function () {
 				var eventBorderColor = defaultEventBorderColor;
@@ -65,8 +62,9 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 				var parentAspectRatio = element.parent().width() / element.parent().height();
 				element.fullCalendar('destroy');
+
 				element.fullCalendar({
-					defaultView: 'agendaWeek',
+					defaultView: 'agenda',
 					allDaySlot: false,
 					allDayDefault: false,
 					aspectRatio: parentAspectRatio,
@@ -74,16 +72,27 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 					minTime: '07:00',
 					maxTime: '22:00',
 					header: false,
-					columnHeaderFormat: 'ddd',
-					slotEventOverlap: false,
-					hiddenDays: scope.view.state.filters.hiddenDays,
 					eventColor: eventColor,
 					eventBorderColor: eventBorderColor,
 					eventTextColor: eventTextColor,
+					slotEventOverlap: false,
 					displayEventTime: false,
+					visibleRange: {
+						start: moment().startOf('week').format('YYYY-MM-DD'),
+						end: moment().startOf('week').add(scope.locations.ids.length, 'days').format('YYYY-MM-DD')
+					},
+					columnHeaderText: function(mom) {
+						var day = mom.startOf('day');
+
+						// The third param 'true' avoids moments timezone conversion errors and instead gives the raw exact difference in days
+						var locationIndex = Math.ceil(day.diff(scope.startOfWeek, 'days', true));
+
+						var locationId = scope.locations.ids[locationIndex];
+						var location = scope.locations.list[locationId];
+						return location.description;
+					},
 					eventSources: [
-						getActivities(),
-						getUnavailabilities()
+						getActivities()
 					],
 					eventClick: function (calEvent, jsEvent, view) {
 						var closeTarget = angular.element(jsEvent.target).hasClass('activity-remove');
@@ -176,7 +185,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 							if (tagColor) {
 								calendarActivities = calendarActivities.concat(
-									styleCalendarEvents(unstyledEvents, tagColor, tagColor, "#ffffff")
+									styleCalendarEvents(unstyledEvents, tagColor, tagColor, "white")
 								);
 							} else {
 								calendarActivities = calendarActivities.concat(
@@ -190,83 +199,58 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				return calendarActivities;
 			};
 
+			// TODO: alter the activity day to match the index of the locationId
 			var activityToEvents = function (activity, courseTitle) {
 				var calendarActivities = [];
 
-				if (activity.startTime && activity.endTime && activity.dayIndicator) {
+				if (activity.startTime && activity.endTime) {
 					var dayArray = activity.dayIndicator.split('');
 
 					var start = activity.startTime.split(':').map(Number);
 					var end = activity.endTime.split(':').map(Number);
 					var location = activity.locationDescription || '';
+					var locationIndex = scope.locations.ids.indexOf(activity.locationId);
+					var activityStart = moment().day(locationIndex).hour(start[0]).minute(start[1]).second(0).format('llll');
+					var activityEnd = moment().day(locationIndex).hour(end[0]).minute(end[1]).second(0).format('llll');
 
-					dayArray.forEach(function (d, i) {
-						if (d === '1') {
-							var activityStart = moment().day(i).hour(start[0]).minute(start[1]).second(0).format('llll');
-							var activityEnd = moment().day(i).hour(end[0]).minute(end[1]).second(0).format('llll');
 
-							// Add classes to group events that belong to the same activity
-							var activityClasses = [
-								'activity-event',
-								'activity-' + activity.id,
-								'section-group-' + activity.sectionGroupId
-							];
+					// Add classes to group events that belong to the same activity
+					var activityClasses = [
+						'activity-event',
+						'activity-' + activity.id,
+						'section-group-' + activity.sectionGroupId
+					];
 
-							// Add a class to selected activity's meetings
-							if (scope.view.state.uiState.selectedActivityId == activity.id) {
-								activityClasses.push('selected-activity');
-							}
+					// Add a class to selected activity's meetings
+					if (scope.view.state.uiState.selectedActivityId == activity.id) {
+						activityClasses.push('selected-activity');
+					}
 
-							// Add a class to selected sectionGroup's meetings
-							if (scope.view.state.uiState.selectedSectionGroupId == activity.sectionGroupId) {
-								activityClasses.push('selected-section-group');
-							}
+					// Add a class to selected sectionGroup's meetings
+					if (scope.view.state.uiState.selectedSectionGroupId == activity.sectionGroupId) {
+						activityClasses.push('selected-section-group');
+					}
 
-							var typeCodeText = activity.activityTypeCode.activityTypeCode.getActivityCodeDescription() ? ' (' + activity.activityTypeCode.activityTypeCode + ') ' : ' ';
+					var instructorIds = scope.state.sectionGroups.list[activity.sectionGroupId].instructorIds;
 
-							calendarActivities.push({
-								title: courseTitle + typeCodeText + location,
-								start: activityStart,
-								end: activityEnd,
-								activityId: activity.id,
-								sectionGroupId: activity.sectionGroupId,
-								className: activityClasses
-							});
-						}
+					var instructors = instructorIds.map(function(instructorId) {
+						return scope.state.instructors.list[instructorId].firstName + ' ' + scope.state.instructors.list[instructorId].lastName[0];
+					});
+
+					var instructorText = instructors.join(', ');
+					var typeCodeText = activity.activityTypeCode.activityTypeCode.getActivityCodeDescription() ? ' (' + activity.activityTypeCode.activityTypeCode + ') ' : ' ';
+
+					calendarActivities.push({
+						title: courseTitle + typeCodeText + instructorText,
+						start: activityStart,
+						end: activityEnd,
+						activityId: activity.id,
+						sectionGroupId: activity.sectionGroupId,
+						className: activityClasses
 					});
 				}
+
 				return calendarActivities;
-			};
-
-			var teachingCallResponseToEvents = function (teachingCallResponse, title) {
-				var calendarUnavailabilities = [];
-				var unavailabilitiesArr = teachingCallResponse.availabilityBlob.split(',');
-
-				for (var d = 1; d < 6; d++) { // Blob starts on Monday and ends on Friday by definition
-					var unavailabilityStart = null;
-					for (var h = 7; h < 22; h++) { // Blob starts at 7am and ends at 10pm by definition
-						var slotUnavailable = unavailabilitiesArr[15 * (d - 1) + (h - 7)] === '0';
-						if (unavailabilityStart === null && slotUnavailable) {
-							unavailabilityStart = moment().day(d).hour(h).minute(0).second(0);
-						}
-
-						// If unavailability slot is ending or day is ending...
-						if (unavailabilityStart !== null && (slotUnavailable === false || h === 21)) {
-							if (h === 21) { h++; } // Unavailabilities must end at 22:00
-							var unavailabilityEnd = moment().day(d).hour(h).minute(0).second(0);
-							calendarUnavailabilities.push({
-								title: title,
-								start: unavailabilityStart,
-								end: unavailabilityEnd,
-								teachingCallResponseId: teachingCallResponse.id,
-								className: ['unavailability-event']
-							});
-							unavailabilityStart = null;
-						}
-					}
-				}
-
-				return calendarUnavailabilities;
 			};
 
 			var sectionGroupToActivityEvents = function (sectionGroup) {
@@ -275,6 +259,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 				if (sectionGroup.sharedActivityIds) {
 					sectionGroup.sharedActivityIds.forEach(function (sharedActivityId) {
+
 						if (activityMatchesFilters(sharedActivityId)) {
 							calendarActivities = calendarActivities.concat(activityToEvents(scope.view.state.activities.list[sharedActivityId], title));
 						}
@@ -297,28 +282,13 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				return calendarActivities;
 			};
 
-			var sectionGroupToUnavailabilityEvents = function (sectionGroup) {
-				var calendarActivities = [];
-
-				if (sectionGroup.teachingCallResponseIds) {
-					sectionGroup.teachingCallResponseIds.forEach(function (trId) {
-						var teachingCallResponse = scope.view.state.teachingCallResponses.list[trId];
-						var instructor = scope.view.state.instructors.list[teachingCallResponse.instructorId];
-						var instructorName = instructor ? instructor.fullName : "Unknown Instructor";
-						calendarActivities = calendarActivities.concat(teachingCallResponseToEvents(teachingCallResponse, instructorName));
-					});
-				}
-
-				return calendarActivities;
-			};
-
 			// Generate a styled calendar event (text/background/border colors)
 			// Considers the selectedActivity in the UI, and supplied tag colors
 			var styleCalendarEvents = function (calendarActivities, backgroundColor, borderColor, textColor, tagColor) {
 				calendarActivities.forEach(function (event) {
 					if (activityMatchesSelection(event.activityId)) {
-						// Selected activity with tag coloring
 						if (tagColor) {
+						// Selected activity with tag coloring
 							event.color = tagColor;
 							event.borderColor = tagColor;
 							event.textColor = textColor;
@@ -338,25 +308,20 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				return calendarActivities;
 			};
 
+			var anyActivitySelected = function () {
+				return (scope.view.state.uiState.selectedSectionGroupId || scope.view.state.uiState.selectedActivityId || scope.view.state.uiState.selectedCourseId);
+			};
+
 			var getCourseTitleByCourseId = function (courseId) {
 				var course = scope.view.state.courses.list[courseId];
 				return course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern;
 			};
 
-			var getUnavailabilities = function () {
-				var calendarActivities = [];
+			// Ensure the activity has a customRoom assignment, and that it matches the selected day
+			var activityMatchesFilters = function(activityId) {
+				var activity = scope.view.state.activities.list[activityId];
 
-				// Add Selected sectionGroup unavailabilities
-				if (scope.view.state.uiState.selectedSectionGroupId) {
-					var unstyledEvents = sectionGroupToUnavailabilityEvents(scope.view.state.sectionGroups.list[scope.view.state.uiState.selectedSectionGroupId]);
-					calendarActivities = styleCalendarEvents(unstyledEvents, unavailabilityEventBackgroundColor, unavailabilityEventBorderColor, unavailabilityEventTextColor);
-				}
-
-				return calendarActivities;
-			};
-
-			var anyActivitySelected = function () {
-				return (scope.view.state.uiState.selectedSectionGroupId || scope.view.state.uiState.selectedActivityId || scope.view.state.uiState.selectedCourseId);
+				return ( (activity.locationId > 0) && (activity.dayIndicator[scope.selectedDay] == 1) );
 			};
 
 			var activityMatchesSelection = function (activityId) {
@@ -385,62 +350,22 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				return false;
 			};
 
-			var activityMatchesFilters = function(activityId) {
-				var passesLocationFilter = false;
-
-				var activity = scope.view.state.activities.list[activityId];
-				var sectionGroup = null;
-
-				if (activity.sectionGroupId) {
-					sectionGroup = scope.view.state.sectionGroups.list[activity.sectionGroupId];
-				} else {
-					var section = scope.view.state.sections.list[activity.sectionId];
-					sectionGroup = scope.view.state.sectionGroups.list[activity.sectionGroupId];
-				}
-
-				if (scope.view.state.filters.enabledLocationIds.indexOf(activity.locationId) >= 0 || scope.view.state.filters.enabledLocationIds.length === 0) {
-					passesLocationFilter = true;
-				}
-
-				var primaryFilter = scope.state.filters.showOnlyPrimaryActivity;
-				var passesPrimaryFilter = false;
-
-				if (primaryFilter == false) {
-					passesPrimaryFilter = true;
-				} else {
-					if (activity.category == "01") {
-						passesPrimaryFilter = true;
-					} else if (activity.shared) {
-						passesPrimaryFilter = true;
-					} else if (activity.activityTypeCode.activityTypeCode == "A") {
-						passesPrimaryFilter = true;
-					}
-				}
-
-				var selectedSectionGroupId = scope.state.uiState.selectedSectionGroupId;
-				var selectedSectionGroup = scope.state.sectionGroups.list[selectedSectionGroupId];
-
-				// If activity is selected, bypass primary filter
-				if (selectedSectionGroup == sectionGroup) {
-					passesPrimaryFilter = true;
-				}
-
-				return (passesLocationFilter && passesPrimaryFilter);
-			};
-
 			$rootScope.$on("schedulingStateChanged", function (event, data) {
 				scope.view.state = data.state;
 				var actionTypesOfInterest = [
 					"CALCULATE_SECTION_GROUPS",
 					"ACTIVITY_SELECTED",
 					"UPDATE_ACTIVITY",
-					"APPLY_FILTER_TO_SELECTION",
 					"RENDER_CALENDAR"
 				];
 
 				if (actionTypesOfInterest.indexOf(data.action.type) > -1) {
 					refreshCalendar();
 				}
+			});
+
+			scope.$watch("selectedDay", function () {
+				refreshCalendar();
 			});
 
 			var neonCalendar = neonCalendar || {};
@@ -464,4 +389,4 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 	};
 };
 
-export default termCalendar;
+export default departmentalRoomCalendar;

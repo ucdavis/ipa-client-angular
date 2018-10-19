@@ -12,6 +12,8 @@ import SchedulingStateService from './services/schedulingStateService.js';
 import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
+import ActivityService from './../shared/services/ActivityService.js';
+import StringService from './../shared/services/StringService.js';
 
 // Directives
 import termCalendar from './directives/termCalendar/termCalendar.js';
@@ -21,6 +23,8 @@ import locationEditor from './directives/activityDetails/locationEditor/location
 import timeEditor from './directives/activityDetails/timeEditor/timeEditor.js';
 import freeformTimeSelector from './directives/activityDetails/timeEditor/freeformTimeSelector/freeformTimeSelector.js';
 import standardTimeSelector from './directives/activityDetails/timeEditor/standardTimeSelector/standardTimeSelector.js';
+import schedulingFilter from './directives/schedulingFilter/schedulingFilter.js';
+import departmentalRoomCalendar from './directives/departmentalRoomCalendar/departmentalRoomCalendar.js';
 
 // Dependencies
 var dependencies = [
@@ -73,13 +77,17 @@ const schedulingApp = angular.module("schedulingApp", dependencies)
 .service('ApiService', ApiService)
 .service('TermService', TermService)
 .service('AuthService', AuthService)
+.service('ActivityService', ActivityService)
+.service('StringService', StringService)
 .directive('termCalendar', termCalendar)
+.directive('departmentalRoomCalendar', departmentalRoomCalendar)
 .directive('timeInput', timeInput)
 .directive('activityDetails', activityDetails)
 .directive('locationEditor', locationEditor)
 .directive('timeEditor', timeEditor)
 .directive('freeformTimeSelector', freeformTimeSelector)
 .directive('standardTimeSelector', standardTimeSelector)
+.directive('schedulingFilter', schedulingFilter)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	SECTION_GROUP_SELECTED: "SECTION_GROUP_SELECTED",
@@ -97,7 +105,13 @@ const schedulingApp = angular.module("schedulingApp", dependencies)
 	FETCH_COURSE_ACTIVITY_TYPES: "FETCH_COURSE_ACTIVITY_TYPES",
 	CREATE_SECTION: "CREATE_SECTION",
 	DELETE_SECTION: "DELETE_SECTION",
-	GET_ACTIVITIES: "GET_ACTIVITIES"
+	GET_ACTIVITIES: "GET_ACTIVITIES",
+	SELECT_CALENDAR_MODE: "SELECT_CALENDAR_MODE",
+	SET_DEPARTMENTAL_ROOMS_DAY: "SET_DEPARTMENTAL_ROOMS_DAY",
+	TOGGLE_SHOW_ONLY_PRIMARY_ACTIVITY: "TOGGLE_SHOW_ONLY_PRIMARY_ACTIVITY",
+	CALCULATE_SECTION_GROUPS: "CALCULATE_SECTION_GROUPS",
+	APPLY_FILTER_TO_SELECTION: "APPLY_FILTER_TO_SELECTION",
+	RENDER_CALENDAR: "RENDER_CALENDAR"
 });
 
 // Injecting these templates into schedulingApp so uib-popover-template can see them
