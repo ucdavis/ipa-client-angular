@@ -21,7 +21,11 @@ let locationEditor = function (SchedulingActionCreators, $rootScope) {
 
         scope.currentLocationDescription = scope.activity.locationId > 0 ? scope.locations.list[scope.activity.locationId].description : "Registrar Location";
         scope.fullLocationDescription = scope.activity.bannerLocation ? scope.activity.bannerLocation : scope.currentLocationDescription;
- 
+
+        if (scope.fullLocationDescription == "null null") {
+          scope.fullLocationDescription = null;
+        }
+
         // Convert location params to props
         scope.bannerLocation = [
           {id: 0, description: "Registrar Location" }
