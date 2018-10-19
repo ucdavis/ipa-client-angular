@@ -1,6 +1,6 @@
 import './locationEditor.css';
 
-let locationEditor = function (SchedulingActionCreators) {
+let locationEditor = function (SchedulingActionCreators, $rootScope) {
   return {
     restrict: "E",
     template: require('./locationEditor.html'),
@@ -34,6 +34,19 @@ let locationEditor = function (SchedulingActionCreators) {
       scope.$watch("activity", function () {
         scope.convertParams();
       });
+
+      $rootScope.$on('schedulingStateChanged', function (event, data) {
+        scope.activity = data.state.activities.list[data.state.uiState.selectedActivityId];
+        scope.convertParams();
+      });
+
+      scope.generateLocationStandardDescription = function () {
+        if (scope.activity.bannerLocation) { return '(Registrar)'; }
+
+        if (scope.activity.locationId) { return '(Self Assigned)'; }
+
+        return null;
+      };
 
       scope.convertParams();
     }

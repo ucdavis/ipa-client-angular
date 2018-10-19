@@ -1,6 +1,6 @@
 <div class="location-editor">
   <strong>Location</strong>
-	<div>{{ activity.locationDescription }} ({{ activity.bannerLocation ? 'Registrar' : 'Self Assigned' }})</div>
+	<div>{{ activity.currentLocationDescription }} {{ generateLocationStandardDescription() }}</div>
   <hr style="margin: 0 0 5px 0;" />
 
   <ipa-dropdown expanded="expanded"
