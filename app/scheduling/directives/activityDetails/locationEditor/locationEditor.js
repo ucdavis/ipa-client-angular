@@ -17,6 +17,8 @@ let locationEditor = function (SchedulingActionCreators, $rootScope) {
 
       scope.convertParams = function () {
         // Set initial location description display
+        if (!scope.activity) { return; }
+
         scope.currentLocationDescription = scope.activity.locationId > 0 ? scope.locations.list[scope.activity.locationId].description : "Registrar Location";
         scope.fullLocationDescription = scope.activity.bannerLocation ? scope.activity.bannerLocation : scope.currentLocationDescription;
  
