@@ -18,6 +18,24 @@ class TagCtrl {
 		$scope.updateTag = function (tag) {
 			WorkgroupActionCreators.updateTag($scope.workgroupId, tag);
 		};
+
+		$scope.isNewTagValid = function () {
+			if (!$scope.view.state) { return true; }
+
+			var newTag = $scope.view.state.tags.newTag;
+
+			if (!newTag.name) { return false; }
+
+			var isNewTagUnique = true;
+
+			$scope.view.state.tags.ids.forEach(function(tagId) {
+				var tag = $scope.view.state.tags.list[tagId];
+
+				if (tag.name == newTag.name) { isNewTagUnique = false; }
+			});
+
+			return isNewTagUnique;
+		};
 	}
 }
 
