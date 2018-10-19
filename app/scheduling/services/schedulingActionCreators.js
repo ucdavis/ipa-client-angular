@@ -231,7 +231,6 @@ class SchedulingActionCreators {
 				});
 			},
 			setSelectedActivity: function (activity) {
-				this.clearSelectedActivity();
 				var action = {
 					type: ActionTypes.ACTIVITY_TOGGLED,
 					payload: {
