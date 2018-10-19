@@ -520,7 +520,7 @@ class BudgetCalculations {
 							summary.byTerm[term].readerCost += sectionGroupCost.readerCost || 0;
 							summary.byTerm[term].supportCosts += (sectionGroupCost.taCost || 0) + (sectionGroupCost.readerCost || 0);
 							summary.byTerm[term].replacementCosts.overall += sectionGroupCost.overrideInstructorCost || 0;
-							summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroupCost.instructorType, sectionGroupCost.overrideInstructorCost);
+							summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroupCost);
 							summary.byTerm[term].totalCosts += (sectionGroupCost.taCost || 0) + (sectionGroupCost.readerCost || 0) + (sectionGroupCost.overrideInstructorCost || 0);
 							summary.byTerm[term].totalUnits += (sectionGroupCost.unitsLow || sectionGroupCost.unitsHigh || 0);
 							summary.byTerm[term].totalSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
