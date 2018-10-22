@@ -25,38 +25,38 @@ import courseTable from './directives/courseTable.js';
 
 // Dependencies
 var dependencies = [
-	"sharedApp",
-	"ngRoute"
+  "sharedApp",
+  "ngRoute"
 ];
 
 // Config
 function config ($routeProvider) {
-	return $routeProvider
-	.when("/:workgroupId/:year", {
-		template: require('./templates/CourseCtrl.html'),
-		controller: "CourseCtrl",
-		resolve: {
-			validate: function (AuthService, $route, CourseActionCreators) {
-				return AuthService.validate().then(function () {
-					if ($route.current.params.workgroupId) {
-						CourseActionCreators.getInitialState();
-					}
-				});
-			}
-		}
-	})
-	.when("/", {
-		template: require('./templates/CourseCtrl.html'),
-		controller: "CourseCtrl",
-		resolve: {
-			validate: function (AuthService) {
-				return AuthService.validate();
-			}
-		}
-	})
-	.otherwise({
-		redirectTo: "/"
-	});
+  return $routeProvider
+  .when("/:workgroupId/:year", {
+    template: require('./templates/CourseCtrl.html'),
+    controller: "CourseCtrl",
+    resolve: {
+      validate: function (AuthService, $route, CourseActionCreators) {
+        return AuthService.validate().then(function () {
+          if ($route.current.params.workgroupId) {
+            CourseActionCreators.getInitialState();
+          }
+        });
+      }
+    }
+  })
+  .when("/", {
+    template: require('./templates/CourseCtrl.html'),
+    controller: "CourseCtrl",
+    resolve: {
+      validate: function (AuthService) {
+        return AuthService.validate();
+      }
+    }
+  })
+  .otherwise({
+    redirectTo: "/"
+  });
 }
 
 config.$inject = ['$routeProvider'];
@@ -80,41 +80,41 @@ const courseApp = angular.module("courseApp", dependencies)
 .directive('censusChart', censusChart)
 .directive('courseTable', courseTable)
 .constant('ActionTypes', {
-	INIT_STATE: "INIT_STATE",
-	NEW_COURSE: "NEW_COURSE",
-	CREATE_COURSE: "CREATE_COURSE",
-	REMOVE_COURSE: "REMOVE_COURSE",
-	UPDATE_COURSE: "UPDATE_COURSE",
-	GET_COURSE_CENSUS: "GET_COURSE_CENSUS",
-	BEGIN_FETCH_CENSUS: "BEGIN_FETCH_CENSUS",
-	ADD_SECTION_GROUP: "ADD_SECTION_GROUP",
-	REMOVE_SECTION_GROUP: "REMOVE_SECTION_GROUP",
-	UPDATE_SECTION_GROUP: "UPDATE_SECTION_GROUP",
-	TOGGLE_TERM_FILTER: "TOGGLE_TERM_FILTER",
-	CELL_SELECTED: "CELL_SELECTED",
-	CLOSE_DETAILS: "CLOSE_DETAILS",
-	CLOSE_NEW_COURSE_DETAILS: "CLOSE_NEW_COURSE_DETAILS",
-	FETCH_SECTIONS: "FETCH_SECTIONS",
-	BEGIN_FETCH_SECTIONS: "BEGIN_FETCH_SECTIONS",
-	CREATE_SECTION: "CREATE_SECTION",
-	UPDATE_SECTION: "UPDATE_SECTION",
-	REMOVE_SECTION: "REMOVE_SECTION",
-	UPDATE_TABLE_FILTER: "UPDATE_TABLE_FILTER",
-	BEGIN_IMPORT_MODE: "BEGIN_IMPORT_MODE",
-	END_IMPORT_MODE: "END_IMPORT_MODE",
-	SEARCH_IMPORT_COURSES: "SEARCH_IMPORT_COURSES",
-	BEGIN_SEARCH_IMPORT_COURSES: "BEGIN_SEARCH_IMPORT_COURSES",
-	TOGGLE_IMPORT_COURSE: "TOGGLE_IMPORT_COURSE",
-	IMPORT_COURSES: "IMPORT_COURSES",
-	UPDATE_TAG_FILTERS: "UPDATE_TAG_FILTERS",
-	TOGGLE_UNPUBLISHED_COURSES: "TOGGLE_UNPUBLISHED_COURSES",
-	TOGGLE_SELECT_COURSE_ROW: "TOGGLE_SELECT_COURSE_ROW",
-	SELECT_ALL_COURSE_ROWS: "SELECT_ALL_COURSE_ROWS",
-	DESELECT_ALL_COURSE_ROWS: "DESELECT_ALL_COURSE_ROWS",
-	OPEN_COURSE_DELETION_MODAL: "OPEN_COURSE_DELETION_MODAL",
-	CLOSE_COURSE_DELETION_MODAL: "CLOSE_COURSE_DELETION_MODAL",
-	DELETE_MULTIPLE_COURSES: "DELETE_MULTIPLE_COURSES",
-	MASS_ASSIGN_TAGS: "MASS_ASSIGN_TAGS"
+  INIT_STATE: "INIT_STATE",
+  NEW_COURSE: "NEW_COURSE",
+  CREATE_COURSE: "CREATE_COURSE",
+  REMOVE_COURSE: "REMOVE_COURSE",
+  UPDATE_COURSE: "UPDATE_COURSE",
+  GET_COURSE_CENSUS: "GET_COURSE_CENSUS",
+  BEGIN_FETCH_CENSUS: "BEGIN_FETCH_CENSUS",
+  ADD_SECTION_GROUP: "ADD_SECTION_GROUP",
+  REMOVE_SECTION_GROUP: "REMOVE_SECTION_GROUP",
+  UPDATE_SECTION_GROUP: "UPDATE_SECTION_GROUP",
+  TOGGLE_TERM_FILTER: "TOGGLE_TERM_FILTER",
+  CELL_SELECTED: "CELL_SELECTED",
+  CLOSE_DETAILS: "CLOSE_DETAILS",
+  CLOSE_NEW_COURSE_DETAILS: "CLOSE_NEW_COURSE_DETAILS",
+  FETCH_SECTIONS: "FETCH_SECTIONS",
+  BEGIN_FETCH_SECTIONS: "BEGIN_FETCH_SECTIONS",
+  CREATE_SECTION: "CREATE_SECTION",
+  UPDATE_SECTION: "UPDATE_SECTION",
+  REMOVE_SECTION: "REMOVE_SECTION",
+  UPDATE_TABLE_FILTER: "UPDATE_TABLE_FILTER",
+  BEGIN_IMPORT_MODE: "BEGIN_IMPORT_MODE",
+  END_IMPORT_MODE: "END_IMPORT_MODE",
+  SEARCH_IMPORT_COURSES: "SEARCH_IMPORT_COURSES",
+  BEGIN_SEARCH_IMPORT_COURSES: "BEGIN_SEARCH_IMPORT_COURSES",
+  TOGGLE_IMPORT_COURSE: "TOGGLE_IMPORT_COURSE",
+  IMPORT_COURSES: "IMPORT_COURSES",
+  UPDATE_TAG_FILTERS: "UPDATE_TAG_FILTERS",
+  TOGGLE_UNPUBLISHED_COURSES: "TOGGLE_UNPUBLISHED_COURSES",
+  TOGGLE_SELECT_COURSE_ROW: "TOGGLE_SELECT_COURSE_ROW",
+  SELECT_ALL_COURSE_ROWS: "SELECT_ALL_COURSE_ROWS",
+  DESELECT_ALL_COURSE_ROWS: "DESELECT_ALL_COURSE_ROWS",
+  OPEN_COURSE_DELETION_MODAL: "OPEN_COURSE_DELETION_MODAL",
+  CLOSE_COURSE_DELETION_MODAL: "CLOSE_COURSE_DELETION_MODAL",
+  DELETE_MULTIPLE_COURSES: "DELETE_MULTIPLE_COURSES",
+  MASS_ASSIGN_TAGS: "MASS_ASSIGN_TAGS"
 });
 
 export default courseApp;
