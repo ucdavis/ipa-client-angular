@@ -139,6 +139,14 @@
 									class="activity-item clickable" ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
 									ng-click="setSelectedActivity(sharedActivityId)">
 									<span>{{ view.state.activities.list[sharedActivityId].activityTypeCode.activityTypeCode.getActivityCodeDescription().length > 0 ? view.state.activities.list[sharedActivityId].activityTypeCode.activityTypeCode.getActivityCodeDescription() : 'Unknown Activity' }}</span>
+									<span class="activity__day-time">
+										<span class="meeting-days" ng-if="dayIndicatorToDayCodes(view.state.activities.list[sharedActivityId].dayIndicator).length > 0">
+											({{ dayIndicatorToDayCodes(view.state.activities.list[sharedActivityId].dayIndicator) }})&nbsp;
+										</span>
+										<span class="meeting-time" ng-if="view.state.activities.list[sharedActivityId].startTime.toStandardTime() && view.state.activities.list[sharedActivityId].endTime.toStandardTime()">
+											{{ view.state.activities.list[sharedActivityId].startTime.toStandardTime() }}-{{ view.state.activities.list[sharedActivityId].endTime.toStandardTime() }}
+										</span>
+									</span>
 									<i class="entypo-minus-squared pull-right delete-activity clickable" ng-if="!isLocked()" uib-tooltip="Remove shared {{ view.state.activities.list[sharedActivityId].getCodeDescription() }}"
 										tooltip-append-to-body="true" confirm-button="removeActivity(view.state.activities.list[sharedActivityId])" message="Are you sure you want to remove this {{ view.state.activities.list[sharedActivityId].getCodeDescription() }}"
 										yes="Delete" no="Cancel" placement="right"></i>
