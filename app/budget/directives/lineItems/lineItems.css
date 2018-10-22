@@ -83,3 +83,11 @@
 .line-items__hide-item-ui {
   margin-left: 10px;
 }
+
+.line-items__no-funds {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 30px;
+	color: gray;
+}

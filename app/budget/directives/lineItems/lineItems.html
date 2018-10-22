@@ -103,6 +103,13 @@
 						</div>
 					</td>
 				</tr>
+				<tr ng-if="lineItems.length == 0">
+					<td colspan="5">
+						<div class="line-items__no-funds">
+							No Funds Added
+						</div>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 
@@ -187,6 +194,13 @@
 
 					<!-- Amount -->
 					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+					</td>
+				</tr>
+				<tr ng-if="ui.implicitLineItemCount == 0">
+					<td colspan="5">
+						<div class="line-items__no-funds">
+							No Suggested Funds
+						</div>
 					</td>
 				</tr>
 			</tbody>

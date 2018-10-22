@@ -165,6 +165,8 @@ class BudgetCalculations {
 					}
 				});
 
+				BudgetReducers._state.ui.implicitLineItemCount = implicitLineItems;
+
 				BudgetReducers._state.ui.fundsNav.tabOverrides["Suggested"] = implicitLineItems > 0 ? "Suggested (" + implicitLineItems + ")" : null;
 				calculatedLineItems = _array_sortByProperty(calculatedLineItems, "lineItemCategoryId");
 	
