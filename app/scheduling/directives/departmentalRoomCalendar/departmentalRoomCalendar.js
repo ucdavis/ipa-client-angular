@@ -234,7 +234,10 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					var instructorIds = scope.state.sectionGroups.list[activity.sectionGroupId].instructorIds;
 
 					var instructors = instructorIds.map(function(instructorId) {
-						return scope.state.instructors.list[instructorId].firstName + ' ' + scope.state.instructors.list[instructorId].lastName[0];
+						var firstName = scope.state.instructors.list[instructorId] ? scope.state.instructors.list[instructorId].firstName : "";
+						var lastLetter = scope.state.instructors.list[instructorId] ? scope.state.instructors.list[instructorId].lastName[0] : "";
+
+						return firstName + ' ' + lastLetter;
 					});
 
 					var instructorText = instructors.join(', ');
