@@ -427,7 +427,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													course.subjectCode = teachingAssignment.suggestedSubjectCode;
 													course.courseNumber = teachingAssignment.suggestedCourseNumber;
 													course.title = teachingAssignment.suggestedTitle;
-													course.sequencePattern = "()";
+													course.sequencePattern = "001";
 												} else {
 													if (sectionGroup) {
 														course = scope.view.state.courses.list[sectionGroup.courseId];
