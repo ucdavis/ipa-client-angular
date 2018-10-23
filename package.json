@@ -8,7 +8,8 @@
     "build": "webpack --mode=development",
     "server": "webpack-dev-server --inline --progress --mode=development",
     "start": "yarn run server",
-    "cypress": "cypress open"
+    "cypress": "cypress open",
+    "angular": "cd ./angular && npm run-script start"
   },
   "repository": {
     "type": "git",
