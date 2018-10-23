@@ -318,7 +318,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 											}
 
 											if (displayTitle.replace(/ /g, '').length == 0) {
-												displayTitle += teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber + "-" + "001";
+												displayTitle += teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber + " - 001 - " + teachingAssignment.suggestedTitle;
 												plannedSeatsHtml = "<small>Seats: 0</small>";
 												unitsLow = "<small>Units: 4</small>";
 											}
@@ -426,6 +426,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													course = {};
 													course.subjectCode = teachingAssignment.suggestedSubjectCode;
 													course.courseNumber = teachingAssignment.suggestedCourseNumber;
+													course.title = teachingAssignment.suggestedTitle;
 													course.sequencePattern = "()";
 												} else {
 													if (sectionGroup) {
