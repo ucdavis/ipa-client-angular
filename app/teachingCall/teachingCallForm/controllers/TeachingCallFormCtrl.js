@@ -38,6 +38,9 @@ class TeachingCallFormCtrl {
 				});
 				var filteredResults = results.filter(function (option) {
 					return preferencesToFilter.indexOf(option.subjectCode + " " + option.courseNumber) === -1;
+				}).map(function (option) {
+					option.isSuggested = true;
+					return option;
 				});
 
 				return filteredResults.slice(0, 20);
@@ -166,7 +169,7 @@ class TeachingCallFormCtrl {
 			var scheduleId = $scope.view.state.scheduleId;
 
 			// Preference is based off a new course (from Data Warehouse)
-			if (preference && preference.description === undefined) {
+			if (preference && preference.isSuggested === true) {
 				preference.suggestedEffectiveTermCode = preference.effectiveTermCode;
 				preference.suggestedSubjectCode = preference.subjectCode;
 				preference.suggestedCourseNumber = preference.courseNumber;
