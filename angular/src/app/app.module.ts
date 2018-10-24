@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { WorkgroupService } from './workgroup.service';
+
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -23,7 +25,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatIconModule,
     MatTooltipModule
   ],
-  providers: [],
+  providers: [
+    WorkgroupService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
