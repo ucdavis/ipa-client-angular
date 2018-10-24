@@ -22,10 +22,43 @@ class TeachingCallFormCtrl {
 			$scope.view.state = data;
 		});
 
-		$scope.viewState = {};
+		$scope.viewState = {
+			showSuggestCourse: false
+		};
+
+		$scope.toggleSuggestCourse = function () {
+			$scope.viewState.showSuggestCourse = !$scope.viewState.showSuggestCourse;
+		};
+
+		$scope.searchDWCourses = function (termContainer, query) {
+			return TeachingCallFormService.searchDWCourses(query).then(function (results) {
+				// Filter out existing preferences from returned results
+				var preferencesToFilter = termContainer.preferences.map(function(option) {
+					return option.description;
+				});
+				var filteredResults = results.filter(function (option) {
+					return preferencesToFilter.indexOf(option.subjectCode + " " + option.courseNumber) === -1;
+				}).map(function (option) {
+					option.isSuggested = true;
+					return option;
+				});
+
+				return filteredResults.slice(0, 20);
+			}, function (err) {
+				$rootScope.$emit('toast', { message: "Could not search courses.", type: "ERROR" });
+			});
+		};
 
 		$scope.searchCourses = function (termContainer, query) {
-			termContainer.preferenceOptions.forEach(function(course) {
+			// Filter out existing options from list
+			var optionsToFilter = termContainer.preferences.map(function(option) {
+				return option.uniqueIdentifier || option.description;
+			});
+			var uniquePreferenceOptions = termContainer.preferenceOptions.filter(function (option) {
+				return (optionsToFilter.indexOf(option.uniqueIdentifier || option.description) === -1);
+			});
+
+			uniquePreferenceOptions.forEach(function(course) {
 				if (course.subjectCode) {
 					course.description = course.subjectCode + " " + course.courseNumber + " " + course.title;
 				}
@@ -33,7 +66,12 @@ class TeachingCallFormCtrl {
 
 			// Display courses already on the schedule
 			if (!query || query.length == 0) {
-				return termContainer.preferenceOptions;
+				var courses = angular.copy(uniquePreferenceOptions);
+				var groupedResults = _.chain(courses)
+					.groupBy(function(course) { return course.subjectCode; })
+					.map(function(groupedCourses) { groupedCourses[0].firstInGroup = true; return groupedCourses; }).flatten().value();
+				groupedResults.push({ description: "Suggest a Course ...", suggestACourse: true });
+				return groupedResults;
 			}
 
 			var optimizedQuery = $scope.optimizeQueryFormat(query);
@@ -52,10 +90,17 @@ class TeachingCallFormCtrl {
 					]
 				};
 
-				var fuse = new Fuse(termContainer.preferenceOptions, options);
+				var fuse = new Fuse(uniquePreferenceOptions, options);
 				var results = fuse.search(optimizedQuery);
 
-				return results;
+				results = angular.copy(results);
+				var groupedResults = _.chain(results)
+					.groupBy(function(result) { return result.subjectCode; })
+					.map(function(groupedCourses) { groupedCourses[0].firstInGroup = true; return groupedCourses; }).flatten().value();
+
+				// Append Suggest a Course option
+				groupedResults.push({ description: "Suggest a Course ...", suggestACourse: true });
+				return groupedResults;
 			}
 		};
 
@@ -115,15 +160,25 @@ class TeachingCallFormCtrl {
 			elements[0].focus();
 			elements[0].blur();
 
+			if (preference.suggestACourse) {
+				$scope.toggleSuggestCourse();
+				return;
+			}
+
 			var courseNumber, subjectCode, sectionGroup;
 			var scheduleId = $scope.view.state.scheduleId;
 
 			// Preference is based off a new course (from Data Warehouse)
-			if (preference && preference.isSuggested == true) {
+			if (preference && preference.isSuggested === true) {
 				preference.suggestedEffectiveTermCode = preference.effectiveTermCode;
 				preference.suggestedSubjectCode = preference.subjectCode;
 				preference.suggestedCourseNumber = preference.courseNumber;
 				preference.suggestedTitle = preference.title;
+				preference.scheduleId = $scope.view.state.scheduleId;
+				preference.instructorId = $scope.view.state.instructorId;
+				preference.termCode = term;
+
+				$scope.toggleSuggestCourse();
 			}
 
 			TeachingCallFormActionCreators.addPreference(preference, term);
