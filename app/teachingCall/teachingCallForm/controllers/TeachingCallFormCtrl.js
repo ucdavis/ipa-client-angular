@@ -52,11 +52,7 @@ class TeachingCallFormCtrl {
 				return option.uniqueIdentifier || option.description;
 			});
 			var uniquePreferenceOptions = termContainer.preferenceOptions.filter(function (option) {
-				if (option.uniqueIdentifier) {
-					return (optionsToFilter.indexOf(option.uniqueIdentifier) === -1);
-				} else {
-					return (optionsToFilter.indexOf(option.description) === -1);
-				}
+				return (optionsToFilter.indexOf(option.uniqueIdentifier || option.description) === -1);
 			});
 
 			uniquePreferenceOptions.forEach(function(course) {
@@ -69,8 +65,8 @@ class TeachingCallFormCtrl {
 			if (!query || query.length == 0) {
 				var courses = angular.copy(uniquePreferenceOptions);
 				var groupedResults = _.chain(courses)
-					.groupBy(function(course) {return course.subjectCode;})
-					.map(function(g) {g[0].firstInGroup = true; return g;}).flatten().value();
+					.groupBy(function(course) { return course.subjectCode; })
+					.map(function(groupedCourses) { groupedCourses[0].firstInGroup = true; return groupedCourses; }).flatten().value();
 				groupedResults.push({ description: "Suggest a Course ...", suggestACourse: true });
 				return groupedResults;
 			}
@@ -96,8 +92,8 @@ class TeachingCallFormCtrl {
 
 				results = angular.copy(results);
 				var groupedResults = _.chain(results)
-					.groupBy(function(result) {return result.subjectCode;})
-					.map(function(g) {g[0].firstInGroup = true; return g;}).flatten().value();
+					.groupBy(function(result) { return result.subjectCode; })
+					.map(function(groupedCourses) { groupedCourses[0].firstInGroup = true; return groupedCourses; }).flatten().value();
 
 				// Append Suggest a Course option
 				groupedResults.push({ description: "Suggest a Course ...", suggestACourse: true });
