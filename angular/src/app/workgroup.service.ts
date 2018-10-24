@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class WorkgroupService {
-  private apiUrl: string = "http://localhost:4200";
+  private apiUrl: string = "http://localhost:8080";
 
   constructor(private http: HttpClient) {}
 
@@ -12,6 +12,6 @@ export class WorkgroupService {
       withCredentials: true
     };
 
-    return this.http.get(this.apiUrl + "/workgroups", options);
+    return this.http.get(this.apiUrl + "/api/workgroups", options);
   }
 }
