@@ -188,8 +188,6 @@ class TeachingCallFormStateService {
 						});
 	
 						preferences.splice(removePreferenceIndex, 1);
-						preferenceOptions.push(preferenceOfInterest);
-						preferenceOptions = self.sortCourses(preferenceOptions);
 	
 						// Calculate Checklist values
 						this.calculateChecklist(pageState);
@@ -426,12 +424,13 @@ class TeachingCallFormStateService {
 						newPreference.isSuggested = true;
 						newPreference.courseNumber = slotAssignment.suggestedCourseNumber;
 						newPreference.subjectCode = slotAssignment.suggestedSubjectCode;
+						newPreference.title = slotAssignment.suggestedTitle;
 						newPreference.effectiveTermCode = slotAssignment.suggestedEffectiveTermCode;
 						newPreference.description = newPreference.subjectCode + " " + newPreference.courseNumber;
-	
 						newPreference.suggestedCourseNumber = slotAssignment.suggestedCourseNumber;
 						newPreference.suggestedSubjectCode = slotAssignment.suggestedSubjectCode;
 						newPreference.suggestedEffectiveTermCode = slotAssignment.suggestedEffectiveTermCode;
+						newPreference.suggestedTitle = slotAssignment.suggestedTitle;
 	
 						preferences.push(newPreference);
 					}
