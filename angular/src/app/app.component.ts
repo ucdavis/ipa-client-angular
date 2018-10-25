@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { WorkgroupService } from './workgroup.service';
 import { Workgroup } from './workgroup.model';
+import { MatTableDataSource, Sort, MatPaginator } from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -9,19 +10,22 @@ import { Workgroup } from './workgroup.model';
 })
 export class AppComponent {
   title = 'angular';
-  workgroups: Workgroup[] = [];
-  workgroup: Workgroup;
+  workgroups: MatTableDataSource<Workgroup>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'code'
+  ];
 
   constructor(private workgroupService: WorkgroupService) {}
 
   ngOnInit() {
     this.workgroupService.getWorkgroups().subscribe((data: Workgroup[]) => {
-      let workgroups: Workgroup[] = data;
-      this.workgroups = data;
+      this.workgroups = new MatTableDataSource<Workgroup>(data);
+      this.workgroups.paginator = this.paginator;
     });
-  }
-
-  test () {
-    console.log("test");
   }
 }
