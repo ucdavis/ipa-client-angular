@@ -31,6 +31,7 @@ export class WorkgroupService {
         let explodedLastActive = jsonLastActive.split(",");
         let workgroupId = explodedLastActive[0];
         let date = explodedLastActive[1].split(" ")[0];
+        date = date != "null" ? date : ""; 
         lastAccessHash[workgroupId] = date;
       });
 
