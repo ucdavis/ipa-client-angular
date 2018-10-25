@@ -129,6 +129,10 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 				scope.supportCallConfigData.collectAvailabilityByCrn = !scope.supportCallConfigData.collectAvailabilityByCrn;
 			};
 	
+			scope.toggleCollectLanguageProficiencies = function () {
+				scope.supportCallConfigData.collectLanguageProficiencies = !scope.supportCallConfigData.collectLanguageProficiencies;
+			};
+	
 			scope.toggleCollectEligibilityConfirmation = function () {
 				if (scope.supportCallConfigData.collectEligibilityConfirmation) {
 					scope.supportCallConfigData.collectEligibilityConfirmation = false;
