@@ -10,7 +10,6 @@ import { orderBy } from 'lodash';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular';
   workgroups: MatTableDataSource<Workgroup>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
