@@ -24,11 +24,10 @@ class TeachingCallStatusCtrl {
 
 		$rootScope.$on('teachingCallStatusStateChanged', function (event, data) {
 			$scope.view.state = data;
-			console.log(data);
 
 			TeachingCallStatusService.getCourses($scope.workgroupId, $scope.year)
 				.then(function (res) {
-					res.courses.length === 0 ? $scope.view.state.isCourseTableEmpty = true : $scope.view.state.isCourseTableEmpty = false;
+					$scope.view.state.scheduleHasCourses = (res.courses.length === 0);
 				});
 		});
 
