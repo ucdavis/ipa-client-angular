@@ -15,9 +15,6 @@ class TeachingCallStatusService {
 			},
 			removeInstructorFromTeachingCall: function (teachingCallReceiptId) {
 				return ApiService.delete("/api/teachingCallView/teachingCallReceipts/" + teachingCallReceiptId);
-			},
-			getCourses: function (workgroupId, year) {
-				return ApiService.get("/api/courseView/workgroups/" + workgroupId + "/years/" + year);
 			}
 		};
 	}

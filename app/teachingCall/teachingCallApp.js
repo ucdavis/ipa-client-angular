@@ -14,6 +14,8 @@ import TeachingCallStatusActionCreators from './teachingCallStatus/services/teac
 import TeachingCallStatusService from './teachingCallStatus/services/teachingCallStatusService.js';
 import TeachingCallStatusStateService from './teachingCallStatus/services/teachingCallStatusStateService.js';
 
+import CourseService from './../course/services/courseService.js';
+
 // Shared services
 import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
@@ -74,6 +76,7 @@ const teachingCallApp = angular.module("teachingCallApp", dependencies)
 .service('TeachingCallStatusActionCreators', TeachingCallStatusActionCreators)
 .service('TeachingCallStatusService', TeachingCallStatusService)
 .service('TeachingCallStatusStateService', TeachingCallStatusStateService)
+.service('CourseService', CourseService)
 .service('ApiService', ApiService)
 .service('TermService', TermService)
 .service('AuthService', AuthService)
