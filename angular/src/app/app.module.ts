@@ -6,10 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { AuthInterceptor } from './auth.interceptor';
-import { WorkgroupService } from './workgroup.service';
-
 import { MaterialModule } from './material.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,10 +19,7 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     HttpClientModule,
     MaterialModule,
-  ],
-  providers: [
-    WorkgroupService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    SharedModule
   ],
   bootstrap: [AppComponent]
 })

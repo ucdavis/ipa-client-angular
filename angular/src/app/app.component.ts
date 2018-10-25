@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { WorkgroupService } from './workgroup.service';
-import { Workgroup } from './workgroup.model';
+import { WorkgroupService } from './shared/services/workgroup.service';
+import { Workgroup } from './shared/models/workgroup.model';
 import { MatTableDataSource, Sort, MatPaginator } from '@angular/material';
 import { orderBy } from 'lodash';
 
