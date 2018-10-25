@@ -9,12 +9,14 @@ import { Workgroup } from './workgroup.model';
 })
 export class AppComponent {
   title = 'angular';
-  workgroups: Workgroup[];
+  workgroups: Workgroup[] = [];
+  workgroup: Workgroup;
 
   constructor(private workgroupService: WorkgroupService) {}
 
   ngOnInit() {
-    this.workgroupService.getWorkgroups().subscribe(data => {
+    this.workgroupService.getWorkgroups().subscribe((data: Workgroup[]) => {
+      let workgroups: Workgroup[] = data;
       this.workgroups = data;
     });
   }
