@@ -7,18 +7,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class WorkgroupService {
   private apiUrl: string = "http://localhost:8080";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.fetchWorkgroups();
+  }
 
   private _workgroups: BehaviorSubject<Workgroup[]> = new BehaviorSubject([]);
   public readonly workgroups$: Observable<Workgroup[]> = this._workgroups.asObservable();
 
   getWorkgroups(): Observable<Workgroup[]> {
-    // Trigger fetch if workgroups are empty
-    // Assumes there should be at least 'some' workgroups
-    this.workgroups$.subscribe(users => { if (!users.length) {
-      this.fetchWorkgroups();
-    }});
-
     return this.workgroups$;
   }
 

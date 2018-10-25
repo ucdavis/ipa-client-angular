@@ -23,7 +23,7 @@ export class AppComponent {
   constructor(private workgroupService: WorkgroupService) {}
 
   ngOnInit() {
-    this.workgroupService.getWorkgroups().subscribe((data: Workgroup[]) => {
+    this.workgroupService.workgroups$.subscribe((data: Workgroup[]) => {
       this.workgroups = new MatTableDataSource<Workgroup>(data);
       this.workgroups.paginator = this.paginator;
     });
