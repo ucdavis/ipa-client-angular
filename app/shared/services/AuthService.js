@@ -14,6 +14,7 @@ class AuthService {
 			validateToken: function (token) {
 				var self = this;
 				var deferred = $q.defer();
+
 				$http.post(serverRoot + '/login', { token: token }, { withCredentials: true }).then(function (response) {
 					// Token may be null if we are redirecting
 					if (response.data != null && response.data.token !== null) {
@@ -29,7 +30,6 @@ class AuthService {
 						localStorage.removeItem('JWT');
 						localStorage.removeItem('currentUser');
 						$window.location.href = response.data.redirect + "?ref=" + $location.absUrl();
-
 						deferred.reject(response);
 					}
 				}, function (error) {
@@ -124,6 +124,7 @@ class AuthService {
 			},
 			validateState: function (data, workgroupId, year, ignoreFallBackUrl) {
 				var currentUser = new CurrentUser(data.displayName, data.userRoles);
+
 				currentUser.setDisplayName(data.displayName);
 				currentUser.setLoginId(data.loginId);
 				currentUser.setRealUserDisplayName(data.realUserDisplayName);
@@ -139,34 +140,39 @@ class AuthService {
 					this.fallbackToDefaultUrl();
 					$rootScope.$emit('sharedStateSet', this.getSharedState());
 					return false;
-				} else {
-					var matchingRole = _.findWhere(data.userRoles, { workgroupId: Number(workgroupId) });
-					if (matchingRole) {
-						// User has access to requested page, let them in
-						var workgroup = { id: workgroupId, name: matchingRole.workgroupName };
-						this.setSharedState(workgroup, year);
-					} else if (currentUser.isAdmin()) {
-						// If the user is an admin, the current workgroup might have been set
-						// in the admin page, and we don't have information about the name of
-						// the workgroup in the payload. So, set the workgroupName to whatever
-						// is already in localStorage if any.
-						var currentWorkgroup = this.getCurrentWorkgroup();
-						var workgroupName = (currentWorkgroup.id == Number(workgroupId)) ? currentWorkgroup.name : '';
-						var workgroup = { id: workgroupId, name: workgroupName };
-						this.setSharedState(workgroup, year);
-					} else {
-						// User is neither an admin nor has access to requested workgroup. redirect to access denied
-						$log.error("User " + data.displayName + " does not have access to workgroupId " + workgroupId);
-						$window.location.href = "/access-denied.html";
-						return false;
-					}
 				}
 
-				return true;
+				var matchingRole = _.findWhere(data.userRoles, { workgroupId: Number(workgroupId) });
+
+				if (matchingRole) {
+					// User has access to requested page, let them in
+					var workgroup = { id: workgroupId, name: matchingRole.workgroupName };
+					this.setSharedState(workgroup, year);
+
+					return true;
+				} else if (currentUser.isAdmin()) {
+					// If the user is an admin, the current workgroup might have been set
+					// in the admin page, and we don't have information about the name of
+					// the workgroup in the payload. So, set the workgroupName to whatever
+					// is already in localStorage if any.
+					var currentWorkgroup = this.getCurrentWorkgroup();
+					var workgroupName = (currentWorkgroup.id == Number(workgroupId)) ? currentWorkgroup.name : '';
+					var workgroup = { id: workgroupId, name: workgroupName };
+					this.setSharedState(workgroup, year);
+
+					return true;
+				} else {
+					// User is neither an admin nor has access to requested workgroup. redirect to access denied
+					$log.error("User " + data.displayName + " does not have access to workgroupId " + workgroupId);
+					$window.location.href = "/access-denied.html";
+
+					return false;
+				}
 			},
 
 			/**
 			 * Validates the given JWT token with the backend.
+			 * Also performs various login actions like setting Google Analytics user ID.
 			 */
 			validate: function (ignoreFallBackUrl) {
 				var token = localStorage.getItem('JWT');
@@ -179,6 +185,10 @@ class AuthService {
 					// Success
 					function (response) {
 						if (scope.validateState(response.data, workgroupId, year, ignoreFallBackUrl)) {
+							// Log the user to Google Analytics (only in production mode)
+							if(ipaRunningMode === 'production') {
+								ga('set', 'userId', response.data.userTrackingId);
+							}
 							deferred.resolve();
 						} else {
 							deferred.resolve();

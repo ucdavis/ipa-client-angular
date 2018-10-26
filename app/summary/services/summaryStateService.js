@@ -512,7 +512,6 @@ class SummaryStateService {
 				scope._state = newState;
 	
 				$rootScope.$emit('summaryStateChanged', scope._state);
-				$log.debug(newState);
 			}
 		};	
 	}
