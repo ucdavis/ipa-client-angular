@@ -13,7 +13,7 @@ let languageProficiencies = function ($rootScope, StudentFormActions) {
 
       scope.selectProficiency = function (option) {
         scope.selectedProficiency = scope.languageProficiencies[option.id];
-      }
+      };
 
       scope.languageProficiencies = [
         {
