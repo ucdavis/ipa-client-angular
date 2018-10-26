@@ -24,8 +24,7 @@ export class WorkgroupService {
     };
 
     this.http.put(this.apiUrl + "/api/adminView/workgroups/" + workgroup.id, workgroup, options).subscribe( (newWorkgroup: any) => {
-      let workgroups = this._workgroups.getValue().map(function(slotWorkgroup) { return newWorkgroup.id == slotWorkgroup.id ? newWorkgroup : slotWorkgroup; });
-      this._workgroups.next(workgroups);
+      // TODO: notify success or fail
     });
   }
 
@@ -47,7 +46,7 @@ export class WorkgroupService {
       });
 
       // Attach lastActiveDate
-      let workgroups = data.workgroups.map(workgroup => {
+      let workgroups: Workgroup[] = data.workgroups.map( (workgroup: Workgroup) => {
         workgroup.lastAccessed = lastAccessHash[workgroup.id];
         return workgroup;
       });
