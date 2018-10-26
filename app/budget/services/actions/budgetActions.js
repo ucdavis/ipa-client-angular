@@ -259,6 +259,7 @@ class BudgetActions {
 				let term = BudgetReducers._state.ui.termNav.activeTerm;
 				let year = BudgetReducers._state.ui.year;
 
+				// When SectionGroupCost is not associated with a scheduled course, it will already have its effectiveTermCode
 				if (!sectionGroupCost.effectiveTermCode) {
 					var sectionGroup = BudgetReducers._state.sectionGroups.list[sectionGroupCost.sectionGroupId];
 					var course = BudgetReducers._state.courses.list[sectionGroup.courseId];
