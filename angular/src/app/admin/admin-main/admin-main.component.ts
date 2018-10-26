@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { WorkgroupService } from '../../shared/services/workgroup.service';
 import { Workgroup } from '../../shared/models/workgroup.model';
-import { MatTableDataSource, Sort, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatSnackBar, Sort, MatPaginator } from '@angular/material';
 import { orderBy } from 'lodash';
 
 @Component({
@@ -20,7 +20,7 @@ export class AdminMainComponent {
     'lastAccessed'
   ];
 
-  constructor(private workgroupService: WorkgroupService) {}
+  constructor(private workgroupService: WorkgroupService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.workgroupService.workgroups$.subscribe((data: Workgroup[]) => {

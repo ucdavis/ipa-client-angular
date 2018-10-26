@@ -4,6 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
 
 import { WorkgroupService } from './services/workgroup.service';
+import { NotificationService } from './services/notification.service';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { WorkgroupService } from './services/workgroup.service';
   ],
   providers: [
     WorkgroupService,
+    NotificationService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 })

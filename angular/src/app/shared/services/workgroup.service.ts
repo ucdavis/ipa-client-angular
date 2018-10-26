@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Workgroup } from '../models/workgroup.model';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { NotificationService } from './notification.service';
 
 @Injectable({ providedIn: 'root' })
 export class WorkgroupService {
   private apiUrl: string = "http://localhost:8080";
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private notificationService: NotificationService) {
     this.fetchWorkgroups();
   }
 
@@ -24,7 +25,7 @@ export class WorkgroupService {
     };
 
     this.http.put(this.apiUrl + "/api/adminView/workgroups/" + workgroup.id, workgroup, options).subscribe( (newWorkgroup: any) => {
-      // TODO: notify success or fail
+      this.notificationService.subj_notification.next('Workgroup saved');
     });
   }
 

@@ -8,7 +8,10 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { SharedModule } from './shared/shared.module';
 import { AdminModule } from './admin/admin.module';
+
 import { AdminMainComponent } from './admin/admin-main/admin-main.component';
+import { NotificationService } from './shared/services/notification.service';
+
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
@@ -25,6 +28,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     AdminModule,
     FormsModule,
     ReactiveFormsModule
+  ],
+  providers: [
+    NotificationService
   ],
   bootstrap: [AppComponent]
 })
