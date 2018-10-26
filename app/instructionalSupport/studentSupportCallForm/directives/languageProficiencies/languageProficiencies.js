@@ -1,6 +1,6 @@
 import './languageProficiencies.css';
 
-let languageProficiencies = function (StudentFormActions) {
+let languageProficiencies = function ($rootScope, StudentFormActions) {
   return {
     restrict: 'E',
     template: require('./languageProficiencies.html'),
@@ -9,10 +9,6 @@ let languageProficiencies = function (StudentFormActions) {
       supportCallResponse: '<'
     },
     link: function (scope, element, attrs) {
-      scope.updateStudentQualifications = function () {
-        StudentFormActions.updateStudentQualifications(scope.supportCallResponse);
-      };
-
       scope.languageProficiencies = [
         {
           id: 0,

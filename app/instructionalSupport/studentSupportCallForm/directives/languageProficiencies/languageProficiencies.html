@@ -1,10 +1,10 @@
-<div ng-if="supportCallResponse.collectLanguageProficiencies">
+<div ng-show="supportCallResponse.collectLanguageProficiencies">
   <h5>Language Proficiencies</h5>
   <ipa-dropdown
     expanded="expanded"
     button-text="'Select One'"
     is-wide="true"
-    items="languagePreferences"
+    items="languageProficiencies"
     style="'minimal'">
   </ipa-dropdown>
 </div>
