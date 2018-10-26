@@ -185,7 +185,7 @@ class ScheduleCostCalculations {
         if (sectionGroupCost.instructorTypeId > 0) {
           var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroupCost.instructorTypeId];
 
-          if (instructorTypeCost > 0) {
+          if (instructorTypeCost) {
             sectionGroupCost.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
             sectionGroupCost.overrideInstructorCostSource = "instructor type";
             sectionGroupCost.overrideInstructorCostSourceDescription = instructorTypeCost.description + " category";
