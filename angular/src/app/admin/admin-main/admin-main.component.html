@@ -1,0 +1,33 @@
+<div class="main-content" matSort (matSortChange)="sortData($event)">
+  <table mat-table [dataSource]="workgroups" class="workgroup-table mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let workgroup"> {{ workgroup.id }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef start="desc" mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let workgroup; let i = index">
+        {{ workgroup.name }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastAccessed">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Accessed </th>
+      <td mat-cell *matCellDef="let workgroup; let i = index">
+        {{ workgroup.lastAccessed }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef> Code </th>
+      <td mat-cell *matCellDef="let workgroup"> {{ workgroup.code }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+<mat-paginator [pageSize]="10"
+               [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
+</div>
+
+<router-outlet></router-outlet>
