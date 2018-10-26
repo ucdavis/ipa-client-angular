@@ -30,8 +30,8 @@ import studentFormReview from './studentSupportCallForm/directives/studentFormRe
 import studentPreferences from './studentSupportCallForm/directives/studentPreferences/studentPreferences.js';
 import studentPreferenceTable from './studentSupportCallForm/directives/studentPreferences/studentPreferenceTable/studentPreferenceTable.js';
 import studentPreferenceSelector from './studentSupportCallForm/directives/studentPreferences/studentPreferenceTable/studentPreferenceSelector/studentPreferenceSelector.js';
-
 import studentQualifications from './studentSupportCallForm/directives/studentQualifications/studentQualifications.js';
+import languageProficiencies from './studentSupportCallForm/directives/languageProficiencies/languageProficiencies.js';
 
 // Dependencies
 var dependencies = [
@@ -104,6 +104,7 @@ const instructionalSupportApp = angular.module("instructionalSupportApp", depend
 .directive('studentPreferenceTable', studentPreferenceTable)
 .directive('studentPreferenceSelector', studentPreferenceSelector)
 .directive('studentQualifications', studentQualifications)
+.directive('languageProficiencies', languageProficiencies)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	ADD_ASSIGNMENT_SLOTS: "ADD_ASSIGNMENT_SLOTS",
