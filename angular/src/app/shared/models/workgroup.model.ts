@@ -1,5 +1,5 @@
 export interface Workgroup {
-  workgroupId: number;
+  id: number;
   name: string;
   code: string;
   lastUpdated: Date;
