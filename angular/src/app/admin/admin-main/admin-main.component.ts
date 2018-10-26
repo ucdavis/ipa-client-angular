@@ -11,7 +11,6 @@ import { orderBy } from 'lodash';
 })
 export class AdminMainComponent {
   workgroups: MatTableDataSource<Workgroup>;
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   displayedColumns: string[] = [
@@ -35,5 +34,9 @@ export class AdminMainComponent {
     let orderedData = orderBy(data, [sort.active], [sort.direction, 'asc']);
     this.workgroups = new MatTableDataSource(orderedData);
     this.workgroups.paginator = this.paginator;
+  }
+
+  updateWorkgroupName(workgroup) {
+    this.workgroupService.updateWorkgroup(workgroup);
   }
 }

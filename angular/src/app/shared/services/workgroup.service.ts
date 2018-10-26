@@ -18,6 +18,17 @@ export class WorkgroupService {
     return this.workgroups$;
   }
 
+  updateWorkgroup(workgroup): void {
+    let options: any = {
+      withCredentials: true
+    };
+
+    this.http.put(this.apiUrl + "/api/adminView/workgroups/" + workgroup.id, workgroup, options).subscribe( (newWorkgroup: any) => {
+      let workgroups = this._workgroups.getValue().map(function(slotWorkgroup) { return newWorkgroup.id == slotWorkgroup.id ? newWorkgroup : slotWorkgroup; });
+      this._workgroups.next(workgroups);
+    });
+  }
+
   fetchWorkgroups(): any {
     let options: any = {
       withCredentials: true

@@ -9,7 +9,6 @@ import { AdminMainComponent } from './admin-main/admin-main.component';
     SharedModule
   ],
   providers: [
-    AdminMainComponent
   ]
 })
 export class AdminModule { }
