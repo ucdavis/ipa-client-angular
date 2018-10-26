@@ -2,9 +2,10 @@
   <h5>Language Proficiencies</h5>
   <ipa-dropdown
     expanded="expanded"
-    button-text="'Select One'"
+    button-text="selectedProficiency.description || 'Select One'"
     is-wide="true"
     items="languageProficiencies"
-    style="'minimal'">
+    style="'minimal'"
+    select-item="selectProficiency(item)">
   </ipa-dropdown>
 </div>

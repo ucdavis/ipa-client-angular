@@ -9,6 +9,12 @@ let languageProficiencies = function ($rootScope, StudentFormActions) {
       supportCallResponse: '<'
     },
     link: function (scope, element, attrs) {
+      scope.selectedProficiency;
+
+      scope.selectProficiency = function (option) {
+        scope.selectedProficiency = scope.languageProficiencies[option.id];
+      }
+
       scope.languageProficiencies = [
         {
           id: 0,
