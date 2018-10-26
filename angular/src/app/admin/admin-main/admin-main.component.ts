@@ -36,7 +36,7 @@ export class AdminMainComponent {
     this.workgroups.paginator = this.paginator;
   }
 
-  updateWorkgroupName(workgroup) {
+  updateWorkgroup(workgroup) {
     this.workgroupService.updateWorkgroup(workgroup);
   }
 }
