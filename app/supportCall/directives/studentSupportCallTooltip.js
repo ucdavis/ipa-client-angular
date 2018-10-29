@@ -18,6 +18,7 @@ let studentSupportCallTooltip = function ($document, $timeout) {
 				collectReaderPreferences = attrs.collectReaderPreferences || false,
 				collectTeachingAssistantPreferences = attrs.collectTeachingAssistantPreferences || false,
 				collectTeachingQualifications = attrs.collectTeachingQualifications || false,
+				collectLanguageProficiencies = attrs.collectLanguageProficiencies || false,
 				title = attrs.title || "Confirm",
 				btnClass = attrs.btnClass || "btn-danger",
 				placement = attrs.placement || "bottom";
@@ -54,6 +55,10 @@ let studentSupportCallTooltip = function ($document, $timeout) {
 				collectTeachingQualifications = (collectTeachingQualifications == "true");
 			}
 
+			if (typeof collectLanguageProficiencies === 'string') {
+				collectLanguageProficiencies = (collectLanguageProficiencies == "true");
+			}
+
 			var allowSubmissionAfterDueDateDescription = allowSubmissionAfterDueDate ? 'Yes' : 'No';
 
 			var collectAssociateInstructorPreferencesDescription = collectAssociateInstructorPreferences ? 'Yes' : 'No';
@@ -63,6 +68,7 @@ let studentSupportCallTooltip = function ($document, $timeout) {
 			var collectReaderPreferencesDescription = collectReaderPreferences ? 'Yes' : 'No';
 			var collectTeachingAssistantPreferencesDescription = collectTeachingAssistantPreferences ? 'Yes' : 'No';
 			var collectTeachingQualificationsDescription = collectTeachingQualifications ? 'Yes' : 'No';
+			var collectLanguageProficienciesDescription = collectLanguageProficiencies ? 'Yes' : 'No';
 
 
 			var html = "<div id=\"button-" + buttonId + "\" style=\"position: relative; width: 250px;\">";
@@ -76,6 +82,7 @@ let studentSupportCallTooltip = function ($document, $timeout) {
 			html += '<p class="confirmbutton-msg"><b>Collect reader preferences</b>: ' + collectReaderPreferencesDescription + '</p>';
 			html += '<p class="confirmbutton-msg"><b>Collect teaching assistant preferences</b>: ' + collectTeachingAssistantPreferencesDescription + '</p>';
 			html += '<p class="confirmbutton-msg"><b>Collect teaching qualifications</b>: ' + collectTeachingQualificationsDescription + '</p>';
+			html += '<p class="confirmbutton-msg"><b>Collect language proficiencies</b>: ' + collectLanguageProficienciesDescription + '</p>';
 
 			if (message && message.length > 0) {
 				html += '<p class="confirmbutton-msg"><b>Email:</b> ' + message + '</p>';
