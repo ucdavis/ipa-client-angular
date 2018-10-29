@@ -13,3 +13,5 @@ var dwToken = 'secretToken';
  * Debugger mode
  */
 var debuggerEnabled = false;
+
+var ipaRunningMode = 'development';
