@@ -20,6 +20,9 @@ import DwService from './../shared/services/DwService.js';
 
 // Directives
 import instructorPreferenceSelector from './instructorSupportCallForm/directives/instructorPreferenceSelector/instructorPreferenceSelector.js';
+import studentFormDetail from './instructorSupportCallForm/directives/studentFormDetail/studentFormDetail.js';
+import instructorPreferences from './instructorSupportCallForm/directives/instructorPreferences/instructorPreferences.js';
+
 import confirmEligible from './studentSupportCallForm/directives/confirmEligible/confirmEligible.js';
 import modalPreferenceComments from './studentSupportCallForm/directives/modalPreferenceComments/modalPreferenceComments.js';
 import studentAvailabilities from './studentSupportCallForm/directives/studentAvailabilities/studentAvailabilities.js';
@@ -105,6 +108,8 @@ const instructionalSupportApp = angular.module("instructionalSupportApp", depend
 .directive('studentPreferenceSelector', studentPreferenceSelector)
 .directive('studentQualifications', studentQualifications)
 .directive('languageProficiencies', languageProficiencies)
+.directive('studentFormDetail', studentFormDetail)
+.directive('instructorPreferences', instructorPreferences)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	ADD_ASSIGNMENT_SLOTS: "ADD_ASSIGNMENT_SLOTS",
@@ -138,7 +143,8 @@ const instructionalSupportApp = angular.module("instructionalSupportApp", depend
 	BEGIN_FETCH_ACTIVITIES_BY_CRN: "BEGIN_FETCH_ACTIVITIES_BY_CRN",
 	COMPLETE_FETCH_ACTIVITIES_BY_CRN: "COMPLETE_FETCH_ACTIVITIES_BY_CRN",
 	UPDATE_PREFERENCE_COMMENT_VALIDATION: "UPDATE_PREFERENCE_COMMENT_VALIDATION",
-	CLEAR_CRN_SEARCH: "CLEAR_CRN_SEARCH"
+	CLEAR_CRN_SEARCH: "CLEAR_CRN_SEARCH",
+	SELECT_COURSE: "SELECT_COURSE"
 });
 
 export default instructionalSupportApp;
