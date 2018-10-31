@@ -746,6 +746,7 @@ ol.sortable-list>li .term-preference-dropdown {
 .neon-dark-confirm-btn.disabled:active {
 	background-color: rgb(48, 54, 65);
 	color: white;
+	border: 1px none;
 }
 
 .teaching-call-complete-container {
