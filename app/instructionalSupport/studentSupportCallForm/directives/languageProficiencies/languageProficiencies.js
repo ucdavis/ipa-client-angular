@@ -9,10 +9,11 @@ let languageProficiencies = function ($rootScope, StudentFormActions) {
       supportCallResponse: '<'
     },
     link: function (scope, element, attrs) {
-      scope.selectedProficiency;
+      scope.selectLanguageProficiency = function (languageProficiency) {
+        scope.supportCallResponse.languageProficiency = languageProficiency.id;
+        StudentFormActions.updateSupportCallResponse(scope.supportCallResponse);
 
-      scope.selectProficiency = function (option) {
-        scope.selectedProficiency = scope.languageProficiencies[option.id];
+        scope.selectedLanguageProficiency = languageProficiency;
       };
 
       scope.languageProficiencies = [
