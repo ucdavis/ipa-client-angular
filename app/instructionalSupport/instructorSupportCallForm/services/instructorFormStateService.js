@@ -194,6 +194,7 @@ class InstructorFormStateService {
         // This is the 'view friendly' version of the store
         let newPageState = {};
         newPageState.supportCallResponse = angular.copy(scope._state.supportCallResponse);
+        newPageState.studentSupportCallResponses = angular.copy(action.payload.studentSupportCallResponses);
         newPageState.misc = angular.copy(scope._state.misc);
         newPageState.sectionGroups = InstructorFormSelectors.generateSectionGroups(
                                                                               scope._state.sectionGroups,

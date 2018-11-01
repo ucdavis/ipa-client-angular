@@ -8,7 +8,9 @@ let studentFormDetail = function ($rootScope) {
 		restrict: 'E',
 		template: require('./studentFormDetail.html'),
 		replace: true,
-		scope: false,
+		scope: {
+			studentSupportCallResponses: '='
+		},
 		link: function (scope, element, attrs) {
 			// do nothing
 		}
