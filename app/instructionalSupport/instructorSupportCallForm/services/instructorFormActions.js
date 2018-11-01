@@ -79,7 +79,9 @@ class InstructorFormActions {
           $rootScope.$emit('toast', { message: "Could not update preference.", type: "ERROR" });
         });
       },
-      deleteInstructorPreference: function (preference, studentPreferences) {
+      deleteInstructorPreference: function (preference) {
+        var studentPreferences = InstructorFormStateService._state.studentPreferences;
+
         InstructorFormService.deleteInstructorPreference(preference.id).then(function (payload) {
           $rootScope.$emit('toast', { message: "Removed Preference", type: "SUCCESS" });
           var action = {

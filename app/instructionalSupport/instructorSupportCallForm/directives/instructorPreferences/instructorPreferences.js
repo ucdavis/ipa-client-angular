@@ -3,7 +3,7 @@ import './instructorPreferences.css';
 /**
  * Provides the main course table in the Courses View
  */
-let instructorPreferences = function ($rootScope) {
+let instructorPreferences = function ($rootScope, InstructorFormActions) {
 	return {
 		restrict: 'E',
 		template: require('./instructorPreferences.html'),
@@ -12,6 +12,13 @@ let instructorPreferences = function ($rootScope) {
       sectionGroup: '='
     },
 		link: function (scope, element, attrs) {
+      scope.addPreference = function(sectionGroupId, supportStaffId) {
+        InstructorFormActions.addInstructorPreference(sectionGroupId, supportStaffId);
+      };
+
+      scope.deleteInstructorPreference = function(preference) {
+        InstructorFormActions.deleteInstructorPreference(preference);
+      };
 		}
 	};
 };
