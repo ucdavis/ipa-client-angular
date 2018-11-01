@@ -8,9 +8,10 @@ let instructorPreferences = function ($rootScope) {
 		restrict: 'E',
 		template: require('./instructorPreferences.html'),
 		replace: true,
-		scope: false,
+		scope: {
+      sectionGroup: '='
+    },
 		link: function (scope, element, attrs) {
-			// do nothing
 		}
 	};
 };

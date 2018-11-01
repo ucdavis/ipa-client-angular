@@ -61,15 +61,31 @@ class InstructorFormStateService {
 
             var allTabs = action.payload.sectionGroups.map(function(sectionGroup) {
               var course = courses[sectionGroup.courseId];
-              return course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern; });
+              return course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern;
+            });
+
+            var activeCourseId = action.payload.courses.length > 0 ? action.payload.courses[0].id : null;
+            var activeSectionGroupId = null;
+
+            if (activeCourseId) {
+              action.payload.sectionGroups.forEach(function(sectionGroup) {
+                if (sectionGroup.courseId == activeCourseId) {
+                  activeSectionGroupId = sectionGroup.id;
+                }
+              });
+            }
+
             misc = {
               allTabs: allTabs,
-              activeTab: allTabs.length > 0 ? allTabs[0] : null
+              activeTab: allTabs.length > 0 ? allTabs[0] : null,
+              activeSectionGroupId: activeSectionGroupId
             };
+
             misc.scheduleId = action.payload.scheduleId;
             return misc;
             case ActionTypes.SELECT_COURSE:
               misc.activeTab = action.payload.activeTab;
+              misc.activeSectionGroupId = action.payload.activeSectionGroupId
               return misc;
           default:
             return misc;

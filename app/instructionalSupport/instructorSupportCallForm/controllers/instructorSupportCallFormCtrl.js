@@ -32,6 +32,7 @@ class InstructorSupportCallFormCtrl {
     $scope.listenersActive = false;
 
     $rootScope.$on('instructorFormStateChanged', function (event, data) {
+      $scope.activeSectionGroup = data.sectionGroups.list[data.misc.activeSectionGroupId];
       $scope.view.state = data;
       console.log(data);
     });

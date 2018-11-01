@@ -25,10 +25,31 @@ class InstructorFormActions {
         });
       },
       selectCourse: function (tab) {
+        var sectionGroups = InstructorFormStateService._state.sectionGroups;
+        var courses = InstructorFormStateService._state.courses;
+
+        var activeCourseId = null;
+        courses.ids.forEach(function(courseId) {
+          var course = courses.list[courseId];
+          var courseKey = course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern;
+          if (courseKey == tab) {
+            activeCourseId = course.id;
+          }
+        });
+
+        var activeSectionGroupId = null;
+        sectionGroups.ids.forEach(function(sectionGroupId) {
+          var sectionGroup = sectionGroups.list[sectionGroupId];
+          if (sectionGroup.courseId == activeCourseId) {
+            activeSectionGroupId = sectionGroup.id;
+          }
+        });
+
         InstructorFormStateService.reduce({
           type: ActionTypes.SELECT_COURSE,
           payload:  {
-            activeTab: tab
+            activeTab: tab,
+            activeSectionGroupId: activeSectionGroupId
           }
         });
       },

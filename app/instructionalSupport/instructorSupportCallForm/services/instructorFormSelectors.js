@@ -3,9 +3,7 @@ class InstructorFormSelectors {
 		return {
 			generateSectionGroups: function (sectionGroups, supportStaff, studentPreferences, instructorPreferences, courses) {
 				var self = this;
-	
-				let newSectionGroups = [];
-	
+
 				sectionGroups.ids.forEach( function (sectionGroupId) {
 					var sectionGroup = sectionGroups.list[sectionGroupId];
 					// Add instructor preference data
@@ -16,14 +14,9 @@ class InstructorFormSelectors {
 	
 					// Add support staff data
 					sectionGroup = self.addEligibleSupportStaffToSectionGroup(sectionGroup, supportStaff, studentPreferences);
-	
-					newSectionGroups.push(sectionGroup);
 				});
-	
-				// Sort
-				newSectionGroups = _array_sortByProperty(newSectionGroups, ["subjectCode", "courseNumber"]);
-	
-				return newSectionGroups;
+		
+				return sectionGroups;
 			},
 	
 			// Blend the relevant course data into the sectionGroup
