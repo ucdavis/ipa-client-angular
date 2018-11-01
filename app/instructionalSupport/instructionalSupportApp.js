@@ -17,6 +17,7 @@ import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
 import DwService from './../shared/services/DwService.js';
+import SupportCallService from './../shared/services/SupportCallService';
 
 // Directives
 import instructorPreferenceSelector from './instructorSupportCallForm/directives/instructorPreferenceSelector/instructorPreferenceSelector.js';
@@ -95,6 +96,7 @@ const instructionalSupportApp = angular.module("instructionalSupportApp", depend
 .service('TermService', TermService)
 .service('AuthService', AuthService)
 .service('DwService', DwService)
+.service('SupportCallService', SupportCallService)
 .directive('instructorPreferenceSelector', instructorPreferenceSelector)
 .directive('confirmEligible', confirmEligible)
 .directive('modalPreferenceComments', modalPreferenceComments)

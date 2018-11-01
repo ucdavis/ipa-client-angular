@@ -1,6 +1,6 @@
 import './languageProficiencies.css';
 
-let languageProficiencies = function ($rootScope, StudentFormActions) {
+let languageProficiencies = function ($rootScope, StudentFormActions, SupportCallService) {
   return {
     restrict: 'E',
     template: require('./languageProficiencies.html'),
@@ -9,6 +9,11 @@ let languageProficiencies = function ($rootScope, StudentFormActions) {
       supportCallResponse: '<'
     },
     link: function (scope, element, attrs) {
+      scope.selectedLanguageProficiency = {
+        id: scope.supportCallResponse.languageProficiency,
+        description: SupportCallService.getLanguageProficiencyDescription(scope.supportCallResponse.languageProficiency),
+      };
+
       scope.selectLanguageProficiency = function (languageProficiency) {
         scope.supportCallResponse.languageProficiency = languageProficiency.id;
         StudentFormActions.updateSupportCallResponse(scope.supportCallResponse);
@@ -19,27 +24,27 @@ let languageProficiencies = function ($rootScope, StudentFormActions) {
       scope.languageProficiencies = [
         {
           id: 0,
-          description: "Undergraduate degree from an institution where English is the sole language of instruction",
+          description: SupportCallService.getLanguageProficiencyDescription(0),
           selected: false
         },
         {
           id: 1,
-          description: "Achieving a minimum score of 26 on the speaking subset of the TOEFL iBT",
+          description: SupportCallService.getLanguageProficiencyDescription(1),
           selected: false
         },
         {
           id: 2,
-          description: "Achieving a minimum score of 8 on the speaking subset of the IELTS",
+          description: SupportCallService.getLanguageProficiencyDescription(2),
           selected: false
         },
         {
           id: 3,
-          description: "Achieving a minimum score of 50 on the SPEAK",
+          description: SupportCallService.getLanguageProficiencyDescription(3),
           selected: false
         },
         {
           id: 4,
-          description: "Achieving a “Pass” on the TOEP",
+          description: SupportCallService.getLanguageProficiencyDescription(4),
           selected: false
         },
       ];
