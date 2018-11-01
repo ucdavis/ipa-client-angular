@@ -1,6 +1,6 @@
 import './staffComments.css';
 
-let staffComments = function ($rootScope) {
+let staffComments = function ($rootScope, SupportCallService) {
 	return {
 		restrict: 'E',
 		template: require('./staffComments.html'),
@@ -10,13 +10,9 @@ let staffComments = function ($rootScope) {
 		},
 		link: function (scope, element, attrs) {
 			// Intentionally empty
-			scope.languageProficiencyDescriptions = [
-				"Undergraduate degree from an institution where English is the sole language of instruction",
-				"Achieved a minimum score of 26 on the speaking subset of the TOEFL iBT",
-				"Achieved a minimum score of 8 on the speaking subset of the IELTS",
-				"Achieved a minimum score of 50 on the SPEAK",
-				"Achieved a “Pass” on the TOEP",
-			];
+			scope.getLanguageProficiencyDescription = function (languageProficiencyId) {
+				return SupportCallService.getLanguageProficiencyDescription(languageProficiencyId);
+			};
 		}
 	};
 };
