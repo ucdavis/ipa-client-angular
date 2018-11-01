@@ -10,6 +10,13 @@ let staffComments = function ($rootScope) {
 		},
 		link: function (scope, element, attrs) {
 			// Intentionally empty
+			scope.languageProficiencyDescriptions = [
+				"Undergraduate degree from an institution where English is the sole language of instruction",
+				"Achieved a minimum score of 26 on the speaking subset of the TOEFL iBT",
+				"Achieved a minimum score of 8 on the speaking subset of the IELTS",
+				"Achieved a minimum score of 50 on the SPEAK",
+				"Achieved a “Pass” on the TOEP",
+			];
 		}
 	};
 };
