@@ -169,7 +169,7 @@ class ScheduleCostCalculations {
             return;
           }
 
-          var instructorTypeId = sectionGroupCost.instructor.instructorType.id;
+          var instructorTypeId = sectionGroupCost.instructor && sectionGroupCost.instructor.instructorType ? sectionGroupCost.instructor.instructorType.id : sectionGroupCost.instructorTypeId;
           var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[instructorTypeId];
 
           if (instructorTypeCost && instructorTypeCost.cost > 0) {
