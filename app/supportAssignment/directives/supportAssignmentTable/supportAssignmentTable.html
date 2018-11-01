@@ -3,7 +3,7 @@
 		tab-names="tabNames"
 		active-tab="state.ui.tabPivot"
 		select-tab="setViewPivot">
-		<support-staff-tab state="state"></support-staff-tab>
-		<support-courses-tab state="state"></support-courses-tab>
+		<support-staff-tab ng-if="state.ui.tabPivot == 'By Support Staff'" state="state"></support-staff-tab>
+		<support-courses-tab 	ng-if="state.ui.tabPivot == 'By Course'" state="state"></support-courses-tab>
 	</ipa-tabs>
 </div>
