@@ -51,12 +51,12 @@ class InstructorSupportCallFormCtrl {
     };
 
     $scope.updateSupportCallResponse = function() {
-      InstructorFormActions.updateSupportCallResponse($scope.view.state.supportCallResponse);
+      InstructorFormActions.updateSupportCallResponse($scope.view.state.instructorSupportCallResponse);
     };
 
     $scope.submitPreferences = function() {
-      $scope.view.state.supportCallResponse.submitted = true;
-      InstructorFormActions.submitInstructorPreferences($scope.view.state.supportCallResponse, $scope.workgroupId, $scope.year);
+      $scope.view.state.instructorSupportCallResponse.submitted = true;
+      InstructorFormActions.submitInstructorPreferences($scope.view.state.instructorSupportCallResponse, $scope.workgroupId, $scope.year);
     };
 
     // Used on 'update preferences' button, since saving is not required again.

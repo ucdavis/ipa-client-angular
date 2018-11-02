@@ -67,8 +67,8 @@ class InstructorFormActions {
           $rootScope.$emit('toast', { message: "Could not add instructor preference.", type: "ERROR" });
         });
       },
-      updateSupportCallResponse: function (supportCallResponse) {
-        InstructorFormService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
+      updateSupportCallResponse: function (instructorSupportCallResponse) {
+        InstructorFormService.updateSupportCallResponse(instructorSupportCallResponse).then(function (payload) {
           $rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
           var action = {
             type: ActionTypes.UPDATE_SUPPORT_CALL_RESPONSE,
@@ -96,8 +96,8 @@ class InstructorFormActions {
           $rootScope.$emit('toast', { message: "Could not remove preference.", type: "ERROR" });
         });
       },
-      submitInstructorPreferences: function (supportCallResponse, workgroupId, year) {
-        InstructorFormService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
+      submitInstructorPreferences: function (instructorSupportCallResponse, workgroupId, year) {
+        InstructorFormService.updateSupportCallResponse(instructorSupportCallResponse).then(function (payload) {
           $rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
 
           var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor";

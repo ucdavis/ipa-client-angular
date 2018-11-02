@@ -162,18 +162,18 @@ class InstructorFormStateService {
             return instructorPreferences;
         }
       },
-      _supportCallResponseReducers: function (action, supportCallResponse) {
+      _instructorSupportCallResponseReducers: function (action, instructorSupportCallResponse) {
         var scope = this;
 
         switch (action.type) {
           case ActionTypes.INIT_STATE:
-            supportCallResponse = action.payload.instructorSupportCallResponse;
-            return supportCallResponse;
+            instructorSupportCallResponse = action.payload.instructorSupportCallResponse;
+            return instructorSupportCallResponse;
           case ActionTypes.UPDATE_SUPPORT_CALL_RESPONSE:
-            supportCallResponse = action.payload;
-            return supportCallResponse;
+            instructorSupportCallResponse = action.payload;
+            return instructorSupportCallResponse;
           default:
-            return supportCallResponse;
+            return instructorSupportCallResponse;
         }
       },
       reduce: function (action) {
@@ -184,7 +184,7 @@ class InstructorFormStateService {
         newState.courses = scope._courseReducers(action, scope._state.courses);
         newState.supportStaff = scope._supportStaffReducers(action, scope._state.supportStaff);
         newState.misc = scope._miscReducers(action, scope._state.misc);
-        newState.supportCallResponse = scope._supportCallResponseReducers(action, scope._state.supportCallResponse);
+        newState.instructorSupportCallResponse = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponse);
         newState.studentPreferences = scope._studentPreferenceReducers(action, scope._state.studentPreferences);
         newState.instructorPreferences = scope._instructorPreferenceReducers(action, scope._state.instructorPreferences);
 
@@ -193,7 +193,8 @@ class InstructorFormStateService {
         // Build new 'page state'
         // This is the 'view friendly' version of the store
         let newPageState = {};
-        newPageState.supportCallResponse = angular.copy(scope._state.supportCallResponse);
+
+        newPageState.instructorSupportCallResponse = angular.copy(scope._state.instructorSupportCallResponse);
         newPageState.studentSupportCallResponses = angular.copy(action.payload.studentSupportCallResponses);
         newPageState.studentPreferences = angular.copy(scope._state.studentPreferences);
         newPageState.misc = angular.copy(scope._state.misc);
