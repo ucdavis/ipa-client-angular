@@ -63,3 +63,8 @@
 .instructor-support-call-form .ui-sortable-handle {
 	cursor: move;
 }
+
+.instructor-support-call-form__preference-container {
+	display: flex;
+	justify-content: space-between;
+}

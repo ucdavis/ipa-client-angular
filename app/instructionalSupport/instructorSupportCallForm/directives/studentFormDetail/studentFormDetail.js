@@ -1,4 +1,5 @@
 import './studentFormDetail.css';
+import studentPreferences from '../../../studentSupportCallForm/directives/studentPreferences/studentPreferences';
 
 /**
  * Provides the main course table in the Courses View
@@ -9,10 +10,11 @@ let studentFormDetail = function ($rootScope) {
 		template: require('./studentFormDetail.html'),
 		replace: true,
 		scope: {
-			studentSupportCallResponses: '='
+			studentSupportCallResponses: '=',
+			studentPreferences: '='
 		},
 		link: function (scope, element, attrs) {
-			// do nothing
+			scope.selectedResponse = scope.studentSupportCallResponses[1];
 		}
 	};
 };

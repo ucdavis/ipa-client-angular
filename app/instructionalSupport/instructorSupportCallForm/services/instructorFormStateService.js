@@ -195,6 +195,7 @@ class InstructorFormStateService {
         let newPageState = {};
         newPageState.supportCallResponse = angular.copy(scope._state.supportCallResponse);
         newPageState.studentSupportCallResponses = angular.copy(action.payload.studentSupportCallResponses);
+        newPageState.studentPreferences = angular.copy(scope._state.studentPreferences);
         newPageState.misc = angular.copy(scope._state.misc);
         newPageState.sectionGroups = InstructorFormSelectors.generateSectionGroups(
                                                                               scope._state.sectionGroups,
