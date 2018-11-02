@@ -11,4 +11,11 @@
   <p>General Comments: {{ currentSupportStaffResponse.generalComments }}</p>
   <p>Language Proficiency: {{ currentSupportStaffResponse.languageProficiency }}</p>
   <p>Teaching Qualifications: {{ currentSupportStaffResponse.teachingQualifications}}</p>
+
+  <h6>Student Preferences</h6>
+
+  <p ng-repeat="preference in currentSupportStaffPreferences">
+    <strong>{{ sectionGroups.list[preference.sectionGroupId].subjectCode + " " + sectionGroups.list[preference.sectionGroupId].courseNumber }}: </strong>
+    {{ preference.comment }}
+  </p>
 </div>

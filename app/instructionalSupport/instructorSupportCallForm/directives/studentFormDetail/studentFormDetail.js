@@ -12,7 +12,8 @@ let studentFormDetail = function ($rootScope) {
 		scope: {
 			studentSupportCallResponses: '<',
 			studentPreferences: '<',
-			supportStaff: '<'
+			supportStaff: '<',
+			sectionGroups: '<'
 		},
 		link: function (scope, element, attrs) {
 			scope.currentSupportStaff = null;
@@ -29,7 +30,7 @@ let studentFormDetail = function ($rootScope) {
 				scope.currentSupportStaffPreferences = scope.studentPreferences.array.filter(function (studentPreference) {
 					return studentPreference.supportStaffId === supportStaff.id;
 				});
-			}
+			};
 		}
 	};
 };
