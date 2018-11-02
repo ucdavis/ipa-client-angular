@@ -98,17 +98,44 @@ class InstructorFormStateService {
           case ActionTypes.INIT_STATE:
             supportStaff = {
               ids: [],
-              list: {}
+              list: {},
+              sorted: [],
             };
 
             action.payload.supportStaffList.forEach( function(slotSupportStaff) {
               supportStaff.ids.push(slotSupportStaff.id);
               supportStaff.list[slotSupportStaff.id] = slotSupportStaff;
+
+              slotSupportStaff.description = slotSupportStaff.fullName;
+              supportStaff.sorted.push(slotSupportStaff);
             });
+
+            supportStaff.sorted = _array_sortByProperty(supportStaff.sorted, "lastName");
 
             return supportStaff;
           default:
             return supportStaff;
+        }
+      },
+      _studentSupportCallResponseReducers: function (action, studentSupportCallResponses) {
+        var scope = this;
+
+        switch (action.type) {
+          case ActionTypes.INIT_STATE:
+            studentSupportCallResponses = {
+              ids: [],
+              list: {},
+              array: action.payload.studentSupportCallResponses
+            };
+
+            action.payload.studentSupportCallResponses.forEach( function(slotStudentSupportCallResponse) {
+              studentSupportCallResponses.ids.push(slotStudentSupportCallResponse.id);
+              studentSupportCallResponses.list[slotStudentSupportCallResponse.id] = slotStudentSupportCallResponse;
+            });
+
+            return studentSupportCallResponses;
+          default:
+            return studentSupportCallResponses;
         }
       },
       _studentPreferenceReducers: function (action, studentPreferences) {
@@ -118,7 +145,8 @@ class InstructorFormStateService {
           case ActionTypes.INIT_STATE:
             studentPreferences = {
               ids: [],
-              list: {}
+              list: {},
+              array: action.payload.studentSupportPreferences
             };
 
             action.payload.studentSupportPreferences.forEach( function(slotStudentPreference) {
@@ -185,6 +213,7 @@ class InstructorFormStateService {
         newState.supportStaff = scope._supportStaffReducers(action, scope._state.supportStaff);
         newState.misc = scope._miscReducers(action, scope._state.misc);
         newState.instructorSupportCallResponse = scope._instructorSupportCallResponseReducers(action, scope._state.instructorSupportCallResponse);
+        newState.studentSupportCallResponses = scope._studentSupportCallResponseReducers(action, scope._state.studentSupportCallResponses);
         newState.studentPreferences = scope._studentPreferenceReducers(action, scope._state.studentPreferences);
         newState.instructorPreferences = scope._instructorPreferenceReducers(action, scope._state.instructorPreferences);
 
@@ -194,8 +223,9 @@ class InstructorFormStateService {
         // This is the 'view friendly' version of the store
         let newPageState = {};
 
+        newPageState.supportStaff = angular.copy(newState.supportStaff);
         newPageState.instructorSupportCallResponse = angular.copy(scope._state.instructorSupportCallResponse);
-        newPageState.studentSupportCallResponses = angular.copy(action.payload.studentSupportCallResponses);
+        newPageState.studentSupportCallResponses = angular.copy(scope._state.studentSupportCallResponses);
         newPageState.studentPreferences = angular.copy(scope._state.studentPreferences);
         newPageState.misc = angular.copy(scope._state.misc);
         newPageState.sectionGroups = InstructorFormSelectors.generateSectionGroups(

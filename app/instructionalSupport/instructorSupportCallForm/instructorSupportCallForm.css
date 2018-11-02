@@ -64,7 +64,16 @@
 	cursor: move;
 }
 
-.instructor-support-call-form__preference-container {
+.instructor-support-call-form__preference-window {
 	display: flex;
 	justify-content: space-between;
+}
+
+.instructor-support-call-form__preference-container {
+	flex: 1 0 0px;
+}
+
+.instructor-support-call-form__support-staff-viewer {
+	flex: 2 0 0px;
+	margin-left: 16px;
 }

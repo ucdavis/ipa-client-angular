@@ -28,18 +28,21 @@
 <!-- Main page container -->
 <div ng-if="view.state && isInstructor && view.state.sectionGroups.ids.length > 0" class="instructor-support-call-form">
   <div class="instructor-support-call-form__preference-window">
-    <ipa-tabs tab-names="view.state.misc.allTabs"
-              active-tab="view.state.misc.activeTab"
-              select-tab="selectCourse"
-              slim="true">
-      <div class="instructor-support-call-form__preference-container">
-        <instructor-preferences section-group="activeSectionGroup"></instructor-preferences>
-        <student-form-detail student-support-call-responses="view.state.studentSupportCallResponses" student-preferences="view.state.studentPreferences"></student-form-detail>
-      </div>
-    </ipa-tabs>
-  </div>
-  <div class="instructor-support-call-form__support-staff-viewer">
-    <student-viewer></student-viewer>
+    <div class="instructor-support-call-form__preference-container">
+      <ipa-tabs tab-names="view.state.misc.allTabs"
+                active-tab="view.state.misc.activeTab"
+                select-tab="selectCourse"
+                slim="true">
+          <instructor-preferences section-group="activeSectionGroup"></instructor-preferences>
+      </ipa-tabs>
+    </div>
+
+    <div class="instructor-support-call-form__support-staff-viewer">
+      <student-form-detail student-support-call-responses="view.state.studentSupportCallResponses"
+                           student-preferences="view.state.studentPreferences"
+                           support-staff="view.state.supportStaff">
+      </student-form-detail>
+    </div>
   </div>
 
   <!-- Comments and submission area -->

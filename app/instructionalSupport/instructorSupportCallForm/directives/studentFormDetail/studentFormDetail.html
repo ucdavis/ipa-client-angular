@@ -1,7 +1,14 @@
-<div>
-  <h6>Name Goes Here.</h6>
+<div style="">
+  <ipa-dropdown expanded="expanded"
+                button-text="'Select a Support Staff'"
+                items="supportStaff.sorted"
+                style="'minimal'"
+                select-item="selectSupportStaff(item)">
+  </ipa-dropdown>
 
-  <p>General Comments: {{ selectedResponse.generalComments }}</p>
-  <p>Language Proficiency: {{ selectedResponse.languageProficiency }}</p>
-  <p>Teaching Qualifications: {{ selectedResponse.teachingQualifications}}</p>
+  <h6>{{ currentSupportStaff.fullName }}</h6>
+
+  <p>General Comments: {{ currentSupportStaffResponse.generalComments }}</p>
+  <p>Language Proficiency: {{ currentSupportStaffResponse.languageProficiency }}</p>
+  <p>Teaching Qualifications: {{ currentSupportStaffResponse.teachingQualifications}}</p>
 </div>

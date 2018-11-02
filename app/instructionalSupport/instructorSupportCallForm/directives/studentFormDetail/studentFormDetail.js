@@ -10,11 +10,26 @@ let studentFormDetail = function ($rootScope) {
 		template: require('./studentFormDetail.html'),
 		replace: true,
 		scope: {
-			studentSupportCallResponses: '=',
-			studentPreferences: '='
+			studentSupportCallResponses: '<',
+			studentPreferences: '<',
+			supportStaff: '<'
 		},
 		link: function (scope, element, attrs) {
-			scope.selectedResponse = scope.studentSupportCallResponses[1];
+			scope.currentSupportStaff = null;
+			scope.currentSupportStaffResponse = null;
+			scope.currentSupportStaffPreferences = null;
+
+			scope.selectSupportStaff = function (supportStaff) {
+				scope.currentSupportStaff = supportStaff;
+
+				scope.currentSupportStaffResponse = scope.studentSupportCallResponses.array.find(function (supportCallResponse) {
+					return supportCallResponse.supportStaffId === supportStaff.id;
+				});
+
+				scope.currentSupportStaffPreferences = scope.studentPreferences.array.filter(function (studentPreference) {
+					return studentPreference.supportStaffId === supportStaff.id;
+				});
+			}
 		}
 	};
 };
