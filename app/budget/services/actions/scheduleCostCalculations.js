@@ -145,7 +145,6 @@ class ScheduleCostCalculations {
       },
       _calculateInstructorCost: function(sectionGroupCost) {
         var _this = this;
-
         sectionGroupCost.overrideInstructorCost = null;
         sectionGroupCost.overrideInstructorCostSource = "course";
 
@@ -170,7 +169,8 @@ class ScheduleCostCalculations {
             return;
           }
 
-          var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroupCost.instructorTypeId];
+          var instructorTypeId = sectionGroupCost.instructor && sectionGroupCost.instructor.instructorType ? sectionGroupCost.instructor.instructorType.id : sectionGroupCost.instructorTypeId;
+          var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[instructorTypeId];
 
           if (instructorTypeCost && instructorTypeCost.cost > 0) {
             sectionGroupCost.overrideInstructorCost = angular.copy(instructorTypeCost.cost);
