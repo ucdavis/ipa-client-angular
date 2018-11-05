@@ -35,14 +35,8 @@ class InstructorSupportCallFormCtrl {
     $rootScope.$on('instructorFormStateChanged', function (event, data) {
       $scope.activeSectionGroup = data.sectionGroups.list[data.misc.activeSectionGroupId];
       $scope.view.state = data;
-      $scope.generateInstructorCourses();
       console.log(data);
     });
-
-    $scope.generateInstructorCourses = function () {
-      $scope.view.state;
-      debugger;
-    };
 
     $rootScope.$on('sharedStateSet', function (event, data) {
       $scope.sharedState = data;

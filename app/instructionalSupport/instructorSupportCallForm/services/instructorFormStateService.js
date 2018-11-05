@@ -55,25 +55,34 @@ class InstructorFormStateService {
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             var courses = {};
+
             action.payload.courses.forEach(function(course) {
               courses[course.id] = course;
             });
 
-            var allTabs = action.payload.sectionGroups.map(function(sectionGroup) {
-              var course = courses[sectionGroup.courseId];
-              return course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern;
+            var sectionGroups = {};
+
+            action.payload.sectionGroups.forEach(function(sectionGroup) {
+              sectionGroups[sectionGroup.id] = sectionGroup;
             });
 
-            var activeCourseId = action.payload.courses.length > 0 ? action.payload.courses[0].id : null;
+            var allTabs = [];
+            var activeTab = null;
             var activeSectionGroupId = null;
 
-            if (activeCourseId) {
-              action.payload.sectionGroups.forEach(function(sectionGroup) {
-                if (sectionGroup.courseId == activeCourseId) {
+            action.payload.teachingAssignments.forEach(function(teachingAssignment) {
+              if (teachingAssignment.approved && teachingAssignment.sectionGroupId) {
+                var sectionGroup = sectionGroups[teachingAssignment.sectionGroupId];
+                var course = courses[sectionGroup.courseId];
+                var courseKey = course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern;
+                allTabs.push(courseKey);
+
+                if (!activeTab) {
+                  activeTab = courseKey;
                   activeSectionGroupId = sectionGroup.id;
                 }
-              });
-            }
+              }
+            });
 
             misc = {
               allTabs: allTabs,
@@ -249,7 +258,8 @@ class InstructorFormStateService {
         newPageState.studentSupportCallResponses = angular.copy(scope._state.studentSupportCallResponses);
         newPageState.studentPreferences = angular.copy(scope._state.studentPreferences);
         newPageState.misc = angular.copy(scope._state.misc);
-        newPageState.teachingAssignment = newState.teachingAssignments;
+        newPageState.teachingAssignments = newState.teachingAssignments;
+        newPageState.courses = newState.courses;
         newPageState.sectionGroups = InstructorFormSelectors.generateSectionGroups(
                                                                               scope._state.sectionGroups,
                                                                               scope._state.supportStaff,
