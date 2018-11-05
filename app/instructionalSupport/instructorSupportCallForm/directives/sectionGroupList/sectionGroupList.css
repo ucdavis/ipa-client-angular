@@ -1,0 +1,29 @@
+
+.section-group-list {
+	flex: 1 0 0px;
+}
+
+.section-group-list__container {
+	list-style: none;
+}
+
+.section-group-list__item {
+	cursor: pointer;
+	padding: 6px;
+}
+
+.section-group-list__item:hover {
+	border: 1px solid rgb(48, 54, 65);
+	border-radius: 3px;
+	padding: 5px;
+}
+
+.section-group-list__item.active,
+.section-group-list__item.active:hover {
+	border: 1px solid rgb(48, 54, 65);
+	border-radius: 3px;
+	background-color: rgb(48, 54, 65);
+	color: white;
+	cursor: default;
+	padding: 5px;
+}

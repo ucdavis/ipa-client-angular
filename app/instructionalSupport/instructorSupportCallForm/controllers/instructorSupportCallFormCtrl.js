@@ -66,10 +66,6 @@ class InstructorSupportCallFormCtrl {
       $window.location.href = "/summary/" + $scope.workgroupId + "/" + $scope.year + "?mode=instructor";
     };
 
-    $scope.selectSectionGroup = function(sectionGroup) {
-      InstructorFormActions.selectSectionGroup(sectionGroup);
-    };
-
     $scope.updatePreferencesOrder = function(preferenceIds, listIndentifier) {
       var filteredPreferenceIds = [];
 

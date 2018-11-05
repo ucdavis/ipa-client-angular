@@ -23,6 +23,7 @@ import SupportCallService from './../shared/services/SupportCallService';
 import instructorPreferenceSelector from './instructorSupportCallForm/directives/instructorPreferenceSelector/instructorPreferenceSelector.js';
 import studentFormDetail from './instructorSupportCallForm/directives/studentFormDetail/studentFormDetail.js';
 import instructorPreferences from './instructorSupportCallForm/directives/instructorPreferences/instructorPreferences.js';
+import sectionGroupList from './instructorSupportCallForm/directives/sectionGroupList/sectionGroupList.js';
 
 import confirmEligible from './studentSupportCallForm/directives/confirmEligible/confirmEligible.js';
 import modalPreferenceComments from './studentSupportCallForm/directives/modalPreferenceComments/modalPreferenceComments.js';
@@ -112,6 +113,7 @@ const instructionalSupportApp = angular.module("instructionalSupportApp", depend
 .directive('languageProficiencies', languageProficiencies)
 .directive('studentFormDetail', studentFormDetail)
 .directive('instructorPreferences', instructorPreferences)
+.directive('sectionGroupList', sectionGroupList)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	ADD_ASSIGNMENT_SLOTS: "ADD_ASSIGNMENT_SLOTS",
