@@ -69,33 +69,6 @@ class InstructorSupportCallFormCtrl {
       InstructorFormActions.selectCourse(tab);
     };
 
-    // Activates sortable lists for each sectionGroup, after a short delay to give the view time to render
-    $scope.listenForSort = function() {
-      if ($scope.listenersActive) {
-        return;
-      }
-      $scope.listenersActive = true;
-
-      setTimeout(function() {
-        var listenerIds = [];
-        $scope.view.state.sectionGroups.forEach(function(sectionGroup) {
-          var listener = "#sortable-" + sectionGroup.id;
-          listenerIds.push(listener);
-        });
-
-        listenerIds.forEach( function(listenerId) {
-          $(listenerId).sortable({
-            placeholder: "sortable-student-preference-placeholder",
-            update: function( event, ui ) {
-              var preferenceIds = $( listenerId ).sortable( "toArray" );
-              $scope.updatePreferencesOrder(preferenceIds, listenerId);
-            },
-            axis: "y"
-          });
-        });
-      }, 500);
-    };
-
     $scope.updatePreferencesOrder = function(preferenceIds, listIndentifier) {
       var filteredPreferenceIds = [];
 
