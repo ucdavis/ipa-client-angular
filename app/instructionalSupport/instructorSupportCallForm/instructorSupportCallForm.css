@@ -73,6 +73,31 @@
 	flex: 1 0 0px;
 }
 
+.instructor-support-call-form__course-list > ul {
+	list-style: none;
+}
+
+.instructor-support-call-form__course-item {
+	cursor: pointer;
+	padding: 6px;
+}
+
+.instructor-support-call-form__course-item:hover {
+	border: 1px solid rgb(48, 54, 65);
+	border-radius: 3px;
+	padding: 5px;
+}
+
+.instructor-support-call-form__course-item.active,
+.instructor-support-call-form__course-item.active:hover {
+	border: 1px solid rgb(48, 54, 65);
+	border-radius: 3px;
+	background-color: rgb(48, 54, 65);
+	color: white;
+	cursor: default;
+	padding: 5px;
+}
+
 .instructor-support-call-form__staff-preferences {
 	flex: 1 0 0px;
 }

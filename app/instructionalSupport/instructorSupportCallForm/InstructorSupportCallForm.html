@@ -30,8 +30,12 @@
   <div class="instructor-support-call-form__preference-window">
     <div class="instructor-support-call-form__course-list">
       <ul>
-        <li ng-repeat="sectionGroup in view.state.misc.allTabs" ng-click="selectSectionGroup(sectionGroup)">
-          {{sectionGroup.subjectCode + " " + sectionGroup.courseNumber + " " + sectionGroup.sequenceNumber + " " + sectionGroup.title}}
+        <li ng-repeat="sectionGroup in view.state.misc.allTabs"
+            class="instructor-support-call-form__course-item"
+            ng-class="{active: sectionGroup.id === view.state.misc.activeSectionGroupId}"
+            ng-click="selectSectionGroup(sectionGroup)">
+          <p>{{ sectionGroup.subjectCode + " " + sectionGroup.courseNumber + " " + sectionGroup.sequenceNumber }}</p>
+          <p>{{ sectionGroup.title }}</p>
         </li>
       </ul>
     </div>
