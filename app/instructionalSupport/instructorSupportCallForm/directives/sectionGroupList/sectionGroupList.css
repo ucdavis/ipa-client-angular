@@ -1,6 +1,6 @@
 
 .section-group-list {
-	flex: 1 0 0px;
+  padding: 10px;
 }
 
 .section-group-list__container {

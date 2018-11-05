@@ -19,12 +19,13 @@ import AuthService from './../shared/services/AuthService.js';
 import DwService from './../shared/services/DwService.js';
 import SupportCallService from './../shared/services/SupportCallService';
 
-// Directives
-import instructorPreferenceSelector from './instructorSupportCallForm/directives/instructorPreferenceSelector/instructorPreferenceSelector.js';
+// Instructor Form Directives
 import studentFormDetail from './instructorSupportCallForm/directives/studentFormDetail/studentFormDetail.js';
 import instructorPreferences from './instructorSupportCallForm/directives/instructorPreferences/instructorPreferences.js';
 import sectionGroupList from './instructorSupportCallForm/directives/sectionGroupList/sectionGroupList.js';
+import supportStaff from './instructorSupportCallForm/directives/supportStaff/supportStaff.js';
 
+// Student Form Directives
 import confirmEligible from './studentSupportCallForm/directives/confirmEligible/confirmEligible.js';
 import modalPreferenceComments from './studentSupportCallForm/directives/modalPreferenceComments/modalPreferenceComments.js';
 import studentAvailabilities from './studentSupportCallForm/directives/studentAvailabilities/studentAvailabilities.js';
@@ -98,7 +99,6 @@ const instructionalSupportApp = angular.module("instructionalSupportApp", depend
 .service('AuthService', AuthService)
 .service('DwService', DwService)
 .service('SupportCallService', SupportCallService)
-.directive('instructorPreferenceSelector', instructorPreferenceSelector)
 .directive('confirmEligible', confirmEligible)
 .directive('modalPreferenceComments', modalPreferenceComments)
 .directive('studentAvailabilities', studentAvailabilities)
@@ -114,6 +114,7 @@ const instructionalSupportApp = angular.module("instructionalSupportApp", depend
 .directive('studentFormDetail', studentFormDetail)
 .directive('instructorPreferences', instructorPreferences)
 .directive('sectionGroupList', sectionGroupList)
+.directive('supportStaff', supportStaff)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	ADD_ASSIGNMENT_SLOTS: "ADD_ASSIGNMENT_SLOTS",

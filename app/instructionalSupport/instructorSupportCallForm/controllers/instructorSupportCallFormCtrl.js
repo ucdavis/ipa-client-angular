@@ -43,14 +43,6 @@ class InstructorSupportCallFormCtrl {
       $scope.isInstructor = $scope.sharedState.currentUser.isInstructor($scope.workgroupId);
     });
 
-    $scope.addPreference = function(sectionGroupId, supportStaffId) {
-      InstructorFormActions.addInstructorPreference(sectionGroupId, supportStaffId);
-    };
-
-    $scope.deleteInstructorPreference = function(preference) {
-      InstructorFormActions.deleteInstructorPreference(preference, $scope.view.state.studentPreferences);
-    };
-
     $scope.updateSupportCallResponse = function() {
       InstructorFormActions.updateSupportCallResponse($scope.view.state.instructorSupportCallResponse);
     };
@@ -64,20 +56,6 @@ class InstructorSupportCallFormCtrl {
     $scope.pretendToastMessage = function() {
       InstructorFormActions.pretendToastMessage();
       $window.location.href = "/summary/" + $scope.workgroupId + "/" + $scope.year + "?mode=instructor";
-    };
-
-    $scope.updatePreferencesOrder = function(preferenceIds, listIndentifier) {
-      var filteredPreferenceIds = [];
-
-      preferenceIds.forEach(function(id) {
-        if (id.length > 0) {
-          filteredPreferenceIds.push(id);
-        }
-      });
-
-      var sectionGroupId = listIndentifier.slice(10);
-      var scheduleId = $scope.view.state.misc.scheduleId;
-      InstructorFormActions.updateInstructorPreferencesOrder(filteredPreferenceIds, scheduleId, sectionGroupId);
     };
   }
 }

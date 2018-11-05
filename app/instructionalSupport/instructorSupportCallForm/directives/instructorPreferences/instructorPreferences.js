@@ -9,7 +9,8 @@ let instructorPreferences = function ($rootScope, InstructorFormActions) {
 		template: require('./instructorPreferences.html'),
 		replace: true,
 		scope: {
-      sectionGroup: '='
+      sectionGroup: '=',
+      supportStaffList: '<'
     },
 		link: function (scope, element, attrs) {
       scope.addPreference = function(sectionGroupId, supportStaffId) {
