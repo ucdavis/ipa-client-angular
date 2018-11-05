@@ -9,11 +9,15 @@ class InstructorFormActions {
 
     return {
       getInitialState: function () {
+        var _this = this;
+
         var workgroupId = $route.current.params.workgroupId;
         var year = $route.current.params.year;
         var termShortCode = $route.current.params.termShortCode;
 
         InstructorFormService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
+          _this.addCourseDataToSectionGroups(payload.courses, payload.sectionGroups);
+
           var action = {
             type: ActionTypes.INIT_STATE,
             payload: payload,
@@ -22,6 +26,21 @@ class InstructorFormActions {
           InstructorFormStateService.reduce(action);
         }, function (err) {
           $rootScope.$emit('toast', { message: "Could not load instructional support initial state.", type: "ERROR" });
+        });
+      },
+      // Blend the relevant course data into the sectionGroup
+      addCourseDataToSectionGroups: function (courses, sectionGroups) {
+        sectionGroups.forEach(function(sectionGroup) {
+          courses.forEach( function (course) {
+    
+            if (sectionGroup.courseId == course.id) {
+              sectionGroup.subjectCode = course.subjectCode;
+              sectionGroup.sequencePattern = course.sequencePattern;
+              sectionGroup.courseNumber = course.courseNumber;
+              sectionGroup.title = course.title;
+              sectionGroup.units = course.unitsLow;
+            }
+          });
         });
       },
       selectCourse: function (tab) {
