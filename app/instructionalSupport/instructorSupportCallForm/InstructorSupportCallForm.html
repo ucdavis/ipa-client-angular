@@ -28,20 +28,19 @@
 <!-- Main page container -->
 <div ng-if="view.state && isInstructor && view.state.sectionGroups.ids.length > 0" class="instructor-support-call-form">
   <div class="instructor-support-call-form__preference-window">
-    <div class="instructor-support-call-form__preference-container">
-      <ipa-tabs tab-names="view.state.misc.allTabs"
-                active-tab="view.state.misc.activeTab"
-                select-tab="selectCourse"
-                slim="true">
-          <instructor-preferences section-group="activeSectionGroup"></instructor-preferences>
-      </ipa-tabs>
+    <div class="instructor-support-call-form__course-list">
+      <ul>
+        <li ng-repeat="sectionGroup in view.state.misc.allTabs" ng-click="selectSectionGroup(sectionGroup)">
+          {{sectionGroup.subjectCode + " " + sectionGroup.courseNumber + " " + sectionGroup.sequenceNumber + " " + sectionGroup.title}}
+        </li>
+      </ul>
     </div>
-
+    <div class="instructor-support-call-form__staff-preferences">
+      staff list
+    </div>
     <div class="instructor-support-call-form__support-staff-viewer">
-      <student-form-detail student-support-call-responses="view.state.studentSupportCallResponses"
-                           student-preferences="view.state.studentPreferences"
-                           support-staff="view.state.supportStaff"
-                           section-groups="view.state.sectionGroups">
+      <student-form-detail student-support-call-responses="view.state.studentSupportCallResponses" student-preferences="view.state.studentPreferences"
+        support-staff="view.state.supportStaff" section-groups="view.state.sectionGroups">
       </student-form-detail>
     </div>
   </div>

@@ -74,11 +74,9 @@ class InstructorFormStateService {
               if (teachingAssignment.approved && teachingAssignment.sectionGroupId) {
                 var sectionGroup = sectionGroups[teachingAssignment.sectionGroupId];
                 var course = courses[sectionGroup.courseId];
-                var courseKey = course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern;
-                allTabs.push(courseKey);
+                allTabs.push(sectionGroup);
 
                 if (!activeTab) {
-                  activeTab = courseKey;
                   activeSectionGroupId = sectionGroup.id;
                 }
               }
@@ -86,14 +84,12 @@ class InstructorFormStateService {
 
             misc = {
               allTabs: allTabs,
-              activeTab: allTabs.length > 0 ? allTabs[0] : null,
               activeSectionGroupId: activeSectionGroupId
             };
 
             misc.scheduleId = action.payload.scheduleId;
             return misc;
             case ActionTypes.SELECT_COURSE:
-              misc.activeTab = action.payload.activeTab;
               misc.activeSectionGroupId = action.payload.activeSectionGroupId
               return misc;
           default:
