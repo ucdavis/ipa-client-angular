@@ -39,8 +39,26 @@
         </li>
       </ul>
     </div>
-    <div class="instructor-support-call-form__staff-preferences">
-      staff list
+    <div class="instructor-support-call-form__support-staff-section">
+      <div>
+        <h5>Support Staff Preferences</h5>
+      </div>
+      <div>
+        <h6>Interested Support Staff</h6>
+        <ul class="instructor-support-call-form__support-staff-list">
+          <li ng-repeat="supportStaff in view.state.sectionGroups.list[view.state.misc.activeSectionGroupId].eligibleSupportStaff.preferred"
+              class="instructor-support-call-form__support-staff-item">
+            {{ "#" + supportStaff.priority + " " + supportStaff.fullName }}
+          </li>
+        </ul>
+        <h6>Other</h6>
+        <ul class="instructor-support-call-form__support-staff-list">
+          <li ng-repeat="supportStaff in view.state.sectionGroups.list[view.state.misc.activeSectionGroupId].eligibleSupportStaff.other"
+              class="instructor-support-call-form__support-staff-item">
+            {{ supportStaff.fullName }}
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="instructor-support-call-form__support-staff-viewer">
       <student-form-detail student-support-call-responses="view.state.studentSupportCallResponses" student-preferences="view.state.studentPreferences"

@@ -98,8 +98,19 @@
 	padding: 5px;
 }
 
-.instructor-support-call-form__staff-preferences {
+.instructor-support-call-form__support-staff-section {
 	flex: 1 0 0px;
+}
+
+.instructor-support-call-form__support-staff-list {
+	list-style: none;
+	padding-left: 0px;
+}
+
+.instructor-support-call-form__support-staff-item {
+	border: 1px solid rgb(48, 54, 65);
+	border-radius: 3px;
+	padding: 3px;
 }
 
 .instructor-support-call-form__support-staff-viewer {
