@@ -138,6 +138,27 @@ class InstructorFormStateService {
             return studentSupportCallResponses;
         }
       },
+      _teachingAssignmentReducers: function (action, teachingAssignments) {
+        var scope = this;
+
+        switch (action.type) {
+          case ActionTypes.INIT_STATE:
+            teachingAssignments = {
+              ids: [],
+              list: {},
+              array: action.payload.teachingAssignments
+            };
+
+            action.payload.teachingAssignments.forEach( function(teachingAssignment) {
+              teachingAssignments.ids.push(teachingAssignment.id);
+              teachingAssignments.list[teachingAssignment.id] = teachingAssignment;
+            });
+
+            return teachingAssignments;
+          default:
+            return teachingAssignments;
+        }
+      },
       _studentPreferenceReducers: function (action, studentPreferences) {
         var scope = this;
 
@@ -216,7 +237,7 @@ class InstructorFormStateService {
         newState.studentSupportCallResponses = scope._studentSupportCallResponseReducers(action, scope._state.studentSupportCallResponses);
         newState.studentPreferences = scope._studentPreferenceReducers(action, scope._state.studentPreferences);
         newState.instructorPreferences = scope._instructorPreferenceReducers(action, scope._state.instructorPreferences);
-
+        newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
         scope._state = newState;
 
         // Build new 'page state'
@@ -228,6 +249,7 @@ class InstructorFormStateService {
         newPageState.studentSupportCallResponses = angular.copy(scope._state.studentSupportCallResponses);
         newPageState.studentPreferences = angular.copy(scope._state.studentPreferences);
         newPageState.misc = angular.copy(scope._state.misc);
+        newPageState.teachingAssignment = newState.teachingAssignments;
         newPageState.sectionGroups = InstructorFormSelectors.generateSectionGroups(
                                                                               scope._state.sectionGroups,
                                                                               scope._state.supportStaff,
