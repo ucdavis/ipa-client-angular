@@ -63,8 +63,8 @@ class InstructorFormActions {
           }
         });
       },
-      addInstructorPreference: function (sectionGroupId, supportStaffId) {
-        InstructorFormService.addInstructorPreference(sectionGroupId, supportStaffId).then(function (newPreference) {
+      addInstructorPreference: function (supportStaffId) {
+        InstructorFormService.addInstructorPreference(InstructorFormStateService._state.misc.activeSectionGroupId, supportStaffId).then(function (newPreference) {
           $rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
           var action = {
             type: ActionTypes.ADD_INSTRUCTOR_PREFERENCE,

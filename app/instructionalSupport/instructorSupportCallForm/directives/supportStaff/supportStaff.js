@@ -16,11 +16,11 @@ let supportStaff = function (InstructorFormActions) {
       };
 
       scope.addPreference = function() {
-        InstructorFormActions.addInstructorPreference(supportStaff);
+        InstructorFormActions.addInstructorPreference(scope.supportStaff.id);
       };
 
       scope.deletePreference = function() {
-        InstructorFormActions.deleteInstructorPreference(instructorPreference);
+        InstructorFormActions.deleteInstructorPreference(scope.instructorPreference);
       };
     }
   };
