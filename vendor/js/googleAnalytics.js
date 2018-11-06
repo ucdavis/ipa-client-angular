@@ -4,19 +4,6 @@ if(ipaRunningMode === 'production') {
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
   
-  var sendPageViewTimerId;
-
-  function sendPageViewIfUserIdIsSet() {
-    if(typeof(window.ipa_user_tracking_id) === "undefined") {
-      // Will retry next interval ...
-    } else {
-      // Set user ID and sending to GA ...
-      ga('set', 'userId', window.ipa_user_tracking_id);
-      ga('create', 'UA-83774200-1', 'auto');
-      ga('send', 'pageview');
-      clearInterval(sendPageViewTimerId);
-    }
-  }
-  
-  sendPageViewTimerId = setInterval(sendPageViewIfUserIdIsSet, 500);
+  ga('create', 'UA-83774200-1', 'auto');
+  ga('send', 'pageview');
 }
