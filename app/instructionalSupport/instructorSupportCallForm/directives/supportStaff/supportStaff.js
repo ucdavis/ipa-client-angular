@@ -21,7 +21,6 @@ let supportStaff = function (InstructorFormActions) {
       };
 
       scope.deletePreference = function() {
-        debugger;
         InstructorFormActions.deleteInstructorPreference(scope.instructorPreference);
       };
     }
