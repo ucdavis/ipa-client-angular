@@ -17,6 +17,10 @@ class InstructorFormActions {
 
         InstructorFormService.getInitialState(workgroupId, year, termShortCode).then(function (payload) {
           _this.addCourseDataToSectionGroups(payload.courses, payload.sectionGroups);
+          payload.supportStaffList = payload.supportStaffList.map(function(supportStaff) {
+            supportStaff.supportStaffId = supportStaff.id;
+            return supportStaff;
+          });
 
           var action = {
             type: ActionTypes.INIT_STATE,
