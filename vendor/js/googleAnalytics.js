@@ -13,6 +13,7 @@ if(ipaRunningMode === 'production') {
     } else {
       console.log('will clear ');
       console.log(window.ipa_user_id);
+      ga('set', 'userId', window.ipa_user_id);
       clearInterval(tryUserIdTimerId);
     }
   }
