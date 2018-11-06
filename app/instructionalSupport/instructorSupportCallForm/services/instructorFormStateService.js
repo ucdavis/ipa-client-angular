@@ -89,7 +89,7 @@ class InstructorFormStateService {
 
             misc.scheduleId = action.payload.scheduleId;
             return misc;
-            case ActionTypes.SELECT_COURSE:
+            case ActionTypes.SELECT_SECTION_GROUP:
               misc.activeSectionGroupId = action.payload.activeSectionGroupId
               return misc;
           default:

@@ -45,7 +45,7 @@ class InstructorFormActions {
       },
       selectSectionGroup: function (sectionGroup) {
         InstructorFormStateService.reduce({
-          type: ActionTypes.SELECT_COURSE,
+          type: ActionTypes.SELECT_SECTION_GROUP,
           payload:  {
             activeSectionGroupId: sectionGroup.id
           }
