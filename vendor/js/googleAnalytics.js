@@ -4,24 +4,20 @@ if(ipaRunningMode === 'production') {
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
   
-  var tryUserIdTimerId;
+  var sendPageViewTimerId;
 
-  function tryUserId() {
-    console.log('window2 ...');
-    if(typeof(window.ipa_user_id) === "undefined") {
-      console.log('will retry ...');
+  function sendPageViewIfUserIdIsSet() {
+    if(typeof(window.ipa_user_tracking_id) === "undefined") {
+      // Will retry next interval ...
     } else {
-      console.log('will clear ');
-      console.log(window.ipa_user_id);
-      ga('set', 'userId', window.ipa_user_id);
-      clearInterval(tryUserIdTimerId);
+      console.log('Setting user ID and sending to GA ...');
+      console.log(window.ipa_user_tracking_id);
+      ga('set', 'userId', window.ipa_user_tracking_id);
+      ga('create', 'UA-83774200-1', 'auto');
+      ga('send', 'pageview');
+      clearInterval(sendPageViewTimerId);
     }
   }
   
-  tryUserIdTimerId = setInterval(tryUserId, 500);
-
-  console.log('window ...');
-  console.log(window.ipa_user_id);
-  ga('create', 'UA-83774200-1', 'auto');
-  ga('send', 'pageview');
+  sendPageViewTimerId = setInterval(sendPageViewIfUserIdIsSet, 500);
 }
