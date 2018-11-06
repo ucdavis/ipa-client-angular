@@ -10,7 +10,8 @@ let instructorPreferences = function ($rootScope, InstructorFormActions) {
 		replace: true,
 		scope: {
       sectionGroup: '=',
-      supportStaffList: '<'
+      supportStaffList: '<',
+      activeSupportStaffId: '<'
     },
 		link: function (scope, element, attrs) {
       scope.filteredSupportStaff = scope.supportStaffList.sorted;

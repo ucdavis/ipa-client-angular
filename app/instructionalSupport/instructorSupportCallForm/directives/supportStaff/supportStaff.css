@@ -1,5 +1,47 @@
 .support-staff {
   border: 1px solid rgb(48, 54, 65);
   border-radius: 3px;
+  display: flex;
+  width: 100%;
+  border-color: #ebebeb;
+  margin: 5px;
+  margin-left: 0px;
+  height: 48px;
+  justify-content: space-between;
+}
+
+.support-staff__priority {
   padding: 3px;
+  background-color: #F8F8F8;
+  display: flex;
+}
+
+.support-staff__priority-ui {
+  padding-left: 6px;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+}
+
+.support-staff__priority-text {
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.support-staff__add-remove {
+  padding: 3px;
+  display: flex;
+}
+
+.support-staff__name {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.support-staff:hover,
+.active {
+  border-color: rgb(48, 54, 65);
 }

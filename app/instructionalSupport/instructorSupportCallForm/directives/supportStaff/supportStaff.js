@@ -8,7 +8,8 @@ let supportStaff = function (InstructorFormActions) {
     scope: {
       supportStaff: '<',
       instructorPreference: '<?',
-      priority: '<'
+      priority: '<',
+      active: '<'
     },
     link: function (scope, element, attrs) {
       scope.selectSupportStaff = function(supportStaff) {
@@ -20,6 +21,7 @@ let supportStaff = function (InstructorFormActions) {
       };
 
       scope.deletePreference = function() {
+        debugger;
         InstructorFormActions.deleteInstructorPreference(scope.instructorPreference);
       };
     }
