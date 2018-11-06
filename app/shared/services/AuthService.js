@@ -189,6 +189,7 @@ class AuthService {
 							if(ipaRunningMode === 'production') {
 								console.log('ga() user:');
 								console.log(response.data.userTrackingId);
+								window.ipa_user_id = response.data.userTrackingId;
 								ga('set', 'userId', response.data.userTrackingId);
 							} else {
 								console.log('not ga() user.');
