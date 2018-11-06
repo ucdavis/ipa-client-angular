@@ -6,6 +6,10 @@
         ng-click="selectSectionGroup(sectionGroup)">
       <p>{{ sectionGroup.subjectCode + " " + sectionGroup.courseNumber + " " + sectionGroup.sequenceNumber }}</p>
       <p>{{ sectionGroup.title }}</p>
+
+    <div ng-if="sectionGroup.teachingAssistantAppointments > 0">
+      Numbers of TAs: {{ sectionGroup.teachingAssistantAppointments }}
+    </div>
     </li>
   </ul>
 </div>
