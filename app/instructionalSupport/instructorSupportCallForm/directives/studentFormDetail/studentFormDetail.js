@@ -13,24 +13,22 @@ let studentFormDetail = function ($rootScope) {
 			studentSupportCallResponses: '<',
 			studentPreferences: '<',
 			supportStaff: '<',
-			sectionGroups: '<'
+			sectionGroups: '<',
 		},
 		link: function (scope, element, attrs) {
-			scope.currentSupportStaff = null;
-			scope.currentSupportStaffResponse = null;
-			scope.currentSupportStaffPreferences = null;
+			$rootScope.$on('instructorFormStateChanged', function(event, data) {
+				if (data.misc.activeSupportStaffId) {
+					scope.currentSupportStaff = data.supportStaff.list[data.misc.activeSupportStaffId];
 
-			scope.selectSupportStaff = function (supportStaff) {
-				scope.currentSupportStaff = supportStaff;
+					scope.currentSupportStaffResponse = scope.studentSupportCallResponses.array.find(function (supportCallResponse) {
+						return supportCallResponse.supportStaffId === scope.currentSupportStaff.id;
+					});
 
-				scope.currentSupportStaffResponse = scope.studentSupportCallResponses.array.find(function (supportCallResponse) {
-					return supportCallResponse.supportStaffId === supportStaff.id;
-				});
-
-				scope.currentSupportStaffPreferences = scope.studentPreferences.array.filter(function (studentPreference) {
-					return studentPreference.supportStaffId === supportStaff.id;
-				});
-			};
+					scope.currentSupportStaffPreferences = scope.studentPreferences.array.filter(function (studentPreference) {
+						return studentPreference.supportStaffId === scope.currentSupportStaff.id;
+					});
+				}
+			});
 		}
 	};
 };
