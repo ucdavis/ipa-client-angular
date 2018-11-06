@@ -10,8 +10,7 @@ if(ipaRunningMode === 'production') {
     if(typeof(window.ipa_user_tracking_id) === "undefined") {
       // Will retry next interval ...
     } else {
-      console.log('Setting user ID and sending to GA ...');
-      console.log(window.ipa_user_tracking_id);
+      // Set user ID and sending to GA ...
       ga('set', 'userId', window.ipa_user_tracking_id);
       ga('create', 'UA-83774200-1', 'auto');
       ga('send', 'pageview');
