@@ -10,6 +10,7 @@
 .section-group-list__item {
 	cursor: pointer;
 	padding: 6px;
+  border: 1px solid rgb(48, 54, 65);
 }
 
 .section-group-list__item:hover {
