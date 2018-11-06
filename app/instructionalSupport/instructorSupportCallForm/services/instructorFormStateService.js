@@ -69,6 +69,7 @@ class InstructorFormStateService {
             var allTabs = [];
             var activeTab = null;
             var activeSectionGroupId = null;
+            var activeSupportStaffId = null;
 
             action.payload.teachingAssignments.forEach(function(teachingAssignment) {
               if (teachingAssignment.approved && teachingAssignment.sectionGroupId) {
@@ -84,13 +85,17 @@ class InstructorFormStateService {
 
             misc = {
               allTabs: allTabs,
-              activeSectionGroupId: activeSectionGroupId
+              activeSectionGroupId: activeSectionGroupId,
+              activeSupportStaffId: activeSupportStaffId
             };
 
             misc.scheduleId = action.payload.scheduleId;
             return misc;
             case ActionTypes.SELECT_SECTION_GROUP:
-              misc.activeSectionGroupId = action.payload.activeSectionGroupId
+              misc.activeSectionGroupId = action.payload.activeSectionGroupId;
+              return misc;
+            case ActionTypes.SELECT_SUPPORT_STAFF:
+              misc.activeSupportStaffId = action.payload.activeSupportStaffId;
               return misc;
           default:
             return misc;

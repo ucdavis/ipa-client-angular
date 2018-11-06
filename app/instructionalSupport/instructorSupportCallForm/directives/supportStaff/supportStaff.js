@@ -11,6 +11,10 @@ let supportStaff = function (InstructorFormActions) {
       priority: '<'
     },
     link: function (scope, element, attrs) {
+      scope.selectSupportStaff = function(supportStaff) {
+        InstructorFormActions.selectSupportStaff(supportStaff);
+      };
+
       scope.addPreference = function() {
         InstructorFormActions.addInstructorPreference(supportStaff);
       };

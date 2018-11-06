@@ -51,6 +51,14 @@ class InstructorFormActions {
           }
         });
       },
+      selectSupportStaff: function (supportStaff) {
+        InstructorFormStateService.reduce({
+          type: ActionTypes.SELECT_SUPPORT_STAFF,
+          payload:  {
+            activeSupportStaffId: supportStaff.supportStaffId
+          }
+        });
+      },
       addInstructorPreference: function (sectionGroupId, supportStaffId) {
         InstructorFormService.addInstructorPreference(sectionGroupId, supportStaffId).then(function (newPreference) {
           $rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
