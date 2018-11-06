@@ -16,7 +16,7 @@ let supportStaff = function (InstructorFormActions) {
       };
 
       scope.addPreference = function() {
-        InstructorFormActions.addInstructorPreference(scope.supportStaff.id);
+        InstructorFormActions.addInstructorPreference(scope.supportStaff.supportStaffId);
       };
 
       scope.deletePreference = function() {
