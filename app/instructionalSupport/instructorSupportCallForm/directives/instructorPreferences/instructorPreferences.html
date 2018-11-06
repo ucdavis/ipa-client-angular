@@ -35,8 +35,13 @@
   </ul>
 
   <h5>Other</h6>
+  <input type="Search"
+          class=""
+          placeholder="Filter Support Staff"
+          ng-model="view.searchQuery"
+          ng-change="filterSupportStaff(view.searchQuery)">
   <ul class="instructor-support-call-form__support-staff-list">
-    <li ng-repeat="supportStaff in supportStaffList.sorted">
+    <li ng-repeat="supportStaff in filteredSupportStaff">
       <support-staff support-staff="supportStaff"></support-staff>
     </li>
   </ul>
