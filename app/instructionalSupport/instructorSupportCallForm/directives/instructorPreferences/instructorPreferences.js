@@ -14,30 +14,35 @@ let instructorPreferences = function ($rootScope, InstructorFormActions) {
       activeSupportStaffId: '<'
     },
 		link: function (scope, element, attrs) {
-      scope.filteredSupportStaff = scope.supportStaffList.sorted;
+      scope.filteredSupportStaff = scope.sectionGroup.eligibleSupportStaff.other;
 
-      scope.filterSupportStaff = function(searchQuery) {
-        if(searchQuery.length >= 1) {
-          var options = {
-            shouldSort: true,
-            threshold: 0.3,
-            location: 0,
-            distance: 100,
-            maxPatternLength: 32,
-            minMatchCharLength: 1,
-            includeScore: false,
-            keys: [
-              "fullName"
-            ]
-          };
-        
-          var fuse = new Fuse(scope.supportStaffList.sorted, options);
-          var results = fuse.search(searchQuery);
-          scope.filteredSupportStaff = results;
-        } else {
-          scope.filteredSupportStaff = scope.supportStaffList.sorted;
-        }
-      };
+      $rootScope.$on('instructorFormStateChanged', function (event, data) {
+        scope.sectionGroup = data.sectionGroups.list[data.misc.activeSectionGroupId];
+        scope.filteredSupportStaff = scope.sectionGroup.eligibleSupportStaff.other;
+
+        scope.filterSupportStaff = function (searchQuery) {
+          if (searchQuery.length >= 1) {
+            var options = {
+              shouldSort: true,
+              threshold: 0.3,
+              location: 0,
+              distance: 100,
+              maxPatternLength: 32,
+              minMatchCharLength: 1,
+              includeScore: false,
+              keys: [
+                "fullName"
+              ]
+            };
+
+            var fuse = new Fuse(scope.supportStaffList.sorted, options);
+            var results = fuse.search(searchQuery);
+            scope.filteredSupportStaff = results;
+          } else {
+            scope.filteredSupportStaff = scope.sectionGroup.eligibleSupportStaff.other;
+          }
+        };
+      });
 
       scope.addPreference = function(sectionGroupId, supportStaffId) {
         InstructorFormActions.addInstructorPreference(sectionGroupId, supportStaffId);
