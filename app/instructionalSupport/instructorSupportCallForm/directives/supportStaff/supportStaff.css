@@ -41,7 +41,10 @@
   justify-content: center;
 }
 
-.support-staff:hover,
-.active {
-  border-color: rgb(48, 54, 65);
+.support-staff:hover {
+  border-color: #c2c3c6
+}
+.support-staff__active,
+.support-staff__active:hover {
+  border: 1px solid #a0a1a5;
 }
