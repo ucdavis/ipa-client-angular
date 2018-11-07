@@ -8,13 +8,15 @@
         icon-class="'glyphicon glyphicon-chevron-up'"
         on-click="updatePreferencesOrder(-1)"
         is-disabled="!canRaisePriority"
-        size="'slim'">
+        size="'slim'"
+        stop-event="click">
       </ipa-button>
       <ipa-button
         icon-class="'glyphicon glyphicon-chevron-down'"
         on-click="updatePreferencesOrder(1)"
         is-disabled="!canLowerPriority"
-        size="'slim'">
+        size="'slim'"
+        stop-event="click">
       </ipa-button>
     </div>
     <div class="support-staff__priority-text">
