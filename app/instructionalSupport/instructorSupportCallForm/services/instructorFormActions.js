@@ -120,9 +120,15 @@ class InstructorFormActions {
         var scheduleId = InstructorFormStateService._state.misc.scheduleId;
         var sectionGroupId = InstructorFormStateService._state.misc.activeSectionGroupId;
 
-        var instructorPreferences = InstructorFormStateService._state.instructorPreferences;
+        var sectionGroupPreferences = {};
+        InstructorFormStateService._state.instructorPreferences.ids.forEach(function(preferenceId) {
+          var preference = InstructorFormStateService._state.instructorPreferences.list[preferenceId];
+          if (preference.sectionGroupId == sectionGroupId) {
+            sectionGroupPreferences[preference.id] = preference;
+          }
+        });
 
-        var preferenceIds = _array_sortByProperty(instructorPreferences.list, "priority");
+        var preferenceIds = _array_sortByProperty(sectionGroupPreferences, "priority");
         preferenceIds = preferenceIds.map(function (preference) { return preference.id; });
 
         var index = preferenceIds.indexOf(preference.id);
