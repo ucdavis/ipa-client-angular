@@ -16,3 +16,8 @@
 .instructor-preferences__interested {
   margin-top: 30px;
 }
+
+.instructor-preferences__no-preferences-info {
+  text-align: center;
+  color: #a5a5a5;
+}
