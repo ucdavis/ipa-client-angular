@@ -187,7 +187,8 @@ class AuthService {
 						if (scope.validateState(response.data, workgroupId, year, ignoreFallBackUrl)) {
 							// Log the user to Google Analytics (only in production mode)
 							if(ipaRunningMode === 'production') {
-								ga('set', 'userId', response.data.userTrackingId);
+								window.ipa_user_tracking_id = String(response.data.userTrackingId);
+								ga('set', 'userId', String(response.data.userTrackingId));
 								ga('send', 'event', 'authentication', 'user-id available');
 							}
 							deferred.resolve();
