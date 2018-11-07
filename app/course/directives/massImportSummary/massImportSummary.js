@@ -23,11 +23,11 @@ let massImportSummary = function (CourseActionCreators) {
         var importAssignments = scope.view.state.uiState.massImportInstructors;
 
         if (scope.view.state.uiState.massImportSource == 'IPA') {
-          ipa_analyze_event('courses', 'mass_import', 'ipa');
+          ipa_analyze_event('courses', 'mass import from IPA');
           CourseActionCreators.importCoursesAndSectionGroupsFromIPA(
             sectionGroupImports, scope.workgroupId, scope.year, selectedCourseIds.length, importTimes, importAssignments);
         } else {
-          ipa_analyze_event('courses', 'mass_import', 'banner');
+          ipa_analyze_event('courses', 'mass import from Banner');
           CourseActionCreators.importCoursesAndSectionGroups(
             sectionGroupImports, scope.workgroupId, scope.year, selectedCourseIds.length, importTimes, importAssignments);
         }
