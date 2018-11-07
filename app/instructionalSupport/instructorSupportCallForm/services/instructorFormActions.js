@@ -117,6 +117,9 @@ class InstructorFormActions {
         });
       },
       updateInstructorPreferencesOrder: function (preference, changeValue) {
+        var scheduleId = InstructorFormStateService._state.misc.scheduleId;
+        var sectionGroupId = InstructorFormStateService._state.misc.activeSectionGroupId;
+
         var instructorPreferences = InstructorFormStateService._state.instructorPreferences;
 
         var preferenceIds = _array_sortByProperty(instructorPreferences.list, "priority");
@@ -125,10 +128,6 @@ class InstructorFormActions {
         var index = preferenceIds.indexOf(preference.id);
         preferenceIds = _array_swap_positions(preferenceIds, index, index + changeValue);
 
-        var scheduleId = InstructorFormStateService._state.misc.scheduleId;
-        var sectionGroupId = InstructorFormStateService._state.misc.activeSectionGroupId;
-
-        debugger;
         InstructorFormService.updatePreferencesOrder(preferenceIds, scheduleId, sectionGroupId).then(function (payload) {
           $rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
           var action = {
