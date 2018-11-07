@@ -6,7 +6,10 @@
       <support-staff support-staff="instructorPreference"
                      instructor-preference="instructorPreference"
                      priority="instructorPreference.priority"
-                     active="(instructorPreference.supportStaffId == activeSupportStaffId)">
+                     active="(instructorPreference.supportStaffId == activeSupportStaffId)"
+                     can-raise-priority="!$first"
+                     can-lower-priority="!$last"
+                     >
       </support-staff>
     </li>
   </ul>

@@ -6,14 +6,14 @@
     <div class="support-staff__priority-ui">
       <ipa-button
         icon-class="'glyphicon glyphicon-chevron-up'"
-        on-click="updatePreferencesOrder(preference, -1)"
-        is-disabled="$first"
+        on-click="updatePreferencesOrder(-1)"
+        is-disabled="!canRaisePriority"
         size="'slim'">
       </ipa-button>
       <ipa-button
         icon-class="'glyphicon glyphicon-chevron-down'"
-        on-click="updatePreferencesOrder(preference, 1)"
-        is-disabled="$last"
+        on-click="updatePreferencesOrder(1)"
+        is-disabled="!canLowerPriority"
         size="'slim'">
       </ipa-button>
     </div>

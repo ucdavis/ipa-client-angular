@@ -9,7 +9,9 @@ let supportStaff = function (InstructorFormActions) {
       supportStaff: '<',
       instructorPreference: '<?',
       priority: '<',
-      active: '<'
+      active: '<',
+      canRaisePriority: '<',
+      canLowerPriority: '<'
     },
     link: function (scope, element, attrs) {
       scope.selectSupportStaff = function(supportStaff) {
@@ -23,6 +25,10 @@ let supportStaff = function (InstructorFormActions) {
       scope.deletePreference = function() {
         InstructorFormActions.deleteInstructorPreference(scope.instructorPreference);
       };
+
+      scope.updatePreferencesOrder = function(changeValue) {
+        InstructorFormActions.updateInstructorPreferencesOrder(scope.instructorPreference, changeValue);
+      }
     }
   };
 };

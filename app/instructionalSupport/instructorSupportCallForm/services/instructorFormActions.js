@@ -116,7 +116,19 @@ class InstructorFormActions {
           $rootScope.$emit('toast', { message: "Could not update preference.", type: "ERROR" });
         });
       },
-      updateInstructorPreferencesOrder: function (preferenceIds, scheduleId, sectionGroupId) {
+      updateInstructorPreferencesOrder: function (preference, changeValue) {
+        var instructorPreferences = InstructorFormStateService._state.instructorPreferences;
+
+        var preferenceIds = _array_sortByProperty(instructorPreferences.list, "priority");
+        preferenceIds = preferenceIds.map(function (preference) { return preference.id; });
+
+        var index = preferenceIds.indexOf(preference.id);
+        preferenceIds = _array_swap_positions(preferenceIds, index, index + changeValue);
+
+        var scheduleId = InstructorFormStateService._state.misc.scheduleId;
+        var sectionGroupId = InstructorFormStateService._state.misc.activeSectionGroupId;
+
+        debugger;
         InstructorFormService.updatePreferencesOrder(preferenceIds, scheduleId, sectionGroupId).then(function (payload) {
           $rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
           var action = {

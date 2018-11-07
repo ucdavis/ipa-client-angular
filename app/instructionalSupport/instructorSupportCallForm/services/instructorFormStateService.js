@@ -217,6 +217,14 @@ class InstructorFormStateService {
 
             instructorPreferences.ids.splice(index, 1);
             return instructorPreferences;
+
+          case ActionTypes.UPDATE_PREFERENCES_ORDER:
+            for (var i = 0; i < action.payload.length; i++) {
+              var preferenceId = action.payload[i];
+              var priority = i + 1;
+              instructorPreferences.list[preferenceId].priority = priority;
+            }
+            return instructorPreferences;
           default:
             return instructorPreferences;
         }
