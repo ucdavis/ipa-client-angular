@@ -15,7 +15,7 @@
     No preferences set
   </div>
 
-  <div ng-show="sectionGroup.eligibleSupportStaff.preferred.length > 0">
+  <div class="instructor-preferences__interested" ng-show="sectionGroup.eligibleSupportStaff.preferred.length > 0">
     <h5>Interested</h5>
     <ul class="instructor-support-call-form__support-staff-list">
       <li ng-repeat="supportStaff in sectionGroup.eligibleSupportStaff.preferred">
@@ -26,7 +26,7 @@
       </li>
     </ul>
   </div>
-  <div>
+  <div class="instructor-preferences__other">
     <h5>Other</h6>
     <input type="Search"
             class="instructor-preferences__filter-ui"

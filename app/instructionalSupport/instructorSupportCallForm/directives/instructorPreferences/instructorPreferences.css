@@ -11,3 +11,8 @@
   width: 100%;
   margin-bottom: 5px;
 }
+
+.instructor-preferences__other,
+.instructor-preferences__interested {
+  margin-top: 30px;
+}
