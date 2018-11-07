@@ -13,28 +13,34 @@
       </support-staff>
     </li>
   </ul>
+  <div ng-if="sectionGroup.instructorPreferences">
+    No preferences set
+  </div>
 
-  <h5>Interested</h5>
-  <ul class="instructor-support-call-form__support-staff-list">
-    <li ng-repeat="supportStaff in sectionGroup.eligibleSupportStaff.preferred">
-      <support-staff support-staff="supportStaff"
-                     priority="supportStaff.priority"
-                     active="(supportStaff.supportStaffId == activeSupportStaffId)">
-      </support-staff>
-    </li>
-  </ul>
-
-  <h5>Other</h6>
-  <input type="Search"
-          class=""
-          placeholder="Filter Support Staff"
-          ng-model="view.searchQuery"
-          ng-change="filterSupportStaff(view.searchQuery)">
-  <ul class="instructor-support-call-form__support-staff-list">
-    <li ng-repeat="supportStaff in filteredSupportStaff">
-      <support-staff support-staff="supportStaff"
-                     active="(supportStaff.supportStaffId == activeSupportStaffId)">
-      </support-staff>
-    </li>
-  </ul>
+  <div ng-show="sectionGroup.eligibleSupportStaff.preferred.length > 0">
+    <h5>Interested</h5>
+    <ul class="instructor-support-call-form__support-staff-list">
+      <li ng-repeat="supportStaff in sectionGroup.eligibleSupportStaff.preferred">
+        <support-staff support-staff="supportStaff"
+                      priority="supportStaff.priority"
+                      active="(supportStaff.supportStaffId == activeSupportStaffId)">
+        </support-staff>
+      </li>
+    </ul>
+  </div>
+  <div ng-show="filteredSupportStaff.length > 0">
+    <h5>Other</h6>
+    <input type="Search"
+            class=""
+            placeholder="Filter Support Staff"
+            ng-model="view.searchQuery"
+            ng-change="filterSupportStaff(view.searchQuery)">
+    <ul class="instructor-support-call-form__support-staff-list">
+      <li ng-repeat="supportStaff in filteredSupportStaff">
+        <support-staff support-staff="supportStaff"
+                      active="(supportStaff.supportStaffId == activeSupportStaffId)">
+        </support-staff>
+      </li>
+    </ul>    
+  </div>
 </div>
