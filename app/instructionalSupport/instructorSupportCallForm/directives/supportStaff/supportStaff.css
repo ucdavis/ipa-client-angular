@@ -14,6 +14,7 @@
   padding: 3px;
   background-color: #F8F8F8;
   display: flex;
+  height: 100%;
 }
 
 .support-staff__priority-ui {
@@ -30,14 +31,20 @@
   align-items: center;
 }
 
+.support-staff__priority-container {
+  flex: 1 0 0px;
+}
 .support-staff__add-remove {
+  flex: 1 0 0px;
   padding: 3px;
   display: flex;
+  justify-content: flex-end;
 }
 
 .support-staff__name {
+  flex: 3 0 0px;
   display: flex;
-  align-content: center;
+  align-items: center;
   justify-content: center;
 }
 
@@ -47,4 +54,8 @@
 .support-staff__active,
 .support-staff__active:hover {
   border: 1px solid #a0a1a5;
+}
+
+.support-staff__wide-button {
+  width: 100%;
 }

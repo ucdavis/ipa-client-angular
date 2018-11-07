@@ -2,25 +2,27 @@
      ng-class="{'support-staff__active': active }"
      ng-click="selectSupportStaff(supportStaff)">
 
-  <div class="support-staff__priority" ng-if="instructorPreference">
-    <div class="support-staff__priority-ui">
-      <ipa-button
-        icon-class="'glyphicon glyphicon-chevron-up'"
-        on-click="updatePreferencesOrder(-1)"
-        is-disabled="!canRaisePriority"
-        size="'slim'"
-        stop-event="click">
-      </ipa-button>
-      <ipa-button
-        icon-class="'glyphicon glyphicon-chevron-down'"
-        on-click="updatePreferencesOrder(1)"
-        is-disabled="!canLowerPriority"
-        size="'slim'"
-        stop-event="click">
-      </ipa-button>
-    </div>
-    <div class="support-staff__priority-text">
-      {{ instructorPreference.priority }}
+  <div class="support-staff__priority-container">
+    <div class="support-staff__priority" ng-if="instructorPreference">
+      <div class="support-staff__priority-ui">
+        <ipa-button
+          icon-class="'glyphicon glyphicon-chevron-up'"
+          on-click="updatePreferencesOrder(-1)"
+          is-disabled="!canRaisePriority"
+          size="'slim'"
+          stop-event="click">
+        </ipa-button>
+        <ipa-button
+          icon-class="'glyphicon glyphicon-chevron-down'"
+          on-click="updatePreferencesOrder(1)"
+          is-disabled="!canLowerPriority"
+          size="'slim'"
+          stop-event="click">
+        </ipa-button>
+      </div>
+      <div class="support-staff__priority-text">
+        {{ instructorPreference.priority }}
+      </div>
     </div>
   </div>
 
@@ -31,7 +33,7 @@
   <div class="support-staff__add-remove">
     <button ng-if="instructorPreference"
             type="button"
-            class="btn btn-danger btn-xs remove-preference-btn"
+            class="btn btn-danger btn-xs remove-preference-btn support-staff__wide-button"
             confirm-button="deletePreference(preference)"
             btn-class="btn-danger"
             message="Are you sure you want to delete this preference"
@@ -44,7 +46,7 @@
 
     <button ng-if="!instructorPreference"
             type="button"
-            class="btn btn-white btn-xs remove-preference-btn"
+            class="btn btn-white btn-xs remove-preference-btn support-staff__wide-button"
             aria-hidden="true" uib-tooltip="Add Preference" tooltip-placement="top"
             tooltip-append-to-body="true"
             ng-click="addPreference()">
