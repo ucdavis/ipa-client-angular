@@ -1,8 +1,7 @@
 <div class="instructor-preferences">
   <h5>Preferences</h5>
   <ul class="instructor-support-call-form__support-staff-list">
-    <li ng-repeat="instructorPreference in sectionGroup.instructorPreferences | orderBy: 'priority'"
-        class="instructor-preference">
+    <li ng-repeat="instructorPreference in sectionGroup.instructorPreferences | orderBy: 'priority'">
       <support-staff support-staff="instructorPreference"
                      instructor-preference="instructorPreference"
                      priority="instructorPreference.priority"
@@ -12,7 +11,7 @@
       </support-staff>
     </li>
   </ul>
-  <div ng-if="sectionGroup.instructorPreferences">
+  <div ng-if="sectionGroup.instructorPreferences.length == 0">
     No preferences set
   </div>
 
@@ -30,7 +29,7 @@
   <div ng-show="filteredSupportStaff.length > 0">
     <h5>Other</h6>
     <input type="Search"
-            class=""
+            class="instructor-preferences__filter-ui"
             placeholder="Filter Support Staff"
             ng-model="view.searchQuery"
             ng-change="filterSupportStaff(view.searchQuery)">
