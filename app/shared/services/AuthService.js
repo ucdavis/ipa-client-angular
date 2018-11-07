@@ -188,6 +188,7 @@ class AuthService {
 							// Log the user to Google Analytics (only in production mode)
 							if(ipaRunningMode === 'production') {
 								ga('set', 'userId', response.data.userTrackingId);
+								ga('send', 'event', 'authentication', 'user-id available');
 							}
 							deferred.resolve();
 						} else {
