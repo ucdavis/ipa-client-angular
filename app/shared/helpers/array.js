@@ -143,3 +143,11 @@ _array_find_by_properties = function(array, properties, object) {
 	}
 	return null;
 };
+
+_array_swap_positions = function (array, indexA, indexB) {
+	var valA = array[indexA];
+	array[indexA] = array[indexB];
+	array[indexB] = valA;
+
+	return array;
+};
