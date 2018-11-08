@@ -778,6 +778,8 @@ class BudgetActions {
 				var instructorTypes = BudgetReducers._state.instructorTypes;
 
 				var user = users.byLoginId[instructor.loginId.toLowerCase()];
+        if (!user) { return null; }
+
 				var userRoleId = userRoles.ids.find(id => (userRoles.list[id].roleId == Roles.instructor && userRoles.list[id].userId == user.id));
 
 				if (!userRoleId) { return null; }
