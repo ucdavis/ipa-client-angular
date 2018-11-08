@@ -49,6 +49,15 @@ class TeachingCallStatusActionCreators {
 					$rootScope.$emit('toast', { message: "Could not set next email contact.", type: "ERROR" });
 				});
 			},
+
+			/**
+			 * Adds many instructors to a teaching call. This is the primary method for generating
+			 * a teaching call.
+			 * 
+			 * @param {*} workgroupId 
+			 * @param {*} year 
+			 * @param {*} teachingCallConfig 
+			 */
 			addInstructorsToTeachingCall: function (workgroupId, year, teachingCallConfig) {
 				var self = this;
 				teachingCallConfig.instructorIds = [];
@@ -69,6 +78,8 @@ class TeachingCallStatusActionCreators {
 				}
 	
 				TeachingCallStatusService.addInstructorsToTeachingCall(workgroupId, year, teachingCallConfig).then(function (teachingCallReceipts) {
+					ipa_analyze_event('teaching call', 'called instructors');
+
 					$rootScope.$emit('toast', { message: "Added to Teaching Call", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ADD_INSTRUCTORS_TO_TEACHING_CALL,

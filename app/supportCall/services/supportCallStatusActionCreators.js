@@ -36,6 +36,8 @@ class SupportCallStatusActionCreators {
 				}
 	
 				SupportCallStatusService.addStudentsSupportCall(scheduleId, supportCallData).then(function (payload) {
+					ipa_analyze_event('support call', 'called students');
+
 					$rootScope.$emit('toast', { message: "Students added to support call", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ADD_STUDENT_SUPPORT_CALL,
@@ -62,6 +64,8 @@ class SupportCallStatusActionCreators {
 				}
 	
 				SupportCallStatusService.addInstructorsSupportCall(scheduleId, supportCallData).then(function (payload) {
+					ipa_analyze_event('support call', 'called instructors');
+
 					$rootScope.$emit('toast', { message: "Instructors added to support call", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ADD_INSTRUCTOR_SUPPORT_CALL,

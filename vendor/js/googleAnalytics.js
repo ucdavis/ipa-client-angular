@@ -10,6 +10,13 @@ if(ipaRunningMode === 'production') {
 
 /**
  * Wrapper for ga('send', 'event' ...), used in site analytics
+ * 
+ * @param category - IPA module used (GA recommends "object interacted with, e.g. video")
+ * @param action - action performed, e.g. "mass import"
+ * @param label - categorize events (a detail), e.g. "banner"
+ * 
+ * e.g. ipa_analyze_event(module, action_performed, optional_detail);
+ * ipa_analyze_event('courses', 'mass import', 'IPA');
  */
 window.ipa_analyze_event = function(category, action, label) {
   if(ipaRunningMode === 'production') {
