@@ -29,6 +29,16 @@ let studentFormDetail = function ($rootScope) {
 					});
 				}
 			});
+
+      scope.hasFormData = function () {
+        if (!scope.currentSupportStaffResponse) { return false; }
+        var isGeneralCommentsPresent = scope.currentSupportStaffResponse.generalComments && scope.currentSupportStaffResponse.generalComments.length > 0;
+        var isLanguagePresent = scope.currentSupportStaffResponse.languageProficiency && scope.currentSupportStaffResponse.languageProficiency.length > 0;
+        var isQualificationsPresent = scope.currentSupportStaffResponse.teachingQualifications && scope.currentSupportStaffResponse.teachingQualifications.length > 0;
+        var isPreferencesPresent = scope.currentSupportStaffPreferences && scope.currentSupportStaffPreferences.length > 0;
+
+        return isGeneralCommentsPresent || isLanguagePresent || isQualificationsPresent ||isPreferencesPresent;
+      };
 		}
 	};
 };

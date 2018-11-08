@@ -1,14 +1,44 @@
 <div class="student-form-detail">
-  <h6>{{ currentSupportStaff.fullName }}</h6>
+  <div ng-if="currentSupportStaff">
+    <h6>{{ currentSupportStaff.fullName }}</h6>
+    <div ng-if="currentSupportStaffResponse.generalComments">
+      <div>
+        General Comments:
+      </div>
+      <div>
+        {{ currentSupportStaffResponse.generalComments }}
+      </div>
+    </div>
 
-  <p>General Comments: {{ currentSupportStaffResponse.generalComments }}</p>
-  <p>Language Proficiency: {{ currentSupportStaffResponse.languageProficiency }}</p>
-  <p>Teaching Qualifications: {{ currentSupportStaffResponse.teachingQualifications}}</p>
+    <div ng-if="currentSupportStaffResponse.languageProficiency">
+      <div>
+        Language Proficiency:
+      </div>
+      <div>
+        {{ currentSupportStaffResponse.languageProficiency }}
+      </div>
+    </div>
 
-  <h6>Student Preferences</h6>
+    <div ng-if="currentSupportStaffResponse.teachingQualifications">
+      <div>
+        Teaching Qualifications:
+      </div>
+      <div>
+        {{ currentSupportStaffResponse.teachingQualifications }}
+      </div>
+    </div>
 
-  <p ng-repeat="preference in currentSupportStaffPreferences">
-    <strong>{{ sectionGroups.list[preference.sectionGroupId].subjectCode + " " + sectionGroups.list[preference.sectionGroupId].courseNumber }}: </strong>
-    {{ preference.comment }}
-  </p>
+    <div ng-if="currentSupportStaffPreferences.length > 0" ng-repeat="preference in currentSupportStaffPreferences">
+      <h6>Student Preferences</h6>
+
+      <strong>{{ sectionGroups.list[preference.sectionGroupId].subjectCode + " " + sectionGroups.list[preference.sectionGroupId].courseNumber }}: </strong>
+      {{ preference.comment }}
+    </div>
+  </div>
+  <div class="student-form-detail__selected-info" ng-if="!currentSupportStaff">
+    No student selected
+  </div>
+  <div class="student-form-detail__selected-info" ng-if="currentSupportStaff && !hasFormData()">
+    No preference data submitted
+  </div>
 </div>
