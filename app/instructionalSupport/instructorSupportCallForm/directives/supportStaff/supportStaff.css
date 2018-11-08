@@ -1,9 +1,8 @@
 .support-staff {
-  border: 1px solid rgb(48, 54, 65);
+  border: 1px solid #ebebeb;
   border-radius: 3px;
   display: flex;
   width: 100%;
-  border-color: #ebebeb;
   margin: 5px;
   margin-left: 0px;
   height: 48px;

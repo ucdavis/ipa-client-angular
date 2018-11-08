@@ -4,6 +4,7 @@
 
 .instructor-support-call-form__section-group-list {
   	flex: 1 0 0px;
+    border-right: 1px solid #ebebeb;
 }
 
 .instructor-support-call-form__preference-window {
