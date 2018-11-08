@@ -1,5 +1,6 @@
 .instructor-support-call-form {
 	padding: 20px;
+  padding-top: 10px;
 }
 
 .instructor-support-call-form__section-group-list {
@@ -14,6 +15,7 @@
 
 .instructor-support-call-form__support-staff-section {
 	flex: 2 0 0px;
+  overflow-y: scroll;
 }
 
 .instructor-support-call-form__support-staff-list {
@@ -36,4 +38,5 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   flex: 3 0 0px;
   display: flex;
+  height: 70vh;
 }
