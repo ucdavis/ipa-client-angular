@@ -1,4 +1,6 @@
 <div class="student-form-detail">
+  <h6>{{ currentSupportStaff.fullName }}</h6>
+
   <div class="student-form-detail__selected-info" ng-if="!currentSupportStaff">
     No student selected
   </div>
@@ -7,7 +9,6 @@
   </div>
 
   <div ng-if="hasFormData()">
-    <h6>{{ currentSupportStaff.fullName }}</h6>
     <div ng-if="currentSupportStaffResponse.generalComments">
       <div>
         General Comments:
