@@ -1,5 +1,12 @@
 <div class="student-form-detail">
-  <div ng-if="currentSupportStaff">
+  <div class="student-form-detail__selected-info" ng-if="!currentSupportStaff">
+    No student selected
+  </div>
+  <div class="student-form-detail__selected-info" ng-if="hasFormData()">
+    No preference data submitted
+  </div>
+
+  <div ng-if="hasFormData()">
     <h6>{{ currentSupportStaff.fullName }}</h6>
     <div ng-if="currentSupportStaffResponse.generalComments">
       <div>
@@ -28,17 +35,14 @@
       </div>
     </div>
 
-    <div ng-if="currentSupportStaffPreferences.length > 0" ng-repeat="preference in currentSupportStaffPreferences">
+    <div ng-if="currentSupportStaffPreferences.length > 0">
       <h6>Student Preferences</h6>
-
-      <strong>{{ sectionGroups.list[preference.sectionGroupId].subjectCode + " " + sectionGroups.list[preference.sectionGroupId].courseNumber }}: </strong>
-      {{ preference.comment }}
+      <div ng-repeat="preference in currentSupportStaffPreferences">
+        <strong>{{ sectionGroups.list[preference.sectionGroupId].subjectCode + " " + sectionGroups.list[preference.sectionGroupId].courseNumber }}</strong>
+        <div ng-if="preference.comment">
+          {{ preference.comment }}
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="student-form-detail__selected-info" ng-if="!currentSupportStaff">
-    No student selected
-  </div>
-  <div class="student-form-detail__selected-info" ng-if="currentSupportStaff && !hasFormData()">
-    No preference data submitted
   </div>
 </div>
