@@ -14,6 +14,12 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 			scope.generatePriority = function(teachingAssignment, instructor) {
 				var termCode = teachingAssignment.termCode;
+
+				if (instructor === undefined) {
+					// TBD assignment e.g. "Associate Instructor"
+					return teachingAssignment.priority;
+				}
+
 				var teachingAssignmentIds = instructor.teachingAssignmentTermCodeIds[termCode];
 				
 				var courseId = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId].courseId;
@@ -24,6 +30,14 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 				for (var slotTeachingAssignmentId of teachingAssignmentIds) {
 					var slotTeachingAssignment = scope.view.state.teachingAssignments.list[slotTeachingAssignmentId];
+
+					if (slotTeachingAssignment.sectionGroupId === 0 || slotTeachingAssignment.sectionGroupId === null) {
+						// A Suggested Course
+						var slotCourseDescription = slotTeachingAssignment.suggestedSubjectCode + slotTeachingAssignment.suggestedCourseNumber;
+						assignmentsTable[slotCourseDescription] = { ids: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+						continue;
+					}
+
 					var slotCourse = scope.view.state.courses.list[scope.view.state.sectionGroups.list[slotTeachingAssignment.sectionGroupId].courseId];
 					var slotCourseDescription = slotCourse.subjectCode + slotCourse.courseNumber;
 
