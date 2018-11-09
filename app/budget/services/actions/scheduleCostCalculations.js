@@ -150,7 +150,7 @@ class ScheduleCostCalculations {
         sectionGroupCost.overrideInstructorCostSource = "course";
 
         // If course cost => Use course cost
-        if (sectionGroupCost.cost) {
+        if (sectionGroupCost.cost === 0 || sectionGroupCost.cost > 0) {
           sectionGroupCost.overrideInstructorCost = angular.copy(sectionGroupCost.cost);
           sectionGroupCost.overrideInstructorCostSource = "course";
           sectionGroupCost.newInstructorCost = null;
