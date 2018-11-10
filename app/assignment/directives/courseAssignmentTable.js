@@ -32,8 +32,18 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					var slotTeachingAssignment = scope.view.state.teachingAssignments.list[slotTeachingAssignmentId];
 
 					if (slotTeachingAssignment.sectionGroupId === 0 || slotTeachingAssignment.sectionGroupId === null) {
-						// A Suggested Course
+						// A Suggested Course or non-course option
 						var slotCourseDescription = slotTeachingAssignment.suggestedSubjectCode + slotTeachingAssignment.suggestedCourseNumber;
+
+						if (slotCourseDescription === 0) {
+							// Non-course option
+							if (assignmentsTable["nonCourse"]) {
+								assignmentsTable["nonCourse"]++;
+							} else {
+								assignmentsTable["nonCourse"] = 0;
+							}
+							continue;
+						}
 						assignmentsTable[slotCourseDescription] = { ids: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
 						continue;
 					}
@@ -57,6 +67,13 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 						assignmentsTable[assignmentKey].priority = index + 1;
 					}
 				});
+
+				if (assignmentsTable["nonCourse"]) {
+					// adjust priority by length
+					assignmentKeys.forEach(function (assignmentKey, index) {
+						assignmentsTable[assignmentKey].priority -= assignmentsTable["nonCourse"].ids.length;
+					});
+				}
 
 				return assignmentsTable[courseDescription].priority;
 			};
