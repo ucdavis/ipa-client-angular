@@ -27,6 +27,8 @@
 
 <!-- Main page container -->
 <div ng-if="view.state && isInstructor && view.state.misc.allTabs.length > 0" class="instructor-support-call-form">
+  <ipa-section-header header-text="'Preferred TAs'"></ipa-section-header>
+
   <div class="instructor-support-call-form__preference-window">
 
     <div class="instructor-support-call-form__left-sidebar">
@@ -53,6 +55,7 @@
     </div>
   </div>
 
+<ipa-section-header header-text="'Miscellaneous'"></ipa-section-header>
   <!-- Comments and submission area -->
   <div class="input-box-container">
     <div class="instructor-comment-container">

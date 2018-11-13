@@ -11,6 +11,7 @@
 .instructor-support-call-form__preference-window {
 	display: flex;
 	justify-content: space-between;
+  margin-top: 20px;
 }
 
 .instructor-support-call-form__support-staff-section {
