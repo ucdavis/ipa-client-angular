@@ -93,6 +93,7 @@ class InstructorFormStateService {
             return misc;
             case ActionTypes.SELECT_SECTION_GROUP:
               misc.activeSectionGroupId = action.payload.activeSectionGroupId;
+              misc.activeSupportStaffId = null;
               return misc;
             case ActionTypes.SELECT_SUPPORT_STAFF:
               misc.activeSupportStaffId = action.payload.activeSupportStaffId;
