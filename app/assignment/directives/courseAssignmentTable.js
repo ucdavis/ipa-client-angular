@@ -20,10 +20,6 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					return teachingAssignment.priority;
 				}
 
-				if (instructor.id === 42) {
-					debugger;
-				}
-
 				var teachingAssignmentIds = instructor.teachingAssignmentTermCodeIds[termCode];
 				
 				var courseId = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId].courseId;
@@ -73,15 +69,6 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 						assignmentsTable[assignmentKey].priority = index + 1;
 					}
 				});
-
-				// if (assignmentsTable["nonCourse"]) {
-				// 	// adjust priority by length
-				// 	assignmentKeys.filter(function (assignmentKey) {
-				// 		return assignmentKey !== "nonCourse";
-				// 	}).forEach(function (assignmentKey, index) {
-				// 		assignmentsTable[assignmentKey].priority -= assignmentsTable["nonCourse"];
-				// 	});
-				// }
 
 				return assignmentsTable[courseDescription] ? assignmentsTable[courseDescription].priority : 0;
 			};
