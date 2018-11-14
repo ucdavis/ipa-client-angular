@@ -13,38 +13,40 @@
   </div>
 
   <div ng-if="hasFormData()">
-    <div ng-if="currentSupportStaffResponse.generalComments">
-      <div>
-        General Comments:
+    <div class="student-form-details__category" ng-if="currentSupportStaffResponse.generalComments">
+      <div class="student-form-details__label">
+        General Comments
       </div>
-      <div>
+      <div class="student-form-details__content">
         {{ currentSupportStaffResponse.generalComments }}
       </div>
     </div>
 
-    <div ng-if="currentSupportStaffResponse.languageProficiency">
-      <div>
-        Language Proficiency:
+    <div class="student-form-details__category" ng-if="currentSupportStaffResponse.languageProficiency">
+      <div class="student-form-details__label">
+        Language Proficiency
       </div>
-      <div>
+      <div class="student-form-details__content">
         {{ currentSupportStaffResponse.languageProficiency }}
       </div>
     </div>
 
-    <div ng-if="currentSupportStaffResponse.teachingQualifications">
-      <div>
-        Teaching Qualifications:
+    <div class="student-form-details__category" ng-if="currentSupportStaffResponse.teachingQualifications">
+      <div class="student-form-details__label">
+        Teaching Qualifications
       </div>
-      <div>
+      <div class="student-form-details__content">
         {{ currentSupportStaffResponse.teachingQualifications }}
       </div>
     </div>
 
     <div ng-if="currentSupportStaffPreferences.length > 0">
       <h6>Student Preferences</h6>
-      <div ng-repeat="preference in currentSupportStaffPreferences">
-        <strong>{{ sectionGroups.list[preference.sectionGroupId].subjectCode + " " + sectionGroups.list[preference.sectionGroupId].courseNumber }}</strong>
-        <div ng-if="preference.comment">
+      <div ng-repeat="preference in currentSupportStaffPreferences" class="student-form-details__category">
+        <div class="student-form-details__label">
+          {{ sectionGroups.list[preference.sectionGroupId].subjectCode + " " + sectionGroups.list[preference.sectionGroupId].courseNumber }}
+        </div>
+        <div class="student-form-details__content" ng-if="preference.comment">
           {{ preference.comment }}
         </div>
       </div>

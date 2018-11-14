@@ -14,3 +14,24 @@
   font-size: 14px;
   font-weight: bold;
 }
+
+.student-form-details__category {
+  display: flex;
+  margin-bottom: -1px;
+
+}
+
+.student-form-details__label {
+  flex: 2 0 0px;
+  border: 1px solid #ebebeb;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.student-form-details__content {
+  flex: 8 0 0px;
+  border: 1px solid #ebebeb;
+  padding: 10px;
+  margin-left: -1px;
+
+}
