@@ -13,7 +13,18 @@
   </div>
 
   <div ng-if="hasFormData()">
-    <div class="student-form-details__category" ng-if="currentSupportStaffResponse.generalComments">
+    <div ng-if="currentSupportStaffPreferences.length > 0">
+      <div ng-repeat="preference in currentSupportStaffPreferences | orderBy: 'priority'" class="student-form-details__category">
+        <div class="student-form-details__label">
+          ({{preference.priority}}) {{ sectionGroups.list[preference.sectionGroupId].subjectCode + " " + sectionGroups.list[preference.sectionGroupId].courseNumber }}
+        </div>
+        <div class="student-form-details__content" ng-if="preference.comment">
+          {{ preference.comment }}
+        </div>
+      </div>
+    </div>
+
+    <div class="student-form-details__category student-form-details__general-comments" ng-if="currentSupportStaffResponse.generalComments">
       <div class="student-form-details__label">
         General Comments
       </div>
@@ -40,15 +51,14 @@
       </div>
     </div>
 
-    <div ng-if="currentSupportStaffPreferences.length > 0">
-      <h6>Student Preferences</h6>
-      <div ng-repeat="preference in currentSupportStaffPreferences | orderBy: 'priority'" class="student-form-details__category">
-        <div class="student-form-details__label">
-          ({{preference.priority}}) {{ sectionGroups.list[preference.sectionGroupId].subjectCode + " " + sectionGroups.list[preference.sectionGroupId].courseNumber }}
-        </div>
-        <div class="student-form-details__content" ng-if="preference.comment">
-          {{ preference.comment }}
-        </div>
+    <div class="student-form-details__category" ng-if="currentSupportStaffResponse.teachingQualifications">
+      <div class="student-form-details__label">
+        Availability
+      </div>
+      <div class="student-form-details__content">
+        <availability-grid blob="currentSupportStaffResponse.availabilityBlob"
+                          read-only="true">
+        </availability-grid>
       </div>
     </div>
   </div>

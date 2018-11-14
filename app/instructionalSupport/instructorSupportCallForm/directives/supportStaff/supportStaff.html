@@ -27,6 +27,9 @@
   </div>
 
   <div class="support-staff__name">
+    <span class="support-staff__name-priority" ng-if="!instructorPreference && priority">
+      ({{priority}})
+      </span>
     {{ supportStaff.firstName }} {{ supportStaff.lastName }}
   </div>  
 
