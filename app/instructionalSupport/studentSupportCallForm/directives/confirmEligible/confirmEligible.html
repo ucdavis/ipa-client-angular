@@ -1,25 +1,22 @@
 <div class="confirm-eligible" ng-show="supportCallResponse.collectEligibilityConfirmation">
-	<div class="confirm-eligible__icon">
-		<i class="entypo-attention"></i>
-	</div>
+	<ipa-section-header header-text="'Eligibility'"></ipa-section-header>
 
-	<div class="confirm-eligible__main">
-		<div class="confirm-eligible__header">
-			TA ELIGIBILITY REQUIREMENTS
-		</div>
-		<div>
-			Full-time (12 units) graduate student, current cumulative GPA 3.0 or above, completed the TA orientation, and total appointments for this quarter not exceeding 75%
-		</div>
-	</div>
-
-
-	<div class="confirm-eligible__checkbox">
-		<ipa-checkbox
-			is-checked="supportCallResponse.eligibilityConfirmed"
-			click-action="toggleEligibilityConfirmed()">
-		</ipa-checkbox>
-		<div class="confirm-eligible__label">
-			Confirm Eligibility
-		</div>
-	</div>
+  <div class="confirm-eligible__content">
+    <div class="confirm-eligible__header">
+      TA Eligibility Requirements
+    </div>
+    <div class="confirm-eligible__main">
+      <div class="confirm-eligible__description">
+        Full-time (12 units) graduate student, current cumulative GPA 3.0 or above, completed the TA orientation, and total appointments for this quarter not exceeding 75%
+      </div>
+      <div class="confirm-eligible__checkbox">
+        <ipa-checkbox is-checked="supportCallResponse.eligibilityConfirmed"
+                      click-action="toggleEligibilityConfirmed()">
+        </ipa-checkbox>
+        <div class="confirm-eligible__label">
+          Confirm Eligibility
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
