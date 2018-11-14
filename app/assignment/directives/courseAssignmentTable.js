@@ -12,8 +12,11 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 		link: function (scope, element, attrs) {
 			scope.view = {};
 
-			scope.generatePriority = function(teachingAssignment, instructor) {
+			scope.calculatePriority = function(teachingAssignment, instructor) {
 				var termCode = teachingAssignment.termCode;
+				var courseId = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId].courseId;
+				var course = scope.view.state.courses.list[courseId];
+				var courseDescription = course.subjectCode + course.courseNumber;
 
 				if (instructor === undefined) {
 					// TBD assignment e.g. "Associate Instructor"
@@ -21,19 +24,14 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				}
 
 				var teachingAssignmentIds = instructor.teachingAssignmentTermCodeIds[termCode];
-				
-				var courseId = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId].courseId;
-				var course = scope.view.state.courses.list[courseId];
-				var courseDescription = course.subjectCode + course.courseNumber;
-
-				var assignmentsTable = {};
-				var nonCourseOptions = 0;
+				var assignmentsHash = {};
+				var nonCourseOptionsCount = 0;
 
 				for (var slotTeachingAssignmentId of teachingAssignmentIds) {
 					var slotTeachingAssignment = scope.view.state.teachingAssignments.list[slotTeachingAssignmentId];
 
 					if (slotTeachingAssignment.approved === true) {
-						// skip over approved courses
+						// skip over approved assignments
 						continue;
 					}
 
@@ -42,35 +40,35 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 						var slotCourseDescription = slotTeachingAssignment.suggestedSubjectCode + slotTeachingAssignment.suggestedCourseNumber;
 
 						if (slotCourseDescription === 0) {
-							// Non-course option
-							nonCourseOptions++;
+							// non-course option
 							continue;
 						}
-						assignmentsTable[slotCourseDescription] = { ids: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+
+						assignmentsHash[slotCourseDescription] = { ids: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
 						continue;
 					}
 
 					var slotCourse = scope.view.state.courses.list[scope.view.state.sectionGroups.list[slotTeachingAssignment.sectionGroupId].courseId];
 					var slotCourseDescription = slotCourse.subjectCode + slotCourse.courseNumber;
 
-					if (assignmentsTable[slotCourseDescription]) {
-						assignmentsTable[slotCourseDescription].ids.push(slotTeachingAssignmentId);
+					if (assignmentsHash[slotCourseDescription]) {
+						assignmentsHash[slotCourseDescription].ids.push(slotTeachingAssignmentId);
 					} else {
-						assignmentsTable[slotCourseDescription] = {ids: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority};
+						assignmentsHash[slotCourseDescription] = {ids: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority};
 					}
 				}
 
 				// Adjust listed priority if outside the range of number of courses
-				var numberOfUniqueCourses = Object.keys(assignmentsTable).length;
-				var assignmentKeys = Object.keys(assignmentsTable);
+				var numberOfUniqueCourses = Object.keys(assignmentsHash).length;
+				var assignmentKeys = Object.keys(assignmentsHash);
 				
 				assignmentKeys.forEach(function (assignmentKey, index) {
-					if (assignmentsTable[assignmentKey].priority > numberOfUniqueCourses) {
-						assignmentsTable[assignmentKey].priority = index + 1;
+					if (assignmentsHash[assignmentKey].priority > numberOfUniqueCourses) {
+						assignmentsHash[assignmentKey].priority = index + 1;
 					}
 				});
 
-				return assignmentsTable[courseDescription] ? assignmentsTable[courseDescription].priority : 0;
+				return assignmentsHash[courseDescription] ? assignmentsHash[courseDescription].priority : 0;
 			};
 
 			scope.userCanEdit = function () {
@@ -296,7 +294,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 												$.each(sectionGroup.teachingAssignmentIds, function (i, teachingAssignmentId) {
 													var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
-													var priority = scope.generatePriority(teachingAssignment, instructor);
+													var priority = scope.calculatePriority(teachingAssignment, instructor);
 
 													if (instructor) {
 														interestedInstructorIds.push(instructor.id);
