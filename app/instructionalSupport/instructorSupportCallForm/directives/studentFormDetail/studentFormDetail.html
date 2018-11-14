@@ -18,9 +18,7 @@
         <div class="student-form-details__label">
           ({{preference.priority}}) {{ sectionGroups.list[preference.sectionGroupId].subjectCode + " " + sectionGroups.list[preference.sectionGroupId].courseNumber }}
         </div>
-        <div class="student-form-details__content" ng-if="preference.comment">
-          {{ preference.comment }}
-        </div>
+        <div class="student-form-details__content" ng-if="preference.comment">{{ preference.comment }}</div>
       </div>
     </div>
 
@@ -28,9 +26,7 @@
       <div class="student-form-details__label">
         General Comments
       </div>
-      <div class="student-form-details__content">
-        {{ currentSupportStaffResponse.generalComments }}
-      </div>
+      <div class="student-form-details__content">{{ currentSupportStaffResponse.generalComments }}</div>
     </div>
 
     <div class="student-form-details__category" ng-if="currentSupportStaffResponse.languageProficiency">
@@ -38,7 +34,7 @@
         Language Proficiency
       </div>
       <div class="student-form-details__content">
-        {{ currentSupportStaffResponse.languageProficiency }}
+        {{ getLanguageProficiencyDescription(currentSupportStaffResponse.languageProficiency) }}
       </div>
     </div>
 
@@ -46,9 +42,7 @@
       <div class="student-form-details__label">
         Teaching Qualifications
       </div>
-      <div class="student-form-details__content">
-        {{ currentSupportStaffResponse.teachingQualifications }}
-      </div>
+      <div class="student-form-details__content">{{ currentSupportStaffResponse.teachingQualifications }}</div>
     </div>
 
     <div class="student-form-details__category" ng-if="currentSupportStaffResponse.teachingQualifications">

@@ -1,10 +1,9 @@
 import './studentFormDetail.css';
-import studentPreferences from '../../../studentSupportCallForm/directives/studentPreferences/studentPreferences';
 
 /**
  * Provides the main course table in the Courses View
  */
-let studentFormDetail = function ($rootScope) {
+let studentFormDetail = function ($rootScope, SupportCallService) {
   return {
     restrict: 'E',
     template: require('./studentFormDetail.html'),
@@ -16,6 +15,10 @@ let studentFormDetail = function ($rootScope) {
       sectionGroups: '<',
     },
     link: function (scope, element, attrs) {
+      scope.getLanguageProficiencyDescription = function (languageProficiency) {
+        return SupportCallService.getLanguageProficiencyDescription(languageProficiency);
+      };
+
       $rootScope.$on('instructorFormStateChanged', function(event, data) {
         if (data.misc.activeSupportStaffId) {
           scope.currentSupportStaff = data.supportStaff.list[data.misc.activeSupportStaffId];

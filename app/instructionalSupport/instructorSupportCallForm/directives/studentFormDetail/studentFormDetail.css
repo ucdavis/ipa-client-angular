@@ -33,6 +33,7 @@
   border: 1px solid #ebebeb;
   padding: 10px;
   margin-left: -1px;
+  white-space: pre-wrap;
 }
 
 .student-form-details__general-comments {
