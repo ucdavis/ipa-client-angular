@@ -8,7 +8,7 @@
   <div class="student-form-detail__selected-info" ng-if="!currentSupportStaff">
     No student selected
   </div>
-  <div class="student-form-detail__selected-info" ng-if="hasFormData()">
+  <div class="student-form-detail__selected-info" ng-if="currentSupportStaff && !hasFormData()">
     No preference data submitted
   </div>
 
