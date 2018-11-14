@@ -20,6 +20,10 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					return teachingAssignment.priority;
 				}
 
+				if (instructor.id === 42) {
+					debugger;
+				}
+
 				var teachingAssignmentIds = instructor.teachingAssignmentTermCodeIds[termCode];
 				
 				var courseId = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId].courseId;
@@ -27,9 +31,15 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				var courseDescription = course.subjectCode + course.courseNumber;
 
 				var assignmentsTable = {};
+				var nonCourseOptions = 0;
 
 				for (var slotTeachingAssignmentId of teachingAssignmentIds) {
 					var slotTeachingAssignment = scope.view.state.teachingAssignments.list[slotTeachingAssignmentId];
+
+					if (slotTeachingAssignment.approved === true) {
+						// skip over approved courses
+						continue;
+					}
 
 					if (slotTeachingAssignment.sectionGroupId === 0 || slotTeachingAssignment.sectionGroupId === null) {
 						// A Suggested Course or non-course option
@@ -37,11 +47,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 						if (slotCourseDescription === 0) {
 							// Non-course option
-							if (assignmentsTable["nonCourse"]) {
-								assignmentsTable["nonCourse"]++;
-							} else {
-								assignmentsTable["nonCourse"] = 0;
-							}
+							nonCourseOptions++;
 							continue;
 						}
 						assignmentsTable[slotCourseDescription] = { ids: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
@@ -68,14 +74,16 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					}
 				});
 
-				if (assignmentsTable["nonCourse"]) {
-					// adjust priority by length
-					assignmentKeys.forEach(function (assignmentKey, index) {
-						assignmentsTable[assignmentKey].priority -= assignmentsTable["nonCourse"].ids.length;
-					});
-				}
+				// if (assignmentsTable["nonCourse"]) {
+				// 	// adjust priority by length
+				// 	assignmentKeys.filter(function (assignmentKey) {
+				// 		return assignmentKey !== "nonCourse";
+				// 	}).forEach(function (assignmentKey, index) {
+				// 		assignmentsTable[assignmentKey].priority -= assignmentsTable["nonCourse"];
+				// 	});
+				// }
 
-				return assignmentsTable[courseDescription].priority;
+				return assignmentsTable[courseDescription] ? assignmentsTable[courseDescription].priority : 0;
 			};
 
 			scope.userCanEdit = function () {
