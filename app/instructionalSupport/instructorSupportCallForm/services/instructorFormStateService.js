@@ -83,6 +83,8 @@ class InstructorFormStateService {
               }
             });
 
+            allTabs = _array_sortByProperty(allTabs, ["subjectCode", "courseNumber"]);
+
             misc = {
               allTabs: allTabs,
               activeSectionGroupId: activeSectionGroupId,
