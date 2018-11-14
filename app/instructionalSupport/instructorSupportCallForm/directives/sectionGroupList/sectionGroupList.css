@@ -1,24 +1,29 @@
 .section-group-list__container {
-	list-style: none;
+  list-style: none;
   padding-left: 0px;
 }
 
 .section-group-list__item {
-	cursor: pointer;
-	padding: 6px;
+  cursor: pointer;
+  padding: 6px;
   border: 1px solid #ebebeb;
-  margin: -1px;
+  margin-top: -1px;
+  margin-bottom: -1px;
 }
 
 .section-group-list__item:hover {
-	border: 1px solid #c2c3c6;
-	padding: 6px;
+  border: 1px solid #c2c3c6;
+padding: 6px;
 }
 
 .section-group-list__item.active,
 .section-group-list__item.active:hover {
-	border: 1px solid #a0a1a5;
-	background-color: rgb(48, 54, 65);
-	color: white;
-	cursor: default;
+  border: 1px solid #a0a1a5;
+  background-color: rgb(48, 54, 65);
+  color: white;
+cursor: default;
+}
+
+.section-group-list__title {
+  font-weight: bold;
 }

@@ -1,9 +1,16 @@
 .student-form-detail {
   padding: 10px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  height: 400px;
+  overflow-y: scroll;
 }
 
 .student-form-detail__selected-info {
   text-align: center;
   color: #a5a5a5;
+}
+
+.student-form-detail__header {
+  font-size: 14px;
+  font-weight: bold;
 }

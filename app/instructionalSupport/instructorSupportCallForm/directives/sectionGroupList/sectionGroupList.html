@@ -4,12 +4,8 @@
         class="section-group-list__item"
         ng-class="{'active': sectionGroup.id === activeSectionGroupId}"
         ng-click="selectSectionGroup(sectionGroup)">
-      <p>{{ sectionGroup.subjectCode + " " + sectionGroup.courseNumber + " " + sectionGroup.sequenceNumber }}</p>
-      <p>{{ sectionGroup.title }}</p>
-
-    <div ng-if="sectionGroup.teachingAssistantAppointments > 0">
-      Numbers of TAs: {{ sectionGroup.teachingAssistantAppointments }}
-    </div>
+      <div>{{ sectionGroup.subjectCode + " " + sectionGroup.courseNumber + " " + sectionGroup.sequenceNumber }}</div>
+      <div class="section-group-list__title">{{ sectionGroup.title }}</div>
     </li>
   </ul>
 </div>
