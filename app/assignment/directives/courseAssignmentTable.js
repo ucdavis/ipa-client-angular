@@ -25,13 +25,11 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 				var teachingAssignmentIds = instructor.teachingAssignmentTermCodeIds[termCode];
 				var assignmentsHash = {};
-				var nonCourseOptionsCount = 0;
-
 				for (var slotTeachingAssignmentId of teachingAssignmentIds) {
 					var slotTeachingAssignment = scope.view.state.teachingAssignments.list[slotTeachingAssignmentId];
 
 					if (slotTeachingAssignment.approved === true) {
-						// skip over approved assignments
+						// skip approved assignments
 						continue;
 					}
 
@@ -41,10 +39,27 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 						if (slotCourseDescription === 0) {
 							// non-course option
+								if (slotTeachingAssignment.buyout) {
+									assignmentsHash["Buyout"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+								} else if (slotTeachingAssignment.courseRelease) {
+									assignmentsHash["CourseRelease"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+								} else if (slotTeachingAssignment.sabbatical) {
+									assignmentsHash["Sabbatical"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+								} else if (slotTeachingAssignment.inResidence) {
+									assignmentsHash["InResidence"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+								} else if (slotTeachingAssignment.sabbaticalInResidence) {
+									assignmentsHash["SabbaticalInResidence"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+								} else if (slotTeachingAssignment.leaveOfAbsense) {
+									assignmentsHash["LeaveOfAbsense"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+								} else if (slotTeachingAssignment.workLifeBalance) {
+									assignmentsHash["WorkLifeBalance"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+								} else {
+									continue;
+								}
 							continue;
 						}
 
-						assignmentsHash[slotCourseDescription] = { ids: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+						assignmentsHash[slotCourseDescription] = { description: slotCourseDescription, ids: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
 						continue;
 					}
 
@@ -54,21 +69,16 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					if (assignmentsHash[slotCourseDescription]) {
 						assignmentsHash[slotCourseDescription].ids.push(slotTeachingAssignmentId);
 					} else {
-						assignmentsHash[slotCourseDescription] = {ids: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority};
+						assignmentsHash[slotCourseDescription] = { description: slotCourseDescription, ids: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority} ;
 					}
 				}
 
-				// Adjust listed priority if outside the range of number of courses
-				var numberOfUniqueCourses = Object.keys(assignmentsHash).length;
-				var assignmentKeys = Object.keys(assignmentsHash);
-				
-				assignmentKeys.forEach(function (assignmentKey, index) {
-					if (assignmentsHash[assignmentKey].priority > numberOfUniqueCourses) {
-						assignmentsHash[assignmentKey].priority = index + 1;
-					}
+				var sortedAssignmentsHash = _array_sortByProperty(assignmentsHash, ["priority"]);
+				var displayRank = sortedAssignmentsHash.findIndex(function(assignmentHash) {
+					return assignmentHash.description === courseDescription;
 				});
 
-				return assignmentsHash[courseDescription] ? assignmentsHash[courseDescription].priority : 0;
+				return displayRank + 1;
 			};
 
 			scope.userCanEdit = function () {
@@ -167,7 +177,6 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 									var sectionGroupId = course.sectionGroupTermCodeIds[termCode];
 									if (sectionGroupId) {
 										var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
-
 										// Adding sectionGroup Seats
 										courseHtml += "<div class=\"assignment-seats-container\">";
 										courseHtml += "<span class=\"assignment-seats\" data-toggle=\"tooltip\" data-placement=\"top\"";
