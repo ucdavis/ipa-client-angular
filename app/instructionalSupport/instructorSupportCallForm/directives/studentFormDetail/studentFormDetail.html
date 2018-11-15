@@ -1,12 +1,10 @@
 <div class="student-form-detail">
   <div class="student-form-detail__header">
-    Student Details
+    Student Details <span ng-if="currentSupportStaff">: {{ currentSupportStaff.fullName }}</span>
   </div>
 
-  <h6>{{ currentSupportStaff.fullName }}</h6>
-
   <div class="student-form-detail__selected-info" ng-if="!currentSupportStaff">
-    No student selected
+    Select a student on the left to view details
   </div>
   <div class="student-form-detail__selected-info" ng-if="currentSupportStaff && !hasFormData()">
     No preference data submitted
@@ -33,9 +31,7 @@
       <div class="student-form-details__label">
         Language Proficiency
       </div>
-      <div class="student-form-details__content">
-        {{ getLanguageProficiencyDescription(currentSupportStaffResponse.languageProficiency) }}
-      </div>
+      <div class="student-form-details__content">{{ getLanguageProficiencyDescription(currentSupportStaffResponse.languageProficiency) }}</div>
     </div>
 
     <div class="student-form-details__category" ng-if="currentSupportStaffResponse.teachingQualifications">

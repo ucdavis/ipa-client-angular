@@ -38,6 +38,9 @@
                       active="(supportStaff.supportStaffId == activeSupportStaffId)">
         </support-staff>
       </li>
-    </ul>    
+    </ul>
+    <div class="instructor-preferences__no-students-info" ng-if="!filteredSupportStaff || filteredSupportStaff.length == 0">
+      No students available
+    </div>
   </div>
 </div>

@@ -20,3 +20,9 @@
   text-align: center;
   color: #a5a5a5;
 }
+
+.instructor-preferences__no-students-info {
+  text-align: center;
+  color: #a5a5a5;
+  margin-bottom: 20px;
+}

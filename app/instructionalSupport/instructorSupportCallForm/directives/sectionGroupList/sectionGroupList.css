@@ -1,14 +1,14 @@
 .section-group-list__container {
   list-style: none;
   padding-left: 0px;
+  overflow-x: hidden;
 }
 
 .section-group-list__item {
   cursor: pointer;
   padding: 6px;
   border: 1px solid #ebebeb;
-  margin-top: -1px;
-  margin-bottom: -1px;
+  margin: -1px;
 }
 
 .section-group-list__item:hover {
