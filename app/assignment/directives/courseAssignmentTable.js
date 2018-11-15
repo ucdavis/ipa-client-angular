@@ -40,39 +40,38 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 						if (slotCourseDescription === 0) {
 							// non-course option
 								if (slotTeachingAssignment.buyout) {
-									assignmentsHash["Buyout"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+									assignmentsHash["Buyout"] = { priority: slotTeachingAssignment.priority };
 								} else if (slotTeachingAssignment.courseRelease) {
-									assignmentsHash["CourseRelease"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+									assignmentsHash["CourseRelease"] = { priority: slotTeachingAssignment.priority };
 								} else if (slotTeachingAssignment.sabbatical) {
-									assignmentsHash["Sabbatical"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+									assignmentsHash["Sabbatical"] = { priority: slotTeachingAssignment.priority };
 								} else if (slotTeachingAssignment.inResidence) {
-									assignmentsHash["InResidence"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+									assignmentsHash["InResidence"] = { priority: slotTeachingAssignment.priority };
 								} else if (slotTeachingAssignment.sabbaticalInResidence) {
-									assignmentsHash["SabbaticalInResidence"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+									assignmentsHash["SabbaticalInResidence"] = {  priority: slotTeachingAssignment.priority };
 								} else if (slotTeachingAssignment.leaveOfAbsense) {
-									assignmentsHash["LeaveOfAbsense"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+									assignmentsHash["LeaveOfAbsense"] = { priority: slotTeachingAssignment.priority };
 								} else if (slotTeachingAssignment.workLifeBalance) {
-									assignmentsHash["WorkLifeBalance"] = { id: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+									assignmentsHash["WorkLifeBalance"] = { priority: slotTeachingAssignment.priority };
 								} else {
 									continue;
 								}
 							continue;
 						}
 
-						assignmentsHash[slotCourseDescription] = { description: slotCourseDescription, ids: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority };
+						assignmentsHash[slotCourseDescription] = { description: slotCourseDescription, priority: slotTeachingAssignment.priority };
 						continue;
 					}
 
 					var slotCourse = scope.view.state.courses.list[scope.view.state.sectionGroups.list[slotTeachingAssignment.sectionGroupId].courseId];
 					var slotCourseDescription = slotCourse.subjectCode + slotCourse.courseNumber;
 
-					if (assignmentsHash[slotCourseDescription]) {
-						assignmentsHash[slotCourseDescription].ids.push(slotTeachingAssignmentId);
-					} else {
-						assignmentsHash[slotCourseDescription] = { description: slotCourseDescription, ids: [slotTeachingAssignmentId], priority: slotTeachingAssignment.priority} ;
+					if (!assignmentsHash[slotCourseDescription]) {
+						assignmentsHash[slotCourseDescription] = { description: slotCourseDescription, priority: slotTeachingAssignment.priority} ;
 					}
 				}
 
+				debugger;
 				var sortedAssignmentsHash = _array_sortByProperty(assignmentsHash, ["priority"]);
 				var displayRank = sortedAssignmentsHash.findIndex(function(assignmentHash) {
 					return assignmentHash.description === courseDescription;
