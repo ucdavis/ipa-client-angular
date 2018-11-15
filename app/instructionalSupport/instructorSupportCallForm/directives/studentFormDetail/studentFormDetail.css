@@ -52,8 +52,9 @@
 .student-form-details__preference {
   font-weight: bold;
   margin-top: 20px;
+  font-size: 14px;
 }
 
-.student-form-details__preference--first {
-  margin-top: 0px;
+.student-form-details__comment-label {
+  font-weight: bold;
 }

@@ -16,12 +16,17 @@
         Course Preferences
       </div>
       <div class="student-form-details__content">
-        <div ng-repeat="preference in currentSupportStaffPreferences | orderBy: 'priority'">
-          <div class="student-form-details__preference" ng-class="{'student-form-details__preference--first': $first}">
-            ({{preference.priority}}) {{ sectionGroups.list[preference.sectionGroupId].subjectCode + " " + sectionGroups.list[preference.sectionGroupId].courseNumber }}
-          </div>
-          <div class="student-form-details__content-raw" ng-if="preference.comment">{{ preference.comment }}</div>
-        </div>
+        <ol>
+          <li ng-repeat="preference in currentSupportStaffPreferences | orderBy: 'priority'">
+            <div class="student-form-details__preference">
+              {{ sectionGroups.list[preference.sectionGroupId].subjectCode }} {{ sectionGroups.list[preference.sectionGroupId].courseNumber }} {{ sectionGroups.list[preference.sectionGroupId].title }}
+            </div>
+            <div class="student-form-details__comment" ng-if="preference.comment">
+              <div class="student-form-details__comment-label">Comment </div>
+              <div class="student-form-details__content-raw">{{ preference.comment }}</div>
+            </div>
+          </li>
+        </ol>
       </div>
     </div>
 
