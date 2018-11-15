@@ -44,7 +44,7 @@ let studentFormDetail = function ($rootScope, SupportCallService) {
         var isQualificationsPresent = scope.currentSupportStaffResponse.teachingQualifications && scope.currentSupportStaffResponse.teachingQualifications.length > 0;
         var isPreferencesPresent = scope.currentSupportStaffPreferences && scope.currentSupportStaffPreferences.length > 0;
 
-        return isGeneralCommentsPresent || isLanguagePresent || isQualificationsPresent ||isPreferencesPresent;
+        return isGeneralCommentsPresent || isLanguagePresent || isQualificationsPresent || isPreferencesPresent;
       };
     }
   };

@@ -13,7 +13,7 @@
 
 .section-group-list__item:hover {
   border: 1px solid #c2c3c6;
-padding: 6px;
+  padding: 6px;
 }
 
 .section-group-list__item.active,
@@ -21,7 +21,7 @@ padding: 6px;
   border: 1px solid #a0a1a5;
   background-color: rgb(48, 54, 65);
   color: white;
-cursor: default;
+  cursor: default;
 }
 
 .section-group-list__title {

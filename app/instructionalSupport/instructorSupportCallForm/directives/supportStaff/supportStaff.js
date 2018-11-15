@@ -28,7 +28,7 @@ let supportStaff = function (InstructorFormActions) {
 
       scope.updatePreferencesOrder = function(changeValue) {
         InstructorFormActions.updateInstructorPreferencesOrder(scope.instructorPreference, changeValue);
-      }
+      };
     }
   };
 };
