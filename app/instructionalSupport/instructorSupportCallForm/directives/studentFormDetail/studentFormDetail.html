@@ -11,12 +11,17 @@
   </div>
 
   <div ng-if="hasFormData()">
-    <div ng-if="currentSupportStaffPreferences.length > 0">
-      <div ng-repeat="preference in currentSupportStaffPreferences | orderBy: 'priority'" class="student-form-details__category">
-        <div class="student-form-details__label">
-          ({{preference.priority}}) {{ sectionGroups.list[preference.sectionGroupId].subjectCode + " " + sectionGroups.list[preference.sectionGroupId].courseNumber }}
+    <div class="student-form-details__category student-form-details__general-comments" ng-if="currentSupportStaffPreferences.length > 0">
+      <div class="student-form-details__label">
+        Course Preferences
+      </div>
+      <div class="student-form-details__content">
+        <div ng-repeat="preference in currentSupportStaffPreferences | orderBy: 'priority'">
+          <div class="student-form-details__preference" ng-class="{'student-form-details__preference--first': $first}">
+            ({{preference.priority}}) {{ sectionGroups.list[preference.sectionGroupId].subjectCode + " " + sectionGroups.list[preference.sectionGroupId].courseNumber }}
+          </div>
+          <div class="student-form-details__content-raw" ng-if="preference.comment">{{ preference.comment }}</div>
         </div>
-        <div class="student-form-details__content" ng-if="preference.comment">{{ preference.comment }}</div>
       </div>
     </div>
 
@@ -24,28 +29,28 @@
       <div class="student-form-details__label">
         General Comments
       </div>
-      <div class="student-form-details__content">{{ currentSupportStaffResponse.generalComments }}</div>
+      <div class="student-form-details__content student-form-details__content-raw">{{ currentSupportStaffResponse.generalComments }}</div>
     </div>
 
     <div class="student-form-details__category" ng-if="currentSupportStaffResponse.languageProficiency">
       <div class="student-form-details__label">
         Language Proficiency
       </div>
-      <div class="student-form-details__content">{{ getLanguageProficiencyDescription(currentSupportStaffResponse.languageProficiency) }}</div>
+      <div class="student-form-details__content student-form-details__content-raw">{{ getLanguageProficiencyDescription(currentSupportStaffResponse.languageProficiency) }}</div>
     </div>
 
     <div class="student-form-details__category" ng-if="currentSupportStaffResponse.teachingQualifications">
       <div class="student-form-details__label">
         Teaching Qualifications
       </div>
-      <div class="student-form-details__content">{{ currentSupportStaffResponse.teachingQualifications }}</div>
+      <div class="student-form-details__content student-form-details__content-raw">{{ currentSupportStaffResponse.teachingQualifications }}</div>
     </div>
 
     <div class="student-form-details__category" ng-if="currentSupportStaffResponse.availabilityBlob">
       <div class="student-form-details__label">
         Availability
       </div>
-      <div class="student-form-details__content">
+      <div class="student-form-details__content student-form-details__content-raw">
         <div class="student-form-details__availability_description" ng-repeat="availability in currentSupportStaffResponse.availabilityDescriptions">
           <b>{{ availability.day }}</b> {{ availability.times }}
         </div>

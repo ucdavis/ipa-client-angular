@@ -32,9 +32,12 @@
   border: 1px solid #ebebeb;
   padding: 10px;
   margin-left: -1px;
-  white-space: pre-wrap;
   display: flex;
   flex-flow: column;
+}
+
+.student-form-details__content-raw {
+  white-space: pre-wrap;
 }
 
 .student-form-details__general-comments {
@@ -44,4 +47,13 @@
 .student-form-details__availability_description {
   height: 20px;
   display: flex;
+}
+
+.student-form-details__preference {
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.student-form-details__preference--first {
+  margin-top: 0px;
 }
