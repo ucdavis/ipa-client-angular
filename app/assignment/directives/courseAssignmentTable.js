@@ -226,7 +226,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 											var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 
 											if (teachingAssignment.approved === true) {
-												var instructor = scope.view.state.instructorMasterList.list[teachingAssignment.instructorId];
+												var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 												var instructorType = scope.view.state.instructorTypes.list[teachingAssignment.instructorTypeId];
 
 												// Add approved teachingAssignment to term
