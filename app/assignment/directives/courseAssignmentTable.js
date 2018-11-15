@@ -71,8 +71,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					}
 				}
 
-				debugger;
-				var sortedAssignmentsHash = _array_sortByProperty(assignmentsHash, ["priority"]);
+				var sortedAssignmentsHash = _array_sortByProperty(assignmentsHash, "priority");
 				var displayRank = sortedAssignmentsHash.findIndex(function(assignmentHash) {
 					return assignmentHash.description === courseDescription;
 				});
