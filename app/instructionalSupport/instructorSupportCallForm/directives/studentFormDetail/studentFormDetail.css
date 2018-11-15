@@ -33,8 +33,15 @@
   padding: 10px;
   margin-left: -1px;
   white-space: pre-wrap;
+  display: flex;
+  flex-flow: column;
 }
 
 .student-form-details__general-comments {
   margin-top: 10px;
+}
+
+.student-form-details__availability_description {
+  height: 20px;
+  display: flex;
 }
