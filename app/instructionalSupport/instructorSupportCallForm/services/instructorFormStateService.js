@@ -54,12 +54,6 @@ class InstructorFormStateService {
 
         switch (action.type) {
           case ActionTypes.INIT_STATE:
-            var courses = {};
-
-            action.payload.courses.forEach(function(course) {
-              courses[course.id] = course;
-            });
-
             var sectionGroups = {};
 
             action.payload.sectionGroups.forEach(function(sectionGroup) {
@@ -74,16 +68,13 @@ class InstructorFormStateService {
             action.payload.teachingAssignments.forEach(function(teachingAssignment) {
               if (teachingAssignment.approved && teachingAssignment.sectionGroupId) {
                 var sectionGroup = sectionGroups[teachingAssignment.sectionGroupId];
-                var course = courses[sectionGroup.courseId];
                 allTabs.push(sectionGroup);
-
-                if (!activeTab) {
-                  activeSectionGroupId = sectionGroup.id;
-                }
               }
             });
 
             allTabs = _array_sortByProperty(allTabs, ["subjectCode", "courseNumber"]);
+
+            activeSectionGroupId = allTabs[0] ? allTabs[0].id : null;
 
             misc = {
               allTabs: allTabs,
