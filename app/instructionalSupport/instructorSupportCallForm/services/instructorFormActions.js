@@ -90,15 +90,12 @@ class InstructorFormActions {
         });
       },
       deleteInstructorPreference: function (preference) {
-        var studentPreferences = InstructorFormStateService._state.studentPreferences;
-
         InstructorFormService.deleteInstructorPreference(preference.id).then(function (payload) {
           $rootScope.$emit('toast', { message: "Removed Preference", type: "SUCCESS" });
           var action = {
             type: ActionTypes.DELETE_INSTRUCTOR_PREFERENCE,
             payload: {
-              preference: preference,
-              studentPreferences: studentPreferences
+              preference: preference
             }
           };
           InstructorFormStateService.reduce(action);

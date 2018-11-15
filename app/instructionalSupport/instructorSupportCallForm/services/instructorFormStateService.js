@@ -217,10 +217,14 @@ class InstructorFormStateService {
           case ActionTypes.DELETE_INSTRUCTOR_PREFERENCE:
             var preferenceId = action.payload.preference.id;
             var index = instructorPreferences.ids.indexOf(preferenceId);
-
             instructorPreferences.ids.splice(index, 1);
+            instructorPreferences.ids.forEach(function(preferenceId) {
+              var preference = instructorPreferences.list[preferenceId];
+              if (preference.sectionGroupId == action.payload.preference.sectionGroupId && preference.priority > action.payload.preference.priority) {
+                preference.priority -= 1;
+              }
+            });
             return instructorPreferences;
-
           case ActionTypes.UPDATE_PREFERENCES_ORDER:
             for (var i = 0; i < action.payload.length; i++) {
               var preferenceId = action.payload[i];
