@@ -71,12 +71,12 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					}
 				}
 
-				var sortedAssignmentsHash = _array_sortByProperty(assignmentsHash, "priority");
-				var displayRank = sortedAssignmentsHash.findIndex(function(assignmentHash) {
-					return assignmentHash.description === courseDescription;
+				var sortedPriorityList = _array_sortByProperty(assignmentsHash, "priority");
+				var priorityIndex = sortedPriorityList.findIndex(function (priority) {
+					return priority.description === courseDescription;
 				});
 
-				return displayRank + 1;
+				return priorityIndex + 1;
 			};
 
 			scope.userCanEdit = function () {
