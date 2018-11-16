@@ -160,6 +160,8 @@ class CourseActionCreators {
       deleteCourse: function (course) {
         var courseTitle = course.title;
         CourseService.deleteCourse(course).then(function () {
+          ipa_analyze_event('courses', 'single course deleted', courseTitle);
+
           $rootScope.$emit('toast', { message: "Deleted course " + courseTitle, type: "SUCCESS" });
           var action = {
             type: ActionTypes.REMOVE_COURSE,
@@ -175,6 +177,8 @@ class CourseActionCreators {
       deleteMultipleCourses: function (courseIds, workgroupId, year) {
         var self = this;
         CourseService.deleteMultipleCourses(courseIds, workgroupId, year).then(function () {
+          ipa_analyze_event('courses', 'multiple courses deleted');
+  
           $rootScope.$emit('toast', { message: "Deleted courses.", type: "SUCCESS" });
           var action = {
             type: ActionTypes.DELETE_MULTIPLE_COURSES,
@@ -249,6 +253,8 @@ class CourseActionCreators {
        */
       createCourse: function (newCourse, workgroupId, year) {
         CourseService.createCourse(newCourse, workgroupId, year).then(function (createdCourse) {
+          ipa_analyze_event('courses', 'course added');
+
           $rootScope.$emit('toast', { message: "Created course " + createdCourse.title, type: "SUCCESS" });
           var action = {
             type: ActionTypes.CREATE_COURSE,
@@ -267,6 +273,8 @@ class CourseActionCreators {
         var importAssignments = importAssignments ? true : false;
 
         CourseService.importCoursesAndSectionGroups(sectionGroupImports, workgroupId, year, importTimes, importAssignments).then(function (payload) {
+          ipa_analyze_event('courses', 'mass import', 'Banner');
+
           $rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS" });
           var action = {
             type: ActionTypes.IMPORT_COURSES,
@@ -282,6 +290,8 @@ class CourseActionCreators {
         var importAssignments = importAssignments ? true : false;
 
         CourseService.importCoursesAndSectionGroupsFromIPA(sectionGroupImports, workgroupId, year, importTimes, importAssignments).then(function (payload) {
+          ipa_analyze_event('courses', 'mass import', 'IPA');
+
           $rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS" });
           var action = {
             type: ActionTypes.IMPORT_COURSES,
@@ -294,6 +304,8 @@ class CourseActionCreators {
       },
       updateCourse: function (course) {
         CourseService.updateCourse(course).then(function (updatedCourse) {
+          ipa_analyze_event('courses', 'course updated');
+
           $rootScope.$emit('toast', { message: "Updated course " + updatedCourse.title, type: "SUCCESS" });
           var action = {
             type: ActionTypes.UPDATE_COURSE,
@@ -308,6 +320,8 @@ class CourseActionCreators {
       },
       addTagToCourse: function (course, tag) {
         CourseService.addTagToCourse(course, tag).then(function (updatedCourse) {
+          ipa_analyze_event('courses', 'course tag added');
+
           $rootScope.$emit('toast', { message: "Added tag " + tag.name, type: "SUCCESS" });
           var action = {
             type: ActionTypes.UPDATE_COURSE,
@@ -322,6 +336,8 @@ class CourseActionCreators {
       },
       removeTagFromCourse: function (course, tag) {
         CourseService.removeTagFromCourse(course, tag).then(function (updatedCourse) {
+          ipa_analyze_event('courses', 'course tag removed');
+
           $rootScope.$emit('toast', { message: "Removed tag " + tag.name, type: "SUCCESS" });
           var action = {
             type: ActionTypes.UPDATE_COURSE,
@@ -354,6 +370,8 @@ class CourseActionCreators {
       },
       updateSection: function (section) {
         CourseService.updateSection(section).then(function (section) {
+          ipa_analyze_event('courses', 'section updated');
+
           $rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber, type: "SUCCESS" });
           var action = {
             type: ActionTypes.UPDATE_SECTION,
@@ -368,6 +386,8 @@ class CourseActionCreators {
       },
       createSection: function (section) {
         CourseService.createSection(section).then(function (section) {
+          ipa_analyze_event('courses', 'section created');
+
           $rootScope.$emit('toast', { message: "Created section " + section.sequenceNumber, type: "SUCCESS" });
           var action = {
             type: ActionTypes.CREATE_SECTION,
@@ -382,6 +402,8 @@ class CourseActionCreators {
       },
       deleteSection: function (section) {
         CourseService.deleteSection(section).then(function () {
+          ipa_analyze_event('courses', 'section deleted');
+
           $rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
           var action = {
             type: ActionTypes.REMOVE_SECTION,

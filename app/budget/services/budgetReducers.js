@@ -231,8 +231,9 @@ class BudgetReducers {
 						if (sectionGroupCosts.ids.indexOf(sectionGroupCost.id) == -1) {
 							sectionGroupCosts.ids.push(sectionGroupCost.id);
 						}
-						var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode + "-" + sectionGroupCost.budgetScenarioId;
+            var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode + "-" + sectionGroupCost.budgetScenarioId;
 						sectionGroupCosts.idsByUniqueKey[uniqueKey] = sectionGroupCost.id;
+            sectionGroupCosts.uniqueKeys.push(uniqueKey);
 						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
 						return sectionGroupCosts;
 					default:

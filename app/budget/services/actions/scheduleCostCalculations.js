@@ -134,6 +134,7 @@ class ScheduleCostCalculations {
         var instructorTypes = BudgetReducers._state.instructorTypes;
 
         var user = users.byLoginId[instructor.loginId.toLowerCase()];
+        if (!user) { return null; }
         var userRoleId = userRoles.ids.find(id => (userRoles.list[id].roleId == Roles.instructor && userRoles.list[id].userId == user.id));
 
         if (!userRoleId) { return null; }
@@ -149,7 +150,7 @@ class ScheduleCostCalculations {
         sectionGroupCost.overrideInstructorCostSource = "course";
 
         // If course cost => Use course cost
-        if (sectionGroupCost.cost) {
+        if (sectionGroupCost.cost === 0 || sectionGroupCost.cost > 0) {
           sectionGroupCost.overrideInstructorCost = angular.copy(sectionGroupCost.cost);
           sectionGroupCost.overrideInstructorCostSource = "course";
           sectionGroupCost.newInstructorCost = null;
