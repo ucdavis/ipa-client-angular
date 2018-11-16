@@ -12,6 +12,12 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 		link: function (scope, element, attrs) {
 			scope.view = {};
 
+			/** 
+			 * When a teaching preference is created, a single course can have multiple teaching assignments created for each section group,
+			 * with each teaching assignment getting a incremental priority.
+			 * e.g. CHE002A has priority 1 through 6. The next preference added will be stored with priority 7.
+			 * This function checks for duplicate teaching assignments of a course and returns the adjusted priority.
+			 */
 			scope.calculatePriority = function(teachingAssignment, instructor) {
 				var termCode = teachingAssignment.termCode;
 				var courseId = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId].courseId;
