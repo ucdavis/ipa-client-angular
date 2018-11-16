@@ -48,3 +48,9 @@
   font-weight: bold;
   margin: 10px;
 }
+
+.instructor-support-call-form__submission {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
