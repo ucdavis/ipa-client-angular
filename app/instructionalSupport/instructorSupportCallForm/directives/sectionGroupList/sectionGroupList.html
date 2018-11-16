@@ -1,0 +1,11 @@
+<div class="section-group-list">
+  <ul class="section-group-list__container">
+    <li ng-repeat="sectionGroup in allTabs"
+        class="section-group-list__item"
+        ng-class="{'active': sectionGroup.id === activeSectionGroupId}"
+        ng-click="selectSectionGroup(sectionGroup)">
+      <div>{{ sectionGroup.subjectCode + " " + sectionGroup.courseNumber + " " + sectionGroup.sequenceNumber }}</div>
+      <div class="section-group-list__title">{{ sectionGroup.title }}</div>
+    </li>
+  </ul>
+</div>

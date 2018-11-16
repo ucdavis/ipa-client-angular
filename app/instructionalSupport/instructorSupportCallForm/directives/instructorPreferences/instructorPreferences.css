@@ -1,0 +1,28 @@
+.instructor-preferences {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.instructor-preferences__filter-ui {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.instructor-preferences__other,
+.instructor-preferences__interested {
+  margin-top: 30px;
+}
+
+.instructor-preferences__no-preferences-info {
+  text-align: center;
+  color: #a5a5a5;
+}
+
+.instructor-preferences__no-students-info {
+  text-align: center;
+  color: #a5a5a5;
+  margin-bottom: 20px;
+}

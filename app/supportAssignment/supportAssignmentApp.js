@@ -13,6 +13,7 @@ import SupportSelectors from './services/supportSelectors.js';
 import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
+import SupportCallService from './../shared/services/SupportCallService.js';
 
 // Directives
 import viewAvailabilityModal from './directives/modals/viewAvailabilityModal/viewAvailabilityModal.js';
@@ -78,6 +79,7 @@ const supportAssignmentApp = angular.module("supportAssignmentApp", dependencies
 .service('ApiService', ApiService)
 .service('TermService', TermService)
 .service('AuthService', AuthService)
+.service('SupportCallService', SupportCallService)
 .directive('viewAvailabilityModal', viewAvailabilityModal)
 .directive('reviewTools', reviewTools)
 .directive('supportAssignmentSearch', supportAssignmentSearch)

@@ -28,6 +28,14 @@
 			</div>
 		</div>
 	</div>
+	<div ng-if="supportStaff.supportCallResponse.collectLanguageProficiencies">
+		<div class="staff-comments__header">
+			Language Proficiency
+		</div>
+		<p>
+			{{ getLanguageProficiencyDescription(supportStaff.supportCallResponse.languageProficiency) }}
+		</p>
+	</div>
 	<div class="staff-comments__no-comments"
 		ng-if="!supportStaff.supportCallResponse.teachingQualifications && !supportStaff.supportCallResponse.generalComments && supportStaff.supportStaffPreferences.length == 0">
 		No comments

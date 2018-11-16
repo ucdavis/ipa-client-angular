@@ -1,0 +1,11 @@
+<div class="language-proficiencies" ng-show="supportCallResponse.collectLanguageProficiencies">
+  <h5>Language Proficiencies</h5>
+  <ipa-dropdown
+    expanded="expanded"
+    button-text="selectedLanguageProficiency.description || 'Select One'"
+    is-wide="true"
+    items="languageProficiencies"
+    style="'minimal'"
+    select-item="selectLanguageProficiency(item)">
+  </ipa-dropdown>
+</div>

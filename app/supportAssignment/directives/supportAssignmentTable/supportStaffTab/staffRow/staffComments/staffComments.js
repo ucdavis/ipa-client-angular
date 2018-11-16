@@ -1,6 +1,6 @@
 import './staffComments.css';
 
-let staffComments = function ($rootScope) {
+let staffComments = function ($rootScope, SupportCallService) {
 	return {
 		restrict: 'E',
 		template: require('./staffComments.html'),
@@ -10,6 +10,9 @@ let staffComments = function ($rootScope) {
 		},
 		link: function (scope, element, attrs) {
 			// Intentionally empty
+			scope.getLanguageProficiencyDescription = function (languageProficiencyId) {
+				return SupportCallService.getLanguageProficiencyDescription(languageProficiencyId);
+			};
 		}
 	};
 };

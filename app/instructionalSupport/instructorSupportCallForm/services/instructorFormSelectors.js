@@ -3,46 +3,18 @@ class InstructorFormSelectors {
 		return {
 			generateSectionGroups: function (sectionGroups, supportStaff, studentPreferences, instructorPreferences, courses) {
 				var self = this;
-	
-				let newSectionGroups = [];
-	
+
 				sectionGroups.ids.forEach( function (sectionGroupId) {
 					var sectionGroup = sectionGroups.list[sectionGroupId];
 					// Add instructor preference data
 					sectionGroup = self.addInstructorPreferencesToSectionGroup(sectionGroup, supportStaff, instructorPreferences);
-	
-					// Add course data
-					sectionGroup = self.addCourseDataToSectionGroup(sectionGroup, courses);
-	
+		
 					// Add support staff data
 					sectionGroup = self.addEligibleSupportStaffToSectionGroup(sectionGroup, supportStaff, studentPreferences);
-	
-					newSectionGroups.push(sectionGroup);
 				});
-	
-				// Sort
-				newSectionGroups = _array_sortByProperty(newSectionGroups, ["subjectCode", "courseNumber"]);
-	
-				return newSectionGroups;
+		
+				return sectionGroups;
 			},
-	
-			// Blend the relevant course data into the sectionGroup
-			addCourseDataToSectionGroup: function (sectionGroup, courses) {
-				courses.ids.forEach( function (courseId) {
-					var course = courses.list[courseId];
-	
-					if (sectionGroup.courseId == course.id) {
-						sectionGroup.subjectCode = course.subjectCode;
-						sectionGroup.sequencePattern = course.sequencePattern;
-						sectionGroup.courseNumber = course.courseNumber;
-						sectionGroup.title = course.title;
-						sectionGroup.units = course.unitsLow;
-					}
-				});
-	
-				return sectionGroup;
-			},
-	
 			// Add de-normalized instructor preferences to the sectionGroup
 			addInstructorPreferencesToSectionGroup: function (sectionGroup, supportStaff, instructorPreferences) {
 				sectionGroup.instructorPreferences = [];

@@ -1,0 +1,65 @@
+<div class="student-form-detail">
+  <div class="student-form-detail__header">
+    Student Details <span ng-if="currentSupportStaff">: {{ currentSupportStaff.fullName }}</span>
+  </div>
+
+  <div class="student-form-detail__selected-info" ng-if="!currentSupportStaff">
+    Select a student on the left to view details
+  </div>
+  <div class="student-form-detail__selected-info" ng-if="currentSupportStaff && !hasFormData()">
+    No preference data submitted
+  </div>
+
+  <div ng-if="hasFormData()">
+    <div class="student-form-details__category student-form-details__general-comments" ng-if="currentSupportStaffPreferences.length > 0">
+      <div class="student-form-details__label">
+        Course Preferences
+      </div>
+      <div class="student-form-details__content">
+        <ol>
+          <li ng-repeat="preference in currentSupportStaffPreferences | orderBy: 'priority'">
+            <div class="student-form-details__preference">
+              {{ sectionGroups.list[preference.sectionGroupId].subjectCode }} {{ sectionGroups.list[preference.sectionGroupId].courseNumber }} {{ sectionGroups.list[preference.sectionGroupId].title }}
+            </div>
+            <div class="student-form-details__comment" ng-if="preference.comment">
+              <div class="student-form-details__comment-label">Comment </div>
+              <div class="student-form-details__content-raw">{{ preference.comment }}</div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="student-form-details__category student-form-details__general-comments" ng-if="currentSupportStaffResponse.generalComments">
+      <div class="student-form-details__label">
+        General Comments
+      </div>
+      <div class="student-form-details__content student-form-details__content-raw">{{ currentSupportStaffResponse.generalComments }}</div>
+    </div>
+
+    <div class="student-form-details__category" ng-if="currentSupportStaffResponse.languageProficiency">
+      <div class="student-form-details__label">
+        Language Proficiency
+      </div>
+      <div class="student-form-details__content student-form-details__content-raw">{{ getLanguageProficiencyDescription(currentSupportStaffResponse.languageProficiency) }}</div>
+    </div>
+
+    <div class="student-form-details__category" ng-if="currentSupportStaffResponse.teachingQualifications">
+      <div class="student-form-details__label">
+        Teaching Qualifications
+      </div>
+      <div class="student-form-details__content student-form-details__content-raw">{{ currentSupportStaffResponse.teachingQualifications }}</div>
+    </div>
+
+    <div class="student-form-details__category" ng-if="currentSupportStaffResponse.availabilityBlob">
+      <div class="student-form-details__label">
+        Availability
+      </div>
+      <div class="student-form-details__content student-form-details__content-raw">
+        <div class="student-form-details__availability_description" ng-repeat="availability in currentSupportStaffResponse.availabilityDescriptions">
+          <b>{{ availability.day }}</b> {{ availability.times }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

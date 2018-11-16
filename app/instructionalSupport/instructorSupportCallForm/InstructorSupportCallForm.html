@@ -4,120 +4,83 @@
 <ipa-header page-title="Support Call"></ipa-header>
 
 <div ng-hide="view.state" style="margin-top:300px;">
-	<spinner></spinner>
+  <spinner></spinner>
 </div>
 
 <!-- handle lack of access -->
 <div ng-if="view.state && isInstructor == false">
-	<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
-		<p class="lead">You have not been invited to a support call in this term.</p>
-		<br />
-		<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
-	</div>
+  <div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+    <p class="lead">You have not been invited to a support call in this term.</p>
+    <br />
+    <p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
+  </div>
 </div>
 
 <!-- handle lack of data -->
-<div ng-if="view.state && isInstructor && view.state.sectionGroups.length == 0">
-	<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
-		<p class="lead">You have not been assigned any courses in this term.</p>
-		<br />
-		<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
-	</div>
+<div ng-if="view.state && isInstructor && view.state.misc.allTabs.length == 0">
+  <div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+    <p class="lead">You have not been assigned any courses in this term.</p>
+    <br />
+    <p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
+  </div>
 </div>
 
 <!-- Main page container -->
-<div ng-if="view.state && isInstructor && view.state.sectionGroups.length > 0" class="instructor-support-call-form">
+<div ng-if="view.state && isInstructor && view.state.misc.allTabs.length > 0" class="instructor-support-call-form">
+  <ipa-section-header header-text="'TA Preferences'"></ipa-section-header>
 
-	<!-- Preference table header -->
-	<div class="row provide-preferences-header">
-		<div class="col-md-6">
-			<h5>Please indicate your preferences:</h5>
-		</div>
-		<div class="col-md-6">
-			<div class="pull-right instructor-support-call-form__preference-hint" tooltip-placement="left"
-			uib-tooltip="Clicking the Add button will show you a list of all courses currently in the schedule (Use the comment box below
-			to request courses not on the list). Once you've added your preferences you can rank them by dragging and dropping them into the
-			preferred order">
-				<i class="glyphicon glyphicon-question-sign pull-right question--position"></i>
-			</div>
-		</div>
-	</div>
+  <div class="instructor-support-call-form__preference-window">
 
-	<!-- SectionGroup headers -->
-	<div style="display:flex; width: 100%;">
-		<div ng-repeat="sectionGroup in ::view.state.sectionGroups track by $index" style="flex: 1 0 0px;">
-			<div class="section-group-header">
-				<div>
-					{{ sectionGroup.subjectCode}}
-					{{ sectionGroup.courseNumber }} -
-					{{ sectionGroup.sequencePattern }}
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="instructor-support-call-form__left-sidebar">
+      <div class="instructor-support-call-form__section-group-list">
+        <div class="instructor-support-call-form__sub-section-header">Courses</div>
+        <section-group-list active-section-group-id="view.state.misc.activeSectionGroupId"
+                            all-tabs="view.state.misc.allTabs">
+        </section-group-list>
+      </div>
 
-	<!-- Preferences for sectionGroup -->
-	<div style="display:flex; width: 100%;">
-		<div class="section-group-container" ng-repeat="sectionGroup in ::view.state.sectionGroups track by $index" style="flex: 1 0 0px;">
-			<ul id="sortable-{{sectionGroup.id}}" class="preferences-container">
+      <div class="instructor-support-call-form__support-staff-section">
+        <div class="instructor-support-call-form__sub-section-header">Preferences</div>
+        <instructor-preferences section-group="view.state.sectionGroups.list[view.state.misc.activeSectionGroupId]"
+                                support-staff-list="view.state.supportStaff"
+                                active-support-staff-id="view.state.misc.activeSupportStaffId">
+        </instructor-preferences>
+      </div>
+    </div>
 
-				<!-- Current preferences -->
-				<li ng-repeat="instructorPreference in sectionGroup.instructorPreferences | orderBy: 'priority'"
-				    id="{{ instructorPreference.id }}"
-				    class="instructor-preference">
+    <div class="instructor-support-call-form__support-staff-viewer">
+      <student-form-detail student-support-call-responses="view.state.studentSupportCallResponses"
+                           student-preferences="view.state.studentPreferences"
+                           support-staff="view.state.supportStaff"
+                           section-groups="view.state.sectionGroups">
+      </student-form-detail>
+    </div>
+  </div>
 
-					<div>{{ instructorPreference.priority }}</div>
-					<div>
-						<i class="preference-sortable-handle glyphicon glyphicon-option-vertical preference-sortable-handle"></i>
-					</div>
-					<div class="preference-box">
-						<div>
-							{{ instructorPreference.fullName}}
-						</div>
-						<div style="padding-left: 5px;">
-							<i class="btn glyphicon glyphicon-remove" style="color: black; padding: 0;"
-								uib-tooltip="Delete Assignment" tooltip-placement="bottom"
-								confirm-button="deleteInstructorPreference(instructorPreference)"
-								btn-class="btn-danger"
-								message="Are you sure you want to delete this Assignment?"
-								yes="Confirm" no="Cancel" placement="top">
-							</i>
-						</div>
-					</div>
-				</li>
-
-				<li class="unsortable" style="display: flex; justify-content: center; text-align: center; padding-top: 10px;">
-					<!-- New preferences -->
-					<instructor-preference-selector>
-					</instructor-preference-selector>
-				</li>
-			</ul>
-		</div>
-	</div><!-- end preferences area -->
-
-	<!-- Comments and submission area -->
-	<div class="input-box-container">
-		<div class="instructor-comment-container">
-			<div class="instructor-comment__area">
-				<h5>Comments:</h5>
-				<textarea class="instructor-comment__text"
-				ng-model="view.state.supportCallResponse.generalComments"
-				auto-input on-blur="updateSupportCallResponse()"></textarea>
-			</div>
-		</div>
-		<div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
-			<button ng-if="!view.state.supportCallResponse.submitted" type="button" class="btn btn-primary pull-right"
-			 confirm-button="submitPreferences()"
-			 btn-class="btn-primary"
-			 message="Are you sure you want to submit your preferences?"
-			 yes="Confirm" no="Cancel" placement="top">
-				Submit Preferences
-			</button>
-			<button ng-click="pretendToastMessage()"
-				ng-if="view.state.supportCallResponse.submitted"
-				type="button" class="btn btn-primary pull-right">
-					Update Preferences
-			</button>
-		</div>
-	</div><!-- End comments and submission -->
+<ipa-section-header header-text="'Miscellaneous'"></ipa-section-header>
+  <!-- Comments and submission area -->
+  <div class="input-box-container">
+    <div class="instructor-comment-container">
+      <div class="instructor-comment__area">
+        <h5>Comments</h5>
+        <textarea class="instructor-comment__text"
+                  ng-model="view.state.instructorSupportCallResponse.generalComments"
+                  auto-input on-blur="updateSupportCallResponse()"></textarea>
+      </div>
+    </div>
+    <div class="instructor-support-call-form__submission">
+      <button ng-if="!view.state.instructorSupportCallResponse.submitted" type="button" class="btn btn-primary pull-right"
+              confirm-button="submitPreferences()"
+              btn-class="btn-primary"
+              message="Are you sure you want to submit your preferences?"
+              yes="Confirm" no="Cancel" placement="top">
+        Submit Preferences
+      </button>
+      <button ng-click="pretendToastMessage()"
+              ng-if="view.state.instructorSupportCallResponse.submitted"
+              type="button" class="btn btn-primary pull-right">
+          Update Preferences
+      </button>
+    </div>
+  </div><!-- End comments and submission -->
 </div>

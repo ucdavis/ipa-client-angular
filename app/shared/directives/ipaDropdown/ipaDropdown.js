@@ -10,7 +10,7 @@ let ipaDropdown = function() {
 			selectItem: '&',
 			buttonClass: '<?',
 			isWide: '<?',
-			style: '<?' // Current options are 'minimal'
+			style: '<?' // Current options are 'minimal' or leaving blank gives default styling
 		},
 		replace: true, // Replace with the template below
 		link: function(scope, element, attrs, iAttr) {

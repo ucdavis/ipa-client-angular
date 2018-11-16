@@ -17,9 +17,16 @@ import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
 import DwService from './../shared/services/DwService.js';
+import SupportCallService from './../shared/services/SupportCallService';
+import AvailabilityService from './../shared/services/AvailabilityService';
 
-// Directives
-import instructorPreferenceSelector from './instructorSupportCallForm/directives/instructorPreferenceSelector/instructorPreferenceSelector.js';
+// Instructor Form Directives
+import studentFormDetail from './instructorSupportCallForm/directives/studentFormDetail/studentFormDetail.js';
+import instructorPreferences from './instructorSupportCallForm/directives/instructorPreferences/instructorPreferences.js';
+import sectionGroupList from './instructorSupportCallForm/directives/sectionGroupList/sectionGroupList.js';
+import supportStaff from './instructorSupportCallForm/directives/supportStaff/supportStaff.js';
+
+// Student Form Directives
 import confirmEligible from './studentSupportCallForm/directives/confirmEligible/confirmEligible.js';
 import modalPreferenceComments from './studentSupportCallForm/directives/modalPreferenceComments/modalPreferenceComments.js';
 import studentAvailabilities from './studentSupportCallForm/directives/studentAvailabilities/studentAvailabilities.js';
@@ -30,8 +37,8 @@ import studentFormReview from './studentSupportCallForm/directives/studentFormRe
 import studentPreferences from './studentSupportCallForm/directives/studentPreferences/studentPreferences.js';
 import studentPreferenceTable from './studentSupportCallForm/directives/studentPreferences/studentPreferenceTable/studentPreferenceTable.js';
 import studentPreferenceSelector from './studentSupportCallForm/directives/studentPreferences/studentPreferenceTable/studentPreferenceSelector/studentPreferenceSelector.js';
-
 import studentQualifications from './studentSupportCallForm/directives/studentQualifications/studentQualifications.js';
+import languageProficiencies from './studentSupportCallForm/directives/languageProficiencies/languageProficiencies.js';
 
 // Dependencies
 var dependencies = [
@@ -92,7 +99,8 @@ const instructionalSupportApp = angular.module("instructionalSupportApp", depend
 .service('TermService', TermService)
 .service('AuthService', AuthService)
 .service('DwService', DwService)
-.directive('instructorPreferenceSelector', instructorPreferenceSelector)
+.service('SupportCallService', SupportCallService)
+.service('AvailabilityService', AvailabilityService)
 .directive('confirmEligible', confirmEligible)
 .directive('modalPreferenceComments', modalPreferenceComments)
 .directive('studentAvailabilities', studentAvailabilities)
@@ -104,6 +112,11 @@ const instructionalSupportApp = angular.module("instructionalSupportApp", depend
 .directive('studentPreferenceTable', studentPreferenceTable)
 .directive('studentPreferenceSelector', studentPreferenceSelector)
 .directive('studentQualifications', studentQualifications)
+.directive('languageProficiencies', languageProficiencies)
+.directive('studentFormDetail', studentFormDetail)
+.directive('instructorPreferences', instructorPreferences)
+.directive('sectionGroupList', sectionGroupList)
+.directive('supportStaff', supportStaff)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	ADD_ASSIGNMENT_SLOTS: "ADD_ASSIGNMENT_SLOTS",
@@ -137,7 +150,9 @@ const instructionalSupportApp = angular.module("instructionalSupportApp", depend
 	BEGIN_FETCH_ACTIVITIES_BY_CRN: "BEGIN_FETCH_ACTIVITIES_BY_CRN",
 	COMPLETE_FETCH_ACTIVITIES_BY_CRN: "COMPLETE_FETCH_ACTIVITIES_BY_CRN",
 	UPDATE_PREFERENCE_COMMENT_VALIDATION: "UPDATE_PREFERENCE_COMMENT_VALIDATION",
-	CLEAR_CRN_SEARCH: "CLEAR_CRN_SEARCH"
+	CLEAR_CRN_SEARCH: "CLEAR_CRN_SEARCH",
+	SELECT_SECTION_GROUP: "SELECT_SECTION_GROUP",
+	SELECT_SUPPORT_STAFF: "SELECT_SUPPORT_STAFF"
 });
 
 export default instructionalSupportApp;

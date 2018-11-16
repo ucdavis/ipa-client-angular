@@ -1,0 +1,60 @@
+.student-form-detail {
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.student-form-detail__selected-info {
+  text-align: center;
+  color: #a5a5a5;
+}
+
+.student-form-detail__header {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.student-form-details__category {
+  display: flex;
+  margin-bottom: -1px;
+}
+
+.student-form-details__label {
+  flex: 2 0 0px;
+  border: 1px solid #ebebeb;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.student-form-details__content {
+  flex: 8 0 0px;
+  border: 1px solid #ebebeb;
+  padding: 10px;
+  margin-left: -1px;
+  display: flex;
+  flex-flow: column;
+}
+
+.student-form-details__content-raw {
+  white-space: pre-wrap;
+}
+
+.student-form-details__general-comments {
+  margin-top: 10px;
+}
+
+.student-form-details__availability_description {
+  height: 20px;
+  display: flex;
+}
+
+.student-form-details__preference {
+  font-weight: bold;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.student-form-details__comment-label {
+  font-weight: bold;
+}

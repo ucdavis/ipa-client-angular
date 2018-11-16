@@ -1,34 +1,33 @@
-.confirm-eligible {
-	padding: 15px 20px;
-	border: 1px solid #21A9E1;
-	border-radius: 3px;
-	font-weight: 500;
-	display: flex;
-}
-
 .confirm-eligible__icon {
-	flex: 1 0 0px;
-	color: #21A9E1;
-}
-
-.confirm-eligible__main {
-	flex: 25 0 0px;
-	display: flex;
-	flex-flow:column;
-	align-items: flex-start;
+  flex: 1 0 0px;
+  color: #21A9E1;
 }
 
 .confirm-eligible__header {
-	margin-bottom: 5px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .confirm-eligible__checkbox {
-	flex: 5 0 0px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  flex: 1 0 0px;
+  display: flex;
+  align-items: flex-start;
 }
 
 .confirm-eligible__label {
-	padding-left: 5px;	
+  padding-left: 5px;
+}
+
+.confirm-eligible__content {
+  margin-left: 15px;
+}
+
+.confirm-eligible__main {
+  display: flex;
+}
+
+.confirm-eligible__description {
+  flex: 4 0 0px;
 }

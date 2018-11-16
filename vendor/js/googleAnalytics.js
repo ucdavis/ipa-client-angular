@@ -20,33 +20,8 @@ if(ipaRunningMode === 'production') {
  */
 window.ipa_analyze_event = function(category, action, label) {
   if(ipaRunningMode === 'production') {
-    //ga('send', 'event', category, action, label);
-    event_data = {
-      eventCategory: category,
-      eventAction: action,
-      eventLabel: label
-    };
-
-    if(typeof(window.ipa_user_tracking_id) === 'string') {
-      event_data['userId'] = window.ipa_user_tracking_id;
-    }
-
-    console.log('sending event data ...');
-    console.log(event_data);
-    ga('send', 'event', event_data);
+    ga('send', 'event', category, action, label);
   } else {
     console.debug('Event: ' + category + ', ' + action + ', ' + label);
   }
 };
-
-// ga('send', 'event', 'link', 'click', 'http://example.com', {
-//   nonInteraction: true
-// });
-
-// ga('send', 'event', {
-//   eventCategory: 'Outbound Link',
-//   eventAction: 'click',
-//   eventLabel: event.target.href
-// });
-
-// ga('create', 'UA-XXXX-Y', {'userId': 'as8eknlll'});

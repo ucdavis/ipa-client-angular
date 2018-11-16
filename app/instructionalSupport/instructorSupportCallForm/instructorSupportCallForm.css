@@ -1,65 +1,56 @@
 .instructor-support-call-form {
-	padding-left: 6%;
-	padding-right:6%;
+  padding: 20px;
+  padding-top: 10px;
 }
 
-.instructor-support-call-form__preference-hint {
-	color: #949494;
+.instructor-support-call-form__section-group-list {
+  flex: 3 0 0px;
+  border-right: 1px solid #ebebeb;
+  overflow-y: scroll;
 }
 
-.instructor-support-call-form .row {
-	margin-left: 0;
-	margin-right: 0;
+.instructor-support-call-form__preference-window {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
-.instructor-support-call-form .section-group-header {
-	border-right: 1px solid;
-	border-color: rgb(235, 235, 235);
-	color: rgb(51, 51, 51);
-	background-color: rgb(245, 245, 246);
-	font-size: 14px;
-	height: 34px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-top: 1px solid rgb(235, 235, 235);
-	border-left: 1px solid rgb(235, 235, 235);
+.instructor-support-call-form__support-staff-section {
+  flex: 5 0 0px;
+  overflow-y: scroll;
 }
 
-.instructor-support-call-form .preferences-container {
-	border-top: 1px solid rgb(235, 235, 235);
-	border-left: 1px solid rgb(235, 235, 235);
-	border-bottom: 1px solid rgb(235, 235, 235);
-	padding-bottom: 10px;
-	height: 100%;
-	list-style: none;
+.instructor-support-call-form__support-staff-list {
+  list-style: none;
+  padding-left: 0px;
 }
 
-.instructor-support-call-form .section-group-container:last-child {
-	border-right: 1px solid rgb(235, 235, 235);
+.instructor-support-call-form__support-staff-item {
+  border: 1px solid rgb(48, 54, 65);
+  border-radius: 3px;
+  padding: 3px;
 }
 
-
-.instructor-support-call-form .preference-box {
-	border-radius: 4px;
-	border: 1px solid #adadad;
-	background-color: white;
-	display: flex;
-	justify-content: space-between;
-	width: 200px;
-	align-items: center;
-	padding: 10px;
+.instructor-support-call-form__support-staff-viewer {
+  flex: 4 0 0px;
+  margin-left: 16px;
 }
 
-.instructor-support-call-form .instructor-preference {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding-top: 10px;
-	color: black;
-	cursor: pointer;
+.instructor-support-call-form__left-sidebar {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  flex: 3 0 0px;
+  display: flex;
+  height: 400px;
 }
 
-.instructor-support-call-form .ui-sortable-handle {
-	cursor: move;
+.instructor-support-call-form__sub-section-header {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 10px;
+}
+
+.instructor-support-call-form__submission {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
 }

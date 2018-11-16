@@ -1,0 +1,46 @@
+<div class="instructor-preferences">
+  <ul class="instructor-support-call-form__support-staff-list">
+    <li ng-repeat="instructorPreference in sectionGroup.instructorPreferences | orderBy: 'priority'">
+      <support-staff support-staff="instructorPreference"
+                     instructor-preference="instructorPreference"
+                     priority="instructorPreference.priority"
+                     active="(instructorPreference.supportStaffId == activeSupportStaffId)"
+                     can-raise-priority="!$first"
+                     can-lower-priority="!$last">
+      </support-staff>
+    </li>
+  </ul>
+  <div class="instructor-preferences__no-preferences-info" ng-if="sectionGroup.instructorPreferences.length == 0">
+    No preferences set
+  </div>
+
+  <div class="instructor-preferences__interested" ng-show="sectionGroup.eligibleSupportStaff.preferred.length > 0">
+    <h5>Interested</h5>
+    <ul class="instructor-support-call-form__support-staff-list">
+      <li ng-repeat="supportStaff in sectionGroup.eligibleSupportStaff.preferred">
+        <support-staff support-staff="supportStaff"
+                      priority="supportStaff.priority"
+                      active="(supportStaff.supportStaffId == activeSupportStaffId)">
+        </support-staff>
+      </li>
+    </ul>
+  </div>
+  <div class="instructor-preferences__other">
+    <h5>Other</h6>
+    <input type="Search"
+            class="instructor-preferences__filter-ui"
+            placeholder="Search"
+            ng-model="view.searchQuery"
+            ng-change="filterSupportStaff(view.searchQuery)">
+    <ul class="instructor-support-call-form__support-staff-list">
+      <li ng-repeat="supportStaff in filteredSupportStaff">
+        <support-staff support-staff="supportStaff"
+                      active="(supportStaff.supportStaffId == activeSupportStaffId)">
+        </support-staff>
+      </li>
+    </ul>
+    <div class="instructor-preferences__no-students-info" ng-if="!filteredSupportStaff || filteredSupportStaff.length == 0">
+      No students available
+    </div>
+  </div>
+</div>
