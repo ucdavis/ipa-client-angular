@@ -55,6 +55,14 @@
   font-size: 14px;
 }
 
+.student-form-details__preference--first {
+  margin-top: 0px;
+}
+
 .student-form-details__comment-label {
   font-weight: bold;
+}
+
+.student-form-details__preference-container {
+  padding-left: 15px;
 }

@@ -16,9 +16,9 @@
         Course Preferences
       </div>
       <div class="student-form-details__content">
-        <ol>
+        <ol class="student-form-details__preference-container">
           <li ng-repeat="preference in currentSupportStaffPreferences | orderBy: 'priority'">
-            <div class="student-form-details__preference">
+            <div class="student-form-details__preference" ng-class="{'student-form-details__preference--first': $first}">
               {{ sectionGroups.list[preference.sectionGroupId].subjectCode }} {{ sectionGroups.list[preference.sectionGroupId].courseNumber }} {{ sectionGroups.list[preference.sectionGroupId].title }}
             </div>
             <div class="student-form-details__comment" ng-if="preference.comment">
