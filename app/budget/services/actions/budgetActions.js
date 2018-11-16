@@ -57,6 +57,8 @@ class BudgetActions {
 				var self = this;
 
 				BudgetService.updateBudgetScenario(budgetScenario).then(function (results) {
+					ipa_analyze_event('budget', 'budget scenario updated');
+
 					$rootScope.$emit('toast', { message: "Updated budget scenario", type: "SUCCESS" });
 
 					BudgetReducers.reduce({
@@ -77,6 +79,8 @@ class BudgetActions {
 				if (scenarioId == null) { scenarioId = 0;}
 	
 				BudgetService.createBudgetScenario(newBudgetScenario, budgetId, scenarioId).then(function (results) {
+					ipa_analyze_event('budget', 'budget scenario created');
+
 					var action = {
 						type: ActionTypes.CREATE_BUDGET_SCENARIO,
 						payload: results
@@ -99,6 +103,8 @@ class BudgetActions {
 				var self = this;
 
 				BudgetService.deleteBudgetScenario(budgetScenarioId).then(function (budgetScenarioId) {
+					ipa_analyze_event('budget', 'budget scenario deleted');
+
 					var action = {
 						type: ActionTypes.DELETE_BUDGET_SCENARIO,
 						payload: {
@@ -121,6 +127,8 @@ class BudgetActions {
 				instructorCost.cost = parseFloat(instructorCost.cost);
 
 				BudgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
+					ipa_analyze_event('budget', 'instructor cost updated');
+
 					var action = {
 						type: ActionTypes.UPDATE_INSTRUCTOR_COST,
 						payload: {
@@ -147,6 +155,8 @@ class BudgetActions {
 				instructorCost.cost = parseFloat(instructorCost.cost);
 	
 				BudgetService.createInstructorCost(instructorCost).then(function (newInstructorCost) {
+					ipa_analyze_event('budget', 'instructor cost created');
+
 					var action = {
 						type: ActionTypes.CREATE_INSTRUCTOR_COST,
 						payload: {
@@ -167,6 +177,8 @@ class BudgetActions {
 				newLineItem.amount = newLineItem.amount ? parseFloat(newLineItem.amount) : null;
 	
 				BudgetService.createLineItem(newLineItem, budgetScenarioId).then(function (newLineItem) {
+					ipa_analyze_event('budget', 'line item created');
+
 					var action = {
 						type: ActionTypes.CREATE_LINE_ITEM,
 						payload: newLineItem
@@ -195,6 +207,8 @@ class BudgetActions {
 				lineItem.amount = parseFloat(lineItem.amount);
 	
 				BudgetService.updateLineItem(lineItem, lineItem.budgetScenarioId).then(function (results) {
+					ipa_analyze_event('budget', 'line item updated');
+
 					var action = {
 						type: ActionTypes.UPDATE_LINE_ITEM,
 						payload: results
@@ -221,6 +235,8 @@ class BudgetActions {
 				}
 
 				BudgetService.deleteLineItem(lineItem).then(function (lineItemId) {
+					ipa_analyze_event('budget', 'line item deleted');
+
 					var action = {
 						type: ActionTypes.DELETE_LINE_ITEM,
 						payload: {
@@ -235,16 +251,27 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not delete line item.", type: "ERROR" });
 				});
 			},
+
+			/**
+			 * Updates existing sectionGroupCost. Happens when TA count, reader count,
+			 * instructor assignment, cost override, etc. are touched.
+			 * 
+			 * @param {*} sectionGroupCost 
+			 */
 			updateSectionGroupCost: function (sectionGroupCost) {
 				var self = this;
 				BudgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
+					ipa_analyze_event('budget', 'section group cost updated');
+
 					var action = {
 						type: ActionTypes.UPDATE_SECTION_GROUP_COST,
 						payload: {
 							sectionGroupCost: newSectionGroupCost
 						}
 					};
+
 					$rootScope.$emit('toast', { message: "Updated course", type: "SUCCESS" });
+
 					BudgetReducers.reduce(action);
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
@@ -270,6 +297,8 @@ class BudgetActions {
 				sectionGroupCost.budgetScenarioId = BudgetReducers._state.ui.selectedBudgetScenarioId;
 
 				BudgetService.createSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
+					ipa_analyze_event('budget', 'section group cost created');
+
 					var action = {
 						type: ActionTypes.CREATE_SECTION_GROUP_COST,
 						payload: {
@@ -778,6 +807,8 @@ class BudgetActions {
 				var instructorTypes = BudgetReducers._state.instructorTypes;
 
 				var user = users.byLoginId[instructor.loginId.toLowerCase()];
+        if (!user) { return null; }
+
 				var userRoleId = userRoles.ids.find(id => (userRoles.list[id].roleId == Roles.instructor && userRoles.list[id].userId == user.id));
 
 				if (!userRoleId) { return null; }

@@ -336,6 +336,8 @@ class BudgetCalculations {
 
 					instructor.instructorCost = instructorCost;
 					var user = users.byLoginId[instructor.loginId.toLowerCase()];
+          if (!user) { return; }
+
 					var instructorTypeId = null;
 
 					for (var i = 0; i < userRoles.ids.length; i++) {

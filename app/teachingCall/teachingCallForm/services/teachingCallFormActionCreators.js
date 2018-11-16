@@ -34,6 +34,8 @@ class TeachingCallFormActionCreators {
 			},
 			updateTeachingCallResponse: function (teachingCallResponse) {
 				TeachingCallFormService.updateTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
+					ipa_analyze_event('teaching call form', 'availabilities set');
+
 					$rootScope.$emit('toast', { message: "Updated availabilities", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_TEACHING_CALL_RESPONSE,
@@ -46,8 +48,16 @@ class TeachingCallFormActionCreators {
 					$rootScope.$emit('toast', { message: "Could not update availabilities.", type: "ERROR" });
 				});
 			},
+
+			/**
+			 * Called when comments are modified or 'Submit' button is clicked.
+			 * 
+			 * @param {*} teachingCallReceipt 
+			 */
 			updateTeachingCallReceipt: function (teachingCallReceipt) {
 				TeachingCallFormService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
+					ipa_analyze_event('teaching call form', 'teaching call receipt updated');
+
 					$rootScope.$emit('toast', { message: "Updated Preferences", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_TEACHING_CALL_RECEIPT,
@@ -71,6 +81,8 @@ class TeachingCallFormActionCreators {
 			},
 			createAvailability: function (teachingCallResponse) {
 				TeachingCallFormService.createAvailability(teachingCallResponse).then(function (teachingCallResponse) {
+					ipa_analyze_event('teaching call form', 'availabilities set');
+
 					$rootScope.$emit('toast', { message: "Updated availablities", type: "SUCCESS" });
 	
 					var action = {
@@ -86,6 +98,8 @@ class TeachingCallFormActionCreators {
 			},
 			addPreference: function (teachingAssignment, termCode) {
 				TeachingCallFormService.addPreference(teachingAssignment).then(function (teachingAssignments) {
+					ipa_analyze_event('teaching call form', 'preference added');
+
 					$rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ADD_PREFERENCE,
@@ -101,6 +115,8 @@ class TeachingCallFormActionCreators {
 			},
 			removePreference: function (teachingAssignment) {
 				TeachingCallFormService.removePreference(teachingAssignment).then(function (teachingAssignments) {
+					ipa_analyze_event('teaching call form', 'preference removed');
+
 					$rootScope.$emit('toast', { message: "Removed Preference", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.REMOVE_PREFERENCE,

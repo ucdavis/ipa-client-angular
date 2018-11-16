@@ -38,6 +38,8 @@ class AssignmentActionCreators {
 				var course = AssignmentStateService._state.courses.list[courseId];
 				course.note = note;
 				_self.AssignmentService.updateCourse(course).then(function (newCourse) {
+					ipa_analyze_event('instructor assignments', 'course note updated');
+
 					_self.$rootScope.$emit('toast', { message: "Updated course note", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_COURSE_NOTE,
@@ -61,6 +63,8 @@ class AssignmentActionCreators {
 				instructorNote.note = note;
 
 				_self.AssignmentService.updateInstructorNote(instructorNote).then(function (newInstructorNote) {
+					ipa_analyze_event('instructor assignments', 'instructor note created or updated');
+
 					_self.$rootScope.$emit('toast', { message: "Updated instructor note", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UPDATE_INSTRUCTOR_NOTE,
@@ -180,6 +184,15 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 				});
 			},
+
+			/**
+			 * Assigns an instructor to a course
+			 * 
+			 * @param {*} instructorId 
+			 * @param {*} year 
+			 * @param {*} workgroupId 
+			 * @param {*} comment 
+			 */
 			addInstructorAssignment: function (instructorId, year, workgroupId, comment) {
 				var scheduleInstructorNote = {};
 				scheduleInstructorNote.instructorId = instructorId;
@@ -200,6 +213,8 @@ class AssignmentActionCreators {
 			},
 			removeInstructorAssignment: function (teachingAssignment) {
 				_self.AssignmentService.removeInstructorAssignment(sectionGroupId, instructorId).then(function (sectionGroupId) {
+					ipa_analyze_event('instructor assignments', 'instructor unassigned');
+
 					_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,
@@ -212,8 +227,17 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
 				});
 			},
+
+			/**
+			 * Assigns an instructor who did not have a teaching preference.
+			 * 
+			 * @param {*} teachingAssignment 
+			 * @param {*} scheduleId 
+			 */
 			addAndApproveInstructorAssignment: function (teachingAssignment, scheduleId) {
 				_self.AssignmentService.addInstructorAssignment(teachingAssignment, scheduleId).then(function (teachingAssignment) {
+					ipa_analyze_event('instructor assignments', 'instructor without preference assigned');
+
 					_self.$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ADD_TEACHING_ASSIGNMENT,
@@ -226,10 +250,18 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
 				});
 			},
+
+			/**
+			 * Assigns an instructor type to a course (as opposed to an instructor)
+			 * 
+			 * @param {*} teachingAssignment 
+			 */
 			assignInstructorType: function (teachingAssignment) {
 				var scheduleId = AssignmentStateService._state.userInterface.scheduleId;
 	
 				_self.AssignmentService.addInstructorAssignment(teachingAssignment, scheduleId).then(function (newTeachingAssignment) {
+					ipa_analyze_event('instructor assignments', 'instructor type assigned');
+
 					_self.$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
 					_self.AssignmentStateService.reduce({
 						type: ActionTypes.ADD_TEACHING_ASSIGNMENT,
@@ -287,6 +319,8 @@ class AssignmentActionCreators {
 				teachingAssignment.approved = true;
 	
 				_self.AssignmentService.updateInstructorAssignment(teachingAssignment).then(function (teachingAssignment) {
+					ipa_analyze_event('instructor assignments', 'instructor assignment approved');
+
 					$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
 						var action = {
 							type: ActionTypes.UPDATE_TEACHING_ASSIGNMENT,
