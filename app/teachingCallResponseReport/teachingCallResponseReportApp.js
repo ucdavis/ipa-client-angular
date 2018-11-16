@@ -15,6 +15,7 @@ import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
 import StringService from './../shared/services/StringService.js';
 import SupportCallService from './../shared/services/SupportCallService.js';
+import AvailabilityService from './../shared/services/AvailabilityService.js';
 
 // Dependencies
 var dependencies = [
@@ -59,6 +60,7 @@ const teachingCallResponseReportApp = angular.module("teachingCallResponseReport
 .service('ApiService', ApiService)
 .service('TermService', TermService)
 .service('SupportCallService', SupportCallService)
+.service('AvailabilityService', AvailabilityService)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE"
 });

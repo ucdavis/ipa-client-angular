@@ -18,6 +18,7 @@ import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
 import DwService from './../shared/services/DwService.js';
 import SupportCallService from './../shared/services/SupportCallService';
+import AvailabilityService from './../shared/services/AvailabilityService';
 
 // Instructor Form Directives
 import studentFormDetail from './instructorSupportCallForm/directives/studentFormDetail/studentFormDetail.js';
@@ -99,6 +100,7 @@ const instructionalSupportApp = angular.module("instructionalSupportApp", depend
 .service('AuthService', AuthService)
 .service('DwService', DwService)
 .service('SupportCallService', SupportCallService)
+.service('AvailabilityService', AvailabilityService)
 .directive('confirmEligible', confirmEligible)
 .directive('modalPreferenceComments', modalPreferenceComments)
 .directive('studentAvailabilities', studentAvailabilities)

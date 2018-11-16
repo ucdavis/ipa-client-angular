@@ -1,5 +1,5 @@
 class TeachingCallResponseReportStateService {
-	constructor ($rootScope, $log, Term, SectionGroup, ActionTypes, StringService, SupportCallService) {
+	constructor ($rootScope, $log, Term, SectionGroup, ActionTypes, StringService, AvailabilityService) {
 		var self = this;
 		this.$rootScope = $rootScope;
 		this.$log = $log;
@@ -25,7 +25,7 @@ class TeachingCallResponseReportStateService {
 										instructor.availabilityByTermCode = {};
 									}
 	
-									instructor.availabilityByTermCode[teachingCallResponse.termCode] = SupportCallService.availabilityBlobToDescriptions(teachingCallResponse.availabilityBlob);
+									instructor.availabilityByTermCode[teachingCallResponse.termCode] = AvailabilityService.availabilityBlobToDescriptions(teachingCallResponse.availabilityBlob);
 								}
 							});
 						});
@@ -238,6 +238,6 @@ class TeachingCallResponseReportStateService {
 	}
 }
 
-TeachingCallResponseReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup', 'ActionTypes', 'StringService', 'SupportCallService'];
+TeachingCallResponseReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup', 'ActionTypes', 'StringService', 'AvailabilityService'];
 
 export default TeachingCallResponseReportStateService;

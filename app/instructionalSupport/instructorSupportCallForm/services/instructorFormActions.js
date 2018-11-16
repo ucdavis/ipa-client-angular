@@ -1,6 +1,6 @@
 
 class InstructorFormActions {
-  constructor ($rootScope, $window, $route, InstructorFormService, InstructorFormStateService, ActionTypes, SupportCallService) {
+  constructor ($rootScope, $window, $route, InstructorFormService, InstructorFormStateService, ActionTypes, AvailabilityService) {
     this.$rootScope = $rootScope;
     this.$window = $window;
     this.InstructorFormService = InstructorFormService;
@@ -22,7 +22,7 @@ class InstructorFormActions {
             return supportStaff;
           });
           payload.studentSupportCallResponses.map(function(response) {
-            response.availabilityDescriptions = SupportCallService.availabilityBlobToDescriptions(response.availabilityBlob);
+            response.availabilityDescriptions = AvailabilityService.availabilityBlobToDescriptions(response.availabilityBlob);
           });
 
           var action = {
@@ -163,6 +163,6 @@ class InstructorFormActions {
   }
 }
 
-InstructorFormActions.$inject = ['$rootScope', '$window', '$route', 'InstructorFormService', 'InstructorFormStateService', 'ActionTypes', 'SupportCallService'];
+InstructorFormActions.$inject = ['$rootScope', '$window', '$route', 'InstructorFormService', 'InstructorFormStateService', 'ActionTypes', 'AvailabilityService'];
 
 export default InstructorFormActions;
