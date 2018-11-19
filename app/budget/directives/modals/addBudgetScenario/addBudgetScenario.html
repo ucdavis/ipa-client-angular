@@ -1,58 +1,67 @@
 <div class="add-budget-scenario">
-	<form role="form" class="form-horizontal">
-		<div class="form-group">
-			<label class="col-sm-6 control-label">Create From</label>
-			<div class="col-sm-5">
-				<div class="input-group" class="scenario-selection-container">
-					<button class="btn add-budget-scenario__dropdown dropdown-toggle"
-									type="button" data-toggle="dropdown">
-						<span class="add-budget-scenario__dropdown-label">
-							{{ newBudgetScenario.description }}
-						</span>
-						<span class="caret"></span>
-					</button>
+  <form role="form" class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-6 control-label">Create From</label>
+      <div class="col-sm-5">
+        <div class="input-group" class="scenario-selection-container">
+          <button class="btn add-budget-scenario__dropdown dropdown-toggle"
+                  type="button" data-toggle="dropdown">
+            <span class="add-budget-scenario__dropdown-label">
+              {{ newBudgetScenario.description }}
+            </span>
+            <span class="caret"></span>
+          </button>
 
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="budgetScenario in state.budgetScenarios" class="budget-scenario-item">
-							<a ng-click="selectBudgetScenario(budgetScenario)">
-								{{ budgetScenario.name }}
-							</a>
-						</li>
-						<li role="presentation" class="divider courses-separator"></li>
-						<li ng-click="newBudgetScenario.budgetScenarioId = 0" class="budget-scenario-item">
-							<a ng-click="selectBudgetScenario()">
-								Schedule data
-							</a>
-						</li>
-					</ul>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li ng-repeat="budgetScenario in state.budgetScenarios" class="budget-scenario-item">
+              <a ng-click="selectBudgetScenario(budgetScenario)">
+                {{ budgetScenario.name }}
+              </a>
+            </li>
+            <li role="presentation" class="divider courses-separator"></li>
+            <li ng-click="newBudgetScenario.budgetScenarioId = 0" class="budget-scenario-item">
+              <a ng-click="selectBudgetScenario()">
+                Schedule data
+              </a>
+            </li>
+          </ul>
 
-				</div>
-			</div>
-		</div>
+        </div>
+      </div>
+    </div>
 
-		<div class="form-group">
-			<label class="col-sm-6 control-label">Name</label>
-			<div class="col-sm-5">
-				<div class="input-group">
-					<input
-						class="form-control" type="text"
-						ng-model="newBudgetScenario.name"
-						placeholder="Budget scenario name">
-				</div>
-			</div>
-		</div>
-
-		<div class="add-budget-scenario-footer">
-			<button ng-click="close()"
-							type="button"
-							class="btn btn-default modal-button">
-				Cancel
-			</button>
-			<button ng-click="submitBudgetScenarioForm()"
-							type="button"
-							class="btn neon-dark-confirm-btn modal-button">
-				Submit
-			</button>
-		</div>
-	</form>
+    <div class="form-group">
+      <label class="col-sm-6 control-label">Name</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <input
+            class="form-control" type="text"
+            ng-model="newBudgetScenario.name"
+            placeholder="Budget scenario name">
+        </div>
+      </div>
+    </div>
+    <div class="form-group" ng-if="newBudgetScenario.budgetScenarioId > 0">
+      <label class="col-sm-6 control-label">Copy Funds</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <ipa-checkbox is-checked="newBudgetScenario.copyFunds"
+                        click-action="toggleCopyFunds()">
+          </ipa-checkbox>
+        </div>
+      </div>
+    </div>
+    <div class="add-budget-scenario-footer">
+      <button ng-click="close()"
+              type="button"
+              class="btn btn-default modal-button">
+        Cancel
+      </button>
+      <button ng-click="submitBudgetScenarioForm()"
+              type="button"
+              class="btn neon-dark-confirm-btn modal-button">
+        Submit
+      </button>
+    </div>
+  </form>
 </div>
