@@ -30,6 +30,7 @@ let addBudgetScenario = function ($rootScope, BudgetActions) {
 
       scope.submitBudgetScenarioForm = function () {
         BudgetActions.createBudgetScenario(scope.newBudgetScenario, scope.state.budget.id, scope.newBudgetScenario.budgetScenarioId);
+        scope.close();
       };
 
       scope.toggleCopyFunds = function () {
