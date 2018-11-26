@@ -698,6 +698,12 @@ class AssignmentStateService {
 								});
 						}
 
+						sectionGroups.ids.forEach(function (sectionGroupId) {
+							var sectionGroup = sectionGroupsList[sectionGroupId];
+							sectionGroup.aiAssignmentOptions.other = _array_sortByProperty(sectionGroup.aiAssignmentOptions.other, 'lastName');
+							sectionGroup.aiAssignmentOptions.preferences = _array_sortByProperty(sectionGroup.aiAssignmentOptions.preferences, 'lastName');
+						});
+
 						sectionGroups.list = sectionGroupsList;
 						return sectionGroups;
 					case ActionTypes.ADD_TEACHING_ASSIGNMENT:
