@@ -88,8 +88,9 @@
 										</div>
 									</div>
 									<div class="section-group__teaching-assistants">
-										<span ng-if="sectionGroup.teachingAssistants.length > 0" class="section-instructors">
-											TAs: 
+										<span ng-if="sectionGroup.teachingAssistants.length > 0 || sectionGroup.teachingAssistantAppointments" class="section-instructors">
+											<span ng-if="sectionGroup.teachingAssistantAppointments">({{ sectionGroup.teachingAssistantAppointments }})</span> TAs
+                      <span ng-if="sectionGroup.teachingAssistants.length > 0">:</span>
 										</span>
 										<span ng-repeat="teachingAssistant in sectionGroup.teachingAssistants">
 											{{ teachingAssistant }}<span ng-if="$last == false">, </span>
