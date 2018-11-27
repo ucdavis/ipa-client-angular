@@ -566,7 +566,16 @@ class BudgetCalculations {
 
 				if (!replacementCost) { return replacementCosts; }
 
-				var instructorTypeId = sectionGroup.overrideInstructorTypeId || sectionGroup.instructorTypeId;
+        var instructorTypeId = null;
+
+        if (sectionGroup.overrideInstructorTypeId) {
+          instructorTypeId = sectionGroup.overrideInstructorTypeId;
+        } else if (sectionGroup.instructor && sectionGroup.instructor.instructorType && sectionGroup.instructor.instructorType.id) {
+          instructorTypeId = sectionGroup.instructor.instructorType.id;
+        } else {
+          instructorTypeId = sectionGroup.instructorTypeId;
+        }
+
 				var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroup.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroup.instructorId];
 
 				// Course has a cost but no instructor
@@ -586,7 +595,7 @@ class BudgetCalculations {
 	
 				// Add cost
 				replacementCosts.byInstructorTypeId[instructorTypeId] += replacementCost;
-	
+
 				return replacementCosts;
 			},
 			_combineReplacementCost: function (replacementCosts, termCosts) {
