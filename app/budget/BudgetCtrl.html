@@ -101,7 +101,12 @@
                     term-nav="view.state.ui.termNav"
                     selected-budget-scenario="view.state.selectedBudgetScenario">
       </course-list>
-      <incoming-changes></incoming-changes>
+      <incoming-changes ng-if="view.state.ui.sectionNav.activeTab == 'Incoming Changes'"
+                        courses="view.state.courses"
+                        section-groups="view.state.sectionGroups"
+                        section-group-costs="view.state.sectionGroupCosts"
+                        term-nav="view.state.ui.termNav">
+      </incoming-changes>
     </div>
   </div>
 </div>

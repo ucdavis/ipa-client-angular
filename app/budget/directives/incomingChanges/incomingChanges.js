@@ -6,12 +6,60 @@ let incomingChanges = function (BudgetActions) {
     template: require('./incomingChanges.html'),
     replace: true,
     scope: {
-      termNav: '<'
+      termNav: '<',
+      sectionGroups: '<',
+      courses: '<',
+      sectionGroupCosts: '<'
     },
     link: function (scope, element, attrs) {
+      // Total of differences, by term
       scope.setActiveTerm = function(activeTermTab) {
         BudgetActions.selectTerm(activeTermTab);
       };
+
+      scope.calculateChanges = function () {
+        scope.courses;
+        scope.sectionGroups;
+        scope.sectionGroupCosts;
+
+        scope.calculateChangedValues();
+        scope.calculateMissingCourses();
+        scope.calculateAddedCourses();
+      };
+
+      scope.calculateChangedValues = function () {
+        scope.sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
+          var sectionGroupCost = scope.sectionGroupCosts.list[sectionGroupCostId];
+          var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
+          var sectionGroup = scope.sectionGroups.byUniqueKey[uniqueKey];
+
+          // This is a missingCourse, not a changed value
+          if (!sectionGroup) { return; }
+
+          // Check seats
+          // Check assigned instructor
+          // Check enrollment
+          // Check seats
+          // Check TAs
+          // Check Readers
+        });
+      };
+
+      // // Example changeObject
+      // var changeObject = {
+      //   sectionGroupCostId: 22
+      //   parameter: "enrollment"
+      //   value: 22
+      //   term: "201610"
+      // };
+
+      // Recalculate on changes
+      scope.$watchGroup(['courses', 'sectionGroups', 'sectionGroupCosts'], function(newValues, oldValues, scope) {
+        scope.calculateChanges();
+      });
+
+      // Calculate on instantation of directive
+      scope.calculateChanges();
     }
   };
 };

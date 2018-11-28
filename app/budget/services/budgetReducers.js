@@ -914,7 +914,7 @@ class BudgetReducers {
 				newState.lineItemComments = scope.lineItemCommentReducers(action, scope._state.lineItemComments);
 				newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
 				newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
-				newState.sectionGroupCostComments = scope.sectionGroupCostCommentReducers(action, scope._state.sectionGroupCostComments);
+        newState.sectionGroupCostComments = scope.sectionGroupCostCommentReducers(action, scope._state.sectionGroupCostComments);
 				newState.scheduleSectionGroups = scope.scheduleSectionGroupReducers(action, scope._state.scheduleSectionGroups);
 				newState.assignedInstructors = scope.assignedInstructorReducers(action, scope._state.assignedInstructors);
 				newState.activeInstructors = scope.activeInstructorReducers(action, scope._state.activeInstructors);
@@ -947,6 +947,7 @@ class BudgetReducers {
 				newPageState.lineItemCategories = BudgetSelectors.generateLineItemCategories(newState.lineItemCategories);
 				newPageState.courses = newState.courses;
 				newPageState.sectionGroups = newState.sectionGroups;
+				newPageState.sectionGroupCosts = newState.sectionGroupCosts;
 
 				newPageState.calculatedCourseList = newState.calculatedCourseList;
 				newPageState.calculatedScheduleCosts = newState.calculatedScheduleCosts;
