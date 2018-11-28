@@ -710,7 +710,7 @@ class BudgetReducers {
 							},
 							sectionNav: {
 								activeTab: "Summary",
-								allTabs: ["Schedule Costs", "Funds", "Summary", "Instructor List", "Course List"]
+								allTabs: ["Schedule Costs", "Funds", "Summary", "Instructor List", "Course List", "Incoming Changes"]
 							},
 							termNav: {
 								activeTab: null,

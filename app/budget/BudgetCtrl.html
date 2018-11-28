@@ -3,104 +3,105 @@
 <ipa-header page-title="Budget"></ipa-header>
 
 <div class="budget-view">
-	<spinner ng-if="!view.state"
-		size="20" style="padding-top: 200px;">
-	</spinner>
+  <spinner ng-if="!view.state"
+    size="20" style="padding-top: 200px;">
+  </spinner>
 
-	<div ng-if="view.state">
-		<!-- Modals -->
-		<ipa-modal is-visible="view.state.openAddBudgetScenario"
-		           header-text="Add New Budget Scenario">
-			<add-budget-scenario ng-if="view.state.openAddBudgetScenario"
-			                     state="view.state"
-			                     is-visible="view.state.openAddBudgetScenario">
-			</add-budget-scenario>
-		</ipa-modal>
+  <div ng-if="view.state">
+    <!-- Modals -->
+    <ipa-modal is-visible="view.state.openAddBudgetScenario"
+                header-text="Add New Budget Scenario">
+      <add-budget-scenario ng-if="view.state.openAddBudgetScenario"
+                            state="view.state"
+                            is-visible="view.state.openAddBudgetScenario">
+      </add-budget-scenario>
+    </ipa-modal>
 
-		<ipa-modal is-visible="view.state.ui.isAddLineItemModalOpen"
-		           header-text="Line Item">
-			<add-line-item ng-if="view.state.ui.isAddLineItemModalOpen"
-			               state="view.state"
-			               is-visible="view.state.ui.isAddLineItemModalOpen"
-			               line-item-to-edit="view.state.ui.lineItemToEdit">
-			</add-line-item>
-		</ipa-modal>
+    <ipa-modal is-visible="view.state.ui.isAddLineItemModalOpen"
+                header-text="Line Item">
+      <add-line-item ng-if="view.state.ui.isAddLineItemModalOpen"
+                      state="view.state"
+                      is-visible="view.state.ui.isAddLineItemModalOpen"
+                      line-item-to-edit="view.state.ui.lineItemToEdit">
+      </add-line-item>
+    </ipa-modal>
 
-		<ipa-modal is-visible="view.state.ui.isBudgetConfigModalOpen"
-		           header-text="Terms"
-		           styles="budgetConfigStyles">
-			<budget-config ng-if="view.state.ui.isBudgetConfigModalOpen"
-			               state="view.state"
-			               selected-budget-scenario="view.state.selectedBudgetScenario"
-			               is-visible="view.state.ui.isBudgetConfigModalOpen">
-			</budget-config>
-		</ipa-modal>
+    <ipa-modal is-visible="view.state.ui.isBudgetConfigModalOpen"
+                header-text="Terms"
+                styles="budgetConfigStyles">
+      <budget-config ng-if="view.state.ui.isBudgetConfigModalOpen"
+                      state="view.state"
+                      selected-budget-scenario="view.state.selectedBudgetScenario"
+                      is-visible="view.state.ui.isBudgetConfigModalOpen">
+      </budget-config>
+    </ipa-modal>
 
-		<ipa-modal is-visible="view.state.ui.courseCommentsModal.isOpen"
-		           header-text="Course Comments">
-			<add-course-comments ng-if="view.state.ui.courseCommentsModal.isOpen"
-			                     section-group-cost="view.state.ui.courseCommentsModal.sectionGroupCost"
-			                     current-user-login-id="currentUser.loginId"
-			                     is-visible="view.state.ui.courseCommentsModal.isOpen">
-			</add-course-comments>
-		</ipa-modal>
+    <ipa-modal is-visible="view.state.ui.courseCommentsModal.isOpen"
+                header-text="Course Comments">
+      <add-course-comments ng-if="view.state.ui.courseCommentsModal.isOpen"
+                            section-group-cost="view.state.ui.courseCommentsModal.sectionGroupCost"
+                            current-user-login-id="currentUser.loginId"
+                            is-visible="view.state.ui.courseCommentsModal.isOpen">
+      </add-course-comments>
+    </ipa-modal>
 
 
-		<ipa-modal class="add-course__modal" is-visible="view.state.ui.addCourseModal.isOpen"
-		           header-text="Add Course">
-			<add-course ng-if="view.state.ui.addCourseModal.isOpen"
-			            state="view.state"
-			            is-visible="view.state.ui.addCourseModal.isOpen">
-			</add-course>
-		</ipa-modal>
+    <ipa-modal class="add-course__modal" is-visible="view.state.ui.addCourseModal.isOpen"
+                header-text="Add Course">
+      <add-course ng-if="view.state.ui.addCourseModal.isOpen"
+                  state="view.state"
+                  is-visible="view.state.ui.addCourseModal.isOpen">
+      </add-course>
+    </ipa-modal>
 
-		<ipa-modal is-visible="view.state.ui.lineItemCommentsModal.isOpen"
-		           header-text="Line Item Comments">
-			<add-line-item-comments ng-if="view.state.ui.lineItemCommentsModal.isOpen"
-			                        line-item="view.state.ui.lineItemCommentsModal.lineItem"
-			                        current-user-login-id="currentUser.loginId"
-			                        is-visible="view.state.ui.lineItemCommentsModal.isOpen">
-			</add-line-item-comments>
-		</ipa-modal>
+    <ipa-modal is-visible="view.state.ui.lineItemCommentsModal.isOpen"
+                header-text="Line Item Comments">
+      <add-line-item-comments ng-if="view.state.ui.lineItemCommentsModal.isOpen"
+                              line-item="view.state.ui.lineItemCommentsModal.lineItem"
+                              current-user-login-id="currentUser.loginId"
+                              is-visible="view.state.ui.lineItemCommentsModal.isOpen">
+      </add-line-item-comments>
+    </ipa-modal>
 
-		<budget-scenario-toolbar state="view.state"></budget-scenario-toolbar>
+    <budget-scenario-toolbar state="view.state"></budget-scenario-toolbar>
 
-		<budget-nav class="budget-view__nav-container"
-		            total-balance="view.state.selectedBudgetScenario.summary.totalBalance"
-		            selected-section="view.state.ui.sectionNav.activeTab"
-		            selected-budget-scenario="view.state.selectedBudgetScenario"
-		            selected-line-items="view.state.ui.selectedLineItems"
-		            filters="view.state.ui.filters"
-		            funds-nav="view.state.ui.fundsNav.activeTab">
-		</budget-nav>
+    <budget-nav class="budget-view__nav-container"
+                total-balance="view.state.selectedBudgetScenario.summary.totalBalance"
+                selected-section="view.state.ui.sectionNav.activeTab"
+                selected-budget-scenario="view.state.selectedBudgetScenario"
+                selected-line-items="view.state.ui.selectedLineItems"
+                filters="view.state.ui.filters"
+                funds-nav="view.state.ui.fundsNav.activeTab">
+    </budget-nav>
 
-		<div class="page-content">
-			<budget-summary ng-if="view.state.ui.sectionNav.activeTab == 'Summary'"
-			                summary="view.state.summary"
-			                instructor-types="view.state.instructorTypes"
-			                selected-budget-scenario="view.state.selectedBudgetScenario">
-			</budget-summary>
-			<line-items ng-if="view.state.ui.sectionNav.activeTab == 'Funds'"
-			            selected-budget-scenario="view.state.selectedBudgetScenario"
-			            line-items="view.state.calculatedLineItems"
-			            ui="view.state.ui">
-			</line-items>
-			<budget-costs ng-if="view.state.ui.sectionNav.activeTab == 'Schedule Costs'"
-			              instructor-assignment-options="view.state.ui.instructorAssignmentOptions"
-			              regular-instructor-assignment-options="view.state.ui.regularInstructorAssignmentOptions"
-			              schedule-costs="view.state.calculatedScheduleCosts"
-			              term-nav="view.state.ui.termNav"
-			              summary="view.state.summary">
-			</budget-costs>
-			<instructor-list ng-if="view.state.ui.sectionNav.activeTab == 'Instructor List'"
-			                 state="view.state"
-			                 selected-budget-scenario="view.state.selectedBudgetScenario">
-			</instructor-list>
-			<course-list ng-if="view.state.ui.sectionNav.activeTab == 'Course List'"
-			             course-list="view.state.calculatedCourseList"
-			             term-nav="view.state.ui.termNav"
-			             selected-budget-scenario="view.state.selectedBudgetScenario">
-			</instructor-list>
-		</div>
-	</div>
+    <div class="page-content">
+      <budget-summary ng-if="view.state.ui.sectionNav.activeTab == 'Summary'"
+                      summary="view.state.summary"
+                      instructor-types="view.state.instructorTypes"
+                      selected-budget-scenario="view.state.selectedBudgetScenario">
+      </budget-summary>
+      <line-items ng-if="view.state.ui.sectionNav.activeTab == 'Funds'"
+                  selected-budget-scenario="view.state.selectedBudgetScenario"
+                  line-items="view.state.calculatedLineItems"
+                  ui="view.state.ui">
+      </line-items>
+      <budget-costs ng-if="view.state.ui.sectionNav.activeTab == 'Schedule Costs'"
+                    instructor-assignment-options="view.state.ui.instructorAssignmentOptions"
+                    regular-instructor-assignment-options="view.state.ui.regularInstructorAssignmentOptions"
+                    schedule-costs="view.state.calculatedScheduleCosts"
+                    term-nav="view.state.ui.termNav"
+                    summary="view.state.summary">
+      </budget-costs>
+      <instructor-list ng-if="view.state.ui.sectionNav.activeTab == 'Instructor List'"
+                        state="view.state"
+                        selected-budget-scenario="view.state.selectedBudgetScenario">
+      </instructor-list>
+      <course-list ng-if="view.state.ui.sectionNav.activeTab == 'Course List'"
+                    course-list="view.state.calculatedCourseList"
+                    term-nav="view.state.ui.termNav"
+                    selected-budget-scenario="view.state.selectedBudgetScenario">
+      </course-list>
+      <incoming-changes></incoming-changes>
+    </div>
+  </div>
 </div>

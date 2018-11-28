@@ -19,6 +19,7 @@ import AuthService from './../shared/services/AuthService.js';
 import SectionService from './../shared/services/SectionService.js';
 
 // Directives
+import incomingChanges from './directives/incomingChanges/incomingChanges.js';
 import budgetNav from './directives/budgetNav/budgetNav.js';
 import lineItemFilters from './directives/budgetNav/lineItemFilters/lineItemFilters.js';
 
@@ -103,6 +104,7 @@ const budgetApp = angular.module("budgetApp", dependencies)
 .directive('addLineItem', addLineItem)
 .directive('addLineItemComments', addLineItemComments)
 .directive('courseList', courseList)
+.directive('incomingChanges', incomingChanges)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	CREATE_BUDGET_SCENARIO: "CREATE_BUDGET_SCENARIO",
