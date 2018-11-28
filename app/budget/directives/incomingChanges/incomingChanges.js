@@ -9,7 +9,8 @@ let incomingChanges = function (BudgetActions) {
       termNav: '<',
       sectionGroups: '<',
       courses: '<',
-      sectionGroupCosts: '<'
+      sectionGroupCosts: '<',
+      selectedBudgetScenario: '<'
     },
     link: function (scope, element, attrs) {
       // Total of differences, by term
@@ -33,7 +34,10 @@ let incomingChanges = function (BudgetActions) {
           var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
           var sectionGroup = scope.sectionGroups.byUniqueKey[uniqueKey];
 
-          // This is a missingCourse, not a changed value
+          // Ensure sectionGroupCost matches scenario
+          if (sectionGroupCost.budgetScenario != scope.selectedBudgetScenario.id) { return; }
+
+          // Ensure sectionGroupCost has a match in IPA
           if (!sectionGroup) { return; }
 
           // Check seats
