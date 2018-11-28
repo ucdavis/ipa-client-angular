@@ -25,6 +25,7 @@ import AuthService from './../shared/services/AuthService.js';
 import teachingCallTooltip from './teachingCallStatus/directives/teachingCallTooltip.js';
 import addInstructorsModal from './teachingCallStatus/directives/modals/addInstructorsModal/addInstructorsModal.js';
 import contactInstructorsModal from './teachingCallStatus/directives/modals/contactInstructorsModal/contactInstructorsModal.js';
+import tutorialModal from './teachingCallForm/directives/modals/tutorialModal/tutorialModal.js';
 
 // Dependencies
 var dependencies = [
@@ -83,6 +84,7 @@ const teachingCallApp = angular.module("teachingCallApp", dependencies)
 .directive('addInstructorsModal', addInstructorsModal)
 .directive('contactInstructorsModal', contactInstructorsModal)
 .directive('teachingCallTooltip', teachingCallTooltip)
+.directive('tutorialModal', tutorialModal)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	UPDATE_TEACHING_ASSIGNMENT_ORDER: "UPDATE_TEACHING_ASSIGNMENT_ORDER",
