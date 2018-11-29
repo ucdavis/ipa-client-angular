@@ -28,7 +28,7 @@ class TeachingCallStatusCtrl {
 
 			CourseService.getScheduleByWorkgroupIdAndYear($scope.workgroupId, $scope.year)
 				.then(function (res) {
-					$scope.view.state.scheduleHasCourses = (res.courses.length === 0);
+					$scope.view.state.scheduleHasCourses = (res.courses.length !== 0);
 				});
 		});
 
