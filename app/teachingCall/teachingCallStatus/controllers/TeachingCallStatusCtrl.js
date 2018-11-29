@@ -25,11 +25,6 @@ class TeachingCallStatusCtrl {
 
 		$rootScope.$on('teachingCallStatusStateChanged', function (event, data) {
 			$scope.view.state = data;
-
-			CourseService.getScheduleByWorkgroupIdAndYear($scope.workgroupId, $scope.year)
-				.then(function (res) {
-					$scope.view.state.scheduleHasCourses = (res.courses.length !== 0);
-				});
 		});
 
 		$scope.toggleInstructor = function(instructor) {
@@ -73,6 +68,11 @@ class TeachingCallStatusCtrl {
 
 		// Launches Call Instructor Modal
 		$scope.openAddInstructorsModal = function() {
+			CourseService.getScheduleByWorkgroupIdAndYear($scope.workgroupId, $scope.year)
+				.then(function (res) {
+					$scope.view.state.scheduleHasCourses = (res.courses.length !== 0);
+				});
+
 			$scope.view.state.openCallInstructorModal = true;
 		};
 
