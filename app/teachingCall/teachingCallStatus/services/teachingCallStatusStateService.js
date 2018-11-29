@@ -66,7 +66,8 @@ class TeachingCallStatusStateService {
 						var ui = {
 							selectedInstructorIds: [],
 							instructorsInCalls: false,
-							haveUnsentEmails: false
+							haveUnsentEmails: false,
+							scheduleHasCourses: action.scheduleHasCourses
 						};
 						return ui;
 					case ActionTypes.CALCULATE_PENDING_EMAILS:

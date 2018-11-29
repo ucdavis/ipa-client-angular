@@ -114,20 +114,20 @@
 
   <div class="add-instructors-modal__footer">
     <!-- send buttons -->
-    <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == true && startTeachingCallConfig.sendEmail && state.scheduleHasCourses === true"
+    <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == true && startTeachingCallConfig.sendEmail && state.ui.scheduleHasCourses === true"
             type="button"
             class="btn neon-dark-confirm-btn"
             ng-click="submit()">
       Send
     </button>
-    <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false && startTeachingCallConfig.sendEmail && state.scheduleHasCourses === true"
+    <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false && startTeachingCallConfig.sendEmail && state.ui.scheduleHasCourses === true"
             tooltip-placement="left"
             uib-tooltip="You must select at least one term and one instructor"
             type="button"
             class="disabled btn btn-info neon-dark-confirm-btn">
       Send
     </button>
-    <button ng-if="startTeachingCallConfig.sendEmail && state.scheduleHasCourses === false"
+    <button ng-if="startTeachingCallConfig.sendEmail && state.ui.scheduleHasCourses === false"
             tooltip-placement="left"
             uib-tooltip="You have no courses scheduled for the year"
             type="button"
@@ -136,20 +136,20 @@
     </button>
 
     <!-- start buttons (no email) -->
-    <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == true && !startTeachingCallConfig.sendEmail && state.scheduleHasCourses === true"
+    <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == true && !startTeachingCallConfig.sendEmail && state.ui.scheduleHasCourses === true"
             type="button"
             class="btn neon-dark-confirm-btn"
             ng-click="submit()">
       Start
     </button>
-    <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false && !startTeachingCallConfig.sendEmail && state.scheduleHasCourses === true"
+    <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false && !startTeachingCallConfig.sendEmail && state.ui.scheduleHasCourses === true"
             tooltip-placement="left"
             uib-tooltip="You must select at least one term and one instructor"
             type="button"
             class="disabled btn btn-info neon-dark-confirm-btn">
       Start
     </button>
-    <button ng-if="!startTeachingCallConfig.sendEmail && state.scheduleHasCourses === false"
+    <button ng-if="!startTeachingCallConfig.sendEmail && state.ui.scheduleHasCourses === false"
             tooltip-placement="left"
             uib-tooltip="You have no courses scheduled for the year"
             type="button"
