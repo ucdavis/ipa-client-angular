@@ -1,12 +1,23 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 
-<ipa-header page-title="Teaching Call"></ipa-header>
+<ipa-header page-title="Teaching Call">
+  <button ng-click="openTutorialModal()" type="button" class="teaching-call-form__video-tutorial-btn btn btn-default">
+    Video Tutorial
+  </button>
+</ipa-header>
 
 <div ng-hide="view.state" style="margin-top:300px;">
 	<spinner></spinner>
 </div>
 
 <div class="container-fluid teaching-call-form">
+	<ipa-modal is-visible="modals.isTutorialModalOpen"
+	            header-text="Video Tutorial">
+		<tutorial-modal ng-if="modals.isTutorialModalOpen"
+	                  is-visible="modals.isTutorialModalOpen">
+		</tutorial-modal>
+  </ipa-modal>
+
 	<div id="teaching-call-form--container" ng-repeat="term in view.state.terms" ng-if="term.termCode == view.state.selectedTermCode">
 		<!-- course preferences -->
 		<div id="teaching-call--course-preference" class="row">
