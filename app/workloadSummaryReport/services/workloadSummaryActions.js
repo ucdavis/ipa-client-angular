@@ -334,6 +334,7 @@ class WorkloadSummaryActions {
 						var course = sectionGroup ? courses.list[sectionGroup.courseId] : null;
 
 						assignment.term = TermService.getTermName(termCode);
+						assignment.termCode = termCode;
 
 						assignment.description = TeachingAssignmentService.getDescription(teachingAssignment, course);
 
@@ -365,6 +366,8 @@ class WorkloadSummaryActions {
 						instructor.totals.previousEnrollment += assignment.previousEnrollment || 0;
 						instructor.totals.assignmentCount += 1;
 					});
+
+					instructor.assignments = _array_sortByProperty(instructor.assignments, ["termCode", "description"]);
 
 					calculatedView.byInstructorType[instructorTypeId].push(instructor);
 					calculatedView.totals.instructorCount += 1;
