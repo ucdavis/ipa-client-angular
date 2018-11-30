@@ -16,7 +16,7 @@ class TeachingCallFormCtrl {
 		$scope.year = $routeParams.year;
 		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 		$scope.view = {};
-
+		$scope.modals = {};
 
 		$rootScope.$on('teachingCallFormStateChanged', function (event, data) {
 			$scope.view.state = data;
@@ -26,6 +26,9 @@ class TeachingCallFormCtrl {
 			showSuggestCourse: false
 		};
 
+		$scope.openTutorialModal = function () {
+			$scope.modals.isTutorialModalOpen = true;
+		};
 		$scope.toggleSuggestCourse = function () {
 			$scope.viewState.showSuggestCourse = !$scope.viewState.showSuggestCourse;
 		};

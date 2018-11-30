@@ -12,6 +12,79 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 		link: function (scope, element, attrs) {
 			scope.view = {};
 
+			/** 
+			 * When a teaching preference is created, a single course can have multiple teaching assignments created for each section group,
+			 * with each teaching assignment getting a incremental priority.
+			 * e.g. CHE002A has priority 1 through 6. The next preference added will be stored with priority 7.
+			 * This function checks for duplicate teaching assignments of a course and returns the adjusted priority.
+			 */
+			scope.calculatePriority = function(teachingAssignment, instructor) {
+				var termCode = teachingAssignment.termCode;
+				var courseId = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId].courseId;
+				var course = scope.view.state.courses.list[courseId];
+				var courseDescription = course.subjectCode + course.courseNumber;
+
+				if (instructor === undefined) {
+					// TBD assignment e.g. "Associate Instructor"
+					return teachingAssignment.priority;
+				}
+
+				var teachingAssignmentIds = instructor.teachingAssignmentTermCodeIds[termCode];
+				var assignmentsHash = {};
+				for (var slotTeachingAssignmentId of teachingAssignmentIds) {
+					var slotTeachingAssignment = scope.view.state.teachingAssignments.list[slotTeachingAssignmentId];
+
+					if (slotTeachingAssignment.approved === true) {
+						// skip approved assignments
+						continue;
+					}
+
+					if (slotTeachingAssignment.sectionGroupId === 0 || slotTeachingAssignment.sectionGroupId === null) {
+						// A Suggested Course or non-course option
+						var slotCourseDescription = slotTeachingAssignment.suggestedSubjectCode + slotTeachingAssignment.suggestedCourseNumber;
+
+						if (slotCourseDescription === 0) {
+							// non-course option
+								if (slotTeachingAssignment.buyout) {
+									assignmentsHash["Buyout"] = { priority: slotTeachingAssignment.priority };
+								} else if (slotTeachingAssignment.courseRelease) {
+									assignmentsHash["CourseRelease"] = { priority: slotTeachingAssignment.priority };
+								} else if (slotTeachingAssignment.sabbatical) {
+									assignmentsHash["Sabbatical"] = { priority: slotTeachingAssignment.priority };
+								} else if (slotTeachingAssignment.inResidence) {
+									assignmentsHash["InResidence"] = { priority: slotTeachingAssignment.priority };
+								} else if (slotTeachingAssignment.sabbaticalInResidence) {
+									assignmentsHash["SabbaticalInResidence"] = {  priority: slotTeachingAssignment.priority };
+								} else if (slotTeachingAssignment.leaveOfAbsense) {
+									assignmentsHash["LeaveOfAbsense"] = { priority: slotTeachingAssignment.priority };
+								} else if (slotTeachingAssignment.workLifeBalance) {
+									assignmentsHash["WorkLifeBalance"] = { priority: slotTeachingAssignment.priority };
+								} else {
+									continue;
+								}
+							continue;
+						}
+
+						assignmentsHash[slotCourseDescription] = { description: slotCourseDescription, priority: slotTeachingAssignment.priority };
+						continue;
+					}
+
+					var slotCourse = scope.view.state.courses.list[scope.view.state.sectionGroups.list[slotTeachingAssignment.sectionGroupId].courseId];
+					var slotCourseDescription = slotCourse.subjectCode + slotCourse.courseNumber;
+
+					if (!assignmentsHash[slotCourseDescription]) {
+						assignmentsHash[slotCourseDescription] = { description: slotCourseDescription, priority: slotTeachingAssignment.priority} ;
+					}
+				}
+
+				var sortedPriorityList = _array_sortByProperty(assignmentsHash, "priority");
+				var priorityIndex = sortedPriorityList.findIndex(function (priority) {
+					return priority.description === courseDescription;
+				});
+
+				return priorityIndex + 1;
+			};
+
 			scope.userCanEdit = function () {
 				var hasAuthorizedRole = scope.sharedState.currentUser.isAdmin() ||
 					scope.sharedState.currentUser.hasRole('academicPlanner', scope.sharedState.workgroup.id);
@@ -108,7 +181,6 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 									var sectionGroupId = course.sectionGroupTermCodeIds[termCode];
 									if (sectionGroupId) {
 										var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
-
 										// Adding sectionGroup Seats
 										courseHtml += "<div class=\"assignment-seats-container\">";
 										courseHtml += "<span class=\"assignment-seats\" data-toggle=\"tooltip\" data-placement=\"top\"";
@@ -235,6 +307,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 												$.each(sectionGroup.teachingAssignmentIds, function (i, teachingAssignmentId) {
 													var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
+													var priority = scope.calculatePriority(teachingAssignment, instructor);
 
 													if (instructor) {
 														interestedInstructorIds.push(instructor.id);
@@ -253,7 +326,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 														courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
 														courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 
-														courseHtml += " href=\"#\">" + instructor.fullName + " (" + teachingAssignment.priority + ")" + "</a></li>";
+														courseHtml += " href=\"#\">" + instructor.fullName + " (" + priority + ")" + "</a></li>";
 
 														numberOfInstructorsAdded++;
 													}
