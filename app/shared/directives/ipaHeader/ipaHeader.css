@@ -19,7 +19,7 @@
 }
 
 .header--work-group {
-	min-width: 190px;
+	display: flex;
 }
 
 .header--work-group .ipa-header__workgroup-button {
