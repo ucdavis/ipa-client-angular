@@ -77,8 +77,9 @@
 											Units: {{ sectionGroup.units }}
 										</span>
 									</div>
-									<div class="instructor-details section-group__instructors">
-										<span ng-if="sectionGroup.instructors.length > 0">
+
+									<div ng-if="sectionGroup.instructors.length > 0" class="instructor-details section-group__instructors">
+										<span>
 												Instructors: 
 										</span>
 										<div ng-repeat="instructor in sectionGroup.instructors"
@@ -87,10 +88,11 @@
 											({{ instructor.instructorType }})<span ng-if="$last == false">, </span>
 										</div>
 									</div>
+
 									<div class="section-group__teaching-assistants">
 										<span ng-if="sectionGroup.teachingAssistants.length > 0 || sectionGroup.teachingAssistantAppointments" class="section-instructors">
-											<span ng-if="sectionGroup.teachingAssistantAppointments">({{ sectionGroup.teachingAssistantAppointments }})</span> TAs
-                      <span ng-if="sectionGroup.teachingAssistants.length > 0">:</span>
+											<div ng-if="sectionGroup.teachingAssistantAppointments">{{ sectionGroup.teachingAssistantAppointments }} TA(s) requested</div>
+											<span ng-if="sectionGroup.teachingAssistants.length > 0">TAs Assigned:</span>
 										</span>
 										<span ng-repeat="teachingAssistant in sectionGroup.teachingAssistants">
 											{{ teachingAssistant }}<span ng-if="$last == false">, </span>
