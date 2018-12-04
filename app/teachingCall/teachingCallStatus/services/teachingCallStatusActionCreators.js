@@ -1,24 +1,29 @@
 class TeachingCallStatusActionCreators {
-	constructor (TeachingCallStatusStateService, TeachingCallStatusService, $rootScope, $window, Role, ActionTypes, $route) {
+	constructor (TeachingCallStatusStateService, TeachingCallStatusService, CourseService, $rootScope, $window, Role, ActionTypes, $route) {
 		return {
 			getInitialState: function (tab) {
 				var self = this;
 				var workgroupId = $route.current.params.workgroupId;
 				var year = $route.current.params.year;
 
-				TeachingCallStatusService.getInitialState(workgroupId, year).then(function (payload) {
-					var action = {
-						type: ActionTypes.INIT_STATE,
-						payload: payload,
-						year: year,
-						tab: tab
-					};
-					TeachingCallStatusStateService.reduce(action);
-					self._calculateInstructorsInCall();
-					self._calculateEligibleInstructors();
-					self._calculatePendingEmails();
-				}, function (err) {
-					$rootScope.$emit('toast', { message: "Could not load initial teaching call status state.", type: "ERROR" });
+				CourseService.getScheduleByWorkgroupIdAndYear(workgroupId, year).then(function (res) {
+					var scheduleHasCourses = res.courses.length !== 0;
+
+					TeachingCallStatusService.getInitialState(workgroupId, year).then(function (payload) {
+						var action = {
+							type: ActionTypes.INIT_STATE,
+							payload: payload,
+							year: year,
+							tab: tab,
+							scheduleHasCourses: scheduleHasCourses
+						};
+						TeachingCallStatusStateService.reduce(action);
+						self._calculateInstructorsInCall();
+						self._calculateEligibleInstructors();
+						self._calculatePendingEmails();
+					}, function (err) {
+						$rootScope.$emit('toast', { message: "Could not load initial teaching call status state.", type: "ERROR" });
+					});
 				});
 			},
 			contactInstructors: function (workgroupId, year, teachingCallConfig, selectedInstructors) {

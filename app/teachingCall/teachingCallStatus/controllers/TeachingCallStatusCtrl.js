@@ -1,7 +1,7 @@
 import 'TeachingCall/css/teaching-call-status.css';
 
 class TeachingCallStatusCtrl {
-	constructor ($scope, $rootScope, $window, $route, $routeParams, TeachingCallStatusActionCreators, TeachingCallStatusService, CourseService, AuthService) {
+	constructor ($scope, $rootScope, $window, $route, $routeParams, TeachingCallStatusActionCreators, TeachingCallStatusService, AuthService) {
 		this.AuthService = AuthService;
 		this.$rootScope = $rootScope;
 		this.$window = $window;
@@ -9,7 +9,6 @@ class TeachingCallStatusCtrl {
 		this.$routeParams = $routeParams;
 		this.TeachingCallStatusActionCreators = TeachingCallStatusActionCreators;
 		this.TeachingCallStatusService = TeachingCallStatusService;
-		this.CourseService = CourseService;
 		this.AuthService = AuthService;
 
 		$scope.modalStyles = { "width" : "75%" };
@@ -25,11 +24,6 @@ class TeachingCallStatusCtrl {
 
 		$rootScope.$on('teachingCallStatusStateChanged', function (event, data) {
 			$scope.view.state = data;
-
-			CourseService.getScheduleByWorkgroupIdAndYear($scope.workgroupId, $scope.year)
-				.then(function (res) {
-					$scope.view.state.scheduleHasCourses = (res.courses.length === 0);
-				});
 		});
 
 		$scope.toggleInstructor = function(instructor) {
@@ -82,6 +76,6 @@ class TeachingCallStatusCtrl {
 	}
 }
 
-TeachingCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$route', '$routeParams', 'TeachingCallStatusActionCreators', 'TeachingCallStatusService', 'CourseService', 'AuthService'];
+TeachingCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$route', '$routeParams', 'TeachingCallStatusActionCreators', 'TeachingCallStatusService', 'AuthService'];
 
 export default TeachingCallStatusCtrl;
