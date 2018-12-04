@@ -143,6 +143,16 @@
 	padding-left: 10px;
 }
 
+.instructor-assignment__dropdown--header {
+	font-weight: bold;
+	background-color: white;
+	padding-left: 20px;
+}
+
+.instructor-assignment__dropdown--subsection {
+	padding-left: 14px;
+}
+
 ul.dropdown-menu li div {
 	color: rgb(0, 0, 0);
 	font-size: 12px;

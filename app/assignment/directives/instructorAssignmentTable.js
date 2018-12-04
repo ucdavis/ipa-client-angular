@@ -359,6 +359,33 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 									courseHtml += "<div class=\"term-cell\">";
 
+									// Teaching Assignments within a term
+									var teachingAssignmentsIds = scope.view.state.instructors.list[instructor.id].teachingAssignmentTermCodeIds[termCode];
+									// sort teachingAssignments by priority
+
+									var instructorTeachingAssignments = teachingAssignmentsIds.map(function (teachingAssignmentId) {
+										return scope.view.state.teachingAssignments.list[teachingAssignmentId];
+									});
+
+									var teachingAssignmentsByPriority = _array_sortByProperty(instructorTeachingAssignments, 'priority');
+
+									// // find the first in group
+									// var courseDescriptions = [];
+									// teachingAssignmentsByPriority.forEach(function (teachingAssignment) {
+									// 	var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
+
+									// 	if (sectionGroup) {
+									// 		var course = scope.view.state.courses.list[sectionGroup.courseId];
+
+									// 		var courseDescription = course.subjectCode + course.courseNumber;
+											
+									// 		courseDescriptions.push(courseDescription);
+									// 	}
+									// });
+
+									// var uniqueCourseDescriptions = Array.from(new Set(courseDescriptions));
+
+									debugger;
 									// Loop over teachingAssignments within a term
 									$.each(scope.view.state.instructors.list[instructor.id].teachingAssignmentTermCodeIds[termCode], function (j, teachingAssignmentId) {
 										// Ensure it is approved already
@@ -441,6 +468,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										// Track courses that were already present in 'interested', and should be filtered from 'other'
 										var interestedCourseIds = [];
 										var firstInterestedCourseAdded = false;
+										var firstCourseInGroup = [];
 										var nonCoursePreferences = {buyout: false, sabbatical: false, inResidence: false, workLifeBalance: false, leaveOfAbsence: false, courseRelease: false, sabbaticalInResidence: false};
 
 										// If the instructor has teachingAssignments in this term, show them first
@@ -518,8 +546,16 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 														firstInterestedCourseAdded = true;
 													}
 
+
+													if (firstCourseInGroup.indexOf(course.subjectCode + course.courseNumber) < 0) {
+														courseHtml += "<li><div class=\"instructor-assignment__dropdown--header\">" + (firstCourseInGroup.length + 1) + ". ";
+														courseHtml += course.subjectCode + course.courseNumber + " - " + course.title;
+														courseHtml += "</div></li>";
+														firstCourseInGroup.push(course.subjectCode + course.courseNumber);
+													}
+
 													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
-													courseHtml += "<li><a";
+													courseHtml += "<li class=\"instructor-assignment__dropdown--subsection\"><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 													courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
 												}
