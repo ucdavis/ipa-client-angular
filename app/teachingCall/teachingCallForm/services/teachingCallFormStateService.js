@@ -358,8 +358,7 @@ class TeachingCallFormStateService {
 						termCode: slotAssignment.termCode,
 						scheduleId: scheduleId,
 						description: null,
-						instructorId: slotAssignment.instructorId,
-						relatedTeachingAssignments: []
+						instructorId: slotAssignment.instructorId
 					};
 	
 					var sectionGroup = null;
@@ -382,11 +381,6 @@ class TeachingCallFormStateService {
 	
 						// Ensure this preference has not already been added
 						if (uniqueAddedPreferences.indexOf(newPreference.uniqueIdentifier) > -1) {
-							// Keep track of related TeachingAssignmentIds for adjusting priorities
-							var uniquePreference = preferences.find(function (preference) {
-								return preference.uniqueIdentifier === newPreference.uniqueIdentifier;
-							});
-							uniquePreference.relatedTeachingAssignments.push(slotAssignment.id);
 							return;
 						}
 	

@@ -189,22 +189,6 @@ class TeachingCallFormCtrl {
 			TeachingCallFormActionCreators.removePreference(teachingAssignment);
 		};
 
-		$scope.expandPreferenceIds = function (preferenceIds, preferences) {
-			// Insert related TeachingPreferences Ids to update all priorities on backend
-			var expandedPreferenceIds = preferenceIds.slice(0);
-
-			preferenceIds.forEach(function (teachingPreferenceId) {
-				var teachingPreference = preferences.find(function (preference) {
-					return preference.id === teachingPreferenceId;
-				});
-
-				var index = expandedPreferenceIds.indexOf(teachingPreferenceId) + 1;
-				expandedPreferenceIds.splice(index, 0, ...teachingPreference.relatedTeachingAssignments);
-			});
-
-			return expandedPreferenceIds;
-		};
-
 		$scope.raisePriority = function (preference, preferences, termCode) {
 			var sortedTeachingPreferenceIds = [];
 			var indexToSwap = null;
@@ -225,8 +209,7 @@ class TeachingCallFormCtrl {
 			sortedTeachingPreferenceIds[indexToSwap - 1] = sortedTeachingPreferenceIds[indexToSwap];
 			sortedTeachingPreferenceIds[indexToSwap] = temp;
 
-			var expandedPreferenceIds = $scope.expandPreferenceIds(sortedTeachingPreferenceIds, preferences);
-			$scope.updateAssignmentsOrder(expandedPreferenceIds, termCode);
+			$scope.updateAssignmentsOrder(sortedTeachingPreferenceIds, termCode);
 		};
 
 		$scope.lowerPriority = function (preference, preferences, termCode) {
@@ -249,8 +232,7 @@ class TeachingCallFormCtrl {
 			sortedTeachingPreferenceIds[indexToSwap + 1] = sortedTeachingPreferenceIds[indexToSwap];
 			sortedTeachingPreferenceIds[indexToSwap] = temp;
 
-			var expandedPreferenceIds = $scope.expandPreferenceIds(sortedTeachingPreferenceIds, preferences);
-			$scope.updateAssignmentsOrder(expandedPreferenceIds, termCode);
+			$scope.updateAssignmentsOrder(sortedTeachingPreferenceIds, termCode);
 		};
 
 		$scope.updateAssignmentsOrder = function(sortedTeachingPreferenceIds, termCode) {
