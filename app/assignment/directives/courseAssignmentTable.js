@@ -4,6 +4,14 @@
 let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 	return {
 		restrict: 'A',
+		scope: {
+			lowerDivisionTable: "=",
+			upperDivisionTable: "=",
+			graduateTable: "=",
+			professionalTable: "=",
+			currentUser: "=",
+			workGroupId: "=",
+		},
 		template: '<div class=\"course-list-row\">' +
 		'<div class=\"course-header course-description-cell\">&nbsp;</div></div>' +
 		'<div style="display: flex; justify-content: center; padding-top: 20px;">' +
@@ -12,7 +20,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 		link: function (scope, element, attrs) {
 			scope.view = {};
 
-			/** 
+			/**
 			 * When a teaching preference is created, a single course can have multiple teaching assignments created for each section group,
 			 * with each teaching assignment getting a incremental priority.
 			 * e.g. CHE002A has priority 1 through 6. The next preference added will be stored with priority 7.
@@ -86,8 +94,8 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 			};
 
 			scope.userCanEdit = function () {
-				var hasAuthorizedRole = scope.sharedState.currentUser.isAdmin() ||
-					scope.sharedState.currentUser.hasRole('academicPlanner', scope.sharedState.workgroup.id);
+				var hasAuthorizedRole = scope.currentUser.isAdmin() ||
+					scope.currentUser.hasRole('academicPlanner', scope.workGroupId);
 
 					return hasAuthorizedRole;
 			};
@@ -119,6 +127,23 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					$('.tooltip').remove();
 					element.empty();
 
+					var courseTypeHeader;
+
+					if (scope.lowerDivisionTable == true) {
+						courseTypeHeader = '<div class="type-header"><h5>Lower Divison Course</h5></div>';
+					}
+					if (scope.upperDivisionTable == true) {
+						courseTypeHeader = '<div class="type-header"><h5>Upper Divison Course</h5></div>';
+					}
+					if (scope.graduateTable == true) {
+						courseTypeHeader = '<div class="type-header"><h5>Graduate Course</h5></div>';
+					}
+					if (scope.professionalTable == true) {
+						courseTypeHeader = '<div class="type-header"><h5>Professional Course</h5></div>';
+					}
+
+					element.append(courseTypeHeader);
+
 					var header = scope.renderHeader();
 					element.append(header);
 
@@ -137,6 +162,15 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					else {
 						$.each(scope.view.state.courses.ids, function (i, courseId) {
 							var course = scope.view.state.courses.list[courseId];
+
+							// Converts string courseNumber into an int without the sequencePattern
+							var courseNumber = parseInt(course.courseNumber, 10);
+
+							if (scope.lowerDivisionTable == true && (courseNumber < 1 || courseNumber > 99)) { return; }
+							if (scope.upperDivisionTable == true && (courseNumber < 100 || courseNumber > 199)) { return; }
+							if (scope.graduateTable == true && (courseNumber < 200 || courseNumber > 299)) { return; }
+							if (scope.professionalTable == true && (courseNumber < 300 || courseNumber > 499)) { return; }
+
 							if (course.isHidden === false && course.isFiltered === false && course.matchesTagFilters === true) {
 								var courseHtml = "";
 								courseHtml += "<div class=\"course-list-row\">";

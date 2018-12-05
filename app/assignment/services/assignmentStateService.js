@@ -636,6 +636,12 @@ class AssignmentStateService {
 							sectionGroupsList[sectionGroup.id] = sectionGroup;
 							sectionGroups.ids.push(sectionGroup.id);
 
+							sectionGroupsList[sectionGroup.id].isAssigned = false;
+
+							if (sectionGroup.showTheStaff == true) {
+								sectionGroupsList[sectionGroup.id].isAssigned = true;
+							}
+
 							// Create a list of teachingAssignmentIds that are associated to this sectionGroup
 							sectionGroupsList[sectionGroup.id].teachingAssignmentIds = [];
 							action.payload.teachingAssignments
@@ -643,6 +649,7 @@ class AssignmentStateService {
 									return teachingAssignment.sectionGroupId === sectionGroup.id;
 								})
 								.forEach(function (teachingAssignment) {
+									sectionGroupsList[sectionGroup.id].isAssigned = true;
 									sectionGroupsList[sectionGroup.id].teachingAssignmentIds.push(teachingAssignment.id);
 								});
 
@@ -698,6 +705,12 @@ class AssignmentStateService {
 							}
 						}
 						return sectionGroups;
+					case ActionTypes.CREATE_PLACEHOLDER_STAFF:
+						sectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
+						sectionGroup.isAssigned = action.payload.sectionGroup.isAssigned;
+					case ActionTypes.REMOVE_PLACEHOLDER_STAFF:
+						sectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
+						sectionGroup.isAssigned = action.payload.sectionGroup.isAssigned;
 					default:
 						return sectionGroups;
 				}
@@ -753,6 +766,7 @@ class AssignmentStateService {
 						var sectionGroupId = action.payload.sectionGroup.id;
 						theStaff.termCodes[termCode] = theStaff.termCodes[termCode] || [];
 						theStaff.termCodes[parseInt(termCode)].push(sectionGroupId);
+						theStaff.termCodes[termCode].sort();
 						return theStaff;
 					case ActionTypes.REMOVE_PLACEHOLDER_STAFF:
 						var termCode = action.payload.sectionGroup.termCode;

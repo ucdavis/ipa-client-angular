@@ -100,23 +100,68 @@
 			</div> <!-- .table-toolbar -->
 		</div> <!-- .row -->
 
-		<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"></div>
+		<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"
+		     state="view.state"
+		     current-user="view.sharedState.currentUser"
+		     work-group-id="view.sharedState.workgroup.id"
+		     work-group-id="view.sharedState.workgroup.id"
+		     lower-division-table="true"
+		     upper-division-table="false"
+		     graduate-table="false"
+		     professional-table="false">
+		</div>
+		<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"
+		     state="view.state"
+		     current-user="view.sharedState.currentUser"
+		     work-group-id="view.sharedState.workgroup.id"
+		     lower-division-table="false"
+		     upper-division-table="true"
+		     graduate-table="false"
+		     professional-table="false">
+		</div>
+		<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"
+		     state="view.state"
+		     current-user="view.sharedState.currentUser"
+		     work-group-id="view.sharedState.workgroup.id"
+		     lower-division-table="false"
+		     upper-division-table="false"
+		     graduate-table="true"
+		     professional-table="false">
+		</div>
+		<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"
+		     state="view.state"
+		     current-user="view.sharedState.currentUser"
+		     work-group-id="view.sharedState.workgroup.id"
+		     lower-division-table="false"
+		     upper-division-table="false"
+		     graduate-table="false"
+		     professional-table="true">
+		</div>
 
 		<div ng-if="view.state" ng-show="view.state.userInterface.showInstructors">
 			<div ng-repeat="instructorTypeId in view.state.instructorTypes.ids">
 				<div instructor-assignment-table id="instructors-table"
 				     state="view.state"
 				     show-staff-table="false"
+				     show-unassigned-table="false"
 				     shared-state="view.sharedState"
 				     instructor-type-id="instructorTypeId"
 				     open-comment-modal="openCommentModal(instructorId)"
 				     open-unavailability-modal="openUnavailabilityModal(instructorId)"></div>
 			</div>
-			
+
 			<div instructor-assignment-table id="instructors-table"
 			     state="view.state"
 			     show-staff-table="true"
-			     shared-state="view.sharedState"></div>
+			     show-unassigned-table="false"
+			     shared-state="view.sharedState">
+			</div>
+			<div instructor-assignment-table id="instructors-table"
+			     state="view.state"
+			     show-staff-table="false"
+			     show-unassigned-table="true"
+			     shared-state="view.sharedState">
+			</div>
 		</div>
 	</div>
 </div>
