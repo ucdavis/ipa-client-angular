@@ -359,33 +359,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 									courseHtml += "<div class=\"term-cell\">";
 
-									// Teaching Assignments within a term
-									var teachingAssignmentsIds = scope.view.state.instructors.list[instructor.id].teachingAssignmentTermCodeIds[termCode];
-									// sort teachingAssignments by priority
-
-									var instructorTeachingAssignments = teachingAssignmentsIds.map(function (teachingAssignmentId) {
-										return scope.view.state.teachingAssignments.list[teachingAssignmentId];
-									});
-
-									var teachingAssignmentsByPriority = _array_sortByProperty(instructorTeachingAssignments, 'priority');
-
-									// // find the first in group
-									// var courseDescriptions = [];
-									// teachingAssignmentsByPriority.forEach(function (teachingAssignment) {
-									// 	var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
-
-									// 	if (sectionGroup) {
-									// 		var course = scope.view.state.courses.list[sectionGroup.courseId];
-
-									// 		var courseDescription = course.subjectCode + course.courseNumber;
-											
-									// 		courseDescriptions.push(courseDescription);
-									// 	}
-									// });
-
-									// var uniqueCourseDescriptions = Array.from(new Set(courseDescriptions));
-
-									debugger;
 									// Loop over teachingAssignments within a term
 									$.each(scope.view.state.instructors.list[instructor.id].teachingAssignmentTermCodeIds[termCode], function (j, teachingAssignmentId) {
 										// Ensure it is approved already
@@ -473,9 +446,12 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 										// If the instructor has teachingAssignments in this term, show them first
 										if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
+											var currentTermTeachingAssignments = instructor.teachingAssignmentTermCodeIds[termCode].map(function (teachingAssignmentId) {
+												return scope.view.state.teachingAssignments.list[teachingAssignmentId];
+											});
+											var currentTermTeachingAssignmentsByPriority = _array_sortByProperty(currentTermTeachingAssignments, 'adjustedPriority');
 
-											$.each(instructor.teachingAssignmentTermCodeIds[termCode], function (i, teachingAssignmentId) {
-												var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+											$.each(currentTermTeachingAssignmentsByPriority, function (i, teachingAssignment) {
 												var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
 												// This teachingAssignment is a buyout/sabb/release
@@ -511,7 +487,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													}
 
 													courseHtml += "<li><a";
-													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
+													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
 													courseHtml += " href=\"#\">" + preferenceDisplayText + "</a></li>";
 
 													return true;
@@ -546,7 +522,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 														firstInterestedCourseAdded = true;
 													}
 
-
 													if (firstCourseInGroup.indexOf(course.subjectCode + course.courseNumber) < 0) {
 														courseHtml += "<li><div class=\"instructor-assignment__dropdown--header\">" + (firstCourseInGroup.length + 1) + ". ";
 														courseHtml += course.subjectCode + course.courseNumber + " - " + course.title;
@@ -556,7 +531,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 													courseHtml += "<li class=\"instructor-assignment__dropdown--subsection\"><a";
-													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
+													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
 													courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
 												}
 											});
