@@ -486,9 +486,10 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 														firstInterestedCourseAdded = true;
 													}
 
-													courseHtml += "<li><a";
+													courseHtml += "<li class=\"instructor-assignment__dropdown--header\"><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
-													courseHtml += " href=\"#\">" + preferenceDisplayText + "</a></li>";
+													courseHtml += " href=\"#\">" + (firstCourseInGroup.length + 1) + ". " + preferenceDisplayText + "</a></li>";
+													firstCourseInGroup.push(preferenceDisplayText);
 
 													return true;
 												}

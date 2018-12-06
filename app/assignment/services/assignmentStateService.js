@@ -912,6 +912,31 @@ class AssignmentStateService {
 						var teachingAssignment = newState.teachingAssignments.list[teachingAssignmentId];
 						var sectionGroup = newState.sectionGroups.list[teachingAssignment.sectionGroupId];
 
+						// Non-course option or suggested course
+						if (teachingAssignment.sectionGroupId === null || teachingAssignment.sectionGroupId === 0) {
+							if (teachingAssignment.buyout) {
+								uniqueCoursesAdded.push("Buyout");
+							} else if (teachingAssignment.courseRelease) {
+								uniqueCoursesAdded.push("CourseRelease");
+							} else if (teachingAssignment.sabbatical) {
+								uniqueCoursesAdded.push("Sabbatical");
+							} else if (teachingAssignment.inResidence) {
+								uniqueCoursesAdded.push("InResidence");
+							} else if (teachingAssignment.sabbaticalInResidence) {
+								uniqueCoursesAdded.push("SabbaticalInResidence");
+							} else if (teachingAssignment.leaveOfAbsense) {
+								uniqueCoursesAdded.push("LeaveOfAbsense");
+							} else if (teachingAssignment.workLifeBalance) {
+								uniqueCoursesAdded.push("WorkLifeBalance");
+							} else {
+								var uniqueIdentifier = teachingAssignment.suggestedSubjectCode + teachingAssignment.suggestedCourseNumber + teachingAssignment.suggestedEffectiveTermCode;
+								teachingAssignment.uniqueIdentifier = uniqueIdentifier;
+								teachingAssignment.relatedAssignmentIds = [];
+								uniqueCoursesAdded.push(uniqueIdentifier);
+							}
+							uniqueAssignments.push(teachingAssignment);
+						}
+
 						if (sectionGroup) {
 							var course = newState.courses.list[sectionGroup.courseId];
 							var uniqueIdentifier = course.subjectCode + course.courseNumber + course.effectiveTermCode;
@@ -935,10 +960,15 @@ class AssignmentStateService {
 					var priority = 1;
 
 					sortedUniqueAssignments.forEach(function (assignment) {
-						assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {
-							newState.teachingAssignments.list[teachingAssignmentId].adjustedPriority = priority;
+						if (assignment.relatedAssignmentIds) {
+							assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {
+								newState.teachingAssignments.list[teachingAssignmentId].adjustedPriority = priority;
+								priority++;
+							});
+						} else {
+							newState.teachingAssignments.list[assignment.id].adjustedPriority = priority;
 							priority++;
-						});
+						}
 					});
 				});
 			});
