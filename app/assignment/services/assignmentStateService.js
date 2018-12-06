@@ -889,43 +889,43 @@ class AssignmentStateService {
 				newState.instructorNotes = scope._instructorNoteReducers(action, scope._state.instructorNotes);
 
 				// Group related TeachingAssignments and normalize priority for looping over in dropdown
-				let uniqueCoursesAdded = [];
-				let uniqueAssignments = [];
-
 				if (newState.teachingAssignments) {
-					newState.teachingAssignments.ids.forEach(function (teachingAssignmentId) {
-						var teachingAssignment = newState.teachingAssignments.list[teachingAssignmentId];
-						var sectionGroup = newState.sectionGroups.list[teachingAssignment.sectionGroupId];
+					newState.instructors.ids.forEach(function (instructorId) {
+						Object.keys(newState.instructors.list[instructorId].teachingAssignmentTermCodeIds).forEach(function (termCodeId) {
+							var uniqueAssignments = [];
+							var uniqueCoursesAdded = [];
+							var termTeachingAssignmentIds = newState.instructors.list[instructorId].teachingAssignmentTermCodeIds[termCodeId];
 
-						if (sectionGroup) {
-							var course = newState.courses.list[sectionGroup.courseId];
-							var uniqueIdentifier = course.subjectCode + course.courseNumber + course.effectiveTermCode;
-							if (uniqueCoursesAdded.indexOf(uniqueIdentifier) < 0) {
-								uniqueCoursesAdded.push(uniqueIdentifier);
-								teachingAssignment.uniqueIdentifier = uniqueIdentifier;
-								teachingAssignment.relatedAssignmentIds = [];
-								uniqueAssignments.push(teachingAssignment);
-							}
-								
-							if (uniqueCoursesAdded.indexOf(uniqueIdentifier) > -1) {
-								var uniqueAssignment = uniqueAssignments.find(function (assignment) {
-									return assignment.uniqueIdentifier === uniqueIdentifier;
+							termTeachingAssignmentIds.forEach(function (teachingAssignmentId) {
+								var teachingAssignment = newState.teachingAssignments.list[teachingAssignmentId];
+								var sectionGroup = newState.sectionGroups.list[teachingAssignment.sectionGroupId];
+
+								if (sectionGroup) {
+									var course = newState.courses.list[sectionGroup.courseId];
+									var uniqueIdentifier = course.subjectCode + course.courseNumber + course.effectiveTermCode;
+									if (uniqueCoursesAdded.indexOf(uniqueIdentifier) < 0) {
+										teachingAssignment.uniqueIdentifier = uniqueIdentifier;
+										teachingAssignment.relatedAssignmentIds = [];
+										uniqueAssignments.push(teachingAssignment);
+										uniqueCoursesAdded.push(uniqueIdentifier);
+									} else {
+										var uniqueAssignment = uniqueAssignments.find(function (assignment) {
+											return assignment.uniqueIdentifier === uniqueIdentifier;
+										});
+										uniqueAssignment.relatedAssignmentIds.push(teachingAssignment.id);
+									}
+								}
+							});
+
+							var sortedUniqueAssignments = _array_sortByProperty(uniqueAssignments, "priority");
+							var priority = 1;
+
+							sortedUniqueAssignments.forEach(function (assignment) {
+								assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {
+									newState.teachingAssignments.list[teachingAssignmentId].adjustedPriority = priority;
+									priority++;
 								});
-
-								uniqueAssignment.relatedAssignmentIds.push(teachingAssignment.id);
-							}
-						}
-					});
-				}
-
-				if (uniqueAssignments) {
-					var sortedUniqueAssignments = _array_sortByProperty(uniqueAssignments, "priority");
-					var priority = 1;
-
-					sortedUniqueAssignments.forEach(function (assignment) {
-						assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {
-							newState.teachingAssignments.list[teachingAssignmentId].adjustedPriority = priority;
-							priority++;
+							});
 						});
 					});
 				}
