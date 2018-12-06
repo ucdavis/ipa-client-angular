@@ -888,47 +888,7 @@ class AssignmentStateService {
 				newState.users = scope._userReducers(action, scope._state.users);
 				newState.instructorNotes = scope._instructorNoteReducers(action, scope._state.instructorNotes);
 
-				// Group related TeachingAssignments and normalize priority for looping over in dropdown
-				if (newState.teachingAssignments) {
-					newState.instructors.ids.forEach(function (instructorId) {
-						Object.keys(newState.instructors.list[instructorId].teachingAssignmentTermCodeIds).forEach(function (termCodeId) {
-							var uniqueAssignments = [];
-							var uniqueCoursesAdded = [];
-							var termTeachingAssignmentIds = newState.instructors.list[instructorId].teachingAssignmentTermCodeIds[termCodeId];
-
-							termTeachingAssignmentIds.forEach(function (teachingAssignmentId) {
-								var teachingAssignment = newState.teachingAssignments.list[teachingAssignmentId];
-								var sectionGroup = newState.sectionGroups.list[teachingAssignment.sectionGroupId];
-
-								if (sectionGroup) {
-									var course = newState.courses.list[sectionGroup.courseId];
-									var uniqueIdentifier = course.subjectCode + course.courseNumber + course.effectiveTermCode;
-									if (uniqueCoursesAdded.indexOf(uniqueIdentifier) < 0) {
-										teachingAssignment.uniqueIdentifier = uniqueIdentifier;
-										teachingAssignment.relatedAssignmentIds = [];
-										uniqueAssignments.push(teachingAssignment);
-										uniqueCoursesAdded.push(uniqueIdentifier);
-									} else {
-										var uniqueAssignment = uniqueAssignments.find(function (assignment) {
-											return assignment.uniqueIdentifier === uniqueIdentifier;
-										});
-										uniqueAssignment.relatedAssignmentIds.push(teachingAssignment.id);
-									}
-								}
-							});
-
-							var sortedUniqueAssignments = _array_sortByProperty(uniqueAssignments, "priority");
-							var priority = 1;
-
-							sortedUniqueAssignments.forEach(function (assignment) {
-								assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {
-									newState.teachingAssignments.list[teachingAssignmentId].adjustedPriority = priority;
-									priority++;
-								});
-							});
-						});
-					});
-				}
+				newState = _self.generateAdjustedPriorities(newState);
 
 				scope._state = newState;
 
@@ -937,6 +897,52 @@ class AssignmentStateService {
 				$log.debug(scope._state, action.type);
 			}
 		};
+	}
+
+	// Group related TeachingAssignments and generate adjusted priority for looping over in dropdown
+	generateAdjustedPriorities (newState) {
+		if (newState.teachingAssignments) {
+			newState.instructors.ids.forEach(function (instructorId) {
+				Object.keys(newState.instructors.list[instructorId].teachingAssignmentTermCodeIds).forEach(function (termCodeId) {
+					var uniqueAssignments = [];
+					var uniqueCoursesAdded = [];
+					var termTeachingAssignmentIds = newState.instructors.list[instructorId].teachingAssignmentTermCodeIds[termCodeId];
+
+					termTeachingAssignmentIds.forEach(function (teachingAssignmentId) {
+						var teachingAssignment = newState.teachingAssignments.list[teachingAssignmentId];
+						var sectionGroup = newState.sectionGroups.list[teachingAssignment.sectionGroupId];
+
+						if (sectionGroup) {
+							var course = newState.courses.list[sectionGroup.courseId];
+							var uniqueIdentifier = course.subjectCode + course.courseNumber + course.effectiveTermCode;
+							if (uniqueCoursesAdded.indexOf(uniqueIdentifier) < 0) {
+								teachingAssignment.uniqueIdentifier = uniqueIdentifier;
+								teachingAssignment.relatedAssignmentIds = [];
+								uniqueAssignments.push(teachingAssignment);
+								uniqueCoursesAdded.push(uniqueIdentifier);
+							} else {
+								var uniqueAssignment = uniqueAssignments.find(function (assignment) {
+									return assignment.uniqueIdentifier === uniqueIdentifier;
+								});
+								uniqueAssignment.relatedAssignmentIds.push(teachingAssignment.id);
+							}
+						}
+					});
+
+					var sortedUniqueAssignments = _array_sortByProperty(uniqueAssignments, "priority");
+					var priority = 1;
+
+					sortedUniqueAssignments.forEach(function (assignment) {
+						assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {
+							newState.teachingAssignments.list[teachingAssignmentId].adjustedPriority = priority;
+							priority++;
+						});
+					});
+				});
+			});
+		}
+
+		return newState;
 	}
 
 	generateTermCode (year, term) {
