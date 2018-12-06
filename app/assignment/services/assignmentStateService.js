@@ -920,7 +920,9 @@ class AssignmentStateService {
 								teachingAssignment.relatedAssignmentIds = [];
 								uniqueAssignments.push(teachingAssignment);
 								uniqueCoursesAdded.push(uniqueIdentifier);
-							} else {
+							}
+							
+							if (uniqueCoursesAdded.indexOf(uniqueIdentifier) > -1) {
 								var uniqueAssignment = uniqueAssignments.find(function (assignment) {
 									return assignment.uniqueIdentifier === uniqueIdentifier;
 								});
