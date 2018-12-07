@@ -291,6 +291,10 @@ class BudgetActions {
 					var sectionGroup = BudgetReducers._state.sectionGroups.list[sectionGroupCost.sectionGroupId];
 					var course = BudgetReducers._state.courses.list[sectionGroup.courseId];
 					sectionGroupCost.effectiveTermCode = course.effectiveTermCode;
+					sectionGroupCost.unitsHigh = course.unitsHigh;
+					sectionGroupCost.unitsLow = course.unitsLow;
+					sectionGroupCost.taCount = sectionGroup.teachingAssistantAppointments;
+					sectionGroupCost.readerCount = sectionGroup.readerAppointments;
 				}
 
 				sectionGroupCost.termCode = TermService.termToTermCode(term, year);
