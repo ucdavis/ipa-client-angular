@@ -232,7 +232,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 												// Add approved teachingAssignment to term
 												courseHtml += "<div class=\"alert alert-info tile-assignment\">";
 												if (instructor) {
-													courseHtml += instructor.fullName;
+													courseHtml += instructor.fullName + '<div class="course-assignment-table__instructor-type">' + instructorType.description + '</div>';
 												} else {
 													courseHtml += instructorType.description;
 												}
