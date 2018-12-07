@@ -312,9 +312,19 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 								courseHtml += "</div>";
 
 								// Instructor Comment UI
+								var teachingCallReceipt = scope.view.state.teachingCallReceipts.list[instructor.teachingCallReceiptId];
+								var comment = teachingCallReceipt ? teachingCallReceipt.comment : null;
+
 								courseHtml += "<div class=\"description-cell__comment-btn-container hidden-print\">";
-								courseHtml += "<i class=\"glyphicon comment-btn glyphicon-pencil\" data-instructor-id=" + instructor.id;
-								courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor comments\" data-container=\"body\"></i>";
+								if (comment) {
+									// Instructor Availabilities UI
+									courseHtml += "<i class=\"glyphicon comment-btn glyphicon-comment\" data-instructor-id=" + instructor.id;
+									courseHtml += " data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Instructor comments\" data-container=\"body\"></i>";
+								} else {
+									courseHtml += "<div data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"No comments\" data-container=\"body\">";
+									courseHtml += "<i class=\" disabled-calendar glyphicon glyphicon-comment hidden-print\"></i></div>";
+								}
+
 								courseHtml += "</div>";
 
 								// If they don't have any teachingCallResponses, there won't be any unavailabilities to show
