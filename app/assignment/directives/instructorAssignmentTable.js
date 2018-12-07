@@ -78,15 +78,15 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				return false;
 			};
 
-			scope.findOrCreateInstructorNote = function (instructorId) {
-				let instructorNote = scope.view.state.instructorNotes.byInstructorId[instructorId];
+			scope.findOrCreateScheduleInstructorNote = function (instructorId) {
+				let instructorNote = scope.view.state.scheduleInstructorNotes.byInstructorId[instructorId];
 
 				if (instructorNote) { return instructorNote; }
 
 				return {
 					scheduleId: scope.view.state.userInterface.scheduleId,
 					instructorId: instructorId,
-					note: ""
+					instructorComment: ""
 				};
 			};
 
@@ -350,15 +350,15 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 									courseHtml += "</div>";
 								}
 
-								var instructorNote = scope.findOrCreateInstructorNote(instructorId);
+								var scheduleInstructorNote = scope.findOrCreateScheduleInstructorNote(instructorId);
 								// Add input for instructor notes
 								courseHtml += '<hr />';
 								courseHtml += "<div class='course-assignments__course-note hidden-print'>";
-								courseHtml += '<textarea maxlength="750" class="form-control add-note__text-area" placeholder="Add Note" data-instructor-id="' + instructor.id + '" data-schedule-id="' + scope.view.state.userInterface.scheduleId + '" data-event-type="setInstructorNote">' + instructorNote.note + '</textarea>';
+								courseHtml += '<textarea maxlength="750" class="form-control add-note__text-area" placeholder="Add Note" data-schedule-instructor-note-id="' + scheduleInstructorNote.id + '" data-instructor-id="' + instructor.id + '" data-schedule-id="' + scope.view.state.userInterface.scheduleId + '" data-event-type="setScheduleInstructorNote">' + scheduleInstructorNote.instructorComment + '</textarea>';
 								courseHtml += "</div>";
 
 								courseHtml += "<div class='visible-print'>";
-								courseHtml += instructorNote.note || "";
+								courseHtml += scheduleInstructorNote.instructorComment || "";
 								courseHtml += "</div>";
 
 								courseHtml += "</div>"; // end description-cell
@@ -640,29 +640,31 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			// Handle input box edits
 			element.on("keydown", function(e) {
 				let $el = $(e.target);
-				if ($el.data('event-type') != 'setInstructorNote') { return; }
+				if ($el.data('event-type') != 'setScheduleInstructorNote') { return; }
 
 				if (e.key == "Enter") {
 					var instructorId = $el.data('instructor-id');
 					var scheduleId = $el.data('schedule-id');
+				var scheduleInstructorNoteId = $el.data('schedule-instructor-note-id');
 
 					var note = e.target.value;
 
-					AssignmentActionCreators.createOrUpdateInstructorNote(scheduleId, instructorId, note);
+					AssignmentActionCreators.createOrUpdateScheduleInstructorNote(scheduleId, instructorId, note, scheduleInstructorNoteId);
 				}
 			});
 
 			// Handle input box edits
 			element.on("change", function(e) {
 				var $el = $(e.target);
-				if ($el.data('event-type') != 'setInstructorNote') { return; }
+				if ($el.data('event-type') != 'setScheduleInstructorNote') { return; }
 
 				var instructorId = $el.data('instructor-id');
 				var scheduleId = $el.data('schedule-id');
+				var scheduleInstructorNoteId = $el.data('schedule-instructor-note-id');
 
 				var note = e.target.value;
 
-				AssignmentActionCreators.createOrUpdateInstructorNote(scheduleId, instructorId, note);
+				AssignmentActionCreators.createOrUpdateScheduleInstructorNote(scheduleId, instructorId, note, scheduleInstructorNoteId);
 			});
 
 			// Handle Instructor UI events

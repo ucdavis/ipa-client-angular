@@ -103,31 +103,6 @@ class AssignmentStateService {
 						return instructorTypes;
 				}
 			},
-			_instructorNoteReducers: function (action, instructorNotes) {
-				switch (action.type) {
-					case ActionTypes.INIT_ASSIGNMENT_VIEW:
-						var instructorNotes = {
-							ids: [],
-							list: {},
-							byInstructorId: {}
-						};
-						action.payload.instructorNotes.forEach( function(instructorNote) {
-							instructorNotes.list[instructorNote.id] = instructorNote;
-							instructorNotes.ids.push(instructorNote.id);
-							instructorNotes.byInstructorId[instructorNote.instructorId] = instructorNote;
-						});
-						return instructorNotes;
-					case ActionTypes.UPDATE_INSTRUCTOR_NOTE:
-						instructorNotes.list[action.payload.instructorNote.id] = action.payload.instructorNote;
-						if (instructorNotes.ids.indexOf(action.payload.instructorNote.id) == -1) {
-							instructorNotes.ids.push(action.payload.instructorNote.id);
-						}
-						instructorNotes.byInstructorId[action.payload.instructorNote.instructorId] = action.payload.instructorNote;
-						return instructorNotes;
-					default:
-						return instructorNotes;
-				}
-			},
 			_supportStaffReducers: function (action, supportStaffList) {
 				var scope = this;
 
@@ -594,23 +569,25 @@ class AssignmentStateService {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						scheduleInstructorNotes = {
 							ids: [],
-							list: []
+							list: {},
+							byInstructorId: {}
 						};
-						var scheduleInstructorNotesList = {};
-						var length = action.payload.scheduleInstructorNotes ? action.payload.scheduleInstructorNotes.length : 0;
-						for (var i = 0; i < length; i++) {
-							var scheduleInstructorNote = new ScheduleInstructorNote(action.payload.scheduleInstructorNotes[i]);
-							scheduleInstructorNotesList[scheduleInstructorNote.id] = scheduleInstructorNote;
-						}
-						scheduleInstructorNotes.ids = _array_sortIdsByProperty(scheduleInstructorNotesList, ["id"]);
-						scheduleInstructorNotes.list = scheduleInstructorNotesList;
+
+						action.payload.scheduleInstructorNotes.forEach(function(scheduleInstructorNoteData) {
+							var scheduleInstructorNote = new ScheduleInstructorNote(scheduleInstructorNoteData);
+							scheduleInstructorNotes.ids.push(scheduleInstructorNote.id);
+							scheduleInstructorNotes.list[scheduleInstructorNote.id] = scheduleInstructorNote;
+							scheduleInstructorNotes.byInstructorId[scheduleInstructorNote.instructorId] = scheduleInstructorNote;
+						});
 						return scheduleInstructorNotes;
 					case ActionTypes.UPDATE_SCHEDULE_INSTRUCTOR_NOTE:
 						scheduleInstructorNotes.list[action.payload.scheduleInstructorNote.id] = action.payload.scheduleInstructorNote;
+						scheduleInstructorNotes.byInstructorId[action.payload.scheduleInstructorNote.instructorId] = action.payload.scheduleInstructorNote;
 						return scheduleInstructorNotes;
 					case ActionTypes.ADD_SCHEDULE_INSTRUCTOR_NOTE:
 						scheduleInstructorNotes.list[action.payload.scheduleInstructorNote.id] = action.payload.scheduleInstructorNote;
 						scheduleInstructorNotes.ids.push(action.payload.scheduleInstructorNote.id);
+						scheduleInstructorNotes.byInstructorId[action.payload.scheduleInstructorNote.instructorId] = action.payload.scheduleInstructorNote;
 						return scheduleInstructorNotes;
 					default:
 						return scheduleInstructorNotes;
@@ -886,7 +863,6 @@ class AssignmentStateService {
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
 				newState.users = scope._userReducers(action, scope._state.users);
-				newState.instructorNotes = scope._instructorNoteReducers(action, scope._state.instructorNotes);
 
 				scope._state = newState;
 

@@ -52,31 +52,6 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Could not update course note.", type: "ERROR" });
 				});
 			},
-			createOrUpdateInstructorNote: function (scheduleId, instructorId, note) {
-				var instructorNote = AssignmentStateService._state.instructorNotes.byInstructorId[instructorId];
-
-				instructorNote = instructorNote ? instructorNote : {
-					scheduleId: scheduleId,
-					instructorId: instructorId
-				};
-
-				instructorNote.note = note;
-
-				_self.AssignmentService.updateInstructorNote(instructorNote).then(function (newInstructorNote) {
-					ipa_analyze_event('instructor assignments', 'instructor note created or updated');
-
-					_self.$rootScope.$emit('toast', { message: "Updated instructor note", type: "SUCCESS" });
-					var action = {
-						type: ActionTypes.UPDATE_INSTRUCTOR_NOTE,
-						payload: {
-							instructorNote: newInstructorNote
-						}
-					};
-					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
-					_self.$rootScope.$emit('toast', { message: "Could not update instructor note.", type: "ERROR" });
-				});
-			},
 			updateTagFilters: function (tagIds) {
 				var action = {
 					type: ActionTypes.UPDATE_TAG_FILTERS,
@@ -99,6 +74,19 @@ class AssignmentActionCreators {
 				}, function (err) {
 					_self.$rootScope.$emit('toast', { message: "Could not update assignment order.", type: "ERROR" });
 				});
+			},
+			createOrUpdateScheduleInstructorNote: function (instructorId, scheduleId, note, scheduleInstructorNoteId) {
+				var _this = this;
+				var scheduleInstructorNote = _self.AssignmentStateService._state.scheduleInstructorNotes.list[scheduleInstructorNoteId];
+
+				if (scheduleInstructorNote) {
+					scheduleInstructorNote.instructorComment = note;
+					_this.updateScheduleInstructorNote(scheduleInstructorNote);
+				} else {
+					var year = $route.current.params.year;
+					var workgroupId = $route.current.params.workgroupId;
+					_this.addScheduleInstructorNote(instructorId, year, workgroupId, note, assignmentsCompleted);
+				}
 			},
 			addScheduleInstructorNote: function (instructorId, year, workgroupId, comment, assignmentsCompleted) {
 				_self.AssignmentService.addScheduleInstructorNote(instructorId, year, workgroupId, comment, assignmentsCompleted).then(function (scheduleInstructorNote) {
