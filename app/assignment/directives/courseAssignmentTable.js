@@ -130,16 +130,16 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					var courseTypeHeader;
 
 					if (scope.lowerDivisionTable == true) {
-						courseTypeHeader = '<div class="type-header"><h5>Lower Divison Course</h5></div>';
+						courseTypeHeader = '<div class="type-header"><h5>Lower Divison Courses</h5></div>';
 					}
 					if (scope.upperDivisionTable == true) {
-						courseTypeHeader = '<div class="type-header"><h5>Upper Divison Course</h5></div>';
+						courseTypeHeader = '<div class="type-header"><h5>Upper Divison Courses</h5></div>';
 					}
 					if (scope.graduateTable == true) {
-						courseTypeHeader = '<div class="type-header"><h5>Graduate Course</h5></div>';
+						courseTypeHeader = '<div class="type-header"><h5>Graduate Courses</h5></div>';
 					}
 					if (scope.professionalTable == true) {
-						courseTypeHeader = '<div class="type-header"><h5>Professional Course</h5></div>';
+						courseTypeHeader = '<div class="type-header"><h5>Professional Courses</h5></div>';
 					}
 
 					element.append(courseTypeHeader);

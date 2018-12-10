@@ -154,6 +154,16 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				|| teachingAssignment.sabbatical);
 			};
 
+			scope.sortArray = function (array) {
+				var sortedArray = _.sortBy(array, function (sectionGroupId) {
+					var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+					var course = scope.view.state.courses.list[sectionGroup.courseId];
+
+					return course.subjectCode + course.courseNumber + course.sequencePattern;
+				});
+				return sortedArray;
+			};
+
 			scope.renderTable = function () {
 				// If courses is undefined do nothing
 				// The app is in the process of re-routing to a valid url
@@ -166,7 +176,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				var coursesHtml = "";
 
 				if (scope.showStaffTable == true) {
-					var instructorTypeHeader = '<div class="type-header"><h5>Instructor TBD</h5></div>';
+					var instructorTypeHeader = '<div class="type-header"><h5>Instructors TBD</h5></div>';
 					element.append(instructorTypeHeader);
 
 					var header = scope.renderHeader();
@@ -204,7 +214,9 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 								// Loop over sectionGroups within a term
 								if (scope.view.state.theStaff.termCodes[termCode]) {
-									scope.view.state.theStaff.termCodes[termCode].forEach(function(sectionGroupId) {
+									var sortedTheStaff = scope.sortArray(scope.view.state.theStaff.termCodes[termCode]);
+
+									sortedTheStaff.forEach(function(sectionGroupId) {
 										var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 										var displayTitle = "";
 										var plannedSeatsHtml = "";
@@ -241,9 +253,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						coursesHtml += "</div>"; // Ending course-row div
 					}
 				} else if (scope.showUnassignedTable == true) {
-					var header = scope.renderHeader();
-					element.append(header);
-
 					if (scope.view.state.courses.ids == 0) {
 						coursesHtml += "<div class=\"course-list-row\">";
 						coursesHtml += "<div class=\"course-description-cell empty-table-message\">";
@@ -256,7 +265,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						coursesHtml += "<span style=\"margin-right:5px;\"></span>";
 
 						// Instructor assignmentCompleted UI
-						coursesHtml += "<div><strong>Courses Not Assigned to Instructor or Staff</strong></div>";
+						coursesHtml += "<div><strong>Unassigned</strong></div>";
 
 						// Instructor Comment UI
 						coursesHtml += "<div class=\"description-cell__comment-btn-container hidden-print\"></div>";
@@ -265,13 +274,30 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						coursesHtml += "<div class=\"description-cell__avail-btn-container\"></div>";
 						coursesHtml += "</div>";
 						coursesHtml += "</div>"; // end description-cell
+
+						var Unassigned = {};
+						Unassigned.termCodes = {};
+
+						scope.view.state.sectionGroups.ids.forEach(function(sectionGroupId) {
+							var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+							if (!sectionGroup.isAssigned) {
+								// Scaffold assignments array if this is the first in the termCode
+								if (!Unassigned.termCodes[sectionGroup.termCode]) {
+									Unassigned.termCodes[sectionGroup.termCode] = [];
+								}
+
+								Unassigned.termCodes[sectionGroup.termCode].push(sectionGroup.id);
+							}
+						});
+
 						// Loop over active terms
 						$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) {
 							var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
+							var sortedUnassigned = scope.sortArray(Unassigned.termCodes[termCode]);
 
 							coursesHtml += "<div class=\"term-cell\">";
 
-							scope.view.state.sectionGroups.ids.forEach(function(sectionGroupId) {
+							sortedUnassigned.forEach(function(sectionGroupId) {
 								var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 
 								if (sectionGroup.termCode != termCode) { return; }
@@ -319,7 +345,14 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 					var instructorTypeHeader = "";
 
 					if (scope.view.state.instructorTypes.list[scope.instructorTypeId]) {
-						instructorTypeHeader = '<div class="type-header"><h5>' + scope.view.state.instructorTypes.list[scope.instructorTypeId].description + '</h5></div>';
+						var instructorType = scope.view.state.instructorTypes.list[scope.instructorTypeId].description;
+
+						if (instructorType == "Emeriti - Recalled" || instructorType == "Ladder Faculty" || instructorType == "Lecturer SOE") {
+							instructorTypeHeader = '<div class="type-header"><h5>' + instructorType + '</h5></div>';
+						}
+						else {
+							instructorTypeHeader = '<div class="type-header"><h5>' + instructorType + 's' + '</h5></div>';
+						}
 					}
 
 					element.append(instructorTypeHeader);

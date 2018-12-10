@@ -190,6 +190,7 @@ button.btn.assign-dropdown-btn {
   padding-bottom: 5px;
 	margin: 0px;
   border-radius: 3px;
+  margin-bottom: -40px;
 }
 .tool-icon {
   margin: 0 0.5em;

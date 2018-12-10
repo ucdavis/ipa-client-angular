@@ -766,7 +766,6 @@ class AssignmentStateService {
 						var sectionGroupId = action.payload.sectionGroup.id;
 						theStaff.termCodes[termCode] = theStaff.termCodes[termCode] || [];
 						theStaff.termCodes[parseInt(termCode)].push(sectionGroupId);
-						theStaff.termCodes[termCode].sort();
 						return theStaff;
 					case ActionTypes.REMOVE_PLACEHOLDER_STAFF:
 						var termCode = action.payload.sectionGroup.termCode;
