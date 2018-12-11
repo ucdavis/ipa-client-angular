@@ -303,7 +303,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 								courseHtml += " assignments-complete clickable\" data-toggle=\"tooltip\" data-placement=\"right\" data-original-title=\"Toggle completed assigning instructor\" data-container=\"body\"";
 								courseHtml += " data-instructor-id=" + instructor.id + " data-schedule-instructor-note-id=" + instructor.scheduleInstructorNoteId + "></i>";
 								courseHtml += "</span>";
-								courseHtml += "<div><strong>";
+								courseHtml += "<div style=\"color:black;\"><strong>";
 								if (instructor) {
 									courseHtml += instructor.fullName;
 								}
