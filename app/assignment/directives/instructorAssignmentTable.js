@@ -538,6 +538,11 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 														}
 													}
 
+													// Skip sub-option if there's only one option
+													if (teachingAssignment.relatedAssignmentIds && teachingAssignment.relatedAssignmentIds.length <= 1) {
+														return;
+													}
+
 													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 													courseHtml += "<li class=\"instructor-assignment__dropdown--subsection\"><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
