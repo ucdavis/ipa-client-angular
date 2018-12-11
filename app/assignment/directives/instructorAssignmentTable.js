@@ -486,7 +486,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 														firstInterestedCourseAdded = true;
 													}
 
-													courseHtml += "<li class=\"instructor-assignment__dropdown--header\"><a";
+													courseHtml += "<li class=\"instructor-assignment__dropdown--single-option\"><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
 													courseHtml += " href=\"#\">" + (firstCourseInGroup.length + 1) + ". " + preferenceDisplayText + "</a></li>";
 													firstCourseInGroup.push(preferenceDisplayText);
@@ -530,12 +530,20 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 															courseHtml += "</div></li>";
 															firstCourseInGroup.push(course.subjectCode + course.courseNumber);
 															return;
-														} else {
-															courseHtml += "<li><div class=\"instructor-assignment__dropdown--header\">" + (firstCourseInGroup.length + 1) + ". ";
-															courseHtml += course.subjectCode + course.courseNumber + " - " + course.title;
-															courseHtml += "</div></li>";
-															firstCourseInGroup.push(course.subjectCode + course.courseNumber);
 														}
+
+														if (teachingAssignment.relatedAssignmentIds && teachingAssignment.relatedAssignmentIds.length <= 1) {
+															courseHtml += "<li class=\"instructor-assignment__dropdown--single-option\"><a";
+															courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
+															courseHtml += " href=\"#\">" + (firstCourseInGroup.length + 1) + ". " + course.subjectCode + " " + course.courseNumber + " - " + course.title + "</a></li>";
+															firstCourseInGroup.push(course.subjectCode + course.courseNumber);
+															return;
+														}
+
+														courseHtml += "<li><div class=\"instructor-assignment__dropdown--header\">" + (firstCourseInGroup.length + 1) + ". ";
+														courseHtml += course.subjectCode + course.courseNumber + " - " + course.title;
+														courseHtml += "</div></li>";
+														firstCourseInGroup.push(course.subjectCode + course.courseNumber);
 													}
 
 													// Skip sub-option if there's only one option

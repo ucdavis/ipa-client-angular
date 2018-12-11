@@ -159,11 +159,7 @@
 	text-decoration: line-through;
 }
 
-ul.dropdown-menu li.instructor-assignment__dropdown--header > a {
-	font-weight: bold;
-	padding-left: 0px;
-	padding-top: 3px;
-	padding-bottom: 3px;
+ul.dropdown-menu li.instructor-assignment__dropdown--single-option > a {
 	color: rgb(0,0,0);
 }
 
