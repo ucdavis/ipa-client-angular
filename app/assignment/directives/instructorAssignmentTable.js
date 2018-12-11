@@ -482,7 +482,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													}
 
 													if (firstInterestedCourseAdded === false) {
-														courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
+														courseHtml += "<li><div class=\"dropdown-assign-header\">Preferred</div></li>";
 														firstInterestedCourseAdded = true;
 													}
 
@@ -517,9 +517,9 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 												}
 
 												// Show option if the TeachingAssignment is not already approved
-												if (teachingAssignment.approved === false && course) {
+												if (course) {
 													if (firstInterestedCourseAdded === false) {
-														courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
+														courseHtml += "<li><div class=\"dropdown-assign-header\">Preferred</div></li>";
 														firstInterestedCourseAdded = true;
 													}
 
@@ -537,6 +537,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 												}
 											});
 											if (firstInterestedCourseAdded) {
+												courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
 												courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
 											}
 										}
