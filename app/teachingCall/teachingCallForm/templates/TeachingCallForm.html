@@ -124,7 +124,7 @@
 									typeahead-focus-first="false"
 									typeahead-min-length="0"
 									typeahead-focus-on-select="false"
-									typeahead-template-url="typeahead-item.html"
+									typeahead-popup-template-url="typeahead-popup-template.html"
 									auto-close="always"
 									typeahead-on-select="addPreference($item, term.termCode, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isSabbaticalInResidence, isCourseRelease)"
 									class="form-control search-course-input">
@@ -275,9 +275,30 @@
 
 <script type="text/ng-template" id="typeahead-item.html">
 	<div class="typeahead-group-header" ng-if="match.model.firstInGroup">{{match.model.subjectCode ? match.model.subjectCode + " Courses" : "Non-Courses"}} </div>
-	<div class="typeahead--suggest-course" ng-if="match.model.suggestACourse"></div>
 	
 	<a>
 		<span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
 	</a>
+</script>
+
+<script type="text/ng-template" id="typeahead-popup-template.html">
+		<ul class="dropdown-menu" 
+				ng-show="isOpen() && !moveInProgress" 
+				ng-style="{top: position().top+'px', left: position().left+'px'}"
+				style="top: 456px; left: 234px;" role="listbox" aria-hidden="false">
+
+			<li class="uib-typeahead-match"
+					ng-repeat="match in matches track by $index"
+					ng-class="{active: isActive($index) }"
+					ng-mouseenter="selectActive($index)"
+					ng-click="selectMatch($index)"
+					role="option"
+					id="{{::match.id}}">
+
+			<div class="typeahead-group-header" ng-if="match.model.firstInGroup">{{match.model.subjectCode ? match.model.subjectCode + " Courses" : "Non-Courses"}}</div>
+
+				<div uib-typeahead-match index="$index" match="match" query="query" template-url="templateUrl"></div>
+			</li>
+		</ul>
+	</div>
 </script>
