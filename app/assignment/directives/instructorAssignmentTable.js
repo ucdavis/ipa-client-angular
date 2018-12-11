@@ -516,7 +516,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													}
 												}
 
-												// Show option if the TeachingAssignment is not already approved
+												// Preferred TeachingAssignments
 												if (course) {
 													if (firstInterestedCourseAdded === false) {
 														courseHtml += "<li><div class=\"dropdown-assign-header\">Preferred</div></li>";
@@ -524,10 +524,18 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													}
 
 													if (firstCourseInGroup.indexOf(course.subjectCode + course.courseNumber) < 0) {
-														courseHtml += "<li><div class=\"instructor-assignment__dropdown--header\">" + (firstCourseInGroup.length + 1) + ". ";
-														courseHtml += course.subjectCode + course.courseNumber + " - " + course.title;
-														courseHtml += "</div></li>";
-														firstCourseInGroup.push(course.subjectCode + course.courseNumber);
+														if (teachingAssignment.relatedCourseApproved === true) {
+															courseHtml += "<li><div class=\"instructor-assignment__dropdown--header-used\">" + (firstCourseInGroup.length + 1) + ". ";
+															courseHtml += course.subjectCode + course.courseNumber + " - " + course.title;
+															courseHtml += "</div></li>";
+															firstCourseInGroup.push(course.subjectCode + course.courseNumber);
+															return;
+														} else {
+															courseHtml += "<li><div class=\"instructor-assignment__dropdown--header\">" + (firstCourseInGroup.length + 1) + ". ";
+															courseHtml += course.subjectCode + course.courseNumber + " - " + course.title;
+															courseHtml += "</div></li>";
+															firstCourseInGroup.push(course.subjectCode + course.courseNumber);
+														}
 													}
 
 													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];

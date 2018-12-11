@@ -150,6 +150,15 @@
 	padding-bottom: 3px;
 }
 
+.instructor-assignment__dropdown--header-used {
+	background-color: white;
+	padding-left: 20px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	pointer-events: none;
+	text-decoration: line-through;
+}
+
 ul.dropdown-menu li.instructor-assignment__dropdown--header > a {
 	font-weight: bold;
 	padding-left: 0px;
