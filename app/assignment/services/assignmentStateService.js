@@ -959,15 +959,30 @@ class AssignmentStateService {
 					var sortedUniqueAssignments = _array_sortByProperty(uniqueAssignments, "priority");
 					var priority = 1;
 
+					var firstAssignmentIdInGroup;
+					var relatedCourseApproved = false;
 					sortedUniqueAssignments.forEach(function (assignment) {
 						if (assignment.relatedAssignmentIds) {
+							firstAssignmentIdInGroup = assignment.id;
 							assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {
+								if (newState.teachingAssignments.list[teachingAssignmentId].approved === true) {
+									firstAssignmentIdInGroup;
+									relatedCourseApproved = true;
+								}
 								newState.teachingAssignments.list[teachingAssignmentId].adjustedPriority = priority;
 								priority++;
 							});
 						} else {
 							newState.teachingAssignments.list[assignment.id].adjustedPriority = priority;
 							priority++;
+						}
+
+						if (firstAssignmentIdInGroup && relatedCourseApproved === true) {
+							newState.teachingAssignments.list[firstAssignmentIdInGroup].relatedAssignmentIds.forEach(function (teachingAssignmentId) {
+								newState.teachingAssignments.list[teachingAssignmentId].relatedCourseApproved = true;
+							});
+							firstAssignmentIdInGroup = null;
+							relatedCourseApproved = false;
 						}
 					});
 				});
