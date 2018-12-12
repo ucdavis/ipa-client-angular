@@ -35,9 +35,9 @@
 
 #courses-table .tile-assignment {
   position: relative;
-  height: 30px;
   padding: 6px;
 }
+
 .tile-assignment-details {
   padding-top: 3px;
   font-size: 10px;
@@ -1002,4 +1002,8 @@ li.active-term .dropdown-term-row {
 	margin: 9px 0;
 	overflow: hidden;
 	background-color: #e5e5e5;
+}
+
+.course-assignment-table__instructor-type {
+	opacity: .6;
 }
