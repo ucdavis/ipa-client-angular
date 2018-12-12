@@ -1,3 +1,5 @@
+import './commentModal.css';
+
 let commentModal = function (AssignmentActionCreators) {
   return {
     restrict: 'E',

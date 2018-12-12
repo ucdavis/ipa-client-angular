@@ -1,15 +1,18 @@
-<div class="modal-body">
-  <div>
-    <div class="modal-comment-subheader">
-      From Instructor
-    </div>
-
-    <div ng-hide="instructorComment.length > 0" class="gray-text instructor-comment-modal__comment-text">
+<div class="instructor-comments-modal">
+  <div class="modal-body">
+    <div ng-hide="instructorComment.length > 0">
       No Instructor comments.
     </div>
 
-    <div ng-show="instructorComment.length > 0" class="gray-text instructor-comment-modal__comment-text">
+    <div ng-show="instructorComment.length > 0">
       {{ instructorComment }}
     </div>
+  </div>
+  <div class="comment-modal__footer">
+    <button ng-click="close()"
+            type="button"
+            class="btn btn-default modal-button">
+      Dismiss
+    </button>
   </div>
 </div>
