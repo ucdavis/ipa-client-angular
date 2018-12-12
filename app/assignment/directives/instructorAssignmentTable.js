@@ -551,6 +551,10 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 														return;
 													}
 
+													if (teachingAssignment.relatedCourseApproved) {
+														return;
+													}
+
 													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 													courseHtml += "<li class=\"instructor-assignment__dropdown--subsection\"><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
