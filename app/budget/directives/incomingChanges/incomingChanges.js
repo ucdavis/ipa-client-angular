@@ -32,22 +32,78 @@ let incomingChanges = function (BudgetActions) {
 
       // Loops over sectionGroupCosts
       scope.calculateChangedValues = function (sectionGroupCostIds) {
-        sectionGroupCostIds.forEach(function(sectionGroupCostId) {
-          var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
-          var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
-          var sectionGroupId = sectionGroups.idsByUniqueKey[uniqueKey];
-          var sectionGroup = sectionGroups.list[sectionGroupId];
+        var changes = [];
 
-          // Check seats
-          sectionGroup;
-          sectionGroupCost;
-          debugger;
-          // Check assigned instructor
+        sectionGroupCostIds.forEach(function(sectionGroupCostId) {
+          var sectionGroupCost = scope.sectionGroupCosts.list[sectionGroupCostId];
+          var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
+          var sectionGroupId = scope.sectionGroups.idsByUniqueKey[uniqueKey];
+          var sectionGroup = scope.sectionGroups.list[sectionGroupId];
+
           // Check enrollment
-          // Check seats
+          if (sectionGroup.totalSeats != sectionGroupCost.enrollment) {
+            var change = {
+              sectionGroupCost: sectionGroupCost,
+              enrollment: sectionGroup.totalSeats
+            };
+
+            changes.push(change);
+          }
+
           // Check TAs
+          if (sectionGroup.teachingAssistantAppointments != sectionGroupCost.taCount) {
+            var change = {
+              sectionGroupCost: sectionGroupCost,
+              taCount: sectionGroup.teachingAssistantAppointments
+            };
+
+            changes.push(change);
+          }
+
           // Check Readers
+          if (sectionGroup.readerAppointments != sectionGroupCost.readerCount) {
+            var change = {
+              sectionGroupCost: sectionGroupCost,
+              readerCount: sectionGroup.readerAppointments
+            };
+
+            changes.push(change);
+          }
+
+          // Check assigned instructor / instructorType
+          var sectionGroupInstructorId = sectionGroup.assignedInstructorIds[0];
+          var sectionGroupInstructorTypeId = sectionGroup.assignedInstructorTypeIds[0];
+          var sectionGroupCostInstructorId = sectionGroupCost.instructorId;
+          var sectionGroupCostInstructorTypeId = sectionGroupCost.instructorTypeId;
+
+          if (sectionGroupInstructorId != sectionGroupCostInstructorId) {
+            var change = {
+              sectionGroupCost: sectionGroupCost,
+              instructorId: sectionGroupInstructorId
+            };
+
+            changes.push(change);
+          } else if (sectionGroupInstructorTypeId != sectionGroupCostInstructorId) {
+            var change = {
+              sectionGroupCost: sectionGroupCost,
+              instructorTypeId: sectionGroupInstructorTypeId
+            };
+
+            changes.push(change);
+          }
+
+          // Check section count
+          if (sectionGroup.sectionCount != sectionGroupCost.sectionCount) {
+            var change = {
+              sectionGroupCost: sectionGroupCost,
+              sectionCount: sectionGroup.sectionCount
+            };
+
+            changes.push(change);
+          }
         });
+
+        return changes;
       };
 
       // Filters provided sectionGroupCostIds to ensure they match a sectionGroup.
