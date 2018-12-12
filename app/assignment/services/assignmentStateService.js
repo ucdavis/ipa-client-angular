@@ -966,7 +966,6 @@ class AssignmentStateService {
 							firstAssignmentIdInGroup = assignment.id;
 							assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {
 								if (newState.teachingAssignments.list[teachingAssignmentId].approved === true) {
-									firstAssignmentIdInGroup;
 									relatedCourseApproved = true;
 								}
 								newState.teachingAssignments.list[teachingAssignmentId].adjustedPriority = priority;
@@ -977,9 +976,9 @@ class AssignmentStateService {
 							priority++;
 						}
 
-						if (firstAssignmentIdInGroup && relatedCourseApproved === true) {
+						if (firstAssignmentIdInGroup) {
 							newState.teachingAssignments.list[firstAssignmentIdInGroup].relatedAssignmentIds.forEach(function (teachingAssignmentId) {
-								newState.teachingAssignments.list[teachingAssignmentId].relatedCourseApproved = true;
+								newState.teachingAssignments.list[teachingAssignmentId].relatedCourseApproved = relatedCourseApproved;
 							});
 							firstAssignmentIdInGroup = null;
 							relatedCourseApproved = false;
