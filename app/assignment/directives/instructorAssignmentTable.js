@@ -455,7 +455,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 												var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
 												// This teachingAssignment is a buyout/sabb/release
-												if (teachingAssignment.approved == false && (teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.workLifeBalance || teachingAssignment.leaveOfAbsence || teachingAssignment.sabbaticalInResidence || teachingAssignment.sabbatical)) {
+												if ((teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.workLifeBalance || teachingAssignment.leaveOfAbsence || teachingAssignment.sabbaticalInResidence || teachingAssignment.sabbatical)) {
 													let preferenceDisplayText = "";
 
 													if (teachingAssignment.buyout) {
@@ -486,6 +486,13 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 														firstInterestedCourseAdded = true;
 													}
 
+													if (teachingAssignment.approved) {
+														courseHtml += "<li><div class=\"instructor-assignment__dropdown--header-used\">" + (firstCourseInGroup.length + 1) + ". ";
+														courseHtml += preferenceDisplayText + "</div></li>";
+														firstCourseInGroup.push(preferenceDisplayText);
+														return;
+													}
+													
 													courseHtml += "<li class=\"instructor-assignment__dropdown--single-option\"><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
 													courseHtml += " href=\"#\">" + (firstCourseInGroup.length + 1) + ". " + preferenceDisplayText + "</a></li>";
