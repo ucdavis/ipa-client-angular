@@ -38,7 +38,6 @@ let ipaTermSelectorDropdown  = function ($window, $location, $routeParams, $root
 
 			if (scope.termShortCode == null) {
 				scope.readOnlyMode = true;
-				scope.currentTermDescription = "Annual";
 			}
 
 			scope.gotoTerm = function (newTermShortCode) {
