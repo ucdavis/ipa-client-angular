@@ -19,13 +19,11 @@ let incomingChanges = function (BudgetActions) {
       };
 
       scope.calculateChanges = function () {
-        var scenarioSectionGroupCostIds = scope.getScenarioSectionGroupCostIds(scope.sectionGroupCosts, scope.selectedBudgetScenario);
-        var scenarioSectionGroupIds = scope.getScenarioSectionGroupIds(scope.sectionGroups, scope.selectedBudgetScenario);
+        var scenarioSectionGroupCostIds = scope.getActiveSectionGroupCostIds(scope.sectionGroupCosts, scope.selectedBudgetScenario);
         var presentSectionGroupCostIds = scope.getPresentSectionGroupCostIds(scenarioSectionGroupCostIds, scope.sectionGroupCosts, scope.sectionGroups);
-
         var changedValues = scope.calculateChangedValues(presentSectionGroupCostIds);
-        var missingCourses = scope.calculateMissingCourses(scope.sectionGroupIds);
-        var addedCourses = scope.calculateAddedCourses(sectionGroupIds);
+        var missingCourses = scope.calculateMissingCourses();
+        var addedCourses = scope.calculateAddedCourses(scenarioSectionGroupCostIds);
 
         debugger;
       };
@@ -83,7 +81,7 @@ let incomingChanges = function (BudgetActions) {
             };
 
             changes.push(change);
-          } else if (sectionGroupInstructorTypeId != sectionGroupCostInstructorId) {
+          } else if (sectionGroupInstructorTypeId != sectionGroupCostInstructorTypeId) {
             var change = {
               sectionGroupCost: sectionGroupCost,
               instructorTypeId: sectionGroupInstructorTypeId
@@ -121,45 +119,53 @@ let incomingChanges = function (BudgetActions) {
         });
       };
 
-      // Filters sectionGroups against selected scenario
-      scope.getScenarioSectionGroupIds = function (sectionGroups, selectedBudgetScenario) {
-        return sectionGroups.ids.filter(function(sectionGroupId) {
-          var sectionGroup = sectionGroups.list[sectionGroupId];
-
-          // Ensure sectionGroupCost matches scenario
-          if (sectionGroup.budgetScenarioId != selectedBudgetScenario.id) { return false; }
-
-          return true;
-        });
-      };
-
-      // Filters sectionGroupCosts against selected scenario
-      scope.getScenarioSectionGroupCostIds = function (sectionGroupCosts, selectedBudgetScenario) {
+      // Filters sectionGroupCosts against selected scenario and activeTerms
+      scope.getActiveSectionGroupCostIds = function (sectionGroupCosts, selectedBudgetScenario) {
         return sectionGroupCosts.ids.filter(function(sectionGroupCostId) {
           var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
           // Ensure sectionGroupCost matches scenario
           if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return false; }
 
+          // Ensure sectionGroupCost matches termCode
+          var activeTerm = scope.selectedBudgetScenario.terms;
+          if (sectionGroupCost.termCode.slice(-2) != activeTerm) { return false; }
+
           return true;
         });
       };
 
+      // Returns change objects with sectionGroups that need a corresponding sectionGroupCost created
       scope.calculateMissingCourses = function () {
+        var changes = [];
 
+        scope.sectionGroups.ids.forEach(function(sectionGroupId) {
+          var sectionGroup = scope.sectionGroups.list[sectionGroupId];
+          var sectionGroupTerm = sectionGroup.termCode.slice(-2);
+
+          // Ensure sectionGroupCost matches termCode
+          if (scope.selectedBudgetScenario.terms.indexOf(sectionGroupCostTerm) == -1) { return; }
+
+          var uniqueKey = sectionGroup.subjectCode + "-" + sectionGroup.courseNumber + "-" + sectionGroup.sequencePattern + "-" + sectionGroup.termCode + "-" + scope.selectedBudgetScenario.id;
+          var sectionGroupCostId = scope.sectionGroupCosts.idsByUniqueKey[uniqueKey];
+
+          // No matching sectionGroupCost found for this sectionGroup
+          if (!sectionGroupCostId) {
+            var change = {
+              sectionGroup: sectionGroup,
+              sectionGroupCost: null
+            };
+
+            changes.push(change);
+          }
+        });
+
+        return changes;
       };
 
       scope.calculateAddedCourses = function () {
 
       };
-
-      // // Example changeObject
-      // var changeObject = {
-      //   sectionGroupCostId: 22
-      //   parameter: "enrollment"
-      //   value: 22
-      //   term: "201610"
-      // };
 
       // Recalculate on changes
       scope.$watchGroup(['courses', 'sectionGroups', 'sectionGroupCosts'], function(newValues, oldValues, scope) {
