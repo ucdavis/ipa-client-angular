@@ -37,22 +37,8 @@
         </thead>
 
         <tbody>
-          <tr ng-repeat="sectionGroupCost in courseList">
+          <tr ng-repeat="change in changes" ng-if="change.term == termNav.activeTerm">
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
-              <span ng-if="sectionGroupCost.isBudgeted == true && sectionGroupCost.isScheduled == false">
-                <i class="entypo-attention line-items__orphan-warn"
-                   tooltip-append-to-body="true"
-                   uib-tooltip="This course is budgeted for in this scenario, but has not been scheduled">
-                </i>
-              </span>
-
-              <span ng-if="sectionGroupCost.isBudgeted == false && sectionGroupCost.isScheduled == true">
-                <i class="entypo-attention line-items__orphan-warn"
-                   tooltip-append-to-body="true"
-                   uib-tooltip="This course is scheduled, but not budgeted in this scenario.">
-                </i>
-              </span>
-
               <span>
                 {{ sectionGroupCost.subjectCode }}
               </span>

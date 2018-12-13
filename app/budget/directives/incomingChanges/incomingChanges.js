@@ -18,11 +18,18 @@ let incomingChanges = function (BudgetActions) {
       };
 
       scope.calculateChanges = function () {
+        scope.changes = [];
+
         var scenarioSectionGroupCostIds = scope.getActiveSectionGroupCostIds(scope.sectionGroupCosts, scope.selectedBudgetScenario);
         var presentSectionGroupCostIds = scope.getPresentSectionGroupCostIds(scenarioSectionGroupCostIds, scope.sectionGroupCosts, scope.sectionGroups);
+
         var changedValues = scope.calculateChangedValues(presentSectionGroupCostIds);
         var missingCourses = scope.calculateMissingCourses();
         var addedCourses = scope.calculateAddedCourses(scenarioSectionGroupCostIds);
+
+        scope.changes = scope.changes.concat(changedValues);
+        scope.changes = scope.changes.concat(missingCourses);
+        scope.changes = scope.changes.concat(addedCourses);
       };
 
       // Loops over sectionGroupCosts
@@ -39,7 +46,8 @@ let incomingChanges = function (BudgetActions) {
           if (sectionGroup.totalSeats != sectionGroupCost.enrollment) {
             var change = {
               sectionGroupCost: sectionGroupCost,
-              enrollment: sectionGroup.totalSeats
+              enrollment: sectionGroup.totalSeats,
+              term: sectionGroup.termCode.slice(-2)
             };
 
             changes.push(change);
@@ -49,7 +57,8 @@ let incomingChanges = function (BudgetActions) {
           if (sectionGroup.teachingAssistantAppointments != sectionGroupCost.taCount) {
             var change = {
               sectionGroupCost: sectionGroupCost,
-              taCount: sectionGroup.teachingAssistantAppointments
+              taCount: sectionGroup.teachingAssistantAppointments,
+              term: sectionGroup.termCode.slice(-2)
             };
 
             changes.push(change);
@@ -59,7 +68,8 @@ let incomingChanges = function (BudgetActions) {
           if (sectionGroup.readerAppointments != sectionGroupCost.readerCount) {
             var change = {
               sectionGroupCost: sectionGroupCost,
-              readerCount: sectionGroup.readerAppointments
+              readerCount: sectionGroup.readerAppointments,
+              term: sectionGroup.termCode.slice(-2)
             };
 
             changes.push(change);
@@ -74,14 +84,16 @@ let incomingChanges = function (BudgetActions) {
           if (sectionGroupInstructorId != sectionGroupCostInstructorId) {
             var change = {
               sectionGroupCost: sectionGroupCost,
-              instructorId: sectionGroupInstructorId
+              instructorId: sectionGroupInstructorId,
+              term: sectionGroupCost.termCode.slice(-2)
             };
 
             changes.push(change);
           } else if (sectionGroupInstructorTypeId != sectionGroupCostInstructorTypeId) {
             var change = {
               sectionGroupCost: sectionGroupCost,
-              instructorTypeId: sectionGroupInstructorTypeId
+              instructorTypeId: sectionGroupInstructorTypeId,
+              term: sectionGroupCost.termCode.slice(-2)
             };
 
             changes.push(change);
@@ -91,7 +103,8 @@ let incomingChanges = function (BudgetActions) {
           if (sectionGroup.sectionCount != sectionGroupCost.sectionCount) {
             var change = {
               sectionGroupCost: sectionGroupCost,
-              sectionCount: sectionGroup.sectionCount
+              sectionCount: sectionGroup.sectionCount,
+              term: sectionGroupCost.termCode.slice(-2)
             };
 
             changes.push(change);
@@ -157,7 +170,8 @@ let incomingChanges = function (BudgetActions) {
           if (!sectionGroupCost || sectionGroupCost.disabled) {
             var change = {
               sectionGroup: sectionGroup,
-              sectionGroupCost: null
+              sectionGroupCost: null,
+              term: sectionGroup.termCode.slice(-2)
             };
 
             changes.push(change);
@@ -175,7 +189,8 @@ let incomingChanges = function (BudgetActions) {
           if (sectionGroupCost.isBudgeted && sectionGroupCost.isScheduled == false) {
             var change = {
               sectionGroupCost: sectionGroupCost,
-              sectionGroup: null
+              sectionGroup: null,
+              term: sectionGroupCost.termCode.slice(-2)
             };
 
             changes.push(change);
