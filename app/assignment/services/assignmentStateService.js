@@ -956,12 +956,12 @@ class AssignmentStateService {
 						}
 					});
 
-					var sortedUniqueAssignments = _array_sortByProperty(uniqueAssignments, "priority");
+					var uniqueAssignmentsByPriority = _array_sortByProperty(uniqueAssignments, "priority");
 					var priority = 1;
 
 					var firstAssignmentIdInGroup;
 					var relatedCourseApproved = false;
-					sortedUniqueAssignments.forEach(function (assignment) {
+					uniqueAssignmentsByPriority.forEach(function (assignment) {
 						if (assignment.relatedAssignmentIds) {
 							firstAssignmentIdInGroup = assignment.id;
 							assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {

@@ -487,13 +487,13 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													}
 
 													if (teachingAssignment.approved) {
-														courseHtml += "<li><div class=\"instructor-assignment__dropdown--header-used\">" + (firstCourseInGroup.length + 1) + ". ";
+														courseHtml += "<li><div class=\"instructor-assignment__dropdown--option-used\">" + (firstCourseInGroup.length + 1) + ". ";
 														courseHtml += preferenceDisplayText + "</div></li>";
 														firstCourseInGroup.push(preferenceDisplayText);
 														return;
 													}
-													
-													courseHtml += "<li class=\"instructor-assignment__dropdown--single-option\"><a";
+
+													courseHtml += "<li class=\"instructor-assignment__dropdown--option\"><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
 													courseHtml += " href=\"#\">" + (firstCourseInGroup.length + 1) + ". " + preferenceDisplayText + "</a></li>";
 													firstCourseInGroup.push(preferenceDisplayText);
@@ -532,7 +532,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 													if (firstCourseInGroup.indexOf(course.subjectCode + course.courseNumber) < 0) {
 														if (teachingAssignment.relatedCourseApproved === true) {
-															courseHtml += "<li><div class=\"instructor-assignment__dropdown--header-used\">" + (firstCourseInGroup.length + 1) + ". ";
+															courseHtml += "<li><div class=\"instructor-assignment__dropdown--option-used\">" + (firstCourseInGroup.length + 1) + ". ";
 															courseHtml += course.subjectCode + course.courseNumber + " - " + course.title;
 															courseHtml += "</div></li>";
 															firstCourseInGroup.push(course.subjectCode + course.courseNumber);
@@ -540,14 +540,14 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 														}
 
 														if (teachingAssignment.relatedAssignmentIds && teachingAssignment.relatedAssignmentIds.length <= 1) {
-															courseHtml += "<li class=\"instructor-assignment__dropdown--single-option\"><a";
+															courseHtml += "<li class=\"instructor-assignment__dropdown--option\"><a";
 															courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
 															courseHtml += " href=\"#\">" + (firstCourseInGroup.length + 1) + ". " + course.subjectCode + " " + course.courseNumber + " - " + course.title + "</a></li>";
 															firstCourseInGroup.push(course.subjectCode + course.courseNumber);
 															return;
 														}
 
-														courseHtml += "<li><div class=\"instructor-assignment__dropdown--header\">" + (firstCourseInGroup.length + 1) + ". ";
+														courseHtml += "<li><div class=\"instructor-assignment__dropdown--option-header\">" + (firstCourseInGroup.length + 1) + ". ";
 														courseHtml += course.subjectCode + course.courseNumber + " - " + course.title;
 														courseHtml += "</div></li>";
 														firstCourseInGroup.push(course.subjectCode + course.courseNumber);
@@ -563,7 +563,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													}
 
 													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
-													courseHtml += "<li class=\"instructor-assignment__dropdown--subsection\"><a";
+													courseHtml += "<li class=\"instructor-assignment__dropdown--sub-option\"><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
 													courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
 												}

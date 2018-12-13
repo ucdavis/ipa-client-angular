@@ -143,14 +143,14 @@
 	padding-left: 10px;
 }
 
-.instructor-assignment__dropdown--header {
+.instructor-assignment__dropdown--option-header {
 	background-color: white;
 	padding-left: 20px;
 	padding-top: 3px;
 	padding-bottom: 3px;
 }
 
-.instructor-assignment__dropdown--header-used {
+.instructor-assignment__dropdown--option-used {
 	background-color: white;
 	padding-left: 20px;
 	padding-top: 3px;
@@ -159,11 +159,11 @@
 	text-decoration: line-through;
 }
 
-ul.dropdown-menu li.instructor-assignment__dropdown--single-option > a {
+ul.dropdown-menu li.instructor-assignment__dropdown--option > a {
 	color: rgb(0,0,0);
 }
 
-.instructor-assignment__dropdown--subsection {
+.instructor-assignment__dropdown--sub-option {
 	padding-left: 14px;
 }
 
