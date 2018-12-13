@@ -23,6 +23,7 @@ let incomingChanges = function (BudgetActions) {
         var presentSectionGroupCostIds = scope.getPresentSectionGroupCostIds(scenarioSectionGroupCostIds, scope.sectionGroupCosts, scope.sectionGroups);
         var changedValues = scope.calculateChangedValues(presentSectionGroupCostIds);
         var missingCourses = scope.calculateMissingCourses();
+        debugger;
         var addedCourses = scope.calculateAddedCourses(scenarioSectionGroupCostIds);
 
         debugger;
@@ -150,9 +151,10 @@ let incomingChanges = function (BudgetActions) {
 
           var uniqueKey = sectionGroup.subjectCode + "-" + sectionGroup.courseNumber + "-" + sectionGroup.sequencePattern + "-" + sectionGroup.termCode + "-" + scope.selectedBudgetScenario.id;
           var sectionGroupCostId = scope.sectionGroupCosts.idsByUniqueKey[uniqueKey];
+          var isPresent =  scope.sectionGroupCosts.list[sectionGroupCostId] && scope.sectionGroupCosts.list[sectionGroupCostId].disabled == false ? true : false;
 
-          // No matching sectionGroupCost found for this sectionGroup
-          if (!sectionGroupCostId) {
+          // No matching active sectionGroupCost found for this sectionGroup
+          if (isPresent == false) {
             var change = {
               sectionGroup: sectionGroup,
               sectionGroupCost: null
@@ -166,7 +168,7 @@ let incomingChanges = function (BudgetActions) {
       };
 
       scope.calculateAddedCourses = function () {
-
+        debugger;
       };
 
       // Recalculate on changes
