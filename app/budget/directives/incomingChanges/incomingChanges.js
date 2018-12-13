@@ -13,7 +13,6 @@ let incomingChanges = function (BudgetActions) {
       selectedBudgetScenario: '<'
     },
     link: function (scope, element, attrs) {
-      // Total of differences, by term
       scope.setActiveTerm = function(activeTermTab) {
         BudgetActions.selectTerm(activeTermTab);
       };
@@ -23,10 +22,7 @@ let incomingChanges = function (BudgetActions) {
         var presentSectionGroupCostIds = scope.getPresentSectionGroupCostIds(scenarioSectionGroupCostIds, scope.sectionGroupCosts, scope.sectionGroups);
         var changedValues = scope.calculateChangedValues(presentSectionGroupCostIds);
         var missingCourses = scope.calculateMissingCourses();
-        debugger;
         var addedCourses = scope.calculateAddedCourses(scenarioSectionGroupCostIds);
-
-        debugger;
       };
 
       // Loops over sectionGroupCosts
@@ -109,6 +105,10 @@ let incomingChanges = function (BudgetActions) {
       scope.getPresentSectionGroupCostIds = function (sectionGroupCostIds, sectionGroupCosts, sectionGroups) {
         return sectionGroupCostIds.filter(function(sectionGroupCostId) {
           var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+
+          // Ensure sectionGroupCost is not disabled
+          if (sectionGroupCost.disabled) { return false; }
+
           var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
           var sectionGroupId = sectionGroups.idsByUniqueKey[uniqueKey];
           var sectionGroup = sectionGroups.list[sectionGroupId];
@@ -151,10 +151,10 @@ let incomingChanges = function (BudgetActions) {
 
           var uniqueKey = sectionGroup.subjectCode + "-" + sectionGroup.courseNumber + "-" + sectionGroup.sequencePattern + "-" + sectionGroup.termCode + "-" + scope.selectedBudgetScenario.id;
           var sectionGroupCostId = scope.sectionGroupCosts.idsByUniqueKey[uniqueKey];
-          var isPresent =  scope.sectionGroupCosts.list[sectionGroupCostId] && scope.sectionGroupCosts.list[sectionGroupCostId].disabled == false ? true : false;
+          var sectionGroupCost = sectionGroupCostId ? scope.sectionGroupCosts.list[sectionGroupCostId] : null;
 
           // No matching active sectionGroupCost found for this sectionGroup
-          if (isPresent == false) {
+          if (!sectionGroupCost || sectionGroupCost.disabled) {
             var change = {
               sectionGroup: sectionGroup,
               sectionGroupCost: null
@@ -167,8 +167,23 @@ let incomingChanges = function (BudgetActions) {
         return changes;
       };
 
-      scope.calculateAddedCourses = function () {
-        debugger;
+      scope.calculateAddedCourses = function (sectionGroupCostIds) {
+        var changes = [];
+
+        sectionGroupCostIds.forEach(function(sectionGroupCostId) {
+          var sectionGroupCost = scope.sectionGroupCosts.list[sectionGroupCostId];
+          if (sectionGroupCost.isBudgeted && sectionGroupCost.isScheduled == false) {
+            var change = {
+              sectionGroupCost: sectionGroupCost,
+              sectionGroup: null
+            };
+
+            changes.push(change);
+
+          }
+        });
+
+        return changes;
       };
 
       // Recalculate on changes
