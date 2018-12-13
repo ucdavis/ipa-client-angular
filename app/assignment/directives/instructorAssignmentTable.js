@@ -524,7 +524,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 												}
 
 												// Preferred TeachingAssignments
-												if (course) {
+												if (teachingAssignment.fromInstructor && course) {
 													if (firstInterestedCourseAdded === false) {
 														courseHtml += "<li><div class=\"dropdown-assign-header\">Preferred</div></li>";
 														firstInterestedCourseAdded = true;
