@@ -128,8 +128,10 @@ let incomingChanges = function (BudgetActions) {
           if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return false; }
 
           // Ensure sectionGroupCost matches termCode
-          var activeTerm = scope.selectedBudgetScenario.terms;
-          if (sectionGroupCost.termCode.slice(-2) != activeTerm) { return false; }
+          var activeTerms = scope.selectedBudgetScenario.terms;
+          var sectionGroupCostTerm = sectionGroupCost.termCode.slice(-2);
+
+          if (activeTerms.indexOf(sectionGroupCostTerm) == -1) { return false; }
 
           return true;
         });
@@ -144,7 +146,7 @@ let incomingChanges = function (BudgetActions) {
           var sectionGroupTerm = sectionGroup.termCode.slice(-2);
 
           // Ensure sectionGroupCost matches termCode
-          if (scope.selectedBudgetScenario.terms.indexOf(sectionGroupCostTerm) == -1) { return; }
+          if (scope.selectedBudgetScenario.terms.indexOf(sectionGroupTerm) == -1) { return; }
 
           var uniqueKey = sectionGroup.subjectCode + "-" + sectionGroup.courseNumber + "-" + sectionGroup.sequencePattern + "-" + sectionGroup.termCode + "-" + scope.selectedBudgetScenario.id;
           var sectionGroupCostId = scope.sectionGroupCosts.idsByUniqueKey[uniqueKey];
