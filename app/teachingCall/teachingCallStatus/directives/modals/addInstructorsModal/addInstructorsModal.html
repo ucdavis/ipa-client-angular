@@ -118,7 +118,7 @@
             type="button"
             class="btn neon-dark-confirm-btn"
             ng-click="submit()">
-      Start call for {{ invitedInstructorsCount() }} {{ invitedInstructorsCount() > 1 ? 'Instructors' : 'Instructor' }}
+      Start Call for {{ invitedInstructorsCount() }} {{ invitedInstructorsCount() > 1 ? 'Instructors' : 'Instructor' }}
     </button>
     <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false && startTeachingCallConfig.sendEmail && state.ui.scheduleHasCourses === true"
             tooltip-placement="left"
