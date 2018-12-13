@@ -67,21 +67,10 @@ class TeachingCallFormCtrl {
 				}
 			});
 
-			// Display courses already on the schedule
+			var results = [];
 			if (!query || query.length == 0) {
-				var courses = angular.copy(uniquePreferenceOptions);
-				var groupedResults = _.chain(courses)
-					.groupBy(function(course) { return course.subjectCode; })
-					.map(function(groupedCourses) { groupedCourses[0].firstInGroup = true; return groupedCourses; }).flatten().value();
-				groupedResults.push({ description: "Suggest a Course ...", suggestACourse: true });
-				groupedResults.unshift({ description: "Non-Courses", header: true });
-				var firstCourseIndex = groupedResults.findIndex(function (result) { return result.uniqueIdentifier; });
-				var firstSubjectCode = groupedResults[firstCourseIndex].subjectCode;
-				groupedResults.splice(firstCourseIndex, 0, { description: firstSubjectCode + " Courses", header: true });
-				return groupedResults;
+				results = angular.copy(uniquePreferenceOptions);
 			}
-
-			var optimizedQuery = $scope.optimizeQueryFormat(query);
 
 			if (query.length >= 3) {
 				var options = {
@@ -96,29 +85,30 @@ class TeachingCallFormCtrl {
 						"description"
 					]
 				};
+				var optimizedQuery = $scope.optimizeQueryFormat(query);
 
 				var fuse = new Fuse(uniquePreferenceOptions, options);
-				var results = fuse.search(optimizedQuery);
-
-				results = angular.copy(results);
-				var groupedResults = _.chain(results)
-					.groupBy(function(result) { return result.subjectCode; })
-					.map(function(groupedCourses) { groupedCourses[0].firstInGroup = true; return groupedCourses; }).flatten().value();
-
-				// Inject group headers
-				var firstDescription = groupedResults[0].uniqueIdentifier ? groupedResults[0].subjectCode + " Courses" : "Non-Courses";
-				groupedResults[0].firstInGroup = false;
-				groupedResults.unshift({ description: firstDescription, header: true});
-
-				var headerIndex = groupedResults.findIndex(function (result) { return result.firstInGroup; });
-				if (headerIndex > -1) {
-					var headerDescription = groupedResults[headerIndex].uniqueIdentifier ? groupedResults[headerIndex].subjectCode + " Courses" : "Non-Courses";
-					groupedResults.splice(headerIndex, 0, { description: headerDescription, header: true });
-				}
-
-				groupedResults.push({ description: "Suggest a Course ...", suggestACourse: true });
-				return groupedResults;
+				var searchResults = fuse.search(optimizedQuery);
+				results = angular.copy(searchResults);
 			}
+
+			// Inject headers into results for displaying in typeahead dropdown
+			var groupedResults = _.chain(results).groupBy(function (course) { return course.subjectCode; })
+				.map(function (groupedCourses) { groupedCourses[0].firstInGroup = true; return groupedCourses; })
+				.flatten().value();
+
+			var resultsWithHeaders = angular.copy(groupedResults);
+			var headersAdded = 0;
+			groupedResults.forEach(function (result, index) {
+				if (result.firstInGroup === true) {
+					var headerDescription = result.uniqueIdentifier ? result.subjectCode + " Courses" : "Non-Courses";
+					resultsWithHeaders.splice(index + headersAdded, 0, { description: headerDescription, header: true });
+					headersAdded += 1;
+				}
+			});
+			resultsWithHeaders.push({ description: "Suggest a Course ...", suggestACourse: true });
+
+			return resultsWithHeaders;
 		};
 
 		// Will improve query formatting when possible to improve search score
