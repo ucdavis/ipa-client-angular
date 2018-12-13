@@ -45,9 +45,16 @@ let incomingChanges = function (BudgetActions) {
           // Check enrollment
           if (sectionGroup.totalSeats != sectionGroupCost.enrollment) {
             var change = {
-              sectionGroupCost: sectionGroupCost,
-              enrollment: sectionGroup.totalSeats,
-              term: sectionGroup.termCode.slice(-2)
+              payload: {
+                sectionGroupCost: sectionGroupCost,
+                enrollment: sectionGroup.totalSeats
+              },
+              term: sectionGroup.termCode.slice(-2),
+              display: {
+                description: "Seats",
+                ipaText: sectionGroup.totalSeats,
+                scenarioText: sectionGroupCost.enrollment
+              }
             };
 
             changes.push(change);
@@ -56,9 +63,16 @@ let incomingChanges = function (BudgetActions) {
           // Check TAs
           if (sectionGroup.teachingAssistantAppointments != sectionGroupCost.taCount) {
             var change = {
-              sectionGroupCost: sectionGroupCost,
-              taCount: sectionGroup.teachingAssistantAppointments,
-              term: sectionGroup.termCode.slice(-2)
+              payload: {
+                sectionGroupCost: sectionGroupCost,
+                taCount: sectionGroup.teachingAssistantAppointments
+              },
+              term: sectionGroup.termCode.slice(-2),
+              display: {
+                description: "TA Count",
+                ipaText: sectionGroup.teachingAssistantAppointments,
+                scenarioText: sectionGroupCost.taCount
+              }
             };
 
             changes.push(change);
@@ -67,9 +81,16 @@ let incomingChanges = function (BudgetActions) {
           // Check Readers
           if (sectionGroup.readerAppointments != sectionGroupCost.readerCount) {
             var change = {
-              sectionGroupCost: sectionGroupCost,
-              readerCount: sectionGroup.readerAppointments,
-              term: sectionGroup.termCode.slice(-2)
+              payload: {
+                sectionGroupCost: sectionGroupCost,
+                readerCount: sectionGroup.readerAppointments
+              },
+              term: sectionGroup.termCode.slice(-2),
+              display: {
+                description: "Reader Count",
+                ipaText: sectionGroup.readerAppointments,
+                scenarioText: sectionGroupCost.readerCount
+              }
             };
 
             changes.push(change);
@@ -83,17 +104,31 @@ let incomingChanges = function (BudgetActions) {
 
           if (sectionGroupInstructorId != sectionGroupCostInstructorId) {
             var change = {
-              sectionGroupCost: sectionGroupCost,
-              instructorId: sectionGroupInstructorId,
-              term: sectionGroupCost.termCode.slice(-2)
+              payload: {
+                sectionGroupCost: sectionGroupCost,
+                instructorId: sectionGroupInstructorId,
+              },
+              term: sectionGroupCost.termCode.slice(-2),
+              display: {
+                description: "Instructor",
+                ipaText: sectionGroup.assignedInstructorNames[0],
+                scenarioText: sectionGroupCost.instructor ? sectionGroupCost.instructor.description : null
+              }
             };
 
             changes.push(change);
           } else if (sectionGroupInstructorTypeId != sectionGroupCostInstructorTypeId) {
             var change = {
-              sectionGroupCost: sectionGroupCost,
-              instructorTypeId: sectionGroupInstructorTypeId,
-              term: sectionGroupCost.termCode.slice(-2)
+              payload: {
+                sectionGroupCost: sectionGroupCost,
+                instructorTypeId: sectionGroupInstructorTypeId,
+              },
+              term: sectionGroupCost.termCode.slice(-2),
+              display: {
+                description: "Instructor",
+                ipaText: sectionGroup.assignedInstructorType ? sectionGroup.assignedInstructorType.description : null,
+                scenarioText: sectionGroupCost.instructorType ? sectionGroupCost.instructorType.description : null
+              }
             };
 
             changes.push(change);
@@ -102,9 +137,16 @@ let incomingChanges = function (BudgetActions) {
           // Check section count
           if (sectionGroup.sectionCount != sectionGroupCost.sectionCount) {
             var change = {
-              sectionGroupCost: sectionGroupCost,
-              sectionCount: sectionGroup.sectionCount,
-              term: sectionGroupCost.termCode.slice(-2)
+              payload: {
+                sectionGroupCost: sectionGroupCost,
+                sectionCount: sectionGroup.sectionCount,
+              },
+              term: sectionGroupCost.termCode.slice(-2),
+              display: {
+                description: "Section Count",
+                ipaText: sectionGroup.sectionCount,
+                scenarioText: sectionGroupCost.sectionCount
+              }
             };
 
             changes.push(change);
@@ -169,9 +211,17 @@ let incomingChanges = function (BudgetActions) {
           // No matching active sectionGroupCost found for this sectionGroup
           if (!sectionGroupCost || sectionGroupCost.disabled) {
             var change = {
-              sectionGroup: sectionGroup,
-              sectionGroupCost: null,
-              term: sectionGroup.termCode.slice(-2)
+              payload: {
+                sectionGroup: sectionGroup,
+                sectionGroupCost: null,
+              },
+              term: sectionGroup.termCode.slice(-2),
+              display: {
+                course: "",
+                description: "",
+                ipaText: "present",
+                scenarioText: "missing"
+              }
             };
 
             changes.push(change);
@@ -186,11 +236,20 @@ let incomingChanges = function (BudgetActions) {
 
         sectionGroupCostIds.forEach(function(sectionGroupCostId) {
           var sectionGroupCost = scope.sectionGroupCosts.list[sectionGroupCostId];
+          // Course is on scenario but not on schedule
           if (sectionGroupCost.isBudgeted && sectionGroupCost.isScheduled == false) {
             var change = {
-              sectionGroupCost: sectionGroupCost,
-              sectionGroup: null,
-              term: sectionGroupCost.termCode.slice(-2)
+              payload: {
+                sectionGroupCost: sectionGroupCost,
+                sectionGroup: null,
+              },
+              term: sectionGroupCost.termCode.slice(-2),
+              display: {
+                course: "",
+                description: "",
+                ipaText: "missing",
+                scenarioText: "present"
+              }
             };
 
             changes.push(change);
