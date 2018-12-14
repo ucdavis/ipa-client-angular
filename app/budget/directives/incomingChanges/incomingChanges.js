@@ -32,10 +32,12 @@ let incomingChanges = function (BudgetActions) {
         scope.changes = scope.changes.concat(addedCourses);
 
         scope.changes = _.sortBy(scope.changes, function (change) {
-          return change.display.course;
+          return change.sortKey;
         });
 
         scope.changes = scope.breakIntoTerms(scope.changes);
+        scope.changes = scope.addCourseHeaders(scope.changes);
+        debugger;
       };
 
       // Loops over sectionGroupCosts
@@ -56,10 +58,12 @@ let incomingChanges = function (BudgetActions) {
                 enrollment: sectionGroup.totalSeats
               },
               term: sectionGroup.termCode.slice(-2),
+              courseTitle: sectionGroup.title,
+              course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+              sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
-                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
-                title: sectionGroup.title,
-                description: "Seats",
+                subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
+                changeText: "Seats",
                 ipaText: sectionGroup.totalSeats,
                 scenarioText: sectionGroupCost.enrollment
               }
@@ -76,10 +80,12 @@ let incomingChanges = function (BudgetActions) {
                 taCount: sectionGroup.teachingAssistantAppointments
               },
               term: sectionGroup.termCode.slice(-2),
+              courseTitle: sectionGroup.title,
+              course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+              sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
-                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
-                title: sectionGroup.title,
-                description: "TA Count",
+                subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
+                changeText: "TA Count",
                 ipaText: sectionGroup.teachingAssistantAppointments,
                 scenarioText: sectionGroupCost.taCount
               }
@@ -96,10 +102,12 @@ let incomingChanges = function (BudgetActions) {
                 readerCount: sectionGroup.readerAppointments
               },
               term: sectionGroup.termCode.slice(-2),
+              courseTitle: sectionGroup.title,
+              course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+              sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
-                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
-                title: sectionGroup.title,
-                description: "Reader Count",
+                subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
+                changeText: "Reader Count",
                 ipaText: sectionGroup.readerAppointments,
                 scenarioText: sectionGroupCost.readerCount
               }
@@ -121,10 +129,12 @@ let incomingChanges = function (BudgetActions) {
                 instructorId: sectionGroupInstructorId,
               },
               term: sectionGroupCost.termCode.slice(-2),
+              courseTitle: sectionGroup.title,
+              course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+              sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
-                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
-                title: sectionGroup.title,
-                description: "Instructor",
+                subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
+                changeText: "Instructor",
                 ipaText: sectionGroup.assignedInstructorNames[0],
                 scenarioText: sectionGroupCost.instructor ? sectionGroupCost.instructor.description : null
               }
@@ -138,10 +148,12 @@ let incomingChanges = function (BudgetActions) {
                 instructorTypeId: sectionGroupInstructorTypeId,
               },
               term: sectionGroupCost.termCode.slice(-2),
+              courseTitle: sectionGroup.title,
+              course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+              sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
-                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
-                title: sectionGroup.title,
-                description: "Instructor",
+                subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
+                changeText: "Instructor",
                 ipaText: sectionGroup.assignedInstructorType ? sectionGroup.assignedInstructorType.description : null,
                 scenarioText: sectionGroupCost.instructorType ? sectionGroupCost.instructorType.description : null
               }
@@ -158,10 +170,12 @@ let incomingChanges = function (BudgetActions) {
                 sectionCount: sectionGroup.sectionCount,
               },
               term: sectionGroupCost.termCode.slice(-2),
+              courseTitle: sectionGroup.title,
+              course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+              sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
-                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
-                title: sectionGroup.title,
-                description: "Section Count",
+                subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
+                changeText: "Section Count",
                 ipaText: sectionGroup.sectionCount,
                 scenarioText: sectionGroupCost.sectionCount
               }
@@ -234,10 +248,12 @@ let incomingChanges = function (BudgetActions) {
                 sectionGroupCost: null,
               },
               term: sectionGroup.termCode.slice(-2),
+              courseTitle: sectionGroup.title,
+              course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+              sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
-                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
-                title: sectionGroup.title,
-                description: "Not budgeted",
+                subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
+                changeText: "Not budgeted",
                 ipaText: "check",
                 scenarioText: ""
               }
@@ -263,17 +279,18 @@ let incomingChanges = function (BudgetActions) {
                 sectionGroup: null,
               },
               term: sectionGroupCost.termCode.slice(-2),
+              courseTitle: sectionGroupCost.title,
+              course: sectionGroupCost.subjectCode + " " + sectionGroupCost.courseNumber,
+              sortKey: sectionGroupCost.subjectCode + sectionGroupCost.courseNumber + sectionGroupCost.sequencePattern,
               display: {
-                course: sectionGroupCost.subjectCode + " " + sectionGroupCost.courseNumber,
-                title: sectionGroupCost.title,
-                description: "Not scheduled",
+                subTitle: sectionGroupCost.sequencePattern,
+                changeText: "Not Scheduled",
                 ipaText: "",
                 scenarioText: "check"
               }
             };
 
             changes.push(change);
-
           }
         });
 
@@ -289,6 +306,42 @@ let incomingChanges = function (BudgetActions) {
         });
 
         return separatedChanges;
+      };
+
+      scope.addCourseHeaders = function (changes) {
+        var changesWithHeaders = {};
+        Object.keys(changes).forEach(function (key) { 
+          var termChanges = changes[key];
+          changesWithHeaders[key] = [];
+          
+          var courseHeader = null;
+
+          termChanges.forEach(function(change) {
+            debugger;
+            if (!courseHeader || courseHeader.display.course != change.display.course) {
+              courseHeader = {
+                payload: {
+                  changes: []
+                },
+                term: change.term,
+                course: change.course,
+                courseTitle: change.courseTitle,
+                sortKey: change.course,
+                display: {
+                  title: change.course,
+                  subTitle: change.courseTitle
+                }
+              };
+  
+              changesWithHeaders[key].push(courseHeader);
+            }
+
+            courseHeader.payload.changes.push(change);
+            changesWithHeaders[key].push(change);
+          });
+        });
+
+        return changesWithHeaders;
       };
 
       // Recalculate on changes

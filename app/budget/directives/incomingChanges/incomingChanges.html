@@ -16,7 +16,6 @@
           <tr>
             <th class="line-items__table-header">
               <div class="line-items__table-header-container">
-                Course
               </div>
             </th>
            <th class="line-items__table-header">
@@ -43,16 +42,16 @@
         <tbody>
           <tr ng-repeat="change in changes[termNav.activeTerm]">
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
-              <div class="incoming-changes__course">
-                {{ change.display.course }}
+              <div class="incoming-changes__title">
+                {{ change.display.title }}
               </div>
               <div>
-                {{ change.display.title }}
+                {{ change.display.subTitle }}
               </div>
             </td>
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
-              <span>
-                {{ change.display.description }}
+              <span class="incoming-changes__change-text">
+                {{ change.display.changeText }}
               </span>
             </td>
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
@@ -66,8 +65,9 @@
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
 
               <span>
-                <ipa-button text="'Do the thing'"
+                <ipa-button text="'Sync ' + change.display.changeText"
                             size="'small'"
+                            skin="'dark'"
                             confirm-message="'Are you sure you want to do the thing?'"
                             on-click="hide(sectionGroupCost)">
                 </ipa-button>

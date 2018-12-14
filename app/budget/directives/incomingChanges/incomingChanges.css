@@ -1,3 +1,7 @@
-.incoming-changes__course {
+.incoming-changes__title {
   font-weight: bold;
+}
+
+.incoming-changes__change-text {
+  color: rgb(153, 153, 153);
 }
