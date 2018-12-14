@@ -33,6 +33,11 @@
 	line-height: 1.2em;
 }
 
+.instructor-title {
+	color: black;
+	font-weight: bold;
+}
+
 #courses-table .tile-assignment {
   position: relative;
   padding: 6px;
@@ -118,7 +123,7 @@
 }
 
 .course-title {
-	color: #949494;
+	color: black;
 	font-weight: bold;
 }
 
