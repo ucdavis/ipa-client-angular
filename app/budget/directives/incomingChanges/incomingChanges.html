@@ -40,8 +40,8 @@
         </thead>
 
         <tbody>
-          <tr ng-repeat="change in changes[termNav.activeTerm]">
-            <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
+          <tr ng-repeat="change in changes[termNav.activeTerm]" ng-class="{'incoming-changes__course-divide': change.courseHeader, 'incoming-changes__section-divide': !change.courseHeader}">
+            <td class="course-list__cell">
               <div class="incoming-changes__title">
                 {{ change.display.title }}
               </div>
@@ -49,22 +49,31 @@
                 {{ change.display.subTitle }}
               </div>
             </td>
-            <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
+            <td class="incoming-changes__course-header-ui" ng-if="change.courseHeader" colspan="4">
+              <span>
+                <ipa-button text="'Sync (' + change.payload.changes.length + ') changes'"
+                            size="'small'"
+                            skin="'dark'"
+                            confirm-message="'Are you sure you want to do the thing?'"
+                            on-click="hide(sectionGroupCost)">
+                </ipa-button>
+              </span>
+            </td>
+            <td ng-if="!change.courseHeader" class="course-list__cell">
               <span class="incoming-changes__change-text">
                 {{ change.display.changeText }}
               </span>
             </td>
-            <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
+            <td ng-if="!change.courseHeader" class="course-list__cell">
               <i ng-if="change.display.ipaText == 'check'" class="glyphicon glyphicon-check"></i>
               <span ng-if="change.display.ipaText != 'check'">{{ change.display.ipaText }}</span>
             </td>
-            <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
+            <td ng-if="!change.courseHeader" class="course-list__cell">
               <i ng-if="change.display.scenarioText == 'check'" class="glyphicon glyphicon-check"></i>
               <span ng-if="change.display.scenarioText != 'check'">{{ change.display.scenarioText }}</span>
             </td>
-            <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
-
-              <span>
+            <td ng-if="!change.courseHeader" class="course-list__cell">
+              <span ng-if="!change.courseHeader">
                 <ipa-button text="'Sync ' + change.display.changeText"
                             size="'small'"
                             skin="'dark'"

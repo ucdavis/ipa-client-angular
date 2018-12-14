@@ -9,3 +9,15 @@
 .incoming-changes__sub-title-indent {
   margin-left: 10px;
 }
+
+.incoming-changes__course-divide {
+  border-bottom: 1px black solid;
+}
+
+.incoming-changes__section-divide {
+  border-top: 1px #ebebeb solid;
+}
+
+.incoming-changes__course-header-ui {
+  padding-left: 20%;
+}

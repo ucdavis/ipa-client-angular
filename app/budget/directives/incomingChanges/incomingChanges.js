@@ -318,6 +318,7 @@ let incomingChanges = function (BudgetActions) {
           termChanges.forEach(function(change) {
             if (!courseHeader || courseHeader.course != change.course) {
               courseHeader = {
+                courseHeader: true,
                 payload: {
                   changes: []
                 },
