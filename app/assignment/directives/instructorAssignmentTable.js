@@ -486,18 +486,17 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 														firstInterestedCourseAdded = true;
 													}
 
-													if (teachingAssignment.approved) {
-														courseHtml += "<li><div class=\"instructor-assignment__dropdown--option-used\">" + (firstCourseInGroup.length + 1) + ". ";
-														courseHtml += preferenceDisplayText + "</div></li>";
+													if (teachingAssignment.fromInstructor) {
+														if (teachingAssignment.approved) {
+															courseHtml += "<li><div class=\"instructor-assignment__dropdown--option-used\">" + (firstCourseInGroup.length + 1) + ". ";
+															courseHtml += preferenceDisplayText + "</div></li>";
+														} else {
+															courseHtml += "<li class=\"instructor-assignment__dropdown--option\"><a";
+															courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
+															courseHtml += " href=\"#\">" + (firstCourseInGroup.length + 1) + ". " + preferenceDisplayText + "</a></li>";
+														}
 														firstCourseInGroup.push(preferenceDisplayText);
-														return;
 													}
-
-													courseHtml += "<li class=\"instructor-assignment__dropdown--option\"><a";
-													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
-													courseHtml += " href=\"#\">" + (firstCourseInGroup.length + 1) + ". " + preferenceDisplayText + "</a></li>";
-													firstCourseInGroup.push(preferenceDisplayText);
-
 													return true;
 												}
 
