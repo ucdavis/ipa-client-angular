@@ -118,21 +118,21 @@
             type="button"
             class="btn neon-dark-confirm-btn"
             ng-click="submit()">
-      Send
+      Start Call for {{ invitedInstructorsCount() }} {{ invitedInstructorsCount() > 1 ? 'Instructors' : 'Instructor' }}
     </button>
     <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false && startTeachingCallConfig.sendEmail && state.ui.scheduleHasCourses === true"
             tooltip-placement="left"
             uib-tooltip="You must select at least one term and one instructor"
             type="button"
             class="disabled btn btn-info neon-dark-confirm-btn">
-      Send
+      Start Call
     </button>
     <button ng-if="startTeachingCallConfig.sendEmail && state.ui.scheduleHasCourses === false"
             tooltip-placement="left"
             uib-tooltip="You have no courses scheduled for the year"
             type="button"
             class="disabled btn btn-info neon-dark-confirm-btn">
-      Send
+      Start Call
     </button>
 
     <!-- start buttons (no email) -->
@@ -140,21 +140,21 @@
             type="button"
             class="btn neon-dark-confirm-btn"
             ng-click="submit()">
-      Start
+      Start Call for {{ invitedInstructorsCount() }} {{ invitedInstructorsCount() > 1 ? 'Instructors' : 'Instructor' }}
     </button>
     <button ng-if="startTeachingCallConfig.isAddInstructorFormComplete == false && !startTeachingCallConfig.sendEmail && state.ui.scheduleHasCourses === true"
             tooltip-placement="left"
             uib-tooltip="You must select at least one term and one instructor"
             type="button"
             class="disabled btn btn-info neon-dark-confirm-btn">
-      Start
+      Start Call
     </button>
     <button ng-if="!startTeachingCallConfig.sendEmail && state.ui.scheduleHasCourses === false"
             tooltip-placement="left"
             uib-tooltip="You have no courses scheduled for the year"
             type="button"
             class="disabled btn btn-info neon-dark-confirm-btn">
-      Start
+      Start Call
     </button>
   </div>
 </div>

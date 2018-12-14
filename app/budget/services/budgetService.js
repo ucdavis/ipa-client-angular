@@ -29,7 +29,7 @@ class BudgetService {
 			},
 			// Budget Scenario
 			createBudgetScenario: function(newBudgetScenario, budgetId, scenarioId) {
-				return ApiService.post("/api/budgetView/budgets/" + budgetId + "/budgetScenarios?scenarioId=" + scenarioId, newBudgetScenario);
+				return ApiService.post("/api/budgetView/budgets/" + budgetId + "/budgetScenarios?scenarioId=" + scenarioId + "&copyFunds=" + newBudgetScenario.copyFunds, newBudgetScenario);
 			},
 			deleteBudgetScenario: function(budgetScenarioId) {
 				return ApiService.delete("/api/budgetView/budgetScenarios/" + budgetScenarioId);
