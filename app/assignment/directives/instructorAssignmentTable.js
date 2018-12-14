@@ -638,22 +638,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			// end on event 'assignmentStateChanged'
 
 			// Handle input box edits
-			element.on("keydown", function(e) {
-				let $el = $(e.target);
-				if ($el.data('event-type') != 'setScheduleInstructorNote') { return; }
-
-				if (e.key == "Enter") {
-					var instructorId = $el.data('instructor-id');
-					var scheduleId = $el.data('schedule-id');
-				var scheduleInstructorNoteId = $el.data('schedule-instructor-note-id');
-
-					var note = e.target.value;
-
-					AssignmentActionCreators.createOrUpdateScheduleInstructorNote(scheduleId, instructorId, note, scheduleInstructorNoteId);
-				}
-			});
-
-			// Handle input box edits
 			element.on("change", function(e) {
 				var $el = $(e.target);
 				if ($el.data('event-type') != 'setScheduleInstructorNote') { return; }
