@@ -64,8 +64,8 @@ let incomingChanges = function (BudgetActions) {
               sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
-                changeText: "Seats",
-                ipaText: sectionGroup.totalSeats,
+                changeText: "seats",
+                scheduleText: sectionGroup.totalSeats || '0',
                 scenarioText: sectionGroupCost.enrollment
               }
             };
@@ -86,8 +86,8 @@ let incomingChanges = function (BudgetActions) {
               sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
-                changeText: "TA Count",
-                ipaText: sectionGroup.teachingAssistantAppointments,
+                changeText: "TA count",
+                scheduleText: sectionGroup.teachingAssistantAppointments || '0',
                 scenarioText: sectionGroupCost.taCount
               }
             };
@@ -108,8 +108,8 @@ let incomingChanges = function (BudgetActions) {
               sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
-                changeText: "Reader Count",
-                ipaText: sectionGroup.readerAppointments,
+                changeText: "reader count",
+                scheduleText: sectionGroup.readerAppointments || '0',
                 scenarioText: sectionGroupCost.readerCount
               }
             };
@@ -135,8 +135,8 @@ let incomingChanges = function (BudgetActions) {
               sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
-                changeText: "Instructor",
-                ipaText: sectionGroup.assignedInstructorNames[0],
+                changeText: "instructor",
+                scheduleText: sectionGroup.assignedInstructorNames[0] || 'unassigned',
                 scenarioText: sectionGroupCost.instructor ? sectionGroupCost.instructor.description : null
               }
             };
@@ -154,9 +154,9 @@ let incomingChanges = function (BudgetActions) {
               sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
-                changeText: "Instructor",
-                ipaText: sectionGroup.assignedInstructorType ? sectionGroup.assignedInstructorType.description : null,
-                scenarioText: sectionGroupCost.instructorType ? sectionGroupCost.instructorType.description : null
+                changeText: "instructor",
+                scheduleText: sectionGroup.assignedInstructorType ? sectionGroup.assignedInstructorType.description : 'unassigned',
+                scenarioText: sectionGroupCost.instructorType ? sectionGroupCost.instructorType.description : 'unassigned'
               }
             };
 
@@ -176,8 +176,8 @@ let incomingChanges = function (BudgetActions) {
               sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
-                changeText: "Section Count",
-                ipaText: sectionGroup.sectionCount,
+                changeText: "section count",
+                scheduleText: sectionGroup.sectionCount || '0',
                 scenarioText: sectionGroupCost.sectionCount
               }
             };
@@ -254,8 +254,8 @@ let incomingChanges = function (BudgetActions) {
               sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
               display: {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
-                changeText: "Not budgeted",
-                ipaText: "check",
+                changeText: "add course",
+                scheduleText: "check",
                 scenarioText: ""
               }
             };
@@ -285,8 +285,8 @@ let incomingChanges = function (BudgetActions) {
               sortKey: sectionGroupCost.subjectCode + sectionGroupCost.courseNumber + sectionGroupCost.sequencePattern,
               display: {
                 subTitle: sectionGroupCost.sequencePattern,
-                changeText: "Not Scheduled",
-                ipaText: "",
+                changeText: "remove course",
+                scheduleText: "",
                 scenarioText: "check"
               }
             };

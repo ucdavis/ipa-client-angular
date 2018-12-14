@@ -69,8 +69,8 @@
               </span>
             </td>
             <td ng-if="!change.courseHeader" class="course-list__cell">
-              <i ng-if="change.display.ipaText == 'check'" class="glyphicon glyphicon-check"></i>
-              <span ng-if="change.display.ipaText != 'check'">{{ change.display.ipaText }}</span>
+              <i ng-if="change.display.scheduleText == 'check'" class="glyphicon glyphicon-check"></i>
+              <span ng-if="change.display.scheduleText != 'check'">{{ change.display.scheduleText }}</span>
             </td>
             <td ng-if="!change.courseHeader" class="course-list__cell">
               <i ng-if="change.display.scenarioText == 'check'" class="glyphicon glyphicon-check"></i>
@@ -81,7 +81,7 @@
                 <ipa-button text="'Apply ' + change.display.changeText"
                             size="'small'"
                             skin="'dark'"
-                            confirm-message="'Are you sure you want to do the thing?'"
+                            confirm-message="'Are you sure you want to set ' + change.display.changeText + ' to ' +  change.display.scheduleText + '?'"
                             on-click="hide(sectionGroupCost)">
                 </ipa-button>
               </span>
