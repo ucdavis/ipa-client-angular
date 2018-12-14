@@ -13,6 +13,8 @@ let incomingChanges = function (BudgetActions) {
       selectedBudgetScenario: '<'
     },
     link: function (scope, element, attrs) {
+      scope.totalChanges = {};
+
       scope.setActiveTerm = function(activeTermTab) {
         BudgetActions.selectTerm(activeTermTab);
       };
@@ -309,9 +311,10 @@ let incomingChanges = function (BudgetActions) {
 
       scope.addCourseHeaders = function (changes) {
         var changesWithHeaders = {};
-        Object.keys(changes).forEach(function (key) { 
-          var termChanges = changes[key];
-          changesWithHeaders[key] = [];
+        Object.keys(changes).forEach(function (term) { 
+          var termChanges = changes[term];
+          changesWithHeaders[term] = [];
+          scope.totalChanges[term] = changes[term].length;
           
           var courseHeader = null;
 
@@ -332,11 +335,11 @@ let incomingChanges = function (BudgetActions) {
                 }
               };
   
-              changesWithHeaders[key].push(courseHeader);
+              changesWithHeaders[term].push(courseHeader);
             }
 
             courseHeader.payload.changes.push(change);
-            changesWithHeaders[key].push(change);
+            changesWithHeaders[term].push(change);
           });
         });
 

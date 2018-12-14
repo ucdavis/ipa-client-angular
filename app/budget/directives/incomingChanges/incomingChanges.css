@@ -26,3 +26,36 @@
   width: 100%;
   margin-bottom: 20px;
 }
+
+.incoming-changes__apply-term {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border-bottom: 1p solid #ebebeb;
+}
+
+.incoming-changes__table-header {
+	width: 10%;
+	border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.incoming-changes__table-header-container {
+	border-right: 1px solid #ddd;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.incoming-changes__no-changes {
+  color: #777;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
