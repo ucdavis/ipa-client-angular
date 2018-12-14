@@ -33,6 +33,11 @@
 	line-height: 1.2em;
 }
 
+.instructor-title {
+	color: black;
+	font-weight: bold;
+}
+
 #courses-table .tile-assignment {
   position: relative;
   height: 30px;
