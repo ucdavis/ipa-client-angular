@@ -37,7 +37,6 @@ let incomingChanges = function (BudgetActions) {
 
         scope.changes = scope.breakIntoTerms(scope.changes);
         scope.changes = scope.addCourseHeaders(scope.changes);
-        debugger;
       };
 
       // Loops over sectionGroupCosts
@@ -317,8 +316,7 @@ let incomingChanges = function (BudgetActions) {
           var courseHeader = null;
 
           termChanges.forEach(function(change) {
-            debugger;
-            if (!courseHeader || courseHeader.display.course != change.display.course) {
+            if (!courseHeader || courseHeader.course != change.course) {
               courseHeader = {
                 payload: {
                   changes: []

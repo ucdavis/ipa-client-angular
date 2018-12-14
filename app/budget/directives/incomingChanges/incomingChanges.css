@@ -5,3 +5,7 @@
 .incoming-changes__change-text {
   color: rgb(153, 153, 153);
 }
+
+.incoming-changes__sub-title-indent {
+  margin-left: 10px;
+}

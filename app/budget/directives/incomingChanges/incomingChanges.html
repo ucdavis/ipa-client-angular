@@ -45,7 +45,7 @@
               <div class="incoming-changes__title">
                 {{ change.display.title }}
               </div>
-              <div>
+              <div ng-class="{ 'incoming-changes__sub-title-indent': !change.display.title }">
                 {{ change.display.subTitle }}
               </div>
             </td>
@@ -59,7 +59,7 @@
               <span ng-if="change.display.ipaText != 'check'">{{ change.display.ipaText }}</span>
             </td>
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
-              <i ng-if="change.display.ipaText == 'check'" class="glyphicon glyphicon-check"></i>
+              <i ng-if="change.display.scenarioText == 'check'" class="glyphicon glyphicon-check"></i>
               <span ng-if="change.display.scenarioText != 'check'">{{ change.display.scenarioText }}</span>
             </td>
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
