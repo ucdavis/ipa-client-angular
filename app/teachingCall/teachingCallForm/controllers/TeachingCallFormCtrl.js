@@ -67,12 +67,8 @@ class TeachingCallFormCtrl {
 				}
 			});
 
-			var results = [];
-			if (!query || query.length == 0) {
-				results = angular.copy(uniquePreferenceOptions);
-			}
-
-			if (query.length >= 3) {
+			var results = angular.copy(uniquePreferenceOptions);
+			if (query) {
 				var options = {
 					shouldSort: true,
 					threshold: 0.8,
