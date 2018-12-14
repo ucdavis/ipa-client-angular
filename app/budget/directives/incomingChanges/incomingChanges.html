@@ -6,9 +6,10 @@
     <div class="line-items">
       <table class="line-items__table">
         <colgroup>
-          <col style="width: 30%;">
-          <col style="width: 25%;">
-          <col style="width: 25%;">
+          <col style="width: 20%;">
+          <col style="width: 20%;">
+          <col style="width: 20%;">
+          <col style="width: 20%;">
           <col style="width: 20%;">
         </colgroup>
         <thead>
@@ -16,6 +17,11 @@
             <th class="line-items__table-header">
               <div class="line-items__table-header-container">
                 Course
+              </div>
+            </th>
+           <th class="line-items__table-header">
+              <div class="line-items__table-header-container">
+                Change
               </div>
             </th>
             <th class="line-items__table-header">
@@ -29,9 +35,7 @@
               </div>
             </th>
             <th class="line-items__table-header line-items__table--amount">
-              <div class="line-items__table-header-amount-container">
-                UI
-              </div>
+              <div class="line-items__table-header-amount-container"></div>
             </th>
           </tr>
         </thead>
@@ -39,33 +43,33 @@
         <tbody>
           <tr ng-repeat="change in changes" ng-if="change.term == termNav.activeTerm">
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
+              <div class="incoming-changes__course">
+                {{ change.display.course }}
+              </div>
+              <div>
+                {{ change.display.title }}
+              </div>
+            </td>
+            <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
               <span>
-                {{ sectionGroupCost.subjectCode }}
+                {{ change.display.description }}
               </span>
             </td>
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
-              {{ sectionGroupCost.courseNumber }}
+              <i ng-if="change.display.ipaText == 'check'" class="glyphicon glyphicon-check"></i>
+              <span ng-if="change.display.ipaText != 'check'">{{ change.display.ipaText }}</span>
             </td>
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
-              {{ sectionGroupCost.title }}
-            </td>
-            <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
-              {{ sectionGroupCost.sequencePattern }}
+              <i ng-if="change.display.ipaText == 'check'" class="glyphicon glyphicon-check"></i>
+              <span ng-if="change.display.scenarioText != 'check'">{{ change.display.scenarioText }}</span>
             </td>
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
 
-              <span ng-if="sectionGroupCost.isBudgeted">
-                <ipa-button text="'Remove Course'"
+              <span>
+                <ipa-button text="'Do the thing'"
                             size="'small'"
-                            confirm-message="'Are you sure you want to remove the course?'"
+                            confirm-message="'Are you sure you want to do the thing?'"
                             on-click="hide(sectionGroupCost)">
-                </ipa-button>
-              </span>
-              <span ng-if="sectionGroupCost.isBudgeted == false">
-                <ipa-button text="'Add Course'"
-                            skin="'dark'"
-                            size="'small'"
-                            on-click="unHide(sectionGroupCost)">
                 </ipa-button>
               </span>
             </td>

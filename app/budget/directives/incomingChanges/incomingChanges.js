@@ -30,6 +30,10 @@ let incomingChanges = function (BudgetActions) {
         scope.changes = scope.changes.concat(changedValues);
         scope.changes = scope.changes.concat(missingCourses);
         scope.changes = scope.changes.concat(addedCourses);
+
+        scope.changes = _.sortBy(scope.changes, function (change) {
+          return change.display.course;
+        });
       };
 
       // Loops over sectionGroupCosts
@@ -51,6 +55,8 @@ let incomingChanges = function (BudgetActions) {
               },
               term: sectionGroup.termCode.slice(-2),
               display: {
+                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+                title: sectionGroup.title,
                 description: "Seats",
                 ipaText: sectionGroup.totalSeats,
                 scenarioText: sectionGroupCost.enrollment
@@ -69,6 +75,8 @@ let incomingChanges = function (BudgetActions) {
               },
               term: sectionGroup.termCode.slice(-2),
               display: {
+                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+                title: sectionGroup.title,
                 description: "TA Count",
                 ipaText: sectionGroup.teachingAssistantAppointments,
                 scenarioText: sectionGroupCost.taCount
@@ -87,6 +95,8 @@ let incomingChanges = function (BudgetActions) {
               },
               term: sectionGroup.termCode.slice(-2),
               display: {
+                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+                title: sectionGroup.title,
                 description: "Reader Count",
                 ipaText: sectionGroup.readerAppointments,
                 scenarioText: sectionGroupCost.readerCount
@@ -110,6 +120,8 @@ let incomingChanges = function (BudgetActions) {
               },
               term: sectionGroupCost.termCode.slice(-2),
               display: {
+                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+                title: sectionGroup.title,
                 description: "Instructor",
                 ipaText: sectionGroup.assignedInstructorNames[0],
                 scenarioText: sectionGroupCost.instructor ? sectionGroupCost.instructor.description : null
@@ -125,6 +137,8 @@ let incomingChanges = function (BudgetActions) {
               },
               term: sectionGroupCost.termCode.slice(-2),
               display: {
+                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+                title: sectionGroup.title,
                 description: "Instructor",
                 ipaText: sectionGroup.assignedInstructorType ? sectionGroup.assignedInstructorType.description : null,
                 scenarioText: sectionGroupCost.instructorType ? sectionGroupCost.instructorType.description : null
@@ -143,6 +157,8 @@ let incomingChanges = function (BudgetActions) {
               },
               term: sectionGroupCost.termCode.slice(-2),
               display: {
+                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+                title: sectionGroup.title,
                 description: "Section Count",
                 ipaText: sectionGroup.sectionCount,
                 scenarioText: sectionGroupCost.sectionCount
@@ -217,10 +233,11 @@ let incomingChanges = function (BudgetActions) {
               },
               term: sectionGroup.termCode.slice(-2),
               display: {
-                course: "",
-                description: "",
-                ipaText: "present",
-                scenarioText: "missing"
+                course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+                title: sectionGroup.title,
+                description: "Not budgeted",
+                ipaText: "check",
+                scenarioText: ""
               }
             };
 
@@ -245,10 +262,11 @@ let incomingChanges = function (BudgetActions) {
               },
               term: sectionGroupCost.termCode.slice(-2),
               display: {
-                course: "",
-                description: "",
-                ipaText: "missing",
-                scenarioText: "present"
+                course: sectionGroupCost.subjectCode + " " + sectionGroupCost.courseNumber,
+                title: sectionGroupCost.title,
+                description: "Not scheduled",
+                ipaText: "",
+                scenarioText: "check"
               }
             };
 
