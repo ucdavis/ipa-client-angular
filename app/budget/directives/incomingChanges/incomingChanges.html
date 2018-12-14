@@ -41,7 +41,7 @@
         </thead>
 
         <tbody>
-          <tr ng-repeat="change in changes" ng-if="change.term == termNav.activeTerm">
+          <tr ng-repeat="change in changes[termNav.activeTerm]">
             <td class="course-list__cell" ng-class-even="'course-list__cell--dark'">
               <div class="incoming-changes__course">
                 {{ change.display.course }}

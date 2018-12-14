@@ -34,6 +34,8 @@ let incomingChanges = function (BudgetActions) {
         scope.changes = _.sortBy(scope.changes, function (change) {
           return change.display.course;
         });
+
+        scope.changes = scope.breakIntoTerms(scope.changes);
       };
 
       // Loops over sectionGroupCosts
@@ -276,6 +278,17 @@ let incomingChanges = function (BudgetActions) {
         });
 
         return changes;
+      };
+
+      scope.breakIntoTerms = function(changes) {
+        var separatedChanges = {};
+
+        changes.forEach(function(change) {
+          separatedChanges[change.term] = separatedChanges[change.term] || [];
+          separatedChanges[change.term].push(change);
+        });
+
+        return separatedChanges;
       };
 
       // Recalculate on changes
