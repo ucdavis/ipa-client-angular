@@ -1,16 +1,16 @@
 import './incomingChanges.css';
 
-let incomingChanges = function (BudgetActions) {
+let incomingChanges = function (BudgetActions, $rootScope) {
   return {
     restrict: 'E',
     template: require('./incomingChanges.html'),
     replace: true,
     scope: {
-      termNav: '<',
-      sectionGroups: '<',
-      courses: '<',
-      sectionGroupCosts: '<',
-      selectedBudgetScenario: '<'
+      termNav: '=',
+      sectionGroups: '=',
+      courses: '=',
+      sectionGroupCosts: '=',
+      selectedBudgetScenario: '='
     },
     link: function (scope, element, attrs) {
       scope.totalChanges = {};
@@ -245,6 +245,7 @@ let incomingChanges = function (BudgetActions) {
           if (!sectionGroupCost || sectionGroupCost.disabled) {
             var change = {
               payload: {
+                type: "create",
                 sectionGroup: sectionGroup,
                 sectionGroupCost: null,
               },
@@ -276,6 +277,7 @@ let incomingChanges = function (BudgetActions) {
           if (sectionGroupCost.isBudgeted && sectionGroupCost.isScheduled == false) {
             var change = {
               payload: {
+                type: "remove",
                 sectionGroupCost: sectionGroupCost,
                 sectionGroup: null,
               },
@@ -346,8 +348,52 @@ let incomingChanges = function (BudgetActions) {
         return changesWithHeaders;
       };
 
+      scope.applyTermChanges = function () {
+
+      };
+
+      scope.applyCourseChanges = function (courseHeader) {
+
+      };
+
+      scope.applyChange = function (change) {
+        // Create sectionGroupCost
+        if (change.payload.type == "create") {
+          var sectionGroupCost = {
+            todo: null
+          };
+          debugger;
+
+          //BudgetActions.createSectionGroupCost(sectionGroupCost);
+        }
+
+        // Disable sectionGroupCost
+        if (change.payload.type == "remove") {
+          payload.sectionGroupCost.disabled = true;
+          BudgetActions.updateSectionGroupCost(payload.sectionGroupCost);
+          return;
+        }
+
+        // Update sectionGroupCost
+        if ('enrollment' in change.payload) {
+          change.payload.sectionGroupCost.enrollment = change.payload.enrollment;
+        } else if ('taCount' in change.payload) {
+          change.payload.sectionGroupCost.taCount = change.payload.taCount;
+        } else if ('readerCount' in change.payload) {
+          change.payload.sectionGroupCost.readerCount = change.payload.readerCount;
+        } else if ('instructorTypeId' in change.payload) {
+          change.payload.sectionGroupCost.instructorTypeId = change.payload.instructorTypeId;
+        } else if ('instructorId' in change.payload) {
+          change.payload.sectionGroupCost.instructorId = change.payload.instructorId;
+        } else if ('sectionCount' in change.payload) {
+          change.payload.sectionGroupCost.sectionCount = change.payload.sectionCount;
+        }
+
+        BudgetActions.updateSectionGroupCost(change.payload.sectionGroupCost);
+      };
+
       // Recalculate on changes
-      scope.$watchGroup(['courses', 'sectionGroups', 'sectionGroupCosts'], function(newValues, oldValues, scope) {
+      $rootScope.$on('budgetStateChanged', function (event, data) {
         scope.calculateChanges();
       });
 

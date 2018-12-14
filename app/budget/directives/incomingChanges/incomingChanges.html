@@ -5,7 +5,10 @@
             slim="true">
     <div>
       <div ng-if="changes[termNav.activeTerm].length > 0" class="incoming-changes__apply-term">
-        <ipa-button text="'Apply (' + totalChanges[termNav.activeTerm] + ') changes in ' + termNav.activeTab" skin="'dark'"></ipa-button>
+        <ipa-button text="'Apply (' + totalChanges[termNav.activeTerm] + ') changes in ' + termNav.activeTab"
+                    skin="'dark'"
+                    on-click="applyTermChanges()">
+        </ipa-button>
       </div>
       <table class="incoming-changes__table">
         <colgroup>
@@ -58,8 +61,8 @@
                 <ipa-button text="'Apply (' + change.payload.changes.length + ') changes in ' + change.course"
                             size="'small'"
                             skin="'dark'"
-                            confirm-message="'Are you sure you want to do the thing?'"
-                            on-click="hide(sectionGroupCost)">
+                            confirm-message="'Are you sure you want to apply changes to ' + change.course + '?'"
+                            on-click="applyChange(change)">
                 </ipa-button>
               </span>
             </td>
@@ -82,7 +85,7 @@
                             size="'small'"
                             skin="'dark'"
                             confirm-message="'Are you sure you want to set ' + change.display.changeText + ' to ' +  change.display.scheduleText + '?'"
-                            on-click="hide(sectionGroupCost)">
+                            on-click="applyChange(change)">
                 </ipa-button>
               </span>
             </td>
