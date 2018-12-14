@@ -21,3 +21,8 @@
 .incoming-changes__course-header-ui {
   padding-left: 20%;
 }
+
+.incoming-changes__table {
+  width: 100%;
+  margin-bottom: 20px;
+}
