@@ -353,7 +353,9 @@ let incomingChanges = function (BudgetActions, $rootScope) {
       };
 
       scope.applyCourseChanges = function (courseHeader) {
-
+        courseHeader.payload.changes.forEach(function(change) {
+          scope.applyChange(change);
+        });
       };
 
       scope.applyChange = function (change) {
