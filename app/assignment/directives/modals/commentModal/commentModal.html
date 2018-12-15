@@ -4,9 +4,7 @@
       No Instructor comments.
     </div>
 
-    <div ng-show="instructorComment.length > 0">
-      {{ instructorComment }}
-    </div>
+    <div class="comment-modal__comment" ng-show="instructorComment.length > 0">{{ instructorComment }}</div>
   </div>
   <div class="comment-modal__footer">
     <button ng-click="close()"
