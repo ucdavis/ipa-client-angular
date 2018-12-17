@@ -124,7 +124,6 @@ let incomingChanges = function (BudgetActions, $rootScope) {
           var sectionGroupCostInstructorTypeId = sectionGroupCost.instructorTypeId;
 
           if (sectionGroupInstructorId != sectionGroupCostInstructorId) {
-            debugger;
             var change = {
               payload: {
                 sectionGroupCost: sectionGroupCost,
