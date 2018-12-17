@@ -18,8 +18,9 @@
   border-top: 1px #ebebeb solid;
 }
 
-.incoming-changes__course-header-ui {
-  padding-left: 20%;
+.incoming-changes__ui {
+  text-align: end;
+  padding-right: 15px;
 }
 
 .incoming-changes__table {
