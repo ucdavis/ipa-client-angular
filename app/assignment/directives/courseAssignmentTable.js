@@ -405,19 +405,6 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 			}); // end on event 'assignmentStateChanged'
 
 			// Handle input box edits
-			element.on("keydown", function(e) {
-				let $el = $(e.target);
-				if ($el.data('event-type') != 'setCourseNote') { return; }
-
-				if (e.key == "Enter") {
-					var courseId = $el.data('course-id');
-					var note = e.target.value;
-
-					AssignmentActionCreators.updateCourseNote(courseId, note);
-				}
-			});
-
-			// Handle input box edits
 			element.on("change", function(e) {
 				var $el = $(e.target);
 				if ($el.data('event-type') != 'setCourseNote') { return; }

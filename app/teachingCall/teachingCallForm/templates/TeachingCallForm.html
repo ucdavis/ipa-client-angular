@@ -264,6 +264,7 @@
 		padding: 3px 20px;
 		border-bottom: 1px solid #999;
 		font-weight: bold;
+		cursor: default;
 	}
 
 	.typeahead--suggest-course {
@@ -274,10 +275,9 @@
 </style>
 
 <script type="text/ng-template" id="typeahead-item.html">
-	<div class="typeahead-group-header" ng-if="match.model.firstInGroup">{{match.model.subjectCode ? match.model.subjectCode + " Courses" : "Non-Courses"}} </div>
+	<div class="typeahead-group-header" ng-if="match.model.header" ng-click="$event.stopPropagation();">{{ match.model.description }}</div>
 	<div class="typeahead--suggest-course" ng-if="match.model.suggestACourse"></div>
-	
-	<a>
+	<a ng-if="!match.model.header">
 		<span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
 	</a>
 </script>
