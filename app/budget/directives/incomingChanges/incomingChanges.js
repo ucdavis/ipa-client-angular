@@ -124,6 +124,7 @@ let incomingChanges = function (BudgetActions, $rootScope) {
           var sectionGroupCostInstructorTypeId = sectionGroupCost.instructorTypeId;
 
           if (sectionGroupInstructorId != sectionGroupCostInstructorId) {
+            debugger;
             var change = {
               payload: {
                 sectionGroupCost: sectionGroupCost,
@@ -142,7 +143,7 @@ let incomingChanges = function (BudgetActions, $rootScope) {
             };
 
             changes.push(change);
-          } else if (sectionGroupInstructorTypeId != sectionGroupCostInstructorTypeId) {
+          } else if (!sectionGroupInstructorId && sectionGroupInstructorTypeId != sectionGroupCostInstructorTypeId) {
             var change = {
               payload: {
                 sectionGroupCost: sectionGroupCost,
