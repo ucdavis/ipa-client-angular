@@ -249,12 +249,32 @@ let incomingChanges = function (BudgetActions, $rootScope, TermService) {
           var sectionGroupCost = sectionGroupCostId ? scope.sectionGroupCosts.list[sectionGroupCostId] : null;
 
           // No matching active sectionGroupCost found for this sectionGroup
-          if (!sectionGroupCost || sectionGroupCost.disabled) {
+          if (!sectionGroupCost) {
             var change = {
               payload: {
                 type: "create",
                 sectionGroup: sectionGroup,
                 sectionGroupCost: null,
+              },
+              term: sectionGroup.termCode.slice(-2),
+              courseTitle: sectionGroup.title,
+              course: sectionGroup.subjectCode + " " + sectionGroup.courseNumber,
+              sortKey: sectionGroup.subjectCode + sectionGroup.courseNumber + scope.courses.list[sectionGroup.courseId].sequencePattern,
+              display: {
+                subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
+                changeText: "add course",
+                scheduleText: "check",
+                scenarioText: ""
+              }
+            };
+
+            changes.push(change);
+          } else if (sectionGroupCost.disabled) {
+            var change = {
+              payload: {
+                type: "update",
+                disabled: false,
+                sectionGroupCost: sectionGroupCost,
               },
               term: sectionGroup.termCode.slice(-2),
               courseTitle: sectionGroup.title,
@@ -401,6 +421,8 @@ let incomingChanges = function (BudgetActions, $rootScope, TermService) {
           change.payload.sectionGroupCost.instructorId = change.payload.instructorId;
         } else if ('sectionCount' in change.payload) {
           change.payload.sectionGroupCost.sectionCount = change.payload.sectionCount;
+        } else if ('disabled' in change.payload) {
+          change.payload.sectionGroupCost.disabled = change.payload.disabled;
         }
 
         BudgetActions.updateSectionGroupCost(change.payload.sectionGroupCost);
