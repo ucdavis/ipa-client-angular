@@ -349,7 +349,11 @@ let incomingChanges = function (BudgetActions, $rootScope) {
       };
 
       scope.applyTermChanges = function () {
-
+        scope.changes[scope.termNav.activeTerm].forEach(function (change) {
+          if (change.courseHeader) {
+            scope.applyCourseChanges(change);
+          }
+        });
       };
 
       scope.applyCourseChanges = function (courseHeader) {
@@ -362,17 +366,18 @@ let incomingChanges = function (BudgetActions, $rootScope) {
         // Create sectionGroupCost
         if (change.payload.type == "create") {
           var sectionGroupCost = {
-            todo: null
+            sectionGroupId: change.payload.sectionGroup.id,
+            disabled: false
           };
-          debugger;
 
-          //BudgetActions.createSectionGroupCost(sectionGroupCost);
+          BudgetActions.createSectionGroupCost(sectionGroupCost);
+          return;
         }
 
         // Disable sectionGroupCost
         if (change.payload.type == "remove") {
-          payload.sectionGroupCost.disabled = true;
-          BudgetActions.updateSectionGroupCost(payload.sectionGroupCost);
+          change.payload.sectionGroupCost.disabled = true;
+          BudgetActions.updateSectionGroupCost(change.payload.sectionGroupCost);
           return;
         }
 
