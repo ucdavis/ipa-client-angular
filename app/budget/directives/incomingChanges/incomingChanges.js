@@ -73,7 +73,8 @@ let incomingChanges = function (BudgetActions, $rootScope, TermService) {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
                 changeText: "seats",
                 scheduleText: sectionGroup.totalSeats || '0',
-                scenarioText: sectionGroupCost.enrollment
+                scenarioText: sectionGroupCost.enrollment,
+                tooltip: "Are you sure you want to set seats to " + (sectionGroup.totalSeats || '0') + "?"
               }
             };
 
@@ -95,7 +96,8 @@ let incomingChanges = function (BudgetActions, $rootScope, TermService) {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
                 changeText: "TA count",
                 scheduleText: sectionGroup.teachingAssistantAppointments || '0',
-                scenarioText: sectionGroupCost.taCount
+                scenarioText: sectionGroupCost.taCount,
+                tooltip: "Are you sure you want to set TAs to " + (sectionGroup.teachingAssistantAppointments || '0') + "?"
               }
             };
 
@@ -117,7 +119,8 @@ let incomingChanges = function (BudgetActions, $rootScope, TermService) {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
                 changeText: "reader count",
                 scheduleText: sectionGroup.readerAppointments || '0',
-                scenarioText: sectionGroupCost.readerCount
+                scenarioText: sectionGroupCost.readerCount,
+                tooltip: "Are you sure you want to set readers to " + (sectionGroup.readerAppointments || '0') + "?"
               }
             };
 
@@ -144,12 +147,14 @@ let incomingChanges = function (BudgetActions, $rootScope, TermService) {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
                 changeText: "instructor",
                 scheduleText: sectionGroup.assignedInstructorNames[0] || 'unassigned',
-                scenarioText: sectionGroupCost.instructor ? sectionGroupCost.instructor.description : null
+                scenarioText: sectionGroupCost.instructor ? sectionGroupCost.instructor.description : null,
+                tooltip: "Are you sure you want to set the instructor to " + (sectionGroup.assignedInstructorNames[0] || 'unassigned') + "?"
               }
             };
 
             changes.push(change);
           } else if (!sectionGroupInstructorId && sectionGroupInstructorTypeId != sectionGroupCostInstructorTypeId) {
+            var scheduleText = sectionGroup.assignedInstructorType ? sectionGroup.assignedInstructorType.description : 'unassigned';
             var change = {
               payload: {
                 sectionGroupCost: sectionGroupCost,
@@ -162,8 +167,9 @@ let incomingChanges = function (BudgetActions, $rootScope, TermService) {
               display: {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
                 changeText: "instructor",
-                scheduleText: sectionGroup.assignedInstructorType ? sectionGroup.assignedInstructorType.description : 'unassigned',
-                scenarioText: sectionGroupCost.instructorType ? sectionGroupCost.instructorType.description : 'unassigned'
+                scheduleText: scheduleText,
+                scenarioText: sectionGroupCost.instructorType ? sectionGroupCost.instructorType.description : 'unassigned',
+                tooltip: "Are you sure you want to set the instructor type to " + scheduleText + "?"
               }
             };
 
@@ -185,7 +191,8 @@ let incomingChanges = function (BudgetActions, $rootScope, TermService) {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
                 changeText: "section count",
                 scheduleText: sectionGroup.sectionCount || '0',
-                scenarioText: sectionGroupCost.sectionCount
+                scenarioText: sectionGroupCost.sectionCount,
+                tooltip: "Are you sure you want to set the section count to " + (sectionGroup.sectionCount || '0') + "?"
               }
             };
 
@@ -264,7 +271,8 @@ let incomingChanges = function (BudgetActions, $rootScope, TermService) {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
                 changeText: "add course",
                 scheduleText: "check",
-                scenarioText: ""
+                scenarioText: "",
+                tooltip: "Are you sure you want to add " + sectionGroup.subjectCode + " " + sectionGroup.courseNumber + "?"
               }
             };
 
@@ -284,7 +292,8 @@ let incomingChanges = function (BudgetActions, $rootScope, TermService) {
                 subTitle: scope.courses.list[sectionGroup.courseId].sequencePattern,
                 changeText: "add course",
                 scheduleText: "check",
-                scenarioText: ""
+                scenarioText: "",
+                tooltip: "Are you sure you want to remove " + sectionGroup.subjectCode + " " + sectionGroup.courseNumber + "?"
               }
             };
 
@@ -316,7 +325,8 @@ let incomingChanges = function (BudgetActions, $rootScope, TermService) {
                 subTitle: sectionGroupCost.sequencePattern,
                 changeText: "remove course",
                 scheduleText: "",
-                scenarioText: "check"
+                scenarioText: "check",
+                tooltip: "Are you sure you want to remove " + sectionGroupCost.subjectCode + " " + sectionGroupCost.courseNumber + "?"
               }
             };
 
@@ -360,7 +370,7 @@ let incomingChanges = function (BudgetActions, $rootScope, TermService) {
                 sortKey: change.course,
                 display: {
                   title: change.course,
-                  subTitle: change.courseTitle
+                  subTitle: change.courseTitle,
                 }
               };
   
