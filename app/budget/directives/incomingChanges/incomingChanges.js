@@ -1,6 +1,6 @@
 import './incomingChanges.css';
 
-let incomingChanges = function (BudgetActions, $rootScope) {
+let incomingChanges = function (BudgetActions, $rootScope, TermService) {
   return {
     restrict: 'E',
     template: require('./incomingChanges.html'),
@@ -14,6 +14,7 @@ let incomingChanges = function (BudgetActions, $rootScope) {
     },
     link: function (scope, element, attrs) {
       scope.totalChanges = {};
+      scope.tabOverrides = {};
 
       scope.setActiveTerm = function(activeTermTab) {
         BudgetActions.selectTerm(activeTermTab);
@@ -38,6 +39,12 @@ let incomingChanges = function (BudgetActions, $rootScope) {
         });
 
         scope.changes = scope.breakIntoTerms(scope.changes);
+
+        Object.keys(scope.changes).forEach(function(term) {
+          var changes = scope.changes[term].length > 0 ? " (" + scope.changes[term].length + ")" : "";
+          scope.tabOverrides[TermService.getShortTermName(term)] = TermService.getShortTermName(term) + changes;
+        });
+
         scope.changes = scope.addCourseHeaders(scope.changes);
       };
 
