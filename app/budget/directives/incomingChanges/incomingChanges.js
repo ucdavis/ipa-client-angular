@@ -48,7 +48,7 @@ let incomingChanges = function (BudgetActions, $rootScope, TermService) {
         scope.changes = scope.addCourseHeaders(scope.changes);
       };
 
-      // Loops over sectionGroupCosts
+      // Calculate changes for sections present in both the scheduled data and the scenario
       scope.calculateChangedValues = function (sectionGroupCostIds) {
         var changes = [];
 
