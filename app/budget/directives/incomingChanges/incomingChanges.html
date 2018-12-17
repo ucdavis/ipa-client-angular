@@ -7,6 +7,7 @@
       <div ng-if="changes[termNav.activeTerm].length > 0" class="incoming-changes__apply-term">
         <ipa-button text="'Apply (' + totalChanges[termNav.activeTerm] + ') changes in ' + termNav.activeTab"
                     skin="'dark'"
+                    confirm-message="'Are you sure you want to apply all changes in ' + termNav.activeTab + '?'"
                     on-click="applyTermChanges()">
         </ipa-button>
       </div>
