@@ -33,6 +33,11 @@
 	line-height: 1.2em;
 }
 
+.instructor-title {
+	color: black;
+	font-weight: bold;
+}
+
 #courses-table .tile-assignment {
   position: relative;
   padding: 6px;
@@ -118,7 +123,7 @@
 }
 
 .course-title {
-	color: #949494;
+	color: black;
 	font-weight: bold;
 }
 
@@ -918,12 +923,6 @@ li.active-term .dropdown-term-row {
 
 .uib-datepicker-popup {
    width: 285px;
-}
-
-.instructor-comment-modal__comment-text {
-	margin-top: 10px;
-	border: 1px solid #F2F2F2;
-	padding: 5px;
 }
 
 .assign-instructor-dropdown {
