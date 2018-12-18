@@ -9,6 +9,16 @@
 	border-radius: 3px;
 }
 
+.add-budget-scenario__copy-ui {
+  height: 31px;
+  display: flex;
+  align-items: center;
+}
+
+.add-budget-scenario__main-content {
+  min-height: 150px;
+}
+
 .add-budget-scenario__dropdown-label {
 	padding-right: 5px;
 	text-decoration: none;

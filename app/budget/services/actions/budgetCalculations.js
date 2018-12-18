@@ -515,7 +515,9 @@ class BudgetCalculations {
 						sectionCount: 0,
 						balance: (lineItemsAmount * -1)
 					};
+				});
 
+				summary.terms.forEach(function(term) {
 					scheduleCosts.byTerm[term].forEach(function(container) {
 						container.sectionGroupCosts.forEach(function(sectionGroupCost) {
 							summary.byTerm[term].taCount += sectionGroupCost.taCount || 0;
@@ -526,7 +528,16 @@ class BudgetCalculations {
 							summary.byTerm[term].replacementCosts.overall += sectionGroupCost.overrideInstructorCost || 0;
 							summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroupCost);
 							summary.byTerm[term].totalCosts += (sectionGroupCost.taCost || 0) + (sectionGroupCost.readerCost || 0) + (sectionGroupCost.overrideInstructorCost || 0);
-							summary.byTerm[term].totalUnits += (sectionGroupCost.unitsLow || sectionGroupCost.unitsHigh || 0);
+
+							var units = 0;
+
+							if (sectionGroupCost.unitsHigh && sectionGroupCost.unitsHigh >= sectionGroupCost.unitsLow) {
+								units = sectionGroupCost.unitsHigh;
+							} else if (sectionGroupCost.unitsLow && sectionGroupCost.unitsLow > sectionGroupCost.unitsHigh) {
+								units = sectionGroupCost.unitsLow;
+							}
+
+							summary.byTerm[term].totalUnits += units;
 							summary.byTerm[term].totalSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
 							summary.byTerm[term].lowerDivCount += (parseInt(sectionGroupCost.courseNumber) < 100 ? 1 : 0);
 							summary.byTerm[term].upperDivCount += (parseInt(sectionGroupCost.courseNumber) > 100 && parseInt(sectionGroupCost.courseNumber) < 200 ? 1 : 0);
@@ -536,7 +547,7 @@ class BudgetCalculations {
 							summary.byTerm[term].totalOfferingsCount += 1;
 						});
 					});
-	
+
 					summary.combinedTerms.taCount += summary.byTerm[term].taCount;
 					summary.combinedTerms.taCost += summary.byTerm[term].taCost;
 					summary.combinedTerms.readerCount += summary.byTerm[term].readerCount;

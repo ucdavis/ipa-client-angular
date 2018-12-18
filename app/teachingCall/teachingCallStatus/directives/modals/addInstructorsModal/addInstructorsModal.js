@@ -29,6 +29,10 @@ let addInstructorsModal = function (TermService, TeachingCallStatusActionCreator
         instructor.invited = false;
       });
 
+      scope.invitedInstructorsCount = function() {
+        return scope.startTeachingCallConfig.invitedInstructors.filter(function(el) { return el.invited == true; }).length;
+      };
+
       scope.close = function() {
 				scope.isVisible = false;
 			};
