@@ -33,11 +33,16 @@
 	line-height: 1.2em;
 }
 
+.instructor-title {
+	color: black;
+	font-weight: bold;
+}
+
 #courses-table .tile-assignment {
   position: relative;
-  height: 30px;
   padding: 6px;
 }
+
 .tile-assignment-details {
   padding-top: 3px;
   font-size: 10px;
@@ -118,7 +123,7 @@
 }
 
 .course-title {
-	color: #949494;
+	color: black;
 	font-weight: bold;
 }
 
@@ -944,12 +949,6 @@ li.active-term .dropdown-term-row {
    width: 285px;
 }
 
-.instructor-comment-modal__comment-text {
-	margin-top: 10px;
-	border: 1px solid #F2F2F2;
-	padding: 5px;
-}
-
 .assign-instructor-dropdown {
 	min-width: 100%;
 }
@@ -1026,4 +1025,8 @@ li.active-term .dropdown-term-row {
 	margin: 9px 0;
 	overflow: hidden;
 	background-color: #e5e5e5;
+}
+
+.course-assignment-table__instructor-type {
+	opacity: .6;
 }

@@ -16,7 +16,7 @@ class TeachingCallFormCtrl {
 		$scope.year = $routeParams.year;
 		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 		$scope.view = {};
-
+		$scope.modals = {};
 
 		$rootScope.$on('teachingCallFormStateChanged', function (event, data) {
 			$scope.view.state = data;
@@ -26,6 +26,9 @@ class TeachingCallFormCtrl {
 			showSuggestCourse: false
 		};
 
+		$scope.openTutorialModal = function () {
+			$scope.modals.isTutorialModalOpen = true;
+		};
 		$scope.toggleSuggestCourse = function () {
 			$scope.viewState.showSuggestCourse = !$scope.viewState.showSuggestCourse;
 		};
@@ -64,19 +67,8 @@ class TeachingCallFormCtrl {
 				}
 			});
 
-			// Display courses already on the schedule
-			if (!query || query.length == 0) {
-				var courses = angular.copy(uniquePreferenceOptions);
-				var groupedResults = _.chain(courses)
-					.groupBy(function(course) { return course.subjectCode; })
-					.map(function(groupedCourses) { groupedCourses[0].firstInGroup = true; return groupedCourses; }).flatten().value();
-				groupedResults.push({ description: "Suggest a Course ...", suggestACourse: true });
-				return groupedResults;
-			}
-
-			var optimizedQuery = $scope.optimizeQueryFormat(query);
-
-			if (query.length >= 3) {
+			var results = angular.copy(uniquePreferenceOptions);
+			if (query) {
 				var options = {
 					shouldSort: true,
 					threshold: 0.8,
@@ -89,19 +81,30 @@ class TeachingCallFormCtrl {
 						"description"
 					]
 				};
+				var optimizedQuery = $scope.optimizeQueryFormat(query);
 
 				var fuse = new Fuse(uniquePreferenceOptions, options);
-				var results = fuse.search(optimizedQuery);
-
-				results = angular.copy(results);
-				var groupedResults = _.chain(results)
-					.groupBy(function(result) { return result.subjectCode; })
-					.map(function(groupedCourses) { groupedCourses[0].firstInGroup = true; return groupedCourses; }).flatten().value();
-
-				// Append Suggest a Course option
-				groupedResults.push({ description: "Suggest a Course ...", suggestACourse: true });
-				return groupedResults;
+				var searchResults = fuse.search(optimizedQuery);
+				results = angular.copy(searchResults);
 			}
+
+			// Inject headers into results for displaying in typeahead dropdown
+			var groupedResults = _.chain(results).groupBy(function (course) { return course.subjectCode; })
+				.map(function (groupedCourses) { groupedCourses[0].firstInGroup = true; return groupedCourses; })
+				.flatten().value();
+
+			var resultsWithHeaders = angular.copy(groupedResults);
+			var headersAdded = 0;
+			groupedResults.forEach(function (result, index) {
+				if (result.firstInGroup === true) {
+					var headerDescription = result.uniqueIdentifier ? result.subjectCode + " Courses" : "Non-Courses";
+					resultsWithHeaders.splice(index + headersAdded, 0, { description: headerDescription, header: true });
+					headersAdded += 1;
+				}
+			});
+			resultsWithHeaders.push({ description: "Suggest a Course ...", suggestACourse: true });
+
+			return resultsWithHeaders;
 		};
 
 		// Will improve query formatting when possible to improve search score

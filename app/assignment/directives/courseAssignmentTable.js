@@ -232,7 +232,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 												// Add approved teachingAssignment to term
 												courseHtml += "<div class=\"alert alert-info tile-assignment\">";
 												if (instructor) {
-													courseHtml += instructor.fullName;
+													courseHtml += instructor.fullName + '<div class="course-assignment-table__instructor-type">' + instructorType.description + '</div>';
 												} else {
 													courseHtml += instructorType.description;
 												}
@@ -403,19 +403,6 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					});
 				}
 			}); // end on event 'assignmentStateChanged'
-
-			// Handle input box edits
-			element.on("keydown", function(e) {
-				let $el = $(e.target);
-				if ($el.data('event-type') != 'setCourseNote') { return; }
-
-				if (e.key == "Enter") {
-					var courseId = $el.data('course-id');
-					var note = e.target.value;
-
-					AssignmentActionCreators.updateCourseNote(courseId, note);
-				}
-			});
 
 			// Handle input box edits
 			element.on("change", function(e) {

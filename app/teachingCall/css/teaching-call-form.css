@@ -954,14 +954,6 @@ li.active-term .dropdown-term-row {
    width: 285px;
 }
 
-.instructor-comment-modal__comment-text {
-	margin-top: 10px;
-	border: 1px solid #F2F2F2;
-	padding: 5px;
-}
-
-
-
 /* Teaching-Call-Form
 ---------------------
 */
@@ -1317,4 +1309,21 @@ table.availability-grid tr td {
 .teaching-call-form .submit-success-label {
 	color: #9e9e9e;
 	padding-top: 10px;
+}
+
+.teaching-call-form__video-tutorial-btn {
+	background-color: #03A9F4;
+	color: white;
+	border-color: #03A9F4;
+	height: 31px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.teaching-call-form__video-tutorial-btn:focus,
+.teaching-call-form__video-tutorial-btn:active,
+.teaching-call-form__video-tutorial-btn:hover {
+	background-color: #028dcc !important; /*Overriding a neon theme that uses !important */
+	color: white !important;
+	border-color: #03A9F4;
 }
