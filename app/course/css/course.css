@@ -794,3 +794,7 @@ width: 180px;
   padding: 0px;
   cursor: pointer;
 }
+
+.section-group-details__total--overflow {
+  color: #cc2424;
+}

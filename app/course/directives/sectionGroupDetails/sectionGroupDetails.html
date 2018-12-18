@@ -63,7 +63,11 @@
             <td><strong>Total</strong></td>
             <!-- TODO: Get enrollment live from DW? -->
             <!--<td>{{ section.enrollment }}</td>-->
-            <td class="text-center">{{ sectionSeatTotal(view.selectedEntity) }} / {{ view.selectedEntity.plannedSeats }}</td>
+            <td class="text-center">
+              <p ng-class="{'section-group-details__total--overflow': sectionSeatTotal(view.selectedEntity) > view.selectedEntity.plannedSeats }">
+                {{ sectionSeatTotal(view.selectedEntity) }} / {{ view.selectedEntity.plannedSeats }}
+              </p>
+            </td>
             <td></td>
           </tr>
         </tbody>
