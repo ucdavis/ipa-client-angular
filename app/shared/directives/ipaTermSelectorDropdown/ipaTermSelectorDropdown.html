@@ -1,5 +1,13 @@
 <div class="ipa-term-selector-dropdown header--work-group btn-group" role="group" aria-label="...">
-	<button ng-if="readOnlyMode == false"
+	<div ng-if="readOnlyMode == true"	
+ 					class="btn-term-selector-inactive dropdown-toggle"	
+ 					type="button"	
+ 					aria-haspopup="true" aria-expanded="true">	
+ 		<span>	
+ 			{{ currentTermDescription }}	
+ 		</span>	
+	</div>
+	 <button ng-if="isDisabled == false && readOnlyMode == false"
 					class="ipa-term-selector-dropdown__button btn btn-default dropdown-toggle"
 					type="button" id="dropdownMenu1" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="true">
@@ -8,7 +16,7 @@
 			<span class="caret"></span>
 		</span>
 	</button>
-	<ul ng-if="readOnlyMode == false"
+	<ul ng-if="isDisabled == false && readOnlyMode == false"
 			class="dropdown-menu" style="width: 250px;" aria-labelledby="dropdownMenu1">
 		<li ng-repeat="term in scheduleTerms" style="cursor: pointer;">
 			<a ng-click="gotoTerm(term.shortCode)">

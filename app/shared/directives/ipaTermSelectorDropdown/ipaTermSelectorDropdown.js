@@ -12,6 +12,7 @@ let ipaTermSelectorDropdown  = function ($window, $location, $routeParams, $root
 			scope.workgroupId = $routeParams.workgroupId;
 			scope.termShortCode = $routeParams.termShortCode;
 			scope.currentEndHref = $location.path().split('/').pop();
+			scope.isDisabled = false;
 
 			// Term navigation is disabled in read only mode
 			scope.readOnlyMode = false;
@@ -37,7 +38,7 @@ let ipaTermSelectorDropdown  = function ($window, $location, $routeParams, $root
 			});
 
 			if (scope.termShortCode == null) {
-				scope.readOnlyMode = true;
+				scope.isDisabled = true;
 			}
 
 			scope.gotoTerm = function (newTermShortCode) {
