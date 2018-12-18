@@ -228,7 +228,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 								// Loop over sectionGroups within a term
 								if (scope.view.state.theStaff.termCodes[termCode]) {
-
 									var sortedTheStaff = scope.sortArray(scope.view.state.theStaff.termCodes[termCode]);
 
 									sortedTheStaff.forEach(function(sectionGroupId) {
