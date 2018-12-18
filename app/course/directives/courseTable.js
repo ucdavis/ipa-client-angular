@@ -179,7 +179,10 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           // One for checkbox, and one for course title
           var miscColumns = 2;
           var numberOfColumns = data.state.filters.enabledTerms.length + miscColumns;
-          body += "<tr><td class=\"text-center text-muted\" colspan=\"" + numberOfColumns + "\">No Courses</td></tr>";
+          body += "<tr><td class=\"text-center text-muted\" colspan=\"" + numberOfColumns + "\">No Courses</td>";
+          body += "<td class=\"ui-overlay\"><i class=\"btn add-after entypo-plus-circled\" data-event-type=\"addCourse\" ></i></td>";
+          body += "</tr>"
+        
         }
 
         body += scope.getTotalsRow(termsToRender, data.state);
