@@ -134,10 +134,6 @@ class TeachingCallFormStateService {
 	
 						pageState.formHasChanges = true;
 						return pageState;
-					case ActionTypes.UPDATE_PREFERENCE:
-						pageState;
-						debugger;
-						return pageState;
 					case ActionTypes.ADD_PREFERENCE:
 						var termCode = action.payload.termCode;
 	

@@ -114,29 +114,6 @@ class TeachingCallFormActionCreators {
 				});
 			},
 			removePreference: function (teachingAssignment) {
-				var _this = this;
-				// If a preference is already approved, it is now an assignment. We now simply want to set 'from instructor' to false, not delete the assignment.
-				if (teachingAssignment.approved) {
-					teachingAssignment.fromInstructor = false;
-
-					TeachingCallFormService.updateTeachingAssignment(teachingAssignment).then(function (teachingAssignment) {
-						ipa_analyze_event('teaching call form', 'preference removed');
-						$rootScope.$emit('toast', { message: "Removed Preference", type: "SUCCESS" });
-						var action = {
-							type: ActionTypes.UPDATE_PREFERENCE,
-							payload: {
-								teachingAssignment: teachingAssignment
-							}
-						};
-
-						TeachingCallFormStateService.reduce(action);
-					}, function (err) {
-						$rootScope.$emit('toast', { message: "Could not remove preference.", type: "ERROR" });
-					});
-
-					return;
-				}
-
 				TeachingCallFormService.removePreference(teachingAssignment).then(function (teachingAssignments) {
 					ipa_analyze_event('teaching call form', 'preference removed');
 
