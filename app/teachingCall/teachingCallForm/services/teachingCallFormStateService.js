@@ -134,6 +134,10 @@ class TeachingCallFormStateService {
 	
 						pageState.formHasChanges = true;
 						return pageState;
+					case ActionTypes.UPDATE_PREFERENCE:
+						pageState;
+						debugger;
+						return pageState;
 					case ActionTypes.ADD_PREFERENCE:
 						var termCode = action.payload.termCode;
 	
@@ -340,23 +344,21 @@ class TeachingCallFormStateService {
 			// Filtered by termCode and instructor, and whether or not it should be approved
 			generatePreferences: function (scheduleId, termCode, instructorId, teachingAssignments, sectionGroups, courses) {
 				var preferences = [];
-	
 				var uniqueAddedPreferences = [];
-	
+
 				teachingAssignments.forEach( function (slotAssignment) {
-					// Ensure the assignment is not approved, from the instructor and the term of interest
-					if (termCode != slotAssignment.termCode 
-					|| instructorId != slotAssignment.instructorId) {
-						return;
-					}
-	
+					// Ensure the assignment is from the instructor and the term of interest
+					if (termCode != slotAssignment.termCode || instructorId != slotAssignment.instructorId || slotAssignment.fromInstructor == false) { return; }
+
 					var newPreference = {
 						id: slotAssignment.id,
 						priority: slotAssignment.priority,
 						termCode: slotAssignment.termCode,
 						scheduleId: scheduleId,
 						description: null,
-						instructorId: slotAssignment.instructorId
+						instructorId: slotAssignment.instructorId,
+						fromInstructor: slotAssignment.fromInstructor,
+						approved: slotAssignment.approved
 					};
 	
 					var sectionGroup = null;
@@ -429,7 +431,7 @@ class TeachingCallFormStateService {
 						newPreference.suggestedSubjectCode = slotAssignment.suggestedSubjectCode;
 						newPreference.suggestedEffectiveTermCode = slotAssignment.suggestedEffectiveTermCode;
 						newPreference.suggestedTitle = slotAssignment.suggestedTitle;
-	
+
 						preferences.push(newPreference);
 					}
 					// Unknown preference type

@@ -7,6 +7,9 @@ class TeachingCallFormService {
 			addPreference: function (teachingAssignment) {
 				return ApiService.post("/api/assignmentView/preferences/" + teachingAssignment.scheduleId, teachingAssignment);
 			},
+			updateTeachingAssignment: function (teachingAssignment) {
+				return ApiService.put("/api/teachingAssignments/" + teachingAssignment.id, teachingAssignment);
+			},
 			removePreference: function (teachingAssignment) {
 				return ApiService.delete("/api/assignmentView/preferences/" + teachingAssignment.id);
 			},
