@@ -81,7 +81,6 @@ class TeachingCallFormStateService {
 						// Process data into preferences, assignments, and scheduledCourses
 						pageState.terms.forEach( function(termData) {
 							termData.preferences = self.generatePreferences(action.payload.scheduleId, termData.termCode, action.payload.instructorId, teachingAssignments, pageState.sectionGroupsIndex, pageState.coursesIndex);
-							termData.assignments = self.generateAssignments(action.payload.scheduleId, termData.termCode, action.payload.instructorId, teachingAssignments, pageState.sectionGroupsIndex, pageState.coursesIndex);
 							termData.preferenceOptions = self.generatePreferenceOptions(action.payload.scheduleId, action.payload.instructorId, termData.termCode, termData.preferences, termData.assignments, pageState.sectionGroups, pageState.coursesIndex);
 						});
 	
@@ -339,7 +338,7 @@ class TeachingCallFormStateService {
 			},
 			// Return flattened objects that can be preferences, assignments, or preferenceOptions
 			// Filtered by termCode and instructor, and whether or not it should be approved
-			generateAbstractCourses: function (scheduleId, termCode, instructorId, teachingAssignments, sectionGroups, courses, approved) {
+			generatePreferences: function (scheduleId, termCode, instructorId, teachingAssignments, sectionGroups, courses) {
 				var preferences = [];
 	
 				var uniqueAddedPreferences = [];
@@ -347,8 +346,7 @@ class TeachingCallFormStateService {
 				teachingAssignments.forEach( function (slotAssignment) {
 					// Ensure the assignment is not approved, from the instructor and the term of interest
 					if (termCode != slotAssignment.termCode 
-					|| instructorId != slotAssignment.instructorId
-					|| slotAssignment.approved != approved) {
+					|| instructorId != slotAssignment.instructorId) {
 						return;
 					}
 	
@@ -488,14 +486,6 @@ class TeachingCallFormStateService {
 				allCourses = _self.sortCourses(allCourses);
 	
 				return allCourses;
-			},
-			generatePreferences: function (scheduleId, termCode, instructorId, teachingAssignments, sectionGroups, courses) {
-				var approved = false;
-				return this.generateAbstractCourses(scheduleId, termCode, instructorId, teachingAssignments, sectionGroups, courses, approved);
-			},
-			generateAssignments: function (scheduleId, termCode, instructorId, teachingAssignments, sectionGroups, courses) {
-				var approved = true;
-				return this.generateAbstractCourses(scheduleId, termCode, instructorId, teachingAssignments, sectionGroups, courses, approved);
 			},
 			generatePreferenceOptions: function (scheduleId, instructorId, termCode, preferences, assignments, sectionGroups, courses) {
 				// Gather all course identifiers that already exist as a preference or assignment
