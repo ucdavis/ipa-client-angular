@@ -12,9 +12,9 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 			currentUser: "=",
 			workGroupId: "=",
 		},
-		template: '<div class=\"course-list-row\">' +
+		template: '<div class=\"course-list-row\" ng-if="lowerDivisionTable == true">' +
 		'<div class=\"course-header course-description-cell\">&nbsp;</div></div>' +
-		'<div style="display: flex; justify-content: center; padding-top: 20px;">' +
+		'<div style="display: flex; justify-content: center; padding-top: 20px;" ng-if="lowerDivisionTable == true">' +
 		'<div><img src="/images/ajax-loader.gif" style="width: 32px; height: 32px;" /> <span class="text-muted">&nbsp; Loading assignments</span></div>' +
 		'</div>',
 		link: function (scope, element, attrs) {
@@ -129,31 +129,18 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 					var courseTypeHeader;
 
-					if (scope.lowerDivisionTable == true) {
-						courseTypeHeader = '<div class="type-header"><h5>Lower Divison Courses</h5></div>';
-					}
-					if (scope.upperDivisionTable == true) {
-						courseTypeHeader = '<div class="type-header"><h5>Upper Divison Courses</h5></div>';
-					}
-					if (scope.graduateTable == true) {
-						courseTypeHeader = '<div class="type-header"><h5>Graduate Courses</h5></div>';
-					}
-					if (scope.professionalTable == true) {
-						courseTypeHeader = '<div class="type-header"><h5>Professional Courses</h5></div>';
-					}
-
-					element.append(courseTypeHeader);
-
-					var header = scope.renderHeader();
-					element.append(header);
-
 					var coursesHtml = "";
 					var rowsSinceHeaderWasAdded = 0;
 
 					// Loop over courses (sectionGroup rows)
 
+					var courseHeader = true;
+
 					// Display message if table is empty
-					if (scope.view.state.courses.ids == 0) {
+					if (scope.view.state.courses.ids == 0 && scope.lowerDivisionTable == true) {
+						var header = scope.renderHeader();
+						element.append(header);
+
 						coursesHtml += "<div class=\"course-list-row\">";
 						coursesHtml += "<div class=\"course-description-cell empty-table-message\">";
 						coursesHtml += "No courses have been added to the schedule";
@@ -170,6 +157,27 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 							if (scope.upperDivisionTable == true && (courseNumber < 100 || courseNumber > 199)) { return; }
 							if (scope.graduateTable == true && (courseNumber < 200 || courseNumber > 299)) { return; }
 							if (scope.professionalTable == true && (courseNumber < 300 || courseNumber > 499)) { return; }
+
+						if (courseHeader == true) {
+							if (scope.lowerDivisionTable == true) {
+								courseTypeHeader = '<div class="type-header"><h5>Lower Divison Courses</h5></div>';
+							}
+							if (scope.upperDivisionTable == true) {
+								courseTypeHeader = '<div class="type-header"><h5>Upper Divison Courses</h5></div>';
+							}
+							if (scope.graduateTable == true) {
+								courseTypeHeader = '<div class="type-header"><h5>Graduate Courses</h5></div>';
+							}
+							if (scope.professionalTable == true) {
+								courseTypeHeader = '<div class="type-header"><h5>Professional Courses</h5></div>';
+							}
+							element.append(courseTypeHeader);
+
+							var header = scope.renderHeader();
+							element.append(header);
+
+							courseHeader = false;
+						}
 
 							if (course.isHidden === false && course.isFiltered === false && course.matchesTagFilters === true) {
 								var courseHtml = "";
@@ -417,13 +425,13 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 								coursesHtml += courseHtml;
 
+								rowsSinceHeaderWasAdded++;
+
 								// Add a header after each 10 displayed course rows
 								if (rowsSinceHeaderWasAdded == 10) {
 									coursesHtml += scope.renderHeader();
 									rowsSinceHeaderWasAdded = 0;
 								}
-								rowsSinceHeaderWasAdded++;
-
 							}
 
 						}); // Ending loop over courses

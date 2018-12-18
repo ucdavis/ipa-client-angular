@@ -424,7 +424,6 @@ class AssignmentStateService {
 							instructors.list[instructor.id] = instructor;
 						}
 
-
 						return instructors;
 					case ActionTypes.ADD_SCHEDULE_INSTRUCTOR_NOTE:
 						let scheduleInstructorNote = action.payload.scheduleInstructorNote;
@@ -749,6 +748,23 @@ class AssignmentStateService {
 						var sectionGroupId = action.payload.sectionGroup.id;
 						var index = theStaff.termCodes[termCode].indexOf(sectionGroupId);
 						theStaff.termCodes[termCode].splice(index, 1);
+
+						if (theStaff.termCodes[termCode].length == 0) {
+							delete theStaff.termCodes[termCode];
+						}
+						return theStaff;
+					case ActionTypes.ADD_TEACHING_ASSIGNMENT:
+						var sectionGroupId = action.payload.teachingAssignment.sectionGroupId;
+						var termCode = action.payload.teachingAssignment.termCode;
+
+						if (theStaff.termCodes[termCode]) {
+							var index = theStaff.termCodes[termCode].indexOf(sectionGroupId);
+							theStaff.termCodes[termCode].splice(index, 1);
+
+							if (theStaff.termCodes[termCode].length == 0) {
+								delete theStaff.termCodes[termCode];
+							}
+						}
 						return theStaff;
 					default:
 						return theStaff;

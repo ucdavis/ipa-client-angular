@@ -195,7 +195,6 @@ button.btn.assign-dropdown-btn {
   padding-bottom: 5px;
 	margin: 0px;
   border-radius: 3px;
-  margin-bottom: -40px;
 }
 .tool-icon {
   margin: 0 0.5em;
@@ -978,7 +977,7 @@ li.active-term .dropdown-term-row {
 	padding: 5px 15px 5px 15px;
 	background-color: #F8F8F8;
 	border: 1px solid #CCCCCC;
-	margin-top: 40px;
+	margin-top: 20px;
 	margin-bottom: 20px;
 	border-radius: 3px;
 	position: relative;

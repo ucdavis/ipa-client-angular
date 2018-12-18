@@ -6,8 +6,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 		restrict: 'A',
 		scope: {
 			state: '=',
-			showStaffTable: '=',
-			showUnassignedTable: '=',
+			showInstructorUndeterminedTable: '=',
 			instructorTypeId: '=',
 			sharedState: '=',
 			openCommentModal: '&?',
@@ -175,21 +174,36 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 				var coursesHtml = "";
 
-				if (scope.showStaffTable == true) {
+				if (scope.showInstructorUndeterminedTable == true) {
+					var Unassigned = {};
+					Unassigned.termCodes = {};
+
+					scope.view.state.sectionGroups.ids.forEach(function(sectionGroupId) {
+						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+						if (!sectionGroup.isAssigned) {
+							// Scaffold assignments array if this is the first in the termCode
+							if (!Unassigned.termCodes[sectionGroup.termCode]) {
+								Unassigned.termCodes[sectionGroup.termCode] = [];
+							}
+
+							Unassigned.termCodes[sectionGroup.termCode].push(sectionGroup.id);
+						}
+					});
+
+					var theStaffLength = _.keys(scope.view.state.theStaff.termCodes).length;
+					var unassignedLength = _.keys(Unassigned.termCodes).length;
+
+					if (!theStaffLength > 0 && !unassignedLength > 0) {
+						return;
+					}
+
 					var instructorTypeHeader = '<div class="type-header"><h5>Instructors TBD</h5></div>';
 					element.append(instructorTypeHeader);
 
 					var header = scope.renderHeader();
 					element.append(header);
 
-					// Add 'The Staff'
-					// Display message if table is empty
-					if (scope.view.state.courses.ids == 0) {
-						coursesHtml += "<div class=\"course-list-row\">";
-						coursesHtml += "<div class=\"course-description-cell empty-table-message\">";
-						coursesHtml += "No courses have been added to the schedule";
-						coursesHtml += "</div>";
-					} else {
+					if (theStaffLength > 0) {
 						coursesHtml += "<div class=\"course-list-row\">";
 						coursesHtml += "<div class=\"description-cell\">";
 						coursesHtml += "<div>";
@@ -214,6 +228,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 								// Loop over sectionGroups within a term
 								if (scope.view.state.theStaff.termCodes[termCode]) {
+
 									var sortedTheStaff = scope.sortArray(scope.view.state.theStaff.termCodes[termCode]);
 
 									sortedTheStaff.forEach(function(sectionGroupId) {
@@ -252,13 +267,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 							});
 						coursesHtml += "</div>"; // Ending course-row div
 					}
-				} else if (scope.showUnassignedTable == true) {
-					if (scope.view.state.courses.ids == 0) {
-						coursesHtml += "<div class=\"course-list-row\">";
-						coursesHtml += "<div class=\"course-description-cell empty-table-message\">";
-						coursesHtml += "No courses have been added to the schedule";
-						coursesHtml += "</div>";
-					} else {
+					if (unassignedLength > 0) {
 						coursesHtml += "<div class=\"course-list-row\">";
 						coursesHtml += "<div class=\"description-cell\">";
 						coursesHtml += "<div>";
@@ -274,21 +283,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						coursesHtml += "<div class=\"description-cell__avail-btn-container\"></div>";
 						coursesHtml += "</div>";
 						coursesHtml += "</div>"; // end description-cell
-
-						var Unassigned = {};
-						Unassigned.termCodes = {};
-
-						scope.view.state.sectionGroups.ids.forEach(function(sectionGroupId) {
-							var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
-							if (!sectionGroup.isAssigned) {
-								// Scaffold assignments array if this is the first in the termCode
-								if (!Unassigned.termCodes[sectionGroup.termCode]) {
-									Unassigned.termCodes[sectionGroup.termCode] = [];
-								}
-
-								Unassigned.termCodes[sectionGroup.termCode].push(sectionGroup.id);
-							}
-						});
 
 						// Loop over active terms
 						$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) {

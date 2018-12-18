@@ -255,7 +255,10 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
 					var sectionGroup = AssignmentStateService._state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
-					sectionGroup.isAssigned = true;
+					if (sectionGroup) {
+						sectionGroup.isAssigned = true;
+						sectionGroup.showTheStaff= false;
+					}
 
 					var action = {
 						type: ActionTypes.ADD_TEACHING_ASSIGNMENT,
@@ -281,6 +284,12 @@ class AssignmentActionCreators {
 					ipa_analyze_event('instructor assignments', 'instructor type assigned');
 
 					_self.$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
+					var sectionGroup = AssignmentStateService._state.sectionGroups.list[newTeachingAssignment.sectionGroupId];
+
+					if (sectionGroup) {
+						sectionGroup.isAssigned = true;
+					}
+
 					_self.AssignmentStateService.reduce({
 						type: ActionTypes.ADD_TEACHING_ASSIGNMENT,
 						payload: {
@@ -402,9 +411,10 @@ class AssignmentActionCreators {
 					if (originalTeachingAssignment.fromInstructor === false && originalTeachingAssignment.approved === false) {
 						var sectionGroup = AssignmentStateService._state.sectionGroups.list[originalTeachingAssignment.sectionGroupId];
 
-						if (sectionGroup.teachingAssignmentIds.length == 1) {
+						if (sectionGroup && sectionGroup.teachingAssignmentIds.length == 1) {
 							sectionGroup.isAssigned = false;
 						}
+
 						action = {
 							type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,
 							payload: {

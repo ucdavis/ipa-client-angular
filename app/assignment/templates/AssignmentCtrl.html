@@ -142,8 +142,7 @@
 			<div ng-repeat="instructorTypeId in view.state.instructorTypes.ids">
 				<div instructor-assignment-table id="instructors-table"
 				     state="view.state"
-				     show-staff-table="false"
-				     show-unassigned-table="false"
+				     show-instructor-undetermined-table="false"
 				     shared-state="view.sharedState"
 				     instructor-type-id="instructorTypeId"
 				     open-comment-modal="openCommentModal(instructorId)"
@@ -152,14 +151,7 @@
 			</div>
 			<div instructor-assignment-table id="instructors-table"
 			     state="view.state"
-			     show-staff-table="true"
-			     show-unassigned-table="false"
-			     shared-state="view.sharedState">
-			</div>
-			<div instructor-assignment-table id="instructors-table"
-			     state="view.state"
-			     show-staff-table="false"
-			     show-unassigned-table="true"
+			     show-instructor-undetermined-table="true"
 			     shared-state="view.sharedState">
 			</div>
 		</div>
