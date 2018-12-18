@@ -21,9 +21,15 @@ let ipaTermSelector = function($window, $location, $routeParams, $rootScope) {
 
 			// Generates display text for the center of the term selector
 			scope.generateDisplayText = function() {
+				if (!scope.termShortCode || scope.termShortCode.length != 2) {
+					return "Annual";
+				}
+
 				var description = scope.termShortCode.getTermDisplayName();
 				if (description && description.length > 0) {
 					return description;
+				} else {
+					return "Annual";
 				}
 			};
 
