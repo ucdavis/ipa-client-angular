@@ -1,0 +1,106 @@
+<div class="incoming-changes">
+  <ipa-tabs tab-names="termNav.allTabs"
+            active-tab="termNav.activeTab"
+            select-tab="setActiveTerm"
+            tab-overrides="tabOverrides"
+            slim="true">
+    <div>
+      <div ng-if="changes[termNav.activeTerm].length > 0" class="incoming-changes__apply-term">
+        <ipa-button text="'Apply (' + totalChanges[termNav.activeTerm] + ') changes in ' + termNav.activeTab"
+                    skin="'dark'"
+                    confirm-message="'Are you sure you want to apply all changes in ' + termNav.activeTab + '?'"
+                    on-click="applyTermChanges()">
+        </ipa-button>
+      </div>
+      <table class="incoming-changes__table">
+        <colgroup>
+          <col style="width: 20%;">
+          <col style="width: 20%;">
+          <col style="width: 20%;">
+          <col style="width: 20%;">
+          <col style="width: 20%;">
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="incoming-changes__table-header">
+              <div class="incoming-changes__table-header-container">
+                Course
+              </div>
+            </th>
+           <th class="incoming-changes__table-header">
+              <div class="incoming-changes__table-header-container">
+                Change
+              </div>
+            </th>
+            <th class="incoming-changes__table-header">
+              <div class="incoming-changes__table-header-container">
+                Scheduled
+              </div>
+            </th>
+            <th class="incoming-changes__table-header">
+              <div class="incoming-changes__table-header-container">
+                Scenario
+              </div>
+            </th>
+            <th class="incoming-changes__table-header">
+              <div class="incoming-changes__table-header-container"></div>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="change in changes[termNav.activeTerm]" ng-class="{'incoming-changes__course-divide': change.courseHeader, 'incoming-changes__section-divide': !change.courseHeader}">
+            <td class="course-list__cell">
+              <div class="incoming-changes__title">
+                {{ change.display.title }}
+              </div>
+              <div ng-class="{ 'incoming-changes__sub-title-indent': !change.display.title }">
+                {{ change.display.subTitle }}
+              </div>
+            </td>
+            <td class="incoming-changes__course-header-ui" ng-if="change.courseHeader" colspan="4">
+              <span>
+                <ipa-button text="'Apply (' + change.payload.changes.length + ') changes in ' + change.course"
+                            size="'small'"
+                            skin="'dark'"
+                            confirm-message="'Are you sure you want to apply changes to ' + change.course + '?'"
+                            on-click="applyCourseChanges(change)">
+                </ipa-button>
+              </span>
+            </td>
+            <td ng-if="!change.courseHeader" class="course-list__cell">
+              <span class="incoming-changes__change-text">
+                {{ change.display.changeText }}
+              </span>
+            </td>
+            <td ng-if="!change.courseHeader" class="course-list__cell">
+              <i ng-if="change.display.scheduleText == 'check'" class="glyphicon glyphicon-check"></i>
+              <span ng-if="change.display.scheduleText != 'check'">{{ change.display.scheduleText }}</span>
+            </td>
+            <td ng-if="!change.courseHeader" class="course-list__cell">
+              <i ng-if="change.display.scenarioText == 'check'" class="glyphicon glyphicon-check"></i>
+              <span ng-if="change.display.scenarioText != 'check'">{{ change.display.scenarioText }}</span>
+            </td>
+            <td ng-if="!change.courseHeader" class="course-list__cell incoming-changes__ui">
+              <span ng-if="!change.courseHeader">
+                <ipa-button text="'Apply ' + change.display.changeText"
+                            size="'small'"
+                            skin="'dark'"
+                            confirm-message="change.display.tooltip"
+                            on-click="applyChange(change)">
+                </ipa-button>
+              </span>
+            </td>
+          </tr>
+          <tr ng-show="!changes[termNav.activeTerm]">
+            <td colspan="5">
+              <div class="incoming-changes__no-changes">
+                No changes
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ipa-tabs>
+</div>

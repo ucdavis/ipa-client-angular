@@ -295,6 +295,14 @@ class BudgetActions {
 					sectionGroupCost.unitsLow = course.unitsLow;
 					sectionGroupCost.taCount = sectionGroup.teachingAssistantAppointments;
 					sectionGroupCost.readerCount = sectionGroup.readerAppointments;
+          sectionGroupCost.title = course.title;
+          sectionGroupCost.subjectCode = course.subjectCode;
+          sectionGroupCost.courseNumber = course.courseNumber;
+          sectionGroupCost.sequencePattern = course.sequencePattern;
+          sectionGroupCost.sectionCount = sectionGroup.sectionCount;
+          sectionGroupCost.enrollment = sectionGroup.plannedSeats;
+          sectionGroupCost.instructorId = sectionGroup.assignedInstructorIds[0];
+          sectionGroupCost.instructorTypeId = sectionGroup.assignedInstructorTypeIds[0];
 				}
 
 				sectionGroupCost.termCode = TermService.termToTermCode(term, year);
