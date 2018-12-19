@@ -251,6 +251,44 @@
 				</td>
 			</tr>
 
+			<!-- Undergrad SCH-->
+			<tr>
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell-container--left">
+						Student Credit Hours (Undergrad)
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms" class="budget-summary__total-sch">
+					<div class="budget-summary__cell-container">
+						{{ summary.byTerm[term].undergradSCH }}
+					</div>
+				</td>
+				<td class="budget-summary__total-sch">
+					<div class="budget-summary__cell-container budget-summary__cell-container--last">
+						{{ summary.combinedTerms.undergradSCH }}
+					</div>
+				</td>
+			</tr>
+
+			<!-- Grad SCH-->
+			<tr>
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell-container--left">
+						Student Credit Hours (Graduate)
+					</div>
+				</td>
+				<td ng-repeat="term in summary.terms">
+					<div class="budget-summary__cell-container">
+						{{ summary.byTerm[term].gradSCH }}
+					</div>
+				</td>
+				<td>
+					<div class="budget-summary__cell-container budget-summary__cell-container--last">
+						{{ summary.combinedTerms.gradSCH }}
+					</div>
+				</td>
+			</tr>
+
 			<!-- Total Student Credit Hours -->
 			<tr>
 				<td>

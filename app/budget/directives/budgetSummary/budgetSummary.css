@@ -62,3 +62,7 @@
 	align-items: center;
 	justify-content: flex-end;
 }
+
+.budget-summary__total-sch {
+	border-top: 1px solid black;
+}
