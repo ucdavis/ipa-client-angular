@@ -341,7 +341,10 @@ class WorkloadSummaryActions {
 						if (teachingAssignment.sectionGroupId > 0) {
 							assignment.sequencePattern = course.sequencePattern;
 							assignment.enrollment = _self._getEnrollment(sectionGroup);
+							assignment.actualEnrollment = sectionGroup.actualEnrollment;
+							assignment.maxEnrollment = sectionGroup.maxEnrollment;
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
+							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
 							assignment.units = _self._getUnits(course);
 							assignment.studentCreditHours = assignment.enrollment * assignment.units;
 
@@ -493,7 +496,7 @@ class WorkloadSummaryActions {
 												sectionGroup.previousEnrollment += censusSection.currentEnrolledCount;
 											} else {
 												sectionGroup.actualEnrollment += censusSection.currentEnrolledCount;
-
+												sectionGroup.maxEnrollment = 0;
 												_self._getSectionsForSectionGroup(sectionGroup).forEach(function(section) {
 													sectionGroup.maxEnrollment += section.seats;
 												});

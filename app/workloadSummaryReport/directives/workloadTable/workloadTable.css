@@ -54,3 +54,7 @@
 .workload-table__value--type-totals-bar {
 	border-top: 3px double #979797;
 }
+
+.workload-table__enrollment-percent {
+	color: #a3a3a3;
+}
