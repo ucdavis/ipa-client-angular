@@ -305,21 +305,48 @@ class AssignmentActionCreators {
 			},
 			approveInstructorAssignment: function (teachingAssignment, workgroupId, year) {
 				teachingAssignment.approved = true;
-	
-				_self.AssignmentService.updateInstructorAssignment(teachingAssignment).then(function (teachingAssignment) {
-					ipa_analyze_event('instructor assignments', 'instructor assignment approved');
 
-					$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
-						var action = {
-							type: ActionTypes.UPDATE_TEACHING_ASSIGNMENT,
-							payload: {
-								teachingAssignment: teachingAssignment
-							}
-						};
-						_self.AssignmentStateService.reduce(action);
-				}, function (err) {
-					_self.$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
-				});
+				// If approved course was suggested, need to fetch new sectionGroup and course data
+				if (teachingAssignment.suggestedSubjectCode) {
+					_self.AssignmentService.updateInstructorAssignment(teachingAssignment).then(function (teachingAssignment) {
+						ipa_analyze_event('instructor assignments', 'instructor assignment approved');
+
+						_self.AssignmentService.getSectionGroups(workgroupId, year).then(function (sectionGroups) {
+							var sectionGroup = sectionGroups.find(function (sectionGroup) { return sectionGroup.id === teachingAssignment.sectionGroupId; });
+							_self.AssignmentService.getCourses(workgroupId, year).then(function (courses) {
+								var course = courses.find(function (course) { return course.id === sectionGroup.courseId; });
+
+								$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
+									var action = {
+										type: ActionTypes.UPDATE_TEACHING_ASSIGNMENT,
+										payload: {
+											teachingAssignment: teachingAssignment,
+											sectionGroup: sectionGroup,
+											course: course
+										}
+									};
+									_self.AssignmentStateService.reduce(action);
+								}, function (err) {
+									_self.$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
+								});
+							});
+						});
+				} else {
+					_self.AssignmentService.updateInstructorAssignment(teachingAssignment).then(function (teachingAssignment) {
+						ipa_analyze_event('instructor assignments', 'instructor assignment approved');
+
+						$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
+							var action = {
+								type: ActionTypes.UPDATE_TEACHING_ASSIGNMENT,
+								payload: {
+									teachingAssignment: teachingAssignment
+								}
+							};
+							_self.AssignmentStateService.reduce(action);
+					}, function (err) {
+						_self.$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
+					});
+				}
 			},
 			createPlaceholderStaff: function (sectionGroup) {
 				_self.AssignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {

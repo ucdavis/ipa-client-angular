@@ -81,6 +81,16 @@ class AssignmentStateService {
 							}
 						});
 						return courses;
+					case ActionTypes.UPDATE_TEACHING_ASSIGNMENT:
+						if (action.payload.course) {
+							var course = action.payload.course;
+							var sectionGroup = action.payload.sectionGroup;
+							courses.ids.push(course.id);
+							courses.list[course.id] = course;
+							courses.list[course.id].sectionGroupTermCodeIds = {};
+							courses.list[course.id].sectionGroupTermCodeIds[sectionGroup.termCode] = sectionGroup.id;
+						}
+						return courses;
 					default:
 						return courses;
 				}
@@ -685,6 +695,13 @@ class AssignmentStateService {
 							sectionGroup.teachingAssignmentIds.push(teachingAssignment.id);
 						}
 						return sectionGroups;
+					case ActionTypes.UPDATE_TEACHING_ASSIGNMENT:
+						if (action.payload.sectionGroup) {
+							var sectionGroup = action.payload.sectionGroup;
+							sectionGroups.ids.push(sectionGroup.id);
+							sectionGroups.list[sectionGroup.id] = sectionGroup;
+						}
+						return sectionGroups;
 					case ActionTypes.REMOVE_TEACHING_ASSIGNMENT:
 						teachingAssignment = action.payload.teachingAssignment;
 						sectionGroup = sectionGroups.list[teachingAssignment.sectionGroupId];
@@ -864,6 +881,8 @@ class AssignmentStateService {
 				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
 				newState.users = scope._userReducers(action, scope._state.users);
 
+				newState = _self.generateAdjustedPriorities(newState);
+
 				scope._state = newState;
 
 				$rootScope.$emit('assignmentStateChanged', scope._state);
@@ -871,6 +890,98 @@ class AssignmentStateService {
 				$log.debug(scope._state, action.type);
 			}
 		};
+	}
+
+	// Group related TeachingAssignments and generate adjusted priority for looping over in dropdown
+	generateAdjustedPriorities (newState) {
+		if (newState.teachingAssignments) {
+			newState.instructors.ids.forEach(function (instructorId) {
+				Object.keys(newState.instructors.list[instructorId].teachingAssignmentTermCodeIds).forEach(function (termCodeId) {
+					var uniqueAssignments = [];
+					var uniqueCoursesAdded = [];
+					var termTeachingAssignmentIds = newState.instructors.list[instructorId].teachingAssignmentTermCodeIds[termCodeId];
+
+					termTeachingAssignmentIds.forEach(function (teachingAssignmentId) {
+						var teachingAssignment = newState.teachingAssignments.list[teachingAssignmentId];
+						var sectionGroup = newState.sectionGroups.list[teachingAssignment.sectionGroupId];
+
+						// Non-course option or suggested course
+						if (teachingAssignment.sectionGroupId === null || teachingAssignment.sectionGroupId === 0) {
+							if (teachingAssignment.buyout) {
+								uniqueCoursesAdded.push("Buyout");
+							} else if (teachingAssignment.courseRelease) {
+								uniqueCoursesAdded.push("CourseRelease");
+							} else if (teachingAssignment.sabbatical) {
+								uniqueCoursesAdded.push("Sabbatical");
+							} else if (teachingAssignment.inResidence) {
+								uniqueCoursesAdded.push("InResidence");
+							} else if (teachingAssignment.sabbaticalInResidence) {
+								uniqueCoursesAdded.push("SabbaticalInResidence");
+							} else if (teachingAssignment.leaveOfAbsense) {
+								uniqueCoursesAdded.push("LeaveOfAbsense");
+							} else if (teachingAssignment.workLifeBalance) {
+								uniqueCoursesAdded.push("WorkLifeBalance");
+							} else {
+								var uniqueIdentifier = teachingAssignment.suggestedSubjectCode + teachingAssignment.suggestedCourseNumber + teachingAssignment.suggestedEffectiveTermCode;
+								teachingAssignment.uniqueIdentifier = uniqueIdentifier;
+								teachingAssignment.relatedAssignmentIds = [];
+								uniqueCoursesAdded.push(uniqueIdentifier);
+							}
+							uniqueAssignments.push(teachingAssignment);
+						}
+
+						if (sectionGroup) {
+							var course = newState.courses.list[sectionGroup.courseId];
+							var uniqueIdentifier = course.subjectCode + course.courseNumber + course.effectiveTermCode;
+							if (uniqueCoursesAdded.indexOf(uniqueIdentifier) < 0) {
+								teachingAssignment.uniqueIdentifier = uniqueIdentifier;
+								teachingAssignment.relatedAssignmentIds = [];
+								uniqueAssignments.push(teachingAssignment);
+								uniqueCoursesAdded.push(uniqueIdentifier);
+							}
+							
+							if (uniqueCoursesAdded.indexOf(uniqueIdentifier) > -1) {
+								var uniqueAssignment = uniqueAssignments.find(function (assignment) {
+									return assignment.uniqueIdentifier === uniqueIdentifier;
+								});
+								uniqueAssignment.relatedAssignmentIds.push(teachingAssignment.id);
+							}
+						}
+					});
+
+					var uniqueAssignmentsByPriority = _array_sortByProperty(uniqueAssignments, "priority");
+					var priority = 1;
+
+					var firstAssignmentIdInGroup;
+					var relatedCourseApproved = false;
+					uniqueAssignmentsByPriority.forEach(function (assignment) {
+						if (assignment.relatedAssignmentIds) {
+							firstAssignmentIdInGroup = assignment.id;
+							assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {
+								if (newState.teachingAssignments.list[teachingAssignmentId].approved === true) {
+									relatedCourseApproved = true;
+								}
+								newState.teachingAssignments.list[teachingAssignmentId].adjustedPriority = priority;
+								priority++;
+							});
+						} else {
+							newState.teachingAssignments.list[assignment.id].adjustedPriority = priority;
+							priority++;
+						}
+
+						if (firstAssignmentIdInGroup) {
+							newState.teachingAssignments.list[firstAssignmentIdInGroup].relatedAssignmentIds.forEach(function (teachingAssignmentId) {
+								newState.teachingAssignments.list[teachingAssignmentId].relatedCourseApproved = relatedCourseApproved;
+							});
+							firstAssignmentIdInGroup = null;
+							relatedCourseApproved = false;
+						}
+					});
+				});
+			});
+		}
+
+		return newState;
 	}
 
 	generateTermCode (year, term) {

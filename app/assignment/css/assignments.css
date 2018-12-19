@@ -148,6 +148,30 @@
 	padding-left: 10px;
 }
 
+.instructor-assignment__dropdown--option-header {
+	background-color: white;
+	padding-left: 20px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.instructor-assignment__dropdown--option-used {
+	background-color: white;
+	padding-left: 20px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	pointer-events: none;
+	text-decoration: line-through;
+}
+
+ul.dropdown-menu li.instructor-assignment__dropdown--option > a {
+	color: rgb(0,0,0);
+}
+
+.instructor-assignment__dropdown--sub-option {
+	padding-left: 14px;
+}
+
 ul.dropdown-menu li div {
 	color: rgb(0, 0, 0);
 	font-size: 12px;

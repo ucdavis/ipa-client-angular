@@ -12,6 +12,12 @@ class AssignmentService {
 			getInitialState: function(workgroupId, year) {
 				return ApiService.get("/api/assignmentView/" + workgroupId + "/" + year);
 			},
+			getCourses: function (workgroupId, year) {
+				return ApiService.get("/api/assignmentView/" + workgroupId + "/" + year + "/courses");
+			},
+			getSectionGroups: function(workgroupId, year) {
+				return ApiService.get("/api/assignmentView/" + workgroupId + "/" + year + "/sectionGroups");
+			},
 			download: function (workgroupId, year) {
 				var deferred = $q.defer();
 	
