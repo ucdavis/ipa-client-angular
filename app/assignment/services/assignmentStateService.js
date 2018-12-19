@@ -81,6 +81,16 @@ class AssignmentStateService {
 							}
 						});
 						return courses;
+					case ActionTypes.UPDATE_TEACHING_ASSIGNMENT:
+						if (action.payload.course) {
+							var course = action.payload.course;
+							var sectionGroup = action.payload.sectionGroup;
+							courses.ids.push(course.id);
+							courses.list[course.id] = course;
+							courses.list[course.id].sectionGroupTermCodeIds = {};
+							courses.list[course.id].sectionGroupTermCodeIds[sectionGroup.termCode] = sectionGroup.id;
+						}
+						return courses;
 					default:
 						return courses;
 				}
@@ -683,6 +693,13 @@ class AssignmentStateService {
 						if (teachingAssignment.sectionGroupId) {
 							sectionGroup = sectionGroups.list[teachingAssignment.sectionGroupId];
 							sectionGroup.teachingAssignmentIds.push(teachingAssignment.id);
+						}
+						return sectionGroups;
+					case ActionTypes.UPDATE_TEACHING_ASSIGNMENT:
+						if (action.payload.sectionGroup) {
+							var sectionGroup = action.payload.sectionGroup;
+							sectionGroups.ids.push(sectionGroup.id);
+							sectionGroups.list[sectionGroup.id] = sectionGroup;
 						}
 						return sectionGroups;
 					case ActionTypes.REMOVE_TEACHING_ASSIGNMENT:
