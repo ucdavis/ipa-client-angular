@@ -225,6 +225,7 @@ table.availability-grid tr td {
 .ipa-header .header--work-group .dropdown-toggle {
 	font-size: 12px;
 	padding: 6px 12px 6px 12px;
+	height: 31px;
 }
 
 .ipa-header .header--work-group .dropdown-menu li i {
