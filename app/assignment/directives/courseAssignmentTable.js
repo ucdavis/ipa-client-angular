@@ -194,7 +194,8 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 										// Display placeholder AI
 										if (sectionGroup.showPlaceholderAI == true) {
 											courseHtml += "<div class=\"alert alert-info tile-assignment\">";
-											courseHtml += "AI Placeholder";
+											courseHtml += '<span class="course-assignment-table__assignment-title">';
+											courseHtml += '<span class="course-assignment-table__assignment-header">AI Placeholder</span>';
 
 											var popoverTemplate = "Are you sure you want to remove the AI Placeholder? <br /><br />" +
 												"<div class='text-center'><button class='btn btn-red' data-event-type='deletePlaceholderAI' data-section-group-id='" + sectionGroup.id + "'>Remove</button>" +
@@ -203,13 +204,14 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
 											courseHtml += " data-section-group-id=\"" + sectionGroup.id + "\" data-event-type=\"deletePlaceholderAIPop\" " +
 												"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
-											courseHtml += "</div>";
+											courseHtml += "</span></div>";
 										}
 
 										// Display The Staff placeholder
 										if (sectionGroup.showTheStaff == true) {
 											courseHtml += "<div class=\"alert alert-info tile-assignment\">";
-											courseHtml += "The Staff";
+											courseHtml += '<span class="course-assignment-table__assignment-title">';
+											courseHtml += '<span class="course-assignment-table__assignment-header">The Staff</span>';
 
 											var popoverTemplate = "Are you sure you want to remove The Staff? <br /><br />" +
 												"<div class='text-center'><button class='btn btn-red' data-event-type='deleteTheStaff' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
@@ -218,7 +220,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 											courseHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
 											courseHtml += " data-section-group-id=\"" + sectionGroup.id + "\" data-event-type=\"deleteTheStaffPop\" " +
 												"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
-											courseHtml += "</div>"; // Ending Teaching assignment div
+											courseHtml += "</span></div>"; // Ending Teaching assignment div
 										}
 
 										// Loop over teachingAssignments that are approved
@@ -231,11 +233,16 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 												// Add approved teachingAssignment to term
 												courseHtml += "<div class=\"alert alert-info tile-assignment\">";
+												courseHtml += '<span class="course-assignment-table__assignment-title">';
+												courseHtml += '<span class="course-assignment-table__assignment-description">';
+
 												if (instructor) {
 													courseHtml += instructor.fullName + '<div class="course-assignment-table__instructor-type">' + instructorType.description + '</div>';
 												} else {
 													courseHtml += instructorType.description;
 												}
+
+												courseHtml += '</span>';
 
 												if (scope.userCanEdit()) {
 													var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
@@ -246,7 +253,8 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\" data-event-type=\"deleteAssignmentPop\" " +
 														"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
 												}
-												courseHtml += "</div>"; // Ending Teaching assignment div
+
+												courseHtml += "</span></div>"; // Ending Teaching assignment div
 											}
 										});
 
