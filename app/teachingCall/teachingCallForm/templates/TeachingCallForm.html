@@ -18,6 +18,15 @@
 		</tutorial-modal>
   </ipa-modal>
 
+	<!-- handle lack of access -->
+	<div ng-if="view.state && !view.state.teachingCallReceiptId">
+		<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
+			<p class="lead">You have not been invited to a teaching call for the year {{ year }}-{{ nextYear }}.</p>
+			<br />
+			<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
+		</div>
+	</div>
+
 	<div id="teaching-call-form--container" ng-repeat="term in view.state.terms" ng-if="term.termCode == view.state.selectedTermCode">
 		<!-- course preferences -->
 		<div id="teaching-call--course-preference" class="row">
