@@ -36,6 +36,10 @@
   justify-content: space-between;
 }
 
+.instructors-table__preference-title {
+  height: 18px;
+}
+
 .instructor-title {
 	color: black;
 	font-weight: bold;
@@ -1029,11 +1033,13 @@ li.active-term .dropdown-term-row {
 	opacity: .6;
 }
 
+.course-assignment-table__instructor-type,
 .instructor-assignment-table__course-title {
   color: #2c7ea1b3;
   font-weight: bold;
 }
 
+.course-assignment-table__assignment-description,
 .instructor-assignment-table__course-definition {
   font-weight: bold;
 }
