@@ -42,11 +42,12 @@
           </div>
         </div>
       </div>
-      <div class="form-group" ng-if="newBudgetScenario.budgetScenarioId > 0">
+      <div class="form-group">
         <label class="col-sm-6 control-label">Copy Funds</label>
         <div class="col-sm-5">
           <div class="input-group add-budget-scenario__copy-ui">
             <ipa-checkbox is-checked="newBudgetScenario.copyFunds"
+                          is-disabled="!(newBudgetScenario.budgetScenarioId > 0)"
                           click-action="toggleCopyFunds()">
             </ipa-checkbox>
           </div>
