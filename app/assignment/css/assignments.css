@@ -1029,10 +1029,6 @@ li.active-term .dropdown-term-row {
 	background-color: #e5e5e5;
 }
 
-.course-assignment-table__instructor-type {
-	opacity: .6;
-}
-
 .course-assignment-table__instructor-type,
 .instructor-assignment-table__course-title {
   color: #2c7ea1b3;
