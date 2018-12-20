@@ -21,3 +21,15 @@
 .btn.btn-default.ipa-term-selector-dropdown__button:hover {
 	border: 1px solid #777;
 }
+
+.btn-term-selector-inactive {
+	border: 1px solid #333;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0px 20px 0px 0px;
+	background-color: white;
+	border-radius: 4px;
+	height: 31px;
+	min-width: 140px;
+}

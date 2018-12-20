@@ -195,7 +195,7 @@ class AssignmentActionCreators {
 			},
 
 			/**
-			 * Assigns an instructor to a course
+			 * Assigns an instructor to a comment
 			 *
 			 * @param {*} instructorId
 			 * @param {*} year
@@ -220,27 +220,6 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Could not add instructor comment.", type: "ERROR" });
 				});
 			},
-			removeInstructorAssignment: function (teachingAssignment) {
-				_self.AssignmentService.removeInstructorAssignment(sectionGroupId, instructorId).then(function (sectionGroupId) {
-					ipa_analyze_event('instructor assignments', 'instructor unassigned');
-
-					_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
-					var sectionGroup = AssignmentStateService._state.sectionGroups.list[sectionGroupId];
-
-					if (sectionGroup.teachingAssignmentIds.length == 1) {
-						sectionGroup.isAssigned = false;
-					}
-					var action = {
-						type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,
-						payload: {
-							sectionGroup: sectionGroup
-						}
-					};
-					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
-					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
-				});
-			},
 
 			/**
 			 * Assigns an instructor who did not have a teaching preference.
@@ -259,7 +238,6 @@ class AssignmentActionCreators {
 						sectionGroup.isAssigned = true;
 						sectionGroup.showTheStaff= false;
 					}
-
 					var action = {
 						type: ActionTypes.ADD_TEACHING_ASSIGNMENT,
 						payload: {
@@ -289,7 +267,6 @@ class AssignmentActionCreators {
 					if (sectionGroup) {
 						sectionGroup.isAssigned = true;
 					}
-
 					_self.AssignmentStateService.reduce({
 						type: ActionTypes.ADD_TEACHING_ASSIGNMENT,
 						payload: {
@@ -298,24 +275,6 @@ class AssignmentActionCreators {
 					});
 				}, function (err) {
 					_self.$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
-				});
-			},
-			unassignInstructorType: function (originalTeachingAssignment) {
-				_self.AssignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {
-					_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
-					var sectionGroup = AssignmentStateService._state.sectionGroups.list[teachingAssignment.sectionGroupId];
-
-					if (sectionGroup.teachingAssignmentIds.length == 1) {
-						sectionGroup.isAssigned = false;
-					}
-					_self.AssignmentStateService.reduce({
-						type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,
-						payload: {
-							teachingAssignment: originalTeachingAssignment
-						}
-					});
-				}, function (err) {
-					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
 				});
 			},
 			assignStudentToAssociateInstructor: function (sectionGroup, supportStaff) {
@@ -355,8 +314,10 @@ class AssignmentActionCreators {
 					$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
 					var sectionGroup = AssignmentStateService._state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
-					sectionGroup.isAssigned = true;
-
+					if (sectionGroup) {
+						sectionGroup.isAssigned = true;
+						sectionGroup.showTheStaff= false;
+					}
 						var action = {
 							type: ActionTypes.UPDATE_TEACHING_ASSIGNMENT,
 							payload: {
@@ -406,14 +367,23 @@ class AssignmentActionCreators {
 				originalTeachingAssignment.approved = false;
 				_self.AssignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {
 					_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
+					var sectionGroup = AssignmentStateService._state.sectionGroups.list[originalTeachingAssignment.sectionGroupId];
 					var action;
+
+					if (sectionGroup) {
+						sectionGroup.isAssigned = false;
+
+						for (var i in sectionGroup.teachingAssignmentIds) {
+							var teachingAssignment = AssignmentStateService._state.teachingAssignments.list[sectionGroup.teachingAssignmentIds[i]];
+
+							if (teachingAssignment.approved == true) {
+								sectionGroup.isAssigned = true;
+								break;
+							}
+						}
+					}
 					// If unapproving a teachingPreference that was not created by the instructor, delete it instead
 					if (originalTeachingAssignment.fromInstructor === false && originalTeachingAssignment.approved === false) {
-						var sectionGroup = AssignmentStateService._state.sectionGroups.list[originalTeachingAssignment.sectionGroupId];
-
-						if (sectionGroup && sectionGroup.teachingAssignmentIds.length == 1) {
-							sectionGroup.isAssigned = false;
-						}
 
 						action = {
 							type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,

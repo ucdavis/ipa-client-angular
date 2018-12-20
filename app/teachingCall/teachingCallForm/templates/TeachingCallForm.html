@@ -51,18 +51,6 @@
 						</div>
 					</div>
 
-					<!-- Assignments -->
-					<div ng-repeat="preference in term.assignments | orderBy: 'description'" class="assignment-row">
-						<div class="priority-cell outline">
-						</div>
-						<div class="preference-cell outline">
-							{{ preference.description }} {{ preference.title }}
-						</div>
-						<div class="seats-cell outline">
-							{{ preference.plannedSeats }}
-						</div>
-					</div>
-
 					<!-- Preferences -->
 					<div ng-repeat="preference in term.preferences | orderBy: 'priority'" class="preference-row">
 						<div class="priority-cell outline">

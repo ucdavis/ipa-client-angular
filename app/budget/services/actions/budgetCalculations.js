@@ -485,6 +485,8 @@ class BudgetCalculations {
 					funds: 0,
 					balance: 0,
 					totalSCH: 0,
+					gradSCH: 0,
+					undergradSCH: 0,
 					lowerDivCount: 0,
 					upperDivCount: 0,
 					graduateCount: 0,
@@ -507,6 +509,8 @@ class BudgetCalculations {
 						},
 						totalCosts: 0,
 						totalSCH: 0,
+						gradSCH: 0,
+						undergradSCH: 0,
 						lowerDivCount: 0,
 						upperDivCount: 0,
 						graduateCount: 0,
@@ -537,6 +541,12 @@ class BudgetCalculations {
 								units = sectionGroupCost.unitsLow;
 							}
 
+							if (sectionGroupCost.courseNumber >= 200) {
+								summary.byTerm[term].gradSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
+							} else {
+								summary.byTerm[term].undergradSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
+							}
+
 							summary.byTerm[term].totalUnits += units;
 							summary.byTerm[term].totalSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
 							summary.byTerm[term].lowerDivCount += (parseInt(sectionGroupCost.courseNumber) < 100 ? 1 : 0);
@@ -558,6 +568,8 @@ class BudgetCalculations {
 					summary.combinedTerms.totalCosts += summary.byTerm[term].totalCosts;
 					summary.combinedTerms.totalUnits += summary.byTerm[term].totalUnits;
 					summary.combinedTerms.totalSCH += summary.byTerm[term].totalSCH;
+					summary.combinedTerms.gradSCH += summary.byTerm[term].gradSCH;
+					summary.combinedTerms.undergradSCH += summary.byTerm[term].undergradSCH;
 					summary.combinedTerms.lowerDivCount += summary.byTerm[term].lowerDivCount;
 					summary.combinedTerms.upperDivCount += summary.byTerm[term].upperDivCount;
 					summary.combinedTerms.graduateCount += summary.byTerm[term].graduateCount;
