@@ -20,7 +20,6 @@ class TeachingCallFormCtrl {
 
 		$rootScope.$on('teachingCallFormStateChanged', function (event, data) {
 			$scope.view.state = data;
-			console.log(data);
 		});
 
 		$rootScope.$on('sharedStateSet', function (event, data) {
