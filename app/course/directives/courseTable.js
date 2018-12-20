@@ -531,7 +531,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
       /* Generates the final row of the table, containing seat totals */
       /* 248ms-258ms */
       scope.getTotalsRow = function (termsToRender, state) {
-        var row = "<tr class=\"term-totals\"><td><!-- checkbox --></td><td>Totals</td>";
+        var row = "<tr class=\"term-totals\"><td class=\"checkbox-cell\"><!-- checkbox --></td><td>Totals</td>";
 
         var termCount = {};
 
