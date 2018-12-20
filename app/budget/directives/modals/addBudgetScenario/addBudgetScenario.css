@@ -3,7 +3,7 @@
 }
 
 .add-budget-scenario__dropdown {
-	width: 151px;
+	width: 100%;
 	background: #fff;
 	border: 1px solid #ccc;
 	border-radius: 3px;
@@ -13,6 +13,11 @@
   height: 31px;
   display: flex;
   align-items: center;
+}
+
+.add-budget-scenario__main-content {
+	width: 385px;
+	margin: 0 auto;
 }
 
 .add-budget-scenario__dropdown-label {
