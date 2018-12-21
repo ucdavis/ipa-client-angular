@@ -73,6 +73,7 @@ class TeachingCallFormActionCreators {
 			submitTeachingCall: function (teachingCallReceipt, workgroupId, year) {
 				TeachingCallFormService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
 					var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor&submittedTC=true";
+					window.onbeforeunload = null;
 					$window.location.href = instructorSummaryUrl;
 					$rootScope.$emit('toast', { message: "Preferences saved.", type: "SUCCESS" });
 				}, function (err) {
