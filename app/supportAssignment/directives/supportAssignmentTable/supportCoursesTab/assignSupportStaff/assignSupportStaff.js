@@ -11,7 +11,7 @@ let assignSupportStaff = function (SupportActions) {
 			section: '<?',
 			viewType: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.expanded = false;
 
 			scope.closeDropdown = function() {

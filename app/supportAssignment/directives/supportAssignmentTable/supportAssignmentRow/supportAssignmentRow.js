@@ -11,7 +11,7 @@ let supportAssignmentRow = function (SupportActions) {
 			supportAssignment: '<',
 			readOnly: '<?'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.deleteAssignment = function(supportAssignment) {
 				SupportActions.deleteAssignment(supportAssignment);
 			};

@@ -8,7 +8,7 @@ let supportAssignmentTable = function ($rootScope, SupportActions) {
 		scope: {
 			state: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.tabNames = ['By Support Staff', 'By Course'];
 
 			scope.setViewPivot = function (tabName) {

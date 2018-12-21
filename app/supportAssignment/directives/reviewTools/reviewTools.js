@@ -9,7 +9,7 @@ let reviewTools = function ($rootScope, SupportActions) {
 			supportReview: '<',
 			readOnly: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.toggleInstructorSupportCallReview = function() {
 				SupportActions.toggleInstructorSupportCallReview();
 			};

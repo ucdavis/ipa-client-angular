@@ -10,7 +10,7 @@ let courseAppointmentInput = function (SupportActions) {
 			viewType: '<',
 			readOnly: '<?'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.updateTeachingAssistantAppointments = function () {
 				scope.sectionGroup.teachingAssistantAppointments = parseFloat(scope.sectionGroup.teachingAssistantAppointments);
 				SupportActions.updateTeachingAssistantAppointments(scope.sectionGroup);

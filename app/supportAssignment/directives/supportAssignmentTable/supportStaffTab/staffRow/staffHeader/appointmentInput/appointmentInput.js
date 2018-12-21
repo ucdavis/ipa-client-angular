@@ -8,7 +8,7 @@ let appointmentInput = function ($rootScope, SupportActions) {
 			viewType: '<',
 			readOnly: '<?'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.updateSupportAppointment = function () {
 				var type = scope.viewType == "Readers" ? "reader" : "teachingAssistant";
 

@@ -11,8 +11,6 @@ class SummaryStateService {
 		return {
 			_state: {},
 			_courseReducers: function (action, courses) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						courses = {
@@ -33,8 +31,6 @@ class SummaryStateService {
 				}
 			},
 			_sectionGroupReducers: function (action, sectionGroups) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						sectionGroups = {
@@ -82,8 +78,6 @@ class SummaryStateService {
 				}
 			},
 			_sectionReducers: function (action, sections) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						sections = {
@@ -92,7 +86,6 @@ class SummaryStateService {
 						};
 	
 						var sectionsList = {};
-						var length = action.payload.sections ? action.payload.sections.length : 0;
 						for (var i = 0; i < action.payload.sections.length; i++) {
 							var sectionData = action.payload.sections[i];
 	
@@ -107,8 +100,6 @@ class SummaryStateService {
 				}
 			},
 			_activityReducers: function (action, activities) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						activities = {
@@ -315,9 +306,6 @@ class SummaryStateService {
 				}
 			},
 			_teachingCallReceiptReducers: function (action, teachingCallReceipt) {
-				var scope = this;
-				var data = action.payload;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 					// Return the teachingCallReceipt for the workgroupId and year if it exists
@@ -365,8 +353,6 @@ class SummaryStateService {
 				}
 			},
 			_scheduleReducers: function (action, schedule) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						var schedule = action.payload.schedule;
@@ -464,7 +450,6 @@ class SummaryStateService {
 							}
 						};
 						// Determine instructor summary sections needing attention
-						var teachingCallReceipt = null;
 						// Find teachingCall for current workgroup/year
 						action.payload.teachingCallReceipts.forEach(function(slotReceipt) {
 							if (slotReceipt.workgroupId == action.workgroupId

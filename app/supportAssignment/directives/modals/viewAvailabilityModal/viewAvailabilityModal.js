@@ -9,7 +9,7 @@ let viewAvailabilityModal = function ($rootScope, SupportActions) {
 			supportStaff: '<',
 			isVisible: '='
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.close = function() {
 				SupportActions.closeAvailabilityModal();
 				scope.isVisible = false;

@@ -10,7 +10,7 @@ let courseHeader = function ($rootScope, SupportActions) {
 			viewType: '<',
 			readOnly: '<?'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.updateTeachingAssistantAppointments = function(sectionGroup) {
 				SupportActions.updateTeachingAssistantAppointments(sectionGroup);
 			};

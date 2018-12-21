@@ -8,7 +8,7 @@ let staffComments = function ($rootScope, SupportCallService) {
 		scope: {
 			supportStaff: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			// Intentionally empty
 			scope.getLanguageProficiencyDescription = function (languageProficiencyId) {
 				return SupportCallService.getLanguageProficiencyDescription(languageProficiencyId);

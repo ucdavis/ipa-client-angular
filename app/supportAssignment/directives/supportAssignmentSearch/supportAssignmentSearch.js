@@ -6,7 +6,7 @@ let supportAssignmentSearch = function ($rootScope, SupportActions) {
 		template: require('./supportAssignmentSearch.html'),
 		replace: true,
 		scope: {},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.searchQuery = "";
 
 			scope.filterTable = function() {
