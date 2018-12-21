@@ -5,7 +5,6 @@ class BudgetComparisonReportCtrl {
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
 		this.$routeParams = $routeParams;
-		var _self = this;
 
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;

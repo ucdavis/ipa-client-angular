@@ -15,7 +15,7 @@ let ipaToggle = function () {
       no: '<?',
       confirmClass: '<?'
     },
-    link: function (scope, element, attrs) {
+    link: function () {
       // Intentionally empty
     }
   };

@@ -4,7 +4,7 @@ let ipaTermSelector = function($window, $location, $routeParams, $rootScope) {
 		template: require('./ipaTermSelector.html'), // directive html found here:
 		replace: true, // Replace with the template below
 		scope: {},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.year = $routeParams.year;
 			scope.workgroupId = $routeParams.workgroupId;
 			scope.termShortCode = $routeParams.termShortCode;
@@ -43,7 +43,7 @@ let ipaTermSelector = function($window, $location, $routeParams, $rootScope) {
 
 				var url = $location.absUrl();
 
-				n = url.lastIndexOf(currentTerm);
+				var n = url.lastIndexOf(currentTerm);
 				if (n > -1) {
 					url = url.substring(0, n) + previousTerm + url.substring(n+2, url.length);
 				}
@@ -61,7 +61,7 @@ let ipaTermSelector = function($window, $location, $routeParams, $rootScope) {
 
 				var url = $location.absUrl();
 
-				n = url.lastIndexOf(currentTerm);
+				var n = url.lastIndexOf(currentTerm);
 				if (n > -1) {
 					url = url.substring(0, n) + nextTerm + url.substring(n+2, url.length);
 				}

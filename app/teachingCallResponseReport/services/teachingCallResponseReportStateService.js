@@ -1,6 +1,5 @@
 class TeachingCallResponseReportStateService {
 	constructor ($rootScope, $log, Term, SectionGroup, ActionTypes, StringService, AvailabilityService) {
-		var self = this;
 		this.$rootScope = $rootScope;
 		this.$log = $log;
 		this.Term = Term;
@@ -11,7 +10,7 @@ class TeachingCallResponseReportStateService {
 			_state: {},
 			_instructorReducers: function (action, instructors) {
 				switch (action.type) {
-					case ActionTypes.INIT_STATE:
+					case ActionTypes.INIT_STATE: {
 						// Root state object
 						let instructors = action.payload.instructors;
 	
@@ -114,8 +113,8 @@ class TeachingCallResponseReportStateService {
 									} else if (teachingAssignment.suggestedSubjectCode != null && teachingAssignment.suggestedCourseNumber != null) {
 										description = teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber;
 									} else {
-										console.error("Unhandled teachingAssignment type.");
-										console.dir(teachingAssignment);
+										console.error("Unhandled teachingAssignment type."); // eslint-disable-line no-console
+										console.dir(teachingAssignment); // eslint-disable-line no-console
 										description = "Unknown";
 									}
 	
@@ -152,15 +151,14 @@ class TeachingCallResponseReportStateService {
 						});
 	
 						return instructors;
+					}
 					default:
 						return instructors;
 				}
 			},
 			_termCodeReducers: function (action, termCodes) {
-				var self = this;
-
 				switch (action.type) {
-					case ActionTypes.INIT_STATE:
+					case ActionTypes.INIT_STATE: {
 						var collapsedTermsBlob = "0000000000";
 	
 						// Collapse the teachingCall termsBlobs into one
@@ -213,6 +211,7 @@ class TeachingCallResponseReportStateService {
 						}
 	
 						return relevantTermCodes;
+					}
 					default:
 						return termCodes;
 				}

@@ -7,7 +7,7 @@ let activityDiff = function (RegistrarReconciliationReportActionCreators) {
 		restrict: "E",
 		template: require('./activityDiff.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.deleteActivity = function (activity) {
 				RegistrarReconciliationReportActionCreators.deleteActivity(activity);
 			};

@@ -3,8 +3,6 @@ class SupportReducer {
 		return {
 			_state: {},
 			_sectionGroupReducers: function (action, sectionGroups) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						sectionGroups = {
@@ -18,11 +16,13 @@ class SupportReducer {
 						});
 	
 						return sectionGroups;
-					case ActionTypes.UPDATE_SECTIONGROUP:
+					case ActionTypes.UPDATE_SECTIONGROUP: {
 						let sectionGroup = action.payload.sectionGroup;
 						sectionGroups.list[sectionGroup.id].readerAppointments = sectionGroup.readerAppointments;
 						sectionGroups.list[sectionGroup.id].teachingAssistantAppointments = sectionGroup.teachingAssistantAppointments;
+
 						return sectionGroups;
+					}
 					case ActionTypes.UPDATE_TABLE_FILTER:
 						var query = action.payload.query;
 	
@@ -55,8 +55,6 @@ class SupportReducer {
 				}
 			},
 			_sectionReducers: function (action, sections) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						sections = {
@@ -91,8 +89,6 @@ class SupportReducer {
 				}
 			},
 			_activityReducers: function (action, activities) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						activities = {
@@ -121,8 +117,6 @@ class SupportReducer {
 				}
 			},
 			_supportAppointmentReducers: function (action, supportAppointments) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						supportAppointments = {
@@ -149,8 +143,6 @@ class SupportReducer {
 				}
 			},
 			_courseReducers: function (action, courses) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						courses = {
@@ -169,8 +161,6 @@ class SupportReducer {
 				}
 			},
 			_supportAssignmentsReducers: function (action, supportAssignments) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						supportAssignments = {
@@ -235,8 +225,6 @@ class SupportReducer {
 				}
 			},
 			_supportStaffListReducers: function (action, supportStaffList) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						supportStaffList = {
@@ -293,8 +281,6 @@ class SupportReducer {
 				}
 			},
 			_supportStaffPreferenceReducers: function (action, supportStaffPreferences) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						supportStaffPreferences = {
@@ -312,8 +298,6 @@ class SupportReducer {
 				}
 			},
 			_instructorPreferenceReducers: function (action, instructorPreferences) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						instructorPreferences = {
@@ -342,8 +326,6 @@ class SupportReducer {
 				}
 			},
 			_supportStaffSupportCallResponseReducers: function (action, supportStaffSupportCallResponses) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						supportStaffSupportCallResponses = {
@@ -363,8 +345,6 @@ class SupportReducer {
 				}
 			},
 			_instructorSupportCallResponseReducers: function (action, instructorSupportCallResponses) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						instructorSupportCallResponses = {
@@ -382,8 +362,6 @@ class SupportReducer {
 				}
 			},
 			_scheduleReducers: function (action, schedule) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						schedule = {};
@@ -400,8 +378,6 @@ class SupportReducer {
 				}
 			},
 			_uiReducers: function (action, ui) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 	
@@ -535,8 +511,8 @@ class SupportReducer {
 	// Sort the course Ids by subject Code and then course number
 	sortCourseIds (courseIds, courses) {
 		courseIds.sort(function (aId, bId) {
-			a = courses[aId];
-			b = courses[bId];
+			var a = courses[aId];
+			var b = courses[bId];
 
 			// Use subject codes to sort
 			if (a.subjectCode > b.subjectCode) {

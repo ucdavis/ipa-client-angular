@@ -8,7 +8,7 @@ let tutorialModal = function ($rootScope) {
     scope: {
       isVisible: '='
     },
-    link: function(scope, element, attrs) {
+    link: function() {
       // Empty intentionally
     }
   };

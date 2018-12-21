@@ -17,9 +17,9 @@ let ipaTabsVertical = function () {
 			selectTab: '&' // Callback function
 		},
 		transclude: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			// Validate passed methods
-			if (angular.isUndefined(scope.selectTab)) {
+			if (angular.isUndefined(scope.selectTab)) { // eslint-disable-line no-undef
 				throw {
 					message: "ipaTabs: Required method selectTab was not provided."
 				};

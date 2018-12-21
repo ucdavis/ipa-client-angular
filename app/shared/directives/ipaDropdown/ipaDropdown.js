@@ -25,7 +25,7 @@ let ipaDropdown = function() {
 			*/
 
 			// Validate passed methods
-			scope.isSelectItemSupplied = (angular.isUndefined(scope.selectItem) === false);
+			scope.isSelectItemSupplied = (angular.isUndefined(scope.selectItem) === false); // eslint-disable-line no-undef
 
 			if (scope.isSelectItemSupplied == false) {
 				throw {

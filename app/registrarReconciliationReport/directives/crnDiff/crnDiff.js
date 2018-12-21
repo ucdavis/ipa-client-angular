@@ -7,7 +7,7 @@ let crnDiff = function (RegistrarReconciliationReportActionCreators) {
 		restrict: "E",
 		template: require('./crnDiff.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.section = scope.view.state.sections.list[scope.sectionId];
 
 			scope.updateCrn = function (sectionId, crn) {

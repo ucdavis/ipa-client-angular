@@ -13,7 +13,7 @@ let supportStaff = function (InstructorFormActions) {
       canRaisePriority: '<',
       canLowerPriority: '<'
     },
-    link: function (scope, element, attrs) {
+    link: function (scope) {
       scope.selectSupportStaff = function(supportStaff) {
         InstructorFormActions.selectSupportStaff(supportStaff);
       };

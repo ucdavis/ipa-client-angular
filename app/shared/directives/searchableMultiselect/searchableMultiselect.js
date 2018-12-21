@@ -17,7 +17,7 @@ let searchableMultiselect = function() {
 
 			scope.updateSelectedItems = function (obj) {
 				var selectedObj;
-				for (i = 0; typeof scope.selectedItems !== 'undefined' && i < scope.selectedItems.length; i++) {
+				for (var i = 0; typeof scope.selectedItems !== 'undefined' && i < scope.selectedItems.length; i++) {
 					if (typeof scope.selectedItems[i][scope.displayAttr] !== 'undefined' &&
 						scope.selectedItems[i][scope.displayAttr].toUpperCase() === obj[scope.displayAttr].toUpperCase()) {
 						selectedObj = scope.selectedItems[i];
@@ -35,7 +35,7 @@ let searchableMultiselect = function() {
 				if (typeof scope.selectedItems === 'undefined') { return false; }
 
 				var tmpItem;
-				for (i = 0; i < scope.selectedItems.length; i++) {
+				for (var i = 0; i < scope.selectedItems.length; i++) {
 					tmpItem = scope.selectedItems[i];
 					if (typeof tmpItem !== 'undefined' &&
 						typeof tmpItem[scope.displayAttr] !== 'undefined' &&
@@ -50,7 +50,7 @@ let searchableMultiselect = function() {
 
 			scope.commaDelimitedSelected = function () {
 				var list = "";
-				angular.forEach(scope.selectedItems, function (item, index) {
+				angular.forEach(scope.selectedItems, function (item, index) { // eslint-disable-line no-undef
 					if (typeof item[scope.displayAttr] === 'undefined') { return; }
 					list += item[scope.displayAttr];
 					if (index < scope.selectedItems.length - 1) { list += ', '; }

@@ -7,7 +7,7 @@ let startTimeDiff = function (RegistrarReconciliationReportActionCreators) {
 		restrict: "E",
 		template: require('./startTimeDiff.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.updateStartTime = function (startTime) {
 				var activity = {
 					id: scope.activity.id,

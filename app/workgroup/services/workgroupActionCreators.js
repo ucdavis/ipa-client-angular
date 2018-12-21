@@ -29,7 +29,7 @@ class WorkgroupActionCreators {
 					};
 					WorkgroupStateService.reduce(action);
 					self._calculateUserRoles();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load workgroup initial state.", type: "ERROR" });
 				});
 			},
@@ -48,7 +48,7 @@ class WorkgroupActionCreators {
 					};
 					WorkgroupStateService.reduce(action);
 					self._calculateUserRoles();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update instructor type", type: "ERROR" });
 				});
 			},
@@ -62,7 +62,7 @@ class WorkgroupActionCreators {
 						}
 					};
 					WorkgroupStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Not could create tag.", type: "ERROR" });
 				});
 			},
@@ -76,7 +76,7 @@ class WorkgroupActionCreators {
 						}
 					};
 					WorkgroupStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update tag.", type: "ERROR" });
 				});
 			},
@@ -90,7 +90,7 @@ class WorkgroupActionCreators {
 						}
 					};
 					WorkgroupStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not remove tag.", type: "ERROR" });
 				});
 			},
@@ -104,7 +104,7 @@ class WorkgroupActionCreators {
 						}
 					};
 					WorkgroupStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not create location.", type: "ERROR" });
 				});
 			},
@@ -118,12 +118,12 @@ class WorkgroupActionCreators {
 						}
 					};
 					WorkgroupStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not rename location.", type: "ERROR" });
 				});
 			},
 			removeLocation: function (workgroupId, location) {
-				WorkgroupService.removeLocation(workgroupId, location).then(function (newLocation) {
+				WorkgroupService.removeLocation(workgroupId, location).then(function () {
 					$rootScope.$emit('toast', { message: "Removed location " + location.description, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.REMOVE_LOCATION,
@@ -132,7 +132,7 @@ class WorkgroupActionCreators {
 						}
 					};
 					WorkgroupStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not remove location.", type: "ERROR" });
 				});
 			},
@@ -149,7 +149,7 @@ class WorkgroupActionCreators {
 					};
 					WorkgroupStateService.reduce(action);
 					self._calculateUserRoles();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update student role", type: "ERROR" });
 				});
 			},
@@ -167,7 +167,7 @@ class WorkgroupActionCreators {
 					};
 					WorkgroupStateService.reduce(action);
 					self._calculateUserRoles();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not add role for user.", type: "ERROR" });
 				});
 			},
@@ -177,7 +177,7 @@ class WorkgroupActionCreators {
 				var role = WorkgroupStateService._state.roles.list[roleId];
 				var workgroupId = WorkgroupStateService._state.ui.workgroupId;
 	
-				WorkgroupService.removeRoleFromUser(workgroupId, user, role).then(function (userRole) {
+				WorkgroupService.removeRoleFromUser(workgroupId, user, role).then(function () {
 					$rootScope.$emit('toast', { message: user.firstName + " " + user.lastName + " is no longer " + role.getDisplayName(), type: "SUCCESS" });
 	
 					WorkgroupStateService.reduce({
@@ -189,7 +189,7 @@ class WorkgroupActionCreators {
 					});
 	
 					self._calculateUserRoles();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not remove role from user.", type: "ERROR" });
 				});
 			},
@@ -226,7 +226,7 @@ class WorkgroupActionCreators {
 						WorkgroupStateService.reduce(action);
 						self.addRoleToUser(workgroupId, newUser, new Role({ name: "presence"}));
 						self.addRoleToUser(workgroupId, newUser, role);
-					}, function (err) {
+					}, function () {
 						$rootScope.$emit('toast', { message: "Could not add user.", type: "ERROR" });
 					});
 				} else {

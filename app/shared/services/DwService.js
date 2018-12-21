@@ -52,7 +52,7 @@ class DwService {
 
 				let params = paramArray.join("&");
 
-				return self.apiService.get("/census" + params + "&token=" + dwToken, null, dwUrl);
+				return self.apiService.get("/census" + params + "&token=" + window.dwToken, null, window.dwUrl);
 			}
 		};
 	}
