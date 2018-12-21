@@ -21,7 +21,7 @@ class TeachingCallStatusActionCreators {
 						self._calculateInstructorsInCall();
 						self._calculateEligibleInstructors();
 						self._calculatePendingEmails();
-					}, function (err) {
+					}, function () {
 						$rootScope.$emit('toast', { message: "Could not load initial teaching call status state.", type: "ERROR" });
 					});
 				});
@@ -50,7 +50,7 @@ class TeachingCallStatusActionCreators {
 					self._calculateInstructorsInCall();
 					self._calculateEligibleInstructors();
 					self._calculatePendingEmails();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not set next email contact.", type: "ERROR" });
 				});
 			},
@@ -83,7 +83,7 @@ class TeachingCallStatusActionCreators {
 				}
 	
 				TeachingCallStatusService.addInstructorsToTeachingCall(workgroupId, year, teachingCallConfig).then(function (teachingCallReceipts) {
-					ipa_analyze_event('teaching call', 'called instructors');
+					window.ipa_analyze_event('teaching call', 'called instructors');
 
 					$rootScope.$emit('toast', { message: "Added to Teaching Call", type: "SUCCESS" });
 					var action = {
@@ -96,7 +96,7 @@ class TeachingCallStatusActionCreators {
 					self._calculateInstructorsInCall();
 					self._calculateEligibleInstructors();
 					self._calculatePendingEmails();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not add instructors to teaching call.", type: "ERROR" });
 				});
 			},
@@ -115,7 +115,7 @@ class TeachingCallStatusActionCreators {
 					self._calculateInstructorsInCall();
 					self._calculateEligibleInstructors();
 					self._calculatePendingEmails();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not remove instructor from teaching call.", type: "ERROR" });
 				});
 			},
@@ -228,8 +228,6 @@ class TeachingCallStatusActionCreators {
 				});
 			},
 			_calculatePendingEmails: function() {
-				var EMAIL_TASK_DELAY = 5;
-	
 				TeachingCallStatusStateService._state.teachingCallReceipts.ids.forEach(function(teachingCallReceiptId) {
 					var teachingCallReceipt = TeachingCallStatusStateService._state.teachingCallReceipts.list[teachingCallReceiptId];
 	

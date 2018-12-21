@@ -13,7 +13,7 @@ class TeachingCallFormActionCreators {
 						tab: tab
 					};
 					TeachingCallFormStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not get teaching call form initial state.", type: "ERROR" });
 				});
 			},
@@ -28,13 +28,13 @@ class TeachingCallFormActionCreators {
 						}
 					};
 					TeachingCallFormStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update order of assignments.", type: "ERROR" });
 				});
 			},
 			updateTeachingCallResponse: function (teachingCallResponse) {
 				TeachingCallFormService.updateTeachingCallResponse(teachingCallResponse).then(function (teachingCallResponse) {
-					ipa_analyze_event('teaching call form', 'availabilities set');
+					window.ipa_analyze_event('teaching call form', 'availabilities set');
 
 					$rootScope.$emit('toast', { message: "Updated availabilities", type: "SUCCESS" });
 					var action = {
@@ -44,7 +44,7 @@ class TeachingCallFormActionCreators {
 						}
 					};
 					TeachingCallFormStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update availabilities.", type: "ERROR" });
 				});
 			},
@@ -56,7 +56,7 @@ class TeachingCallFormActionCreators {
 			 */
 			updateTeachingCallReceipt: function (teachingCallReceipt) {
 				TeachingCallFormService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
-					ipa_analyze_event('teaching call form', 'teaching call receipt updated');
+					window.ipa_analyze_event('teaching call form', 'teaching call receipt updated');
 
 					$rootScope.$emit('toast', { message: "Updated Preferences", type: "SUCCESS" });
 					var action = {
@@ -66,7 +66,7 @@ class TeachingCallFormActionCreators {
 						}
 					};
 					TeachingCallFormStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 				});
 			},
@@ -75,13 +75,13 @@ class TeachingCallFormActionCreators {
 					var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor&submittedTC=true";
 					$window.location.href = instructorSummaryUrl;
 					$rootScope.$emit('toast', { message: "Preferences saved.", type: "SUCCESS" });
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not save preferences.", type: "ERROR" });
 				});
 			},
 			createAvailability: function (teachingCallResponse) {
 				TeachingCallFormService.createAvailability(teachingCallResponse).then(function (teachingCallResponse) {
-					ipa_analyze_event('teaching call form', 'availabilities set');
+					window.ipa_analyze_event('teaching call form', 'availabilities set');
 
 					$rootScope.$emit('toast', { message: "Updated availablities", type: "SUCCESS" });
 	
@@ -92,13 +92,13 @@ class TeachingCallFormActionCreators {
 						}
 					};
 					TeachingCallFormStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update availabilities.", type: "ERROR" });
 				});
 			},
 			addPreference: function (teachingAssignment, termCode) {
 				TeachingCallFormService.addPreference(teachingAssignment).then(function (teachingAssignments) {
-					ipa_analyze_event('teaching call form', 'preference added');
+					window.ipa_analyze_event('teaching call form', 'preference added');
 
 					$rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
 					var action = {
@@ -109,13 +109,13 @@ class TeachingCallFormActionCreators {
 						}
 					};
 					TeachingCallFormStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not add preference.", type: "ERROR" });
 				});
 			},
 			removePreference: function (teachingAssignment) {
 				TeachingCallFormService.removePreference(teachingAssignment).then(function (teachingAssignments) {
-					ipa_analyze_event('teaching call form', 'preference removed');
+					window.ipa_analyze_event('teaching call form', 'preference removed');
 
 					$rootScope.$emit('toast', { message: "Removed Preference", type: "SUCCESS" });
 					var action = {
@@ -128,7 +128,7 @@ class TeachingCallFormActionCreators {
 					};
 	
 					TeachingCallFormStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not remove preference.", type: "ERROR" });
 				});
 			},

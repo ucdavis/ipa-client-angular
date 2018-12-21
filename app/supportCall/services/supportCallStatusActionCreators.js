@@ -1,6 +1,5 @@
 class SupportCallStatusActionCreators {
 	constructor ($rootScope, $window, SupportCallStatusService, SupportCallStatusStateService, ActionTypes, $route) {
-		var self = this;
 		return {
 			getInitialState: function () {
 				var workgroupId = $route.current.params.workgroupId;
@@ -16,7 +15,7 @@ class SupportCallStatusActionCreators {
 						termShortCode: termShortCode
 					};
 					SupportCallStatusStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not set support call status initial state.", type: "ERROR" });
 				});
 			},
@@ -36,7 +35,7 @@ class SupportCallStatusActionCreators {
 				}
 	
 				SupportCallStatusService.addStudentsSupportCall(scheduleId, supportCallData).then(function (payload) {
-					ipa_analyze_event('support call', 'called students');
+					window.ipa_analyze_event('support call', 'called students');
 
 					$rootScope.$emit('toast', { message: "Students added to support call", type: "SUCCESS" });
 					var action = {
@@ -44,7 +43,7 @@ class SupportCallStatusActionCreators {
 						payload: payload
 					};
 					SupportCallStatusStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not add students to support call.", type: "ERROR" });
 				});
 			},
@@ -64,7 +63,7 @@ class SupportCallStatusActionCreators {
 				}
 	
 				SupportCallStatusService.addInstructorsSupportCall(scheduleId, supportCallData).then(function (payload) {
-					ipa_analyze_event('support call', 'called instructors');
+					window.ipa_analyze_event('support call', 'called instructors');
 
 					$rootScope.$emit('toast', { message: "Instructors added to support call", type: "SUCCESS" });
 					var action = {
@@ -72,7 +71,7 @@ class SupportCallStatusActionCreators {
 						payload: payload
 					};
 					SupportCallStatusStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not add instructors to support call.", type: "ERROR" });
 				});
 			},
@@ -95,7 +94,7 @@ class SupportCallStatusActionCreators {
 						payload: payload
 					};
 					SupportCallStatusStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not schedule instructor contact.", type: "ERROR" });
 				});
 			},
@@ -118,7 +117,7 @@ class SupportCallStatusActionCreators {
 						payload: payload
 					};
 					SupportCallStatusStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not schedule student contact.", type: "ERROR" });
 				});
 			},
@@ -133,7 +132,7 @@ class SupportCallStatusActionCreators {
 						}
 					};
 					SupportCallStatusStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not remove instructor from support call.", type: "ERROR" });
 				});
 			},
@@ -148,7 +147,7 @@ class SupportCallStatusActionCreators {
 						}
 					};
 					SupportCallStatusStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not remove student from support call.", type: "ERROR" });
 				});
 			}

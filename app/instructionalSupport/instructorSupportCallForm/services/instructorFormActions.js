@@ -31,7 +31,7 @@ class InstructorFormActions {
             year: year
           };
           InstructorFormStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not load instructional support initial state.", type: "ERROR" });
         });
       },
@@ -59,7 +59,7 @@ class InstructorFormActions {
         });
       },
       selectSupportStaff: function (supportStaff) {
-        ipa_analyze_event('faculty_ta_form', 'selected_support_staff', supportStaff.supportStaffId);
+        window.ipa_analyze_event('faculty_ta_form', 'selected_support_staff', supportStaff.supportStaffId);
 
         InstructorFormStateService.reduce({
           type: ActionTypes.SELECT_SUPPORT_STAFF,
@@ -71,7 +71,7 @@ class InstructorFormActions {
       addInstructorPreference: function (supportStaffId) {
         InstructorFormService.addInstructorPreference(InstructorFormStateService._state.misc.activeSectionGroupId, supportStaffId).then(function (newPreference) {
           $rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
-          ipa_analyze_event('faculty_ta_form', 'added_support_staff_preference', newPreference.id);
+          window.ipa_analyze_event('faculty_ta_form', 'added_support_staff_preference', newPreference.id);
 
           var action = {
             type: ActionTypes.ADD_INSTRUCTOR_PREFERENCE,
@@ -80,28 +80,28 @@ class InstructorFormActions {
             }
           };
           InstructorFormStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not add instructor preference.", type: "ERROR" });
         });
       },
       updateSupportCallResponse: function (instructorSupportCallResponse) {
         InstructorFormService.updateSupportCallResponse(instructorSupportCallResponse).then(function (payload) {
           $rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
-          ipa_analyze_event('faculty_ta_form', 'updated_comment');
+          window.ipa_analyze_event('faculty_ta_form', 'updated_comment');
 
           var action = {
             type: ActionTypes.UPDATE_SUPPORT_CALL_RESPONSE,
             payload: payload
           };
           InstructorFormStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not update preference.", type: "ERROR" });
         });
       },
       deleteInstructorPreference: function (preference) {
         InstructorFormService.deleteInstructorPreference(preference.id).then(function (payload) {
           $rootScope.$emit('toast', { message: "Removed Preference", type: "SUCCESS" });
-          ipa_analyze_event('faculty_ta_form', 'removed_support_staff_preference', preference.id);
+          window.ipa_analyze_event('faculty_ta_form', 'removed_support_staff_preference', preference.id);
 
           var action = {
             type: ActionTypes.DELETE_INSTRUCTOR_PREFERENCE,
@@ -110,18 +110,18 @@ class InstructorFormActions {
             }
           };
           InstructorFormStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not remove preference.", type: "ERROR" });
         });
       },
       submitInstructorPreferences: function (instructorSupportCallResponse, workgroupId, year) {
         InstructorFormService.updateSupportCallResponse(instructorSupportCallResponse).then(function (payload) {
           $rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
-          ipa_analyze_event('faculty_ta_form', 'submitted_form');
+          window.ipa_analyze_event('faculty_ta_form', 'submitted_form');
 
           var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor";
           $window.location.href = instructorSummaryUrl;
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not update preference.", type: "ERROR" });
         });
       },
@@ -145,14 +145,14 @@ class InstructorFormActions {
 
         InstructorFormService.updatePreferencesOrder(preferenceIds, scheduleId, sectionGroupId).then(function (payload) {
           $rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
-          ipa_analyze_event('faculty_ta_form', 'updated_preference_order');
+          window.ipa_analyze_event('faculty_ta_form', 'updated_preference_order');
 
           var action = {
             type: ActionTypes.UPDATE_PREFERENCES_ORDER,
             payload: payload
           };
           InstructorFormStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not update preference order.", type: "ERROR" });
         });
       },
