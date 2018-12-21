@@ -68,7 +68,7 @@ class TeachingCallStatusStateService {
 							list: {},
 							byInstructorId: {}
 						};
-						action.payload.instructorTypes.forEach(function(teachingCallResponse) {
+						action.payload.teachingCallResponses.forEach(function(teachingCallResponse) {
 							teachingCallResponses.list[teachingCallResponse.id] = teachingCallResponse;
 							teachingCallResponses.ids.push(teachingCallResponse.id);
 							teachingCallResponses.byInstructorId[teachingCallResponse.instructorId] = teachingCallResponses.byInstructorId[teachingCallResponse.instructorId] || [];

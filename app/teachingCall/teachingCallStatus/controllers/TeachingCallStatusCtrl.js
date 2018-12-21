@@ -27,9 +27,28 @@ class TeachingCallStatusCtrl {
 		});
 
 		$scope.instructorFormHasData = function(instructor) {
-			// TODO: teachingCallReceipt has a message?
-			// TODO: teachingCallResponses from that year have availabilities?
-			// TODO: preferences from that year?
+			// Is message set?
+			if (instructor.message) { return true; }
+
+			// Are instructor preferences set?
+			var teachingAssignments = $scope.view.state.teachingAssignments.byInstructorId[instructor.instructorId];
+
+			var hasData = false;
+
+			teachingAssignments.forEach(function(teachingAssignment) {
+				if (teachingAssignment.fromInstructor) { hasData = true; }
+			});
+
+			if (hasData) { return true; }
+
+			// Is unavailability set?
+			var teachingCallResponses = $scope.view.state.teachingCallResponses.byInstructorId[instructor.instructorId];
+
+			teachingCallResponses.forEach(function(teachingCallResponse) {
+				if (teachingCallResponse.availabilityBlob.indexOf("0") > -1) { hasData = true; }
+			});
+
+			return hasData;
 		};
 
 		$scope.toggleInstructor = function(instructor) {
