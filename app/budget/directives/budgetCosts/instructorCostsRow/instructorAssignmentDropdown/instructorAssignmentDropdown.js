@@ -8,7 +8,7 @@ let instructorAssignmentDropdown = function ($rootScope, BudgetActions) {
 			sectionGroupCost: '<',
 			instructors: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.setInstructor = function(instructor) {
 				if (instructor.isInstructorType) {
 					scope.sectionGroupCost.instructorId = null;

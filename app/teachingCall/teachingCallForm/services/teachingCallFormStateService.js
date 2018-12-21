@@ -5,7 +5,7 @@ class TeachingCallFormStateService {
 			_pageStateReducers: function (action, pageState) {
 				var self = this;
 				switch (action.type) {
-					case ActionTypes.INIT_STATE:
+					case ActionTypes.INIT_STATE: {
 						pageState = {
 							showUnavailabilities: null, // False
 							dueDate: null, // "dec 15th 2016"
@@ -109,6 +109,7 @@ class TeachingCallFormStateService {
 						pageState.formHasChanges = false;
 						pageState.formJustSubmitted = false;
 						return pageState;
+					}
 					case ActionTypes.UPDATE_TEACHING_ASSIGNMENT_ORDER:
 						var sortedIds = action.payload.sortedTeachingAssignmentIds;
 						var termCode = action.payload.termCode;
@@ -133,6 +134,7 @@ class TeachingCallFormStateService {
 						this.calculateChecklist(pageState);
 	
 						pageState.formHasChanges = true;
+
 						return pageState;
 					case ActionTypes.ADD_PREFERENCE:
 						var termCode = action.payload.termCode;
@@ -158,7 +160,7 @@ class TeachingCallFormStateService {
 	
 						pageState.formHasChanges = true;
 						return pageState;
-					case ActionTypes.REMOVE_PREFERENCE:
+					case ActionTypes.REMOVE_PREFERENCE: {
 						var termCode = action.payload.termCode;
 						let preferenceIdsToMove = [];
 	
@@ -192,7 +194,9 @@ class TeachingCallFormStateService {
 						this.calculateChecklist(pageState);
 	
 						pageState.formHasChanges = true;
+
 						return pageState;
+					}
 					case ActionTypes.ADD_TEACHING_CALL_RESPONSE:
 						pageState.formHasChanges = true;
 						return pageState;
@@ -432,7 +436,7 @@ class TeachingCallFormStateService {
 					}
 					// Unknown preference type
 					else {
-						console.debug("course not determine the preference type");
+						console.debug("Could not determine preference type"); // eslint-disable-line no-console
 						return;
 					}
 				});

@@ -3,7 +3,7 @@ let supportSummary = function (TermService) {
 		restrict: 'E',
 		template: require('./supportSummary.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.orderedTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
 
 			scope.termDescription = function(term) {

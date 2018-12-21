@@ -6,7 +6,7 @@ assignmentApp.directive("select2", this.select2 = function () {
 			selectedIds: '=',
 			optionObjects: '='
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope, element) {
 			scope.$watch("selectedIds", function () {
 				if (scope.optionIds === undefined) { return; }
 

@@ -8,7 +8,7 @@ let budgetScenarioDropdown = function($window, $location, $routeParams, $rootSco
 		scope: {
 			state: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 
 			scope.deleteBudgetScenario = function (budgetScenario) {
 				BudgetActions.deleteBudgetScenario(budgetScenario.id);

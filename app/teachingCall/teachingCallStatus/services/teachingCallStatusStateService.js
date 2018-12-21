@@ -2,8 +2,7 @@ class TeachingCallStatusStateService {
 	constructor ($rootScope, $log, ActionTypes) {
 		return {
 			_state: {},
-			_teachingCallReceiptReducers: function (action, teachingCallReceipts, instructors) {
-				var scope = this;
+			_teachingCallReceiptReducers: function (action, teachingCallReceipts) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						teachingCallReceipts = {
@@ -44,7 +43,6 @@ class TeachingCallStatusStateService {
 				}
 			},
 			_instructorTypeReducers: function (action, instructorTypes) {
-				var scope = this;
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						instructorTypes = {
@@ -101,11 +99,9 @@ class TeachingCallStatusStateService {
 						return calculations;
 				}
 			},
-			_instructorReducers: function (action, instructors, teachingCallReceipts) {
-				var scope = this;
-
+			_instructorReducers: function (action, instructors) {
 				switch (action.type) {
-					case ActionTypes.INIT_STATE:
+					case ActionTypes.INIT_STATE: {
 						var instructors = {
 							ids: [],
 							list: []
@@ -147,6 +143,7 @@ class TeachingCallStatusStateService {
 						});
 	
 						return instructors;
+					}
 					case ActionTypes.ADD_INSTRUCTORS_TO_TEACHING_CALL:
 						action.payload.teachingCallReceipts.forEach(function(slotReceipt) {
 							var instructor = instructors.list[slotReceipt.instructorId];
@@ -164,8 +161,8 @@ class TeachingCallStatusStateService {
 				// Build new 'state'
 				// The 'state' is the normalized source of truth
 				let newState = {};
-				newState.instructors = scope._instructorReducers(action, scope._state.instructors, angular.copy(scope._state.teachingCallReceipts));
-				newState.teachingCallReceipts = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipts, angular.copy(scope._state.instructors));
+				newState.instructors = scope._instructorReducers(action, scope._state.instructors, angular.copy(scope._state.teachingCallReceipts)); // eslint-disable-line no-undef
+				newState.teachingCallReceipts = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipts, angular.copy(scope._state.instructors)); // eslint-disable-line no-undef
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 				newState.calculations = scope._calculationReducers(action, scope._state.calculations);
 				newState.ui = scope._uiReducers(action, scope._state.ui);

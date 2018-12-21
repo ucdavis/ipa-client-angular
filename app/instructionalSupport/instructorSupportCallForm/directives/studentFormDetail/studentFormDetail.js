@@ -14,7 +14,7 @@ let studentFormDetail = function ($rootScope, SupportCallService) {
       supportStaff: '<',
       sectionGroups: '<',
     },
-    link: function (scope, element, attrs) {
+    link: function (scope) {
       scope.getLanguageProficiencyDescription = function (languageProficiency) {
         return SupportCallService.getLanguageProficiencyDescription(languageProficiency);
       };

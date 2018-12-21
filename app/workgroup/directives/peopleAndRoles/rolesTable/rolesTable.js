@@ -11,7 +11,7 @@ let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService
 			users: '<',
 			ui: '<'
 		},
-		link: function(scope, element, attrs) {
+		link: function(scope) {
 			scope.view = {
 				loadingPeople: false,
 				noResults: false
@@ -35,12 +35,12 @@ let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService
 			scope.searchUsers = function (query) {
 				return WorkgroupService.searchUsers(scope.ui.workgroupId, query).then(function (userSearchResults) {
 					return userSearchResults;
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', {message: "Could not search users.", type: "ERROR"});
 				});
 			};
 
-			scope.searchUsersResultSelected = function ($item, $model, $label, $event) {
+			scope.searchUsersResultSelected = function ($item) {
 				scope.users.newUser = $item;
 			};
 

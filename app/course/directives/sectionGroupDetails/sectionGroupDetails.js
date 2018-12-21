@@ -1,9 +1,9 @@
-let sectionGroupDetails = function (CourseActionCreators, $rootScope) {
+let sectionGroupDetails = function (CourseActionCreators) {
   return {
     restrict: 'E',
     template: require('./sectionGroupDetails.html'),
     replace: true,
-    link: function (scope, element, attrs) {
+    link: function (scope) {
       scope.isLocked = function () {
         return scope.view.state.uiState.tableLocked;
       };

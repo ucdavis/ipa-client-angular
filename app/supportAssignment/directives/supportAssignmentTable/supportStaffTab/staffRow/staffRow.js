@@ -9,7 +9,7 @@ let staffRow = function ($rootScope, SupportActions) {
 			state: '<',
 			supportStaff: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.tabNames = ['Assignments', 'Comments'];
 
 			scope.setSupportStaffTab = function (tabName) {

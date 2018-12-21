@@ -8,7 +8,7 @@ let confirmEligible = function ($rootScope, StudentFormActions) {
 		scope: {
 			supportCallResponse: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.toggleEligibilityConfirmed = function() {
 				scope.supportCallResponse.eligibilityConfirmed = !scope.supportCallResponse.eligibilityConfirmed;
 				StudentFormActions.updateSupportCallResponse(scope.supportCallResponse);
