@@ -1,4 +1,3 @@
-
 class AuthService {
 	constructor ($http, $window, $q, $location, $rootScope, $log, CurrentUser, $route) {
 		this.$http = $http;
@@ -15,7 +14,7 @@ class AuthService {
 				var self = this;
 				var deferred = $q.defer();
 
-				$http.post(serverRoot + '/login', { token: token }, { withCredentials: true }).then(function (response) {
+				$http.post(window.serverRoot + '/login', { token: token }, { withCredentials: true }).then(function (response) {
 					// Token may be null if we are redirecting
 					if (response.data != null && response.data.token !== null) {
 						var token = response.data.token;
@@ -81,9 +80,8 @@ class AuthService {
 			impersonate: function (loginIdToImpersonate) {
 				var token = localStorage.getItem('JWT');
 
-				var self = this;
 				var deferred = $q.defer();
-				$http.post(serverRoot + '/impersonate/' + loginIdToImpersonate, { token: token }, { withCredentials: true }).then(function (response) {
+				$http.post(window.serverRoot + '/impersonate/' + loginIdToImpersonate, { token: token }, { withCredentials: true }).then(function (response) {
 					var token = response.data.token;
 					$http.defaults.headers.common.Authorization = 'Bearer ' + token;
 					localStorage.setItem('JWT', token);
@@ -95,7 +93,7 @@ class AuthService {
 					var year = explodedUrl[workgroupIndex + 2];
 
 					$window.location.href = "/summary/" + workgroupId + "/" + year;
-				}, function (error) {
+				}, function () {
 					// FIXME: Shouuldn't we do something here?
 				});
 
@@ -108,15 +106,14 @@ class AuthService {
 			unimpersonate: function () {
 				var token = localStorage.getItem('JWT');
 
-				var self = this;
 				var deferred = $q.defer();
-				$http.post(serverRoot + '/unimpersonate', { token: token }, { withCredentials: true }).then(function (response) {
+				$http.post(window.serverRoot + '/unimpersonate', { token: token }, { withCredentials: true }).then(function (response) {
 					var token = response.data.token;
 					$http.defaults.headers.common.Authorization = 'Bearer ' + token;
 					localStorage.setItem('JWT', token);
 
 					$window.location.href = "/summary";
-				}, function (error) {
+				}, function () {
 					// FIXME: Shouldn't we do something here?
 				});
 
@@ -186,9 +183,9 @@ class AuthService {
 					function (response) {
 						if (scope.validateState(response.data, workgroupId, year, ignoreFallBackUrl)) {
 							// Log the user to Google Analytics (only in production mode)
-							if(ipaRunningMode === 'production') {
-								ga('set', 'userId', String(response.data.userTrackingId));
-								ga('send', 'event', 'authentication', 'user-id available');
+							if(window.ipaRunningMode === 'production') {
+								ga('set', 'userId', String(response.data.userTrackingId)); // eslint-disable-line no-undef
+								ga('send', 'event', 'authentication', 'user-id available'); // eslint-disable-line no-undef
 							}
 							deferred.resolve();
 						} else {
@@ -196,7 +193,7 @@ class AuthService {
 						}
 					},
 					// Failure
-					function (response) {
+					function () {
 						deferred.reject();
 					}
 				);
@@ -209,7 +206,7 @@ class AuthService {
 				localStorage.removeItem('userRoles');
 				localStorage.removeItem('displayName');
 				localStorage.removeItem('termStates');
-				redirectUrl = redirectUrl || serverRoot + "/logout";
+				redirectUrl = redirectUrl || window.serverRoot + "/logout";
 				$window.location.href = redirectUrl;
 			},
 
