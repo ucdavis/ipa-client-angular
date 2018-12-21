@@ -49,7 +49,7 @@ function config ($routeProvider) {
 config.$inject = ['$routeProvider'];
 
 // App declaration
-const teachingCallResponseReportApp = angular.module("teachingCallResponseReportApp", dependencies)
+const teachingCallResponseReportApp = angular.module("teachingCallResponseReportApp", dependencies) // eslint-disable-line no-undef
 .config(config)
 .controller('TeachingCallResponseReportCtrl', TeachingCallResponseReportCtrl)
 .service('TeachingCallResponseReportActionCreators', TeachingCallResponseReportActionCreators)

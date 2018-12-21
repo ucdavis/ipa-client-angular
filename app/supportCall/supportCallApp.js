@@ -52,7 +52,7 @@ function config ($routeProvider) {
 config.$inject = ['$routeProvider'];
 
 // App declaration
-const supportCallApp = angular.module("supportCallApp", dependencies)
+const supportCallApp = angular.module("supportCallApp", dependencies) // eslint-disable-line no-undef
 .config(config)
 .controller('SupportCallStatusCtrl', SupportCallStatusCtrl)
 .service('SupportCallStatusActionCreators', SupportCallStatusActionCreators)

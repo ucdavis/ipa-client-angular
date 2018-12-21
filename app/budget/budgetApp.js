@@ -72,7 +72,7 @@ function config ($routeProvider) {
 config.$inject = ['$routeProvider'];
 
 // App declaration
-const budgetApp = angular.module("budgetApp", dependencies)
+const budgetApp = angular.module("budgetApp", dependencies) // eslint-disable-line no-undef
 .config(config)
 .controller('BudgetCtrl', BudgetCtrl)
 .service('BudgetActions', BudgetActions)

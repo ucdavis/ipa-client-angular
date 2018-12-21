@@ -42,7 +42,7 @@ function config ($routeProvider) {
 config.$inject = ['$routeProvider'];
 
 // App declaration
-const reportsApp = angular.module("reportsApp", dependencies)
+const reportsApp = angular.module("reportsApp", dependencies) // eslint-disable-line no-undef
                           .controller('BudgetComparisonReportCtrl', BudgetComparisonReportCtrl)
                           .service('BudgetComparisonReportActions', BudgetComparisonReportActions)
                           .service('BudgetComparisonReportReducers', BudgetComparisonReportReducers)

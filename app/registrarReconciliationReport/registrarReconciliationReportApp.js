@@ -66,7 +66,7 @@ function config ($routeProvider) {
 config.$inject = ['$routeProvider'];
 
 // App declaration
-const registrarReconciliationReportApp = angular.module("registrarReconciliationReportApp", dependencies)
+const registrarReconciliationReportApp = angular.module("registrarReconciliationReportApp", dependencies) // eslint-disable-line no-undef
 .config(config)
 .controller('RegistrarReconciliationReportCtrl', RegistrarReconciliationReportCtrl)
 .service('RegistrarReconciliationReportActionCreators', RegistrarReconciliationReportActionCreators)

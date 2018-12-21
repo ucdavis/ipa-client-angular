@@ -50,7 +50,7 @@ function config ($routeProvider) {
 config.$inject = ['$routeProvider'];
 
 // App declaration
-const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", dependencies)
+const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", dependencies) // eslint-disable-line no-undef
 .directive('workloadTable', workloadTable)
 .directive('workloadTotals', workloadTotals)
 .controller('WorkloadSummaryReportCtrl', WorkloadSummaryReportCtrl)

@@ -149,8 +149,8 @@ function config ($httpProvider, $compileProvider, $logProvider, IdleProvider, $l
 
 	// Debugger mode
 	try {
-		$compileProvider.debugInfoEnabled(debuggerEnabled);
-		$logProvider.debugEnabled(debuggerEnabled);
+		$compileProvider.debugInfoEnabled(window.debuggerEnabled);
+		$logProvider.debugEnabled(window.debuggerEnabled);
 	} catch (e) {
 		console.warn("Debugger status not defined. Please set value in clientConfig. Defaulting to enabled.", e); // eslint-disable-line no-console
 		$compileProvider.debugInfoEnabled(true);
@@ -238,7 +238,7 @@ function exceptionHandler($provide) {
 				};
 				
 				$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("JWT"); // Set proper headers
-				$http.post(serverRoot + "/api/reportJsException", exceptionObject, { withCredentials: true }).then(function(res) {
+				$http.post(window.serverRoot + "/api/reportJsException", exceptionObject, { withCredentials: true }).then(function(res) {
 					return res.data;
 				});
 			}

@@ -7,7 +7,7 @@ let instructorTypeSelector = function (WorkgroupActionCreators) {
 			instructorTypes: '<',
 			userRole: '<'
 		},
-		link: function(scope, element, attrs) {
+		link: function(scope) {
 			scope.setInstructorType = function(instructorType) {
 				WorkgroupActionCreators.setInstructorType(instructorType, scope.userRole);
 			};

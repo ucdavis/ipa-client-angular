@@ -64,7 +64,7 @@ function config ($routeProvider) {
 config.$inject = ['$routeProvider'];
 
 // App declaration
-const scheduleSummaryReportApp = angular.module("scheduleSummaryReportApp", dependencies)
+const scheduleSummaryReportApp = angular.module("scheduleSummaryReportApp", dependencies) // eslint-disable-line no-undef
 .config(config)
 .controller('ScheduleSummaryReportCtrl', ScheduleSummaryReportCtrl)
 .service('ScheduleSummaryReportActionCreators', ScheduleSummaryReportActionCreators)
