@@ -7,7 +7,7 @@ let dayIndicatorDiff = function (RegistrarReconciliationReportActionCreators) {
 		restrict: "E",
 		template: require('./dayIndicatorDiff.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.updateDayIndicator = function (dayIndicator) {
 				var activity = {
 					id: scope.activity.id,

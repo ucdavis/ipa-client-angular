@@ -5,7 +5,7 @@ let workgroupSummary = function () {
 		restrict: 'E',
 		template: require('./workgroupSummary.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function () {
 			// Do nothing
 		}
 	};

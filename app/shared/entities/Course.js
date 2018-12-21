@@ -9,7 +9,7 @@ const Course = angular.module('Course', [])
 	}
 	Course.prototype = {
 		setData: function(courseData) {
-			angular.extend(this, courseData);
+			angular.extend(this, courseData); // eslint-disable-line no-undef
 		},
 		isSeries: function () {
 			return this.sequencePattern.toLowerCase() != this.sequencePattern.toUpperCase();

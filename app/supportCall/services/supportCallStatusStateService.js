@@ -9,8 +9,6 @@ class SupportCallStatusStateService {
 		return {
 			_state: {},
 			_supportStaffSupportCallResponseReducers: function (action, supportStaffSupportCallResponses) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						supportStaffSupportCallResponses = {
@@ -51,8 +49,6 @@ class SupportCallStatusStateService {
 				}
 			},
 			_instructorSupportCallResponseReducers: function (action, instructorSupportCallResponses) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						instructorSupportCallResponses = {
@@ -92,9 +88,7 @@ class SupportCallStatusStateService {
 						return instructorSupportCallResponses;
 				}
 			},
-			_instructorReducers: function (action, instructors, instructorSupportCallResponses) {
-				var scope = this;
-	
+			_instructorReducers: function (action, instructors) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						instructors = {
@@ -138,9 +132,7 @@ class SupportCallStatusStateService {
 						return instructors;
 				}
 			},
-			_supportStaffReducers: function (action, supportStaff, supportStaffSupportCallResponses) {
-				var scope = this;
-	
+			_supportStaffReducers: function (action, supportStaff) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						supportStaff = {
@@ -197,8 +189,6 @@ class SupportCallStatusStateService {
 				}
 			},
 			_miscReducers: function (action, misc) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						misc = {
@@ -243,21 +233,21 @@ class SupportCallStatusStateService {
 				newPageState.eligible = {};
 				newPageState.misc = {};
 	
-				newPageState.supportCall.instructors = self.SupportCallStatusSelectors.generateInstructorGroup(angular.copy(scope._state.instructors), angular.copy(scope._state.instructorSupportCallResponses), false);
+				newPageState.supportCall.instructors = self.SupportCallStatusSelectors.generateInstructorGroup(angular.copy(scope._state.instructors), angular.copy(scope._state.instructorSupportCallResponses), false); // eslint-disable-line no-undef
 	
-				newPageState.supportCall.masters = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), false, "masters");
-				newPageState.supportCall.phds = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), false, "phd");
-				newPageState.supportCall.instructionalSupports = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), false, "instructionalSupport");
-				newPageState.supportCall.supportStaff = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), false, "all");
+				newPageState.supportCall.masters = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), false, "masters"); // eslint-disable-line no-undef
+				newPageState.supportCall.phds = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), false, "phd"); // eslint-disable-line no-undef
+				newPageState.supportCall.instructionalSupports = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), false, "instructionalSupport"); // eslint-disable-line no-undef
+				newPageState.supportCall.supportStaff = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), false, "all"); // eslint-disable-line no-undef
 	
-				newPageState.eligible.instructors = self.SupportCallStatusSelectors.generateInstructorGroup(angular.copy(scope._state.instructors), angular.copy(scope._state.instructorSupportCallResponses), true);
+				newPageState.eligible.instructors = self.SupportCallStatusSelectors.generateInstructorGroup(angular.copy(scope._state.instructors), angular.copy(scope._state.instructorSupportCallResponses), true); // eslint-disable-line no-undef
 	
-				newPageState.eligible.masters = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), true, "masters");
-				newPageState.eligible.phds = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), true, "phd");
-				newPageState.eligible.instructionalSupports = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), true, "instructionalSupport");
-				newPageState.eligible.supportStaff = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), true, "all");
+				newPageState.eligible.masters = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), true, "masters"); // eslint-disable-line no-undef
+				newPageState.eligible.phds = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), true, "phd"); // eslint-disable-line no-undef
+				newPageState.eligible.instructionalSupports = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), true, "instructionalSupport"); // eslint-disable-line no-undef
+				newPageState.eligible.supportStaff = self.SupportCallStatusSelectors.generateSupportStaffGroup(angular.copy(scope._state.supportStaff), angular.copy(scope._state.supportStaffSupportCallResponses), true, "all"); // eslint-disable-line no-undef
 	
-				newPageState.misc = angular.copy(scope._state.misc);
+				newPageState.misc = angular.copy(scope._state.misc); // eslint-disable-line no-undef
 	
 				$rootScope.$emit('supportCallStatusStateChanged', newPageState);
 			}

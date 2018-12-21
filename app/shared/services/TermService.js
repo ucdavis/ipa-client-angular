@@ -66,8 +66,8 @@ class TermService {
 				return descriptionTerms[description];
 			},
 			termToTermCode: function(termDTO, yearDTO) {
-				var year = parseInt(angular.copy(yearDTO));
-				var term = angular.copy(termDTO);
+				var year = parseInt(angular.copy(yearDTO)); // eslint-disable-line no-undef
+				var term = angular.copy(termDTO); // eslint-disable-line no-undef
 
 				// Already a termCode
 				if (term.length == 6) {

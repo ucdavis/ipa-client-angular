@@ -1,3 +1,4 @@
+ // eslint-disable-next-line no-undef
 const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 	.factory('CurrentUser', ['$http', 'UserRole', function ($http, UserRole) {
 		function CurrentUser(currentUserData) {
@@ -7,7 +8,7 @@ const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 		}
 		CurrentUser.prototype = {
 			setData: function (currentUserData) {
-				angular.extend(this, currentUserData);
+				angular.extend(this, currentUserData); // eslint-disable-line no-undef
 			},
 
 			setLoginId: function (loginId) {

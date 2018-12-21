@@ -7,7 +7,7 @@ class SupportCallStatusSelectors {
 			// Will combine metadata of instructors and supportCallResponses,
 			// Filtering based on eligibility and groupType
 			generateInstructorGroup: function (instructors, supportCallResponses, isEligible) {
-				self = this;
+				var _self = this;
 				let generatedInstructors = [];
 
 				instructors.ids.forEach( function (instructorId) {
@@ -17,7 +17,7 @@ class SupportCallStatusSelectors {
 	
 					// Confirm matching eligibility filter
 					if (isEligible != isInstructorInSupportCall) {
-						var viewInstructor = self.generateInstructor(instructor, supportCallResponse);
+						var viewInstructor = _self.generateInstructor(instructor, supportCallResponse);
 						generatedInstructors.push(viewInstructor);
 					}
 				});
@@ -26,7 +26,7 @@ class SupportCallStatusSelectors {
 			},
 	
 			generateSupportStaffGroup: function (supportStaffList, supportCallResponses, isEligible, groupType) {
-				self = this;
+				var _self = this;
 				let generatedSupportStaffList = [];
 	
 				supportStaffList.ids.forEach( function (supportStaffId) {
@@ -60,7 +60,7 @@ class SupportCallStatusSelectors {
 					}
 	
 					// Generate supportStaff
-					var viewSupportStaff = self.generateSupportStaff(supportStaff, supportCallResponse);
+					var viewSupportStaff = _self.generateSupportStaff(supportStaff, supportCallResponse);
 					generatedSupportStaffList.push(viewSupportStaff);
 				});
 	
@@ -69,8 +69,8 @@ class SupportCallStatusSelectors {
 	
 			// Push supportCallResponse data onto the instructor
 			generateSupportStaff: function (supportStaff, supportCallResponse) {
-				var newSupportStaff = angular.copy(supportStaff);
-				var supportCallResponseCopy = angular.copy(supportCallResponse);
+				var newSupportStaff = angular.copy(supportStaff); // eslint-disable-line no-undef
+				var supportCallResponseCopy = angular.copy(supportCallResponse); // eslint-disable-line no-undef
 	
 				newSupportStaff.lastContactedAt = null;
 				newSupportStaff.nextContactAt = null;
@@ -125,8 +125,8 @@ class SupportCallStatusSelectors {
 	
 			// Push supportCallResponse data onto the instructor
 			generateInstructor: function (instructor, supportCallResponse) {
-				var newInstructor = angular.copy(instructor);
-				var supportCallResponseCopy = angular.copy(supportCallResponse);
+				var newInstructor = angular.copy(instructor); // eslint-disable-line no-undef
+				var supportCallResponseCopy = angular.copy(supportCallResponse); // eslint-disable-line no-undef
 	
 					newInstructor.lastContactedAt = null;
 					newInstructor.nextContactAt = null;

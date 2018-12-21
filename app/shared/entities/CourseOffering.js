@@ -8,7 +8,7 @@ const CourseOffering = angular.module('CourseOffering', [])
 	}
 	CourseOffering.prototype = {
 			setData: function(courseOfferingData) {
-				angular.extend(this, courseOfferingData);
+				angular.extend(this, courseOfferingData); // eslint-disable-line no-undef
 			}
 	};
 	return CourseOffering;

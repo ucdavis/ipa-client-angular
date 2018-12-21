@@ -1,3 +1,4 @@
+ // eslint-disable-next-line no-undef
 const Term = angular.module('Term', [])
 .factory('Term', ['$http', function($http) {
 	function Term(termData) {
@@ -7,7 +8,7 @@ const Term = angular.module('Term', [])
 	}
 	Term.prototype = {
 			setData: function(termData) {
-				angular.extend(this, termData);
+				angular.extend(this, termData); // eslint-disable-line no-undef
 			},
 
 			// Generates a useful table of terms for the given academic year, e.g. for academicYear = 2016
@@ -29,7 +30,7 @@ const Term = angular.module('Term', [])
 					{ id: 3,  description: "Spring Quarter",         shortCode: "03"}
 				];
 				var year;
-				angular.forEach(table, function(term, i) {
+				angular.forEach(table, function(term, i) {  // eslint-disable-line no-undef
 					if(Number(term.shortCode) < 5) {
 						year = (Number(academicYear) + 1);
 					} else {

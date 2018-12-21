@@ -6,7 +6,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 		scope: {
 			state: '='
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope, element) {
 			scope.isResizeListenerActive = false;
 
 			scope.listenForResize = function() {
@@ -99,51 +99,26 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 							scope.$apply();
 						});
 					},
-					eventMouseover: function (event, jsEvent, view) {
+					eventMouseover: function (event) {
 						element.find('a.activity-' + event.activityId).addClass('hover-activity');
 						element.find('a.section-group-' + event.sectionGroupId).addClass('hover-section-group');
 					},
-					eventMouseout: function (event, jsEvent, view) {
+					eventMouseout: function (event) {
 						element.find('a.activity-' + event.activityId).removeClass('hover-activity');
 						element.find('a.section-group-' + event.sectionGroupId).removeClass('hover-section-group');
 					},
-					dayClick: function (date, jsEvent, view) {
+					dayClick: function () {
 						SchedulingActionCreators.setSelectedActivity();
 						$timeout(function () {
 							scope.$apply();
 						});
 					},
-					eventAfterAllRender: function (view) {
+					eventAfterAllRender: function () {
 						var eventRemove = angular.element('<i class="glyphicon glyphicon-remove hoverable activity-remove"></i>');
 						element.find('a.activity-event:not(.selected-activity):not(.selected-section-group) .fc-content').append(eventRemove);
 					}
 				});
 			};
-
-			// Converts a piece of the rgb value to its hex equivalent
-			// Example: rgbComponentToHex(110) -> "6e"
-			function rgbComponentToHex(c) {
-				var hex = c.toString(16);
-				return hex.length == 1 ? "0" + hex : hex;
-			}
-
-			function rgbToHex(r, g, b) {
-				return "#" + rgbComponentToHex(r) + rgbComponentToHex(g) + rgbComponentToHex(b);
-			}
-
-			function hexToRgb(hex) {
-				var expandedHex = {
-					r: hex.slice(1, 3),
-					g: hex.slice(3,5),
-					b: hex.slice(5,7)
-				};
-
-				return expandedHex ? {
-					r: parseInt(expandedHex.r, 16),
-					b: parseInt(expandedHex.b, 16),
-					g: parseInt(expandedHex.g, 16)
-				} : null;
-			}
 
 			var getActivities = function () {
 				// Each of these If blocks will add to a 'events array'
@@ -170,7 +145,6 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 					scope.view.state.uiState.activeSectionGroupIds.forEach(function (sgId) {
 						if (sgId !== scope.view.state.uiState.selectedSectionGroupId) {
 							var sectionGroup = scope.view.state.sectionGroups.list[sgId];
-							var course = scope.view.state.courses.list[sectionGroup.courseId];
 							var unstyledEvents = sectionGroupToActivityEvents(scope.view.state.sectionGroups.list[sgId]);
 							var tagColor = scope.view.state.courses.list[sectionGroup.courseId].tagColor;
 
@@ -355,10 +329,6 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				return calendarActivities;
 			};
 
-			var anyActivitySelected = function () {
-				return (scope.view.state.uiState.selectedSectionGroupId || scope.view.state.uiState.selectedActivityId || scope.view.state.uiState.selectedCourseId);
-			};
-
 			var activityMatchesSelection = function (activityId) {
 				if (!activityId) { return false; }
 
@@ -394,7 +364,6 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				if (activity.sectionGroupId) {
 					sectionGroup = scope.view.state.sectionGroups.list[activity.sectionGroupId];
 				} else {
-					var section = scope.view.state.sections.list[activity.sectionId];
 					sectionGroup = scope.view.state.sectionGroups.list[activity.sectionGroupId];
 				}
 

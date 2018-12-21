@@ -1,3 +1,4 @@
+ // eslint-disable-next-line no-undef
 const Section = angular.module('Section', [])
 
 .factory('Section', ['$http', function($http) {
@@ -8,7 +9,7 @@ const Section = angular.module('Section', [])
 	}
 	Section.prototype = {
 			setData: function(sectionData) {
-				angular.extend(this, sectionData);
+				angular.extend(this, sectionData); // eslint-disable-line no-undef
 			}
 	};
 	return Section;

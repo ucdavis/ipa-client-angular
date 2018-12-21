@@ -8,7 +8,7 @@ const Building = angular.module('Building', [])
 	}
 	Building.prototype = {
 			setData: function(buildingData) {
-				angular.extend(this, buildingData);
+				angular.extend(this, buildingData); // eslint-disable-line no-undef
 			}
 	};
 	return Building;

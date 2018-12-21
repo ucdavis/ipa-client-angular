@@ -8,7 +8,7 @@ const CourseOfferingGroup = angular.module('CourseOfferingGroup', [])
 	}
 	CourseOfferingGroup.prototype = {
 			setData: function(cogData) {
-				angular.extend(this, cogData);
+				angular.extend(this, cogData); // eslint-disable-line no-undef
 			}
 	};
 	return CourseOfferingGroup;

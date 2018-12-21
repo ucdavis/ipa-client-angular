@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 const Event = angular.module('Event', [])
 
 .factory('Event', ['$http', function($http) {
@@ -8,7 +9,7 @@ const Event = angular.module('Event', [])
 	}
 	Event.prototype = {
 			setData: function(eventData) {
-				angular.extend(this, eventData);
+				angular.extend(this, eventData); // eslint-disable-line no-undef
 			}
 	};
 	return Event;

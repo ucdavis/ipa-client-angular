@@ -1,3 +1,4 @@
+ // eslint-disable-next-line no-undef
 const Location = angular.module('Location', [])
 
 .factory('Location', ['$http', function($http) {
@@ -8,7 +9,7 @@ const Location = angular.module('Location', [])
 	}
 	Location.prototype = {
 			setData: function(locationData) {
-				angular.extend(this, locationData);
+				angular.extend(this, locationData); // eslint-disable-line no-undef
 			}
 	};
 	return Location;

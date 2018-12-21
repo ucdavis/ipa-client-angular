@@ -8,7 +8,7 @@ const Activity = angular.module('Activity', [])
 	}
 	Activity.prototype = {
 		setData: function (activityData) {
-			angular.extend(this, activityData);
+			angular.extend(this, activityData); // eslint-disable-line no-undef
 		},
 		updateCalculatedProperties: function () {
 			this.setStandardTimes();

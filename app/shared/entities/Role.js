@@ -3,6 +3,7 @@
  * Workgroup Configuration page and possibly elsewhere.
  */
 
+  // eslint-disable-next-line no-undef
 const Role = angular.module('Role', [])
 
 .factory('Role', ['$http', function($http) {
@@ -13,7 +14,7 @@ const Role = angular.module('Role', [])
 	}
 	Role.prototype = {
 			setData: function(roleData) {
-				angular.extend(this, roleData);
+				angular.extend(this, roleData); // eslint-disable-line no-undef
 			},
 			getDisplayName : function() {
 				if (typeof this.name !== 'string') { return ""; }

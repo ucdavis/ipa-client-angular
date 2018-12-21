@@ -24,7 +24,7 @@ class summaryActionCreators {
 						workgroupId: workgroupId
 					};
 					self.summaryStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					self.$rootScope.$emit('toast', { message: "Could not load summary initial state.", type: "ERROR" });
 				});
 			},

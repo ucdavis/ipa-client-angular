@@ -1,6 +1,6 @@
 class SharedCtrl {
 	constructor ($scope, $rootScope, $http, $uibModal, $log, AuthService) {
-		$rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
+		$rootScope.$on('$routeChangeError', function () {
 			if (!$rootScope.loadingError) { $rootScope.loadingError = 'unknown'; }
 			$log.error('Failed to change routes. Error code: ' + $rootScope.loadingError);
 		});

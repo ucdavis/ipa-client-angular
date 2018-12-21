@@ -1,3 +1,4 @@
+ // eslint-disable-next-line no-undef
 const TeachingAssignment = angular.module('TeachingAssignment', [])
 
 .factory('TeachingAssignment', ['$http', function($http) {
@@ -8,7 +9,7 @@ const TeachingAssignment = angular.module('TeachingAssignment', [])
 	}
 	TeachingAssignment.prototype = {
 			setData: function(teachingAssignmentData) {
-				angular.extend(this, teachingAssignmentData);
+				angular.extend(this, teachingAssignmentData); // eslint-disable-line no-undef
 			}
 	};
 	return TeachingAssignment;
