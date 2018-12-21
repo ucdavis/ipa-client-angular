@@ -312,9 +312,11 @@ class TeachingCallFormCtrl {
 			if ($scope.view.state.teachingCallReceipt.isDone == false) {
 				window.onbeforeunload = function (event) {
 					var message = 'Are you sure you want to leave this page without submitting your preferences?';
+
 					if (typeof event == 'undefined') {
 						event = window.event;
 					}
+
 					if (event) {
 						event.returnValue = message;
 					}
