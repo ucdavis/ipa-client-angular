@@ -68,6 +68,9 @@
 					<td>
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
 							{{ assignment.enrollment }}
+							<span ng-if="assignment.actualEnrollment"> / {{ assignment.maxEnrollment }}
+								<span class="workload-table__enrollment-percent">(&nbsp;{{ assignment.enrollmentPercentage }}%&nbsp;)</span>
+							</span>
 						</div>
 						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals" ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
 							{{ instructor.totals.enrollment }}
