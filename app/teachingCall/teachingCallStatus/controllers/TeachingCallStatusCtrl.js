@@ -26,6 +26,12 @@ class TeachingCallStatusCtrl {
 			$scope.view.state = data;
 		});
 
+		$scope.instructorFormHasData = function(instructor) {
+			// TODO: teachingCallReceipt has a message?
+			// TODO: teachingCallResponses from that year have availabilities?
+			// TODO: preferences from that year?
+		};
+
 		$scope.toggleInstructor = function(instructor) {
 			TeachingCallStatusActionCreators.toggleInstructor(instructor.instructorId);
 		};

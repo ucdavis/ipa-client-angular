@@ -324,3 +324,7 @@
 	color: #21A9E1;
 	padding-right: 5px;
 }
+
+.teaching-call-status__form-submitted {
+	color: green;
+}
