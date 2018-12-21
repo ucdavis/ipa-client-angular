@@ -14,7 +14,6 @@ class WorkloadSummaryActions {
 				var workgroupId = $route.current.params.workgroupId;
 				var year = $route.current.params.year;
 
-				var _self = this;
 				WorkloadSummaryReducers._state = {};
 				WorkloadSummaryReducers.reduce({
 					type: ActionTypes.INIT_STATE,
@@ -52,7 +51,7 @@ class WorkloadSummaryActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
@@ -78,7 +77,7 @@ class WorkloadSummaryActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
@@ -105,7 +104,7 @@ class WorkloadSummaryActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
@@ -131,7 +130,7 @@ class WorkloadSummaryActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
@@ -157,7 +156,7 @@ class WorkloadSummaryActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
@@ -184,7 +183,7 @@ class WorkloadSummaryActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
@@ -210,7 +209,7 @@ class WorkloadSummaryActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
@@ -236,7 +235,7 @@ class WorkloadSummaryActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
@@ -511,7 +510,7 @@ class WorkloadSummaryActions {
 							if (openCalls == completedCalls) {
 								_self._performCalculations();
 							}
-						}, function (err) {
+						}, function () {
 							$rootScope.$emit('toast', { message: "Could not retrieve enrollment data.", type: "ERROR" });
 						});
 					});
@@ -559,7 +558,6 @@ class WorkloadSummaryActions {
 				return termCodes;
 			},
 			_getSectionsForSectionGroup: function (sectionGroup) {
-				var sectionGroups = WorkloadSummaryReducers._state.sectionGroups;
 				var sections = WorkloadSummaryReducers._state.sections;
 
 				var matchingSections = [];

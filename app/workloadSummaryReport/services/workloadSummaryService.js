@@ -6,7 +6,7 @@ class WorkloadSummaryService {
 			getCourses: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/courses");
 			},
-			getInstructorTypes: function (workgroupId, year) {
+			getInstructorTypes: function () {
 				return _self.ApiService.get("/api/instructorTypes");
 			},
 			getInstructors: function (workgroupId, year) {
@@ -21,7 +21,7 @@ class WorkloadSummaryService {
 			getUsers: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/users");
 			},
-			getUserRoles: function (workgroupId, year) {
+			getUserRoles: function (workgroupId) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/userRoles");
 			},
 			getSections: function (workgroupId, year) {
@@ -30,7 +30,7 @@ class WorkloadSummaryService {
 			downloadWorkloadSummary: function (workgroupId, year) {
 				var deferred = $q.defer();
 	
-				$http.get(serverRoot + "/api/workloadSummaryReport/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
+				$http.get(window.serverRoot + "/api/workloadSummaryReport/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
 					.then(function (payload) {
 						$window.location.href = payload.data.redirect;
 						deferred.resolve(payload.data);

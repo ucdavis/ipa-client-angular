@@ -5,7 +5,6 @@ class WorkloadSummaryReportCtrl {
 		this.$routeParams = $routeParams;
 		this.WorkloadSummaryActions = WorkloadSummaryActions;
 		this.AuthService = AuthService;
-		var _self = this;
 
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
@@ -14,7 +13,6 @@ class WorkloadSummaryReportCtrl {
 
 		$rootScope.$on('workloadSummaryStateChanged', function (event, data) {
 			$scope.view.state = data.state;
-			console.log($scope.view.state);
 		});
 	}
 }
