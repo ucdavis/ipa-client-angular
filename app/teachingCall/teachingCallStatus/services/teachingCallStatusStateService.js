@@ -60,6 +60,44 @@ class TeachingCallStatusStateService {
 						return instructorTypes;
 				}
 			},
+			_teachingCallResponseReducers: function (action, teachingCallResponses) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						teachingCallResponses = {
+							ids: [],
+							list: {},
+							byInstructorId: {}
+						};
+						action.payload.instructorTypes.forEach(function(teachingCallResponse) {
+							teachingCallResponses.list[teachingCallResponse.id] = teachingCallResponse;
+							teachingCallResponses.ids.push(teachingCallResponse.id);
+							teachingCallResponses.byInstructorId[teachingCallResponse.instructorId] = teachingCallResponses.byInstructorId[teachingCallResponse.instructorId] || [];
+							teachingCallResponses.byInstructorId[teachingCallResponse.instructorId].push(teachingCallResponse);
+						});
+						return teachingCallResponses;
+					default:
+						return teachingCallResponses;
+				}
+			},
+			_teachingAssignmentReducers: function (action, teachingAssignments) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						teachingAssignments = {
+							ids: [],
+							list: {},
+							byInstructorId: {}
+						};
+						action.payload.teachingAssignments.forEach(function(teachingAssignment) {
+							teachingAssignments.list[teachingAssignment.id] = teachingAssignment;
+							teachingAssignments.ids.push(teachingAssignment.id);
+							teachingAssignments.byInstructorId[teachingAssignment.instructorId] = teachingAssignments.byInstructorId[teachingAssignment.instructorId] || [];
+							teachingAssignments.byInstructorId[teachingAssignment.instructorId].push(teachingAssignment);
+						});
+						return teachingAssignments;
+					default:
+						return teachingAssignments;
+				}
+			},
 			_uiReducers: function(action, ui) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -169,7 +207,8 @@ class TeachingCallStatusStateService {
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 				newState.calculations = scope._calculationReducers(action, scope._state.calculations);
 				newState.ui = scope._uiReducers(action, scope._state.ui);
-	
+				newState.teachingCallResponses = scope._teachingCallResponseReducers(action, scope._state.teachingCallResponses);
+				newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
 				scope._state = newState;
 	
 				// Build new 'page state'
@@ -180,7 +219,9 @@ class TeachingCallStatusStateService {
 				newPageState.calculations = newState.calculations;
 				newPageState.ui = newState.ui;
 				newPageState.teachingCallReceipts = newState.teachingCallReceipts;
-	
+				newPageState.teachingCallResponses = newState.teachingCallResponses;
+				newPageState.teachingAssignments = newState.teachingAssignments;
+
 				$rootScope.$emit('teachingCallStatusStateChanged', newPageState);
 				$log.debug("Teaching Call Status state updated:");
 				$log.debug(newPageState, action.type);
