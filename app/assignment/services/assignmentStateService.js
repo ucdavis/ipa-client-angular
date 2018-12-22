@@ -1,3 +1,5 @@
+import { _array_sortIdsByProperty, _array_sortByProperty } from 'shared/helpers/array';
+
 /**
  * @ngdoc service
  * @name workgroupApp.workgroupStateService
@@ -17,8 +19,6 @@ class AssignmentStateService {
 		return {
 			_state: {},
 			_courseReducers: function (action, courses) {
-				var scope = this;
-
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						courses = {
@@ -114,8 +114,6 @@ class AssignmentStateService {
 				}
 			},
 			_supportStaffReducers: function (action, supportStaffList) {
-				var scope = this;
-
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						var supportStaffList = {
@@ -133,8 +131,6 @@ class AssignmentStateService {
 				}
 			},
 			_studentPreferenceReducers: function (action, studentPreferences) {
-				var scope = this;
-
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						var studentPreferences = {
@@ -167,8 +163,7 @@ class AssignmentStateService {
 				}
 			},
 			_teachingAssignmentReducers: function (action, teachingAssignments) {
-				var scope = this;
-				var i, payloadTeachingAssignments, slotTeachingAssignment, index;
+				var i, index;
 
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
@@ -203,7 +198,6 @@ class AssignmentStateService {
 				}
 			},
 			_teachingCallReducers: function (action, teachingCalls) {
-				var scope = this;
 				var teachingCall;
 
 				switch (action.type) {
@@ -239,8 +233,6 @@ class AssignmentStateService {
 				}
 			},
 			_teachingCallReceiptReducers: function (action, teachingCallReceipts) {
-				var scope = this;
-
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						teachingCallReceipts = {
@@ -265,8 +257,6 @@ class AssignmentStateService {
 				}
 			},
 			_teachingCallResponseReducers: function (action, teachingCallResponses) {
-				var scope = this;
-
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						teachingCallResponses = {
@@ -436,7 +426,7 @@ class AssignmentStateService {
 
 
 						return instructors;
-					case ActionTypes.ADD_SCHEDULE_INSTRUCTOR_NOTE:
+					case ActionTypes.ADD_SCHEDULE_INSTRUCTOR_NOTE: {
 						let scheduleInstructorNote = action.payload.scheduleInstructorNote;
 						for (i = 0; i < instructors.ids.length; i++) {
 							let instructor = instructors.list[instructors.ids[i]];
@@ -445,6 +435,7 @@ class AssignmentStateService {
 							}
 						}
 						return instructors;
+					}
 					case ActionTypes.ADD_TEACHING_ASSIGNMENT:
 						teachingAssignment = action.payload.teachingAssignment;
 						instructor = instructors.list[teachingAssignment.instructorId];
@@ -452,7 +443,7 @@ class AssignmentStateService {
 							instructor.teachingAssignmentTermCodeIds[teachingAssignment.termCode].push(teachingAssignment.id);
 						}
 						return instructors;
-					case ActionTypes.REMOVE_TEACHING_ASSIGNMENT:
+					case ActionTypes.REMOVE_TEACHING_ASSIGNMENT: {
 						teachingAssignment = action.payload.teachingAssignment;
 						instructor = instructors.list[teachingAssignment.instructorId];
 
@@ -468,13 +459,12 @@ class AssignmentStateService {
 						}
 
 						return instructors;
+					}
 					default:
 						return instructors;
 				}
 			},
 			_instructorMasterListReducers: function (action, instructorMasterList) {
-				var scope = this;
-
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						instructorMasterList = {
@@ -493,8 +483,6 @@ class AssignmentStateService {
 				}
 			},
 			_scheduleTermStateReducers: function (action, scheduleTermStates) {
-				var scope = this;
-
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						scheduleTermStates = {
@@ -551,8 +539,6 @@ class AssignmentStateService {
 				}
 			},
 			_tagReducers: function (action, tags) {
-				var scope = this;
-
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						tags = {
@@ -573,8 +559,6 @@ class AssignmentStateService {
 				}
 			},
 			_scheduleInstructorNoteReducers: function (action, scheduleInstructorNotes) {
-				var scope = this;
-
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						scheduleInstructorNotes = {
@@ -717,8 +701,6 @@ class AssignmentStateService {
 				}
 			},
 			_filterReducers: function (action, filters) {
-				var scope = this;
-
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
 						// A filter is 'enabled' if it is checked, i.e. the category it represents

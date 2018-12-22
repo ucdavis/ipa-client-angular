@@ -1,3 +1,5 @@
+import { _array_sortIdsByProperty } from 'shared/helpers/array';
+
 class SupportCallStatusStateService {
 	constructor ($rootScope, $log, SupportCallStatusSelectors, ActionTypes) {
 		this.$rootScope = $rootScope;

@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 /**
  * @ngdoc service
  * @name workgroupApp.workgroupActionCreators

@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 class BudgetCalculations {
 	constructor (BudgetReducers, TermService, Roles, ActionTypes, ScheduleCostCalculations) {
 		return {
@@ -456,8 +458,6 @@ class BudgetCalculations {
 				var scheduleCosts = BudgetReducers._state.calculatedScheduleCosts;
 				var lineItems = BudgetReducers._state.lineItems;
 				var activeTerms = selectedBudgetScenario.terms;
-				var readerCost = BudgetReducers._state.budget.readerCost;
-				var taCost = BudgetReducers._state.budget.taCost;
 	
 				// Calculate lineItem 'cost'
 				var lineItemsAmount = 0;

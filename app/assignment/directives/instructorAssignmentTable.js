@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 /**
  * Provides the main course table in the Courses View
  */
@@ -12,7 +14,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			openCommentModal: '&?',
 			openUnavailabilityModal: '&?'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope, element) {
 			scope.sharedState = scope.sharedState || AuthService.getSharedState();
 			scope.workgroupId = $routeParams.workgroupId;
 			scope.year = $routeParams.year;

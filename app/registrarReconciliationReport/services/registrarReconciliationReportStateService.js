@@ -1,3 +1,5 @@
+import { _array_sortIdsByProperty } from 'shared/helpers/array';
+
 /**
  * @ngdoc service
  * @name registrarReconciliationReportApp.reportStateService
@@ -100,7 +102,6 @@ class RegistrarReconciliationReportStateService {
 													.filter(function (activityChange) {
 														return activityChange.removedValue;
 													}).forEach(function (activityChange) {
-														var uniqueKey = activityChange.removedValue.cdoId;
 														var activities = slotSection.activities;
 														activities[activityChange.index].noRemote = true;
 													});
@@ -156,9 +157,6 @@ class RegistrarReconciliationReportStateService {
 						// Flag the first section in a sectionGroup as a groupHead
 						var uniqSectionGroupKeys = [];
 						sections.ids.forEach(function (id) {
-	
-							var sequencePattern = isNumber(sectionList[id].sequenceNumber) ?
-								sectionList[id].sequenceNumber : sectionList[id].sequenceNumber.charAt(0);
 							var uniqueKey = sectionList[id].uniqueKey;
 							if (uniqSectionGroupKeys.indexOf(uniqueKey) < 0) {
 								uniqSectionGroupKeys.push(uniqueKey);

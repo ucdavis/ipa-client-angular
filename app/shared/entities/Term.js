@@ -1,4 +1,6 @@
- // eslint-disable-next-line no-undef
+import { _array_findById } from 'shared/helpers/array';
+
+// eslint-disable-next-line no-undef
 const Term = angular.module('Term', [])
 .factory('Term', ['$http', function($http) {
 	function Term(termData) {

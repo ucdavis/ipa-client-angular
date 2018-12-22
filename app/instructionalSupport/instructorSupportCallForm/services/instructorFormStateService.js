@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 class InstructorFormStateService {
   constructor ($rootScope, $log, InstructorFormSelectors, ActionTypes) {
     this.$rootScope = $rootScope;
@@ -8,8 +10,6 @@ class InstructorFormStateService {
     return {
       _state: {},
       _sectionGroupReducers: function (action, sectionGroups) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             sectionGroups = {
@@ -29,8 +29,6 @@ class InstructorFormStateService {
         }
       },
       _courseReducers: function (action, courses) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
           courses = {
@@ -50,8 +48,6 @@ class InstructorFormStateService {
         }
       },
       _miscReducers: function (action, misc) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             var sectionGroups = {};
@@ -61,7 +57,6 @@ class InstructorFormStateService {
             });
 
             var allTabs = [];
-            var activeTab = null;
             var activeSectionGroupId = null;
             var activeSupportStaffId = null;
 
@@ -96,8 +91,6 @@ class InstructorFormStateService {
         }
       },
       _supportStaffReducers: function (action, supportStaff) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             supportStaff = {
@@ -122,8 +115,6 @@ class InstructorFormStateService {
         }
       },
       _studentSupportCallResponseReducers: function (action, studentSupportCallResponses) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             studentSupportCallResponses = {
@@ -143,8 +134,6 @@ class InstructorFormStateService {
         }
       },
       _teachingAssignmentReducers: function (action, teachingAssignments) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             teachingAssignments = {
@@ -164,8 +153,6 @@ class InstructorFormStateService {
         }
       },
       _studentPreferenceReducers: function (action, studentPreferences) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             studentPreferences = {
@@ -185,8 +172,6 @@ class InstructorFormStateService {
         }
       },
       _instructorPreferenceReducers: function (action, instructorPreferences) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             instructorPreferences = {
@@ -228,8 +213,6 @@ class InstructorFormStateService {
         }
       },
       _instructorSupportCallResponseReducers: function (action, instructorSupportCallResponse) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             instructorSupportCallResponse = action.payload.instructorSupportCallResponse;

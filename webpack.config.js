@@ -174,7 +174,6 @@ module.exports = {
         './node_modules/jquery/dist/jquery.js',
         './node_modules/underscore/underscore-min.js',
         './node_modules/moment/min/moment.min.js',
-        './app/shared/helpers/array.js',
         './app/shared/helpers/dates.js',
         './app/shared/helpers/object.js',
         './app/shared/helpers/sections.js',

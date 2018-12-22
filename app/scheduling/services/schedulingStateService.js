@@ -1,3 +1,5 @@
+import { _array_sortIdsByProperty } from 'shared/helpers/array';
+
 /**
  * @ngdoc service
  schedulingApp.schedulingStateService
@@ -58,7 +60,7 @@ class SchedulingStateService {
 				var scope = this;
 	
 				switch (action.type) {
-					case ActionTypes.INIT_STATE:
+					case ActionTypes.INIT_STATE: {
 						instructors = {
 							list: {},
 							ids: []
@@ -82,6 +84,7 @@ class SchedulingStateService {
 						instructors.ids = _array_sortIdsByProperty(instructorsList, ["lastName", "firstName"]);
 						instructors.list = instructorsList;
 						return instructors;
+					}
 					default:
 						return instructors;
 				}
@@ -266,8 +269,6 @@ class SchedulingStateService {
 				}
 			},
 			_teachingCallResponseReducers: function (action, teachingCallResponses) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						teachingCallResponses = {
@@ -288,8 +289,6 @@ class SchedulingStateService {
 				}
 			},
 			_teachingAssignmentReducers: function (action, teachingAssignments) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						teachingAssignments = {
@@ -382,8 +381,6 @@ class SchedulingStateService {
 				}
 			},
 			_tagReducers: function (action, tags) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						tags = {
@@ -422,8 +419,6 @@ class SchedulingStateService {
 				}
 			},
 			_locationReducers: function (action, locations) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						locations = {

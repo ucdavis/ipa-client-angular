@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 /**
  * Provides the main course table in the Courses View
  */
@@ -9,7 +11,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 		'<div style="display: flex; justify-content: center; padding-top: 20px;">' +
 		'<div><img src="/images/ajax-loader.gif" style="width: 32px; height: 32px;" /> <span class="text-muted">&nbsp; Loading assignments</span></div>' +
 		'</div>',
-		link: function (scope, element, attrs) {
+		link: function (scope, element) {
 			scope.view = {};
 
 			/** 

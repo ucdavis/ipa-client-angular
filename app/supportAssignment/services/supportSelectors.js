@@ -1,3 +1,5 @@
+import { _array_sortByProperty, _array_contains_by_properties } from 'shared/helpers/array';
+
 /*
 	Selectors are pure javascript functions that translate the normalized state into nested objects for the view
 */

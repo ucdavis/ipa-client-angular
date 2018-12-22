@@ -1,3 +1,5 @@
+import { _array_sortByProperty, _array_find_by_properties } from 'shared/helpers/array';
+
 class ScheduleCostCalculations {
   constructor (BudgetReducers, TermService, Roles, ActionTypes) {
     return {

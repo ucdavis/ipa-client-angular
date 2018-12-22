@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 import './add-instructors-modal.css';
 
 let addInstructorsModal = function (TermService, TeachingCallStatusActionCreators) {
@@ -11,7 +13,7 @@ let addInstructorsModal = function (TermService, TeachingCallStatusActionCreator
       workgroupId: '<',
       isVisible: '='
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
       scope.startTeachingCallConfig = {};
       scope.startTeachingCallConfig.dueDate = "";
       scope.startTeachingCallConfig.showUnavailabilities = true;

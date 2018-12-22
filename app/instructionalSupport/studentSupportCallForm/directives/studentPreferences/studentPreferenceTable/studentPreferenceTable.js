@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 import './studentPreferenceTable.css';
 
 let studentPreferenceTable = function (StudentFormActions) {
@@ -5,7 +7,7 @@ let studentPreferenceTable = function (StudentFormActions) {
 		restrict: 'E',
 		template: require('./studentPreferenceTable.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.deletePreference = function(preference) {
 				StudentFormActions.deleteStudentPreference(preference);
 			};

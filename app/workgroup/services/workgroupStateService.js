@@ -1,3 +1,5 @@
+import { _array_sortIdsByProperty } from 'shared/helpers/array';
+
 /**
  * @ngdoc service
  * @name workgroupApp.workgroupStateService
@@ -11,8 +13,6 @@ class WorkgroupStateService {
 		return {
 			_state: {},
 			_tagReducers: function (action, tags) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_WORKGROUP:
 						tags = {
@@ -48,8 +48,6 @@ class WorkgroupStateService {
 				}
 			},
 			_locationReducers: function (action, locations) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_WORKGROUP:
 						locations = {
@@ -127,7 +125,6 @@ class WorkgroupStateService {
 				}
 			},
 			_userReducers: function (action, users) {
-				var scope = this;
 				var userIndex;
 	
 				switch (action.type) {
@@ -171,8 +168,6 @@ class WorkgroupStateService {
 				}
 			},
 			_roleReducers: function (action, roles) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_WORKGROUP:
 						roles = {
@@ -194,8 +189,6 @@ class WorkgroupStateService {
 				}
 			},
 			_instructorTypeReducers: function (action, instructorTypes) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_WORKGROUP:
 						instructorTypes = {
@@ -214,8 +207,6 @@ class WorkgroupStateService {
 				}
 			},
 			_calculatedUserRoleReducers: function (action, calculatedUserRoles) {
-				var scope = this;
-				
 				switch (action.type) {
 					case ActionTypes.INIT_WORKGROUP:
 						return [];
@@ -227,11 +218,11 @@ class WorkgroupStateService {
 			},
 	
 			_uiReducers: function (action, ui) {
+				// TODO: These should be stored / used from a central list. DRY.
 				var INSTRUCTIONAL_SUPPORT_ROLE_ID = 11;
 				var STUDENT_MASTERS_ROLE_ID = 12;
 				var STUDENT_PHD_ROLE_ID = 13;
 				var ACADEMIC_PLANNER_ROLE_ID = 2;
-				var scope = this;
 	
 				switch (action.type) {
 					case ActionTypes.INIT_WORKGROUP:

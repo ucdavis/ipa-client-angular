@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 import 'TeachingCall/css/teaching-call-form.css';
 
 class TeachingCallFormCtrl {
@@ -47,7 +49,7 @@ class TeachingCallFormCtrl {
 				});
 
 				return filteredResults.slice(0, 20);
-			}, function (err) {
+			}, function () {
 				$rootScope.$emit('toast', { message: "Could not search courses.", type: "ERROR" });
 			});
 		};
@@ -157,7 +159,7 @@ class TeachingCallFormCtrl {
 			return subjectCode + " " + courseNumber;
 		};
 
-		$scope.addPreference = function(preference, term, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isSabbaticalInResidence, isCourseRelease) {
+		$scope.addPreference = function(preference, term) {
 			// Reset add preference UI state
 			var elements = $('.search-course-input');
 			elements[0].focus();
@@ -167,9 +169,6 @@ class TeachingCallFormCtrl {
 				$scope.toggleSuggestCourse();
 				return;
 			}
-
-			var courseNumber, subjectCode, sectionGroup;
-			var scheduleId = $scope.view.state.scheduleId;
 
 			// Preference is based off a new course (from Data Warehouse)
 			if (preference && preference.isSuggested === true) {

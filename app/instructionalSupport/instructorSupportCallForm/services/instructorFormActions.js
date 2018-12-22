@@ -1,3 +1,4 @@
+import { _array_sortByProperty, _array_swap_positions } from 'shared/helpers/array';
 
 class InstructorFormActions {
   constructor ($rootScope, $window, $route, InstructorFormService, InstructorFormStateService, ActionTypes, AvailabilityService) {

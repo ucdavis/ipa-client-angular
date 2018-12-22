@@ -1,3 +1,5 @@
+import { _array_sortIdsByProperty } from 'shared/helpers/array';
+
 /**
  * @ngdoc service
  * @name courseApp.courseStateService
@@ -35,7 +37,6 @@ class CourseStateService {
         }
       },
       _courseReducers: function (action, courses) {
-        var scope = this;
         var newCourseIndex;
 
         switch (action.type) {

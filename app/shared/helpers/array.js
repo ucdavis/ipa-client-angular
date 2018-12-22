@@ -1,5 +1,5 @@
 // TODO: Rename to _array_getElementById
-_array_findById = function (arr, id) {
+export function _array_findById(arr, id) {
 	var index = _array_getIndexById(arr, id);
 
 	if (index == -1) {
@@ -7,14 +7,14 @@ _array_findById = function (arr, id) {
 	}
 
 	return arr[index];
-};
+}
 
-_array_getIndexById = function (arr, id) {
+function _array_getIndexById(arr, id) {
 	if (!(arr instanceof Array)) { return -1; }
 	return arr.findIndex(function (n) {
 		return n.id == id;
 	});
-};
+}
 
 /**
  * Returns a sorted array of Ids based on the value of a
@@ -29,7 +29,7 @@ _array_getIndexById = function (arr, id) {
  * @param {string or array of strings} properties - The property/properties that the sorter will be comparing.
  * @returns {array} The sorted array
  */
-_array_sortIdsByProperty = function (listHash, properties) {
+export function _array_sortIdsByProperty(listHash, properties) {
 	var keys = Object.keys(listHash);
 	return keys.sort(function (a, b) {
 		var valA, valB;
@@ -55,9 +55,9 @@ _array_sortIdsByProperty = function (listHash, properties) {
 		if (valA > valB) { return 1; }
 		return 0;
 	}).map(function (id) { return parseInt(id); });
-};
+}
 
-_array_sortByProperty = function (listHash, properties, reverseOrder) {
+export function _array_sortByProperty(listHash, properties, reverseOrder) {
 	var keys = Object.keys(listHash);
 	var sortedKeys = keys.sort(function (a, b) {
 		var valA, valB;
@@ -93,11 +93,12 @@ _array_sortByProperty = function (listHash, properties, reverseOrder) {
 	sortedKeys.forEach(function(key) {
 		newArray.push(listHash[key]);
 	});
+	
 	return newArray;
-};
+}
 
 // Will test if an object exists in an array by the specified properties
-_array_contains_by_properties = function(array, properties, object) {
+export function _array_contains_by_properties(array, properties, object) {
 	if ( !(array) || !(properties) || !(object)) {
 		return false;
 	}
@@ -118,10 +119,10 @@ _array_contains_by_properties = function(array, properties, object) {
 		}
 	}
 	return false;
-};
+}
 
 // Will return a matching object by specified properties, otherwise null
-_array_find_by_properties = function(array, properties, object) {
+export function _array_find_by_properties(array, properties, object) {
 	if ( !(array) || !(properties) || !(object)) {
 		return null;
 	}
@@ -142,12 +143,12 @@ _array_find_by_properties = function(array, properties, object) {
 		}
 	}
 	return null;
-};
+}
 
-_array_swap_positions = function (array, indexA, indexB) {
+export function _array_swap_positions(array, indexA, indexB) {
 	var valA = array[indexA];
 	array[indexA] = array[indexB];
 	array[indexB] = valA;
 
 	return array;
-};
+}
