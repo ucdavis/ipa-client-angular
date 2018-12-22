@@ -1,3 +1,5 @@
+import { isCurrentTerm } from 'shared/helpers/dates';
+
 import './scheduledCourses.css';
 
 let scheduledCourses = function ($rootScope) {

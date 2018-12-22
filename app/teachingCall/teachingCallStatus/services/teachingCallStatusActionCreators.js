@@ -1,4 +1,5 @@
 import { _ } from 'underscore';
+import { elapsedMinutes } from 'shared/helpers/dates';
 
 class TeachingCallStatusActionCreators {
 	constructor (TeachingCallStatusStateService, TeachingCallStatusService, CourseService, $rootScope, $window, Role, ActionTypes, $route) {

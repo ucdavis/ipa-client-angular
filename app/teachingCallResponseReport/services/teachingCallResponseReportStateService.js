@@ -1,5 +1,7 @@
+import { setCharAt } from 'shared/helpers/string';
+
 class TeachingCallResponseReportStateService {
-	constructor ($rootScope, $log, Term, SectionGroup, ActionTypes, StringService, AvailabilityService) {
+	constructor ($rootScope, $log, Term, SectionGroup, ActionTypes, AvailabilityService) {
 		this.$rootScope = $rootScope;
 		this.$log = $log;
 		this.Term = Term;
@@ -170,7 +172,7 @@ class TeachingCallResponseReportStateService {
 								var blobFlag = teachingCallReceipt.termsBlob[i];
 								if (blobFlag == "1") {
 									// Change the relevant flag to 1
-									collapsedTermsBlob = StringService.setCharAt(collapsedTermsBlob, i, "1");
+									collapsedTermsBlob = setCharAt(collapsedTermsBlob, i, "1");
 								}
 							}
 						});
@@ -237,6 +239,6 @@ class TeachingCallResponseReportStateService {
 	}
 }
 
-TeachingCallResponseReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup', 'ActionTypes', 'StringService', 'AvailabilityService'];
+TeachingCallResponseReportStateService.$inject = ['$rootScope', '$log', 'Term', 'SectionGroup', 'ActionTypes', 'AvailabilityService'];
 
 export default TeachingCallResponseReportStateService;

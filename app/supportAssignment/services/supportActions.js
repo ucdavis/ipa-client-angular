@@ -1,4 +1,5 @@
 import { isNumber } from 'shared/helpers/types';
+import { setCharAt } from 'shared/helpers/string';
 
 class SupportActions {
 	constructor ($rootScope, $window, SupportService, SupportReducer, ActionTypes, Term, $route) {
@@ -402,11 +403,6 @@ class SupportActions {
 			},
 			getDefaultBlob: function() {
 				return "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
-			},
-			setCharAt: function(str, index, chr) {
-				if (index > str.length-1) { return str;}
-	
-				return str.substr(0,index) + chr + str.substr(index + 1);
 			},
 			combineBlobs: function (blobOne, blobTwo) {
 				for( var i = 0; i < blobTwo.length; i = i + 2) {

@@ -1,4 +1,5 @@
 import { _array_sortIdsByProperty } from 'shared/helpers/array';
+import { millisecondsToDate } from 'shared/helpers/dates';
 
 /**
  * @ngdoc service

@@ -1,4 +1,5 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
+import { getRoleDisplayName } from 'shared/helpers/string';
 
 /**
  * @ngdoc service

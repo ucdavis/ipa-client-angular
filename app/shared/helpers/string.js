@@ -142,7 +142,7 @@ String.prototype.getWeekDays = function () {
 	return dayStr;
 };
 
-function getRoleDisplayName(roleString) {
+export function getRoleDisplayName(roleString) {
 	if (typeof roleString !== 'string') { return ""; }
 
 	if (roleString == "studentPhd") {
@@ -153,7 +153,7 @@ function getRoleDisplayName(roleString) {
 	return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);
 }
 
-function toCurrency(number) {
+export function toCurrency(number) {
 	if (!number) {
 		return "$0.00";
 	}
@@ -166,7 +166,7 @@ function toCurrency(number) {
 	return currency;
 }
 
-function setCharAt(str, index, chr) {
+export function setCharAt(str, index, chr) {
 	// If index is out of bounds, do nothing
 	if (index > str.length - 1) { return str; }
 

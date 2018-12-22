@@ -1,3 +1,5 @@
+import { toCurrency } from 'shared/helpers/string';
+
 import './yearTable.css';
 
 let yearTable = function (StringService) {

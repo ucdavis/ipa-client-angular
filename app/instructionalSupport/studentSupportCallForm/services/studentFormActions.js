@@ -1,3 +1,5 @@
+import { setCharAt } from 'shared/helpers/string';
+
 class StudentFormActions {
 	constructor ($rootScope, $window, $route, StudentFormService, DwService, StudentFormReducers, ActionTypes) {
 		return {

@@ -1,3 +1,5 @@
+import { toCurrency } from 'shared/helpers/string';
+
 import './changeTable.css';
 
 let changeTable = function () {

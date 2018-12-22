@@ -1,3 +1,5 @@
+import { setCharAt } from 'shared/helpers/string';
+
 import './budgetScenarioToolbar.css';
 
 let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScope, BudgetActions) {

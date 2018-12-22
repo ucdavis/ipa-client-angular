@@ -1,3 +1,5 @@
+import { millisecondsToDate } from 'shared/helpers/dates';
+
 class StudentFormReducers {
 	constructor ($rootScope, $log, StudentFormSelectors, ActionTypes) {
 		this.$rootScope = $rootScope;

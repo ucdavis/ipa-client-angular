@@ -173,8 +173,7 @@ module.exports = {
       filesToConcat: [
         './node_modules/jquery/dist/jquery.js',
         './node_modules/moment/min/moment.min.js',
-        './app/shared/helpers/dates.js',
-        './app/shared/helpers/string.js',
+        './app/shared/helpers/string_prototypes.js',
         'course/constants.js',
         './node_modules/fullcalendar/dist/fullcalendar.js',
         './node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',

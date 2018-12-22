@@ -1,3 +1,5 @@
+import { toCurrency } from 'shared/helpers/string';
+
 import './courseCostsRow.css';
 
 let courseCostsRow = function ($rootScope, BudgetActions) {
