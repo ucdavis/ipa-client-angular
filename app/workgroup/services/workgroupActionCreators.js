@@ -10,7 +10,6 @@ import { _array_sortByProperty } from 'shared/helpers/array';
  */
 class WorkgroupActionCreators {
 	constructor (WorkgroupStateService, WorkgroupService, $rootScope, Role, Roles, ActionTypes, $route) {
-		var self = this;
 		this.WorkgroupStateService = WorkgroupStateService;
 		this.WorkgroupService = WorkgroupService;
 		this.$rootScope = $rootScope;

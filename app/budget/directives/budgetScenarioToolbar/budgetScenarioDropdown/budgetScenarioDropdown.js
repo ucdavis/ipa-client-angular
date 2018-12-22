@@ -13,7 +13,7 @@ let budgetScenarioDropdown = function($window, $location, $routeParams, $rootSco
 			scope.deleteBudgetScenario = function (budgetScenario) {
 				BudgetActions.deleteBudgetScenario(budgetScenario.id);
 				// Ensure bootstrap dropdown closes properly when confirming deleting budget scenario
-				$(".budget-scenario-dropdown").toggleClass("open");
+				$(".budget-scenario-dropdown").toggleClass("open"); // eslint-disable-line no-undef
 			};
 
 			scope.selectBudgetScenario = function (budgetScenario) {

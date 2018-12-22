@@ -100,7 +100,7 @@ class InstructorFormActions {
         });
       },
       deleteInstructorPreference: function (preference) {
-        InstructorFormService.deleteInstructorPreference(preference.id).then(function (payload) {
+        InstructorFormService.deleteInstructorPreference(preference.id).then(function () {
           $rootScope.$emit('toast', { message: "Removed Preference", type: "SUCCESS" });
           window.ipa_analyze_event('faculty_ta_form', 'removed_support_staff_preference', preference.id);
 
@@ -116,7 +116,7 @@ class InstructorFormActions {
         });
       },
       submitInstructorPreferences: function (instructorSupportCallResponse, workgroupId, year) {
-        InstructorFormService.updateSupportCallResponse(instructorSupportCallResponse).then(function (payload) {
+        InstructorFormService.updateSupportCallResponse(instructorSupportCallResponse).then(function () {
           $rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
           window.ipa_analyze_event('faculty_ta_form', 'submitted_form');
 

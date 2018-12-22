@@ -10,7 +10,7 @@ let budgetSummary = function ($rootScope, TermService) {
 			instructorTypes: '<',
 			selectedBudgetScenario: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.getTermName = function(term) {
 				return TermService.getShortTermName(term);
 			};

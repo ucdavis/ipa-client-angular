@@ -13,7 +13,7 @@ let budgetNav = function ($rootScope, BudgetActions) {
 			filters: '<',
 			fundsNav: '<'
 		},
-		link: function(scope, element, attrs) {
+		link: function(scope) {
 			scope.setRoute = function(selectedRoute) {
 				BudgetActions.setRoute(selectedRoute);
 			};

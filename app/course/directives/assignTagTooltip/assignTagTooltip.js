@@ -1,6 +1,6 @@
 import './assignTagTooltip.css';
 
-let assignTagTooltip = function ($rootScope) {
+let assignTagTooltip = function () {
   return {
     restrict: 'E', // Use this via an element selector <ipa-modal></ipa-modal>
     template: require('./assignTagTooltip.html'),
@@ -8,7 +8,7 @@ let assignTagTooltip = function ($rootScope) {
     scope: {
       isVisible: '='
     },
-    link: function(scope, element, attrs) {
+    link: function() {
       // Empty intentionally
     }
   };

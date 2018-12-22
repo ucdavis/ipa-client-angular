@@ -5,7 +5,6 @@ class ScheduleSummaryReportStateService {
 		return {
 			_state: {},
 			_sectionGroupReducers: function (action, sectionGroups) {
-				var section;
 				switch (action.type) {
 					case ActionTypes.INIT_STATE: {
 						// Build courses metadata for searching

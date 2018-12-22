@@ -10,7 +10,7 @@ let courseList = function (BudgetActions) {
       selectedBudgetScenario: '<',
       termNav: '<'
     },
-    link: function (scope, element, attrs) {
+    link: function (scope) {
       scope.setActiveTerm = function(activeTermTab) {
         BudgetActions.selectTerm(activeTermTab);
       };

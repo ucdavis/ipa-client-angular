@@ -2,8 +2,6 @@ class BudgetComparisonReportCalculations {
 	constructor(BudgetComparisonReportReducers, ActionTypes, Roles) {
 		return {
 			calculateView: function () {
-				var _self = this;
-
 				var budget = BudgetComparisonReportReducers._state.budget;
 				var budgetScenarios = BudgetComparisonReportReducers._state.budgetScenarios;
 				var lineItems = BudgetComparisonReportReducers._state.lineItems;
@@ -11,7 +9,6 @@ class BudgetComparisonReportCalculations {
 				var sectionGroups = BudgetComparisonReportReducers._state.sectionGroups;
 				var sections = BudgetComparisonReportReducers._state.sections;
 				var teachingAssignments = BudgetComparisonReportReducers._state.teachingAssignments;
-				var instructorTypes = BudgetComparisonReportReducers._state.instructorTypes;
 				var instructorTypeCosts = BudgetComparisonReportReducers._state.instructorTypeCosts;
 				var instructorCosts = BudgetComparisonReportReducers._state.instructorCosts;
 				var sectionGroupCosts = BudgetComparisonReportReducers._state.sectionGroupCosts;
@@ -96,8 +93,6 @@ class BudgetComparisonReportCalculations {
 			},
 			// Generates calculations for instructor and support (reader, TA) costs
 			_generateCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, budget, selectedScenarioId, sectionGroups) {
-				var _self = this;
-
 				var costs = {
 					instructorCosts: this._generateInstructionCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, selectedScenarioId),
 					supportCosts:this. _generateSupportCosts(budget, sectionGroups, selectedScenarioId),
@@ -236,8 +231,6 @@ class BudgetComparisonReportCalculations {
 			},
 			// Generates funding values based on the selected budget scenario
 			_generateFunding(lineItems, selectedScenarioId) {
-				var lineItemCategories = BudgetComparisonReportReducers._state.lineItemCategories;
-
 				var funding = {
 					typeIds: [],
 					types: {},
@@ -294,8 +287,6 @@ class BudgetComparisonReportCalculations {
 				var instructorTypes = BudgetComparisonReportReducers._state.instructorTypes;
 
 				instructorTypes.current.ids.forEach(function(instructorTypeId) {
-					var instructorType = instructorTypes.current.list[instructorTypeId];
-
 					var currentInstructorCost = currentCosts.instructorCosts.byType[instructorTypeId];
 					var currentCost = currentInstructorCost ? currentInstructorCost.cost : 0;
 					var currentCourses = currentInstructorCost ? currentInstructorCost.courses : 0;
@@ -403,7 +394,6 @@ class BudgetComparisonReportCalculations {
 				return scenarios;
 			},
 			_getSectionGroupCost(sectionGroupId, selectedScenarioId) {
-				var budgetScenarios = BudgetComparisonReportReducers._state.budgetScenarios;
 				var sectionGroupCostIds = BudgetComparisonReportReducers._state.sectionGroupCosts.current.bySectionGroupId[sectionGroupId] || BudgetComparisonReportReducers._state.sectionGroupCosts.previous.bySectionGroupId[sectionGroupId];
 				var sectionGroupCost = null;
 

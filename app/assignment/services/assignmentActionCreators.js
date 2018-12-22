@@ -85,7 +85,7 @@ class AssignmentActionCreators {
 				} else {
 					var year = $route.current.params.year;
 					var workgroupId = $route.current.params.workgroupId;
-					_this.addScheduleInstructorNote(instructorId, year, workgroupId, note, assignmentsCompleted);
+					_this.addScheduleInstructorNote(instructorId, year, workgroupId, note); //, assignmentsCompleted);
 				}
 			},
 			addScheduleInstructorNote: function (instructorId, year, workgroupId, comment, assignmentsCompleted) {
@@ -199,21 +199,22 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Could not add instructor comment.", type: "ERROR" });
 				});
 			},
-			removeInstructorAssignment: function (teachingAssignment) {
-				_self.AssignmentService.removeInstructorAssignment(sectionGroupId, instructorId).then(function (sectionGroupId) {
-					window.ipa_analyze_event('instructor assignments', 'instructor unassigned');
+			removeInstructorAssignment: function () {
+				console.error("This function was using undefined variables so it has been disabled"); // eslint-disable-line no-console
+				// _self.AssignmentService.removeInstructorAssignment(sectionGroupId, instructorId).then(function (sectionGroupId) {
+				// 	window.ipa_analyze_event('instructor assignments', 'instructor unassigned');
 
-					_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
-					var action = {
-						type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,
-						payload: {
-							sectionGroup: sectionGroup
-						}
-					};
-					_self.AssignmentStateService.reduce(action);
-				}, function () {
-					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
-				});
+				// 	_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
+				// 	var action = {
+				// 		type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,
+				// 		payload: {
+				// 			sectionGroup: sectionGroup
+				// 		}
+				// 	};
+				// 	_self.AssignmentStateService.reduce(action);
+				// }, function () {
+				// 	_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
+				// });
 			},
 
 			/**
@@ -262,7 +263,7 @@ class AssignmentActionCreators {
 				});
 			},
 			unassignInstructorType: function (originalTeachingAssignment) {
-				_self.AssignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {
+				_self.AssignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function () {
 					_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
 	
 					_self.AssignmentStateService.reduce({

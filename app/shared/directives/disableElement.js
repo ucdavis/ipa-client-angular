@@ -4,7 +4,7 @@ let disableElement = function () {
 		scope: {
 			disableElement: '='
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope, element) {
 			scope.$watch('disableElement', function (disableElement) {
 				if (disableElement) {
 					element

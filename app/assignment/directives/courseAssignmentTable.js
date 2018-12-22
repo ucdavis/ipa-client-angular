@@ -6,8 +6,8 @@ import { _array_sortByProperty } from 'shared/helpers/array';
 let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 	return {
 		restrict: 'A',
-		template: '<div class=\"course-list-row\">' +
-		'<div class=\"course-header course-description-cell\">&nbsp;</div></div>' +
+		template: '<div class="course-list-row">' +
+		'<div class="course-header course-description-cell">&nbsp;</div></div>' +
 		'<div style="display: flex; justify-content: center; padding-top: 20px;">' +
 		'<div><img src="/images/ajax-loader.gif" style="width: 32px; height: 32px;" /> <span class="text-muted">&nbsp; Loading assignments</span></div>' +
 		'</div>',
@@ -100,8 +100,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				var header = "<div class=\"course-list-row\">";
 				header += "<div class=\"course-header course-description-cell\"></div>";
 
-				$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) {
-
+				$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) { // eslint-disable-line no-undef
 					var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
 					header += "<div class=\"term-header term-cell\">" + termCode.getTermCodeDisplayName(true) + "</div>";
 				});
@@ -118,7 +117,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				// The app is in the process of re-routing to a valid url
 				if (scope.view.state.courses) {
 					// Clear the table
-					$('.tooltip').remove();
+					$('.tooltip').remove(); // eslint-disable-line no-undef
 					element.empty();
 
 					var header = scope.renderHeader();
@@ -137,7 +136,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 						coursesHtml += "</div>";
 					}
 					else {
-						$.each(scope.view.state.courses.ids, function (i, courseId) {
+						$.each(scope.view.state.courses.ids, function (i, courseId) { // eslint-disable-line no-undef
 							var course = scope.view.state.courses.list[courseId];
 							if (course.isHidden === false && course.isFiltered === false && course.matchesTagFilters === true) {
 								var courseHtml = "";
@@ -156,7 +155,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 								courseHtml += "Tags: ";
 
 								// Display tags
-								$.each(course.tagIds, function (i, tagId) {
+								$.each(course.tagIds, function (i, tagId) { // eslint-disable-line no-undef
 									var tag = scope.view.state.tags.list[tagId];
 									courseHtml += '<div class="label course-tag" style="background-color:' + tag.color + '">' + tag.name + "</div>";
 								});
@@ -175,7 +174,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 								courseHtml += "</div></div>"; // End course-description-cell
 
 								// Loop over active terms
-								$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) {
+								$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) { // eslint-disable-line no-undef
 									var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
 
 									courseHtml += "<div class=\"term-cell\">";
@@ -224,7 +223,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 										}
 
 										// Loop over teachingAssignments that are approved
-										$.each(sectionGroup.teachingAssignmentIds, function (i, teachingAssignmentId) {
+										$.each(sectionGroup.teachingAssignmentIds, function (i, teachingAssignmentId) { // eslint-disable-line no-undef
 											var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 
 											if (teachingAssignment.approved === true) {
@@ -306,7 +305,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 											if (sectionGroup.teachingAssignmentIds.length > 0) {
 
 												// Loop over instructors who are interested in this course
-												$.each(sectionGroup.teachingAssignmentIds, function (i, teachingAssignmentId) {
+												$.each(sectionGroup.teachingAssignmentIds, function (i, teachingAssignmentId) { // eslint-disable-line no-undef
 													var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 													var priority = scope.calculatePriority(teachingAssignment, instructor);
@@ -339,7 +338,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 											}
 
 											// Loop over instructors who are not interested in this course
-											$.each(scope.view.state.instructors.ids, function (i, instructorId) {
+											$.each(scope.view.state.instructors.ids, function (i, instructorId) { // eslint-disable-line no-undef
 												var instructor = scope.view.state.instructors.list[instructorId];
 												if (interestedInstructorIds.indexOf(instructor.id) < 0) {
 													courseHtml += "<li><a";
@@ -400,7 +399,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					element.append(coursesHtml);
 
 					// Manually activate bootstrap tooltip triggers
-					$('body').tooltip({
+					$('body').tooltip({ // eslint-disable-line no-undef
 						selector: '[data-toggle="tooltip"]'
 					});
 				}
@@ -408,7 +407,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 			// Handle input box edits
 			element.on("change", function(e) {
-				var $el = $(e.target);
+				var $el = $(e.target); // eslint-disable-line no-undef
 				if ($el.data('event-type') != 'setCourseNote') { return; }
 
 				var courseId = $el.data('course-id');
@@ -419,7 +418,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 			// Handle Instructor UI events
 			element.click(function (e) {
-				let $el = $(e.target);
+				let $el = $(e.target); // eslint-disable-line no-undef
 
 				var teachingAssignmentId, teachingAssignment;
 				// Approving a teachingAssignment or creating a new one

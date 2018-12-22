@@ -8,7 +8,7 @@ let courseCostsRow = function ($rootScope, BudgetActions) {
 		scope: {
 			sectionGroupCost: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.updateSectionGroupCost = function (sectionGroupCost) {
 				scope.enforceNumericParams(sectionGroupCost);
 				BudgetActions.updateSectionGroupCost(sectionGroupCost);

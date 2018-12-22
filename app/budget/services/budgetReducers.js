@@ -1,5 +1,5 @@
 class BudgetReducers {
-	constructor ($rootScope, $log, BudgetSelectors, ActionTypes, Roles) {
+	constructor ($rootScope, $log, BudgetSelectors, ActionTypes) {
 		return {
 			_state: {},
 			budgetScenarioReducers: function (action, budgetScenarios) {
@@ -961,6 +961,6 @@ class BudgetReducers {
 	}
 }
 
-BudgetReducers.$inject = ['$rootScope', '$log', 'BudgetSelectors', 'ActionTypes', 'Roles'];
+BudgetReducers.$inject = ['$rootScope', '$log', 'BudgetSelectors', 'ActionTypes'];
 
 export default BudgetReducers;

@@ -8,7 +8,7 @@ let studentComments = function (StudentFormActions) {
 		scope: {
 			supportCallResponse: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.updateStudentComments = function() {
 				StudentFormActions.updateStudentComments(scope.supportCallResponse);
 			};

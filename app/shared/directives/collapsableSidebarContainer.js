@@ -5,7 +5,7 @@
 
 let collapsableSidebarContainer = function ($rootScope, AuthService) {
 	return {
-		link: function (scope, element, attrs, ngModelCtrl) {
+		link: function (scope, element) {
 
 			$rootScope.$on('sidebarStateToggled', function (event, sidebarCollapsed) {
 				updateClass(sidebarCollapsed);

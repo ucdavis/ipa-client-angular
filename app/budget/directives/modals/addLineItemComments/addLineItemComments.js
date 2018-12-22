@@ -9,7 +9,7 @@ let addLineItemComments = function ($rootScope, BudgetActions) {
 			lineItem: '<',
 			currentUserLoginId: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.newComment = "";
 
 			scope.isFormValid = function() {

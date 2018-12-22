@@ -11,7 +11,7 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 			divider: '<'
 		},
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.toggleCourseCostsSection = function() {
 				BudgetActions.toggleCourseCostsSection();
 			};
@@ -33,7 +33,7 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 			};
 
 			scope.updateInstructorCost = function(sectionGroupCost) {
-				sectionGroupCost.cost = angular.copy(parseFloat(sectionGroupCost.cost));
+				sectionGroupCost.cost = angular.copy(parseFloat(sectionGroupCost.cost)); // eslint-disable-line no-undef
 				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 

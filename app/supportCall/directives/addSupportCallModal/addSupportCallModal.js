@@ -278,7 +278,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			};
 	
 			scope.submit = function () {
-				var messageInput = $('.support-call-message-input').val();
+				var messageInput = $('.support-call-message-input').val(); // eslint-disable-line no-undef
 				if (messageInput) {
 					scope.supportCallConfigData.message = messageInput.replace(/\r?\n/g, '<br />');
 				}

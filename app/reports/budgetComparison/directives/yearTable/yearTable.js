@@ -13,7 +13,7 @@ let yearTable = function (StringService) {
 			funding: '<',
 			miscStats: '<',
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.toCurrency = function (value) {
 				return toCurrency(value);
 			};

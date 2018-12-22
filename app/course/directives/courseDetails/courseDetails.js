@@ -3,8 +3,8 @@ let courseDetails = function (CourseActionCreators, SectionService) {
     restrict: 'E',
     template: require('./courseDetails.html'),
     replace: true,
-    link: function (scope, element, attrs) {
-      scope.originalSequencePattern = angular.copy(scope.view.selectedEntity.sequencePattern);
+    link: function (scope) {
+      scope.originalSequencePattern = angular.copy(scope.view.selectedEntity.sequencePattern); // eslint-disable-line no-undef
       scope.sequenceNumberPlaceholder = "Example: '001' or 'A'";
       scope.courseDetails = {
         sequencePatternTooltipMessage: null

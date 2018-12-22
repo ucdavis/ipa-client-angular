@@ -13,7 +13,7 @@ let instructorPreferences = function ($rootScope, InstructorFormActions) {
       supportStaffList: '<',
       activeSupportStaffId: '<'
     },
-    link: function (scope, element, attrs) {
+    link: function (scope) {
       scope.filteredSupportStaff = scope.sectionGroup.eligibleSupportStaff.other;
 
       $rootScope.$on('instructorFormStateChanged', function (event, data) {
@@ -36,7 +36,7 @@ let instructorPreferences = function ($rootScope, InstructorFormActions) {
             ]
           };
 
-          var fuse = new Fuse(scope.supportStaffList.sorted, options);
+          var fuse = new Fuse(scope.supportStaffList.sorted, options); // eslint-disable-line no-undef
           var results = fuse.search(searchQuery);
           scope.filteredSupportStaff = results;
         } else {
