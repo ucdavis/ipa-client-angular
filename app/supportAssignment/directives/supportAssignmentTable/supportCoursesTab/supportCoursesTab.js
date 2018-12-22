@@ -1,3 +1,5 @@
+import { isNumber } from 'shared/helpers/types';
+
 import './supportCoursesTab.css';
 
 let supportCoursesTab = function ($rootScope, SupportActions) {

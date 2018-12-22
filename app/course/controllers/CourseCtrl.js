@@ -1,3 +1,5 @@
+import { isNumber } from 'shared/helpers/types';
+
 /**
  * @ngdoc function
  * @name ipaClientAngularApp.controller:CourseCtrl
@@ -216,7 +218,7 @@ class CourseCtrl {
         });
       } else if (data.state.uiState.selectedCourseId && !data.state.uiState.selectedTermCode) {
         // A course is selected
-        _self.$scope.view.selectedEntity = angular.copy(_self.$scope.view.state.courses.list[data.state.uiState.selectedCourseId]);
+        _self.$scope.view.selectedEntity = angular.copy(_self.$scope.view.state.courses.list[data.state.uiState.selectedCourseId]); // eslint-disable-line no-undef
         _self.$scope.view.selectedEntityType = "course";
       } else if (data.state.uiState.selectedCourseId && data.state.uiState.selectedTermCode) {
         // A sectionGroup is selected

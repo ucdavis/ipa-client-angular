@@ -3,6 +3,8 @@
  * Expects an Integer
  */
 
+import { isNumber } from 'shared/helpers/types';
+
 let ordinal = function() {
 	return function (number) {
 		if (number && isNumber(number)) {

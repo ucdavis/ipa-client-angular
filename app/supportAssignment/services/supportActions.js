@@ -1,3 +1,5 @@
+import { isNumber } from 'shared/helpers/types';
+
 class SupportActions {
 	constructor ($rootScope, $window, SupportService, SupportReducer, ActionTypes, Term, $route) {
 		var here = this;
@@ -21,7 +23,7 @@ class SupportActions {
 					});
 	
 					self.performInitCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not get instructional support assignment initial state.", type: "ERROR" });
 				});
 			},
@@ -35,7 +37,7 @@ class SupportActions {
 							shortTermCode: SupportReducer._state.ui.shortTermCode
 						}
 					});
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not toggle support staff call review.", type: "ERROR" });
 				});
 			},
@@ -49,7 +51,7 @@ class SupportActions {
 							shortTermCode: SupportReducer._state.ui.shortTermCode
 						}
 					});
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update instructor support call review.", type: "ERROR" });
 				});
 			},
@@ -62,7 +64,7 @@ class SupportActions {
 							supportAssignment: supportAssignment
 						}
 					});
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not assign staff.", type: "ERROR" });
 				});
 			},
@@ -75,7 +77,7 @@ class SupportActions {
 							supportAssignment: supportAssignment
 						}
 					});
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not assign staff.", type: "ERROR" });
 				});
 			},
@@ -88,7 +90,7 @@ class SupportActions {
 						sectionId: supportAssignment.sectionId,
 						sectionGroupId: supportAssignment.sectionGroupId
 					});
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not remove assignment.", type: "ERROR" });
 				});
 			},
@@ -106,7 +108,7 @@ class SupportActions {
 					showPlaceholderAI: sectionGroupDTO.showPlaceholderAI
 				};
 	
-				SupportService.updateSectionGroup(sectionGroup).then(function(payload) {
+				SupportService.updateSectionGroup(sectionGroup).then(function() {
 					$rootScope.$emit('toast', { message: "Updated Readers", type: "SUCCESS" });
 					SupportReducer.reduce({
 						type: ActionTypes.UPDATE_SECTIONGROUP,
@@ -114,7 +116,7 @@ class SupportActions {
 							sectionGroup: sectionGroup
 						}
 					});
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update readers.", type: "ERROR" });
 				});
 			},
@@ -135,7 +137,7 @@ class SupportActions {
 				sectionGroup.teachingAssistantAppointments = sectionGroupDTO.teachingAssistantAppointments;
 	
 				
-				SupportService.updateSectionGroup(sectionGroup).then(function(payload) {
+				SupportService.updateSectionGroup(sectionGroup).then(function() {
 					$rootScope.$emit('toast', { message: "Updated Teaching Assistants", type: "SUCCESS" });
 					SupportReducer.reduce({
 						type: ActionTypes.UPDATE_SECTIONGROUP,
@@ -143,7 +145,7 @@ class SupportActions {
 							sectionGroup: sectionGroup
 						}
 					});
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update teaching assistants.", type: "ERROR" });
 				});
 			},
@@ -160,7 +162,7 @@ class SupportActions {
 							supportAppointment: payload
 						}
 					});
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update teaching assistants.", type: "ERROR" });
 				});
 			},
@@ -208,7 +210,7 @@ class SupportActions {
 					}
 				});
 			},
-			closeAvailabilityModal: function(supportStaff) {
+			closeAvailabilityModal: function() {
 				SupportReducer.reduce({
 					type: ActionTypes.CLOSE_AVAILABILITY_MODAL,
 					payload: {}

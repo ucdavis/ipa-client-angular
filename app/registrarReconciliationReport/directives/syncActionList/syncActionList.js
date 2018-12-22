@@ -1,3 +1,5 @@
+import { isLetter } from 'shared/helpers/types';
+
 /**
  * example:
  * <sync-action-list></sync-action-list>

@@ -1,4 +1,5 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
+import { isNumber } from 'shared/helpers/types';
 
 import 'TeachingCall/css/teaching-call-form.css';
 
@@ -69,7 +70,7 @@ class TeachingCallFormCtrl {
 				}
 			});
 
-			var results = angular.copy(uniquePreferenceOptions);
+			var results = angular.copy(uniquePreferenceOptions); // eslint-disable-line no-undef
 			if (query) {
 				var options = {
 					shouldSort: true,

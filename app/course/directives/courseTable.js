@@ -1,3 +1,5 @@
+import { isNumber } from 'shared/helpers/types';
+
 /**
  * Provides the main course table in the Courses View
  */
@@ -9,7 +11,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
     '<div style="width: 100%;" align="center" class=\"text-muted\">' +
     '<img src="/images/ajax-loader.gif" style="width: 32px; height: 32px;" /> &nbsp; Loading schedule</div>' +
     '</td></tr></tbody>',
-    link: function (scope, element, attrs) {
+    link: function (scope, element) {
       var self = this;
 
       scope.view = {};

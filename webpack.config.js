@@ -178,7 +178,6 @@ module.exports = {
         './app/shared/helpers/object.js',
         './app/shared/helpers/sections.js',
         './app/shared/helpers/string.js',
-        './app/shared/helpers/types.js',
         'course/constants.js',
         './node_modules/fullcalendar/dist/fullcalendar.js',
         './node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',

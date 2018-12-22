@@ -1,4 +1,5 @@
 import { _array_sortIdsByProperty } from 'shared/helpers/array';
+import { isNumber } from 'shared/helpers/types';
 
 /**
  * @ngdoc service
@@ -13,8 +14,6 @@ class SchedulingStateService {
 		return {
 			_state: {},
 			_courseReducers: function (action, courses) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						courses = {
@@ -57,8 +56,6 @@ class SchedulingStateService {
 				}
 			},
 			_instructorReducers: function (action, instructors) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE: {
 						instructors = {
@@ -90,8 +87,6 @@ class SchedulingStateService {
 				}
 			},
 			_sectionGroupReducers: function (action, sectionGroups) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						sectionGroups = {
@@ -205,8 +200,6 @@ class SchedulingStateService {
 				}
 			},
 			_sectionReducers: function (action, sections) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						sections = {
@@ -309,8 +302,6 @@ class SchedulingStateService {
 				}
 			},
 			_activityReducers: function (action, activities) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						activities = {
@@ -368,7 +359,6 @@ class SchedulingStateService {
 						activities.ids.push(action.payload.activity.id);
 						return activities;
 					case ActionTypes.GET_ACTIVITIES:
-						var section = action.payload.section;
 						var activitiesPayload = action.payload.activities;
 	
 						activitiesPayload.forEach(function(activity) {
@@ -441,8 +431,6 @@ class SchedulingStateService {
 				}
 			},
 			_filterReducers: function (action, filters) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						// A filter is 'enabled' if it is checked, i.e. the category it represents
@@ -487,8 +475,6 @@ class SchedulingStateService {
 				}
 			},
 			_uiStateReducers: function (action, uiState) {
-				var scope = this;
-
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						var sectionGroupIds = action.payload.sectionGroups.map( sectionGroup => sectionGroup.id);
