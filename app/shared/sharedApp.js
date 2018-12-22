@@ -138,11 +138,11 @@ var sharedAppDependencies = [
 // Config
 function config ($httpProvider, $compileProvider, $logProvider, IdleProvider, $locationProvider) {
 	// Add CSRF token to all requests
-	var csrfHeader = $('meta[name=csrf-header]').attr('content');
+	var csrfHeader = $('meta[name=csrf-header]').attr('content'); // eslint-disable-line no-undef
 	if (csrfHeader === undefined) {
 		console.warn("CSRF meta tag not found."); // eslint-disable-line no-console
 	} else {
-		$httpProvider.defaults.headers.common[csrfHeader] = $('meta[name=csrf-token]').attr('content');
+		$httpProvider.defaults.headers.common[csrfHeader] = $('meta[name=csrf-token]').attr('content'); // eslint-disable-line no-undef
 	}
 
 	$httpProvider.useApplyAsync(true);

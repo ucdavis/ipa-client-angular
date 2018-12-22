@@ -1,4 +1,5 @@
 import { _array_sortIdsByProperty } from 'shared/helpers/array';
+import { _ } from 'underscore';
 
 /**
  * @ngdoc service
@@ -121,12 +122,14 @@ class RegistrarReconciliationReportStateService {
 											case "bannerLocation":
 											case "startTime":
 											case "endTime":
-											case "dayIndicator":
+											case "dayIndicator": {
 												let activity = _.find(slotSection.activities, { uniqueKey: change.affectedLocalId });
+												
 												activity.dwChanges = activity.dwChanges || {};
 												activity.dwChanges[change.propertyName] = { isToDo: false };
 												activity.dwChanges[change.propertyName].value = change.right;
 												break;
+											}
 											case "crn":
 											case "seats":
 												slotSection.dwChanges = slotSection.dwChanges || {};

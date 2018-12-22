@@ -71,7 +71,7 @@ class TeachingCallFormActionCreators {
 				});
 			},
 			submitTeachingCall: function (teachingCallReceipt, workgroupId, year) {
-				TeachingCallFormService.updateTeachingCallReceipt(teachingCallReceipt).then(function (teachingCallReceipt) {
+				TeachingCallFormService.updateTeachingCallReceipt(teachingCallReceipt).then(function () {
 					var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor&submittedTC=true";
 					$window.location.href = instructorSummaryUrl;
 					$rootScope.$emit('toast', { message: "Preferences saved.", type: "SUCCESS" });

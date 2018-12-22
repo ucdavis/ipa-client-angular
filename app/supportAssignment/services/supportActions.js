@@ -2,15 +2,12 @@ import { isNumber } from 'shared/helpers/types';
 
 class SupportActions {
 	constructor ($rootScope, $window, SupportService, SupportReducer, ActionTypes, Term, $route) {
-		var here = this;
-
 		return {
 			getInitialState: function () {
 				var self = this;
 				var workgroupId = $route.current.params.workgroupId;
 				var year = $route.current.params.year;
 				var shortTermCode = $route.current.params.termShortCode;
-				var termCode = Term.prototype.getTermByTermShortCodeAndYear(shortTermCode, year).code;
 				var tab = $route.current.params.tab;
 
 				SupportService.getInitialState(workgroupId, year, shortTermCode).then(function (payload) {
@@ -41,7 +38,7 @@ class SupportActions {
 					$rootScope.$emit('toast', { message: "Could not toggle support staff call review.", type: "ERROR" });
 				});
 			},
-			toggleInstructorSupportCallReview: function (scheduleId, termShortCode) {
+			toggleInstructorSupportCallReview: function () {
 				SupportService.toggleInstructorSupportCallReview(SupportReducer._state.schedule.id, SupportReducer._state.ui.shortTermCode).then(function (schedule) {
 					$rootScope.$emit('toast', { message: "Updated instructor support call review", type: "SUCCESS" });
 					SupportReducer.reduce({
@@ -82,7 +79,7 @@ class SupportActions {
 				});
 			},
 			deleteAssignment: function (supportAssignment) {
-				SupportService.deleteAssignment(supportAssignment).then(function (payload) {
+				SupportService.deleteAssignment(supportAssignment).then(function () {
 					$rootScope.$emit('toast', { message: "Removed Assignment", type: "SUCCESS" });
 					SupportReducer.reduce({
 						type: ActionTypes.DELETE_ASSIGNMENT,

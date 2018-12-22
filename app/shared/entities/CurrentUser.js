@@ -1,4 +1,6 @@
- // eslint-disable-next-line no-undef
+import { _ } from 'underscore';
+
+// eslint-disable-next-line no-undef
 const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 	.factory('CurrentUser', ['$http', 'UserRole', function ($http, UserRole) {
 		function CurrentUser(currentUserData) {
@@ -86,7 +88,7 @@ const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 
 			hasRoles: function (roleNames, workgroupId) {
 				if (roleNames instanceof Array === false) {
-					$log.error("Parameter passed to hasRoles() is not valid", roleNames);
+					console.error("Parameter passed to hasRoles() is not valid", roleNames); // eslint-disable-line no-console
 					return false;
 				}
 				if (!this.userRoles) { return false; }

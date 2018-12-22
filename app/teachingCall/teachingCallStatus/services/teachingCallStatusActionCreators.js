@@ -1,3 +1,5 @@
+import { _ } from 'underscore';
+
 class TeachingCallStatusActionCreators {
 	constructor (TeachingCallStatusStateService, TeachingCallStatusService, CourseService, $rootScope, $window, Role, ActionTypes, $route) {
 		return {
@@ -195,7 +197,6 @@ class TeachingCallStatusActionCreators {
 				var instructorsInCalls = false;
 	
 				instructorTypes.ids.forEach(function(instructorTypeId) {
-					var instructorType = instructorTypes.list[instructorTypeId];
 					teachingCallsByInstructorType[instructorTypeId] = [];
 				});
 	

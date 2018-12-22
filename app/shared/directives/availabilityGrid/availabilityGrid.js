@@ -8,7 +8,7 @@ let availabilityGrid = function($timeout) {
 			readOnly: '=',
 			onChange: '&'
 		},
-		link: function(scope, element, attrs) {
+		link: function(scope, element) {
 			scope.days = ['M', 'T', 'W', 'R', 'F'];
 			scope.hours = [7,8,9,10,11,12,1,2,3,4,5,6,7,8,9];
 
@@ -67,12 +67,12 @@ let availabilityGrid = function($timeout) {
 			// Highlights the day/hour on hover
 			element.delegate('td','mouseover mouseleave', function(e) {
 				if (e.type == 'mouseover') {
-					$(this).siblings('th').addClass("hover");
-					element.find("thead th").eq($(this).index()).addClass("hover");
+					$(this).siblings('th').addClass("hover"); // eslint-disable-line no-undef
+					element.find("thead th").eq($(this).index()).addClass("hover"); // eslint-disable-line no-undef
 				}
 				else {
-					$(this).siblings('th').removeClass("hover");
-					element.find("thead th").eq($(this).index()).removeClass("hover");
+					$(this).siblings('th').removeClass("hover"); // eslint-disable-line no-undef
+					element.find("thead th").eq($(this).index()).removeClass("hover"); // eslint-disable-line no-undef
 				}
 			});
 
@@ -81,34 +81,34 @@ let availabilityGrid = function($timeout) {
 
 				var isMouseDown = false;
 				var dragValue,dragClass;
-				element.delegate('td','mousedown', function(e) {
+				element.delegate('td','mousedown', function() {
 					isMouseDown = true;
-					var d = $(this).data().day;
-					var h = $(this).data().hour;
+					var d = $(this).data().day; // eslint-disable-line no-undef
+					var h = $(this).data().hour; // eslint-disable-line no-undef
 					dragValue = scope.availability[d][h] = 1- scope.availability[d][h];
 					scope.saveAvailability();
 
 					dragClass = dragValue === 0 ? 'unavailable' : 'available';
-					$(this).removeClass('available unavailable');
-					$(this).addClass(dragClass);
+					$(this).removeClass('available unavailable'); // eslint-disable-line no-undef
+					$(this).addClass(dragClass); // eslint-disable-line no-undef
 					return false; // prevent text selection
 				})
-				.delegate('td','mouseover', function(e) {
+				.delegate('td','mouseover', function() {
 					if (isMouseDown) {
-						var d = $(this).data().day;
-						var h = $(this).data().hour;
+						var d = $(this).data().day; // eslint-disable-line no-undef
+						var h = $(this).data().hour; // eslint-disable-line no-undef
 						scope.availability[d][h] = dragValue;
 						scope.saveAvailability();
 
-						$(this).removeClass('available unavailable');
-						$(this).addClass(dragClass);
+						$(this).removeClass('available unavailable'); // eslint-disable-line no-undef
+						$(this).addClass(dragClass); // eslint-disable-line no-undef
 					}
 				})
 				.bind("selectstart", function () {
 					return false; // prevent text selection in IE
 				});
 
-				$(document)
+				$(document) // eslint-disable-line no-undef
 				.mouseup(function () {
 					isMouseDown = false;
 				});

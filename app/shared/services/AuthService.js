@@ -1,3 +1,5 @@
+import { _ } from 'underscore';
+
 class AuthService {
 	constructor ($http, $window, $q, $location, $rootScope, $log, CurrentUser, $route) {
 		this.$http = $http;
@@ -315,9 +317,9 @@ class AuthService {
 				errorForm += "<input type=\"text\" name=\"url\" value=\"" + error.config.url + "\" />";
 				errorForm += "</form>";
 
-				$("body").append(errorForm);
+				$("body").append(errorForm); // eslint-disable-line no-undef
 
-				$("form#unknownErrorForm").submit();
+				$("form#unknownErrorForm").submit(); // eslint-disable-line no-undef
 			}
 		};
 	}

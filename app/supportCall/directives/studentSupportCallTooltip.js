@@ -20,7 +20,6 @@ let studentSupportCallTooltip = function ($document, $timeout) {
 				collectTeachingQualifications = attrs.collectTeachingQualifications || false,
 				collectLanguageProficiencies = attrs.collectLanguageProficiencies || false,
 				title = attrs.title || "Confirm",
-				btnClass = attrs.btnClass || "btn-danger",
 				placement = attrs.placement || "bottom";
 
 			if (typeof allowSubmissionAfterDueDate === 'string') {

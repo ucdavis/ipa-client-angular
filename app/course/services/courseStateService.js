@@ -1,5 +1,6 @@
 import { _array_sortIdsByProperty } from 'shared/helpers/array';
 import { _object_search_properties } from 'shared/helpers/object';
+import { _ } from 'underscore';
 
 /**
  * @ngdoc service
@@ -197,7 +198,6 @@ class CourseStateService {
         }
       },
       _sectionGroupReducers: function (action, sectionGroups) {
-        var scope = this;
         var sectionGroupData;
 
         switch (action.type) {

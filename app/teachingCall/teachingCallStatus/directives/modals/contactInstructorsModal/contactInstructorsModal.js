@@ -11,7 +11,7 @@ let contactInstructorsModal = function (TermService, TeachingCallStatusActionCre
       workgroupId: '<',
       isVisible: '='
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
       scope.startTeachingCallConfig = {};
       scope.startTeachingCallConfig.dueDate = new Date();
       scope.startTeachingCallConfig.showUnavailabilities = true;
@@ -88,11 +88,11 @@ let contactInstructorsModal = function (TermService, TeachingCallStatusActionCre
     
       scope.start = function (emailInstructors) {
         scope.startTeachingCallConfig.emailInstructors = emailInstructors;
-        $uibModalInstance.close(scope.startTeachingCallConfig);
+        $uibModalInstance.close(scope.startTeachingCallConfig); // eslint-disable-line no-undef
       };
     
       scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel'); // eslint-disable-line no-undef
       };
     
       scope.isFormIncomplete = function () {
@@ -156,7 +156,7 @@ let contactInstructorsModal = function (TermService, TeachingCallStatusActionCre
       scope.altInputFormats = ['M!/d!/yyyy'];
     
       scope.submit = function() {
-        var messageInput = $('.teaching-call-message-input').val();
+        var messageInput = $('.teaching-call-message-input').val(); // eslint-disable-line no-undef
         scope.startTeachingCallConfig.message = messageInput.replace(/\r?\n/g, '<br />');
 
         scope.contactInstructors();

@@ -85,6 +85,7 @@ String.prototype.toFullDate = function () {
 };
 
 // Turns 'D' into 'Discussion'
+// FIXME: Do not extend String.prototype for this functionality.
 String.prototype.getActivityCodeDescription = function () {
 	var codeDescriptions = {
 		'%': "World Wide Web Electronic Discussion",

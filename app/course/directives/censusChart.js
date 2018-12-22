@@ -1,3 +1,5 @@
+import { _ } from 'underscore';
+
 /**
  * Uses Chart JS to display either a bar chart (historical courses), or a line chart (future courses)
  * Example: <census-chart census="census" term="termCode"course-id="courseId"></census-chart>
@@ -12,7 +14,7 @@ let censusChart = function ($rootScope, $timeout) {
       term: '=',
       courseId: '='
     },
-    link: function (scope, element, attrs) {
+    link: function (scope, element) {
       var ctx = element[0].getContext("2d");
 
       // Watch for changing params: happens when selecting a different courses

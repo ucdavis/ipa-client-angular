@@ -1,5 +1,6 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
 import { isNumber } from 'shared/helpers/types';
+import { _ } from 'underscore';
 
 import 'TeachingCall/css/teaching-call-form.css';
 

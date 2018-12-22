@@ -64,7 +64,6 @@ let teachingCallTooltip = function ($document, $timeout) {
 				showUnavail = attrs.showUnavail || "no showUnavail",
 
 				title = attrs.title || "Confirm",
-				btnClass = attrs.btnClass || "btn-danger",
 				placement = attrs.placement || "bottom";
 
 			if (typeof showUnavail === 'string') {
@@ -113,13 +112,13 @@ let teachingCallTooltip = function ($document, $timeout) {
 				var dontBubble = true;
 				e.stopPropagation();
 				// First remove all pre-existing popups
-				$(".popover").hide();
+				$(".popover").hide(); // eslint-disable-line no-undef
 
 				// Activate this popup
 				element.popover('show');
 				element.addClass('active');
 
-				var pop = $("#button-" + buttonId);
+				var pop = $("#button-" + buttonId); // eslint-disable-line no-undef
 
 				pop.closest(".popover").click(function (e) {
 					if (dontBubble) {
