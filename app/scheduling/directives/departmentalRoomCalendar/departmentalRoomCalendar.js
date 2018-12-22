@@ -10,7 +10,7 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 		},
 		link: function (scope, element) {
 			scope.isResizeListenerActive = false;
-			scope.startOfWeek = moment().startOf('week').startOf('day');
+			scope.startOfWeek = moment().startOf('week').startOf('day'); // eslint-disable-line no-undef
 
 			scope.listenForResize = function() {
 				if (scope.isResizeListenerActive) {
@@ -78,8 +78,8 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					slotEventOverlap: false,
 					displayEventTime: false,
 					visibleRange: {
-						start: moment().startOf('week').format('YYYY-MM-DD'),
-						end: moment().startOf('week').add(scope.locations.ids.length, 'days').format('YYYY-MM-DD')
+						start: moment().startOf('week').format('YYYY-MM-DD'), // eslint-disable-line no-undef
+						end: moment().startOf('week').add(scope.locations.ids.length, 'days').format('YYYY-MM-DD') // eslint-disable-line no-undef
 					},
 					columnHeaderText: function(mom) {
 						var day = mom.startOf('day');
@@ -181,8 +181,8 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					var start = activity.startTime.split(':').map(Number);
 					var end = activity.endTime.split(':').map(Number);
 					var locationIndex = scope.locations.ids.indexOf(activity.locationId);
-					var activityStart = moment().day(locationIndex).hour(start[0]).minute(start[1]).second(0).format('llll');
-					var activityEnd = moment().day(locationIndex).hour(end[0]).minute(end[1]).second(0).format('llll');
+					var activityStart = moment().day(locationIndex).hour(start[0]).minute(start[1]).second(0).format('llll'); // eslint-disable-line no-undef
+					var activityEnd = moment().day(locationIndex).hour(end[0]).minute(end[1]).second(0).format('llll'); // eslint-disable-line no-undef
 
 
 					// Add classes to group events that belong to the same activity

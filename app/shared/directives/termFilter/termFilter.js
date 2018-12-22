@@ -8,9 +8,9 @@ let termFilter = function (TermService) {
 			activeTerms: '<',
 			selectTerm: '&'
 		},
-		link: function(scope, element, attrs) {
+		link: function(scope) {
 			// Validate passed methods
-			if (angular.isUndefined(scope.selectTerm)) {
+			if (angular.isUndefined(scope.selectTerm)) { // eslint-disable-line no-undef
 				throw {
 					message: "termFilter: Required method selectTerm was not provided."
 				};

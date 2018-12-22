@@ -124,7 +124,6 @@ class SummaryStateService {
 				}
 			},
 			_eventReducers: function (action, events) {
-				var scope = this;
 				var i, startDate, endDate, eventData;
 	
 				switch (action.type) {
@@ -140,8 +139,8 @@ class SummaryStateService {
 						var teachingCallLength = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
 						for (i = 0; i < teachingCallLength; i++) {
 							var teachingCall = action.payload.teachingCalls[i];
-							startDate = moment(teachingCall.startDate, "YYYY-MM-DD");
-							endDate = moment(teachingCall.dueDate, "YYYY-MM-DD");
+							startDate = moment(teachingCall.startDate, "YYYY-MM-DD"); // eslint-disable-line no-undef
+							endDate = moment(teachingCall.dueDate, "YYYY-MM-DD"); // eslint-disable-line no-undef
 	
 							// Build eventData object based on the teachingCall's start date
 							var teachingCallType = "";
@@ -164,7 +163,7 @@ class SummaryStateService {
 							};
 	
 							// Only add the event if it happens in the future
-							if (startDate.isAfter(moment())) {
+							if (startDate.isAfter(moment())) { // eslint-disable-line no-undef
 								eventsList.push(new Event(eventData));
 							}
 	
@@ -178,7 +177,7 @@ class SummaryStateService {
 								'caption': "",
 								'link': "/assignments/" + action.workgroupId + "/" + action.year + "/teachingCallStatus"
 							};
-							if (endDate.isAfter(moment())) {
+							if (endDate.isAfter(moment())) { // eslint-disable-line no-undef
 								eventsList.push(new Event(eventData));
 							}
 	
@@ -186,7 +185,7 @@ class SummaryStateService {
 	
 						var futureTerms = action.payload.terms.filter(function (term) {
 							// return only terms that will end in the future and exclude the unused '04' terms
-							return moment(term.endDate).isAfter(moment()) && term.termCode.slice(-2) != '04';
+							return moment(term.endDate).isAfter(moment()) && term.termCode.slice(-2) != '04'; // eslint-disable-line no-undef
 						});
 	
 						// Append future events retrieved from the terms
@@ -320,7 +319,7 @@ class SummaryStateService {
 							if (teachingCallReceiptData.workgroupId == action.workgroupId
 								&& teachingCallReceiptData.academicYear == action.year) {
 									if (teachingCallReceiptData.dueDate) {
-										teachingCallReceiptData.dueDateDescription = moment(teachingCallReceiptData.dueDate).format("YYYY-MM-DD").toFullDate();
+										teachingCallReceiptData.dueDateDescription = moment(teachingCallReceiptData.dueDate).format("YYYY-MM-DD").toFullDate(); // eslint-disable-line no-undef
 									} else {
 										teachingCallReceiptData.dueDateDescription = "";
 									}
@@ -512,7 +511,7 @@ class SummaryStateService {
 		var month = d.getMonth() + 1;
 		var year = d.getFullYear();
 		var formattedDate = year + "-" + month + "-" + day;
-		formattedDate = moment(formattedDate, "YYYY-MM-DD").format('LL');
+		formattedDate = moment(formattedDate, "YYYY-MM-DD").format('LL'); // eslint-disable-line no-undef
 	
 		return formattedDate;
 	}

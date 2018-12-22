@@ -272,14 +272,14 @@ class AuthService {
 
 			setSharedState: function (workgroup, year) {
 				localStorage.setItem('workgroup', JSON.stringify(workgroup));
-				localStorage.setItem('year', year || moment().year());
+				localStorage.setItem('year', year || moment().year()); // eslint-disable-line no-undef
 				$rootScope.$emit('sharedStateSet', this.getSharedState());
 			},
 
 			getSharedState: function () {
 				return {
 					workgroup: this.getCurrentWorkgroup(),
-					year: Number(localStorage.getItem('year')) || moment().year(),
+					year: Number(localStorage.getItem('year')) || moment().year(), // eslint-disable-line no-undef
 					termStates: this.getTermStates(),
 					currentUser: this.getCurrentUser()
 				};

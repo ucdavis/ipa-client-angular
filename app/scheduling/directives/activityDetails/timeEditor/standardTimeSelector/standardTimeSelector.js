@@ -8,7 +8,7 @@ let standardTimeSelector = function($window, $location, $routeParams, $rootScope
 		scope: {
 			activity: '='
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.initializeSelector = function() {
 				scope.standardPatterns = Activity.prototype.getStandardTimes();
 				scope.selectedDuration = scope.activity.selectedDuration;
@@ -81,9 +81,9 @@ let standardTimeSelector = function($window, $location, $routeParams, $rootScope
 				scope.timeOfferings = scope.standardPatterns[duration].times;
 
 				if (scope.activity.startTime) {
-					var endTimeObject = moment(scope.activity.startTime, 'hh:mm:ss');
+					var endTimeObject = moment(scope.activity.startTime, 'hh:mm:ss'); // eslint-disable-line no-undef
 					endTimeObject.add(scope.selectedDuration, 'minutes');
-					scope.activity.endTime = moment(endTimeObject).format('hh:mm:ss');
+					scope.activity.endTime = moment(endTimeObject).format('hh:mm:ss'); // eslint-disable-line no-undef
 				}
 				scope.saveActivity();
 			};

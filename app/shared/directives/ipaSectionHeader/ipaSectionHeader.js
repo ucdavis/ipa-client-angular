@@ -7,7 +7,7 @@ let ipaSectionHeader = function() {
 		},
 		replace: true, // Replace with the template below
 		transclude: true,
-		link: function(scope, element, attrs) {
+		link: function() {
 			/* Example Usage:
 			<ipa-section-header
 				header-text="supportCall.title">

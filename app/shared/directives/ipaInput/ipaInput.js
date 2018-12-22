@@ -15,7 +15,7 @@ let ipaInput = function ($timeout) {
 			allowNegative: '<?',
 			mode: '<?' // Options are 'number' (only allow characters 0-9), and 'currency' (currency style formatting and input enforcement)
 		},
-		link: function(scope, element, attrs) {
+		link: function(scope, element) {
 			scope.$watch('mode',function() {
 				if (scope.mode && scope.mode == 'number') {
 					scope.onlyAllowNumberInputs();
@@ -90,7 +90,7 @@ let ipaInput = function ($timeout) {
 
 			// Triggers the update function with default 500ms delay, or uses provided delay override
 			scope.applyUpdate = function() {
-				if (angular.isUndefined(scope.onUpdate)) { return; }
+				if (angular.isUndefined(scope.onUpdate)) { return; } // eslint-disable-line no-undef
 
 				scope.delay = scope.updateDelay || 1000;
 				$timeout.cancel(scope.timeOut);
@@ -99,7 +99,7 @@ let ipaInput = function ($timeout) {
 			};
 
 			scope.onBlur = function() {
-				if (angular.isUndefined(scope.onUpdate)) { return; }
+				if (angular.isUndefined(scope.onUpdate)) { return; } // eslint-disable-line no-undef
 
 				// $timeout.cancel will return true if there was time remaining
 				var needToUpdate = $timeout.cancel(scope.timeOut);

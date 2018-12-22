@@ -146,9 +146,9 @@ const Activity = angular.module('Activity', []) // eslint-disable-line no-undef
 			this.locationType = this.locationId ? 'custom' : 'registrar';
 		},
 		setSelectedDuration: function () {
-			var start = moment(this.startTime, "HH:mm:ss");
-			var end = moment(this.endTime, "HH:mm:ss");
-			var duration = moment.duration(end.diff(start));
+			var start = moment(this.startTime, "HH:mm:ss"); // eslint-disable-line no-undef
+			var end = moment(this.endTime, "HH:mm:ss"); // eslint-disable-line no-undef
+			var duration = moment.duration(end.diff(start)); // eslint-disable-line no-undef
 			this.selectedDuration = duration.asMinutes().toString();
 		},
 		setDefaultDayIndicator: function () {

@@ -34,7 +34,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load report initial state.", type: "ERROR" });
 				});
 			},
@@ -76,7 +76,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update section.", type: "ERROR" });
 				});
 			},
@@ -99,7 +99,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
 				});
 			},
@@ -118,7 +118,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete activity.", type: "ERROR" });
 				});
 			},
@@ -131,8 +131,8 @@ class RegistrarReconciliationReportActionCreators {
 			createActivity: function (section, activityIndex) {
 				// Set the time to match the server format
 				var activity = section.activities[activityIndex];
-				activity.startTime = moment(activity.startTime, "HHmm").format("HH:mm:ss");
-				activity.endTime = moment(activity.endTime, "HHmm").format("HH:mm:ss");
+				activity.startTime = moment(activity.startTime, "HHmm").format("HH:mm:ss"); // eslint-disable-line no-undef
+				activity.endTime = moment(activity.endTime, "HHmm").format("HH:mm:ss"); // eslint-disable-line no-undef
 	
 				RegistrarReconciliationReportService.createActivity(section.id, activity).then(function (createdActivity) {
 					$rootScope.$emit('toast', { message: "Created " + activity.typeCode.getActivityCodeDescription(), type: "SUCCESS" });
@@ -145,7 +145,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not create activity.", type: "ERROR" });
 				});
 			},
@@ -154,8 +154,8 @@ class RegistrarReconciliationReportActionCreators {
 				// Make start/end times IPA friendly format
 				if (section.activities) {
 					section.activities.forEach( function(activity) {
-						activity.startTime = moment(activity.startTime, "HHmm").format("HH:mm:ss");
-						activity.endTime = moment(activity.endTime, "HHmm").format("HH:mm:ss");
+						activity.startTime = moment(activity.startTime, "HHmm").format("HH:mm:ss"); // eslint-disable-line no-undef
+						activity.endTime = moment(activity.endTime, "HHmm").format("HH:mm:ss"); // eslint-disable-line no-undef
 					});
 				}
 	
@@ -170,7 +170,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not create section.", type: "ERROR" });
 				});
 			},
@@ -182,7 +182,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param instructor
 			 */
 			assignInstructor: function (section, instructor) {
-				RegistrarReconciliationReportService.assignInstructor(section.sectionGroupId, instructor).then(function (teachingAssingment) {
+				RegistrarReconciliationReportService.assignInstructor(section.sectionGroupId, instructor).then(function () {
 					$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ASSIGN_INSTRUCTOR,
@@ -192,7 +192,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not assign instructor.", type: "ERROR" });
 				});
 			},
@@ -203,7 +203,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param instructor
 			 */
 			unAssignInstructor: function (section, instructor) {
-				RegistrarReconciliationReportService.unAssignInstructor(section.sectionGroupId, instructor).then(function (teachingAssingment) {
+				RegistrarReconciliationReportService.unAssignInstructor(section.sectionGroupId, instructor).then(function () {
 					$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.UNASSIGN_INSTRUCTOR,
@@ -213,7 +213,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not unassign instructor.", type: "ERROR" });
 				});
 			},
@@ -232,7 +232,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete section.", type: "ERROR" });
 				});
 			},
@@ -264,7 +264,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not create to-do item.", type: "ERROR" });
 				});
 			},
@@ -286,7 +286,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete to-do item.", type: "ERROR" });
 				});
 			}

@@ -41,7 +41,7 @@ let timeInput = function ($timeout) {
 				scope.canIncrementHours = true;
 				scope.canIncrementMinutes = true;
 
-				var selectedTime = moment(scope.time, "HH:mm:ss");
+				var selectedTime = moment(scope.time, "HH:mm:ss"); // eslint-disable-line no-undef
 				var selectedMinutes = selectedTime.minutes();
 				var selectedHours = selectedTime.hours();
 
@@ -54,7 +54,7 @@ let timeInput = function ($timeout) {
 				}
 
 				if (scope.floor) {
-					var floorTime = moment(scope.floor, "HH:mm:ss");
+					var floorTime = moment(scope.floor, "HH:mm:ss"); // eslint-disable-line no-undef
 					floorTime = floorTime.add(5, "minutes");
 
 					var floorMinutes = floorTime.minutes();
@@ -75,7 +75,7 @@ let timeInput = function ($timeout) {
 				}
 
 				if (scope.ceiling) {
-					var ceilingTime = moment(scope.ceiling, "HH:mm:ss");
+					var ceilingTime = moment(scope.ceiling, "HH:mm:ss"); // eslint-disable-line no-undef
 					ceilingTime = ceilingTime.subtract(5, "minutes");
 
 					var ceilingMinutes = ceilingTime.minutes();

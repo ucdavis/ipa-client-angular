@@ -14,13 +14,13 @@ String.prototype.toStandardTime = function () {
 	var returnFormat = "h:mm A";
 	if (/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-9][0-9]$/.test(this)) {
 		// Case "13:00:00"
-		return moment(this, "HH:mm:ss").format(returnFormat);
+		return moment(this, "HH:mm:ss").format(returnFormat); // eslint-disable-line no-undef
 	} else if (/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(this)) {
 		// Case "13:00"
-		return moment(this, "HH:mm").format(returnFormat);
+		return moment(this, "HH:mm").format(returnFormat); // eslint-disable-line no-undef
 	} else if (/^([0-9]|0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/.test(this)) {
 		// Case "1300"
-		return moment(this, "HHmm").format(returnFormat);
+		return moment(this, "HHmm").format(returnFormat); // eslint-disable-line no-undef
 	}
 };
 
@@ -81,7 +81,7 @@ String.prototype.toFullDate = function () {
 		return "";
 	}
 
-	return moment(this, "YYYY-MM-DD").format('LL');
+	return moment(this, "YYYY-MM-DD").format('LL'); // eslint-disable-line no-undef
 };
 
 // Turns 'D' into 'Discussion'
@@ -134,7 +134,7 @@ String.prototype.getWeekDays = function () {
 	var dayArr = this.split('');
 
 	var dayStr = '';
-	angular.forEach(dayArr, function (day, i) {
+	angular.forEach(dayArr, function (day, i) { // eslint-disable-line no-undef
 				if (day === '1') { dayStr = dayStr + days[i]; }
 	});
 

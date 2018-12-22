@@ -86,7 +86,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 						getUnavailabilities()
 					],
 					eventClick: function (calEvent, jsEvent, view) {
-						var closeTarget = angular.element(jsEvent.target).hasClass('activity-remove');
+						var closeTarget = angular.element(jsEvent.target).hasClass('activity-remove'); // eslint-disable-line no-undef
 						if (closeTarget) {
 							SchedulingActionCreators.toggleCheckedSectionGroup(calEvent.sectionGroupId);
 						} else {
@@ -114,7 +114,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 						});
 					},
 					eventAfterAllRender: function () {
-						var eventRemove = angular.element('<i class="glyphicon glyphicon-remove hoverable activity-remove"></i>');
+						var eventRemove = angular.element('<i class="glyphicon glyphicon-remove hoverable activity-remove"></i>'); // eslint-disable-line no-undef
 						element.find('a.activity-event:not(.selected-activity):not(.selected-section-group) .fc-content').append(eventRemove);
 					}
 				});
@@ -176,8 +176,8 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 					dayArray.forEach(function (d, i) {
 						if (d === '1') {
-							var activityStart = moment().day(i).hour(start[0]).minute(start[1]).second(0).format('llll');
-							var activityEnd = moment().day(i).hour(end[0]).minute(end[1]).second(0).format('llll');
+							var activityStart = moment().day(i).hour(start[0]).minute(start[1]).second(0).format('llll'); // eslint-disable-line no-undef
+							var activityEnd = moment().day(i).hour(end[0]).minute(end[1]).second(0).format('llll'); // eslint-disable-line no-undef
 
 							// Add classes to group events that belong to the same activity
 							var activityClasses = [
@@ -221,13 +221,13 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 					for (var h = 7; h < 22; h++) { // Blob starts at 7am and ends at 10pm by definition
 						var slotUnavailable = unavailabilitiesArr[15 * (d - 1) + (h - 7)] === '0';
 						if (unavailabilityStart === null && slotUnavailable) {
-							unavailabilityStart = moment().day(d).hour(h).minute(0).second(0);
+							unavailabilityStart = moment().day(d).hour(h).minute(0).second(0); // eslint-disable-line no-undef
 						}
 
 						// If unavailability slot is ending or day is ending...
 						if (unavailabilityStart !== null && (slotUnavailable === false || h === 21)) {
 							if (h === 21) { h++; } // Unavailabilities must end at 22:00
-							var unavailabilityEnd = moment().day(d).hour(h).minute(0).second(0);
+							var unavailabilityEnd = moment().day(d).hour(h).minute(0).second(0); // eslint-disable-line no-undef
 							calendarUnavailabilities.push({
 								title: title,
 								start: unavailabilityStart,

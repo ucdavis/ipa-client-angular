@@ -16,7 +16,7 @@ class AdminCtrl {
 		this.authService = AuthService;
 
 		this.$scope.workgroupId = this.$routeParams.workgroupId;
-		this.$scope.year = this.$routeParams.year || moment().year();
+		this.$scope.year = this.$routeParams.year || moment().year(); // eslint-disable-line no-undef
 		this.$scope.view = {};
 
 		self.initialize();

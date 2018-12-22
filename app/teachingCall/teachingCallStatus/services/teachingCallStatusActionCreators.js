@@ -209,10 +209,10 @@ class TeachingCallStatusActionCreators {
 					teachingCallReceipt.lastName = instructor.lastName;
 					teachingCallReceipt.instructorId = instructor.id;
 					teachingCallReceipt.teachingCallReceiptId = teachingCallReceipt.id;
-					teachingCallReceipt.lastContactedAt = teachingCallReceipt.lastContactedAt ? moment(teachingCallReceipt.lastContactedAt).format("YYYY-MM-DD").toFullDate() : null;
+					teachingCallReceipt.lastContactedAt = teachingCallReceipt.lastContactedAt ? moment(teachingCallReceipt.lastContactedAt).format("YYYY-MM-DD").toFullDate() : null; // eslint-disable-line no-undef
 					teachingCallReceipt.nextContactAtRaw = teachingCallReceipt.nextContactAt;
-					teachingCallReceipt.nextContactAt = teachingCallReceipt.nextContactAt ? moment(teachingCallReceipt.nextContactAt).format("YYYY-MM-DD").toFullDate() : null;
-					teachingCallReceipt.dueDate = teachingCallReceipt.dueDate ? moment(teachingCallReceipt.dueDate).format("YYYY-MM-DD").toFullDate() : null;
+					teachingCallReceipt.nextContactAt = teachingCallReceipt.nextContactAt ? moment(teachingCallReceipt.nextContactAt).format("YYYY-MM-DD").toFullDate() : null; // eslint-disable-line no-undef
+					teachingCallReceipt.dueDate = teachingCallReceipt.dueDate ? moment(teachingCallReceipt.dueDate).format("YYYY-MM-DD").toFullDate() : null; // eslint-disable-line no-undef
 	
 					teachingCallsByInstructorType[instructor.instructorTypeId].push(teachingCallReceipt);
 	

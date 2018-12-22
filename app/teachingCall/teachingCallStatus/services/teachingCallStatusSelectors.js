@@ -25,8 +25,8 @@ teachingCallApp.service('teachingCallStatusSelectors', function () {
 	return {
 
 		generateInstructorGroup: function (instructors, teachingCallReceipts, inTeachingCall) {
-			generatedInstructors = [];
-			self = this;
+			var generatedInstructors = [];
+			var _self = this;
 
 			instructors.ids.forEach( function (instructorId) {
 				var instructor = instructors.list[instructorId];
@@ -34,7 +34,7 @@ teachingCallApp.service('teachingCallStatusSelectors', function () {
 				var isInstructorInTeachingCall = teachingCallReceipt ? true : false;
 
 				if (inTeachingCall == isInstructorInTeachingCall) {
-					var viewInstructor = self.generateInstructor(instructor, teachingCallReceipt);
+					var viewInstructor = _self.generateInstructor(instructor, teachingCallReceipt);
 					generatedInstructors.push(viewInstructor);
 				}
 
@@ -44,8 +44,8 @@ teachingCallApp.service('teachingCallStatusSelectors', function () {
 		},
 		// Push teachingCallReceipt data onto the instructor
 		generateInstructor: function (instructor, teachingCallReceipt) {
-			var newInstructor = angular.copy(instructor);
-			var teachingCallReceiptCopy = angular.copy(teachingCallReceipt);
+			var newInstructor = angular.copy(instructor); // eslint-disable-line no-undef
+			var teachingCallReceiptCopy = angular.copy(teachingCallReceipt); // eslint-disable-line no-undef
 
 				newInstructor.lastContactedAt = null;
 				newInstructor.nextContactAt = null;
@@ -60,16 +60,16 @@ teachingCallApp.service('teachingCallStatusSelectors', function () {
 			if (teachingCallReceiptCopy) {
 
 				if (teachingCallReceiptCopy.lastContactedAt) {
-					newInstructor.lastContactedAt = moment(teachingCallReceiptCopy.lastContactedAt).format("YYYY-MM-DD").toFullDate();
+					newInstructor.lastContactedAt = moment(teachingCallReceiptCopy.lastContactedAt).format("YYYY-MM-DD").toFullDate(); // eslint-disable-line no-undef
 				}
 
 				if (teachingCallReceiptCopy.nextContactAt) {
 					newInstructor.nextContactRaw = teachingCallReceiptCopy.nextContactAt;
-					newInstructor.nextContactAt = moment(teachingCallReceiptCopy.nextContactAt).format("YYYY-MM-DD").toFullDate();
+					newInstructor.nextContactAt = moment(teachingCallReceiptCopy.nextContactAt).format("YYYY-MM-DD").toFullDate(); // eslint-disable-line no-undef
 				}
 
 				if (teachingCallReceiptCopy.dueDate) {
-					newInstructor.dueDate = moment(teachingCallReceiptCopy.dueDate).format("YYYY-MM-DD").toFullDate();
+					newInstructor.dueDate = moment(teachingCallReceiptCopy.dueDate).format("YYYY-MM-DD").toFullDate(); // eslint-disable-line no-undef
 				}
 
 				newInstructor.message = teachingCallReceiptCopy.message;

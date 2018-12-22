@@ -1,4 +1,4 @@
-let noMobileSupport = function($window, $location, $routeParams, $rootScope) {
+let noMobileSupport = function() {
 	return {
 		restrict: 'E', // Use this via an element selector <no-mobile-support></no-mobile-support>
 		template: require('./noMobileSupport.html'), // directive html found here:

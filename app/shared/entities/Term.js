@@ -55,8 +55,8 @@ const Term = angular.module('Term', [])
 			},
 
 			isLocked: function () {
-				var termEnd = moment(this.endDate);
-				var now = moment();
+				var termEnd = moment(this.endDate); // eslint-disable-line no-undef
+				var now = moment(); // eslint-disable-line no-undef
 				return termEnd.isBefore(now);
 			}
 
