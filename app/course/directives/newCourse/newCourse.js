@@ -1,3 +1,5 @@
+import { sequencePatterns } from 'course/constants';
+
 import './newCourse.css';
 
 let newCourse = function (CourseActionCreators, CourseService, SectionService) {

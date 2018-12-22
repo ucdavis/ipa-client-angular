@@ -1,6 +1,6 @@
 import './commentModal.css';
 
-let commentModal = function (AssignmentActionCreators) {
+let commentModal = function () {
   return {
     restrict: 'E',
     template: require('./commentModal.html'),
@@ -15,7 +15,7 @@ let commentModal = function (AssignmentActionCreators) {
       year: '<',
       workgroupId: '<'
     },
-    link: function (scope, element, attrs) {
+    link: function (scope) {
       scope.close = function () {
         scope.isVisible = false;
       };

@@ -373,9 +373,11 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
 
       scope.selectAll = function() {
+        // no-op
       };
 
       scope.selectCourse = function() {
+        // no-op
       };
 
       scope.getImportCourseRow = function (course, termsToRender, state) {

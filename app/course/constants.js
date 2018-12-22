@@ -1,4 +1,6 @@
-var sequencePatterns = [
+// FIXME: Some of this can be programmatically generated.
+
+export var sequencePatterns = [
   "A",
   "B",
   "C",
@@ -1027,10 +1029,10 @@ var sequencePatterns = [
   "999"
 ];
 
-var alphaSequencePatterns = sequencePatterns.slice(0, 26);
-var numericSequencePatterns = sequencePatterns.slice(26, sequencePatterns.length);
+export var alphaSequencePatterns = sequencePatterns.slice(0, 26);
+export var numericSequencePatterns = sequencePatterns.slice(26, sequencePatterns.length);
 
-var subjectCodes = [
+export var subjectCodes = [
   'AAS',
   'AASN',
   'ABG',

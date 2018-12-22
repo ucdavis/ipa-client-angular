@@ -1,3 +1,5 @@
+import { sequencePatterns, alphaSequencePatterns, numericSequencePatterns } from 'course/constants';
+
 let courseDetails = function (CourseActionCreators, SectionService) {
   return {
     restrict: 'E',

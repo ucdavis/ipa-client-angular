@@ -1,4 +1,5 @@
 import { isNumber } from 'shared/helpers/types';
+import { sequencePatterns } from 'course/constants';
 
 import './addCourse.css';
 

@@ -1,4 +1,5 @@
 import { isNumber } from 'shared/helpers/types';
+import { sequencePatterns, subjectCodes } from 'course/constants';
 
 /**
  * @ngdoc function
