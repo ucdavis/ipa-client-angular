@@ -1,6 +1,6 @@
  // eslint-disable-next-line no-undef
 const Schedule = angular.module('Schedule', [])
-.factory('Schedule', ['$http', function($http) {
+.factory('Schedule', function() {
 	function Schedule(scheduleData) {
 		if (scheduleData) {
 			this.setData(scheduleData);
@@ -12,6 +12,6 @@ const Schedule = angular.module('Schedule', [])
 			}
 	};
 	return Schedule;
-}]);
+});
 
 export default Schedule;

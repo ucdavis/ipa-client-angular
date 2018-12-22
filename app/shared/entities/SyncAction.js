@@ -1,7 +1,7 @@
  // eslint-disable-next-line no-undef
 const SyncAction = angular.module('SyncAction', [])
 
-	.factory('SyncAction', ['$http', function ($http) {
+	.factory('SyncAction', function () {
 		function SyncAction(syncActionData) {
 			if (syncActionData) {
 				this.setData(syncActionData);
@@ -13,6 +13,6 @@ const SyncAction = angular.module('SyncAction', [])
 			}
 		};
 		return SyncAction;
-	}]);
+	});
 
 	export default SyncAction;

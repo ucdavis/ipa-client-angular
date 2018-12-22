@@ -1,6 +1,6 @@
-const Course = angular.module('Course', [])
+const Course = angular.module('Course', []) // eslint-disable-line no-undef
 
-.factory('Course', ['$http', function($http) {
+.factory('Course', function() {
 	function Course(courseData) {
 		this.tagIds = [];
 		if (courseData) {
@@ -16,6 +16,6 @@ const Course = angular.module('Course', [])
 		}
 	};
 	return Course;
-}]);
+});
 
 export default Course;

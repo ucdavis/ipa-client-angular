@@ -1,7 +1,7 @@
  // eslint-disable-next-line no-undef
 const ScheduleInstructorNote = angular.module('ScheduleInstructorNote', [])
 
-.factory('ScheduleInstructorNote', ['$http', function($http) {
+.factory('ScheduleInstructorNote', function() {
 	function ScheduleInstructorNote(scheduleInstructorNoteData) {
 		if (scheduleInstructorNoteData) {
 			this.setData(scheduleInstructorNoteData);
@@ -13,6 +13,6 @@ const ScheduleInstructorNote = angular.module('ScheduleInstructorNote', [])
 			}
 	};
 	return ScheduleInstructorNote;
-}]);
+});
 
 export default ScheduleInstructorNote;

@@ -1,4 +1,5 @@
 import { _array_sortIdsByProperty, _array_sortByProperty } from 'shared/helpers/array';
+import { _object_search_properties } from 'shared/helpers/object';
 
 /**
  * @ngdoc service

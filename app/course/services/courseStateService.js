@@ -1,4 +1,5 @@
 import { _array_sortIdsByProperty } from 'shared/helpers/array';
+import { _object_search_properties } from 'shared/helpers/object';
 
 /**
  * @ngdoc service
@@ -15,8 +16,6 @@ class CourseStateService {
     return {
       _state: {},
       _termReducers: function (action, terms) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             terms = {
@@ -308,8 +307,6 @@ class CourseStateService {
         }
       },
       _sectionReducers: function (action, sections) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             sections = {
@@ -340,8 +337,6 @@ class CourseStateService {
         }
       },
       _tagReducers: function (action, tags) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             tags = {
@@ -365,8 +360,6 @@ class CourseStateService {
         }
       },
       _filterReducers: function (action, filters) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             // A filter is 'enabled' if it is checked, i.e. the category it represents
@@ -411,8 +404,6 @@ class CourseStateService {
         }
       },
       _uiStateReducers: function (action, uiState) {
-        var scope = this;
-
         switch (action.type) {
           case ActionTypes.INIT_STATE:
           case ActionTypes.IMPORT_COURSES:

@@ -5,7 +5,7 @@ let scheduledCourses = function ($rootScope) {
 		restrict: 'E',
 		template: require('./scheduledCourses.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			$rootScope.$on('summaryStateChanged', function (event, data) {
 				scope.mapDataToState(data);
 			});

@@ -1,4 +1,5 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
+import { sequenceNumberToPattern } from 'shared/helpers/sections';
 
 class WorkloadSummaryActions {
 	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService, InstructorTypeService, $route) {
@@ -280,8 +281,6 @@ class WorkloadSummaryActions {
 				var teachingAssignments = WorkloadSummaryReducers._state.teachingAssignments;
 				var instructors = WorkloadSummaryReducers._state.instructors;
 				var instructorTypes = WorkloadSummaryReducers._state.instructorTypes;
-				var users = WorkloadSummaryReducers._state.users;
-				var userRoles = WorkloadSummaryReducers._state.userRoles;
 
 				var calculatedView = {
 					instructorTypeIds: [],

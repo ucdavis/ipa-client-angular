@@ -4,7 +4,7 @@ let supportAssignmentToolbar = function ($rootScope) {
 		template: require('./supportAssignmentToolbar.html'),
 		replace: true,
 		scope: {},
-		link: function (scope, element, attrs) {
+		link: function () {
 			// intentionally empty
 		}
 	};

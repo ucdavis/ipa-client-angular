@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-undef
 const Event = angular.module('Event', [])
 
-.factory('Event', ['$http', function($http) {
+.factory('Event', function() {
 	function Event(eventData) {
 		if (eventData) {
 			this.setData(eventData);
@@ -13,6 +13,6 @@ const Event = angular.module('Event', [])
 			}
 	};
 	return Event;
-}]);
+});
 
 export default Event;

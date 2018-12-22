@@ -1,7 +1,7 @@
  // eslint-disable-next-line no-undef
 const TeachingPreference = angular.module('TeachingPreference', [])
 
-.factory('TeachingPreference', ['$http', function($http) {
+.factory('TeachingPreference', function() {
 	function TeachingPreference(teachingPreferenceData) {
 		if (teachingPreferenceData) {
 			this.setData(teachingPreferenceData);
@@ -13,6 +13,6 @@ const TeachingPreference = angular.module('TeachingPreference', [])
 			}
 	};
 	return TeachingPreference;
-}]);
+});
 
 export default TeachingPreference;

@@ -1,6 +1,6 @@
  // eslint-disable-next-line no-undef
 const Instructor = angular.module('Instructor', [])
-.factory('Instructor', ['$http', function($http) {
+.factory('Instructor', function() {
 	function Instructor(instructorData) {
 		if (instructorData) {
 			this.setData(instructorData);
@@ -12,6 +12,6 @@ const Instructor = angular.module('Instructor', [])
 			}
 	};
 	return Instructor;
-}]);
+});
 
 export default Instructor;

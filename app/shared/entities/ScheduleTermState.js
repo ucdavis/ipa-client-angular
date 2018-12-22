@@ -1,7 +1,7 @@
  // eslint-disable-next-line no-undef
 const ScheduleTermState = angular.module('ScheduleTermState', [])
 
-.factory('ScheduleTermState', ['$http', function($http) {
+.factory('ScheduleTermState', function() {
 	function ScheduleTermState(scheduleTermStateData) {
 		if (scheduleTermStateData) {
 			this.setData(scheduleTermStateData);
@@ -13,6 +13,6 @@ const ScheduleTermState = angular.module('ScheduleTermState', [])
 			}
 	};
 	return ScheduleTermState;
-}]);
+});
 
 export default ScheduleTermState;

@@ -1,3 +1,5 @@
+import { nextSequenceNumber } from 'shared/helpers/sections';
+
 /**
  * @ngdoc function
  * @name ipaClientAngularApp.controller:SchedulingCtrl

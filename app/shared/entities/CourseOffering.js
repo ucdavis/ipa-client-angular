@@ -1,6 +1,6 @@
-const CourseOffering = angular.module('CourseOffering', [])
+const CourseOffering = angular.module('CourseOffering', []) // eslint-disable-line no-undef
 
-.factory('CourseOffering', ['$http', function($http) {
+.factory('CourseOffering', function() {
 	function CourseOffering(courseOfferingData) {
 		if (courseOfferingData) {
 			this.setData(courseOfferingData);
@@ -12,6 +12,6 @@ const CourseOffering = angular.module('CourseOffering', [])
 			}
 	};
 	return CourseOffering;
-}]);
+});
 
 export default CourseOffering;

@@ -1,3 +1,5 @@
+import { _object_search_properties } from 'shared/helpers/object';
+
 class SupportReducer {
 	constructor ($rootScope, $log, SupportSelectors, ActionTypes) {
 		return {

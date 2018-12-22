@@ -6,7 +6,7 @@
   // eslint-disable-next-line no-undef
 const Role = angular.module('Role', [])
 
-.factory('Role', ['$http', function($http) {
+.factory('Role', function() {
 	function Role(roleData) {
 		if (roleData) {
 			this.setData(roleData);
@@ -28,6 +28,6 @@ const Role = angular.module('Role', [])
 			}
 	};
 	return Role;
-}]);
+});
 
 export default Role;

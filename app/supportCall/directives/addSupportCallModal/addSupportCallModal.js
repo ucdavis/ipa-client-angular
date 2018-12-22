@@ -12,7 +12,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			supportCallMode: '<',
 			termShortCode: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.supportCallConfigData = {};
 			scope.nextYear = parseInt(scope.year) + 1;
 

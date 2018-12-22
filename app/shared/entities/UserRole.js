@@ -1,6 +1,6 @@
  // eslint-disable-next-line no-undef
 const UserRole = angular.module('UserRole', [])
-.factory('UserRole', ['$http', function($http) {
+.factory('UserRole', function() {
 	function UserRole(userRoleData) {
 		if (userRoleData) {
 			this.setData(userRoleData);
@@ -12,6 +12,6 @@ const UserRole = angular.module('UserRole', [])
 			}
 	};
 	return UserRole;
-}]);
+});
 
 export default UserRole;

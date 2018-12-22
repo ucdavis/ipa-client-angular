@@ -2,7 +2,7 @@ import { _array_findById } from 'shared/helpers/array';
 
 // eslint-disable-next-line no-undef
 const Term = angular.module('Term', [])
-.factory('Term', ['$http', function($http) {
+.factory('Term', function() {
 	function Term(termData) {
 		if (termData) {
 			this.setData(termData);
@@ -32,7 +32,7 @@ const Term = angular.module('Term', [])
 					{ id: 3,  description: "Spring Quarter",         shortCode: "03"}
 				];
 				var year;
-				angular.forEach(table, function(term, i) {  // eslint-disable-line no-undef
+				angular.forEach(table, function(term) {  // eslint-disable-line no-undef
 					if(Number(term.shortCode) < 5) {
 						year = (Number(academicYear) + 1);
 					} else {
@@ -63,6 +63,6 @@ const Term = angular.module('Term', [])
 	};
 
 	return Term;
-}]);
+});
 
 export default Term;

@@ -1,27 +1,3 @@
-//Merges properties of 'other' into 'self'
-_object_merge = function (self, other) {
-	for (var key in other) {
-		// hasOwnProperty() allows us to avoid copying prototype properties
-		if (other.hasOwnProperty(key)) {
-			self[key] = other[key];
-		}
-	}
-
-	return self;
-};
-
-// Empties object without loosing reference
-_object_clear = function (self) {
-	for (var key in self) {
-		// hasOwnProperty() allows us to avoid copying prototype properties
-		if (self.hasOwnProperty(key)) {
-			delete self[key];
-		}
-	}
-
-	return self;
-};
-
 /**
  * Searches the specified properties of the passed collection
  * the collection needs to have the state service structure:
@@ -34,7 +10,7 @@ _object_clear = function (self) {
  * modifies the passed collection adding 'isFiltered' flag to the
  * items that don't match all the query terms
  */
-_object_search_properties = function (query, tree, propertyKeyList) {
+export function _object_search_properties(query, tree, propertyKeyList) {
 	if (!tree.ids || !tree.list) { return; }
 
 	// Convert the query into an array split at the white space
@@ -57,4 +33,4 @@ _object_search_properties = function (query, tree, propertyKeyList) {
 
 		if (itemMatchesQuery) { tree.list[itemId].isFiltered = false; }
 	});
-};
+}

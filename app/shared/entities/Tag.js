@@ -1,7 +1,7 @@
  // eslint-disable-next-line no-undef
 const Tag = angular.module('Tag', [])
 
-.factory('Tag', ['$http', function($http) {
+.factory('Tag', function() {
 	function Tag(tagData) {
 		if (tagData) {
 			this.setData(tagData);
@@ -26,6 +26,6 @@ const Tag = angular.module('Tag', [])
 		}
 	};
 	return Tag;
-}]);
+});
 
 export default Tag;

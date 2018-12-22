@@ -1,29 +1,3 @@
-// Returns false on null, undefined, zero characters, or only whitespace
-String.prototype.isEmpty = function () {
-	return (!this || this.length === 0 || !this.trim());
-};
-
-// Returns the appropriate suffix, e.g. 1st, 2nd, 3rd, 4th, etc.
-String.prototype.appendOrdinalSuffix = function () {
-	var j = this % 10, k = this % 100;
-
-	if (j == 1 && k != 11) {
-		return this + "st";
-	}
-	if (j == 2 && k != 12) {
-		return this + "nd";
-	}
-	if (j == 3 && k != 13) {
-		return this + "rd";
-	}
-	return this + "th";
-};
-
-// Removes leading zeroes from a number
-String.prototype.toNumber = function () {
-	return Number(this).toString();
-};
-
 // Converts a 4-digit year to academic year format. Example: 2015 -> 2015-16
 String.prototype.yearToAcademicYear = function () {
 	return this + "-" + (Number(this) + 1).toString().slice(-2);

@@ -1,5 +1,5 @@
-const Activity = angular.module('Activity', [])
-.factory('Activity', ['$http', function ($http) {
+const Activity = angular.module('Activity', []) // eslint-disable-line no-undef
+.factory('Activity', function () {
 	function Activity(activityData) {
 		if (activityData) {
 			this.setData(activityData);
@@ -156,6 +156,6 @@ const Activity = angular.module('Activity', [])
 		}
 	};
 	return Activity;
-}]);
+});
 
 export default Activity;

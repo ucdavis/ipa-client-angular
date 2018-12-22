@@ -1,7 +1,7 @@
  // eslint-disable-next-line no-undef
 const TeachingCallResponse = angular.module('TeachingCallResponse', [])
 
-.factory('TeachingCallResponse', ['$http', function($http) {
+.factory('TeachingCallResponse', function() {
 	function TeachingCallResponse(teachingCallResponseData) {
 		if (teachingCallResponseData) {
 			this.setData(teachingCallResponseData);
@@ -13,6 +13,6 @@ const TeachingCallResponse = angular.module('TeachingCallResponse', [])
 			}
 	};
 	return TeachingCallResponse;
-}]);
+});
 
 export default TeachingCallResponse;

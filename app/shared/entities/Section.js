@@ -1,7 +1,7 @@
  // eslint-disable-next-line no-undef
 const Section = angular.module('Section', [])
 
-.factory('Section', ['$http', function($http) {
+.factory('Section', function() {
 	function Section(sectionData) {
 		if (sectionData) {
 			this.setData(sectionData);
@@ -13,6 +13,6 @@ const Section = angular.module('Section', [])
 			}
 	};
 	return Section;
-}]);
+});
 
 export default Section;

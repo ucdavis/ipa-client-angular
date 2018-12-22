@@ -1,7 +1,7 @@
  // eslint-disable-next-line no-undef
 const Workgroup = angular.module('Workgroup', [])
 
-.factory('Workgroup', ['$http', function($http) {
+.factory('Workgroup', function() {
 	function Workgroup(workgroupData) {
 		if (workgroupData) {
 			this.setData(workgroupData);
@@ -13,6 +13,6 @@ const Workgroup = angular.module('Workgroup', [])
 			}
 	};
 	return Workgroup;
-}]);
+});
 
 export default Workgroup;
