@@ -21,12 +21,11 @@ class SchedulingActionCreators {
 						payload: payload
 					};
 					SchedulingStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load schedule initial state.", type: "ERROR" });
 				});
 			},
 			updateActivity: function (activity) {
-				var _this = this;
 				SchedulingService.updateActivity(activity).then(function (updatedActivity) {
 					$rootScope.$emit('toast', { message: "Updated " + activity.getCodeDescription(), type: "SUCCESS" });
 					var action = {
@@ -36,7 +35,7 @@ class SchedulingActionCreators {
 						}
 					};
 					SchedulingStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
 				});
 			},
@@ -160,7 +159,7 @@ class SchedulingActionCreators {
 						}
 					};
 					SchedulingStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not remove activity.", type: "ERROR" });
 				});
 			},
@@ -175,7 +174,7 @@ class SchedulingActionCreators {
 						}
 					};
 					SchedulingStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not create shared activity.", type: "ERROR" });
 				});
 			},
@@ -190,7 +189,7 @@ class SchedulingActionCreators {
 						}
 					};
 					SchedulingStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not create activity.", type: "ERROR" });
 				});
 			},
@@ -249,7 +248,7 @@ class SchedulingActionCreators {
 						}
 					};
 					SchedulingStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not get course activity types.", type: "ERROR" });
 				});
 			},
@@ -264,8 +263,6 @@ class SchedulingActionCreators {
 				this.calculateSectionGroups();
 			},
 			updateTagFilters: function (tagIds) {
-				var _this = this;
-
 				var action = {
 					type: ActionTypes.UPDATE_TAG_FILTERS,
 					payload: {
@@ -276,8 +273,6 @@ class SchedulingActionCreators {
 				this.calculateSectionGroups();
 			},
 			updateLocationFilters: function (locationIds) {
-				var _this = this;
-
 				var action = {
 					type: ActionTypes.UPDATE_LOCATION_FILTERS,
 					payload: {
@@ -288,8 +283,6 @@ class SchedulingActionCreators {
 				this.calculateSectionGroups();
 			},
 			updateInstructorFilters: function (instructorIds) {
-				var _this = this;
-
 				var action = {
 					type: ActionTypes.UPDATE_INSTRUCTOR_FILTERS,
 					payload: {
@@ -313,13 +306,12 @@ class SchedulingActionCreators {
 
 					// Server potentially created new activities as well
 					self.getActivities(section);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not create section activities.", type: "ERROR" });
 				});
 			},
 			removeSection: function (section) {
-				var self = this;
-				SchedulingService.deleteSection(section).then(function (results) {
+				SchedulingService.deleteSection(section).then(function () {
 					$rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.DELETE_SECTION,
@@ -328,7 +320,7 @@ class SchedulingActionCreators {
 						}
 					};
 					SchedulingStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete section.", type: "ERROR" });
 				});
 			},
@@ -342,7 +334,7 @@ class SchedulingActionCreators {
 						}
 					};
 					SchedulingStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not get activities.", type: "ERROR" });
 				});
 			},

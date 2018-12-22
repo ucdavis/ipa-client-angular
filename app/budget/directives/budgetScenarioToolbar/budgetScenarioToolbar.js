@@ -8,9 +8,9 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 		scope: {
 			state: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.displayScenarioRenameUI = false;
-			scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name);
+			scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name); // eslint-disable-line no-undef
 			scope.isNewScenarioNameValid = true;
 			scope.validationError = "";
 
@@ -24,16 +24,16 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 
 			scope.showScenarioRenameUI = function() {
 				scope.displayScenarioRenameUI = true;
-				scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name);
+				scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name); // eslint-disable-line no-undef
 			};
 
 			scope.cancelScenarioRename = function() {
 				scope.displayScenarioRenameUI = false;
-				scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name);
+				scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name); // eslint-disable-line no-undef
 			};
 
 			scope.saveNewScenarioName = function() {
-				scope.state.selectedBudgetScenario.name = angular.copy(scope.newScenarioName);
+				scope.state.selectedBudgetScenario.name = angular.copy(scope.newScenarioName); // eslint-disable-line no-undef
 				BudgetActions.updateBudgetScenario(scope.state.selectedBudgetScenario);
 				scope.displayScenarioRenameUI = false;
 			};

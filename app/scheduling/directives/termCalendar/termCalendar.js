@@ -17,12 +17,12 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				scope.isResizeListenerActive = true;
 
 				setTimeout(function() {
-					$(window).resize(function() {
-						$('#calendar').fullCalendar('option', 'height', scope.get_calendar_height());
-						$('.section-group-container').height(scope.get_calendar_height());
+					$(window).resize(function() { // eslint-disable-line no-undef
+						$('#calendar').fullCalendar('option', 'height', scope.get_calendar_height()); // eslint-disable-line no-undef
+						$('.section-group-container').height(scope.get_calendar_height()); // eslint-disable-line no-undef
 					});
 
-					$('#calendar').fullCalendar({
+					$('#calendar').fullCalendar({ // eslint-disable-line no-undef
 						height: scope.get_calendar_height()
 					});
 				}, 500);
@@ -85,7 +85,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 						getActivities(),
 						getUnavailabilities()
 					],
-					eventClick: function (calEvent, jsEvent, view) {
+					eventClick: function (calEvent, jsEvent) {
 						var closeTarget = angular.element(jsEvent.target).hasClass('activity-remove'); // eslint-disable-line no-undef
 						if (closeTarget) {
 							SchedulingActionCreators.toggleCheckedSectionGroup(calEvent.sectionGroupId);
@@ -415,18 +415,18 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 			var neonCalendar = neonCalendar || {};
 
-			neonCalendar.$container = $(".calendar-env");
+			neonCalendar.$container = $(".calendar-env"); // eslint-disable-line no-undef
 
-			$.extend(neonCalendar, {
+			$.extend(neonCalendar, { // eslint-disable-line no-undef
 				isPresent: neonCalendar.$container.length > 0
 			});
 
 			scope.get_calendar_height = function () {
-				if ($(window).height() < 485) {
-					return $(window).height();
+				if ($(window).height() < 485) { // eslint-disable-line no-undef
+					return $(window).height(); // eslint-disable-line no-undef
 				}
 			
-				return $(window).height() - 178;
+				return $(window).height() - 178; // eslint-disable-line no-undef
 			};
 
 			refreshCalendar();

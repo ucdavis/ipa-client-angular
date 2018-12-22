@@ -6,7 +6,7 @@ let sortable = function () {
 			dragEnd: '&',
 			readOnly: '='
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope, element) {
 			scope.$watch('readOnly', function (readOnly) {
 				if (readOnly) { element.sortable().sortable("disable"); }
 			});
@@ -15,10 +15,10 @@ let sortable = function () {
 				handle: '.preference-sortable-handle',
 				items: ">li:not(.unsortable)",
 				cancel: ".disable-sorting",
-				start: function (event, ui) {
+				start: function () {
 					scope.dragStart();
 				},
-				update: function (event, ui) {
+				update: function () {
 					var sortedIds = element.sortable("serialize").split('pref[]=').join('').split('&');
 					scope.dragEnd({ sortedIds: sortedIds });
 				},

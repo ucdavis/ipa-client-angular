@@ -1,4 +1,4 @@
-let ipaTermSelector = function($window, $location, $routeParams, $rootScope) {
+let ipaTermSelector = function($window, $location, $routeParams) {
 	return {
 		restrict: 'E', // Use this via an element selector <dss-modal></dss-modal>
 		template: require('./ipaTermSelector.html'), // directive html found here:

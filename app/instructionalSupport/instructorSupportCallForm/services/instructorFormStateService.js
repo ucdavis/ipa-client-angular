@@ -243,11 +243,11 @@ class InstructorFormStateService {
         // This is the 'view friendly' version of the store
         let newPageState = {};
 
-        newPageState.supportStaff = angular.copy(newState.supportStaff);
-        newPageState.instructorSupportCallResponse = angular.copy(scope._state.instructorSupportCallResponse);
-        newPageState.studentSupportCallResponses = angular.copy(scope._state.studentSupportCallResponses);
-        newPageState.studentPreferences = angular.copy(scope._state.studentPreferences);
-        newPageState.misc = angular.copy(scope._state.misc);
+        newPageState.supportStaff = angular.copy(newState.supportStaff); // eslint-disable-line no-undef
+        newPageState.instructorSupportCallResponse = angular.copy(scope._state.instructorSupportCallResponse); // eslint-disable-line no-undef
+        newPageState.studentSupportCallResponses = angular.copy(scope._state.studentSupportCallResponses); // eslint-disable-line no-undef
+        newPageState.studentPreferences = angular.copy(scope._state.studentPreferences); // eslint-disable-line no-undef
+        newPageState.misc = angular.copy(scope._state.misc); // eslint-disable-line no-undef
         newPageState.teachingAssignments = newState.teachingAssignments;
         newPageState.courses = newState.courses;
         newPageState.sectionGroups = InstructorFormSelectors.generateSectionGroups(

@@ -9,7 +9,7 @@ let sectionGroupList = function (InstructorFormActions) {
       activeSectionGroupId: '<',
       allTabs: '<'
     },
-    link: function (scope, element, attrs) {
+    link: function (scope) {
     scope.selectSectionGroup = function(sectionGroup) {
       InstructorFormActions.selectSectionGroup(sectionGroup);
     };

@@ -55,7 +55,7 @@ let confirmButton = function ($document, $timeout) {
 				element.popover('show');
 				element.addClass('active');
 
-				var pop = $("#button-" + buttonId);
+				var pop = $("#button-" + buttonId); // eslint-disable-line no-undef
 
 				pop.closest(".popover").click(function (e) {
 					if (dontBubble) {

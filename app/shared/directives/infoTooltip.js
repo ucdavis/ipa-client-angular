@@ -10,7 +10,6 @@ let infoTooltip = function ($document, $timeout) {
 			var buttonId = Math.floor(Math.random() * 10000000000),
 				message = attrs.message || "Are you sure?",
 				title = attrs.title || "Confirm",
-				btnClass = attrs.btnClass || "btn-danger",
 				placement = attrs.placement || "bottom";
 
 			var html = "<div id=\"button-" + buttonId + "\" style=\"position: relative; width: 250px;\">" +
@@ -51,7 +50,7 @@ let infoTooltip = function ($document, $timeout) {
 				element.popover('show');
 				element.addClass('active');
 
-				var pop = $("#button-" + buttonId);
+				var pop = $("#button-" + buttonId); // eslint-disable-line no-undef
 
 				pop.closest(".popover").click(function (e) {
 					if (dontBubble) {

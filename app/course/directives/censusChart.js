@@ -111,16 +111,16 @@ let censusChart = function ($rootScope, $timeout) {
           ];
         }
 
-        Chart.defaults.global.defaultFontColor = "#888";
-        Chart.defaults.global.tooltips.mode = 'x-axis';
-        Chart.defaults.global.tooltips.titleFontSize = 10;
-        Chart.defaults.global.tooltips.bodyFontSize = 10;
-        Chart.defaults.global.tooltips.caretSize = 3;
-        Chart.defaults.global.tooltips.cornerRadius = 3;
-        Chart.defaults.global.legend.display = false;
+        Chart.defaults.global.defaultFontColor = "#888"; // eslint-disable-line no-undef
+        Chart.defaults.global.tooltips.mode = 'x-axis'; // eslint-disable-line no-undef
+        Chart.defaults.global.tooltips.titleFontSize = 10; // eslint-disable-line no-undef
+        Chart.defaults.global.tooltips.bodyFontSize = 10; // eslint-disable-line no-undef
+        Chart.defaults.global.tooltips.caretSize = 3; // eslint-disable-line no-undef
+        Chart.defaults.global.tooltips.cornerRadius = 3; // eslint-disable-line no-undef
+        Chart.defaults.global.legend.display = false; // eslint-disable-line no-undef
 
         $timeout(function () {
-          var myChart = new Chart(ctx, {
+          var myChart = new Chart(ctx, { // eslint-disable-line no-undef
             type: type,
             data: {
               labels: labels,

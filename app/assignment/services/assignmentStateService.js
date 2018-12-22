@@ -12,7 +12,7 @@ import { _object_search_properties } from 'shared/helpers/object';
 class AssignmentStateService {
 	constructor ($rootScope, $log, SectionGroup, Course, ScheduleTermState,
 	ScheduleInstructorNote, Term, Tag, Instructor, TeachingAssignment, TeachingCall,
-	TeachingCallReceipt, TeachingCallResponse, ActionTypes, Roles, InstructorTypeService, TermService) {
+	TeachingCallReceipt, TeachingCallResponse, ActionTypes, Roles, InstructorTypeService) {
 		this.Roles = Roles;
 		this.InstructorTypeService = InstructorTypeService;
 		var _self = this;
@@ -282,8 +282,7 @@ class AssignmentStateService {
 				}
 			},
 			_instructorReducers: function (action, instructors) {
-				var scope = this;
-				var i, j, scheduleInstructorNote, instructor, teachingAssignments, termCode, slotTeachingAssignment, teachingAssignment;
+				var i, j, instructor, teachingAssignments, teachingAssignment;
 
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
@@ -589,8 +588,7 @@ class AssignmentStateService {
 				}
 			},
 			_sectionGroupReducers: function (action, sectionGroups) {
-				var scope = this;
-				var sectionGroup, i, slotTeachingAssignment, teachingAssignment, index;
+				var sectionGroup, i, teachingAssignment, index;
 
 				switch (action.type) {
 					case ActionTypes.INIT_ASSIGNMENT_VIEW:
@@ -651,7 +649,7 @@ class AssignmentStateService {
 									return (preference.type === "associateInstructor" && preference.sectionGroupId == sectionGroup.id);
 								})
 								.forEach(function (preference) {
-									var supportStaffDTO = angular.copy(supportStaffList.list[preference.supportStaffId]);
+									var supportStaffDTO = angular.copy(supportStaffList.list[preference.supportStaffId]); // eslint-disable-line no-undef
 
 									if (supportStaffDTO) {
 										supportStaffDTO.priority = preference.priority;
@@ -665,7 +663,7 @@ class AssignmentStateService {
 								otherSupportStaffIds = otherSupportStaffIds.filter(function(id) { return preferredSupportStaffIds.indexOf(id) == -1;});
 
 								otherSupportStaffIds.forEach(function(supportStaffId) {
-									var supportStaffDTO = angular.copy(supportStaffList.list[supportStaffId]);
+									var supportStaffDTO = angular.copy(supportStaffList.list[supportStaffId]); // eslint-disable-line no-undef
 									sectionGroupsList[sectionGroup.id].aiAssignmentOptions.other.push(supportStaffDTO);
 								});
 						}
@@ -762,7 +760,6 @@ class AssignmentStateService {
 				}
 			},
 			_userInterfaceReducers: function (action, userInterface) {
-				var scope = this;
 				var i;
 
 				switch (action.type) {
@@ -1063,6 +1060,6 @@ class AssignmentStateService {
 
 AssignmentStateService.$inject = ['$rootScope', '$log', 'SectionGroup', 'Course', 'ScheduleTermState',
 	'ScheduleInstructorNote', 'Term', 'Tag', 'Instructor', 'TeachingAssignment',
-	'TeachingCall', 'TeachingCallReceipt', 'TeachingCallResponse', 'ActionTypes', 'Roles', 'InstructorTypeService', 'TermService'];
+	'TeachingCall', 'TeachingCallReceipt', 'TeachingCallResponse', 'ActionTypes', 'Roles', 'InstructorTypeService'];
 
 export default AssignmentStateService;

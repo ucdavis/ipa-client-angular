@@ -36,7 +36,7 @@ let ipaModal = function() {
 			// Methods
 			scope.close = function() {
 				// Re-enable page scrolling
-				$('body').css('overflow-y','visible');
+				$('body').css('overflow-y','visible'); // eslint-disable-line no-undef
 
 				if (scope.isVisible && angular.isUndefined(scope.onClose) == false) { // eslint-disable-line no-undef
 					scope.onClose()();
@@ -48,7 +48,7 @@ let ipaModal = function() {
 			scope.open = function() {
 				scope.isVisible = true;
 				// Disables page scrolling while modal is up
-				$('body').css('overflow-y','hidden');
+				$('body').css('overflow-y','hidden'); // eslint-disable-line no-undef
 			};
 		}
 	};

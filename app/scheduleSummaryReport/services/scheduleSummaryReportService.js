@@ -17,7 +17,7 @@ class ScheduleSummaryReportService {
 			downloadSchedule: function (workgroupId, year, shortTermCode) {
 				var deferred = $q.defer();
 	
-				$http.get(serverRoot + "/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + shortTermCode + "/generateExcel", { withCredentials: true })
+				$http.get(window.serverRoot + "/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + shortTermCode + "/generateExcel", { withCredentials: true })
 					.then(function (payload) {
 						$window.location.href = payload.data.redirect;
 						deferred.resolve(payload.data);

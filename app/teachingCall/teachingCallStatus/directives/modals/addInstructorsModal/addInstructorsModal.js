@@ -198,7 +198,7 @@ let addInstructorsModal = function (TermService, TeachingCallStatusActionCreator
       scope.altInputFormats = ['M!/d!/yyyy'];
     
       scope.submit = function() {
-        var messageInput = $('.teaching-call-message-input').val();
+        var messageInput = $('.teaching-call-message-input').val(); // eslint-disable-line no-undef
         if (messageInput) {
           scope.startTeachingCallConfig.message = messageInput.replace(/\r?\n/g, '<br />');
         }

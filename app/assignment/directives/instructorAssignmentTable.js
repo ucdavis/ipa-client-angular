@@ -133,7 +133,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				header += "<div class=\"course-header course-description-cell\"></div>";
 
 				if (scope.view.state.userInterface.enabledTerms) {
-					$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) {
+					$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) { // eslint-disable-line no-undef
 
 						var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
 						header += "<div class=\"term-header term-cell\">" + termCode.getTermCodeDisplayName(true) + "</div>";
@@ -161,7 +161,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				if (!scope.view.state.courses) { return; }
 
 				// Clear the table
-				$('.tooltip').remove();
+				$('.tooltip').remove(); // eslint-disable-line no-undef
 				element.empty();
 
 				var coursesHtml = "";
@@ -198,7 +198,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						coursesHtml += "</div>"; // end description-cell
 
 							// Loop over active terms
-							$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) {
+							$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) { // eslint-disable-line no-undef
 								var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
 
 								coursesHtml += "<div class=\"term-cell\">";
@@ -246,7 +246,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 					var relevantInstructors = 0;
 
-					$.each(scope.view.state.instructors.ids, function (i, instructorId) {
+					$.each(scope.view.state.instructors.ids, function (i, instructorId) { // eslint-disable-line no-undef
 						var instructor = scope.view.state.instructors.list[instructorId];
 
 						if (scope.instructorTypeId == instructor.instructorTypeId) {
@@ -278,7 +278,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						coursesHtml += "</div>";
 					} else {
 						// Loop over instructors
-						$.each(scope.view.state.instructors.ids, function (i, instructorId) {
+						$.each(scope.view.state.instructors.ids, function (i, instructorId) { // eslint-disable-line no-undef
 							var instructor = scope.view.state.instructors.list[instructorId];
 							var slotInstructorTypeId = scope.getInstructorTypeId(instructor);
 
@@ -365,13 +365,13 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 								courseHtml += "</div>"; // end description-cell
 
 								// Loop over active terms
-								$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) {
+								$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) { // eslint-disable-line no-undef
 									var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
 
 									courseHtml += "<div class=\"term-cell\">";
 
 									// Loop over teachingAssignments within a term
-									$.each(scope.view.state.instructors.list[instructor.id].teachingAssignmentTermCodeIds[termCode], function (j, teachingAssignmentId) {
+									$.each(scope.view.state.instructors.list[instructor.id].teachingAssignmentTermCodeIds[termCode], function (j, teachingAssignmentId) { // eslint-disable-line no-undef
 										// Ensure it is approved already
 										if (scope.view.state.teachingAssignments.list[teachingAssignmentId].approved) {
 											var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
@@ -462,7 +462,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 											});
 											var currentTermTeachingAssignmentsByPriority = _array_sortByProperty(currentTermTeachingAssignments, 'adjustedPriority');
 
-											$.each(currentTermTeachingAssignmentsByPriority, function (i, teachingAssignment) {
+											$.each(currentTermTeachingAssignmentsByPriority, function (i, teachingAssignment) { // eslint-disable-line no-undef
 												var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
 												// This teachingAssignment is a buyout/sabb/release
@@ -572,7 +572,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 														return;
 													}
 
-													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 													courseHtml += "<li class=\"instructor-assignment__dropdown--sub-option\"><a";
 													courseHtml += " data-teaching-assignment-id=\"" + teachingAssignment.id + "\"";
 													courseHtml += " href=\"#\">" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</a></li>";
@@ -639,7 +638,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
 
 										// Loop over all other courses
-										$.each(scope.view.state.courses.ids, function (i, courseId) {
+										$.each(scope.view.state.courses.ids, function (i, courseId) { // eslint-disable-line no-undef
 											var course = scope.view.state.courses.list[courseId];
 											// Show option if course has a sectionGroup in this term, and course did not already show up in the interested section
 											if (course.sectionGroupTermCodeIds[termCode] && interestedCourseIds.indexOf(course.id) < 0) {
@@ -675,7 +674,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				element.append(coursesHtml);
 
 				// Manually activate bootstrap tooltip triggers
-				$('body').tooltip({
+				$('body').tooltip({ // eslint-disable-line no-undef
 					selector: '[data-toggle="tooltip"]'
 				});
 			};
@@ -684,7 +683,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 			// Handle input box edits
 			element.on("change", function(e) {
-				var $el = $(e.target);
+				var $el = $(e.target); // eslint-disable-line no-undef
 				if ($el.data('event-type') != 'setScheduleInstructorNote') { return; }
 
 				var instructorId = $el.data('instructor-id');
@@ -698,7 +697,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 			// Handle Instructor UI events
 			element.click(function (e) {
-				let $el = $(e.target);
+				let $el = $(e.target); // eslint-disable-line no-undef
 				var teachingAssignment, teachingAssignmentId, instructorId;
 				// Approving a teachingAssignment or creating a new one
 				if ($el.is('a')) {

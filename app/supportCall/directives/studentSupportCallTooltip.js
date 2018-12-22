@@ -118,13 +118,13 @@ let studentSupportCallTooltip = function ($document, $timeout) {
 				var dontBubble = true;
 				e.stopPropagation();
 				// First remove all pre-existing popups
-				$(".popover").hide();
+				$(".popover").hide(); // eslint-disable-line no-undef
 
 				// Activate this popup
 				element.popover('show');
 				element.addClass('active');
 
-				var pop = $("#button-" + buttonId);
+				var pop = $("#button-" + buttonId); // eslint-disable-line no-undef
 
 				pop.closest(".popover").click(function (e) {
 					if (dontBubble) {
