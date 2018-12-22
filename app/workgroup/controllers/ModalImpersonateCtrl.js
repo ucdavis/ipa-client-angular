@@ -1,4 +1,4 @@
-workgroupApp.controller('ModalImpersonateCtrl', this.ModalImpersonateCtrl = function(
+workgroupApp.controller('ModalImpersonateCtrl', this.ModalImpersonateCtrl = function( // eslint-disable-line no-undef
 	$scope, $rootScope, $uibModalInstance, authService, workgroupActionCreators, state) {
 
 	$scope.state = state;

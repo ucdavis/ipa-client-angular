@@ -309,7 +309,7 @@ class CourseCtrl {
     };
 
     _self.$scope.manuallyUpdatePlannedSeats = function(sectionGroup) {
-      $('[data-course-id="' + sectionGroup.courseId + '"] [data-term-code="' + sectionGroup.termCode + '"] input').val(sectionGroup.plannedSeats);
+      $('[data-course-id="' + sectionGroup.courseId + '"] [data-term-code="' + sectionGroup.termCode + '"] input').val(sectionGroup.plannedSeats); // eslint-disable-line no-undef
     };
 
     _self.$scope.deleteSection = function (section) {

@@ -1,6 +1,6 @@
 import './tutorialModal.css';
 
-let tutorialModal = function ($rootScope) {
+let tutorialModal = function () {
   return {
     restrict: 'E',
     template: require('./tutorialModal.html'),

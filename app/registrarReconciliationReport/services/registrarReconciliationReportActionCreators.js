@@ -21,7 +21,8 @@ class RegistrarReconciliationReportActionCreators {
 
 				if (!termShortCode) {
 					var termStates = AuthService.getTermStates();
-					var termShortCode = calculateCurrentTermShortCode(termStates);
+					// LINTME
+					var termShortCode = calculateCurrentTermShortCode(termStates);// eslint-disable-line no-undef
 				}
 		
 				var termCode = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, $route.current.params.year).code;

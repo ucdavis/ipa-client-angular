@@ -5,7 +5,7 @@ import { _ } from 'underscore';
  * Expects an array of termCodes
  */
 
-registrarReconciliationReportApp.filter("termUniqueYears", this.termUniqueYears = function () {
+registrarReconciliationReportApp.filter("termUniqueYears", this.termUniqueYears = function () { // eslint-disable-line no-undef
 	return function (arr) {
 		if (arr instanceof Array) {
 			return _.uniq(arr, function (termCode) { return Math.floor(Number(termCode) / 100); })

@@ -1,11 +1,11 @@
 class InstructorFormSelectors {
 	constructor () {
 		return {
-			generateSectionGroups: function (sectionGroups, supportStaff, studentPreferences, instructorPreferences, courses) {
+			generateSectionGroups: function (sectionGroups, supportStaff, studentPreferences, instructorPreferences) {
 				var self = this;
 
 				sectionGroups.ids.forEach( function (sectionGroupId) {
-					var sectionGroup = sectionGroups.list[sectionGroupId];
+					var sectionGroup = sectionGroups.list[sectionGroupId]; // eslint-disable-line no-unused-vars
 					// Add instructor preference data
 					sectionGroup = self.addInstructorPreferencesToSectionGroup(sectionGroup, supportStaff, instructorPreferences);
 		

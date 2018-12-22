@@ -169,20 +169,16 @@ class TeachingCallFormStateService {
 						});
 	
 						var preferences = null;
-						var preferenceOptions = null;
 	
 						pageState.terms.forEach( function (termContainer) {
 							if (termContainer.termCode == termCode) {
 								preferences = termContainer.preferences;
-								preferenceOptions = termContainer.preferenceOptions;
 							}
 						});
 	
-						let preferenceOfInterest = null;
 						let removePreferenceIndex = null;
 						preferences.forEach( function (slotPreference, index) {
 							if (preferenceIdsToMove.indexOf(slotPreference.id) > -1) {
-								preferenceOfInterest = slotPreference;
 								removePreferenceIndex = index;
 								return;
 							}

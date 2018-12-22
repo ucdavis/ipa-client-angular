@@ -21,7 +21,7 @@
 /*
 	Selectors are pure javascript functions that translate the normalized state into nested objects for the view
 */
-teachingCallApp.service('teachingCallStatusSelectors', function () {
+teachingCallApp.service('teachingCallStatusSelectors', function () { // eslint-disable-line no-undef
 	return {
 
 		generateInstructorGroup: function (instructors, teachingCallReceipts, inTeachingCall) {

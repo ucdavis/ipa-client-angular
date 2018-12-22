@@ -50,7 +50,7 @@ class StudentSupportCallFormCtrl {
 			return TermService.termToTermCode(term, $scope.year);
 		};
 	
-		$scope.updatePreferencesOrder = function(preferenceIds, listIndentifier) {
+		$scope.updatePreferencesOrder = function(preferenceIds) {
 			var filteredPreferenceIds = [];
 	
 			preferenceIds.forEach(function(id) {
