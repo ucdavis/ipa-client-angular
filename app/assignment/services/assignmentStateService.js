@@ -779,10 +779,12 @@ class AssignmentStateService {
 
 						if (theStaff.termCodes[termCode]) {
 							var index = theStaff.termCodes[termCode].indexOf(sectionGroupId);
-							theStaff.termCodes[termCode].splice(index, 1);
+							if(index > -1) {
+								theStaff.termCodes[termCode].splice(index, 1);
 
-							if (theStaff.termCodes[termCode].length == 0) {
-								delete theStaff.termCodes[termCode];
+								if (theStaff.termCodes[termCode].length == 0) {
+									delete theStaff.termCodes[termCode];
+								}
 							}
 						}
 						return theStaff;
