@@ -15,7 +15,7 @@
   </div>
 
   <div class="panel-body no-padding">
-    <div class="section-group-details" style="padding: 1em;">
+    <span class="section-group-details" style="padding: 1em;">
       <census-chart census="view.state.courses.list[view.selectedEntity.courseId].census"
                     term="view.state.terms.list[view.selectedEntity.termCode]"
                     course-id="view.selectedEntity.courseId"></census-chart>
@@ -63,7 +63,10 @@
             <td><strong>Total</strong></td>
             <!-- TODO: Get enrollment live from DW? -->
             <!--<td>{{ section.enrollment }}</td>-->
-            <td class="text-center">{{ sectionSeatTotal(view.selectedEntity) }} / {{ view.selectedEntity.plannedSeats }}</td>
+            <td class="text-center"
+                ng-class="{'section-group-details__total--overflow': view.selectedEntity.plannedSeats > 0 && sectionSeatTotal(view.selectedEntity) > view.selectedEntity.plannedSeats }">
+              {{ sectionSeatTotal(view.selectedEntity) }} <span ng-if="view.selectedEntity.plannedSeats > 0">/ {{ view.selectedEntity.plannedSeats }}</span>
+            </td>
             <td></td>
           </tr>
         </tbody>
@@ -92,6 +95,6 @@
                 no="Cancel"
                 placement="left">Delete Offering</button>
       </div>
-    </div>
+    </span>
   </div>
 </div>
