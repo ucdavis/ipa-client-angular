@@ -377,11 +377,13 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 											var displayTitle = "";
 											var plannedSeatsHtml = "";
 											var unitsLow = "";
+											var subTitle = "";
 
 											if (sectionGroup) {
 												var course = scope.view.state.courses.list[sectionGroup.courseId];
 												if (course) {
-													displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
+													displayTitle += '<span><span class="instructor-assignment-table__course-definition">' + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + '</span> <span class="instructor-assignment-table__course-title">' + '' + "</span></span>";
+													subTitle = course.title;
 													var plannedSeats = sectionGroup.plannedSeats || "0";
 													plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
 													unitsLow = "<small>Units: " + course.unitsLow + "</small>";
@@ -420,12 +422,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 											}
 
 											courseHtml += "\">";
-											courseHtml += "<p class='instructors-table__preference-title'>" + displayTitle + "</p>";
-											courseHtml += "<div class=\"tile-assignment-details\">";
-											courseHtml += plannedSeatsHtml;
-											courseHtml += "<br />";
-											courseHtml += unitsLow;
-											courseHtml += "</div>";
+											courseHtml += "<p class='instructors-table__preference-title'>" + displayTitle;
 
 											if (scope.userCanEdit()) {
 												var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
@@ -436,6 +433,14 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 												courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\" data-event-type=\"deleteAssignmentPop\" " +
 													"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
 											}
+											courseHtml += "</p>";
+											courseHtml += '<div class="instructor-assignment-table__course-title">' + subTitle + '</div>';
+											courseHtml += "<div class=\"tile-assignment-details\">";
+											courseHtml += plannedSeatsHtml;
+											courseHtml += "<br />";
+											courseHtml += unitsLow;
+											courseHtml += "</div>";
+
 											courseHtml += "</div>";
 										}
 									});
