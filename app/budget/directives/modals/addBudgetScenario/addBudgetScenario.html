@@ -2,9 +2,8 @@
   <form role="form" class="form-horizontal">
     <div class="add-budget-scenario__main-content">
       <div class="form-group">
-        <label class="col-sm-6 control-label">Create From</label>
-        <div class="col-sm-5">
-          <div class="input-group" class="scenario-selection-container">
+        <label class="col-sm-5 control-label">Create From</label>
+          <div class="col-sm-5 input-group" class="scenario-selection-container">
             <button class="btn add-budget-scenario__dropdown dropdown-toggle"
                     type="button" data-toggle="dropdown">
               <span class="add-budget-scenario__dropdown-label">
@@ -26,30 +25,25 @@
                 </a>
               </li>
             </ul>
-
-          </div>
         </div>
       </div>
 
       <div class="form-group">
-        <label class="col-sm-6 control-label">Name</label>
-        <div class="col-sm-5">
-          <div class="input-group">
-            <input
-              class="form-control" type="text"
-              ng-model="newBudgetScenario.name"
-              placeholder="Budget scenario name">
-          </div>
+        <label class="col-sm-5 control-label">Name</label>
+        <div class="col-sm-5 input-group">
+          <input
+            class="form-control" type="text"
+            ng-model="newBudgetScenario.name"
+            placeholder="Budget scenario name">
         </div>
       </div>
-      <div class="form-group" ng-if="newBudgetScenario.budgetScenarioId > 0">
-        <label class="col-sm-6 control-label">Copy Funds</label>
-        <div class="col-sm-5">
-          <div class="input-group add-budget-scenario__copy-ui">
-            <ipa-checkbox is-checked="newBudgetScenario.copyFunds"
-                          click-action="toggleCopyFunds()">
-            </ipa-checkbox>
-          </div>
+      <div class="form-group">
+        <label class="col-sm-5 control-label">Copy Funds</label>
+        <div class="col-sm-5 input-group add-budget-scenario__copy-ui">
+          <ipa-checkbox is-checked="newBudgetScenario.copyFunds"
+                        is-disabled="!(newBudgetScenario.budgetScenarioId > 0)"
+                        click-action="toggleCopyFunds()">
+          </ipa-checkbox>
         </div>
       </div>
     </div>
@@ -63,7 +57,7 @@
       <button ng-click="submitBudgetScenarioForm()"
               type="button"
               class="btn neon-dark-confirm-btn modal-button">
-        Submit
+        Create
       </button>
     </div>
   </form>
