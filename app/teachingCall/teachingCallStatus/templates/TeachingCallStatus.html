@@ -136,7 +136,8 @@
 							</div>
 						</div>
 						<div class="column-submitted cell">
-							<i class="glyphicon glyphicon-ok" ng-if="instructor.isDone"></i>
+							<i class="glyphicon glyphicon-ok teaching-call-status__form-submitted" ng-if="instructor.isDone" uib-tooltip="Instructor submitted form"></i>
+							<i class="glyphicon glyphicon-ok teaching-call-status__form-has-data" ng-if="!instructor.isDone && instructorFormHasData(instructor)" uib-tooltip="Instructor has entered some data but did not submit form"></i>
 						</div>
 						<div class="column-last cell">
 							{{ instructor.lastContactedAt }}

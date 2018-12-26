@@ -324,3 +324,13 @@
 	color: #21A9E1;
 	padding-right: 5px;
 }
+
+.teaching-call-status__form-submitted {
+	color: green;
+	cursor: default;
+}
+
+.teaching-call-status__form-has-data {
+	color: #b1afaf;
+	cursor: default;
+}

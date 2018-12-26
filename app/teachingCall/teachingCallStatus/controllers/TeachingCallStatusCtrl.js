@@ -26,6 +26,31 @@ class TeachingCallStatusCtrl {
 			$scope.view.state = data;
 		});
 
+		$scope.instructorFormHasData = function(instructor) {
+			// Is message set?
+			if (instructor.message) { return true; }
+
+			// Are instructor preferences set?
+			var teachingAssignments = $scope.view.state.teachingAssignments.byInstructorId[instructor.instructorId];
+
+			var hasData = false;
+
+			teachingAssignments.forEach(function(teachingAssignment) {
+				if (teachingAssignment.fromInstructor) { hasData = true; }
+			});
+
+			if (hasData) { return true; }
+
+			// Is unavailability set?
+			var teachingCallResponses = $scope.view.state.teachingCallResponses.byInstructorId[instructor.instructorId];
+
+			teachingCallResponses.forEach(function(teachingCallResponse) {
+				if (teachingCallResponse.availabilityBlob.indexOf("0") > -1) { hasData = true; }
+			});
+
+			return hasData;
+		};
+
 		$scope.toggleInstructor = function(instructor) {
 			TeachingCallStatusActionCreators.toggleInstructor(instructor.instructorId);
 		};

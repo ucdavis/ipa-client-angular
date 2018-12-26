@@ -20,6 +20,7 @@ class TeachingCallFormCtrl {
 
 		$rootScope.$on('teachingCallFormStateChanged', function (event, data) {
 			$scope.view.state = data;
+			$scope.updateNavigateAwayGuard();
 		});
 
 		$scope.viewState = {
@@ -305,6 +306,26 @@ class TeachingCallFormCtrl {
 			}
 
 			return displayRank;
+		};
+
+		$scope.updateNavigateAwayGuard = function () {
+			if ($scope.view.state.teachingCallReceipt.isDone == false) {
+				window.onbeforeunload = function (event) {
+					var message = 'Are you sure you want to leave this page without submitting your preferences?';
+
+					if (typeof event == 'undefined') {
+						event = window.event;
+					}
+
+					if (event) {
+						event.returnValue = message;
+					}
+
+					return message;
+				};
+			} else {
+				window.onbeforeunload = null;
+			}
 		};
 
 		$scope.timeout = {};
