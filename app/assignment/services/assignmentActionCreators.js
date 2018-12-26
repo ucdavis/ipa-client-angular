@@ -23,6 +23,7 @@ class AssignmentActionCreators {
 				var tab = $route.current.params.tab;
 
 				_self.AssignmentService.getInitialState(workgroupId, year).then(function (payload) {
+					// usersMap maps user IDs to login IDs
 					var usersMap = new Map();
 					for (var user in payload.users) {
 						usersMap.set(payload.users[user].loginId, payload.users[user].id);
@@ -236,7 +237,7 @@ class AssignmentActionCreators {
 
 					if (sectionGroup) {
 						sectionGroup.isAssigned = true;
-						sectionGroup.showTheStaff= false;
+						sectionGroup.showTheStaff = false;
 					}
 					var action = {
 						type: ActionTypes.ADD_TEACHING_ASSIGNMENT,
@@ -316,7 +317,7 @@ class AssignmentActionCreators {
 
 					if (sectionGroup) {
 						sectionGroup.isAssigned = true;
-						sectionGroup.showTheStaff= false;
+						sectionGroup.showTheStaff = false;
 					}
 						var action = {
 							type: ActionTypes.UPDATE_TEACHING_ASSIGNMENT,

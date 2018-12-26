@@ -153,7 +153,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				|| teachingAssignment.sabbatical);
 			};
 
-			scope.sortArray = function (array) {
+			scope.sortCourses = function (array) {
 				var sortedArray = _.sortBy(array, function (sectionGroupId) {
 					var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 					var course = scope.view.state.courses.list[sectionGroup.courseId];
@@ -175,25 +175,25 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				var coursesHtml = "";
 
 				if (scope.showInstructorUndeterminedTable == true) {
-					var Unassigned = {};
-					Unassigned.termCodes = {};
+					var unassignedTermCodes = {};
 
 					scope.view.state.sectionGroups.ids.forEach(function(sectionGroupId) {
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 						if (!sectionGroup.isAssigned) {
 							// Scaffold assignments array if this is the first in the termCode
-							if (!Unassigned.termCodes[sectionGroup.termCode]) {
-								Unassigned.termCodes[sectionGroup.termCode] = [];
+							if (!unassignedTermCodes[sectionGroup.termCode]) {
+								unassignedTermCodes[sectionGroup.termCode] = [];
 							}
 
-							Unassigned.termCodes[sectionGroup.termCode].push(sectionGroup.id);
+							unassignedTermCodes[sectionGroup.termCode].push(sectionGroup.id);
 						}
 					});
 
 					var theStaffLength = _.keys(scope.view.state.theStaff.termCodes).length;
-					var unassignedLength = _.keys(Unassigned.termCodes).length;
+					var unassignedLength = _.keys(unassignedTermCodes).length;
 
-					if (!theStaffLength > 0 && !unassignedLength > 0) {
+					if ((theStaffLength == 0) && (unassignedLength == 0)) {
+						// Nothing to show for 'Instructors TBD'
 						return;
 					}
 
@@ -228,7 +228,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 								// Loop over sectionGroups within a term
 								if (scope.view.state.theStaff.termCodes[termCode]) {
-									var sortedTheStaff = scope.sortArray(scope.view.state.theStaff.termCodes[termCode]);
+									var sortedTheStaff = scope.sortCourses(scope.view.state.theStaff.termCodes[termCode]);
 
 									sortedTheStaff.forEach(function(sectionGroupId) {
 										var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
@@ -286,7 +286,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						// Loop over active terms
 						$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) {
 							var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
-							var sortedUnassigned = scope.sortArray(Unassigned.termCodes[termCode]);
+							var sortedUnassigned = scope.sortCourses(unassignedTermCodes[termCode]);
 
 							coursesHtml += "<div class=\"term-cell\">";
 

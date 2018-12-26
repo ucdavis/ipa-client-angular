@@ -158,26 +158,26 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 							if (scope.graduateTable == true && (courseNumber < 200 || courseNumber > 299)) { return; }
 							if (scope.professionalTable == true && (courseNumber < 300 || courseNumber > 499)) { return; }
 
-						if (courseHeader == true) {
-							if (scope.lowerDivisionTable == true) {
-								courseTypeHeader = '<div class="type-header"><h5>Lower Divison Courses</h5></div>';
-							}
-							if (scope.upperDivisionTable == true) {
-								courseTypeHeader = '<div class="type-header"><h5>Upper Divison Courses</h5></div>';
-							}
-							if (scope.graduateTable == true) {
-								courseTypeHeader = '<div class="type-header"><h5>Graduate Courses</h5></div>';
-							}
-							if (scope.professionalTable == true) {
-								courseTypeHeader = '<div class="type-header"><h5>Professional Courses</h5></div>';
-							}
-							element.append(courseTypeHeader);
+							if (courseHeader == true) {
+								if (scope.lowerDivisionTable == true) {
+									courseTypeHeader = '<div class="type-header"><h5>Lower Divison Courses</h5></div>';
+								}
+								if (scope.upperDivisionTable == true) {
+									courseTypeHeader = '<div class="type-header"><h5>Upper Divison Courses</h5></div>';
+								}
+								if (scope.graduateTable == true) {
+									courseTypeHeader = '<div class="type-header"><h5>Graduate Courses</h5></div>';
+								}
+								if (scope.professionalTable == true) {
+									courseTypeHeader = '<div class="type-header"><h5>Professional Courses</h5></div>';
+								}
+								element.append(courseTypeHeader);
 
-							var header = scope.renderHeader();
-							element.append(header);
+								var header = scope.renderHeader();
+								element.append(header);
 
-							courseHeader = false;
-						}
+								courseHeader = false;
+							}
 
 							if (course.isHidden === false && course.isFiltered === false && course.matchesTagFilters === true) {
 								var courseHtml = "";

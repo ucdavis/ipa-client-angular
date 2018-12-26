@@ -905,92 +905,92 @@ class AssignmentStateService {
 
 	// Group related TeachingAssignments and generate adjusted priority for looping over in dropdown
 	generateAdjustedPriorities (newState) {
-		if (newState.teachingAssignments) {
-			newState.instructors.ids.forEach(function (instructorId) {
-				Object.keys(newState.instructors.list[instructorId].teachingAssignmentTermCodeIds).forEach(function (termCodeId) {
-					var uniqueAssignments = [];
-					var uniqueCoursesAdded = [];
-					var termTeachingAssignmentIds = newState.instructors.list[instructorId].teachingAssignmentTermCodeIds[termCodeId];
+		if (!newState.teachingAssignments) { return newState; }
 
-					termTeachingAssignmentIds.forEach(function (teachingAssignmentId) {
-						var teachingAssignment = newState.teachingAssignments.list[teachingAssignmentId];
-						var sectionGroup = newState.sectionGroups.list[teachingAssignment.sectionGroupId];
+		newState.instructors.ids.forEach(function (instructorId) {
+			Object.keys(newState.instructors.list[instructorId].teachingAssignmentTermCodeIds).forEach(function (termCodeId) {
+				var uniqueAssignments = [];
+				var uniqueCoursesAdded = [];
+				var termTeachingAssignmentIds = newState.instructors.list[instructorId].teachingAssignmentTermCodeIds[termCodeId];
 
-						// Non-course option or suggested course
-						if (teachingAssignment.sectionGroupId === null || teachingAssignment.sectionGroupId === 0) {
-							if (teachingAssignment.buyout) {
-								uniqueCoursesAdded.push("Buyout");
-							} else if (teachingAssignment.courseRelease) {
-								uniqueCoursesAdded.push("CourseRelease");
-							} else if (teachingAssignment.sabbatical) {
-								uniqueCoursesAdded.push("Sabbatical");
-							} else if (teachingAssignment.inResidence) {
-								uniqueCoursesAdded.push("InResidence");
-							} else if (teachingAssignment.sabbaticalInResidence) {
-								uniqueCoursesAdded.push("SabbaticalInResidence");
-							} else if (teachingAssignment.leaveOfAbsense) {
-								uniqueCoursesAdded.push("LeaveOfAbsense");
-							} else if (teachingAssignment.workLifeBalance) {
-								uniqueCoursesAdded.push("WorkLifeBalance");
-							} else {
-								var uniqueIdentifier = teachingAssignment.suggestedSubjectCode + teachingAssignment.suggestedCourseNumber + teachingAssignment.suggestedEffectiveTermCode;
-								teachingAssignment.uniqueIdentifier = uniqueIdentifier;
-								teachingAssignment.relatedAssignmentIds = [];
-								uniqueCoursesAdded.push(uniqueIdentifier);
-							}
-							uniqueAssignments.push(teachingAssignment);
-						}
+				termTeachingAssignmentIds.forEach(function (teachingAssignmentId) {
+					var teachingAssignment = newState.teachingAssignments.list[teachingAssignmentId];
+					var sectionGroup = newState.sectionGroups.list[teachingAssignment.sectionGroupId];
 
-						if (sectionGroup) {
-							var course = newState.courses.list[sectionGroup.courseId];
-							var uniqueIdentifier = course.subjectCode + course.courseNumber + course.effectiveTermCode;
-							if (uniqueCoursesAdded.indexOf(uniqueIdentifier) < 0) {
-								teachingAssignment.uniqueIdentifier = uniqueIdentifier;
-								teachingAssignment.relatedAssignmentIds = [];
-								uniqueAssignments.push(teachingAssignment);
-								uniqueCoursesAdded.push(uniqueIdentifier);
-							}
-
-							if (uniqueCoursesAdded.indexOf(uniqueIdentifier) > -1) {
-								var uniqueAssignment = uniqueAssignments.find(function (assignment) {
-									return assignment.uniqueIdentifier === uniqueIdentifier;
-								});
-								uniqueAssignment.relatedAssignmentIds.push(teachingAssignment.id);
-							}
-						}
-					});
-
-					var uniqueAssignmentsByPriority = _array_sortByProperty(uniqueAssignments, "priority");
-					var priority = 1;
-
-					var firstAssignmentIdInGroup;
-					var relatedCourseApproved = false;
-					uniqueAssignmentsByPriority.forEach(function (assignment) {
-						if (assignment.relatedAssignmentIds) {
-							firstAssignmentIdInGroup = assignment.id;
-							assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {
-								if (newState.teachingAssignments.list[teachingAssignmentId].approved === true) {
-									relatedCourseApproved = true;
-								}
-								newState.teachingAssignments.list[teachingAssignmentId].adjustedPriority = priority;
-								priority++;
-							});
+					// Non-course option or suggested course
+					if (teachingAssignment.sectionGroupId === null || teachingAssignment.sectionGroupId === 0) {
+						if (teachingAssignment.buyout) {
+							uniqueCoursesAdded.push("Buyout");
+						} else if (teachingAssignment.courseRelease) {
+							uniqueCoursesAdded.push("CourseRelease");
+						} else if (teachingAssignment.sabbatical) {
+							uniqueCoursesAdded.push("Sabbatical");
+						} else if (teachingAssignment.inResidence) {
+							uniqueCoursesAdded.push("InResidence");
+						} else if (teachingAssignment.sabbaticalInResidence) {
+							uniqueCoursesAdded.push("SabbaticalInResidence");
+						} else if (teachingAssignment.leaveOfAbsense) {
+							uniqueCoursesAdded.push("LeaveOfAbsense");
+						} else if (teachingAssignment.workLifeBalance) {
+							uniqueCoursesAdded.push("WorkLifeBalance");
 						} else {
-							newState.teachingAssignments.list[assignment.id].adjustedPriority = priority;
-							priority++;
+							var uniqueIdentifier = teachingAssignment.suggestedSubjectCode + teachingAssignment.suggestedCourseNumber + teachingAssignment.suggestedEffectiveTermCode;
+							teachingAssignment.uniqueIdentifier = uniqueIdentifier;
+							teachingAssignment.relatedAssignmentIds = [];
+							uniqueCoursesAdded.push(uniqueIdentifier);
+						}
+						uniqueAssignments.push(teachingAssignment);
+					}
+
+					if (sectionGroup) {
+						var course = newState.courses.list[sectionGroup.courseId];
+						var uniqueIdentifier = course.subjectCode + course.courseNumber + course.effectiveTermCode;
+						if (uniqueCoursesAdded.indexOf(uniqueIdentifier) < 0) {
+							teachingAssignment.uniqueIdentifier = uniqueIdentifier;
+							teachingAssignment.relatedAssignmentIds = [];
+							uniqueAssignments.push(teachingAssignment);
+							uniqueCoursesAdded.push(uniqueIdentifier);
 						}
 
-						if (firstAssignmentIdInGroup) {
-							newState.teachingAssignments.list[firstAssignmentIdInGroup].relatedAssignmentIds.forEach(function (teachingAssignmentId) {
-								newState.teachingAssignments.list[teachingAssignmentId].relatedCourseApproved = relatedCourseApproved;
+						if (uniqueCoursesAdded.indexOf(uniqueIdentifier) > -1) {
+							var uniqueAssignment = uniqueAssignments.find(function (assignment) {
+								return assignment.uniqueIdentifier === uniqueIdentifier;
 							});
-							firstAssignmentIdInGroup = null;
-							relatedCourseApproved = false;
+							uniqueAssignment.relatedAssignmentIds.push(teachingAssignment.id);
 						}
-					});
+					}
+				});
+
+				var uniqueAssignmentsByPriority = _array_sortByProperty(uniqueAssignments, "priority");
+				var priority = 1;
+
+				var firstAssignmentIdInGroup;
+				var relatedCourseApproved = false;
+				uniqueAssignmentsByPriority.forEach(function (assignment) {
+					if (assignment.relatedAssignmentIds) {
+						firstAssignmentIdInGroup = assignment.id;
+						assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {
+							if (newState.teachingAssignments.list[teachingAssignmentId].approved === true) {
+								relatedCourseApproved = true;
+							}
+							newState.teachingAssignments.list[teachingAssignmentId].adjustedPriority = priority;
+							priority++;
+						});
+					} else {
+						newState.teachingAssignments.list[assignment.id].adjustedPriority = priority;
+						priority++;
+					}
+
+					if (firstAssignmentIdInGroup) {
+						newState.teachingAssignments.list[firstAssignmentIdInGroup].relatedAssignmentIds.forEach(function (teachingAssignmentId) {
+							newState.teachingAssignments.list[teachingAssignmentId].relatedCourseApproved = relatedCourseApproved;
+						});
+						firstAssignmentIdInGroup = null;
+						relatedCourseApproved = false;
+					}
 				});
 			});
-		}
+		});
 
 		return newState;
 	}
