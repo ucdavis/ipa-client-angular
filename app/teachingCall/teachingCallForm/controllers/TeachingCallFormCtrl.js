@@ -23,6 +23,10 @@ class TeachingCallFormCtrl {
 			$scope.updateNavigateAwayGuard();
 		});
 
+		$rootScope.$on('sharedStateSet', function (event, data) {
+			$scope.sharedState = data;
+		});
+
 		$scope.viewState = {
 			showSuggestCourse: false
 		};
