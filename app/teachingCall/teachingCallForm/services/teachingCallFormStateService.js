@@ -232,6 +232,55 @@ class TeachingCallFormStateService {
 						return pageState;
 				}
 			},
+			_pastAssignmentReducers: function (action, pastAssignments) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						var pastCourses = {
+							ids: [],
+							list: {}
+						};
+
+						action.payload.pastCourses.forEach(function(course) {
+							pastCourses.ids.push(course.id);
+							pastCourses.list[course.id] = course;
+						});
+
+						var pastSectionGroups = {
+							ids: [],
+							list: {}
+						};
+
+						action.payload.pastSectionGroups.forEach(function(sectionGroup) {
+							pastSectionGroups.ids.push(sectionGroup.id);
+							pastSectionGroups.list[sectionGroup.id] = sectionGroup;
+						});
+
+						var pastAssignments = {
+							ids: [],
+							list: {}
+						};
+
+						action.payload.pastTeachingAssignments.forEach(function(assignment) {
+							var sectionGroup = pastSectionGroups.list[assignment.sectionGroupId];
+							var course = sectionGroup ? pastCourses.list[sectionGroup.courseId] : null;
+
+							if (course) {
+								assignment.title = course.title;
+								assignment.subjectCode = course.subjectCode;
+								assignment.courseNumber = course.courseNumber;
+								assignment.title = course.title;
+								debugger;
+							}
+
+							pastAssignments.ids.push(assignment.id);
+							pastAssignments.list[assignment.id] = assignment;
+						});
+
+						return pastAssignments;
+					default:
+						return pastAssignments;
+				}
+			},
 			reduce: function (action) {
 				var scope = this;
 	
@@ -239,8 +288,9 @@ class TeachingCallFormStateService {
 					return;
 				}
 
-				scope._state = scope._pageStateReducers(action, scope._state);
-	
+				scope._state.pageState = scope._pageStateReducers(action, scope._state);
+				scope._state.pastAssignments = scope._pastAssignmentReducers(action, scope._state);
+
 				$rootScope.$emit('teachingCallFormStateChanged', scope._state);
 	
 				$log.debug("Assignment state updated:");
