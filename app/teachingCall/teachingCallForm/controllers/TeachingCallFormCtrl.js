@@ -23,7 +23,8 @@ class TeachingCallFormCtrl {
 		$scope.modals = {};
 
 		$rootScope.$on('teachingCallFormStateChanged', function (event, data) {
-			$scope.view.state = data;
+			$scope.view.state = data.pageState;
+			$scope.view.state.pastAssignments = data.pastAssignments;
 			$scope.updateNavigateAwayGuard();
 		});
 
@@ -104,6 +105,14 @@ class TeachingCallFormCtrl {
 
 			var resultsWithHeaders = angular.copy(groupedResults); // eslint-disable-line no-undef
 			var headersAdded = 0;
+
+			// Past Courses
+			if ($scope.view.state.pastAssignments) {
+				resultsWithHeaders.splice(0, 0, { description: "Past Assignments", header: true });
+				headersAdded += 1;
+			}
+
+			// Current courses
 			groupedResults.forEach(function (result, index) {
 				if (result.firstInGroup === true) {
 					var headerDescription = result.uniqueIdentifier ? result.subjectCode + " Courses" : "Non-Courses";
