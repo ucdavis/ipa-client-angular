@@ -5,7 +5,7 @@ let supportCalls = function () {
 		restrict: 'E',
 		template: require('./supportCalls.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function () {
 			// Do nothing
 		}
 	};

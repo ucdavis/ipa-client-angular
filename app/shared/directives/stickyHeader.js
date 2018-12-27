@@ -1,4 +1,4 @@
-let stickyHeader = function($timeout) {
+let stickyHeader = function() {
 	return {
 		restrict: 'C',
 		link: function (scope, element, attrs) {
@@ -22,7 +22,7 @@ let stickyHeader = function($timeout) {
 			if (makeSticky() === false) {
 				scope.$watch(function () {
 					return element.find('thead > tr > th').length * element.find('tr:not(.cloned-header):visible').length;
-				}, function (newVal, oldVal) {
+				}, function () {
 					element.find('tr.cloned-header').remove();
 
 					var row = scope.repeatEvery;
@@ -35,11 +35,11 @@ let stickyHeader = function($timeout) {
 						selector = 'tbody tr';
 					}
 
-					repetitions = Math.floor(element.find(selector + ':not(.cloned-header):visible').length / scope.repeatEvery);
+					var repetitions = Math.floor(element.find(selector + ':not(.cloned-header):visible').length / scope.repeatEvery);
 
 					for (var i = 0; i < repetitions; i++) {
 						var tr = element.find('thead tr').clone().css('background-color', '#eee').addClass('cloned-header');
-						angular.element(element.find(selector).get(row - 1)).after(tr);
+						angular.element(element.find(selector).get(row - 1)).after(tr); // eslint-disable-line no-undef
 						row += scope.repeatEvery;
 					}
 				});

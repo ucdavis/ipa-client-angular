@@ -1,3 +1,5 @@
+import { toCurrency } from 'shared/helpers/string';
+
 import './changeTable.css';
 
 let changeTable = function () {
@@ -12,7 +14,7 @@ let changeTable = function () {
 			funding: '<',
 			miscStats: '<',
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.toCurrency = function (value) {
 				return toCurrency(value);
 			};

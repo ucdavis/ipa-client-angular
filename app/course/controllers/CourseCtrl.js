@@ -1,3 +1,6 @@
+import { isNumber } from 'shared/helpers/types';
+import { sequencePatterns, subjectCodes } from 'course/constants';
+
 /**
  * @ngdoc function
  * @name ipaClientAngularApp.controller:CourseCtrl
@@ -216,7 +219,7 @@ class CourseCtrl {
         });
       } else if (data.state.uiState.selectedCourseId && !data.state.uiState.selectedTermCode) {
         // A course is selected
-        _self.$scope.view.selectedEntity = angular.copy(_self.$scope.view.state.courses.list[data.state.uiState.selectedCourseId]);
+        _self.$scope.view.selectedEntity = angular.copy(_self.$scope.view.state.courses.list[data.state.uiState.selectedCourseId]); // eslint-disable-line no-undef
         _self.$scope.view.selectedEntityType = "course";
       } else if (data.state.uiState.selectedCourseId && data.state.uiState.selectedTermCode) {
         // A sectionGroup is selected
@@ -306,7 +309,7 @@ class CourseCtrl {
     };
 
     _self.$scope.manuallyUpdatePlannedSeats = function(sectionGroup) {
-      $('[data-course-id="' + sectionGroup.courseId + '"] [data-term-code="' + sectionGroup.termCode + '"] input').val(sectionGroup.plannedSeats);
+      $('[data-course-id="' + sectionGroup.courseId + '"] [data-term-code="' + sectionGroup.termCode + '"] input').val(sectionGroup.plannedSeats); // eslint-disable-line no-undef
     };
 
     _self.$scope.deleteSection = function (section) {

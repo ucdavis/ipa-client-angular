@@ -1,3 +1,5 @@
+import { _array_sortIdsByProperty } from 'shared/helpers/array';
+
 /**
  * @ngdoc service
  * @name adminApp.adminStateService
@@ -15,8 +17,6 @@ class AdminStateService {
 		return {
 			_state: {},
 			_workgroupReducers: function (action, workgroups) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						workgroups = {
@@ -67,8 +67,6 @@ class AdminStateService {
 				}
 			},
 			_uiStateReducers: function (action, uiState) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						uiState = {

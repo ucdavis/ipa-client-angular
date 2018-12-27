@@ -63,7 +63,7 @@ function config ($routeProvider) {
 config.$inject = ['$routeProvider'];
 
 // App declaration
-const workgroupApp = angular.module("workgroupApp", dependencies)
+const workgroupApp = angular.module("workgroupApp", dependencies) // eslint-disable-line no-undef
 .config(config)
 .controller('LocationCtrl', LocationCtrl)
 .controller('TagCtrl', TagCtrl)

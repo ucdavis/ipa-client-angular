@@ -1,6 +1,6 @@
-const CourseOffering = angular.module('CourseOffering', [])
+const CourseOffering = angular.module('CourseOffering', []) // eslint-disable-line no-undef
 
-.factory('CourseOffering', ['$http', function($http) {
+.factory('CourseOffering', function() {
 	function CourseOffering(courseOfferingData) {
 		if (courseOfferingData) {
 			this.setData(courseOfferingData);
@@ -8,10 +8,10 @@ const CourseOffering = angular.module('CourseOffering', [])
 	}
 	CourseOffering.prototype = {
 			setData: function(courseOfferingData) {
-				angular.extend(this, courseOfferingData);
+				angular.extend(this, courseOfferingData); // eslint-disable-line no-undef
 			}
 	};
 	return CourseOffering;
-}]);
+});
 
 export default CourseOffering;

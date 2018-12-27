@@ -7,7 +7,7 @@ let seatsDiff = function (RegistrarReconciliationReportActionCreators) {
 		restrict: "E",
 		template: require('./seatsDiff.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.section = scope.view.state.sections.list[scope.sectionId];
 
 			scope.updateSeats = function (seats) {

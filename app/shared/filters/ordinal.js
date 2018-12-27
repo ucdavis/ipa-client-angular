@@ -3,10 +3,12 @@
  * Expects an Integer
  */
 
+import { isNumber } from 'shared/helpers/types';
+
 let ordinal = function() {
 	return function (number) {
 		if (number && isNumber(number)) {
-			return toOrdinalSuffix(number);
+			return toOrdinalSuffix(number);// eslint-disable-line no-undef
 		}
 	};
 };

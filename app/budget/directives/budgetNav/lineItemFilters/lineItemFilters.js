@@ -8,7 +8,7 @@ let lineItemFilters = function(BudgetActions) {
 		scope: {
 			filters: '<' // Expected to have 'description' and 'selected' properties
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.isDropdownOpen = false;
 
 			scope.toggleLineItemFilterDropdown = function() {

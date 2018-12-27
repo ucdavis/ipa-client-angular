@@ -1,3 +1,5 @@
+import { isNumber, isLetter } from 'shared/helpers/types';
+
 /**
  * @ngdoc service
  * @name ipaClientAngularApp.SectionService

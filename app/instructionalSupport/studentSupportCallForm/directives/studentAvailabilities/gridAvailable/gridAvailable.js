@@ -9,8 +9,7 @@ let gridAvailable = function (StudentFormActions, $timeout) {
 			supportCallResponse: '<',
 			readOnly: '<'
 		},
-		link: function (scope, element, attrs) {
-
+		link: function (scope) {
 			scope.saveSupportCallResponse = function(newBlob, delay) {
 				scope.supportCallResponse.availabilityBlob = newBlob;
 

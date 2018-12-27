@@ -12,7 +12,8 @@ import ScheduleSummaryReportStateService from './services/scheduleSummaryReportS
 import ApiService from './../shared/services/ApiService.js';
 import DwService from './../shared/services/DwService.js';
 import TermService from './../shared/services/TermService.js';
-import AuthService from './../shared/services/AuthService.js';
+// FIXME is the following import needed?
+import AuthService from './../shared/services/AuthService.js'; // eslint-disable-line no-unused-vars
 
 // Dependencies
 var dependencies = [
@@ -64,7 +65,7 @@ function config ($routeProvider) {
 config.$inject = ['$routeProvider'];
 
 // App declaration
-const scheduleSummaryReportApp = angular.module("scheduleSummaryReportApp", dependencies)
+const scheduleSummaryReportApp = angular.module("scheduleSummaryReportApp", dependencies) // eslint-disable-line no-undef
 .config(config)
 .controller('ScheduleSummaryReportCtrl', ScheduleSummaryReportCtrl)
 .service('ScheduleSummaryReportActionCreators', ScheduleSummaryReportActionCreators)

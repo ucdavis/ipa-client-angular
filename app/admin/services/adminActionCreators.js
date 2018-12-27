@@ -22,7 +22,7 @@ class AdminActionCreators {
 						payload: payload
 					};
 					self.adminStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					self.$rootScope.$emit('toast', { message: "Could not load admin view.", type: "ERROR" });
 				});
 			},
@@ -36,7 +36,7 @@ class AdminActionCreators {
 						}
 					};
 					self.adminStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					self.$rootScope.$emit('toast', { message: "Could not update workgroup.", type: "ERROR" });
 				});
 			},
@@ -50,7 +50,7 @@ class AdminActionCreators {
 						}
 					};
 					self.adminStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					self.$rootScope.$emit('toast', { message: "Could not remove workgroup.", type: "ERROR" });
 				});
 			},
@@ -64,7 +64,7 @@ class AdminActionCreators {
 						}
 					};
 					self.adminStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					self.$rootScope.$emit('toast', { message: "Could not add workgroup.", type: "ERROR" });
 				});
 			}

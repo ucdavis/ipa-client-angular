@@ -7,7 +7,7 @@ let locationDiff = function (RegistrarReconciliationReportActionCreators) {
 		restrict: "E",
 		template: require('./locationDiff.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.updateBannerLocation = function (bannerLocation) {
 				var activity = {
 					id: scope.activity.id,

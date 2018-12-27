@@ -1,3 +1,5 @@
+import { _ } from 'underscore';
+
 /**
  * Uses Chart JS to display either a bar chart (historical courses), or a line chart (future courses)
  * Example: <census-chart census="census" term="termCode"course-id="courseId"></census-chart>
@@ -12,7 +14,7 @@ let censusChart = function ($rootScope, $timeout) {
       term: '=',
       courseId: '='
     },
-    link: function (scope, element, attrs) {
+    link: function (scope, element) {
       var ctx = element[0].getContext("2d");
 
       // Watch for changing params: happens when selecting a different courses
@@ -28,7 +30,7 @@ let censusChart = function ($rootScope, $timeout) {
 
         // Gets the "CURRENT" snapshot of the given property (e.g. currentEnrolledCount, maxEnrollmentCount)
         var getCurrentCensusForProperty = function (property) {
-          var lastFiveYears = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; });
+          var lastFiveYears = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; }); // eslint-disable-line no-undef
           return lastFiveYears.map(function (year) {
             return _.find(scope.census, function (c) {
               var matchesTermCode = c.termCode.toString() == year + (scope.term.termCode + '').slice(-2);
@@ -85,7 +87,8 @@ let censusChart = function ($rootScope, $timeout) {
           ];
         } else { // SG is in the future (unlocked)
           type = 'line';
-          labels = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; }); // Last 5 years
+          // Last 5 years
+          labels = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; }); // eslint-disable-line no-undef
           datasets = [
             {
               label: "Seats",
@@ -108,16 +111,16 @@ let censusChart = function ($rootScope, $timeout) {
           ];
         }
 
-        Chart.defaults.global.defaultFontColor = "#888";
-        Chart.defaults.global.tooltips.mode = 'x-axis';
-        Chart.defaults.global.tooltips.titleFontSize = 10;
-        Chart.defaults.global.tooltips.bodyFontSize = 10;
-        Chart.defaults.global.tooltips.caretSize = 3;
-        Chart.defaults.global.tooltips.cornerRadius = 3;
-        Chart.defaults.global.legend.display = false;
+        Chart.defaults.global.defaultFontColor = "#888"; // eslint-disable-line no-undef
+        Chart.defaults.global.tooltips.mode = 'x-axis'; // eslint-disable-line no-undef
+        Chart.defaults.global.tooltips.titleFontSize = 10; // eslint-disable-line no-undef
+        Chart.defaults.global.tooltips.bodyFontSize = 10; // eslint-disable-line no-undef
+        Chart.defaults.global.tooltips.caretSize = 3; // eslint-disable-line no-undef
+        Chart.defaults.global.tooltips.cornerRadius = 3; // eslint-disable-line no-undef
+        Chart.defaults.global.legend.display = false; // eslint-disable-line no-undef
 
         $timeout(function () {
-          var myChart = new Chart(ctx, {
+          var myChart = new Chart(ctx, { // eslint-disable-line no-undef
             type: type,
             data: {
               labels: labels,

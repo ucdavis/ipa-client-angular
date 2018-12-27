@@ -1,3 +1,6 @@
+import { _array_sortIdsByProperty } from 'shared/helpers/array';
+import { millisecondsToDate } from 'shared/helpers/dates';
+
 /**
  * @ngdoc service
  * @name SummaryApp.SummaryStateService
@@ -11,8 +14,6 @@ class SummaryStateService {
 		return {
 			_state: {},
 			_courseReducers: function (action, courses) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						courses = {
@@ -33,8 +34,6 @@ class SummaryStateService {
 				}
 			},
 			_sectionGroupReducers: function (action, sectionGroups) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						sectionGroups = {
@@ -82,8 +81,6 @@ class SummaryStateService {
 				}
 			},
 			_sectionReducers: function (action, sections) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						sections = {
@@ -92,7 +89,6 @@ class SummaryStateService {
 						};
 	
 						var sectionsList = {};
-						var length = action.payload.sections ? action.payload.sections.length : 0;
 						for (var i = 0; i < action.payload.sections.length; i++) {
 							var sectionData = action.payload.sections[i];
 	
@@ -107,8 +103,6 @@ class SummaryStateService {
 				}
 			},
 			_activityReducers: function (action, activities) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						activities = {
@@ -131,7 +125,6 @@ class SummaryStateService {
 				}
 			},
 			_eventReducers: function (action, events) {
-				var scope = this;
 				var i, startDate, endDate, eventData;
 	
 				switch (action.type) {
@@ -147,8 +140,8 @@ class SummaryStateService {
 						var teachingCallLength = action.payload.teachingCalls ? action.payload.teachingCalls.length : 0;
 						for (i = 0; i < teachingCallLength; i++) {
 							var teachingCall = action.payload.teachingCalls[i];
-							startDate = moment(teachingCall.startDate, "YYYY-MM-DD");
-							endDate = moment(teachingCall.dueDate, "YYYY-MM-DD");
+							startDate = moment(teachingCall.startDate, "YYYY-MM-DD"); // eslint-disable-line no-undef
+							endDate = moment(teachingCall.dueDate, "YYYY-MM-DD"); // eslint-disable-line no-undef
 	
 							// Build eventData object based on the teachingCall's start date
 							var teachingCallType = "";
@@ -171,7 +164,7 @@ class SummaryStateService {
 							};
 	
 							// Only add the event if it happens in the future
-							if (startDate.isAfter(moment())) {
+							if (startDate.isAfter(moment())) { // eslint-disable-line no-undef
 								eventsList.push(new Event(eventData));
 							}
 	
@@ -185,7 +178,7 @@ class SummaryStateService {
 								'caption': "",
 								'link': "/assignments/" + action.workgroupId + "/" + action.year + "/teachingCallStatus"
 							};
-							if (endDate.isAfter(moment())) {
+							if (endDate.isAfter(moment())) { // eslint-disable-line no-undef
 								eventsList.push(new Event(eventData));
 							}
 	
@@ -193,7 +186,7 @@ class SummaryStateService {
 	
 						var futureTerms = action.payload.terms.filter(function (term) {
 							// return only terms that will end in the future and exclude the unused '04' terms
-							return moment(term.endDate).isAfter(moment()) && term.termCode.slice(-2) != '04';
+							return moment(term.endDate).isAfter(moment()) && term.termCode.slice(-2) != '04'; // eslint-disable-line no-undef
 						});
 	
 						// Append future events retrieved from the terms
@@ -315,9 +308,6 @@ class SummaryStateService {
 				}
 			},
 			_teachingCallReceiptReducers: function (action, teachingCallReceipt) {
-				var scope = this;
-				var data = action.payload;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 					// Return the teachingCallReceipt for the workgroupId and year if it exists
@@ -330,7 +320,7 @@ class SummaryStateService {
 							if (teachingCallReceiptData.workgroupId == action.workgroupId
 								&& teachingCallReceiptData.academicYear == action.year) {
 									if (teachingCallReceiptData.dueDate) {
-										teachingCallReceiptData.dueDateDescription = moment(teachingCallReceiptData.dueDate).format("YYYY-MM-DD").toFullDate();
+										teachingCallReceiptData.dueDateDescription = moment(teachingCallReceiptData.dueDate).format("YYYY-MM-DD").toFullDate(); // eslint-disable-line no-undef
 									} else {
 										teachingCallReceiptData.dueDateDescription = "";
 									}
@@ -365,8 +355,6 @@ class SummaryStateService {
 				}
 			},
 			_scheduleReducers: function (action, schedule) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						var schedule = action.payload.schedule;
@@ -464,7 +452,6 @@ class SummaryStateService {
 							}
 						};
 						// Determine instructor summary sections needing attention
-						var teachingCallReceipt = null;
 						// Find teachingCall for current workgroup/year
 						action.payload.teachingCallReceipts.forEach(function(slotReceipt) {
 							if (slotReceipt.workgroupId == action.workgroupId
@@ -525,7 +512,7 @@ class SummaryStateService {
 		var month = d.getMonth() + 1;
 		var year = d.getFullYear();
 		var formattedDate = year + "-" + month + "-" + day;
-		formattedDate = moment(formattedDate, "YYYY-MM-DD").format('LL');
+		formattedDate = moment(formattedDate, "YYYY-MM-DD").format('LL'); // eslint-disable-line no-undef
 	
 		return formattedDate;
 	}

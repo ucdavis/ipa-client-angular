@@ -7,12 +7,12 @@ let startTimeDiff = function (RegistrarReconciliationReportActionCreators) {
 		restrict: "E",
 		template: require('./startTimeDiff.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.updateStartTime = function (startTime) {
 				var activity = {
 					id: scope.activity.id,
 					typeCode: scope.activity.typeCode,
-					startTime: moment(startTime, "HHmm").format("HH:mm:ss")
+					startTime: moment(startTime, "HHmm").format("HH:mm:ss") // eslint-disable-line no-undef
 				};
 				RegistrarReconciliationReportActionCreators.updateActivity(activity, 'startTime');
 			};

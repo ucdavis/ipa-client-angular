@@ -8,7 +8,7 @@ let crnAvailable = function (StudentFormActions) {
 		scope: {
 			state: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.searchCrn = "";
 
 			scope.calculateTimesForCrn = function(crn) {

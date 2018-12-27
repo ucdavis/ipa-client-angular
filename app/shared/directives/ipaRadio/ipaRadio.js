@@ -8,9 +8,9 @@ let ipaRadio = function () {
 			activeRadio: '<',
 			onSelect: '&'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			// Validate passed methods
-			if (angular.isUndefined(scope.onSelect)) {
+			if (angular.isUndefined(scope.onSelect)) { // eslint-disable-line no-undef
 				throw {
 					message: "ipaRadio: Required method onSelect was not provided."
 				};

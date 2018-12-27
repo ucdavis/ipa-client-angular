@@ -5,7 +5,7 @@ let instructorSummary = function () {
 		restrict: 'E',
 		template: require('./instructorSummary.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function () {
 			// Do nothing
 		}
 	};

@@ -8,7 +8,7 @@ let languageProficiencies = function ($rootScope, StudentFormActions, SupportCal
     scope: {
       supportCallResponse: '<'
     },
-    link: function (scope, element, attrs) {
+    link: function (scope) {
       scope.selectedLanguageProficiency = {
         id: scope.supportCallResponse.languageProficiency,
         description: SupportCallService.getLanguageProficiencyDescription(scope.supportCallResponse.languageProficiency),

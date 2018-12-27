@@ -1,3 +1,5 @@
+import { sequencePatterns } from 'course/constants';
+
 import './newCourse.css';
 
 let newCourse = function (CourseActionCreators, CourseService, SectionService) {
@@ -5,7 +7,7 @@ let newCourse = function (CourseActionCreators, CourseService, SectionService) {
     restrict: 'E',
     template: require('./newCourse.html'),
     replace: true,
-    link: function (scope, element, attrs) {
+    link: function (scope) {
       scope.sequenceNumberPlaceholder = "Example: '001' or 'A'";
       scope.newCourseValidation = {
         tooltipErrorMessage: "Select a course and enter a sequence pattern"
@@ -35,12 +37,14 @@ let newCourse = function (CourseActionCreators, CourseService, SectionService) {
       scope.searchCourses = function (query) {
         return CourseService.searchCourses(query).then(function (courseSearchResults) {
           return courseSearchResults.slice(0, 20);
-        }, function (err) {
-          $rootScope.$emit('toast', { message: "Could not search courses.", type: "ERROR" });
+        }, function () {
+          // FIXME
+          // $rootScope.$emit('toast', { message: "Could not search courses.", type: "ERROR" });
+          console.error("Could not search courses."); // eslint-disable-line no-console
         });
       };
 
-      scope.searchCoursesResultSelected = function ($item, $model, $label, $event) {
+      scope.searchCoursesResultSelected = function ($item) {
         scope.view.state.courses.newCourse.title = $item.title;
         scope.view.state.courses.newCourse.subjectCode = $item.subjectCode;
         scope.view.state.courses.newCourse.courseNumber = $item.courseNumber;

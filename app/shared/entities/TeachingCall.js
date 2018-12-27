@@ -1,6 +1,7 @@
+ // eslint-disable-next-line no-undef
 const TeachingCall = angular.module('TeachingCall', [])
 
-.factory('TeachingCall', ['$http', function($http) {
+.factory('TeachingCall', function() {
 	function TeachingCall(teachingCallData) {
 		if (teachingCallData) {
 			this.setData(teachingCallData);
@@ -8,10 +9,10 @@ const TeachingCall = angular.module('TeachingCall', [])
 	}
 	TeachingCall.prototype = {
 			setData: function(teachingCallData) {
-				angular.extend(this, teachingCallData);
+				angular.extend(this, teachingCallData); // eslint-disable-line no-undef
 			}
 	};
 	return TeachingCall;
-}]);
+});
 
 export default TeachingCall;

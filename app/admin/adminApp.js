@@ -50,7 +50,7 @@ function config ($routeProvider) {
 config.$inject = ['$routeProvider'];
 
 // App declaration
-const adminApp = angular.module("adminApp", dependencies)
+const adminApp = angular.module("adminApp", dependencies) // eslint-disable-line no-undef
 .config(config)
 .controller('AdminCtrl', AdminCtrl)
 .service('AdminActionCreators', AdminActionCreators)

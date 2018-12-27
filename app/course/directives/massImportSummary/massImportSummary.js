@@ -3,7 +3,7 @@ let massImportSummary = function (CourseActionCreators) {
     restrict: 'E',
     template: require('./massImportSummary.html'),
     replace: true,
-    link: function (scope, element, attrs) {
+    link: function (scope) {
       /**
        * Sends the selected courses to IPA-WEB to be imported to the schedule
        */

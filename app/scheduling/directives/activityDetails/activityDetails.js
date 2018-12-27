@@ -2,7 +2,7 @@ let activityDetails = function () {
 	return {
 		restrict: "E",
 		template: require('./activityDetails.html'),
-		link: function (scope, element, attrs) {
+		link: function () {
 			// Intentionally blank
 		}
 	};

@@ -9,7 +9,7 @@ let workloadTable = function () {
 			instructors: '<',
 			totals: '<'
 		},
-		link: function(scope, element, attrs) {
+		link: function() {
 			// Intentionally blank
 		}
 	};

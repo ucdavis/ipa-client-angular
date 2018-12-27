@@ -26,8 +26,10 @@ class registrarReconciliationReportCtrl {
 		this.$scope.termShortCode = this.$routeParams.termShortCode;
 
 		if (!this.$scope.termShortCode) {
-			var termStates = authService.getTermStates();
-			this.$scope.termShortCode = calculateCurrentTermShortCode(termStates);
+			// LINTME
+			var termStates = authService.getTermStates();// eslint-disable-line no-undef
+			// LINTME
+			this.$scope.termShortCode = calculateCurrentTermShortCode(termStates);// eslint-disable-line no-undef
 		}
 
 		this.$scope.term = this.Term.prototype.getTermByTermShortCodeAndYear(this.$scope.termShortCode, this.$scope.year);

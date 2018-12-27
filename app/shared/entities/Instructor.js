@@ -1,5 +1,6 @@
+ // eslint-disable-next-line no-undef
 const Instructor = angular.module('Instructor', [])
-.factory('Instructor', ['$http', function($http) {
+.factory('Instructor', function() {
 	function Instructor(instructorData) {
 		if (instructorData) {
 			this.setData(instructorData);
@@ -7,10 +8,10 @@ const Instructor = angular.module('Instructor', [])
 	}
 	Instructor.prototype = {
 			setData: function(instructorData) {
-				angular.extend(this, instructorData);
+				angular.extend(this, instructorData); // eslint-disable-line no-undef
 			}
 	};
 	return Instructor;
-}]);
+});
 
 export default Instructor;

@@ -12,7 +12,7 @@ class TeachingCallResponseReportService {
 			download: function (workgroupId, year) {
 				var deferred = $q.defer();
 
-				$http.get(serverRoot + "/api/teachingCallResponseReportView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
+				$http.get(window.serverRoot + "/api/teachingCallResponseReportView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
 				.then(function(payload) {
 					$window.location.href = payload.data.redirect;
 					deferred.resolve(payload.data);

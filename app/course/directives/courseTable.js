@@ -1,3 +1,6 @@
+import { isNumber } from 'shared/helpers/types';
+import { _ } from 'underscore';
+
 /**
  * Provides the main course table in the Courses View
  */
@@ -6,12 +9,10 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
   return {
     restrict: 'A',
     template: '<thead><tr><th>&nbsp;</th></tr></thead><tbody><tr><td>' +
-    '<div style="width: 100%;" align="center" class=\"text-muted\">' +
+    '<div style="width: 100%;" align="center" class="text-muted">' +
     '<img src="/images/ajax-loader.gif" style="width: 32px; height: 32px;" /> &nbsp; Loading schedule</div>' +
     '</td></tr></tbody>',
-    link: function (scope, element, attrs) {
-      var self = this;
-
+    link: function (scope, element) {
       scope.view = {};
 
       scope.previouslySelectedCourseId = null;
@@ -55,15 +56,15 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
         if (data.action.type == ActionTypes.ADD_SECTION_GROUP) {
           // Indicate on the textbox that the sectionGroup is offered
-          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').addClass("is-offered");
+          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').addClass("is-offered"); // eslint-disable-line no-undef
 
           return;
         }
 
         if (data.action.type == ActionTypes.REMOVE_SECTION_GROUP) {
           // Empty the textbox
-          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input.planned-seats').val("");
-          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').removeClass("is-offered");
+          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input.planned-seats').val(""); // eslint-disable-line no-undef
+          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').removeClass("is-offered"); // eslint-disable-line no-undef
 
           return;
         }
@@ -83,10 +84,10 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
           if (data.state.uiState.selectedCourseId && !data.state.uiState.selectedTermCode) {
             // Highlight row if a course is selected
-            $('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"]').addClass("selected-tr");
+            $('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"]').addClass("selected-tr"); // eslint-disable-line no-undef
           } else if (data.state.uiState.selectedCourseId && data.state.uiState.selectedTermCode) {
             // Highlight single cell if a sectionGroup is selected
-            $('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]').addClass("selected-td");
+            $('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]').addClass("selected-td"); // eslint-disable-line no-undef
           }
 
           scope.manuallyDeselectAllCourseRows();
@@ -124,13 +125,13 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         // Filter scope.termDefinitions to only those terms which are enabled by the filter.
         // Store this in termsToRender.
         var termsToRender = [];
-        $.each(scope.termDefinitions, function (i, term) {
+        $.each(scope.termDefinitions, function (i, term) { // eslint-disable-line no-undef
           if (data.state.filters.enabledTerms.indexOf(Number(term.shortCode)) != -1) {
             termsToRender.push(term);
           }
         });
 
-        $.each(termsToRender, function (i, termToRender) {
+        $.each(termsToRender, function (i, termToRender) { // eslint-disable-line no-undef
           header += "<th class=\"\">" + termToRender.description + "</th>";
         });
 
@@ -147,7 +148,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             return course.subjectCode + course.courseNumber + course.sequenceNumber;
           });
 
-          $.each(sortedBlendedCoursesArray, function (rowIdx, course) {
+          $.each(sortedBlendedCoursesArray, function (rowIdx, course) { // eslint-disable-line no-undef
             if (course.id === undefined) {
               body += scope.getImportCourseRow(course, termsToRender, data.state);
             } else {
@@ -157,7 +158,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         } else if (data.state.courses.ids.length) {
           var allContentFilteredOut = true;
 
-          $.each(data.state.courses.ids, function (rowIdx, courseId) {
+          $.each(data.state.courses.ids, function (rowIdx, courseId) { // eslint-disable-line no-undef
             var row = scope.getCourseRow(rowIdx, courseId, termsToRender, data.state);
 
             if (row) {
@@ -184,11 +185,11 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         body += scope.getTotalsRow(termsToRender, data.state);
         element.append(header + body);
 
-        $('delete-course').popover();
+        $('delete-course').popover(); // eslint-disable-line no-undef
 
         element.find('input.planned-seats').blur(function (e) {
           $timeout(function () {
-            let $el = $(e.target);
+            let $el = $(e.target); // eslint-disable-line no-undef
             scope.savePlannedSeats($el, scope, CourseActionCreators);
 
             // Important: notify angular since this happens outside of the scope
@@ -196,7 +197,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           }, 500);
         }).focus(function (e) {
           // Select the cell when the input is focused (In case user tabs between inputs)
-          let $el = $(e.target);
+          let $el = $(e.target); // eslint-disable-line no-undef
           // Select a cell/row
           let courseId = $el.closest("tr").data('course-id');
           var termCode = $el.closest("td").data('term-code');
@@ -213,7 +214,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
       element.keypress(function (e) {
         if (e.which == 13) {
           // ENTER button pressed
-          let $el = $(e.target);
+          let $el = $(e.target); // eslint-disable-line no-undef
 
           if ($el.hasClass('planned-seats')) {
             scope.savePlannedSeats($el, scope, CourseActionCreators);
@@ -232,7 +233,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
       // Emit sg-clicked event whenever a table <td> is clicked.
       // I'm sorry. Really.
       element.click(function (e) {
-        let $el = $(e.target);
+        let $el = $(e.target); // eslint-disable-line no-undef
         var courseId;
 
         if ($el.data('event-type') == 'deleteCoursePop') {
@@ -329,7 +330,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
       });
 
       element.bind('mousewheel', function (e) {
-        let $el = $(e.target);
+        let $el = $(e.target); // eslint-disable-line no-undef
 
         // Disable scrolling on number inputs as it might increase accidental changes
         if ($el.hasClass('planned-seats') && $el.is(":focus") ) {
@@ -340,21 +341,21 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
       // For performance reasons, the 'DESELECT_ALL_COURSE_ROWS' action does not trigger the courses table to re-render from scratch
       // Instead, this method manually modifies the table while the state is updated independently
       scope.manuallyDeselectAllCourseRows = function() {
-        $(".courses-table .checkbox-replace").removeClass("checked");
-        $('div[data-is-checked]').data('is-checked', false);
+        $(".courses-table .checkbox-replace").removeClass("checked"); // eslint-disable-line no-undef
+        $('div[data-is-checked]').data('is-checked', false); // eslint-disable-line no-undef
       };
 
       // For performance reasons, the 'TOGGLE_SELECT_COURSE_ROW' action does not trigger the courses table to re-render from scratch
       // Instead, this method manually modifies the table while the state is updated independently
       scope.manuallyToggleSelectedCourse = function(courseId) {
-        $('.courses-table .checkbox-container*[data-course-id="' + courseId + '"] .checkbox-replace').first().toggleClass("checked");
+        $('.courses-table .checkbox-container*[data-course-id="' + courseId + '"] .checkbox-replace').first().toggleClass("checked"); // eslint-disable-line no-undef
       };
 
       // For performance reasons, the 'SELECT_ALL_COURSE_ROWS' action does not trigger the courses table to re-render from scratch
       // Instead, this method manually modifies the table while the state is updated independently
       scope.manuallySelectAllCourseRows = function() {
-        $(".courses-table .checkbox-replace").addClass("checked");
-        $('div[data-is-checked]').data('is-checked', true);
+        $(".courses-table .checkbox-replace").addClass("checked"); // eslint-disable-line no-undef
+        $('div[data-is-checked]').data('is-checked', true); // eslint-disable-line no-undef
       };
 
       scope.getCheckbox = function(courseId, type, isChecked) {
@@ -372,11 +373,11 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
 
       scope.selectAll = function() {
-        console.log("select all courses");
+        // no-op
       };
 
       scope.selectCourse = function() {
-        console.log("selected course");
+        // no-op
       };
 
       scope.getImportCourseRow = function (course, termsToRender, state) {
@@ -385,7 +386,6 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         var row = "<tr class=\"odd gradeX clickable " + rowClass + "\" data-course-subject-code=\"" + course.subjectCode + "\"" +
           "data-course-number=\"" + course.courseNumber + "\" data-course-sequence-pattern=\"" + course.sequencePattern + "\" >";
 
-          var isChecked = false;
           row += '<td class="checkbox-cell">' + scope.getCheckbox(0, "", false) + "</td>";
 
           row += "<td class=\"import-course course-cell\">" +
@@ -393,9 +393,8 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           "<div class=\"import-course-description\"><strong>" +
           course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern +
           "</strong><br />" + course.title + "</div></td>";
-        $.each(termsToRender, function (i, term) {
+        $.each(termsToRender, function (i, term) { // eslint-disable-line no-undef
           var termCode = term.code;
-          var once = true;
           var sectionGroup = _.find(state.sectionGroups.importList, function (sg) {
             return (sg.termCode.slice(-2) == termCode.slice(-2)) &&
               (sg.subjectCode == course.subjectCode) &&
@@ -435,7 +434,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
           if (course.tagIds.length) {
             row += "<div class=\"hidden-print\">";
-            $.each(course.tagIds, function (i, tagId) {
+            $.each(course.tagIds, function (i, tagId) { // eslint-disable-line no-undef
               var tag = state.tags.list[tagId];
               var bgColor = tag.color ? tag.color : "#333";
               row += "<div class=\"label\" style=\"padding: 3px; margin-left: 3px; background-color: " + bgColor + "; color: " + tag.getTextColor() + "; \">" + tag.name + "</div>";
@@ -447,7 +446,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           var courseSgs = _.filter(state.sectionGroups.list, function (sg) { return sg.courseId == courseId; });
 
           // Term column(s)
-          $.each(termsToRender, function (i, termToRender) {
+          $.each(termsToRender, function (i, termToRender) { // eslint-disable-line no-undef
             var termCode = termToRender.code;
             var sectionGroup = _.find(courseSgs, function (sg) { return sg.termCode == termCode; });
             var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
@@ -457,7 +456,6 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             var requiresAttention = false;
 
             // Determine if the term is readonly
-            var term = state.terms.list[termCode];
             var cellClass = sectionGroupId ? "sg-cell is-offered" : "sg-cell";
 
             row += "<td data-term-code=\"" + termCode + "\" class=\"" + cellClass + "\"><div>";

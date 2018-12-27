@@ -1,6 +1,6 @@
-const Building = angular.module('Building', [])
+const Building = angular.module('Building', []) // eslint-disable-line no-undef
 
-.factory('Building', ['$http', function($http) {
+.factory('Building', function() {
 	function Building(buildingData) {
 		if (buildingData) {
 			this.setData(buildingData);
@@ -8,10 +8,10 @@ const Building = angular.module('Building', [])
 	}
 	Building.prototype = {
 			setData: function(buildingData) {
-				angular.extend(this, buildingData);
+				angular.extend(this, buildingData); // eslint-disable-line no-undef
 			}
 	};
 	return Building;
-}]);
+});
 
 export default Building;

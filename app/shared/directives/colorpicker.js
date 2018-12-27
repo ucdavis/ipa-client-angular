@@ -16,7 +16,7 @@ let colorpicker = function ($timeout) {
 			color: '=',
 			onChange: '&'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope, element) {
 			element.find('input').on('focus', function () {
 				element.colorpicker('show');
 			});

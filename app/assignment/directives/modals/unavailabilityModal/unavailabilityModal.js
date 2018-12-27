@@ -9,7 +9,7 @@ let unavailabilityModal = function (AssignmentActionCreators) {
       termDisplayNames: '<',
       teachingCallResponses: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
       scope.close = function () {
         scope.isVisible = false;
       };

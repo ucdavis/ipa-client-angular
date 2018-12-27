@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 import './add-instructors-modal.css';
 
 let addInstructorsModal = function (TermService, TeachingCallStatusActionCreators) {
@@ -11,7 +13,7 @@ let addInstructorsModal = function (TermService, TeachingCallStatusActionCreator
       workgroupId: '<',
       isVisible: '='
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
       scope.startTeachingCallConfig = {};
       scope.startTeachingCallConfig.dueDate = "";
       scope.startTeachingCallConfig.showUnavailabilities = true;
@@ -196,7 +198,7 @@ let addInstructorsModal = function (TermService, TeachingCallStatusActionCreator
       scope.altInputFormats = ['M!/d!/yyyy'];
     
       scope.submit = function() {
-        var messageInput = $('.teaching-call-message-input').val();
+        var messageInput = $('.teaching-call-message-input').val(); // eslint-disable-line no-undef
         if (messageInput) {
           scope.startTeachingCallConfig.message = messageInput.replace(/\r?\n/g, '<br />');
         }

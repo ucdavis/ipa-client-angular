@@ -28,7 +28,7 @@ class SchedulingService {
 				return ApiService.get("/api/schedulingView/sections/" + section.id + "/activities");
 			},
 			getCourseActivityTypes: function (course) {
-				return ApiService.get("/activities?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + dwToken, null, dwUrl);
+				return ApiService.get("/activities?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + window.dwToken, null, window.dwUrl);
 			},
 			createSection: function (section) {
 				return ApiService.post("/api/courseView/sectionGroups/" + section.sectionGroupId + "/sections", section);

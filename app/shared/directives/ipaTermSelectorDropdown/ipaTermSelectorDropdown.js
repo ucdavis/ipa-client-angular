@@ -1,4 +1,3 @@
-
 let ipaTermSelectorDropdown  = function ($window, $location, $routeParams, $rootScope, Term) {
 	return {
 		restrict: 'E',
@@ -7,7 +6,7 @@ let ipaTermSelectorDropdown  = function ($window, $location, $routeParams, $root
 		scope: {
 			termStates: '='
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.year = $routeParams.year;
 			scope.workgroupId = $routeParams.workgroupId;
 			scope.termShortCode = $routeParams.termShortCode;

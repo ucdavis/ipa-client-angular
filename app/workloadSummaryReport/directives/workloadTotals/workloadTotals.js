@@ -8,7 +8,7 @@ let workloadTotals = function () {
 		scope: {
 			state: '<'
 		},
-		link: function(scope, element, attrs) {
+		link: function() {
 			// Intentionally blank
 		}
 	};

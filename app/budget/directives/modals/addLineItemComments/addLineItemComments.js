@@ -1,3 +1,5 @@
+import { dateToCalendar, dateToRelative } from 'shared/helpers/dates';
+
 import './addLineItemComments.css';
 
 let addLineItemComments = function ($rootScope, BudgetActions) {
@@ -9,7 +11,7 @@ let addLineItemComments = function ($rootScope, BudgetActions) {
 			lineItem: '<',
 			currentUserLoginId: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.newComment = "";
 
 			scope.isFormValid = function() {

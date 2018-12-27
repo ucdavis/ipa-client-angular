@@ -16,9 +16,9 @@ let ipaCheckbox = function() {
 			style: '<?' // Options are muted and default (black)
 		},
 		replace: true, // Replace with the template below
-		link: function(scope, element, attrs) {
+		link: function(scope) {
 			scope.onClick = function() {
-				if (angular.isUndefined(scope.clickAction)) { return; }
+				if (angular.isUndefined(scope.clickAction)) { return; } // eslint-disable-line no-undef
 
 				scope.clickAction();
 			};

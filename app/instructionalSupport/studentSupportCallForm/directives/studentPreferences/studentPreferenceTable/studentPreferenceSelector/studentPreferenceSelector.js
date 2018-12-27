@@ -5,7 +5,7 @@ let studentPreferenceSelector = function (StudentFormActions) {
 		restrict: 'E',
 		template: require('./studentPreferenceSelector.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.addPreference = function(preference, type) {
 				StudentFormActions.addStudentPreference(preference.id, type);
 			};

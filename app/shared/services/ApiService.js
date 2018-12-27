@@ -5,7 +5,7 @@ class ApiService {
 
 		return {
 			get: function(url, data, serverUrl) {
-				serverUrl = serverUrl || serverRoot;
+				serverUrl = serverUrl || window.serverRoot;
 
 				var config = {
 					method: "GET",
@@ -17,7 +17,7 @@ class ApiService {
 				return this.query(config);
 			},
 			delete: function(url, data, serverUrl) {
-				serverUrl = serverUrl || serverRoot;
+				serverUrl = serverUrl || window.serverRoot;
 
 				var config = {
 					method: "DELETE",
@@ -29,7 +29,7 @@ class ApiService {
 				return this.query(config);
 			},
 			put: function(url, data, serverUrl) {
-				serverUrl = serverUrl || serverRoot;
+				serverUrl = serverUrl || window.serverRoot;
 
 				var config = {
 					method: "PUT",
@@ -41,7 +41,7 @@ class ApiService {
 				return this.query(config);
 			},
 			post: function(url, data, serverUrl) {
-				serverUrl = serverUrl || serverRoot;
+				serverUrl = serverUrl || window.serverRoot;
 
 				var config = {
 					method: "POST",

@@ -8,17 +8,17 @@ let popoverToggleCloseOthers = function() {
 		restrict: 'A',
 		link: function (scope, element, attr) {
 			scope.closeOthers = function() {
-				$('*[uib-popover], *[uib-popover-template]').not(element).each(function(){
-					angular.element(this).triggerHandler('close');
+				$('*[uib-popover], *[uib-popover-template]').not(element).each(function() { // eslint-disable-line no-undef
+					angular.element(this).triggerHandler('close'); // eslint-disable-line no-undef
 				});
-				$('.popover.in').remove();
+				$('.popover.in').remove(); // eslint-disable-line no-undef
 			};
 
 			scope.open = function() {
 				element.triggerHandler('open');
 			};
 
-			if (!angular.isDefined(attr.initCallback)) {
+			if (!angular.isDefined(attr.initCallback)) { // eslint-disable-line no-undef
 				element.bind('click', function (e) {
 					e.stopPropagation();
 					scope.closeOthers();

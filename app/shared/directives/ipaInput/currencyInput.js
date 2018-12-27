@@ -1,7 +1,7 @@
 /**
 	Helper directive used by ipaInput for handling currency rendering/parsing
 **/
-let currencyInput = function ($filter, $parse) {
+let currencyInput = function ($filter) {
 	return {
 		require: 'ngModel',
 		restrict: 'A',

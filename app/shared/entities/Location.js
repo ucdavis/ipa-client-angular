@@ -1,6 +1,7 @@
+ // eslint-disable-next-line no-undef
 const Location = angular.module('Location', [])
 
-.factory('Location', ['$http', function($http) {
+.factory('Location', function() {
 	function Location(locationData) {
 		if (locationData) {
 			this.setData(locationData);
@@ -8,10 +9,10 @@ const Location = angular.module('Location', [])
 	}
 	Location.prototype = {
 			setData: function(locationData) {
-				angular.extend(this, locationData);
+				angular.extend(this, locationData); // eslint-disable-line no-undef
 			}
 	};
 	return Location;
-}]);
+});
 
 export default Location;

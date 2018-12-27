@@ -1,5 +1,8 @@
+import { _array_findById } from 'shared/helpers/array';
+
+// eslint-disable-next-line no-undef
 const Term = angular.module('Term', [])
-.factory('Term', ['$http', function($http) {
+.factory('Term', function() {
 	function Term(termData) {
 		if (termData) {
 			this.setData(termData);
@@ -7,7 +10,7 @@ const Term = angular.module('Term', [])
 	}
 	Term.prototype = {
 			setData: function(termData) {
-				angular.extend(this, termData);
+				angular.extend(this, termData); // eslint-disable-line no-undef
 			},
 
 			// Generates a useful table of terms for the given academic year, e.g. for academicYear = 2016
@@ -29,7 +32,7 @@ const Term = angular.module('Term', [])
 					{ id: 3,  description: "Spring Quarter",         shortCode: "03"}
 				];
 				var year;
-				angular.forEach(table, function(term, i) {
+				angular.forEach(table, function(term) {  // eslint-disable-line no-undef
 					if(Number(term.shortCode) < 5) {
 						year = (Number(academicYear) + 1);
 					} else {
@@ -52,14 +55,14 @@ const Term = angular.module('Term', [])
 			},
 
 			isLocked: function () {
-				var termEnd = moment(this.endDate);
-				var now = moment();
+				var termEnd = moment(this.endDate); // eslint-disable-line no-undef
+				var now = moment(); // eslint-disable-line no-undef
 				return termEnd.isBefore(now);
 			}
 
 	};
 
 	return Term;
-}]);
+});
 
 export default Term;

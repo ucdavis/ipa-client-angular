@@ -2,7 +2,7 @@ let timeEditor = function (ActivityService, Activity) {
 	return {
 		restrict: "E",
 		template: require('./timeEditor.html'),
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.dayIndicatorToDayCodes = function (dayIndicator) {
 				return ActivityService.dayIndicatorToDayCodes(dayIndicator);
 			};

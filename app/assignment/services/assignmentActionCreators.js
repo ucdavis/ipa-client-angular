@@ -30,7 +30,7 @@ class AssignmentActionCreators {
 						tab: tab
 					};
 					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not load assignment view.", type: "ERROR" });
 				});
 			},
@@ -38,7 +38,7 @@ class AssignmentActionCreators {
 				var course = AssignmentStateService._state.courses.list[courseId];
 				course.note = note;
 				_self.AssignmentService.updateCourse(course).then(function (newCourse) {
-					ipa_analyze_event('instructor assignments', 'course note updated');
+					window.ipa_analyze_event('instructor assignments', 'course note updated');
 
 					_self.$rootScope.$emit('toast', { message: "Updated course note", type: "SUCCESS" });
 					var action = {
@@ -48,7 +48,7 @@ class AssignmentActionCreators {
 						}
 					};
 					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not update course note.", type: "ERROR" });
 				});
 			},
@@ -71,7 +71,7 @@ class AssignmentActionCreators {
 						}
 					};
 					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not update assignment order.", type: "ERROR" });
 				});
 			},
@@ -85,7 +85,7 @@ class AssignmentActionCreators {
 				} else {
 					var year = $route.current.params.year;
 					var workgroupId = $route.current.params.workgroupId;
-					_this.addScheduleInstructorNote(instructorId, year, workgroupId, note, assignmentsCompleted);
+					_this.addScheduleInstructorNote(instructorId, year, workgroupId, note); //, assignmentsCompleted);
 				}
 			},
 			addScheduleInstructorNote: function (instructorId, year, workgroupId, comment, assignmentsCompleted) {
@@ -98,7 +98,7 @@ class AssignmentActionCreators {
 						}
 					};
 					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not add instructor comment.", type: "ERROR" });
 				});
 			},
@@ -112,7 +112,7 @@ class AssignmentActionCreators {
 						}
 					};
 					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not update instructor comment.", type: "ERROR" });
 				});
 			},
@@ -126,7 +126,7 @@ class AssignmentActionCreators {
 						}
 					};
 					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not mark instructor complete.", type: "ERROR" });
 				});
 			},
@@ -140,7 +140,7 @@ class AssignmentActionCreators {
 						}
 					};
 					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not mark instructor incomplete.", type: "ERROR" });
 				});
 			},
@@ -154,7 +154,7 @@ class AssignmentActionCreators {
 						}
 					};
 					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not update availabilities.", type: "ERROR" });
 				});
 			},
@@ -168,7 +168,7 @@ class AssignmentActionCreators {
 						}
 					};
 					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 				});
 			},
@@ -195,25 +195,26 @@ class AssignmentActionCreators {
 						}
 					};
 					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not add instructor comment.", type: "ERROR" });
 				});
 			},
-			removeInstructorAssignment: function (teachingAssignment) {
-				_self.AssignmentService.removeInstructorAssignment(sectionGroupId, instructorId).then(function (sectionGroupId) {
-					ipa_analyze_event('instructor assignments', 'instructor unassigned');
+			removeInstructorAssignment: function () {
+				console.error("This function was using undefined variables so it has been disabled"); // eslint-disable-line no-console
+				// _self.AssignmentService.removeInstructorAssignment(sectionGroupId, instructorId).then(function (sectionGroupId) {
+				// 	window.ipa_analyze_event('instructor assignments', 'instructor unassigned');
 
-					_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
-					var action = {
-						type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,
-						payload: {
-							sectionGroup: sectionGroup
-						}
-					};
-					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
-					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
-				});
+				// 	_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
+				// 	var action = {
+				// 		type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,
+				// 		payload: {
+				// 			sectionGroup: sectionGroup
+				// 		}
+				// 	};
+				// 	_self.AssignmentStateService.reduce(action);
+				// }, function () {
+				// 	_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
+				// });
 			},
 
 			/**
@@ -224,7 +225,7 @@ class AssignmentActionCreators {
 			 */
 			addAndApproveInstructorAssignment: function (teachingAssignment, scheduleId) {
 				_self.AssignmentService.addInstructorAssignment(teachingAssignment, scheduleId).then(function (teachingAssignment) {
-					ipa_analyze_event('instructor assignments', 'instructor without preference assigned');
+					window.ipa_analyze_event('instructor assignments', 'instructor without preference assigned');
 
 					_self.$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
 					var action = {
@@ -234,7 +235,7 @@ class AssignmentActionCreators {
 						}
 					};
 					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
 				});
 			},
@@ -248,7 +249,7 @@ class AssignmentActionCreators {
 				var scheduleId = AssignmentStateService._state.userInterface.scheduleId;
 	
 				_self.AssignmentService.addInstructorAssignment(teachingAssignment, scheduleId).then(function (newTeachingAssignment) {
-					ipa_analyze_event('instructor assignments', 'instructor type assigned');
+					window.ipa_analyze_event('instructor assignments', 'instructor type assigned');
 
 					_self.$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
 					_self.AssignmentStateService.reduce({
@@ -257,12 +258,12 @@ class AssignmentActionCreators {
 							teachingAssignment: newTeachingAssignment
 						}
 					});
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
 				});
 			},
 			unassignInstructorType: function (originalTeachingAssignment) {
-				_self.AssignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {
+				_self.AssignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function () {
 					_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
 	
 					_self.AssignmentStateService.reduce({
@@ -271,7 +272,7 @@ class AssignmentActionCreators {
 							teachingAssignment: originalTeachingAssignment
 						}
 					});
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
 				});
 			},
@@ -299,7 +300,7 @@ class AssignmentActionCreators {
 					});
 	
 					here.addAndApproveInstructorAssignment(teachingAssignment, AssignmentStateService._state.userInterface.scheduleId);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
 				});
 			},
@@ -309,7 +310,7 @@ class AssignmentActionCreators {
 				// If approved course was suggested, need to fetch new sectionGroup and course data
 				if (teachingAssignment.suggestedSubjectCode) {
 					_self.AssignmentService.updateInstructorAssignment(teachingAssignment).then(function (teachingAssignment) {
-						ipa_analyze_event('instructor assignments', 'instructor assignment approved');
+						window.ipa_analyze_event('instructor assignments', 'instructor assignment approved');
 
 						_self.AssignmentService.getSectionGroups(workgroupId, year).then(function (sectionGroups) {
 							var sectionGroup = sectionGroups.find(function (sectionGroup) { return sectionGroup.id === teachingAssignment.sectionGroupId; });
@@ -326,14 +327,14 @@ class AssignmentActionCreators {
 										}
 									};
 									_self.AssignmentStateService.reduce(action);
-								}, function (err) {
+								}, function () {
 									_self.$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
 								});
 							});
 						});
 				} else {
 					_self.AssignmentService.updateInstructorAssignment(teachingAssignment).then(function (teachingAssignment) {
-						ipa_analyze_event('instructor assignments', 'instructor assignment approved');
+						window.ipa_analyze_event('instructor assignments', 'instructor assignment approved');
 
 						$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
 							var action = {
@@ -343,7 +344,7 @@ class AssignmentActionCreators {
 								}
 							};
 							_self.AssignmentStateService.reduce(action);
-					}, function (err) {
+					}, function () {
 						_self.$rootScope.$emit('toast', { message: "Could not assign instructor to course.", type: "ERROR" });
 					});
 				}
@@ -358,7 +359,7 @@ class AssignmentActionCreators {
 							}
 						};
 						_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not assign The Staff.", type: "ERROR" });
 				});
 			},
@@ -372,7 +373,7 @@ class AssignmentActionCreators {
 							}
 						};
 						_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not remove The Staff.", type: "ERROR" });
 				});
 			},
@@ -400,7 +401,7 @@ class AssignmentActionCreators {
 						};
 						_self.AssignmentStateService.reduce(action);
 					}
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
 				});
 			},
@@ -414,7 +415,7 @@ class AssignmentActionCreators {
 						}
 					};
 					_self.AssignmentStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not update availabilities.", type: "ERROR" });
 				});
 			},

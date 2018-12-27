@@ -1,10 +1,8 @@
 class BudgetReducers {
-	constructor ($rootScope, $log, BudgetSelectors, ActionTypes, Roles) {
+	constructor ($rootScope, $log, BudgetSelectors, ActionTypes) {
 		return {
 			_state: {},
 			budgetScenarioReducers: function (action, budgetScenarios) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						budgetScenarios = {
@@ -44,8 +42,6 @@ class BudgetReducers {
 				}
 			},
 			instructorTypeReducers: function (action, instructorTypes) {
-				var scope = this;
-	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						instructorTypes = {
@@ -164,6 +160,7 @@ class BudgetReducers {
 						return budget;
 					case ActionTypes.UPDATE_BUDGET:
 						budget = action.payload.budget;
+						return budget;
 					default:
 						return budget;
 				}
@@ -499,7 +496,7 @@ class BudgetReducers {
 			},
 			scheduleSectionGroupReducers: function (action, scheduleSectionGroups) {
 				switch (action.type) {
-					case ActionTypes.INIT_STATE:
+					case ActionTypes.INIT_STATE: {
 						let courses = {
 							ids: [],
 							list: {}
@@ -616,6 +613,7 @@ class BudgetReducers {
 						});
 	
 						return scheduleSectionGroups;
+					}
 					default:
 						return scheduleSectionGroups;
 				}
@@ -963,6 +961,6 @@ class BudgetReducers {
 	}
 }
 
-BudgetReducers.$inject = ['$rootScope', '$log', 'BudgetSelectors', 'ActionTypes', 'Roles'];
+BudgetReducers.$inject = ['$rootScope', '$log', 'BudgetSelectors', 'ActionTypes'];
 
 export default BudgetReducers;

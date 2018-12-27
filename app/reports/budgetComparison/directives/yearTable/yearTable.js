@@ -1,3 +1,5 @@
+import { toCurrency } from 'shared/helpers/string';
+
 import './yearTable.css';
 
 let yearTable = function (StringService) {
@@ -13,7 +15,7 @@ let yearTable = function (StringService) {
 			funding: '<',
 			miscStats: '<',
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.toCurrency = function (value) {
 				return toCurrency(value);
 			};

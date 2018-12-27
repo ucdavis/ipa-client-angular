@@ -9,12 +9,12 @@ import 'bootstrap/dist/js/bootstrap.js';
 import 'angular-ui-bootstrap/dist/ui-bootstrap-tpls.js';
 
 // Helpers
-import array from './helpers/array.js';
-import dates from './helpers/dates.js';
-import object from './helpers/object.js';
-import sections from './helpers/sections.js';
-import string from './helpers/string.js';
-import types from './helpers/types.js';
+import array from './helpers/array.js'; // eslint-disable-line no-unused-vars
+import dates from './helpers/dates.js'; // eslint-disable-line no-unused-vars
+import object from './helpers/object.js'; // eslint-disable-line no-unused-vars
+import sections from './helpers/sections.js'; // eslint-disable-line no-unused-vars
+import string from './helpers/string.js'; // eslint-disable-line no-unused-vars
+import types from './helpers/types.js'; // eslint-disable-line no-unused-vars
 
 // Controllers
 import SharedCtrl from './controllers/SharedCtrl.js';
@@ -27,32 +27,32 @@ import SectionService from './services/SectionService.js';
 import ActivityService from './services/ActivityService.js';
 
 // Entities
-import Activity from './entities/Activity.js';
-import Building from './entities/Building.js';
-import CourseOfferingGroup from './entities/CourseOfferingGroup.js';
-import CourseOffering from './entities/CourseOffering.js';
-import Course from './entities/Course.js';
-import CurrentUser from './entities/CurrentUser.js';
-import Event from './entities/Event.js';
-import Instructor from './entities/Instructor.js';
-import Location from './entities/Location.js';
-import Role from './entities/Role.js';
-import ScheduleInstructorNote from './entities/ScheduleInstructorNote.js';
-import ScheduleTermState from './entities/ScheduleTermState.js';
-import Schedule from './entities/Schedule.js';
-import Section from './entities/Section.js';
-import SectionGroup from './entities/SectionGroup.js';
-import SyncAction from './entities/SyncAction.js';
-import Tag from './entities/Tag.js';
-import TeachingAssignment from './entities/TeachingAssignment.js';
-import TeachingPreference from './entities/TeachingPreference.js';
-import TeachingCall from './entities/TeachingCall.js';
-import TeachingCallReceipt from './entities/TeachingCallReceipt.js';
-import TeachingCallResponse from './entities/TeachingCallResponse.js';
-import Term from './entities/Term.js';
-import User from './entities/User.js';
-import UserRole from './entities/UserRole.js';
-import Workgroup from './entities/Workgroup.js';
+import Activity from './entities/Activity.js'; // eslint-disable-line no-unused-vars
+import Building from './entities/Building.js'; // eslint-disable-line no-unused-vars
+import CourseOfferingGroup from './entities/CourseOfferingGroup.js'; // eslint-disable-line no-unused-vars
+import CourseOffering from './entities/CourseOffering.js'; // eslint-disable-line no-unused-vars
+import Course from './entities/Course.js'; // eslint-disable-line no-unused-vars
+import CurrentUser from './entities/CurrentUser.js'; // eslint-disable-line no-unused-vars
+import Event from './entities/Event.js'; // eslint-disable-line no-unused-vars
+import Instructor from './entities/Instructor.js'; // eslint-disable-line no-unused-vars
+import Location from './entities/Location.js'; // eslint-disable-line no-unused-vars
+import Role from './entities/Role.js'; // eslint-disable-line no-unused-vars
+import ScheduleInstructorNote from './entities/ScheduleInstructorNote.js'; // eslint-disable-line no-unused-vars
+import ScheduleTermState from './entities/ScheduleTermState.js'; // eslint-disable-line no-unused-vars
+import Schedule from './entities/Schedule.js'; // eslint-disable-line no-unused-vars
+import Section from './entities/Section.js'; // eslint-disable-line no-unused-vars
+import SectionGroup from './entities/SectionGroup.js'; // eslint-disable-line no-unused-vars
+import SyncAction from './entities/SyncAction.js'; // eslint-disable-line no-unused-vars
+import Tag from './entities/Tag.js'; // eslint-disable-line no-unused-vars
+import TeachingAssignment from './entities/TeachingAssignment.js'; // eslint-disable-line no-unused-vars
+import TeachingPreference from './entities/TeachingPreference.js'; // eslint-disable-line no-unused-vars
+import TeachingCall from './entities/TeachingCall.js'; // eslint-disable-line no-unused-vars
+import TeachingCallReceipt from './entities/TeachingCallReceipt.js'; // eslint-disable-line no-unused-vars
+import TeachingCallResponse from './entities/TeachingCallResponse.js'; // eslint-disable-line no-unused-vars
+import Term from './entities/Term.js'; // eslint-disable-line no-unused-vars
+import User from './entities/User.js'; // eslint-disable-line no-unused-vars
+import UserRole from './entities/UserRole.js'; // eslint-disable-line no-unused-vars
+import Workgroup from './entities/Workgroup.js'; // eslint-disable-line no-unused-vars
 
 // Directives
 import availabilityGrid from './directives/availabilityGrid/availabilityGrid.js';
@@ -138,21 +138,21 @@ var sharedAppDependencies = [
 // Config
 function config ($httpProvider, $compileProvider, $logProvider, IdleProvider, $locationProvider) {
 	// Add CSRF token to all requests
-	var csrfHeader = $('meta[name=csrf-header]').attr('content');
+	var csrfHeader = $('meta[name=csrf-header]').attr('content'); // eslint-disable-line no-undef
 	if (csrfHeader === undefined) {
-		console.warn("CSRF meta tag not found.");
+		console.warn("CSRF meta tag not found."); // eslint-disable-line no-console
 	} else {
-		$httpProvider.defaults.headers.common[csrfHeader] = $('meta[name=csrf-token]').attr('content');
+		$httpProvider.defaults.headers.common[csrfHeader] = $('meta[name=csrf-token]').attr('content'); // eslint-disable-line no-undef
 	}
 
 	$httpProvider.useApplyAsync(true);
 
 	// Debugger mode
 	try {
-		$compileProvider.debugInfoEnabled(debuggerEnabled);
-		$logProvider.debugEnabled(debuggerEnabled);
+		$compileProvider.debugInfoEnabled(window.debuggerEnabled);
+		$logProvider.debugEnabled(window.debuggerEnabled);
 	} catch (e) {
-		console.warn("Debugger status not defined. Please set value in clientConfig. Defaulting to enabled.", e);
+		console.warn("Debugger status not defined. Please set value in clientConfig. Defaulting to enabled.", e); // eslint-disable-line no-console
 		$compileProvider.debugInfoEnabled(true);
 		$logProvider.debugEnabled(true);
 	}
@@ -238,7 +238,7 @@ function exceptionHandler($provide) {
 				};
 				
 				$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("JWT"); // Set proper headers
-				$http.post(serverRoot + "/api/reportJsException", exceptionObject, { withCredentials: true }).then(function(res) {
+				$http.post(window.serverRoot + "/api/reportJsException", exceptionObject, { withCredentials: true }).then(function(res) {
 					return res.data;
 				});
 			}
@@ -249,7 +249,7 @@ function exceptionHandler($provide) {
 exceptionHandler.$inject = ['$provide'];
 
 // App declaration
-const sharedApp = angular.module("sharedApp", sharedAppDependencies)
+const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-disable-line no-undef
 .config(config)
 .controller('SharedCtrl', SharedCtrl)
 .service('ApiService', ApiService)
@@ -315,14 +315,14 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies)
 // Detect route errors
 .run(['$rootScope', 'Idle',
 	function ($rootScope, Idle) {
-		$rootScope.$on('$routeChangeStart', function (e, curr, prev) {
+		$rootScope.$on('$routeChangeStart', function (e, curr) {
 			if (curr.$$route && curr.$$route.resolve) {
 				// Show a loading message until promises aren't resolved
 				$rootScope.loadingView = true;
 			}
 		});
 
-		$rootScope.$on('$routeChangeSuccess', function (e, curr, prev) {
+		$rootScope.$on('$routeChangeSuccess', function () {
 			// Hide loading message
 			$rootScope.loadingView = false;
 		});

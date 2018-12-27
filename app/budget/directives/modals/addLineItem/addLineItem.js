@@ -10,11 +10,11 @@ let addLineItem = function ($rootScope, BudgetActions) {
 			isVisible: '=',
 			lineItemToEdit: '<?'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.newLineItem = {};
 
 			if (scope.lineItemToEdit) {
-				scope.newLineItem = angular.copy(scope.lineItemToEdit);
+				scope.newLineItem = angular.copy(scope.lineItemToEdit); // eslint-disable-line no-undef
 			}
 
 			scope.newLineItem.categoryDescription = scope.newLineItem.categoryDescription || "Select a category";

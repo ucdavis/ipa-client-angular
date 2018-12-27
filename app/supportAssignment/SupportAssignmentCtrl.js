@@ -41,7 +41,7 @@ class SupportAssignmentCtrl {
 
 		_self.$scope.sharedState = _self.AuthService.getSharedState();
 
-		_self.$rootScope.$on('sharedStateSet', function (event, sharedStateData) {
+		_self.$rootScope.$on('sharedStateSet', function () {
 			_self.$scope.sharedState = _self.AuthService.getSharedState();
 		});
 

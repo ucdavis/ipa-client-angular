@@ -1,5 +1,5 @@
-const Activity = angular.module('Activity', [])
-.factory('Activity', ['$http', function ($http) {
+const Activity = angular.module('Activity', []) // eslint-disable-line no-undef
+.factory('Activity', function () {
 	function Activity(activityData) {
 		if (activityData) {
 			this.setData(activityData);
@@ -8,7 +8,7 @@ const Activity = angular.module('Activity', [])
 	}
 	Activity.prototype = {
 		setData: function (activityData) {
-			angular.extend(this, activityData);
+			angular.extend(this, activityData); // eslint-disable-line no-undef
 		},
 		updateCalculatedProperties: function () {
 			this.setStandardTimes();
@@ -146,9 +146,9 @@ const Activity = angular.module('Activity', [])
 			this.locationType = this.locationId ? 'custom' : 'registrar';
 		},
 		setSelectedDuration: function () {
-			var start = moment(this.startTime, "HH:mm:ss");
-			var end = moment(this.endTime, "HH:mm:ss");
-			var duration = moment.duration(end.diff(start));
+			var start = moment(this.startTime, "HH:mm:ss"); // eslint-disable-line no-undef
+			var end = moment(this.endTime, "HH:mm:ss"); // eslint-disable-line no-undef
+			var duration = moment.duration(end.diff(start)); // eslint-disable-line no-undef
 			this.selectedDuration = duration.asMinutes().toString();
 		},
 		setDefaultDayIndicator: function () {
@@ -156,6 +156,6 @@ const Activity = angular.module('Activity', [])
 		}
 	};
 	return Activity;
-}]);
+});
 
 export default Activity;

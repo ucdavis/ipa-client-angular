@@ -7,13 +7,13 @@ let freeformTimeSelector = function (SchedulingActionCreators) {
 		scope: {
 			activity: '='
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.days = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
 
 			// Ensure activity startTime precedes endTime before submission
 			scope.saveActivity = function() {
-				var startTime = moment(scope.activity.startTime, "HH:mm");
-				var endTime = moment(scope.activity.endTime, "HH:mm");
+				var startTime = moment(scope.activity.startTime, "HH:mm"); // eslint-disable-line no-undef
+				var endTime = moment(scope.activity.endTime, "HH:mm"); // eslint-disable-line no-undef
 
 				if (startTime.isAfter(endTime) || startTime.isSame(endTime)) {
 					endTime = startTime.add(5, "minutes");

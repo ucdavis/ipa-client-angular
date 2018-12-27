@@ -1,3 +1,5 @@
+import { isLetter } from 'shared/helpers/types';
+
 /**
  * example:
  * <sync-action-list></sync-action-list>
@@ -8,7 +10,7 @@ let syncActionList = function ($rootScope, $log, RegistrarReconciliationReportAc
 		template: require('./syncActionList.html'),
 		scope: true,
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.view = {
 				listItems: [],
 				hasAccess: scope.sharedState.currentUser.isAdmin() ||
@@ -41,7 +43,7 @@ let syncActionList = function ($rootScope, $log, RegistrarReconciliationReportAc
 				], {
 						type: "text/plain;charset=utf-8;",
 					});
-				saveAs(blob, "banner-to-do.txt");
+				saveAs(blob, "banner-to-do.txt"); // eslint-disable-line no-undef
 			};
 
 			$rootScope.$on('reportStateChanged', function (event, data) {

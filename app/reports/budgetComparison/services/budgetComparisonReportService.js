@@ -1,5 +1,5 @@
 class BudgetComparisonReportService {
-	constructor(ApiService, $q, $http, $window) {
+	constructor(ApiService) {
 		var _self = this;
 		this.ApiService = ApiService;
 		return {
@@ -9,7 +9,7 @@ class BudgetComparisonReportService {
 			getCourses: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/courses");
 			},
-			getInstructorTypes: function (workgroupId, year) {
+			getInstructorTypes: function () {
 				return _self.ApiService.get("/api/instructorTypes");
 			},
 			getTeachingAssignments: function (workgroupId, year) {
@@ -27,7 +27,7 @@ class BudgetComparisonReportService {
 			getBudgetScenarios: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/budgetScenarios");
 			},
-			getLineItemCategories: function (workgroupId, year) {
+			getLineItemCategories: function () {
 				return _self.ApiService.get("/api/lineItemCategories");
 			},
 			getInstructorTypeCosts: function (workgroupId, year) {
@@ -53,6 +53,6 @@ class BudgetComparisonReportService {
 	}
 }
 
-BudgetComparisonReportService.$inject = ['ApiService', '$q', '$http', '$window'];
+BudgetComparisonReportService.$inject = ['ApiService'];
 
 export default BudgetComparisonReportService;

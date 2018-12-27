@@ -1,3 +1,6 @@
+import { _array_sortIdsByProperty } from 'shared/helpers/array';
+import { _ } from 'underscore';
+
 /**
  * @ngdoc service
  * @name registrarReconciliationReportApp.reportStateService
@@ -100,7 +103,6 @@ class RegistrarReconciliationReportStateService {
 													.filter(function (activityChange) {
 														return activityChange.removedValue;
 													}).forEach(function (activityChange) {
-														var uniqueKey = activityChange.removedValue.cdoId;
 														var activities = slotSection.activities;
 														activities[activityChange.index].noRemote = true;
 													});
@@ -120,12 +122,14 @@ class RegistrarReconciliationReportStateService {
 											case "bannerLocation":
 											case "startTime":
 											case "endTime":
-											case "dayIndicator":
+											case "dayIndicator": {
 												let activity = _.find(slotSection.activities, { uniqueKey: change.affectedLocalId });
+												
 												activity.dwChanges = activity.dwChanges || {};
 												activity.dwChanges[change.propertyName] = { isToDo: false };
 												activity.dwChanges[change.propertyName].value = change.right;
 												break;
+											}
 											case "crn":
 											case "seats":
 												slotSection.dwChanges = slotSection.dwChanges || {};
@@ -156,9 +160,6 @@ class RegistrarReconciliationReportStateService {
 						// Flag the first section in a sectionGroup as a groupHead
 						var uniqSectionGroupKeys = [];
 						sections.ids.forEach(function (id) {
-	
-							var sequencePattern = isNumber(sectionList[id].sequenceNumber) ?
-								sectionList[id].sequenceNumber : sectionList[id].sequenceNumber.charAt(0);
 							var uniqueKey = sectionList[id].uniqueKey;
 							if (uniqSectionGroupKeys.indexOf(uniqueKey) < 0) {
 								uniqSectionGroupKeys.push(uniqueKey);

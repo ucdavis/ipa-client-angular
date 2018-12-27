@@ -1,3 +1,5 @@
+import { toCurrency } from 'shared/helpers/string';
+
 import './budgetSummary.css';
 
 let budgetSummary = function ($rootScope, TermService) {
@@ -10,7 +12,7 @@ let budgetSummary = function ($rootScope, TermService) {
 			instructorTypes: '<',
 			selectedBudgetScenario: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.getTermName = function(term) {
 				return TermService.getShortTermName(term);
 			};

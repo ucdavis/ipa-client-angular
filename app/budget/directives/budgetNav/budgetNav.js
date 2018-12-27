@@ -1,3 +1,5 @@
+import { toCurrency } from 'shared/helpers/string';
+
 import './budgetNav.css';
 
 let budgetNav = function ($rootScope, BudgetActions) {
@@ -13,7 +15,7 @@ let budgetNav = function ($rootScope, BudgetActions) {
 			filters: '<',
 			fundsNav: '<'
 		},
-		link: function(scope, element, attrs) {
+		link: function(scope) {
 			scope.setRoute = function(selectedRoute) {
 				BudgetActions.setRoute(selectedRoute);
 			};

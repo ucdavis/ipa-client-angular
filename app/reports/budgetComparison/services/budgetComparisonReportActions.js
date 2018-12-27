@@ -2,7 +2,6 @@ class BudgetComparisonReportActions {
 	constructor(BudgetComparisonReportReducers, BudgetComparisonReportService, BudgetComparisonReportCalculations, $rootScope, ActionTypes, Roles, $route) {
 		return {
 			getInitialState: function () {
-				var _self = this;
 				var workgroupId = $route.current.params.workgroupId;
 				var year = $route.current.params.year;
 				var previousYear = String(parseInt($route.current.params.year) - 1);
@@ -56,7 +55,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -84,7 +83,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -113,7 +112,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -139,7 +138,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -165,7 +164,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -193,7 +192,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -221,7 +220,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -250,7 +249,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -276,7 +275,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -302,7 +301,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -328,7 +327,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -354,7 +353,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -380,7 +379,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -411,7 +410,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
@@ -437,7 +436,7 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},

@@ -19,7 +19,6 @@ import AuthService from './../shared/services/AuthService.js';
 // Directives
 import instructorSupportCallTooltip from './directives/instructorSupportCallTooltip.js';
 import addSupportCallModal from './directives/addSupportCallModal/addSupportCallModal.js';
-import contactModal from './directives/contactModal/contactModal.js';
 import studentSupportCallTooltip from './directives/studentSupportCallTooltip.js';
 
 // Dependencies
@@ -52,7 +51,7 @@ function config ($routeProvider) {
 config.$inject = ['$routeProvider'];
 
 // App declaration
-const supportCallApp = angular.module("supportCallApp", dependencies)
+const supportCallApp = angular.module("supportCallApp", dependencies) // eslint-disable-line no-undef
 .config(config)
 .controller('SupportCallStatusCtrl', SupportCallStatusCtrl)
 .service('SupportCallStatusActionCreators', SupportCallStatusActionCreators)
@@ -64,7 +63,6 @@ const supportCallApp = angular.module("supportCallApp", dependencies)
 .service('AuthService', AuthService)
 .directive('instructorSupportCallTooltip', instructorSupportCallTooltip)
 .directive('addSupportCallModal', addSupportCallModal)
-.directive('contactModal', contactModal)
 .directive('studentSupportCallTooltip', studentSupportCallTooltip)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",

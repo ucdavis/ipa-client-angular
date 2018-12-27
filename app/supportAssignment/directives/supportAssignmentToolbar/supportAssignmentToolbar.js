@@ -1,10 +1,10 @@
-let supportAssignmentToolbar = function ($rootScope) {
+let supportAssignmentToolbar = function () {
 	return {
 		restrict: 'E',
 		template: require('./supportAssignmentToolbar.html'),
 		replace: true,
 		scope: {},
-		link: function (scope, element, attrs) {
+		link: function () {
 			// intentionally empty
 		}
 	};

@@ -1,6 +1,7 @@
+ // eslint-disable-next-line no-undef
 const SyncAction = angular.module('SyncAction', [])
 
-	.factory('SyncAction', ['$http', function ($http) {
+	.factory('SyncAction', function () {
 		function SyncAction(syncActionData) {
 			if (syncActionData) {
 				this.setData(syncActionData);
@@ -8,10 +9,10 @@ const SyncAction = angular.module('SyncAction', [])
 		}
 		SyncAction.prototype = {
 			setData: function (syncActionData) {
-				angular.extend(this, syncActionData);
+				angular.extend(this, syncActionData); // eslint-disable-line no-undef
 			}
 		};
 		return SyncAction;
-	}]);
+	});
 
 	export default SyncAction;

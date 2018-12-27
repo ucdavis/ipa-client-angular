@@ -1,3 +1,6 @@
+import { _ } from 'underscore';
+import { elapsedMinutes } from 'shared/helpers/dates';
+
 class TeachingCallStatusActionCreators {
 	constructor (TeachingCallStatusStateService, TeachingCallStatusService, CourseService, $rootScope, $window, Role, ActionTypes, $route) {
 		return {
@@ -21,7 +24,7 @@ class TeachingCallStatusActionCreators {
 						self._calculateInstructorsInCall();
 						self._calculateEligibleInstructors();
 						self._calculatePendingEmails();
-					}, function (err) {
+					}, function () {
 						$rootScope.$emit('toast', { message: "Could not load initial teaching call status state.", type: "ERROR" });
 					});
 				});
@@ -50,7 +53,7 @@ class TeachingCallStatusActionCreators {
 					self._calculateInstructorsInCall();
 					self._calculateEligibleInstructors();
 					self._calculatePendingEmails();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not set next email contact.", type: "ERROR" });
 				});
 			},
@@ -83,7 +86,7 @@ class TeachingCallStatusActionCreators {
 				}
 	
 				TeachingCallStatusService.addInstructorsToTeachingCall(workgroupId, year, teachingCallConfig).then(function (teachingCallReceipts) {
-					ipa_analyze_event('teaching call', 'called instructors');
+					window.ipa_analyze_event('teaching call', 'called instructors');
 
 					$rootScope.$emit('toast', { message: "Added to Teaching Call", type: "SUCCESS" });
 					var action = {
@@ -96,7 +99,7 @@ class TeachingCallStatusActionCreators {
 					self._calculateInstructorsInCall();
 					self._calculateEligibleInstructors();
 					self._calculatePendingEmails();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not add instructors to teaching call.", type: "ERROR" });
 				});
 			},
@@ -115,7 +118,7 @@ class TeachingCallStatusActionCreators {
 					self._calculateInstructorsInCall();
 					self._calculateEligibleInstructors();
 					self._calculatePendingEmails();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not remove instructor from teaching call.", type: "ERROR" });
 				});
 			},
@@ -195,7 +198,6 @@ class TeachingCallStatusActionCreators {
 				var instructorsInCalls = false;
 	
 				instructorTypes.ids.forEach(function(instructorTypeId) {
-					var instructorType = instructorTypes.list[instructorTypeId];
 					teachingCallsByInstructorType[instructorTypeId] = [];
 				});
 	
@@ -209,10 +211,10 @@ class TeachingCallStatusActionCreators {
 					teachingCallReceipt.lastName = instructor.lastName;
 					teachingCallReceipt.instructorId = instructor.id;
 					teachingCallReceipt.teachingCallReceiptId = teachingCallReceipt.id;
-					teachingCallReceipt.lastContactedAt = teachingCallReceipt.lastContactedAt ? moment(teachingCallReceipt.lastContactedAt).format("YYYY-MM-DD").toFullDate() : null;
+					teachingCallReceipt.lastContactedAt = teachingCallReceipt.lastContactedAt ? moment(teachingCallReceipt.lastContactedAt).format("YYYY-MM-DD").toFullDate() : null; // eslint-disable-line no-undef
 					teachingCallReceipt.nextContactAtRaw = teachingCallReceipt.nextContactAt;
-					teachingCallReceipt.nextContactAt = teachingCallReceipt.nextContactAt ? moment(teachingCallReceipt.nextContactAt).format("YYYY-MM-DD").toFullDate() : null;
-					teachingCallReceipt.dueDate = teachingCallReceipt.dueDate ? moment(teachingCallReceipt.dueDate).format("YYYY-MM-DD").toFullDate() : null;
+					teachingCallReceipt.nextContactAt = teachingCallReceipt.nextContactAt ? moment(teachingCallReceipt.nextContactAt).format("YYYY-MM-DD").toFullDate() : null; // eslint-disable-line no-undef
+					teachingCallReceipt.dueDate = teachingCallReceipt.dueDate ? moment(teachingCallReceipt.dueDate).format("YYYY-MM-DD").toFullDate() : null; // eslint-disable-line no-undef
 	
 					teachingCallsByInstructorType[instructor.instructorTypeId].push(teachingCallReceipt);
 	
@@ -228,8 +230,6 @@ class TeachingCallStatusActionCreators {
 				});
 			},
 			_calculatePendingEmails: function() {
-				var EMAIL_TASK_DELAY = 5;
-	
 				TeachingCallStatusStateService._state.teachingCallReceipts.ids.forEach(function(teachingCallReceiptId) {
 					var teachingCallReceipt = TeachingCallStatusStateService._state.teachingCallReceipts.list[teachingCallReceiptId];
 	

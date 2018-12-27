@@ -1,17 +1,17 @@
-let ipaCurrencyInput = function($window, $location, $rootScope) {
+let ipaCurrencyInput = function() {
 	return {
 		restrict: 'E',
 		template: require('./ipaCurrencyInput.html'),
 		replace: true,
 		scope: {},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.previousInputValue = "";
 			scope.inputValue = "";
 			scope.indexOfPeriod = -1;
 
 			scope.updateInput = function() {
 				// Remove anything that isn't a number or period
-				scope.inputValue = scope.inputValue.toString().match(/[0-9\.]/g);
+				scope.inputValue = scope.inputValue.toString().match(/[0-9\.]/g); // eslint-disable-line no-useless-escape
 				// If empty, set to zero, otherwise combine the regex results array into a string
 				scope.inputValue = scope.inputValue ? scope.inputValue.join("") : "0";
 
@@ -19,14 +19,8 @@ let ipaCurrencyInput = function($window, $location, $rootScope) {
 
 				scope.setPeriodLocation(index);
 				scope.insertCommas();
-				// Convert to currency
-//				console.log(scope.inputValue);
-//				scope.inputValue = (parseInt(scope.inputValue))
-//				.toLocaleString('en-US', {
-//					style: 'decimal'
-//				});
 
-				scope.previousInputValue = angular.copy(scope.inputValue);
+				scope.previousInputValue = angular.copy(scope.inputValue); // eslint-disable-line no-undef
 			};
 
 			// Will identify the proper location for the period.

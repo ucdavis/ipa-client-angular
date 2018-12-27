@@ -6,8 +6,8 @@
 // isNumber(undefined); // false
 // isNumber(false); // false
 // isNumber('   '); // false
-function isNumber(obj) { return ! isNaN (obj-0) && obj !== null && obj !== "" && obj !== false; }
+export function isNumber(obj) { return ! isNaN (obj-0) && obj !== null && obj !== "" && obj !== false; }
 
-function isLetter(c) {
+export function isLetter(c) {
   return c.toLowerCase() != c.toUpperCase();
 }

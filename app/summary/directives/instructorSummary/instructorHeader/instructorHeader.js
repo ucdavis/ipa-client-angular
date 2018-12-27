@@ -8,7 +8,7 @@ let instructorHeader = function ($routeParams, $rootScope, $location, $window) {
 		scope: {
 			state: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.workgroupId = $routeParams.workgroupId;
 			scope.year = $routeParams.year;
 

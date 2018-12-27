@@ -1,3 +1,5 @@
+import { setCharAt } from 'shared/helpers/string';
+
 class StudentFormActions {
 	constructor ($rootScope, $window, $route, StudentFormService, DwService, StudentFormReducers, ActionTypes) {
 		return {
@@ -22,7 +24,7 @@ class StudentFormActions {
 					};
 					StudentFormReducers.reduce(action);
 					_self.calculateFormValid();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load support staff form initial state.", type: "ERROR" });
 				});
 			},
@@ -38,7 +40,7 @@ class StudentFormActions {
 					};
 					StudentFormReducers.reduce(action);
 					_self.calculateFormValid();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not add preference.", type: "ERROR" });
 				});
 			},
@@ -50,7 +52,7 @@ class StudentFormActions {
 						payload: payload
 					};
 					StudentFormReducers.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update comments.", type: "ERROR" });
 				});
 			},
@@ -62,7 +64,7 @@ class StudentFormActions {
 						payload: payload
 					};
 					StudentFormReducers.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update qualifications.", type: "ERROR" });
 				});
 			},
@@ -96,7 +98,7 @@ class StudentFormActions {
 						payload: payload
 					};
 					StudentFormReducers.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update qualifications.", type: "ERROR" });
 				});
 			},
@@ -110,13 +112,13 @@ class StudentFormActions {
 					};
 					StudentFormReducers.reduce(action);
 					self.calculateFormValid();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 				});
 			},
 			deleteStudentPreference: function (preference) {
 				var self = this;
-				StudentFormService.deleteStudentPreference(preference.id).then(function (payload) {
+				StudentFormService.deleteStudentPreference(preference.id).then(function () {
 					$rootScope.$emit('toast', { message: "Removed Preference", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.DELETE_STUDENT_PREFERENCE,
@@ -126,15 +128,15 @@ class StudentFormActions {
 					};
 					StudentFormReducers.reduce(action);
 					self.calculateFormValid();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not remove preference.", type: "ERROR" });
 				});
 			},
 			submitPreferences: function (supportCallResponse, workgroupId, year) {
-				StudentFormService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
+				StudentFormService.updateSupportCallResponse(supportCallResponse).then(function () {
 					$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
 					$window.location.href = "/summary/" + workgroupId + "/" + year + "?mode=instructionalSupport";
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 				});
 			},
@@ -146,7 +148,7 @@ class StudentFormActions {
 						payload: payload
 					};
 					StudentFormReducers.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update preference order.", type: "ERROR" });
 				});
 			},
@@ -166,7 +168,7 @@ class StudentFormActions {
 					};
 					StudentFormReducers.reduce(action);
 					self.calculateFormValid();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update preference comments.", type: "ERROR" });
 				});
 			},
@@ -260,7 +262,7 @@ class StudentFormActions {
 					});
 	
 					self.generateTimesForCrn(payload, crn);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not fetch activities by crn.", type: "ERROR" });
 				});
 			},

@@ -1,6 +1,6 @@
 import './tutorialModal.css';
 
-let tutorialModal = function ($rootScope) {
+let tutorialModal = function () {
   return {
     restrict: 'E',
     template: require('./tutorialModal.html'),
@@ -8,7 +8,7 @@ let tutorialModal = function ($rootScope) {
     scope: {
       isVisible: '='
     },
-    link: function(scope, element, attrs) {
+    link: function() {
       // Empty intentionally
     }
   };

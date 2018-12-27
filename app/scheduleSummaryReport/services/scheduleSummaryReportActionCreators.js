@@ -1,3 +1,5 @@
+import { sequenceNumberToPattern } from 'shared/helpers/sections';
+
 class ScheduleSummaryReportActionCreators {
 	constructor(scheduleSummaryReportStateService, scheduleSummaryReportService, $rootScope, dwService, termService , ActionTypes, Term, $route, AuthService) {
 		this.scheduleSummaryReportStateService = scheduleSummaryReportStateService;
@@ -16,7 +18,8 @@ class ScheduleSummaryReportActionCreators {
 				
 				if (!termShortCode) {
 					var termStates = AuthService.getTermStates();
-					var termShortCode = calculateCurrentTermShortCode(termStates);
+					// LINTME
+					var termShortCode = calculateCurrentTermShortCode(termStates); // eslint-disable-line no-undef
 				}
 				
 				var termCode = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, year).code;
@@ -28,7 +31,7 @@ class ScheduleSummaryReportActionCreators {
 					};
 					scheduleSummaryReportStateService.reduce(action);
 					self._getEnrollmentData(year, termCode);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load schedule summary report initial state.", type: "ERROR" });
 				});
 			},
@@ -39,8 +42,6 @@ class ScheduleSummaryReportActionCreators {
 
 				subjectCodes.forEach(function(subjectCode) {
 					dwService.getDwCensusData(subjectCode, null, termCode).then(function(censusSections) {
-						var filteredSections = [];
-
 						censusSections.forEach(function(censusSection) {
 							if (censusSection.snapshotCode == SNAPSHOT_CODE) {
 								var censusSectionGroupKey = censusSection.subjectCode + censusSection.courseNumber + sequenceNumberToPattern(censusSection.sequenceNumber);
@@ -59,7 +60,7 @@ class ScheduleSummaryReportActionCreators {
 								});
 							}
 						});
-					}, function (err) {
+					}, function () {
 						$rootScope.$emit('toast', { message: "Could not retrieve enrollment data.", type: "ERROR" });
 					});
 				});

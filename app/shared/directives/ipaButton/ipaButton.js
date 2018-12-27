@@ -28,7 +28,7 @@ let ipaButton = function () {
 			superscript: '<?', // Superscript text displayed to the right of the icon
 			iconColor: '<?'  // Accepts optional color value to override default styling
 		},
-		link: function(scope, element, attrs) {
+		link: function(scope) {
 			scope.calculateTooltip = function() {
 				if (scope.isDisabled && scope.disabledTooltipMessage && scope.disabledTooltipMessage.length > 0) {
 					return scope.disabledTooltipMessage;

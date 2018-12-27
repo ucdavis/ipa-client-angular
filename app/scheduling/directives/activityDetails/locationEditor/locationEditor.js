@@ -8,7 +8,7 @@ let locationEditor = function (SchedulingActionCreators, $rootScope) {
       activity: '<',
       locations: '<'
     },
-    link: function (scope, element, attrs) {
+    link: function (scope) {
       scope.setLocation = function (location) {
         scope.activity.locationId = location.id;
         SchedulingActionCreators.updateActivity(scope.activity);

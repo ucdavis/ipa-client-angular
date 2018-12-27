@@ -6,11 +6,11 @@
  * Controller of the ipaClientAngularApp
  */
 class UserCtrl {
-	constructor ($scope, $rootScope, $routeParams, $timeout, WorkgroupActionCreators, WorkgroupService) {
+	constructor () {
 			// Intentionally Blank
 	}
 }
 
-UserCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$timeout', 'WorkgroupActionCreators', 'WorkgroupService'];
+UserCtrl.$inject = [];
 
 export default UserCtrl;

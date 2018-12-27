@@ -19,10 +19,10 @@ class SupportCallStatusService {
 			contactSupportStaffSupportCall: function(scheduleId, supportCallData) {
 				return self.ApiService.put("/api/supportCallView/" + scheduleId + "/contactSupportStaff", supportCallData);
 			},
-			removeInstructorFromSupportCall: function(instructor, scheduleId, termCode) {
+			removeInstructorFromSupportCall: function(instructor, scheduleId) {
 				return self.ApiService.delete("/api/supportCallView/schedules/" + scheduleId + "/instructorSupportCallResponses/" + instructor.supportCallResponseId);
 			},
-			removeStudentFromSupportCall: function(student, scheduleId, termCode) {
+			removeStudentFromSupportCall: function(student, scheduleId) {
 				return self.ApiService.delete("/api/supportCallView/schedules/" + scheduleId + "/studentSupportCallResponses/" + student.supportCallResponseId);
 			}
 		};

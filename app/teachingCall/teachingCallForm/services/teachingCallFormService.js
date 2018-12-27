@@ -26,7 +26,7 @@ class TeachingCallFormService {
 				return ApiService.put("/api/assignmentView/teachingCallReceipts/" + teachingCallReceipt.id, teachingCallReceipt);
 			},
 			searchDWCourses: function (query) {
-				return ApiService.get('/courses/search?q=' + query + '&token=' + dwToken, null, dwUrl);
+				return ApiService.get('/courses/search?q=' + query + '&token=' + window.dwToken, null, window.dwUrl);
 			},
 			allTerms: function () {
 				var allTerms = {

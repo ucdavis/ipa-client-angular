@@ -10,7 +10,7 @@ let assignCourse = function (SupportActions) {
 			assignmentOptions: '<',
 			viewType: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.expanded = false;
 
 			scope.closeDropdown = function() {

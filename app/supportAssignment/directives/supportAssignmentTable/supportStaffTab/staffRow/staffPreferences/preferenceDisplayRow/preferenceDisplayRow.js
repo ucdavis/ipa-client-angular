@@ -8,7 +8,7 @@ let preferenceDisplayRow = function () {
 		scope: {
 			text: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function () {
 			// Intentionally empty
 		}
 	};

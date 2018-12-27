@@ -70,7 +70,7 @@ class BudgetService {
 			},
 
 			searchCourses: function (query) {
-				return ApiService.get("/courses/search?q=" + query + "&token=" + dwToken, null, dwUrl);
+				return ApiService.get("/courses/search?q=" + query + "&token=" + window.dwToken, null, window.dwUrl);
 			},
 		};
 	}

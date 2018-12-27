@@ -24,7 +24,7 @@ class CourseService {
         var deferred = $q.defer();
         var showDoNotPrintParam = enableUnpublishedCourses ? "?showDoNotPrint=true" : "";
 
-        _self.$http.get(serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel" + showDoNotPrintParam, { withCredentials: true })
+        _self.$http.get(window.serverRoot + "/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel" + showDoNotPrintParam, { withCredentials: true })
           .then(function (payload) {
             _self.$window.location.href = payload.data.redirect;
             deferred.resolve(payload.data);
@@ -79,12 +79,12 @@ class CourseService {
         return _self.ApiService.put("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/massAddTags", massAssignTags);
       },
       searchCourses: function (query) {
-        return _self.ApiService.get("/courses/search?q=" + query + "&token=" + dwToken, null, dwUrl);
+        return _self.ApiService.get("/courses/search?q=" + query + "&token=" + window.dwToken, null, window.dwUrl);
       },
       searchImportCourses: function (subjectCode, year, includePrivate) {
         var privateParam = includePrivate ? "&private=true" : "";
 
-        return _self.ApiService.get("/sections/search?subjectCode=" + subjectCode + "&academicYear=" + year + "&token=" + dwToken + privateParam, null, dwUrl);
+        return _self.ApiService.get("/sections/search?subjectCode=" + subjectCode + "&academicYear=" + year + "&token=" + window.dwToken + privateParam, null, window.dwUrl);
       },
       addTagToCourse: function (course, tag) {
         if (!course) { return; }
@@ -117,11 +117,9 @@ class CourseService {
       getCourseCensus: function (course) {
         if (!course) { return; }
 
-        return _self.ApiService.get("/census?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + dwToken, null, dwUrl);
+        return _self.ApiService.get("/census?subjectCode=" + course.subjectCode + "&courseNumber=" + course.courseNumber + "&token=" + window.dwToken, null, window.dwUrl);
       },
       searchCoursesFromIPA: function (workgroupId, year, includePrivate) {
-        var privateParam = includePrivate ? "&private=true" : "";
-
         return _self.ApiService.get("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/queryCourses", includePrivate);
       }
     };

@@ -1,3 +1,5 @@
+import { toCurrency } from 'shared/helpers/string';
+
 import './courseCostsRow.css';
 
 let courseCostsRow = function ($rootScope, BudgetActions) {
@@ -8,7 +10,7 @@ let courseCostsRow = function ($rootScope, BudgetActions) {
 		scope: {
 			sectionGroupCost: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.updateSectionGroupCost = function (sectionGroupCost) {
 				scope.enforceNumericParams(sectionGroupCost);
 				BudgetActions.updateSectionGroupCost(sectionGroupCost);

@@ -9,7 +9,7 @@ let instructorList = function (BudgetActions) {
 			state: '<',
 			selectedBudgetScenario: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.view = {
 				activeTab: 'Salaries',
 				allTabs: ['Salaries', 'Category Costs']
@@ -27,7 +27,7 @@ let instructorList = function (BudgetActions) {
 				}
 			};
 
-			scope.updateBudget = function (budget) {
+			scope.updateBudget = function () {
 				BudgetActions.updateBudget(scope.state.budget);
 			};
 

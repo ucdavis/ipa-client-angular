@@ -9,7 +9,7 @@ let staffPreferences = function ($rootScope, SupportActions) {
 			state: '<',
 			supportStaff: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.deleteAssignment = function(supportAssignment) {
 				SupportActions.deleteAssignment(supportAssignment);
 			};

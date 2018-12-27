@@ -1,3 +1,7 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+import { isNumber } from 'shared/helpers/types';
+import { _ } from 'underscore';
+
 import 'TeachingCall/css/teaching-call-form.css';
 
 class TeachingCallFormCtrl {
@@ -52,7 +56,7 @@ class TeachingCallFormCtrl {
 				});
 
 				return filteredResults.slice(0, 20);
-			}, function (err) {
+			}, function () {
 				$rootScope.$emit('toast', { message: "Could not search courses.", type: "ERROR" });
 			});
 		};
@@ -72,7 +76,7 @@ class TeachingCallFormCtrl {
 				}
 			});
 
-			var results = angular.copy(uniquePreferenceOptions);
+			var results = angular.copy(uniquePreferenceOptions); // eslint-disable-line no-undef
 			if (query) {
 				var options = {
 					shouldSort: true,
@@ -88,9 +92,9 @@ class TeachingCallFormCtrl {
 				};
 				var optimizedQuery = $scope.optimizeQueryFormat(query);
 
-				var fuse = new Fuse(uniquePreferenceOptions, options);
+				var fuse = new Fuse(uniquePreferenceOptions, options); // eslint-disable-line no-undef
 				var searchResults = fuse.search(optimizedQuery);
-				results = angular.copy(searchResults);
+				results = angular.copy(searchResults); // eslint-disable-line no-undef
 			}
 
 			// Inject headers into results for displaying in typeahead dropdown
@@ -98,7 +102,7 @@ class TeachingCallFormCtrl {
 				.map(function (groupedCourses) { groupedCourses[0].firstInGroup = true; return groupedCourses; })
 				.flatten().value();
 
-			var resultsWithHeaders = angular.copy(groupedResults);
+			var resultsWithHeaders = angular.copy(groupedResults); // eslint-disable-line no-undef
 			var headersAdded = 0;
 			groupedResults.forEach(function (result, index) {
 				if (result.firstInGroup === true) {
@@ -118,7 +122,7 @@ class TeachingCallFormCtrl {
 		// 'ECS010' becomes 'ecs 010'
 		// 'ECS 1' becomes 'ecs 001'
 		$scope.optimizeQueryFormat = function(query) {
-			var optimizedQuery = angular.copy(query);
+			var optimizedQuery = angular.copy(query); // eslint-disable-line no-undef
 
 			// Is there a space?
 			if (optimizedQuery.indexOf(' ') == -1) {
@@ -162,9 +166,9 @@ class TeachingCallFormCtrl {
 			return subjectCode + " " + courseNumber;
 		};
 
-		$scope.addPreference = function(preference, term, isBuyout, isSabbatical, isInResidence, isWorkLifeBalance, isLeaveOfAbsence, isSabbaticalInResidence, isCourseRelease) {
+		$scope.addPreference = function(preference, term) {
 			// Reset add preference UI state
-			var elements = $('.search-course-input');
+			var elements = $('.search-course-input'); // eslint-disable-line no-undef
 			elements[0].focus();
 			elements[0].blur();
 
@@ -172,9 +176,6 @@ class TeachingCallFormCtrl {
 				$scope.toggleSuggestCourse();
 				return;
 			}
-
-			var courseNumber, subjectCode, sectionGroup;
-			var scheduleId = $scope.view.state.scheduleId;
 
 			// Preference is based off a new course (from Data Warehouse)
 			if (preference && preference.isSuggested === true) {

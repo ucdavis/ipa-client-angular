@@ -1,6 +1,6 @@
-const CourseOfferingGroup = angular.module('CourseOfferingGroup', [])
+const CourseOfferingGroup = angular.module('CourseOfferingGroup', []) // eslint-disable-line no-undef
 
-.factory('CourseOfferingGroup', ['$http', function($http) {
+.factory('CourseOfferingGroup', function() {
 	function CourseOfferingGroup(cogData) {
 		if (cogData) {
 			this.setData(cogData);
@@ -8,10 +8,10 @@ const CourseOfferingGroup = angular.module('CourseOfferingGroup', [])
 	}
 	CourseOfferingGroup.prototype = {
 			setData: function(cogData) {
-				angular.extend(this, cogData);
+				angular.extend(this, cogData); // eslint-disable-line no-undef
 			}
 	};
 	return CourseOfferingGroup;
-}]);
+});
 
 export default CourseOfferingGroup;

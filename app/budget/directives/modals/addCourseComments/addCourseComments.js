@@ -1,3 +1,5 @@
+import { dateToCalendar, dateToRelative } from 'shared/helpers/dates';
+
 import './addCourseComments.css';
 
 let addCourseComments = function ($rootScope, BudgetActions) {
@@ -9,7 +11,7 @@ let addCourseComments = function ($rootScope, BudgetActions) {
 			sectionGroupCost: '<',
 			currentUserLoginId: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.newComment = "";
 
 			scope.isFormValid = function() {

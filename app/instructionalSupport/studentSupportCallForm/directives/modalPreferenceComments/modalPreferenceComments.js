@@ -9,7 +9,7 @@ let modalPreferenceComments = function ($rootScope, StudentFormActions) {
 			state: '<',
 			isVisible: '='
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.preference = scope.state.ui.modalPreference;
 
 			scope.submitForm = function () {

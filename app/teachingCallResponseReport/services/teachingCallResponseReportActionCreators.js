@@ -17,7 +17,7 @@ class TeachingCallResponseReportActionCreators {
 						year: year
 					};
 					teachingCallResponseReportStateService.reduce(action);
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load teaching call response report initial state.", type: "ERROR" });
 				});
 			}

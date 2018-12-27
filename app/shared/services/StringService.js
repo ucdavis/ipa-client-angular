@@ -45,13 +45,13 @@ class StringService {
     var returnFormat = "h:mm A";
     if (/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-9][0-9]$/.test(this)) {
       // Case "13:00:00"
-      return moment(this, "HH:mm:ss").format(returnFormat);
+      return moment(this, "HH:mm:ss").format(returnFormat); // eslint-disable-line no-undef
     } else if (/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(this)) {
       // Case "13:00"
-      return moment(this, "HH:mm").format(returnFormat);
+      return moment(this, "HH:mm").format(returnFormat); // eslint-disable-line no-undef
     } else if (/^([0-9]|0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/.test(this)) {
       // Case "1300"
-      return moment(this, "HHmm").format(returnFormat);
+      return moment(this, "HHmm").format(returnFormat); // eslint-disable-line no-undef
     }
   }
 
@@ -112,7 +112,7 @@ class StringService {
       return "";
     }
 
-    return moment(this, "YYYY-MM-DD").format('LL');
+    return moment(this, "YYYY-MM-DD").format('LL'); // eslint-disable-line no-undef
   }
 
   // Turns 'D' into 'Discussion'
@@ -165,42 +165,11 @@ class StringService {
     var dayArr = this.split('');
 
     var dayStr = '';
-    angular.forEach(dayArr, function (day, i) {
+    angular.forEach(dayArr, function (day, i) { // eslint-disable-line no-undef
           if (day === '1') { dayStr = dayStr + days[i]; }
     });
 
     return dayStr;
-  }
-
-  getRoleDisplayName(roleString) {
-    if (typeof roleString !== 'string') { return ""; }
-
-    if (roleString == "studentPhd") {
-      return "Student PhD";
-    }
-
-    var lowercase = roleString.replace( /([A-Z])/g, " $1" );
-    return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);
-  }
-
-  toCurrency(number) {
-    if (!number) {
-      return "$0.00";
-    }
-
-    var currency = (parseFloat(number)).toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    });
-
-    return currency;
-  }
-
-  setCharAt(str, index, chr) {
-    // If index is out of bounds, do nothing
-    if (index > str.length - 1) { return str; }
-
-    return str.substr(0,index) + chr + str.substr(index + 1);
   }
 
   toAcademicYear(year) {

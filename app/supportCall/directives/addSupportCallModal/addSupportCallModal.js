@@ -12,7 +12,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			supportCallMode: '<',
 			termShortCode: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.supportCallConfigData = {};
 			scope.nextYear = parseInt(scope.year) + 1;
 
@@ -278,7 +278,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			};
 	
 			scope.submit = function () {
-				var messageInput = $('.support-call-message-input').val();
+				var messageInput = $('.support-call-message-input').val(); // eslint-disable-line no-undef
 				if (messageInput) {
 					scope.supportCallConfigData.message = messageInput.replace(/\r?\n/g, '<br />');
 				}

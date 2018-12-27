@@ -12,7 +12,7 @@ let schedulingFilter = function (SchedulingActionCreators) {
       locations: '<',
       schedulingMode: '<'
     },
-    link: function (scope, element, attrs) {
+    link: function (scope) {
       scope.dayDescriptions = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       scope.filterDescriptionMax = 19;
 

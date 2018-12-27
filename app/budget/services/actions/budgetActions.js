@@ -49,15 +49,13 @@ class BudgetActions {
 					BudgetCalculations.calculateInstructors();
 					BudgetCalculations.calculateLineItems();
 					BudgetCalculations.calculateInstructorTypeCosts();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load initial budget state.", type: "ERROR" });
 				});
 			},
 			updateBudgetScenario: function (budgetScenario) {
-				var self = this;
-
 				BudgetService.updateBudgetScenario(budgetScenario).then(function (results) {
-					ipa_analyze_event('budget', 'budget scenario updated');
+					window.ipa_analyze_event('budget', 'budget scenario updated');
 
 					$rootScope.$emit('toast', { message: "Updated budget scenario", type: "SUCCESS" });
 
@@ -70,7 +68,7 @@ class BudgetActions {
 					BudgetCalculations.calculateScenarioTerms();
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateLineItems();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update budget scenario.", type: "ERROR" });
 				});
 			},
@@ -79,7 +77,7 @@ class BudgetActions {
 				if (scenarioId == null) { scenarioId = 0;}
 	
 				BudgetService.createBudgetScenario(newBudgetScenario, budgetId, scenarioId).then(function (results) {
-					ipa_analyze_event('budget', 'budget scenario created');
+					window.ipa_analyze_event('budget', 'budget scenario created');
 
 					var action = {
 						type: ActionTypes.CREATE_BUDGET_SCENARIO,
@@ -95,7 +93,7 @@ class BudgetActions {
 					BudgetCalculations.calculateLineItems();
 					BudgetCalculations.calculateInstructorTypeCosts();
 
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not create budget scenario.", type: "ERROR" });
 				});
 			},
@@ -103,7 +101,7 @@ class BudgetActions {
 				var self = this;
 
 				BudgetService.deleteBudgetScenario(budgetScenarioId).then(function (budgetScenarioId) {
-					ipa_analyze_event('budget', 'budget scenario deleted');
+					window.ipa_analyze_event('budget', 'budget scenario deleted');
 
 					var action = {
 						type: ActionTypes.DELETE_BUDGET_SCENARIO,
@@ -115,7 +113,7 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Deleted budget scenario", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
 					self.selectBudgetScenario();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete budget scenario.", type: "ERROR" });
 				});
 			},
@@ -127,7 +125,7 @@ class BudgetActions {
 				instructorCost.cost = parseFloat(instructorCost.cost);
 
 				BudgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
-					ipa_analyze_event('budget', 'instructor cost updated');
+					window.ipa_analyze_event('budget', 'instructor cost updated');
 
 					var action = {
 						type: ActionTypes.UPDATE_INSTRUCTOR_COST,
@@ -143,19 +141,18 @@ class BudgetActions {
 
 					self.asignInstructorType(newInstructorCost);
 					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
 				});
 			},
 			createInstructorCost: function (instructorCostDto) {
-				var self = this;
 				var instructorCost = Object.assign({}, instructorCostDto);
 	
 				// Ensure cost is passed as a number
 				instructorCost.cost = parseFloat(instructorCost.cost);
 	
 				BudgetService.createInstructorCost(instructorCost).then(function (newInstructorCost) {
-					ipa_analyze_event('budget', 'instructor cost created');
+					window.ipa_analyze_event('budget', 'instructor cost created');
 
 					var action = {
 						type: ActionTypes.CREATE_INSTRUCTOR_COST,
@@ -167,7 +164,7 @@ class BudgetActions {
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
 					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
 				});
 			},
@@ -177,7 +174,7 @@ class BudgetActions {
 				newLineItem.amount = newLineItem.amount ? parseFloat(newLineItem.amount) : null;
 	
 				BudgetService.createLineItem(newLineItem, budgetScenarioId).then(function (newLineItem) {
-					ipa_analyze_event('budget', 'line item created');
+					window.ipa_analyze_event('budget', 'line item created');
 
 					var action = {
 						type: ActionTypes.CREATE_LINE_ITEM,
@@ -190,7 +187,7 @@ class BudgetActions {
 					self.closeAddLineItemModal();
 					BudgetCalculations.calculateLineItems();
 					BudgetCalculations.calculateTotalCost();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not create line item.", type: "ERROR" });
 				});
 			},
@@ -207,7 +204,7 @@ class BudgetActions {
 				lineItem.amount = parseFloat(lineItem.amount);
 	
 				BudgetService.updateLineItem(lineItem, lineItem.budgetScenarioId).then(function (results) {
-					ipa_analyze_event('budget', 'line item updated');
+					window.ipa_analyze_event('budget', 'line item updated');
 
 					var action = {
 						type: ActionTypes.UPDATE_LINE_ITEM,
@@ -220,13 +217,11 @@ class BudgetActions {
 					self.closeAddLineItemModal();
 					BudgetCalculations.calculateLineItems();
 					BudgetCalculations.calculateTotalCost();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not save line item.", type: "ERROR" });
 				});
 			},
 			deleteLineItem: function(lineItem) {
-				var self = this;
-
 				// If the lineItem is based on a teachingAssignment, do not delete it, instead mark it as hidden
 				if (lineItem.teachingAssignmentId > 0) {
 					lineItem.hidden = true;
@@ -235,7 +230,7 @@ class BudgetActions {
 				}
 
 				BudgetService.deleteLineItem(lineItem).then(function (lineItemId) {
-					ipa_analyze_event('budget', 'line item deleted');
+					window.ipa_analyze_event('budget', 'line item deleted');
 
 					var action = {
 						type: ActionTypes.DELETE_LINE_ITEM,
@@ -247,7 +242,7 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Deleted line item", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
 					BudgetCalculations.calculateLineItems();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete line item.", type: "ERROR" });
 				});
 			},
@@ -259,9 +254,8 @@ class BudgetActions {
 			 * @param {*} sectionGroupCost 
 			 */
 			updateSectionGroupCost: function (sectionGroupCost) {
-				var self = this;
 				BudgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
-					ipa_analyze_event('budget', 'section group cost updated');
+					window.ipa_analyze_event('budget', 'section group cost updated');
 
 					var action = {
 						type: ActionTypes.UPDATE_SECTION_GROUP_COST,
@@ -276,13 +270,11 @@ class BudgetActions {
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
 					BudgetCalculations.calculateCourseList();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
 				});
 			},
 			createSectionGroupCost: function (sectionGroupCost) {
-				var self = this;
-
 				let term = BudgetReducers._state.ui.termNav.activeTerm;
 				let year = BudgetReducers._state.ui.year;
 
@@ -301,7 +293,7 @@ class BudgetActions {
 				sectionGroupCost.budgetScenarioId = BudgetReducers._state.ui.selectedBudgetScenarioId;
 
 				BudgetService.createSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
-					ipa_analyze_event('budget', 'section group cost created');
+					window.ipa_analyze_event('budget', 'section group cost created');
 
 					var action = {
 						type: ActionTypes.CREATE_SECTION_GROUP_COST,
@@ -315,13 +307,11 @@ class BudgetActions {
 					BudgetCalculations.calculateTotalCost();
 					BudgetCalculations.calculateCourseList();
 					ScheduleCostCalculations.calculateScheduleCosts();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not add course.", type: "ERROR" });
 				});
 			},
 			asignInstructorType: function(instructorCost) {
-				var self = this;
-
 				BudgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
 					var action = {
 						type: ActionTypes.UPDATE_INSTRUCTOR_COST,
@@ -334,8 +324,9 @@ class BudgetActions {
 					BudgetCalculations.calculateTotalCost();
 					BudgetCalculations.calculateInstructors();
 					BudgetCalculations.calculateInstructorTypeCosts();
+					
 					$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
 				});
 			},
@@ -347,7 +338,6 @@ class BudgetActions {
 				}
 			},
 			_createInstructorTypeCost: function (instructorTypeCostDTO) {
-				var self = this;
 				instructorTypeCostDTO.cost = parseFloat(instructorTypeCostDTO.cost);
 
 				BudgetService.createInstructorTypeCost(instructorTypeCostDTO).then(function (instructorTypeCost) {
@@ -361,12 +351,11 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
 					BudgetCalculations.calculateInstructorTypeCosts();
 					BudgetCalculations.calculateSectionGroups();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
 				});
 			},
 			_updateInstructorTypeCost: function (newInstructorTypeCost) {
-				var self = this;
 				newInstructorTypeCost.cost = parseFloat(newInstructorTypeCost.cost);
 	
 				BudgetService.updateInstructorTypeCost(newInstructorTypeCost).then(function (instructorTypeCost) {
@@ -381,13 +370,11 @@ class BudgetActions {
 					BudgetCalculations.calculateInstructorTypeCosts();
 					BudgetCalculations.calculateInstructors();
 					BudgetCalculations.calculateSectionGroups();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update instructor type.", type: "ERROR" });
 				});
 			},
 			updateBudget: function (budget) {
-				var self = this;
-	
 				BudgetService.updateBudget(budget).then(function (budget) {
 					var action = {
 						type: ActionTypes.UPDATE_BUDGET,
@@ -398,7 +385,7 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Updated costs", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
 					BudgetCalculations.calculateSectionGroups();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update costs.", type: "ERROR" });
 				});
 			},
@@ -424,7 +411,7 @@ class BudgetActions {
 	
 						self.updateSectionGroupCost(newSectionGroupCost);
 						$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
-					}, function (err) {
+					}, function () {
 						$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 					});
 				} else {
@@ -464,7 +451,7 @@ class BudgetActions {
 						});
 						self.updateSectionGroupCost(newSectionGroupCost);
 						$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
-					}, function (err) {
+					}, function () {
 						$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
 					});
 				} else {
@@ -505,7 +492,7 @@ class BudgetActions {
 						});
 						self.updateSectionGroupCost(newSectionGroupCost);
 						$rootScope.$emit('toast', { message: "Assigned instructor", type: "SUCCESS" });
-					}, function (err) {
+					}, function () {
 						$rootScope.$emit('toast', { message: "Could not assign instructor.", type: "ERROR" });
 					});
 				} else {
@@ -516,7 +503,6 @@ class BudgetActions {
 			},
 			// Will also create sectionGroupCost if it does not already exist.
 			createSectionGroupCostCommentFromSectionGroup: function (comment, sectionGroupCost, currentUserLoginId) {	
-				var self = this;
 				var sectionGroupCostComment = {};
 				sectionGroupCostComment.comment = comment;
 				sectionGroupCostComment.loginId = currentUserLoginId;
@@ -531,7 +517,7 @@ class BudgetActions {
 					});
 					$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
 					BudgetCalculations.calculateSectionGroups();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 				});
 			},
@@ -555,7 +541,7 @@ class BudgetActions {
 	
 						$rootScope.$emit('toast', { message: "Saved line item", type: "SUCCESS" });
 						self._createLineItemComment(comment, lineItem, currentUserLoginId);
-					}, function (err) {
+					}, function () {
 						$rootScope.$emit('toast', { message: "Could not save line item.", type: "ERROR" });
 					});
 				} else {
@@ -563,8 +549,6 @@ class BudgetActions {
 				}
 			},
 			_createLineItemComment: function (comment, lineItem, currentUserLoginId) {
-				var self = this;
-	
 				var lineItemComment = {};
 				lineItemComment.comment = comment;
 				lineItemComment.loginId = currentUserLoginId;
@@ -580,7 +564,7 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
 					BudgetCalculations.calculateLineItems();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not save comment.", type: "ERROR" });
 				});
 			},
@@ -667,7 +651,7 @@ class BudgetActions {
 			selectBudgetScenario: function(selectedScenarioId) {
 				// If scenarioId was not provided, attempt to use currently selected scenario
 				if (selectedScenarioId == null) {
-					selectedScenarioId = angular.copy(BudgetReducers._state.ui.selectedBudgetScenarioId);
+					selectedScenarioId = angular.copy(BudgetReducers._state.ui.selectedBudgetScenarioId); // eslint-disable-line no-undef
 	
 					// If a scenario was not already selected, default to first scenario
 					if (selectedScenarioId == null) {
@@ -734,9 +718,7 @@ class BudgetActions {
 				});
 			},
 			deleteLineItems: function(budgetScenario, lineItemIds) {
-				var self = this;
-	
-				BudgetService.deleteLineItems(budgetScenario, lineItemIds).then(function (results) {
+				BudgetService.deleteLineItems(budgetScenario, lineItemIds).then(function () {
 					$rootScope.$emit('toast', { message: "Deleted line items", type: "SUCCESS" });
 					BudgetReducers.reduce({
 						type: ActionTypes.DELETE_LINE_ITEMS,
@@ -745,7 +727,7 @@ class BudgetActions {
 						}
 					});
 					BudgetCalculations.calculateLineItems();
-				}, function (err) {
+				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete line items.", type: "ERROR" });
 				});
 			},

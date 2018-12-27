@@ -1,6 +1,7 @@
+ // eslint-disable-next-line no-undef
 const SectionGroup = angular.module('SectionGroup', [])
 
-.factory('SectionGroup', ['$http', function($http) {
+.factory('SectionGroup', function() {
 	function SectionGroup(coData) {
 		if (coData) {
 			this.setData(coData);
@@ -8,10 +9,10 @@ const SectionGroup = angular.module('SectionGroup', [])
 	}
 	SectionGroup.prototype = {
 			setData: function(coData) {
-				angular.extend(this, coData);
+				angular.extend(this, coData); // eslint-disable-line no-undef
 			}
 	};
 	return SectionGroup;
-}]);
+});
 
 export default SectionGroup;

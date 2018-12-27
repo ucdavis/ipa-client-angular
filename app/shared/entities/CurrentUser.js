@@ -1,3 +1,6 @@
+import { _ } from 'underscore';
+
+// eslint-disable-next-line no-undef
 const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 	.factory('CurrentUser', ['$http', 'UserRole', function ($http, UserRole) {
 		function CurrentUser(currentUserData) {
@@ -7,7 +10,7 @@ const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 		}
 		CurrentUser.prototype = {
 			setData: function (currentUserData) {
-				angular.extend(this, currentUserData);
+				angular.extend(this, currentUserData); // eslint-disable-line no-undef
 			},
 
 			setLoginId: function (loginId) {
@@ -85,7 +88,7 @@ const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 
 			hasRoles: function (roleNames, workgroupId) {
 				if (roleNames instanceof Array === false) {
-					$log.error("Parameter passed to hasRoles() is not valid", roleNames);
+					console.error("Parameter passed to hasRoles() is not valid", roleNames); // eslint-disable-line no-console
 					return false;
 				}
 				if (!this.userRoles) { return false; }

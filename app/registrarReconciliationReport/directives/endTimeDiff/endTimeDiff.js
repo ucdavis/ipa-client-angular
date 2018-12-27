@@ -7,12 +7,12 @@ let endTimeDiff = function (RegistrarReconciliationReportActionCreators) {
 		restrict: "E",
 		template: require('./endTimeDiff.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.updateEndTime = function (endTime) {
 				var activity = {
 					id: scope.activity.id,
 					typeCode: scope.activity.typeCode,
-					endTime: moment(endTime, "HHmm").format("HH:mm:ss")
+					endTime: moment(endTime, "HHmm").format("HH:mm:ss") // eslint-disable-line no-undef
 				};
 				RegistrarReconciliationReportActionCreators.updateActivity(activity, 'endTime');
 			};

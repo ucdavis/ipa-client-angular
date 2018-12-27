@@ -62,7 +62,7 @@ function config ($routeProvider) {
 config.$inject = ['$routeProvider'];
 
 // App declaration
-const courseApp = angular.module("courseApp", dependencies)
+const courseApp = angular.module("courseApp", dependencies) // eslint-disable-line no-undef
 .config(config)
 .controller('CourseCtrl', CourseCtrl)
 .service('CourseActionCreators', CourseActionCreators)

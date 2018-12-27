@@ -7,7 +7,7 @@ let sectionDiff = function (RegistrarReconciliationReportActionCreators) {
 		restrict: "A",
 		template: require('./sectionDiff.html'),
 		replace: true,
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.section = scope.view.state.sections.list[scope.sectionId];
 
 			scope.toggleBannerToDoItem = function (property, childUniqueKey, childProperty) {

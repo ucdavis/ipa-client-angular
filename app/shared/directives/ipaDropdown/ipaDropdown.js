@@ -13,7 +13,7 @@ let ipaDropdown = function() {
 			style: '<?' // Current options are 'minimal' or leaving blank gives default styling
 		},
 		replace: true, // Replace with the template below
-		link: function(scope, element, attrs, iAttr) {
+		link: function(scope, element, attrs) {
 			/* Example Usage:
 			<ipa-dropdown
 				expanded="expanded"
@@ -25,7 +25,7 @@ let ipaDropdown = function() {
 			*/
 
 			// Validate passed methods
-			scope.isSelectItemSupplied = (angular.isUndefined(scope.selectItem) === false);
+			scope.isSelectItemSupplied = (angular.isUndefined(scope.selectItem) === false); // eslint-disable-line no-undef
 
 			if (scope.isSelectItemSupplied == false) {
 				throw {

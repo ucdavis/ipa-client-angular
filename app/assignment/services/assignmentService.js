@@ -21,7 +21,7 @@ class AssignmentService {
 			download: function (workgroupId, year) {
 				var deferred = $q.defer();
 	
-				$http.get(serverRoot + "/api/assignmentView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
+				$http.get(window.serverRoot + "/api/assignmentView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
 				.then(function(payload) {
 					$window.location.href = payload.data.redirect;
 					deferred.resolve(payload.data);
@@ -87,7 +87,7 @@ class AssignmentService {
 				return ApiService.put("/api/assignmentView/teachingCallReceipts/" + teachingCallReceipt.id, teachingCallReceipt);
 			},
 			searchCourses: function(query) {
-				return ApiService.get("/courses/search?q=" + query + "&token=" + dwToken, null, dwUrl);
+				return ApiService.get("/courses/search?q=" + query + "&token=" + window.dwToken, null, window.dwUrl);
 			},
 			allTerms: function () {
 				var allTerms = {

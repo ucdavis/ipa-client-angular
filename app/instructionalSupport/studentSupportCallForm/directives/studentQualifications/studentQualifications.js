@@ -8,7 +8,7 @@ let studentQualifications = function (StudentFormActions) {
 		scope: {
 			supportCallResponse: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.updateStudentQualifications = function() {
 				StudentFormActions.updateStudentQualifications(scope.supportCallResponse);
 			};

@@ -6,7 +6,7 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 		scope: {
 			state: '='
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope, element) {
 			scope.isResizeListenerActive = false;
 
 			scope.listenForResize = function() {
@@ -17,12 +17,12 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				scope.isResizeListenerActive = true;
 
 				setTimeout(function() {
-					$(window).resize(function() {
-						$('#calendar').fullCalendar('option', 'height', scope.get_calendar_height());
-						$('.section-group-container').height(scope.get_calendar_height());
+					$(window).resize(function() { // eslint-disable-line no-undef
+						$('#calendar').fullCalendar('option', 'height', scope.get_calendar_height()); // eslint-disable-line no-undef
+						$('.section-group-container').height(scope.get_calendar_height()); // eslint-disable-line no-undef
 					});
 
-					$('#calendar').fullCalendar({
+					$('#calendar').fullCalendar({ // eslint-disable-line no-undef
 						height: scope.get_calendar_height()
 					});
 				}, 500);
@@ -85,8 +85,8 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 						getActivities(),
 						getUnavailabilities()
 					],
-					eventClick: function (calEvent, jsEvent, view) {
-						var closeTarget = angular.element(jsEvent.target).hasClass('activity-remove');
+					eventClick: function (calEvent, jsEvent) {
+						var closeTarget = angular.element(jsEvent.target).hasClass('activity-remove'); // eslint-disable-line no-undef
 						if (closeTarget) {
 							SchedulingActionCreators.toggleCheckedSectionGroup(calEvent.sectionGroupId);
 						} else {
@@ -99,51 +99,26 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 							scope.$apply();
 						});
 					},
-					eventMouseover: function (event, jsEvent, view) {
+					eventMouseover: function (event) {
 						element.find('a.activity-' + event.activityId).addClass('hover-activity');
 						element.find('a.section-group-' + event.sectionGroupId).addClass('hover-section-group');
 					},
-					eventMouseout: function (event, jsEvent, view) {
+					eventMouseout: function (event) {
 						element.find('a.activity-' + event.activityId).removeClass('hover-activity');
 						element.find('a.section-group-' + event.sectionGroupId).removeClass('hover-section-group');
 					},
-					dayClick: function (date, jsEvent, view) {
+					dayClick: function () {
 						SchedulingActionCreators.setSelectedActivity();
 						$timeout(function () {
 							scope.$apply();
 						});
 					},
-					eventAfterAllRender: function (view) {
-						var eventRemove = angular.element('<i class="glyphicon glyphicon-remove hoverable activity-remove"></i>');
+					eventAfterAllRender: function () {
+						var eventRemove = angular.element('<i class="glyphicon glyphicon-remove hoverable activity-remove"></i>'); // eslint-disable-line no-undef
 						element.find('a.activity-event:not(.selected-activity):not(.selected-section-group) .fc-content').append(eventRemove);
 					}
 				});
 			};
-
-			// Converts a piece of the rgb value to its hex equivalent
-			// Example: rgbComponentToHex(110) -> "6e"
-			function rgbComponentToHex(c) {
-				var hex = c.toString(16);
-				return hex.length == 1 ? "0" + hex : hex;
-			}
-
-			function rgbToHex(r, g, b) {
-				return "#" + rgbComponentToHex(r) + rgbComponentToHex(g) + rgbComponentToHex(b);
-			}
-
-			function hexToRgb(hex) {
-				var expandedHex = {
-					r: hex.slice(1, 3),
-					g: hex.slice(3,5),
-					b: hex.slice(5,7)
-				};
-
-				return expandedHex ? {
-					r: parseInt(expandedHex.r, 16),
-					b: parseInt(expandedHex.b, 16),
-					g: parseInt(expandedHex.g, 16)
-				} : null;
-			}
 
 			var getActivities = function () {
 				// Each of these If blocks will add to a 'events array'
@@ -170,7 +145,6 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 					scope.view.state.uiState.activeSectionGroupIds.forEach(function (sgId) {
 						if (sgId !== scope.view.state.uiState.selectedSectionGroupId) {
 							var sectionGroup = scope.view.state.sectionGroups.list[sgId];
-							var course = scope.view.state.courses.list[sectionGroup.courseId];
 							var unstyledEvents = sectionGroupToActivityEvents(scope.view.state.sectionGroups.list[sgId]);
 							var tagColor = scope.view.state.courses.list[sectionGroup.courseId].tagColor;
 
@@ -202,8 +176,8 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 					dayArray.forEach(function (d, i) {
 						if (d === '1') {
-							var activityStart = moment().day(i).hour(start[0]).minute(start[1]).second(0).format('llll');
-							var activityEnd = moment().day(i).hour(end[0]).minute(end[1]).second(0).format('llll');
+							var activityStart = moment().day(i).hour(start[0]).minute(start[1]).second(0).format('llll'); // eslint-disable-line no-undef
+							var activityEnd = moment().day(i).hour(end[0]).minute(end[1]).second(0).format('llll'); // eslint-disable-line no-undef
 
 							// Add classes to group events that belong to the same activity
 							var activityClasses = [
@@ -247,13 +221,13 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 					for (var h = 7; h < 22; h++) { // Blob starts at 7am and ends at 10pm by definition
 						var slotUnavailable = unavailabilitiesArr[15 * (d - 1) + (h - 7)] === '0';
 						if (unavailabilityStart === null && slotUnavailable) {
-							unavailabilityStart = moment().day(d).hour(h).minute(0).second(0);
+							unavailabilityStart = moment().day(d).hour(h).minute(0).second(0); // eslint-disable-line no-undef
 						}
 
 						// If unavailability slot is ending or day is ending...
 						if (unavailabilityStart !== null && (slotUnavailable === false || h === 21)) {
 							if (h === 21) { h++; } // Unavailabilities must end at 22:00
-							var unavailabilityEnd = moment().day(d).hour(h).minute(0).second(0);
+							var unavailabilityEnd = moment().day(d).hour(h).minute(0).second(0); // eslint-disable-line no-undef
 							calendarUnavailabilities.push({
 								title: title,
 								start: unavailabilityStart,
@@ -355,10 +329,6 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				return calendarActivities;
 			};
 
-			var anyActivitySelected = function () {
-				return (scope.view.state.uiState.selectedSectionGroupId || scope.view.state.uiState.selectedActivityId || scope.view.state.uiState.selectedCourseId);
-			};
-
 			var activityMatchesSelection = function (activityId) {
 				if (!activityId) { return false; }
 
@@ -394,7 +364,6 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 				if (activity.sectionGroupId) {
 					sectionGroup = scope.view.state.sectionGroups.list[activity.sectionGroupId];
 				} else {
-					var section = scope.view.state.sections.list[activity.sectionId];
 					sectionGroup = scope.view.state.sectionGroups.list[activity.sectionGroupId];
 				}
 
@@ -446,18 +415,18 @@ let termCalendar = function ($rootScope, $timeout, SchedulingActionCreators) {
 
 			var neonCalendar = neonCalendar || {};
 
-			neonCalendar.$container = $(".calendar-env");
+			neonCalendar.$container = $(".calendar-env"); // eslint-disable-line no-undef
 
-			$.extend(neonCalendar, {
+			$.extend(neonCalendar, { // eslint-disable-line no-undef
 				isPresent: neonCalendar.$container.length > 0
 			});
 
 			scope.get_calendar_height = function () {
-				if ($(window).height() < 485) {
-					return $(window).height();
+				if ($(window).height() < 485) { // eslint-disable-line no-undef
+					return $(window).height(); // eslint-disable-line no-undef
 				}
 			
-				return $(window).height() - 178;
+				return $(window).height() - 178; // eslint-disable-line no-undef
 			};
 
 			refreshCalendar();

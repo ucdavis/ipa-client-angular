@@ -10,7 +10,7 @@ let staffHeader = function ($rootScope, SupportActions) {
 			viewType: '<',
 			readOnly: '<?'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.openAvailabilityModal = function(supportStaff) {
 				SupportActions.openAvailabilityModal(supportStaff);
 			};

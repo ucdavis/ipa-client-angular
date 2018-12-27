@@ -1,3 +1,5 @@
+import { isNumber } from 'shared/helpers/types';
+
 import './supportCoursesTab.css';
 
 let supportCoursesTab = function ($rootScope, SupportActions) {
@@ -8,7 +10,7 @@ let supportCoursesTab = function ($rootScope, SupportActions) {
 		scope: {
 			state: '<'
 		},
-		link: function (scope, element, attrs) {
+		link: function (scope) {
 			scope.radioNames = ["Teaching Assistants", "Readers"];
 
 			scope.setViewType = function(type) {

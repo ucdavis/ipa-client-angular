@@ -1,3 +1,5 @@
+import { millisecondsToDate } from 'shared/helpers/dates';
+
 class StudentFormReducers {
 	constructor ($rootScope, $log, StudentFormSelectors, ActionTypes) {
 		this.$rootScope = $rootScope;
@@ -284,13 +286,13 @@ class StudentFormReducers {
 				// Build new 'page state'
 				// This is the 'view friendly' version of the store
 				let newPageState = {};
-				newPageState.ui = angular.copy(scope._state.ui);
-				newPageState.courses = angular.copy(scope._state.courses);
-				newPageState.sectionGroups = angular.copy(scope._state.sectionGroups);
+				newPageState.ui = angular.copy(scope._state.ui); // eslint-disable-line no-undef
+				newPageState.courses = angular.copy(scope._state.courses); // eslint-disable-line no-undef
+				newPageState.sectionGroups = angular.copy(scope._state.sectionGroups); // eslint-disable-line no-undef
 	
-				newPageState.supportCallResponse = angular.copy(scope._state.supportCallResponse);
-				newPageState.misc = angular.copy(scope._state.misc);
-				newPageState.supportAssignments = angular.copy(scope._state.supportAssignments);
+				newPageState.supportCallResponse = angular.copy(scope._state.supportCallResponse); // eslint-disable-line no-undef
+				newPageState.misc = angular.copy(scope._state.misc); // eslint-disable-line no-undef
+				newPageState.supportAssignments = angular.copy(scope._state.supportAssignments); // eslint-disable-line no-undef
 	
 				newPageState.preferences = StudentFormSelectors.generatePreferences(
 																															scope._state.preferences,

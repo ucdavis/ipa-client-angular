@@ -1,3 +1,6 @@
+import { isNumber } from 'shared/helpers/types';
+import { sequencePatterns } from 'course/constants';
+
 import './addCourse.css';
 
 let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionService, TermService) {
@@ -9,7 +12,7 @@ let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionServi
       state: '<',
       isVisible: '='
     },
-    link: function (scope, element, attrs) {
+    link: function (scope) {
       scope.newCourse = {};
       scope.view = {};
       scope.sequenceNumberPlaceholder = "Example: '001' or 'A'";
@@ -30,7 +33,7 @@ let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionServi
       scope.searchCourses = function (query) {
         return BudgetService.searchCourses(query).then(function (courseSearchResults) {
           return courseSearchResults.slice(0, 20);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not search courses.", type: "ERROR" });
         });
       };
@@ -56,7 +59,7 @@ let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionServi
         return true;
       };
 
-      scope.searchCoursesResultSelected = function ($item, $model, $label, $event) {
+      scope.searchCoursesResultSelected = function ($item) {
         scope.newCourse.title = $item.title;
         scope.newCourse.subjectCode = $item.subjectCode;
         scope.newCourse.courseNumber = $item.courseNumber;
@@ -107,7 +110,7 @@ let addCourse = function ($rootScope, BudgetActions, BudgetService, SectionServi
           scope.newCourse.rawSequencePattern = "001";
         } else {
           scope.newCourse.sequencePattern = scope.generateNextSequencePattern(usedSequencePatterns);
-          scope.newCourse.rawSequencePattern = angular.copy(scope.newCourse.sequencePattern);
+          scope.newCourse.rawSequencePattern = angular.copy(scope.newCourse.sequencePattern); // eslint-disable-line no-undef
         }
 
         scope.validateCourse();

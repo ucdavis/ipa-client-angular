@@ -19,7 +19,7 @@ class CourseActionCreators {
             payload: payload
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not load initial course state.", type: "ERROR" });
         });
       },
@@ -39,14 +39,14 @@ class CourseActionCreators {
           }
         });
 
-        CourseService.submitMassAssignTags(massAssignTags, workgroupId, year).then(function (payload) {
+        CourseService.submitMassAssignTags(massAssignTags, workgroupId, year).then(function () {
           var action = {
             type: ActionTypes.MASS_ASSIGN_TAGS,
             massAssignTags: massAssignTags
           };
           CourseStateService.reduce(action);
           $rootScope.$emit('toast', { message: "Updated tags.", type: "SUCCESS" });
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not update tags.", type: "ERROR" });
         });
       },
@@ -101,7 +101,7 @@ class CourseActionCreators {
             payload: payload
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not toggle unpublished courses.", type: "ERROR" });
         });
       },
@@ -124,7 +124,7 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not create course offering.", type: "ERROR" });
         });
       },
@@ -138,7 +138,7 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not update course offering.", type: "ERROR" });
         });
       },
@@ -153,14 +153,14 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not delete course offering.", type: "ERROR" });
         });
       },
       deleteCourse: function (course) {
         var courseTitle = course.title;
         CourseService.deleteCourse(course).then(function () {
-          ipa_analyze_event('courses', 'single course deleted', courseTitle);
+          window.ipa_analyze_event('courses', 'single course deleted', courseTitle);
 
           $rootScope.$emit('toast', { message: "Deleted course " + courseTitle, type: "SUCCESS" });
           var action = {
@@ -170,14 +170,14 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not delete course.", type: "ERROR" });
         });
       },
       deleteMultipleCourses: function (courseIds, workgroupId, year) {
         var self = this;
         CourseService.deleteMultipleCourses(courseIds, workgroupId, year).then(function () {
-          ipa_analyze_event('courses', 'multiple courses deleted');
+          window.ipa_analyze_event('courses', 'multiple courses deleted');
   
           $rootScope.$emit('toast', { message: "Deleted courses.", type: "SUCCESS" });
           var action = {
@@ -190,7 +190,7 @@ class CourseActionCreators {
 
           self.closeCourseDeletionModal();
           self.deselectAllCourseRows();
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Unable to delete multiple courses.", type: "ERROR" });
         });
       },
@@ -209,7 +209,7 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not search import courses.", type: "ERROR" });
         });
       },
@@ -228,7 +228,7 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not search IPA courses.", type: "ERROR" });
         });
       },
@@ -253,7 +253,7 @@ class CourseActionCreators {
        */
       createCourse: function (newCourse, workgroupId, year) {
         CourseService.createCourse(newCourse, workgroupId, year).then(function (createdCourse) {
-          ipa_analyze_event('courses', 'course added');
+          window.ipa_analyze_event('courses', 'course added');
 
           $rootScope.$emit('toast', { message: "Created course " + createdCourse.title, type: "SUCCESS" });
           var action = {
@@ -263,7 +263,7 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not create course.", type: "ERROR" });
         });
 
@@ -273,7 +273,7 @@ class CourseActionCreators {
         var importAssignments = importAssignments ? true : false;
 
         CourseService.importCoursesAndSectionGroups(sectionGroupImports, workgroupId, year, importTimes, importAssignments).then(function (payload) {
-          ipa_analyze_event('courses', 'mass import', 'Banner');
+          window.ipa_analyze_event('courses', 'mass import', 'Banner');
 
           $rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS" });
           var action = {
@@ -281,7 +281,7 @@ class CourseActionCreators {
             payload: payload
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not import courses.", type: "ERROR" });
         });
       },
@@ -290,7 +290,7 @@ class CourseActionCreators {
         var importAssignments = importAssignments ? true : false;
 
         CourseService.importCoursesAndSectionGroupsFromIPA(sectionGroupImports, workgroupId, year, importTimes, importAssignments).then(function (payload) {
-          ipa_analyze_event('courses', 'mass import', 'IPA');
+          window.ipa_analyze_event('courses', 'mass import', 'IPA');
 
           $rootScope.$emit('toast', { message: "Created " + importedCoursesCount + " courses", type: "SUCCESS" });
           var action = {
@@ -298,13 +298,13 @@ class CourseActionCreators {
             payload: payload
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not import courses from IPA.", type: "ERROR" });
         });
       },
       updateCourse: function (course) {
         CourseService.updateCourse(course).then(function (updatedCourse) {
-          ipa_analyze_event('courses', 'course updated');
+          window.ipa_analyze_event('courses', 'course updated');
 
           $rootScope.$emit('toast', { message: "Updated course " + updatedCourse.title, type: "SUCCESS" });
           var action = {
@@ -314,13 +314,13 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
         });
       },
       addTagToCourse: function (course, tag) {
         CourseService.addTagToCourse(course, tag).then(function (updatedCourse) {
-          ipa_analyze_event('courses', 'course tag added');
+          window.ipa_analyze_event('courses', 'course tag added');
 
           $rootScope.$emit('toast', { message: "Added tag " + tag.name, type: "SUCCESS" });
           var action = {
@@ -330,13 +330,13 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not add tag to course.", type: "ERROR" });
         });
       },
       removeTagFromCourse: function (course, tag) {
         CourseService.removeTagFromCourse(course, tag).then(function (updatedCourse) {
-          ipa_analyze_event('courses', 'course tag removed');
+          window.ipa_analyze_event('courses', 'course tag removed');
 
           $rootScope.$emit('toast', { message: "Removed tag " + tag.name, type: "SUCCESS" });
           var action = {
@@ -346,7 +346,7 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not remove tag from course.", type: "ERROR" });
         });
       },
@@ -364,13 +364,13 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not get sections for section group.", type: "ERROR" });
         });
       },
       updateSection: function (section) {
         CourseService.updateSection(section).then(function (section) {
-          ipa_analyze_event('courses', 'section updated');
+          window.ipa_analyze_event('courses', 'section updated');
 
           $rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber, type: "SUCCESS" });
           var action = {
@@ -380,13 +380,13 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not update section.", type: "ERROR" });
         });
       },
       createSection: function (section) {
         CourseService.createSection(section).then(function (section) {
-          ipa_analyze_event('courses', 'section created');
+          window.ipa_analyze_event('courses', 'section created');
 
           $rootScope.$emit('toast', { message: "Created section " + section.sequenceNumber, type: "SUCCESS" });
           var action = {
@@ -396,13 +396,13 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not create section.", type: "ERROR" });
         });
       },
       deleteSection: function (section) {
         CourseService.deleteSection(section).then(function () {
-          ipa_analyze_event('courses', 'section deleted');
+          window.ipa_analyze_event('courses', 'section deleted');
 
           $rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
           var action = {
@@ -412,7 +412,7 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not delete section.", type: "ERROR" });
         });
       },
@@ -454,7 +454,7 @@ class CourseActionCreators {
             }
           };
           CourseStateService.reduce(action);
-        }, function (err) {
+        }, function () {
           $rootScope.$emit('toast', { message: "Could not get course census.", type: "ERROR" });
         });
       },

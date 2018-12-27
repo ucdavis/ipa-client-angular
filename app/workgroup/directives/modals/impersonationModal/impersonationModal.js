@@ -7,7 +7,7 @@ let impersonationModal = function (AuthService) {
 			state: '<',
 			isVisible: '='
 		},
-		link: function (scope, element, attrs) {	
+		link: function (scope) {
       scope.selectUser = function (user) {
         scope.selectedUser = user;
       };

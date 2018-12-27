@@ -1,12 +1,12 @@
+import { _array_sortIdsByProperty, _array_sortByProperty } from 'shared/helpers/array';
+
 class ScheduleSummaryReportStateService {
 	constructor ($rootScope, $log, Term, SectionGroup, ActionTypes, TeachingAssignmentService) {
 		return {
 			_state: {},
 			_sectionGroupReducers: function (action, sectionGroups) {
-				var section;
 				switch (action.type) {
-					case ActionTypes.INIT_STATE:
-
+					case ActionTypes.INIT_STATE: {
 						// Build courses metadata for searching
 						let courses = {
 							ids: [],
@@ -217,6 +217,7 @@ class ScheduleSummaryReportStateService {
 						});
 
 						return sectionGroups;
+					}
 					default:
 						return sectionGroups;
 				}
