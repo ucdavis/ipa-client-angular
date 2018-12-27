@@ -999,11 +999,14 @@ li.active-term .dropdown-term-row {
 	color: rgb(123, 123, 123);
 }
 
-.instructor-type-header {
-	font-weight: bold;
-	padding-top: 30px;
-	padding-bottom: 5px;
-	color: #616060;
+.type-header {
+	padding: 5px 15px 5px 15px;
+	background-color: #F8F8F8;
+	border: 1px solid #CCCCCC;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-radius: 3px;
+	position: relative;
 }
 
 .course-assignments__course-note {

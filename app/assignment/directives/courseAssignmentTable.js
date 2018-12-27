@@ -6,15 +6,23 @@ import { _array_sortByProperty } from 'shared/helpers/array';
 let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 	return {
 		restrict: 'A',
-		template: '<div class="course-list-row">' +
+		scope: {
+			lowerDivisionTable: "=",
+			upperDivisionTable: "=",
+			graduateTable: "=",
+			professionalTable: "=",
+			currentUser: "=",
+			workGroupId: "=",
+		},
+		template: '<div class="course-list-row" ng-if="lowerDivisionTable == true">' +
 		'<div class="course-header course-description-cell">&nbsp;</div></div>' +
-		'<div style="display: flex; justify-content: center; padding-top: 20px;">' +
+		'<div style="display: flex; justify-content: center; padding-top: 20px;" ng-if="lowerDivisionTable == true">' +
 		'<div><img src="/images/ajax-loader.gif" style="width: 32px; height: 32px;" /> <span class="text-muted">&nbsp; Loading assignments</span></div>' +
 		'</div>',
 		link: function (scope, element) {
 			scope.view = {};
 
-			/** 
+			/**
 			 * When a teaching preference is created, a single course can have multiple teaching assignments created for each section group,
 			 * with each teaching assignment getting a incremental priority.
 			 * e.g. CHE002A has priority 1 through 6. The next preference added will be stored with priority 7.
@@ -88,8 +96,8 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 			};
 
 			scope.userCanEdit = function () {
-				var hasAuthorizedRole = scope.sharedState.currentUser.isAdmin() ||
-					scope.sharedState.currentUser.hasRole('academicPlanner', scope.sharedState.workgroup.id);
+				var hasAuthorizedRole = scope.currentUser.isAdmin() ||
+					scope.currentUser.hasRole('academicPlanner', scope.workGroupId);
 
 					return hasAuthorizedRole;
 			};
@@ -120,16 +128,20 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					$('.tooltip').remove(); // eslint-disable-line no-undef
 					element.empty();
 
-					var header = scope.renderHeader();
-					element.append(header);
+					var courseTypeHeader;
 
 					var coursesHtml = "";
 					var rowsSinceHeaderWasAdded = 0;
 
 					// Loop over courses (sectionGroup rows)
 
+					var courseHeader = true;
+
 					// Display message if table is empty
-					if (scope.view.state.courses.ids == 0) {
+					if (scope.view.state.courses.ids == 0 && scope.lowerDivisionTable == true) {
+						var header = scope.renderHeader();
+						element.append(header);
+
 						coursesHtml += "<div class=\"course-list-row\">";
 						coursesHtml += "<div class=\"course-description-cell empty-table-message\">";
 						coursesHtml += "No courses have been added to the schedule";
@@ -138,6 +150,36 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					else {
 						$.each(scope.view.state.courses.ids, function (i, courseId) { // eslint-disable-line no-undef
 							var course = scope.view.state.courses.list[courseId];
+
+							// Converts string courseNumber into an int without the sequencePattern
+							var courseNumber = parseInt(course.courseNumber, 10);
+
+							if (scope.lowerDivisionTable == true && (courseNumber < 1 || courseNumber > 99)) { return; }
+							if (scope.upperDivisionTable == true && (courseNumber < 100 || courseNumber > 199)) { return; }
+							if (scope.graduateTable == true && (courseNumber < 200 || courseNumber > 299)) { return; }
+							if (scope.professionalTable == true && (courseNumber < 300 || courseNumber > 499)) { return; }
+
+							if (courseHeader == true) {
+								if (scope.lowerDivisionTable == true) {
+									courseTypeHeader = '<div class="type-header"><h5>Lower Divison Courses</h5></div>';
+								}
+								if (scope.upperDivisionTable == true) {
+									courseTypeHeader = '<div class="type-header"><h5>Upper Divison Courses</h5></div>';
+								}
+								if (scope.graduateTable == true) {
+									courseTypeHeader = '<div class="type-header"><h5>Graduate Courses</h5></div>';
+								}
+								if (scope.professionalTable == true) {
+									courseTypeHeader = '<div class="type-header"><h5>Professional Courses</h5></div>';
+								}
+								element.append(courseTypeHeader);
+
+								var header = scope.renderHeader();
+								element.append(header);
+
+								courseHeader = false;
+							}
+
 							if (course.isHidden === false && course.isFiltered === false && course.matchesTagFilters === true) {
 								var courseHtml = "";
 								courseHtml += "<div class=\"course-list-row\">";
@@ -229,7 +271,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 											var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 
 											if (teachingAssignment.approved === true) {
-												var instructor = scope.view.state.instructorMasterList.list[teachingAssignment.instructorId];
+												var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 												var instructorType = scope.view.state.instructorTypes.list[teachingAssignment.instructorTypeId];
 
 												// Add approved teachingAssignment to term
@@ -392,13 +434,13 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 								coursesHtml += courseHtml;
 
+								rowsSinceHeaderWasAdded++;
+
 								// Add a header after each 10 displayed course rows
 								if (rowsSinceHeaderWasAdded == 10) {
 									coursesHtml += scope.renderHeader();
 									rowsSinceHeaderWasAdded = 0;
 								}
-								rowsSinceHeaderWasAdded++;
-
 							}
 
 						}); // Ending loop over courses

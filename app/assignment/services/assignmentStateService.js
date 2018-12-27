@@ -424,7 +424,6 @@ class AssignmentStateService {
 							instructors.list[instructor.id] = instructor;
 						}
 
-
 						return instructors;
 					case ActionTypes.ADD_SCHEDULE_INSTRUCTOR_NOTE: {
 						let scheduleInstructorNote = action.payload.scheduleInstructorNote;
@@ -462,24 +461,6 @@ class AssignmentStateService {
 					}
 					default:
 						return instructors;
-				}
-			},
-			_instructorMasterListReducers: function (action, instructorMasterList) {
-				switch (action.type) {
-					case ActionTypes.INIT_ASSIGNMENT_VIEW:
-						instructorMasterList = {
-							ids: [],
-							list: []
-						};
-
-						action.payload.instructorMasterList.forEach( function (slotInstructor) {
-							instructorMasterList.ids.push(slotInstructor.id);
-							instructorMasterList.list[slotInstructor.id] = slotInstructor;
-						});
-
-						return instructorMasterList;
-					default:
-						return instructorMasterList;
 				}
 			},
 			_scheduleTermStateReducers: function (action, scheduleTermStates) {
@@ -626,6 +607,12 @@ class AssignmentStateService {
 							sectionGroupsList[sectionGroup.id] = sectionGroup;
 							sectionGroups.ids.push(sectionGroup.id);
 
+							sectionGroupsList[sectionGroup.id].isAssigned = false;
+
+							if (sectionGroup.showTheStaff == true) {
+								sectionGroupsList[sectionGroup.id].isAssigned = true;
+							}
+
 							// Create a list of teachingAssignmentIds that are associated to this sectionGroup
 							sectionGroupsList[sectionGroup.id].teachingAssignmentIds = [];
 							action.payload.teachingAssignments
@@ -633,6 +620,9 @@ class AssignmentStateService {
 									return teachingAssignment.sectionGroupId === sectionGroup.id;
 								})
 								.forEach(function (teachingAssignment) {
+									if (teachingAssignment.approved == true) {
+										sectionGroupsList[sectionGroup.id].isAssigned = true;
+									}
 									sectionGroupsList[sectionGroup.id].teachingAssignmentIds.push(teachingAssignment.id);
 								});
 
@@ -695,6 +685,11 @@ class AssignmentStateService {
 							}
 						}
 						return sectionGroups;
+					case ActionTypes.CREATE_PLACEHOLDER_STAFF:
+					case ActionTypes.REMOVE_PLACEHOLDER_STAFF:
+						sectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
+						sectionGroup.isAssigned = action.payload.sectionGroup.isAssigned;
+						return sectionGroups;
 					default:
 						return sectionGroups;
 				}
@@ -754,6 +749,26 @@ class AssignmentStateService {
 						var sectionGroupId = action.payload.sectionGroup.id;
 						var index = theStaff.termCodes[termCode].indexOf(sectionGroupId);
 						theStaff.termCodes[termCode].splice(index, 1);
+
+						if (theStaff.termCodes[termCode].length == 0) {
+							delete theStaff.termCodes[termCode];
+						}
+						return theStaff;
+					case ActionTypes.ADD_TEACHING_ASSIGNMENT:
+					case ActionTypes.UPDATE_TEACHING_ASSIGNMENT:
+						var sectionGroupId = action.payload.teachingAssignment.sectionGroupId;
+						var termCode = action.payload.teachingAssignment.termCode;
+
+						if (theStaff.termCodes[termCode]) {
+							var index = theStaff.termCodes[termCode].indexOf(sectionGroupId);
+							if(index > -1) {
+								theStaff.termCodes[termCode].splice(index, 1);
+
+								if (theStaff.termCodes[termCode].length == 0) {
+									delete theStaff.termCodes[termCode];
+								}
+							}
+						}
 						return theStaff;
 					default:
 						return theStaff;
@@ -845,7 +860,6 @@ class AssignmentStateService {
 				newState.courses = scope._courseReducers(action, scope._state.courses);
 				newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
 				newState.instructors = scope._instructorReducers(action, scope._state.instructors);
-				newState.instructorMasterList = scope._instructorMasterListReducers(action, scope._state.instructorMasterList);
 				newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
 				newState.teachingCallReceipts = scope._teachingCallReceiptReducers(action, scope._state.teachingCallReceipts);
 				newState.teachingCallResponses = scope._teachingCallResponseReducers(action, scope._state.teachingCallResponses);
@@ -874,92 +888,92 @@ class AssignmentStateService {
 
 	// Group related TeachingAssignments and generate adjusted priority for looping over in dropdown
 	generateAdjustedPriorities (newState) {
-		if (newState.teachingAssignments) {
-			newState.instructors.ids.forEach(function (instructorId) {
-				Object.keys(newState.instructors.list[instructorId].teachingAssignmentTermCodeIds).forEach(function (termCodeId) {
-					var uniqueAssignments = [];
-					var uniqueCoursesAdded = [];
-					var termTeachingAssignmentIds = newState.instructors.list[instructorId].teachingAssignmentTermCodeIds[termCodeId];
+		if (!newState.teachingAssignments) { return newState; }
 
-					termTeachingAssignmentIds.forEach(function (teachingAssignmentId) {
-						var teachingAssignment = newState.teachingAssignments.list[teachingAssignmentId];
-						var sectionGroup = newState.sectionGroups.list[teachingAssignment.sectionGroupId];
+		newState.instructors.ids.forEach(function (instructorId) {
+			Object.keys(newState.instructors.list[instructorId].teachingAssignmentTermCodeIds).forEach(function (termCodeId) {
+				var uniqueAssignments = [];
+				var uniqueCoursesAdded = [];
+				var termTeachingAssignmentIds = newState.instructors.list[instructorId].teachingAssignmentTermCodeIds[termCodeId];
 
-						// Non-course option or suggested course
-						if (teachingAssignment.sectionGroupId === null || teachingAssignment.sectionGroupId === 0) {
-							if (teachingAssignment.buyout) {
-								uniqueCoursesAdded.push("Buyout");
-							} else if (teachingAssignment.courseRelease) {
-								uniqueCoursesAdded.push("CourseRelease");
-							} else if (teachingAssignment.sabbatical) {
-								uniqueCoursesAdded.push("Sabbatical");
-							} else if (teachingAssignment.inResidence) {
-								uniqueCoursesAdded.push("InResidence");
-							} else if (teachingAssignment.sabbaticalInResidence) {
-								uniqueCoursesAdded.push("SabbaticalInResidence");
-							} else if (teachingAssignment.leaveOfAbsense) {
-								uniqueCoursesAdded.push("LeaveOfAbsense");
-							} else if (teachingAssignment.workLifeBalance) {
-								uniqueCoursesAdded.push("WorkLifeBalance");
-							} else {
-								var uniqueIdentifier = teachingAssignment.suggestedSubjectCode + teachingAssignment.suggestedCourseNumber + teachingAssignment.suggestedEffectiveTermCode;
-								teachingAssignment.uniqueIdentifier = uniqueIdentifier;
-								teachingAssignment.relatedAssignmentIds = [];
-								uniqueCoursesAdded.push(uniqueIdentifier);
-							}
-							uniqueAssignments.push(teachingAssignment);
-						}
+				termTeachingAssignmentIds.forEach(function (teachingAssignmentId) {
+					var teachingAssignment = newState.teachingAssignments.list[teachingAssignmentId];
+					var sectionGroup = newState.sectionGroups.list[teachingAssignment.sectionGroupId];
 
-						if (sectionGroup) {
-							var course = newState.courses.list[sectionGroup.courseId];
-							var uniqueIdentifier = course.subjectCode + course.courseNumber + course.effectiveTermCode;
-							if (uniqueCoursesAdded.indexOf(uniqueIdentifier) < 0) {
-								teachingAssignment.uniqueIdentifier = uniqueIdentifier;
-								teachingAssignment.relatedAssignmentIds = [];
-								uniqueAssignments.push(teachingAssignment);
-								uniqueCoursesAdded.push(uniqueIdentifier);
-							}
-							
-							if (uniqueCoursesAdded.indexOf(uniqueIdentifier) > -1) {
-								var uniqueAssignment = uniqueAssignments.find(function (assignment) {
-									return assignment.uniqueIdentifier === uniqueIdentifier;
-								});
-								uniqueAssignment.relatedAssignmentIds.push(teachingAssignment.id);
-							}
-						}
-					});
-
-					var uniqueAssignmentsByPriority = _array_sortByProperty(uniqueAssignments, "priority");
-					var priority = 1;
-
-					var firstAssignmentIdInGroup;
-					var relatedCourseApproved = false;
-					uniqueAssignmentsByPriority.forEach(function (assignment) {
-						if (assignment.relatedAssignmentIds) {
-							firstAssignmentIdInGroup = assignment.id;
-							assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {
-								if (newState.teachingAssignments.list[teachingAssignmentId].approved === true) {
-									relatedCourseApproved = true;
-								}
-								newState.teachingAssignments.list[teachingAssignmentId].adjustedPriority = priority;
-								priority++;
-							});
+					// Non-course option or suggested course
+					if (teachingAssignment.sectionGroupId === null || teachingAssignment.sectionGroupId === 0) {
+						if (teachingAssignment.buyout) {
+							uniqueCoursesAdded.push("Buyout");
+						} else if (teachingAssignment.courseRelease) {
+							uniqueCoursesAdded.push("CourseRelease");
+						} else if (teachingAssignment.sabbatical) {
+							uniqueCoursesAdded.push("Sabbatical");
+						} else if (teachingAssignment.inResidence) {
+							uniqueCoursesAdded.push("InResidence");
+						} else if (teachingAssignment.sabbaticalInResidence) {
+							uniqueCoursesAdded.push("SabbaticalInResidence");
+						} else if (teachingAssignment.leaveOfAbsense) {
+							uniqueCoursesAdded.push("LeaveOfAbsense");
+						} else if (teachingAssignment.workLifeBalance) {
+							uniqueCoursesAdded.push("WorkLifeBalance");
 						} else {
-							newState.teachingAssignments.list[assignment.id].adjustedPriority = priority;
-							priority++;
+							var uniqueIdentifier = teachingAssignment.suggestedSubjectCode + teachingAssignment.suggestedCourseNumber + teachingAssignment.suggestedEffectiveTermCode;
+							teachingAssignment.uniqueIdentifier = uniqueIdentifier;
+							teachingAssignment.relatedAssignmentIds = [];
+							uniqueCoursesAdded.push(uniqueIdentifier);
+						}
+						uniqueAssignments.push(teachingAssignment);
+					}
+
+					if (sectionGroup) {
+						var course = newState.courses.list[sectionGroup.courseId];
+						var uniqueIdentifier = course.subjectCode + course.courseNumber + course.effectiveTermCode;
+						if (uniqueCoursesAdded.indexOf(uniqueIdentifier) < 0) {
+							teachingAssignment.uniqueIdentifier = uniqueIdentifier;
+							teachingAssignment.relatedAssignmentIds = [];
+							uniqueAssignments.push(teachingAssignment);
+							uniqueCoursesAdded.push(uniqueIdentifier);
 						}
 
-						if (firstAssignmentIdInGroup) {
-							newState.teachingAssignments.list[firstAssignmentIdInGroup].relatedAssignmentIds.forEach(function (teachingAssignmentId) {
-								newState.teachingAssignments.list[teachingAssignmentId].relatedCourseApproved = relatedCourseApproved;
+						if (uniqueCoursesAdded.indexOf(uniqueIdentifier) > -1) {
+							var uniqueAssignment = uniqueAssignments.find(function (assignment) {
+								return assignment.uniqueIdentifier === uniqueIdentifier;
 							});
-							firstAssignmentIdInGroup = null;
-							relatedCourseApproved = false;
+							uniqueAssignment.relatedAssignmentIds.push(teachingAssignment.id);
 						}
-					});
+					}
+				});
+
+				var uniqueAssignmentsByPriority = _array_sortByProperty(uniqueAssignments, "priority");
+				var priority = 1;
+
+				var firstAssignmentIdInGroup;
+				var relatedCourseApproved = false;
+				uniqueAssignmentsByPriority.forEach(function (assignment) {
+					if (assignment.relatedAssignmentIds) {
+						firstAssignmentIdInGroup = assignment.id;
+						assignment.relatedAssignmentIds.forEach(function (teachingAssignmentId) {
+							if (newState.teachingAssignments.list[teachingAssignmentId].approved === true) {
+								relatedCourseApproved = true;
+							}
+							newState.teachingAssignments.list[teachingAssignmentId].adjustedPriority = priority;
+							priority++;
+						});
+					} else {
+						newState.teachingAssignments.list[assignment.id].adjustedPriority = priority;
+						priority++;
+					}
+
+					if (firstAssignmentIdInGroup) {
+						newState.teachingAssignments.list[firstAssignmentIdInGroup].relatedAssignmentIds.forEach(function (teachingAssignmentId) {
+							newState.teachingAssignments.list[teachingAssignmentId].relatedCourseApproved = relatedCourseApproved;
+						});
+						firstAssignmentIdInGroup = null;
+						relatedCourseApproved = false;
+					}
 				});
 			});
-		}
+		});
 
 		return newState;
 	}
