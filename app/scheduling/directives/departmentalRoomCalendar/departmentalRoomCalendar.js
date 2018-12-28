@@ -122,6 +122,11 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 							scope.$apply();
 						});
 					},
+					eventRender: function(event, element) {
+						if (event.locationConflict) {
+							element.find(".fc-title").append("<i class=\"entypo-attention activity__event--location-conflict\"></i>");
+						}
+					},
 					eventAfterAllRender: function () {
 						var eventRemove = angular.element('<i class="glyphicon glyphicon-remove hoverable activity-remove"></i>'); // eslint-disable-line no-undef
 						element.find('a.activity-event:not(.selected-activity):not(.selected-section-group) .fc-content').append(eventRemove);
@@ -170,6 +175,21 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					});
 				}
 
+				// Flags custom location and time conflicted activities
+				for (let index = 0; index < calendarActivities.length; index++) {
+					var slotActivity = calendarActivities[index];
+					var slotActivityLocationIndex = slotActivity.locationIndex;
+					var slotActivityStartTime = slotActivity.start;
+					var slotActivityEndTime = slotActivity.end;
+
+					calendarActivities.forEach(function (activity) {
+						if (activity.activityId !== slotActivity.activityId && activity.locationIndex === slotActivityLocationIndex
+								&& activity.start < slotActivityEndTime && slotActivityStartTime < activity.end) {
+							slotActivity.locationConflict = true;
+						}
+					});
+				}
+
 				return calendarActivities;
 			};
 
@@ -214,13 +234,14 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					var instructorText = instructors.join(', ');
 					var typeCodeText = activity.activityTypeCode.activityTypeCode.getActivityCodeDescription() ? ' (' + activity.activityTypeCode.activityTypeCode + ') ' : ' ';
 
-					calendarActivities.push({
+					calendarActivities.push({ 
 						title: courseTitle + typeCodeText + instructorText,
 						start: activityStart,
 						end: activityEnd,
 						activityId: activity.id,
 						sectionGroupId: activity.sectionGroupId,
-						className: activityClasses
+						className: activityClasses,
+						locationIndex: locationIndex
 					});
 				}
 
