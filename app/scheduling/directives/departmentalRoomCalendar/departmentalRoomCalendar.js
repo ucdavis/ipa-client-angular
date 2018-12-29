@@ -81,7 +81,7 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						start: moment().startOf('week').format('YYYY-MM-DD'), // eslint-disable-line no-undef
 						end: moment().startOf('week').add(scope.locations.ids.length, 'days').format('YYYY-MM-DD') // eslint-disable-line no-undef
 					},
-					columnHeaderText: function(mom) {
+					columnHeaderHtml: function(mom) {
 						var day = mom.startOf('day');
 
 						// The third param 'true' avoids moments timezone conversion errors and instead gives the raw exact difference in days
@@ -89,7 +89,12 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 
 						var locationId = scope.locations.ids[locationIndex];
 						var location = scope.locations.list[locationId];
-						return location.description;
+
+						if (location.hasConflict) {
+							return "<span>" + location.description + " <i class=\"entypo-attention activity__event--location-conflict\" tooltip-append-to-body=\"true\" uib-tooltip=\"Room conflict\"></i>" + "</span>";
+						} else {
+							return "<span>" + location.description + "</span>";
+						}
 					},
 					eventSources: [
 						getActivities()
@@ -185,7 +190,7 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					calendarActivities.forEach(function (activity) {
 						if (activity.activityId !== slotActivity.activityId && activity.locationIndex === slotActivityLocationIndex
 								&& activity.start < slotActivityEndTime && slotActivityStartTime < activity.end) {
-							slotActivity.locationConflict = true;
+							scope.locations.list[activity.locationIndex].hasConflict = true;
 						}
 					});
 				}
