@@ -190,6 +190,7 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					calendarActivities.forEach(function (activity) {
 						if (activity.activityId !== slotActivity.activityId && activity.locationIndex === slotActivityLocationIndex
 								&& activity.start < slotActivityEndTime && slotActivityStartTime < activity.end) {
+							slotActivity.locationConflict = true;
 							scope.locations.list[activity.locationIndex].hasConflict = true;
 						}
 					});
