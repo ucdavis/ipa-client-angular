@@ -6,13 +6,25 @@
 				<input type="text" ng-model="users.searchQuery" placeholder="Search by name or login ID" uib-typeahead="person.name for person in searchUsers($viewValue)"
 					ng-change="searchOnChange()" typeahead-loading="view.loadingPeople" typeahead-no-results="view.noResults"
 					typeahead-wait-ms="400" typeahead-min-length="2" typeahead-on-select="searchUsersResultSelected($item, $model, $label, $event)"
-					class="form-control typeahead">
+					class="form-control typeahead"
+					typeahead-template-url="popupTemplate.html">
+				
 				<ul class="typeahead-status dropdown-menu" ng-show="view.noResults">
 					<li><a>No results</a></li>
 				</ul>
 				<i ng-show="view.loadingPeople || ui.addUserPending"><spinner size="20"></spinner></i>
 				<i ng-hide="users.searchQuery || view.loadingPeople" class="entypo-search"></i>
 				<i ng-show="users.searchQuery && !view.loadingPeople && !ui.addUserPending" class="entypo-cancel" ng-click="clearUserSearch()"></i>
+				<script type="text/ng-template" id="popupTemplate.html">
+					<a>
+						<strong>{{ match.model.name }}</strong>
+						<div class="row" style='border-bottom:1px solid #f3f3f3;'>
+							<div class="col-sm-4">
+								{{ match.model.email }}
+							</div>
+						</div>
+					</a>
+				</script>	
 				<span class="input-group-btn">
 					<button ng-disabled="!users.newUser.name || ui.addUserPending"
 						class="btn-add-person btn btn-primary"
