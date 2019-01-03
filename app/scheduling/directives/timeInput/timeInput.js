@@ -69,7 +69,7 @@ let timeInput = function ($timeout) {
 						scope.canDecrementHours = false;
 					}
 
-					if (selectedMinutes < floorMinutes && ((floorHours+1) == selectedHours)) {
+					if (selectedMinutes < floorMinutes && ((floorHours + 1) == selectedHours)) {
 						scope.canDecrementHours = false;
 					}
 				}
