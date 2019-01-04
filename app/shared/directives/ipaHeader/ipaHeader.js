@@ -21,7 +21,7 @@ let ipaHeader = function ($window, $location, $rootScope, AuthService) {
 			scope.changeWorkgroup = function(originalWorkgroupId, newWorkgroupId) {
 				var originalWorkgroupId = originalWorkgroupId.toString();
 				var newWorkgroupId = newWorkgroupId.toString();
-				var newUrl = 	$window.location.href.replace(originalWorkgroupId, newWorkgroupId);
+				var newUrl = $window.location.href.replace(originalWorkgroupId, newWorkgroupId);
 				$window.location.href = newUrl;
 			};
 
