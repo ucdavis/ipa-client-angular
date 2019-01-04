@@ -16,9 +16,9 @@
 				<i ng-hide="users.searchQuery || view.loadingPeople" class="entypo-search"></i>
 				<i ng-show="users.searchQuery && !view.loadingPeople && !ui.addUserPending" class="entypo-cancel" ng-click="clearUserSearch()"></i>
 				<script type="text/ng-template" id="popupTemplate.html">
-					<a>
+					<a href="#" style='border-bottom:1px solid #f3f3f3;'>
 						<strong>{{ match.model.name }}</strong>
-						<div class="row" style='border-bottom:1px solid #f3f3f3;'>
+						<div class="row">
 							<div class="col-sm-4">
 								{{ match.model.email }}
 							</div>
