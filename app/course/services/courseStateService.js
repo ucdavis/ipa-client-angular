@@ -526,11 +526,6 @@ class CourseStateService {
           case ActionTypes.CLOSE_COURSE_DELETION_MODAL:
             uiState.isCourseDeleteModalOpen = false;
             return uiState;
-          case ActionTypes.NO_ACCESS:
-            uiState = {
-              noAccess: true
-            };
-            return uiState;
           default:
             return uiState;
         }
@@ -559,7 +554,6 @@ class CourseStateService {
 
         $log.debug("Course state updated:");
         $log.debug(scope._state, action.type);
-        console.log(scope._state);
       }
     };
   }

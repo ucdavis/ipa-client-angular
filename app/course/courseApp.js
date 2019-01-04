@@ -43,7 +43,7 @@ function config ($routeProvider) {
             if (hasAccess) {
               CourseActionCreators.getInitialState();
             } else {
-              CourseActionCreators.noAccess();
+              return { noAccess: true };
             }
           }
         });
@@ -119,8 +119,7 @@ const courseApp = angular.module("courseApp", dependencies) // eslint-disable-li
   OPEN_COURSE_DELETION_MODAL: "OPEN_COURSE_DELETION_MODAL",
   CLOSE_COURSE_DELETION_MODAL: "CLOSE_COURSE_DELETION_MODAL",
   DELETE_MULTIPLE_COURSES: "DELETE_MULTIPLE_COURSES",
-  MASS_ASSIGN_TAGS: "MASS_ASSIGN_TAGS",
-  NO_ACCESS: "NO_ACCESS"
+  MASS_ASSIGN_TAGS: "MASS_ASSIGN_TAGS"
 });
 
 export default courseApp;

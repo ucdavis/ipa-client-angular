@@ -9,7 +9,7 @@ import { sequencePatterns, subjectCodes } from 'course/constants';
  * Controller of the ipaClientAngularApp
  */
 class CourseCtrl {
-  constructor ($scope, $rootScope, $route, $routeParams, $timeout, CourseActionCreators, CourseService, Term, AuthService) {
+  constructor ($scope, $rootScope, $route, $routeParams, $timeout, CourseActionCreators, CourseService, Term, AuthService, validate) {
     var self = this;
     this.$scope = $scope;
     this.$rootScope = $rootScope;
@@ -24,6 +24,8 @@ class CourseCtrl {
     $scope.workgroupId = $routeParams.workgroupId;
     $scope.year = $routeParams.year;
     $scope.view = { isAssignTagsDropdownOpen: false };
+    $scope.noAccess = validate ? validate.noAccess : null;
+
     self.initialize();
   }
 
@@ -405,6 +407,6 @@ class CourseCtrl {
   }
 }
 
-CourseCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', '$timeout', 'CourseActionCreators', 'CourseService', 'Term', 'AuthService'];
+CourseCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', '$timeout', 'CourseActionCreators', 'CourseService', 'Term', 'AuthService', 'validate'];
 
 export default CourseCtrl;

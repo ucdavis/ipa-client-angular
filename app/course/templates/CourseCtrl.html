@@ -10,11 +10,11 @@
   </ipa-modal>
 
 	<!-- Handle lack of access -->
-  <div ng-if="view.state.uiState.noAccess">
+  <div ng-if="noAccess">
     <no-access workgroup-name="sharedState.workgroup.name"></no-access>
   </div>
 
-  <div class="container-fluid" ng-if="!view.state.uiState.noAccess">
+  <div class="container-fluid" ng-if="!noAccess">
     <div class="col-md-9" unselect-cell>
     <div class="row" style="margin-bottom: 2em;">
       <div class="col-sm-offset-3 col-sm-6 input-group">
