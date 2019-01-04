@@ -33,7 +33,7 @@ const Term = angular.module('Term', [])
 				];
 				var year;
 				angular.forEach(table, function(term) {  // eslint-disable-line no-undef
-					if(Number(term.shortCode) < 5) {
+					if (Number(term.shortCode) < 5) {
 						year = (Number(academicYear) + 1);
 					} else {
 						year = academicYear;

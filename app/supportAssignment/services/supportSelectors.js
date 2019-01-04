@@ -354,7 +354,7 @@ class SupportSelectors {
 	
 				supportAssignmentDTOs.forEach( function(assignment) {
 					var properties = ["courseNumber", "subjectCode", "sequencePattern", "appointmentType", "appointmentPercentage"];
-					if(_array_contains_by_properties(uniqueSupportAssignments, properties, assignment)) {
+					if (_array_contains_by_properties(uniqueSupportAssignments, properties, assignment)) {
 						return;
 					}
 	

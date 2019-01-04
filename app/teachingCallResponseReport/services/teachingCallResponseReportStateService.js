@@ -89,7 +89,7 @@ class TeachingCallResponseReportStateService {
 									instructor.preferencesByTermCode = {};
 								}
 	
-								if(!instructor.preferencesByTermCode[teachingAssignment.termCode]) {
+								if (!instructor.preferencesByTermCode[teachingAssignment.termCode]) {
 									instructor.preferencesByTermCode[teachingAssignment.termCode] = [];
 								}
 	

@@ -71,7 +71,7 @@ class TeachingCallStatusActionCreators {
 				teachingCallConfig.instructorIds = [];
 	
 				teachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
-					if(slotInstructor.invited) {
+					if (slotInstructor.invited) {
 						teachingCallConfig.instructorIds.push(slotInstructor.id);
 					}
 				});

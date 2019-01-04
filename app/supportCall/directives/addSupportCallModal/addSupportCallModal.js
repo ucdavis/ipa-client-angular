@@ -300,7 +300,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			scope.isAddFormComplete = function() {
 				if (scope.supportCallConfigData.mode == "supportStaff") {
 					// Ensure at least one preference type is set
-					if(!scope.supportCallConfigData.collectAssociateInstructorPreferences
+					if (!scope.supportCallConfigData.collectAssociateInstructorPreferences
 						&& !scope.supportCallConfigData.collectReaderPreferences
 						&& !scope.supportCallConfigData.collectTeachingAssistantPreferences) {
 						return false;

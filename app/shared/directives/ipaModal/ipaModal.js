@@ -24,7 +24,7 @@ let ipaModal = function() {
 					return;
 				}
 				// Watches for changes to isVisible to turn page scrolling on/off
-				if(scope.isVisible == true) {
+				if (scope.isVisible == true) {
 					scope.open();
 				} else if (!scope.isVisible) {
 					scope.close();

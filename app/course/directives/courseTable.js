@@ -533,7 +533,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         var termCount = {};
 
         _.each(state.sectionGroups.list, function(sg) {
-          if(termCount[sg.termCode] === undefined) {
+          if (termCount[sg.termCode] === undefined) {
             termCount[sg.termCode] = sg.plannedSeats;
           } else {
             termCount[sg.termCode] += sg.plannedSeats;

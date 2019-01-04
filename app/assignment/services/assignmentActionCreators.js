@@ -31,7 +31,7 @@ class AssignmentActionCreators {
 
 					var userRolesMap = new Map();
 					for (var userRole in payload.userRoles) {
-						if(payload.userRoles[userRole].role == "instructor") {
+						if (payload.userRoles[userRole].role == "instructor") {
 							userRolesMap.set(payload.userRoles[userRole].userId, payload.userRoles[userRole].role);
 						}
 					}

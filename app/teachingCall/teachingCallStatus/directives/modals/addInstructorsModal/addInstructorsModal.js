@@ -44,7 +44,7 @@ let addInstructorsModal = function (TermService, TeachingCallStatusActionCreator
     
         if (scope.startTeachingCallConfig.invitedInstructors) {
           scope.startTeachingCallConfig.invitedInstructors.forEach(function(instructor) {
-            if(instructor.instructorTypeId == instructorTypeId) {
+            if (instructor.instructorTypeId == instructorTypeId) {
               atLeastOneInstructor = true;
             }
           });
@@ -55,7 +55,7 @@ let addInstructorsModal = function (TermService, TeachingCallStatusActionCreator
     
       scope.inviteInstructorsOfType = function (instructorTypeId) {
         scope.startTeachingCallConfig.invitedInstructors.forEach(function(instructor) {
-          if(instructor.instructorTypeId == instructorTypeId) {
+          if (instructor.instructorTypeId == instructorTypeId) {
             instructor.invited = true;
           }
         });
@@ -107,10 +107,10 @@ let addInstructorsModal = function (TermService, TeachingCallStatusActionCreator
         $event.preventDefault();
         $event.stopPropagation();
         scope.opened  = {start: false, end: false};
-        if(type == 'start') {
+        if (type == 'start') {
           scope.opened.start = true;
         }
-        if(type == 'end') {
+        if (type == 'end') {
           scope.opened[id].end = true;
         }
       };

@@ -55,7 +55,7 @@ class AvailabilityService {
           blocks.push(_this._blockDescription(startTimeBlock, endTimeBlock));
         }
 
-        if(blocks.length == 0) {
+        if (blocks.length == 0) {
           // No availabilities were indicated
           blocks.push("Not available");
         }

@@ -136,7 +136,7 @@ class SupportAssignmentCtrl {
 		};
 
 		_self.$scope.appointmentTypeToShorthand = function(appointmentType) {
-			switch(appointmentType) {
+			switch (appointmentType) {
 				case "teachingAssistant":
 					return "TA";
 				case "reader":
