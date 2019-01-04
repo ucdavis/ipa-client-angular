@@ -146,15 +146,15 @@ class CourseStateService {
             var tagIdsToAdd = action.massAssignTags.tagIdsToAdd;
             var tagIdsToRemove = action.massAssignTags.tagIdsToRemove;
 
-            courseIds.forEach( function(courseId) {
+            courseIds.forEach(function(courseId) {
               var course = courses.list[courseId];
 
-              tagIdsToAdd.forEach( function(tagId) {
+              tagIdsToAdd.forEach(function(tagId) {
                 if (course.tagIds.indexOf(tagId) == -1) {
                   course.tagIds.push(tagId);
                 }
               });
-              tagIdsToRemove.forEach( function(tagId) {
+              tagIdsToRemove.forEach(function(tagId) {
                 var index = course.tagIds.indexOf(tagId);
                 if (index > -1) {
                   course.tagIds.splice(index, 1);

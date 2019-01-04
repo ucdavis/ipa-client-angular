@@ -28,7 +28,7 @@ teachingCallApp.service('teachingCallStatusSelectors', function () { // eslint-d
 			var generatedInstructors = [];
 			var _self = this;
 
-			instructors.ids.forEach( function (instructorId) {
+			instructors.ids.forEach(function (instructorId) {
 				var instructor = instructors.list[instructorId];
 				var teachingCallReceipt = teachingCallReceipts.list[instructor.teachingCallReceiptId];
 				var isInstructorInTeachingCall = teachingCallReceipt ? true : false;

@@ -19,8 +19,8 @@ class TeachingCallResponseReportStateService {
 						// Get availability blobs and put on instructor in an associative array by termCode
 						let teachingCallResponses = action.payload.teachingCallResponses;
 	
-						teachingCallResponses.forEach( function(teachingCallResponse) {
-							instructors.forEach( function(instructor) {
+						teachingCallResponses.forEach(function(teachingCallResponse) {
+							instructors.forEach(function(instructor) {
 								if (instructor.id == teachingCallResponse.instructorId) {
 									if (!instructor.availabilityByTermCode) {
 										instructor.availabilityByTermCode = {};
@@ -34,8 +34,8 @@ class TeachingCallResponseReportStateService {
 						// Get isDone (submitted) and comments and put them on instructor
 						let teachingCallReceipts = action.payload.teachingCallReceipts;
 	
-						teachingCallReceipts.forEach( function(teachingCallReceipt) {
-							instructors.forEach( function(instructor) {
+						teachingCallReceipts.forEach(function(teachingCallReceipt) {
+							instructors.forEach(function(instructor) {
 								if (instructor.id == teachingCallReceipt.instructorId) {
 									instructor.submitted = teachingCallReceipt.isDone;
 									instructor.comment = teachingCallReceipt.comment;
@@ -49,7 +49,7 @@ class TeachingCallResponseReportStateService {
 							ids: []
 						};
 	
-						action.payload.sectionGroups.forEach( function(sectionGroup) {
+						action.payload.sectionGroups.forEach(function(sectionGroup) {
 							sectionGroups.ids.push(sectionGroup.id);
 							sectionGroups.list[sectionGroup.id] = sectionGroup;
 						});
@@ -59,14 +59,14 @@ class TeachingCallResponseReportStateService {
 							ids: []
 						};
 	
-						action.payload.courses.forEach( function(course) {
+						action.payload.courses.forEach(function(course) {
 							courses.ids.push(course.id);
 							courses.list[course.id] = course;
 						});
 	
 						// Look for unique instances of assignments (there are duplicates for multiple sectionGroups)
 						// then look for associated course data, and add that assignment to the instructor
-						action.payload.teachingAssignments.forEach( function(teachingAssignment) {
+						action.payload.teachingAssignments.forEach(function(teachingAssignment) {
 							// Ignore teachingAssignments that aren't people based
 							if (teachingAssignment.instructorId == null) { return; }
 	
@@ -132,7 +132,7 @@ class TeachingCallResponseReportStateService {
 									var course = courses.list[courseId];
 	
 									// Do we already have that course listed for this term?
-									var alreadyExists = preferences.find( function (preference) {
+									var alreadyExists = preferences.find(function (preference) {
 										return preference.effectiveTermCode == course.effectiveTermCode
 										&& preference.subjectCode == course.subjectCode
 										&& preference.courseNumber == course.courseNumber; });
@@ -166,7 +166,7 @@ class TeachingCallResponseReportStateService {
 						// Collapse the teachingCall termsBlobs into one
 						let teachingCallReceipts = action.payload.teachingCallReceipts;
 	
-						teachingCallReceipts.forEach( function(teachingCallReceipt) {
+						teachingCallReceipts.forEach(function(teachingCallReceipt) {
 							// Loop through blobFlags in teachingCalls termBlob
 							for (var i = 0; i < teachingCallReceipt.termsBlob.length; i++) {
 								var blobFlag = teachingCallReceipt.termsBlob[i];
@@ -192,7 +192,7 @@ class TeachingCallResponseReportStateService {
 						// sort terms Chronologically
 						var chronologicallyOrderedTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
 						var sortedTerms = [];
-						chronologicallyOrderedTerms.forEach( function(term) {
+						chronologicallyOrderedTerms.forEach(function(term) {
 							if (relevantTerms.indexOf(term) > -1) {
 								sortedTerms.push(term);
 							}

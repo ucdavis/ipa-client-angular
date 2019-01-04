@@ -333,7 +333,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         let $el = $(e.target); // eslint-disable-line no-undef
 
         // Disable scrolling on number inputs as it might increase accidental changes
-        if ($el.hasClass('planned-seats') && $el.is(":focus") ) {
+        if ($el.hasClass('planned-seats') && $el.is(":focus")) {
           e.preventDefault();
         }
       });

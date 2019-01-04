@@ -100,7 +100,7 @@ class SupportAssignmentCtrl {
 		_self.$scope.isInstructorSupportCallReviewOpen = function () {
 			var index = parseInt(_self.$scope.termShortCode) - 1;
 
-			if ( !(_self.$scope.view.state.schedule.instructorSupportCallReviewOpen)){
+			if (!(_self.$scope.view.state.schedule.instructorSupportCallReviewOpen)){
 				return false;
 			}
 
@@ -113,7 +113,7 @@ class SupportAssignmentCtrl {
 		_self.$scope.isSupportStaffSupportCallReviewOpen = function () {
 			var index = parseInt(_self.$scope.termShortCode) - 1;
 
-			if ( !(_self.$scope.view.state.schedule.supportStaffSupportCallReviewOpen)){
+			if (!(_self.$scope.view.state.schedule.supportStaffSupportCallReviewOpen)){
 				return false;
 			}
 

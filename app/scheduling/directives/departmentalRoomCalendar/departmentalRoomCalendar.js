@@ -291,7 +291,7 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 			var activityMatchesFilters = function(activityId) {
 				var activity = scope.view.state.activities.list[activityId];
 
-				return ( (activity.locationId > 0) && (activity.dayIndicator[scope.selectedDay] == 1) );
+				return ((activity.locationId > 0) && (activity.dayIndicator[scope.selectedDay] == 1));
 			};
 
 			var activityMatchesSelection = function (activityId) {

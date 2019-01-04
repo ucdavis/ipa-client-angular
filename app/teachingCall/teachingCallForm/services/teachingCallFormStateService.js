@@ -46,8 +46,8 @@ class TeachingCallFormStateService {
 						pageState.terms = this.scaffoldTermsFromBlob(termsBlob, action.year);
 	
 						// Find availabilityBlob data
-						action.payload.teachingCallResponses.forEach ( function(teachingCallResponse) {
-							pageState.terms.forEach( function(termContainer) {
+						action.payload.teachingCallResponses.forEach (function(teachingCallResponse) {
+							pageState.terms.forEach(function(termContainer) {
 								if (termContainer.termCode == teachingCallResponse.termCode) {
 									termContainer.availabilityBlob = teachingCallResponse.availabilityBlob;
 									termContainer.teachingCallResponseId = teachingCallResponse.id;
@@ -60,26 +60,26 @@ class TeachingCallFormStateService {
 						var teachingAssignmentsIndex = {};
 						var teachingAssignments = action.payload.teachingAssignments;
 	
-						teachingAssignments.forEach( function (assignment) {
+						teachingAssignments.forEach(function (assignment) {
 							teachingAssignmentsIndex[assignment.id] = assignment;
 						});
 	
 						pageState.sectionGroupsIndex = {};
 						pageState.sectionGroups = action.payload.sectionGroups;
 	
-						pageState.sectionGroups.forEach( function (sectionGroup) {
+						pageState.sectionGroups.forEach(function (sectionGroup) {
 							pageState.sectionGroupsIndex[sectionGroup.id] = sectionGroup;
 						});
 	
 						pageState.coursesIndex = {};
 						pageState.courses = action.payload.courses;
 	
-						pageState.courses.forEach( function (course) {
+						pageState.courses.forEach(function (course) {
 							pageState.coursesIndex[course.id] = course;
 						});
 	
 						// Process data into preferences, assignments, and scheduledCourses
-						pageState.terms.forEach( function(termData) {
+						pageState.terms.forEach(function(termData) {
 							termData.preferences = self.generatePreferences(action.payload.scheduleId, termData.termCode, action.payload.instructorId, teachingAssignments, pageState.sectionGroupsIndex, pageState.coursesIndex);
 							termData.preferenceOptions = self.generatePreferenceOptions(action.payload.scheduleId, action.payload.instructorId, termData.termCode, termData.preferences, termData.assignments, pageState.sectionGroups, pageState.coursesIndex);
 						});
@@ -90,7 +90,7 @@ class TeachingCallFormStateService {
 						// Calculate termSelection UI
 						pageState.termSelection = [];
 	
-						pageState.terms.forEach( function(term) {
+						pageState.terms.forEach(function(term) {
 							let newTerm = {};
 							newTerm.description = term.termDescription;
 							newTerm.isSelected = false;
@@ -115,15 +115,15 @@ class TeachingCallFormStateService {
 						var termCode = action.payload.termCode;
 	
 						var preferences = null;
-						pageState.terms.forEach( function (termContainer) {
+						pageState.terms.forEach(function (termContainer) {
 							if (termContainer.termCode == termCode) {
 								preferences = termContainer.preferences;
 							}
 						});
 	
 						// Update the preference priorities
-						sortedIds.forEach( function(preferenceId, index) {
-							preferences.forEach( function(preference) {
+						sortedIds.forEach(function(preferenceId, index) {
+							preferences.forEach(function(preference) {
 								if (preference.id == preferenceId) {
 									preference.priority = index + 1;
 								}
@@ -147,7 +147,7 @@ class TeachingCallFormStateService {
 						var preferenceObjects = this.generatePreferences(pageState.scheduleId, termCode, pageState.instructorId, newPreferenceArray, pageState.sectionGroupsIndex, pageState.coursesIndex);
 						var newPreferenceObject = preferenceObjects[0];
 	
-						pageState.terms.forEach( function (termContainer) {
+						pageState.terms.forEach(function (termContainer) {
 							if (termContainer.termCode == termCode) {
 								preferences = termContainer.preferences;
 							}
@@ -164,20 +164,20 @@ class TeachingCallFormStateService {
 						var termCode = action.payload.termCode;
 						let preferenceIdsToMove = [];
 	
-						action.payload.teachingAssignments.forEach( function(slotAssignment) {
+						action.payload.teachingAssignments.forEach(function(slotAssignment) {
 							preferenceIdsToMove.push(slotAssignment.id);
 						});
 	
 						var preferences = null;
 	
-						pageState.terms.forEach( function (termContainer) {
+						pageState.terms.forEach(function (termContainer) {
 							if (termContainer.termCode == termCode) {
 								preferences = termContainer.preferences;
 							}
 						});
 	
 						let removePreferenceIndex = null;
-						preferences.forEach( function (slotPreference, index) {
+						preferences.forEach(function (slotPreference, index) {
 							if (preferenceIdsToMove.indexOf(slotPreference.id) > -1) {
 								removePreferenceIndex = index;
 								return;
@@ -215,7 +215,7 @@ class TeachingCallFormStateService {
 						// selectedTermCode
 						pageState.selectedTermCode = action.payload.selectedTermCode;
 	
-						pageState.termSelection.forEach( function (term) {
+						pageState.termSelection.forEach(function (term) {
 								if (term.termCode == action.payload.selectedTermCode) {
 									term.isSelected = true;
 								} else {
@@ -260,18 +260,18 @@ class TeachingCallFormStateService {
 					canSubmit: false
 				};
 	
-				pageState.terms.forEach ( function (term) {
+				pageState.terms.forEach (function (term) {
 					let newTerm = {};
 					newTerm.description = term.termDescription;
 					newTerm.isChecked = false;
 	
-					if ( (term.preferences && term.preferences.length > 0) || (term.assignments && term.assignments.length > 0) ) {
+					if ((term.preferences && term.preferences.length > 0) || (term.assignments && term.assignments.length > 0)) {
 						newTerm.isChecked = true;
 						pageState.checklist.preferencesChecked = true;
 						pageState.checklist.canSubmit = true;
 	
 						// Mark term in termSelection UI as having preferences
-						pageState.termSelection.forEach( function (slotTerm) {
+						pageState.termSelection.forEach(function (slotTerm) {
 							if (slotTerm.termCode == term.termCode) {
 								slotTerm.hasPreferences = true;
 							}
@@ -291,7 +291,7 @@ class TeachingCallFormStateService {
 				// Deserialize the termsBlob
 				var relevantShortTermCodes = [];
 	
-				for ( var i = 0; i < termsBlob.length; i++) {
+				for (var i = 0; i < termsBlob.length; i++) {
 					var blobFlag = termsBlob.charAt(i);
 	
 					if (blobFlag == "1") {
@@ -302,14 +302,14 @@ class TeachingCallFormStateService {
 				// Chronologically order the terms
 				var orderedshortTermCodes = [];
 	
-				chronologicalTermsReference.forEach( function(term) {
+				chronologicalTermsReference.forEach(function(term) {
 					if (relevantShortTermCodes.indexOf(term) > -1) {
 						orderedshortTermCodes.push(term);
 					}
 				});
 	
 				// Scaffold the terms
-				orderedshortTermCodes.forEach ( function( term) {
+				orderedshortTermCodes.forEach (function(term) {
 					var termNames = {
 						'05': 'Summer Session 1',
 						'06': 'Summer Special Session',
@@ -342,7 +342,7 @@ class TeachingCallFormStateService {
 				var preferences = [];
 				var uniqueAddedPreferences = [];
 
-				teachingAssignments.forEach( function (slotAssignment) {
+				teachingAssignments.forEach(function (slotAssignment) {
 					// Ensure the assignment is from the instructor and the term of interest
 					if (termCode != slotAssignment.termCode || instructorId != slotAssignment.instructorId || slotAssignment.fromInstructor == false) { return; }
 
@@ -445,7 +445,7 @@ class TeachingCallFormStateService {
 	
 				var uniqueAddedCourses = [];
 	
-				sectionGroups.forEach( function (slotSectionGroup) {
+				sectionGroups.forEach(function (slotSectionGroup) {
 					// Ensure the assignment is not approved, from the instructor and the term of interest
 					if (termCode != slotSectionGroup.termCode) {
 						return;
@@ -489,10 +489,10 @@ class TeachingCallFormStateService {
 				// Gather all course identifiers that already exist as a preference or assignment
 				var courseIdentifiersToFilter = [];
 	
-				preferences.forEach( function(preference) {
+				preferences.forEach(function(preference) {
 					courseIdentifiersToFilter.push(preference.uniqueIdentifier);
 				});
-				assignments.forEach( function(assignment) {
+				assignments.forEach(function(assignment) {
 					courseIdentifiersToFilter.push(assignment.uniqueIdentifier);
 				});
 	
@@ -549,7 +549,7 @@ class TeachingCallFormStateService {
 					instructorId: instructorId,
 					termCode: termCode
 				});
-				allCourses.forEach( function (course) {
+				allCourses.forEach(function (course) {
 					// Skip courses that are already an assignment or preference
 					if (courseIdentifiersToFilter.indexOf(course.uniqueIdentifier) > -1) {
 						return;

@@ -85,7 +85,7 @@ let timeInput = function ($timeout) {
 						scope.canIncrementMinutes = false;
 					}
 
-					if ( ceilingHours == selectedHours) {
+					if (ceilingHours == selectedHours) {
 						scope.canIncrementHours = false;
 					}
 				}

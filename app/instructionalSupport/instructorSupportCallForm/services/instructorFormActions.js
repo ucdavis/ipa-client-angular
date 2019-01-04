@@ -39,7 +39,7 @@ class InstructorFormActions {
       // Blend the relevant course data into the sectionGroup
       addCourseDataToSectionGroups: function (courses, sectionGroups) {
         sectionGroups.forEach(function(sectionGroup) {
-          courses.forEach( function (course) {
+          courses.forEach(function (course) {
     
             if (sectionGroup.courseId == course.id) {
               sectionGroup.subjectCode = course.subjectCode;

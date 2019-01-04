@@ -16,7 +16,7 @@ class StudentFormReducers {
 							ids: [],
 							list: {}
 						};
-						action.payload.sectionGroups.forEach( function(sectionGroup) {
+						action.payload.sectionGroups.forEach(function(sectionGroup) {
 							sectionGroups.ids.push(sectionGroup.id);
 							sectionGroups.list[sectionGroup.id] = sectionGroup;
 						});
@@ -32,7 +32,7 @@ class StudentFormReducers {
 							ids: [],
 							list: {}
 						};
-						action.payload.courses.forEach( function(course) {
+						action.payload.courses.forEach(function(course) {
 							courses.ids.push(course.id);
 							courses.list[course.id] = course;
 						});
@@ -48,7 +48,7 @@ class StudentFormReducers {
 							ids: [],
 							list: {}
 						};
-						action.payload.studentSupportPreferences.forEach( function(preference) {
+						action.payload.studentSupportPreferences.forEach(function(preference) {
 							preferences.ids.push(preference.id);
 							preferences.list[preference.id] = preference;
 						});
@@ -92,7 +92,7 @@ class StudentFormReducers {
 							ids: [],
 							list: {}
 						};
-						action.payload.supportAssignments.forEach( function(supportAssignment) {
+						action.payload.supportAssignments.forEach(function(supportAssignment) {
 							supportAssignments.ids.push(supportAssignment.id);
 							supportAssignments.list[supportAssignment.id] = supportAssignment;
 						});

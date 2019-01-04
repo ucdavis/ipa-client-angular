@@ -399,7 +399,7 @@ class SchedulingStateService {
 							list: {}
 						};
 	
-						action.payload.instructorTypes.forEach( function(instructorType) {
+						action.payload.instructorTypes.forEach(function(instructorType) {
 							instructorTypes.list[instructorType.id] = instructorType;
 							instructorTypes.ids.push(instructorType.id);
 						});
@@ -477,7 +477,7 @@ class SchedulingStateService {
 			_uiStateReducers: function (action, uiState) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
-						var sectionGroupIds = action.payload.sectionGroups.map( sectionGroup => sectionGroup.id);
+						var sectionGroupIds = action.payload.sectionGroups.map(sectionGroup => sectionGroup.id);
 
 						uiState = {
 							selectedSectionGroupId: null,

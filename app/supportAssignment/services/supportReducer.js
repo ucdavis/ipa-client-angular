@@ -12,7 +12,7 @@ class SupportReducer {
 							list: {}
 						};
 	
-						action.payload.sectionGroups.forEach( function(sectionGroup) {
+						action.payload.sectionGroups.forEach(function(sectionGroup) {
 							sectionGroups.ids.push(sectionGroup.id);
 							sectionGroups.list[sectionGroup.id] = sectionGroup;
 						});
@@ -65,7 +65,7 @@ class SupportReducer {
 							bySectionGroupId: {}
 						};
 	
-						action.payload.sections.forEach( function(section) {
+						action.payload.sections.forEach(function(section) {
 							sections.ids.push(section.id);
 							sections.list[section.id] = section;
 	
@@ -100,7 +100,7 @@ class SupportReducer {
 							bySectionGroupIds: {}
 						};
 	
-						action.payload.activities.forEach( function(activity) {
+						action.payload.activities.forEach(function(activity) {
 							activities.ids.push(activity.id);
 							activities.list[activity.id] = activity;
 	
@@ -126,7 +126,7 @@ class SupportReducer {
 							list: {}
 						};
 	
-						action.payload.supportAppointments.forEach( function(supportAppointment) {
+						action.payload.supportAppointments.forEach(function(supportAppointment) {
 							supportAppointments.ids.push(supportAppointment.id);
 							supportAppointments.list[supportAppointment.id] = supportAppointment;
 						});
@@ -152,7 +152,7 @@ class SupportReducer {
 							list: {}
 						};
 	
-						action.payload.courses.forEach( function(course) {
+						action.payload.courses.forEach(function(course) {
 							courses.ids.push(course.id);
 							courses.list[course.id] = course;
 						});
@@ -172,7 +172,7 @@ class SupportReducer {
 							bySectionIds: {}
 						};
 	
-						action.payload.supportAssignments.forEach( function(supportAssignment) {
+						action.payload.supportAssignments.forEach(function(supportAssignment) {
 							supportAssignments.ids.push(supportAssignment.id);
 							supportAssignments.list[supportAssignment.id] = supportAssignment;
 	
@@ -235,13 +235,13 @@ class SupportReducer {
 						};
 	
 						// Support staff via roles
-						action.payload.supportStaffList.forEach( function(supportStaff) {
+						action.payload.supportStaffList.forEach(function(supportStaff) {
 							supportStaffList.list[supportStaff.id] = supportStaff;
 							supportStaffList.ids.push(supportStaff.id);
 						});
 	
 						// Support staff via assignments (but not necessarily roles)
-						action.payload.assignedSupportStaff.forEach( function(supportStaff) {
+						action.payload.assignedSupportStaff.forEach(function(supportStaff) {
 							// Only add new supportStaff references
 							if (supportStaffList.ids.indexOf(supportStaff.id) == -1) {
 								supportStaffList.list[supportStaff.id] = supportStaff;
@@ -290,7 +290,7 @@ class SupportReducer {
 							list: {}
 						};
 	
-						action.payload.studentSupportPreferences.forEach( function(preference) {
+						action.payload.studentSupportPreferences.forEach(function(preference) {
 							supportStaffPreferences.list[preference.id] = preference;
 							supportStaffPreferences.ids.push(preference.id);
 						});
@@ -307,7 +307,7 @@ class SupportReducer {
 							list: {}
 						};
 	
-						action.payload.instructorSupportPreferences.forEach( function(preference) {
+						action.payload.instructorSupportPreferences.forEach(function(preference) {
 							instructorPreferences.list[preference.id] = preference;
 							instructorPreferences.ids.push(preference.id);
 						});
@@ -336,7 +336,7 @@ class SupportReducer {
 							bySupportStaffId: {}
 						};
 	
-						action.payload.studentSupportCallResponses.forEach( function(supportCallResponse) {
+						action.payload.studentSupportCallResponses.forEach(function(supportCallResponse) {
 							supportStaffSupportCallResponses.list[supportCallResponse.id] = supportCallResponse;
 							supportStaffSupportCallResponses.ids.push(supportCallResponse.id);
 							supportStaffSupportCallResponses.bySupportStaffId[supportCallResponse.supportStaffId] = supportCallResponse;
@@ -354,7 +354,7 @@ class SupportReducer {
 							list: {}
 						};
 	
-						action.payload.instructorSupportCallResponses.forEach( function(supportCallResponse) {
+						action.payload.instructorSupportCallResponses.forEach(function(supportCallResponse) {
 							instructorSupportCallResponses.list[supportCallResponse.id] = supportCallResponse;
 							instructorSupportCallResponses.ids.push(supportCallResponse.id);
 						});

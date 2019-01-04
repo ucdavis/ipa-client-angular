@@ -20,7 +20,7 @@ class SupportSelectors {
 	
 				// Build sectionGroup DTOs
 				var newSectionGroups = [];
-				sectionGroups.ids.forEach( function(sectionGroupId) {
+				sectionGroups.ids.forEach(function(sectionGroupId) {
 					var sectionGroup = sectionGroups.list[sectionGroupId];
 	
 					// Add course data
@@ -29,7 +29,7 @@ class SupportSelectors {
 					// Add assignments
 					sectionGroup.supportAssignments = [];
 	
-					supportAssignments.ids.forEach( function(assignmentId) {
+					supportAssignments.ids.forEach(function(assignmentId) {
 						var supportAssignment = supportAssignments.list[assignmentId];
 	
 						// Ensure preference is relevant to sectionGroup
@@ -55,7 +55,7 @@ class SupportSelectors {
 					sectionGroup.teachingAssistantAssignmentOptions.instructorPreferences = [];
 	
 					// Add instructor preferences
-					instructorPreferences.ids.forEach( function(preferenceId) {
+					instructorPreferences.ids.forEach(function(preferenceId) {
 						var preference = instructorPreferences.list[preferenceId];
 	
 						if (preference.sectionGroupId != sectionGroup.id) {
@@ -70,7 +70,7 @@ class SupportSelectors {
 	
 					// Add SupportStaff preferences
 					sectionGroup.teachingAssistantAssignmentOptions.supportStaffPreferences = [];
-					supportStaffPreferences.ids.forEach( function(preferenceId) {
+					supportStaffPreferences.ids.forEach(function(preferenceId) {
 						var preference = supportStaffPreferences.list[preferenceId];
 	
 						if (preference.sectionGroupId != sectionGroup.id
@@ -86,7 +86,7 @@ class SupportSelectors {
 	
 					// Add Other options
 					sectionGroup.teachingAssistantAssignmentOptions.other = [];
-					supportStaffList.ids.forEach( function(supportStaffId) {
+					supportStaffList.ids.forEach(function(supportStaffId) {
 						var supportStaff = supportStaffList.list[supportStaffId];
 	
 						if (processedSupportStaffIds.indexOf(supportStaffId) > -1) {
@@ -109,7 +109,7 @@ class SupportSelectors {
 	
 					// Add SupportStaff preferences
 					sectionGroup.readerAssignmentOptions.supportStaffPreferences = [];
-					supportStaffPreferences.ids.forEach( function(preferenceId) {
+					supportStaffPreferences.ids.forEach(function(preferenceId) {
 						var preference = supportStaffPreferences.list[preferenceId];
 	
 						if (preference.sectionGroupId != sectionGroup.id
@@ -125,7 +125,7 @@ class SupportSelectors {
 	
 					// Add Other options
 					sectionGroup.readerAssignmentOptions.other = [];
-					supportStaffList.ids.forEach( function(supportStaffId) {
+					supportStaffList.ids.forEach(function(supportStaffId) {
 						var supportStaff = supportStaffList.list[supportStaffId];
 	
 						if (processedSupportStaffIds.indexOf(supportStaffId) > -1) {
@@ -181,7 +181,7 @@ class SupportSelectors {
 	
 					section.supportAssignments = [];
 	
-					supportAssignments.bySectionIds[sectionId].forEach( function(assignmentId) {
+					supportAssignments.bySectionIds[sectionId].forEach(function(assignmentId) {
 						var supportAssignment = supportAssignments.list[assignmentId];
 	
 						// Ensure preference is relevant to sectionGroup
@@ -219,7 +219,7 @@ class SupportSelectors {
 				var newSupportStaffList = [];
 	
 				// Build the supportStaff view DTOs
-				supportStaffList.ids.forEach( function(supportStaffId) {
+				supportStaffList.ids.forEach(function(supportStaffId) {
 					var supportStaffDTO = supportStaffList.list[supportStaffId];
 	
 					supportStaffDTO.supportCallResponse = self.findSupportCallResponse(supportStaffSupportCallResponses, supportStaffDTO.id);
@@ -282,7 +282,7 @@ class SupportSelectors {
 				var self = this;
 				var newPreferences = [];
 	
-				supportStaffPreferences.ids.forEach( function(preferenceId) {
+				supportStaffPreferences.ids.forEach(function(preferenceId) {
 					var preference = supportStaffPreferences.list[preferenceId];
 	
 					// Ensure preference is relevant to supportStaff
@@ -302,7 +302,7 @@ class SupportSelectors {
 			generateSupportAssignmentsForSupportStaff: function(supportStaffId, supportAssignments, sectionGroups, courses, sections) {
 				var self = this;
 				var generatedSupportAssignments = [];
-				supportAssignments.ids.forEach( function(assignmentId) {
+				supportAssignments.ids.forEach(function(assignmentId) {
 					var supportAssignment = supportAssignments.list[assignmentId];
 	
 					// Ensure preference is relevant to supportStaff
@@ -324,7 +324,7 @@ class SupportSelectors {
 			findSupportCallResponse: function(supportCallResponses, supportStaffId) {
 				var supportCallResponse = null;
 	
-				supportCallResponses.ids.forEach( function(supportCallResponseId) {
+				supportCallResponses.ids.forEach(function(supportCallResponseId) {
 					var slotSupportCallResponse = supportCallResponses.list[supportCallResponseId];
 					if (supportStaffId == slotSupportCallResponse.supportStaffId) {
 						supportCallResponse = slotSupportCallResponse;
@@ -337,7 +337,7 @@ class SupportSelectors {
 				var self = this;
 				var newSupportAssignments = [];
 	
-				supportAssignments.ids.forEach( function(supportAssignmentId) {
+				supportAssignments.ids.forEach(function(supportAssignmentId) {
 					var supportAssignment = supportAssignments.list[supportAssignmentId];
 					supportAssignment = self.getCourseId(supportAssignment, sectionGroups);
 					supportAssignment = self.addCourseData(supportAssignment, courses);
@@ -352,7 +352,7 @@ class SupportSelectors {
 				var uniqueSupportAssignments = [];
 				var supportAssignmentDTOs = this.generateSupportAssignments(supportAssignments, sectionGroups, courses);
 	
-				supportAssignmentDTOs.forEach( function(assignment) {
+				supportAssignmentDTOs.forEach(function(assignment) {
 					var properties = ["courseNumber", "subjectCode", "sequencePattern", "appointmentType", "appointmentPercentage"];
 					if (_array_contains_by_properties(uniqueSupportAssignments, properties, assignment)) {
 						return;
@@ -366,7 +366,7 @@ class SupportSelectors {
 			/* Helper functions */
 			// Blend the relevant course data
 			addCourseData: function(entity, courses) {
-				courses.ids.forEach( function (courseId) {
+				courses.ids.forEach(function (courseId) {
 					var course = courses.list[courseId];
 	
 					if (entity.courseId == course.id) {
@@ -410,7 +410,7 @@ class SupportSelectors {
 			},
 			// Blend the relevant supportStaff data
 			addSupportStaffData: function(entity, supportStaffList) {
-				supportStaffList.ids.forEach( function (supportStaffId) {
+				supportStaffList.ids.forEach(function (supportStaffId) {
 					var supportStaff = supportStaffList.list[supportStaffId];
 	
 					if (entity.supportStaffId == supportStaff.id) {

@@ -124,7 +124,7 @@ let addInstructorsModal = function (TermService, TeachingCallStatusActionCreator
         var atLeastOneInstructor = false;
         var atLeastOneTerm = false;
     
-        scope.startTeachingCallConfig.invitedInstructors.forEach( function(slotInstructor) {
+        scope.startTeachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
           if (slotInstructor.invited == true) {
             atLeastOneInstructor = true;
           }

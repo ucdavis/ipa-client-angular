@@ -30,7 +30,7 @@ let ipaTermSelectorDropdown  = function ($window, $location, $routeParams, $root
 
 			scope.scheduleTerms = scope.getScheduleTerms();
 
-			scope.scheduleTerms.forEach( function(term) {
+			scope.scheduleTerms.forEach(function(term) {
 				if (term.shortCode == scope.termShortCode) {
 					scope.currentTermDescription = term.description;
 				}

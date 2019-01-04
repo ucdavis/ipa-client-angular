@@ -5,7 +5,7 @@ export function getRoleDisplayName(roleString) {
 		return "Student PhD";
 	}
 
-	var lowercase = roleString.replace( /([A-Z])/g, " $1" );
+	var lowercase = roleString.replace(/([A-Z])/g, " $1");
 	return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);
 }
 

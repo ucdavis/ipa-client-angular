@@ -59,7 +59,7 @@ let courseDetails = function (CourseActionCreators, SectionService) {
           return;
         }
 
-        if (scope.isSequencePatternUnique(sequencePattern) == false ) {
+        if (scope.isSequencePatternUnique(sequencePattern) == false) {
           scope.courseDetails.sequencePatternTooltipMessage = "Sequence pattern already in use";
           return;
         }

@@ -121,7 +121,7 @@ class SchedulingActionCreators {
 					}
 				});
 
-				if (StringService.isDay(tab) ) {
+				if (StringService.isDay(tab)) {
 					var days = {
 						"Sunday": { number: 0, description: "Sunday"},
 						"Monday": { number: 1, description: "Monday"},

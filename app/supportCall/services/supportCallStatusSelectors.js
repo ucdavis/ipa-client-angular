@@ -10,7 +10,7 @@ class SupportCallStatusSelectors {
 				var _self = this;
 				let generatedInstructors = [];
 
-				instructors.ids.forEach( function (instructorId) {
+				instructors.ids.forEach(function (instructorId) {
 					var instructor = instructors.list[instructorId];
 					var supportCallResponse = supportCallResponses.list[instructor.supportCallResponseId];
 					var isInstructorInSupportCall = supportCallResponse ? true : false;
@@ -29,7 +29,7 @@ class SupportCallStatusSelectors {
 				var _self = this;
 				let generatedSupportStaffList = [];
 	
-				supportStaffList.ids.forEach( function (supportStaffId) {
+				supportStaffList.ids.forEach(function (supportStaffId) {
 					var supportStaff = supportStaffList.list[supportStaffId];
 					var supportCallResponse = supportCallResponses.list[supportStaff.supportCallResponseId];
 					var isSupportStaffInSupportCall = supportCallResponse ? true : false;

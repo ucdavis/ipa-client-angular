@@ -4,7 +4,7 @@ class InstructorFormSelectors {
 			generateSectionGroups: function (sectionGroups, supportStaff, studentPreferences, instructorPreferences) {
 				var self = this;
 
-				sectionGroups.ids.forEach( function (sectionGroupId) {
+				sectionGroups.ids.forEach(function (sectionGroupId) {
 					var sectionGroup = sectionGroups.list[sectionGroupId]; // eslint-disable-line no-unused-vars
 					// Add instructor preference data
 					sectionGroup = self.addInstructorPreferencesToSectionGroup(sectionGroup, supportStaff, instructorPreferences);
@@ -19,14 +19,14 @@ class InstructorFormSelectors {
 			addInstructorPreferencesToSectionGroup: function (sectionGroup, supportStaff, instructorPreferences) {
 				sectionGroup.instructorPreferences = [];
 	
-				instructorPreferences.ids.forEach( function (preferenceId) {
+				instructorPreferences.ids.forEach(function (preferenceId) {
 					var preference = instructorPreferences.list[preferenceId];
 	
 					if (preference.sectionGroupId != sectionGroup.id) {
 						return;
 					}
 	
-					supportStaff.ids.forEach( function(supportStaffId) {
+					supportStaff.ids.forEach(function(supportStaffId) {
 						var staff = supportStaff.list[supportStaffId];
 						if (preference.supportStaffId == staff.id) {
 							preference.firstName = staff.firstName;
@@ -46,7 +46,7 @@ class InstructorFormSelectors {
 	
 				sectionGroup.eligibleSupportStaff = {};
 	
-				sectionGroup.instructorPreferences.forEach( function(preference) {
+				sectionGroup.instructorPreferences.forEach(function(preference) {
 					if (confirmedSupportStaffIds.indexOf(preference.supportStaffId) == -1) {
 						confirmedSupportStaffIds.push(preference.supportStaffId);
 					}
@@ -54,12 +54,12 @@ class InstructorFormSelectors {
 	
 				sectionGroup.eligibleSupportStaff.preferred = [];
 	
-				studentPreferences.ids.forEach( function (preferenceId) {
+				studentPreferences.ids.forEach(function (preferenceId) {
 					var preference = studentPreferences.list[preferenceId];
 					var slotSupportStaff = supportStaff.list[preference.supportStaffId];
 	
 					if (preference.sectionGroupId == sectionGroup.id
-					&& confirmedSupportStaffIds.indexOf(preference.supportStaffId) == -1 ) {
+					&& confirmedSupportStaffIds.indexOf(preference.supportStaffId) == -1) {
 						confirmedSupportStaffIds.push(preference.supportStaffId);
 	
 						preference.firstName = slotSupportStaff.firstName;
@@ -72,7 +72,7 @@ class InstructorFormSelectors {
 	
 				sectionGroup.eligibleSupportStaff.other = [];
 	
-				supportStaff.ids.forEach( function(supportStaffId) {
+				supportStaff.ids.forEach(function(supportStaffId) {
 					var staff = supportStaff.list[supportStaffId];
 	
 					if (confirmedSupportStaffIds.indexOf(supportStaffId) == -1) {

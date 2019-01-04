@@ -405,7 +405,7 @@ class SupportActions {
 				return "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
 			},
 			combineBlobs: function (blobOne, blobTwo) {
-				for ( var i = 0; i < blobTwo.length; i = i + 2) {
+				for (var i = 0; i < blobTwo.length; i = i + 2) {
 					if (blobTwo[i] == "0") {
 						blobOne = setCharAt(blobOne, i, "0");
 					}

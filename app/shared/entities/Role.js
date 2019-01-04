@@ -23,7 +23,7 @@ const Role = angular.module('Role', [])
 					return "Student PhD";
 				}
 
-				var lowercase = this.name.replace( /([A-Z])/g, " $1" );
+				var lowercase = this.name.replace(/([A-Z])/g, " $1");
 				return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);
 			}
 	};

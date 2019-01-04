@@ -104,7 +104,7 @@ class AssignmentStateService {
 							list: {}
 						};
 
-						action.payload.instructorTypes.forEach( function(instructorType) {
+						action.payload.instructorTypes.forEach(function(instructorType) {
 							instructorTypes.list[instructorType.id] = instructorType;
 							instructorTypes.ids.push(instructorType.id);
 						});
@@ -122,7 +122,7 @@ class AssignmentStateService {
 							list: {}
 						};
 
-						action.payload.supportStaffList.forEach( function(supportStaff) {
+						action.payload.supportStaffList.forEach(function(supportStaff) {
 							supportStaffList.list[supportStaff.id] = supportStaff;
 							supportStaffList.ids.push(supportStaff.id);
 						});
@@ -144,12 +144,12 @@ class AssignmentStateService {
 							list: {}
 						};
 
-						action.payload.supportStaffList.forEach( function(supportStaff) {
+						action.payload.supportStaffList.forEach(function(supportStaff) {
 							supportStaffList.list[supportStaff.id] = supportStaff;
 							supportStaffList.ids.push(supportStaff.id);
 						});
 
-						action.payload.studentSupportPreferences.forEach( function(preference) {
+						action.payload.studentSupportPreferences.forEach(function(preference) {
 							var supportStaff = supportStaffList.list[preference.supportStaffId];
 
 							if (supportStaff) {
@@ -584,7 +584,7 @@ class AssignmentStateService {
 							list: {}
 						};
 
-						action.payload.supportStaffList.forEach( function(supportStaff) {
+						action.payload.supportStaffList.forEach(function(supportStaff) {
 							supportStaffList.list[supportStaff.id] = supportStaff;
 							supportStaffList.ids.push(supportStaff.id);
 						});
@@ -594,7 +594,7 @@ class AssignmentStateService {
 							list: {}
 						};
 
-						action.payload.studentSupportPreferences.forEach( function(preference) {
+						action.payload.studentSupportPreferences.forEach(function(preference) {
 							studentPreferences.list[preference.id] = preference;
 							studentPreferences.ids.push(preference.id);
 						});
