@@ -58,7 +58,15 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, BudgetActions) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						BudgetActions.getInitialState();
+						if ($route.current.params.workgroupId) {
+							var hasAccess = AuthService.getCurrentUser().hasRole('academicPlanner', $route.current.params.workgroupId);
+
+							if (hasAccess) {
+								return BudgetActions.getInitialState();
+							} else {
+								return { noAccess: true };
+							}
+						}
 					}
 				});
 			}
