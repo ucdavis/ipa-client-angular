@@ -9,7 +9,12 @@
       <delete-course-modal ng-if="view.state.uiState.isCourseDeleteModalOpen" state="view.state" is-visible="view.state.uiState.isCourseDeleteModalOpen"></delete-course-modal>
   </ipa-modal>
 
-  <div class="container-fluid">
+	<!-- Handle lack of access -->
+  <div ng-if="view.state.uiState.noAccess">
+    <no-access workgroup-name="sharedState.workgroup.name"></no-access>
+  </div>
+
+  <div class="container-fluid" ng-if="!view.state.uiState.noAccess">
     <div class="col-md-9" unselect-cell>
     <div class="row" style="margin-bottom: 2em;">
       <div class="col-sm-offset-3 col-sm-6 input-group">

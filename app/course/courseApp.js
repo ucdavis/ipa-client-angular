@@ -39,7 +39,12 @@ function config ($routeProvider) {
       validate: function (AuthService, $route, CourseActionCreators) {
         return AuthService.validate().then(function () {
           if ($route.current.params.workgroupId) {
-            CourseActionCreators.getInitialState();
+            var hasAccess = AuthService.getCurrentUser().hasRole('academicPlanner', $route.current.params.workgroupId);
+            if (hasAccess) {
+              CourseActionCreators.getInitialState();
+            } else {
+              CourseActionCreators.noAccess();
+            }
           }
         });
       }
@@ -114,7 +119,8 @@ const courseApp = angular.module("courseApp", dependencies) // eslint-disable-li
   OPEN_COURSE_DELETION_MODAL: "OPEN_COURSE_DELETION_MODAL",
   CLOSE_COURSE_DELETION_MODAL: "CLOSE_COURSE_DELETION_MODAL",
   DELETE_MULTIPLE_COURSES: "DELETE_MULTIPLE_COURSES",
-  MASS_ASSIGN_TAGS: "MASS_ASSIGN_TAGS"
+  MASS_ASSIGN_TAGS: "MASS_ASSIGN_TAGS",
+  NO_ACCESS: "NO_ACCESS"
 });
 
 export default courseApp;

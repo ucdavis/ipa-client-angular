@@ -23,6 +23,12 @@ class CourseActionCreators {
           $rootScope.$emit('toast', { message: "Could not load initial course state.", type: "ERROR" });
         });
       },
+      noAccess: function () {
+        CourseStateService.reduce({
+          type: ActionTypes.NO_ACCESS,
+          payload: {}
+        });
+      },
       submitMassAssignTags: function (userActions, tagIds, courseIds, workgroupId, year) {
         let massAssignTags = {
           tagIdsToAdd: [],
