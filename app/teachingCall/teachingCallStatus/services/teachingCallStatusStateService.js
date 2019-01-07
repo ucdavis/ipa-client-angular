@@ -9,7 +9,7 @@ class TeachingCallStatusStateService {
 							ids: [],
 							list: []
 						};
-						action.payload.teachingCallReceipts.forEach( function(teachingCallReceipt) {
+						action.payload.teachingCallReceipts.forEach(function(teachingCallReceipt) {
 							teachingCallReceipts.ids.push(teachingCallReceipt.id);
 							teachingCallReceipts.list[teachingCallReceipt.id] = teachingCallReceipt;
 						});

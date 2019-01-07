@@ -212,7 +212,7 @@ class ScheduleCostCalculations {
 
         sectionGroupCost.commentCountDisplay = sectionGroupCost.commentCount > 0 ? " (" + sectionGroupCost.commentCount + ")" : '   ';
 
-        sectionGroupCost.comments =_array_sortByProperty(sectionGroupCost.comments, "lastModifiedOn", true);
+        sectionGroupCost.comments = _array_sortByProperty(sectionGroupCost.comments, "lastModifiedOn", true);
       },
       // Calculate sectionGroup costs
       _calculateSectionGroupFinancialCosts: function(sectionGroupCost) {

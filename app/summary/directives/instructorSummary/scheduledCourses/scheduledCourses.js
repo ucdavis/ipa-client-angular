@@ -176,7 +176,7 @@ let scheduledCourses = function ($rootScope) {
 
 					if (!days && !start & !end) { return; }
 
-					if ( !(matchingActivityHash[uniqueKey])) {
+					if (!(matchingActivityHash[uniqueKey])) {
 						matchingActivityHash[uniqueKey] = [];
 						hashKeys.push(uniqueKey);
 					}

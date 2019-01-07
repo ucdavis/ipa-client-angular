@@ -504,7 +504,7 @@ class SummaryStateService {
 	}
 
 	millisecondsToFullDate(milliseconds) {
-		if ( !(milliseconds) ) {
+		if (!(milliseconds)) {
 			return "";
 		}
 		var d = new Date(milliseconds);

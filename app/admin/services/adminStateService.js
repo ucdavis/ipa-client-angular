@@ -33,7 +33,7 @@ class AdminStateService {
 						workgroups.list = workgroupList;
 	
 						if (action.payload.lastActiveDates) {
-							action.payload.lastActiveDates.forEach( function(lastActiveDate) {
+							action.payload.lastActiveDates.forEach(function(lastActiveDate) {
 								var results = lastActiveDate.split(",");
 								var workgroupId = results[0];
 								var date = results[1].split(" ")[0];

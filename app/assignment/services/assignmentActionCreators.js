@@ -23,6 +23,28 @@ class AssignmentActionCreators {
 				var tab = $route.current.params.tab;
 
 				_self.AssignmentService.getInitialState(workgroupId, year).then(function (payload) {
+					// usersMap maps user IDs to login IDs
+					var usersMap = new Map();
+					for (var user in payload.users) {
+						usersMap.set(payload.users[user].loginId, payload.users[user].id);
+					}
+
+					var userRolesMap = new Map();
+					for (var userRole in payload.userRoles) {
+						if (payload.userRoles[userRole].role == "instructor") {
+							userRolesMap.set(payload.userRoles[userRole].userId, payload.userRoles[userRole].role);
+						}
+					}
+
+					for (var instructor in payload.instructors) {
+						payload.instructors[instructor].isAssignable = false;
+						var userId = usersMap.get(payload.instructors[instructor].loginId);
+
+						if (userRolesMap.get(userId)) {
+							payload.instructors[instructor].isAssignable = true;
+						}
+					}
+
 					var action = {
 						type: ActionTypes.INIT_ASSIGNMENT_VIEW,
 						payload: payload,
@@ -174,18 +196,18 @@ class AssignmentActionCreators {
 			},
 
 			/**
-			 * Assigns an instructor to a course
-			 * 
-			 * @param {*} instructorId 
-			 * @param {*} year 
-			 * @param {*} workgroupId 
-			 * @param {*} comment 
+			 * Assigns an instructor to a comment
+			 *
+			 * @param {*} instructorId
+			 * @param {*} year
+			 * @param {*} workgroupId
+			 * @param {*} comment
 			 */
 			addInstructorAssignment: function (instructorId, year, workgroupId, comment) {
 				var scheduleInstructorNote = {};
 				scheduleInstructorNote.instructorId = instructorId;
 				scheduleInstructorNote.comment = comment;
-	
+
 				_self.AssignmentService.addScheduleInstructorNote(instructorId, year, workgroupId, comment).then(function (scheduleInstructorNote) {
 					_self.$rootScope.$emit('toast', { message: "Added instructor comment", type: "SUCCESS" });
 					var action = {
@@ -199,35 +221,24 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Could not add instructor comment.", type: "ERROR" });
 				});
 			},
-			removeInstructorAssignment: function () {
-				console.error("This function was using undefined variables so it has been disabled"); // eslint-disable-line no-console
-				// _self.AssignmentService.removeInstructorAssignment(sectionGroupId, instructorId).then(function (sectionGroupId) {
-				// 	window.ipa_analyze_event('instructor assignments', 'instructor unassigned');
-
-				// 	_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
-				// 	var action = {
-				// 		type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,
-				// 		payload: {
-				// 			sectionGroup: sectionGroup
-				// 		}
-				// 	};
-				// 	_self.AssignmentStateService.reduce(action);
-				// }, function () {
-				// 	_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
-				// });
-			},
 
 			/**
 			 * Assigns an instructor who did not have a teaching preference.
-			 * 
-			 * @param {*} teachingAssignment 
-			 * @param {*} scheduleId 
+			 *
+			 * @param {*} teachingAssignment
+			 * @param {*} scheduleId
 			 */
 			addAndApproveInstructorAssignment: function (teachingAssignment, scheduleId) {
 				_self.AssignmentService.addInstructorAssignment(teachingAssignment, scheduleId).then(function (teachingAssignment) {
 					window.ipa_analyze_event('instructor assignments', 'instructor without preference assigned');
 
 					_self.$rootScope.$emit('toast', { message: "Assigned instructor to course", type: "SUCCESS" });
+					var sectionGroup = AssignmentStateService._state.sectionGroups.list[teachingAssignment.sectionGroupId];
+
+					if (sectionGroup) {
+						sectionGroup.isAssigned = true;
+						sectionGroup.showTheStaff = false;
+					}
 					var action = {
 						type: ActionTypes.ADD_TEACHING_ASSIGNMENT,
 						payload: {
@@ -242,16 +253,21 @@ class AssignmentActionCreators {
 
 			/**
 			 * Assigns an instructor type to a course (as opposed to an instructor)
-			 * 
-			 * @param {*} teachingAssignment 
+			 *
+			 * @param {*} teachingAssignment
 			 */
 			assignInstructorType: function (teachingAssignment) {
 				var scheduleId = AssignmentStateService._state.userInterface.scheduleId;
-	
+
 				_self.AssignmentService.addInstructorAssignment(teachingAssignment, scheduleId).then(function (newTeachingAssignment) {
 					window.ipa_analyze_event('instructor assignments', 'instructor type assigned');
 
 					_self.$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
+					var sectionGroup = AssignmentStateService._state.sectionGroups.list[newTeachingAssignment.sectionGroupId];
+
+					if (sectionGroup) {
+						sectionGroup.isAssigned = true;
+					}
 					_self.AssignmentStateService.reduce({
 						type: ActionTypes.ADD_TEACHING_ASSIGNMENT,
 						payload: {
@@ -262,25 +278,11 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
 				});
 			},
-			unassignInstructorType: function (originalTeachingAssignment) {
-				_self.AssignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function () {
-					_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
-	
-					_self.AssignmentStateService.reduce({
-						type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,
-						payload: {
-							teachingAssignment: originalTeachingAssignment
-						}
-					});
-				}, function () {
-					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
-				});
-			},
 			assignStudentToAssociateInstructor: function (sectionGroup, supportStaff) {
 				var here = this;
 				_self.AssignmentService.assignStudentToAssociateInstructor(sectionGroup.id, supportStaff.id).then(function (teachingAssignment) {
 					_self.$rootScope.$emit('toast', { message: "Assigned Associate Instructor", type: "SUCCESS" });
-	
+
 					var instructor = {
 						id: teachingAssignment.instructorId,
 						firstName: supportStaff.firstName,
@@ -289,7 +291,7 @@ class AssignmentActionCreators {
 						email: supportStaff.emailAddress,
 						loginId: supportStaff.loginId
 					};
-	
+
 					_self.AssignmentStateService.reduce({
 						type: ActionTypes.ASSIGN_ASSOCIATE_INSTRUCTOR,
 						payload: {
@@ -298,7 +300,7 @@ class AssignmentActionCreators {
 							year: AssignmentStateService._state.userInterface.year
 						}
 					});
-	
+
 					here.addAndApproveInstructorAssignment(teachingAssignment, AssignmentStateService._state.userInterface.scheduleId);
 				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not remove instructor from course.", type: "ERROR" });
@@ -314,6 +316,12 @@ class AssignmentActionCreators {
 
 						_self.AssignmentService.getSectionGroups(workgroupId, year).then(function (sectionGroups) {
 							var sectionGroup = sectionGroups.find(function (sectionGroup) { return sectionGroup.id === teachingAssignment.sectionGroupId; });
+
+							if (sectionGroup) {
+								sectionGroup.isAssigned = true;
+								sectionGroup.showTheStaff = false;
+							}
+
 							_self.AssignmentService.getCourses(workgroupId, year).then(function (courses) {
 								var course = courses.find(function (course) { return course.id === sectionGroup.courseId; });
 
@@ -352,6 +360,9 @@ class AssignmentActionCreators {
 			createPlaceholderStaff: function (sectionGroup) {
 				_self.AssignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
 					_self.$rootScope.$emit('toast', { message: "Assigned The Staff", type: "SUCCESS" });
+
+					sectionGroup.isAssigned = true;
+
 						var action = {
 							type: ActionTypes.CREATE_PLACEHOLDER_STAFF,
 							payload: {
@@ -366,6 +377,9 @@ class AssignmentActionCreators {
 			removePlaceholderStaff: function (sectionGroup) {
 				_self.AssignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
 					_self.$rootScope.$emit('toast', { message: "Removed The Staff", type: "SUCCESS" });
+
+					sectionGroup.isAssigned = false;
+
 						var action = {
 							type: ActionTypes.REMOVE_PLACEHOLDER_STAFF,
 							payload: {
@@ -381,9 +395,24 @@ class AssignmentActionCreators {
 				originalTeachingAssignment.approved = false;
 				_self.AssignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {
 					_self.$rootScope.$emit('toast', { message: "Removed instructor from course", type: "SUCCESS" });
+					var sectionGroup = AssignmentStateService._state.sectionGroups.list[originalTeachingAssignment.sectionGroupId];
 					var action;
+
+					if (sectionGroup) {
+						sectionGroup.isAssigned = false;
+
+						for (var i in sectionGroup.teachingAssignmentIds) {
+							var teachingAssignment = AssignmentStateService._state.teachingAssignments.list[sectionGroup.teachingAssignmentIds[i]];
+
+							if (teachingAssignment.approved == true) {
+								sectionGroup.isAssigned = true;
+								break;
+							}
+						}
+					}
 					// If unapproving a teachingPreference that was not created by the instructor, delete it instead
 					if (originalTeachingAssignment.fromInstructor === false && originalTeachingAssignment.approved === false) {
+
 						action = {
 							type: ActionTypes.REMOVE_TEACHING_ASSIGNMENT,
 							payload: {
@@ -391,7 +420,7 @@ class AssignmentActionCreators {
 							}
 						};
 						_self.AssignmentStateService.reduce(action);
-	
+
 					} else {
 						action = {
 							type: ActionTypes.UPDATE_TEACHING_ASSIGNMENT,

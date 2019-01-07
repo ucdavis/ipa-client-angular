@@ -18,7 +18,7 @@ class SupportCallStatusStateService {
 							list: []
 						};
 	
-						action.payload.studentSupportCallResponses.forEach( function(supportResponse) {
+						action.payload.studentSupportCallResponses.forEach(function(supportResponse) {
 							// Record to state
 							supportStaffSupportCallResponses.ids.push(supportResponse.id);
 							supportStaffSupportCallResponses.list[supportResponse.id] = supportResponse;
@@ -58,7 +58,7 @@ class SupportCallStatusStateService {
 							list: []
 						};
 	
-						action.payload.instructorSupportCallResponses.forEach( function(supportResponse) {
+						action.payload.instructorSupportCallResponses.forEach(function(supportResponse) {
 							// Record to state
 							instructorSupportCallResponses.ids.push(supportResponse.id);
 							instructorSupportCallResponses.list[supportResponse.id] = supportResponse;
@@ -98,7 +98,7 @@ class SupportCallStatusStateService {
 							list: []
 						};
 	
-						action.payload.activeInstructors.forEach( function(instructor) {
+						action.payload.activeInstructors.forEach(function(instructor) {
 							// Find teachingCallReceiptId if it exists
 							instructor.teachingCallReceiptId = 0;
 	
@@ -149,7 +149,7 @@ class SupportCallStatusStateService {
 						supportStaff.phdIds = action.payload.phdStudentIds;
 						supportStaff.instructionalSupportIds = action.payload.instructionalSupportIds;
 	
-						action.payload.supportStaffList.forEach( function(slotSupportStaff) {
+						action.payload.supportStaffList.forEach(function(slotSupportStaff) {
 	
 							// Identify type of supportStaff
 							slotSupportStaff.isMasters = (supportStaff.mastersIds.indexOf(slotSupportStaff.id) > -1);

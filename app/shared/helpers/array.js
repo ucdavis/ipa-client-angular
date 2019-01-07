@@ -99,7 +99,7 @@ export function _array_sortByProperty(listHash, properties, reverseOrder) {
 
 // Will test if an object exists in an array by the specified properties
 export function _array_contains_by_properties(array, properties, object) {
-	if ( !(array) || !(properties) || !(object)) {
+	if (!(array) || !(properties) || !(object)) {
 		return false;
 	}
 
@@ -123,7 +123,7 @@ export function _array_contains_by_properties(array, properties, object) {
 
 // Will return a matching object by specified properties, otherwise null
 export function _array_find_by_properties(array, properties, object) {
-	if ( !(array) || !(properties) || !(object)) {
+	if (!(array) || !(properties) || !(object)) {
 		return null;
 	}
 

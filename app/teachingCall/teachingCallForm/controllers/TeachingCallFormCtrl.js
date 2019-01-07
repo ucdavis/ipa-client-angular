@@ -312,7 +312,7 @@ class TeachingCallFormCtrl {
 			var displayRank = 1;
 
 			if (preferences) {
-				preferences.forEach( function(slotPreference) {
+				preferences.forEach(function(slotPreference) {
 					if (preference.priority > slotPreference.priority) {
 						displayRank++;
 					}

@@ -13,8 +13,8 @@ class InstructorTypeService {
 					let aDescription = instructorTypes.list[aId].description;
 					let bDescription = instructorTypes.list[bId].description;
 
-					if(aDescription < bDescription) { return -1; }
-					if(aDescription > bDescription) { return 1; }
+					if (aDescription < bDescription) { return -1; }
+					if (aDescription > bDescription) { return 1; }
 
 					return 0;
 				});

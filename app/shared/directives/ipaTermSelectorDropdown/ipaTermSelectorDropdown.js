@@ -30,7 +30,7 @@ let ipaTermSelectorDropdown  = function ($window, $location, $routeParams, $root
 
 			scope.scheduleTerms = scope.getScheduleTerms();
 
-			scope.scheduleTerms.forEach( function(term) {
+			scope.scheduleTerms.forEach(function(term) {
 				if (term.shortCode == scope.termShortCode) {
 					scope.currentTermDescription = term.description;
 				}
@@ -45,7 +45,7 @@ let ipaTermSelectorDropdown  = function ($window, $location, $routeParams, $root
 
 				let n = url.lastIndexOf(scope.termShortCode);
 				if (n > -1) {
-					url = url.substring(0, n) + newTermShortCode + url.substring(n+2, url.length);
+					url = url.substring(0, n) + newTermShortCode + url.substring(n + 2, url.length);
 				}
 
 				$window.location.href = url;

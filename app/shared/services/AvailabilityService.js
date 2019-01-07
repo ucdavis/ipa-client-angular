@@ -37,7 +37,7 @@ class AvailabilityService {
         var endTimeBlock = null;
         var blocks = [];
 
-        dayArray.forEach( function(hourFlag, i) {
+        dayArray.forEach(function(hourFlag, i) {
           if (hourFlag == "1") {
             if (startTimeBlock == null) {
               startTimeBlock = startHour + i;
@@ -55,7 +55,7 @@ class AvailabilityService {
           blocks.push(_this._blockDescription(startTimeBlock, endTimeBlock));
         }
 
-        if(blocks.length == 0) {
+        if (blocks.length == 0) {
           // No availabilities were indicated
           blocks.push("Not available");
         }
@@ -65,8 +65,8 @@ class AvailabilityService {
         return descriptions;
       },
       _blockDescription (startTime, endTime) {
-        var start = (startTime > 12 ? (startTime - 12) + "pm" : startTime + "am" );
-        var end = (endTime > 12 ? (endTime - 12) + "pm" : endTime + "am" );
+        var start = (startTime > 12 ? (startTime - 12) + "pm" : startTime + "am");
+        var end = (endTime > 12 ? (endTime - 12) + "pm" : endTime + "am");
 
         return start + "-" + end;
       }

@@ -184,7 +184,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			scope.areAllInstructorsInvited = function() {
 				let invitedInstructors = 0;
 	
-				scope.supportCallConfigData.participantPool.forEach( function(participant) {
+				scope.supportCallConfigData.participantPool.forEach(function(participant) {
 					if (participant.invited && participant.isInstructor) {
 						invitedInstructors++;
 					}
@@ -200,7 +200,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			scope.areAllMastersInvited = function() {
 				let invitedInstructors = 0;
 	
-				scope.supportCallConfigData.participantPool.forEach( function(participant) {
+				scope.supportCallConfigData.participantPool.forEach(function(participant) {
 					if (participant.invited && participant.isMasters) {
 						invitedInstructors++;
 					}
@@ -216,7 +216,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			scope.areAllPhdsInvited = function() {
 				let invitedInstructors = 0;
 	
-				scope.supportCallConfigData.participantPool.forEach( function(participant) {
+				scope.supportCallConfigData.participantPool.forEach(function(participant) {
 					if (participant.invited && participant.isPhd) {
 						invitedInstructors++;
 					}
@@ -232,7 +232,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			scope.areAllInstructionalSupportInvited = function() {
 				let invitedInstructors = 0;
 	
-				scope.supportCallConfigData.participantPool.forEach( function(participant) {
+				scope.supportCallConfigData.participantPool.forEach(function(participant) {
 					if (participant.invited && participant.isInstructionalSupport) {
 						invitedInstructors++;
 					}
@@ -246,7 +246,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			};
 	
 			scope.inviteInstructors = function() {
-				scope.supportCallConfigData.participantPool.forEach( function(participant) {
+				scope.supportCallConfigData.participantPool.forEach(function(participant) {
 					if (participant.isInstructor) {
 						participant.invited = true;
 					}
@@ -254,7 +254,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			};
 	
 			scope.inviteMasters = function() {
-				scope.supportCallConfigData.participantPool.forEach( function(participant) {
+				scope.supportCallConfigData.participantPool.forEach(function(participant) {
 					if (participant.isMasters) {
 						participant.invited = true;
 					}
@@ -262,7 +262,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			};
 	
 			scope.invitePhds = function() {
-				scope.supportCallConfigData.participantPool.forEach( function(participant) {
+				scope.supportCallConfigData.participantPool.forEach(function(participant) {
 					if (participant.isPhd) {
 						participant.invited = true;
 					}
@@ -270,7 +270,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			};
 	
 			scope.inviteInstructionalSupport = function() {
-				scope.supportCallConfigData.participantPool.forEach( function(participant) {
+				scope.supportCallConfigData.participantPool.forEach(function(participant) {
 					if (participant.isInstructionalSupport) {
 						participant.invited = true;
 					}
@@ -300,7 +300,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 			scope.isAddFormComplete = function() {
 				if (scope.supportCallConfigData.mode == "supportStaff") {
 					// Ensure at least one preference type is set
-					if(!scope.supportCallConfigData.collectAssociateInstructorPreferences
+					if (!scope.supportCallConfigData.collectAssociateInstructorPreferences
 						&& !scope.supportCallConfigData.collectReaderPreferences
 						&& !scope.supportCallConfigData.collectTeachingAssistantPreferences) {
 						return false;
@@ -310,7 +310,7 @@ let addSupportCallModal = function (SupportCallStatusActionCreators) {
 				// Ensure at least participant is selected
 				var atLeastOneInvited = false;
 	
-				scope.supportCallConfigData.participantPool.forEach( function (participant) {
+				scope.supportCallConfigData.participantPool.forEach(function (participant) {
 					if (participant.invited == true) {
 						atLeastOneInvited = true;
 					}

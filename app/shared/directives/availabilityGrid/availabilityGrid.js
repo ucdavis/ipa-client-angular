@@ -85,7 +85,7 @@ let availabilityGrid = function($timeout) {
 					isMouseDown = true;
 					var d = $(this).data().day; // eslint-disable-line no-undef
 					var h = $(this).data().hour; // eslint-disable-line no-undef
-					dragValue = scope.availability[d][h] = 1- scope.availability[d][h];
+					dragValue = scope.availability[d][h] = 1 - scope.availability[d][h];
 					scope.saveAvailability();
 
 					dragClass = dragValue === 0 ? 'unavailable' : 'available';

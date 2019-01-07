@@ -17,7 +17,7 @@ class InstructorFormStateService {
               list: {}
             };
 
-            action.payload.sectionGroups.forEach( function(sectionGroup) {
+            action.payload.sectionGroups.forEach(function(sectionGroup) {
               // Record to state
               sectionGroups.ids.push(sectionGroup.id);
               sectionGroups.list[sectionGroup.id] = sectionGroup;
@@ -36,7 +36,7 @@ class InstructorFormStateService {
               list: {}
             };
 
-            action.payload.courses.forEach( function(course) {
+            action.payload.courses.forEach(function(course) {
               // Record to state
               courses.ids.push(course.id);
               courses.list[course.id] = course;
@@ -99,7 +99,7 @@ class InstructorFormStateService {
               sorted: [],
             };
 
-            action.payload.supportStaffList.forEach( function(slotSupportStaff) {
+            action.payload.supportStaffList.forEach(function(slotSupportStaff) {
               supportStaff.ids.push(slotSupportStaff.id);
               supportStaff.list[slotSupportStaff.id] = slotSupportStaff;
 
@@ -123,7 +123,7 @@ class InstructorFormStateService {
               array: action.payload.studentSupportCallResponses
             };
 
-            action.payload.studentSupportCallResponses.forEach( function(slotStudentSupportCallResponse) {
+            action.payload.studentSupportCallResponses.forEach(function(slotStudentSupportCallResponse) {
               studentSupportCallResponses.ids.push(slotStudentSupportCallResponse.id);
               studentSupportCallResponses.list[slotStudentSupportCallResponse.id] = slotStudentSupportCallResponse;
             });
@@ -142,7 +142,7 @@ class InstructorFormStateService {
               array: action.payload.teachingAssignments
             };
 
-            action.payload.teachingAssignments.forEach( function(teachingAssignment) {
+            action.payload.teachingAssignments.forEach(function(teachingAssignment) {
               teachingAssignments.ids.push(teachingAssignment.id);
               teachingAssignments.list[teachingAssignment.id] = teachingAssignment;
             });
@@ -161,7 +161,7 @@ class InstructorFormStateService {
               array: action.payload.studentSupportPreferences
             };
 
-            action.payload.studentSupportPreferences.forEach( function(slotStudentPreference) {
+            action.payload.studentSupportPreferences.forEach(function(slotStudentPreference) {
               studentPreferences.ids.push(slotStudentPreference.id);
               studentPreferences.list[slotStudentPreference.id] = slotStudentPreference;
             });
@@ -179,7 +179,7 @@ class InstructorFormStateService {
               list: {}
             };
 
-            action.payload.instructorSupportPreferences.forEach( function(instructorPreference) {
+            action.payload.instructorSupportPreferences.forEach(function(instructorPreference) {
               instructorPreferences.ids.push(instructorPreference.id);
               instructorPreferences.list[instructorPreference.id] = instructorPreference;
             });

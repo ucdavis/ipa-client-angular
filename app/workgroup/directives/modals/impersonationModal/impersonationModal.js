@@ -20,7 +20,7 @@ let impersonationModal = function (AuthService) {
       scope.canBeImpersonated = function(user) {
         var canBeImpersonated = false;
     
-        user.userRoles.forEach( function(userRole) {
+        user.userRoles.forEach(function(userRole) {
           if (userRole.role == "studentMasters"
           || userRole.role == "studentPhd"
           || userRole.role == "instructor"

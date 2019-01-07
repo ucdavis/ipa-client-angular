@@ -11,7 +11,7 @@ class StudentFormSelectors {
 	
 				var newPreferences = [];
 	
-				preferences.ids.forEach( function(preferenceId) {
+				preferences.ids.forEach(function(preferenceId) {
 					var preference = preferences.list[preferenceId];
 	
 					preference = self.addSectionGroupData(preference, sectionGroups);
@@ -55,7 +55,7 @@ class StudentFormSelectors {
 			},
 			// Blend the relevant course data
 			addCourseData: function (entity, courses) {
-				courses.ids.forEach( function (courseId) {
+				courses.ids.forEach(function (courseId) {
 					var course = courses.list[courseId];
 	
 					if (entity.courseId == course.id) {
@@ -71,7 +71,7 @@ class StudentFormSelectors {
 			},
 			// Blend the relevant course data
 			addSectionGroupData: function (entity, sectionGroups) {
-				sectionGroups.ids.forEach( function (sectionGroupId) {
+				sectionGroups.ids.forEach(function (sectionGroupId) {
 					var sectionGroup = sectionGroups.list[sectionGroupId];
 	
 					if (entity.sectionGroupId == sectionGroup.id) {

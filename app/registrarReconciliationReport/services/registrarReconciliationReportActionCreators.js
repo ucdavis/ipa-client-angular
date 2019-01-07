@@ -42,9 +42,9 @@ class RegistrarReconciliationReportActionCreators {
 			calculateCurrentTermShortCode (termStates) {
 				var earliestTermCode = null;
 
-				termStates.forEach( function(termState) {
+				termStates.forEach(function(termState) {
 					if (termState.state == "ANNUAL_DRAFT") {
-						if ( (earliestTermCode == null) || earliestTermCode > termState.termCode) {
+						if ((earliestTermCode == null) || earliestTermCode > termState.termCode) {
 							earliestTermCode = termState.termCode;
 						}
 					}
@@ -154,7 +154,7 @@ class RegistrarReconciliationReportActionCreators {
 			createSection: function (section) {
 				// Make start/end times IPA friendly format
 				if (section.activities) {
-					section.activities.forEach( function(activity) {
+					section.activities.forEach(function(activity) {
 						activity.startTime = moment(activity.startTime, "HHmm").format("HH:mm:ss"); // eslint-disable-line no-undef
 						activity.endTime = moment(activity.endTime, "HHmm").format("HH:mm:ss"); // eslint-disable-line no-undef
 					});

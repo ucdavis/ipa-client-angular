@@ -78,10 +78,10 @@ let contactInstructorsModal = function (TermService, TeachingCallStatusActionCre
         $event.preventDefault();
         $event.stopPropagation();
         scope.opened  = {start: false, end: false};
-        if(type == 'start') {
+        if (type == 'start') {
           scope.opened.start = true;
         }
-        if(type == 'end') {
+        if (type == 'end') {
           scope.opened[id].end = true;
         }
       };

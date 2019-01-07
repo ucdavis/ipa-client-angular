@@ -179,7 +179,9 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           // One for checkbox, and one for course title
           var miscColumns = 2;
           var numberOfColumns = data.state.filters.enabledTerms.length + miscColumns;
-          body += "<tr><td class=\"text-center text-muted\" colspan=\"" + numberOfColumns + "\">No Courses</td></tr>";
+          body += "<tr><td class=\"text-center text-muted\" colspan=\"" + numberOfColumns + "\">No Courses</td>";
+          body += "<td class=\"ui-overlay\"><i class=\"btn add-after entypo-plus-circled\" data-event-type=\"addCourse\" ></i></td>";
+          body += "</tr>";
         }
 
         body += scope.getTotalsRow(termsToRender, data.state);
@@ -333,7 +335,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         let $el = $(e.target); // eslint-disable-line no-undef
 
         // Disable scrolling on number inputs as it might increase accidental changes
-        if ($el.hasClass('planned-seats') && $el.is(":focus") ) {
+        if ($el.hasClass('planned-seats') && $el.is(":focus")) {
           e.preventDefault();
         }
       });
@@ -528,25 +530,26 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
       /* Generates the final row of the table, containing seat totals */
       /* 248ms-258ms */
       scope.getTotalsRow = function (termsToRender, state) {
-        var row = "<tr class=\"term-totals\"><td><!-- checkbox --></td><td>Totals</td>";
+        var row = "<tr class=\"term-totals\"><td class=\"checkbox-cell\"><!-- checkbox --></td><td>Totals</td>";
 
         var termCount = {};
 
         _.each(state.sectionGroups.list, function(sg) {
-          if(termCount[sg.termCode] === undefined) {
+          if (termCount[sg.termCode] === undefined) {
             termCount[sg.termCode] = sg.plannedSeats;
           } else {
             termCount[sg.termCode] += sg.plannedSeats;
           }
         });
 
-        termsToRender.forEach(function (term) {
+        termsToRender.forEach(function(term) {
+          if(termCount[term.code] == undefined) { termCount[term.code] = 0; }
           row += "<td>" + termCount[term.code] + "</td>";
         });
 
         row += "</tr>";
 
-        if (state.courses.ids.length) { return row; }
+        if(state.courses.ids.length) { return row; }
       };
     }
   };

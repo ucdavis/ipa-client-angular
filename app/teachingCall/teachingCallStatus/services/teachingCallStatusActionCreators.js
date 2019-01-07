@@ -34,7 +34,7 @@ class TeachingCallStatusActionCreators {
 	
 				// Turn these instructor view objects into teachingCallReceipts
 				var receiptsPayload = selectedInstructors;
-				receiptsPayload.forEach( function(instructor) {
+				receiptsPayload.forEach(function(instructor) {
 					instructor.id = instructor.teachingCallReceiptId;
 					instructor.message = teachingCallConfig.message;
 					instructor.nextContactAtRaw = instructor.nextContactAt;
@@ -71,7 +71,7 @@ class TeachingCallStatusActionCreators {
 				teachingCallConfig.instructorIds = [];
 	
 				teachingCallConfig.invitedInstructors.forEach(function(slotInstructor) {
-					if(slotInstructor.invited) {
+					if (slotInstructor.invited) {
 						teachingCallConfig.instructorIds.push(slotInstructor.id);
 					}
 				});

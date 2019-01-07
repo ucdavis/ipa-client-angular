@@ -13,7 +13,7 @@ class ScheduleSummaryReportStateService {
 							list: {}
 						};
 
-						action.payload.courses.forEach( function(slotCourse) {
+						action.payload.courses.forEach(function(slotCourse) {
 							courses.ids.push(slotCourse.id);
 							courses.list[slotCourse.id] = slotCourse;
 						});
@@ -23,7 +23,7 @@ class ScheduleSummaryReportStateService {
 							list: {}
 						};
 
-						action.payload.supportStaffList.forEach( function(supportStaff) {
+						action.payload.supportStaffList.forEach(function(supportStaff) {
 							supportStaffList.ids.push(supportStaff.id);
 							supportStaffList.list[supportStaff.id] = supportStaff;
 						});
@@ -33,7 +33,7 @@ class ScheduleSummaryReportStateService {
 							list: {}
 						};
 
-						action.payload.instructorTypes.forEach( function(instructorType) {
+						action.payload.instructorTypes.forEach(function(instructorType) {
 							instructorTypes.ids.push(instructorType.id);
 							instructorTypes.list[instructorType.id] = instructorType;
 						});
@@ -44,7 +44,7 @@ class ScheduleSummaryReportStateService {
 							list: {}
 						};
 
-						action.payload.sectionGroups.forEach( function(slotSectionGroup) {
+						action.payload.sectionGroups.forEach(function(slotSectionGroup) {
 							// Get course data
 							var courseId = slotSectionGroup.courseId;
 							var slotCourse = courses.list[courseId];
@@ -75,7 +75,7 @@ class ScheduleSummaryReportStateService {
 							list: {}
 						};
 
-						action.payload.instructors.forEach( function(slotInstructor) {
+						action.payload.instructors.forEach(function(slotInstructor) {
 							instructors.ids.push(slotInstructor.id);
 							instructors.list[slotInstructor.id] = slotInstructor;
 						});
@@ -87,7 +87,7 @@ class ScheduleSummaryReportStateService {
 						};
 
 						// Add assigned instructor data to sectionGroups
-						action.payload.teachingAssignments.forEach( function(slotTeachingAssignment) {
+						action.payload.teachingAssignments.forEach(function(slotTeachingAssignment) {
 							// Non-sectiongroup based assignments are irrelevant here.
 							// TeachingAssignments that are unapproved are preferences and not assignments.
 							if (!slotTeachingAssignment.sectionGroupId || slotTeachingAssignment.approved == false) { return; }
@@ -112,13 +112,13 @@ class ScheduleSummaryReportStateService {
 							list: {}
 						};
 
-						action.payload.sections.forEach( function(slotSection) {
+						action.payload.sections.forEach(function(slotSection) {
 							sections.ids.push(slotSection.id);
 							sections.list[slotSection.id] = slotSection;
 						});
 
 						// Calculate a list of TA names for each sectionGroup/section
-						action.payload.supportAssignments.forEach( function(supportAssignment) {
+						action.payload.supportAssignments.forEach(function(supportAssignment) {
 							// Ensure supportAssignment is relevant
 							if (supportAssignment.appointmentType != "teachingAssistant" || !supportAssignment.supportStaffId) { return; }
 
@@ -152,7 +152,7 @@ class ScheduleSummaryReportStateService {
 							list: {}
 						};
 
-						action.payload.activities.forEach( function(slotActivity) {
+						action.payload.activities.forEach(function(slotActivity) {
 							let slotSection = sections.list[slotActivity.sectionId];
 
 							if (slotSection) {
@@ -170,7 +170,7 @@ class ScheduleSummaryReportStateService {
 						let slotSectionGroup = null;
 
 						// Add the combined sections to sectionGroups
-						sections.ids.forEach( function(slotSectionId) {
+						sections.ids.forEach(function(slotSectionId) {
 							let slotSection = sections.list[slotSectionId];
 							slotSectionGroup = sectionGroups.list[slotSection.sectionGroupId];
 
@@ -186,14 +186,14 @@ class ScheduleSummaryReportStateService {
 						}
 
 						// Add any shared activities to the appropriate sections
-						action.payload.activities.forEach( function(slotActivity) {
+						action.payload.activities.forEach(function(slotActivity) {
 							let slotSection = sections.list[slotActivity.sectionId];
 							slotSectionGroup = sectionGroups.list[slotActivity.sectionGroupId];
 
 							// Check if this activity is a shared activity
 							if (!slotSection && slotSectionGroup) {
 								
-								slotSectionGroup.sections.forEach ( function (slotSection) {
+								slotSectionGroup.sections.forEach (function (slotSection) {
 									// Scaffold section activities if necessary
 									if (slotSection.activities == null) {
 										slotSection.activities = [];
@@ -207,7 +207,7 @@ class ScheduleSummaryReportStateService {
 							activities.list[slotActivity.id] = slotActivity;
 						});
 
-						sectionGroups.ids.forEach( function (sectionGroupId) {
+						sectionGroups.ids.forEach(function (sectionGroupId) {
 							var sectionGroup = sectionGroups.list[sectionGroupId];
 
 							if (sectionGroup.sections == null && sectionGroup.plannedSeats > 0) {

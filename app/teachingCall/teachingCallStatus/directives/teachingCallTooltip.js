@@ -23,7 +23,7 @@ let teachingCallTooltip = function ($document, $timeout) {
 				// sort terms Chronologically
 				var chronologicallyOrderedTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
 				var sortedTerms = [];
-				chronologicallyOrderedTerms.forEach( function(term) {
+				chronologicallyOrderedTerms.forEach(function(term) {
 					if (relevantTerms.indexOf(term) > -1) {
 						sortedTerms.push(term);
 					}

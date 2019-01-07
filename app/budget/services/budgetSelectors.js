@@ -15,7 +15,7 @@ class BudgetSelectors {
       generateLineItemCategories: function (lineItemCategories) {
         let lineItemCategoryList = [];
 
-        lineItemCategories.ids.forEach( function (lineItemCategoryId) {
+        lineItemCategories.ids.forEach(function (lineItemCategoryId) {
           lineItemCategoryList.push(lineItemCategories.list[lineItemCategoryId]);
         });
 

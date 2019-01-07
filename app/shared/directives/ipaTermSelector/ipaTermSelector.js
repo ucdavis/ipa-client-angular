@@ -45,7 +45,7 @@ let ipaTermSelector = function($window, $location, $routeParams) {
 
 				var n = url.lastIndexOf(currentTerm);
 				if (n > -1) {
-					url = url.substring(0, n) + previousTerm + url.substring(n+2, url.length);
+					url = url.substring(0, n) + previousTerm + url.substring(n + 2, url.length);
 				}
 
 				$window.location.href = url;
@@ -63,7 +63,7 @@ let ipaTermSelector = function($window, $location, $routeParams) {
 
 				var n = url.lastIndexOf(currentTerm);
 				if (n > -1) {
-					url = url.substring(0, n) + nextTerm + url.substring(n+2, url.length);
+					url = url.substring(0, n) + nextTerm + url.substring(n + 2, url.length);
 				}
 
 				$window.location.href = url;

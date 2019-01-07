@@ -37,6 +37,9 @@
 		"no-eq-null": 0, // warn about null comparisons without type-checking operators
 		"no-eval": 2, // disallow the use of eval()
 		"no-redeclare": 0, // warn about variable redeclaration
+		"space-infix-ops": 1, // warn about whitespace around operators
+		"keyword-spacing": 1, // warn about spaces around 'if', etc.
+		"space-in-parens": [1, "never"],
 
 		// Variables
 		"no-delete-var": 2, // The delete operator is used to remove a property from an object. deleting a variable might lead to unexpected behavior

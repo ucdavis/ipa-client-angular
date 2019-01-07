@@ -185,7 +185,7 @@ class AuthService {
 					function (response) {
 						if (scope.validateState(response.data, workgroupId, year, ignoreFallBackUrl)) {
 							// Log the user to Google Analytics (only in production mode)
-							if(window.ipaRunningMode === 'production') {
+							if (window.ipaRunningMode === 'production') {
 								ga('set', 'userId', String(response.data.userTrackingId)); // eslint-disable-line no-undef
 								ga('send', 'event', 'authentication', 'user-id available'); // eslint-disable-line no-undef
 							}
