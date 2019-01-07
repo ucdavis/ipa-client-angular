@@ -3,12 +3,16 @@
 
 <ipa-header page-title="Support Call"></ipa-header>
 
-<div ng-hide="view.state" style="margin-top:300px;">
+<div ng-if="noAccess">
+	<no-access workgroup-name="sharedState.workgroup.name"></no-access>
+</div>
+
+<div ng-hide="noAccess || view.state" style="margin-top:300px;">
   <spinner></spinner>
 </div>
 
 <!-- handle lack of access -->
-<div ng-if="view.state && isInstructor == false">
+<div ng-if="!noAccess && view.state && isInstructor == false">
   <div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
     <p class="lead">You have not been invited to a support call in this term.</p>
     <br />
@@ -17,7 +21,7 @@
 </div>
 
 <!-- handle lack of data -->
-<div ng-if="view.state && isInstructor && view.state.misc.allTabs.length == 0">
+<div ng-if="!noAccess && view.state && isInstructor && view.state.misc.allTabs.length == 0">
   <div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
     <p class="lead">You have not been assigned any courses in this term.</p>
     <br />
@@ -26,7 +30,7 @@
 </div>
 
 <!-- Main page container -->
-<div ng-if="view.state && isInstructor && view.state.misc.allTabs.length > 0" class="instructor-support-call-form">
+<div ng-if="!noAccess && view.state && isInstructor && view.state.misc.allTabs.length > 0" class="instructor-support-call-form">
   <ipa-section-header header-text="'TA Preferences'"></ipa-section-header>
 
   <div class="instructor-support-call-form__preference-window">
@@ -59,7 +63,7 @@
 
 <ipa-section-header header-text="'Miscellaneous'"></ipa-section-header>
   <!-- Comments and submission area -->
-  <div class="input-box-container">
+  <div ng-if="!noAccess" class="input-box-container">
     <div class="instructor-comment-container">
       <div class="instructor-comment__area">
         <h5>Comments</h5>

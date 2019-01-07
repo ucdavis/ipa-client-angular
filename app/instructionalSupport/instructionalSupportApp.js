@@ -56,7 +56,14 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, InstructorFormActions) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						InstructorFormActions.getInitialState();
+						var roles = ['academicPlanner', 'instructor'];
+						var hasAccess = AuthService.getCurrentUser().hasRoles(roles, $route.current.params.workgroupId);
+
+						if (hasAccess) {
+							return InstructorFormActions.getInitialState();
+						} else {
+							return { noAccess: true };
+						}
 					}
 				});
 			}
@@ -69,7 +76,14 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, StudentFormActions) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						StudentFormActions.getInitialState();
+						var roles = ['academicPlanner', 'studentMaster', 'studentPhd'];
+						var hasAccess = AuthService.getCurrentUser().hasRoles(roles, $route.current.params.workgroupId);
+
+						if (hasAccess) {
+							return StudentFormActions.getInitialState();
+						} else {
+							return { noAccess: true };
+						}
 					}
 				});
 			}

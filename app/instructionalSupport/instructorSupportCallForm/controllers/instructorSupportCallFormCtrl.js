@@ -9,7 +9,7 @@ import './../instructorComment.css';
  * Controller of the ipaClientAngularApp
  */
 class InstructorSupportCallFormCtrl {
-  constructor ($scope, $route, $rootScope, $window, $timeout, $location, $routeParams, $uibModal, InstructorFormActions, AuthService) {
+  constructor ($scope, $route, $rootScope, $window, $timeout, $location, $routeParams, $uibModal, InstructorFormActions, AuthService, validate) {
     this.$scope = $scope;
     this.$route = $route;
     this.$rootScope = $rootScope;
@@ -27,6 +27,8 @@ class InstructorSupportCallFormCtrl {
     $scope.workgroupId = $routeParams.workgroupId;
     $scope.year = $routeParams.year;
     $scope.termShortCode = $routeParams.termShortCode;
+		$scope.noAccess = validate ? validate.noAccess : null;
+		$scope.sharedState = $scope.sharedState || AuthService.getSharedState();
 
     $scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 
@@ -59,6 +61,6 @@ class InstructorSupportCallFormCtrl {
   }
 }
 
-InstructorSupportCallFormCtrl.$inject = ['$scope', '$route', '$rootScope', '$window', '$timeout', '$location', '$routeParams', '$uibModal', 'InstructorFormActions', 'AuthService'];
+InstructorSupportCallFormCtrl.$inject = ['$scope', '$route', '$rootScope', '$window', '$timeout', '$location', '$routeParams', '$uibModal', 'InstructorFormActions', 'AuthService', 'validate'];
 
 export default InstructorSupportCallFormCtrl;
