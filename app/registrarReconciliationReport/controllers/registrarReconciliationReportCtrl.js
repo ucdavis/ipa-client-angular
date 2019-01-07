@@ -6,7 +6,7 @@
  * Controller of the ipaClientAngularApp
  */
 class registrarReconciliationReportCtrl {
-	constructor ($scope, $rootScope, $route, $routeParams, Term, registrarReconciliationReportActionCreators, AuthService) {
+	constructor ($scope, $rootScope, $route, $routeParams, Term, registrarReconciliationReportActionCreators, AuthService, validate) {
 		var self = this;
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
@@ -15,6 +15,8 @@ class registrarReconciliationReportCtrl {
 		this.Term = Term;
 		this.registrarReconciliationReportActionCreators = registrarReconciliationReportActionCreators;
 		this.authService = AuthService;
+		$scope.noAccess = validate ? validate.noAccess : null;
+		$scope.sharedState = $scope.sharedState || AuthService.getSharedState();
 
 		self.initialize();
 	}
@@ -101,6 +103,6 @@ class registrarReconciliationReportCtrl {
 	}
 }
 
-registrarReconciliationReportCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Term', 'RegistrarReconciliationReportActionCreators', 'AuthService'];
+registrarReconciliationReportCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Term', 'RegistrarReconciliationReportActionCreators', 'AuthService', 'validate'];
 
 export default registrarReconciliationReportCtrl;
