@@ -37,7 +37,13 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, SupportCallStatusActionCreators) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						SupportCallStatusActionCreators.getInitialState();
+						var hasAccess = AuthService.getCurrentUser().hasRole('academicPlanner', $route.current.params.workgroupId);
+
+						if (hasAccess) {
+							return SupportCallStatusActionCreators.getInitialState();
+						} else {
+							return { noAccess: true };
+						}
 					}
 				});
 			}
