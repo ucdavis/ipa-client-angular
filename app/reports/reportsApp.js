@@ -31,7 +31,13 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, BudgetComparisonReportActions) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						BudgetComparisonReportActions.getInitialState();
+						var hasAccess = AuthService.getCurrentUser().hasRole('academicPlanner', $route.current.params.workgroupId);
+
+						if (hasAccess) {
+							return BudgetComparisonReportActions.getInitialState();
+						} else {
+							return { noAccess: true };
+						}
 					}
 				});
 			}
