@@ -8,7 +8,7 @@ let noAccess = function () {
     scope: {
       workgroupName: '<',
     },
-    link: function(scope) {
+    link: function() {
       // Intentionally blank
     }
   };
