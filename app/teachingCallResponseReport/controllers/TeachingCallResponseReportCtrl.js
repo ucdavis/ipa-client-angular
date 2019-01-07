@@ -1,5 +1,5 @@
 class TeachingCallResponseReportCtrl {
-	constructor ($scope, $rootScope, $route, $routeParams, TeachingCallResponseReportActionCreators, AuthService, TeachingCallResponseReportService, TermService) {
+	constructor ($scope, $rootScope, $route, $routeParams, TeachingCallResponseReportActionCreators, AuthService, TeachingCallResponseReportService, TermService, validate) {
 		var _self = this;
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
@@ -10,6 +10,7 @@ class TeachingCallResponseReportCtrl {
 		this.TeachingCallResponseReportService = TeachingCallResponseReportService;
 		this.TermService = TermService;
 
+		$scope.noAccess = validate ? validate.noAccess : null;
 		$scope.workgroupId = this.$routeParams.workgroupId;
 		$scope.year = this.$routeParams.year;
 
@@ -22,6 +23,8 @@ class TeachingCallResponseReportCtrl {
 			_self.$scope.sharedState.currentUser.hasRole('academicPlanner', _self.$scope.sharedState.workgroup.id);
 		});
 
+		$scope.sharedState = $scope.sharedState || AuthService.getSharedState();
+
 		$scope.getTermName = function(term) {
 			return TermService.getTermName(term);
 		};
@@ -32,6 +35,6 @@ class TeachingCallResponseReportCtrl {
 	}
 }
 
-TeachingCallResponseReportCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'TeachingCallResponseReportActionCreators', 'AuthService', 'TeachingCallResponseReportService', 'TermService'];
+TeachingCallResponseReportCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'TeachingCallResponseReportActionCreators', 'AuthService', 'TeachingCallResponseReportService', 'TermService', 'validate'];
 
 export default TeachingCallResponseReportCtrl;

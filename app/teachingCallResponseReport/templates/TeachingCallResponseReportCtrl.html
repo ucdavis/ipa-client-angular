@@ -3,14 +3,19 @@
 <div class="teaching-call-response-report-container">
 	<ipa-header page-title="Teaching Call Response Report"></ipa-header>
 
+	<!-- handle no access -->
+	<div ng-if="noAccess">
+		<no-access workgroup-name="sharedState.workgroup.name"></no-access>
+	</div>
+
 	<!-- handle lack of teaching call data-->
-	<div ng-if="view.state && view.state.termCodes.length == 0">
+	<div ng-if="!noAccess && view.state && view.state.termCodes.length == 0">
 			<div class="jumbotron" style="text-align: center; height: 100%; background-color: white;">
 				<p class="lead">No Teaching Call Responses found for {{sharedState.workgroup.name}} {{ year.yearToAcademicYear() }}</p>
 			</div>
 	</div>
 
-	<div ng-if="view.state && view.state.termCodes.length > 0" class="main-content">
+	<div ng-if="!noAccess && view.state && view.state.termCodes.length > 0" class="main-content">
 		<!-- Toolbar -->
 		<div class="row hidden-print">
 			<div class="table-toolbar">
