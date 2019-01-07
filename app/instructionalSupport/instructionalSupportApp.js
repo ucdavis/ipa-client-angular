@@ -57,7 +57,7 @@ function config ($routeProvider) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
 						var roles = ['academicPlanner', 'instructor'];
-						var hasAccess = AuthService.getCurrentUser().hasRoles(roles, $route.current.params.workgroupId);
+						var hasAccess = AuthService.getCurrentUser().hasAccess(roles, $route.current.params.workgroupId);
 
 						if (hasAccess) {
 							return InstructorFormActions.getInitialState();
@@ -77,7 +77,7 @@ function config ($routeProvider) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
 						var roles = ['academicPlanner', 'studentMaster', 'studentPhd'];
-						var hasAccess = AuthService.getCurrentUser().hasRoles(roles, $route.current.params.workgroupId);
+						var hasAccess = AuthService.getCurrentUser().hasAccess(roles, $route.current.params.workgroupId);
 
 						if (hasAccess) {
 							return StudentFormActions.getInitialState();

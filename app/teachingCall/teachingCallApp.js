@@ -56,7 +56,7 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, TeachingCallStatusActionCreators) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						var hasAccess = AuthService.getCurrentUser().hasRole('academicPlanner', $route.current.params.workgroupId);
+						var hasAccess = AuthService.getCurrentUser().hasAccess('academicPlanner', $route.current.params.workgroupId);
 
 						if (hasAccess) {
 							return TeachingCallStatusActionCreators.getInitialState();
