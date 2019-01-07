@@ -1,7 +1,7 @@
 import 'TeachingCall/css/teaching-call-status.css';
 
 class TeachingCallStatusCtrl {
-	constructor ($scope, $rootScope, $window, $route, $routeParams, TeachingCallStatusActionCreators, TeachingCallStatusService, AuthService) {
+	constructor ($scope, $rootScope, $window, $route, $routeParams, TeachingCallStatusActionCreators, TeachingCallStatusService, AuthService, validate) {
 		this.AuthService = AuthService;
 		this.$rootScope = $rootScope;
 		this.$window = $window;
@@ -12,6 +12,8 @@ class TeachingCallStatusCtrl {
 		this.AuthService = AuthService;
 
 		$scope.modalStyles = { "width" : "75%" };
+		$scope.noAccess = validate ? validate.noAccess : null;
+		$scope.sharedState = $scope.sharedState || AuthService.getSharedState();
 
 		$window.document.title = "Teaching Call Status";
 		$scope.workgroupId = $routeParams.workgroupId;
@@ -101,6 +103,6 @@ class TeachingCallStatusCtrl {
 	}
 }
 
-TeachingCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$route', '$routeParams', 'TeachingCallStatusActionCreators', 'TeachingCallStatusService', 'AuthService'];
+TeachingCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$route', '$routeParams', 'TeachingCallStatusActionCreators', 'TeachingCallStatusService', 'AuthService', 'validate'];
 
 export default TeachingCallStatusCtrl;

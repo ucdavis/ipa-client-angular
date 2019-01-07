@@ -4,7 +4,11 @@
 
 <ipa-header page-title="Teaching Calls"></ipa-header>
 
-<div class="teaching-call-status"><!-- main content container -->
+<div ng-if="noAccess">
+	<no-access workgroup-name="sharedState.workgroup.name"></no-access>
+</div>
+
+<div ng-if="!noAccess" class="teaching-call-status"><!-- main content container -->
 
 	<spinner ng-if="!view.state"
 	         size="20"
