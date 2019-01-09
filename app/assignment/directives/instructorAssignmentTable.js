@@ -179,6 +179,9 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 				if (scope.showInstructorUndeterminedTable == true) {
 					var unassignedTermCodes = {};
+					var unassignedInstructorTypes = {};
+					var unassignedInstructorTypeLength = 0;
+					var unassignedInstructorTypeIds = [];
 
 					scope.view.state.sectionGroups.ids.forEach(function(sectionGroupId) {
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
@@ -189,13 +192,27 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 							}
 
 							unassignedTermCodes[sectionGroup.termCode].push(sectionGroup.id);
+						} else {
+							sectionGroup.teachingAssignmentIds.forEach(function(teachingAssignmentId) {
+								var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+								if (!teachingAssignment.instructorId && teachingAssignment.instructorTypeId) {
+									unassignedInstructorTypes[teachingAssignment.instructorTypeId] = unassignedInstructorTypes[teachingAssignment.instructorTypeId] || {};
+									unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode] = unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode] || [];
+									unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode].push(teachingAssignment.sectionGroupId);
+									unassignedInstructorTypeLength += 1;
+
+									if (unassignedInstructorTypeIds.indexOf(teachingAssignment.instructorTypeId) == -1) {
+										unassignedInstructorTypeIds.push(teachingAssignment.instructorTypeId);
+									}
+								}
+							});
 						}
 					});
 
 					var theStaffLength = _.keys(scope.view.state.theStaff.termCodes).length;
 					var unassignedLength = _.keys(unassignedTermCodes).length;
 
-					if ((theStaffLength == 0) && (unassignedLength == 0)) {
+					if ((theStaffLength == 0) && (unassignedLength == 0) && unassignedInstructorTypeLength == 0) {
 						// Nothing to show for 'Instructors TBD'
 						return;
 					}
@@ -322,6 +339,64 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 							coursesHtml += "</div>"; // Ending term-cell div
 						});
 						coursesHtml += "</div>"; // Ending course-row div
+					}
+
+					if (unassignedInstructorTypeLength) {
+						unassignedInstructorTypeIds.forEach(function(instructorTypeId) {
+							coursesHtml += "<div class=\"course-list-row\">";
+							coursesHtml += "<div class=\"description-cell\">";
+							coursesHtml += "<div>";
+							coursesHtml += "<span style=\"margin-right:5px;\"></span>";
+
+							// Instructor assignmentCompleted UI
+							coursesHtml += "<div><strong>" + scope.view.state.instructorTypes.list[instructorTypeId].description + "</strong></div>";
+
+							// Instructor Comment UI
+							coursesHtml += "<div class=\"description-cell__comment-btn-container hidden-print\"></div>";
+
+							// If they don't have any teachingCallResponses, there won't be any unavailabilities to show
+							coursesHtml += "<div class=\"description-cell__avail-btn-container\"></div>";
+							coursesHtml += "</div>";
+							coursesHtml += "</div>"; // end description-cell
+
+							// Loop over active terms
+							$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) { // eslint-disable-line no-undef
+								var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
+								var sorted = scope.sortCourses(unassignedInstructorTypes[instructorTypeId][termCode]);
+
+								coursesHtml += "<div class=\"term-cell\">";
+
+								sorted.forEach(function(sectionGroupId) {
+									var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+
+									if (sectionGroup.termCode != termCode) { return; }
+
+									var displayTitle = "";
+									var plannedSeatsHtml = "";
+									var unitsLow = "";
+
+									var course = scope.view.state.courses.list[sectionGroup.courseId];
+
+									displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
+									var plannedSeats = sectionGroup.plannedSeats || "0";
+									plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
+									unitsLow = "<small>Units: " + course.unitsLow + "</small>";
+
+									coursesHtml += "<div class=\"alert alert-info tile-assignment\">";
+									coursesHtml += "<p>" + displayTitle + "</p>";
+									coursesHtml += "<div class=\"tile-assignment-details\">";
+									coursesHtml += plannedSeatsHtml;
+									coursesHtml += "<br />";
+									coursesHtml += unitsLow;
+									coursesHtml += "</div>";
+									coursesHtml += "</div>";
+								});
+
+								coursesHtml += "</div>"; // Ending term-cell div
+							});
+
+							coursesHtml += "</div>"; // Ending course-row div
+						});
 					}
 				} else {
 					if (!scope.instructorTypeId) { return; }
