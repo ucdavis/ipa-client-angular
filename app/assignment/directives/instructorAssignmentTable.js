@@ -4,7 +4,7 @@ import { _ } from 'underscore';
 /**
  * Provides the main course table in the Courses View
  */
-let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, AuthService, $routeParams, Roles) {
+let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, AuthService, $routeParams) {
 	return {
 		restrict: 'A',
 		scope: {
@@ -103,29 +103,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				}
 				return null;
 			};
-
-			scope.getInstructorTypeId = function (instructor) {
-				var teachingAssignments = scope.view.state.teachingAssignments;
-				var userRoles = scope.view.state.userRoles;
-				var user = scope.getUserByLoginId(instructor.loginId);
-				if (user) {
-					// Attempt to find via userRole
-					for (var i = 0; i < userRoles.ids.length; i++) {
-						var userRole = userRoles.list[userRoles.ids[i]];
-						if (userRole.roleId == Roles.instructor && userRole.userId == user.id) {
-							return userRole.instructorTypeId;
-						}
-					}
-				}
-				// Attempt to find via teachingAssignment
-				for (var i = 0; i < teachingAssignments.ids.length; i++) {
-					var teachingAssignment = teachingAssignments.list[teachingAssignments.ids[i]];
-					if (teachingAssignment.instructorId == instructor.id) {
-						return teachingAssignment.instructorTypeId;
-					}
-				}
-				return null;
-			},
 
 			// Build a string of html to display a column header (course, terms, etc.)
 			scope.renderHeader = function () {
@@ -369,9 +346,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						// Loop over instructors
 						$.each(scope.view.state.instructors.ids, function (i, instructorId) { // eslint-disable-line no-undef
 							var instructor = scope.view.state.instructors.list[instructorId];
-							var slotInstructorTypeId = scope.getInstructorTypeId(instructor);
 
-							if (scope.instructorTypeId != slotInstructorTypeId) { return; }
+							if (scope.instructorTypeId != instructor.instructorTypeId) { return; }
 
 							if (instructor.isFiltered === false && scope.showCompletedInstructor(instructor)) {
 								var scheduleInstructorNote = scope.view.state.scheduleInstructorNotes.list[instructor.scheduleInstructorNoteId];
