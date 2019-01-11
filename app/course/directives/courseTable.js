@@ -543,13 +543,13 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         });
 
         termsToRender.forEach(function(term) {
-          if(termCount[term.code] == undefined) { termCount[term.code] = 0; }
+          if (termCount[term.code] == undefined) { termCount[term.code] = 0; }
           row += "<td>" + termCount[term.code] + "</td>";
         });
 
         row += "</tr>";
 
-        if(state.courses.ids.length) { return row; }
+        if (state.courses.ids.length) { return row; }
       };
     }
   };
