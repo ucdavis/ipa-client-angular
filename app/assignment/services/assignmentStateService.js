@@ -1063,7 +1063,7 @@ class AssignmentStateService {
 		for (var i = 0; i < users.ids.length; i++) {
 			var user = users.list[users.ids[i]];
 
-			if (user.loginId == loginId) {
+			if (user.loginId.toLowerCase() == loginId.toLowerCase()) {
 				return user;
 			}
 		}
