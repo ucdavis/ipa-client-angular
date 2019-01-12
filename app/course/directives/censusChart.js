@@ -40,74 +40,31 @@ let censusChart = function ($rootScope, $timeout) {
           });
         };
 
-        /**
-         * Returns an arry of Enrollments for the given list of snapshot codes
-         */
-        var getCensusEnrollmentByCensusCodes = function (snapshotCodes) {
-          var censusEnrollment = [];
-
-          // Create an array of currentEnrolledCounts in the order of passed snapshotCodes
-          for (var sc = 0; sc < snapshotCodes.length; sc++) {
-            var snapshotCodesFound = false;
-            for (var c = 0; c < scope.census.length; c++) {
-              // If snapshotCode and termCode match push to array and go on to the next snapshotCode
-              if (scope.census[c].snapshotCode == snapshotCodes[sc] && scope.census[c].termCode == scope.term.termCode) {
-                censusEnrollment.push(scope.census[c].currentEnrolledCount);
-                snapshotCodesFound = true;
-                break;
-              }
-            }
-            // Fill in 0 for missing snapshotCodes
-            if (!snapshotCodesFound) {
-              censusEnrollment.push(0);
-            }
-          }
-
-          return censusEnrollment;
-        };
-
         var type, labels, datasets;
 
-        if (scope.term.isLocked()) {	// Historical mode (locked)
-          var snapshotCodes = ["INSTR_BEG", "DAY5", "DAY10", "DAY15", "CURRENT"];
-          type = 'bar';
-          labels = snapshotCodes;
-          datasets = [
-            {
-              label: "Census",
-              lineTension: 0,
-              backgroundColor: "rgba(179,181,198,0.5)",
-              borderColor: "rgba(179,181,198,1)",
-              pointBackgroundColor: "rgba(179,181,198,1)",
-              pointBorderColor: "#fff",
-              data: getCensusEnrollmentByCensusCodes(snapshotCodes)
-            }
-          ];
-        } else { // SG is in the future (unlocked)
-          type = 'line';
-          // Last 5 years
-          labels = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; }); // eslint-disable-line no-undef
-          datasets = [
-            {
-              label: "Seats",
-              lineTension: 0,
-              backgroundColor: "rgba(179,181,198,0.2)",
-              borderColor: "rgba(179,181,198,1)",
-              pointBackgroundColor: "rgba(179,181,198,1)",
-              pointBorderColor: "#fff",
-              data: getCurrentCensusForProperty("maxEnrollmentCount")
-            },
-            {
-              label: "Enrollment",
-              lineTension: 0,
-              backgroundColor: "rgba(200,181,150,0.2)",
-              borderColor: "rgba(200,181,150,1)",
-              pointBackgroundColor: "rgba(200,181,150,1)",
-              pointBorderColor: "#fff",
-              data: getCurrentCensusForProperty("currentEnrolledCount")
-            }
-          ];
-        }
+        type = 'line';
+        // Last 5 years
+        labels = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; }); // eslint-disable-line no-undef
+        datasets = [
+          {
+            label: "Seats",
+            lineTension: 0,
+            backgroundColor: "rgba(179,181,198,0.2)",
+            borderColor: "rgba(179,181,198,1)",
+            pointBackgroundColor: "rgba(179,181,198,1)",
+            pointBorderColor: "#fff",
+            data: getCurrentCensusForProperty("maxEnrollmentCount")
+          },
+          {
+            label: "Enrollment",
+            lineTension: 0,
+            backgroundColor: "rgba(200,181,150,0.2)",
+            borderColor: "rgba(200,181,150,1)",
+            pointBackgroundColor: "rgba(200,181,150,1)",
+            pointBorderColor: "#fff",
+            data: getCurrentCensusForProperty("currentEnrolledCount")
+          }
+        ];
 
         Chart.defaults.global.defaultFontColor = "#888"; // eslint-disable-line no-undef
         Chart.defaults.global.tooltips.mode = 'x-axis'; // eslint-disable-line no-undef
