@@ -1,5 +1,4 @@
 import { _array_sortIdsByProperty } from 'shared/helpers/array';
-import { _ } from 'underscore';
 
 /**
  * @ngdoc service
@@ -80,7 +79,7 @@ class RegistrarReconciliationReportStateService {
 														return instructorChange.removedValue;
 													}).forEach(function (instructorChange) {
 														var uniqueKey = instructorChange.removedValue.cdoId;
-														var instructor = _.find(slotSection.instructors, { uniqueKey: uniqueKey });
+														var instructor = _.find(slotSection.instructors, { uniqueKey: uniqueKey }); // eslint-disable-line no-undef
 														instructor.noRemote = true;
 													});
 												// DW has extra instructors, flag them, then add them to the current section
@@ -88,7 +87,7 @@ class RegistrarReconciliationReportStateService {
 													.filter(function (instructorChange) {
 														return instructorChange.addedValue;
 													}).map(function (instructorChange) {
-														var instructor = _.find(dwSectionData.instructors, { uniqueKey: instructorChange.addedValue.cdoId });
+														var instructor = _.find(dwSectionData.instructors, { uniqueKey: instructorChange.addedValue.cdoId }); // eslint-disable-line no-undef
 														instructor.noLocal = true;
 														return instructor;
 													}).forEach(function (instructor) {
@@ -123,7 +122,7 @@ class RegistrarReconciliationReportStateService {
 											case "startTime":
 											case "endTime":
 											case "dayIndicator": {
-												let activity = _.find(slotSection.activities, { uniqueKey: change.affectedLocalId });
+												let activity = _.find(slotSection.activities, { uniqueKey: change.affectedLocalId }); // eslint-disable-line no-undef
 												
 												activity.dwChanges = activity.dwChanges || {};
 												activity.dwChanges[change.propertyName] = { isToDo: false };
@@ -204,7 +203,7 @@ class RegistrarReconciliationReportStateService {
 						// Apply the requested changes to all matching activities
 						otherSectionIds.forEach(function (sectionId) {
 							section = sections.list[sectionId];
-							var activity = _.find(section.activities, { id: action.payload.activity.id });
+							var activity = _.find(section.activities, { id: action.payload.activity.id }); // eslint-disable-line no-undef
 							// Apply the changes on the activity
 							activity[action.payload.property] = action.payload.activity[action.payload.property];
 							// Delete the applied change from the dwChanges object

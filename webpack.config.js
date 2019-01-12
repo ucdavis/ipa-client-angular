@@ -172,6 +172,7 @@ module.exports = {
       fileName: 'js/lib.js',
       filesToConcat: [
         './node_modules/jquery/dist/jquery.js',
+        './node_modules/underscore/underscore-min.js',
         './node_modules/moment/min/moment.min.js',
         './app/shared/helpers/string_prototypes.js',
         './node_modules/fullcalendar/dist/fullcalendar.js',

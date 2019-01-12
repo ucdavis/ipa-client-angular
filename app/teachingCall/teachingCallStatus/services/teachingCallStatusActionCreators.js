@@ -1,4 +1,3 @@
-import { _ } from 'underscore';
 import { elapsedMinutes } from 'shared/helpers/dates';
 
 class TeachingCallStatusActionCreators {
@@ -148,7 +147,7 @@ class TeachingCallStatusActionCreators {
 					instructorIdsToSelect.push(instructor.instructorId);
 				});
 	
-				var selectedInstructorIds = _.union(instructorIdsToSelect, TeachingCallStatusStateService._state.ui.selectedInstructorIds);
+				var selectedInstructorIds = _.union(instructorIdsToSelect, TeachingCallStatusStateService._state.ui.selectedInstructorIds); // eslint-disable-line no-undef
 	
 				TeachingCallStatusStateService.reduce({
 					type: ActionTypes.SELECT_INSTRUCTORS,
@@ -164,7 +163,7 @@ class TeachingCallStatusActionCreators {
 					instructorIdsToRemove.push(instructor.instructorId);
 				});
 	
-				var selectedInstructorIds = _.difference(TeachingCallStatusStateService._state.ui.selectedInstructorIds, instructorIdsToRemove);
+				var selectedInstructorIds = _.difference(TeachingCallStatusStateService._state.ui.selectedInstructorIds, instructorIdsToRemove); // eslint-disable-line no-undef
 	
 				TeachingCallStatusStateService.reduce({
 					type: ActionTypes.SELECT_INSTRUCTORS,

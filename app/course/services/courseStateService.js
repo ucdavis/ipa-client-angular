@@ -1,6 +1,5 @@
 import { _array_sortIdsByProperty } from 'shared/helpers/array';
 import { _object_search_properties } from 'shared/helpers/object';
-import { _ } from 'underscore';
 
 /**
  * @ngdoc service
@@ -69,13 +68,13 @@ class CourseStateService {
               }
 
               // Find any duplicate in existing courses
-              var matchingCourse = _.find(courses.list, function (course) {
+              var matchingCourse = _.find(courses.list, function (course) { // eslint-disable-line no-undef
                 return (course.courseNumber == sg.courseNumber)
                         && (course.subjectCode == sg.subjectCode)
                         && (course.sequencePattern == sg.sequencePattern);
               });
               // Find any duplicate in importList
-              var matchingImportCourse = _.find(importList, function (course) {
+              var matchingImportCourse = _.find(importList, function (course) { // eslint-disable-line no-undef
                 return (course.courseNumber == sg.courseNumber) && (course.sequencePattern == sg.sequencePattern);
               });
               // Add only non-duplicates
@@ -93,12 +92,12 @@ class CourseStateService {
                 }));
               }
             });
-            courses.importList = _.sortBy(importList, function (course) {
+            courses.importList = _.sortBy(importList, function (course) { // eslint-disable-line no-undef
               return course.subjectCode + course.courseNumber + course.sequenceNumber;
             });
             return courses;
           case ActionTypes.TOGGLE_IMPORT_COURSE:
-            var matchingImportCourse = _.find(courses.importList, function (course) {
+            var matchingImportCourse = _.find(courses.importList, function (course) { // eslint-disable-line no-undef
               return (course.subjectCode == action.payload.subjectCode) &&
                 (course.courseNumber == action.payload.courseNumber) &&
                 (course.sequencePattern == action.payload.sequencePattern);
@@ -223,7 +222,7 @@ class CourseStateService {
             sectionGroups.importList = [];
             action.payload.sectionGroups.forEach(function (sg) {
               // Find any duplicate in importList
-              var matchingImportSectionGroup = _.find(sectionGroups.importList, function (sectionGroup) {
+              var matchingImportSectionGroup = _.find(sectionGroups.importList, function (sectionGroup) { // eslint-disable-line no-undef
                 return (sectionGroup.courseNumber == sg.courseNumber) &&
                   (sectionGroup.subjectCode == sg.subjectCode) &&
                   (sectionGroup.sequencePattern == sg.sequencePattern) &&
@@ -284,7 +283,7 @@ class CourseStateService {
             sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.splice(sectionIdIndex, 1);
             return sectionGroups;
           case ActionTypes.CELL_SELECTED:
-            sectionGroups.selectedSectionGroup = _.find(sectionGroups.list, function (sg) {
+            sectionGroups.selectedSectionGroup = _.find(sectionGroups.list, function (sg) { // eslint-disable-line no-undef
               return (sg.termCode == action.payload.termCode) && (sg.courseId == action.payload.courseId);
             });
             if (action.payload.termCode && sectionGroups.selectedSectionGroup === undefined) {

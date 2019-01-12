@@ -1,6 +1,5 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
 import { isNumber } from 'shared/helpers/types';
-import { _ } from 'underscore';
 
 import 'TeachingCall/css/teaching-call-form.css';
 
@@ -98,7 +97,7 @@ class TeachingCallFormCtrl {
 			}
 
 			// Inject headers into results for displaying in typeahead dropdown
-			var groupedResults = _.chain(results).groupBy(function (course) { return course.subjectCode; })
+			var groupedResults = _.chain(results).groupBy(function (course) { return course.subjectCode; }) // eslint-disable-line no-undef
 				.map(function (groupedCourses) { groupedCourses[0].firstInGroup = true; return groupedCourses; })
 				.flatten().value();
 

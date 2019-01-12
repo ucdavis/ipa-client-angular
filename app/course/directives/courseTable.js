@@ -1,5 +1,4 @@
 import { isNumber } from 'shared/helpers/types';
-import { _ } from 'underscore';
 
 /**
  * Provides the main course table in the Courses View
@@ -144,7 +143,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           var coursesArray = data.state.courses.ids.map(function (id) { return data.state.courses.list[id]; });
           var blendedCoursesArray = coursesArray.concat(data.state.courses.importList);
           // TODO: handle different sorting options here
-          var sortedBlendedCoursesArray = _.sortBy(blendedCoursesArray, function (course) {
+          var sortedBlendedCoursesArray = _.sortBy(blendedCoursesArray, function (course) { // eslint-disable-line no-undef
             return course.subjectCode + course.courseNumber + course.sequenceNumber;
           });
 
@@ -397,7 +396,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           "</strong><br />" + course.title + "</div></td>";
         $.each(termsToRender, function (i, term) { // eslint-disable-line no-undef
           var termCode = term.code;
-          var sectionGroup = _.find(state.sectionGroups.importList, function (sg) {
+          var sectionGroup = _.find(state.sectionGroups.importList, function (sg) { // eslint-disable-line no-undef
             return (sg.termCode.slice(-2) == termCode.slice(-2)) &&
               (sg.subjectCode == course.subjectCode) &&
               (sg.courseNumber == course.courseNumber) &&
@@ -445,12 +444,12 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           }
           row += "</td>";
 
-          var courseSgs = _.filter(state.sectionGroups.list, function (sg) { return sg.courseId == courseId; });
+          var courseSgs = _.filter(state.sectionGroups.list, function (sg) { return sg.courseId == courseId; }); // eslint-disable-line no-undef
 
           // Term column(s)
           $.each(termsToRender, function (i, termToRender) { // eslint-disable-line no-undef
             var termCode = termToRender.code;
-            var sectionGroup = _.find(courseSgs, function (sg) { return sg.termCode == termCode; });
+            var sectionGroup = _.find(courseSgs, function (sg) { return sg.termCode == termCode; }); // eslint-disable-line no-undef
             var sectionGroupId = sectionGroup ? sectionGroup.id : 0;
             var plannedSeats = (sectionGroup && sectionGroup.plannedSeats) ? sectionGroup.plannedSeats : "";
 
@@ -491,7 +490,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
       scope.savePlannedSeats = function ($el, scope, CourseActionCreators) {
         var courseId = $el.closest("tr").data('course-id');
         var termCode = $el.closest("td").data('term-code').toString();
-        var sectionGroup = _.findWhere(scope.view.state.sectionGroups.list, { courseId: courseId, termCode: termCode });
+        var sectionGroup = _.findWhere(scope.view.state.sectionGroups.list, { courseId: courseId, termCode: termCode }); // eslint-disable-line no-undef
         var plannedSeats = $el.val() === "" ? null : parseInt($el.val());
 
         if (isNaN(plannedSeats)) { return; }
@@ -534,7 +533,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
         var termCount = {};
 
-        _.each(state.sectionGroups.list, function(sg) {
+        _.each(state.sectionGroups.list, function(sg) { // eslint-disable-line no-undef
           if (termCount[sg.termCode] === undefined) {
             termCount[sg.termCode] = sg.plannedSeats;
           } else {

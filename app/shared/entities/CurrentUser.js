@@ -1,5 +1,3 @@
-import { _ } from 'underscore';
-
 // eslint-disable-next-line no-undef
 const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 	.factory('CurrentUser', ['$http', 'UserRole', function ($http, UserRole) {
@@ -40,7 +38,7 @@ const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 
 			getWorkgroups: function () {
 				if (!this.userRoles) { return []; }
-				return _.uniq(
+				return _.uniq( // eslint-disable-line no-undef
 					this.userRoles
 						.filter(function (ur) { return ur.workgroupId > 0; })
 						.map(function (ur) { return { id: ur.workgroupId, name: ur.workgroupName }; }),

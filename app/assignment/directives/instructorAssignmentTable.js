@@ -1,5 +1,4 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
-import { _ } from 'underscore';
 
 /**
  * Provides the main course table in the Courses View
@@ -134,7 +133,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 			};
 
 			scope.sortCourses = function (array) {
-				var sortedArray = _.sortBy(array, function (sectionGroupId) {
+				var sortedArray = _.sortBy(array, function (sectionGroupId) { // eslint-disable-line no-undef
 					var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 					var course = scope.view.state.courses.list[sectionGroup.courseId];
 
@@ -169,8 +168,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						}
 					});
 
-					var theStaffLength = _.keys(scope.view.state.theStaff.termCodes).length;
-					var unassignedLength = _.keys(unassignedTermCodes).length;
+					var theStaffLength = _.keys(scope.view.state.theStaff.termCodes).length; // eslint-disable-line no-undef
+					var unassignedLength = _.keys(unassignedTermCodes).length; // eslint-disable-line no-undef
 
 					if ((theStaffLength == 0) && (unassignedLength == 0)) {
 						// Nothing to show for 'Instructors TBD'

@@ -1,5 +1,3 @@
-import { _ } from 'underscore';
-
 class AuthService {
 	constructor ($http, $window, $q, $location, $rootScope, $log, CurrentUser, $route) {
 		this.$http = $http;
@@ -141,7 +139,7 @@ class AuthService {
 					return false;
 				}
 
-				var matchingRole = _.findWhere(data.userRoles, { workgroupId: Number(workgroupId) });
+				var matchingRole = _.findWhere(data.userRoles, { workgroupId: Number(workgroupId) }); // eslint-disable-line no-undef
 
 				if (matchingRole) {
 					// User has access to requested page, let them in

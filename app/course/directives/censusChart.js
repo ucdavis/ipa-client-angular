@@ -1,5 +1,3 @@
-import { _ } from 'underscore';
-
 /**
  * Uses Chart JS to display either a bar chart (historical courses), or a line chart (future courses)
  * Example: <census-chart census="census" term="termCode"course-id="courseId"></census-chart>
@@ -32,7 +30,7 @@ let censusChart = function ($rootScope, $timeout) {
         var getCurrentCensusForProperty = function (property) {
           var lastFiveYears = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; }); // eslint-disable-line no-undef
           return lastFiveYears.map(function (year) {
-            return _.find(scope.census, function (c) {
+            return _.find(scope.census, function (c) { // eslint-disable-line no-undef
               var matchesTermCode = c.termCode.toString() == year + (scope.term.termCode + '').slice(-2);
               var matchesCurrentCode = c.snapshotCode == "CURRENT";
               return matchesTermCode && matchesCurrentCode;
