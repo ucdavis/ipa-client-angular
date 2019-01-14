@@ -286,60 +286,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 							});
 						coursesHtml += "</div>"; // Ending course-row div
 					}
-					if (unassignedLength > 0) {
-						coursesHtml += "<div class=\"course-list-row\">";
-						coursesHtml += "<div class=\"description-cell\">";
-						coursesHtml += "<div>";
-						coursesHtml += "<span style=\"margin-right:5px;\"></span>";
-
-						// Instructor assignmentCompleted UI
-						coursesHtml += '<div class="instructor-title">Unassigned</div>';
-
-						// Instructor Comment UI
-						coursesHtml += "<div class=\"description-cell__comment-btn-container hidden-print\"></div>";
-
-						// If they don't have any teachingCallResponses, there won't be any unavailabilities to show
-						coursesHtml += "<div class=\"description-cell__avail-btn-container\"></div>";
-						coursesHtml += "</div>";
-						coursesHtml += "</div>"; // end description-cell
-
-						// Loop over active terms
-						$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) { // eslint-disable-line no-undef
-							var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
-							var sortedUnassigned = scope.sortCourses(unassignedTermCodes[termCode]);
-
-							coursesHtml += "<div class=\"term-cell\">";
-
-							sortedUnassigned.forEach(function(sectionGroupId) {
-								var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
-
-								if (sectionGroup.termCode != termCode) { return; }
-								if (sectionGroup.isAssigned == true) { return; }
-
-								var displayTitle = "";
-								var plannedSeatsHtml = "";
-								var unitsLow = "";
-
-								var course = scope.view.state.courses.list[sectionGroup.courseId];
-
-								displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
-								var plannedSeats = sectionGroup.plannedSeats || "0";
-								plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
-								unitsLow = "<small>Units: " + course.unitsLow + "</small>";
-
-								coursesHtml += "<div class=\"alert alert-info tile-assignment\">";
-								coursesHtml += "<p>" + displayTitle + "</p>";
-								coursesHtml += "<div class=\"tile-assignment-details\">";
-								coursesHtml += plannedSeatsHtml;
-								coursesHtml += "<br />";
-								coursesHtml += unitsLow;
-								coursesHtml += "</div>";
-								coursesHtml += "</div>";
-							});
-							coursesHtml += "</div>"; // Ending term-cell div
-						});
-						coursesHtml += "</div>"; // Ending course-row div
-					}
 
 					if (unassignedInstructorTypeLength) {
 						unassignedInstructorTypeIds.forEach(function(instructorTypeId) {
@@ -397,6 +343,61 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 							coursesHtml += "</div>"; // Ending course-row div
 						});
+					}
+
+					if (unassignedLength > 0) {
+						coursesHtml += "<div class=\"course-list-row\">";
+						coursesHtml += "<div class=\"description-cell\">";
+						coursesHtml += "<div>";
+						coursesHtml += "<span style=\"margin-right:5px;\"></span>";
+
+						// Instructor assignmentCompleted UI
+						coursesHtml += '<div class="instructor-title">Unassigned</div>';
+
+						// Instructor Comment UI
+						coursesHtml += "<div class=\"description-cell__comment-btn-container hidden-print\"></div>";
+
+						// If they don't have any teachingCallResponses, there won't be any unavailabilities to show
+						coursesHtml += "<div class=\"description-cell__avail-btn-container\"></div>";
+						coursesHtml += "</div>";
+						coursesHtml += "</div>"; // end description-cell
+
+						// Loop over active terms
+						$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) { // eslint-disable-line no-undef
+							var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
+							var sortedUnassigned = scope.sortCourses(unassignedTermCodes[termCode]);
+
+							coursesHtml += "<div class=\"term-cell\">";
+
+							sortedUnassigned.forEach(function(sectionGroupId) {
+								var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+
+								if (sectionGroup.termCode != termCode) { return; }
+								if (sectionGroup.isAssigned == true) { return; }
+
+								var displayTitle = "";
+								var plannedSeatsHtml = "";
+								var unitsLow = "";
+
+								var course = scope.view.state.courses.list[sectionGroup.courseId];
+
+								displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
+								var plannedSeats = sectionGroup.plannedSeats || "0";
+								plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
+								unitsLow = "<small>Units: " + course.unitsLow + "</small>";
+
+								coursesHtml += "<div class=\"alert alert-info tile-assignment\">";
+								coursesHtml += "<p>" + displayTitle + "</p>";
+								coursesHtml += "<div class=\"tile-assignment-details\">";
+								coursesHtml += plannedSeatsHtml;
+								coursesHtml += "<br />";
+								coursesHtml += unitsLow;
+								coursesHtml += "</div>";
+								coursesHtml += "</div>";
+							});
+							coursesHtml += "</div>"; // Ending term-cell div
+						});
+						coursesHtml += "</div>"; // Ending course-row div
 					}
 				} else {
 					if (!scope.instructorTypeId) { return; }
