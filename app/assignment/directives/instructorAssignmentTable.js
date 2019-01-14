@@ -230,7 +230,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						coursesHtml += "<span style=\"margin-right:5px;\"></span>";
 
 						// Instructor assignmentCompleted UI
-						coursesHtml += "<div><strong>The Staff</strong></div>";
+						coursesHtml += '<div class="instructor-title">The Staff</div>';
 
 						// Instructor Comment UI
 						coursesHtml += "<div class=\"description-cell__comment-btn-container hidden-print\"></div>";
@@ -293,7 +293,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						coursesHtml += "<span style=\"margin-right:5px;\"></span>";
 
 						// Instructor assignmentCompleted UI
-						coursesHtml += "<div><strong>Unassigned</strong></div>";
+						coursesHtml += '<div class="instructor-title">Unassigned</div>';
 
 						// Instructor Comment UI
 						coursesHtml += "<div class=\"description-cell__comment-btn-container hidden-print\"></div>";
@@ -349,7 +349,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 							coursesHtml += "<span style=\"margin-right:5px;\"></span>";
 
 							// Instructor assignmentCompleted UI
-							coursesHtml += "<div><strong>" + scope.view.state.instructorTypes.list[instructorTypeId].description + "</strong></div>";
+							coursesHtml += '<div class="instructor-title">' + scope.view.state.instructorTypes.list[instructorTypeId].description + '</div>';
 
 							// Instructor Comment UI
 							coursesHtml += "<div class=\"description-cell__comment-btn-container hidden-print\"></div>";
