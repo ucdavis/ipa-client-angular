@@ -5,6 +5,11 @@ let workgroupSummary = function () {
 		restrict: 'E',
 		template: require('./workgroupSummary.html'),
 		replace: true,
+    scope: {
+      state: '=',
+      workgroup: '=',
+      hasAccess: '='
+    },
 		link: function () {
 			// Do nothing
 		}
