@@ -398,6 +398,23 @@ class SummaryStateService {
 						return supportAssignments;
 				}
 			},
+			_teachingAssignmentReducers: function (action, teachingAssignments) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						teachingAssignments = {
+							list: {},
+							ids: []
+						};
+	
+						action.payload.teachingAssignments.forEach(function(teachingAssignment) {
+							teachingAssignments.list[teachingAssignment.id] = teachingAssignment;
+							teachingAssignments.ids.push(teachingAssignment.id);
+						});
+						return teachingAssignments;
+					default:
+						return teachingAssignments;
+				}
+			},
 			_studentSupportCallResponseReducers: function (action, supportCallResponses) {	
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -493,6 +510,7 @@ class SummaryStateService {
 				newState.schedule = scope._scheduleReducers(action, scope._state.schedule);
 				newState.supportStaffList = scope._supportStaffListReducers(action, scope._state.supportStaffList);
 				newState.supportAssignments = scope._supportAssignmentReducers(action, scope._state.supportAssignments);
+				newState.teachingAssignments = scope._teachingAssignmentReducers(action, scope._state.teachingAssignments);
 				newState.ui = scope._uiReducers(action, scope._state.ui);
 				newState.terms = scope._termReducers(action, scope._state.terms);
 	

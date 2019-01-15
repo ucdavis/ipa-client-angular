@@ -2,7 +2,7 @@ import { isCurrentTerm } from 'shared/helpers/dates';
 
 import './scheduledCourses.css';
 
-let scheduledCourses = function ($rootScope) {
+let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 	return {
 		restrict: 'E',
 		template: require('./scheduledCourses.html'),
@@ -40,6 +40,34 @@ let scheduledCourses = function ($rootScope) {
 			};
 
 			scope.mapDataToState = function(data) {
+				scope.instructorAssignments = [];
+				scope.termCodes = [];
+
+				data.teachingAssignments.ids.forEach(function(teachingAssignmentId) {
+					var teachingAssignment = data.teachingAssignments.list[teachingAssignmentId];
+					var sectionGroup = teachingAssignment.sectionGroupId ? data.sectionGroups.list[teachingAssignment.sectionGroupId] : null;
+					var course = sectionGroup ? data.courses.list[sectionGroup.courseId] : null;
+					var description = TeachingAssignmentService.getDescription (teachingAssignment, course);
+					description = course ? description += " - " + course.sequencePattern : description;
+
+					var instructorAssignment = {
+						description: description,
+						termCode: teachingAssignment.termCode,
+						times: "-",
+						meetings: []
+					};
+
+					scope.instructorAssignments.push(instructorAssignment);
+
+					if (scope.termCodes.indexOf(teachingAssignment.termCode) == -1) {
+						scope.termCodes.push(teachingAssignment.termCode);
+					}
+				});
+
+				scope.termCodes;
+				scope.instructorAssignments;
+				//debugger;
+
 				var scheduledCourses = {
 					terms: [],
 					list: {}
