@@ -340,11 +340,12 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 									if (scope.userCanEdit()) {
 										var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
-											"<div class='text-center'><button class='btn btn-red' data-event-type='deleteAssignment' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
-											"<button class='btn btn-white' data-event-type='dismissDeleteAssignmentPop'>Cancel</button></div>";
+										"<div class='text-center'><button class='btn btn-red' data-event-type='deleteAssignmentType' data-instructor-type-id=" + instructorTypeId + " data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
+										"<button class='btn btn-white' data-event-type='dismissDeleteAssignmentPop'>Cancel</button></div>";
 
 										coursesHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
 										coursesHtml += " data-section-group-id=\"" + sectionGroupId + "\" data-event-type=\"deleteAssignmentPop\" ";
+										coursesHtml += " data-instructor-type-id=\"" + instructorTypeId + " ";
 										coursesHtml += "data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
 									}
 
@@ -939,6 +940,22 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				// User has confirmed deletion of the assignment
 				else if ($el.data('event-type') == 'deleteAssignment') {
 					teachingAssignmentId = $el.data('teaching-assignment-id');
+					teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+					AssignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
+				}
+
+				if ($el.data('event-type') == 'deleteAssignmentType') {
+					sectionGroupId = $el.data('section-group-id');
+					sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+					var teachingAssignmentId = null;
+
+					scope.view.state.teachingAssignments.ids.forEach(function(slotTeachingAssignmentId) {
+						var slotTeachingAssignment = scope.view.state.teachingAssignments.list[slotTeachingAssignmentId];
+						if (!slotTeachingAssignment.instructorId && slotTeachingAssignment.instructorTypeId && slotTeachingAssignment.sectionGroupId == sectionGroupId) {
+							teachingAssignmentId = slotTeachingAssignment.id;
+						}
+					});
+
 					teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 					AssignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
 				}
