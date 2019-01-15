@@ -48,7 +48,7 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 					var sectionGroup = teachingAssignment.sectionGroupId ? data.sectionGroups.list[teachingAssignment.sectionGroupId] : null;
 					var course = sectionGroup ? data.courses.list[sectionGroup.courseId] : null;
 					var description = TeachingAssignmentService.getDescription (teachingAssignment, course);
-					description = course ? description += " - " + course.title : description;
+					description = course ? description += " - " + course.title + " - " + course.sequencePattern : description;
 					var meetings = sectionGroup ? scope.generateMeetingsInSectionGroup(sectionGroup, data.sections, data.activities) : null;
 
 					var instructorAssignment = {
@@ -64,29 +64,6 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 						scope.termCodes.push(teachingAssignment.termCode);
 					}
 				});
-
-				scope.termCodes;
-				scope.instructorAssignments;
-				//debugger;
-
-				var scheduledCourses = {
-					terms: [],
-					list: {}
-				};
-
-				data.sectionGroups.ids.forEach(function(sectionGroupId) {
-					var sectionGroup = data.sectionGroups.list[sectionGroupId];
-
-					if (!scheduledCourses.list[sectionGroup.termCode]) {
-						scheduledCourses.list[sectionGroup.termCode] = [];
-						scheduledCourses.terms.push(sectionGroup.termCode);
-					}
-
-					var scheduledCourse = scope.generateScheduledCourse(sectionGroup, data);
-					scheduledCourses.list[sectionGroup.termCode].push(scheduledCourse);
-				});
-
-				scope.view.state.scheduledCourses = scheduledCourses;
 			};
 
 			scope.generateScheduledCourse = function(sectionGroup, data) {
@@ -123,8 +100,8 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 					if (scope.activityBelongsToSectionGroup(activity, sectionGroup, sections) == false) { return;}
 
 					var meeting = {
-						startTime: activity.startTime ? activity.startTime.toStandardTime() : activity.startTime,
-						endTime: activity.endTime ? activity.endTime.toStandardTime() : activity.endTime,
+						startTime: activity.startTime,
+						endTime: activity.endTime,
 						activityType: activity.activityTypeCode.activityTypeCode.getActivityCodeDescription(),
 						dayIndicator: activity.dayIndicator,
 						location: activity.locationDescription || "To Be Announced"
