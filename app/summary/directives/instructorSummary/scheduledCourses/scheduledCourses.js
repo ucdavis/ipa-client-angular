@@ -23,7 +23,7 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 			scope.dayIndicatorToDayCodes = function (dayIndicator) {
 				let dayCodes = "";
 				// Handle incorrect data
-				if (dayIndicator.length === 0) {
+				if (!dayIndicator || dayIndicator.length === 0) {
 					return dayCodes;
 				}
 
@@ -48,13 +48,14 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 					var sectionGroup = teachingAssignment.sectionGroupId ? data.sectionGroups.list[teachingAssignment.sectionGroupId] : null;
 					var course = sectionGroup ? data.courses.list[sectionGroup.courseId] : null;
 					var description = TeachingAssignmentService.getDescription (teachingAssignment, course);
-					description = course ? description += " - " + course.sequencePattern : description;
+					description = course ? description += " - " + course.title : description;
+					var meetings = sectionGroup ? scope.generateMeetingsInSectionGroup(sectionGroup, data.sections, data.activities) : null;
 
 					var instructorAssignment = {
 						description: description,
 						termCode: teachingAssignment.termCode,
-						times: "-",
-						meetings: []
+						meetings: meetings,
+						sectionGroupId: sectionGroup ? sectionGroup.id : null
 					};
 
 					scope.instructorAssignments.push(instructorAssignment);
@@ -122,8 +123,8 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 					if (scope.activityBelongsToSectionGroup(activity, sectionGroup, sections) == false) { return;}
 
 					var meeting = {
-						startTime: activity.startTime,
-						endTime: activity.endTime,
+						startTime: activity.startTime ? activity.startTime.toStandardTime() : activity.startTime,
+						endTime: activity.endTime ? activity.endTime.toStandardTime() : activity.endTime,
 						activityType: activity.activityTypeCode.activityTypeCode.getActivityCodeDescription(),
 						dayIndicator: activity.dayIndicator,
 						location: activity.locationDescription || "To Be Announced"
