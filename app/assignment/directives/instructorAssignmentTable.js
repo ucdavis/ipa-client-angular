@@ -329,14 +329,28 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 									var unitsLow = "";
 
 									var course = scope.view.state.courses.list[sectionGroup.courseId];
-
 									displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
 									var plannedSeats = sectionGroup.plannedSeats || "0";
 									plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
 									unitsLow = "<small>Units: " + course.unitsLow + "</small>";
 
 									coursesHtml += "<div class=\"alert alert-info tile-assignment\">";
-									coursesHtml += "<p>" + displayTitle + "</p>";
+									coursesHtml += '<p class="instructors-table__preference-title">';
+									coursesHtml += '<span class="instructor-assignment-table__course-definition">' + displayTitle + '</span>';
+
+									if (scope.userCanEdit()) {
+										var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
+											"<div class='text-center'><button class='btn btn-red' data-event-type='deleteAssignment' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
+											"<button class='btn btn-white' data-event-type='dismissDeleteAssignmentPop'>Cancel</button></div>";
+
+										coursesHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
+										coursesHtml += " data-section-group-id=\"" + sectionGroupId + "\" data-event-type=\"deleteAssignmentPop\" ";
+										coursesHtml += "data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
+									}
+
+									coursesHtml += '</span></p>';
+
+									coursesHtml += '<div class="instructor-assignment-table__course-title">' + course.title + '</div>';
 									coursesHtml += "<div class=\"tile-assignment-details\">";
 									coursesHtml += plannedSeatsHtml;
 									coursesHtml += "<br />";
