@@ -257,19 +257,16 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										var unitsLow = "";
 
 										var course = scope.view.state.courses.list[sectionGroup.courseId];
-
+										var subTitle = course.title;
 										displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
+
 										var plannedSeats = sectionGroup.plannedSeats || "0";
 										plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
 										unitsLow = "<small>Units: " + course.unitsLow + "</small>";
 
-										coursesHtml += "<div class=\"alert alert-info tile-assignment\">";
-										coursesHtml += "<p>" + displayTitle + "</p>";
-										coursesHtml += "<div class=\"tile-assignment-details\">";
-										coursesHtml += plannedSeatsHtml;
-										coursesHtml += "<br />";
-										coursesHtml += unitsLow;
-										coursesHtml += "</div>";
+										coursesHtml += '<div class="alert alert-info tile-assignment">';
+
+										coursesHtml += '<p class="instructors-table__preference-title"><span class="instructor-assignment-table__course-definition">' + displayTitle + '</span>';
 
 										var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
 											"<div class='text-center'><button class='btn btn-red' data-event-type='removeTheStaff' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
@@ -278,6 +275,16 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										coursesHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
 										coursesHtml += " data-section-group-id=\"" + sectionGroup.id + "\" data-event-type=\"removeTheStaffPop\" " +
 											"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
+
+										coursesHtml += "</p>";
+
+										coursesHtml += '<div class="instructor-assignment-table__course-title">' + subTitle + '</div>';
+
+										coursesHtml += "<div class=\"tile-assignment-details\">";
+										coursesHtml += plannedSeatsHtml;
+										coursesHtml += "<br />";
+										coursesHtml += unitsLow;
+										coursesHtml += "</div>";
 
 										coursesHtml += "</div>";
 									});
